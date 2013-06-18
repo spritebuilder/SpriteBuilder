@@ -391,12 +391,12 @@
 
 - (NSArray*) resIndependentExts
 {
-    return [NSArray arrayWithObjects:@"@2x",@"-hd",@"-ipad",@"-ipadhd", @"-xsmall", @"-small", @"-medium", @"-large", @"-xlarge", @"-html5", @"-auto", nil];
+    return [NSArray arrayWithObjects:@"@2x",@"-phone",@"-tablet",@"-tablethd", @"-phonehd", @"-html5", @"-auto", nil];
 }
 
 - (NSArray*) resIndependentDirs
 {
-    return [NSArray arrayWithObjects:@"resources-iphone", @"resources-iphonehd", @"resources-iphone5", @"resources-iphone5hd", @"resources-ipad",@"resources-ipadhd", @"resources-xsmall", @"resources-small", @"resources-medium", @"resources-large", @"resources-xlarge", @"resources-html5", @"resources-auto", nil];
+    return [NSArray arrayWithObjects:@"resources-phone", @"resources-phonehd", @"resources-tablet", @"resources-tablethd", @"resources-html5", @"resources-auto", nil];
 }
 
 - (BOOL) isResolutionDependentFile: (NSString*) file
@@ -831,15 +831,10 @@
 {
     // Calculate the scale factor
     float dstScale = 1;
-    if ([res isEqualToString:@"iphone"]) dstScale = 1;
-    if ([res isEqualToString:@"iphonehd"]) dstScale = 2;
-    else if ([res isEqualToString:@"ipad"]) dstScale = 2;
-    else if ([res isEqualToString:@"ipadhd"]) dstScale = 4;
-    else if ([res isEqualToString:@"xsmall"]) dstScale = 0.5;
-    else if ([res isEqualToString:@"small"]) dstScale = 1;
-    else if ([res isEqualToString:@"medium"]) dstScale = 1.5;
-    else if ([res isEqualToString:@"large"]) dstScale = 2;
-    else if ([res isEqualToString:@"xlarge"]) dstScale = 4;
+    if ([res isEqualToString:@"phone"]) dstScale = 1;
+    if ([res isEqualToString:@"phonehd"]) dstScale = 2;
+    else if ([res isEqualToString:@"tablet"]) dstScale = 2;
+    else if ([res isEqualToString:@"tablethd"]) dstScale = 4;
     else if ([res isEqualToString:@"html5"])
     {
         dstScale = [CocosBuilderAppDelegate appDelegate].projectSettings.publishResolutionHTML5_scale;

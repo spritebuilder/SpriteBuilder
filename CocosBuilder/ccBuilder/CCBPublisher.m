@@ -921,21 +921,21 @@
             NSMutableArray* resolutions = [NSMutableArray array];
             
             // Add iPhone resolutions from publishing settings
-            if (projectSettings.publishResolution_)
+            if (projectSettings.publishResolution_ios_phone)
             {
-                [resolutions addObject:@"iphone"];
+                [resolutions addObject:@"phone"];
             }
-            if (projectSettings.publishResolution_hd)
+            if (projectSettings.publishResolution_ios_phonehd)
             {
-                [resolutions addObject:@"iphonehd"];
+                [resolutions addObject:@"phonehd"];
             }
-            if (projectSettings.publishResolution_ipad)
+            if (projectSettings.publishResolution_ios_tablet)
             {
-                [resolutions addObject:@"ipad"];
+                [resolutions addObject:@"tablet"];
             }
-            if (projectSettings.publishResolution_ipadhd)
+            if (projectSettings.publishResolution_ios_tablethd)
             {
-                [resolutions addObject:@"ipadhd"];
+                [resolutions addObject:@"tablethd"];
             }
             publishForResolutions = resolutions;
             
@@ -963,25 +963,21 @@
             
             NSMutableArray* resolutions = [NSMutableArray array];
             
-            if (projectSettings.publishResolution_xsmall)
+            if (projectSettings.publishResolution_android_phone)
             {
-                [resolutions addObject:@"xsmall"];
+                [resolutions addObject:@"phone"];
             }
-            if (projectSettings.publishResolution_small)
+            if (projectSettings.publishResolution_android_phonehd)
             {
-                [resolutions addObject:@"small"];
+                [resolutions addObject:@"phonehd"];
             }
-            if (projectSettings.publishResolution_medium)
+            if (projectSettings.publishResolution_android_tablet)
             {
-                [resolutions addObject:@"medium"];
+                [resolutions addObject:@"tablet"];
             }
-            if (projectSettings.publishResolution_large)
+            if (projectSettings.publishResolution_android_tablethd)
             {
-                [resolutions addObject:@"large"];
-            }
-            if (projectSettings.publishResolution_xlarge)
-            {
-                [resolutions addObject:@"xlarge"];
+                [resolutions addObject:@"tablethd"];
             }
             publishForResolutions = resolutions;
             
@@ -1058,12 +1054,12 @@
                 if (deviceInfo.hasRetinaDisplay)
                 {
                     // iPad retina
-                    publishForResolutions = [NSArray arrayWithObjects:@"ipadhd", nil];
+                    publishForResolutions = [NSArray arrayWithObjects:@"tablethd", nil];
                 }
                 else
                 {
                     // iPad normal
-                    publishForResolutions = [NSArray arrayWithObjects:@"ipad", @"hd", nil];
+                    publishForResolutions = [NSArray arrayWithObjects:@"tablet", @"phonehd", nil];
                 }
             }
             else if ([deviceInfo.deviceType isEqualToString:@"iPhone"])
@@ -1071,11 +1067,11 @@
                 // iPhone
                 if (deviceInfo.hasRetinaDisplay)
                 {
-                    publishForResolutions = [NSArray arrayWithObjects:@"iphonehd", nil];
+                    publishForResolutions = [NSArray arrayWithObjects:@"phonehd", nil];
                 }
                 else
                 {
-                    publishForResolutions = [NSArray arrayWithObjects:@"iphone", nil];
+                    publishForResolutions = [NSArray arrayWithObjects:@"phone", nil];
                 }
             }
             else if ([deviceInfo.deviceType isEqualToString:@"Android"])

@@ -117,15 +117,14 @@
 @synthesize publishEnablediPhone;
 @synthesize publishEnabledAndroid;
 @synthesize publishEnabledHTML5;
-@synthesize publishResolution_;
-@synthesize publishResolution_hd;
-@synthesize publishResolution_ipad;
-@synthesize publishResolution_ipadhd;
-@synthesize publishResolution_xsmall;
-@synthesize publishResolution_small;
-@synthesize publishResolution_medium;
-@synthesize publishResolution_large;
-@synthesize publishResolution_xlarge;
+@synthesize publishResolution_ios_phone;
+@synthesize publishResolution_ios_phonehd;
+@synthesize publishResolution_ios_tablet;
+@synthesize publishResolution_ios_tablethd;
+@synthesize publishResolution_android_phone;
+@synthesize publishResolution_android_phonehd;
+@synthesize publishResolution_android_tablet;
+@synthesize publishResolution_android_tablethd;
 @synthesize publishResolutionHTML5_width;
 @synthesize publishResolutionHTML5_height;
 @synthesize publishResolutionHTML5_scale;
@@ -172,15 +171,14 @@
     self.publishEnabledAndroid = NO;
     self.publishEnabledHTML5 = YES;
     
-    self.publishResolution_ = YES;
-    self.publishResolution_hd = YES;
-    self.publishResolution_ipad = YES;
-    self.publishResolution_ipadhd = YES;
-    self.publishResolution_xsmall = YES;
-    self.publishResolution_small = YES;
-    self.publishResolution_medium = YES;
-    self.publishResolution_large = YES;
-    self.publishResolution_xlarge = YES;
+    self.publishResolution_ios_phone = YES;
+    self.publishResolution_ios_phonehd = YES;
+    self.publishResolution_ios_tablet = YES;
+    self.publishResolution_ios_tablethd = YES;
+    self.publishResolution_android_phone = YES;
+    self.publishResolution_android_phonehd = YES;
+    self.publishResolution_android_tablet = YES;
+    self.publishResolution_android_tablethd = YES;
     
     self.publishResolutionHTML5_width = 480;
     self.publishResolutionHTML5_height = 320;
@@ -229,15 +227,14 @@
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
     self.publishEnabledHTML5 = [[dict objectForKey:@"publishEnabledHTML5"] boolValue];
     
-    self.publishResolution_ = [[dict objectForKey:@"publishResolution_"] boolValue];
-    self.publishResolution_hd = [[dict objectForKey:@"publishResolution_hd"] boolValue];
-    self.publishResolution_ipad = [[dict objectForKey:@"publishResolution_ipad"] boolValue];
-    self.publishResolution_ipadhd = [[dict objectForKey:@"publishResolution_ipadhd"] boolValue];
-    self.publishResolution_xsmall = [[dict objectForKey:@"publishResolution_xsmall"] boolValue];
-    self.publishResolution_small = [[dict objectForKey:@"publishResolution_small"] boolValue];
-    self.publishResolution_medium = [[dict objectForKey:@"publishResolution_medium"] boolValue];
-    self.publishResolution_large = [[dict objectForKey:@"publishResolution_large"] boolValue];
-    self.publishResolution_xlarge = [[dict objectForKey:@"publishResolution_xlarge"] boolValue];
+    self.publishResolution_ios_phone = [[dict objectForKey:@"publishResolution_ios_phone"] boolValue];
+    self.publishResolution_ios_phonehd = [[dict objectForKey:@"publishResolution_ios_phonehd"] boolValue];
+    self.publishResolution_ios_tablet = [[dict objectForKey:@"publishResolution_ios_tablet"] boolValue];
+    self.publishResolution_ios_tablethd = [[dict objectForKey:@"publishResolution_ios_tablethd"] boolValue];
+    self.publishResolution_android_phone = [[dict objectForKey:@"publishResolution_android_phone"] boolValue];
+    self.publishResolution_android_phonehd = [[dict objectForKey:@"publishResolution_android_phonehd"] boolValue];
+    self.publishResolution_android_tablet = [[dict objectForKey:@"publishResolution_android_tablet"] boolValue];
+    self.publishResolution_android_tablethd = [[dict objectForKey:@"publishResolution_android_tablethd"] boolValue];
     
     self.publishResolutionHTML5_width = [[dict objectForKey:@"publishResolutionHTML5_width"]intValue];
     self.publishResolutionHTML5_height = [[dict objectForKey:@"publishResolutionHTML5_height"]intValue];
@@ -331,15 +328,14 @@
     [dict setObject:[NSNumber numberWithBool:publishEnabledHTML5] forKey:@"publishEnabledHTML5"];
     
     
-    [dict setObject:[NSNumber numberWithBool:publishResolution_] forKey:@"publishResolution_"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_hd] forKey:@"publishResolution_hd"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_ipad] forKey:@"publishResolution_ipad"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_ipadhd] forKey:@"publishResolution_ipadhd"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_xsmall] forKey:@"publishResolution_xsmall"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_small] forKey:@"publishResolution_small"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_medium] forKey:@"publishResolution_medium"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_large] forKey:@"publishResolution_large"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_xlarge] forKey:@"publishResolution_xlarge"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phone] forKey:@"publishResolution_ios_phone"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phonehd] forKey:@"publishResolution_ios_phonehd"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_tablet] forKey:@"publishResolution_ios_tablet"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_tablethd] forKey:@"publishResolution_ios_tablethd"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_android_phone] forKey:@"publishResolution_android_phone"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_android_phonehd] forKey:@"publishResolution_android_phonehd"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_android_tablet] forKey:@"publishResolution_android_tablet"];
+    [dict setObject:[NSNumber numberWithBool:publishResolution_android_tablethd] forKey:@"publishResolution_android_tablethd"];
     
     [dict setObject:[NSNumber numberWithInt:publishResolutionHTML5_width] forKey:@"publishResolutionHTML5_width"];
     [dict setObject:[NSNumber numberWithInt:publishResolutionHTML5_height] forKey:@"publishResolutionHTML5_height"];

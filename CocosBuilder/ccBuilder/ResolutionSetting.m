@@ -113,7 +113,7 @@
     setting.name = @"iPhone";
     setting.width = 0;
     setting.height = 0;
-    setting.ext = @"iphone";
+    setting.ext = @"phone";
     setting.scale = 1;
     
     return setting;
@@ -170,7 +170,7 @@
     setting.name = @"iPad";
     setting.width = 0;
     setting.height = 0;
-    setting.ext = @"ipad iphonehd";
+    setting.ext = @"tablet phonehd";
     setting.scale = 2;
     
     return setting;
@@ -205,7 +205,7 @@
     setting.name = @"Android X-Small";
     setting.width = 0;
     setting.height = 0;
-    setting.ext = @"xsmall";
+    setting.ext = @"phone";
     setting.scale = 0.5f;
     
     return setting;
@@ -240,7 +240,7 @@
     setting.name = @"Android Small";
     setting.width = 0;
     setting.height = 0;
-    setting.ext = @"small";
+    setting.ext = @"phone";
     setting.scale = 1;
     
     return setting;
@@ -275,7 +275,7 @@
     setting.name = @"Android Medium";
     setting.width = 0;
     setting.height = 0;
-    setting.ext = @"medium";
+    setting.ext = @"phone";
     setting.scale = 1.5f;
     
     return setting;
@@ -310,7 +310,7 @@
     setting.name = @"Android Large";
     setting.width = 0;
     setting.height = 0;
-    setting.ext = @"large";
+    setting.ext = @"phonehd";
     setting.scale = 2;
     
     return setting;
@@ -345,7 +345,7 @@
     setting.name = @"Android X-Large";
     setting.width = 0;
     setting.height = 0;
-    setting.ext = @"xlarge";
+    setting.ext = @"tablethd";
     setting.scale = 4;
     
     return setting;

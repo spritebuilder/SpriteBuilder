@@ -68,15 +68,14 @@
     BOOL publishEnabledAndroid;
     BOOL publishEnabledHTML5;
     
-    BOOL publishResolution_;
-    BOOL publishResolution_hd;
-    BOOL publishResolution_ipad;
-    BOOL publishResolution_ipadhd;
-    BOOL publishResolution_xsmall;
-    BOOL publishResolution_small;
-    BOOL publishResolution_medium;
-    BOOL publishResolution_large;
-    BOOL publishResolution_xlarge;
+    BOOL publishResolution_ios_phone;
+    BOOL publishResolution_ios_phonehd;
+    BOOL publishResolution_ios_tablet;
+    BOOL publishResolution_ios_tablethd;
+    BOOL publishResolution_android_phone;
+    BOOL publishResolution_android_phonehd;
+    BOOL publishResolution_android_tablet;
+    BOOL publishResolution_android_tablethd;
     
     int publishResolutionHTML5_width;
     int publishResolutionHTML5_height;
@@ -115,15 +114,14 @@
 @property (nonatomic, copy) NSString* publishDirectoryAndroid;
 @property (nonatomic, copy) NSString* publishDirectoryHTML5;
 
-@property (nonatomic,assign) BOOL publishResolution_;
-@property (nonatomic,assign) BOOL publishResolution_hd;
-@property (nonatomic,assign) BOOL publishResolution_ipad;
-@property (nonatomic,assign) BOOL publishResolution_ipadhd;
-@property (nonatomic,assign) BOOL publishResolution_xsmall;
-@property (nonatomic,assign) BOOL publishResolution_small;
-@property (nonatomic,assign) BOOL publishResolution_medium;
-@property (nonatomic,assign) BOOL publishResolution_large;
-@property (nonatomic,assign) BOOL publishResolution_xlarge;
+@property (nonatomic,assign) BOOL publishResolution_ios_phone;
+@property (nonatomic,assign) BOOL publishResolution_ios_phonehd;
+@property (nonatomic,assign) BOOL publishResolution_ios_tablet;
+@property (nonatomic,assign) BOOL publishResolution_ios_tablethd;
+@property (nonatomic,assign) BOOL publishResolution_android_phone;
+@property (nonatomic,assign) BOOL publishResolution_android_phonehd;
+@property (nonatomic,assign) BOOL publishResolution_android_tablet;
+@property (nonatomic,assign) BOOL publishResolution_android_tablethd;
 
 @property (nonatomic,assign) int publishResolutionHTML5_width;
 @property (nonatomic,assign) int publishResolutionHTML5_height;
