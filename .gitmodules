@@ -1,12 +1,12 @@
 [submodule "CocosBuilder/libs/cocos2d-iphone"]
 	path = CocosBuilder/libs/cocos2d-iphone
-	url = https://github.com/cocos2d/cocos2d-iphone.git
+	url = https://github.com/apportable/cocos2d-iphone.git
 [submodule "CocosBuilder/libs/ssziparchive"]
 	path = CocosBuilder/libs/ssziparchive
-	url = https://github.com/vlidholt/ssziparchive
+	url = https://github.com/vlidholt/ssziparchive.git
 [submodule "CocosBuilder/libs/Fragaria"]
 	path = CocosBuilder/libs/Fragaria
 	url = https://github.com/vlidholt/Fragaria.git
 [submodule "Examples/CocosBuilderExample/libs/CCBReader"]
 	path = Examples/CocosBuilderExample/libs/CCBReader
-	url = git://github.com/cocos2d/CCBReader.git
+	url = https://github.com/apportable/CCBReader.git
