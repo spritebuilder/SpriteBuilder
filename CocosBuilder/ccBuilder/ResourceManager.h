@@ -80,7 +80,7 @@ enum
 @property (nonatomic,assign) BOOL touched;
 @property (nonatomic,retain) id data;
 - (void) loadData;
-- (NSImage*) preview;
+- (NSImage*) previewForResolution:(NSString*) res;
 
 @end
 

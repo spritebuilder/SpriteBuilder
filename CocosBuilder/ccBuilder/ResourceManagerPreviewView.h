@@ -42,6 +42,8 @@
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewTablethd;
 @property (nonatomic,readonly) CocosBuilderAppDelegate* appDelegate;
 
+@property (nonatomic, assign) int tabletScale;
+
 - (void) setPreviewFile:(NSString*) file;
 
 @end

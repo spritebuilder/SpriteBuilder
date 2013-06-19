@@ -117,20 +117,23 @@
     }
 }
 
-- (NSImage*) preview
+- (NSImage*) previewForResolution:(NSString *)res
 {
+    if (!res) res = @"auto";
+    
     if (type == kCCBResTypeImage)
     {
         NSString* fileName = [filePath lastPathComponent];
         NSString* dirPath = [filePath stringByDeletingLastPathComponent];
+        NSString* resDirName = [@"resources-" stringByAppendingString:res];
         
-        NSString* autoPath = [[dirPath stringByAppendingPathComponent:@"resources-auto"] stringByAppendingPathComponent:fileName];
+        NSString* autoPath = [[dirPath stringByAppendingPathComponent:resDirName] stringByAppendingPathComponent:fileName];
         
         NSImage* img = [[[NSImage alloc] initWithContentsOfFile:autoPath] autorelease];
-        if (!img)
-        {
-            img = [[[NSImage alloc] initWithContentsOfFile:filePath] autorelease];
-        }
+        //if (!img)
+        //{
+        //    img = [[[NSImage alloc] initWithContentsOfFile:filePath] autorelease];
+        //}
         return img;
     }
     

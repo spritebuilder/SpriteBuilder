@@ -40,22 +40,43 @@
     [super awakeFromNib];
     
     // Disable focus rings
+    /*
     [previewMain setFocusRingType:NSFocusRingTypeNone];
     [previewPhone setFocusRingType:NSFocusRingTypeNone];
     [previewPhonehd setFocusRingType:NSFocusRingTypeNone];
     [previewTablet setFocusRingType:NSFocusRingTypeNone];
     [previewTablethd setFocusRingType:NSFocusRingTypeNone];
+    */
+    
+    [previewMain setAllowsCutCopyPaste:NO];
+    [previewPhone setAllowsCutCopyPaste:NO];
+    [previewPhonehd setAllowsCutCopyPaste:NO];
+    [previewTablet setAllowsCutCopyPaste:NO];
+    [previewTablethd setAllowsCutCopyPaste:NO];
+    
+    self.tabletScale = 1;
 }
 
 - (void) setPreviewFile:(id) selection
 {
-    NSImage* preview = NULL;
-    if ([selection respondsToSelector:@selector(preview)])
+    // Clear all previews
+    [previewMain setImage:NULL];
+    [previewPhone setImage:NULL];
+    [previewPhonehd setImage:NULL];
+    [previewTablet setImage:NULL];
+    [previewTablethd setImage:NULL];
+    
+    // Update previews for different resolutions
+    if ([selection respondsToSelector:@selector(previewForResolution:)])
     {
-        preview = [selection preview];
+        [previewMain setImage:[selection previewForResolution:@"auto"]];
+        [previewPhone setImage:[selection previewForResolution:@"phone"]];
+        [previewPhonehd setImage:[selection previewForResolution:@"phonehd"]];
+        [previewTablet setImage:[selection previewForResolution:@"tablet"]];
+        [previewTablethd setImage:[selection previewForResolution:@"tablethd"]];
     }
     
-    [previewMain setImage:preview];
+    
     
     
     //if (preview) [lblNoPreview setHidden:YES];
@@ -82,7 +103,7 @@
 
 - (CGFloat) splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
 {
-    if (proposedMinimumPosition < 140) return 140;
+    if (proposedMinimumPosition < 160) return 160;
     else return proposedMinimumPosition;
 }
 
