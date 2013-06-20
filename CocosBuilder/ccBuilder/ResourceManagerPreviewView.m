@@ -26,6 +26,8 @@
 #import "ResourceManager.h"
 #import "CCBImageView.h"
 #import "CocosBuilderAppDelegate.h"
+#import "ProjectSettings.h"
+#import "Tupac.h"
 
 @implementation ResourceManagerPreviewView
 
@@ -57,7 +59,7 @@
     self.tabletScale = 1;
 }
 
-- (void) setPreviewFile:(id) selection
+- (void) resetView
 {
     // Clear all previews
     [previewMain setImage:NULL];
@@ -65,41 +67,331 @@
     [previewPhonehd setImage:NULL];
     [previewTablet setImage:NULL];
     [previewTablethd setImage:NULL];
+    self.imgMain = NULL;
+    self.imgPhone = NULL;
+    self.imgPhonehd = NULL;
+    self.imgTablet = NULL;
+    self.imgTablethd = NULL;
+    
+    _previewedResource = NULL;
+    
+    self.enabled = NO;
+    self.scaleFrom = 0;
+    
+    self.format_ios_compress_enabled = NO;
+    self.format_ios_dither_enabled = NO;
+    self.format_ios_compress = NO;
+    self.format_ios_dither = NO;
+}
+
+- (void) setPreviewFile:(id) selection
+{
+    [self resetView];
     
     // Update previews for different resolutions
-    if ([selection respondsToSelector:@selector(previewForResolution:)])
+    if ([selection isKindOfClass:[RMResource class]])
     {
-        [previewMain setImage:[selection previewForResolution:@"auto"]];
-        [previewPhone setImage:[selection previewForResolution:@"phone"]];
-        [previewPhonehd setImage:[selection previewForResolution:@"phonehd"]];
-        [previewTablet setImage:[selection previewForResolution:@"tablet"]];
-        [previewTablethd setImage:[selection previewForResolution:@"tablethd"]];
+        RMResource* res = (RMResource*) selection;
+        
+        _previewedResource = res;
+        
+        if (res.type == kCCBResTypeImage)
+        {
+            // Load previews
+            self.imgMain = [selection previewForResolution:@"auto"];
+            self.imgPhone = [selection previewForResolution:@"phone"];
+            self.imgPhonehd = [selection previewForResolution:@"phonehd"];
+            self.imgTablet = [selection previewForResolution:@"tablet"];
+            self.imgTablethd = [selection previewForResolution:@"tablethd"];
+            
+            [previewMain setImage: self.imgMain];
+            [previewPhone setImage:self.imgPhone];
+            [previewPhonehd setImage:self.imgPhonehd];
+            [previewTablet setImage:self.imgTablet];
+            [previewTablethd setImage:self.imgTablethd];
+            
+            // Load settings
+            ProjectSettings* settings = [self appDelegate].projectSettings;
+            
+            self.scaleFrom = [[settings valueForResource:res andKey:@"scaleFrom"] intValue];
+            
+            self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
+            self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
+            self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
+            
+            self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
+            
+            self.enabled = YES;
+        }
     }
+}
+
+#pragma mark Callbacks
+
+- (NSString*) resolutionDirectoryForImageView:(NSImageView*) imgView
+{
+    NSString* resolution = NULL;
+    if (imgView == previewMain) resolution = @"auto";
+    else if (imgView == previewPhone) resolution = @"phone";
+    else if (imgView == previewPhonehd) resolution = @"phonehd";
+    else if (imgView == previewTablet) resolution = @"tablet";
+    else if (imgView == previewTablethd) resolution = @"tablethd";
     
+    if (!resolution) return NULL;
     
-    
-    
-    //if (preview) [lblNoPreview setHidden:YES];
-    //else [lblNoPreview setHidden:NO];
+    return [@"resources-" stringByAppendingString:resolution];
 }
 
 - (IBAction)droppedFile:(id)sender
 {
     if (![CocosBuilderAppDelegate appDelegate].projectSettings)
     {
-        [self setPreviewFile:NULL];
+        [self resetView];
+        return;
+    }
+    
+    if (!_previewedResource)
+    {
         return;
     }
     
     CCBImageView* imgView = sender;
     
-    NSLog(@"dropped file: %@", imgView.imagePath);
+    NSString* srcImagePath = imgView.imagePath;
+    
+    NSLog(@"srcImagePath: %@", srcImagePath);
+    
+    if (![[[srcImagePath pathExtension] lowercaseString] isEqualToString:@"png"])
+    {
+        // Only png is supported
+        [self.appDelegate modalDialogTitle:@"Unsupported Format" message:@"Sorry, only png images are supported as source images."];
+        return;
+    }
+    
+    NSString* resolution = [self resolutionDirectoryForImageView:imgView];
+    if (!resolution) return;
+    
+    // Calc dst path
+    NSString* dir = [_previewedResource.filePath stringByDeletingLastPathComponent];
+    NSString* file = [_previewedResource.filePath lastPathComponent];
+    
+    NSString* dstFile = [[dir stringByAppendingPathComponent:resolution] stringByAppendingPathComponent:file];
+    
+    // Copy file
+    NSFileManager* fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:dstFile error:NULL];
+    [fm copyItemAtPath:srcImagePath toPath:dstFile error:NULL];
+    
+#warning Make sure assets are reloaded
+}
+
+- (IBAction)actionRemoveFile:(id)sender
+{
+    if (!_previewedResource) return;
+    
+    CCBImageView* imgView = NULL;
+    int tag = [sender tag];
+    if (tag == 0) imgView = previewPhone;
+    else if (tag == 1) imgView = previewPhonehd;
+    else if (tag == 2) imgView = previewTablet;
+    else if (tag == 3) imgView = previewTablethd;
+    
+    if (!imgView) return;
+    
+    NSLog(@"imgView: %@", imgView);
+    
+    NSString* resolution = [self resolutionDirectoryForImageView:imgView];
+    if (!resolution) return;
+    
+    NSString* dir = [_previewedResource.filePath stringByDeletingLastPathComponent];
+    NSString* file = [_previewedResource.filePath lastPathComponent];
+    
+    NSString* rmFile = [[dir stringByAppendingPathComponent:resolution] stringByAppendingPathComponent:file];
+    
+    // Remove file
+    NSFileManager* fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:rmFile error:NULL];
+    
+    // Remove from view
+    imgView.image = NULL;
+}
+
+- (void) setScaleFrom:(int)scaleFrom
+{
+    _scaleFrom = scaleFrom;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (scaleFrom)
+        {
+            [settings setValue:[NSNumber numberWithInt:scaleFrom] forResource:_previewedResource andKey:@"scaleFrom"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"scaleFrom"];
+        }
+    }
+}
+
+- (BOOL) supportsCompress_ios:(int)format
+{
+    if (format == kTupacImageFormatPVR_RGBA8888) return YES;
+    if (format == kTupacImageFormatPVR_RGBA4444) return YES;
+    if (format == kTupacImageFormatPVR_RGB565) return YES;
+    if (format == kTupacImageFormatPVRTC_2BPP) return YES;
+    if (format == kTupacImageFormatPVRTC_4BPP) return YES;
+    return NO;
+}
+
+- (BOOL) supportsCompress_android:(int)format
+{
+    return NO;
+}
+
+- (BOOL) supportsDither_ios:(int)format
+{
+    if (format == kTupacImageFormatPNG_8BIT) return YES;
+    if (format == kTupacImageFormatPVR_RGBA4444) return YES;
+    if (format == kTupacImageFormatPVR_RGB565) return YES;
+    return NO;
+}
+
+- (BOOL) supportsDither_android:(int)format
+{
+    if (format == kTupacImageFormatPNG_8BIT) return YES;
+    if (format == kTupacImageFormatPVR_RGBA4444) return YES;
+    if (format == kTupacImageFormatPVR_RGB565) return YES;
+    return NO;
+}
+
+- (void) setFormat_ios:(int)format_ios
+{
+    _format_ios = format_ios;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (format_ios)
+        {
+            [settings setValue:[NSNumber numberWithInt:format_ios] forResource:_previewedResource andKey:@"format_ios"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"format_ios"];
+        }
+        
+        self.format_ios_dither_enabled = [self supportsDither_ios:format_ios];
+        self.format_ios_compress_enabled = [self supportsCompress_ios:format_ios];
+    }
+}
+
+- (void) setFormat_android:(int)format_android
+{
+    _format_android = format_android;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (format_android)
+        {
+            [settings setValue:[NSNumber numberWithInt:format_android] forResource:_previewedResource andKey:@"format_android"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"format_android"];
+        }
+        
+        self.format_android_dither_enabled = [self supportsDither_android:format_android];
+        self.format_android_compress_enabled = [self supportsCompress_android:format_android];
+    }
+}
+
+- (void) setFormat_ios_dither:(BOOL)format_ios_dither
+{
+    _format_ios_dither = format_ios_dither;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (format_ios_dither)
+        {
+            [settings setValue:[NSNumber numberWithBool:format_ios_dither] forResource:_previewedResource andKey:@"format_ios_dither"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"format_ios_dither"];
+        }
+    }
+}
+
+- (void) setFormat_android_dither:(BOOL)format_android_dither
+{
+    _format_android_dither = format_android_dither;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (format_android_dither)
+        {
+            [settings setValue:[NSNumber numberWithBool:format_android_dither] forResource:_previewedResource andKey:@"format_android_dither"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"format_android_dither"];
+        }
+    }
+}
+
+- (void) setFormat_ios_compress:(BOOL)format_ios_compress
+{
+    _format_ios_compress = format_ios_compress;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (format_ios_compress)
+        {
+            [settings setValue:[NSNumber numberWithBool:format_ios_compress] forResource:_previewedResource andKey:@"format_ios_compress"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"format_ios_compress"];
+        }
+    }
+}
+
+- (void) setFormat_android_compress:(BOOL)format_android_compress
+{
+    _format_android_compress = format_android_compress;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (format_android_compress)
+        {
+            [settings setValue:[NSNumber numberWithBool:format_android_compress] forResource:_previewedResource andKey:@"format_android_compress"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"format_android_compress"];
+        }
+    }
 }
 
 - (CocosBuilderAppDelegate*) appDelegate
 {
     return [CocosBuilderAppDelegate appDelegate];
 }
+
+#pragma mark Split view constraints
 
 - (CGFloat) splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
 {
@@ -112,6 +404,17 @@
     float max = splitView.frame.size.height - 100;
     if (proposedMaximumPosition > max) return max;
     else return proposedMaximumPosition;
+}
+
+- (void) dealloc
+{
+    self.imgMain = NULL;
+    self.imgPhone = NULL;
+    self.imgPhonehd = NULL;
+    self.imgTablet = NULL;
+    self.imgTablethd = NULL;
+    
+    [super dealloc];
 }
 
 @end

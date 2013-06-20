@@ -32,7 +32,10 @@ enum {
     kTupacImageFormatPVR_RGB565,
     kTupacImageFormatPVRTC_4BPP,
     kTupacImageFormatPVRTC_2BPP,
-    kTupacImageFormatWEBP
+    kTupacImageFormatWEBP,
+    kTupacImageFormatJPG_High,
+    kTupacImageFormatJPG_Medium,
+    kTupacImageFormatJPG_Low,
 };
 
 @interface Tupac : NSObject 

@@ -47,7 +47,6 @@
 #import "PositionPropertySetter.h"
 #import "PublishTypeAccessoryView.h"
 #import "ResourceManager.h"
-#import "ResourceManagerPanel.h"
 #import "GuidesLayer.h"
 #import "RulersLayer.h"
 #import "NSString+RelativePath.h"
@@ -442,6 +441,8 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     
     if (doc.isDirty)
     {
+#warning Should get real file name
+        
         NSAlert* alert = [NSAlert alertWithMessageText:@"Do you want to save the changes you made in the document “Untitled”?" defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
         NSInteger result = [alert runModal];
         

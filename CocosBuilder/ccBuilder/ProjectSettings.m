@@ -188,6 +188,8 @@
     
     generatedSpriteSheets = [[NSMutableDictionary dictionary] retain];
     
+    resourceProperties = [[NSMutableDictionary dictionary] retain];
+    
     // Load available exporters
     self.availableExporters = [NSMutableArray array];
     for (PlugInExport* plugIn in [[PlugInManager sharedManager] plugInsExporters])
@@ -273,6 +275,10 @@
     if (!mainCCB) mainCCB = @"";
     self.javascriptMainCCB = mainCCB;
     
+    // Load resource properties
+    [resourceProperties release];
+    resourceProperties = [[dict objectForKey:@"resourceProperties"] mutableCopy];
+    
     [self detectBrowserPresence];
     
     // Check if we are running a new version of CocosBuilder
@@ -301,6 +307,7 @@
     self.exporter = NULL;
     self.availableExporters = NULL;
     [generatedSpriteSheets release];
+    [resourceProperties release];
     [breakpoints release];
     [super dealloc];
 }
@@ -366,6 +373,15 @@
     }
     [dict setObject:generatedSpriteSheetsDict forKey:@"generatedSpriteSheets"];
     
+    if (resourceProperties)
+    {
+        [dict setObject:resourceProperties forKey:@"resourceProperties"];
+    }
+    else
+    {
+        [dict setObject:[NSDictionary dictionary] forKey:@"resourceProperties"];
+    }
+
     if (versionStr)
     {
         [dict setObject:versionStr forKey:@"versionStr"];
@@ -471,6 +487,36 @@
 - (ProjectSettingsGeneratedSpriteSheet*) smartSpriteSheetForSubPath:(NSString*) relPath
 {
     return [generatedSpriteSheets objectForKey:relPath];
+}
+
+- (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key
+{
+    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
+    
+    NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
+    if (!props)
+    {
+        props = [NSMutableDictionary dictionary];
+        [resourceProperties setValue:props forKey:relPath];
+    }
+    
+    [props setValue:val forKey:key];
+}
+
+- (id) valueForResource:(RMResource*) res andKey:(id) key
+{
+    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
+    
+    NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
+    return [props valueForKey:key];
+}
+
+- (void) removeObjectForResource:(RMResource*) res andKey:(id) key
+{
+    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
+    
+    NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
+    [props removeObjectForKey:key];
 }
 
 - (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line

@@ -26,6 +26,7 @@
 
 @class CCBImageView;
 @class CocosBuilderAppDelegate;
+@class RMResource;
 
 @interface ResourceManagerPreviewView : NSObject <NSSplitViewDelegate>
 {
@@ -34,13 +35,38 @@
     IBOutlet CCBImageView* previewPhonehd;
     IBOutlet CCBImageView* previewTablet;
     IBOutlet CCBImageView* previewTablethd;
+    
+    RMResource* _previewedResource;
 }
+@property (nonatomic,readonly) CocosBuilderAppDelegate* appDelegate;
+
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewMain;
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewPhone;
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewPhonehd;
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewTablet;
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewTablethd;
-@property (nonatomic,readonly) CocosBuilderAppDelegate* appDelegate;
+
+@property (nonatomic,retain) NSImage* imgMain;
+@property (nonatomic,retain) NSImage* imgPhone;
+@property (nonatomic,retain) NSImage* imgPhonehd;
+@property (nonatomic,retain) NSImage* imgTablet;
+@property (nonatomic,retain) NSImage* imgTablethd;
+
+@property (nonatomic,readwrite) BOOL enabled;
+
+@property (nonatomic,readwrite) int scaleFrom;
+
+@property (nonatomic,readwrite) int format_ios;
+@property (nonatomic,readwrite) BOOL format_ios_dither;
+@property (nonatomic,readwrite) BOOL format_ios_compress;
+@property (nonatomic,readwrite) BOOL format_ios_dither_enabled;
+@property (nonatomic,readwrite) BOOL format_ios_compress_enabled;
+
+@property (nonatomic,readwrite) int format_android;
+@property (nonatomic,readwrite) BOOL format_android_dither;
+@property (nonatomic,readwrite) BOOL format_android_compress;
+@property (nonatomic,readwrite) BOOL format_android_dither_enabled;
+@property (nonatomic,readwrite) BOOL format_android_compress_enabled;
 
 @property (nonatomic, assign) int tabletScale;
 

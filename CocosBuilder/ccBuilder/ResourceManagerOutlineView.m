@@ -112,4 +112,69 @@
     return menu;
 }
 
+- (void) keyDown:(NSEvent *)theEvent
+{
+    unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
+    if(key == NSDeleteCharacter)
+    {
+        if([self selectedRow] == -1)
+        {
+            NSBeep();
+            return;
+        }
+        
+        // Confirm remove of items
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?" defaultButton:@"Cancel" alternateButton:@"Delete" otherButton:NULL informativeTextWithFormat:@"You cannot undo this operation."];
+        NSInteger result = [alert runModal];
+        
+        if (result == NSAlertDefaultReturn)
+        {
+            return;
+        }
+    
+        NSFileManager* fm = [NSFileManager defaultManager];
+        
+        // Iterate through rows
+        NSIndexSet* selectedRows = [self selectedRowIndexes];
+        NSUInteger row = [selectedRows firstIndex];
+        while (row != NSNotFound)
+        {
+            id selectedItem = [self itemAtRow:row];
+            if ([selectedItem isKindOfClass:[RMResource class]])
+            {
+                RMResource* res = selectedItem;
+                
+                NSLog(@"Remove: %@", res.filePath);
+                
+                NSString* dirPath = [res.filePath stringByDeletingLastPathComponent];
+                NSString* fileName = [res.filePath lastPathComponent];
+                
+                if (res.type == kCCBResTypeImage)
+                {
+                    // Remove all resolutions
+                    NSArray* resolutions = [NSArray arrayWithObjects:@"resources-auto", @"resources-phone", @"resources-phonehd", @"resources-tablet", @"resources-tablethd", nil];
+                    for (NSString* resolution in resolutions)
+                    {
+                        NSString* filePath = [[dirPath stringByAppendingPathComponent:resolution] stringByAppendingPathComponent:fileName];
+                        [fm removeItemAtPath:filePath error:NULL];
+                    }
+                }
+                else
+                {
+                    // Just remove the file
+                    [fm removeItemAtPath:res.filePath error:NULL];
+                }
+            }
+            
+            row = [selectedRows indexGreaterThanIndex: row];
+        }
+        
+        [self deselectAll:NULL];
+        
+#warning Check that all open ccb-files are valid
+    }
+    
+    [super keyDown:theEvent];
+}
+
 @end

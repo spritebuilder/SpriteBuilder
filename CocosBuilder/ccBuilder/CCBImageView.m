@@ -48,13 +48,20 @@
                                   format:nil
                                   errorDescription:nil];
             if ([filenames count] >= 1) {
-                imagePath = [filenames objectAtIndex:0];
+                self.imagePath = [filenames objectAtIndex:0];
+                NSLog(@"imagePath: %@ filenames: %@", imagePath, filenames);
             } else {
-                imagePath = nil;
+                self.imagePath = nil;
             }
         }
     }
     return dragSucceeded;
+}
+
+- (void) dealloc
+{
+    self.imagePath = NULL;
+    [super dealloc];
 }
 
 @end

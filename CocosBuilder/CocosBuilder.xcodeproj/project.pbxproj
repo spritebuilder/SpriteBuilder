@@ -147,6 +147,7 @@
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		A77EF590171FD30E00451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
 		A77EF594171FD3B200451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
+		B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -542,8 +543,6 @@
 		E3C5C1A41504D17E000CF6F3 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1A31504D17E000CF6F3 /* ResourceManager.m */; };
 		E3C5C1AC1504D30C000CF6F3 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1A81504D30C000CF6F3 /* SCEvent.m */; };
 		E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1AB1504D30C000CF6F3 /* SCEvents.m */; };
-		E3C5C1AF150610D8000CF6F3 /* ResourceManagerPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3C5C1AE150610D8000CF6F3 /* ResourceManagerPanel.xib */; };
-		E3C5C1B215061883000CF6F3 /* ResourceManagerPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1B115061882000CF6F3 /* ResourceManagerPanel.m */; };
 		E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1B415075CDD000CF6F3 /* ResourceManagerUtil.m */; };
 		E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1C81508F35E000CF6F3 /* CCBAnimationParser.m */; };
 		E3C5C1CB15090259000CF6F3 /* InspectorAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3C5C1CA15090259000CF6F3 /* InspectorAnimation.xib */; };
@@ -1085,6 +1084,8 @@
 		A09AB6AE14E9935F009C8B91 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		A77EF58F171FD30E00451DA4 /* cwebp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = cwebp; sourceTree = "<group>"; };
+		B78DA3621773A89B00B85CC0 /* CCBButtonUnclickable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBButtonUnclickable.h; sourceTree = "<group>"; };
+		B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBButtonUnclickable.m; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -1743,9 +1744,6 @@
 		E3C5C1A91504D30C000CF6F3 /* SCEventListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventListenerProtocol.h; sourceTree = "<group>"; };
 		E3C5C1AA1504D30C000CF6F3 /* SCEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.h; sourceTree = "<group>"; };
 		E3C5C1AB1504D30C000CF6F3 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
-		E3C5C1AE150610D8000CF6F3 /* ResourceManagerPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPanel.xib; sourceTree = "<group>"; };
-		E3C5C1B015061882000CF6F3 /* ResourceManagerPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPanel.h; sourceTree = "<group>"; };
-		E3C5C1B115061882000CF6F3 /* ResourceManagerPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPanel.m; sourceTree = "<group>"; };
 		E3C5C1B315075CDD000CF6F3 /* ResourceManagerUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerUtil.h; sourceTree = "<group>"; };
 		E3C5C1B415075CDD000CF6F3 /* ResourceManagerUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerUtil.m; sourceTree = "<group>"; };
 		E3C5C1C71508F35E000CF6F3 /* CCBAnimationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationParser.h; sourceTree = "<group>"; };
@@ -2265,6 +2263,8 @@
 				E334A4E3170CFDE3001604F7 /* CCBTextField.m */,
 				E37FCAF7175FF70F009F81D6 /* CCBImageView.h */,
 				E37FCAF8175FF70F009F81D6 /* CCBImageView.m */,
+				B78DA3621773A89B00B85CC0 /* CCBButtonUnclickable.h */,
+				B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */,
 			);
 			name = "Styled Components";
 			sourceTree = "<group>";
@@ -3901,9 +3901,6 @@
 				E3C5C1A31504D17E000CF6F3 /* ResourceManager.m */,
 				E3C5C1B315075CDD000CF6F3 /* ResourceManagerUtil.h */,
 				E3C5C1B415075CDD000CF6F3 /* ResourceManagerUtil.m */,
-				E3C5C1AE150610D8000CF6F3 /* ResourceManagerPanel.xib */,
-				E3C5C1B015061882000CF6F3 /* ResourceManagerPanel.h */,
-				E3C5C1B115061882000CF6F3 /* ResourceManagerPanel.m */,
 				E3462865155BF6C50043EAB1 /* ResourceManagerOutlineHandler.h */,
 				E3462866155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m */,
 				E33C2AAA15C987EB0043EF9B /* ResourceManagerOutlineView.h */,
@@ -4585,7 +4582,6 @@
 				E325F64F14F5622200D29BCF /* InspectorSeparatorSub.xib in Resources */,
 				E385A42014F69FF300DFB12D /* InspectorBlock.xib in Resources */,
 				E398C04014FBC9D00078E771 /* PublishTypeAccessoryView.xib in Resources */,
-				E3C5C1AF150610D8000CF6F3 /* ResourceManagerPanel.xib in Resources */,
 				E3C5C1CB15090259000CF6F3 /* InspectorAnimation.xib in Resources */,
 				E385080B150AB232007E162A /* segmctrl-bg.png in Resources */,
 				E3D59133150F85D8004180CA /* InspectorCCBFile.xib in Resources */,
@@ -5033,7 +5029,6 @@
 				E3C5C1A41504D17E000CF6F3 /* ResourceManager.m in Sources */,
 				E3C5C1AC1504D30C000CF6F3 /* SCEvent.m in Sources */,
 				E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */,
-				E3C5C1B215061883000CF6F3 /* ResourceManagerPanel.m in Sources */,
 				E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */,
 				E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */,
 				E3C5C1CE150902B3000CF6F3 /* InspectorAnimation.m in Sources */,
@@ -5240,6 +5235,7 @@
 				E3C12B1B171DD386001EEDDB /* NSWindow+CCBAccessoryView.m in Sources */,
 				E37FCAF4175D68FF009F81D6 /* ResourceManagerPreviewView.m in Sources */,
 				E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */,
+				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
