@@ -45,6 +45,7 @@
 #import "SequencerCallbackChannel.h"
 #import "SequencerSoundChannel.h"
 #import <objc/runtime.h>
+#import "NSPasteboard+CCB.h"
 
 static SequencerHandler* sharedSequencerHandler;
 
@@ -469,6 +470,27 @@ static SequencerHandler* sharedSequencerHandler;
         
         return YES;
     }
+    
+    BOOL addedObject = NO;
+    
+    // Dropped textures
+    NSArray* pbTextures = [pb propertyListsForType:@"com.cocosbuilder.texture"];
+    for (NSDictionary* dict in pbTextures)
+    {
+        [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
+        [PositionPropertySetter refreshAllPositions];
+        addedObject = YES;
+    }
+    
+    // Dropped ccb-files
+    NSArray* pbCCBs = [pb propertyListsForType:@"com.cocosbuilder.ccb"];
+    for (NSDictionary* dict in pbCCBs)
+    {
+        [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(0, 0) parent:item];
+        addedObject = YES;
+    }
+    
+    /*
     clipData = [pb dataForType:@"com.cocosbuilder.texture"];
     if (clipData)
     {
@@ -488,9 +510,9 @@ static SequencerHandler* sharedSequencerHandler;
         [appDelegate dropAddCCBFileNamed:[clipDict objectForKey:@"ccbFile"] at:ccp(0, 0) parent:item];
         
         return YES;
-    }
+    }*/
     
-    return NO;
+    return addedObject;
 }
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item

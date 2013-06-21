@@ -117,6 +117,11 @@
     }
 }
 
+- (NSString*) relativePath
+{
+    return [ResourceManagerUtil relativePathFromAbsolutePath: self.filePath];
+}
+
 - (NSImage*) previewForResolution:(NSString *)res
 {
     if (!res) res = @"auto";
@@ -156,6 +161,52 @@
     {
         return [[self.filePath lastPathComponent] compare:[res.filePath lastPathComponent] options:NSNumericSearch|NSForcedOrderingSearch|NSCaseInsensitiveSearch];
     }
+}
+
+- (id) pasteboardPropertyListForType:(NSString *)pbType
+{
+    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+    
+    if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"])
+    {
+        [dict setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+        [dict setObject:filePath forKey:@"filePath"];
+        return dict;
+    }
+    else if ([pbType isEqualToString:@"com.cocosbuilder.texture"])
+    {
+        [dict setObject:self.relativePath forKey:@"spriteFile"];
+        return dict;
+    }
+    else if ([pbType isEqualToString:@"com.cocosbuilder.ccb"])
+    {
+        [dict setObject:self.relativePath forKey:@"ccbFile"];
+        return dict;
+    }
+    return NULL;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.RMResource"];
+    if (type == kCCBResTypeImage)
+    {
+        [pbTypes addObject:@"com.cocosbuilder.texture"];
+    }
+    else if (type == kCCBResTypeCCBFile)
+    {
+        [pbTypes addObject:@"com.cocosbuilder.ccb"];
+    }
+    
+    return pbTypes;
+}
+
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)pbType pasteboard:(NSPasteboard *)pasteboard
+{
+    if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"]) return NSPasteboardWritingPromised;
+    if ([pbType isEqualToString:@"com.cocosbuilder.texture"] && type == kCCBResTypeImage) return NSPasteboardWritingPromised;
+    if ([pbType isEqualToString:@"com.cocosbuilder.ccb"] && type == kCCBResTypeCCBFile) return NSPasteboardWritingPromised;
+    return 0;
 }
 
 - (void) dealloc

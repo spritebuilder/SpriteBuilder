@@ -65,7 +65,7 @@ enum
 @end
 
 
-@interface RMResource : NSObject
+@interface RMResource : NSObject <NSPasteboardWriting>
 {
     int type;
     BOOL touched;
@@ -75,6 +75,7 @@ enum
 }
 
 @property (nonatomic,retain) NSString* filePath;
+@property (nonatomic,readonly) NSString* relativePath;
 @property (nonatomic,retain) NSDate* modifiedTime;
 @property (nonatomic,assign) int type;
 @property (nonatomic,assign) BOOL touched;

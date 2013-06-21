@@ -284,6 +284,27 @@
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
 {
+    [pasteboard clearContents];
+    
+    NSMutableArray* pbItems = [NSMutableArray array];
+    
+    for (id item in items)
+    {
+        if ([item isKindOfClass:[RMResource class]])
+        {
+            [pbItems addObject:item];
+        }
+    }
+    
+    if ([pbItems count] > 0)
+    {
+        [pasteboard writeObjects:pbItems];
+        return YES;
+    }
+    
+    return NO;
+    
+    /*
     NSString* spriteFile = NULL;
     NSString* spriteSheetFile = NULL;
     NSString* ccbFile = NULL;
@@ -356,15 +377,13 @@
     }
     
     return NO;
+     */
 }
 
 - (void) outlineViewSelectionDidChange:(NSNotification *)notification
 {
     id selection = [resourceList itemAtRow:[resourceList selectedRow]];
     [imagePreview setPreviewFile:selection];
-    
-#warning Hackish solution to make multiple selections look good
-    NSLog(@"needsDisplay!");
     [resourceList setNeedsDisplay];
 }
 

@@ -27,6 +27,7 @@
 #import "CocosBuilderAppDelegate.h"
 #import "CCBGlobals.h"
 #import "CocosScene.h"
+#import "NSPasteboard+CCB.h"
 
 @implementation CCBGLView
 
@@ -76,19 +77,18 @@
     
     NSPasteboard* pb = [sender draggingPasteboard];
     
-    NSData* pdData = [pb dataForType:@"com.cocosbuilder.texture"];
-    if (pdData)
+    // Textures
+    NSArray* pbTextures = [pb propertyListsForType:@"com.cocosbuilder.texture"];
+    for (NSDictionary* dict in pbTextures)
     {
-        NSDictionary* pdDict = [NSKeyedUnarchiver unarchiveObjectWithData:pdData];
-        [appDelegate dropAddSpriteNamed:[pdDict objectForKey:@"spriteFile"] inSpriteSheet:[pdDict objectForKey:@"spriteSheetFile"] at:ccp(pt.x,pt.y)];
+        [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(pt.x,pt.y)];
     }
     
-    pdData = [pb dataForType:@"com.cocosbuilder.ccb"];
-    if (pdData)
+    // CCB Files
+    NSArray* pbCCBs = [pb propertyListsForType:@"com.cocosbuilder.ccb"];
+    for (NSDictionary* dict in pbCCBs)
     {
-        NSLog(@"Handling ccb drop!");
-        NSDictionary* pdDict = [NSKeyedUnarchiver unarchiveObjectWithData:pdData];
-        [appDelegate dropAddCCBFileNamed:[pdDict objectForKey:@"ccbFile"] at:ccp(pt.x,pt.y) parent:NULL];
+        [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(pt.x,pt.y) parent:NULL];
     }
 
     return YES;
