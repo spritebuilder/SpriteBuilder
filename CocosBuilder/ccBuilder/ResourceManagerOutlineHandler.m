@@ -431,31 +431,16 @@
         dstDir = dir.dirPath;
     }
     
-    NSLog(@"dstDir: %@", dstDir);
-    
     BOOL movedFile = NO;
     
     // Move files
     NSArray* pbRes = [pb propertyListsForType:@"com.cocosbuilder.RMResource"];
     for (NSDictionary* dict in pbRes)
     {
-        NSLog(@"copyFrom: %@", dict);
-        
         NSString* srcPath = [dict objectForKey:@"filePath"];
         int type = [[dict objectForKey:@"type"] intValue];
-        NSString* fileName = [srcPath lastPathComponent];
         
-        if (type == kCCBResTypeImage)
-        {
-            // Move all resoultions
-        }
-        else
-        {
-            // Move regular resources
-            NSString* dstFile = [dstDir stringByAppendingPathComponent:fileName];
-            [fm moveItemAtPath:srcPath toPath:dstFile error:NULL];
-            movedFile = YES;
-        }
+        movedFile |= [ResourceManager moveResourceFile:srcPath ofType:type toDirectory:dstDir];
     }
     
     // Import files

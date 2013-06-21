@@ -448,7 +448,7 @@
     return [NSArray arrayWithObjects:@"@2x",@"-phone",@"-tablet",@"-tablethd", @"-phonehd", @"-html5", @"-auto", nil];
 }
 
-- (NSArray*) resIndependentDirs
++ (NSArray*) resIndependentDirs
 {
     return [NSArray arrayWithObjects:@"resources-phone", @"resources-phonehd", @"resources-tablet", @"resources-tablethd", @"resources-html5", @"resources-auto", nil];
 }
@@ -480,7 +480,7 @@
     if (isDirectory)
     {
         // Hide resolution directories
-        if ([[self resIndependentDirs] containsObject:[file lastPathComponent]])
+        if ([[ResourceManager resIndependentDirs] containsObject:[file lastPathComponent]])
         {
             return kCCBResTypeNone;
         }
@@ -561,7 +561,7 @@
     NSFileManager* fm = [NSFileManager defaultManager];
     RMDirectory* dir = [directories objectForKey:path];
     
-    NSArray* resolutionDirs = [self resIndependentDirs];
+    NSArray* resolutionDirs = [ResourceManager resIndependentDirs];
     
     // Get files from default directory
     NSMutableSet* files = [NSMutableSet setWithArray:[fm contentsOfDirectoryAtPath:path error:NULL]];
@@ -993,7 +993,7 @@
             NSString* fileName = [p lastPathComponent];
             NSString* dirName = [p stringByDeletingLastPathComponent];
             
-            for (NSString* resDir in [self resIndependentDirs])
+            for (NSString* resDir in [ResourceManager resIndependentDirs])
             {
                 NSString* p2 = [[dirName stringByAppendingPathComponent:resDir] stringByAppendingPathComponent:fileName];
                 if ([fm fileExistsAtPath:p2]) return p2;
@@ -1106,8 +1106,10 @@
 
 #pragma mark File transformations
 
-+ (void) importFile:(NSString*) file intoDir:(NSString*) dstDir
++ (BOOL) importFile:(NSString*) file intoDir:(NSString*) dstDir
 {
+    BOOL importedFile = NO;
+    
     NSFileManager* fm = [NSFileManager defaultManager];
     
     BOOL isDir = NO;
@@ -1123,7 +1125,7 @@
         NSArray* dirFiles = [fm contentsOfDirectoryAtPath:file error:NULL];
         for (NSString* fileName in dirFiles)
         {
-            [ResourceManager importFile:[file stringByAppendingPathComponent:fileName] intoDir:dstDirNew];
+            importedFile |= [ResourceManager importFile:[file stringByAppendingPathComponent:fileName] intoDir:dstDirNew];
         }
     }
     else
@@ -1141,7 +1143,10 @@
             
             [fm copyItemAtPath:file toPath:imgFileName error:NULL];
         }
+        importedFile = YES;
     }
+    
+    return importedFile;
 }
 
 + (BOOL) importResources:(NSArray*) resources intoDir:(NSString*) dstDir
@@ -1150,11 +1155,49 @@
     
     for (NSString* srcFile in resources)
     {
-        [ResourceManager importFile:srcFile intoDir:dstDir];
-        importedFile = YES;
+        importedFile |= [ResourceManager importFile:srcFile intoDir:dstDir];
     }
     
     return importedFile;
+}
+
++ (BOOL) moveResourceFile:(NSString*)srcPath ofType:(int) type toDirectory:(NSString*) dstDir
+{
+    BOOL movedFile = NO;
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    NSString* fileName = [srcPath lastPathComponent];
+    
+    if (type == kCCBResTypeImage)
+    {
+        // Move all resoultions
+        for (NSString* resDir in [ResourceManager resIndependentDirs])
+        {
+            NSString* srcDir = [srcPath stringByDeletingLastPathComponent];
+            NSString* srcResDir = [srcDir stringByAppendingPathComponent:resDir];
+            NSString* srcResFile = [srcResDir stringByAppendingPathComponent:fileName];
+            
+            if ([fm fileExistsAtPath:srcResFile])
+            {
+                // Create dir if it's not existing already
+                NSString* dstResDir = [dstDir stringByAppendingPathComponent:resDir];
+                [fm createDirectoryAtPath:dstResDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+                
+                // Move the file
+                NSString* dstResFile = [dstResDir stringByAppendingPathComponent:fileName];
+                [fm moveItemAtPath:srcResFile toPath:dstResFile error:NULL];
+            }
+        }
+    }
+    else
+    {
+        // Move regular resources
+        NSString* dstFile = [dstDir stringByAppendingPathComponent:fileName];
+        [fm moveItemAtPath:srcPath toPath:dstFile error:NULL];
+        movedFile = YES;
+    }
+    
+    return movedFile;
 }
 
 - (void) debugPrintDirectories
