@@ -162,6 +162,8 @@ enum
 
 - (void) notifyResourceObserversResourceListUpdated;
 
++ (BOOL) importResources:(NSArray*) resources intoDir:(NSString*) dstDir;
+
 - (void) debugPrintDirectories;
 
 

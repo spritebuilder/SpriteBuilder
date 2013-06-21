@@ -1104,6 +1104,59 @@
     return file;
 }
 
+#pragma mark File transformations
+
++ (void) importFile:(NSString*) file intoDir:(NSString*) dstDir
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    BOOL isDir = NO;
+    if ([fm fileExistsAtPath:file isDirectory:&isDir] && isDir)
+    {
+        // Handle directory
+        NSString* dirName = [file lastPathComponent];
+        NSString* dstDirNew = [dstDir stringByAppendingPathComponent:dirName];
+        
+        // Create if not created
+        [fm createDirectoryAtPath:dstDirNew withIntermediateDirectories:YES attributes:NULL error:NULL];
+        
+        NSArray* dirFiles = [fm contentsOfDirectoryAtPath:file error:NULL];
+        for (NSString* fileName in dirFiles)
+        {
+            [ResourceManager importFile:[file stringByAppendingPathComponent:fileName] intoDir:dstDirNew];
+        }
+    }
+    else
+    {
+        // Handle regular file
+        NSString* ext = [[file pathExtension] lowercaseString];
+        if ([ext isEqualToString:@"png"])
+        {
+            // Copy to resources-auto folder
+            NSString* autoDir = [dstDir stringByAppendingPathComponent:@"resources-auto"];
+            
+            [fm createDirectoryAtPath:autoDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+            
+            NSString* imgFileName = [autoDir stringByAppendingPathComponent:[file lastPathComponent]];
+            
+            [fm copyItemAtPath:file toPath:imgFileName error:NULL];
+        }
+    }
+}
+
++ (BOOL) importResources:(NSArray*) resources intoDir:(NSString*) dstDir
+{
+    BOOL importedFile = NO;
+    
+    for (NSString* srcFile in resources)
+    {
+        [ResourceManager importFile:srcFile intoDir:dstDir];
+        importedFile = YES;
+    }
+    
+    return importedFile;
+}
+
 - (void) debugPrintDirectories
 {
     NSLog(@"directories: %@", directories);

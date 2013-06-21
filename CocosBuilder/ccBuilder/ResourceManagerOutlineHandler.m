@@ -29,6 +29,7 @@
 #import "CocosBuilderAppDelegate.h"
 #import "CCBGlobals.h"
 #import "ResourceManagerPreviewView.h"
+#import "NSPasteboard+CCB.h"
 
 @implementation ResourceManagerOutlineHandler
 
@@ -66,6 +67,8 @@
     [resourceList setTarget:self];
     [resourceList setDoubleAction:@selector(doubleClicked:)];
     
+    [outlineView registerForDraggedTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.RMResource", NSFilenamesPboardType, nil]];
+    
     return self;
 }
 
@@ -97,8 +100,6 @@
     if ([item isKindOfClass:[RMDirectory class]])
     {
         RMDirectory* dir = item;
-        
-        NSLog(@"resourcesForType: %d",resType);
         
         NSArray* children = [dir resourcesForType:resType];
         return [children count];
@@ -282,6 +283,8 @@
     [cell setImage:icon];
 }
 
+#pragma mark Dragging and dropping
+
 - (BOOL) outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
 {
     [pasteboard clearContents];
@@ -379,6 +382,96 @@
     return NO;
      */
 }
+
+- (NSDragOperation) outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
+{
+    // Ignore dropping on specific indexes
+    if (index != -1) return NSDragOperationNone;
+    
+    if ([item isKindOfClass:[RMResource class]])
+    {
+        RMResource* res = item;
+        if (res.type == kCCBResTypeDirectory)
+        {
+            // Drop on directories ok
+            return NSDragOperationGeneric;
+        }
+        else
+        {
+            // Dropping on files not ok
+            return NSDragOperationNone;
+        }
+    }
+    if ([item isKindOfClass:[RMSpriteFrame class]])
+    {
+        // Drop on sprite frames not ok
+        return NSDragOperationNone;
+    }
+
+    // Dropping on top level root ok
+    return NSDragOperationGeneric;
+}
+
+- (BOOL) outlineView:(NSOutlineView *)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
+{
+    // Get dropped items
+    NSPasteboard* pb = [info draggingPasteboard];
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    // Find out the destination directory
+    NSString* dstDir = NULL;
+    if ([item isKindOfClass:[RMResource class]])
+    {
+        RMResource* res = item;
+        dstDir = res.filePath;
+    }
+    else if ([item isKindOfClass:[RMDirectory class]])
+    {
+        RMDirectory* dir = item;
+        dstDir = dir.dirPath;
+    }
+    
+    NSLog(@"dstDir: %@", dstDir);
+    
+    BOOL movedFile = NO;
+    
+    // Move files
+    NSArray* pbRes = [pb propertyListsForType:@"com.cocosbuilder.RMResource"];
+    for (NSDictionary* dict in pbRes)
+    {
+        NSLog(@"copyFrom: %@", dict);
+        
+        NSString* srcPath = [dict objectForKey:@"filePath"];
+        int type = [[dict objectForKey:@"type"] intValue];
+        NSString* fileName = [srcPath lastPathComponent];
+        
+        if (type == kCCBResTypeImage)
+        {
+            // Move all resoultions
+        }
+        else
+        {
+            // Move regular resources
+            NSString* dstFile = [dstDir stringByAppendingPathComponent:fileName];
+            [fm moveItemAtPath:srcPath toPath:dstFile error:NULL];
+            movedFile = YES;
+        }
+    }
+    
+    // Import files
+    NSArray* pbFilenames = [pb propertyListForType:NSFilenamesPboardType];
+    movedFile |= [ResourceManager importResources:pbFilenames intoDir:dstDir];
+    
+    // Make sure list is up-to-date
+    if (movedFile)
+    {
+        [resourceList deselectAll:NULL];
+    }
+    
+    return movedFile;
+}
+
+#pragma mark Selections and edit
 
 - (void) outlineViewSelectionDidChange:(NSNotification *)notification
 {
