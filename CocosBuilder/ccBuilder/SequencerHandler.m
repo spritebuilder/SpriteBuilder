@@ -490,28 +490,6 @@ static SequencerHandler* sharedSequencerHandler;
         addedObject = YES;
     }
     
-    /*
-    clipData = [pb dataForType:@"com.cocosbuilder.texture"];
-    if (clipData)
-    {
-        NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:clipData];
-        
-        [appDelegate dropAddSpriteNamed:[clipDict objectForKey:@"spriteFile"] inSpriteSheet:[clipDict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
-        
-        [PositionPropertySetter refreshAllPositions];
-        
-        return YES;
-    }
-    clipData = [pb dataForType:@"com.cocosbuilder.ccb"];
-    if (clipData)
-    {
-        NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:clipData];
-        
-        [appDelegate dropAddCCBFileNamed:[clipDict objectForKey:@"ccbFile"] at:ccp(0, 0) parent:item];
-        
-        return YES;
-    }*/
-    
     return addedObject;
 }
 
