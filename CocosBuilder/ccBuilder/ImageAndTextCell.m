@@ -151,7 +151,11 @@
 
 - (NSColor *)textColor
 {
-    if([self isHighlighted])
+    if (self.controlView == self.controlView.window.firstResponder)
+    {
+        return [NSColor blackColor];
+    }
+    else if ([self isHighlighted])
     {
         return [NSColor whiteColor];
     }
@@ -161,11 +165,12 @@
     }
 }
 
+/*
 - (BOOL) isEditable
 {
     NSLog(@"isEditable (ImageAndTextCell)");
     return YES;
-}
+}*/
 
 @end
 
