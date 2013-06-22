@@ -443,7 +443,7 @@
     }
 }
 
-- (NSArray*) resIndependentExts
++ (NSArray*) resIndependentExts
 {
     return [NSArray arrayWithObjects:@"@2x",@"-phone",@"-tablet",@"-tablethd", @"-phonehd", @"-html5", @"-auto", nil];
 }
@@ -453,13 +453,13 @@
     return [NSArray arrayWithObjects:@"resources-phone", @"resources-phonehd", @"resources-tablet", @"resources-tablethd", @"resources-html5", @"resources-auto", nil];
 }
 
-- (BOOL) isResolutionDependentFile: (NSString*) file
++ (BOOL) isResolutionDependentFile: (NSString*) file
 {
     if ([[file pathExtension] isEqualToString:@"ccb"]) return NO;
     
     NSString* fileNoExt = [file stringByDeletingPathExtension];
     
-    NSArray* resIndependentExts = [self resIndependentExts];
+    NSArray* resIndependentExts = [ResourceManager resIndependentExts];
     
     for (NSString* ext in resIndependentExts)
     {
@@ -469,7 +469,7 @@
     return NO;
 }
 
-- (int) getResourceTypeForFile:(NSString*) file
++ (int) getResourceTypeForFile:(NSString*) file
 {
     NSString* ext = [[file pathExtension] lowercaseString];
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -631,7 +631,7 @@
             {
                 // A resource has been modified, we need to reload assets
                 res.modifiedTime = modifiedTime;
-                res.type = [self getResourceTypeForFile:file];
+                res.type = [ResourceManager getResourceTypeForFile:file];
                 
                 // Reload its data
                 [res loadData];
@@ -655,7 +655,7 @@
             // This is a new resource, add it!
             res = [[RMResource alloc] init];
             res.modifiedTime = modifiedTime;
-            res.type = [self getResourceTypeForFile:file];
+            res.type = [ResourceManager getResourceTypeForFile:file];
             res.filePath = file;
             
             // Load basic resource data if neccessary
@@ -1163,6 +1163,8 @@
 
 + (BOOL) moveResourceFile:(NSString*)srcPath ofType:(int) type toDirectory:(NSString*) dstDir
 {
+    if (!dstDir) return NO;
+    
     BOOL movedFile = NO;
     NSFileManager* fm = [NSFileManager defaultManager];
     
@@ -1198,6 +1200,21 @@
     }
     
     return movedFile;
+}
+
++ (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    NSString* dstPath = [[srcPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:newName];
+    int type = [ResourceManager getResourceTypeForFile:srcPath];
+    
+    if (type == kCCBResTypeImage)
+    {}
+    else
+    {
+        [fm moveItemAtPath:srcPath toPath:dstPath error:NULL];
+    }
 }
 
 - (void) debugPrintDirectories

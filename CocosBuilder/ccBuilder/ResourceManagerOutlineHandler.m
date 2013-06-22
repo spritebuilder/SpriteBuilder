@@ -59,6 +59,7 @@
     resType = rt;
     
     ImageAndTextCell* imageTextCell = [[[ImageAndTextCell alloc] init] autorelease];
+    [imageTextCell setEditable:YES];
     [[resourceList outlineTableColumn] setDataCell:imageTextCell];
     [[resourceList outlineTableColumn] setEditable:YES];
     
@@ -221,7 +222,33 @@
 
 - (void) outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-    NSLog(@"Value: %@", object);
+    if ([item isKindOfClass:[RMResource class]])
+    {
+        RMResource* res = item;
+        
+        NSString* oldPath = res.filePath;
+        NSString* oldExt = [[oldPath pathExtension] lowercaseString];
+        
+        NSString* newName = object;
+        NSString* newExt = [[newName pathExtension] lowercaseString];
+        
+        // Make sure we have a valid extension
+        if (!newExt || ![oldExt isEqualToString:newExt])
+        {
+            newName = [newName stringByAppendingPathExtension:oldExt];
+        }
+        
+        // Make sure that the name is a valid file name
+        newName = [newName stringByReplacingOccurrencesOfString:@"/" withString:@""];
+        
+        if (newName && [newName length] > 0)
+        {
+            // Rename the file
+            [ResourceManager renameResourceFile:oldPath toNewName:newName];
+        }
+    }
+    
+    [resourceList deselectAll:NULL];
 }
 
 - (NSImage*) smallIconForFile:(NSString*)file
@@ -385,6 +412,8 @@
 
 - (NSDragOperation) outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
+    if (!item) return NSDragOperationNone;
+    
     // Ignore dropping on specific indexes
     if (index != -1) return NSDragOperationNone;
     
@@ -414,9 +443,10 @@
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
 {
+    if (!item) return NO;
+    
     // Get dropped items
     NSPasteboard* pb = [info draggingPasteboard];
-    NSFileManager* fm = [NSFileManager defaultManager];
     
     // Find out the destination directory
     NSString* dstDir = NULL;
@@ -486,8 +516,12 @@
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-    NSLog(@"shouldEdit (ResManager)");
-    return YES;
+    if (!item) return NO;
+    if ([item isKindOfClass:[RMResource class]])
+    {
+        return YES;
+    }
+    return NO;
 }
 
 - (void) resourceListUpdated

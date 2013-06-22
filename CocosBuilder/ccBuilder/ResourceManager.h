@@ -155,7 +155,7 @@ enum
 - (void) removeResourceObserver:(id)observer;
 
 - (NSString*) toAbsolutePath:(NSString*)path;
-- (NSArray*) resIndependentExts;
++ (NSArray*) resIndependentExts;
 + (NSArray*) resIndependentDirs;
 
 - (void) createCachedImageFromAuto:(NSString*)autoFile saveAs:(NSString*)dstFile forResolution:(NSString*)res;
@@ -164,7 +164,7 @@ enum
 
 + (BOOL) importResources:(NSArray*) resources intoDir:(NSString*) dstDir;
 + (BOOL) moveResourceFile:(NSString*)srcFile ofType:(int) type toDirectory:(NSString*) dstDir;
-
++ (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName;
 
 - (void) debugPrintDirectories;
 
