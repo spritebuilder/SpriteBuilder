@@ -38,16 +38,7 @@
 {
     if (self.controlView == self.controlView.window.firstResponder)
     {
-        // Is being edited
-        
-        //if ([self isHighlighted])
-        //{
-            //return [NSColor whiteColor];
-        //}
-        //else
-        //{
-            return [NSColor blackColor];
-        //}
+        return [NSColor blackColor];
     }
     else if ([self isHighlighted])
     {
@@ -59,10 +50,11 @@
     }
 }
 
+#warning Doesn't work :/ Edit area is too big
 - (NSText*) setUpFieldEditorAttributes:(NSText *)textObj
 {
-    NSLog(@"setUpFiledEditor");
-    return [super setUpFieldEditorAttributes:textObj];
+    textObj.maxSize = NSMakeSize(40000, 16);
+    return textObj;
 }
 
 @end
