@@ -884,11 +884,20 @@
 - (void) createCachedImageFromAuto:(NSString*)autoFile saveAs:(NSString*)dstFile forResolution:(NSString*)res
 {
     // Calculate the scale factor
+    
+    // Find settings for the file
+    NSString* fileName = [autoFile lastPathComponent];
+    RMResource* resource = [[[RMResource alloc] init] autorelease];
+    resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
+    resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
+    int tabletScale = [[[CocosBuilderAppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
+    if (!tabletScale) tabletScale = 2;
+    
     float dstScale = 1;
     if ([res isEqualToString:@"phone"]) dstScale = 1;
     if ([res isEqualToString:@"phonehd"]) dstScale = 2;
-    else if ([res isEqualToString:@"tablet"]) dstScale = 2;
-    else if ([res isEqualToString:@"tablethd"]) dstScale = 4;
+    else if ([res isEqualToString:@"tablet"]) dstScale = 1 * tabletScale;
+    else if ([res isEqualToString:@"tablethd"]) dstScale = 2 * tabletScale;
     else if ([res isEqualToString:@"html5"])
     {
         dstScale = [CocosBuilderAppDelegate appDelegate].projectSettings.publishResolutionHTML5_scale;

@@ -55,8 +55,6 @@
     [previewPhonehd setAllowsCutCopyPaste:NO];
     [previewTablet setAllowsCutCopyPaste:NO];
     [previewTablethd setAllowsCutCopyPaste:NO];
-    
-    self.tabletScale = 1;
 }
 
 - (void) resetView
@@ -120,6 +118,10 @@
             self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
             
             self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
+            
+            int tabletScale = [[settings valueForResource:res andKey:@"tabletScale"] intValue];
+            if (!tabletScale) tabletScale = 2;
+            self.tabletScale = tabletScale;
             
             self.enabled = YES;
         }
@@ -386,6 +388,22 @@
         {
             [settings removeObjectForResource:_previewedResource andKey:@"format_android_compress"];
         }
+    }
+}
+
+- (void) setTabletScale:(int)tabletScale
+{
+    _tabletScale = tabletScale;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (tabletScale != 2)
+    {
+        [settings setValue:[NSNumber numberWithInt:tabletScale] forResource:_previewedResource andKey:@"tabletScale"];
+    }
+    else
+    {
+        [settings removeObjectForResource:_previewedResource andKey:@"tabletScale"];
     }
 }
 
