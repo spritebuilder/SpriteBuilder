@@ -177,8 +177,11 @@
     
     NSString* dstFile = [[dir stringByAppendingPathComponent:resolution] stringByAppendingPathComponent:file];
     
-    // Copy file
+    // Create directory if it doesn't exist
     NSFileManager* fm = [NSFileManager defaultManager];
+    [fm createDirectoryAtPath:[dstFile stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:NULL error:NULL];
+    
+    // Copy file
     [fm removeItemAtPath:dstFile error:NULL];
     [fm copyItemAtPath:srcImagePath toPath:dstFile error:NULL];
     
