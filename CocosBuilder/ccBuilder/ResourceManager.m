@@ -1210,7 +1210,20 @@
     int type = [ResourceManager getResourceTypeForFile:srcPath];
     
     if (type == kCCBResTypeImage)
-    {}
+    {
+        // Rename all resolutions
+        NSString* srcDir = [srcPath stringByDeletingLastPathComponent];
+        NSString* oldName = [srcPath lastPathComponent];
+        
+        for (NSString* resDir in [ResourceManager resIndependentDirs])
+        {
+            NSString* srcResPath = [[srcDir stringByAppendingPathComponent:resDir] stringByAppendingPathComponent:oldName];
+            NSString* dstResPath = [[srcDir stringByAppendingPathComponent:resDir] stringByAppendingPathComponent:newName];
+            
+            // Move the file
+            [fm moveItemAtPath:srcResPath toPath:dstResPath error:NULL];
+        }
+    }
     else
     {
         [fm moveItemAtPath:srcPath toPath:dstPath error:NULL];
