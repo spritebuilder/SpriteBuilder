@@ -25,6 +25,8 @@
 #import "ResourceManagerOutlineView.h"
 #import "CocosBuilderAppDelegate.h"
 #import "ResourceManager.h"
+#import "ResourceManagerUtil.h"
+#import "ProjectSettings.h"
 
 @implementation ResourceManagerOutlineView
 
@@ -152,7 +154,7 @@
                 if (res.type == kCCBResTypeImage)
                 {
                     // Remove all resolutions
-                    NSArray* resolutions = [NSArray arrayWithObjects:@"resources-auto", @"resources-phone", @"resources-phonehd", @"resources-tablet", @"resources-tablethd", nil];
+                    NSArray* resolutions = [ResourceManager resIndependentDirs];
                     for (NSString* resolution in resolutions)
                     {
                         NSString* filePath = [[dirPath stringByAppendingPathComponent:resolution] stringByAppendingPathComponent:fileName];
@@ -164,6 +166,10 @@
                     // Just remove the file
                     [fm removeItemAtPath:res.filePath error:NULL];
                 }
+                
+                // Make sure it is removed from the current project
+                NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
+                [[CocosBuilderAppDelegate appDelegate].projectSettings removedResourceAt:relPath];
             }
             
             row = [selectedRows indexGreaterThanIndex: row];

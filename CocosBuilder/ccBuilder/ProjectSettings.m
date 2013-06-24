@@ -491,7 +491,7 @@
 
 - (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key
 {
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
+    NSString* relPath = res.relativePath;
     
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     if (!props)
@@ -505,7 +505,7 @@
 
 - (id) valueForResource:(RMResource*) res andKey:(id) key
 {
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
+    NSString* relPath = res.relativePath;
     
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     return [props valueForKey:key];
@@ -513,10 +513,22 @@
 
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key
 {
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
+    NSString* relPath = res.relativePath;
     
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     [props removeObjectForKey:key];
+}
+
+- (void) removedResourceAt:(NSString*) relPath
+{
+    [resourceProperties removeObjectForKey:relPath];
+}
+
+- (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew
+{
+    id props = [resourceProperties objectForKey:relPathOld];
+    if (props) [resourceProperties setObject:props forKey:relPathNew];
+    [resourceProperties removeObjectForKey:relPathOld];
 }
 
 - (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line

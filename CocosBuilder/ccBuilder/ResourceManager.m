@@ -1165,10 +1165,11 @@
 {
     if (!dstDir) return NO;
     
-    BOOL movedFile = NO;
     NSFileManager* fm = [NSFileManager defaultManager];
     
     NSString* fileName = [srcPath lastPathComponent];
+    
+    NSString* dstFile = [dstDir stringByAppendingPathComponent:fileName];
     
     if (type == kCCBResTypeImage)
     {
@@ -1194,12 +1195,16 @@
     else
     {
         // Move regular resources
-        NSString* dstFile = [dstDir stringByAppendingPathComponent:fileName];
         [fm moveItemAtPath:srcPath toPath:dstFile error:NULL];
-        movedFile = YES;
     }
     
-    return movedFile;
+    // Make sure the project is updated
+    NSString* srcRel = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
+    NSString* dstRel = [ResourceManagerUtil relativePathFromAbsolutePath:dstFile];
+    
+    [[CocosBuilderAppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
+    
+    return YES;
 }
 
 + (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName
@@ -1228,6 +1233,12 @@
     {
         [fm moveItemAtPath:srcPath toPath:dstPath error:NULL];
     }
+    
+    // Make sure the project is updated
+    NSString* srcRel = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
+    NSString* dstRel = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
+    
+    [[CocosBuilderAppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
 }
 
 - (void) debugPrintDirectories

@@ -167,6 +167,8 @@
 - (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key;
 - (id) valueForResource:(RMResource*) res andKey:(id) key;
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key;
+- (void) removedResourceAt:(NSString*) relPath;
+- (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
 
 - (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line;
 - (NSSet*) breakpointsForFile:(NSString*)file;
