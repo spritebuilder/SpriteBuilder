@@ -491,6 +491,11 @@
 
 - (void) outlineViewSelectionDidChange:(NSNotification *)notification
 {
+    [self updateSelectionPreview];
+}
+
+- (void) updateSelectionPreview
+{
     id selection = [resourceList itemAtRow:[resourceList selectedRow]];
     [imagePreview setPreviewFile:selection];
     [resourceList setNeedsDisplay];

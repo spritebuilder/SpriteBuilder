@@ -3435,6 +3435,7 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+/*
 - (IBAction)menuEditSmartSpriteSheet:(id)sender
 {
     int selectedRow = [sender tag];
@@ -3483,7 +3484,7 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }
-}
+}*/
 
 - (IBAction)menuAlignKeyframeToMarker:(id)sender
 {

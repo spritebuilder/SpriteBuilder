@@ -89,6 +89,9 @@
     
     [viewGeneric setHidden:YES];
     [viewImage setHidden:YES];
+    [viewSpriteSheet setHidden:YES];
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
     
     // Update previews for different resolutions
     if ([selection isKindOfClass:[RMResource class]])
@@ -99,7 +102,7 @@
         
         if (res.type == kCCBResTypeImage)
         {
-            // Image preview
+            // Setup preview for image resource
             self.imgMain = [selection previewForResolution:@"auto"];
             self.imgPhone = [selection previewForResolution:@"phone"];
             self.imgPhonehd = [selection previewForResolution:@"phonehd"];
@@ -113,8 +116,6 @@
             [previewTablethd setImage:self.imgTablethd];
             
             // Load settings
-            ProjectSettings* settings = [self appDelegate].projectSettings;
-            
             self.scaleFrom = [[settings valueForResource:res andKey:@"scaleFrom"] intValue];
             
             self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
@@ -122,6 +123,8 @@
             self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
             
             self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
+            self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
+            self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
             
             int tabletScale = [[settings valueForResource:res andKey:@"tabletScale"] intValue];
             if (!tabletScale) tabletScale = 2;
@@ -131,16 +134,29 @@
             
             [viewImage setHidden:NO];
         }
+        else if (res.type == kCCBResTypeDirectory && [res.data isDynamicSpriteSheet])
+        {
+            // Setup preview for smart sprite sheet
+            self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
+            self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
+            self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
+            
+            self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
+            self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
+            self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
+            
+            self.enabled = YES;
+            
+            [viewSpriteSheet setHidden:NO];
+        }
         else
         {
             [viewGeneric setHidden:NO];
-            [previewGeneric setImage:NULL];
         }
     }
     else
     {
         [viewGeneric setHidden:NO];
-        [previewGeneric setImage:NULL];
     }
 }
 
@@ -236,6 +252,8 @@
     // Reload open document
     [[CocosBuilderAppDelegate appDelegate] reloadResources];
 }
+
+#pragma mark Edit properties
 
 - (void) setScaleFrom:(int)scaleFrom
 {

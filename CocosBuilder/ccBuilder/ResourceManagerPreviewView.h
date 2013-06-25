@@ -33,6 +33,7 @@
     // Main views
     IBOutlet NSView* viewGeneric;
     IBOutlet NSView* viewImage;
+    IBOutlet NSView* viewSpriteSheet;
     
     // Image previews
     IBOutlet CCBImageView* previewMain;

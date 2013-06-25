@@ -29,6 +29,7 @@
 
 @class RMResource;
 
+/*
 @interface ProjectSettingsGeneratedSpriteSheet : NSObject
 {
     BOOL isDirty;
@@ -52,6 +53,8 @@
 - (id)initWithSerialization:(id)dict;
 - (id)serialize;
 @end
+ 
+ */
 
 @interface ProjectSettings : NSObject
 {
@@ -161,15 +164,20 @@
 
 - (void) makeSmartSpriteSheet:(RMResource*) res;
 - (void) removeSmartSpriteSheet:(RMResource*) res;
-- (ProjectSettingsGeneratedSpriteSheet*) smartSpriteSheetForRes:(RMResource*) res;
-- (ProjectSettingsGeneratedSpriteSheet*) smartSpriteSheetForSubPath:(NSString*) relPath;
 
+// Setting and reading file properties
 - (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key;
+- (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key;
 - (id) valueForResource:(RMResource*) res andKey:(id) key;
+- (id) valueForRelPath:(NSString*) relPath andKey:(id) key;
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key;
+- (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key;
+
+// Handling moved and deleted resources
 - (void) removedResourceAt:(NSString*) relPath;
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
 
+// Breakpoints (for JS)
 - (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line;
 - (NSSet*) breakpointsForFile:(NSString*)file;
 @end

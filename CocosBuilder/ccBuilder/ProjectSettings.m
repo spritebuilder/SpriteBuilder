@@ -32,9 +32,11 @@
 #import "CocosBuilderAppDelegate.h"
 #import "PlayerConnection.h"
 #import "PlayerDeviceInfo.h"
+#import "ResourceManagerOutlineHandler.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
+/*
 @implementation ProjectSettingsGeneratedSpriteSheet
 
 @synthesize isDirty;
@@ -106,6 +108,7 @@
 }
 
 @end
+ */
 
 @implementation ProjectSettings
 
@@ -257,20 +260,6 @@
     self.resourceAutoScaleFactor = [[dict objectForKey:@"resourceAutoScaleFactor"]intValue];
     if (resourceAutoScaleFactor == 0) self.resourceAutoScaleFactor = 4;
     
-    // Load generated sprite sheet settings
-    NSDictionary* generatedSpriteSheetsDict = [dict objectForKey:@"generatedSpriteSheets"];
-    generatedSpriteSheets = [NSMutableDictionary dictionary];
-    if (generatedSpriteSheetsDict)
-    {
-        for (NSString* ssFile in generatedSpriteSheetsDict)
-        {
-            NSDictionary* ssDict = [generatedSpriteSheetsDict objectForKey:ssFile];
-            ProjectSettingsGeneratedSpriteSheet* ssInfo = [[[ProjectSettingsGeneratedSpriteSheet alloc] initWithSerialization:ssDict] autorelease];
-            [generatedSpriteSheets setObject:ssInfo forKey:ssFile];
-        }
-    }
-    [generatedSpriteSheets retain];
-    
     NSString* mainCCB = [dict objectForKey:@"javascriptMainCCB"];
     if (!mainCCB) mainCCB = @"";
     self.javascriptMainCCB = mainCCB;
@@ -364,15 +353,6 @@
     if (!javascriptBased) self.javascriptMainCCB = @"";
     [dict setObject:javascriptMainCCB forKey:@"javascriptMainCCB"];
     
-    NSMutableDictionary* generatedSpriteSheetsDict = [NSMutableDictionary dictionary];
-    for (NSString* ssFile in generatedSpriteSheets)
-    {
-        ProjectSettingsGeneratedSpriteSheet* ssInfo = [generatedSpriteSheets objectForKey:ssFile];
-        id ssDict = [ssInfo serialize];
-        [generatedSpriteSheetsDict setObject:ssDict forKey:ssFile];
-    }
-    [dict setObject:generatedSpriteSheetsDict forKey:@"generatedSpriteSheets"];
-    
     if (resourceProperties)
     {
         [dict setObject:resourceProperties forKey:@"resourceProperties"];
@@ -455,44 +435,32 @@
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
     
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
-    
-    [generatedSpriteSheets setObject:[[[ProjectSettingsGeneratedSpriteSheet alloc] init] autorelease] forKey:relPath];
+    [self setValue:[NSNumber numberWithBool:YES] forResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
     [[CocosBuilderAppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
+    [[CocosBuilderAppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
 }
 
 - (void) removeSmartSpriteSheet:(RMResource*) res
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
     
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
-    
-    [generatedSpriteSheets removeObjectForKey:relPath];
+    [self removeObjectForResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
     [[CocosBuilderAppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
-}
-
-- (ProjectSettingsGeneratedSpriteSheet*) smartSpriteSheetForRes:(RMResource*) res
-{
-    NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
-    
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
-    
-    return [generatedSpriteSheets objectForKey:relPath];
-}
-
-- (ProjectSettingsGeneratedSpriteSheet*) smartSpriteSheetForSubPath:(NSString*) relPath
-{
-    return [generatedSpriteSheets objectForKey:relPath];
+    [[CocosBuilderAppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
 }
 
 - (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key
 {
     NSString* relPath = res.relativePath;
-    
+    [self setValue:val forRelPath:relPath andKey:key];
+}
+
+- (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key
+{
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     if (!props)
     {
@@ -506,7 +474,11 @@
 - (id) valueForResource:(RMResource*) res andKey:(id) key
 {
     NSString* relPath = res.relativePath;
-    
+    return [self valueForRelPath:relPath andKey:key];
+}
+
+- (id) valueForRelPath:(NSString*) relPath andKey:(id) key
+{
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     return [props valueForKey:key];
 }
@@ -514,7 +486,12 @@
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key
 {
     NSString* relPath = res.relativePath;
+    [self removeObjectForRelPath:relPath andKey:key];
     
+}
+
+- (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key
+{
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     [props removeObjectForKey:key];
 }

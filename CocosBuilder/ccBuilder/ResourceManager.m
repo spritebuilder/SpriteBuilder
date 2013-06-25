@@ -270,38 +270,20 @@
 {
     if (dirPath)
     {
-        NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dirPath];
         ProjectSettings* projectSettings = [CocosBuilderAppDelegate appDelegate].projectSettings;
-        if (projectSettings && relPath)
+        
+        RMResource* dirRes = [[[RMResource alloc] init] autorelease];
+        dirRes.type = kCCBResTypeDirectory;
+        dirRes.filePath = dirPath;
+        
+        if (projectSettings)
         {
-            NSDictionary* spriteSheets = projectSettings.generatedSpriteSheets;
-            if ([spriteSheets objectForKey:relPath])
-            {
-                return YES;
-            }
+            BOOL isSmartSpriteSheet = [[projectSettings valueForResource:dirRes andKey:@"isSmartSpriteSheet"] boolValue];
+            return isSmartSpriteSheet;
         }
     }
     return NO;
 }
-
-/*
-- (void) updateIsDynamicSpriteSheet
-{
-    if (dirPath)
-    {
-        NSLog(@"updateIsDynamicSpriteSheet dirPath: %@", dirPath);
-        
-        NSString* dirSettingsPath = [dirPath stringByAppendingPathExtension:@"ccbSpriteSheet"];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:dirSettingsPath])
-        {
-            self.isDynamicSpriteSheet = YES;
-        }
-        else
-        {
-            self.isDynamicSpriteSheet = NO;
-        }
-    }
-}*/
 
 - (void) setDirPath:(NSString *)dp
 {
@@ -310,8 +292,6 @@
         [dirPath release];
         dirPath = [dp retain];
     }
-    
-    //[self updateIsDynamicSpriteSheet];
 }
 
 - (void) dealloc

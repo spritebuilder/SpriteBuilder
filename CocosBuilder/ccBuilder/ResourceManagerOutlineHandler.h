@@ -44,4 +44,6 @@
 
 - (void) reload;
 
+- (void) updateSelectionPreview;
+
 @end

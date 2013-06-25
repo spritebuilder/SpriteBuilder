@@ -180,14 +180,15 @@
         
         NSString *subPath = [[ResourceManagerUtil relativePathFromAbsolutePath:srcFile] stringByDeletingLastPathComponent];
         
-        ProjectSettingsGeneratedSpriteSheet* ssSettings = [projectSettings smartSpriteSheetForSubPath:subPath];
+        //ProjectSettingsGeneratedSpriteSheet* ssSettings = [projectSettings smartSpriteSheetForSubPath:subPath];
+        BOOL isDirty = [projectSettings valueForRelPath:subPath andKey:@"isDirty"];
 
         NSString* spriteSheetFile = NULL;
         if (publishToSingleResolution) spriteSheetFile = outDir;
         else spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
         
         NSDate* dstDate = [CCBFileUtil modificationDateForFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
-        if (dstDate && [dstDate isEqualToDate:srcDate] && !ssSettings.isDirty)
+        if (dstDate && [dstDate isEqualToDate:srcDate] && !isDirty)
         {
             return YES;
         }
@@ -328,7 +329,7 @@
 {
     CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
     ResourceManager* resManager = [ResourceManager sharedManager];
-    NSArray* resIndependentDirs = [resManager resIndependentDirs];
+    NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
     
     NSFileManager* fm = [NSFileManager defaultManager];
     
@@ -535,7 +536,16 @@
         // Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
         NSString* spriteSheetDir = [outDir stringByDeletingLastPathComponent];
         NSString* spriteSheetName = [outDir lastPathComponent];
-        ProjectSettingsGeneratedSpriteSheet* ssSettings = [projectSettings smartSpriteSheetForSubPath:subPath];
+        //ProjectSettingsGeneratedSpriteSheet* ssSettings = [projectSettings smartSpriteSheetForSubPath:subPath];
+        
+        // Load settings
+        BOOL isDirty = [[projectSettings valueForRelPath:subPath andKey:@"isDirty"] boolValue];
+        int format_ios = [[projectSettings valueForRelPath:subPath andKey:@"format_ios"] intValue];
+        BOOL format_ios_dither = [[projectSettings valueForRelPath:subPath andKey:@"format_ios_dither"] boolValue];
+        BOOL format_ios_compress= [[projectSettings valueForRelPath:subPath andKey:@"format_ios_compress"] boolValue];
+        int format_android = [[projectSettings valueForRelPath:subPath andKey:@"format_android"] intValue];
+        BOOL format_android_dither = [[projectSettings valueForRelPath:subPath andKey:@"format_android_dither"] boolValue];
+        BOOL format_android_compress= [[projectSettings valueForRelPath:subPath andKey:@"format_android_compress"] boolValue];
 
         // Check if sprite sheet needs to be re-published
         for (NSString* res in publishForResolutions)
@@ -551,7 +561,7 @@
             
             // Skip publish if sprite sheet exists and is up to date
             NSDate* dstDate = [CCBFileUtil modificationDateForFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
-            if (dstDate && [dstDate isEqualToDate:srcSpriteSheetDate] && !ssSettings.isDirty)
+            if (dstDate && [dstDate isEqualToDate:srcSpriteSheetDate] && !isDirty)
             {
                 continue;
             }
@@ -562,22 +572,24 @@
             
             if (targetType == kCCBPublisherTargetTypeIPhone)
             {
-                packer.imageFormat = ssSettings.textureFileFormat;
-                packer.compress = ssSettings.compress;
-                packer.dither = ssSettings.dither;
+                packer.imageFormat = format_ios;
+                packer.compress = format_ios_compress;
+                packer.dither = format_ios_dither;
             }
             else if (targetType == kCCBPublisherTargetTypeAndroid)
             {
-                packer.imageFormat = ssSettings.textureFileFormatAndroid;
+                packer.imageFormat = format_android;
                 packer.compress = NO;
-                packer.dither = ssSettings.ditherAndroid;
+                packer.dither = format_android_dither;
             }
+            /*
             else if (targetType == kCCBPublisherTargetTypeHTML5)
             {
                 packer.imageFormat = ssSettings.textureFileFormatHTML5;
                 packer.compress = NO;
                 packer.dither = ssSettings.ditherHTML5;
             }
+             */
             
             // Update progress
             [ad modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
@@ -594,8 +606,9 @@
         [publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
         [publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
         
-        if (ssSettings.isDirty) {
-            ssSettings.isDirty = NO;
+        if (isDirty)
+        {
+            [projectSettings removeObjectForRelPath:subPath andKey:@"isDirty"];
             [projectSettings store];
         }
     }
