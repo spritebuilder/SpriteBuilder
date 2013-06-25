@@ -481,6 +481,7 @@
     if (movedFile)
     {
         [resourceList deselectAll:NULL];
+        [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
     }
     
     return movedFile;

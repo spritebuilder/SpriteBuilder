@@ -154,6 +154,8 @@ enum
 - (void) addResourceObserver:(id)observer;
 - (void) removeResourceObserver:(id)observer;
 
+- (void) reloadAllResources;
+
 - (NSString*) toAbsolutePath:(NSString*)path;
 + (NSArray*) resIndependentExts;
 + (NSArray*) resIndependentDirs;

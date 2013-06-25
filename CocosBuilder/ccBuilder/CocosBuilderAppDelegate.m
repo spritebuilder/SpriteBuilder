@@ -110,6 +110,7 @@
 @synthesize defaultCanvasSize;
 @synthesize plugInManager;
 @synthesize resManager;
+@synthesize projectOutlineHandler;
 @synthesize showGuides;
 @synthesize snapToGuides;
 @synthesize guiView;

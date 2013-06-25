@@ -161,8 +161,6 @@
     
     NSString* srcImagePath = imgView.imagePath;
     
-    NSLog(@"srcImagePath: %@", srcImagePath);
-    
     if (![[[srcImagePath pathExtension] lowercaseString] isEqualToString:@"png"])
     {
         // Only png is supported
@@ -187,7 +185,8 @@
     [fm removeItemAtPath:dstFile error:NULL];
     [fm copyItemAtPath:srcImagePath toPath:dstFile error:NULL];
     
-#warning Make sure assets are reloaded
+    // Reload open document
+    [[CocosBuilderAppDelegate appDelegate] reloadResources];
 }
 
 - (IBAction)actionRemoveFile:(id)sender
@@ -203,8 +202,6 @@
     
     if (!imgView) return;
     
-    NSLog(@"imgView: %@", imgView);
-    
     NSString* resolution = [self resolutionDirectoryForImageView:imgView];
     if (!resolution) return;
     
@@ -219,6 +216,9 @@
     
     // Remove from view
     imgView.image = NULL;
+    
+    // Reload open document
+    [[CocosBuilderAppDelegate appDelegate] reloadResources];
 }
 
 - (void) setScaleFrom:(int)scaleFrom

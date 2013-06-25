@@ -26,6 +26,7 @@
 #import "CocosBuilderAppDelegate.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
+#import "ResourceManagerOutlineHandler.h"
 #import "ProjectSettings.h"
 
 @implementation ResourceManagerOutlineView
@@ -177,7 +178,7 @@
         
         [self deselectAll:NULL];
         
-#warning Check that all open ccb-files are valid
+        [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
     }
     
     [super keyDown:theEvent];

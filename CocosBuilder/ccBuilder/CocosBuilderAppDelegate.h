@@ -243,6 +243,7 @@ enum {
 
 
 @property (nonatomic,readonly) ResourceManager* resManager;
+@property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
 @property (nonatomic,retain) CCBDocument* currentDocument;
 @property (nonatomic,assign) BOOL hasOpenedDocument;
 @property (nonatomic,readonly) CCBGLView* cocosView;

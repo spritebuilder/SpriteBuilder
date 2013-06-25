@@ -873,6 +873,21 @@
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
+- (void) reloadAllResources
+{
+    [[[CCDirector sharedDirector] view] lockOpenGLContext];
+    
+    for (id obj in activeDirectories)
+    {
+        RMDirectory* dir = obj;
+        NSString* dirPath = dir.dirPath;
+        
+        [self updateResourcesForPath:dirPath];
+    }
+    
+    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+}
+
 
 - (NSString*) mainActiveDirectoryPath
 {
@@ -1213,6 +1228,9 @@
     
     [[CocosBuilderAppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
     
+    // Update resources
+    [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
+    
     return YES;
 }
 
@@ -1248,6 +1266,9 @@
     NSString* dstRel = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
     
     [[CocosBuilderAppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
+    
+    // Update resources
+    [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
 }
 
 - (void) debugPrintDirectories
