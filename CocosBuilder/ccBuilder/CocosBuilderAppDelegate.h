@@ -175,7 +175,8 @@ enum {
     // Resource manager
     ResourceManager* resManager;
     IBOutlet NSView* previewViewContainer;
-    NSView* previewView;
+    NSView* previewViewImage;
+    NSView* previewViewGeneric;
     ResourceManagerPreviewView* previewViewOwner;
     IBOutlet NSSplitView* resourceManagerSplitView;
     

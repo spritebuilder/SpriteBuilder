@@ -222,8 +222,6 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 {
     // Load resource manager
     resManager = [ResourceManager sharedManager];
-    //resManagerPanel = [[ResourceManagerPanel alloc] initWithWindowNibName:@"ResourceManagerPanel"];
-    //[resManagerPanel.window setIsVisible:NO];
     
     // Setup preview
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
@@ -231,21 +229,23 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     NSArray* topLevelObjs = NULL;
     [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
     
+    
     for (id obj in topLevelObjs)
     {
         if ([obj isKindOfClass:[NSView class]])
         {
-            previewView = obj;
-            break;
+            NSView* view = obj;
+            
+            [previewViewContainer addSubview:view];
         }
     }
-    
-    [previewViewContainer addSubview:previewView];
     
     // Setup project display
     projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
     
     resourceManagerSplitView.delegate = previewViewOwner;
+    
+    [previewViewOwner setPreviewFile:NULL];
 }
 
 - (void) setupGUIWindow

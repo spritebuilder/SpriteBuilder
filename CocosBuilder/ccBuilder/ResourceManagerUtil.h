@@ -24,6 +24,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class RMResource;
+
 @interface ResourceManagerUtil : NSObject
 
 + (void) populateResourcePopup:(NSPopUpButton*)popup resType:(int)resType allowSpriteFrames:(BOOL)allowSpriteFrames selectedFile:(NSString*)file selectedSheet:(NSString*) sheetFile target:(id)target;
@@ -35,5 +37,7 @@
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup;
 
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup forceMarker:(BOOL) forceMarker;
+
++ (NSImage*) iconForResource:(RMResource*) res;
 
 @end

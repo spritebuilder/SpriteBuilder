@@ -24,6 +24,7 @@
 
 #import "ResourceManagerPreviewView.h"
 #import "ResourceManager.h"
+#import "ResourceManagerUtil.h"
 #import "CCBImageView.h"
 #import "CocosBuilderAppDelegate.h"
 #import "ProjectSettings.h"
@@ -86,6 +87,9 @@
 {
     [self resetView];
     
+    [viewGeneric setHidden:YES];
+    [viewImage setHidden:YES];
+    
     // Update previews for different resolutions
     if ([selection isKindOfClass:[RMResource class]])
     {
@@ -95,7 +99,7 @@
         
         if (res.type == kCCBResTypeImage)
         {
-            // Load previews
+            // Image preview
             self.imgMain = [selection previewForResolution:@"auto"];
             self.imgPhone = [selection previewForResolution:@"phone"];
             self.imgPhonehd = [selection previewForResolution:@"phonehd"];
@@ -124,7 +128,19 @@
             self.tabletScale = tabletScale;
             
             self.enabled = YES;
+            
+            [viewImage setHidden:NO];
         }
+        else
+        {
+            [viewGeneric setHidden:NO];
+            [previewGeneric setImage:NULL];
+        }
+    }
+    else
+    {
+        [viewGeneric setHidden:NO];
+        [previewGeneric setImage:NULL];
     }
 }
 

@@ -1162,6 +1162,79 @@
 				<reference key="NSNextKeyView" ref="614478530"/>
 				<string key="NSClassName">NSView</string>
 			</object>
+			<object class="NSCustomView" id="775584319">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">274</int>
+				<array class="NSMutableArray" key="NSSubviews">
+					<object class="NSTextField" id="706683980">
+						<reference key="NSNextResponder" ref="775584319"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{52, 114}, {147, 14}}</string>
+						<reference key="NSSuperview" ref="775584319"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
+						<string key="NSReuseIdentifierKey">_NS:1535</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="184183612">
+							<int key="NSCellFlags">605028416</int>
+							<int key="NSCellFlags2">138544128</int>
+							<string key="NSContents">No Preview Available</string>
+							<object class="NSFont" key="NSSupport">
+								<string key="NSName">LucidaGrande</string>
+								<double key="NSSize">11</double>
+								<int key="NSfFlags">3100</int>
+							</object>
+							<string key="NSCellIdentifier">_NS:1535</string>
+							<reference key="NSControlView" ref="706683980"/>
+							<reference key="NSBackgroundColor" ref="925278207"/>
+							<object class="NSColor" key="NSTextColor">
+								<int key="NSColorSpace">6</int>
+								<string key="NSCatalogName">System</string>
+								<string key="NSColorName">disabledControlTextColor</string>
+								<object class="NSColor" key="NSColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+								</object>
+							</object>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+					</object>
+					<object class="NSImageView" id="227454584">
+						<reference key="NSNextResponder" ref="775584319"/>
+						<int key="NSvFlags">274</int>
+						<set class="NSMutableSet" key="NSDragTypes">
+							<string>Apple PDF pasteboard type</string>
+							<string>Apple PICT pasteboard type</string>
+							<string>Apple PNG pasteboard type</string>
+							<string>NSFilenamesPboardType</string>
+							<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+							<string>NeXT TIFF v4.0 pasteboard type</string>
+						</set>
+						<string key="NSFrame">{{2, 3}, {246, 233}}</string>
+						<reference key="NSSuperview" ref="775584319"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="706683980"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSImageCell" key="NSCell" id="257161101">
+							<int key="NSCellFlags">404750336</int>
+							<int key="NSCellFlags2">0</int>
+							<string key="NSCellIdentifier">_NS:9</string>
+							<int key="NSAlign">0</int>
+							<int key="NSScale">0</int>
+							<int key="NSStyle">2</int>
+							<bool key="NSAnimates">NO</bool>
+						</object>
+						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<bool key="NSEditable">YES</bool>
+					</object>
+				</array>
+				<string key="NSFrameSize">{250, 238}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="227454584"/>
+				<string key="NSClassName">NSView</string>
+			</object>
 			<object class="NSUserDefaultsController" id="292634867">
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
@@ -1338,6 +1411,38 @@
 						<reference key="destination" ref="865242056"/>
 					</object>
 					<int key="connectionID">401</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">droppedFile:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="227454584"/>
+					</object>
+					<int key="connectionID">719</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">viewGeneric</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="775584319"/>
+					</object>
+					<int key="connectionID">725</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">viewImage</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1005"/>
+					</object>
+					<int key="connectionID">726</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">previewGeneric</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="227454584"/>
+					</object>
+					<int key="connectionID">727</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -3080,6 +3185,49 @@
 					</object>
 					<int key="connectionID">550</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: appDelegate.projectSettings</string>
+						<reference key="source" ref="227454584"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="415710664">
+							<reference key="NSSource" ref="227454584"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: appDelegate.projectSettings</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">appDelegate.projectSettings</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSIsNotNil</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">701</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: enabled</string>
+						<reference key="source" ref="227454584"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="227454584"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled2: enabled</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">enabled</string>
+							<dictionary key="NSOptions">
+								<integer value="-1" key="NSMultipleValuesPlaceholder"/>
+								<integer value="-1" key="NSNoSelectionPlaceholder"/>
+								<integer value="-1" key="NSNotApplicablePlaceholder"/>
+								<integer value="-1" key="NSNullPlaceholder"/>
+							</dictionary>
+							<reference key="NSPreviousConnector" ref="415710664"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">702</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -3779,6 +3927,41 @@
 						<reference key="object" ref="118804160"/>
 						<reference key="parent" ref="1741484"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">551</int>
+						<reference key="object" ref="775584319"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="227454584"/>
+							<reference ref="706683980"/>
+						</array>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">578</int>
+						<reference key="object" ref="227454584"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="257161101"/>
+						</array>
+						<reference key="parent" ref="775584319"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">579</int>
+						<reference key="object" ref="257161101"/>
+						<reference key="parent" ref="227454584"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">728</int>
+						<reference key="object" ref="706683980"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="184183612"/>
+						</array>
+						<reference key="parent" ref="775584319"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">729</int>
+						<reference key="object" ref="184183612"/>
+						<reference key="parent" ref="706683980"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3902,12 +4085,19 @@
 				<string key="540.CustomClassName">CCBTextFieldLabel</string>
 				<string key="540.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="541.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="551.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="578.CustomClassName">CCBImageView</string>
+				<string key="578.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="579.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="728.CustomClassName">CCBTextFieldLabel</string>
+				<string key="728.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="729.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">550</int>
+			<int key="maxID">729</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3938,14 +4128,35 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ResourceManagerPreviewView</string>
 					<string key="superclassName">NSObject</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="actionRemoveFile:">id</string>
+						<string key="droppedFile:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="actionRemoveFile:">
+							<string key="name">actionRemoveFile:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="droppedFile:">
+							<string key="name">droppedFile:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="previewGeneric">NSImageView</string>
 						<string key="previewMain">CCBImageView</string>
 						<string key="previewPhone">CCBImageView</string>
 						<string key="previewPhonehd">CCBImageView</string>
 						<string key="previewTablet">CCBImageView</string>
 						<string key="previewTablethd">CCBImageView</string>
+						<string key="viewGeneric">NSView</string>
+						<string key="viewImage">NSView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="previewGeneric">
+							<string key="name">previewGeneric</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="previewMain">
 							<string key="name">previewMain</string>
 							<string key="candidateClassName">CCBImageView</string>
@@ -3965,6 +4176,14 @@
 						<object class="IBToOneOutletInfo" key="previewTablethd">
 							<string key="name">previewTablethd</string>
 							<string key="candidateClassName">CCBImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewGeneric">
+							<string key="name">viewGeneric</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewImage">
+							<string key="name">viewImage</string>
+							<string key="candidateClassName">NSView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

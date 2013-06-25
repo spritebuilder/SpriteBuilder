@@ -248,4 +248,53 @@
     return NULL;
 }
 
+#pragma mark File icons
+
++ (NSImage*) smallIconForFile:(NSString*)file
+{
+    NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:file];
+    [icon setScalesWhenResized:YES];
+    icon.size = NSMakeSize(16, 16);
+    return icon;
+}
+
++ (NSImage*) smallIconForFileType:(NSString*)type
+{
+    NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFileType:type];
+    [icon setScalesWhenResized:YES];
+    icon.size = NSMakeSize(16, 16);
+    return icon;
+}
+
++ (NSImage*) iconForResource:(RMResource*) res
+{
+    NSImage* icon = NULL;
+    
+#warning Do all images by type
+    if (res.type == kCCBResTypeImage)
+    {
+        icon = [ResourceManagerUtil smallIconForFileType:@"png"];
+    }
+    else
+    {
+        if (res.type == kCCBResTypeDirectory)
+        {
+            RMDirectory* dir = res.data;
+            if (dir.isDynamicSpriteSheet)
+            {
+                icon = [NSImage imageNamed:@"reshandler-spritesheet-folder.png"];
+            }
+            else
+            {
+                icon = [ResourceManagerUtil smallIconForFile:res.filePath];
+            }
+        }
+        else
+        {
+            icon = [ResourceManagerUtil smallIconForFile:res.filePath];
+        }
+    }
+    return icon;
+}
+
 @end

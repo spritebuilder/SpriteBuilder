@@ -30,11 +30,19 @@
 
 @interface ResourceManagerPreviewView : NSObject <NSSplitViewDelegate>
 {
+    // Main views
+    IBOutlet NSView* viewGeneric;
+    IBOutlet NSView* viewImage;
+    
+    // Image previews
     IBOutlet CCBImageView* previewMain;
     IBOutlet CCBImageView* previewPhone;
     IBOutlet CCBImageView* previewPhonehd;
     IBOutlet CCBImageView* previewTablet;
     IBOutlet CCBImageView* previewTablethd;
+    
+    // Generic fallback view
+    IBOutlet NSImageView* previewGeneric;
     
     RMResource* _previewedResource;
 }
