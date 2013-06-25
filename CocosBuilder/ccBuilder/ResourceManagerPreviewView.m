@@ -229,6 +229,10 @@
     
     if (_previewedResource)
     {
+        // Return if the value hasn't changed
+        int oldScaleFrom = [settings valueForResource:_previewedResource andKey:@"scaleFrom"];
+        if (oldScaleFrom == scaleFrom) return;
+        
         if (scaleFrom)
         {
             [settings setValue:[NSNumber numberWithInt:scaleFrom] forResource:_previewedResource andKey:@"scaleFrom"];
@@ -237,6 +241,10 @@
         {
             [settings removeObjectForResource:_previewedResource andKey:@"scaleFrom"];
         }
+        
+        // Reload the resource
+        [ResourceManager touchResource:_previewedResource];
+        [[CocosBuilderAppDelegate appDelegate] reloadResources];
     }
 }
 
@@ -393,10 +401,21 @@
 
 - (void) setTabletScale:(int)tabletScale
 {
+    if (_tabletScale == tabletScale)
+    {
+        return;
+    }
+    
     _tabletScale = tabletScale;
     
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
+    // Return if tabletScale hasn't changed
+    int oldTabletScale = [[settings valueForResource:_previewedResource andKey:@"tabletScale"] intValue];
+    if (tabletScale == oldTabletScale) return;
+    if (tabletScale == 2 && !oldTabletScale) return;
+    
+    // Update value and reload assets
     if (tabletScale != 2)
     {
         [settings setValue:[NSNumber numberWithInt:tabletScale] forResource:_previewedResource andKey:@"tabletScale"];
@@ -405,6 +424,9 @@
     {
         [settings removeObjectForResource:_previewedResource andKey:@"tabletScale"];
     }
+    
+    [ResourceManager touchResource:_previewedResource];
+    [[CocosBuilderAppDelegate appDelegate] reloadResources];
 }
 
 - (CocosBuilderAppDelegate*) appDelegate

@@ -168,6 +168,8 @@ enum
 + (BOOL) moveResourceFile:(NSString*)srcFile ofType:(int) type toDirectory:(NSString*) dstDir;
 + (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName;
 
++ (void) touchResource:(RMResource*) res;
+
 - (void) debugPrintDirectories;
 
 

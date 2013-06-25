@@ -898,8 +898,6 @@
 
 - (void) createCachedImageFromAuto:(NSString*)autoFile saveAs:(NSString*)dstFile forResolution:(NSString*)res
 {
-    // Calculate the scale factor
-    
     // Find settings for the file
     NSString* fileName = [autoFile lastPathComponent];
     RMResource* resource = [[[RMResource alloc] init] autorelease];
@@ -908,6 +906,9 @@
     int tabletScale = [[[CocosBuilderAppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
     if (!tabletScale) tabletScale = 2;
     
+    int srcScaleSetting = [[[CocosBuilderAppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"scaleFrom"] intValue];
+    
+    // Calculate the dst scale factor
     float dstScale = 1;
     if ([res isEqualToString:@"phone"]) dstScale = 1;
     if ([res isEqualToString:@"phonehd"]) dstScale = 2;
@@ -918,8 +919,20 @@
         dstScale = [CocosBuilderAppDelegate appDelegate].projectSettings.publishResolutionHTML5_scale;
     }
     
-    float srcScale = [CocosBuilderAppDelegate appDelegate].projectSettings.resourceAutoScaleFactor;
+    // Calculate src scale factor
+    float srcScale = 1;
+    if (srcScaleSetting)
+    {
+        // Use the manual override
+        srcScale = srcScaleSetting;
+    }
+    else
+    {
+        // Use project default
+        srcScale = [CocosBuilderAppDelegate appDelegate].projectSettings.resourceAutoScaleFactor;
+    }
     
+    // Calculate the actual factor
     float scaleFactor = dstScale/srcScale;
     
     // Load src image
@@ -1269,6 +1282,24 @@
     
     // Update resources
     [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
+}
+
++ (void) touchResource:(RMResource*) res
+{
+    if (res.type == kCCBResTypeImage)
+    {
+        for (NSString* resDir in [ResourceManager resIndependentDirs])
+        {
+            NSString* fileName = [res.filePath lastPathComponent];
+            NSString* resPath = [[[res.filePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:resDir ] stringByAppendingPathComponent:fileName];
+            
+            [CCBFileUtil setModificationDate:[NSDate date] forFile:resPath];
+        }
+    }
+    else
+    {
+        [CCBFileUtil setModificationDate:[NSDate date] forFile:res.filePath];
+    }
 }
 
 - (void) debugPrintDirectories
