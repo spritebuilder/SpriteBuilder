@@ -33,6 +33,8 @@
 #import "ProjectSettings.h"
 #import "CCBFileUtil.h"
 #import <CoreGraphics/CGImage.h>
+#import <QTKit/QTKit.h>
+#import "CCBPublisher.h"
 
 #pragma mark RMSpriteFrame
 
@@ -1151,6 +1153,8 @@
         NSString* ext = [[file pathExtension] lowercaseString];
         if ([ext isEqualToString:@"png"])
         {
+            // Handle image import
+            
             // Copy to resources-auto folder
             NSString* autoDir = [dstDir stringByAppendingPathComponent:@"resources-auto"];
             
@@ -1159,8 +1163,32 @@
             NSString* imgFileName = [autoDir stringByAppendingPathComponent:[file lastPathComponent]];
             
             [fm copyItemAtPath:file toPath:imgFileName error:NULL];
+            importedFile = YES;
         }
-        importedFile = YES;
+        else if ([ext isEqualToString:@"wav"])
+        {
+            // Handle sound import
+            
+            QTMovie* movie = [QTMovie movieWithFile:file error:NULL];
+            if (movie)
+            {
+                QTTime duration = movie.duration;
+                float durationSeconds = ((float)duration.timeValue) / ((float)duration.timeScale);
+                
+                // Copy the sound
+                NSString* dstPath = [dstDir stringByAppendingPathComponent:[file lastPathComponent]];
+                [fm copyItemAtPath:file toPath:dstPath error:NULL];
+                
+                if (durationSeconds > 15)
+                {
+                    // Set iOS format to mp4 for long sounds
+                    ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+                    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
+                    [settings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
+                }
+                importedFile = YES;
+            }
+        }
     }
     
     return importedFile;

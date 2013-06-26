@@ -161,6 +161,13 @@
         }
         else if (res.type == kCCBResTypeAudio)
         {
+            // Setup preview for sounds
+            self.format_ios_sound =[[settings valueForResource:res andKey:@"format_ios_sound"] intValue];
+            self.format_ios_sound_quality =[[settings valueForResource:res andKey:@"format_ios_sound_quality"] intValue];
+            
+            self.format_android_sound =[[settings valueForResource:res andKey:@"format_android_sound"] intValue];
+            self.format_android_sound_quality =[[settings valueForResource:res andKey:@"format_android_sound_quality"] intValue];
+            
             // Update icon
             NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"wav"];
             [icon setScalesWhenResized:YES];
@@ -491,6 +498,58 @@
     
     [ResourceManager touchResource:_previewedResource];
     [[CocosBuilderAppDelegate appDelegate] reloadResources];
+}
+
+- (void) setFormat_ios_sound:(int)format_ios_sound
+{
+    _format_ios_sound = format_ios_sound;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        [settings setValue:[NSNumber numberWithInt:format_ios_sound] forResource:_previewedResource andKey:@"format_ios_sound"];
+        
+        if (format_ios_sound) self.format_ios_sound_quality_enabled = YES;
+        else self.format_ios_sound_quality_enabled = NO;
+    }
+}
+
+- (void) setFormat_android_sound:(int)format_android_sound
+{
+    _format_android_sound = format_android_sound;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        [settings setValue:[NSNumber numberWithInt:format_android_sound] forResource:_previewedResource andKey:@"format_android_sound"];
+        self.format_android_sound_quality_enabled = YES;
+    }
+}
+
+- (void) setFormat_ios_sound_quality:(int)format_ios_sound_quality
+{
+    _format_ios_sound_quality = format_ios_sound_quality;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        [settings setValue:[NSNumber numberWithInt:format_ios_sound_quality] forResource:_previewedResource andKey:@"format_ios_sound_quality"];
+    }
+}
+
+- (void) setFormat_android_sound_quality:(int)format_android_sound_quality
+{
+    _format_android_sound_quality = format_android_sound_quality;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        [settings setValue:[NSNumber numberWithInt:format_android_sound_quality] forResource:_previewedResource andKey:@"format_android_sound_quality"];
+    }
 }
 
 #pragma mark Split view constraints
