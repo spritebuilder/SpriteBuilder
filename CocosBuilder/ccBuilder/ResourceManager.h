@@ -167,6 +167,7 @@ enum
 + (BOOL) importResources:(NSArray*) resources intoDir:(NSString*) dstDir;
 + (BOOL) moveResourceFile:(NSString*)srcFile ofType:(int) type toDirectory:(NSString*) dstDir;
 + (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName;
++ (void) removeResource:(RMResource*) res;
 
 + (void) touchResource:(RMResource*) res;
 

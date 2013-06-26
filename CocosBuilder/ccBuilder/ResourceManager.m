@@ -1292,6 +1292,36 @@
     [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
 }
 
++ (void) removeResource:(RMResource*) res
+{
+    NSLog(@"Remove: %@", res.filePath);
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    
+    NSString* dirPath = [res.filePath stringByDeletingLastPathComponent];
+    NSString* fileName = [res.filePath lastPathComponent];
+    
+    if (res.type == kCCBResTypeImage)
+    {
+        // Remove all resolutions
+        NSArray* resolutions = [ResourceManager resIndependentDirs];
+        for (NSString* resolution in resolutions)
+        {
+            NSString* filePath = [[dirPath stringByAppendingPathComponent:resolution] stringByAppendingPathComponent:fileName];
+            [fm removeItemAtPath:filePath error:NULL];
+        }
+    }
+    else
+    {
+        // Just remove the file
+        [fm removeItemAtPath:res.filePath error:NULL];
+    }
+    
+    // Make sure it is removed from the current project
+    [[CocosBuilderAppDelegate appDelegate].projectSettings removedResourceAt:res.relativePath];
+    [[CocosBuilderAppDelegate appDelegate] removedDocumentWithPath:res.filePath];
+}
+
 + (void) touchResource:(RMResource*) res
 {
     if (res.type == kCCBResTypeImage)

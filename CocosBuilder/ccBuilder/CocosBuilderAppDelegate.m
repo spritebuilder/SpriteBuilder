@@ -1193,6 +1193,17 @@ static BOOL hideAllToNextSeparator;
     return NULL;
 }
 
+- (NSTabViewItem*) tabViewItemFromPath:(NSString*)path
+{
+    NSArray* items = [tabView tabViewItems];
+    for (int i = 0; i < [items count]; i++)
+    {
+        CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
+        if ([doc.fileName isEqualToString:path]) return [items objectAtIndex:i];
+    }
+    return NULL;
+}
+
 - (void) checkForTooManyDirectoriesInCurrentDoc
 {
     if (!currentDocument) return;
@@ -2505,13 +2516,20 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) performClose:(id)sender
 {
-    NSLog(@"performClose (AppDelegate)");
-    
     if (!currentDocument) return;
     NSTabViewItem* item = [self tabViewItemFromDoc:currentDocument];
     if (!item) return;
     
     if ([self tabView:tabView shouldCloseTabViewItem:item])
+    {
+        [tabView removeTabViewItem:item];
+    }
+}
+
+- (void) removedDocumentWithPath:(NSString*)path
+{
+    NSTabViewItem* item = [self tabViewItemFromPath:path];
+    if (item)
     {
         [tabView removeTabViewItem:item];
     }

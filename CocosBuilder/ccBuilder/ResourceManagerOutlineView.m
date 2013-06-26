@@ -134,8 +134,6 @@
         {
             return;
         }
-    
-        NSFileManager* fm = [NSFileManager defaultManager];
         
         // Iterate through rows
         NSIndexSet* selectedRows = [self selectedRowIndexes];
@@ -147,30 +145,7 @@
             {
                 RMResource* res = selectedItem;
                 
-                NSLog(@"Remove: %@", res.filePath);
-                
-                NSString* dirPath = [res.filePath stringByDeletingLastPathComponent];
-                NSString* fileName = [res.filePath lastPathComponent];
-                
-                if (res.type == kCCBResTypeImage)
-                {
-                    // Remove all resolutions
-                    NSArray* resolutions = [ResourceManager resIndependentDirs];
-                    for (NSString* resolution in resolutions)
-                    {
-                        NSString* filePath = [[dirPath stringByAppendingPathComponent:resolution] stringByAppendingPathComponent:fileName];
-                        [fm removeItemAtPath:filePath error:NULL];
-                    }
-                }
-                else
-                {
-                    // Just remove the file
-                    [fm removeItemAtPath:res.filePath error:NULL];
-                }
-                
-                // Make sure it is removed from the current project
-                NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
-                [[CocosBuilderAppDelegate appDelegate].projectSettings removedResourceAt:relPath];
+                [ResourceManager removeResource:res];
             }
             
             row = [selectedRows indexGreaterThanIndex: row];
@@ -179,6 +154,8 @@
         [self deselectAll:NULL];
         
         [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
+        
+        return;
     }
     
     [super keyDown:theEvent];
