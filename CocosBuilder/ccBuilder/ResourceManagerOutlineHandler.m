@@ -412,10 +412,10 @@
 
 - (NSDragOperation) outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (!item) return NSDragOperationNone;
+    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1) return NSDragOperationNone;
     
     // Ignore dropping on specific indexes
-    if (index != -1) return NSDragOperationNone;
+    //if (index != -1) return NSDragOperationNone;
     
     if ([item isKindOfClass:[RMResource class]])
     {
@@ -443,7 +443,7 @@
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
 {
-    if (!item) return NO;
+    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1) return NO;
     
     // Get dropped items
     NSPasteboard* pb = [info draggingPasteboard];
@@ -458,6 +458,11 @@
     else if ([item isKindOfClass:[RMDirectory class]])
     {
         RMDirectory* dir = item;
+        dstDir = dir.dirPath;
+    }
+    else if (item == NULL)
+    {
+        RMDirectory* dir = [[ResourceManager sharedManager].activeDirectories objectAtIndex:0];
         dstDir = dir.dirPath;
     }
     
