@@ -2535,6 +2535,14 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+- (void) renamedDocumentPathFrom:(NSString*)oldPath to:(NSString*)newPath
+{
+    NSTabViewItem* item = [self tabViewItemFromPath:oldPath];
+    CCBDocument* doc = [item identifier];
+    doc.fileName = newPath;
+    [item setLabel:doc.formattedName];
+}
+
 - (IBAction) menuSelectBehind:(id)sender
 {
     [[CocosScene cocosScene] selectBehind];

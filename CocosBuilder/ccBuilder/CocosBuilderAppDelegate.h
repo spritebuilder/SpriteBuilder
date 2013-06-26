@@ -310,6 +310,7 @@ enum {
 - (void) closeProject;
 - (IBAction) performClose:(id)sender;
 - (void) removedDocumentWithPath:(NSString*)path;
+- (void) renamedDocumentPathFrom:(NSString*)oldPath to:(NSString*)newPath;
 
 - (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode*)parent atIndex:(int)index;
 - (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode*)parent;
