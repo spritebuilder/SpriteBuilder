@@ -104,6 +104,8 @@
     
     NSString* versionStr;
     BOOL needRepublish;
+    
+    BOOL storing;
 }
 
 @property (nonatomic, copy) NSString* projectPath;

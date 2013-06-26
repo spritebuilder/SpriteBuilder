@@ -426,9 +426,25 @@
     return [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"spritesheet"];
 }
 
+- (void) _storeDelayed
+{
+    [self store];
+    storing = NO;
+}
+
 - (BOOL) store
 {
     return [[self serialize] writeToFile:self.projectPath atomically:YES];
+}
+
+- (void) storeDelayed
+{
+    // Store the file after a short delay
+    if (!storing)
+    {
+        storing = YES;
+        [self performSelector:@selector(_storeDelayed) withObject:NULL afterDelay:1];
+    }
 }
 
 - (void) makeSmartSpriteSheet:(RMResource*) res
@@ -469,6 +485,8 @@
     }
     
     [props setValue:val forKey:key];
+    
+    [self storeDelayed];
 }
 
 - (id) valueForResource:(RMResource*) res andKey:(id) key
@@ -494,6 +512,8 @@
 {
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     [props removeObjectForKey:key];
+    
+    [self storeDelayed];
 }
 
 - (void) removedResourceAt:(NSString*) relPath
