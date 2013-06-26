@@ -23,6 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <QTKit/QTKit.h>
 
 @class CCBImageView;
 @class CocosBuilderAppDelegate;
@@ -34,6 +35,7 @@
     IBOutlet NSView* viewGeneric;
     IBOutlet NSView* viewImage;
     IBOutlet NSView* viewSpriteSheet;
+    IBOutlet NSView* viewSound;
     
     // Image previews
     IBOutlet CCBImageView* previewMain;
@@ -41,6 +43,10 @@
     IBOutlet CCBImageView* previewPhonehd;
     IBOutlet CCBImageView* previewTablet;
     IBOutlet CCBImageView* previewTablethd;
+    
+    // Sound preview
+    IBOutlet QTMovieView* previewSound;
+    IBOutlet NSImageView* previewSoundImage;
     
     // Generic fallback view
     IBOutlet NSImageView* previewGeneric;
@@ -70,12 +76,18 @@
 @property (nonatomic,readwrite) BOOL format_ios_compress;
 @property (nonatomic,readwrite) BOOL format_ios_dither_enabled;
 @property (nonatomic,readwrite) BOOL format_ios_compress_enabled;
+@property (nonatomic,readwrite) int format_ios_sound;
+@property (nonatomic,readwrite) int format_ios_sound_quality;
+@property (nonatomic,readwrite) int format_ios_sound_quality_enabled;
 
 @property (nonatomic,readwrite) int format_android;
 @property (nonatomic,readwrite) BOOL format_android_dither;
 @property (nonatomic,readwrite) BOOL format_android_compress;
 @property (nonatomic,readwrite) BOOL format_android_dither_enabled;
 @property (nonatomic,readwrite) BOOL format_android_compress_enabled;
+@property (nonatomic,readwrite) int format_android_sound;
+@property (nonatomic,readwrite) int format_android_sound_quality;
+@property (nonatomic,readwrite) int format_android_sound_quality_enabled;
 
 @property (nonatomic, assign) int tabletScale;
 

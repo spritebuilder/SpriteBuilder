@@ -32,11 +32,15 @@
 
 @implementation ResourceManagerPreviewView
 
+#pragma mark Properties
+
 @synthesize previewMain;
 @synthesize previewPhone;
 @synthesize previewPhonehd;
 @synthesize previewTablet;
 @synthesize previewTablethd;
+
+#pragma mark Setup
 
 - (void) awakeFromNib
 {
@@ -56,6 +60,11 @@
     [previewPhonehd setAllowsCutCopyPaste:NO];
     [previewTablet setAllowsCutCopyPaste:NO];
     [previewTablethd setAllowsCutCopyPaste:NO];
+}
+
+- (CocosBuilderAppDelegate*) appDelegate
+{
+    return [CocosBuilderAppDelegate appDelegate];
 }
 
 - (void) resetView
@@ -90,6 +99,7 @@
     [viewGeneric setHidden:YES];
     [viewImage setHidden:YES];
     [viewSpriteSheet setHidden:YES];
+    [viewSound setHidden:YES];
     
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
@@ -148,6 +158,26 @@
             self.enabled = YES;
             
             [viewSpriteSheet setHidden:NO];
+        }
+        else if (res.type == kCCBResTypeAudio)
+        {
+            // Update icon
+            NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"wav"];
+            [icon setScalesWhenResized:YES];
+            icon.size = NSMakeSize(128, 128);
+            [previewSoundImage setImage:icon];
+            
+            // Update sound
+            QTMovie* movie = [QTMovie movieWithFile:res.filePath error:NULL];
+            
+            [previewSound setMovie:movie];
+            
+            [previewSound pause:NULL];
+            [previewSound gotoBeginning:NULL];
+            
+            self.enabled = YES;
+            
+            [viewSound setHidden:NO];
         }
         else
         {
@@ -461,11 +491,6 @@
     
     [ResourceManager touchResource:_previewedResource];
     [[CocosBuilderAppDelegate appDelegate] reloadResources];
-}
-
-- (CocosBuilderAppDelegate*) appDelegate
-{
-    return [CocosBuilderAppDelegate appDelegate];
 }
 
 #pragma mark Split view constraints

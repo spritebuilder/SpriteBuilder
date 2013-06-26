@@ -33,6 +33,16 @@ enum {
     kCCBPublisherTargetTypeAndroid,
 };
 
+enum {
+    kCCBPublishFormatSound_ios_caf,
+    kCCBPublishFormatSound_ios_mp4,
+};
+
+enum {
+    kCCBPublishFormatSound_android_ogg,
+};
+
+
 @interface CCBPublisher : NSObject
 {
     ProjectSettings* projectSettings;
