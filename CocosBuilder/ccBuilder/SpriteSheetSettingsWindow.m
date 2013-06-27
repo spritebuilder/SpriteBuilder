@@ -23,7 +23,7 @@
  */
 
 #import "SpriteSheetSettingsWindow.h"
-#import "Tupac.h"
+#import "FCFormatConverter.h"
 
 @interface SpriteSheetSettingsWindow ()
 
@@ -88,10 +88,10 @@
 }
 
 - (BOOL)isCompressable:(int)textureFomat {
-    return (textureFomat >= kTupacImageFormatPVR_RGBA8888 && textureFomat <= kTupacImageFormatPVRTC_2BPP);
+    return (textureFomat >= kFCImageFormatPVR_RGBA8888 && textureFomat <= kFCImageFormatPVRTC_2BPP);
 }
 
 - (BOOL)isDitherable:(int)textureFomat {
-    return ((textureFomat == kTupacImageFormatPVR_RGBA4444) || (textureFomat == kTupacImageFormatPVR_RGB565) || (textureFomat == kTupacImageFormatPNG_8BIT));
+    return ((textureFomat == kFCImageFormatPVR_RGBA4444) || (textureFomat == kFCImageFormatPVR_RGB565) || (textureFomat == kFCImageFormatPNG_8BIT));
 }
 @end

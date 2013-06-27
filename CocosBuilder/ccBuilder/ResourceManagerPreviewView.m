@@ -28,7 +28,7 @@
 #import "CCBImageView.h"
 #import "CocosBuilderAppDelegate.h"
 #import "ProjectSettings.h"
-#import "Tupac.h"
+#import "FCFormatConverter.h"
 
 @implementation ResourceManagerPreviewView
 
@@ -321,11 +321,11 @@
 
 - (BOOL) supportsCompress_ios:(int)format
 {
-    if (format == kTupacImageFormatPVR_RGBA8888) return YES;
-    if (format == kTupacImageFormatPVR_RGBA4444) return YES;
-    if (format == kTupacImageFormatPVR_RGB565) return YES;
-    if (format == kTupacImageFormatPVRTC_2BPP) return YES;
-    if (format == kTupacImageFormatPVRTC_4BPP) return YES;
+    if (format == kFCImageFormatPVR_RGBA8888) return YES;
+    if (format == kFCImageFormatPVR_RGBA4444) return YES;
+    if (format == kFCImageFormatPVR_RGB565) return YES;
+    if (format == kFCImageFormatPVRTC_2BPP) return YES;
+    if (format == kFCImageFormatPVRTC_4BPP) return YES;
     return NO;
 }
 
@@ -336,17 +336,17 @@
 
 - (BOOL) supportsDither_ios:(int)format
 {
-    if (format == kTupacImageFormatPNG_8BIT) return YES;
-    if (format == kTupacImageFormatPVR_RGBA4444) return YES;
-    if (format == kTupacImageFormatPVR_RGB565) return YES;
+    if (format == kFCImageFormatPNG_8BIT) return YES;
+    if (format == kFCImageFormatPVR_RGBA4444) return YES;
+    if (format == kFCImageFormatPVR_RGB565) return YES;
     return NO;
 }
 
 - (BOOL) supportsDither_android:(int)format
 {
-    if (format == kTupacImageFormatPNG_8BIT) return YES;
-    if (format == kTupacImageFormatPVR_RGBA4444) return YES;
-    if (format == kTupacImageFormatPVR_RGB565) return YES;
+    if (format == kFCImageFormatPNG_8BIT) return YES;
+    if (format == kFCImageFormatPVR_RGBA4444) return YES;
+    if (format == kFCImageFormatPVR_RGB565) return YES;
     return NO;
 }
 

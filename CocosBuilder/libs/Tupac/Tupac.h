@@ -24,20 +24,6 @@
 
 #import <Foundation/Foundation.h>
 
-enum {
-    kTupacImageFormatPNG,
-    kTupacImageFormatPNG_8BIT,
-    kTupacImageFormatPVR_RGBA8888,
-    kTupacImageFormatPVR_RGBA4444,
-    kTupacImageFormatPVR_RGB565,
-    kTupacImageFormatPVRTC_4BPP,
-    kTupacImageFormatPVRTC_2BPP,
-    kTupacImageFormatWEBP,
-    kTupacImageFormatJPG_High,
-    kTupacImageFormatJPG_Medium,
-    kTupacImageFormatJPG_Low,
-};
-
 @interface Tupac : NSObject 
 
 @property(nonatomic) BOOL border;

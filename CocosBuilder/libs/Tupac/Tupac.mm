@@ -23,6 +23,8 @@
  */
 
 #import "Tupac.h"
+#import "FCFormatConverter.h"
+#import "FCFormatConverter.h"
 #import "MaxRectsBinPack.h"
 #import "vector"
 
@@ -78,7 +80,7 @@ typedef struct _PVRTexHeader
     {
         scale_ = 1.0;
         border_ = NO;
-        imageFormat_ = kTupacImageFormatPNG;
+        imageFormat_ = kFCImageFormatPNG;
         self.outputFormat = TupacOutputFormatCocos2D;
         self.maxTextureSize = 2048;
         self.padding = 1;
@@ -256,7 +258,7 @@ typedef struct _PVRTexHeader
     std::vector<TPRect> outRects;
     
     BOOL makeSquare = NO;
-    if (self.imageFormat == kTupacImageFormatPVRTC_2BPP || kTupacImageFormatPVRTC_4BPP)
+    if (self.imageFormat == kFCImageFormatPVRTC_2BPP || kFCImageFormatPVRTC_4BPP)
     {
         makeSquare = YES;
         outH = outW;
@@ -392,87 +394,8 @@ typedef struct _PVRTexHeader
     {
         CFRelease(colorSpace);
     }
-
-    // Convert file to 8 bit if original uses indexed colors
-    if (imageFormat_ == kTupacImageFormatPNG_8BIT)
-    {
-        NSTask* pngTask = [[NSTask alloc] init];
-        [pngTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"pngquant"]];
-        NSMutableArray* args = [NSMutableArray arrayWithObjects:
-                                @"--force", @"--ext", @".png", pngFilename, nil];
-        if (self.dither) [args addObject:@"-dither"];
-        [pngTask setArguments:args];
-        [pngTask launch];
-        [pngTask waitUntilExit];
-        [pngTask release];
-    }
-    else if (imageFormat_ == kTupacImageFormatWEBP)
-    {
-        NSString* dstFile = [self.outputName stringByAppendingPathExtension:@"webp"];
-        NSTask* webPTask = [[NSTask alloc] init];
-        [webPTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"cwebp"]];
-        NSMutableArray* args = [NSMutableArray arrayWithObjects:
-                                @"-q", @"80", pngFilename, @"-o", dstFile, nil];
-        [webPTask setArguments:args];
-        [webPTask launch];
-        [webPTask waitUntilExit];
-        [webPTask release];
-        // Remove PNG file
-        [[NSFileManager defaultManager] removeItemAtPath:pngFilename error:NULL];
-    }
-    else if (imageFormat_ != kTupacImageFormatPNG)
-    {
-        NSString *pvrFilename = [self.outputName stringByAppendingPathExtension:@"pvr"];
-        
-        NSString* format = NULL;
-        if (self.imageFormat == kTupacImageFormatPVR_RGBA8888) format = @"r8g8b8a8,UBN,lRGB";
-        else if (self.imageFormat == kTupacImageFormatPVR_RGBA4444) format = @"r4g4b4a4,USN,lRGB";
-        else if (self.imageFormat == kTupacImageFormatPVR_RGB565) format = @"r5g6b5,USN,lRGB";
-        else if (self.imageFormat == kTupacImageFormatPVRTC_4BPP) format = @"PVRTC1_4,UBN,lRGB";
-        else if (self.imageFormat == kTupacImageFormatPVRTC_2BPP) format = @"PVRTC1_2,UBN,lRGB";
-        
-        // Convert PNG to PVR(TC)
-        NSTask* pvrTask = [[NSTask alloc] init];
-        [pvrTask setCurrentDirectoryPath:outputDir];
-        [pvrTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"PVRTexToolCL"]];
-        NSMutableArray* args = [NSMutableArray arrayWithObjects:
-                         @"-i", pngFilename,
-                         @"-o", [self.outputName stringByAppendingPathExtension:@"pvr"],
-                         @"-p",
-                         @"-legacypvr",
-                         @"-f", format,
-                         @"-q", @"pvrtcbest",
-                         nil];
-        if (self.dither) [args addObject:@"-dither"];
-        [pvrTask setArguments:args];
-        [pvrTask launch];
-        [pvrTask waitUntilExit];
-        [pvrTask release];
-        
-        textureFileName = pvrFilename;
-        
-        // Remove PNG file
-        [[NSFileManager defaultManager] removeItemAtPath:pngFilename error:NULL];
-        
-        if (self.compress)
-        {
-            // Create compressed file (ccz)
-            NSTask* zipTask = [[NSTask alloc] init];
-            [zipTask setCurrentDirectoryPath:outputDir];
-            [zipTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ccz"]];
-            NSMutableArray* args = [NSMutableArray arrayWithObjects:textureFileName, nil];
-            [zipTask setArguments:args];
-            [zipTask launch];
-            [zipTask waitUntilExit];
-            [zipTask release];
-            
-            // Remove uncompressed file
-            [[NSFileManager defaultManager] removeItemAtPath:textureFileName error:NULL];
-            
-            // Update name of texture file
-            textureFileName = [textureFileName stringByAppendingPathExtension:@"ccz"];
-        }
-    }
+    
+    textureFileName = [[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_];
     
     // Metadata File Export
     textureFileName = [textureFileName lastPathComponent];

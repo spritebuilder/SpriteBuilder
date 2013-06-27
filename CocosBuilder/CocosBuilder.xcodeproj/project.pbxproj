@@ -151,6 +151,7 @@
 		B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3681773EA0E00B85CC0 /* NSPasteboard+CCB.m */; };
 		B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */ = {isa = PBXBuildFile; fileRef = B794AB90177A30EB004FF493 /* ui-nopreview.png */; };
 		B794AB95177A55B7004FF493 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B794AB94177A55B7004FF493 /* QTKit.framework */; };
+		B794AB99177CE09D004FF493 /* FCFormatConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B794AB98177CE09D004FF493 /* FCFormatConverter.m */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -1091,6 +1092,8 @@
 		B78DA3681773EA0E00B85CC0 /* NSPasteboard+CCB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPasteboard+CCB.m"; sourceTree = "<group>"; };
 		B794AB90177A30EB004FF493 /* ui-nopreview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ui-nopreview.png"; sourceTree = "<group>"; };
 		B794AB94177A55B7004FF493 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		B794AB97177CE09D004FF493 /* FCFormatConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FCFormatConverter.h; path = FCFormatConverter/FCFormatConverter.h; sourceTree = "<group>"; };
+		B794AB98177CE09D004FF493 /* FCFormatConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FCFormatConverter.m; path = FCFormatConverter/FCFormatConverter.m; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -2550,6 +2553,7 @@
 				E3F4087216A9EEAE009A0253 /* CCZ compression */,
 				E33473EC169C5402000737CC /* CCControlExtension */,
 				E3DEF5B5169B358500B9DCF4 /* Lame */,
+				B794AB96177CDFF7004FF493 /* FormatConverter */,
 				E380B24A1642FC240006D31C /* Tupac */,
 				E35A134E15B038D700C9AA15 /* ThoMoNetworking */,
 				E3F541BA15AED66D00EAAFBD /* Fragaria */,
@@ -2847,6 +2851,15 @@
 				A77EF58F171FD30E00451DA4 /* cwebp */,
 			);
 			name = WebP;
+			sourceTree = "<group>";
+		};
+		B794AB96177CDFF7004FF493 /* FormatConverter */ = {
+			isa = PBXGroup;
+			children = (
+				B794AB97177CE09D004FF493 /* FCFormatConverter.h */,
+				B794AB98177CE09D004FF493 /* FCFormatConverter.m */,
+			);
+			name = FormatConverter;
 			sourceTree = "<group>";
 		};
 		E3214C3F15D3B9D0002413A7 /* Custom Properties */ = {
@@ -5240,6 +5253,7 @@
 				E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */,
 				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
 				B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */,
+				B794AB99177CE09D004FF493 /* FCFormatConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
