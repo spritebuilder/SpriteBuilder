@@ -54,7 +54,7 @@ enum {
     NSString* browser;
     BOOL publishToSingleResolution;
     NSArray* publishForResolutions;
-    NSMutableArray* generatedSpriteSheetDirs;
+    NSArray* generatedSpriteSheetDirs;
     NSMutableSet* publishedResources;
     NSMutableDictionary* renamedFiles;
     int targetType;

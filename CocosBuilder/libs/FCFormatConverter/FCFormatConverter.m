@@ -26,6 +26,11 @@ static FCFormatConverter* gDefaultConverter = NULL;
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* dstDir = [srcPath stringByDeletingLastPathComponent];
     
+    if (format == kFCImageFormatPNG)
+    {
+        // PNG image - no conversion required
+        return [[srcPath copy] autorelease];
+    }
     if (format == kFCImageFormatPNG_8BIT)
     {
         // 8 bit PNG image
@@ -41,7 +46,7 @@ static FCFormatConverter* gDefaultConverter = NULL;
         
         if ([fm fileExistsAtPath:srcPath])
         {
-            return srcPath;
+            return [[srcPath copy] autorelease];
         }
     }
     else if (format == kFCImageFormatPVR_RGBA8888 ||
@@ -69,7 +74,7 @@ static FCFormatConverter* gDefaultConverter = NULL;
                                 @"-o", dstPath,
                                 @"-p",
                                 @"-legacypvr",
-                                @"-f", format,
+                                @"-f", formatStr,
                                 @"-q", @"pvrtcbest",
                                 nil];
         if (dither) [args addObject:@"-dither"];

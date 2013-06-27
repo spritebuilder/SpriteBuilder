@@ -328,7 +328,6 @@
 - (BOOL) publishDirectory:(NSString*) dir subPath:(NSString*) subPath
 {
     CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
-    ResourceManager* resManager = [ResourceManager sharedManager];
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
     
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -348,7 +347,8 @@
     BOOL isGeneratedSpriteSheet = NO;
     NSDate* srcSpriteSheetDate = NULL;
     
-    if ([projectSettings.generatedSpriteSheets objectForKey:subPath])
+    //if ([projectSettings.generatedSpriteSheets objectForKey:subPath])
+    if ([[projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue])
     {
         isGeneratedSpriteSheet = YES;
         srcSpriteSheetDate = [self latestModifiedDateForDirectory:dir];
@@ -579,7 +579,7 @@
             else if (targetType == kCCBPublisherTargetTypeAndroid)
             {
                 packer.imageFormat = format_android;
-                packer.compress = NO;
+                packer.compress = format_android_compress;
                 packer.dither = format_android_dither;
             }
             /*
@@ -619,9 +619,8 @@
 - (BOOL) containsCCBFile:(NSString*) dir
 {
     NSFileManager* fm = [NSFileManager defaultManager];
-    ResourceManager* resManager = [ResourceManager sharedManager];
     NSArray* files = [fm contentsOfDirectoryAtPath:dir error:NULL];
-    NSArray* resIndependentDirs = [resManager resIndependentDirs];
+    NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
     
     for (NSString* file in files) {
         BOOL isDirectory;
@@ -830,11 +829,13 @@
     renamedFiles = [NSMutableDictionary dictionary];
     
     // Setup paths for automatically generated sprite sheets
+    /*
     generatedSpriteSheetDirs = [NSMutableArray array];
     for (NSString* dir in projectSettings.generatedSpriteSheets)
     {
         [generatedSpriteSheetDirs addObject:dir];
-    }
+    }*/
+    generatedSpriteSheetDirs = [projectSettings smartSpriteSheetDirectories];
     
     // Publish resources and ccb-files
     for (NSString* dir in projectSettings.absoluteResourcePaths)

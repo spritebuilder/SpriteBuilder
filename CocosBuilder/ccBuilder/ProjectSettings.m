@@ -36,80 +36,6 @@
 
 #import <ApplicationServices/ApplicationServices.h>
 
-/*
-@implementation ProjectSettingsGeneratedSpriteSheet
-
-@synthesize isDirty;
-@synthesize textureFileFormat;
-@synthesize dither;
-@synthesize compress;
-@synthesize textureFileFormatAndroid;
-@synthesize ditherAndroid;
-@synthesize textureFileFormatHTML5;
-@synthesize ditherHTML5;
-
-- (id)init
-{
-    self = [super init];
-    if (!self) return NULL;
-    
-    self.isDirty = NO;
-    
-    self.textureFileFormat = 0; // PNG
-    self.dither = YES;
-    self.compress = YES;
-    
-    self.textureFileFormatAndroid = 0;
-    self.ditherAndroid = YES;
-    
-    self.textureFileFormatHTML5 = 0;
-    self.ditherHTML5 = YES;
-    
-    return self;
-}
-
-- (id)initWithSerialization:(id)dict
-{
-    self = [super init];
-    if (!self) return NULL;
-    
-    self.isDirty = [[dict objectForKey:@"isDirty"] boolValue];
-
-    self.textureFileFormat = [[dict objectForKey:@"textureFileFormat"] intValue];
-    self.dither = [[dict objectForKey:@"dither"] boolValue];
-    self.compress = [[dict objectForKey:@"compress"] boolValue];
-    
-    self.textureFileFormatAndroid = [[dict objectForKey:@"textureFileFormatAndroid"] intValue];
-    self.ditherAndroid = [[dict objectForKey:@"ditherAndroid"] boolValue];
-    
-    self.textureFileFormatHTML5 = [[dict objectForKey:@"textureFileFormatHTML5"] intValue];
-    self.ditherHTML5 = [[dict objectForKey:@"ditherHTML5"] boolValue];
-
-    return self;
-}
-
-- (id) serialize
-{
-    NSMutableDictionary* ser = [NSMutableDictionary dictionary];
-    
-    [ser setObject:[NSNumber numberWithBool:self.isDirty] forKey:@"isDirty"];
-
-    [ser setObject:[NSNumber numberWithInt:self.textureFileFormat] forKey:@"textureFileFormat"];
-    [ser setObject:[NSNumber numberWithBool:self.dither] forKey:@"dither"];
-    [ser setObject:[NSNumber numberWithBool:self.compress] forKey:@"compress"];
-    
-    [ser setObject:[NSNumber numberWithInt:self.textureFileFormatAndroid] forKey:@"textureFileFormatAndroid"];
-    [ser setObject:[NSNumber numberWithBool:self.ditherAndroid] forKey:@"ditherAndroid"];
-    
-    [ser setObject:[NSNumber numberWithInt:self.textureFileFormatHTML5] forKey:@"textureFileFormatHTML5"];
-    [ser setObject:[NSNumber numberWithBool:self.ditherHTML5] forKey:@"ditherHTML5"];
-
-    return ser;
-}
-
-@end
- */
-
 @implementation ProjectSettings
 
 @synthesize projectPath;
@@ -148,7 +74,6 @@
 @synthesize deviceOrientationLandscapeLeft;
 @synthesize deviceOrientationLandscapeRight;
 @synthesize resourceAutoScaleFactor;
-@synthesize generatedSpriteSheets;
 @synthesize breakpoints;
 @synthesize versionStr;
 @synthesize needRepublish;
@@ -173,8 +98,8 @@
     self.resourceAutoScaleFactor = 4;
     
     self.publishEnablediPhone = YES;
-    self.publishEnabledAndroid = NO;
-    self.publishEnabledHTML5 = YES;
+    self.publishEnabledAndroid = YES;
+    self.publishEnabledHTML5 = NO;
     
     self.publishResolution_ios_phone = YES;
     self.publishResolution_ios_phonehd = YES;
@@ -193,8 +118,6 @@
     self.publishAudioQuality_android = 1;
     
     breakpoints = [[NSMutableDictionary dictionary] retain];
-    
-    generatedSpriteSheets = [[NSMutableDictionary dictionary] retain];
     
     resourceProperties = [[NSMutableDictionary dictionary] retain];
     
@@ -305,7 +228,6 @@
     self.publishDirectory = NULL;
     self.exporter = NULL;
     self.availableExporters = NULL;
-    [generatedSpriteSheets release];
     [resourceProperties release];
     [breakpoints release];
     [super dealloc];
@@ -490,6 +412,7 @@
 
 - (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key
 {
+    // Create value if it doesn't exist
     NSMutableDictionary* props = [resourceProperties valueForKey:relPath];
     if (!props)
     {
@@ -497,9 +420,18 @@
         [resourceProperties setValue:props forKey:relPath];
     }
     
-    [props setValue:val forKey:key];
-    
-    [self storeDelayed];
+    // Compare to old value
+    id oldValue = [props objectForKey:key];
+    if (!(oldValue && [oldValue isEqual:val]))
+    {
+        // Set the value if it has changed
+        [props setValue:val forKey:key];
+        
+        // Also mark as dirty
+        [props setValue:[NSNumber numberWithBool:YES] forKey:@"isDirty"];
+        
+        [self storeDelayed];
+    }
 }
 
 - (id) valueForResource:(RMResource*) res andKey:(id) key
@@ -528,6 +460,20 @@
     
     [self storeDelayed];
 }
+
+- (NSArray*) smartSpriteSheetDirectories
+{
+    NSMutableArray* dirs = [NSMutableArray array];
+    for (NSString* relPath in resourceProperties)
+    {
+        if ([[[resourceProperties objectForKey:relPath] objectForKey:@"isSmartSpriteSheet"] boolValue])
+        {
+            [dirs addObject:relPath];
+        }
+    }
+    return dirs;
+}
+
 
 - (void) removedResourceAt:(NSString*) relPath
 {

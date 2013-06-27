@@ -29,38 +29,10 @@
 
 @class RMResource;
 
-/*
-@interface ProjectSettingsGeneratedSpriteSheet : NSObject
-{
-    BOOL isDirty;
-    int textureFileFormat;
-    BOOL dither;
-    BOOL compress;
-    int textureFileFormatAndroid;
-    BOOL ditherAndroid;
-    int textureFileFormatHTML5;
-    BOOL ditherHTML5;
-}
-@property (nonatomic,assign) BOOL isDirty;
-@property (nonatomic,assign) int textureFileFormat;
-@property (nonatomic,assign) BOOL dither;
-@property (nonatomic,assign) BOOL compress;
-@property (nonatomic,assign) int textureFileFormatAndroid;
-@property (nonatomic,assign) BOOL ditherAndroid;
-@property (nonatomic,assign) int textureFileFormatHTML5;
-@property (nonatomic,assign) BOOL ditherHTML5;
-
-- (id)initWithSerialization:(id)dict;
-- (id)serialize;
-@end
- 
- */
-
 @interface ProjectSettings : NSObject
 {
     NSString* projectPath;
     NSMutableArray* resourcePaths;
-    NSMutableDictionary* generatedSpriteSheets;
     NSMutableDictionary* breakpoints;
     NSMutableDictionary* resourceProperties;
     
@@ -160,8 +132,6 @@
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
 
-@property (nonatomic, readonly) NSDictionary* generatedSpriteSheets;
-
 @property (nonatomic,readonly) NSDictionary* breakpoints;
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
@@ -180,6 +150,8 @@
 - (id) valueForRelPath:(NSString*) relPath andKey:(id) key;
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key;
 - (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key;
+
+- (NSArray*) smartSpriteSheetDirectories;
 
 // Handling moved and deleted resources
 - (void) removedResourceAt:(NSString*) relPath;
