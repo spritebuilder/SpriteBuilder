@@ -1342,6 +1342,34 @@
     }
 }
 
+- (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir
+{
+    for (RMResource* res in dir.any)
+    {
+        if ([res.filePath isEqualToString:path]) return res;
+        if (res.type == kCCBResTypeDirectory)
+        {
+            RMDirectory* subDir = res.data;
+            RMResource* found = [self resourceForPath:path inDir:subDir];
+            if (found) return found;
+        }
+    }
+    return NULL;
+}
+
+- (RMResource*) resourceForPath:(NSString*) path
+{
+    // Find resource for path
+    for (RMDirectory* dir in activeDirectories)
+    {
+        RMResource* res = [self resourceForPath:path inDir:dir];
+        if (res) return res;
+    }
+    return NULL;
+}
+
+#pragma mark Debug
+
 - (void) debugPrintDirectories
 {
     NSLog(@"directories: %@", directories);

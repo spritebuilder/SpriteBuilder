@@ -2476,6 +2476,47 @@ static BOOL hideAllToNextSeparator;
     }];
 }
 
+- (IBAction) newFolder:(id)sender
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    // Find directory
+    NSArray* dirs = [ResourceManager sharedManager].activeDirectories;
+    if (dirs.count == 0) return;
+    RMDirectory* dir = [dirs objectAtIndex:0];
+    NSString* dirPath = dir.dirPath;
+    
+    int attempt = 0;
+    NSString* newDirPath = NULL;
+    while (newDirPath == NULL)
+    {
+        NSString* dirName = NULL;
+        if (attempt == 0) dirName = @"Untitled Folder";
+        else dirName = [NSString stringWithFormat:@"Untitled Folder %d", attempt];
+        
+        newDirPath = [dirPath stringByAppendingPathComponent:dirName];
+        
+        NSLog(@"Testing: %@", newDirPath);
+        if ([fm fileExistsAtPath:newDirPath])
+        {
+            attempt++;
+            newDirPath = NULL;
+        }
+    }
+    
+    // Create directory
+    [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
+    [[ResourceManager sharedManager] reloadAllResources];
+    
+    if (dirs.count > 1)
+    {
+        [outlineProject expandItem:[dirs objectAtIndex:0]];
+    }
+    
+    RMResource* res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
+    [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
+}
+
 - (IBAction) newDocument:(id)sender
 {
     NewDocWindowController* wc = [[NewDocWindowController alloc] initWithWindowNibName:@"NewDocWindow"];
