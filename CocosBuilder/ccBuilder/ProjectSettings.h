@@ -85,6 +85,9 @@
     int publishResolutionHTML5_height;
     int publishResolutionHTML5_scale;
     
+    int publishAudioQuality_ios;
+    int publishAudioQuality_android;
+    
     BOOL isSafariExist;
     BOOL isChromeExist;
     BOOL isFirefoxExist;
@@ -132,6 +135,9 @@
 @property (nonatomic,assign) int publishResolutionHTML5_width;
 @property (nonatomic,assign) int publishResolutionHTML5_height;
 @property (nonatomic,assign) int publishResolutionHTML5_scale;
+
+@property (nonatomic,assign) int publishAudioQuality_ios;
+@property (nonatomic,assign) int publishAudioQuality_android;
 
 @property (nonatomic,assign) BOOL isSafariExist;
 @property (nonatomic,assign) BOOL isChromeExist;

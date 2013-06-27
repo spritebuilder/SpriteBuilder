@@ -403,8 +403,6 @@
 		E373BF0D17188FC000D71602 /* JavaScriptAutoCompleteHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E373BF0C17188FC000D71602 /* JavaScriptAutoCompleteHandler.m */; };
 		E373BF1117189D2E00D71602 /* autoCompleteDefinitions in Resources */ = {isa = PBXBuildFile; fileRef = E373BF1017189D2E00D71602 /* autoCompleteDefinitions */; };
 		E3748303171F83A300486659 /* editor-jump.png in Resources */ = {isa = PBXBuildFile; fileRef = E3748302171F83A300486659 /* editor-jump.png */; };
-		E3799EA6155970F400196B4A /* ProjectSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3799EA5155970F400196B4A /* ProjectSettingsWindow.xib */; };
-		E3799EAA1559771E00196B4A /* ProjectSettingsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3799EA91559771D00196B4A /* ProjectSettingsWindow.m */; };
 		E3799EAD155979BF00196B4A /* ProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E3799EAC155979BF00196B4A /* ProjectSettings.m */; };
 		E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */ = {isa = PBXBuildFile; fileRef = E37FCAEC175D2704009F81D6 /* ui-cogs.png */; };
 		E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37FCAED175D2704009F81D6 /* ui-cogs@2x.png */; };
@@ -1530,9 +1528,6 @@
 		E373BF0C17188FC000D71602 /* JavaScriptAutoCompleteHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JavaScriptAutoCompleteHandler.m; sourceTree = "<group>"; };
 		E373BF1017189D2E00D71602 /* autoCompleteDefinitions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = autoCompleteDefinitions; sourceTree = "<group>"; };
 		E3748302171F83A300486659 /* editor-jump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-jump.png"; sourceTree = "<group>"; };
-		E3799EA5155970F400196B4A /* ProjectSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsWindow.xib; sourceTree = "<group>"; };
-		E3799EA81559771D00196B4A /* ProjectSettingsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsWindow.h; sourceTree = "<group>"; };
-		E3799EA91559771D00196B4A /* ProjectSettingsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindow.m; sourceTree = "<group>"; };
 		E3799EAB155979BF00196B4A /* ProjectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettings.h; sourceTree = "<group>"; };
 		E3799EAC155979BF00196B4A /* ProjectSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettings.m; sourceTree = "<group>"; };
 		E37FCAEC175D2704009F81D6 /* ui-cogs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ui-cogs.png"; sourceTree = "<group>"; };
@@ -2116,9 +2111,6 @@
 				E3EDBC0F1546D23000EEF1F3 /* ResolutionSetting.m */,
 				E3799EAB155979BF00196B4A /* ProjectSettings.h */,
 				E3799EAC155979BF00196B4A /* ProjectSettings.m */,
-				E3799EA5155970F400196B4A /* ProjectSettingsWindow.xib */,
-				E3799EA81559771D00196B4A /* ProjectSettingsWindow.h */,
-				E3799EA91559771D00196B4A /* ProjectSettingsWindow.m */,
 				E3808DB31641C45B00398456 /* PublishSettingsWindow.xib */,
 				E3808DB51641CB6300398456 /* PublishSettingsWindow.h */,
 				E3808DB61641CB6400398456 /* PublishSettingsWindow.m */,
@@ -4625,7 +4617,6 @@
 				E3DC1B8C154F18660087724C /* size-3.png in Resources */,
 				E3DC1B8D154F18660087724C /* size-4.png in Resources */,
 				E334069715517225000FBD0B /* InspectorFloatScale.xib in Resources */,
-				E3799EA6155970F400196B4A /* ProjectSettingsWindow.xib in Resources */,
 				E3DCFD9415627FAB00BD7D7F /* WarningsWindow.xib in Resources */,
 				E3DCFD9C15629FC700BD7D7F /* TaskStatusWindow.xib in Resources */,
 				E3BF89D9156D36B7001A24CE /* CocosBuilderProjectIcon.icns in Resources */,
@@ -5145,7 +5136,6 @@
 				E3EDBC1415483E3200EEF1F3 /* ResolutionSettingsWindow.m in Sources */,
 				E3EDBC251549971000EEF1F3 /* CCBFileUtil.m in Sources */,
 				E334069B1551725F000FBD0B /* InspectorFloatScale.m in Sources */,
-				E3799EAA1559771E00196B4A /* ProjectSettingsWindow.m in Sources */,
 				E3799EAD155979BF00196B4A /* ProjectSettings.m in Sources */,
 				E3462867155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m in Sources */,
 				E346286B155C18D80043EAB1 /* SavePanelLimiter.m in Sources */,

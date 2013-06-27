@@ -131,6 +131,8 @@
 @synthesize publishResolutionHTML5_width;
 @synthesize publishResolutionHTML5_height;
 @synthesize publishResolutionHTML5_scale;
+@synthesize publishAudioQuality_ios;
+@synthesize publishAudioQuality_android;
 @synthesize isSafariExist;
 @synthesize isChromeExist;
 @synthesize isFirefoxExist;
@@ -186,6 +188,9 @@
     self.publishResolutionHTML5_width = 480;
     self.publishResolutionHTML5_height = 320;
     self.publishResolutionHTML5_scale = 1;
+    
+    self.publishAudioQuality_ios = 1;
+    self.publishAudioQuality_android = 1;
     
     breakpoints = [[NSMutableDictionary dictionary] retain];
     
@@ -247,6 +252,11 @@
     if (!publishResolutionHTML5_width) publishResolutionHTML5_width = 960;
     if (!publishResolutionHTML5_height) publishResolutionHTML5_height = 640;
     if (!publishResolutionHTML5_scale) publishResolutionHTML5_scale = 2;
+    
+    self.publishAudioQuality_ios = [[dict objectForKey:@"publishAudioQuality_ios"]intValue];
+    if (!self.publishAudioQuality_ios) self.publishAudioQuality_ios = 1;
+    self.publishAudioQuality_android = [[dict objectForKey:@"publishAudioQuality_android"]intValue];
+    if (!self.publishAudioQuality_android) self.publishAudioQuality_android = 1;
     
     self.flattenPaths = [[dict objectForKey:@"flattenPaths"] boolValue];
     self.publishToZipFile = [[dict objectForKey:@"publishToZipFile"] boolValue];
@@ -336,6 +346,9 @@
     [dict setObject:[NSNumber numberWithInt:publishResolutionHTML5_width] forKey:@"publishResolutionHTML5_width"];
     [dict setObject:[NSNumber numberWithInt:publishResolutionHTML5_height] forKey:@"publishResolutionHTML5_height"];
     [dict setObject:[NSNumber numberWithInt:publishResolutionHTML5_scale] forKey:@"publishResolutionHTML5_scale"];
+    
+    [dict setObject:[NSNumber numberWithInt:publishAudioQuality_ios] forKey:@"publishAudioQuality_ios"];
+    [dict setObject:[NSNumber numberWithInt:publishAudioQuality_android] forKey:@"publishAudioQuality_android"];
     
     [dict setObject:[NSNumber numberWithBool:flattenPaths] forKey:@"flattenPaths"];
     [dict setObject:[NSNumber numberWithBool:publishToZipFile] forKey:@"publishToZipFile"];

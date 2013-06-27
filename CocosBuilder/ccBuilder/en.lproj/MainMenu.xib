@@ -520,20 +520,11 @@
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
 								</object>
-								<object class="NSMenuItem" id="144479831">
+								<object class="NSMenuItem" id="20672123">
 									<reference key="NSMenu" ref="720053764"/>
 									<string key="NSTitle">Project Settings...</string>
 									<string key="NSKeyEquiv">;</string>
 									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="35465992"/>
-									<reference key="NSMixedImage" ref="502551668"/>
-								</object>
-								<object class="NSMenuItem" id="20672123">
-									<reference key="NSMenu" ref="720053764"/>
-									<string key="NSTitle">Publish Settings...</string>
-									<string key="NSKeyEquiv">;</string>
-									<int key="NSKeyEquivModMask">1179648</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
 									<reference key="NSMixedImage" ref="502551668"/>
@@ -4749,14 +4740,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">menuProjectSettings:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="144479831"/>
-					</object>
-					<int key="connectionID">1484</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">menuNewProject:</string>
 						<reference key="source" ref="976324537"/>
 						<reference key="destination" ref="579980401"/>
@@ -5900,26 +5883,6 @@
 					<int key="connectionID">1511</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: projectSettings</string>
-						<reference key="source" ref="144479831"/>
-						<reference key="destination" ref="976324537"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="144479831"/>
-							<reference key="NSDestination" ref="976324537"/>
-							<string key="NSLabel">enabled: projectSettings</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">projectSettings</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSIsNotNil</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1515</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">topView</string>
 						<reference key="source" ref="937207363"/>
@@ -6604,7 +6567,6 @@
 							<reference ref="962042828"/>
 							<reference ref="149260753"/>
 							<reference ref="275318861"/>
-							<reference ref="144479831"/>
 							<reference ref="107872598"/>
 							<reference ref="939868915"/>
 							<reference ref="669744098"/>
@@ -7549,11 +7511,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1481</int>
 						<reference key="object" ref="275318861"/>
-						<reference key="parent" ref="720053764"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1482</int>
-						<reference key="object" ref="144479831"/>
 						<reference key="parent" ref="720053764"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -9158,7 +9115,6 @@
 					<string>1478.IBPluginDependency</string>
 					<string>1479.IBPluginDependency</string>
 					<string>1481.IBPluginDependency</string>
-					<string>1482.IBPluginDependency</string>
 					<string>149.IBPluginDependency</string>
 					<string>1491.IBPluginDependency</string>
 					<string>1493.IBPluginDependency</string>
@@ -9522,7 +9478,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="2"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -9995,7 +9950,6 @@
 							<string>menuEditCustomPropSettings:</string>
 							<string>menuEditSmartSpriteSheet:</string>
 							<string>menuMoveObject:</string>
-							<string>menuNewProject:</string>
 							<string>menuNudgeObject:</string>
 							<string>menuOpenResourceManager:</string>
 							<string>menuPublishProjectAndRun:</string>
@@ -10010,7 +9964,6 @@
 							<string>pasteAsChild:</string>
 							<string>performClose:</string>
 							<string>pressedPanelVisibility:</string>
-							<string>pressedPlaybackControl:</string>
 							<string>pressedToolSelection:</string>
 							<string>pressedZoom:</string>
 							<string>redo:</string>
@@ -10019,8 +9972,6 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -10066,7 +10017,6 @@
 							<string>menuEditCustomPropSettings:</string>
 							<string>menuEditSmartSpriteSheet:</string>
 							<string>menuMoveObject:</string>
-							<string>menuNewProject:</string>
 							<string>menuNudgeObject:</string>
 							<string>menuOpenResourceManager:</string>
 							<string>menuPublishProjectAndRun:</string>
@@ -10081,7 +10031,6 @@
 							<string>pasteAsChild:</string>
 							<string>performClose:</string>
 							<string>pressedPanelVisibility:</string>
-							<string>pressedPlaybackControl:</string>
 							<string>pressedToolSelection:</string>
 							<string>pressedZoom:</string>
 							<string>redo:</string>
@@ -10128,10 +10077,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">menuMoveObject:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuNewProject:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -10188,10 +10133,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">pressedPanelVisibility:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">pressedPlaybackControl:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
