@@ -52,7 +52,6 @@ enum {
     NSString* publishFormat;
     BOOL runAfterPublishing;
     NSString* browser;
-    BOOL publishToSingleResolution;
     NSArray* publishForResolutions;
     NSArray* generatedSpriteSheetDirs;
     NSMutableSet* publishedResources;

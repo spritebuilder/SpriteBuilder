@@ -21,6 +21,26 @@ static FCFormatConverter* gDefaultConverter = NULL;
     return gDefaultConverter;
 }
 
+- (NSString*) proposedNameForConvertedImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress
+{
+    if (format == kFCImageFormatPNG ||
+        format == kFCImageFormatPNG_8BIT)
+    {
+        return [[srcPath copy] autorelease];
+    }
+    else if (format == kFCImageFormatPVR_RGBA8888 ||
+             format == kFCImageFormatPVR_RGBA4444 ||
+             format == kFCImageFormatPVR_RGB565 ||
+             format == kFCImageFormatPVRTC_4BPP ||
+             format == kFCImageFormatPVRTC_2BPP)
+    {
+        NSString* dstPath = [[srcPath stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"pvr"];
+        if (compress) dstPath = [dstPath stringByAppendingPathExtension:@"ccz"];
+        return dstPath;
+    }
+    return NULL;
+}
+
 - (NSString*) convertImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress
 {
     NSFileManager* fm = [NSFileManager defaultManager];
