@@ -22,11 +22,20 @@ enum {
     kFCImageFormatJPG_Low,
 };
 
+enum {
+    kFCSoundFormatCAF,
+    kFCSoundFormatMP4,
+    kFCSoundFormatOGG,
+};
+
 @interface FCFormatConverter : NSObject
 
 + (FCFormatConverter*) defaultConverter;
 
 - (NSString*) proposedNameForConvertedImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress;
 - (NSString*) convertImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress;
+
+- (NSString*) proposedNameForConvertedSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality;
+- (NSString*) convertSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality;
 
 @end

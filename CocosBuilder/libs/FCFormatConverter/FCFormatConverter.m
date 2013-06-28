@@ -135,4 +135,23 @@ static FCFormatConverter* gDefaultConverter = NULL;
     return NULL;
 }
 
+- (NSString*) proposedNameForConvertedSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality
+{
+    NSString* ext = NULL;
+    if (format == kFCSoundFormatCAF) ext = @"caf";
+    else if (format == kFCSoundFormatMP4) ext = @"mp4";
+    else if (format == kFCSoundFormatOGG) ext = @"ogg";
+    
+    if (ext)
+    {
+        return [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:ext];
+    }
+    return NULL;
+}
+
+- (NSString*) convertSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality
+{
+    return NULL;
+}
+
 @end

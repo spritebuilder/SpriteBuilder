@@ -243,6 +243,12 @@
     // Fetch new name
     NSString* dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:dstPath format:format dither:dither compress:compress];
     
+    // Add renaming rule
+    NSString* relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath format:format dither:dither compress:compress];
+    [self addRenamingRuleFrom:relPath to:relPathRenamed];
+    
+    // Copy and convert the image
+    
     if ([fm fileExistsAtPath:srcPath])
     {
         // Has customized file for resolution
@@ -299,6 +305,51 @@
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish file %@, make sure it is in the resources-auto folder.",srcFileName] isFatal:NO];
         return YES;
     }
+}
+
+- (BOOL) publishSoundFile:(NSString*) srcPath to:(NSString*) dstPath
+{
+    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
+    
+    int format = 0;
+    int quality = 0;
+    
+    if (targetType == kCCBPublisherTargetTypeIPhone)
+    {
+        int formatRaw = [[projectSettings valueForRelPath:relPath andKey:@"format_ios_sound"] intValue];
+        quality = [[projectSettings valueForRelPath:relPath andKey:@"format_ios_sound_quality"] intValue];
+        if (!quality) quality = projectSettings.publishAudioQuality_ios;
+        
+        if (formatRaw == 0) format = kFCSoundFormatCAF;
+        else if (formatRaw == 1) format = kFCSoundFormatMP4;
+        else
+        {
+            // TODO: Add warning
+            return NO;
+        }
+    }
+    else if (targetType == kCCBPublisherTargetTypeAndroid)
+    {
+        int formatRaw = [[projectSettings valueForRelPath:relPath andKey:@"format_android_sound"] intValue];
+        quality = [[projectSettings valueForRelPath:relPath andKey:@"format_android_sound_quality"] intValue];
+        if (!quality) quality = projectSettings.publishAudioQuality_android;
+        
+        if (formatRaw == 0) format = kFCSoundFormatOGG;
+        else
+        {
+            // TODO: Add warning
+            return NO;
+        }
+    }
+    
+    
+    
+    return YES;
+}
+
+- (BOOL) publishRegularFile:(NSString*) srcPath to:(NSString*) dstPath
+{
+    return YES;
 }
 
 - (BOOL) publishDirectory:(NSString*) dir subPath:(NSString*) subPath
@@ -433,11 +484,18 @@
                 // Copy file (and possibly convert)
                 if ([ext isEqualToString:@"png"])
                 {
+                    // Publish images
                     [self publishImageFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
+                }
+                else if ([ext isEqualToString:@"wav"])
+                {
+                    // Publish sounds
+                    [self publishSoundFile:filePath to:dstFile];
                 }
                 else
                 {
-                    // TODO: Continue here!
+                    // Publish any other type of file
+                    [self publishRegularFile:filePath to:dstFile];
                 }
             }
             
