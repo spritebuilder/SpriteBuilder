@@ -34,8 +34,15 @@ static FCFormatConverter* gDefaultConverter = NULL;
              format == kFCImageFormatPVRTC_4BPP ||
              format == kFCImageFormatPVRTC_2BPP)
     {
-        NSString* dstPath = [[srcPath stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"pvr"];
+        NSString* dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"pvr"];
         if (compress) dstPath = [dstPath stringByAppendingPathExtension:@"ccz"];
+        return dstPath;
+    }
+    else if (format == kFCImageFormatJPG_Low ||
+             format == kFCImageFormatJPG_Medium ||
+             format == kFCImageFormatJPG_High)
+    {
+        NSString* dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
         return dstPath;
     }
     return NULL;
@@ -129,6 +136,39 @@ static FCFormatConverter* gDefaultConverter = NULL;
         {
             return dstPath;
         }
+    }
+    else if (format == kFCImageFormatJPG_Low ||
+             format == kFCImageFormatJPG_Medium ||
+             format == kFCImageFormatJPG_High)
+    {
+        // JPG image format
+        NSString* dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
+        
+        // Set the compression factor
+        float compressionFactor = 1;
+        if (format == kFCImageFormatJPG_High) compressionFactor = 0.9;
+        else if (format == kFCImageFormatJPG_Medium) compressionFactor = 0.6;
+        else if (format == kFCImageFormatJPG_Low) compressionFactor = 0.3;
+        
+        NSLog(@"Converting to JPEG quality: %f", compressionFactor);
+        
+        NSDictionary* props = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:compressionFactor] forKey:NSImageCompressionFactor];
+        
+        // Convert the file
+        NSBitmapImageRep* imageRep = [NSBitmapImageRep imageRepWithContentsOfFile:srcPath];
+        NSData* imgData = [imageRep representationUsingType:NSJPEGFileType properties:props];
+        
+        if (![imgData writeToFile:dstPath atomically:YES]) return NULL;
+        
+        // Remove old file
+        if (![srcPath isEqualToString:dstPath])
+        {
+            [fm removeItemAtPath:srcPath error:NULL];
+        }
+        
+        return dstPath;
+        
+        return NULL;
     }
     
     // Conversion failed
