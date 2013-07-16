@@ -150,8 +150,6 @@ static FCFormatConverter* gDefaultConverter = NULL;
         else if (format == kFCImageFormatJPG_Medium) compressionFactor = 0.6;
         else if (format == kFCImageFormatJPG_Low) compressionFactor = 0.3;
         
-        NSLog(@"Converting to JPEG quality: %f", compressionFactor);
-        
         NSDictionary* props = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:compressionFactor] forKey:NSImageCompressionFactor];
         
         // Convert the file
