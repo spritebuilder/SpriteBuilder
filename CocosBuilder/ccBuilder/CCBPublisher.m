@@ -157,6 +157,10 @@
     {
         if (![self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outDir:outDir resolution:resolution]) return NO;
     }
+    
+    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcFile];
+    [projectSettings clearDirtyMarkerForRelPath:relPath];
+    
     return YES;
 }
 
@@ -248,6 +252,7 @@
     [self addRenamingRuleFrom:relPath to:relPathRenamed];
     
     // Copy and convert the image
+    BOOL isDirty = [[projectSettings valueForRelPath:relPath andKey:@"isDirty"] boolValue];
     
     if ([fm fileExistsAtPath:srcPath])
     {
@@ -257,7 +262,7 @@
         NSDate* srcDate = [CCBFileUtil modificationDateForFile:srcPath];
         NSDate* dstDate = [CCBFileUtil modificationDateForFile:dstPathProposal];
         
-        if (dstDate && [srcDate isEqualToDate:dstDate])
+        if (dstDate && [srcDate isEqualToDate:dstDate] && !isDirty)
         {
             return YES;
         }
@@ -281,7 +286,7 @@
         NSDate* srcDate = [CCBFileUtil modificationDateForFile:srcAutoPath];
         NSDate* dstDate = [CCBFileUtil modificationDateForFile:dstPathProposal];
         
-        if (dstDate && [srcDate isEqualToDate:dstDate])
+        if (dstDate && [srcDate isEqualToDate:dstDate] && !isDirty)
         {
             return YES;
         }
@@ -612,7 +617,7 @@
         
         if (isDirty)
         {
-            [projectSettings removeObjectForRelPath:subPath andKey:@"isDirty"];
+            [projectSettings clearDirtyMarkerForRelPath:subPath];
             [projectSettings store];
         }
     }

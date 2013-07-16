@@ -461,6 +461,16 @@
     [self storeDelayed];
 }
 
+- (void) clearDirtyMarkerForResource:(RMResource*) res
+{
+    [self clearDirtyMarkerForRelPath:res.relativePath];
+}
+
+- (void) clearDirtyMarkerForRelPath:(NSString*) relPath
+{
+    [self removeObjectForRelPath:relPath andKey:@"isDirty"];
+}
+
 - (NSArray*) smartSpriteSheetDirectories
 {
     NSMutableArray* dirs = [NSMutableArray array];

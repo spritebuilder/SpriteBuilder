@@ -150,6 +150,8 @@
 - (id) valueForRelPath:(NSString*) relPath andKey:(id) key;
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key;
 - (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key;
+- (void) clearDirtyMarkerForResource:(RMResource*) res;
+- (void) clearDirtyMarkerForRelPath:(NSString*) relPath;
 
 - (NSArray*) smartSpriteSheetDirectories;
 
