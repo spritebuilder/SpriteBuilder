@@ -93,6 +93,7 @@
 #import "JavaScriptAutoCompleteHandler.h"
 #import "CCBFileUtil.h"
 #import "ResourceManagerPreviewView.h"
+#import "ResourceManagerUtil.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -2511,25 +2512,36 @@ static BOOL hideAllToNextSeparator;
     
     if (acceptedModal)
     {
-        // Accepted create document, prompt for place for file
-        NSSavePanel* saveDlg = [NSSavePanel savePanel];
-        [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"ccb"]];
+        NSString* filePath = [[[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath] stringByAppendingPathComponent:wc.documentName];
+        if (![[filePath pathExtension] isEqualToString:@"ccb"])
+        {
+            filePath = [filePath stringByAppendingPathExtension:@"ccb"];
+        }
         
-        SavePanelLimiter* limiter = [[SavePanelLimiter alloc] initWithPanel:saveDlg resManager:resManager];
+        BOOL isDir = NO;
         
-        [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
-            if (result == NSOKButton)
-            {
-                NSString *type = wc.rootObjectType;
-                NSMutableArray *resolutions = wc.availableResolutions;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                               dispatch_get_current_queue(), ^{
-                    [self newFile:[[saveDlg URL] path] type:type resolutions:resolutions];
-                });
-            }
+        if (!wc.documentName)
+        {
+            [self modalDialogTitle:@"Missing File Name" message:@"Failed to create file, no file name was specified."];
+        }
+        else if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+        {
+            [self modalDialogTitle:@"File Already Exists" message:@"Failed to create file, a file with the same name already exists."];
+        }
+        else if (![[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByDeletingLastPathComponent] isDirectory:&isDir] || !isDir)
+        {
+            [self modalDialogTitle:@"Invalid Directory" message:@"Failed to create file, the directory for the file doesn't exist."];
+        }
+        else
+        {
+            NSString *type = wc.rootObjectType;
+            NSMutableArray *resolutions = wc.availableResolutions;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
+                           dispatch_get_current_queue(), ^{
+                               [self newFile:filePath type:type resolutions:resolutions];
+                           });
             [wc release];
-            [limiter release];
-        }];
+        }
     }
     else
     {

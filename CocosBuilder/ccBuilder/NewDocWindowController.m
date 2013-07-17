@@ -29,6 +29,7 @@
 
 @implementation NewDocWindowController
 
+@synthesize documentName;
 @synthesize rootObjectType;
 @synthesize rootObjectTypes;
 @synthesize resolutions;
@@ -102,6 +103,14 @@
 - (void) awakeFromNib
 {
     [self addFullScreenResolutions];
+    
+    self.documentName = @"Untitled.ccb";
+    
+    // Select only the Untitled word
+    [documentNameField selectText:self];
+    NSText* textEditor = [self.window fieldEditor:YES forObject:documentNameField];
+    NSRange range = NSMakeRange(0, 8);
+    [textEditor setSelectedRange:range];
 }
 
 - (BOOL) canBeFullScreen:(NSString*) rot
@@ -192,6 +201,7 @@
 
 - (void) dealloc
 {
+    self.documentName = NULL;
     self.rootObjectType = NULL;
     self.resolutions = NULL;
     [super dealloc];

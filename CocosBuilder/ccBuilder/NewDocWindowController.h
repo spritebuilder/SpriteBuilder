@@ -28,6 +28,9 @@
 
 @interface NewDocWindowController : NSWindowController
 {
+    NSString* documentName;
+    IBOutlet NSTextField* documentNameField;
+    
     NSArray* rootObjectTypes;
     NSString* rootObjectType;
     
@@ -37,6 +40,7 @@
     BOOL canBeFullScreen;
 }
 
+@property (nonatomic,copy) NSString* documentName;
 @property (nonatomic,retain) NSArray* rootObjectTypes;
 @property (nonatomic,retain) NSString* rootObjectType;
 @property (nonatomic,retain) NSMutableArray* resolutions;
