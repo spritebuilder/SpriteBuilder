@@ -158,9 +158,6 @@
         if (![self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outDir:outDir resolution:resolution]) return NO;
     }
     
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcFile];
-    [projectSettings clearDirtyMarkerForRelPath:relPath];
-    
     return YES;
 }
 
@@ -179,7 +176,7 @@
         
         // Get modified date of sprite sheet src
         NSDate* srcDate = [self latestModifiedDateForDirectory:ssDir];
-        BOOL isDirty = [[projectSettings valueForRelPath:ssDirRel andKey:@"isDirty"] boolValue];
+        BOOL isDirty = [projectSettings isDirtyRelPath:ssDirRel];
         
         // Make the name for the final sprite sheet
         NSString* ssDstPath = [[[[outDir stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
@@ -252,7 +249,7 @@
     [self addRenamingRuleFrom:relPath to:relPathRenamed];
     
     // Copy and convert the image
-    BOOL isDirty = [[projectSettings valueForRelPath:relPath andKey:@"isDirty"] boolValue];
+    BOOL isDirty = [projectSettings isDirtyRelPath:relPath];
     
     if ([fm fileExistsAtPath:srcPath])
     {
@@ -329,7 +326,7 @@
         else if (formatRaw == 1) format = kFCSoundFormatMP4;
         else
         {
-            // TODO: Add warning
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
             return NO;
         }
     }
@@ -342,12 +339,38 @@
         if (formatRaw == 0) format = kFCSoundFormatOGG;
         else
         {
-            // TODO: Add warning
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
             return NO;
         }
     }
     
+    NSFileManager* fm = [NSFileManager defaultManager];
     
+    NSString* dstPathConverted = [[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:dstPath format:format quality:quality];
+    BOOL isDirty = [projectSettings isDirtyRelPath:relPath];
+    
+    [self addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath format:format quality:quality]];
+    
+    if ([fm fileExistsAtPath:dstPathConverted] && [[CCBFileUtil modificationDateForFile:srcPath] isEqualToDate:[CCBFileUtil modificationDateForFile:dstPathConverted]] && !isDirty)
+    {
+        // Skip files that are already converted
+        return YES;
+    }
+    
+    // Copy file
+    [fm copyItemAtPath:srcPath toPath:dstPath error:NULL];
+    
+    // Convert file
+    dstPathConverted = [[FCFormatConverter defaultConverter] convertSoundAtPath:dstPath format:format quality:quality];
+    
+    if (!dstPathConverted)
+    {
+        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert audio file %@", relPath] isFatal:NO];
+        return YES;
+    }
+    
+    // Update modification date
+    [CCBFileUtil setModificationDate:[CCBFileUtil modificationDateForFile:srcPath] forFile:dstPathConverted];
     
     return YES;
 }
@@ -550,7 +573,7 @@
         NSString* spriteSheetName = [outDir lastPathComponent];
         
         // Load settings
-        BOOL isDirty = [[projectSettings valueForRelPath:subPath andKey:@"isDirty"] boolValue];
+        BOOL isDirty = [projectSettings isDirtyRelPath:subPath];
         int format_ios = [[projectSettings valueForRelPath:subPath andKey:@"format_ios"] intValue];
         BOOL format_ios_dither = [[projectSettings valueForRelPath:subPath andKey:@"format_ios_dither"] boolValue];
         BOOL format_ios_compress= [[projectSettings valueForRelPath:subPath andKey:@"format_ios_compress"] boolValue];
@@ -614,12 +637,6 @@
         
         [publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
         [publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
-        
-        if (isDirty)
-        {
-            [projectSettings clearDirtyMarkerForRelPath:subPath];
-            [projectSettings store];
-        }
     }
     
     return YES;
@@ -1079,6 +1096,7 @@
     if (projectSettings.needRepublish)
     {
         projectSettings.needRepublish = NO;
+        [projectSettings clearAllDirtyMarkers];
         [projectSettings store];
     }
     return YES;

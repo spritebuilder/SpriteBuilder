@@ -114,8 +114,8 @@
     self.publishResolutionHTML5_height = 320;
     self.publishResolutionHTML5_scale = 1;
     
-    self.publishAudioQuality_ios = 1;
-    self.publishAudioQuality_android = 1;
+    self.publishAudioQuality_ios = 4;
+    self.publishAudioQuality_android = 4;
     
     breakpoints = [[NSMutableDictionary dictionary] retain];
     
@@ -461,14 +461,22 @@
     [self storeDelayed];
 }
 
-- (void) clearDirtyMarkerForResource:(RMResource*) res
+- (BOOL) isDirtyResource:(RMResource*) res
 {
-    [self clearDirtyMarkerForRelPath:res.relativePath];
+    return [self isDirtyRelPath:res.relativePath];
 }
 
-- (void) clearDirtyMarkerForRelPath:(NSString*) relPath
+- (BOOL) isDirtyRelPath:(NSString*) relPath
 {
-    [self removeObjectForRelPath:relPath andKey:@"isDirty"];
+    return [[self valueForRelPath:relPath andKey:@"isDirty"] boolValue];
+}
+
+- (void) clearAllDirtyMarkers
+{
+    for (NSString* relPath in resourceProperties)
+    {
+        [self removeObjectForRelPath:relPath andKey:@"isDirty"];
+    }
 }
 
 - (NSArray*) smartSpriteSheetDirectories
