@@ -42,11 +42,15 @@
 @interface ImageAndTextCell : NSTextFieldCell
 {
 @private
-    NSImage	*image;
+    NSImage* image;
+    NSImage* imageAlt;
 }
 
 - (void)setImage:(NSImage *)anImage;
 - (NSImage *)image;
+
+- (void)setImageAlt:(NSImage*) anImage;
+- (NSImage *)imageAlt;
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 - (NSSize)cellSize;

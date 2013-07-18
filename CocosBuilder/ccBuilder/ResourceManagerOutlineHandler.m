@@ -30,6 +30,8 @@
 #import "CCBGlobals.h"
 #import "ResourceManagerPreviewView.h"
 #import "NSPasteboard+CCB.h"
+#import "CCBWarnings.h"
+#import "ProjectSettings.h"
 
 @implementation ResourceManagerOutlineHandler
 
@@ -269,7 +271,11 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
+    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    ProjectSettings* settings = ad.projectSettings;
+    
     NSImage* icon = NULL;
+    NSImage* warningIcon = NULL;
     
     if ([item isKindOfClass:[RMResource class]])
     {
@@ -298,6 +304,12 @@
                 icon = [self smallIconForFile:res.filePath];
             }
         }
+        
+        // Add warning sign if there is a warning related to this file
+        if ([settings.lastWarnings warningForRelatedFile:res.relativePath])
+        {
+            warningIcon = [NSImage imageNamed:@"editor-warning.png"];
+        }
     }
     else if ([item isKindOfClass:[RMSpriteFrame class]])
     {
@@ -308,6 +320,7 @@
         icon = [self smallIconForFileType:@"p12"];
     }
     [cell setImage:icon];
+    [cell setImageAlt:warningIcon];
 }
 
 #pragma mark Dragging and dropping

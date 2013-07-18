@@ -77,6 +77,7 @@
 @synthesize breakpoints;
 @synthesize versionStr;
 @synthesize needRepublish;
+@synthesize lastWarnings;
 
 - (id) init
 {

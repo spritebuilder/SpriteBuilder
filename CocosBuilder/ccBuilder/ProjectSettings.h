@@ -28,6 +28,7 @@
 #define kCCBDefaultExportPlugIn @"ccbi"
 
 @class RMResource;
+@class CCBWarnings;
 
 @interface ProjectSettings : NSObject
 {
@@ -79,6 +80,8 @@
     
     NSString* versionStr;
     BOOL needRepublish;
+    
+    CCBWarnings* lastWarnings;
     
     BOOL storing;
 }
@@ -135,6 +138,8 @@
 @property (nonatomic,readonly) NSDictionary* breakpoints;
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
+
+@property (nonatomic, retain) CCBWarnings* lastWarnings;
 
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;

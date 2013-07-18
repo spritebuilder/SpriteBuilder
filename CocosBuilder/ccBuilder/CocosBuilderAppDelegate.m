@@ -2260,6 +2260,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Update and show warnings window
+    projectSettings.lastWarnings = warnings;
     publishWarningsWindow.warnings = warnings;
     
     [[publishWarningsWindow window] setIsVisible:(warnings.warnings.count > 0)];

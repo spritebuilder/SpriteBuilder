@@ -27,9 +27,11 @@
 @interface CCBWarning : NSObject
 {
     NSString* description;
+    NSString* relatedFile;
     BOOL fatal;
 }
 @property (nonatomic,copy) NSString* description;
+@property (nonatomic,copy) NSString* relatedFile;
 @property (nonatomic,assign) BOOL fatal;
 
 @end
@@ -38,6 +40,7 @@
 {
     NSString* warningsDescription;
     NSMutableArray* warnings;
+    NSMutableDictionary* warningsFiles;
 }
 @property (nonatomic,readonly) NSMutableArray* warnings;
 @property (nonatomic,copy) NSString* warningsDescription;
@@ -45,5 +48,7 @@
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal;
 - (void) addWarningWithDescription:(NSString*)description;
 - (void) addWarning:(CCBWarning*)warning;
+
+- (CCBWarning*) warningForRelatedFile:(NSString*) relatedFile;
 
 @end

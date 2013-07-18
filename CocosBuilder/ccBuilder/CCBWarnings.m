@@ -26,11 +26,13 @@
 
 @implementation CCBWarning
 @synthesize description;
+@synthesize relatedFile;
 @synthesize fatal;
 
 - (void) dealloc
 {
     self.description = NULL;
+    self.relatedFile = NULL;
     [super dealloc];
 }
 
@@ -48,6 +50,7 @@
     if (!self) return NULL;
     
     warnings = [[NSMutableArray array] retain];
+    warningsFiles = [[NSMutableDictionary dictionary] retain];
     self.warningsDescription = @"Warnings";
     
     return self;
@@ -55,8 +58,14 @@
 
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal
 {
+    [self addWarningWithDescription:description isFatal:fatal relatedFile:NULL];
+}
+
+- (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile
+{
     CCBWarning* warning = [[[CCBWarning alloc] init] autorelease];
     warning.description = description;
+    warning.relatedFile = relatedFile;
     warning.fatal = fatal;
     [self addWarning:warning];
 }
@@ -72,11 +81,22 @@
 {
     [warnings addObject:warning];
     NSLog(@"CCB WARNING: %@", warning.description);
+    
+    if (warning.relatedFile)
+    {
+        [warningsFiles setObject:warning forKey:warning.relatedFile];
+    }
+}
+
+- (CCBWarning*) warningForRelatedFile:(NSString*) relatedFile
+{
+    return [warningsFiles objectForKey:relatedFile];
 }
 
 - (void) dealloc
 {
     [warnings release];
+    [warningsFiles release];
     [super dealloc];
 }
 

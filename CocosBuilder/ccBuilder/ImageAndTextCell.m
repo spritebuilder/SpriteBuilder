@@ -54,7 +54,9 @@
 
 - (void)dealloc {
     [image release];
+    [imageAlt release];
     image = nil;
+    imageAlt = nil;
     [super dealloc];
 }
 
@@ -62,6 +64,7 @@
 {
     ImageAndTextCell *cell = (ImageAndTextCell *)[super copyWithZone:zone];
     cell->image = [image retain];
+    cell->imageAlt = [imageAlt retain];
     return cell;
 }
 
@@ -79,6 +82,20 @@
     return image;
 }
 
+- (void)setImageAlt:(NSImage *)anImage
+{
+    if (anImage != imageAlt)
+    {
+        [imageAlt release];
+        imageAlt = [anImage retain];
+    }
+}
+
+- (NSImage *)imageAlt
+{
+    return imageAlt;
+}
+
 - (NSRect)imageFrameForCellFrame:(NSRect)cellFrame
 {
     if (image != nil)
@@ -94,10 +111,33 @@
         return NSZeroRect;
 }
 
+- (NSRect)imageAltFrameForCellFrame:(NSRect)cellFrame
+{
+    if (imageAlt != nil)
+	{
+        NSRect imageFrame;
+        imageFrame.size = [imageAlt size];
+        imageFrame.origin = cellFrame.origin;
+        imageFrame.origin.x += cellFrame.size.width - imageAlt.size.width - 3;
+        //imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
+        
+        if ([self.controlView isFlipped])
+        {
+            imageFrame.origin.y += ceil((cellFrame.size.height + imageFrame.size.height) / 2);
+        }
+        else
+        {
+            imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
+        }
+        
+        return imageFrame;
+    }
+    else
+        return NSZeroRect;
+}
+
 - (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
 {
-    NSLog(@"editWithFrame");
-    
     NSRect textFrame, imageFrame;
     NSDivideRect (aRect, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
     [super editWithFrame: textFrame inView: controlView editor:textObj delegate:anObject event: theEvent];
@@ -114,8 +154,8 @@
 {
     if (image != nil)
 	{
-        NSSize	imageSize;
-        NSRect	imageFrame;
+        NSSize imageSize;
+        NSRect imageFrame;
 
         imageSize = [image size];
         NSDivideRect(cellFrame, &imageFrame, &cellFrame, 3 + imageSize.width, NSMinXEdge);
@@ -126,13 +166,18 @@
         }
         imageFrame.origin.x += 3;
         imageFrame.size = imageSize;
-
+        
         if ([controlView isFlipped])
+        {
             imageFrame.origin.y += ceil((cellFrame.size.height + imageFrame.size.height) / 2);
+        }
         else
+        {
             imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
+        }
 
         [image compositeToPoint:imageFrame.origin operation:NSCompositeSourceOver];
+        [imageAlt compositeToPoint:[self imageAltFrameForCellFrame:cellFrame].origin operation:NSCompositeSourceOver];
     }
     [super drawWithFrame:cellFrame inView:controlView];
 }
@@ -164,13 +209,6 @@
         return [NSColor blackColor];
     }
 }
-
-/*
-- (BOOL) isEditable
-{
-    NSLog(@"isEditable (ImageAndTextCell)");
-    return YES;
-}*/
 
 @end
 
