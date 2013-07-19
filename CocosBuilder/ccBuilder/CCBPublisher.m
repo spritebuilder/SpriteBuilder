@@ -602,6 +602,7 @@
             packer.outputName = spriteSheetFile;
             packer.outputFormat = TupacOutputFormatCocos2D;
             
+            // Set image format
             if (targetType == kCCBPublisherTargetTypeIPhone)
             {
                 packer.imageFormat = format_ios;
@@ -622,6 +623,12 @@
                 packer.dither = ssSettings.ditherHTML5;
             }
              */
+            
+            // Set texture maximum size
+            if ([res isEqualToString:@"phone"]) packer.maxTextureSize = 1024;
+            else if ([res isEqualToString:@"phonehd"]) packer.maxTextureSize = 2048;
+            else if ([res isEqualToString:@"tablet"]) packer.maxTextureSize = 2048;
+            else if ([res isEqualToString:@"tablethd"]) packer.maxTextureSize = 4096;
             
             // Update progress
             [ad modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
