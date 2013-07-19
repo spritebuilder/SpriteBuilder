@@ -1109,12 +1109,13 @@
     }
     
     // Once published, set needRepublish back to NO
+    [projectSettings clearAllDirtyMarkers];
     if (projectSettings.needRepublish)
     {
         projectSettings.needRepublish = NO;
-        [projectSettings clearAllDirtyMarkers];
         [projectSettings store];
     }
+    
     return YES;
 }
 
