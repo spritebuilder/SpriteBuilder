@@ -2813,7 +2813,7 @@ static BOOL hideAllToNextSeparator;
         }
         else
         {
-            NSArray* warning = [NSArray arrayWithObject:@"No warnings."];
+            NSArray* warning = [NSArray arrayWithObject:@"No warnings"];
             [SMLErrorPopOver showErrorDescriptions:warning relativeToView:segmPublishBtn];
         }
     }

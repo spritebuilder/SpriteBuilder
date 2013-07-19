@@ -472,6 +472,16 @@
     return [[self valueForRelPath:relPath andKey:@"isDirty"] boolValue];
 }
 
+- (void) markAsDirtyResource:(RMResource*) res
+{
+    [self markAsDirtyRelPath:res.relativePath];
+}
+
+- (void) markAsDirtyRelPath:(NSString*) relPath
+{
+    [self setValue:[NSNumber numberWithBool:YES] forRelPath:relPath andKey:@"isDirty"];
+}
+
 - (void) clearAllDirtyMarkers
 {
     for (NSString* relPath in resourceProperties)
