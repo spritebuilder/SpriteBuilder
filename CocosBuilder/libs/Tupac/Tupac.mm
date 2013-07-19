@@ -326,8 +326,7 @@ typedef struct _PVRTexHeader
         }
     }
     
-#warning DEBUG
-    if (!allFitted || YES)
+    if (!allFitted)
     {
         [self setErrorMessage:@"Failed to fit all sprites in smart sprite sheet."];
     }
