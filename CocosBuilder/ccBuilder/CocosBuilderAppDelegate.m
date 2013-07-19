@@ -60,7 +60,6 @@
 #import "SavePanelLimiter.h"
 #import "CCBPublisher.h"
 #import "CCBWarnings.h"
-#import "WarningsWindow.h"
 #import "TaskStatusWindow.h"
 #import "SequencerHandler.h"
 #import "MainWindow.h"
@@ -1305,6 +1304,8 @@ static BOOL hideAllToNextSeparator;
     // Remove resource paths
     self.projectSettings = NULL;
     [resManager removeAllDirectories];
+    
+    [self updateWarningsButton];
 }
 
 - (BOOL) openProject:(NSString*) fileName
@@ -1379,6 +1380,8 @@ static BOOL hideAllToNextSeparator;
             [self openFile:[resPath stringByAppendingPathComponent:ccbFile]];
         }
     }
+    
+    [self updateWarningsButton];
     
     return YES;
 }
@@ -2254,20 +2257,14 @@ static BOOL hideAllToNextSeparator;
 {
     [self modalStatusWindowFinish];
     
-    // Create warnings window if it is not already created
-    if (!publishWarningsWindow)
-    {
-        publishWarningsWindow = [[WarningsWindow alloc] initWithWindowNibName:@"WarningsWindow"];
-    }
-    
-    // Update and show warnings window
-    publishWarningsWindow.warnings = warnings;
-    
     // Update project view
     projectSettings.lastWarnings = warnings;
     [outlineProject reloadData];
     
-    [[publishWarningsWindow window] setIsVisible:(warnings.warnings.count > 0)];
+    // Update warnings button in toolbar
+    [self updateWarningsButton];
+    
+    if (warnings.warnings.count) [self pressedPublishTB:NULL];
     
     // Run in Browser
     if (publisher.runAfterPublishing && publisher.browser)
@@ -2747,6 +2744,18 @@ static BOOL hideAllToNextSeparator;
     [defaultBrowserMenuItem setState:NSOnState];
 }
 
+- (void) updateWarningsButton
+{
+    if (projectSettings.lastWarnings.warnings.count)
+    {
+        [segmPublishBtn setImage:[NSImage imageNamed:@"editor-warning.png"] forSegment:1];
+    }
+    else
+    {
+        [segmPublishBtn setImage:[NSImage imageNamed:@"editor-check.png"] forSegment:1];
+    }
+}
+
 - (IBAction) menuSetCanvasBorder:(id)sender
 {
     CocosScene* cs = [CocosScene cocosScene];
@@ -2786,20 +2795,27 @@ static BOOL hideAllToNextSeparator;
 {
     NSSegmentedControl* sc = sender;
     int selectedItem = [[sc cell] selectedSegment];
+    if (!sender) selectedItem = 1;
     if (selectedItem == 0)
     {
         [self menuPublishProject:sender];
     }
     else if (selectedItem == 1)
     {
-        if (!projectSettings.lastWarnings.warnings.count) return;
-        
-        NSMutableArray* warnings = [NSMutableArray array];
-        for (CCBWarning* warning in projectSettings.lastWarnings.warnings)
+        if (projectSettings.lastWarnings.warnings.count)
         {
-            [warnings addObject:warning.description];
+            NSMutableArray* warnings = [NSMutableArray array];
+            for (CCBWarning* warning in projectSettings.lastWarnings.warnings)
+            {
+                [warnings addObject:warning.description];
+            }
+            [SMLErrorPopOver showErrorDescriptions:warnings relativeToView:segmPublishBtn];
         }
-        [SMLErrorPopOver showErrorDescriptions:warnings relativeToView:sender];
+        else
+        {
+            NSArray* warning = [NSArray arrayWithObject:@"No warnings."];
+            [SMLErrorPopOver showErrorDescriptions:warning relativeToView:segmPublishBtn];
+        }
     }
 }
 

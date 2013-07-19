@@ -85,7 +85,6 @@ enum {
 @class CCBGLView;
 @class CCBTransparentWindow;
 @class CCBTransparentView;
-@class WarningsWindow;
 @class TaskStatusWindow;
 @class CCBPublisher;
 @class CCBWarnings;
@@ -172,6 +171,8 @@ enum {
     IBOutlet NSMenuItem* menuItemChrome;
     IBOutlet NSMenuItem* menuItemFirefox;
     
+    IBOutlet NSSegmentedControl* segmPublishBtn;
+    
     // Resource manager
     ResourceManager* resManager;
     IBOutlet NSView* previewViewContainer;
@@ -209,7 +210,6 @@ enum {
     CCBTransparentView* guiView;
     
     // Warnings
-    WarningsWindow* publishWarningsWindow;
     NSString* errorDescription;
     
     // Modal status window
