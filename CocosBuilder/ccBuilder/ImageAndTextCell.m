@@ -118,7 +118,7 @@
         NSRect imageFrame;
         imageFrame.size = [imageAlt size];
         imageFrame.origin = cellFrame.origin;
-        imageFrame.origin.x += cellFrame.size.width - imageAlt.size.width - 3;
+        imageFrame.origin.x += cellFrame.size.width - imageAlt.size.width + 3;
         //imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
         
         if ([self.controlView isFlipped])
