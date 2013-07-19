@@ -68,6 +68,7 @@ typedef struct _PVRTexHeader
 }
 
 @synthesize scale=scale_, border=border_, filenames=filenames_, outputName=outputName_, outputFormat=outputFormat_, imageFormat=imageFormat_, directoryPrefix=directoryPrefix_, maxTextureSize=maxTextureSize_, padding=padding_, dither=dither_, compress=compress_;
+@synthesize errorMessage;
 
 + (Tupac*) tupac
 {
@@ -93,8 +94,18 @@ typedef struct _PVRTexHeader
     [filenames_ release];
     [outputName_ release];
     [outputFormat_ release];
+    [errorMessage release];
     
     [super dealloc];
+}
+
+- (void)setErrorMessage:(NSString *)em
+{
+    if (em != errorMessage)
+    {
+        [errorMessage release];
+        errorMessage = [em retain];
+    }
 }
 
 - (NSRect) trimmedRectForImage:(CGImageRef)image
@@ -179,6 +190,13 @@ typedef struct _PVRTexHeader
 
 - (void)createTextureAtlas
 {
+    // Reset the error message
+    if (errorMessage)
+    {
+        [errorMessage release];
+        errorMessage = NULL;
+    }
+    
     // Create output directory if it doesn't exist
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* outputDir = [outputName_ stringByDeletingLastPathComponent];
@@ -306,6 +324,12 @@ typedef struct _PVRTexHeader
                 }
             }
         }
+    }
+    
+#warning DEBUG
+    if (!allFitted || YES)
+    {
+        [self setErrorMessage:@"Failed to fit all sprites in smart sprite sheet."];
     }
     
     // Create the output graphics context
@@ -454,7 +478,6 @@ typedef struct _PVRTexHeader
                        forKey:exportFilename];
         }
         
-        //[metadata setObject:textureFileName                                     forKey:@"realTextureFilename"];
         [metadata setObject:textureFileName                                     forKey:@"textureFileName"];
         [metadata setObject:[NSNumber numberWithInt:2]                      forKey:@"format"];
         [metadata setObject:NSStringFromSize(NSMakeSize(outW, outH))        forKey:@"size"];

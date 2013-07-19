@@ -94,6 +94,7 @@
 #import "CCBFileUtil.h"
 #import "ResourceManagerPreviewView.h"
 #import "ResourceManagerUtil.h"
+#import "SMLErrorPopOver.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -2260,8 +2261,11 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Update and show warnings window
-    projectSettings.lastWarnings = warnings;
     publishWarningsWindow.warnings = warnings;
+    
+    // Update project view
+    projectSettings.lastWarnings = warnings;
+    [outlineProject reloadData];
     
     [[publishWarningsWindow window] setIsVisible:(warnings.warnings.count > 0)];
     
@@ -2778,13 +2782,25 @@ static BOOL hideAllToNextSeparator;
     [cs setStageZoom:1];
 }
 
-- (IBAction) pressedZoom:(id)sender
+- (IBAction) pressedPublishTB:(id)sender
 {
     NSSegmentedControl* sc = sender;
     int selectedItem = [[sc cell] selectedSegment];
-    if (selectedItem == 0) [self menuZoomIn:sender];
-    else if (selectedItem == 1) [self menuResetView:sender];
-    else if (selectedItem == 2) [self menuZoomOut:sender];
+    if (selectedItem == 0)
+    {
+        [self menuPublishProject:sender];
+    }
+    else if (selectedItem == 1)
+    {
+        if (!projectSettings.lastWarnings.warnings.count) return;
+        
+        NSMutableArray* warnings = [NSMutableArray array];
+        for (CCBWarning* warning in projectSettings.lastWarnings.warnings)
+        {
+            [warnings addObject:warning.description];
+        }
+        [SMLErrorPopOver showErrorDescriptions:warnings relativeToView:sender];
+    }
 }
 
 - (IBAction) pressedToolSelection:(id)sender

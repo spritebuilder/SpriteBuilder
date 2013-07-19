@@ -28,12 +28,6 @@
 @class CCBWarnings;
 
 enum {
-    kCCBPublisherTargetTypeHTML5,
-    kCCBPublisherTargetTypeIPhone,
-    kCCBPublisherTargetTypeAndroid,
-};
-
-enum {
     kCCBPublishFormatSound_ios_caf,
     kCCBPublishFormatSound_ios_mp4,
 };

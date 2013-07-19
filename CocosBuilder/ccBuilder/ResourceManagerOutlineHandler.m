@@ -306,7 +306,7 @@
         }
         
         // Add warning sign if there is a warning related to this file
-        if ([settings.lastWarnings warningForRelatedFile:res.relativePath])
+        if ([settings.lastWarnings warningsForRelatedFile:res.relativePath])
         {
             warningIcon = [NSImage imageNamed:@"editor-warning.png"];
         }

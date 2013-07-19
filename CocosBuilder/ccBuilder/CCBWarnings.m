@@ -25,15 +25,34 @@
 #import "CCBWarnings.h"
 
 @implementation CCBWarning
-@synthesize description;
+@synthesize message;
 @synthesize relatedFile;
+@synthesize targetType;
+@synthesize resolution;
 @synthesize fatal;
+
++ (NSString*) formatTargetType:(int)tt
+{
+    if (tt == kCCBPublisherTargetTypeHTML5) return @"HTML5";
+    if (tt == kCCBPublisherTargetTypeIPhone) return @"iOS";
+    if (tt == kCCBPublisherTargetTypeAndroid) return @"Android";
+    return @"Undefined";
+}
 
 - (void) dealloc
 {
-    self.description = NULL;
+    self.message = NULL;
     self.relatedFile = NULL;
+    self.resolution = NULL;
     [super dealloc];
+}
+
+- (NSString*) description
+{
+    NSString* resString = @"";
+    if (self.resolution) resString = [NSString stringWithFormat:@" (%@)", self.resolution];
+    
+    return [NSString stringWithFormat:@"%@%@: %@", [CCBWarning formatTargetType:self.targetType], resString, self.message];
 }
 
 @end
@@ -43,6 +62,7 @@
 
 @synthesize warningsDescription;
 @synthesize warnings;
+@synthesize currentTargetType;
 
 - (id) init
 {
@@ -63,32 +83,48 @@
 
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile
 {
+    [self addWarningWithDescription:description isFatal:fatal relatedFile:relatedFile resolution:NULL];
+}
+
+- (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution
+{
     CCBWarning* warning = [[[CCBWarning alloc] init] autorelease];
-    warning.description = description;
+    warning.message = description;
     warning.relatedFile = relatedFile;
     warning.fatal = fatal;
+    warning.resolution = resolution;
     [self addWarning:warning];
 }
 
 - (void) addWarningWithDescription:(NSString*)description
 {
     CCBWarning* warning = [[[CCBWarning alloc] init] autorelease];
-    warning.description = description;
+    warning.message = description;
     [self addWarning:warning];
 }
 
 - (void) addWarning:(CCBWarning*)warning
 {
+    warning.targetType = currentTargetType;
+    
     [warnings addObject:warning];
     NSLog(@"CCB WARNING: %@", warning.description);
     
     if (warning.relatedFile)
     {
-        [warningsFiles setObject:warning forKey:warning.relatedFile];
+        // Get warnings for the file
+        NSMutableArray* ws = [warningsFiles objectForKey:warning.relatedFile];
+        if (!ws)
+        {
+            ws = [NSMutableArray array];
+            [warningsFiles setObject:ws forKey:warning.relatedFile];
+        }
+        
+        [ws addObject:warning];
     }
 }
 
-- (CCBWarning*) warningForRelatedFile:(NSString*) relatedFile
+- (NSArray*) warningsForRelatedFile:(NSString*) relatedFile
 {
     return [warningsFiles objectForKey:relatedFile];
 }

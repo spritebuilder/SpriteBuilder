@@ -467,7 +467,7 @@
             // Skip directories in generated sprite sheets
             if (isGeneratedSpriteSheet)
             {
-                [warnings addWarningWithDescription:[NSString stringWithFormat:@"Generated sprite sheets do not support direcotires (%@)", [fileName lastPathComponent]] isFatal:NO];
+                [warnings addWarningWithDescription:[NSString stringWithFormat:@"Generated sprite sheets do not support directories (%@)", [fileName lastPathComponent]] isFatal:NO];
                 continue;
             }
             
@@ -630,6 +630,11 @@
             packer.directoryPrefix = subPath;
             packer.border = YES;
             [packer createTextureAtlasFromDirectoryPaths:srcDirs];
+            
+            if (packer.errorMessage)
+            {
+                [warnings addWarningWithDescription:packer.errorMessage isFatal:NO relatedFile:subPath resolution:res];
+            }
             
             // Set correct modification date
             [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
@@ -909,6 +914,7 @@
         if (projectSettings.publishEnablediPhone)
         {
             targetType = kCCBPublisherTargetTypeIPhone;
+            warnings.currentTargetType = targetType;
             
             NSMutableArray* resolutions = [NSMutableArray array];
             
@@ -950,6 +956,7 @@
         if (projectSettings.publishEnabledAndroid)
         {
             targetType = kCCBPublisherTargetTypeAndroid;
+            warnings.currentTargetType = targetType;
             
             NSMutableArray* resolutions = [NSMutableArray array];
             
@@ -1038,6 +1045,7 @@
         {
             // Publish for running on device
             targetType = kCCBPublisherTargetTypeIPhone;
+            warnings.currentTargetType = targetType;
             
             PlayerDeviceInfo* deviceInfo = [PlayerConnection sharedPlayerConnection].selectedDeviceInfo;
             if ([deviceInfo.deviceType isEqualToString:@"iPad"])
@@ -1069,6 +1077,7 @@
             else if ([deviceInfo.deviceType isEqualToString:@"Android"])
             {
                 targetType = kCCBPublisherTargetTypeAndroid;
+                warnings.currentTargetType = targetType;
                 
                 publishForResolutions = [NSArray arrayWithObjects:deviceInfo.preferredResourceType, nil];
             }

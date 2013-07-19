@@ -24,7 +24,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Tupac : NSObject 
+@interface Tupac : NSObject
+{
+    NSString* errorMessage;
+}
 
 @property(nonatomic) BOOL border;
 @property(nonatomic) CGFloat scale;
@@ -37,6 +40,7 @@
 @property(nonatomic,assign) int padding;
 @property(nonatomic,assign) BOOL dither;
 @property(nonatomic,assign) BOOL compress;
+@property(nonatomic,readonly) NSString* errorMessage;
 
 + (Tupac*) tupac;
 
