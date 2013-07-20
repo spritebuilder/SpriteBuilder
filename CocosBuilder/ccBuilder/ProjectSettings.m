@@ -488,6 +488,8 @@
     {
         [self removeObjectForRelPath:relPath andKey:@"isDirty"];
     }
+    
+    [self storeDelayed];
 }
 
 - (NSArray*) smartSpriteSheetDirectories
