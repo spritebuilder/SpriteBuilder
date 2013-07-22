@@ -467,7 +467,7 @@
             // Skip directories in generated sprite sheets
             if (isGeneratedSpriteSheet)
             {
-                [warnings addWarningWithDescription:[NSString stringWithFormat:@"Generated sprite sheets do not support directories (%@)", [fileName lastPathComponent]] isFatal:NO];
+                [warnings addWarningWithDescription:[NSString stringWithFormat:@"Generated sprite sheets do not support directories (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
                 continue;
             }
             
@@ -488,7 +488,7 @@
             // Skip non png files for generated sprite sheets
             if (isGeneratedSpriteSheet &&![ext isEqualToString:@"png"])
             {
-                [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO];
+                [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
                 continue;
             }
             
