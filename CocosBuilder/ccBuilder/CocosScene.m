@@ -52,6 +52,14 @@
 
 static CocosScene* sharedCocosScene;
 
+CGPoint ccpRound(CGPoint pt)
+{
+    CGPoint rounded;
+    rounded.x = roundf(pt.x);
+    rounded.y = roundf(pt.y);
+    return rounded;
+}
+
 @implementation CocosScene
 
 @synthesize rootNode;
@@ -405,50 +413,34 @@ static CocosScene* sharedCocosScene;
             if (node.contentSize.width > 0 && node.contentSize.height > 0)
             {
                 CGAffineTransform transform = [node nodeToWorldTransform];
-                float angleRad = -(atan2(transform.b, transform.a));
-                float angle = angleRad/(M_PI*2)*360;
                 
                 // Selection corners in world space
-                CGPoint bl = [node convertToWorldSpace: ccp(0,0)];
-                CGPoint br = [node convertToWorldSpace: ccp(node.contentSize.width,0)];
-                CGPoint tl = [node convertToWorldSpace: ccp(0,node.contentSize.height)];
-                //CGPoint tr = [node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)];
+                CGPoint bl = ccpRound([node convertToWorldSpace: ccp(0,0)]);
+                CGPoint br = ccpRound([node convertToWorldSpace: ccp(node.contentSize.width,0)]);
+                CGPoint tl = ccpRound([node convertToWorldSpace: ccp(0,node.contentSize.height)]);
+                CGPoint tr = ccpRound([node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)]);
                 
-                // Width & height of selection
-                float width = (int)ccpLength(ccpSub(br, bl));
-                float height = (int)ccpLength(ccpSub(tl, bl));
+                CCSprite* blSprt = [CCSprite spriteWithFile:@"select-corner.png"];
+                CCSprite* brSprt = [CCSprite spriteWithFile:@"select-corner.png"];
+                CCSprite* tlSprt = [CCSprite spriteWithFile:@"select-corner.png"];
+                CCSprite* trSprt = [CCSprite spriteWithFile:@"select-corner.png"];
                 
-                // Check if selection is mirrored
-                CGPoint posRaw = bl;
-                if ([self isLocalCoordinateSystemFlipped:node]) posRaw = tl;
+                blSprt.position = bl;
+                brSprt.position = br;
+                tlSprt.position = tl;
+                trSprt.position = tr;
                 
-                // Round so it is always displayed sharply
-                CGPoint pos = ccpSub(posRaw, ccpRotateByAngle(ccp(kCCBSelectionOutset,kCCBSelectionOutset), CGPointZero, -angleRad));
+                [selectionLayer addChild:blSprt];
+                [selectionLayer addChild:brSprt];
+                [selectionLayer addChild:tlSprt];
+                [selectionLayer addChild:trSprt];
                 
-                if (angle == 0)
-                {
-                    pos = ccp((int)pos.x, (int)pos.y);
-                }
+                CCDrawNode* drawing = [CCDrawNode node];
+                CGPoint points[] = {bl, br, tr, tl};
                 
-                // Create a sprite for the selection
-                CCScale9Sprite* sel = [CCScale9Sprite spriteWithFile:@"sel-frame.png" capInsets:CGRectMake(8, 8, 8, 8)];
-                sel.anchorPoint = ccp(0,0);
-                sel.rotation = angle;
-                sel.position = pos;
-                sel.preferedSize = CGSizeMake(width + kCCBSelectionOutset * 2, height + kCCBSelectionOutset * 2);
-                [selectionLayer addChild:sel];
+                [drawing drawPolyWithVerts:points count:4 fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
                 
-                /*
-                minCorner.x = MIN(minCorner.x, bl.x);
-                minCorner.x = MIN(minCorner.x, br.x);
-                minCorner.x = MIN(minCorner.x, tl.x);
-                minCorner.x = MIN(minCorner.x, tr.x);
-                
-                minCorner.y = MIN(minCorner.y, bl.y);
-                minCorner.y = MIN(minCorner.y, br.y);
-                minCorner.y = MIN(minCorner.y, tl.y);
-                minCorner.y = MIN(minCorner.y, tr.y);
-                 */
+                [selectionLayer addChild:drawing z:-1];
             }
             else
             {
@@ -459,16 +451,6 @@ static CocosScene* sharedCocosScene;
                 sel.position = pos;
                 [selectionLayer addChild:sel];
             }
-            
-            /*
-            if (minCorner.x < 10+15) minCorner.x = 10+15;
-            if (minCorner.y < 36+15) minCorner.y = 36+15;
-            if (minCorner.x > self.contentSize.width - 28*3+6) minCorner.x = self.contentSize.width - 28*3+6;
-            if (minCorner.y > self.contentSize.height+6) minCorner.y = self.contentSize.height+6;
-            
-            minCorner.x = (int)minCorner.x;
-            minCorner.y = (int)minCorner.y;
-             */
         }
     }
 }
