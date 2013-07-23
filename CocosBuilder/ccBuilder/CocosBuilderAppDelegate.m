@@ -1446,7 +1446,29 @@ static BOOL hideAllToNextSeparator;
     [currentDocument.undoManager removeAllActions];
     currentDocument.lastEditedProperty = NULL;
     
+    // Generate preview
+    
+    // Reset to first frame in first timeline in first resolution
+    float currentTime = sequenceHandler.currentSequence.timelinePosition;
+    int currentResolution = currentDocument.currentResolution;
+    SequencerSequence* currentSeq = [sequenceHandler.currentSequence retain];
+    
+    currentDocument.currentResolution = 0;
+    sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
+    sequenceHandler.currentSequence.timelinePosition = 0;
+    [self reloadResources];
+    [PositionPropertySetter refreshAllPositions];
+    
+    // Save preview
     [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:@"ppng"]];
+    
+    // Restore resolution and timeline
+    currentDocument.currentResolution = currentResolution;
+    sequenceHandler.currentSequence = currentSeq;
+    [self reloadResources];
+    [PositionPropertySetter refreshAllPositions];
+    sequenceHandler.currentSequence.timelinePosition = currentTime;
+    [currentSeq release];
 }
 
 - (void) exportFile:(NSString*) fileName withPlugIn:(NSString*) ext
