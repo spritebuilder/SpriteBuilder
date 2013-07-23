@@ -44,6 +44,7 @@
 #import "SequencerNodeProperty.h"
 #import "SequencerKeyframe.h"
 #import "CCScale9Sprite.h"
+#import "Tupac.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -1204,6 +1205,58 @@ CGPoint ccpRound(CGPoint pt)
         trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0, 0, winSize.width, winSize.height) options:NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited | NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow  owner:[appDelegate cocosView] userInfo:NULL];
         [[appDelegate cocosView] addTrackingArea:trackingArea];
     }
+}
+
+#pragma mark Document previews
+
+- (void) savePreviewToFile:(NSString*)path
+{
+    // Remember old position of root node
+    CGPoint oldPosition = rootNode.position;
+    
+    // Create render context
+    CCRenderTexture* render = NULL;
+    BOOL trimImage = NO;
+    if (self.stageSize.width > 0 && self.stageSize.height > 0)
+    {
+        render = [CCRenderTexture renderTextureWithWidth:self.stageSize.width height:self.stageSize.height];
+        rootNode.position = ccp(0,0);
+    }
+    else
+    {
+        render = [CCRenderTexture renderTextureWithWidth:2048 height:2048];
+        rootNode.position = ccp(1024,1024);
+        trimImage = YES;
+    }
+    
+    // Render the root node
+    [render beginWithClear:0 g:0 b:0 a:0];
+    [rootNode visit];
+    [render end];
+    
+    // Reset old position
+    rootNode.position = oldPosition;
+    
+    CGImageRef imgRef = [render newCGImage];
+    
+    // Trim image if needed
+    if (trimImage)
+    {
+        CGRect trimRect = [Tupac trimmedRectForImage:imgRef];
+        CGImageRef trimmedImgRef = CGImageCreateWithImageInRect(imgRef, trimRect);
+        CGImageRelease(imgRef);
+        imgRef = trimmedImgRef;
+    }
+    
+    // Save preview file
+    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:path];
+	CGImageDestinationRef dest = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+	CGImageDestinationAddImage(dest, imgRef, nil);
+	CGImageDestinationFinalize(dest);
+	CFRelease(dest);
+    
+    // Release image
+    CGImageRelease(imgRef);
 }
 
 #pragma mark Init and dealloc

@@ -149,6 +149,8 @@ enum {
 - (void)mouseExited:(NSEvent *)event;
 - (void)cursorUpdate:(NSEvent *)event;
 
+- (void) savePreviewToFile:(NSString*)path;
+
 // Converts to document coordinates from view coordinates
 - (CGPoint) convertToDocSpace:(CGPoint)viewPt;
 // Converst to view coordinates from document coordinates

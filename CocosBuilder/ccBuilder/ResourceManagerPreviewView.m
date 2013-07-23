@@ -100,6 +100,7 @@
     [viewImage setHidden:YES];
     [viewSpriteSheet setHidden:YES];
     [viewSound setHidden:YES];
+    [viewCCB setHidden:YES];
     
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
@@ -185,6 +186,19 @@
             self.enabled = YES;
             
             [viewSound setHidden:NO];
+        }
+        else if (res.type == kCCBResTypeCCBFile)
+        {
+            NSString* imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
+            NSImage* img = [[[NSImage alloc] initWithContentsOfFile:imgPreviewPath] autorelease];
+            if (!img)
+            {
+                img = [NSImage imageNamed:@"ui-nopreview.png"];
+            }
+            
+            [previewCCB setImage:img];
+            
+            [viewCCB setHidden:NO];
         }
         else
         {

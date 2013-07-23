@@ -1445,6 +1445,8 @@ static BOOL hideAllToNextSeparator;
         
     [currentDocument.undoManager removeAllActions];
     currentDocument.lastEditedProperty = NULL;
+    
+    [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:@"ppng"]];
 }
 
 - (void) exportFile:(NSString*) fileName withPlugIn:(NSString*) ext

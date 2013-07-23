@@ -108,7 +108,7 @@ typedef struct _PVRTexHeader
     }
 }
 
-- (NSRect) trimmedRectForImage:(CGImageRef)image
++ (NSRect) trimmedRectForImage:(CGImageRef)image
 {
     int w = (int)CGImageGetWidth(image);
     int h = (int)CGImageGetHeight(image);
@@ -222,7 +222,7 @@ typedef struct _PVRTexHeader
         int w = (int)CGImageGetWidth(srcImage);
         int h = (int)CGImageGetHeight(srcImage);
         
-        NSRect trimRect = [self trimmedRectForImage:srcImage];
+        NSRect trimRect = [Tupac trimmedRectForImage:srcImage];
         
         if (!colorSpace)
         {

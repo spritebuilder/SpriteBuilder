@@ -44,6 +44,8 @@
 
 + (Tupac*) tupac;
 
++ (NSRect) trimmedRectForImage:(CGImageRef)image;
+
 - (void) createTextureAtlasFromDirectoryPaths:(NSArray *)dirs;
 - (void)createTextureAtlas;
 

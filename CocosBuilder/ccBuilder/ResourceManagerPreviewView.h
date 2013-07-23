@@ -36,6 +36,7 @@
     IBOutlet NSView* viewImage;
     IBOutlet NSView* viewSpriteSheet;
     IBOutlet NSView* viewSound;
+    IBOutlet NSView* viewCCB;
     
     // Image previews
     IBOutlet CCBImageView* previewMain;
@@ -50,6 +51,9 @@
     
     // Generic fallback view
     IBOutlet NSImageView* previewGeneric;
+    
+    // CCB preivew
+    IBOutlet NSImageView* previewCCB;
     
     RMResource* _previewedResource;
 }
