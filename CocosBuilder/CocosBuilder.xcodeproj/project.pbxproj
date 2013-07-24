@@ -164,6 +164,13 @@
 		B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC697B179F50850041B8BD /* BFColorPickerPopoverView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC697D179F50850041B8BD /* BFColorPickerViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B7AC6988179F50850041B8BD /* BFIconTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC697F179F50850041B8BD /* BFIconTabBar.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B7AC699C17A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC699317A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B7AC699D17A079C80041B8BD /* SMBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC699517A079C80041B8BD /* SMBar.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B7AC699E17A079C80041B8BD /* SMTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC699717A079C80041B8BD /* SMTabBar.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B7AC699F17A079C80041B8BD /* SMTabBarButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC699917A079C80041B8BD /* SMTabBarButtonCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B7AC69A017A079C80041B8BD /* SMTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC699B17A079C80041B8BD /* SMTabBarItem.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B7AC69A517A07DAD0041B8BD /* inspector-folder.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69A317A07DAD0041B8BD /* inspector-folder.png */; };
+		B7AC69A617A07DAD0041B8BD /* inspector-objects.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69A417A07DAD0041B8BD /* inspector-objects.png */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -1124,6 +1131,18 @@
 		B7AC697D179F50850041B8BD /* BFColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFColorPickerViewController.m; sourceTree = "<group>"; };
 		B7AC697E179F50850041B8BD /* BFIconTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFIconTabBar.h; sourceTree = "<group>"; };
 		B7AC697F179F50850041B8BD /* BFIconTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFIconTabBar.m; sourceTree = "<group>"; };
+		B7AC699217A079C80041B8BD /* NSDictionary+SMKeyValueObserving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SMKeyValueObserving.h"; sourceTree = "<group>"; };
+		B7AC699317A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SMKeyValueObserving.m"; sourceTree = "<group>"; };
+		B7AC699417A079C80041B8BD /* SMBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBar.h; sourceTree = "<group>"; };
+		B7AC699517A079C80041B8BD /* SMBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBar.m; sourceTree = "<group>"; };
+		B7AC699617A079C80041B8BD /* SMTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTabBar.h; sourceTree = "<group>"; };
+		B7AC699717A079C80041B8BD /* SMTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTabBar.m; sourceTree = "<group>"; };
+		B7AC699817A079C80041B8BD /* SMTabBarButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTabBarButtonCell.h; sourceTree = "<group>"; };
+		B7AC699917A079C80041B8BD /* SMTabBarButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTabBarButtonCell.m; sourceTree = "<group>"; };
+		B7AC699A17A079C80041B8BD /* SMTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTabBarItem.h; sourceTree = "<group>"; };
+		B7AC699B17A079C80041B8BD /* SMTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMTabBarItem.m; sourceTree = "<group>"; };
+		B7AC69A317A07DAD0041B8BD /* inspector-folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-folder.png"; sourceTree = "<group>"; };
+		B7AC69A417A07DAD0041B8BD /* inspector-objects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-objects.png"; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -2360,6 +2379,8 @@
 		776041F01498FD630078095D /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B7AC69A317A07DAD0041B8BD /* inspector-folder.png */,
+				B7AC69A417A07DAD0041B8BD /* inspector-objects.png */,
 				B794AB90177A30EB004FF493 /* ui-nopreview.png */,
 				E37FCAEC175D2704009F81D6 /* ui-cogs.png */,
 				E37FCAED175D2704009F81D6 /* ui-cogs@2x.png */,
@@ -2574,6 +2595,7 @@
 		7789ABEF133AB17100CEFCC7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				B7AC699117A079C80041B8BD /* InspectorTabBar */,
 				B7AC696C179F50850041B8BD /* BFColorPickerPopover */,
 				A77EF593171FD31400451DA4 /* WebP */,
 				835DAF7E171561B7003A2F7B /* CocoaHTTPServer */,
@@ -2931,6 +2953,23 @@
 				B7AC697F179F50850041B8BD /* BFIconTabBar.m */,
 			);
 			path = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		B7AC699117A079C80041B8BD /* InspectorTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				B7AC699217A079C80041B8BD /* NSDictionary+SMKeyValueObserving.h */,
+				B7AC699317A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m */,
+				B7AC699417A079C80041B8BD /* SMBar.h */,
+				B7AC699517A079C80041B8BD /* SMBar.m */,
+				B7AC699617A079C80041B8BD /* SMTabBar.h */,
+				B7AC699717A079C80041B8BD /* SMTabBar.m */,
+				B7AC699817A079C80041B8BD /* SMTabBarButtonCell.h */,
+				B7AC699917A079C80041B8BD /* SMTabBarButtonCell.m */,
+				B7AC699A17A079C80041B8BD /* SMTabBarItem.h */,
+				B7AC699B17A079C80041B8BD /* SMTabBarItem.m */,
+			);
+			path = InspectorTabBar;
 			sourceTree = "<group>";
 		};
 		E3214C3F15D3B9D0002413A7 /* Custom Properties */ = {
@@ -4820,6 +4859,8 @@
 				B732A1851799736500333C56 /* TB_build@2x.png in Resources */,
 				B7AC6969179E03BF0041B8BD /* select-corner.png in Resources */,
 				B7AC6981179F50850041B8BD /* BFColorPickerPopover_LICENSE.txt in Resources */,
+				B7AC69A517A07DAD0041B8BD /* inspector-folder.png in Resources */,
+				B7AC69A617A07DAD0041B8BD /* inspector-objects.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5332,6 +5373,11 @@
 				B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */,
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
 				B7AC6988179F50850041B8BD /* BFIconTabBar.m in Sources */,
+				B7AC699C17A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m in Sources */,
+				B7AC699D17A079C80041B8BD /* SMBar.m in Sources */,
+				B7AC699E17A079C80041B8BD /* SMTabBar.m in Sources */,
+				B7AC699F17A079C80041B8BD /* SMTabBarButtonCell.m in Sources */,
+				B7AC69A017A079C80041B8BD /* SMTabBarItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

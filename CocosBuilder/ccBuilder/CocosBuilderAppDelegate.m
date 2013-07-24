@@ -94,6 +94,8 @@
 #import "ResourceManagerPreviewView.h"
 #import "ResourceManagerUtil.h"
 #import "SMLErrorPopOver.h"
+#import "SMTabBar.h"
+#import "SMTabBarItem.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -212,6 +214,25 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     [toolbarDelegate addPlugInItemsToToolbar:toolbar];
 }
 
+- (void) setupProjectViewTabBar
+{
+    NSMutableArray* items = [NSMutableArray array];
+    
+    NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder.png"];
+    [imgFolder setTemplate:YES];
+    SMTabBarItem* itemFolder = [[[SMTabBarItem alloc] initWithImage:imgFolder tag:0] autorelease];
+    itemFolder.toolTip = @"File View";
+    [items addObject:itemFolder];
+    
+    NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects.png"];
+    [imgObjs setTemplate:YES];
+    SMTabBarItem* itemObjs = [[[SMTabBarItem alloc] initWithImage:imgObjs tag:1] autorelease];
+    itemObjs.toolTip = @"Tileless Editor View";
+    [items addObject:itemObjs];
+    
+    projectViewTabs.items = items;
+}
+
 - (void) setupPlayerConnection
 {
     connection = [[PlayerConnection alloc] init];
@@ -326,6 +347,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     
     // Update toolbar with plug-ins
     [self setupToolbar];
+    [self setupProjectViewTabBar];
 
     [self setupResourceManager];
     [self setupGUIWindow];

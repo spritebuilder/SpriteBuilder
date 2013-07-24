@@ -99,6 +99,7 @@ enum {
 @class CCBSplitHorizontalView;
 @class AboutWindow;
 @class ResourceManagerPreviewView;
+@class SMTabBar;
 
 @interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 {
@@ -132,6 +133,9 @@ enum {
     BOOL canEditCustomClass;
     
     BOOL lockedScaleRatio;
+    
+    // Inspector tab bars
+    IBOutlet SMTabBar* projectViewTabs;
     
     // Outline view heirarchy
     SequencerHandler* sequenceHandler;
@@ -330,9 +334,7 @@ enum {
 - (IBAction) menuZoomOut:(id)sender;
 
 - (IBAction)menuCreateSmartSpriteSheet:(id)sender;
-- (IBAction)menuEditSmartSpriteSheet:(id)sender;
 
-- (IBAction) pressedZoom:(id)sender;
 - (IBAction) pressedToolSelection:(id)sender;
 - (IBAction) pressedPanelVisibility:(id)sender;
 

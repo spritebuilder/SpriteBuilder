@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1851,11 +1851,9 @@
 								<string key="NSToolbarItemPaletteLabel">Publish</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSSegmentedControl" key="NSToolbarItemView" id="508682600">
-									<reference key="NSNextResponder"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{0, 14}, {87, 25}}</string>
-									<reference key="NSSuperview"/>
-									<reference key="NSNextKeyView"/>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSSegmentedCell" key="NSCell" id="98193384">
 										<int key="NSCellFlags">67108864</int>
@@ -1913,11 +1911,9 @@
 								<string key="NSToolbarItemPaletteLabel">View</string>
 								<nil key="NSToolbarItemToolTip"/>
 								<object class="NSSegmentedControl" key="NSToolbarItemView" id="475947388">
-									<reference key="NSNextResponder"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">268</int>
 									<string key="NSFrame">{{0, 14}, {132, 23}}</string>
-									<reference key="NSSuperview"/>
-									<reference key="NSNextKeyView"/>
 									<bool key="NSViewIsLayerTreeHost">YES</bool>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
@@ -2203,6 +2199,9 @@
 										<object class="NSCustomView" id="74504784">
 											<reference key="NSNextResponder" ref="61505606"/>
 											<int key="NSvFlags">256</int>
+											<object class="NSMutableArray" key="NSSubviews">
+												<bool key="EncodedWithXMLCoder">YES</bool>
+											</object>
 											<string key="NSFrameSize">{250, 239}</string>
 											<reference key="NSSuperview" ref="61505606"/>
 											<reference key="NSWindow"/>
@@ -2231,7 +2230,7 @@
 																	<object class="NSMutableArray" key="NSSubviews">
 																		<bool key="EncodedWithXMLCoder">YES</bool>
 																	</object>
-																	<string key="NSFrameSize">{250, 408}</string>
+																	<string key="NSFrameSize">{250, 401}</string>
 																	<reference key="NSSuperview" ref="88756307"/>
 																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="1032953836"/>
@@ -2324,7 +2323,7 @@
 																	<int key="NSTableViewGroupRowStyle">1</int>
 																</object>
 															</object>
-															<string key="NSFrameSize">{250, 408}</string>
+															<string key="NSFrameSize">{250, 401}</string>
 															<reference key="NSSuperview" ref="15476149"/>
 															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="719729659"/>
@@ -2359,7 +2358,7 @@
 															<double key="NSPercent">0.99717514124293782</double>
 														</object>
 													</object>
-													<string key="NSFrameSize">{250, 408}</string>
+													<string key="NSFrameSize">{250, 401}</string>
 													<reference key="NSSuperview" ref="552508876"/>
 													<reference key="NSWindow"/>
 													<reference key="NSNextKeyView" ref="987023980"/>
@@ -2373,7 +2372,7 @@
 													<double key="NSMagnification">1</double>
 												</object>
 											</object>
-											<string key="NSFrame">{{0, 240}, {250, 408}}</string>
+											<string key="NSFrame">{{0, 240}, {250, 401}}</string>
 											<reference key="NSSuperview" ref="61505606"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="15476149"/>
@@ -2381,72 +2380,28 @@
 											<string key="NSClassName">NSView</string>
 										</object>
 									</object>
-									<string key="NSFrame">{{0, 16}, {250, 648}}</string>
+									<string key="NSFrame">{{0, 16}, {250, 641}}</string>
 									<reference key="NSSuperview" ref="109787956"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="74504784"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSDividerStyle">2</int>
 								</object>
-								<object class="NSTextField" id="93213126">
+								<object class="NSCustomView" id="535134327">
 									<reference key="NSNextResponder" ref="109787956"/>
-									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{3, 664}, {250, 14}}</string>
+									<int key="NSvFlags">266</int>
+									<string key="NSFrame">{{0, 656}, {250, 22}}</string>
 									<reference key="NSSuperview" ref="109787956"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="61505606"/>
-									<bool key="NSEnabled">YES</bool>
-									<object class="NSTextFieldCell" key="NSCell" id="514615090">
-										<int key="NSCellFlags">68157504</int>
-										<int key="NSCellFlags2">4326400</int>
-										<string key="NSContents">Project</string>
-										<reference key="NSSupport" ref="26"/>
-										<reference key="NSControlView" ref="93213126"/>
-										<reference key="NSBackgroundColor" ref="206630291"/>
-										<reference key="NSTextColor" ref="768113208"/>
-									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-								</object>
-								<object class="NSImageView" id="919059098">
-									<reference key="NSNextResponder" ref="109787956"/>
-									<int key="NSvFlags">268</int>
-									<object class="NSMutableSet" key="NSDragTypes">
-										<bool key="EncodedWithXMLCoder">YES</bool>
-										<object class="NSArray" key="set.sortedObjects">
-											<bool key="EncodedWithXMLCoder">YES</bool>
-											<string>Apple PDF pasteboard type</string>
-											<string>Apple PICT pasteboard type</string>
-											<string>Apple PNG pasteboard type</string>
-											<string>NSFilenamesPboardType</string>
-											<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
-											<string>NeXT TIFF v4.0 pasteboard type</string>
-										</object>
-									</object>
-									<string key="NSFrame">{{0, 664}, {250, 15}}</string>
-									<reference key="NSSuperview" ref="109787956"/>
-									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView" ref="93213126"/>
-									<bool key="NSEnabled">YES</bool>
-									<object class="NSImageCell" key="NSCell" id="54245052">
-										<int key="NSCellFlags">134217728</int>
-										<int key="NSCellFlags2">33554432</int>
-										<object class="NSCustomResource" key="NSContents" id="829257741">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">header-bg</string>
-										</object>
-										<int key="NSAlign">2</int>
-										<int key="NSScale">1</int>
-										<int key="NSStyle">0</int>
-										<bool key="NSAnimates">NO</bool>
-									</object>
-									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-									<bool key="NSEditable">YES</bool>
+									<string key="NSReuseIdentifierKey">_NS:9</string>
+									<string key="NSClassName">SMTabBar</string>
 								</object>
 							</object>
 							<string key="NSFrameSize">{250, 678}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="919059098"/>
+							<reference key="NSNextKeyView" ref="535134327"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 						<object class="NSSplitView" id="937207363">
@@ -3468,7 +3423,10 @@
 											<object class="NSImageCell" key="NSCell" id="573703298">
 												<int key="NSCellFlags">134217728</int>
 												<int key="NSCellFlags2">33554432</int>
-												<reference key="NSContents" ref="829257741"/>
+												<object class="NSCustomResource" key="NSContents">
+													<string key="NSClassName">NSImage</string>
+													<string key="NSResourceName">header-bg</string>
+												</object>
 												<int key="NSAlign">2</int>
 												<int key="NSScale">1</int>
 												<int key="NSStyle">0</int>
@@ -3554,7 +3512,6 @@
 											<string key="NSFrame">{{284, 1}, {15, 678}}</string>
 											<reference key="NSSuperview" ref="949082143"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<reference key="NSTarget" ref="949082143"/>
 											<string key="NSAction">_doScroller:</string>
@@ -3609,7 +3566,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1038619197"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMinSize">{800, 370}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
@@ -5351,6 +5308,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
+						<string key="label">projectViewTabs</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="535134327"/>
+					</object>
+					<int key="connectionID">1970</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
 						<string key="label">appDelegate</string>
 						<reference key="source" ref="1039955690"/>
 						<reference key="destination" ref="976324537"/>
@@ -6809,44 +6774,15 @@
 						<reference key="object" ref="109787956"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="919059098"/>
-							<reference ref="93213126"/>
 							<reference ref="913818403"/>
 							<reference ref="444616467"/>
 							<reference ref="631490047"/>
 							<reference ref="321442560"/>
 							<reference ref="61505606"/>
+							<reference ref="535134327"/>
 						</object>
 						<reference key="parent" ref="439893737"/>
 						<string key="objectName">Left Panel</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1494</int>
-						<reference key="object" ref="919059098"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="54245052"/>
-						</object>
-						<reference key="parent" ref="109787956"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1495</int>
-						<reference key="object" ref="93213126"/>
-						<object class="NSMutableArray" key="children">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="514615090"/>
-						</object>
-						<reference key="parent" ref="109787956"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1496</int>
-						<reference key="object" ref="514615090"/>
-						<reference key="parent" ref="93213126"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1497</int>
-						<reference key="object" ref="54245052"/>
-						<reference key="parent" ref="919059098"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1533</int>
@@ -7958,6 +7894,9 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">1957</int>
 						<reference key="object" ref="74504784"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+						</object>
 						<reference key="parent" ref="61505606"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -8012,6 +7951,11 @@
 						<int key="objectID">1503</int>
 						<reference key="object" ref="478329351"/>
 						<reference key="parent" ref="792391399"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1969</int>
+						<reference key="object" ref="535134327"/>
+						<reference key="parent" ref="109787956"/>
 					</object>
 				</object>
 			</object>
@@ -8099,10 +8043,6 @@
 					<string>149.IBPluginDependency</string>
 					<string>1491.IBPluginDependency</string>
 					<string>1493.IBPluginDependency</string>
-					<string>1494.IBPluginDependency</string>
-					<string>1495.IBPluginDependency</string>
-					<string>1496.IBPluginDependency</string>
-					<string>1497.IBPluginDependency</string>
 					<string>1498.IBPluginDependency</string>
 					<string>1499.CustomClassName</string>
 					<string>1499.IBPluginDependency</string>
@@ -8297,6 +8237,7 @@
 					<string>1957.IBPluginDependency</string>
 					<string>1958.IBPluginDependency</string>
 					<string>196.IBPluginDependency</string>
+					<string>1969.IBPluginDependency</string>
 					<string>197.IBPluginDependency</string>
 					<string>199.IBPluginDependency</string>
 					<string>200.IBPluginDependency</string>
@@ -8434,10 +8375,6 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -8701,6 +8638,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -8764,7 +8702,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1968</int>
+			<int key="maxID">1970</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -8854,7 +8792,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">CCGLView</string>
-					<string key="superclassName">NSOpenGLView</string>
+					<string key="superclassName">UIView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/CCGLView.h</string>
@@ -8875,17 +8813,11 @@
 							<string>menuAddKeyframe:</string>
 							<string>menuAddStickyNote:</string>
 							<string>menuAlignKeyframeToMarker:</string>
-							<string>menuAlignObjects:</string>
-							<string>menuAlignToPixels:</string>
 							<string>menuArrange:</string>
 							<string>menuCleanCacheDirectories:</string>
-							<string>menuCloseProject:</string>
-							<string>menuCreateKeyframesFromSelection:</string>
 							<string>menuCreateSmartSpriteSheet:</string>
 							<string>menuDeselect:</string>
 							<string>menuEditCustomPropSettings:</string>
-							<string>menuEditResolutionSettings:</string>
-							<string>menuEditSmartSpriteSheet:</string>
 							<string>menuJavaScriptControlled:</string>
 							<string>menuMoveObject:</string>
 							<string>menuNewProject:</string>
@@ -8899,18 +8831,13 @@
 							<string>menuQuit:</string>
 							<string>menuResetView:</string>
 							<string>menuResolution:</string>
-							<string>menuReverseSelectedKeyframes:</string>
 							<string>menuSelectBehind:</string>
 							<string>menuSetCanvasBorder:</string>
 							<string>menuSetEasing:</string>
-							<string>menuSetEasingOption:</string>
 							<string>menuSetStateOriginCentered:</string>
-							<string>menuStretchSelectedKeyframes:</string>
 							<string>menuTimelineDuplicate:</string>
-							<string>menuTimelineDuration:</string>
 							<string>menuTimelineNew:</string>
 							<string>menuTimelineSettings:</string>
-							<string>menuUpdateCCBsInDirectory:</string>
 							<string>menuZoomIn:</string>
 							<string>menuZoomOut:</string>
 							<string>newDocument:</string>
@@ -8918,25 +8845,19 @@
 							<string>newJSDocument:</string>
 							<string>openCocosPlayerConsole:</string>
 							<string>openDocument:</string>
-							<string>paste:</string>
 							<string>pasteAsChild:</string>
 							<string>performClose:</string>
-							<string>playbackJumpToStart:</string>
-							<string>playbackPlay:</string>
 							<string>playbackStepBack:</string>
 							<string>playbackStepForward:</string>
-							<string>playbackStop:</string>
 							<string>pressedPanelVisibility:</string>
 							<string>pressedPlaybackControl:</string>
 							<string>pressedPublishTB:</string>
 							<string>pressedToolSelection:</string>
-							<string>pressedZoom:</string>
 							<string>redo:</string>
 							<string>reportBug:</string>
 							<string>runProject:</string>
 							<string>saveAllDocuments:</string>
 							<string>saveDocument:</string>
-							<string>saveDocumentAs:</string>
 							<string>showAPIDocs:</string>
 							<string>showHelp:</string>
 							<string>undo:</string>
@@ -8944,23 +8865,6 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -9032,17 +8936,11 @@
 							<string>menuAddKeyframe:</string>
 							<string>menuAddStickyNote:</string>
 							<string>menuAlignKeyframeToMarker:</string>
-							<string>menuAlignObjects:</string>
-							<string>menuAlignToPixels:</string>
 							<string>menuArrange:</string>
 							<string>menuCleanCacheDirectories:</string>
-							<string>menuCloseProject:</string>
-							<string>menuCreateKeyframesFromSelection:</string>
 							<string>menuCreateSmartSpriteSheet:</string>
 							<string>menuDeselect:</string>
 							<string>menuEditCustomPropSettings:</string>
-							<string>menuEditResolutionSettings:</string>
-							<string>menuEditSmartSpriteSheet:</string>
 							<string>menuJavaScriptControlled:</string>
 							<string>menuMoveObject:</string>
 							<string>menuNewProject:</string>
@@ -9056,18 +8954,13 @@
 							<string>menuQuit:</string>
 							<string>menuResetView:</string>
 							<string>menuResolution:</string>
-							<string>menuReverseSelectedKeyframes:</string>
 							<string>menuSelectBehind:</string>
 							<string>menuSetCanvasBorder:</string>
 							<string>menuSetEasing:</string>
-							<string>menuSetEasingOption:</string>
 							<string>menuSetStateOriginCentered:</string>
-							<string>menuStretchSelectedKeyframes:</string>
 							<string>menuTimelineDuplicate:</string>
-							<string>menuTimelineDuration:</string>
 							<string>menuTimelineNew:</string>
 							<string>menuTimelineSettings:</string>
-							<string>menuUpdateCCBsInDirectory:</string>
 							<string>menuZoomIn:</string>
 							<string>menuZoomOut:</string>
 							<string>newDocument:</string>
@@ -9075,25 +8968,19 @@
 							<string>newJSDocument:</string>
 							<string>openCocosPlayerConsole:</string>
 							<string>openDocument:</string>
-							<string>paste:</string>
 							<string>pasteAsChild:</string>
 							<string>performClose:</string>
-							<string>playbackJumpToStart:</string>
-							<string>playbackPlay:</string>
 							<string>playbackStepBack:</string>
 							<string>playbackStepForward:</string>
-							<string>playbackStop:</string>
 							<string>pressedPanelVisibility:</string>
 							<string>pressedPlaybackControl:</string>
 							<string>pressedPublishTB:</string>
 							<string>pressedToolSelection:</string>
-							<string>pressedZoom:</string>
 							<string>redo:</string>
 							<string>reportBug:</string>
 							<string>runProject:</string>
 							<string>saveAllDocuments:</string>
 							<string>saveDocument:</string>
-							<string>saveDocumentAs:</string>
 							<string>showAPIDocs:</string>
 							<string>showHelp:</string>
 							<string>undo:</string>
@@ -9134,27 +9021,11 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">menuAlignObjects:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuAlignToPixels:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">menuArrange:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">menuCleanCacheDirectories:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuCloseProject:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuCreateKeyframesFromSelection:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -9167,14 +9038,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">menuEditCustomPropSettings:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuEditResolutionSettings:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuEditSmartSpriteSheet:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -9230,10 +9093,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">menuReverseSelectedKeyframes:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">menuSelectBehind:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -9246,23 +9105,11 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">menuSetEasingOption:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">menuSetStateOriginCentered:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">menuStretchSelectedKeyframes:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">menuTimelineDuplicate:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuTimelineDuration:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -9271,10 +9118,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">menuTimelineSettings:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuUpdateCCBsInDirectory:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -9306,10 +9149,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">paste:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">pasteAsChild:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -9318,23 +9157,11 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">playbackJumpToStart:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">playbackPlay:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">playbackStepBack:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">playbackStepForward:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">playbackStop:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -9351,10 +9178,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">pressedToolSelection:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">pressedZoom:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -9375,10 +9198,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">saveDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">saveDocumentAs:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -9430,6 +9249,7 @@
 							<string>outlineProject</string>
 							<string>panelVisibilityControl</string>
 							<string>previewViewContainer</string>
+							<string>projectViewTabs</string>
 							<string>resourceManagerSplitView</string>
 							<string>rightPanel</string>
 							<string>scrubberSelectionView</string>
@@ -9472,6 +9292,7 @@
 							<string>NSOutlineView</string>
 							<string>NSSegmentedControl</string>
 							<string>NSView</string>
+							<string>SMTabBar</string>
 							<string>NSSplitView</string>
 							<string>NSView</string>
 							<string>SequencerScrubberSelectionView</string>
@@ -9517,6 +9338,7 @@
 							<string>outlineProject</string>
 							<string>panelVisibilityControl</string>
 							<string>previewViewContainer</string>
+							<string>projectViewTabs</string>
 							<string>resourceManagerSplitView</string>
 							<string>rightPanel</string>
 							<string>scrubberSelectionView</string>
@@ -9639,6 +9461,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">previewViewContainer</string>
 								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">projectViewTabs</string>
+								<string key="candidateClassName">SMTabBar</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">resourceManagerSplitView</string>
@@ -9947,6 +9773,33 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/ResourceManagerOutlineView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SMBar</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SMBar.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SMTabBar</string>
+					<string key="superclassName">SMBar</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SMTabBar.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
