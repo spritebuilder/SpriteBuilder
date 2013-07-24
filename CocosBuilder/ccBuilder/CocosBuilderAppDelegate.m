@@ -1469,6 +1469,8 @@ static BOOL hideAllToNextSeparator;
     [PositionPropertySetter refreshAllPositions];
     sequenceHandler.currentSequence.timelinePosition = currentTime;
     [currentSeq release];
+    
+    [projectOutlineHandler updateSelectionPreview];
 }
 
 - (void) exportFile:(NSString*) fileName withPlugIn:(NSString*) ext
