@@ -230,7 +230,34 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     itemObjs.toolTip = @"Tileless Editor View";
     [items addObject:itemObjs];
     
+    NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes.png"];
+    [imgNodes setTemplate:YES];
+    SMTabBarItem* itemNodes = [[[SMTabBarItem alloc] initWithImage:imgNodes tag:2] autorelease];
+    itemNodes.toolTip = @"Node Library View";
+    [items addObject:itemNodes];
+    
     projectViewTabs.items = items;
+    projectViewTabs.delegate = self;
+    
+    [self setProjectViewTabBarEnabled: NO];
+}
+
+- (void)tabBar:(SMTabBar *)tabBar didSelectItem:(SMTabBarItem *)item {
+    [projectTabView selectTabViewItemAtIndex:[projectViewTabs.items indexOfObject:item]];
+}
+
+- (void) setProjectViewTabBarEnabled:(BOOL)enable
+{
+    if (!enable)
+    {
+        [projectViewTabs setSelectedItem:[projectViewTabs.items objectAtIndex:0]];
+        [projectTabView selectTabViewItemAtIndex:0];
+    }
+    
+    for (SMTabBarItem* item in projectViewTabs.items)
+    {
+        item.enabled = enable;
+    }
 }
 
 - (void) setupPlayerConnection
@@ -1328,6 +1355,7 @@ static BOOL hideAllToNextSeparator;
     [resManager removeAllDirectories];
     
     [self updateWarningsButton];
+    [self setProjectViewTabBarEnabled: NO];
 }
 
 - (BOOL) openProject:(NSString*) fileName
@@ -1404,6 +1432,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     [self updateWarningsButton];
+    [self setProjectViewTabBarEnabled: YES];
     
     return YES;
 }

@@ -26,6 +26,7 @@
 #import <Cocoa/Cocoa.h>
 #import "cocos2d.h"
 #import "PSMTabBarControl.h"
+#import "SMTabBar.h"
 
 #define kCCBNumCanvasDevices 12
 
@@ -101,7 +102,7 @@ enum {
 @class ResourceManagerPreviewView;
 @class SMTabBar;
 
-@interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
+@interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
     
     // Panel Views
@@ -136,6 +137,7 @@ enum {
     
     // Inspector tab bars
     IBOutlet SMTabBar* projectViewTabs;
+    IBOutlet NSTabView* projectTabView;
     
     // Outline view heirarchy
     SequencerHandler* sequenceHandler;
