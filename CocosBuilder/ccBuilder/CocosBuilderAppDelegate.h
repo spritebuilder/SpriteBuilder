@@ -103,6 +103,7 @@ enum {
 @class ResourceManagerPreviewView;
 @class SMTabBar;
 @class ResourceManagerTilelessEditorManager;
+@class CCBImageBrowserView;
 
 @interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -191,7 +192,7 @@ enum {
     
     // Tileless editor view
     ResourceManagerTilelessEditorManager* tilelessEditorManager;
-    IBOutlet IKImageBrowserView* projectImageBrowserView;
+    IBOutlet CCBImageBrowserView* projectImageBrowserView;
     
     //ResourceManagerPanel* resManagerPanel;
     

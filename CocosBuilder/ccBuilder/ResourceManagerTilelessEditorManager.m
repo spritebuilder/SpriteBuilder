@@ -9,10 +9,11 @@
 #import "ResourceManagerTilelessEditorManager.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
+#import "CCBImageBrowserView.h"
 
 @implementation ResourceManagerTilelessEditorManager
 
-- (id) initWithImageBrowser:(IKImageBrowserView*)bw
+- (id) initWithImageBrowser:(CCBImageBrowserView*)bw
 {
     self = [super init];
     if (!self) return NULL;
@@ -77,6 +78,9 @@
     [pbItems addObject:item];
     
     [pasteboard writeObjects:pbItems];
+    
+    // Deselect
+    [browserView deselectAll];
     
     return 1;
 }

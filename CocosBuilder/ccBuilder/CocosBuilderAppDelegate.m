@@ -97,6 +97,7 @@
 #import "SMTabBar.h"
 #import "SMTabBarItem.h"
 #import "ResourceManagerTilelessEditorManager.h"
+#import "CCBImageBrowserView.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 

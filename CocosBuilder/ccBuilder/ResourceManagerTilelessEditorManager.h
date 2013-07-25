@@ -9,13 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <Quartz/Quartz.h>
 
+@class CCBImageBrowserView;
+
 @interface ResourceManagerTilelessEditorManager : NSObject
 {
-    IKImageBrowserView* browserView;
+    CCBImageBrowserView* browserView;
     NSMutableArray* imageResources;
     NSMutableArray* imageGroups;
 }
 
-- (id) initWithImageBrowser:(IKImageBrowserView*)bw;
+- (id) initWithImageBrowser:(CCBImageBrowserView*)bw;
 
 @end
