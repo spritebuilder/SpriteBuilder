@@ -165,6 +165,8 @@
     }
 }
 
+// Paste board
+
 - (id) pasteboardPropertyListForType:(NSString *)pbType
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
@@ -210,6 +212,72 @@
     if ([pbType isEqualToString:@"com.cocosbuilder.ccb"] && type == kCCBResTypeCCBFile) return NSPasteboardWritingPromised;
     return 0;
 }
+
+// ImageKit representation
+
+- (NSString *) imageUID
+{
+    return self.relativePath;
+}
+
+- (NSString *) imageRepresentationType
+{
+    return IKImageBrowserPathRepresentationType;
+}
+
+- (id) imageRepresentation
+{
+    if (self.type == kCCBResTypeImage)
+    {
+        NSFileManager* fm = [NSFileManager defaultManager];
+        
+        NSString* dir = [self.filePath stringByDeletingLastPathComponent];
+        NSString* file = [self.filePath lastPathComponent];
+        NSString* autoPath = [[dir stringByAppendingPathComponent:@"resources-auto"] stringByAppendingPathComponent:file];
+        
+        if ([fm fileExistsAtPath:autoPath]) return autoPath;
+        else return NULL;
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
+- (NSUInteger) imageVersion
+{
+    if (self.type == kCCBResTypeImage)
+    {
+        NSFileManager* fm = [NSFileManager defaultManager];
+        
+        NSString* dir = [self.filePath stringByDeletingLastPathComponent];
+        NSString* file = [self.filePath lastPathComponent];
+        NSString* autoPath = [[dir stringByAppendingPathComponent:@"resources-auto"] stringByAppendingPathComponent:file];
+        
+        if ([fm fileExistsAtPath:autoPath])
+        {
+            NSDate* fileDate = [CCBFileUtil modificationDateForFile:autoPath];
+            return ((NSUInteger)[fileDate timeIntervalSinceReferenceDate]);
+        }
+        else return 0;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+- (NSString *) imageTitle
+{
+    return [[self.filePath lastPathComponent] stringByDeletingPathExtension];
+}
+
+- (BOOL) isSelectable
+{
+    return NO;
+}
+
+// Deallocation
 
 - (void) dealloc
 {
@@ -1046,7 +1114,7 @@
                 if ([fm fileExistsAtPath:pathForRes]) return pathForRes;
             }
             
-            // TODO: Auto convert!
+            // Auto convert!
             NSString* autoFile = [[defaultDirName stringByAppendingPathComponent:@"resources-auto"] stringByAppendingPathComponent:defaultFileName];
             if ([fm fileExistsAtPath:autoFile])
             {

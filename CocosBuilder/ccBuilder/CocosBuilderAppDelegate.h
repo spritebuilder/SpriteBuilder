@@ -24,6 +24,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import <Quartz/Quartz.h>
 #import "cocos2d.h"
 #import "PSMTabBarControl.h"
 #import "SMTabBar.h"
@@ -101,6 +102,7 @@ enum {
 @class AboutWindow;
 @class ResourceManagerPreviewView;
 @class SMTabBar;
+@class ResourceManagerTilelessEditorManager;
 
 @interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -186,6 +188,10 @@ enum {
     NSView* previewViewGeneric;
     ResourceManagerPreviewView* previewViewOwner;
     IBOutlet NSSplitView* resourceManagerSplitView;
+    
+    // Tileless editor view
+    ResourceManagerTilelessEditorManager* tilelessEditorManager;
+    IBOutlet IKImageBrowserView* projectImageBrowserView;
     
     //ResourceManagerPanel* resManagerPanel;
     

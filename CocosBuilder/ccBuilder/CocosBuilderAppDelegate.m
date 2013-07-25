@@ -96,6 +96,7 @@
 #import "SMLErrorPopOver.h"
 #import "SMTabBar.h"
 #import "SMTabBarItem.h"
+#import "ResourceManagerTilelessEditorManager.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -260,6 +261,11 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     }
 }
 
+- (void) setupProjectTilelessEditor
+{
+    tilelessEditorManager = [[ResourceManagerTilelessEditorManager alloc] initWithImageBrowser:projectImageBrowserView];
+}
+
 - (void) setupPlayerConnection
 {
     connection = [[PlayerConnection alloc] init];
@@ -378,6 +384,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 
     [self setupResourceManager];
     [self setupGUIWindow];
+    [self setupProjectTilelessEditor];
     
     [self setupPlayerConnection];
     

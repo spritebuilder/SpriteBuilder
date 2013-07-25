@@ -173,6 +173,7 @@
 		B7AC69A617A07DAD0041B8BD /* inspector-objects.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69A417A07DAD0041B8BD /* inspector-objects.png */; };
 		B7AC69A917A0923B0041B8BD /* inspector-nodes.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69A817A0923B0041B8BD /* inspector-nodes.png */; };
 		B7AC69AD17A0938C0041B8BD /* inspector-nodes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69AC17A0938C0041B8BD /* inspector-nodes@2x.png */; };
+		B7AC69B017A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69AF17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -1147,6 +1148,8 @@
 		B7AC69A417A07DAD0041B8BD /* inspector-objects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-objects.png"; sourceTree = "<group>"; };
 		B7AC69A817A0923B0041B8BD /* inspector-nodes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-nodes.png"; sourceTree = "<group>"; };
 		B7AC69AC17A0938C0041B8BD /* inspector-nodes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-nodes@2x.png"; sourceTree = "<group>"; };
+		B7AC69AE17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerTilelessEditorManager.h; sourceTree = "<group>"; };
+		B7AC69AF17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerTilelessEditorManager.m; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -4041,6 +4044,8 @@
 				E3583FAF1756C228002DF0B0 /* ResourceManagerPreviewView.xib */,
 				E37FCAF2175D68FF009F81D6 /* ResourceManagerPreviewView.h */,
 				E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */,
+				B7AC69AE17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.h */,
+				B7AC69AF17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m */,
 			);
 			name = "Resource Manager";
 			sourceTree = "<group>";
@@ -5386,6 +5391,7 @@
 				B7AC699E17A079C80041B8BD /* SMTabBar.m in Sources */,
 				B7AC699F17A079C80041B8BD /* SMTabBarButtonCell.m in Sources */,
 				B7AC69A017A079C80041B8BD /* SMTabBarItem.m in Sources */,
+				B7AC69B017A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
