@@ -10,6 +10,8 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "CCBImageBrowserView.h"
+#import "CocosBuilderAppDelegate.h"
+#import "ProjectSettings.h"
 
 @implementation ResourceManagerTilelessEditorManager
 
@@ -42,6 +44,7 @@
     
     imageResources = [[NSMutableArray alloc] init];
     imageGroups = [[NSMutableArray alloc] init];
+    imageGroupsActive = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -60,12 +63,12 @@
 
 - (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index
 {
-    return [imageGroups objectAtIndex:index];
+    return [imageGroupsActive objectAtIndex:index];
 }
 
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser
 {
-    return [imageGroups count];
+    return [imageGroupsActive count];
 }
 
 - (NSUInteger) imageBrowser:(IKImageBrowserView *) aBrowser writeItemsAtIndexes:(NSIndexSet *) itemIndexes toPasteboard:(NSPasteboard *)pasteboard
@@ -89,17 +92,32 @@
 
 - (void) resourceListUpdated
 {
+    ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+    
     [imageResources removeAllObjects];
     [imageGroups removeAllObjects];
+    [imageGroupsActive removeAllObjects];
     
     if ([ResourceManager sharedManager].activeDirectories.count > 0)
     {
         NSDictionary* dirs = [ResourceManager sharedManager].directories;
         for (NSString* dirPath in dirs)
         {
+            // Get info about the directory
             RMDirectory* dir = [dirs objectForKey:dirPath];
             
-            int numAddedFiles = 0;
+            NSString* relDirPath = [ResourceManagerUtil relativePathFromAbsolutePath:dir.dirPath];
+            NSString* relDirPathName = [relDirPath lastPathComponent];
+            if (!relDirPath || [relDirPath isEqualToString:@""])
+            {
+                relDirPathName = @"Resources";
+                relDirPath = @"";
+            }
+            
+            BOOL isActiveDir = ![[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
+            
+            
+            int numImagesInDir = 0;
             int startFileIdx = [imageResources count];
             
             for (RMResource* res in dir.any)
@@ -107,20 +125,20 @@
                 if (res.type == kCCBResTypeImage ||
                     res.type == kCCBResTypeCCBFile)
                 {
-                    [imageResources addObject:res];
-                    numAddedFiles++;
+                    if (isActiveDir) [imageResources addObject:res];
+                    numImagesInDir++;
                 }
             }
             
-            if (numAddedFiles > 0)
+            if (numImagesInDir > 0)
             {
-                NSString* relDirPath = [dir.dirPath lastPathComponent];
-                if (!relDirPath || [relDirPath isEqualToString:@""]) relDirPath = @"Resources";
-                
                 // Add a group
                 NSMutableDictionary* group = [NSMutableDictionary dictionary];
-                [group setObject:[NSValue valueWithRange:NSMakeRange(startFileIdx, numAddedFiles)] forKey:IKImageBrowserGroupRangeKey];
-                [group setObject:relDirPath forKey:IKImageBrowserGroupTitleKey];
+                
+                [group setObject:relDirPath forKey:@"relDirPath"];
+                
+                [group setObject:[NSValue valueWithRange:NSMakeRange(startFileIdx, numImagesInDir)] forKey:IKImageBrowserGroupRangeKey];
+                [group setObject:relDirPathName forKey:IKImageBrowserGroupTitleKey];
                 [group setObject:[NSNumber numberWithInt:IKGroupDisclosureStyle] forKey:IKImageBrowserGroupStyleKey];
                 
                 // Colors
@@ -138,7 +156,7 @@
                 textLayer.contentsScale = [[NSScreen mainScreen] backingScaleFactor];
                 textLayer.bounds = CGRectMake(0, 0, 250, 20);
                 textLayer.frame = CGRectMake(3, -5, 250, 20);
-                textLayer.string = relDirPath;
+                textLayer.string = relDirPathName;
                 textLayer.font = [NSFont systemFontOfSize:11];
                 textLayer.fontSize = 11;
                 textLayer.foregroundColor = cBlack;
@@ -156,6 +174,11 @@
                 
                 // Remember this image group
                 [imageGroups addObject:group];
+                
+                if (![[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue])
+                {
+                    [imageGroupsActive addObject:group];
+                }
                 
                 // Release objects
                 CFRelease(cBlack);
@@ -178,7 +201,12 @@
 {
     if ([aTableColumn.identifier isEqualToString:@"enable"])
     {
-        return [NSNumber numberWithBool:YES];
+        ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+        NSString* relDirPath = [[imageGroups objectAtIndex:rowIndex] objectForKey:@"relDirPath"];
+        
+        BOOL previewFolderHidden = [[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
+        
+        return [NSNumber numberWithBool:!previewFolderHidden];
     }
     else if ([aTableColumn.identifier isEqualToString:@"dir"])
     {
@@ -191,7 +219,13 @@
 {
     if ([column.identifier isEqualToString:@"enable"])
     {
-        NSLog(@"Set value: %@", value);
+        // Update the value
+        ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+        NSString* relDirPath = [[imageGroups objectAtIndex:row] objectForKey:@"relDirPath"];
+        [settings setValue:[NSNumber numberWithBool:![value boolValue]] forRelPath:relDirPath andKey:@"previewFolderHidden"];
+        
+        // Reload the image view
+        [self resourceListUpdated];
     }
 }
 

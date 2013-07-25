@@ -16,6 +16,7 @@
     CCBImageBrowserView* browserView;
     NSMutableArray* imageResources;
     NSMutableArray* imageGroups;
+    NSMutableArray* imageGroupsActive;
 }
 
 - (id) initWithImageBrowser:(CCBImageBrowserView*)bw;
