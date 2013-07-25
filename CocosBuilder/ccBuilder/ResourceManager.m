@@ -265,6 +265,18 @@
         }
         else return 0;
     }
+    else if (self.type == kCCBResTypeCCBFile)
+    {
+        NSFileManager* fm = [NSFileManager defaultManager];
+        
+        NSString* previewPath = [self.filePath stringByAppendingPathExtension:@"ppng"];
+        if ([fm fileExistsAtPath:previewPath])
+        {
+            NSDate* fileDate = [CCBFileUtil modificationDateForFile:previewPath];
+            return ((NSUInteger)[fileDate timeIntervalSinceReferenceDate]);
+        }
+        else return 0;
+    }
     else
     {
         return 0;
