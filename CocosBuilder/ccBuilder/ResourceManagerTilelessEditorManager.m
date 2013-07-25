@@ -99,7 +99,42 @@
                 [group setObject:[NSValue valueWithRange:NSMakeRange(startFileIdx, numAddedFiles)] forKey:IKImageBrowserGroupRangeKey];
                 [group setObject:relDirPath forKey:IKImageBrowserGroupTitleKey];
                 [group setObject:[NSNumber numberWithInt:IKGroupDisclosureStyle] forKey:IKImageBrowserGroupStyleKey];
+                
+                // Colors
+                CGColorRef cBlack = CGColorCreateGenericRGB(0, 0, 0, 1);
+                CGColorRef cGray = CGColorCreateGenericRGB(0.63, 0.63, 0.63, 1);
+                
+                // Create group header with background image
+                CALayer *headerLayer = [CALayer layer];
+                headerLayer.contentsScale = [[NSScreen mainScreen] backingScaleFactor];
+                headerLayer.frame = CGRectMake(0, 0, 100, 16);
+                headerLayer.contents = [NSImage imageNamed:@"header-bg2-crop.png"];
+                
+                // Text for header
+                CATextLayer* textLayer = [CATextLayer layer];
+                textLayer.contentsScale = [[NSScreen mainScreen] backingScaleFactor];
+                textLayer.bounds = CGRectMake(0, 0, 250, 20);
+                textLayer.frame = CGRectMake(3, -5, 250, 20);
+                textLayer.string = relDirPath;
+                textLayer.font = [NSFont systemFontOfSize:11];
+                textLayer.fontSize = 11;
+                textLayer.foregroundColor = cBlack;
+                
+                [headerLayer addSublayer:textLayer];
+                
+                // Empty footer layer
+                CALayer* footerLayer = [CALayer layer];
+                footerLayer.backgroundColor = cGray;
+                footerLayer.frame = CGRectMake(0, 0, 100, 5);
+                
+                [group setObject:headerLayer forKey:IKImageBrowserGroupHeaderLayer];
+                [group setObject:footerLayer forKey:IKImageBrowserGroupFooterLayer];
+                
                 [imageGroups addObject:group];
+                
+                // Release objects
+                CFRelease(cBlack);
+                CFRelease(cGray);
             }
         }
     }
