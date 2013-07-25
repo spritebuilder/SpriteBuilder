@@ -22,14 +22,19 @@
     browserView.dataSource = self;
     
     // Setup options
+    NSColor* cBG = [NSColor colorWithCalibratedRed:0.93 green:0.93 blue:0.93 alpha:1];
+    
     browserView.intercellSpacing = CGSizeMake(2, 2);
     browserView.cellSize = CGSizeMake(54, 54);
-    [browserView setValue:[NSColor colorWithCalibratedRed:0.93 green:0.93 blue:0.93 alpha:1] forKey:IKImageBrowserBackgroundColorKey];
+    [browserView setValue:cBG forKey:IKImageBrowserBackgroundColorKey];
     
     // Title font
     NSMutableDictionary* attr = [NSMutableDictionary dictionary];
     [attr setObject:[NSFont systemFontOfSize:10] forKey:NSFontAttributeName];
     [browserView setValue:attr forKey:IKImageBrowserCellsTitleAttributesKey];
+    [browserView setValue:attr forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];
+    [browserView setValue:cBG forKey:IKImageBrowserSelectionColorKey];
+    [browserView setValue:cBG forKey:IKImageBrowserCellsOutlineColorKey];
     
     // Register with resource manager
     [[ResourceManager sharedManager] addResourceObserver:self];
@@ -60,6 +65,20 @@
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser
 {
     return [imageGroups count];
+}
+
+- (NSUInteger) imageBrowser:(IKImageBrowserView *) aBrowser writeItemsAtIndexes:(NSIndexSet *) itemIndexes toPasteboard:(NSPasteboard *)pasteboard
+{
+    [pasteboard clearContents];
+    
+    RMResource* item = [imageResources objectAtIndex:[itemIndexes firstIndex]];
+    
+    NSMutableArray* pbItems = [NSMutableArray array];
+    [pbItems addObject:item];
+    
+    [pasteboard writeObjects:pbItems];
+    
+    return 1;
 }
 
 #pragma mark Callback from ResourceMangager

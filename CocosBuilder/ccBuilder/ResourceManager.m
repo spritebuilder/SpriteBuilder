@@ -278,7 +278,7 @@
 
 - (BOOL) isSelectable
 {
-    return NO;
+    return YES;
 }
 
 // Deallocation
