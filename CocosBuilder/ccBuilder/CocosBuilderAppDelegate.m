@@ -265,6 +265,9 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 - (void) setupProjectTilelessEditor
 {
     tilelessEditorManager = [[ResourceManagerTilelessEditorManager alloc] initWithImageBrowser:projectImageBrowserView];
+    [tilelessEditorTableFilterView setDataSource:tilelessEditorManager];
+    [tilelessEditorTableFilterView setDelegate:tilelessEditorManager];
+    [tilelessEditorTableFilterView setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.93 blue:0.93 alpha:2]];
 }
 
 - (void) setupPlayerConnection

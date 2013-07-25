@@ -193,6 +193,7 @@ enum {
     // Tileless editor view
     ResourceManagerTilelessEditorManager* tilelessEditorManager;
     IBOutlet CCBImageBrowserView* projectImageBrowserView;
+    IBOutlet NSTableView* tilelessEditorTableFilterView;
     
     //ResourceManagerPanel* resManagerPanel;
     

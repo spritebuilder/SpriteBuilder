@@ -167,6 +167,44 @@
     [browserView reloadData];
 }
 
+#pragma mark Table View data source
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
+{
+    return [imageGroups count];
+}
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    if ([aTableColumn.identifier isEqualToString:@"enable"])
+    {
+        return [NSNumber numberWithBool:YES];
+    }
+    else if ([aTableColumn.identifier isEqualToString:@"dir"])
+    {
+        return [[imageGroups objectAtIndex:rowIndex] objectForKey:IKImageBrowserGroupTitleKey];
+    }
+    return NULL;
+}
+
+- (void)tableView:(NSTableView *)tableView setObjectValue:(id)value forTableColumn:(NSTableColumn *)column row:(NSInteger)row
+{
+    if ([column.identifier isEqualToString:@"enable"])
+    {
+        NSLog(@"Set value: %@", value);
+    }
+}
+
+- (void) tableViewSelectionDidChange:(NSNotification *)notification
+{
+    NSTableView* tableView = notification.object;
+    
+    if (tableView.selectedRow != -1)
+    {
+        [tableView deselectAll:self];
+    }
+}
+
 #pragma mark Dealloc
 
 - (void) dealloc
