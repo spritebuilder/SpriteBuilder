@@ -137,10 +137,6 @@
         NSString* autoPath = [[dirPath stringByAppendingPathComponent:resDirName] stringByAppendingPathComponent:fileName];
         
         NSImage* img = [[[NSImage alloc] initWithContentsOfFile:autoPath] autorelease];
-        //if (!img)
-        //{
-        //    img = [[[NSImage alloc] initWithContentsOfFile:filePath] autorelease];
-        //}
         return img;
     }
     
@@ -236,6 +232,14 @@
         NSString* autoPath = [[dir stringByAppendingPathComponent:@"resources-auto"] stringByAppendingPathComponent:file];
         
         if ([fm fileExistsAtPath:autoPath]) return autoPath;
+        else return NULL;
+    }
+    else if (self.type == kCCBResTypeCCBFile)
+    {
+        NSFileManager* fm = [NSFileManager defaultManager];
+        
+        NSString* previewPath = [self.filePath stringByAppendingPathExtension:@"ppng"];
+        if ([fm fileExistsAtPath:previewPath]) return previewPath;
         else return NULL;
     }
     else

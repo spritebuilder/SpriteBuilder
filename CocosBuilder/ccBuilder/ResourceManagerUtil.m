@@ -237,6 +237,10 @@
     {
         NSString* base = dir.dirPath;
         
+        if ([path isEqualToString:base])
+        {
+            return @"";
+        }
         if ([path hasPrefix:base])
         {
             NSString* relPath = [path substringFromIndex:[base length]+1];
@@ -245,6 +249,11 @@
     }
     
     NSLog(@"WARNING! ResourceManagerUtil: No relative path for %@",path);
+    for (RMDirectory* dir in activeDirs)
+    {
+        NSString* base = dir.dirPath;
+        NSLog(@"  base: %@", base);
+    }
     return NULL;
 }
 

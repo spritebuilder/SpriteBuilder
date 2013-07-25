@@ -35,6 +35,7 @@
     [[ResourceManager sharedManager] addResourceObserver:self];
     
     imageResources = [[NSMutableArray alloc] init];
+    imageGroups = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -51,22 +52,54 @@
     return [imageResources count];
 }
 
+- (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index
+{
+    return [imageGroups objectAtIndex:index];
+}
+
+- (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser
+{
+    return [imageGroups count];
+}
+
 #pragma mark Callback from ResourceMangager
 
 - (void) resourceListUpdated
 {
     [imageResources removeAllObjects];
+    [imageGroups removeAllObjects];
     
-    NSDictionary* dirs = [ResourceManager sharedManager].directories;
-    for (NSString* dirPath in dirs)
+    if ([ResourceManager sharedManager].activeDirectories.count > 0)
     {
-        RMDirectory* dir = [dirs objectForKey:dirPath];
-        
-        for (RMResource* res in dir.images)
+        NSDictionary* dirs = [ResourceManager sharedManager].directories;
+        for (NSString* dirPath in dirs)
         {
-            if (res.type == kCCBResTypeImage)
+            RMDirectory* dir = [dirs objectForKey:dirPath];
+            
+            int numAddedFiles = 0;
+            int startFileIdx = [imageResources count];
+            
+            for (RMResource* res in dir.any)
             {
-                [imageResources addObject:res];
+                if (res.type == kCCBResTypeImage ||
+                    res.type == kCCBResTypeCCBFile)
+                {
+                    [imageResources addObject:res];
+                    numAddedFiles++;
+                }
+            }
+            
+            if (numAddedFiles > 0)
+            {
+                NSString* relDirPath = [dir.dirPath lastPathComponent];
+                if (!relDirPath || [relDirPath isEqualToString:@""]) relDirPath = @"Resources";
+                
+                // Add a group
+                NSMutableDictionary* group = [NSMutableDictionary dictionary];
+                [group setObject:[NSValue valueWithRange:NSMakeRange(startFileIdx, numAddedFiles)] forKey:IKImageBrowserGroupRangeKey];
+                [group setObject:relDirPath forKey:IKImageBrowserGroupTitleKey];
+                [group setObject:[NSNumber numberWithInt:IKGroupDisclosureStyle] forKey:IKImageBrowserGroupStyleKey];
+                [imageGroups addObject:group];
             }
         }
     }

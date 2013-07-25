@@ -13,6 +13,7 @@
 {
     IKImageBrowserView* browserView;
     NSMutableArray* imageResources;
+    NSMutableArray* imageGroups;
 }
 
 - (id) initWithImageBrowser:(IKImageBrowserView*)bw;
