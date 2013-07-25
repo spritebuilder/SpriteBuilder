@@ -122,14 +122,16 @@
                 
                 [headerLayer addSublayer:textLayer];
                 
-                // Empty footer layer
+                // Footer layer (with just a line)
                 CALayer* footerLayer = [CALayer layer];
                 footerLayer.backgroundColor = cGray;
                 footerLayer.frame = CGRectMake(0, 0, 100, 5);
                 
+                // Add header and footer
                 [group setObject:headerLayer forKey:IKImageBrowserGroupHeaderLayer];
                 [group setObject:footerLayer forKey:IKImageBrowserGroupFooterLayer];
                 
+                // Remember this image group
                 [imageGroups addObject:group];
                 
                 // Release objects
