@@ -8,6 +8,7 @@
 
 #import "PlugInNodeViewHandler.h"
 #import "PlugInManager.h"
+#import "PlugInNode.h"
 
 @implementation PlugInNodeViewHandler
 
@@ -18,7 +19,8 @@
     
     PlugInManager* pim = [PlugInManager sharedManager];
     
-    NSMutableArray* plugIns = [NSMutableArray array];
+    plugIns = [[NSMutableArray alloc] init];
+    
     NSArray* nodeNames = pim.plugInsNodeNames;
     for (NSString* nodeName in nodeNames)
     {
@@ -27,8 +29,35 @@
     
     collectionView = cv;
     [collectionView setContent:plugIns];
+    collectionView.delegate = self;
     
     return self;
+}
+
+- (BOOL)collectionView:(NSCollectionView *)collectionView writeItemsAtIndexes:(NSIndexSet *)indexes toPasteboard:(NSPasteboard *)pasteboard
+{
+    [pasteboard clearContents];
+    
+    PlugInNode* plugIn = [plugIns objectAtIndex:[indexes firstIndex]];
+    
+    NSMutableArray* pbItems = [NSMutableArray array];
+    [pbItems addObject:plugIn];
+    
+    [pasteboard writeObjects:pbItems];
+    
+    return YES;
+}
+
+- (NSImage *)collectionView:(NSCollectionView *)collectionView draggingImageForItemsAtIndexes:(NSIndexSet *)indexes withEvent:(NSEvent *)event offset:(NSPointPointer)dragImageOffset
+{
+    PlugInNode* plugIn = [plugIns objectAtIndex:[indexes firstIndex]];
+    return plugIn.icon;
+}
+
+- (void) dealloc
+{
+    [plugIns release];
+    [super dealloc];
 }
 
 @end

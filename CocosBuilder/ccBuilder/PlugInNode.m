@@ -232,6 +232,34 @@
     return [[nodePropertiesDict objectForKey:property] objectForKey:@"type"];
 }
 
+#pragma mark Drag and Drop
+
+- (id) pasteboardPropertyListForType:(NSString *)pbType
+{
+    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+    
+    if ([pbType isEqualToString:@"com.cocosbuilder.PlugInNode"])
+    {
+        [dict setObject:self.nodeClassName forKey:@"nodeClassName"];
+        return dict;
+    }
+    return NULL;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.PlugInNode"];
+    return pbTypes;
+}
+
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)pbType pasteboard:(NSPasteboard *)pasteboard
+{
+    if ([pbType isEqualToString:@"com.cocosbuilder.PlugInNode"]) return NSPasteboardWritingPromised;
+    return 0;
+}
+
+#pragma mark Deallocation
+
 - (void) dealloc
 {
     [cachedAnimatableProperties release];

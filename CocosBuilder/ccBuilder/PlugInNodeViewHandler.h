@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PlugInNodeViewHandler : NSObject
+@interface PlugInNodeViewHandler : NSObject <NSCollectionViewDelegate>
 {
     NSCollectionView* collectionView;
+    NSMutableArray* plugIns;
 }
 
 - (id) initWithCollectionView:(NSCollectionView*)cv;

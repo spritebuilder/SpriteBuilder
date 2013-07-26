@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface PlugInNode : NSObject
+@interface PlugInNode : NSObject <NSPasteboardWriting>
 {
     NSBundle* bundle;
     

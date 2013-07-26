@@ -179,6 +179,7 @@
 		B7AC69B717A1B9930041B8BD /* CCBImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69B617A1B9930041B8BD /* CCBImageBrowserView.m */; };
 		B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69B917A2F4470041B8BD /* PlugInNodeViewHandler.m */; };
 		B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69BF17A3129C0041B8BD /* PlugInNodeCollectionView.m */; };
+		B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69C217A320E30041B8BD /* CCBColorView.m */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -1163,6 +1164,8 @@
 		B7AC69B917A2F4470041B8BD /* PlugInNodeViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlugInNodeViewHandler.m; sourceTree = "<group>"; };
 		B7AC69BE17A3129C0041B8BD /* PlugInNodeCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlugInNodeCollectionView.h; sourceTree = "<group>"; };
 		B7AC69BF17A3129C0041B8BD /* PlugInNodeCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlugInNodeCollectionView.m; sourceTree = "<group>"; };
+		B7AC69C117A320E30041B8BD /* CCBColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBColorView.h; sourceTree = "<group>"; };
+		B7AC69C217A320E30041B8BD /* CCBColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBColorView.m; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -2340,6 +2343,8 @@
 				B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */,
 				B7AC69B517A1B9930041B8BD /* CCBImageBrowserView.h */,
 				B7AC69B617A1B9930041B8BD /* CCBImageBrowserView.m */,
+				B7AC69C117A320E30041B8BD /* CCBColorView.h */,
+				B7AC69C217A320E30041B8BD /* CCBColorView.m */,
 			);
 			name = "Styled Components";
 			sourceTree = "<group>";
@@ -5418,6 +5423,7 @@
 				B7AC69B717A1B9930041B8BD /* CCBImageBrowserView.m in Sources */,
 				B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */,
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
+				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
