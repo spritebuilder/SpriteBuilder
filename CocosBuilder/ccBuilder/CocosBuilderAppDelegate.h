@@ -104,6 +104,7 @@ enum {
 @class SMTabBar;
 @class ResourceManagerTilelessEditorManager;
 @class CCBImageBrowserView;
+@class PlugInNodeViewHandler;
 
 @interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -196,7 +197,9 @@ enum {
     IBOutlet NSTableView* tilelessEditorTableFilterView;
     IBOutlet NSSplitView* tilelessEditorSplitView;
     
-    //ResourceManagerPanel* resManagerPanel;
+    // PlugIn manager view
+    PlugInNodeViewHandler* plugInNodeViewHandler;
+    IBOutlet NSCollectionView* plugInNodeCollectionView;
     
     // Project
     ProjectSettings* projectSettings;

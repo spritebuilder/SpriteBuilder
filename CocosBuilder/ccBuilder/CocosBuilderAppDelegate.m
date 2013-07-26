@@ -98,6 +98,7 @@
 #import "SMTabBarItem.h"
 #import "ResourceManagerTilelessEditorManager.h"
 #import "CCBImageBrowserView.h"
+#import "PlugInNodeViewHandler.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -214,6 +215,11 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     toolbarDelegate = [[MainToolbarDelegate alloc] init];
     toolbar.delegate = toolbarDelegate;
     [toolbarDelegate addPlugInItemsToToolbar:toolbar];
+}
+
+- (void) setupPlugInNodeView
+{
+    plugInNodeViewHandler  = [[PlugInNodeViewHandler alloc] initWithCollectionView:plugInNodeCollectionView];
 }
 
 - (void) setupProjectViewTabBar
@@ -388,6 +394,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     
     // Update toolbar with plug-ins
     [self setupToolbar];
+    [self setupPlugInNodeView];
     [self setupProjectViewTabBar];
 
     [self setupResourceManager];
@@ -506,9 +513,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     
     if (doc.isDirty)
     {
-#warning Should get real file name
-        
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Do you want to save the changes you made in the document “Untitled”?" defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
+        NSAlert* alert = [NSAlert alertWithMessageText:[NSString stringWithFormat: @"Do you want to save the changes you made in the document “%@”?", [doc.fileName lastPathComponent]] defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
         NSInteger result = [alert runModal];
         
         if (result == NSAlertDefaultReturn)
