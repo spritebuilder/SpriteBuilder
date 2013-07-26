@@ -224,6 +224,9 @@
         NSString* relDirPath = [[imageGroups objectAtIndex:row] objectForKey:@"relDirPath"];
         [settings setValue:[NSNumber numberWithBool:![value boolValue]] forRelPath:relDirPath andKey:@"previewFolderHidden"];
         
+        // Deselect the table view to prevent toggle to fire twice
+        [tableView deselectAll:self];
+        
         // Reload the image view
         [self resourceListUpdated];
     }
@@ -235,7 +238,16 @@
     
     if (tableView.selectedRow != -1)
     {
+        // Toggle checkbox
+        ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+        NSString* relDirPath = [[imageGroups objectAtIndex:tableView.selectedRow] objectForKey:@"relDirPath"];
+        
+        BOOL previewFolderHidden = [[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
+        [settings setValue:[NSNumber numberWithBool:!previewFolderHidden] forRelPath:relDirPath andKey:@"previewFolderHidden"];
+        
         [tableView deselectAll:self];
+        [tableView reloadData];
+        [self resourceListUpdated];
     }
 }
 
