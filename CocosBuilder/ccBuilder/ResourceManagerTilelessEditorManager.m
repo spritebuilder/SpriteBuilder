@@ -23,6 +23,7 @@
     // Keep track of browser
     browserView = bw;
     browserView.dataSource = self;
+    browserView.delegate = self;
     
     // Setup options
     NSColor* cBG = [NSColor colorWithCalibratedRed:0.93 green:0.93 blue:0.93 alpha:1];
@@ -188,6 +189,17 @@
     }
     
     [browserView reloadData];
+}
+
+- (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index
+{
+    RMResource* res = [imageResources objectAtIndex:index];
+    if (res.type == kCCBResTypeCCBFile)
+    {
+        [[CocosBuilderAppDelegate appDelegate] openFile:res.filePath];
+        return;
+    }
+    [super imageBrowser:aBrowser cellWasDoubleClickedAtIndex:index];
 }
 
 #pragma mark Table View data source
