@@ -11,7 +11,7 @@
 
 @class CCBImageBrowserView;
 
-@interface ResourceManagerTilelessEditorManager : NSObject <NSTableViewDataSource, NSTableViewDelegate>
+@interface ResourceManagerTilelessEditorManager : NSObject <NSTableViewDataSource, NSTableViewDelegate, NSSplitViewDelegate>
 {
     CCBImageBrowserView* browserView;
     NSMutableArray* imageResources;

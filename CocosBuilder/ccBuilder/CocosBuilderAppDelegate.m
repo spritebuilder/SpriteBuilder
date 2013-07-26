@@ -268,6 +268,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     [tilelessEditorTableFilterView setDataSource:tilelessEditorManager];
     [tilelessEditorTableFilterView setDelegate:tilelessEditorManager];
     [tilelessEditorTableFilterView setBackgroundColor:[NSColor colorWithCalibratedRed:0.93 green:0.93 blue:0.93 alpha:2]];
+    [tilelessEditorSplitView setDelegate:tilelessEditorManager];
 }
 
 - (void) setupPlayerConnection

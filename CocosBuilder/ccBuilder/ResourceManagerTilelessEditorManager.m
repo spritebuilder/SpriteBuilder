@@ -263,6 +263,21 @@
     }
 }
 
+#pragma mark Split View constraints
+
+- (CGFloat) splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+    if (proposedMinimumPosition < 160) return 160;
+    else return proposedMinimumPosition;
+}
+
+- (CGFloat) splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMaximumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+    float max = splitView.frame.size.height - 100;
+    if (proposedMaximumPosition > max) return max;
+    else return proposedMaximumPosition;
+}
+
 #pragma mark Dealloc
 
 - (void) dealloc
