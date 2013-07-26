@@ -224,18 +224,21 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     [imgFolder setTemplate:YES];
     SMTabBarItem* itemFolder = [[[SMTabBarItem alloc] initWithImage:imgFolder tag:0] autorelease];
     itemFolder.toolTip = @"File View";
+    itemFolder.keyEquivalent = @"";
     [items addObject:itemFolder];
     
     NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects.png"];
     [imgObjs setTemplate:YES];
     SMTabBarItem* itemObjs = [[[SMTabBarItem alloc] initWithImage:imgObjs tag:1] autorelease];
     itemObjs.toolTip = @"Tileless Editor View";
+    itemObjs.keyEquivalent = @"";
     [items addObject:itemObjs];
     
     NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes.png"];
     [imgNodes setTemplate:YES];
     SMTabBarItem* itemNodes = [[[SMTabBarItem alloc] initWithImage:imgNodes tag:2] autorelease];
     itemNodes.toolTip = @"Node Library View";
+    itemNodes.keyEquivalent = @"";
     [items addObject:itemNodes];
     
     projectViewTabs.items = items;
