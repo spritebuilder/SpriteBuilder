@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ordering</key>
+	<integer>5000</integer>
+	<key>displayName</key>
+	<string>Control Button</string>
+	<key>description</key>
+	<string>Sends an action message when clicked, supports images and text.</string>
 	<key>inheritsFrom</key>
 	<string>CCControl</string>
 	<key>canHaveChildren</key>

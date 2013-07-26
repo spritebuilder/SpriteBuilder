@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ordering</key>
+	<string>2000</string>
+	<key>displayName</key>
+	<string>Sprite</string>
+	<key>description</key>
+	<string>Displays a texture.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>

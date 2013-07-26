@@ -30,6 +30,9 @@
 
 @synthesize nodeClassName;
 @synthesize nodeEditorClassName;
+@synthesize displayName;
+@synthesize descr;
+@synthesize ordering;
 @synthesize nodeProperties;
 @synthesize nodePropertiesDict;
 @synthesize dropTargetSpriteFrameClass;
@@ -116,6 +119,14 @@
     
     nodeClassName = [[props objectForKey:@"className"] retain];
     nodeEditorClassName = [[props objectForKey:@"editorClassName"] retain];
+    
+    displayName = [[props objectForKey:@"displayName"] retain];
+    descr = [[props objectForKey:@"description"] retain];
+    ordering = [[props objectForKey:@"ordering"] intValue];
+    
+    if (!displayName) displayName = [nodeClassName copy];
+    if (!ordering) ordering = 100000;
+    if (!descr) descr = [@"" copy];
     
     nodeProperties = [[NSMutableArray alloc] init];
     nodePropertiesDict = [[NSMutableDictionary alloc] init];
@@ -262,6 +273,8 @@
 
 - (void) dealloc
 {
+    [displayName release];
+    [descr release];
     [cachedAnimatableProperties release];
     [positionProperty release];
     [requireChildClass release];

@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ordering</key>
+	<integer>1000</integer>
+	<key>displayName</key>
+	<string>Node</string>
+	<key>description</key>
+	<string>The base class of all Cocos2d nodes.</string>
 	<key>className</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>

@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>displayName</key>
+	<string>Layer Gradient</string>
+	<key>ordering</key>
+	<integer>1030</integer>
+	<key>description</key>
+	<string>A layer filled with a gradient.</string>
 	<key>inheritsFrom</key>
 	<string>CCLayer</string>
 	<key>canHaveChildren</key>

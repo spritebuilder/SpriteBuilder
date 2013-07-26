@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>description</key>
+	<string>Incorporates another CocosBuilder interface file.</string>
+	<key>ordering</key>
+	<integer>7000</integer>
+	<key>displayName</key>
+	<string>Interface File</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>

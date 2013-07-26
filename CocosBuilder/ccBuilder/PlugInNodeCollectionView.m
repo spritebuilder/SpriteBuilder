@@ -22,11 +22,11 @@
     NSView* view = item.view;
     
     NSTextField* lblName = [view viewWithTag:1];
-    //NSTextField* lblDescr = [view viewWithTag:2];
+    NSTextField* lblDescr = [view viewWithTag:2];
     NSImageView* imgIcon = [view viewWithTag:3];
     
-    lblName.stringValue = pi.nodeClassName;
-    //lblDescr.stringValue = @"Custom description";
+    lblName.stringValue = pi.displayName;
+    lblDescr.stringValue = pi.descr;
     imgIcon.image = pi.icon;
     
     // Create background view

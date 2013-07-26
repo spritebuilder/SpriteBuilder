@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>displayName</key>
+	<string>Label TTF</string>
+	<key>ordering</key>
+	<integer>3010</integer>
+	<key>description</key>
+	<string>Displays a true type font label.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>

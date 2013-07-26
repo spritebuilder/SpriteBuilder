@@ -27,6 +27,8 @@
         [plugIns addObject:[pim plugInNodeNamed:nodeName]];
     }
     
+    [plugIns sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ordering" ascending:YES]]];
+    
     collectionView = cv;
     [collectionView setContent:plugIns];
     collectionView.delegate = self;

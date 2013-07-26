@@ -32,6 +32,10 @@
     NSString* nodeClassName;
     NSString* nodeEditorClassName;
     
+    NSString* displayName;
+    NSString* descr;
+    int ordering;
+    
     NSImage* icon;
     
     NSString* dropTargetSpriteFrameClass;
@@ -53,6 +57,9 @@
 
 @property (nonatomic,readonly) NSString* nodeClassName;
 @property (nonatomic,readonly) NSString* nodeEditorClassName;
+@property (nonatomic,readonly) NSString* displayName;
+@property (nonatomic,readonly) NSString* descr;
+@property (nonatomic,readonly) int ordering;
 @property (nonatomic,readonly) NSMutableArray* nodeProperties;
 @property (nonatomic,readonly) NSMutableDictionary* nodePropertiesDict;
 @property (nonatomic,readonly) NSString* dropTargetSpriteFrameClass;

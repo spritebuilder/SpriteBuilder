@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>displayName</key>
+	<string>Menu Item Image</string>
+	<key>ordering</key>
+	<integer>4010</integer>
+	<key>description</key>
+	<string>Interactive image menu item to be added to a menu.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>requireParentClass</key>

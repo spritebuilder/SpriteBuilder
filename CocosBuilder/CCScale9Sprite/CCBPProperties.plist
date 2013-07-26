@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>displayName</key>
+	<string>Scale 9 Sprite</string>
+	<key>description</key>
+	<string>Displays an unevenly stretched texture, depending on insets.</string>
+	<key>ordering</key>
+	<integer>2010</integer>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
