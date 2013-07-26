@@ -2274,7 +2274,7 @@
 																						</object>
 																						<string key="NSFrameSize">{250, 401}</string>
 																						<reference key="NSSuperview" ref="88756307"/>
-																						<reference key="NSNextKeyView" ref="1032953836"/>
+																						<reference key="NSNextKeyView" ref="987023980"/>
 																						<bool key="NSEnabled">YES</bool>
 																						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																						<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -2398,7 +2398,7 @@
 																		</object>
 																		<string key="NSFrameSize">{250, 401}</string>
 																		<reference key="NSSuperview" ref="552508876"/>
-																		<reference key="NSNextKeyView" ref="987023980"/>
+																		<reference key="NSNextKeyView" ref="88756307"/>
 																		<int key="NSsFlags">133648</int>
 																		<reference key="NSVScroller" ref="1032953836"/>
 																		<reference key="NSHScroller" ref="987023980"/>
@@ -2916,7 +2916,6 @@
 																				<int key="NSvFlags">-2147483392</int>
 																				<string key="NSFrame">{{0, 173}, {250, 16}}</string>
 																				<reference key="NSSuperview" ref="820382355"/>
-																				<reference key="NSNextKeyView" ref="444616467"/>
 																				<string key="NSReuseIdentifierKey">_NS:60</string>
 																				<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																				<int key="NSsFlags">1</int>
@@ -4584,6 +4583,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1048399951"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<int key="NSTag">3</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="551016694">
 							<int key="NSCellFlags">134217728</int>
@@ -4609,6 +4609,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="690963635"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
+						<int key="NSTag">1</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="945893976">
 							<int key="NSCellFlags">68157504</int>
@@ -4635,6 +4636,7 @@
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSAntiCompressionPriority">{250, 750}</string>
+						<int key="NSTag">2</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="831662064">
 							<int key="NSCellFlags">67108864</int>
@@ -9375,6 +9377,7 @@
 					<string>2008.IBPluginDependency</string>
 					<string>201.IBPluginDependency</string>
 					<string>2014.IBPluginDependency</string>
+					<string>2015.CustomClassName</string>
 					<string>2015.IBCollectionViewIntegration.primaryColor</string>
 					<string>2015.IBPluginDependency</string>
 					<string>2016.IBPluginDependency</string>
@@ -9789,6 +9792,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>PlugInNodeCollectionView</string>
 					<reference ref="206630291"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -10020,32 +10024,24 @@
 							<string>delete:</string>
 							<string>menuAbout:</string>
 							<string>menuAddStickyNote:</string>
-							<string>menuAlignObjects:</string>
 							<string>menuCleanCacheDirectories:</string>
-							<string>menuCloseProject:</string>
 							<string>menuCreateSmartSpriteSheet:</string>
 							<string>menuDeselect:</string>
 							<string>menuEditCustomPropSettings:</string>
-							<string>menuEditResolutionSettings:</string>
 							<string>menuMoveObject:</string>
 							<string>menuNudgeObject:</string>
 							<string>menuOpenResourceManager:</string>
-							<string>menuPublishProject:</string>
 							<string>menuPublishProjectAndRun:</string>
 							<string>menuPublishProjectAndRunInBrowser:</string>
 							<string>menuQuit:</string>
-							<string>menuReverseSelectedKeyframes:</string>
 							<string>menuSelectBehind:</string>
 							<string>menuSetCanvasBorder:</string>
 							<string>menuSetStateOriginCentered:</string>
 							<string>menuTimelineSettings:</string>
 							<string>menuZoomIn:</string>
 							<string>menuZoomOut:</string>
-							<string>newFolder:</string>
 							<string>pasteAsChild:</string>
 							<string>performClose:</string>
-							<string>playbackJumpToStart:</string>
-							<string>playbackStepBack:</string>
 							<string>pressedPanelVisibility:</string>
 							<string>pressedToolSelection:</string>
 							<string>redo:</string>
@@ -10054,14 +10050,6 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -10099,32 +10087,24 @@
 							<string>delete:</string>
 							<string>menuAbout:</string>
 							<string>menuAddStickyNote:</string>
-							<string>menuAlignObjects:</string>
 							<string>menuCleanCacheDirectories:</string>
-							<string>menuCloseProject:</string>
 							<string>menuCreateSmartSpriteSheet:</string>
 							<string>menuDeselect:</string>
 							<string>menuEditCustomPropSettings:</string>
-							<string>menuEditResolutionSettings:</string>
 							<string>menuMoveObject:</string>
 							<string>menuNudgeObject:</string>
 							<string>menuOpenResourceManager:</string>
-							<string>menuPublishProject:</string>
 							<string>menuPublishProjectAndRun:</string>
 							<string>menuPublishProjectAndRunInBrowser:</string>
 							<string>menuQuit:</string>
-							<string>menuReverseSelectedKeyframes:</string>
 							<string>menuSelectBehind:</string>
 							<string>menuSetCanvasBorder:</string>
 							<string>menuSetStateOriginCentered:</string>
 							<string>menuTimelineSettings:</string>
 							<string>menuZoomIn:</string>
 							<string>menuZoomOut:</string>
-							<string>newFolder:</string>
 							<string>pasteAsChild:</string>
 							<string>performClose:</string>
-							<string>playbackJumpToStart:</string>
-							<string>playbackStepBack:</string>
 							<string>pressedPanelVisibility:</string>
 							<string>pressedToolSelection:</string>
 							<string>redo:</string>
@@ -10150,15 +10130,7 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">menuAlignObjects:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">menuCleanCacheDirectories:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuCloseProject:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -10174,10 +10146,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">menuEditResolutionSettings:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">menuMoveObject:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -10190,10 +10158,6 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">menuPublishProject:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">menuPublishProjectAndRun:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -10203,10 +10167,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">menuQuit:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">menuReverseSelectedKeyframes:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -10234,23 +10194,11 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">newFolder:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
 								<string key="name">pasteAsChild:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">performClose:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">playbackJumpToStart:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">playbackStepBack:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -10857,6 +10805,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/PSMTabBarControl.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PlugInNodeCollectionView</string>
+					<string key="superclassName">NSCollectionView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PlugInNodeCollectionView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
