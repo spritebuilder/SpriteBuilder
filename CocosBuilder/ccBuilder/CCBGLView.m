@@ -51,7 +51,7 @@
     
     trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
     
-    [self registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", NULL]];
+    [self registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", NULL]];
 }
 
 
@@ -89,6 +89,13 @@
     for (NSDictionary* dict in pbCCBs)
     {
         [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(pt.x,pt.y) parent:NULL];
+    }
+    
+    // PlugInNode
+    NSArray* pbPlugInNode = [pb propertyListsForType:@"com.cocosbuilder.PlugInNode"];
+    for (NSDictionary* dict in pbPlugInNode)
+    {
+        [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] at:ccp(pt.x, pt.y)];
     }
 
     return YES;

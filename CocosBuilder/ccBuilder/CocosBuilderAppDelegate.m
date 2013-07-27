@@ -1920,6 +1920,12 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+- (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt
+{
+    // New node was dropped in working canvas
+    [self addPlugInNodeNamed:nodeName asChild:NO];
+}
+
 - (void) dropAddCCBFileNamed:(NSString*)ccbFile at:(CGPoint)pt parent:(CCNode*)parent
 {
     if (!parent)
