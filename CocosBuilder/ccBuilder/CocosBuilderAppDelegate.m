@@ -1855,7 +1855,7 @@ static BOOL hideAllToNextSeparator;
     return success;
 }
 
-- (void) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild
+- (CCNode*) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild
 {
     self.errorDescription = NULL;
     CCNode* node = [plugInManager createDefaultNodeOfType:name];
@@ -1863,8 +1863,11 @@ static BOOL hideAllToNextSeparator;
     
     if (!success && self.errorDescription)
     {
+        node = NULL;
         [self modalDialogTitle:@"Failed to Add Object" message:self.errorDescription];
     }
+    
+    return node;
 }
 
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent
@@ -1923,7 +1926,13 @@ static BOOL hideAllToNextSeparator;
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt
 {
     // New node was dropped in working canvas
-    [self addPlugInNodeNamed:nodeName asChild:NO];
+    CCNode* addedNode = [self addPlugInNodeNamed:nodeName asChild:NO];
+    
+    // Set position
+    if (addedNode)
+    {
+        [PositionPropertySetter setPosition:[addedNode.parent convertToNodeSpace:pt] forNode:addedNode prop:@"position"];
+    }
 }
 
 - (void) dropAddCCBFileNamed:(NSString*)ccbFile at:(CGPoint)pt parent:(CCNode*)parent

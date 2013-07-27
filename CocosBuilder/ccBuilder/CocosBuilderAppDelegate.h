@@ -333,7 +333,7 @@ enum {
 - (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode*)parent atIndex:(int)index;
 - (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode*)parent;
 - (BOOL) addCCObject:(CCNode*)obj asChild:(BOOL)asChild;
-- (void) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild;
+- (CCNode*) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild;
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt;
 - (void) deleteNode:(CCNode*)node;
 - (IBAction) pasteAsChild:(id)sender;
