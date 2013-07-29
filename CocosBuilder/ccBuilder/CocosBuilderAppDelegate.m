@@ -212,9 +212,11 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 
 - (void) setupToolbar
 {
+    /*
     toolbarDelegate = [[MainToolbarDelegate alloc] init];
     toolbar.delegate = toolbarDelegate;
     [toolbarDelegate addPlugInItemsToToolbar:toolbar];
+     */
 }
 
 - (void) setupPlugInNodeView
@@ -249,25 +251,72 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     
     projectViewTabs.items = items;
     projectViewTabs.delegate = self;
-    
-    [self setProjectViewTabBarEnabled: NO];
 }
 
-- (void)tabBar:(SMTabBar *)tabBar didSelectItem:(SMTabBarItem *)item {
-    [projectTabView selectTabViewItemAtIndex:[projectViewTabs.items indexOfObject:item]];
-}
-
-- (void) setProjectViewTabBarEnabled:(BOOL)enable
+- (void) setupItemViewTabBar
 {
-    if (!enable)
+    NSMutableArray* items = [NSMutableArray array];
+    
+    NSImage* imgProps = [NSImage imageNamed:@"inspector-props.png"];
+    [imgProps setTemplate:YES];
+    SMTabBarItem* itemProps = [[[SMTabBarItem alloc] initWithImage:imgProps tag:0] autorelease];
+    itemProps.toolTip = @"Item Properties";
+    itemProps.keyEquivalent = @"";
+    [items addObject:itemProps];
+    
+    NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections.png"];
+    [imgCode setTemplate:YES];
+    SMTabBarItem* itemCode = [[[SMTabBarItem alloc] initWithImage:imgCode tag:0] autorelease];
+    itemCode.toolTip = @"Item Code Connections";
+    itemCode.keyEquivalent = @"";
+    [items addObject:itemCode];
+    
+    NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template.png"];
+    [imgTemplate setTemplate:YES];
+    SMTabBarItem* itemTemplate = [[[SMTabBarItem alloc] initWithImage:imgTemplate tag:0] autorelease];
+    itemTemplate.toolTip = @"Item Templates";
+    itemTemplate.keyEquivalent = @"";
+    [items addObject:itemTemplate];
+    
+    itemViewTabs.items = items;
+    itemViewTabs.delegate = self;
+}
+
+- (void)tabBar:(SMTabBar *)tb didSelectItem:(SMTabBarItem *)item
+{
+    if (tb == projectViewTabs)
+    {
+        [projectTabView selectTabViewItemAtIndex:[projectViewTabs.items indexOfObject:item]];
+    }
+    else if (tb == itemViewTabs)
+    {
+        [itemTabView selectTabViewItemAtIndex:[itemViewTabs.items indexOfObject:item]];
+    }
+}
+
+- (void) updateSmallTabBarsEnabled
+{
+    BOOL allEnable = (projectSettings != NULL);
+    
+    if (!allEnable)
     {
         [projectViewTabs setSelectedItem:[projectViewTabs.items objectAtIndex:0]];
         [projectTabView selectTabViewItemAtIndex:0];
+        
+        [itemViewTabs setSelectedItem:[itemViewTabs.items objectAtIndex:0]];
+        [itemTabView selectTabViewItemAtIndex:0];
     }
     
     for (SMTabBarItem* item in projectViewTabs.items)
     {
-        item.enabled = enable;
+        item.enabled = allEnable;
+    }
+    
+    BOOL itemEnable = (self.selectedNode != NULL);
+    
+    for (SMTabBarItem* item in itemViewTabs.items)
+    {
+        item.enabled = allEnable && itemEnable;
     }
 }
 
@@ -396,6 +445,8 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     [self setupToolbar];
     [self setupPlugInNodeView];
     [self setupProjectViewTabBar];
+    [self setupItemViewTabBar];
+    [self updateSmallTabBarsEnabled];
 
     [self setupResourceManager];
     [self setupGUIWindow];
@@ -575,6 +626,8 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     
     // Handle undo/redo
     if (currentDocument) currentDocument.lastEditedProperty = NULL;
+    
+    [self updateSmallTabBarsEnabled];
 }
 
 - (CCNode*) selectedNode
@@ -1375,7 +1428,7 @@ static BOOL hideAllToNextSeparator;
     [resManager removeAllDirectories];
     
     [self updateWarningsButton];
-    [self setProjectViewTabBarEnabled: NO];
+    [self updateSmallTabBarsEnabled];
 }
 
 - (BOOL) openProject:(NSString*) fileName
@@ -1452,7 +1505,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     [self updateWarningsButton];
-    [self setProjectViewTabBarEnabled: YES];
+    [self updateSmallTabBarsEnabled];
     
     return YES;
 }

@@ -143,6 +143,9 @@ enum {
     IBOutlet SMTabBar* projectViewTabs;
     IBOutlet NSTabView* projectTabView;
     
+    IBOutlet SMTabBar* itemViewTabs;
+    IBOutlet NSTabView* itemTabView;
+    
     // Outline view heirarchy
     SequencerHandler* sequenceHandler;
     IBOutlet NSOutlineView* outlineHierarchy;
