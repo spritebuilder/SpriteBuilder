@@ -77,7 +77,7 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy setDelegate:self];
     [outlineHierarchy reloadData];
     
-    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", NULL]];
+    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", NULL]];
     
     [[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
@@ -487,6 +487,14 @@ static SequencerHandler* sharedSequencerHandler;
     for (NSDictionary* dict in pbCCBs)
     {
         [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(0, 0) parent:item];
+        addedObject = YES;
+    }
+    
+    // Dropped node plug-ins
+    NSArray* pbNodePlugIn = [pb propertyListsForType:@"com.cocosbuilder.PlugInNode"];
+    for (NSDictionary* dict in pbNodePlugIn)
+    {
+        [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
         addedObject = YES;
     }
     

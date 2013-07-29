@@ -1935,6 +1935,13 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+- (void) dropAddPlugInNodeNamed:(NSString *)nodeName parent:(CCNode*)parent index:(int)idx
+{
+    CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:nodeName];
+    
+    [self addCCObject:node toParent:parent atIndex:idx];
+}
+
 - (void) dropAddCCBFileNamed:(NSString*)ccbFile at:(CGPoint)pt parent:(CCNode*)parent
 {
     if (!parent)
