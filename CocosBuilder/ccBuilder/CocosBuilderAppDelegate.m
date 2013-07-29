@@ -150,6 +150,11 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     [inspectorDocumentView setAutoresizesSubviews:YES];
     [inspectorDocumentView setAutoresizingMask:NSViewWidthSizable];
     [inspectorScroll setDocumentView:inspectorDocumentView];
+    
+    inspectorCodeDocumentView = [[NSFlippedView alloc] initWithFrame:NSMakeRect(0, 0, [inspectorCodeScroll contentSize].width, 1)];
+    [inspectorCodeDocumentView setAutoresizesSubviews:YES];
+    [inspectorCodeDocumentView setAutoresizingMask:NSViewWidthSizable];
+    [inspectorCodeScroll setDocumentView:inspectorCodeDocumentView];
 }
 
 - (void) setupCocos2d
@@ -434,8 +439,8 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     CocosScene* cs = [CocosScene cocosScene];
     [cs setStageBorder:0];
     [self updateCanvasBorderMenu];
-    [self updateJSControlledMenu];
-    [self updateDefaultBrowser];
+    //[self updateJSControlledMenu];
+    //[self updateDefaultBrowser];
     
     // Load plug-ins
     plugInManager = [PlugInManager sharedManager];
@@ -1239,7 +1244,7 @@ static BOOL hideAllToNextSeparator;
     // Restore selections
     self.selectedNodes = loadedSelectedNodes;
     
-    [self updateJSControlledMenu];
+    //[self updateJSControlledMenu];
     [self updateCanvasBorderMenu];
 }
 
@@ -1257,7 +1262,7 @@ static BOOL hideAllToNextSeparator;
     
     [self updateResolutionMenu];
     [self updateTimelineMenu];
-    [self updateStateOriginCenteredMenu];
+    //[self updateStateOriginCenteredMenu];
     
     CocosScene* cs = [CocosScene cocosScene];
     [cs setStageZoom:document.stageZoom];
@@ -1682,7 +1687,7 @@ static BOOL hideAllToNextSeparator;
     
     self.hasOpenedDocument = YES;
     
-    [self updateStateOriginCenteredMenu];
+    //[self updateStateOriginCenteredMenu];
     
     [[CocosScene cocosScene] setStageZoom:1];
     [[CocosScene cocosScene] setScrollOffset:ccp(0,0)];
@@ -2442,7 +2447,7 @@ static BOOL hideAllToNextSeparator;
     if (publisher.runAfterPublishing && publisher.browser)
     {
         [[CCBHTTPServer sharedHTTPServer] openBrowser:publisher.browser];
-        [self updateDefaultBrowser];
+        //[self updateDefaultBrowser];
     }
     
     // Run in CocosPlayer
@@ -2852,6 +2857,7 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+/*
 - (void) updateStateOriginCenteredMenu
 {
     CocosScene* cs = [CocosScene cocosScene];
@@ -2860,6 +2866,7 @@ static BOOL hideAllToNextSeparator;
     if (centered) [menuItemStageCentered setState:NSOnState];
     else [menuItemStageCentered setState:NSOffState];
 }
+ */
 
 - (IBAction) menuSetStateOriginCentered:(id)sender
 {
@@ -2869,7 +2876,7 @@ static BOOL hideAllToNextSeparator;
     [self saveUndoState];
     [cs setStageSize:[cs stageSize] centeredOrigin:centered];
     
-    [self updateStateOriginCenteredMenu];
+    //[self updateStateOriginCenteredMenu];
 }
 
 - (void) updateCanvasBorderMenu
@@ -2879,6 +2886,7 @@ static BOOL hideAllToNextSeparator;
     [CCBUtil setSelectedSubmenuItemForMenu:menuCanvasBorder tag:tag];
 }
 
+/*
 - (void) updateJSControlledMenu
 {
     if (jsControlled)
@@ -2915,6 +2923,7 @@ static BOOL hideAllToNextSeparator;
     [defaultBrowserMenuItem setKeyEquivalent:@"b"];
     [defaultBrowserMenuItem setState:NSOnState];
 }
+ */
 
 - (void) updateWarningsButton
 {
@@ -3805,7 +3814,7 @@ static BOOL hideAllToNextSeparator;
     [self saveUndoStateWillChangeProperty:@"*javascriptcontrolled"];
     
     jsControlled = !jsControlled;
-    [self updateJSControlledMenu];
+    //[self updateJSControlledMenu];
     [self updateInspectorFromSelection];
 }
 

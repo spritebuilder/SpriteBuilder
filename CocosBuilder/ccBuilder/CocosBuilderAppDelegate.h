@@ -124,6 +124,9 @@ enum {
     NSView* inspectorDocumentView;
     NSMutableDictionary* currentInspectorValues;
     
+    IBOutlet NSScrollView* inspectorCodeScroll;
+    NSView* inspectorCodeDocumentView;
+    
     IBOutlet NSToolbar* toolbar;
     MainToolbarDelegate* toolbarDelegate;
     
@@ -132,8 +135,8 @@ enum {
     NSTabView* tabView;
     
     // Inspector componentes
-    IBOutlet NSComboBox* inspectorSpriteName;
-    IBOutlet NSTextView* inspectorLabelBMFontString;
+    // IBOutlet NSComboBox* inspectorSpriteName;
+    // IBOutlet NSTextView* inspectorLabelBMFontString;
     BOOL canEditContentSize;
     BOOL canEditCustomClass;
     
@@ -176,13 +179,13 @@ enum {
     IBOutlet NSTextField* lblTimelineChained;
 
     CGSize defaultCanvasSizes[kCCBNumCanvasDevices+1];
-    IBOutlet NSMenuItem* menuItemStageCentered;
+    // IBOutlet NSMenuItem* menuItemStageCentered;
     BOOL defaultCanvasSize;
     
-    IBOutlet NSMenuItem* menuItemJSControlled;
-    IBOutlet NSMenuItem* menuItemSafari;
-    IBOutlet NSMenuItem* menuItemChrome;
-    IBOutlet NSMenuItem* menuItemFirefox;
+    // IBOutlet NSMenuItem* menuItemJSControlled;
+    // IBOutlet NSMenuItem* menuItemSafari;
+    // IBOutlet NSMenuItem* menuItemChrome;
+    // IBOutlet NSMenuItem* menuItemFirefox;
     
     IBOutlet NSSegmentedControl* segmPublishBtn;
     
@@ -345,7 +348,7 @@ enum {
 
 - (int) orientedDeviceTypeForSize:(CGSize)size;
 - (IBAction)menuEditCustomPropSettings:(id)sender;
-- (void) updateStateOriginCenteredMenu;
+//- (void) updateStateOriginCenteredMenu;
 - (IBAction) menuSetStateOriginCentered:(id)sender;
 - (void) updateCanvasBorderMenu;
 - (IBAction) menuSetCanvasBorder:(id)sender;
