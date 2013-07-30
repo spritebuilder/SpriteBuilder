@@ -197,6 +197,26 @@
     [self store];
 }
 
+- (void) removeTemplate:(PropertyInspectorTemplate*)templ
+{
+    NSMutableArray* templates = [library objectForKey:templ.nodeType];
+    if (templates)
+    {
+        for (PropertyInspectorTemplate* templCheck in templates)
+        {
+            if (templCheck == templ)
+            {
+                // Remove preview image
+                NSFileManager* fm = [NSFileManager defaultManager];
+                [fm removeItemAtPath:[templ imgFileNamePath] error:NULL];
+                break;
+            }
+        }
+        
+        [templates removeObject:templ];
+    }
+}
+
 - (NSArray*) templatesForNodeType:(NSString*) nodeType
 {
     NSArray* templates = [library objectForKey:nodeType];

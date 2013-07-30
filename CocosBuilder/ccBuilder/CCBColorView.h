@@ -11,6 +11,7 @@
 @interface CCBColorView : NSView
 
 @property (nonatomic,copy) NSColor* backgroundColor;
+@property (nonatomic,copy) NSColor* borderColor;
 @property (nonatomic,assign) float radius;
 
 @end

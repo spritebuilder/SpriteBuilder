@@ -10,7 +10,7 @@
 
 @class PropertyInspectorTemplateLibrary;
 
-@interface PropertyInspectorHandler : NSObject
+@interface PropertyInspectorHandler : NSObject <NSCollectionViewDelegate>
 {
     IBOutlet PropertyInspectorTemplateLibrary* templateLibrary;
     IBOutlet NSCollectionView* collectionView;
