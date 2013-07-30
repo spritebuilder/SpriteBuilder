@@ -863,7 +863,7 @@ static BOOL hideAllToNextSeparator;
             if (!usesFlashSkew && [name isEqualToString:@"rotationX"]) continue;
             if (!usesFlashSkew && [name isEqualToString:@"rotationY"]) continue;
             
-            // TODO: Handle read only for animated properties
+            // Handle read only for animated properties
             if ([self isDisabledProperty:name animatable:animated])
             {
                 readOnly = YES;
