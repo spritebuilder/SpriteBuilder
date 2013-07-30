@@ -1,24 +1,26 @@
 //
-//  PlugInNodeCollectionView.m
+//  PropertyInspectorTemplateCollectionView.m
 //  CocosBuilder
 //
-//  Created by Viktor on 7/26/13.
+//  Created by Viktor on 7/29/13.
 //
 //
 
-#import "PlugInNodeCollectionView.h"
-#import "PlugInNode.h"
+#import "PropertyInspectorTemplateCollectionView.h"
 #import "CCBColorView.h"
 
-@implementation PlugInNodeCollectionView
+@implementation PropertyInspectorTemplateCollectionView
 
 - (NSCollectionViewItem*) newItemForRepresentedObject:(id)object
 {
+    /*
     PlugInNode* pi = object;
+     */
     
     NSCollectionViewItem* item = [super newItemForRepresentedObject:object];
     NSView* view = item.view;
     
+    /*
     NSTextField* lblName = [view viewWithTag:1];
     NSTextField* lblDescr = [view viewWithTag:2];
     NSImageView* imgIcon = [view viewWithTag:3];
@@ -26,6 +28,7 @@
     lblName.stringValue = pi.displayName;
     lblDescr.stringValue = pi.descr;
     imgIcon.image = pi.icon;
+    */
     
     // Create background view
     CCBColorView* bg = [[[CCBColorView alloc] initWithFrame:NSMakeRect(2, 1, view.bounds.size.width - 5, view.bounds.size.height - 2)] autorelease];

@@ -185,6 +185,8 @@
 		B7AC69CB17A70A4B0041B8BD /* inspector-props.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69C617A70A4A0041B8BD /* inspector-props.png */; };
 		B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69C717A70A4B0041B8BD /* inspector-props@2x.png */; };
 		B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69C817A70A4B0041B8BD /* inspector-template.png */; };
+		B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D017A758A40041B8BD /* PropertyInspectorHandler.m */; };
+		B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -1176,6 +1178,10 @@
 		B7AC69C617A70A4A0041B8BD /* inspector-props.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-props.png"; sourceTree = "<group>"; };
 		B7AC69C717A70A4B0041B8BD /* inspector-props@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-props@2x.png"; sourceTree = "<group>"; };
 		B7AC69C817A70A4B0041B8BD /* inspector-template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-template.png"; sourceTree = "<group>"; };
+		B7AC69CF17A758A40041B8BD /* PropertyInspectorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorHandler.h; sourceTree = "<group>"; };
+		B7AC69D017A758A40041B8BD /* PropertyInspectorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorHandler.m; sourceTree = "<group>"; };
+		B7AC69D217A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplateCollectionView.h; sourceTree = "<group>"; };
+		B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplateCollectionView.m; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -2602,6 +2608,7 @@
 			children = (
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
+				B7AC69CE17A756950041B8BD /* Property Inspector */,
 				E335CAED1576031B00A612EE /* Sequencer */,
 				E3C5C1A11504D144000CF6F3 /* Resource Manager */,
 				776041E11498F56D0078095D /* Application Settings & Globals */,
@@ -3016,6 +3023,17 @@
 				B7AC699B17A079C80041B8BD /* SMTabBarItem.m */,
 			);
 			path = InspectorTabBar;
+			sourceTree = "<group>";
+		};
+		B7AC69CE17A756950041B8BD /* Property Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				B7AC69CF17A758A40041B8BD /* PropertyInspectorHandler.h */,
+				B7AC69D017A758A40041B8BD /* PropertyInspectorHandler.m */,
+				B7AC69D217A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.h */,
+				B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */,
+			);
+			name = "Property Inspector";
 			sourceTree = "<group>";
 		};
 		E3214C3F15D3B9D0002413A7 /* Custom Properties */ = {
@@ -5444,6 +5462,8 @@
 				B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */,
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
 				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
+				B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */,
+				B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

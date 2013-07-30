@@ -99,6 +99,7 @@
 #import "ResourceManagerTilelessEditorManager.h"
 #import "CCBImageBrowserView.h"
 #import "PlugInNodeViewHandler.h"
+#import "PropertyInspectorHandler.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -130,6 +131,7 @@
 @synthesize loadedSelectedNodes;
 @synthesize panelVisibilityControl;
 @synthesize connection;
+@synthesize propertyInspectorHandler;
 
 static CocosBuilderAppDelegate* sharedAppDelegate;
 
@@ -142,6 +144,8 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 
 - (void) setupInspectorPane
 {
+    //propertyInspectorHandler = [[PropertyInspectorHandler alloc] init];
+    
     currentInspectorValues = [[NSMutableDictionary alloc] init];
     
     //[inspectorScroll setScrollerStyle: NSScrollerStyleLegacy];
@@ -937,6 +941,8 @@ static BOOL hideAllToNextSeparator;
     
     [inspectorDocumentView setFrameSize:NSMakeSize([inspectorScroll contentSize].width, paneOffset)];
     [inspectorCodeDocumentView setFrameSize:NSMakeSize([inspectorCodeScroll contentSize].width, paneCodeOffset)];
+    
+    [propertyInspectorHandler updateTemplates];
 }
 
 #pragma mark Populating menus

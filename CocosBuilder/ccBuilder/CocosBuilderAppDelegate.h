@@ -105,6 +105,7 @@ enum {
 @class ResourceManagerTilelessEditorManager;
 @class CCBImageBrowserView;
 @class PlugInNodeViewHandler;
+@class PropertyInspectorHandler;
 
 @interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -120,6 +121,8 @@ enum {
     IBOutlet CCBSplitHorizontalView* splitHorizontalView;
     
     // Inspector views
+    IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+    
     IBOutlet NSScrollView* inspectorScroll;
     NSView* inspectorDocumentView;
     NSMutableDictionary* currentInspectorValues;
@@ -272,6 +275,8 @@ enum {
 @property (nonatomic,retain) CCBDocument* currentDocument;
 @property (nonatomic,assign) BOOL hasOpenedDocument;
 @property (nonatomic,readonly) CCBGLView* cocosView;
+
+@property (nonatomic,retain) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
 
 @property (nonatomic,assign) BOOL canEditContentSize;
 @property (nonatomic,assign) BOOL defaultCanvasSize;
