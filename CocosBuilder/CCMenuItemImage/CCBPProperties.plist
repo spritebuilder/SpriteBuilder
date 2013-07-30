@@ -34,6 +34,8 @@
 	<key>properties</key>
 	<array>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>displayName</key>
 			<string>CCMenuItem</string>
 			<key>name</key>
@@ -44,6 +46,8 @@
 			<true/>
 		</dict>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>displayName</key>
 			<string>Selector</string>
 			<key>type</key>

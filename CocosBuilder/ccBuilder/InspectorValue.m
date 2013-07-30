@@ -219,50 +219,9 @@
 #pragma mark -
 #pragma mark Disclosure
 
-- (void)hideAllToNextSeparatorWithAboveSeparator:(InspectorValue*)aboveSeparator
-{
-    [self.view setHidden:YES];
-    return [inspectorValueBelow hideAllToNextSeparatorWithAboveSeparator:aboveSeparator];
-}
-
-- (void)showAllToNextSeparatorWithAbove:(InspectorValue*)above
-{
-    NSRect frame = self.view.frame;
-    frame.origin.y = above.view.frame.origin.y + above.view.frame.size.height;
-    self.view.frame = frame;
-    [self.view setHidden:NO];
-    [inspectorValueBelow showAllToNextSeparatorWithAbove:self];
-}
-
-- (void)moveToMeetAbove:(InspectorValue*)above
-{
-    if (!self.view.isHidden) {
-        NSRect frame = self.view.frame;
-        frame.origin.y = above.view.frame.origin.y + above.view.frame.size.height;
-        self.view.frame = frame;
-        [inspectorValueBelow moveToMeetAbove:self];
-    }
-    else {
-        [inspectorValueBelow moveToMeetAbove:above];
-    }
-}
-
 - (BOOL)isSeparator
 {
     return NO;
-}
-
-- (BOOL)setSuperviewFrameHeight
-{
-    if (![inspectorValueBelow setSuperviewFrameHeight]) {
-        if (self.view.isHidden == NO) {
-            NSView* superView = self.view.superview;
-            [superView setFrameSize:NSMakeSize(superView.frame.size.width, self.view.frame.origin.y+self.view.frame.size.height)];
-            return YES;
-        }
-        return NO;
-    }
-    return YES;
 }
 
 #pragma mark Error handling for validation of text fields

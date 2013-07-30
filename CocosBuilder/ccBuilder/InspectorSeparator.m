@@ -23,6 +23,7 @@
  */
 
 #import "InspectorSeparator.h"
+#import "CocosBuilderAppDelegate.h"
 
 @implementation InspectorSeparator
 @synthesize disclosureButton;
@@ -44,6 +45,7 @@
         return;
     }
     
+    /*
     if (isExpanded) {
         [self.inspectorValueBelow showAllToNextSeparatorWithAbove:self];
     }
@@ -51,11 +53,14 @@
         [self.inspectorValueBelow hideAllToNextSeparatorWithAboveSeparator:self];
     }
     
-    [self setSuperviewFrameHeight];
+    [self setSuperviewFrameHeight];*/
     
     [self setPropertyForSelection:[NSNumber numberWithInt:disclosureButton.state]];
+    
+    [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
 }
 
+/*
 - (void)showAllToNextSeparatorWithAbove:(InspectorValue*)above
 {
     [self moveToMeetAbove:above];
@@ -65,7 +70,7 @@
 {
     [self moveToMeetAbove:aboveSeparator];
 }
-
+*/
 - (BOOL)isSeparator
 {
     return YES;

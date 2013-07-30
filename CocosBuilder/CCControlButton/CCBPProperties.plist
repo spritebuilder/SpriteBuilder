@@ -19,6 +19,8 @@
 	<key>propertiesOverridden</key>
 	<array>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>default</key>
 			<array>
 				<string></string>
@@ -33,6 +35,8 @@
 			<string>ccControl</string>
 		</dict>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>readOnly</key>
 			<true/>
 			<key>displayName</key>

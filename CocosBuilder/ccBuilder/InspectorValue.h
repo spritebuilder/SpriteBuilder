@@ -80,10 +80,6 @@
 - (id) propertyForSelectionVar;
 - (void) setPropertyForSelectionVar:(id)value;
 
-- (void)hideAllToNextSeparatorWithAboveSeparator:(InspectorValue*)aboveSeparator;
-- (void)showAllToNextSeparatorWithAbove:(InspectorValue*)above;
-- (void)moveToMeetAbove:(InspectorValue*)above;
 - (BOOL)isSeparator;
-- (BOOL)setSuperviewFrameHeight;
 
 @end

@@ -711,7 +711,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 static InspectorValue* lastInspectorValue;
 static BOOL hideAllToNextSeparator;
 
-- (int) addInspectorPropertyOfType:(NSString*)type name:(NSString*)prop displayName:(NSString*)displayName extra:(NSString*)e readOnly:(BOOL)readOnly affectsProps:(NSArray*)affectsProps atOffset:(int)offset
+- (int) addInspectorPropertyOfType:(NSString*)type name:(NSString*)prop displayName:(NSString*)displayName extra:(NSString*)e readOnly:(BOOL)readOnly affectsProps:(NSArray*)affectsProps atOffset:(int)offset isCodeConnection:(BOOL)isCodeConnection
 {
     NSString* inspectorNibName = [NSString stringWithFormat:@"Inspector%@",type];
     
@@ -762,7 +762,14 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Add view to inspector and place it at the bottom
-    [inspectorDocumentView addSubview:view];
+    if (isCodeConnection)
+    {
+        [inspectorCodeDocumentView addSubview:view];
+    }
+    else
+    {
+        [inspectorDocumentView addSubview:view];
+    }
     [view setAutoresizingMask:NSViewWidthSizable];
     
     return offset;
@@ -806,10 +813,19 @@ static BOOL hideAllToNextSeparator;
         NSView* pane = [panes objectAtIndex:i];
         [pane removeFromSuperview];
     }
+    panes = [inspectorCodeDocumentView subviews];
+    for (int i = [panes count]-1; i >= 0 ; i--)
+    {
+        NSView* pane = [panes objectAtIndex:i];
+        [pane removeFromSuperview];
+    }
     [currentInspectorValues removeAllObjects];
     
+    // Reset frame sizes
     [inspectorDocumentView setFrameSize:NSMakeSize(233, 1)];
+    [inspectorCodeDocumentView setFrameSize:NSMakeSize(233, 1)];
     int paneOffset = 0;
+    int paneCodeOffset = 0;
     
     // Add show panes according to selections
     if (!self.selectedNode) return;
@@ -820,14 +836,7 @@ static BOOL hideAllToNextSeparator;
     BOOL isCCBSubFile = [plugIn.nodeClassName isEqualToString:@"CCBFile"];
     
     // Always add the code connections pane
-    if (jsControlled)
-    {
-        paneOffset = [self addInspectorPropertyOfType:@"CodeConnectionsJS" name:@"customClass" displayName:@"" extra:NULL readOnly:isCCBSubFile affectsProps:NULL atOffset:paneOffset];
-    }
-    else
-    {
-        paneOffset = [self addInspectorPropertyOfType:@"CodeConnections" name:@"customClass" displayName:@"" extra:NULL readOnly:isCCBSubFile affectsProps:NULL atOffset:paneOffset];
-    }
+    paneCodeOffset = [self addInspectorPropertyOfType:@"CodeConnections" name:@"customClass" displayName:@"" extra:NULL readOnly:isCCBSubFile affectsProps:NULL atOffset:paneOffset isCodeConnection:YES];
     
     // Add panes for each property
     
@@ -844,6 +853,7 @@ static BOOL hideAllToNextSeparator;
             NSArray* affectsProps = [propInfo objectForKey:@"affectsProperties"];
             NSString* extra = [propInfo objectForKey:@"extra"];
             BOOL animated = [[propInfo objectForKey:@"animatable"] boolValue];
+            BOOL isCodeConnection = [[propInfo objectForKey:@"codeConnection"] boolValue];
             if ([name isEqualToString:@"visible"]) animated = YES;
             if ([self.selectedNode shouldDisableProperty:name]) readOnly = YES;
             
@@ -864,7 +874,14 @@ static BOOL hideAllToNextSeparator;
                 name = displayName;
             }
             
-            paneOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneOffset];
+            if (isCodeConnection)
+            {
+                paneCodeOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneCodeOffset isCodeConnection:YES];
+            }
+            else
+            {
+                paneOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneOffset isCodeConnection:NO];
+            }
         }
     }
     else
@@ -879,17 +896,17 @@ static BOOL hideAllToNextSeparator;
     {
         if ([customProps count] || !isCCBSubFile)
         {
-            paneOffset = [self addInspectorPropertyOfType:@"Separator" name:[self.selectedNode extraPropForKey:@"customClass"] displayName:[self.selectedNode extraPropForKey:@"customClass"] extra:NULL readOnly:YES affectsProps:NULL atOffset:paneOffset];
+            paneOffset = [self addInspectorPropertyOfType:@"Separator" name:[self.selectedNode extraPropForKey:@"customClass"] displayName:[self.selectedNode extraPropForKey:@"customClass"] extra:NULL readOnly:YES affectsProps:NULL atOffset:paneOffset isCodeConnection:NO];
         }
         
         for (CustomPropSetting* setting in customProps)
         {
-            paneOffset = [self addInspectorPropertyOfType:@"Custom" name:setting.name displayName:setting.name extra:NULL readOnly:NO affectsProps:NULL atOffset:paneOffset];
+            paneOffset = [self addInspectorPropertyOfType:@"Custom" name:setting.name displayName:setting.name extra:NULL readOnly:NO affectsProps:NULL atOffset:paneOffset isCodeConnection:NO];
         }
         
         if (!isCCBSubFile)
         {
-            paneOffset = [self addInspectorPropertyOfType:@"CustomEdit" name:NULL displayName:@"" extra:NULL readOnly:NO affectsProps:NULL atOffset:paneOffset];
+            paneOffset = [self addInspectorPropertyOfType:@"CustomEdit" name:NULL displayName:@"" extra:NULL readOnly:NO affectsProps:NULL atOffset:paneOffset isCodeConnection:NO];
         }
     }
     
@@ -919,6 +936,7 @@ static BOOL hideAllToNextSeparator;
      */
     
     [inspectorDocumentView setFrameSize:NSMakeSize([inspectorScroll contentSize].width, paneOffset)];
+    [inspectorCodeDocumentView setFrameSize:NSMakeSize([inspectorCodeScroll contentSize].width, paneCodeOffset)];
 }
 
 #pragma mark Populating menus

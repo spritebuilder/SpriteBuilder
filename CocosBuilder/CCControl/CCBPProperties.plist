@@ -13,6 +13,8 @@
 	<key>properties</key>
 	<array>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>displayName</key>
 			<string>CCControl</string>
 			<key>name</key>
@@ -23,6 +25,8 @@
 			<true/>
 		</dict>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>displayName</key>
 			<string></string>
 			<key>type</key>
@@ -31,6 +35,8 @@
 			<string>ccControl</string>
 		</dict>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>displayName</key>
 			<string>Enabled</string>
 			<key>type</key>
@@ -39,6 +45,8 @@
 			<string>enabled</string>
 		</dict>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
 			<key>displayName</key>
 			<string>Selected</string>
 			<key>type</key>
