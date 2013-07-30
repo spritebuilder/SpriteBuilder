@@ -1018,7 +1018,7 @@ static BOOL hideAllToNextSeparator;
         [menuTimelineChained addItem:itemCh];
     }
     
-    lblTimeline.stringValue = sequenceHandler.currentSequence.name;
+    if (sequenceHandler.currentSequence) lblTimeline.stringValue = sequenceHandler.currentSequence.name;
     if (chainedId == -1)
     {
         lblTimelineChained.stringValue = @"No chained timeline";
