@@ -637,6 +637,7 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     if (currentDocument) currentDocument.lastEditedProperty = NULL;
     
     [self updateSmallTabBarsEnabled];
+    [propertyInspectorHandler updateTemplates];
 }
 
 - (CCNode*) selectedNode

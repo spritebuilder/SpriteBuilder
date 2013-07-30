@@ -8,9 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PropertyInspectorTemplateLibrary;
+
 @interface PropertyInspectorHandler : NSObject
 {
+    IBOutlet PropertyInspectorTemplateLibrary* templateLibrary;
     IBOutlet NSCollectionView* collectionView;
+    
+    IBOutlet NSTextField* newTemplateName;
+    IBOutlet NSColorWell* newTemplateBgColor;
 }
 - (void) updateTemplates;
 
