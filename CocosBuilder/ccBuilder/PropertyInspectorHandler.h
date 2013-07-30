@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class PropertyInspectorTemplateLibrary;
+@class PropertyInspectorTemplate;
 
 @interface PropertyInspectorHandler : NSObject <NSCollectionViewDelegate>
 {
@@ -21,6 +22,6 @@
 - (void) updateTemplates;
 
 - (IBAction) addTemplate:(id) sender;
-- (IBAction) toggleShowDefaultTemplates:(id)sender;
+- (void) removeTemplate:(PropertyInspectorTemplate*) templ;
 
 @end

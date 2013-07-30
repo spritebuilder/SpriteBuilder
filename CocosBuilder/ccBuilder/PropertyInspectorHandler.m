@@ -59,9 +59,11 @@
     [[newTemplateName window] makeFirstResponder:[newTemplateName window]];
 }
 
-- (IBAction) toggleShowDefaultTemplates:(id)sender
+- (void) removeTemplate:(PropertyInspectorTemplate*) templ
 {
-    NSLog(@"toggleShowDefaultTemplates:");
+    [templateLibrary removeTemplate:templ];
+    [self updateTemplates];
+    [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
 }
 
 @end

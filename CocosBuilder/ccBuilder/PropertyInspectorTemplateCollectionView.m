@@ -9,6 +9,8 @@
 #import "PropertyInspectorTemplateCollectionView.h"
 #import "CCBColorView.h"
 #import "PropertyInspectorTemplate.h"
+#import "CocosBuilderAppDelegate.h"
+#import "PropertyInspectorHandler.h"
 
 @implementation PropertyInspectorTemplateCollectionView
 
@@ -64,6 +66,37 @@
     }
     
     [super setSelectionIndexes:indexes];
+}
+
+- (void) keyDown:(NSEvent *)theEvent
+{
+    unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
+    if(key == NSDeleteCharacter)
+    {
+        if([self selectionIndexes].count == 0)
+        {
+            NSBeep();
+            return;
+        }
+        
+        // Confirm remove of items
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected template?" defaultButton:@"Cancel" alternateButton:@"Delete" otherButton:NULL informativeTextWithFormat:@"You cannot undo this operation."];
+        NSInteger result = [alert runModal];
+        
+        if (result == NSAlertDefaultReturn)
+        {
+            return;
+        }
+        
+        NSInteger idx = [[self selectionIndexes] firstIndex];
+        PropertyInspectorTemplate* templ = [[self content] objectAtIndex:idx];
+        
+        [[CocosBuilderAppDelegate appDelegate].propertyInspectorHandler removeTemplate:templ];
+        
+        return;
+    }
+    
+    [super keyDown:theEvent];
 }
 
 @end

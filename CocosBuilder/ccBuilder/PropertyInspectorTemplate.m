@@ -215,6 +215,8 @@
         
         [templates removeObject:templ];
     }
+    
+    [self store];
 }
 
 - (NSArray*) templatesForNodeType:(NSString*) nodeType

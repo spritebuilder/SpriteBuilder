@@ -26,6 +26,7 @@
 }
 
 - (void) addTemplate:(PropertyInspectorTemplate*)templ;
+- (void) removeTemplate:(PropertyInspectorTemplate*)templ;
 - (NSArray*) templatesForNodeType:(NSString*) nodeType;
 - (BOOL) hasTemplateForNodeType:(NSString*)type andName:(NSString*)name;
 
