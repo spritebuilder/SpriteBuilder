@@ -9,6 +9,7 @@
 #import "PropertyInspectorTemplate.h"
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
+#import "HashValue.h"
 
 @implementation PropertyInspectorTemplate
 
@@ -27,10 +28,56 @@
     NSString* className = plugIn.nodeClassName;
     self.nodeType = className;
     
-    // TODO: Generate image
-    [self savePreviewForNode:node size:CGSizeMake(256,256) bgColor:c toFile:@"/Users/Lidholt/Desktop/foo.png"];
+    // Generate image
+    [self savePreviewForNode:node size:CGSizeMake(256,256) bgColor:c toFile:[self imgFileNamePath]];
+    self.image = [[[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]] autorelease];
     
     return self;
+}
+
+- (id) initWithSerialization:(NSDictionary*) dict
+{
+    self = [super init];
+    if (!self) return NULL;
+    
+    NSArray* c = [dict objectForKey:@"color"];
+    float r = [[c objectAtIndex:0] floatValue];
+    float g = [[c objectAtIndex:1] floatValue];
+    float b = [[c objectAtIndex:2] floatValue];
+    NSColor* color = [NSColor colorWithDeviceRed:r green:g blue:b alpha:1];
+    
+    self.name = [dict objectForKey:@"name"];
+    self.color = color;
+    self.nodeType = [dict objectForKey:@"nodeType"];
+    
+    self.image = [[[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]] autorelease];
+    
+    return self;
+}
+
+- (id) serialization
+{
+    NSMutableDictionary* ser = [NSMutableDictionary dictionary];
+    
+    CGFloat r, g, b, a;
+    [self.color getRed:&r green:&g blue:&b alpha:&a];
+    NSArray* c = [NSArray arrayWithObjects:
+                  [NSNumber numberWithFloat:r],
+                  [NSNumber numberWithFloat:g],
+                  [NSNumber numberWithFloat:b],
+                  nil];
+    
+    [ser setObject:self.name forKey:@"name"];
+    [ser setObject:c forKey:@"color"];
+    [ser setObject:self.nodeType forKey:@"nodeType"];
+    
+    return ser;
+}
+
+- (NSString*) imgFileNamePath
+{
+    HashValue* hash = [HashValue md5HashWithString:[NSString stringWithFormat:@"%@:%@", self.nodeType, self.name]];
+    return [[[PropertyInspectorTemplateLibrary templateDirectory] stringByAppendingPathComponent:[hash description]] stringByAppendingPathExtension:@"png"];
 }
 
 - (void) savePreviewForNode:(CCNode*) node size:(CGSize)size bgColor:(NSColor*)bgColor toFile:(NSString*)path
@@ -53,12 +100,9 @@
     // Add node to bg
     [bgLayer addChild:node];
     
-    NSLog(@"r: %f g: %f b: %f", r, g, b);
-    
     node.position = ccp(size.width/2, size.height/2);
     
     // Render the root node
-    //[render beginWithClear:r*255 g:g*255 b:b*255 a:255];
     [render beginWithClear:0 g:0 b:0 a:255];
     [bgLayer visit];
     [render end];
@@ -101,6 +145,25 @@
     
     library = [[NSMutableDictionary alloc] init];
     
+    // Load from file
+    NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:[[PropertyInspectorTemplateLibrary templateDirectory] stringByAppendingPathComponent:@"templates.plist"]];
+    if (dict)
+    {
+        for (NSString* nodeType in dict)
+        {
+            NSArray* serTemplates = [dict objectForKey:nodeType];
+            NSMutableArray* templates = [NSMutableArray array];
+            
+            for (NSDictionary* serTempl in serTemplates)
+            {
+                PropertyInspectorTemplate* templ = [[[PropertyInspectorTemplate alloc] initWithSerialization:serTempl] autorelease];
+                [templates addObject:templ];
+            }
+            
+            [library setObject:templates forKey:nodeType];
+        }
+    }
+    
     return self;
 }
 
@@ -108,6 +171,16 @@
 {
     [library release];
     [super dealloc];
+}
+
+- (BOOL) hasTemplateForNodeType:(NSString*)type andName:(NSString*)name
+{
+    NSArray* templates = [self templatesForNodeType:type];
+    for (PropertyInspectorTemplate* templ in templates)
+    {
+        if ([[templ.name lowercaseString] isEqualToString:[name lowercaseString]]) return YES;
+    }
+    return NO;
 }
 
 - (void) addTemplate:(PropertyInspectorTemplate*)templ
@@ -120,6 +193,8 @@
     }
     
     [templates addObject:templ];
+    
+    [self store];
 }
 
 - (NSArray*) templatesForNodeType:(NSString*) nodeType
@@ -127,6 +202,45 @@
     NSArray* templates = [library objectForKey:nodeType];
     if (templates) return templates;
     return [NSArray array];
+}
+
++ (NSString*) templateDirectory
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    
+    // Find application support directory for CocosBuilder
+    NSError *error;
+    NSURL *appSupportDir = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+    appSupportDir = [appSupportDir URLByAppendingPathComponent:@"com.cocosbuilder"];
+    
+    // Create directory for templates if it doesn't exist
+    NSURL* templDir = [appSupportDir URLByAppendingPathComponent:@"templates"];
+    [fm createDirectoryAtURL:templDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+    
+    return templDir.path;
+}
+
+- (void) store
+{
+    NSMutableDictionary* ser = [NSMutableDictionary dictionary];
+    
+    for (NSString* nodeType in library)
+    {
+        NSMutableArray* serTemplates = [NSMutableArray array];
+        
+        NSArray* templates = [self templatesForNodeType:nodeType];
+        
+        for (PropertyInspectorTemplate* templ in templates)
+        {
+            [serTemplates addObject:[templ serialization]];
+        }
+        
+        [ser setObject:serTemplates forKey:nodeType];
+    }
+    
+    BOOL success = [ser writeToFile:[[PropertyInspectorTemplateLibrary templateDirectory] stringByAppendingPathComponent:@"templates.plist"] atomically:YES];
+    
+    NSLog(@"success: %d", success);
 }
 
 @end

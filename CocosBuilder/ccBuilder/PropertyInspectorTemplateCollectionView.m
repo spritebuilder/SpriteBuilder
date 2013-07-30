@@ -23,7 +23,7 @@
     NSImageView* imgPreview = [view viewWithTag:1];
     
     lblName.stringValue = templ.name;
-    //imgPreview.image = templ.image;
+    imgPreview.image = templ.image;
     
     // Create background view
     CCBColorView* bg = [[[CCBColorView alloc] initWithFrame:NSMakeRect(2, view.bounds.size.height - view.bounds.size.width, view.bounds.size.width - 5, view.bounds.size.width - 2)] autorelease];

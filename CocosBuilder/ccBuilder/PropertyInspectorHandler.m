@@ -16,12 +16,6 @@
 
 @implementation PropertyInspectorHandler
 
-/*
-- (void) awakeFromNib
-{
-    [collectionView setContent:[NSArray arrayWithObjects:@"A", @"B", @"C", nil]];
-}*/
-
 - (void) updateTemplates
 {
     CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
@@ -40,9 +34,21 @@
     CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
     if (!node) return;
     
-    if (!newTemplateName.stringValue || [newTemplateName.stringValue isEqualToString:@""]) return;
+    NSString* newName = newTemplateName.stringValue;
     
-    PropertyInspectorTemplate* templ = [[[PropertyInspectorTemplate alloc] initWithNode:node name:newTemplateName.stringValue bgColor:newTemplateBgColor.color] autorelease];
+    // Make sure that the name is a valid file name
+    newName = [newName stringByReplacingOccurrencesOfString:@"/" withString:@""];
+    newName = [newName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!newName || [newName isEqualToString:@""]) return;
+    
+    // Make sure it's a unique name
+    if ([templateLibrary hasTemplateForNodeType:node.plugIn.nodeClassName andName:newName])
+    {
+        [[CocosBuilderAppDelegate appDelegate] modalDialogTitle:@"Failed to Create Template" message:@"You need to specify a unique name. Please try again."];
+        return;
+    }
+    
+    PropertyInspectorTemplate* templ = [[[PropertyInspectorTemplate alloc] initWithNode:node name:newName bgColor:newTemplateBgColor.color] autorelease];
     
     [templateLibrary addTemplate:templ];
     
