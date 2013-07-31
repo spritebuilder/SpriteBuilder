@@ -305,10 +305,12 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
 
 - (void) updateSmallTabBarsEnabled
 {
+    // Set enable for open project
     BOOL allEnable = (projectSettings != NULL);
     
     if (!allEnable)
     {
+        // If project isn't open, set selected tab to the first one
         [projectViewTabs setSelectedItem:[projectViewTabs.items objectAtIndex:0]];
         [projectTabView selectTabViewItemAtIndex:0];
         
@@ -316,16 +318,29 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
         [itemTabView selectTabViewItemAtIndex:0];
     }
     
+    // Update enable for project
     for (SMTabBarItem* item in projectViewTabs.items)
     {
         item.enabled = allEnable;
     }
     
+    // Update enable depending on if object is selected
     BOOL itemEnable = (self.selectedNode != NULL);
     
     for (SMTabBarItem* item in itemViewTabs.items)
     {
         item.enabled = allEnable && itemEnable;
+    }
+    
+    BOOL templateEnable = (itemEnable && self.selectedNode.plugIn.supportsTemplates);
+    SMTabBarItem* templateItem = [itemViewTabs.items objectAtIndex:2];
+    templateItem.enabled = templateEnable;
+
+    if (!templateEnable && [itemViewTabs selectedItem] == templateItem)
+    {
+        // If template isn't available select first tab instead
+        [itemViewTabs setSelectedItem:[itemViewTabs.items objectAtIndex:0]];
+        [itemTabView selectTabViewItemAtIndex:0];
     }
 }
 
