@@ -72,6 +72,7 @@
     if (!node) return;
     if (!templ.properties) return;
     
+    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*template"];
     [templ applyToNode:node];
 }
 
