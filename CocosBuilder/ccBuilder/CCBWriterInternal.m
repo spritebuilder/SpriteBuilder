@@ -181,6 +181,229 @@
 
 #pragma mark Writer
 
++ (id) serializePropertyForNode:(CCNode*) node propInfo:(NSMutableDictionary*) propInfo excludeProps:(NSArray*) excludeProps
+{
+    NodeInfo* info = node.userObject;
+    PlugInNode* plugIn = info.plugIn;
+    NSMutableDictionary* extraProps = info.extraProps;
+    
+    NSString* type = [propInfo objectForKey:@"type"];
+    NSString* name = [propInfo objectForKey:@"name"];
+    //NSString* platform = [propInfo objectForKey:@"platform"];
+    BOOL readOnly = [[propInfo objectForKey:@"readOnly"] boolValue];
+    //BOOL hasKeyframes = [node hasKeyframesForProperty:name];
+    //id defaultSerialization = [propInfo objectForKey:@"defaultSerialization"];
+    id serializedValue = NULL;
+    
+    BOOL useFlashSkews = [node usesFlashSkew];
+    if (useFlashSkews && [name isEqualToString:@"rotation"]) return NULL;
+    if (!useFlashSkews && [name isEqualToString:@"rotationX"]) return NULL;
+    if (!useFlashSkews && [name isEqualToString:@"rotationY"]) return NULL;
+    
+    // Check if this property should be excluded
+    if (excludeProps && [excludeProps indexOfObject:name] != NSNotFound)
+    {
+        return NULL;
+    }
+    
+    // Ignore separators and graphical stuff
+    if ([type isEqualToString:@"Separator"]
+        || [type isEqualToString:@"SeparatorSub"]
+        || [type isEqualToString:@"StartStop"])
+    {
+        return NULL;
+    }
+    
+    // Ignore read only properties
+    if (readOnly)
+    {
+        return NULL;
+    }
+    
+    // Handle different type of properties
+    if ([plugIn dontSetInEditorProperty:name])
+    {
+        // Get the serialized value from the extra props
+        serializedValue = [extraProps objectForKey:name];
+    }
+    else if ([type isEqualToString:@"Position"])
+    {
+        NSPoint pt = [PositionPropertySetter positionForNode:node prop:name];
+        int type = [PositionPropertySetter positionTypeForNode:node prop:name];
+        serializedValue = [CCBWriterInternal serializePosition:pt type:type];
+    }
+    else if([type isEqualToString:@"Point"]
+            || [type isEqualToString:@"PointLock"])
+    {
+        CGPoint pt = NSPointToCGPoint( [[node valueForKey:name] pointValue] );
+        serializedValue = [CCBWriterInternal serializePoint:pt];
+    }
+    else if ([type isEqualToString:@"Size"])
+    {
+        //CGSize size = NSSizeToCGSize( [[node valueForKey:name] sizeValue] );
+        NSSize size = [PositionPropertySetter sizeForNode:node prop:name];
+        int type = [PositionPropertySetter sizeTypeForNode:node prop:name];
+        serializedValue = [CCBWriterInternal serializeSize:size type:type];
+    }
+    else if ([type isEqualToString:@"FloatXY"])
+    {
+        float x = [[node valueForKey:[NSString stringWithFormat:@"%@X",name]] floatValue];
+        float y = [[node valueForKey:[NSString stringWithFormat:@"%@Y",name]] floatValue];
+        serializedValue = [CCBWriterInternal serializePoint:ccp(x,y)];
+    }
+    else if ([type isEqualToString:@"ScaleLock"])
+    {
+        float x = [PositionPropertySetter scaleXForNode:node prop:name];
+        float y = [PositionPropertySetter scaleYForNode:node prop:name];
+        BOOL lock = [[extraProps objectForKey:[NSString stringWithFormat:@"%@Lock",name]] boolValue];
+        int scaleType = [PositionPropertySetter scaledFloatTypeForNode:node prop:name];
+        
+        serializedValue = [CCBWriterInternal serializePoint:ccp(x,y) lock:lock type: scaleType];
+    }
+    else if ([type isEqualToString:@"Float"]
+             || [type isEqualToString:@"Degrees"])
+    {
+        float f = [[node valueForKey:name] floatValue];
+        serializedValue = [CCBWriterInternal serializeFloat:f];
+    }
+    else if ([type isEqualToString:@"FloatScale"])
+    {
+        float f = [PositionPropertySetter floatScaleForNode:node prop:name];
+        int type = [PositionPropertySetter floatScaleTypeForNode:node prop:name];
+        serializedValue = [CCBWriterInternal serializeFloatScale:f type:type];
+    }
+    else if ([type isEqualToString:@"FloatVar"])
+    {
+        float x = [[node valueForKey:name] floatValue];
+        float y = [[node valueForKey:[NSString stringWithFormat:@"%@Var",name]] floatValue];
+        serializedValue = [CCBWriterInternal serializePoint:ccp(x,y)];
+    }
+    else if ([type isEqualToString:@"Integer"]
+             || [type isEqualToString:@"IntegerLabeled"]
+             || [type isEqualToString:@"Byte"])
+    {
+        int d = [[node valueForKey:name] intValue];
+        serializedValue = [CCBWriterInternal serializeInt:d];
+    }
+    else if ([type isEqualToString:@"Check"])
+    {
+        BOOL check = [[node valueForKey:name] boolValue];
+        serializedValue = [CCBWriterInternal serializeBool:check];
+    }
+    else if ([type isEqualToString:@"Flip"])
+    {
+        BOOL x = [[node valueForKey:[NSString stringWithFormat:@"%@X",name]] boolValue];
+        BOOL y = [[node valueForKey:[NSString stringWithFormat:@"%@Y",name]] boolValue];
+        serializedValue = [CCBWriterInternal serializeBoolPairX:x Y:y];
+    }
+    else if ([type isEqualToString:@"SpriteFrame"])
+    {
+        NSString* spriteFile = [extraProps objectForKey:name];
+        NSString* spriteSheetFile = [extraProps objectForKey:[NSString stringWithFormat:@"%@Sheet",name]];
+        serializedValue = [CCBWriterInternal serializeSpriteFrame:spriteFile sheet:spriteSheetFile];
+    }
+    else if ([type isEqualToString:@"Animation"])
+    {
+        NSString* animation = [extraProps objectForKey:name];
+        NSString* animationFile = [extraProps objectForKey:[NSString stringWithFormat:@"%@Animation",name]];
+        serializedValue = [CCBWriterInternal serializeAnimation:animation file:animationFile];
+    }
+    else if ([type isEqualToString:@"Texture"])
+    {
+        NSString* spriteFile = [extraProps objectForKey:name];
+        if (!spriteFile) spriteFile = @"";
+        
+        serializedValue = spriteFile;
+    }
+    else if ([type isEqualToString:@"Color3"])
+    {
+        NSValue* colorValue = [node valueForKey:name];
+        ccColor3B c;
+        [colorValue getValue:&c];
+        serializedValue = [CCBWriterInternal serializeColor3:c];
+    }
+    else if ([type isEqualToString:@"Color4FVar"])
+    {
+        NSValue* cValue = NULL;
+        NSValue* cVarValue = NULL;
+        NSString* nameVar = [NSString stringWithFormat:@"%@Var",name];
+        cValue = [node valueForKey:name];
+        cVarValue = [node valueForKey:nameVar];
+        ccColor4F c;
+        ccColor4F cVar;
+        [cValue getValue:&c];
+        [cVarValue getValue:&cVar];
+        
+        serializedValue = [NSArray arrayWithObjects:
+                           [CCBWriterInternal serializeColor4F:c],
+                           [CCBWriterInternal serializeColor4F:cVar],
+                           nil];
+    }
+    else if ([type isEqualToString:@"Blendmode"])
+    {
+        NSValue* blendValue = [node valueForKey:name];
+        ccBlendFunc bf;
+        [blendValue getValue:&bf];
+        serializedValue = [CCBWriterInternal serializeBlendFunc:bf];
+    }
+    else if ([type isEqualToString:@"FntFile"])
+    {
+        NSString* str = [TexturePropertySetter fontForNode:node andProperty:name];
+        if (!str) str = @"";
+        serializedValue = str;
+    }
+    else if ([type isEqualToString:@"Text"]
+             || [type isEqualToString:@"String"])
+    {
+        NSString* str = [node valueForKey:name];
+        if (!str) str = @"";
+        serializedValue = str;
+    }
+    else if ([type isEqualToString:@"FontTTF"])
+    {
+        NSString* str = [TexturePropertySetter ttfForNode:node andProperty:name];
+        if (!str) str = @"";
+        serializedValue = str;
+    }
+    else if ([type isEqualToString:@"Block"])
+    {
+        NSString* selector = [extraProps objectForKey:name];
+        NSNumber* target = [extraProps objectForKey:[NSString stringWithFormat:@"%@Target",name]];
+        if (!selector) selector = @"";
+        if (!target) target = [NSNumber numberWithInt:0];
+        serializedValue = [NSArray arrayWithObjects:
+                           selector,
+                           target,
+                           nil];
+    }
+    else if ([type isEqualToString:@"BlockCCControl"])
+    {
+        NSString* selector = [extraProps objectForKey:name];
+        NSNumber* target = [extraProps objectForKey:[NSString stringWithFormat:@"%@Target",name]];
+        NSNumber* ctrlEvts = [extraProps objectForKey:[NSString stringWithFormat:@"%@CtrlEvts",name]];
+        if (!selector) selector = @"";
+        if (!target) target = [NSNumber numberWithInt:0];
+        if (!ctrlEvts) ctrlEvts = [NSNumber numberWithInt:0];
+        serializedValue = [NSArray arrayWithObjects:
+                           selector,
+                           target,
+                           ctrlEvts,
+                           nil];
+    }
+    else if ([type isEqualToString:@"CCBFile"])
+    {
+        NSString* spriteFile = [extraProps objectForKey:name];
+        if (!spriteFile) spriteFile = @"";
+        serializedValue = spriteFile;
+    }
+    else
+    {
+        NSLog(@"WARNING Unrecognized property type: %@", type);
+    }
+    
+    return serializedValue;
+}
+
 + (NSMutableDictionary*) dictionaryFromCCObject:(CCNode *)node
 {
     NodeInfo* info = node.userObject;
@@ -205,216 +428,12 @@
         NSString* type = [propInfo objectForKey:@"type"];
         NSString* name = [propInfo objectForKey:@"name"];
         NSString* platform = [propInfo objectForKey:@"platform"];
-        BOOL readOnly = [[propInfo objectForKey:@"readOnly"] boolValue];
         BOOL hasKeyframes = [node hasKeyframesForProperty:name];
         id defaultSerialization = [propInfo objectForKey:@"defaultSerialization"];
         id serializedValue = NULL;
         
-        BOOL useFlashSkews = [node usesFlashSkew];
-        if (useFlashSkews && [name isEqualToString:@"rotation"]) continue;
-        if (!useFlashSkews && [name isEqualToString:@"rotationX"]) continue;
-        if (!useFlashSkews && [name isEqualToString:@"rotationY"]) continue;
-        
-        // Check if this property should be excluded
-        if (excludeProps && [excludeProps indexOfObject:name] != NSNotFound)
-        {
-            continue;
-        }
-        
-        // Ignore separators and graphical stuff
-        if ([type isEqualToString:@"Separator"]
-            || [type isEqualToString:@"SeparatorSub"]
-            || [type isEqualToString:@"StartStop"])
-        {
-            continue;
-        }
-        
-        // Ignore read only properties
-        if (readOnly)
-        {
-            continue;
-        }
-        
-        // Handle different type of properties
-        if ([plugIn dontSetInEditorProperty:name])
-        {
-            // Get the serialized value from the extra props
-            serializedValue = [extraProps objectForKey:name];
-        }
-        else if ([type isEqualToString:@"Position"])
-        {
-            NSPoint pt = [PositionPropertySetter positionForNode:node prop:name];
-            int type = [PositionPropertySetter positionTypeForNode:node prop:name];
-            serializedValue = [CCBWriterInternal serializePosition:pt type:type];
-        }
-        else if([type isEqualToString:@"Point"]
-            || [type isEqualToString:@"PointLock"])
-        {
-			CGPoint pt = NSPointToCGPoint( [[node valueForKey:name] pointValue] );
-            serializedValue = [CCBWriterInternal serializePoint:pt];
-        }
-        else if ([type isEqualToString:@"Size"])
-        {
-			//CGSize size = NSSizeToCGSize( [[node valueForKey:name] sizeValue] );
-            NSSize size = [PositionPropertySetter sizeForNode:node prop:name];
-            int type = [PositionPropertySetter sizeTypeForNode:node prop:name];
-            serializedValue = [CCBWriterInternal serializeSize:size type:type];
-        }
-        else if ([type isEqualToString:@"FloatXY"])
-        {
-            float x = [[node valueForKey:[NSString stringWithFormat:@"%@X",name]] floatValue];
-            float y = [[node valueForKey:[NSString stringWithFormat:@"%@Y",name]] floatValue];
-            serializedValue = [CCBWriterInternal serializePoint:ccp(x,y)];
-        }
-        else if ([type isEqualToString:@"ScaleLock"])
-        {
-            float x = [PositionPropertySetter scaleXForNode:node prop:name];
-            float y = [PositionPropertySetter scaleYForNode:node prop:name];
-            BOOL lock = [[extraProps objectForKey:[NSString stringWithFormat:@"%@Lock",name]] boolValue];
-            int scaleType = [PositionPropertySetter scaledFloatTypeForNode:node prop:name];
-            
-            serializedValue = [CCBWriterInternal serializePoint:ccp(x,y) lock:lock type: scaleType];
-        }
-        else if ([type isEqualToString:@"Float"]
-                 || [type isEqualToString:@"Degrees"])
-        {
-            float f = [[node valueForKey:name] floatValue];
-            serializedValue = [CCBWriterInternal serializeFloat:f];
-        }
-        else if ([type isEqualToString:@"FloatScale"])
-        {
-            float f = [PositionPropertySetter floatScaleForNode:node prop:name];
-            int type = [PositionPropertySetter floatScaleTypeForNode:node prop:name];
-            serializedValue = [CCBWriterInternal serializeFloatScale:f type:type];
-        }
-        else if ([type isEqualToString:@"FloatVar"])
-        {
-            float x = [[node valueForKey:name] floatValue];
-            float y = [[node valueForKey:[NSString stringWithFormat:@"%@Var",name]] floatValue];
-            serializedValue = [CCBWriterInternal serializePoint:ccp(x,y)];
-        }
-        else if ([type isEqualToString:@"Integer"]
-                 || [type isEqualToString:@"IntegerLabeled"]
-                 || [type isEqualToString:@"Byte"])
-        {
-            int d = [[node valueForKey:name] intValue];
-            serializedValue = [CCBWriterInternal serializeInt:d];
-        }
-        else if ([type isEqualToString:@"Check"])
-        {
-            BOOL check = [[node valueForKey:name] boolValue];
-            serializedValue = [CCBWriterInternal serializeBool:check];
-        }
-        else if ([type isEqualToString:@"Flip"])
-        {
-            BOOL x = [[node valueForKey:[NSString stringWithFormat:@"%@X",name]] boolValue];
-            BOOL y = [[node valueForKey:[NSString stringWithFormat:@"%@Y",name]] boolValue];
-            serializedValue = [CCBWriterInternal serializeBoolPairX:x Y:y];
-        }
-        else if ([type isEqualToString:@"SpriteFrame"])
-        {
-            NSString* spriteFile = [extraProps objectForKey:name];
-            NSString* spriteSheetFile = [extraProps objectForKey:[NSString stringWithFormat:@"%@Sheet",name]];
-            serializedValue = [CCBWriterInternal serializeSpriteFrame:spriteFile sheet:spriteSheetFile];
-        }
-        else if ([type isEqualToString:@"Animation"])
-        {
-            NSString* animation = [extraProps objectForKey:name];
-            NSString* animationFile = [extraProps objectForKey:[NSString stringWithFormat:@"%@Animation",name]];
-            serializedValue = [CCBWriterInternal serializeAnimation:animation file:animationFile];
-        }		
-        else if ([type isEqualToString:@"Texture"])
-        {
-            NSString* spriteFile = [extraProps objectForKey:name];
-            if (!spriteFile) spriteFile = @"";
-            
-            serializedValue = spriteFile;
-        }
-        else if ([type isEqualToString:@"Color3"])
-        {
-            NSValue* colorValue = [node valueForKey:name];
-            ccColor3B c;
-            [colorValue getValue:&c];
-            serializedValue = [CCBWriterInternal serializeColor3:c];
-        }
-        else if ([type isEqualToString:@"Color4FVar"])
-        {
-            NSValue* cValue = NULL;
-            NSValue* cVarValue = NULL;
-            NSString* nameVar = [NSString stringWithFormat:@"%@Var",name];
-            cValue = [node valueForKey:name];
-            cVarValue = [node valueForKey:nameVar];
-            ccColor4F c;
-            ccColor4F cVar;
-            [cValue getValue:&c];
-            [cVarValue getValue:&cVar];
-            
-            serializedValue = [NSArray arrayWithObjects:
-                               [CCBWriterInternal serializeColor4F:c],
-                               [CCBWriterInternal serializeColor4F:cVar],
-                               nil];
-        }
-        else if ([type isEqualToString:@"Blendmode"])
-        {
-            NSValue* blendValue = [node valueForKey:name];
-            ccBlendFunc bf;
-            [blendValue getValue:&bf];
-            serializedValue = [CCBWriterInternal serializeBlendFunc:bf];
-        }
-        else if ([type isEqualToString:@"FntFile"])
-        {
-            NSString* str = [TexturePropertySetter fontForNode:node andProperty:name];
-            if (!str) str = @"";
-            serializedValue = str;
-        }
-        else if ([type isEqualToString:@"Text"]
-                 || [type isEqualToString:@"String"])
-        {
-            NSString* str = [node valueForKey:name];
-            if (!str) str = @"";
-            serializedValue = str;
-        }
-        else if ([type isEqualToString:@"FontTTF"])
-        {
-            NSString* str = [TexturePropertySetter ttfForNode:node andProperty:name];
-            if (!str) str = @"";
-            serializedValue = str;
-        }
-        else if ([type isEqualToString:@"Block"])
-        {
-            NSString* selector = [extraProps objectForKey:name];
-            NSNumber* target = [extraProps objectForKey:[NSString stringWithFormat:@"%@Target",name]];
-            if (!selector) selector = @"";
-            if (!target) target = [NSNumber numberWithInt:0];
-            serializedValue = [NSArray arrayWithObjects:
-                               selector,
-                               target,
-                               nil];
-        }
-        else if ([type isEqualToString:@"BlockCCControl"])
-        {
-            NSString* selector = [extraProps objectForKey:name];
-            NSNumber* target = [extraProps objectForKey:[NSString stringWithFormat:@"%@Target",name]];
-            NSNumber* ctrlEvts = [extraProps objectForKey:[NSString stringWithFormat:@"%@CtrlEvts",name]];
-            if (!selector) selector = @"";
-            if (!target) target = [NSNumber numberWithInt:0];
-            if (!ctrlEvts) ctrlEvts = [NSNumber numberWithInt:0];
-            serializedValue = [NSArray arrayWithObjects:
-                               selector,
-                               target,
-                               ctrlEvts,
-                               nil];
-        }
-        else if ([type isEqualToString:@"CCBFile"])
-        {
-            NSString* spriteFile = [extraProps objectForKey:name];
-            if (!spriteFile) spriteFile = @"";
-            serializedValue = spriteFile;
-        }
-        else
-        {
-            NSLog(@"WARNING Unrecognized property type: %@", type);
-        }
+        serializedValue = [CCBWriterInternal serializePropertyForNode:node propInfo:propInfo excludeProps:excludeProps];
+        if (!serializedValue) continue;
         
         // Skip default values
         if ([serializedValue isEqual:defaultSerialization] && !hasKeyframes)
