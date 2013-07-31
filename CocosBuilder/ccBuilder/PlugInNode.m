@@ -33,6 +33,7 @@
 @synthesize displayName;
 @synthesize descr;
 @synthesize ordering;
+@synthesize supportsTemplates;
 @synthesize nodeProperties;
 @synthesize nodePropertiesDict;
 @synthesize dropTargetSpriteFrameClass;
@@ -123,6 +124,7 @@
     displayName = [[props objectForKey:@"displayName"] retain];
     descr = [[props objectForKey:@"description"] retain];
     ordering = [[props objectForKey:@"ordering"] intValue];
+    supportsTemplates = [[props objectForKey:@"supportsTemplates"] boolValue];
     
     if (!displayName) displayName = [nodeClassName copy];
     if (!ordering) ordering = 100000;

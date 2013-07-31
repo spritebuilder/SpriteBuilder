@@ -99,4 +99,21 @@
     [super keyDown:theEvent];
 }
 
+-(void)mouseDown:(NSEvent *)theEvent
+{
+	[super mouseDown:theEvent];
+	
+	// Check for click count above one, which we assume means it's a double click
+	if([theEvent clickCount] > 1)
+    {
+		if([self selectionIndexes].count)
+        {
+            NSInteger idx = [[self selectionIndexes] firstIndex];
+            PropertyInspectorTemplate* templ = [[self content] objectAtIndex:idx];
+            
+            [[CocosBuilderAppDelegate appDelegate].propertyInspectorHandler applyTemplate:templ];
+        }
+	}
+}
+
 @end

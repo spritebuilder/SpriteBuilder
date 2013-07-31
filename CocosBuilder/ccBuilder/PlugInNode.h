@@ -35,6 +35,7 @@
     NSString* displayName;
     NSString* descr;
     int ordering;
+    BOOL supportsTemplates;
     
     NSImage* icon;
     
@@ -60,6 +61,7 @@
 @property (nonatomic,readonly) NSString* displayName;
 @property (nonatomic,readonly) NSString* descr;
 @property (nonatomic,readonly) int ordering;
+@property (nonatomic,readonly) BOOL supportsTemplates;
 @property (nonatomic,readonly) NSMutableArray* nodeProperties;
 @property (nonatomic,readonly) NSMutableDictionary* nodePropertiesDict;
 @property (nonatomic,readonly) NSString* dropTargetSpriteFrameClass;

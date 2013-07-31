@@ -15,6 +15,7 @@
 @property (nonatomic,retain) NSImage* image;
 @property (nonatomic,copy) NSString* nodeType;
 @property (nonatomic,retain) NSColor* color;
+@property (nonatomic,retain) NSArray* properties;
 
 - (id) initWithNode:(CCNode*)node name:(NSString*)n bgColor:(NSColor*)c;
 

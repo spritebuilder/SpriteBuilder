@@ -24,4 +24,6 @@
 - (IBAction) addTemplate:(id) sender;
 - (void) removeTemplate:(PropertyInspectorTemplate*) templ;
 
+- (void) applyTemplate:(PropertyInspectorTemplate*) templ;
+
 @end

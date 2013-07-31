@@ -66,4 +66,9 @@
     [collectionView setSelectionIndexes:[NSIndexSet indexSet]];
 }
 
+- (void) applyTemplate:(PropertyInspectorTemplate*) templ
+{
+    NSLog(@"Apply template: %@", templ.name);
+}
+
 @end

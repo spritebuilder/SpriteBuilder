@@ -10,6 +10,7 @@
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
 #import "HashValue.h"
+#import "CCBWriterInternal.h"
 
 @implementation PropertyInspectorTemplate
 
@@ -32,6 +33,29 @@
     [self savePreviewForNode:node size:CGSizeMake(256,256) bgColor:c toFile:[self imgFileNamePath]];
     self.image = [[[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]] autorelease];
     
+    // Save properties
+    NSMutableArray* props = [NSMutableArray array];
+    
+    NSArray* plugInProps = plugIn.nodeProperties;
+    
+    for (NSMutableDictionary* propInfo in plugInProps)
+    {
+        if ([[propInfo objectForKey:@"saveInTemplate"] boolValue])
+        {
+            id serializedValue = [CCBWriterInternal serializePropertyForNode:node propInfo:propInfo excludeProps:NULL];
+            if (serializedValue)
+            {
+                [props addObject:serializedValue];
+            }
+            else
+            {
+                NSLog(@"WARNING! Failed to serialize value: %@", propInfo);
+            }
+        }
+    }
+    
+    self.properties = props;
+    
     return self;
 }
 
@@ -52,6 +76,8 @@
     
     self.image = [[[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]] autorelease];
     
+    self.properties = [dict objectForKey:@"properties"];
+    
     return self;
 }
 
@@ -70,6 +96,13 @@
     [ser setObject:self.name forKey:@"name"];
     [ser setObject:c forKey:@"color"];
     [ser setObject:self.nodeType forKey:@"nodeType"];
+    
+    if (self.properties)
+    {
+        [ser setObject:self.properties forKey:@"properties"];
+    }
+    
+    NSLog(@"serialization: %@", ser);
     
     return ser;
 }
