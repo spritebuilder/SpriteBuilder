@@ -18,6 +18,7 @@
 @property (nonatomic,retain) NSArray* properties;
 
 - (id) initWithNode:(CCNode*)node name:(NSString*)n bgColor:(NSColor*)c;
+- (void) applyToNode:(CCNode*) node;
 
 @end
 

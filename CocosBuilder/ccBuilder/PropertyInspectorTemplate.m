@@ -11,6 +11,7 @@
 #import "PlugInNode.h"
 #import "HashValue.h"
 #import "CCBWriterInternal.h"
+#import "CCBReaderInternal.h"
 
 @implementation PropertyInspectorTemplate
 
@@ -43,9 +44,15 @@
         if ([[propInfo objectForKey:@"saveInTemplate"] boolValue])
         {
             id serializedValue = [CCBWriterInternal serializePropertyForNode:node propInfo:propInfo excludeProps:NULL];
+            
+            NSMutableDictionary* serProp = [NSMutableDictionary dictionary];
+            [serProp setObject:serializedValue forKey:@"value"];
+            [serProp setObject:[propInfo objectForKey:@"type"] forKey:@"type"];
+            [serProp setObject:[propInfo objectForKey:@"name"] forKey:@"name"];
+            
             if (serializedValue)
             {
-                [props addObject:serializedValue];
+                [props addObject:serProp];
             }
             else
             {
@@ -57,6 +64,18 @@
     self.properties = props;
     
     return self;
+}
+
+- (void) applyToNode:(CCNode*) node
+{
+    for (id propInfo in self.properties)
+    {
+        NSString* type = [propInfo objectForKey:@"type"];
+        NSString* name = [propInfo objectForKey:@"name"];
+        id serializedValue = [propInfo objectForKey:@"value"];
+        
+        [CCBReaderInternal setProp:name ofType:type toValue:serializedValue forNode:node parentSize:CGSizeMake(0, 0)];
+    }
 }
 
 - (id) initWithSerialization:(NSDictionary*) dict
@@ -101,8 +120,6 @@
     {
         [ser setObject:self.properties forKey:@"properties"];
     }
-    
-    NSLog(@"serialization: %@", ser);
     
     return ser;
 }
@@ -293,9 +310,7 @@
         [ser setObject:serTemplates forKey:nodeType];
     }
     
-    BOOL success = [ser writeToFile:[[PropertyInspectorTemplateLibrary templateDirectory] stringByAppendingPathComponent:@"templates.plist"] atomically:YES];
-    
-    NSLog(@"success: %d", success);
+    [ser writeToFile:[[PropertyInspectorTemplateLibrary templateDirectory] stringByAppendingPathComponent:@"templates.plist"] atomically:YES];
 }
 
 @end

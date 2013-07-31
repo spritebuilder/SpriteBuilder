@@ -68,7 +68,11 @@
 
 - (void) applyTemplate:(PropertyInspectorTemplate*) templ
 {
-    NSLog(@"Apply template: %@", templ.name);
+    CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
+    if (!node) return;
+    if (!templ.properties) return;
+    
+    [templ applyToNode:node];
 }
 
 @end
