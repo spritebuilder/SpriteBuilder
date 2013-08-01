@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
+		<int key="IBDocument.SystemTarget">1080</int>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">3084</string>
@@ -42,7 +42,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {480, 199}}</string>
 				<int key="NSWTFlags">544735232</int>
-				<string key="NSWindowTitle">About CocosBuilder</string>
+				<string key="NSWindowTitle">About SpriteBuilder</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -79,12 +79,13 @@
 								<int key="NSStyle">0</int>
 								<bool key="NSAnimates">NO</bool>
 							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 							<bool key="NSEditable">YES</bool>
 						</object>
 						<object class="NSTextField" id="356112787">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{156, 155}, {139, 24}}</string>
+							<string key="NSFrame">{{156, 155}, {137, 24}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSNextKeyView" ref="578853637"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
@@ -92,7 +93,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1065951824">
 								<int key="NSCellFlags">68157504</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">CocosBuilder</string>
+								<string key="NSContents">SpriteBuilder</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">20</double>
@@ -119,6 +120,7 @@
 									</object>
 								</object>
 							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						</object>
 						<object class="NSTextField" id="578853637">
 							<reference key="NSNextResponder" ref="1006"/>
@@ -142,6 +144,7 @@
 								<reference key="NSBackgroundColor" ref="621734625"/>
 								<reference key="NSTextColor" ref="295829453"/>
 							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						</object>
 						<object class="NSTextField" id="1029206555">
 							<reference key="NSNextResponder" ref="1006"/>
@@ -155,9 +158,9 @@
 								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">1346633728</int>
 								<string type="base64-UTF8" key="NSContents">Q29weXJpZ2h0IDIwMTItMjAxMyBaeW5nYSBJbmMuCkNvcHlyaWdodCAyMDExIFZpa3RvciBMaWRob2x0
-CgpDb2Nvc0J1aWxkZXIgaXMgcmVsZWFzZWQgb3BlbiBzb3VyY2UgdW5kZXIgTUlUIGxpY2VuY2UuIFBs
-ZWFzZSBzZWUgTElDRU5TRV9Db2Nvc0J1aWxkZXIudHh0IGZvciBmdWxsIGxpY2Vuc2UgdGV4dC4KCmh0
-dHA6Ly9jb2Nvc2J1aWxkZXIuY29tA</string>
+CgpTcHJpdGVCdWlsZGVyIGlzIHJlbGVhc2VkIG9wZW4gc291cmNlIHVuZGVyIE1JVCBsaWNlbmNlLiBQ
+bGVhc2Ugc2VlIExJQ0VOU0VfU3ByaXRlQnVpbGRlci50eHQgZm9yIGZ1bGwgbGljZW5zZSB0ZXh0LgoK
+aHR0cDovL2NvY29zYnVpbGRlci5jb20</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">9</double>
@@ -168,6 +171,7 @@ dHA6Ly9jb2Nvc2J1aWxkZXIuY29tA</string>
 								<reference key="NSBackgroundColor" ref="621734625"/>
 								<reference key="NSTextColor" ref="295829453"/>
 							</object>
+							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						</object>
 					</array>
 					<string key="NSFrameSize">{480, 199}</string>
