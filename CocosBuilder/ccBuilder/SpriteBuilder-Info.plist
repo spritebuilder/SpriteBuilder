@@ -12,9 +12,9 @@
 				<string>ccb</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>CocosBuilderDocIcon.icns</string>
+			<string>SpriteBuilderDocIcon</string>
 			<key>CFBundleTypeName</key>
-			<string>CocosBuilder Document</string>
+			<string>SpriteBuilder Document</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>????</string>
@@ -32,21 +32,21 @@
 				<string>ccbproj</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>CocosBuilderProjectIcon.icns</string>
+			<string>SpriteBuilderProjectIcon</string>
 			<key>CFBundleTypeName</key>
-			<string>CocosBuilder Project</string>
+			<string>SpriteBuilder Project</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>NSDocumentClass</key>
-			<string>CocosBuilderAppDelegate</string>
+			<string>AppDelegate</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>SpriteBuilderProjectIcon</string>
+	<string>Icon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.cocosbuilder.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.spritebuilder.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
