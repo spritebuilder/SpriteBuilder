@@ -1409,30 +1409,25 @@ static BOOL hideAllToNextSeparator;
     return YES;
 }
 
-- (void) copyDefaultResourcesForProject:(ProjectSettings*) settings
+- (BOOL) createProject:(NSString*) fileName
 {
     NSFileManager* fm = [NSFileManager defaultManager];
     
-    // Copy resources to project dir (root directory)
-    NSString* srcDir = [[NSBundle mainBundle] pathForResource:@"defaultProjectResources" ofType:@""];
-    NSString* dstDir = [settings.absoluteResourcePaths objectAtIndex:0];
+    // Unzip resources
+    NSString* zipFile = [[NSBundle mainBundle] pathForResource:@"defaultProject" ofType:@"zip"];
+    NSTask* zipTask = [[NSTask alloc] init];
+    [zipTask setCurrentDirectoryPath:[fileName stringByDeletingLastPathComponent]];
+    [zipTask setLaunchPath:@"/usr/bin/unzip"];
+    NSArray* args = [NSArray arrayWithObjects:zipFile, nil];
+    [zipTask setArguments:args];
+    [zipTask launch];
+    [zipTask waitUntilExit];
+    [zipTask release];
     
-    NSLog(@"Copy from: %@ to: %@",srcDir,dstDir);
+    // Rename
+    [fm moveItemAtPath:[[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Default.ccbproj"] toPath:fileName error:NULL];
     
-    BOOL success = [fm copyItemAtPath:srcDir toPath:dstDir error:NULL];
-    NSLog(@"succes: %d",success);
-}
-
-- (BOOL) createProject:(NSString*) fileName
-{
-    // Create a default project
-    ProjectSettings* settings = [[[ProjectSettings alloc] init] autorelease];
-    settings.projectPath = fileName;
-    
-    // Copy resources
-    [self copyDefaultResourcesForProject:settings];
-    
-    return [settings store];
+    return [fm fileExistsAtPath:fileName];
 }
 
 - (void) updateResourcePathsFromProjectSettings
