@@ -74,6 +74,13 @@
     
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*template"];
     [templ applyToNode:node];
+    
+    if ([node isKindOfClass:[CCParticleSystemQuad class]])
+    {
+        CCParticleSystemQuad* particles = (CCParticleSystemQuad*)node;
+        [particles stopSystem];
+        [particles resetSystem];
+    }
 }
 
 - (void) installDefaultTemplatesReplace:(BOOL)replace
