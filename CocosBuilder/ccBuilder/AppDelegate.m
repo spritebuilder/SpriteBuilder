@@ -182,7 +182,7 @@ static AppDelegate* sharedAppDelegate;
 	
 	[director runWithScene:[CocosScene sceneWithAppDelegate:self]];
 	
-	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread], @"cocos2d shall run on the Main Thread. Compile CocosBuilder with CC_DIRECTOR_MAC_THREAD=2");
+	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread], @"cocos2d shall run on the Main Thread. Compile SpriteBuilder with CC_DIRECTOR_MAC_THREAD=2");
 }
 
 - (void) setupSequenceHandler
@@ -1467,7 +1467,7 @@ static BOOL hideAllToNextSeparator;
     
     [[JavaScriptAutoCompleteHandler sharedAutoCompleteHandler] removeLocalFiles];
     
-    [window setTitle:@"CocosBuilder"];
+    [window setTitle:@"SpriteBuilder"];
 
     // Stop local web server
     [[CCBHTTPServer sharedHTTPServer] stop];
@@ -1498,7 +1498,7 @@ static BOOL hideAllToNextSeparator;
     ProjectSettings* project = [[[ProjectSettings alloc] initWithSerialization:projectDict] autorelease];
     if (!project)
     {
-        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of CocosBuilder."];
+        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
         return NO;
     }
     project.projectPath = fileName;
@@ -1519,7 +1519,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"CocosBuilder - %@", [fileName lastPathComponent]]];
+    [window setTitle:[NSString stringWithFormat:@"SpriteBuilder - %@", [fileName lastPathComponent]]];
 
     // Start local web server
     NSString* docRoot = [projectSettings.publishDirectoryHTML5 absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
@@ -2433,7 +2433,7 @@ static BOOL hideAllToNextSeparator;
     
     if (run && !browser && ![[PlayerConnection sharedPlayerConnection] connected])
     {
-        [self modalDialogTitle:@"No Player Connected" message:@"There is no CocosPlayer connected to CocosBuilder. Make sure that a player is running and that it has the same pairing number as CocosBuilder."];
+        [self modalDialogTitle:@"No Player Connected" message:@"There is no Player connected to SpriteBuilder. Make sure that a player is running and that it has the same pairing number as SpriteBuilder."];
         return;
     }
     
@@ -4032,7 +4032,7 @@ static BOOL hideAllToNextSeparator;
 {
     if ([self hasDirtyDocument])
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Quit CocosBuilder" defaultButton:@"Cancel" alternateButton:@"Quit" otherButton:NULL informativeTextWithFormat:@"There are unsaved documents. If you quit now you will lose any changes you have made."];
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Quit SpriteBuilder" defaultButton:@"Cancel" alternateButton:@"Quit" otherButton:NULL informativeTextWithFormat:@"There are unsaved documents. If you quit now you will lose any changes you have made."];
         [alert setAlertStyle:NSWarningAlertStyle];
         NSInteger result = [alert runModal];
         if (result == NSAlertDefaultReturn) return NO;
