@@ -370,6 +370,7 @@ enum {
 - (IBAction)menuAddStickyNote:(id)sender;
 - (IBAction) menuCleanCacheDirectories:(id)sender;
 - (IBAction)menuAbout:(id)sender;
+- (IBAction)menuResetSpriteBuilder:(id)sender;
 
 // Undo / Redo
 - (void) updateDirtyMark;
