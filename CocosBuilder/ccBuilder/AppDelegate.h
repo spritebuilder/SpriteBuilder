@@ -107,7 +107,7 @@ enum {
 @class PlugInNodeViewHandler;
 @class PropertyInspectorHandler;
 
-@interface CocosBuilderAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
     
     // Panel Views
@@ -312,7 +312,7 @@ enum {
 - (void) refreshProperty:(NSString*) name;
 
 // Methods
-+ (CocosBuilderAppDelegate*) appDelegate;
++ (AppDelegate*) appDelegate;
 
 - (void) updateTimelineMenu;
 - (void) updateInspectorFromSelection;

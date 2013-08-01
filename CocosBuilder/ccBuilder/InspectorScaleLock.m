@@ -24,7 +24,7 @@
 
 #import "InspectorScaleLock.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "PositionPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 
@@ -41,7 +41,7 @@
 
 - (void) setScaleX:(float)scaleX
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     int type = [PositionPropertySetter scaledFloatTypeForNode:selection prop:propertyName];
     float scaleY = 0;
@@ -69,7 +69,7 @@
 
 - (void) setScaleY:(float)scaleY
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     int type = [PositionPropertySetter scaledFloatTypeForNode:selection prop:propertyName];
     float scaleX = 0;
@@ -102,7 +102,7 @@
 
 - (void) setLocked:(BOOL)locked
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     [selection setExtraProp:[NSNumber numberWithBool:locked] forKey:[propertyName stringByAppendingString:@"Lock"]];
     

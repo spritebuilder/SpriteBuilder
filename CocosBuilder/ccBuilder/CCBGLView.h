@@ -25,14 +25,14 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-@class CocosBuilderAppDelegate;
+@class AppDelegate;
 @class CocosScene;
 
 @interface CCBGLView : CCGLView {
     
     NSTrackingRectTag trackingTag;
     
-    IBOutlet CocosBuilderAppDelegate* appDelegate;
+    IBOutlet AppDelegate* appDelegate;
 }
 
 @end

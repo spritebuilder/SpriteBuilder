@@ -26,7 +26,7 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "CCBImageView.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "FCFormatConverter.h"
 
@@ -62,9 +62,9 @@
     [previewTablethd setAllowsCutCopyPaste:NO];
 }
 
-- (CocosBuilderAppDelegate*) appDelegate
+- (AppDelegate*) appDelegate
 {
-    return [CocosBuilderAppDelegate appDelegate];
+    return [AppDelegate appDelegate];
 }
 
 - (void) resetView
@@ -229,7 +229,7 @@
 
 - (IBAction)droppedFile:(id)sender
 {
-    if (![CocosBuilderAppDelegate appDelegate].projectSettings)
+    if (![AppDelegate appDelegate].projectSettings)
     {
         [self resetView];
         return;
@@ -269,7 +269,7 @@
     [fm copyItemAtPath:srcImagePath toPath:dstFile error:NULL];
     
     // Reload open document
-    [[CocosBuilderAppDelegate appDelegate] reloadResources];
+    [[AppDelegate appDelegate] reloadResources];
 }
 
 - (IBAction)actionRemoveFile:(id)sender
@@ -301,7 +301,7 @@
     imgView.image = NULL;
     
     // Reload open document
-    [[CocosBuilderAppDelegate appDelegate] reloadResources];
+    [[AppDelegate appDelegate] reloadResources];
 }
 
 #pragma mark Edit properties
@@ -329,7 +329,7 @@
         
         // Reload the resource
         [ResourceManager touchResource:_previewedResource];
-        [[CocosBuilderAppDelegate appDelegate] reloadResources];
+        [[AppDelegate appDelegate] reloadResources];
     }
 }
 
@@ -511,7 +511,7 @@
     }
     
     [ResourceManager touchResource:_previewedResource];
-    [[CocosBuilderAppDelegate appDelegate] reloadResources];
+    [[AppDelegate appDelegate] reloadResources];
 }
 
 - (void) setFormat_ios_sound:(int)format_ios_sound

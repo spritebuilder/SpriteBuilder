@@ -23,7 +23,7 @@
  */
 
 #import "InspectorCustomEdit.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation InspectorCustomEdit
 
@@ -32,7 +32,7 @@
 - (IBAction)pressedEdit:(id)sender
 {
     NSLog(@"pressedEdit");
-    [[CocosBuilderAppDelegate appDelegate] menuEditCustomPropSettings:sender];
+    [[AppDelegate appDelegate] menuEditCustomPropSettings:sender];
 }
 
 - (void) willBeAdded

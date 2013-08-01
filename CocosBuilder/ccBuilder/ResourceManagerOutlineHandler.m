@@ -26,7 +26,7 @@
 #import "ImageAndTextCell.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "ResourceManagerPreviewView.h"
 #import "NSPasteboard+CCB.h"
@@ -271,7 +271,7 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     ProjectSettings* settings = ad.projectSettings;
     
     NSImage* icon = NULL;
@@ -499,7 +499,7 @@
     if (movedFile)
     {
         [resourceList deselectAll:NULL];
-        [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
+        [[AppDelegate appDelegate].resManager reloadAllResources];
     }
     
     return movedFile;
@@ -528,11 +528,11 @@
         RMResource* res = (RMResource*) item;
         if (res.type == kCCBResTypeCCBFile)
         {
-            [[CocosBuilderAppDelegate appDelegate] openFile: res.filePath];
+            [[AppDelegate appDelegate] openFile: res.filePath];
         }
         else if (res.type == kCCBResTypeJS || res.type == kCCBResTypeJSON)
         {
-            [[CocosBuilderAppDelegate appDelegate] openJSFile:res.filePath];
+            [[AppDelegate appDelegate] openJSFile:res.filePath];
         }
     }
     

@@ -27,7 +27,7 @@
 #import "SequencerKeyframe.h"
 #import "SequencerCallbackChannel.h"
 #import "SequencerSoundChannel.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation SequencerChannel
 
@@ -78,7 +78,7 @@
 
 - (void) addDefaultKeyframeAtTime:(float)t
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*addchannelkeyframe"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*addchannelkeyframe"];
     
     SequencerKeyframe* kf = [self defaultKeyframe];
     

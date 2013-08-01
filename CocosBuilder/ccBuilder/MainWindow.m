@@ -23,7 +23,7 @@
  */
 
 #import "MainWindow.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation MainWindow
 
@@ -47,14 +47,14 @@
 
 -(IBAction)performClose:(id)sender
 {
-    [[CocosBuilderAppDelegate appDelegate] performClose:sender];
+    [[AppDelegate appDelegate] performClose:sender];
 }
 
 - (BOOL) validateMenuItem:(NSMenuItem *)menuItem
 {
     if ([menuItem.title isEqualToString:@"Close"])
     {
-        return [[CocosBuilderAppDelegate appDelegate] hasOpenedDocument];
+        return [[AppDelegate appDelegate] hasOpenedDocument];
     }
     return [super validateMenuItem:menuItem];
 }

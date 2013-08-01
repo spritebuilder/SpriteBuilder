@@ -29,7 +29,7 @@
 #import "TexturePropertySetter.h"
 #import "PositionPropertySetter.h"
 #import "CCNode+NodeInfo.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation CCBWriterInternal
 
@@ -508,7 +508,7 @@
     }
     
     // Selection
-    NSArray* selection = [CocosBuilderAppDelegate appDelegate].selectedNodes;
+    NSArray* selection = [AppDelegate appDelegate].selectedNodes;
     if (selection && [selection containsObject:node])
     {
         [dict setObject:[NSNumber numberWithBool:YES] forKey:@"selected"];

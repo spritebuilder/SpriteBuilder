@@ -56,7 +56,7 @@
 		7789ABCD133AA82000CEFCC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7789ABCB133AA82000CEFCC7 /* InfoPlist.strings */; };
 		7789ABD0133AA82000CEFCC7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789ABCF133AA82000CEFCC7 /* main.m */; };
 		7789ABD3133AA82000CEFCC7 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7789ABD1133AA82000CEFCC7 /* Credits.rtf */; };
-		7789ABD6133AA82000CEFCC7 /* CocosBuilderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789ABD5133AA82000CEFCC7 /* CocosBuilderAppDelegate.m */; };
+		7789ABD6133AA82000CEFCC7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789ABD5133AA82000CEFCC7 /* AppDelegate.m */; };
 		7789ABD9133AA82000CEFCC7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7789ABD7133AA82000CEFCC7 /* MainMenu.xib */; };
 		7789ABE8133AB10500CEFCC7 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABE7133AB10500CEFCC7 /* ApplicationServices.framework */; };
 		7789ABEA133AB10E00CEFCC7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABE9133AB10E00CEFCC7 /* QuartzCore.framework */; };
@@ -970,8 +970,8 @@
 		7789ABCE133AA82000CEFCC7 /* SpriteBuilder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteBuilder-Prefix.pch"; sourceTree = "<group>"; };
 		7789ABCF133AA82000CEFCC7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7789ABD2133AA82000CEFCC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		7789ABD4133AA82000CEFCC7 /* CocosBuilderAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosBuilderAppDelegate.h; sourceTree = "<group>"; };
-		7789ABD5133AA82000CEFCC7 /* CocosBuilderAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosBuilderAppDelegate.m; sourceTree = "<group>"; };
+		7789ABD4133AA82000CEFCC7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7789ABD5133AA82000CEFCC7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7789ABD8133AA82000CEFCC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		7789ABE7133AB10500CEFCC7 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		7789ABE9133AB10E00CEFCC7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -2249,8 +2249,8 @@
 			children = (
 				7789ACE8133AB47A00CEFCC7 /* CocosScene.h */,
 				7789ACE9133AB47A00CEFCC7 /* CocosScene.m */,
-				7789ABD4133AA82000CEFCC7 /* CocosBuilderAppDelegate.h */,
-				7789ABD5133AA82000CEFCC7 /* CocosBuilderAppDelegate.m */,
+				7789ABD4133AA82000CEFCC7 /* AppDelegate.h */,
+				7789ABD5133AA82000CEFCC7 /* AppDelegate.m */,
 				776A37B41398D6B900960E94 /* CCBGLView.h */,
 				776A37B51398D6BD00960E94 /* CCBGLView.m */,
 				7789ABD7133AA82000CEFCC7 /* MainMenu.xib */,
@@ -2534,7 +2534,7 @@
 				E3D5911A150F50D1004180CA /* LICENSE_PSMTabBarControl.txt */,
 				E3D5911B150F50D1004180CA /* LICENSE_SCEvents.txt */,
 				E3D5911C150F50D1004180CA /* LICENSE_Sparkle.txt */,
-				7789ABC8133AA82000CEFCC7 /* CocosBuilder */,
+				7789ABC8133AA82000CEFCC7 /* SpriteBuilder */,
 				7789ACEB133AB6A700CEFCC7 /* Resources */,
 				E3B7AED114E31A7800DFD402 /* PlugIns (Nodes) */,
 				E398C01D14FB813C0078E771 /* PlugIns (Exporters) */,
@@ -2608,7 +2608,7 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		7789ABC8133AA82000CEFCC7 /* CocosBuilder */ = {
+		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
@@ -2634,7 +2634,7 @@
 				776041EE1498FC320078095D /* GUI Util */,
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
 			);
-			name = CocosBuilder;
+			name = SpriteBuilder;
 			path = ccBuilder;
 			sourceTree = "<group>";
 		};
@@ -5166,7 +5166,7 @@
 				835DB0BD171562D6003A2F7B /* ContextFilterLogFormatter.m in Sources */,
 				835DB0BF171562D6003A2F7B /* DispatchQueueLogFormatter.m in Sources */,
 				7789ABD0133AA82000CEFCC7 /* main.m in Sources */,
-				7789ABD6133AA82000CEFCC7 /* CocosBuilderAppDelegate.m in Sources */,
+				7789ABD6133AA82000CEFCC7 /* AppDelegate.m in Sources */,
 				7789ACEA133AB47A00CEFCC7 /* CocosScene.m in Sources */,
 				772BE565133C06320009B5B9 /* NSFlippedView.m in Sources */,
 				772BE572133E48350009B5B9 /* CCBGlobals.m in Sources */,

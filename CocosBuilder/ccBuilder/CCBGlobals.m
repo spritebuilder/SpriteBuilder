@@ -24,7 +24,7 @@
  */
 
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 
 @implementation CCBGlobals

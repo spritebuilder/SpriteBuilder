@@ -24,7 +24,7 @@
 
 #import "SequencerPopoverBlock.h"
 #import "SequencerKeyframe.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation SequencerPopoverBlock
 
@@ -34,7 +34,7 @@
 {
     if (!selector) selector = @"";
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*popoverblock"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*popoverblock"];
     
     NSNumber* t = [_keyframe.value objectAtIndex:1];
     
@@ -50,7 +50,7 @@
 
 - (void) setTarget:(int)t
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*popoverblock"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*popoverblock"];
     
     NSString* s = [_keyframe.value objectAtIndex:0];
     

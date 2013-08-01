@@ -26,7 +26,7 @@
 #import "CCBGlobals.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "AnimationPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 
@@ -43,7 +43,7 @@
 
 - (void) selectedResource:(id)sender
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     id item = [sender representedObject];
     

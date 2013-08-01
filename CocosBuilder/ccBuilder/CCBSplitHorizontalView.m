@@ -24,7 +24,7 @@
 
 #import "CCBSplitHorizontalView.h"
 #import "MainWindow.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @interface CCBSplitHorizontalView(Private)
 
@@ -121,9 +121,9 @@
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
 {
     if ([self isSubviewCollapsed:bottomView]) {
-        [[CocosBuilderAppDelegate appDelegate].panelVisibilityControl setSelected:NO forSegment:1];
+        [[AppDelegate appDelegate].panelVisibilityControl setSelected:NO forSegment:1];
     } else {
-        [[CocosBuilderAppDelegate appDelegate].panelVisibilityControl setSelected:YES forSegment:1];
+        [[AppDelegate appDelegate].panelVisibilityControl setSelected:YES forSegment:1];
     }
 }
 

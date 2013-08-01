@@ -24,7 +24,7 @@
  */
 
 #import "CCBGLView.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "CocosScene.h"
 #import "NSPasteboard+CCB.h"
@@ -35,7 +35,7 @@
 {
     [self removeTrackingRect:trackingTag];
     trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
-    [[CocosBuilderAppDelegate appDelegate] resizeGUIWindow:[self bounds].size];
+    [[AppDelegate appDelegate] resizeGUIWindow:[self bounds].size];
     
     [super reshape];
 }

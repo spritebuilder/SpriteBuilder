@@ -29,7 +29,7 @@
 #import "PlugInExport.h"
 #import "PlugInManager.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "NSString+AppendToFile.h"
 #import "PlayerConnection.h"
 #import "PlayerDeviceInfo.h"
@@ -163,7 +163,7 @@
 
 - (BOOL) publishImageFile:(NSString*)srcPath to:(NSString*)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString*) outDir resolution:(NSString*) resolution
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     
     NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
     
@@ -382,7 +382,7 @@
 
 - (BOOL) publishDirectory:(NSString*) dir subPath:(NSString*) subPath
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
     
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -1092,7 +1092,7 @@
             if (![self publishAllToDirectory:projectSettings.publishCacheDirectory]) return NO;
             
             // Zip up and push
-            CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+            AppDelegate* ad = [AppDelegate appDelegate];
             [ad modalStatusWindowUpdateStatusText:@"Zipping up project..."];
             
             // Archive
@@ -1137,7 +1137,7 @@
         }
         
         dispatch_sync(dispatch_get_main_queue(), ^{
-            CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+            AppDelegate* ad = [AppDelegate appDelegate];
             [ad publisher:self finishedWithWarnings:warnings];
         });
     });

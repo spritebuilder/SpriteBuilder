@@ -26,7 +26,7 @@
 #import "ProjectSettings.h"
 #import "PlayerDeviceInfo.h"
 #import "DebuggerConnection.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 static PlayerConnection* sharedPlayerConnection;
 
@@ -68,7 +68,7 @@ static PlayerConnection* sharedPlayerConnection;
 - (void) debugConnectionStarted
 {
     // Send list of breakpoints
-    [dbgConnection sendBreakpoints: [CocosBuilderAppDelegate appDelegate].projectSettings.breakpoints];
+    [dbgConnection sendBreakpoints: [AppDelegate appDelegate].projectSettings.breakpoints];
 }
 
 - (void) debugConnectionLost

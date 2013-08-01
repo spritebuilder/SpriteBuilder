@@ -7,7 +7,7 @@
 //
 
 #import "PropertyInspectorHandler.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
 #import "PropertyInspectorTemplate.h"
@@ -18,7 +18,7 @@
 
 - (void) updateTemplates
 {
-    CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     if (!node) return;
     PlugInNode* plugIn = node.plugIn;
@@ -31,7 +31,7 @@
 
 - (IBAction) addTemplate:(id) sender
 {
-    CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     if (!node) return;
     
     NSString* newName = newTemplateName.stringValue;
@@ -44,7 +44,7 @@
     // Make sure it's a unique name
     if ([templateLibrary hasTemplateForNodeType:node.plugIn.nodeClassName andName:newName])
     {
-        [[CocosBuilderAppDelegate appDelegate] modalDialogTitle:@"Failed to Create Template" message:@"You need to specify a unique name. Please try again."];
+        [[AppDelegate appDelegate] modalDialogTitle:@"Failed to Create Template" message:@"You need to specify a unique name. Please try again."];
         return;
     }
     
@@ -68,11 +68,11 @@
 
 - (void) applyTemplate:(PropertyInspectorTemplate*) templ
 {
-    CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     if (!node) return;
     if (!templ.properties) return;
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*template"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*template"];
     [templ applyToNode:node];
 }
 

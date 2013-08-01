@@ -23,7 +23,7 @@
  */
 
 #import "CCBScale9Sprite.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBDocument.h"
 #import "ResolutionSetting.h"
 
@@ -31,7 +31,7 @@
 
 - (float) resolutionScale
 {
-    CCBDocument* currentDocument = [CocosBuilderAppDelegate appDelegate].currentDocument;
+    CCBDocument* currentDocument = [AppDelegate appDelegate].currentDocument;
     
     ResolutionSetting* resolution = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
     

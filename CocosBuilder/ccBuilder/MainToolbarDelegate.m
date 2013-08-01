@@ -25,7 +25,7 @@
 
 #import "PlugInManager.h"
 #import "PlugInNode.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import <Carbon/Carbon.h>
 
 
@@ -82,7 +82,7 @@
         
         [segmControl setMenu:menu forSegment:0];
         
-        [toolbarItem bind:@"enabled" toObject:[CocosBuilderAppDelegate appDelegate] withKeyPath:@"hasOpenedDocument" options:NULL];
+        [toolbarItem bind:@"enabled" toObject:[AppDelegate appDelegate] withKeyPath:@"hasOpenedDocument" options:NULL];
         
         return toolbarItem;
     }
@@ -131,7 +131,7 @@
     [toolbarItem setView:segmControl];
     
     // Bind enabled property
-    [toolbarItem bind:@"enabled" toObject:[CocosBuilderAppDelegate appDelegate] withKeyPath:@"hasOpenedDocument" options:NULL];
+    [toolbarItem bind:@"enabled" toObject:[AppDelegate appDelegate] withKeyPath:@"hasOpenedDocument" options:NULL];
     
     return toolbarItem;
 }
@@ -181,7 +181,7 @@
     NSString* objType = [[sender cell] toolTipForSegment:selectedSegment];
     BOOL asChild = ((GetCurrentKeyModifiers() & shiftKey) != 0);
     
-    [[CocosBuilderAppDelegate appDelegate] addPlugInNodeNamed:objType asChild:asChild];
+    [[AppDelegate appDelegate] addPlugInNodeNamed:objType asChild:asChild];
 }
 
 - (void) selectedItem:(id) sender
@@ -189,7 +189,7 @@
     NSString* objType = [sender title];
     BOOL asChild = ((GetCurrentKeyModifiers() & shiftKey) != 0);
     
-    [[CocosBuilderAppDelegate appDelegate] addPlugInNodeNamed:objType asChild:asChild];
+    [[AppDelegate appDelegate] addPlugInNodeNamed:objType asChild:asChild];
 }
 
 - (void) dealloc

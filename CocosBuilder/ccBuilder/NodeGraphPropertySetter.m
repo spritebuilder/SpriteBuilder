@@ -24,7 +24,7 @@
 
 #import "NodeGraphPropertySetter.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "CCBDocument.h"
 #import "CCBReaderInternal.h"
@@ -41,7 +41,7 @@
     
     if (ccbFileName && ![ccbFileName isEqualToString:@""])
     {
-        CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+        AppDelegate* ad = [AppDelegate appDelegate];
     
         // Get absolut file path to ccb file
         NSString* ccbFileNameAbs = [[ResourceManager sharedManager] toAbsolutePath:ccbFileName];

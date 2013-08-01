@@ -25,13 +25,13 @@
 #import "InspectorBlock.h"
 #import "CCBGlobals.h"
 #import "CCNode+NodeInfo.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation InspectorBlock
 
 - (void) setSelector:(NSString *)selector
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"selector"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"selector"];
     
     if (!selector) selector = @"";
     [selection setExtraProp:selector forKey:propertyName];

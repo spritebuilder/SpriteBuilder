@@ -23,7 +23,7 @@
  */
 
 #import "InspectorSeparator.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation InspectorSeparator
 @synthesize disclosureButton;
@@ -57,7 +57,7 @@
     
     [self setPropertyForSelection:[NSNumber numberWithInt:disclosureButton.state]];
     
-    [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
+    [[AppDelegate appDelegate] updateInspectorFromSelection];
 }
 
 /*

@@ -24,7 +24,7 @@
 
 #import "DebuggerConnection.h"
 #import "PlayerConnection.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ResourceManager.h"
 
 @implementation DebuggerConnection
@@ -96,7 +96,7 @@
 
 - (void) handleMessage:(NSDictionary*) message
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     
     NSString* why = [message objectForKey:@"why"];
     NSDictionary* data = [message objectForKey:@"data"];
@@ -226,7 +226,7 @@
 
 - (void) shutdown
 {
-    [[CocosBuilderAppDelegate appDelegate] resetJSFilesLineHighlight];
+    [[AppDelegate appDelegate] resetJSFilesLineHighlight];
     
     [self sendMessage:@"clear"];
     [self sendMessage:@"continue"];
@@ -271,13 +271,13 @@
 
 - (void) sendContinue
 {
-    [[CocosBuilderAppDelegate appDelegate] resetJSFilesLineHighlight];
+    [[AppDelegate appDelegate] resetJSFilesLineHighlight];
     [self sendMessage:@"continue"];
 }
 
 - (void) sendStep
 {
-    [[CocosBuilderAppDelegate appDelegate] resetJSFilesLineHighlight];
+    [[AppDelegate appDelegate] resetJSFilesLineHighlight];
     [self sendMessage:@"step"];
 }
 

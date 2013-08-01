@@ -28,7 +28,7 @@
 #import "SequencerNodeProperty.h"
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
 #import "PositionPropertySetter.h"
@@ -125,7 +125,7 @@
 - (void) addKeyframe:(SequencerKeyframe*)keyframe forProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId
 {
     // Check so we are not adding a keyframe out of bounds
-    NSArray* seqs = [CocosBuilderAppDelegate appDelegate].currentDocument.sequences;
+    NSArray* seqs = [AppDelegate appDelegate].currentDocument.sequences;
     SequencerSequence* seq = NULL;
     for (SequencerSequence* seqt in seqs)
     {
@@ -138,7 +138,7 @@
     if (time > seq.timelineLength) return;
     
     // Save undo state
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*addkeyframe"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*addkeyframe"];
     
     // Make sure timeline is enabled for this property
     [self enableSequenceNodeProperty:name sequenceId:seqId];
@@ -149,7 +149,7 @@
     [seqNodeProp setKeyframe:keyframe];
     
     // Update property inspector
-    [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
+    [[AppDelegate appDelegate] updateInspectorFromSelection];
     [[SequencerHandler sharedHandler] redrawTimeline];
     [self updateProperty:name time:[SequencerHandler sharedHandler].currentSequence.timelinePosition sequenceId:seqId];
 }
@@ -432,7 +432,7 @@
 
 - (BOOL) deleteSelectedKeyframesForSequenceId:(int)seqId
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*deletekeyframes"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*deletekeyframes"];
     
     BOOL deletedKeyframe = NO;
     

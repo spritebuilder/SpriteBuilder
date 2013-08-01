@@ -23,7 +23,7 @@
  */
 
 #import "InspectorValue.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "NodeInfo.h"
 #import "PlugInNode.h"
@@ -62,7 +62,7 @@
     selection = [s retain];
     extra = [e retain];
     
-    resourceManager = [CocosBuilderAppDelegate appDelegate];
+    resourceManager = [AppDelegate appDelegate];
     
     return self;
 }
@@ -86,14 +86,14 @@
         for (int i = 0; i < [affectsProperties count]; i++)
         {
             NSString* propName = [affectsProperties objectAtIndex:i];
-            CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+            AppDelegate* ad = [AppDelegate appDelegate];
             [ad refreshProperty:propName];
         }
     }
     
     if (inPopoverWindow)
     {
-        [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
+        [[AppDelegate appDelegate] updateInspectorFromSelection];
     }
 }
 
@@ -143,7 +143,7 @@
 
 - (void) setPropertyForSelection:(id)value
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     NodeInfo* nodeInfo = selection.userObject;
     PlugInNode* plugIn = nodeInfo.plugIn;
@@ -171,7 +171,7 @@
 
 - (void) setPropertyForSelectionX:(id)value
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     [selection setValue:value forKey:[propertyName stringByAppendingString:@"X"]];
     [self updateAffectedProperties];
@@ -184,7 +184,7 @@
 
 - (void) setPropertyForSelectionY:(id)value
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     [selection setValue:value forKey:[propertyName stringByAppendingString:@"Y"]];
     [self updateAffectedProperties];
@@ -197,7 +197,7 @@
 
 - (void) setPropertyForSelectionVar:(id)value
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     [selection setValue:value forKey:[propertyName stringByAppendingString:@"Var"]];
     

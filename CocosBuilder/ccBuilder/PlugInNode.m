@@ -23,7 +23,7 @@
  */
 
 #import "PlugInNode.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 
 @implementation PlugInNode

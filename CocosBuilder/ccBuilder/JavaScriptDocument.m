@@ -27,7 +27,7 @@
 #import "SMLTextView.h"
 #import "ResourceManagerUtil.h"
 #import "SMLGutterTextView.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "SMLLineNumbers.h"
 #import "JavaScriptSyntaxChecker.h"
@@ -69,7 +69,7 @@
     [fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOShowLineNumberGutter];
     
     [fragaria setObject:self forKey:MGSFODelegate];
-    [fragaria setObject:[CocosBuilderAppDelegate appDelegate].projectSettings forKey:MGSFOBreakpointDelegate];
+    [fragaria setObject:[AppDelegate appDelegate].projectSettings forKey:MGSFOBreakpointDelegate];
     
     //NSLog(@"breakpoint delegate: %@ ps: %@", [fragaria objectForKey:MGSFOBreakpointDelegate], [CocosBuilderAppDelegate appDelegate].projectSettings);
     

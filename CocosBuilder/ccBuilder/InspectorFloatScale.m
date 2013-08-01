@@ -25,13 +25,13 @@
 #import "InspectorFloatScale.h"
 #import "PositionPropertySetter.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation InspectorFloatScale
 
 - (void) setF:(float)f
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     [PositionPropertySetter setFloatScale:f type:[PositionPropertySetter floatScaleTypeForNode:selection prop:propertyName] forNode:selection prop:propertyName];
     
@@ -50,7 +50,7 @@
 
 - (void) setType:(int)type
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     [PositionPropertySetter setFloatScale:[PositionPropertySetter floatScaleForNode:selection prop:propertyName] type: type forNode:selection prop:propertyName];
     

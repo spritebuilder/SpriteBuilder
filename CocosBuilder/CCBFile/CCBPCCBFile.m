@@ -27,7 +27,7 @@
 #import "CCBReaderInternal.h"
 #import "CCBGlobals.h"
 #import "CCBDocument.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 
 @implementation CCBPCCBFile

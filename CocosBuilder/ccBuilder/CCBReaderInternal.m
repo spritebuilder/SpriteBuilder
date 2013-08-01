@@ -31,7 +31,7 @@
 #import "TexturePropertySetter.h"
 #import "AnimationPropertySetter.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "NodeGraphPropertySetter.h"
 #import "PositionPropertySetter.h"
@@ -410,7 +410,7 @@ NSDictionary* renamedProperties = NULL;
     // Selections
     if ([[dict objectForKey:@"selected"] boolValue])
     {
-        [[CocosBuilderAppDelegate appDelegate].loadedSelectedNodes addObject:node];
+        [[AppDelegate appDelegate].loadedSelectedNodes addObject:node];
     }
     
     BOOL isCCBSubFile = [baseClass isEqualToString:@"CCBFile"];

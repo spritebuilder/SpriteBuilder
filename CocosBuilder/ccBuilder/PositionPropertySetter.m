@@ -26,7 +26,7 @@
 #import "CCBGlobals.h"
 #import "NodeInfo.h"
 #import "PlugInNode.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBDocument.h"
 #import "ResolutionSetting.h"
 #import "NodeGraphPropertySetter.h"
@@ -145,7 +145,7 @@
     }
     else if (type == kCCBPositionTypeMultiplyResolution)
     {
-        CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+        AppDelegate* ad = [AppDelegate appDelegate];
         int currentResolution = ad.currentDocument.currentResolution;
         ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
         
@@ -204,7 +204,7 @@
     }
     else if (type == kCCBPositionTypeMultiplyResolution)
     {
-        CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+        AppDelegate* ad = [AppDelegate appDelegate];
         int currentResolution = ad.currentDocument.currentResolution;
         ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
         
@@ -338,7 +338,7 @@
     }
     else if (type == kCCBSizeTypeMultiplyResolution)
     {
-        CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+        AppDelegate* ad = [AppDelegate appDelegate];
         int currentResolution = ad.currentDocument.currentResolution;
         ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
         
@@ -396,7 +396,7 @@
     }
     else if (type == kCCBSizeTypeMultiplyResolution)
     {
-        CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+        AppDelegate* ad = [AppDelegate appDelegate];
         int currentResolution = ad.currentDocument.currentResolution;
         ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
         
@@ -438,7 +438,7 @@
 
 + (void) setScaledX:(float)scaleX Y:(float)scaleY type:(int)type forNode:(CCNode*)node prop:(NSString*)prop
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     int currentResolution = ad.currentDocument.currentResolution;
     ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
     
@@ -484,7 +484,7 @@
 
 + (void) setFloatScale:(float)f type:(int)type forNode:(CCNode*)node prop:(NSString*)prop
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     int currentResolution = ad.currentDocument.currentResolution;
     ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
     

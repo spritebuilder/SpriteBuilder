@@ -30,7 +30,7 @@
 #import "SequencerNodeProperty.h"
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "SequencerChannel.h"
 #import "SequencerCallbackChannel.h"
 #import "SequencerSoundChannel.h"
@@ -600,7 +600,7 @@
                     if (node)
                     {
                         // Center
-                        [CocosBuilderAppDelegate appDelegate].selectedNodes = [NSArray arrayWithObject: node];
+                        [AppDelegate appDelegate].selectedNodes = [NSArray arrayWithObject: node];
                         
                         if (subRow != 0)
                         {
@@ -775,7 +775,7 @@
             
             if (oldTime != newTime)
             {
-                [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*keyframe"];
+                [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*keyframe"];
                 keyframe.time = newTime;
                 moved = YES;
             }
@@ -857,7 +857,7 @@
 
 - (NSMenu*) menuForEvent:(NSEvent *)theEvent
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     
     NSPoint mouseLocationInWindow = [theEvent locationInWindow];
     NSPoint mouseLocation = [self convertPoint: mouseLocationInWindow fromView: NULL];
@@ -879,7 +879,7 @@
     if (keyframe)
     {
         [SequencerHandler sharedHandler].contextKeyframe = keyframe;
-        return [CocosBuilderAppDelegate appDelegate].menuContextKeyframe;
+        return [AppDelegate appDelegate].menuContextKeyframe;
     }
     
     NSOutlineView* outlineView = [SequencerHandler sharedHandler].outlineHierarchy;
@@ -897,7 +897,7 @@
         [SequencerHandler sharedHandler].contextKeyframe = keyframe;
         
         // Highlight selected option in context menu
-        NSMenu* menu = [CocosBuilderAppDelegate appDelegate].menuContextKeyframeInterpol;
+        NSMenu* menu = [AppDelegate appDelegate].menuContextKeyframeInterpol;
         
         for (NSMenuItem* item in menu.itemArray)
         {

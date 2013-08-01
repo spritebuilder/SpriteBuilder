@@ -9,7 +9,7 @@
 #import "PropertyInspectorTemplateCollectionView.h"
 #import "CCBColorView.h"
 #import "PropertyInspectorTemplate.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "PropertyInspectorHandler.h"
 
 @implementation PropertyInspectorTemplateCollectionView
@@ -91,7 +91,7 @@
         NSInteger idx = [[self selectionIndexes] firstIndex];
         PropertyInspectorTemplate* templ = [[self content] objectAtIndex:idx];
         
-        [[CocosBuilderAppDelegate appDelegate].propertyInspectorHandler removeTemplate:templ];
+        [[AppDelegate appDelegate].propertyInspectorHandler removeTemplate:templ];
         
         return;
     }
@@ -111,7 +111,7 @@
             NSInteger idx = [[self selectionIndexes] firstIndex];
             PropertyInspectorTemplate* templ = [[self content] objectAtIndex:idx];
             
-            [[CocosBuilderAppDelegate appDelegate].propertyInspectorHandler applyTemplate:templ];
+            [[AppDelegate appDelegate].propertyInspectorHandler applyTemplate:templ];
         }
 	}
 }

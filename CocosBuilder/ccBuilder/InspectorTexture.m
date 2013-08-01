@@ -27,7 +27,7 @@
 #import "TexturePropertySetter.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 
 @implementation InspectorTexture
@@ -43,7 +43,7 @@
 
 - (void) selectedResource:(id)sender
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     id item = [sender representedObject];
     

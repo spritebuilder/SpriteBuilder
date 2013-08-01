@@ -25,7 +25,7 @@
 
 #import "CocosScene.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBReaderInternalV1.h"
 #import "NodeInfo.h"
 #import "PlugInManager.h"
@@ -71,7 +71,7 @@ CGPoint ccpRound(CGPoint pt)
 @synthesize rulerLayer;
 @synthesize notesLayer;
 
-+(id) sceneWithAppDelegate:(CocosBuilderAppDelegate*)app
++(id) sceneWithAppDelegate:(AppDelegate*)app
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
@@ -1261,7 +1261,7 @@ CGPoint ccpRound(CGPoint pt)
 
 #pragma mark Init and dealloc
 
--(id) initWithAppDelegate:(CocosBuilderAppDelegate*)app;
+-(id) initWithAppDelegate:(AppDelegate*)app;
 {
     appDelegate = app;
     

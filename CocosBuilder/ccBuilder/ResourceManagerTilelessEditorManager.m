@@ -10,7 +10,7 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "CCBImageBrowserView.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ProjectSettings.h"
 
 @implementation ResourceManagerTilelessEditorManager
@@ -93,7 +93,7 @@
 
 - (void) resourceListUpdated
 {
-    ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+    ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
     
     [imageResources removeAllObjects];
     [imageGroups removeAllObjects];
@@ -196,7 +196,7 @@
     RMResource* res = [imageResources objectAtIndex:index];
     if (res.type == kCCBResTypeCCBFile)
     {
-        [[CocosBuilderAppDelegate appDelegate] openFile:res.filePath];
+        [[AppDelegate appDelegate] openFile:res.filePath];
         return;
     }
     [super imageBrowser:aBrowser cellWasDoubleClickedAtIndex:index];
@@ -213,7 +213,7 @@
 {
     if ([aTableColumn.identifier isEqualToString:@"enable"])
     {
-        ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+        ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
         NSString* relDirPath = [[imageGroups objectAtIndex:rowIndex] objectForKey:@"relDirPath"];
         
         BOOL previewFolderHidden = [[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
@@ -232,7 +232,7 @@
     if ([column.identifier isEqualToString:@"enable"])
     {
         // Update the value
-        ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+        ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
         NSString* relDirPath = [[imageGroups objectAtIndex:row] objectForKey:@"relDirPath"];
         [settings setValue:[NSNumber numberWithBool:![value boolValue]] forRelPath:relDirPath andKey:@"previewFolderHidden"];
         
@@ -251,7 +251,7 @@
     if (tableView.selectedRow != -1)
     {
         // Toggle checkbox
-        ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+        ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
         NSString* relDirPath = [[imageGroups objectAtIndex:tableView.selectedRow] objectForKey:@"relDirPath"];
         
         BOOL previewFolderHidden = [[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];

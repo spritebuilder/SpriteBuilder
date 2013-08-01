@@ -23,7 +23,7 @@
  */
 
 #import "AnimationPropertySetter.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "CCBWriterInternal.h"
 #import "ResourceManager.h"

@@ -26,7 +26,7 @@
 #import "CocosScene.h"
 #import "CCBGlobals.h"
 #import "CCNode+NodeInfo.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation InspectorCodeConnectionsJS
 
@@ -36,23 +36,23 @@
     id disclosureForPreviousCustomClass = [selection extraPropForKey:previousCustomClass];
     
     if (disclosureForPreviousCustomClass) {
-        [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:previousCustomClass];
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:previousCustomClass];
         [selection removeExtraPropForKey:previousCustomClass];
     }
     
     if (customClass) {
-        [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:customClass];
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:customClass];
         [selection setExtraProp:[NSNumber numberWithInt:NSOnState] forKey:customClass];
     }
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"customClass"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"customClass"];
     
     if (!customClass) customClass = @"";
     [selection setExtraProp:customClass forKey:@"customClass"];
     
     
     // Reload the inspector
-    [[CocosBuilderAppDelegate appDelegate] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
+    [[AppDelegate appDelegate] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
 }
 
 - (NSString*) customClass
@@ -62,7 +62,7 @@
 
 - (void) setJsController:(NSString *)jsController
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"jsController"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"jsController"];
     
     if (!jsController) jsController = @"";
     [selection setExtraProp:jsController forKey:@"jsController"];
@@ -77,7 +77,7 @@
 
 - (void) setMemberVarAssignmentName:(NSString *)memberVarAssignmentName
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"memberVarAssignmentName"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"memberVarAssignmentName"];
     
     if (!memberVarAssignmentName) memberVarAssignmentName = @"";
     [selection setExtraProp:memberVarAssignmentName forKey:@"memberVarAssignmentName"];
@@ -90,7 +90,7 @@
 
 - (void) setMemberVarAssignmentType:(int)memberVarAssignmentType
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"memberVarAssignmentType"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"memberVarAssignmentType"];
     
     [selection setExtraProp:[NSNumber numberWithInt: memberVarAssignmentType] forKey:@"memberVarAssignmentType"];
 }

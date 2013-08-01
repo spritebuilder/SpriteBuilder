@@ -25,7 +25,7 @@
 #import "InspectorPosition.h"
 #import "PositionPropertySetter.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 #import "SequencerKeyframe.h"
 
@@ -33,7 +33,7 @@
 
 - (void) setPosX:(float)posX
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
 	NSPoint pt = [PositionPropertySetter positionForNode:selection prop:propertyName];
     pt.x = posX;
@@ -55,7 +55,7 @@
 
 - (void) setPosY:(float)posY
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     NSPoint pt = [PositionPropertySetter positionForNode:selection prop:propertyName];
     pt.y = posY;
@@ -91,7 +91,7 @@
 
 - (void) setPositionType:(int)positionType
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     int oldPositionType = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
     

@@ -24,7 +24,7 @@
 
 #import "CCBFileUtil.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBDocument.h"
 #import "ResolutionSetting.h"
 #import "ProjectSettings.h"
@@ -33,7 +33,7 @@
 
 + (NSString*) toResolutionIndependentFile:(NSString*)file
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     
     if (!ad.currentDocument)
     {
@@ -69,7 +69,7 @@
 
 + (void) addFilesWithExtension:(NSString*)ext inDirectory:(NSString*)dir toArray:(NSMutableArray*)array subPath:(NSString*)subPath
 {
-    ProjectSettings* projectSettings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+    ProjectSettings* projectSettings = [AppDelegate appDelegate].projectSettings;
     
     NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
     for (NSString* file in files)
@@ -100,7 +100,7 @@
 
 + (NSArray*) filesInResourcePathsWithExtension:(NSString*)ext
 {
-    ProjectSettings* projectSettings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+    ProjectSettings* projectSettings = [AppDelegate appDelegate].projectSettings;
     NSMutableArray* files = [NSMutableArray array];
     
     for (NSString* dir in projectSettings.absoluteResourcePaths)

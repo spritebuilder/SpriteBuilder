@@ -26,7 +26,7 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBDocument.h"
 #import "CCBReaderInternal.h"
 #import "NodeGraphPropertySetter.h"
@@ -45,7 +45,7 @@
 
 - (void) selectedResource:(id)sender
 {
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     id item = [sender representedObject];
     
@@ -73,7 +73,7 @@
     [self updateAffectedProperties];
     
     // Reload the inspector
-    [[CocosBuilderAppDelegate appDelegate] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
+    [[AppDelegate appDelegate] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
 }
 
 @end

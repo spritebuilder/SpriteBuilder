@@ -24,7 +24,7 @@
 
 #import "SequencerSequence.h"
 #import "SequencerHandler.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBDocument.h"
 #import "CocosScene.h"
 #import "CCNode+NodeInfo.h"
@@ -133,7 +133,7 @@
         {
             [sh redrawTimeline:NO];     // No need to reload Sequencer Outline View (No node has changed)
             [sh updatePropertiesToTimelinePosition];
-            [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
+            [[AppDelegate appDelegate] updateInspectorFromSelection];
         }
     }
 }
@@ -171,7 +171,7 @@
 {
     if (tl == timelineLength) return;
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*timelineLength"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*timelineLength"];
     
     timelineLength = tl;
     if (timelinePosition > timelineLength) timelinePosition = timelineLength;
@@ -241,7 +241,7 @@
         float pan = [[keyframe.value objectAtIndex:2] floatValue];
         float gain = [[keyframe.value objectAtIndex:3] floatValue];
         
-        NSString* absFile = [[CocosBuilderAppDelegate appDelegate].resManager toAbsolutePath:soundFile];
+        NSString* absFile = [[AppDelegate appDelegate].resManager toAbsolutePath:soundFile];
         if ([[NSFileManager defaultManager] fileExistsAtPath:absFile])
         {
             [[SimpleAudioEngine sharedEngine] playEffect:absFile pitch:pitch pan:pan gain:gain];

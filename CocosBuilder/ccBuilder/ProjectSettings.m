@@ -29,7 +29,7 @@
 #import "PlugInExport.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "PlayerConnection.h"
 #import "PlayerDeviceInfo.h"
 #import "ResourceManagerOutlineHandler.h"
@@ -390,8 +390,8 @@
     [self setValue:[NSNumber numberWithBool:YES] forResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
-    [[CocosBuilderAppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
-    [[CocosBuilderAppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
+    [[AppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
+    [[AppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
 }
 
 - (void) removeSmartSpriteSheet:(RMResource*) res
@@ -401,8 +401,8 @@
     [self removeObjectForResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
-    [[CocosBuilderAppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
-    [[CocosBuilderAppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
+    [[AppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
+    [[AppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
 }
 
 - (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key

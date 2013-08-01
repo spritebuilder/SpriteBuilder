@@ -24,7 +24,7 @@
 
 #import "InspectorCustom.h"
 #import "CCNode+NodeInfo.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 @implementation InspectorCustom
 
@@ -32,7 +32,7 @@
 {
     if (!text) text = @"";
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     [selection setCustomPropertyNamed:propertyName value:text];
     

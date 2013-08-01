@@ -23,7 +23,7 @@
  */
 
 #import "SequencerUtil.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "CCNode+NodeInfo.h"
@@ -41,7 +41,7 @@
 {
     NSMutableArray* selRes = [NSMutableArray array];
     
-    NSOutlineView* outlineView = [CocosBuilderAppDelegate appDelegate].outlineProject;
+    NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
     NSIndexSet* idxSet = [outlineView selectedRowIndexes];
     
     NSUInteger idx = [idxSet firstIndex];
@@ -93,7 +93,7 @@
     }
     
     // Check that the selected object is a sprite
-    CCNode* selectedNode = [[CocosBuilderAppDelegate appDelegate] selectedNode];
+    CCNode* selectedNode = [[AppDelegate appDelegate] selectedNode];
     if (!selectedNode) return NO;
     
     if (![selectedNode.plugIn.nodeClassName isEqualToString:@"CCSprite"])
@@ -111,7 +111,7 @@
     
     SequencerSequence* seq = [SequencerHandler sharedHandler].currentSequence;
     
-    CCNode* selectedNode = [[CocosBuilderAppDelegate appDelegate] selectedNode];
+    CCNode* selectedNode = [[AppDelegate appDelegate] selectedNode];
     NSArray* selectedImages = [SequencerUtil selectedResources];
     
     float currentTime = seq.timelinePosition;
@@ -174,7 +174,7 @@
     BOOL canAlign = [SequencerUtil canAlignKeyframesToMarker];
     if (!canAlign) return;
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*alignKeyframesToMarker"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*alignKeyframesToMarker"];
     
     NSArray* keyframes = [[SequencerHandler sharedHandler] selectedKeyframesForCurrentSequence];
     SequencerSequence* seq = [[SequencerHandler sharedHandler] currentSequence];
@@ -203,7 +203,7 @@
     BOOL canStrech = [SequencerUtil canStretchSelectedKeyframes];
     if (!canStrech) return;
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*stretchSelectedKeyframes"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*stretchSelectedKeyframes"];
     
     SequencerSequence* seq = [[SequencerHandler sharedHandler] currentSequence];
     NSArray* keyframes = [[SequencerHandler sharedHandler] selectedKeyframesForCurrentSequence];
@@ -244,7 +244,7 @@
     BOOL canReverse = [SequencerUtil canReverseSelectedKeyframes];
     if (!canReverse) return;
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*reverseSelectedKeyframes"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*reverseSelectedKeyframes"];
     
     SequencerSequence* seq = [[SequencerHandler sharedHandler] currentSequence];
     NSArray* keyframes = [[SequencerHandler sharedHandler] selectedKeyframesForCurrentSequence];

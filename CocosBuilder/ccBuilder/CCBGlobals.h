@@ -27,7 +27,7 @@
 #import "cocos2d.h"
 #import "CocosScene.h"
 
-@class CocosBuilderAppDelegate;
+@class AppDelegate;
 
 @interface CCBGlobals : NSObject
 {

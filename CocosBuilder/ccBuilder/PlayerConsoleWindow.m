@@ -27,7 +27,7 @@
 #import "PlayerDeviceInfo.h"
 #import "MGSFragaria.h"
 #import "SMLTextView.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "DebuggerTextField.h"
 #import "DebuggerConnection.h"
 
@@ -135,7 +135,7 @@
 
 - (IBAction)pressedPlay:(id)sender
 {
-    [[CocosBuilderAppDelegate appDelegate] menuPublishProjectAndRun:self];
+    [[AppDelegate appDelegate] menuPublishProjectAndRun:self];
 }
 
 - (IBAction)pressedStop:(id)sender

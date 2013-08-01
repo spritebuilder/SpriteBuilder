@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CocosScene.h"
 #import "CCBGLView.h"
 #import "NSFlippedView.h"
@@ -104,7 +104,7 @@
 #import <ExceptionHandling/NSExceptionHandler.h>
 
 
-@implementation CocosBuilderAppDelegate
+@implementation AppDelegate
 
 @synthesize window;
 @synthesize projectSettings;
@@ -133,11 +133,11 @@
 @synthesize connection;
 @synthesize propertyInspectorHandler;
 
-static CocosBuilderAppDelegate* sharedAppDelegate;
+static AppDelegate* sharedAppDelegate;
 
 #pragma mark Setup functions
 
-+ (CocosBuilderAppDelegate*) appDelegate
++ (AppDelegate*) appDelegate
 {
     return sharedAppDelegate;
 }
@@ -1388,7 +1388,7 @@ static BOOL hideAllToNextSeparator;
         [ResourceManager sharedManager].tooManyDirectoriesAdded = NO;
         
         // Notify the user
-        [[CocosBuilderAppDelegate appDelegate] modalDialogTitle:@"Too Many Directories" message:@"You have created or opened a file which is in a directory with very many sub directories. Please save your ccb-files in a directory together with the resources you use in your project."];
+        [[AppDelegate appDelegate] modalDialogTitle:@"Too Many Directories" message:@"You have created or opened a file which is in a directory with very many sub directories. Please save your ccb-files in a directory together with the resources you use in your project."];
     }
 }
 
@@ -1403,7 +1403,7 @@ static BOOL hideAllToNextSeparator;
         [ResourceManager sharedManager].tooManyDirectoriesAdded = NO;
         
         // Notify the user
-        [[CocosBuilderAppDelegate appDelegate] modalDialogTitle:@"Too Many Directories" message:@"You have created or opened a project which is in a directory with very many sub directories. Please save your project-files in a directory together with the resources you use in your project."];
+        [[AppDelegate appDelegate] modalDialogTitle:@"Too Many Directories" message:@"You have created or opened a project which is in a directory with very many sub directories. Please save your project-files in a directory together with the resources you use in your project."];
         return NO;
     }
     return YES;
@@ -3716,7 +3716,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuOpenExternal:(id)sender
 {
-    NSOutlineView* outlineView = [CocosBuilderAppDelegate appDelegate].outlineProject;
+    NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
     
     NSUInteger idx = [sender tag];
     

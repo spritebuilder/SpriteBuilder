@@ -23,7 +23,7 @@
  */
 
 #import "SequencerHandler.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "NodeInfo.h"
 #import "CCNode+NodeInfo.h"
@@ -70,7 +70,7 @@ static SequencerHandler* sharedSequencerHandler;
     
     sharedSequencerHandler = self;
     
-    appDelegate = [CocosBuilderAppDelegate appDelegate];
+    appDelegate = [AppDelegate appDelegate];
     outlineHierarchy = view;
     
     [outlineHierarchy setDataSource:self];
@@ -384,7 +384,7 @@ static SequencerHandler* sharedSequencerHandler;
     
     if (![object isEqualToString:node.displayName])
     {
-        [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*nodeDisplayName"];
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*nodeDisplayName"];
         node.displayName = object;
     }
 }
@@ -656,7 +656,7 @@ static SequencerHandler* sharedSequencerHandler;
     [[CocosScene cocosScene].rootNode deleteSequenceId:seqId];
     
     // Delete any chained sequence references
-    for (SequencerSequence* seq in [CocosBuilderAppDelegate appDelegate].currentDocument.sequences)
+    for (SequencerSequence* seq in [AppDelegate appDelegate].currentDocument.sequences)
     {
         if (seq.chainedSequenceId == seqId)
         {
@@ -664,7 +664,7 @@ static SequencerHandler* sharedSequencerHandler;
         }
     }
     
-    [[CocosBuilderAppDelegate appDelegate] updateTimelineMenu];
+    [[AppDelegate appDelegate] updateTimelineMenu];
 }
 
 - (void) deselectKeyframesForNode:(CCNode*)node
@@ -700,7 +700,7 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [self redrawTimeline];
         [self updatePropertiesToTimelinePosition];
-        [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
+        [[AppDelegate appDelegate] updateInspectorFromSelection];
     }
     return didDelete;
 }
@@ -713,7 +713,7 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [self redrawTimeline];
         [self updatePropertiesToTimelinePosition];
-        [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
+        [[AppDelegate appDelegate] updateInspectorFromSelection];
     }
 }
 
@@ -809,10 +809,10 @@ static SequencerHandler* sharedSequencerHandler;
         currentSequence = [seq retain];
         
         [outlineHierarchy reloadData];
-        [[CocosBuilderAppDelegate appDelegate] updateTimelineMenu];
+        [[AppDelegate appDelegate] updateTimelineMenu];
         [self redrawTimeline];
         [self updatePropertiesToTimelinePosition];
-        [[CocosBuilderAppDelegate appDelegate] updateInspectorFromSelection];
+        [[AppDelegate appDelegate] updateInspectorFromSelection];
         [self updateScaleSlider];
     }
 }
@@ -822,7 +822,7 @@ static SequencerHandler* sharedSequencerHandler;
     int seqId = [sender tag];
     
     SequencerSequence* seqSet = NULL;
-    for (SequencerSequence* seq in [CocosBuilderAppDelegate appDelegate].currentDocument.sequences)
+    for (SequencerSequence* seq in [AppDelegate appDelegate].currentDocument.sequences)
     {
         if (seq.sequenceId == seqId)
         {
@@ -839,9 +839,9 @@ static SequencerHandler* sharedSequencerHandler;
     int seqId = [sender tag];
     if (seqId != self.currentSequence.chainedSequenceId)
     {
-        [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*chainedseqid"];
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*chainedseqid"];
         self.currentSequence.chainedSequenceId = [sender tag];
-        [[CocosBuilderAppDelegate appDelegate] updateTimelineMenu];
+        [[AppDelegate appDelegate] updateTimelineMenu];
     }
 }
 
@@ -852,7 +852,7 @@ static SequencerHandler* sharedSequencerHandler;
     if (!contextKeyframe) return;
     if (contextKeyframe.easing.type == type) return;
     
-    [[CocosBuilderAppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*keyframeeasing"];
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*keyframeeasing"];
     
     contextKeyframe.easing.type = type;
     [self redrawTimeline];
@@ -862,7 +862,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (void) menuAddKeyframeNamed:(NSString*)prop
 {
-    CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     if (!node) return;
     
     SequencerSequence* seq = self.currentSequence;
@@ -875,7 +875,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL) canInsertKeyframeNamed:(NSString*)prop
 {
-    CCNode* node = [CocosBuilderAppDelegate appDelegate].selectedNode;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     if (!node) return NO;
     if (!prop) return NO;
     

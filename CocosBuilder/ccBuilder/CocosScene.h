@@ -24,7 +24,7 @@
  */
 
 #import "cocos2d.h"
-@class CocosBuilderAppDelegate;
+@class AppDelegate;
 @class CCBTemplateNode;
 @class RulersLayer;
 @class GuidesLayer;
@@ -70,7 +70,7 @@ enum {
     NotesLayer* notesLayer;
     CCNode* rootNode;
     CCRenderTexture* renderedScene;
-    CocosBuilderAppDelegate* appDelegate;
+    AppDelegate* appDelegate;
     CGSize winSize;
     
     NSTrackingArea* trackingArea;
@@ -120,12 +120,12 @@ enum {
 @property (nonatomic,readonly) NotesLayer* notesLayer;
 
 // Used to creat the scene
-+(id) sceneWithAppDelegate:(CocosBuilderAppDelegate*)app;
++(id) sceneWithAppDelegate:(AppDelegate*)app;
 
 // Used to retrieve the shared instance
 + (CocosScene*) cocosScene;
 
--(id) initWithAppDelegate:(CocosBuilderAppDelegate*)app;
+-(id) initWithAppDelegate:(AppDelegate*)app;
 
 - (void) scrollWheel:(NSEvent *)theEvent;
 

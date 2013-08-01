@@ -29,7 +29,7 @@
 #define kCCBDefaultTimelineScale 128
 #define kCCBTimelineScaleLowBound 64
 
-@class CocosBuilderAppDelegate;
+@class AppDelegate;
 @class SequencerSequence;
 @class SequencerScrubberSelectionView;
 @class SequencerKeyframe;
@@ -39,7 +39,7 @@
     NSOutlineView* outlineHierarchy;
     BOOL dragAndDropEnabled;
     
-    CocosBuilderAppDelegate* appDelegate;
+    AppDelegate* appDelegate;
     
     SequencerSequence* currentSequence;
     //NSMutableArray* sequences;

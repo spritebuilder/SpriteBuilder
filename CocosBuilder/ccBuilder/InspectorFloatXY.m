@@ -24,7 +24,7 @@
 
 #import "InspectorFloatXY.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "PositionPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 

@@ -26,7 +26,7 @@
 #import <QTKit/QTKit.h>
 
 @class CCBImageView;
-@class CocosBuilderAppDelegate;
+@class AppDelegate;
 @class RMResource;
 
 @interface ResourceManagerPreviewView : NSObject <NSSplitViewDelegate>
@@ -57,7 +57,7 @@
     
     RMResource* _previewedResource;
 }
-@property (nonatomic,readonly) CocosBuilderAppDelegate* appDelegate;
+@property (nonatomic,readonly) AppDelegate* appDelegate;
 
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewMain;
 @property (nonatomic,readonly) IBOutlet CCBImageView* previewPhone;

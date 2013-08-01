@@ -23,7 +23,7 @@
  */
 
 #import "ResourceManagerOutlineView.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "ResourceManagerOutlineHandler.h"
@@ -38,7 +38,7 @@
     
     id clickedItem = [self itemAtRow:row];
 
-    NSMenu* menu = [CocosBuilderAppDelegate appDelegate].menuContextResManager;
+    NSMenu* menu = [AppDelegate appDelegate].menuContextResManager;
     menu.autoenablesItems = NO;
     
     NSArray* items = [menu itemArray];
@@ -153,7 +153,7 @@
         
         [self deselectAll:NULL];
         
-        [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
+        [[AppDelegate appDelegate].resManager reloadAllResources];
         
         return;
     }

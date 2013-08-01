@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@class CocosBuilderAppDelegate;
+@class AppDelegate;
 
 @interface InspectorValue : NSObject <NSControlTextEditingDelegate>
 {
@@ -34,7 +34,7 @@
     NSString* displayName;
     NSString* extra;
     
-    CocosBuilderAppDelegate* resourceManager;
+    AppDelegate* resourceManager;
     
     IBOutlet NSView* view;
     BOOL readOnly;

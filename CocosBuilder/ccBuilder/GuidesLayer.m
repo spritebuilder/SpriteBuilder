@@ -25,7 +25,7 @@
 #import "GuidesLayer.h"
 #import "CCBGlobals.h"
 #import "CCScale9Sprite.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 
 #define kCCBGuideGrabAreaWidth 15
 #define kCCBGuideMoveAreaRadius 4
@@ -121,7 +121,7 @@
     if (!self.visible) return NO;
     
     CocosScene* cs = [CocosScene cocosScene];
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     
     int g = kCCBGuideNone;
     

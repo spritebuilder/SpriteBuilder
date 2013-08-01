@@ -27,7 +27,7 @@
 #import "CCBSpriteSheetParser.h"
 #import "CCBAnimationParser.h"
 #import "CCBGlobals.h"
-#import "CocosBuilderAppDelegate.h"
+#import "AppDelegate.h"
 #import "CCBDocument.h"
 #import "ResolutionSetting.h"
 #import "ProjectSettings.h"
@@ -356,7 +356,7 @@
 {
     if (dirPath)
     {
-        ProjectSettings* projectSettings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+        ProjectSettings* projectSettings = [AppDelegate appDelegate].projectSettings;
         
         RMResource* dirRes = [[[RMResource alloc] init] autorelease];
         dirRes.type = kCCBResTypeDirectory;
@@ -687,7 +687,7 @@
                 res.touched = YES;
                 continue;
             }
-            else if ([[CocosBuilderAppDelegate appDelegate].currentDocument.fileName isEqualToString: file])
+            else if ([[AppDelegate appDelegate].currentDocument.fileName isEqualToString: file])
             {
                 // Skip the current document
                 res.touched = YES;
@@ -837,7 +837,7 @@
     if (resourcesChanged) [self notifyResourceObserversResourceListUpdated];
     if (needsUpdate)
     {
-        [[CocosBuilderAppDelegate appDelegate] reloadResources];
+        [[AppDelegate appDelegate] reloadResources];
     }
 }
 
@@ -969,10 +969,10 @@
     RMResource* resource = [[[RMResource alloc] init] autorelease];
     resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
     resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
-    int tabletScale = [[[CocosBuilderAppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
+    int tabletScale = [[[AppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
     if (!tabletScale) tabletScale = 2;
     
-    int srcScaleSetting = [[[CocosBuilderAppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"scaleFrom"] intValue];
+    int srcScaleSetting = [[[AppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"scaleFrom"] intValue];
     
     // Calculate the dst scale factor
     float dstScale = 1;
@@ -982,7 +982,7 @@
     else if ([res isEqualToString:@"tablethd"]) dstScale = 2 * tabletScale;
     else if ([res isEqualToString:@"html5"])
     {
-        dstScale = [CocosBuilderAppDelegate appDelegate].projectSettings.publishResolutionHTML5_scale;
+        dstScale = [AppDelegate appDelegate].projectSettings.publishResolutionHTML5_scale;
     }
     
     // Calculate src scale factor
@@ -995,7 +995,7 @@
     else
     {
         // Use project default
-        srcScale = [CocosBuilderAppDelegate appDelegate].projectSettings.resourceAutoScaleFactor;
+        srcScale = [AppDelegate appDelegate].projectSettings.resourceAutoScaleFactor;
     }
     
     // Calculate the actual factor
@@ -1081,7 +1081,7 @@
 {
     if ([activeDirectories count] == 0) return NULL;
     NSFileManager* fm = [NSFileManager defaultManager];
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     
     if (!ad.currentDocument)
     {
@@ -1173,7 +1173,7 @@
 
 + (NSString*) toResolutionIndependentFile:(NSString*)file
 {
-    CocosBuilderAppDelegate* ad = [CocosBuilderAppDelegate appDelegate];
+    AppDelegate* ad = [AppDelegate appDelegate];
     
     if (!ad.currentDocument)
     {
@@ -1266,7 +1266,7 @@
                 if (durationSeconds > 15)
                 {
                     // Set iOS format to mp4 for long sounds
-                    ProjectSettings* settings = [CocosBuilderAppDelegate appDelegate].projectSettings;
+                    ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
                     NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
                     [settings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
                 }
@@ -1331,11 +1331,11 @@
     NSString* srcRel = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
     NSString* dstRel = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
     
-    [[CocosBuilderAppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
-    [[CocosBuilderAppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
+    [[AppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
+    [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources
-    [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
+    [[AppDelegate appDelegate].resManager reloadAllResources];
     
     return YES;
 }
@@ -1371,11 +1371,11 @@
     NSString* srcRel = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
     NSString* dstRel = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
     
-    [[CocosBuilderAppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
-    [[CocosBuilderAppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
+    [[AppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
+    [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources
-    [[CocosBuilderAppDelegate appDelegate].resManager reloadAllResources];
+    [[AppDelegate appDelegate].resManager reloadAllResources];
 }
 
 + (void) removeResource:(RMResource*) res
@@ -1404,8 +1404,8 @@
     }
     
     // Make sure it is removed from the current project
-    [[CocosBuilderAppDelegate appDelegate].projectSettings removedResourceAt:res.relativePath];
-    [[CocosBuilderAppDelegate appDelegate] removedDocumentWithPath:res.filePath];
+    [[AppDelegate appDelegate].projectSettings removedResourceAt:res.relativePath];
+    [[AppDelegate appDelegate] removedDocumentWithPath:res.filePath];
 }
 
 + (void) touchResource:(RMResource*) res
