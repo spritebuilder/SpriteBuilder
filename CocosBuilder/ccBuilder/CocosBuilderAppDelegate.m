@@ -420,6 +420,10 @@ static CocosBuilderAppDelegate* sharedAppDelegate;
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
     [self.window center];
     
+    // Install default templates
+    [propertyInspectorHandler installDefaultTemplatesReplace:NO];
+    [propertyInspectorHandler loadTemplateLibrary];
+    
     selectedNodes = [[NSMutableArray alloc] init];
     loadedSelectedNodes = [[NSMutableArray alloc] init];
     

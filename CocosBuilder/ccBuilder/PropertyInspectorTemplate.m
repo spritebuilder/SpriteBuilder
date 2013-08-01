@@ -195,6 +195,13 @@
     
     library = [[NSMutableDictionary alloc] init];
     
+    return self;
+}
+
+- (void) loadLibrary
+{
+    [library removeAllObjects];
+    
     // Load from file
     NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:[[PropertyInspectorTemplateLibrary templateDirectory] stringByAppendingPathComponent:@"templates.plist"]];
     if (dict)
@@ -213,8 +220,6 @@
             [library setObject:templates forKey:nodeType];
         }
     }
-    
-    return self;
 }
 
 - (void) dealloc

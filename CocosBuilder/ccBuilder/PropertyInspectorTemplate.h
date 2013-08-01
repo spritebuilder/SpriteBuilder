@@ -27,13 +27,15 @@
     NSMutableDictionary* library;
 }
 
+- (void) loadLibrary;
+- (void) store;
+
 - (void) addTemplate:(PropertyInspectorTemplate*)templ;
 - (void) removeTemplate:(PropertyInspectorTemplate*)templ;
 - (NSArray*) templatesForNodeType:(NSString*) nodeType;
 - (BOOL) hasTemplateForNodeType:(NSString*)type andName:(NSString*)name;
 
 + (NSString*) templateDirectory;
-- (void) store;
 
 @end
 

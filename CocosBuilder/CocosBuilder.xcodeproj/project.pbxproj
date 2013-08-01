@@ -188,6 +188,7 @@
 		B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D017A758A40041B8BD /* PropertyInspectorHandler.m */; };
 		B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */; };
 		B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */; };
+		B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -1185,6 +1186,7 @@
 		B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplateCollectionView.m; sourceTree = "<group>"; };
 		B7AC69D517A827470041B8BD /* PropertyInspectorTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplate.h; sourceTree = "<group>"; };
 		B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplate.m; sourceTree = "<group>"; };
+		B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultTemplates.zip; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -2682,6 +2684,7 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E373BF1017189D2E00D71602 /* autoCompleteDefinitions */,
 				E390C780170A371E003E9E92 /* version */,
 				E334742E169DC9E0000737CC /* jsdoc */,
@@ -4945,6 +4948,7 @@
 				B7AC69CB17A70A4B0041B8BD /* inspector-props.png in Resources */,
 				B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */,
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
+				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -76,4 +76,40 @@
     [templ applyToNode:node];
 }
 
+- (void) installDefaultTemplatesReplace:(BOOL)replace
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSString* templDir = [PropertyInspectorTemplateLibrary templateDirectory];
+    
+    // Check if templates are already installed
+    BOOL templatesExist = [fm fileExistsAtPath:[templDir stringByAppendingPathComponent:@"templates.plist"]];
+    if (templatesExist && !replace)
+    {
+        NSLog(@"Templates already installed.");
+        return;
+    }
+    
+    NSLog(@"Installing default templates.");
+    
+    // Remove old templates (if any)
+    [fm removeItemAtPath:templDir error:NULL];
+    
+    // Unzip default templates
+    NSString* zipFile = [[NSBundle mainBundle] pathForResource:@"defaultTemplates" ofType:@"zip"];
+    
+    NSTask* zipTask = [[NSTask alloc] init];
+    [zipTask setCurrentDirectoryPath:[templDir stringByDeletingLastPathComponent]];
+    [zipTask setLaunchPath:@"/usr/bin/unzip"];
+    NSArray* args = [NSArray arrayWithObjects:zipFile, nil];
+    [zipTask setArguments:args];
+    [zipTask launch];
+    [zipTask waitUntilExit];
+    [zipTask release];
+}
+
+- (void) loadTemplateLibrary
+{
+    [templateLibrary loadLibrary];
+}
+
 @end

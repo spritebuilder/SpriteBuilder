@@ -23,7 +23,9 @@
 
 - (IBAction) addTemplate:(id) sender;
 - (void) removeTemplate:(PropertyInspectorTemplate*) templ;
-
 - (void) applyTemplate:(PropertyInspectorTemplate*) templ;
+
+- (void) installDefaultTemplatesReplace:(BOOL)replace;
+- (void) loadTemplateLibrary;
 
 @end
