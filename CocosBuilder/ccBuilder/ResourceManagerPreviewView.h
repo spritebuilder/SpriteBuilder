@@ -45,6 +45,9 @@
     IBOutlet CCBImageView* previewTablet;
     IBOutlet CCBImageView* previewTablethd;
     
+    // Sprite sheet previews
+    IBOutlet CCBImageView* previewSpriteSheet;
+    
     // Sound preview
     IBOutlet QTMovieView* previewSound;
     IBOutlet NSImageView* previewSoundImage;

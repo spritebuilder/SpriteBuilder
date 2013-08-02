@@ -934,7 +934,6 @@
 						<string key="NSFrame">{{196, 3}, {45, 11}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="91391007">
@@ -1329,7 +1328,6 @@
 						<string key="NSFrame">{{181, 5}, {66, 19}}</string>
 						<reference key="NSSuperview" ref="322129935"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="707383982">
@@ -1608,7 +1606,6 @@
 						<string key="NSFrame">{{2, 3}, {246, 233}}</string>
 						<reference key="NSSuperview" ref="811362099"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="628556601">
@@ -1652,7 +1649,6 @@
 						<string key="NSFrame">{{2, 3}, {246, 233}}</string>
 						<reference key="NSSuperview" ref="357577938"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSImageCell" key="NSCell" id="544958781">
@@ -1828,7 +1824,6 @@
 						<string key="NSFrame">{{159, 6}, {88, 15}}</string>
 						<reference key="NSSuperview" ref="376939630"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="881740280">
@@ -2547,6 +2542,14 @@
 						<reference key="destination" ref="337875112"/>
 					</object>
 					<int key="connectionID">1112</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">previewSpriteSheet</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="279823761"/>
+					</object>
+					<int key="connectionID">1113</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -6834,7 +6837,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1112</int>
+			<int key="maxID">1113</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6887,6 +6890,7 @@
 						<string key="previewPhonehd">CCBImageView</string>
 						<string key="previewSound">QTMovieView</string>
 						<string key="previewSoundImage">NSImageView</string>
+						<string key="previewSpriteSheet">CCBImageView</string>
 						<string key="previewTablet">CCBImageView</string>
 						<string key="previewTablethd">CCBImageView</string>
 						<string key="viewCCB">NSView</string>
@@ -6923,6 +6927,10 @@
 						<object class="IBToOneOutletInfo" key="previewSoundImage">
 							<string key="name">previewSoundImage</string>
 							<string key="candidateClassName">NSImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="previewSpriteSheet">
+							<string key="name">previewSpriteSheet</string>
+							<string key="candidateClassName">CCBImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="previewTablet">
 							<string key="name">previewTablet</string>

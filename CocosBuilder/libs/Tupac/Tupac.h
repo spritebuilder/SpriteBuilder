@@ -33,6 +33,7 @@
 @property(nonatomic) CGFloat scale;
 @property(nonatomic, copy) NSArray *filenames;
 @property(nonatomic, copy) NSString *outputName;
+@property(nonatomic, copy) NSString* previewFile;
 @property(nonatomic, copy) NSString *outputFormat;
 @property(nonatomic,assign) int imageFormat;
 @property(nonatomic,copy) NSString* directoryPrefix;

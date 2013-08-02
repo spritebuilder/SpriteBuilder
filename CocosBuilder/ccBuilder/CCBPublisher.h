@@ -50,6 +50,7 @@ enum {
     NSArray* generatedSpriteSheetDirs;
     NSMutableSet* publishedResources;
     NSMutableDictionary* renamedFiles;
+    NSMutableArray* publishedSpriteSheetNames;
     int targetType;
 }
 

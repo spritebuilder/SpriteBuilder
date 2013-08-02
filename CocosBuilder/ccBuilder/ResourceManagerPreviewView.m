@@ -46,15 +46,6 @@
 {
     [super awakeFromNib];
     
-    // Disable focus rings
-    /*
-    [previewMain setFocusRingType:NSFocusRingTypeNone];
-    [previewPhone setFocusRingType:NSFocusRingTypeNone];
-    [previewPhonehd setFocusRingType:NSFocusRingTypeNone];
-    [previewTablet setFocusRingType:NSFocusRingTypeNone];
-    [previewTablethd setFocusRingType:NSFocusRingTypeNone];
-    */
-    
     [previewMain setAllowsCutCopyPaste:NO];
     [previewPhone setAllowsCutCopyPaste:NO];
     [previewPhonehd setAllowsCutCopyPaste:NO];
@@ -155,6 +146,15 @@
             self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
             self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
             self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
+            
+            NSString* imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
+            NSImage* img = [[[NSImage alloc] initWithContentsOfFile:imgPreviewPath] autorelease];
+            if (!img)
+            {
+                img = [NSImage imageNamed:@"ui-nopreview.png"];
+            }
+            
+            [previewSpriteSheet setImage:img];
             
             self.enabled = YES;
             

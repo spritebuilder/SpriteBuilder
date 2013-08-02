@@ -60,6 +60,8 @@
     // Setup extensions to copy
     copyExtensions = [[NSArray alloc] initWithObjects:@"jpg",@"png", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf", nil];
     
+    publishedSpriteSheetNames = [[NSMutableArray alloc] init];
+    
     // Set format to use for exports
     self.publishFormat = projectSettings.exporter;
     
@@ -214,8 +216,6 @@
     
     srcPath = [srcDir stringByAppendingPathComponent:srcFileName];
     dstPath = [dstDir stringByAppendingPathComponent:dstFileName];
-    
-    NSLog(@"srcPath: %@ dstPath: %@", srcPath, dstPath);
     
     // Create destination directory if it doesn't exist
     [fm createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
@@ -597,10 +597,20 @@
             {
                 continue;
             }
-                        
+            
+            // Check if preview should be generated
+            NSString* previewFilePath = NULL;
+            if (![publishedSpriteSheetNames containsObject:subPath])
+            {
+                previewFilePath = [dir stringByAppendingPathExtension:@"ppng"];
+                [publishedSpriteSheetNames addObject:subPath];
+            }
+            
+            // Generate sprite sheet
             Tupac* packer = [Tupac tupac];
             packer.outputName = spriteSheetFile;
             packer.outputFormat = TupacOutputFormatCocos2D;
+            packer.previewFile = previewFilePath;
             
             // Set image format
             if (targetType == kCCBPublisherTargetTypeIPhone)
@@ -1156,6 +1166,7 @@
     [copyExtensions release];
     [warnings release];
     [projectSettings release];
+    [publishedSpriteSheetNames release];
     [super dealloc];
 }
 

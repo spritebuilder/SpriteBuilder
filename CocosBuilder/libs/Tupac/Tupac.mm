@@ -95,6 +95,7 @@ typedef struct _PVRTexHeader
     [outputName_ release];
     [outputFormat_ release];
     [errorMessage release];
+    [_previewFile release];
     
     [super dealloc];
 }
@@ -416,6 +417,12 @@ typedef struct _PVRTexHeader
     if (createdColorSpace)
     {
         CFRelease(colorSpace);
+    }
+    
+    if (self.previewFile)
+    {
+        // Generate preview file
+        [[NSFileManager defaultManager] copyItemAtPath:pngFilename toPath:self.previewFile error:NULL];
     }
     
     textureFileName = [[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_];
