@@ -669,15 +669,12 @@
             // Update generated sprite sheets
             if (res.type == kCCBResTypeDirectory)
             {
-                NSLog(@"CHECK DIR %@", res.filePath);
-                
                 RMDirectory* dir = res.data;
                 BOOL oldValue = dir.isDynamicSpriteSheet;
                 //[dir updateIsDynamicSpriteSheet];
                 if (oldValue != dir.isDynamicSpriteSheet)
                 {
                     resourcesChanged = YES;
-                    NSLog(@"RESOURCES CHANGED!");
                 }
             }
             
@@ -1177,14 +1174,12 @@
     
     if (!ad.currentDocument)
     {
-        NSLog(@"No document!");
         return file;
     }
     
     NSArray* resolutions = ad.currentDocument.resolutions;
     if (!resolutions)
     {
-        NSLog(@"No resolutions!");
         return file;
     }
     
@@ -1325,6 +1320,11 @@
     {
         // Move regular resources
         [fm moveItemAtPath:srcPath toPath:dstPath error:NULL];
+        
+        // Also attempt to move preview image (if any)
+        NSString* srcPathPre = [srcPath stringByAppendingPathExtension:@"ppng"];
+        NSString* dstPathPre = [dstPath stringByAppendingPathExtension:@"ppng"];
+        [fm moveItemAtPath:srcPathPre toPath:dstPathPre error:NULL];
     }
     
     // Make sure the project is updated
@@ -1364,7 +1364,13 @@
     }
     else
     {
+        // Move file
         [fm moveItemAtPath:srcPath toPath:dstPath error:NULL];
+        
+        // Also attempt to move preview image (if any)
+        NSString* srcPathPre = [srcPath stringByAppendingPathExtension:@"ppng"];
+        NSString* dstPathPre = [dstPath stringByAppendingPathExtension:@"ppng"];
+        [fm moveItemAtPath:srcPathPre toPath:dstPathPre error:NULL];
     }
     
     // Make sure the project is updated
@@ -1380,7 +1386,6 @@
 
 + (void) removeResource:(RMResource*) res
 {
-    NSLog(@"Remove: %@", res.filePath);
     NSFileManager* fm = [NSFileManager defaultManager];
     
     
@@ -1401,6 +1406,10 @@
     {
         // Just remove the file
         [fm removeItemAtPath:res.filePath error:NULL];
+        
+        // Also attempt to remove preview image (if any)
+        NSString* filePathPre = [res.filePath stringByAppendingPathExtension:@"ppng"];
+        [fm removeItemAtPath:filePathPre error:NULL];
     }
     
     // Make sure it is removed from the current project
