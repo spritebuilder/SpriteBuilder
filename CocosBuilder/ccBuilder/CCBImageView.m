@@ -49,7 +49,12 @@
                                   errorDescription:nil];
             if ([filenames count] >= 1) {
                 self.imagePath = [filenames objectAtIndex:0];
-                NSLog(@"imagePath: %@ filenames: %@", imagePath, filenames);
+                if (![[[self.imagePath pathExtension] lowercaseString] isEqualToString:@"png"])
+                {
+                    self.imagePath = NULL;
+                    self.image = NULL;
+                    return NO;
+                }
             } else {
                 self.imagePath = nil;
             }
