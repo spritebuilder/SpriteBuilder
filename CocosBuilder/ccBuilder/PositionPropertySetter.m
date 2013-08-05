@@ -92,9 +92,12 @@
         NSArray* ccbFileProps = [plugIn readablePropertiesForType:@"CCBFile" node:node];
         for (NSString* prop in ccbFileProps)
         {
+            CCNode* ccbFileNode = [child valueForKey:prop];
+            [PositionPropertySetter refreshPositionsForChildren:ccbFileNode];
+            //NSLog(@"refreshPositionFor CCBFile: %@",ccbFileNode);
             // Reload ccbFiles
-            NSString* ccbFile = [NodeGraphPropertySetter nodeGraphNameForNode:child andProperty:prop];
-            [NodeGraphPropertySetter setNodeGraphForNode:child andProperty:prop withFile:ccbFile parentSize:node.contentSize];
+            //NSString* ccbFile = [NodeGraphPropertySetter nodeGraphNameForNode:child andProperty:prop];
+            //[NodeGraphPropertySetter setNodeGraphForNode:child andProperty:prop withFile:ccbFile parentSize:node.contentSize];
         }
     }
 }

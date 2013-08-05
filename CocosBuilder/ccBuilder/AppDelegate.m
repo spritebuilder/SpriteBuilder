@@ -619,6 +619,19 @@ static AppDelegate* sharedAppDelegate;
 
 #pragma mark Handling selections
 
+- (BOOL) nodeHasCCBFileAncestor:(CCNode*)node
+{
+    while (node.parent != NULL)
+    {
+        if ([NSStringFromClass(node.parent.class) isEqualToString:@"CCBPCCBFile"])
+        {
+            return YES;
+        }
+        node = node.parent;
+    }
+    return NO;
+}
+
 - (void) setSelectedNodes:(NSArray*) selection
 {
     // Close the color picker
@@ -630,11 +643,22 @@ static AppDelegate* sharedAppDelegate;
         return;
     }
     
+    // Remove any nodes that are part of sub ccb-files
+    NSMutableArray* mutableSelection = [NSMutableArray arrayWithArray: selection];
+    for (int i = mutableSelection.count -1; i >= 0; i--)
+    {
+        CCNode* node = [mutableSelection objectAtIndex:i];
+        if ([self nodeHasCCBFileAncestor:node])
+        {
+            [mutableSelection removeObjectAtIndex:i];
+        }
+    }
+    
     // Update selection
     [selectedNodes removeAllObjects];
-    if (selection && selection.count > 0)
+    if (mutableSelection && mutableSelection.count > 0)
     {
-        [selectedNodes addObjectsFromArray:selection];
+        [selectedNodes addObjectsFromArray:mutableSelection];
         
         // Make sure all nodes have the same parent
         CCNode* lastNode = [selectedNodes objectAtIndex:selectedNodes.count-1];
@@ -643,6 +667,7 @@ static AppDelegate* sharedAppDelegate;
         for (int i = selectedNodes.count -1; i >= 0; i--)
         {
             CCNode* node = [selectedNodes objectAtIndex:i];
+            
             if (node.parent != parent)
             {
                 [selectedNodes removeObjectAtIndex:i];
@@ -1145,7 +1170,6 @@ static BOOL hideAllToNextSeparator;
 - (void) prepareForDocumentSwitch
 {
     [self.window makeKeyWindow];
-    [self setSelectedNodes:NULL];
     CocosScene* cs = [CocosScene cocosScene];
     
     if (![self hasOpenedDocument]) return;
@@ -1311,6 +1335,9 @@ static BOOL hideAllToNextSeparator;
     CocosScene* cs = [CocosScene cocosScene];
     [cs setStageZoom:document.stageZoom];
     [cs setScrollOffset:document.stageScrollOffset];
+    
+    // Make sure timeline is up to date
+    [sequenceHandler updatePropertiesToTimelinePosition];
 }
 
 - (void) switchToDocument:(CCBDocument*) document
@@ -1588,7 +1615,7 @@ static BOOL hideAllToNextSeparator;
     [self setSelectedNodes:NULL];
     
     // Make sure timeline is up to date
-    [sequenceHandler updatePropertiesToTimelinePosition];
+    //[sequenceHandler updatePropertiesToTimelinePosition];
     
 	[[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
@@ -2710,7 +2737,6 @@ static BOOL hideAllToNextSeparator;
         
         newDirPath = [dirPath stringByAppendingPathComponent:dirName];
         
-        NSLog(@"Testing: %@", newDirPath);
         if ([fm fileExistsAtPath:newDirPath])
         {
             attempt++;
@@ -3282,8 +3308,8 @@ static BOOL hideAllToNextSeparator;
     
     [[CCTextureCache sharedTextureCache] removeAllTextures];
     [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
-    FNTConfigRemoveCache();  
-  
+    FNTConfigRemoveCache();
+    
     [self switchToDocument:currentDocument forceReload:YES];
     [sequenceHandler updatePropertiesToTimelinePosition];
 }
@@ -3918,7 +3944,6 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuAbout:(id)sender
 {
-    NSLog(@"menuAbout");
     if(!aboutWindow)
     {
         aboutWindow = [[AboutWindow alloc] initWithWindowNibName:@"AboutWindow"];
@@ -3995,7 +4020,6 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)playbackStop:(id)sender
 {
-    NSLog(@"playbackStop");
     playingBack = NO;
 }
 
