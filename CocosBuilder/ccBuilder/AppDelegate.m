@@ -132,6 +132,7 @@
 @synthesize panelVisibilityControl;
 @synthesize connection;
 @synthesize propertyInspectorHandler;
+@synthesize localizationEditorHandler;
 
 static AppDelegate* sharedAppDelegate;
 

@@ -148,6 +148,11 @@
 		A77EF590171FD30E00451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
 		A77EF594171FD3B200451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
 		B7074DCE17AAE8B200652E77 /* defaultProject.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7074DCD17AAE8B200652E77 /* defaultProject.zip */; };
+		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
+		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
+		B7083DF917B1CBC8006628C7 /* LocalizationEditorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */; };
+		B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7083DFA17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist */; };
+		B7083DFE17B2CDA0006628C7 /* LocalizationEditorLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DFD17B2CDA0006628C7 /* LocalizationEditorLanguage.m */; };
 		B732A1841799736500333C56 /* TB_build.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1821799736500333C56 /* TB_build.png */; };
 		B732A1851799736500333C56 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1831799736500333C56 /* TB_build@2x.png */; };
 		B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */; };
@@ -1122,6 +1127,14 @@
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		A77EF58F171FD30E00451DA4 /* cwebp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = cwebp; sourceTree = "<group>"; };
 		B7074DCD17AAE8B200652E77 /* defaultProject.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultProject.zip; sourceTree = "<group>"; };
+		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
+		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
+		B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorWindow.m; sourceTree = "<group>"; };
+		B7083DF717B1CBC8006628C7 /* LocalizationEditorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorHandler.h; sourceTree = "<group>"; };
+		B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorHandler.m; sourceTree = "<group>"; };
+		B7083DFA17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LocaliztaionEditorLanguageList.plist; sourceTree = "<group>"; };
+		B7083DFC17B2CDA0006628C7 /* LocalizationEditorLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorLanguage.h; sourceTree = "<group>"; };
+		B7083DFD17B2CDA0006628C7 /* LocalizationEditorLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorLanguage.m; sourceTree = "<group>"; };
 		B732A1821799736500333C56 /* TB_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_build.png; sourceTree = "<group>"; };
 		B732A1831799736500333C56 /* TB_build@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TB_build@2x.png"; sourceTree = "<group>"; };
 		B78DA3621773A89B00B85CC0 /* CCBButtonUnclickable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBButtonUnclickable.h; sourceTree = "<group>"; };
@@ -2625,6 +2638,7 @@
 				E3B7BC9D15E3B97900CF95EF /* Toolbar */,
 				E3AF6CD615F0A77F0048DB2A /* Help */,
 				E390C77A170A2C20003E9E92 /* About Box */,
+				B7083DEF17B1C31E006628C7 /* Localization Editor */,
 				E3F541D015AF040A00EAAFBD /* JavaScript Editor */,
 				E35A136315B0392800C9AA15 /* Player Connection */,
 				E3B7AEE614E33E5700DFD402 /* Inspector Properties */,
@@ -2963,6 +2977,21 @@
 				A77EF58F171FD30E00451DA4 /* cwebp */,
 			);
 			name = WebP;
+			sourceTree = "<group>";
+		};
+		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B7083DF717B1CBC8006628C7 /* LocalizationEditorHandler.h */,
+				B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */,
+				B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */,
+				B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */,
+				B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */,
+				B7083DFA17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist */,
+				B7083DFC17B2CDA0006628C7 /* LocalizationEditorLanguage.h */,
+				B7083DFD17B2CDA0006628C7 /* LocalizationEditorLanguage.m */,
+			);
+			name = "Localization Editor";
 			sourceTree = "<group>";
 		};
 		B794AB96177CDFF7004FF493 /* FormatConverter */ = {
@@ -4949,6 +4978,8 @@
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
 				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
 				B7074DCE17AAE8B200652E77 /* defaultProject.zip in Resources */,
+				B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */,
+				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5474,6 +5505,9 @@
 				B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */,
 				B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */,
 				B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */,
+				B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */,
+				B7083DF917B1CBC8006628C7 /* LocalizationEditorHandler.m in Sources */,
+				B7083DFE17B2CDA0006628C7 /* LocalizationEditorLanguage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

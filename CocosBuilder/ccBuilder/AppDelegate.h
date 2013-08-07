@@ -106,6 +106,7 @@ enum {
 @class CCBImageBrowserView;
 @class PlugInNodeViewHandler;
 @class PropertyInspectorHandler;
+@class LocalizationEditorHandler;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -260,6 +261,9 @@ enum {
     // JavaScript bindings
     BOOL jsControlled;
     
+    // Localization editor
+    IBOutlet LocalizationEditorHandler* localizationEditorHandler;
+    
 @private
     MainWindow *window;
     
@@ -310,6 +314,8 @@ enum {
 // PlugIns and properties
 @property (nonatomic,readonly) PlugInManager* plugInManager;
 - (void) refreshProperty:(NSString*) name;
+
+@property (nonatomic,readonly) IBOutlet LocalizationEditorHandler* localizationEditorHandler;
 
 // Methods
 + (AppDelegate*) appDelegate;
