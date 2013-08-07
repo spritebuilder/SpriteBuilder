@@ -35,6 +35,8 @@
         self.name = [enLocale displayNameForKey:NSLocaleLanguageCode value:code];
     }
     
+    self.quickEdit = YES;
+    
     return self;
 }
 

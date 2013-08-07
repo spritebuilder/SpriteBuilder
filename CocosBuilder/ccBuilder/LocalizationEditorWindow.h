@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LocalizationEditorWindow : NSWindowController
+@interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource>
 {
-    IBOutlet NSTableView* tableView;
+    IBOutlet NSTableView* tableTranslations;
+    IBOutlet NSTableView* tableLanguages;
     IBOutlet NSPopUpButton* popLanguageAdd;
+    IBOutlet NSPopUpButton* popCurrentLanguage;
 }
 
 - (IBAction)pressedAdd:(id)sender;

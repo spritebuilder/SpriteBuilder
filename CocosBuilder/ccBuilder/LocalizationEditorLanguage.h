@@ -12,6 +12,7 @@
 
 @property (nonatomic,copy) NSString* isoLangCode;
 @property (nonatomic,copy) NSString* name;
+@property (nonatomic,readwrite) BOOL quickEdit;
 
 - (id) initWithIsoLangCode:(NSString*)code;
 

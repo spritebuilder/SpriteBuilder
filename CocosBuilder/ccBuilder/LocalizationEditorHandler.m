@@ -13,6 +13,7 @@
 @implementation LocalizationEditorHandler
 
 @synthesize languages;
+@synthesize activeLanguages;
 
 - (id) init
 {
@@ -29,7 +30,30 @@
         [languages addObject:lang];
     }
     
+    activeLanguages = [[NSMutableArray alloc] init];
+    
     return self;
+}
+
+- (LocalizationEditorLanguage*) getLanguageByName:(NSString*)name
+{
+    for (LocalizationEditorLanguage* lang in languages)
+    {
+        if ([lang.name isEqualToString:name]) return lang;
+    }
+    return NULL;
+}
+
+- (void) addActiveLanguage:(LocalizationEditorLanguage*) lang
+{
+    lang.quickEdit = YES;
+    if ([activeLanguages containsObject:lang]) return;
+    [activeLanguages addObject:lang];
+}
+
+- (void) removeActiveLangage:(LocalizationEditorLanguage*) lang
+{
+    [activeLanguages removeObject:lang];
 }
 
 - (IBAction)openEditor:(id)sender
@@ -44,6 +68,7 @@
 - (void) dealloc
 {
     [languages release];
+    [activeLanguages release];
     [windowController release];
     [super dealloc];
 }
