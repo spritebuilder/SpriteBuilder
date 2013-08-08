@@ -189,6 +189,17 @@
     [self updateQuickEditLangs];
 }
 
+- (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    
+    [handler.activeLanguages removeObjectsAtIndexes:idxs];
+    
+    [tableLanguages reloadData];
+    [self updateLanguageSelectionMenu];
+    [self updateQuickEditLangs];
+}
+
 - (IBAction)selectedCurrentLanguage:(id)sender
 {
     [self updateInspector];

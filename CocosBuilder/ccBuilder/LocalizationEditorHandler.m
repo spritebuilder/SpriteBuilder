@@ -15,6 +15,7 @@
 @synthesize languages;
 @synthesize activeLanguages;
 @synthesize translations;
+@synthesize windowController;
 
 - (id) init
 {

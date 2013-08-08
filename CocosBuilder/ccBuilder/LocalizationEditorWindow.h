@@ -26,6 +26,7 @@
 - (IBAction)pressedAddGroup:(id)sender;
 
 - (IBAction)selectedAddLanguage:(id)sender;
+- (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs;
 - (IBAction)selectedCurrentLanguage:(id)sender;
 
 @end

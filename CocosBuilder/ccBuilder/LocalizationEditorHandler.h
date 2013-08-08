@@ -22,6 +22,7 @@
 @property (nonatomic,readonly) NSMutableArray* languages;
 @property (nonatomic,readonly) NSMutableArray* activeLanguages;
 @property (nonatomic,readonly) NSMutableArray* translations;
+@property (nonatomic,readonly) LocalizationEditorWindow* windowController;
 
 - (LocalizationEditorLanguage*) getLanguageByName:(NSString*)name;
 - (void) addActiveLanguage:(LocalizationEditorLanguage*) lang;
