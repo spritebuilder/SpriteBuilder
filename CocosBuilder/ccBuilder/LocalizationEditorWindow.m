@@ -9,9 +9,22 @@
 #import "LocalizationEditorWindow.h"
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorHandler.h"
+#import "LocalizationEditorTranslation.h"
 #import "AppDelegate.h"
+#import "CCBTextFieldCell.h"
 
 @implementation LocalizationEditorWindow
+
+#pragma mark Init and Updating stuff
+
+- (void) awakeFromNib
+{
+    [self populateLanguageAddMenu];
+    [tableLanguages reloadData];
+    [self updateLanguageSelectionMenu];
+    [self addLanguageColumns];
+    [self updateQuickEditLangs];
+}
 
 - (void) populateLanguageAddMenu
 {
@@ -47,18 +60,118 @@
     }
 }
 
-- (void) awakeFromNib
+- (void) addLanguageColumns
 {
-    [self populateLanguageAddMenu];
-    [tableLanguages reloadData];
-    [self updateLanguageSelectionMenu];
+    NSArray* langs = [AppDelegate appDelegate].localizationEditorHandler.languages;
+    
+    for (LocalizationEditorLanguage* lang in langs)
+    {
+        NSTableColumn* column = [[[NSTableColumn alloc] initWithIdentifier:lang.isoLangCode] autorelease];
+        column.width = 200;
+        column.maxWidth = 1000;
+        column.minWidth = 100;
+        [[column headerCell] setStringValue:lang.name];
+        
+        CCBTextFieldCell* cell = [[[CCBTextFieldCell alloc] init] autorelease];
+        [cell setEditable:YES];
+        [column setDataCell:cell];
+        
+        [tableTranslations addTableColumn:column];
+    }
 }
 
-- (IBAction)pressedAdd:(id)sender
-{}
+- (void) updateQuickEditLangs
+{
+    NSArray* activeLangs = [AppDelegate appDelegate].localizationEditorHandler.activeLanguages;
+    NSArray* allLangs = [AppDelegate appDelegate].localizationEditorHandler.languages;
+    
+    for (LocalizationEditorLanguage* lang in allLangs)
+    {
+        // Find column for language
+        NSTableColumn* col = [tableTranslations tableColumnWithIdentifier:lang.isoLangCode];
+        
+        if ([activeLangs containsObject:lang] && lang.quickEdit)
+        {
+            [col setHidden:NO];
+        }
+        else
+        {
+            [col setHidden:YES];
+        }
+    }
+}
 
-- (IBAction)pressedRemove:(id)sender
-{}
+- (LocalizationEditorLanguage*) selectedLanguage
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    
+    NSString* name = [popCurrentLanguage selectedItem].title;
+    return [handler getLanguageByName:name];
+}
+
+- (void) updateInspector
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSInteger row = [tableTranslations selectedRow];
+    
+    if (row == -1)
+    {
+        // Disable things
+        self.inspectorTextKey = NULL;
+        self.inspectorTextComment = NULL;
+        self.inspectorTextTranslation = NULL;
+    }
+    else
+    {
+        LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+        
+        if (translation.key)
+        {
+            self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:translation.key] autorelease];
+        }
+        else
+        {
+            self.inspectorTextKey = NULL;
+        }
+        
+        if (translation.comment)
+        {
+            self.inspectorTextComment = [[[NSAttributedString alloc] initWithString:translation.comment] autorelease];
+        }
+        else
+        {
+            self.inspectorTextComment = NULL;
+        }
+        
+        LocalizationEditorLanguage* lang = [self selectedLanguage];
+        NSString* currentTranslation = [translation.translations objectForKey:lang.isoLangCode];
+        if (currentTranslation)
+        {
+            self.inspectorTextTranslation = [[[NSAttributedString alloc] initWithString:currentTranslation] autorelease];
+        }
+        else
+        {
+            self.inspectorTextTranslation = NULL;
+        }
+    }
+}
+
+#pragma mark Actions
+
+- (IBAction)pressedAdd:(id)sender
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    
+    LocalizationEditorTranslation* translation = [[LocalizationEditorTranslation alloc] init];
+    
+    [handler.translations addObject:translation];
+    [tableTranslations reloadData];
+    
+    NSInteger newRow = handler.translations.count -1;
+    
+    [tableTranslations selectRowIndexes:[NSIndexSet indexSetWithIndex:newRow] byExtendingSelection:NO];
+    [tableTranslations editColumn:1 row:newRow withEvent:NULL select:sender];
+}
 
 - (IBAction)pressedAddGroup:(id)sender
 {}
@@ -72,9 +185,108 @@
     
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
+    [self updateQuickEditLangs];
 }
 
-#pragma mark Table view delegate
+- (IBAction)selectedCurrentLanguage:(id)sender
+{
+    [self updateInspector];
+}
+
+#pragma mark Properties for Inspector
+
+- (void) setInspectorTextKey:(NSAttributedString *)inspectorTextKey
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSInteger row = [tableTranslations selectedRow];
+    
+    if (row == -1) return;
+    
+    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    translation.key = [inspectorTextKey string];
+    
+    [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:1]];
+}
+
+- (NSAttributedString*) inspectorTextKey
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSInteger row = [tableTranslations selectedRow];
+    
+    if (row == -1) return NULL;
+    
+    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    
+    if (!translation.key) return NULL;
+    return [[[NSAttributedString alloc] initWithString:translation.key] autorelease];
+}
+
+- (void) setInspectorTextComment:(NSAttributedString *)inspectorTextComment
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSInteger row = [tableTranslations selectedRow];
+    
+    if (row == -1) return;
+    
+    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    translation.comment = [inspectorTextComment string];
+    
+    [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:2]];
+}
+
+- (NSAttributedString*) inspectorTextComment
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSInteger row = [tableTranslations selectedRow];
+    
+    if (row == -1) return NULL;
+    
+    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    
+    if (!translation.comment) return NULL;
+    return [[[NSAttributedString alloc] initWithString:translation.comment] autorelease];
+}
+
+- (void) setInspectorTextTranslation:(NSAttributedString *)inspectorTextTranslation
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSInteger row = [tableTranslations selectedRow];
+    
+    if (row == -1) return;
+    
+    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorLanguage* lang = [self selectedLanguage];
+    
+    if (inspectorTextTranslation)
+    {
+        [translation.translations setObject:[inspectorTextTranslation string] forKey:lang.isoLangCode];
+    }
+    else
+    {
+        [translation.translations removeObjectForKey:lang.isoLangCode];
+    }
+    
+    NSInteger col = [tableTranslations columnWithIdentifier:lang.isoLangCode];
+    
+    [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:col]];
+}
+
+- (NSAttributedString*) inspectorTextTranslation
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSInteger row = [tableTranslations selectedRow];
+    
+    if (row == -1) return NULL;
+    
+    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorLanguage* lang = [self selectedLanguage];
+    NSString* translationStr = [translation.translations objectForKey:lang.isoLangCode];
+    
+    if (!translationStr) return NULL;
+    return [[[NSAttributedString alloc] initWithString:translationStr] autorelease];
+}
+
+#pragma mark Table View data provider
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
@@ -83,6 +295,10 @@
     if (aTableView == tableLanguages)
     {
         return handler.activeLanguages.count;
+    }
+    else if (aTableView == tableTranslations)
+    {
+        return handler.translations.count;
     }
     
     return 0;
@@ -105,6 +321,27 @@
             return lang.name;
         }
     }
+    else if (aTableView == tableTranslations)
+    {
+        LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:rowIndex];
+        
+        if ([aTableColumn.identifier isEqualToString:@"key"])
+        {
+            return translation.key;
+        }
+        else if ([aTableColumn.identifier isEqualToString:@"comment"])
+        {
+            return translation.comment;
+        }
+        else if ([aTableColumn.identifier isEqualToString:@"warning"])
+        {
+            return NULL;
+        }
+        else
+        {
+            return [translation.translations objectForKey:aTableColumn.identifier];
+        }
+    }
     
     return NULL;
 }
@@ -119,8 +356,44 @@
         {
             LocalizationEditorLanguage* lang = [handler.activeLanguages objectAtIndex:row];
             lang.quickEdit = [object boolValue];
+            [self updateQuickEditLangs];
         }
     }
+    else if (tableView == tableTranslations)
+    {
+        LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+        
+        if ([tableColumn.identifier isEqualToString:@"key"])
+        {
+            // TODO: Check for duplicates
+            translation.key = object;
+        }
+        else if ([tableColumn.identifier isEqualToString:@"comment"])
+        {
+            translation.comment = object;
+        }
+        else
+        {
+            if ([object isKindOfClass:[NSString class]])
+            {
+                NSString* lang = tableColumn.identifier;
+                
+                [translation.translations setObject:object forKey:lang];
+            }
+        }
+        
+        [self updateInspector];
+    }
+}
+
+#pragma mark Table View delegate
+
+- (void) tableViewSelectionDidChange:(NSNotification *)notification
+{
+    NSInteger row = [tableTranslations selectedRow];
+    
+    self.inspectorEnabled = (row != -1);
+    [self updateInspector];
 }
 
 @end

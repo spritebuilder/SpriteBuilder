@@ -14,6 +14,7 @@
 
 @synthesize languages;
 @synthesize activeLanguages;
+@synthesize translations;
 
 - (id) init
 {
@@ -31,6 +32,8 @@
     }
     
     activeLanguages = [[NSMutableArray alloc] init];
+    
+    translations = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -70,6 +73,7 @@
     [languages release];
     [activeLanguages release];
     [windowController release];
+    [translations release];
     [super dealloc];
 }
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource>
+@interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 {
     IBOutlet NSTableView* tableTranslations;
     IBOutlet NSTableView* tableLanguages;
@@ -16,9 +16,16 @@
     IBOutlet NSPopUpButton* popCurrentLanguage;
 }
 
+@property (nonatomic,assign) BOOL inspectorEnabled;
+
+@property (nonatomic,copy) NSAttributedString* inspectorTextKey;
+@property (nonatomic,copy) NSAttributedString* inspectorTextComment;
+@property (nonatomic,copy) NSAttributedString* inspectorTextTranslation;
+
 - (IBAction)pressedAdd:(id)sender;
 - (IBAction)pressedAddGroup:(id)sender;
 
 - (IBAction)selectedAddLanguage:(id)sender;
+- (IBAction)selectedCurrentLanguage:(id)sender;
 
 @end
