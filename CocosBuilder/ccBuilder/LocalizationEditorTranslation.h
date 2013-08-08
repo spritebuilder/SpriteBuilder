@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LocalizationEditorTranslation : NSObject
+@interface LocalizationEditorTranslation : NSObject <NSPasteboardWriting>
 {
     NSMutableDictionary* _translations;
 }

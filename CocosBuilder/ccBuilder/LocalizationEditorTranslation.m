@@ -35,4 +35,40 @@
     return YES;
 }
 
+- (id) serialization
+{
+    NSMutableDictionary* ser = [NSMutableDictionary dictionary];
+    
+    if (self.key) [ser setObject:self.key forKey:@"key"];
+    if (self.comment) [ser setObject:self.comment forKey:@"comment"];
+    [ser setObject:self.translations forKey:@"translations"];
+    
+    return ser;
+}
+
+#pragma mark Writing to paste board
+
+- (id) pasteboardPropertyListForType:(NSString *)type
+{
+    if ([type isEqualToString:@"com.cocosbuilder.LocalizationEditorTranslation"])
+    {
+        return [self serialization];
+    }
+    return NULL;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    return [NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"];
+}
+
+- (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+    if ([type isEqualToString:@"com.cocosbuilder.LocalizationEditorTranslation"])
+    {
+        return NSPasteboardWritingPromised;
+    }
+    return 0;
+}
+
 @end

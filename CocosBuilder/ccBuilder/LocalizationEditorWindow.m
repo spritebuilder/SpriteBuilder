@@ -12,6 +12,7 @@
 #import "LocalizationEditorTranslation.h"
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
+#import "NSPasteboard+CCB.h"
 
 @implementation LocalizationEditorWindow
 
@@ -19,6 +20,7 @@
 
 - (void) awakeFromNib
 {
+    [tableTranslations registerForDraggedTypes:[NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"]];
     [self populateLanguageAddMenu];
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
@@ -124,6 +126,8 @@
     }
     else
     {
+        self.inspectorEnabled = YES;
+        
         LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
         
         if (translation.key)
@@ -153,6 +157,10 @@
         else
         {
             self.inspectorTextTranslation = NULL;
+        }
+        if (!lang)
+        {
+            self.inspectorEnabled = NO;
         }
     }
 }
@@ -187,6 +195,7 @@
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
+    [self updateInspector];
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
@@ -198,6 +207,7 @@
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
+    [self updateInspector];
 }
 
 - (IBAction)selectedCurrentLanguage:(id)sender
@@ -419,6 +429,63 @@
         
         [self updateInspector];
     }
+}
+
+#pragma mark Drag and drop
+
+- (id < NSPasteboardWriting >)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    
+    return [handler.translations objectAtIndex:row];
+}
+
+- (NSDragOperation)tableView:(NSTableView *)aTableView validateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
+{
+    if (operation == NSTableViewDropAbove) return NSDragOperationMove;
+    return NSDragOperationNone;
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id < NSDraggingInfo >)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
+{
+    if (operation == NSTableViewDropAbove)
+    {
+        LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+        NSPasteboard* pb = [info draggingPasteboard];
+        
+        NSArray* items = [pb propertyListsForType:@"com.cocosbuilder.LocalizationEditorTranslation"];
+        if (items.count != 1) return NO;
+        
+        NSDictionary* dict = [items objectAtIndex:0];
+        
+        // Find source translation by key
+        NSString* key = [dict objectForKey:@"key"];
+        LocalizationEditorTranslation* transl = NULL;
+        for (LocalizationEditorTranslation* cTransl in handler.translations)
+        {
+            if ([cTransl.key isEqualToString:key])
+            {
+                transl = cTransl;
+                break;
+            }
+        }
+        
+        if (!transl) return NO;
+        
+        // Move translation to new index
+        int oldIndex = [handler.translations indexOfObject:transl];
+        int newIndex = row;
+        if (newIndex >= oldIndex) newIndex--;
+        
+        [handler.translations removeObjectAtIndex:oldIndex];
+        [handler.translations insertObject:transl atIndex:newIndex];
+        
+        [tableTranslations reloadData];
+        [tableTranslations selectRowIndexes:[NSIndexSet indexSetWithIndex:newIndex] byExtendingSelection:NO];
+        
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark Table View delegate

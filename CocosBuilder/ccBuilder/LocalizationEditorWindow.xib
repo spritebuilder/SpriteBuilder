@@ -213,9 +213,9 @@
 											</array>
 											<double key="NSIntercellSpacingWidth">3</double>
 											<double key="NSIntercellSpacingHeight">2</double>
-											<object class="NSColor" key="NSBackgroundColor" id="247284560">
-												<int key="NSColorSpace">3</int>
-												<bytes key="NSWhite">MQA</bytes>
+											<object class="NSColor" key="NSBackgroundColor">
+												<int key="NSColorSpace">1</int>
+												<bytes key="NSRGB">MC44OTAxOTYwNzg0IDAuOTA1ODgyMzUyOSAwLjkyNTQ5MDE5NjEAA</bytes>
 											</object>
 											<object class="NSColor" key="NSGridColor" id="611057233">
 												<int key="NSColorSpace">6</int>
@@ -498,7 +498,10 @@
 																<int key="NSFlags">67121127</int>
 																<int key="NSTextCheckingTypes">0</int>
 																<nil key="NSMarkedAttributes"/>
-																<reference key="NSBackgroundColor" ref="247284560"/>
+																<object class="NSColor" key="NSBackgroundColor" id="247284560">
+																	<int key="NSColorSpace">3</int>
+																	<bytes key="NSWhite">MQA</bytes>
+																</object>
 																<dictionary key="NSSelectedAttributes">
 																	<object class="NSColor" key="NSBackgroundColor" id="574934302">
 																		<int key="NSColorSpace">6</int>
@@ -1226,7 +1229,6 @@
 							<string key="NSFrame">{{760, -1}, {104, 22}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="620219114">
