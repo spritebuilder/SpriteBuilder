@@ -23,6 +23,7 @@
 @property (nonatomic,copy) NSAttributedString* inspectorTextComment;
 @property (nonatomic,copy) NSAttributedString* inspectorTextTranslation;
 @property (nonatomic,copy) NSString* startTextValue;
+@property (nonatomic,assign) BOOL hasOpenFile;
 
 - (IBAction)pressedAdd:(id)sender;
 - (IBAction)pressedAddGroup:(id)sender;
@@ -32,5 +33,7 @@
 - (IBAction)selectedCurrentLanguage:(id)sender;
 
 - (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs;
+
+- (void) reload;
 
 @end

@@ -13,11 +13,14 @@
     NSMutableDictionary* _translations;
 }
 
+- (id) initWithSerialization:(id)ser;
+
 @property (nonatomic,copy) NSString* key;
 @property (nonatomic,copy) NSString* comment;
 
 @property (nonatomic,readonly) NSMutableDictionary* translations;
 
 - (BOOL) hasTranslationsForLanguages:(NSArray*)languages;
+- (id) serialization;
 
 @end

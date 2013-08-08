@@ -23,6 +23,20 @@
     return self;
 }
 
+- (id) initWithSerialization:(id)ser
+{
+    self = [super init];
+    if (!self) return NULL;
+    
+    NSDictionary* dict = ser;
+    
+    self.key = [dict objectForKey:@"key"];
+    self.comment = [dict objectForKey:@"comment"];
+    _translations = [[dict objectForKey:@"translations"] mutableCopy];
+    
+    return self;
+}
+
 - (BOOL) hasTranslationsForLanguages:(NSArray*)languages
 {
     for (LocalizationEditorLanguage* lang in languages)

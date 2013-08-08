@@ -218,19 +218,15 @@
 												<int key="NSColorSpace">3</int>
 												<bytes key="NSWhite">MQA</bytes>
 											</object>
-											<object class="NSColor" key="NSGridColor" id="611057233">
-												<int key="NSColorSpace">6</int>
-												<string key="NSCatalogName">System</string>
-												<string key="NSColorName">gridColor</string>
-												<object class="NSColor" key="NSColor">
-													<int key="NSColorSpace">3</int>
-													<bytes key="NSWhite">MC41AA</bytes>
-												</object>
+											<object class="NSColor" key="NSGridColor">
+												<int key="NSColorSpace">1</int>
+												<bytes key="NSRGB">MC44OTAxOTYwNzg0IDAuOTA1ODgyMzUyOSAwLjkyNTQ5MDE5NjEAA</bytes>
 											</object>
 											<double key="NSRowHeight">16</double>
-											<int key="NSTvFlags">1379926016</int>
+											<int key="NSTvFlags">1916796928</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
+											<int key="NSGridStyleMask">3</int>
 											<int key="NSColumnAutoresizingStyle">4</int>
 											<int key="NSDraggingSourceMaskForLocal">15</int>
 											<int key="NSDraggingSourceMaskForNonLocal">0</int>
@@ -1031,7 +1027,15 @@
 																<int key="NSColorSpace">1</int>
 																<bytes key="NSRGB">MC44OTAxOTYwNzg0IDAuOTA1ODgyMzUyOSAwLjkyNTQ5MDE5NjEAA</bytes>
 															</object>
-															<reference key="NSGridColor" ref="611057233"/>
+															<object class="NSColor" key="NSGridColor">
+																<int key="NSColorSpace">6</int>
+																<string key="NSCatalogName">System</string>
+																<string key="NSColorName">gridColor</string>
+																<object class="NSColor" key="NSColor">
+																	<int key="NSColorSpace">3</int>
+																	<bytes key="NSWhite">MC41AA</bytes>
+																</object>
+															</object>
 															<double key="NSRowHeight">17</double>
 															<int key="NSTvFlags">507510784</int>
 															<reference key="NSDelegate"/>
@@ -1201,6 +1205,7 @@
 							<string key="NSFrame">{{760, -1}, {104, 22}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSPopUpButtonCell" key="NSCell" id="620219114">
@@ -1374,6 +1379,22 @@
 					<int key="connectionID">97</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: hasOpenFile</string>
+						<reference key="source" ref="977663147"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="977663147"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: hasOpenFile</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">hasOpenFile</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">146</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="565478334"/>
@@ -1382,12 +1403,44 @@
 					<int key="connectionID">135</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: hasOpenFile</string>
+						<reference key="source" ref="93037643"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="93037643"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: hasOpenFile</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">hasOpenFile</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">140</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="164666846"/>
 						<reference key="destination" ref="1001"/>
 					</object>
 					<int key="connectionID">83</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: hasOpenFile</string>
+						<reference key="source" ref="164666846"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="164666846"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: hasOpenFile</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">hasOpenFile</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">149</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1518,6 +1571,14 @@
 					<int key="connectionID">131</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="1042358690"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">136</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: inspectorEnabled</string>
 						<reference key="source" ref="89643256"/>
@@ -1568,6 +1629,30 @@
 						</object>
 					</object>
 					<int key="connectionID">128</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="179240933"/>
+						<reference key="destination" ref="1001"/>
+					</object>
+					<int key="connectionID">137</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: hasOpenFile</string>
+						<reference key="source" ref="531466873"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="531466873"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: hasOpenFile</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">hasOpenFile</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">143</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2068,7 +2153,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">135</int>
+			<int key="maxID">149</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

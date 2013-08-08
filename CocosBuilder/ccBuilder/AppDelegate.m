@@ -100,6 +100,7 @@
 #import "CCBImageBrowserView.h"
 #import "PlugInNodeViewHandler.h"
 #import "PropertyInspectorHandler.h"
+#import "LocalizationEditorHandler.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -1499,6 +1500,9 @@ static BOOL hideAllToNextSeparator;
     self.projectSettings = NULL;
     [resManager removeAllDirectories];
     
+    // Remove language file
+    localizationEditorHandler.managedFile = NULL;
+    
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 }
@@ -1528,11 +1532,15 @@ static BOOL hideAllToNextSeparator;
     [project store];
     self.projectSettings = project;
     
+    // Update resource paths
     [self updateResourcePathsFromProjectSettings];
     
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
-    
     if (!success) return NO;
+    
+    // Load or create language file
+    NSString* langFile = [resManager.mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
+    localizationEditorHandler.managedFile = langFile;
     
     // Load autocompletions for all JS files
     NSArray* jsFiles = [CCBFileUtil filesInResourcePathsWithExtension:@"js"];

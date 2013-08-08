@@ -165,6 +165,18 @@
     }
 }
 
+- (void) reload
+{
+    [tableLanguages deselectAll:NULL];
+    [tableLanguages reloadData];
+    [tableTranslations deselectAll:NULL];
+    [tableTranslations reloadData];
+    
+    [self updateLanguageSelectionMenu];
+    [self updateQuickEditLangs];
+    [self updateInspector];
+}
+
 #pragma mark Actions
 
 - (IBAction)pressedAdd:(id)sender
@@ -196,6 +208,8 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
+    
+    [handler setEdited];
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
@@ -213,6 +227,8 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
+    
+    [handler setEdited];
 }
 
 - (IBAction)selectedCurrentLanguage:(id)sender
@@ -229,6 +245,8 @@
     [tableTranslations deselectAll:NULL];
     [tableTranslations reloadData];
     [self updateInspector];
+    
+    [handler setEdited];
 }
 
 #pragma mark Properties for Inspector
@@ -419,6 +437,7 @@
                 // This is a new entry without a key, remove it
                 [handler.translations removeObject:translation];
                 [tableTranslations reloadData];
+                [handler setEdited];
             }
             else if (object != NULL && ![object isEqualToString:@""])
             {
@@ -437,6 +456,7 @@
                 {
                     // All is good change the key
                     translation.key = object;
+                    [handler setEdited];
                 }
             }
             
@@ -444,6 +464,7 @@
         else if ([tableColumn.identifier isEqualToString:@"comment"])
         {
             translation.comment = object;
+            [handler setEdited];
         }
         else
         {
@@ -453,6 +474,7 @@
                 
                 [translation.translations setObject:object forKey:lang];
                 [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+                [handler setEdited];
             }
         }
         
@@ -531,32 +553,46 @@
 
 - (BOOL)textShouldBeginEditing:(NSText *)aTextObject
 {
-    self.startTextValue = [aTextObject string];
+    if (aTextObject == textInspectorKey)
+    {
+        self.startTextValue = [aTextObject string];
+    }
     return YES;
 }
 
 - (void) textDidEndEditing:(NSNotification *)notification
 {
-    NSString* endTextValue = [self.inspectorTextKey string];
-    
-    if (!endTextValue || [endTextValue isEqualToString:@""])
-    {
-        self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
-        return;
-    }
-    
-    // Check for duplicates
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     
-    NSInteger row = [tableTranslations selectedRow];
-    LocalizationEditorTranslation* transl = [handler.translations objectAtIndex:row];
-    
-    if (![handler isValidKey:endTextValue forTranslation:transl])
+    if (notification.object == textInspectorKey)
     {
-        // Revert to old value
-        NSBeep();
-        self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
-        return;
+        NSString* endTextValue = [self.inspectorTextKey string];
+        
+        if (!self.startTextValue && !endTextValue) return;
+        
+        if (!endTextValue || [endTextValue isEqualToString:@""])
+        {
+            self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
+            return;
+        }
+        
+        // Check for duplicates
+        NSInteger row = [tableTranslations selectedRow];
+        LocalizationEditorTranslation* transl = [handler.translations objectAtIndex:row];
+        
+        if (![handler isValidKey:endTextValue forTranslation:transl])
+        {
+            // Revert to old value
+            NSBeep();
+            self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
+            return;
+        }
+        
+        [handler setEdited];
+    }
+    else
+    {
+        [handler setEdited];
     }
 }
 
