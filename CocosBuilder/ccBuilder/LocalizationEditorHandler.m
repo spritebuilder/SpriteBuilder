@@ -9,6 +9,7 @@
 #import "LocalizationEditorHandler.h"
 #import "LocalizationEditorWindow.h"
 #import "LocalizationEditorLanguage.h"
+#import "LocalizationEditorTranslation.h"
 
 @implementation LocalizationEditorHandler
 
@@ -58,6 +59,11 @@
 - (void) removeActiveLangage:(LocalizationEditorLanguage*) lang
 {
     [activeLanguages removeObject:lang];
+    
+    for (LocalizationEditorTranslation* transl in self.translations)
+    {
+        [transl.translations removeObjectForKey:lang.isoLangCode];
+    }
 }
 
 - (IBAction)openEditor:(id)sender

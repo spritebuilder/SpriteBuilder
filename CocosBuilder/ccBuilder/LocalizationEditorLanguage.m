@@ -23,17 +23,19 @@
     }
     else if ([code isEqualToString:@"zh-Hans"])
     {
-        self.name = @"Chinese (Simplified)";
+        self.name = @"Simplified Chinese";
     }
     else if ([code isEqualToString:@"zh-Hant"])
     {
-        self.name = @"Chinese (Traditional)";
+        self.name = @"Traditional Chinese";
     }
     else
     {
         NSLocale* enLocale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en"] autorelease];
         self.name = [enLocale displayNameForKey:NSLocaleLanguageCode value:code];
     }
+    
+    self.name = [NSString stringWithFormat:@"%@ (%@)", self.name, code];
     
     self.quickEdit = YES;
     

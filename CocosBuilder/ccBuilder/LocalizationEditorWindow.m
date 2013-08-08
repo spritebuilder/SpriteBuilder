@@ -202,7 +202,12 @@
 {
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     
-    [handler.activeLanguages removeObjectsAtIndexes:idxs];
+    NSArray* langsToRemove = [handler.activeLanguages objectsAtIndexes:idxs];
+    
+    for (LocalizationEditorLanguage* lang in langsToRemove)
+    {
+        [handler removeActiveLangage:lang];
+    }
     
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
@@ -409,8 +414,18 @@
         
         if ([tableColumn.identifier isEqualToString:@"key"])
         {
-            // TODO: Check for duplicates
-            translation.key = object;
+            if (translation.key == NULL && (object == NULL || [object isEqualToString:@""]))
+            {
+                // This is a new entry without a key, remove it
+                [handler.translations removeObject:translation];
+                [tableTranslations reloadData];
+            }
+            else if (object != NULL && ![object isEqualToString:@""])
+            {
+                // TODO: Check for duplicates
+                translation.key = object;
+            }
+            
         }
         else if ([tableColumn.identifier isEqualToString:@"comment"])
         {
@@ -496,6 +511,26 @@
     
     self.inspectorEnabled = (row != -1);
     [self updateInspector];
+}
+
+#pragma marke Inspector key text view delegate
+
+- (BOOL)textShouldBeginEditing:(NSText *)aTextObject
+{
+    NSLog(@"startTextValue: %@", [aTextObject string]);
+    
+    self.startTextValue = [aTextObject string];
+    return YES;
+}
+
+- (void) textDidEndEditing:(NSNotification *)notification
+{
+    NSString* endTextValue = [self.inspectorTextKey string];
+    
+    if (!endTextValue || [endTextValue isEqualToString:@""])
+    {
+        self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
+    }
 }
 
 @end
