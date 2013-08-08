@@ -74,6 +74,7 @@
         
         CCBTextFieldCell* cell = [[[CCBTextFieldCell alloc] init] autorelease];
         [cell setEditable:YES];
+        [cell setFont:[NSFont systemFontOfSize:11]];
         [column setDataCell:cell];
         
         [tableTranslations addTableColumn:column];
@@ -257,6 +258,8 @@
     LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
     LocalizationEditorLanguage* lang = [self selectedLanguage];
     
+    if (!lang) return;
+    
     if (inspectorTextTranslation)
     {
         [translation.translations setObject:[inspectorTextTranslation string] forKey:lang.isoLangCode];
@@ -335,7 +338,16 @@
         }
         else if ([aTableColumn.identifier isEqualToString:@"warning"])
         {
-            return NULL;
+            if ([translation hasTranslationsForLanguages:handler.activeLanguages])
+            {
+                // All languages are covered
+                return NULL;
+            }
+            else
+            {
+                // Some language is missing
+                return [NSImage imageNamed:@"editor-warning.png"];
+            }
         }
         else
         {
@@ -379,6 +391,7 @@
                 NSString* lang = tableColumn.identifier;
                 
                 [translation.translations setObject:object forKey:lang];
+                [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
             }
         }
         

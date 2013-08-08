@@ -18,4 +18,6 @@
 
 @property (nonatomic,readonly) NSMutableDictionary* translations;
 
+- (BOOL) hasTranslationsForLanguages:(NSArray*)languages;
+
 @end

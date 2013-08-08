@@ -7,6 +7,7 @@
 //
 
 #import "LocalizationEditorTranslation.h"
+#import "LocalizationEditorLanguage.h"
 
 @implementation LocalizationEditorTranslation
 
@@ -20,6 +21,18 @@
     _translations = [[NSMutableDictionary alloc] init];
     
     return self;
+}
+
+- (BOOL) hasTranslationsForLanguages:(NSArray*)languages
+{
+    for (LocalizationEditorLanguage* lang in languages)
+    {
+        NSString* transl = [_translations objectForKey:lang.isoLangCode];
+        if (!transl) return NO;
+        if ([transl isEqualToString:@""]) return NO;
+    }
+    
+    return YES;
 }
 
 @end
