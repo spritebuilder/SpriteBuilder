@@ -205,6 +205,17 @@
     [self updateInspector];
 }
 
+- (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    
+    [handler.translations removeObjectsAtIndexes:idxs];
+    
+    [tableTranslations deselectAll:NULL];
+    [tableTranslations reloadData];
+    [self updateInspector];
+}
+
 #pragma mark Properties for Inspector
 
 - (void) setInspectorTextKey:(NSAttributedString *)inspectorTextKey

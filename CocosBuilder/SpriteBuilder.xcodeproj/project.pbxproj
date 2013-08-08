@@ -155,6 +155,7 @@
 		B7083DFE17B2CDA0006628C7 /* LocalizationEditorLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DFD17B2CDA0006628C7 /* LocalizationEditorLanguage.m */; };
 		B7083E0117B2F992006628C7 /* LocalizationEditorTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0017B2F992006628C7 /* LocalizationEditorTranslation.m */; };
 		B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0317B32623006628C7 /* LocalizationEditorLanguageTableView.m */; };
+		B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */; };
 		B732A1841799736500333C56 /* TB_build.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1821799736500333C56 /* TB_build.png */; };
 		B732A1851799736500333C56 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1831799736500333C56 /* TB_build@2x.png */; };
 		B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */; };
@@ -1141,6 +1142,8 @@
 		B7083E0017B2F992006628C7 /* LocalizationEditorTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTranslation.m; sourceTree = "<group>"; };
 		B7083E0217B32623006628C7 /* LocalizationEditorLanguageTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorLanguageTableView.h; sourceTree = "<group>"; };
 		B7083E0317B32623006628C7 /* LocalizationEditorLanguageTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorLanguageTableView.m; sourceTree = "<group>"; };
+		B7083E0517B32DAD006628C7 /* LocalizationEditorTranslationTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorTranslationTableView.h; sourceTree = "<group>"; };
+		B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTranslationTableView.m; sourceTree = "<group>"; };
 		B732A1821799736500333C56 /* TB_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_build.png; sourceTree = "<group>"; };
 		B732A1831799736500333C56 /* TB_build@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TB_build@2x.png"; sourceTree = "<group>"; };
 		B78DA3621773A89B00B85CC0 /* CCBButtonUnclickable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBButtonUnclickable.h; sourceTree = "<group>"; };
@@ -3000,6 +3003,8 @@
 				B7083E0017B2F992006628C7 /* LocalizationEditorTranslation.m */,
 				B7083E0217B32623006628C7 /* LocalizationEditorLanguageTableView.h */,
 				B7083E0317B32623006628C7 /* LocalizationEditorLanguageTableView.m */,
+				B7083E0517B32DAD006628C7 /* LocalizationEditorTranslationTableView.h */,
+				B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */,
 			);
 			name = "Localization Editor";
 			sourceTree = "<group>";
@@ -5520,6 +5525,7 @@
 				B7083DFE17B2CDA0006628C7 /* LocalizationEditorLanguage.m in Sources */,
 				B7083E0117B2F992006628C7 /* LocalizationEditorTranslation.m in Sources */,
 				B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */,
+				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,4 +29,6 @@
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs;
 - (IBAction)selectedCurrentLanguage:(id)sender;
 
+- (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs;
+
 @end
