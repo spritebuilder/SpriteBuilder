@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class LocalizationEditorWindow;
 @class LocalizationEditorLanguage;
+@class LocalizationEditorTranslation;
 
 @interface LocalizationEditorHandler : NSObject
 {
@@ -24,6 +25,7 @@
 @property (nonatomic,readonly) NSMutableArray* translations;
 @property (nonatomic,readonly) LocalizationEditorWindow* windowController;
 
+- (BOOL) isValidKey:(NSString*) key forTranslation:(LocalizationEditorTranslation*) transl;
 - (LocalizationEditorLanguage*) getLanguageByName:(NSString*)name;
 - (void) addActiveLanguage:(LocalizationEditorLanguage*) lang;
 - (void) removeActiveLangage:(LocalizationEditorLanguage*) lang;

@@ -40,6 +40,19 @@
     return self;
 }
 
+- (BOOL) isValidKey:(NSString*) key forTranslation:(LocalizationEditorTranslation*) transl
+{
+    if (!key) return NO; // Missing key
+    if ([key isEqualToString:@""]) return NO; // Missing key
+    
+    for (LocalizationEditorTranslation* cTransl in self.translations)
+    {
+        if (cTransl == transl) continue;
+        if ([cTransl.key isEqualToString:key]) return NO; // Duplicate entry
+    }
+    return YES;
+}
+
 - (LocalizationEditorLanguage*) getLanguageByName:(NSString*)name
 {
     for (LocalizationEditorLanguage* lang in languages)

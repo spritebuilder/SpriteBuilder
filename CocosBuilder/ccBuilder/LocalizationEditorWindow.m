@@ -422,8 +422,22 @@
             }
             else if (object != NULL && ![object isEqualToString:@""])
             {
-                // TODO: Check for duplicates
-                translation.key = object;
+                if (![handler isValidKey:object forTranslation:translation])
+                {
+                    // This is a duplicate key
+                    NSBeep();
+                    
+                    if (translation.key == NULL)
+                    {
+                        // Key hasn't been set yet, select it again so user can edit
+                        [tableTranslations editColumn:1 row:row withEvent:NULL select:YES];
+                    }
+                }
+                else
+                {
+                    // All is good change the key
+                    translation.key = object;
+                }
             }
             
         }
@@ -517,8 +531,6 @@
 
 - (BOOL)textShouldBeginEditing:(NSText *)aTextObject
 {
-    NSLog(@"startTextValue: %@", [aTextObject string]);
-    
     self.startTextValue = [aTextObject string];
     return YES;
 }
@@ -530,6 +542,21 @@
     if (!endTextValue || [endTextValue isEqualToString:@""])
     {
         self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
+        return;
+    }
+    
+    // Check for duplicates
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    
+    NSInteger row = [tableTranslations selectedRow];
+    LocalizationEditorTranslation* transl = [handler.translations objectAtIndex:row];
+    
+    if (![handler isValidKey:endTextValue forTranslation:transl])
+    {
+        // Revert to old value
+        NSBeep();
+        self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
+        return;
     }
 }
 
