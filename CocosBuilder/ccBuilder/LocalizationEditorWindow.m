@@ -527,7 +527,7 @@
     [self updateInspector];
 }
 
-#pragma marke Inspector key text view delegate
+#pragma mark Inspector key text view delegate
 
 - (BOOL)textShouldBeginEditing:(NSText *)aTextObject
 {
@@ -558,6 +558,21 @@
         self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
         return;
     }
+}
+
+#pragma mark Split view delegate
+
+- (CGFloat) splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+    if (proposedMinimumPosition < 300) return 300;
+    else return proposedMinimumPosition;
+}
+
+- (CGFloat) splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMaximumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+    float max = splitView.frame.size.height - 40;
+    if (proposedMaximumPosition > max) return max;
+    else return proposedMaximumPosition;
 }
 
 @end

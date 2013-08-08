@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate>
+@interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate>
 {
     IBOutlet NSTableView* tableTranslations;
     IBOutlet NSTableView* tableLanguages;
