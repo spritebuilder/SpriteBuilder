@@ -406,8 +406,26 @@
         [self writeCachedString:prop isPath: YES];
     }
     else if ([type isEqualToString:@"Text"]
-             || [type isEqualToString:@"String"]
-             || [type isEqualToString:@"FontTTF"])
+             || [type isEqualToString:@"String"])
+    {
+        NSString* str = NULL;
+        BOOL localized = NO;
+        
+        if ([prop isKindOfClass:[NSString class]])
+        {
+            str = prop;
+        }
+        else
+        {
+            str = [prop objectAtIndex:0];
+            localized = [[prop objectAtIndex:1] boolValue];
+        }
+        if (!str) str = @"";
+        
+        [self writeCachedString:str isPath: NO];
+        [self writeBool:localized];
+    }
+    else if ([type isEqualToString:@"FontTTF"])
     {
         [self writeCachedString:prop isPath: NO];
     }
@@ -583,8 +601,20 @@
             [self addToStringCache:value isPath:YES];
         }
         else if ([type isEqualToString:@"Text"]
-                 || [type isEqualToString:@"FontTTF"]
                  || [type isEqualToString:@"String"])
+        {
+            NSString* str = NULL;
+            if ([value isKindOfClass:[NSString class]])
+            {
+                str = value;
+            }
+            else
+            {
+                str = [value objectAtIndex:0];
+            }
+            [self addToStringCache:str isPath:NO];
+        }
+        else if ([type isEqualToString:@"FontTTF"])
         {
             [self addToStringCache:value isPath:NO];
         }
