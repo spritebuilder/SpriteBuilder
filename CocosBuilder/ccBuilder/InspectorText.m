@@ -23,30 +23,71 @@
  */
 
 #import "InspectorText.h"
+#import "StringPropertySetter.h"
+#import "AppDelegate.h"
+#import "LocalizationEditorHandler.h"
 
 @implementation InspectorText
 
 - (void) setText:(NSAttributedString *)text
 {
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    
     NSString* str = [text string];
     if (!str) str = @"";
     
-    [self setPropertyForSelection:str];
+    //[self setPropertyForSelection:str];
+    [StringPropertySetter setString:str forNode:selection andProp:propertyName];
+    
+    [self updateAffectedProperties];
+    
+    [self willChangeValueForKey:@"hasTranslation"];
+    [self didChangeValueForKey:@"hasTranslation"];
 }
 
 - (NSAttributedString*) text
 {
-    NSAttributedString* text = [[[NSAttributedString alloc] initWithString:[self propertyForSelection]] autorelease];
-    return text;
+    //NSAttributedString* text = [[[NSAttributedString alloc] initWithString:[self propertyForSelection]] autorelease];
+    //return text;
+    
+    NSString* str = [StringPropertySetter stringForNode:selection andProp:propertyName];
+    return [[[NSAttributedString alloc] initWithString:str] autorelease];
 }
 
 - (void)controlTextDidChange:(NSNotification *)note
 {
     NSTextField * changedField = [note object];
-    NSString* text = [changedField stringValue];
-    if (!text) text = @"";
+    //NSString* text = [changedField stringValue];
+    //if (!text) text = @"";
     
-    [self setPropertyForSelection:text];
+    //[self setPropertyForSelection:text];
+    [self setText:[changedField attributedStringValue]];
+}
+
+- (void) setLocalize:(BOOL)localize
+{
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    
+    [StringPropertySetter setLocalized:localize forNode:selection andProp:propertyName];
+    
+    [self updateAffectedProperties];
+}
+
+- (BOOL) localize
+{
+    return [StringPropertySetter isLocalizedNode:selection andProp:propertyName];
+}
+
+- (BOOL) hasTranslation
+{
+    return [StringPropertySetter hasTranslationForNode:selection andProp:propertyName];
+}
+
+- (IBAction)pressedEditTranslation:(id)sender
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    [handler openEditor:sender];
+    [handler createOrEditTranslationForKey:[[self text] string]];
 }
 
 @end

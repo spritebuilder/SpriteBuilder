@@ -249,6 +249,11 @@
     [handler setEdited];
 }
 
+- (void) selectRow:(int)row
+{
+    [tableTranslations selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+}
+
 #pragma mark Properties for Inspector
 
 - (void) setInspectorTextKey:(NSAttributedString *)inspectorTextKey

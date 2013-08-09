@@ -131,6 +131,12 @@
         {
             NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:lang.name action:@selector(menuSetLanguage:) keyEquivalent:@""];
             item.target = self;
+            
+            if (lang == currentLanguage)
+            {
+                [item setState:NSOnState];
+            }
+            
             [languageMenu addItem:item];
         }
     }
@@ -163,7 +169,14 @@
         }
     }
     
-    [self updateLanguageMenu];
+    if (activeLanguages.count > 0)
+    {
+        [self setCurrentLanguage:[activeLanguages objectAtIndex:0]];
+    }
+    else
+    {
+        [self setCurrentLanguage:NULL];
+    }
 }
 
 - (void) setEdited
@@ -173,12 +186,35 @@
 
 - (void) setCurrentLanguage:(LocalizationEditorLanguage*) lang
 {
+    LocalizationEditorLanguage* newLang = NULL;
+    
+    if ([activeLanguages containsObject:lang])
+    {
+        newLang = lang;
+    }
+    else if (activeLanguages.count > 0)
+    {
+        newLang = [activeLanguages objectAtIndex:0];
+    }
+    else
+    {
+        newLang = NULL;
+    }
+    
+    if (newLang != currentLanguage)
+    {
+        // TODO: Refresh file
+        currentLanguage = newLang;
+        NSLog(@"Refresh language");
+    }
+    
+    [self updateLanguageMenu];
 }
 
 - (void) menuSetLanguage:(id)sender
 {
     NSString* name = [sender title];
-    NSLog(@"Set language: %@",name);
+    [self setCurrentLanguage:[self getLanguageByName:name]];
 }
 
 - (BOOL) isValidKey:(NSString*) key forTranslation:(LocalizationEditorTranslation*) transl
@@ -217,7 +253,7 @@
     lang.quickEdit = YES;
     if ([activeLanguages containsObject:lang]) return;
     [activeLanguages addObject:lang];
-    [self updateLanguageMenu];
+    [self setCurrentLanguage:currentLanguage];
 }
 
 - (void) removeActiveLangage:(LocalizationEditorLanguage*) lang
@@ -228,7 +264,7 @@
     {
         [transl.translations removeObjectForKey:lang.isoLangCode];
     }
-    [self updateLanguageMenu];
+    [self setCurrentLanguage:currentLanguage];
 }
 
 - (IBAction)openEditor:(id)sender
@@ -239,6 +275,62 @@
     }
     [windowController.window makeKeyAndOrderFront:sender];
     windowController.hasOpenFile = (managedFile != NULL);
+}
+
+- (NSString*) translationForKey:(NSString*)key
+{
+    if (!key) return NULL;
+    if (!currentLanguage) return key;
+    
+    for (LocalizationEditorTranslation* transl in translations)
+    {
+        if ([transl.key isEqualToString:key])
+        {
+            NSString* val = [transl.translations objectForKey:currentLanguage.isoLangCode];
+            if (val)
+            {
+                return val;
+            }
+            else
+            {
+                return key;
+            }
+        }
+    }
+    return key;
+}
+
+- (BOOL) hasTranslationForKey:(NSString*)key
+{
+    if (!key) return NO;
+    
+    for (LocalizationEditorTranslation* transl in translations)
+    {
+        if ([transl.key isEqualToString:key]) return YES;
+    }
+    return NO;
+}
+
+- (void) createOrEditTranslationForKey:(NSString*)key
+{
+    if (![self hasTranslationForKey:key])
+    {
+        LocalizationEditorTranslation* transl = [[[LocalizationEditorTranslation alloc] init] autorelease];
+        transl.key = key;
+        [translations addObject:transl];
+        [windowController reload];
+    }
+    
+    int row = 0;
+    for (LocalizationEditorTranslation* transl in translations)
+    {
+        if ([transl.key isEqualToString:key])
+        {
+            [windowController selectRow:row];
+            break;
+        }
+        row++;
+    }
 }
 
 - (void) dealloc

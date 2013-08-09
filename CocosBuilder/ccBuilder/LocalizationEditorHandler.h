@@ -19,6 +19,7 @@
     NSMutableArray* activeLanguages;
     NSMutableArray* translations;
     NSString* managedFile;
+    LocalizationEditorLanguage* currentLanguage;
     
     LocalizationEditorWindow* windowController;
     
@@ -37,5 +38,11 @@
 - (void) addActiveLanguage:(LocalizationEditorLanguage*) lang;
 - (void) removeActiveLangage:(LocalizationEditorLanguage*) lang;
 - (void) setEdited;
+
+- (NSString*) translationForKey:(NSString*)key;
+- (BOOL) hasTranslationForKey:(NSString*)key;
+
+- (IBAction)openEditor:(id)sender;
+- (void) createOrEditTranslationForKey:(NSString*)key;
 
 @end

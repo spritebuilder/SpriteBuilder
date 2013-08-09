@@ -35,5 +35,6 @@
 - (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs;
 
 - (void) reload;
+- (void) selectRow:(int)row;
 
 @end
