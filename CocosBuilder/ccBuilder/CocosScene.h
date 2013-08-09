@@ -127,6 +127,8 @@ enum {
 
 -(id) initWithAppDelegate:(AppDelegate*)app;
 
+- (void) forceRedraw;
+
 - (void) scrollWheel:(NSEvent *)theEvent;
 
 - (void) setStageSize: (CGSize) size centeredOrigin:(BOOL)centeredOrigin;

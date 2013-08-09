@@ -49,7 +49,10 @@
 {
     NSString* inspectorClassName = [NSString stringWithFormat:@"Inspector%@",t];
     
-    return [[[NSClassFromString(inspectorClassName) alloc] initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e] autorelease];
+    InspectorValue* inspector = [[[NSClassFromString(inspectorClassName) alloc] initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e] autorelease];
+    inspector.propertyType = t;
+    
+    return inspector;
 }
 
 - (id) initWithSelection:(CCNode*)s andPropertyName:(NSString*)pn andDisplayName:(NSString*) dn andExtra:(NSString*)e;
@@ -206,6 +209,7 @@
 
 - (void)dealloc
 {
+    self.propertyType = NULL;
     self.affectsProperties = NULL;
     self.textFieldOriginalValue = NULL;
     [selection release];

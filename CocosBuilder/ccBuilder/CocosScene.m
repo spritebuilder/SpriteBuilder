@@ -1126,6 +1126,11 @@ CGPoint ccpRound(CGPoint pt)
 
 #pragma mark Updates every frame
 
+- (void) forceRedraw
+{
+    [self nextFrame:0];
+}
+
 - (void) nextFrame:(ccTime) time
 {
     // Recenter the content layer

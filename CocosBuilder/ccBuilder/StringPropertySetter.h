@@ -11,6 +11,8 @@
 
 @interface StringPropertySetter : NSObject
 
++ (void) refreshStringProp:(NSString*)prop forNode:(CCNode*)node;
+
 + (void) setString:(NSString*)str forNode:(CCNode*)node andProp:(NSString*)prop;
 + (NSString*) stringForNode:(CCNode*)node andProp:(NSString*)prop;
 
@@ -18,5 +20,6 @@
 + (BOOL) isLocalizedNode:(CCNode*)node andProp:(NSString*)prop;
 
 + (BOOL) hasTranslationForNode:(CCNode*)node andProp:(NSString*)prop;
++ (void) refreshAllStringProps;
 
 @end

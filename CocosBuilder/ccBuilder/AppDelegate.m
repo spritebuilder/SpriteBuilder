@@ -758,6 +758,20 @@ static AppDelegate* sharedAppDelegate;
     }
 }
 
+- (void) refreshPropertiesOfType:(NSString*)type
+{
+    if (!self.selectedNode) return;
+    
+    for (NSString* name in currentInspectorValues)
+    {
+        InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+        if ([inspectorValue.propertyType isEqualToString:type])
+        {
+            [inspectorValue refresh];
+        }
+    }
+}
+
 
 static InspectorValue* lastInspectorValue;
 static BOOL hideAllToNextSeparator;

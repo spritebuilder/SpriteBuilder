@@ -314,6 +314,7 @@ enum {
 // PlugIns and properties
 @property (nonatomic,readonly) PlugInManager* plugInManager;
 - (void) refreshProperty:(NSString*) name;
+- (void) refreshPropertiesOfType:(NSString*)type;
 
 @property (nonatomic,readonly) IBOutlet LocalizationEditorHandler* localizationEditorHandler;
 

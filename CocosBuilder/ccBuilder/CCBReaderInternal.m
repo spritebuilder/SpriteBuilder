@@ -35,6 +35,7 @@
 #import "ResourceManager.h"
 #import "NodeGraphPropertySetter.h"
 #import "PositionPropertySetter.h"
+#import "StringPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 
 NSDictionary* renamedProperties = NULL;
@@ -266,9 +267,22 @@ NSDictionary* renamedProperties = NULL;
     else if ([type isEqualToString:@"Text"]
              || [type isEqualToString:@"String"])
     {
-        NSString* str = serializedValue;
+        NSString* str = NULL;
+        BOOL localized = NO;
+        
+        if ([serializedValue isKindOfClass:[NSString class]])
+        {
+            str = serializedValue;
+        }
+        else
+        {
+            str = [serializedValue objectAtIndex:0];
+            localized = [[serializedValue objectAtIndex:1] boolValue];
+        }
+        
         if (!str) str = @"";
-        [node setValue:str forKey:name];
+        [StringPropertySetter setString:str forNode:node andProp:name];
+        [StringPropertySetter setLocalized:localized forNode:node andProp:name];
     }
     else if ([type isEqualToString:@"FontTTF"])
     {

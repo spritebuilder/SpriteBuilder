@@ -25,6 +25,7 @@
 #import "InspectorText.h"
 #import "StringPropertySetter.h"
 #import "AppDelegate.h"
+#import "CocosScene.h"
 #import "LocalizationEditorHandler.h"
 
 @implementation InspectorText
@@ -81,6 +82,19 @@
 - (BOOL) hasTranslation
 {
     return [StringPropertySetter hasTranslationForNode:selection andProp:propertyName];
+}
+
+- (void) refresh
+{
+    [self willChangeValueForKey:@"text"];
+    [self willChangeValueForKey:@"localize"];
+    [self willChangeValueForKey:@"hasTranslation"];
+    
+    [self didChangeValueForKey:@"text"];
+    [self didChangeValueForKey:@"localize"];
+    [self didChangeValueForKey:@"hasTranslation"];
+    
+    [StringPropertySetter refreshStringProp:propertyName forNode:selection];
 }
 
 - (IBAction)pressedEditTranslation:(id)sender

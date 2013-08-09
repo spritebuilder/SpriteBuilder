@@ -55,6 +55,7 @@
 @property (nonatomic,retain) InspectorValue* inspectorValueBelow;
 @property (nonatomic,assign) BOOL inPopoverWindow;
 @property (nonatomic,retain) NSString* textFieldOriginalValue;
+@property (nonatomic,copy) NSString* propertyType;
 
 + (id) inspectorOfType:(NSString*) t withSelection:(CCNode*)s andPropertyName:(NSString*)pn andDisplayName:(NSString*) dn andExtra:(NSString*)e;
 

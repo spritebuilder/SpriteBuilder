@@ -11,6 +11,10 @@
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorTranslation.h"
 
+#import "AppDelegate.h"
+#import "CocosScene.h"
+#import "StringPropertySetter.h"
+
 @implementation LocalizationEditorHandler
 
 @synthesize languages;
@@ -76,6 +80,10 @@
     
     // Store
     [ser writeToFile:managedFile atomically:YES];
+    
+    // Make sure that the scene is redrawn
+    [StringPropertySetter refreshAllStringProps];
+    [[CocosScene cocosScene] forceRedraw];
 }
 
 - (BOOL) load
@@ -181,6 +189,9 @@
 
 - (void) setEdited
 {
+    [[AppDelegate appDelegate] refreshPropertiesOfType:@"String"];
+    [[AppDelegate appDelegate] refreshPropertiesOfType:@"Text"];
+    
     [self store];
 }
 
@@ -203,9 +214,11 @@
     
     if (newLang != currentLanguage)
     {
-        // TODO: Refresh file
         currentLanguage = newLang;
-        NSLog(@"Refresh language");
+        
+        // Refresh file
+        [StringPropertySetter refreshAllStringProps];
+        [[CocosScene cocosScene] forceRedraw];
     }
     
     [self updateLanguageMenu];
@@ -319,6 +332,7 @@
         transl.key = key;
         [translations addObject:transl];
         [windowController reload];
+        [self store];
     }
     
     int row = 0;

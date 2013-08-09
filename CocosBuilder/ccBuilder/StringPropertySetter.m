@@ -11,6 +11,8 @@
 #import "CCNode+NodeInfo.h"
 #import "AppDelegate.h"
 #import "LocalizationEditorHandler.h"
+#import "CocosScene.h"
+#import "PlugInNode.h"
 
 @implementation StringPropertySetter
 
@@ -63,6 +65,35 @@
 {
     NSString* str = [self stringForNode:node andProp:prop];
     return [[AppDelegate appDelegate].localizationEditorHandler hasTranslationForKey:str];
+}
+
++ (void) refreshAllStringProps
+{
+    CCNode* rootNode = [CocosScene cocosScene].rootNode;
+    [StringPropertySetter refreshStringPropsForNodeTree:rootNode];
+}
+
++ (void) refreshStringPropsForNodeTree:(CCNode*)node
+{
+    // Refresh all String and Text properties
+    NSArray* props = [node.plugIn readablePropertiesForType:@"String" node:node];
+    for (NSString* prop in props)
+    {
+        [StringPropertySetter refreshStringProp:prop forNode:node];
+    }
+    props = [node.plugIn readablePropertiesForType:@"Text" node:node];
+    for (NSString* prop in props)
+    {
+        [StringPropertySetter refreshStringProp:prop forNode:node];
+    }
+    
+    // Refresh all children also
+    CCArray* childs = [node children];
+    CCNode* child = NULL;
+    CCARRAY_FOREACH(childs, child)
+    {
+        [StringPropertySetter refreshStringPropsForNodeTree:child];
+    }
 }
 
 @end

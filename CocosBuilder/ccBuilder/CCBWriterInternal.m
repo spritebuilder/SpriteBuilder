@@ -28,6 +28,7 @@
 #import "PlugInNode.h"
 #import "TexturePropertySetter.h"
 #import "PositionPropertySetter.h"
+#import "StringPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 #import "AppDelegate.h"
 
@@ -355,9 +356,10 @@
     else if ([type isEqualToString:@"Text"]
              || [type isEqualToString:@"String"])
     {
-        NSString* str = [node valueForKey:name];
+        NSString* str = [StringPropertySetter stringForNode:node andProp:name];
+        BOOL localized = [StringPropertySetter isLocalizedNode:node andProp:name];
         if (!str) str = @"";
-        serializedValue = str;
+        serializedValue = [NSArray arrayWithObjects:str, [NSNumber numberWithBool:localized], nil];
     }
     else if ([type isEqualToString:@"FontTTF"])
     {
