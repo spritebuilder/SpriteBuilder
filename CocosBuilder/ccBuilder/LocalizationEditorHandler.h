@@ -21,6 +21,8 @@
     NSString* managedFile;
     
     LocalizationEditorWindow* windowController;
+    
+    IBOutlet NSMenu* languageMenu;
 }
 
 @property (nonatomic,readonly) NSMutableArray* languages;

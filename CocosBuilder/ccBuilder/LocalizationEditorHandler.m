@@ -115,6 +115,27 @@
     return YES;
 }
 
+- (void) updateLanguageMenu
+{
+    [languageMenu removeAllItems];
+    
+    if (activeLanguages.count == 0)
+    {
+        NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:@"No Languages Available" action:NULL keyEquivalent:@""] autorelease];
+        [item setEnabled:NO];
+        [languageMenu addItem:item];
+    }
+    else
+    {
+        for (LocalizationEditorLanguage* lang in activeLanguages)
+        {
+            NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:lang.name action:@selector(menuSetLanguage:) keyEquivalent:@""];
+            item.target = self;
+            [languageMenu addItem:item];
+        }
+    }
+}
+
 - (NSString*) managedFile
 {
     return managedFile;
@@ -129,22 +150,35 @@
     
     [self reset];
     
-    if (!file) return;
+    if (file)
+    {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:managedFile])
+        {
+            [self load];
+        }
+        else
+        {
+            [self store];
+            windowController.hasOpenFile = YES;
+        }
+    }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:managedFile])
-    {
-        [self load];
-    }
-    else
-    {
-        [self store];
-        windowController.hasOpenFile = YES;
-    }
+    [self updateLanguageMenu];
 }
 
 - (void) setEdited
 {
     [self store];
+}
+
+- (void) setCurrentLanguage:(LocalizationEditorLanguage*) lang
+{
+}
+
+- (void) menuSetLanguage:(id)sender
+{
+    NSString* name = [sender title];
+    NSLog(@"Set language: %@",name);
 }
 
 - (BOOL) isValidKey:(NSString*) key forTranslation:(LocalizationEditorTranslation*) transl
@@ -183,6 +217,7 @@
     lang.quickEdit = YES;
     if ([activeLanguages containsObject:lang]) return;
     [activeLanguages addObject:lang];
+    [self updateLanguageMenu];
 }
 
 - (void) removeActiveLangage:(LocalizationEditorLanguage*) lang
@@ -193,6 +228,7 @@
     {
         [transl.translations removeObjectForKey:lang.isoLangCode];
     }
+    [self updateLanguageMenu];
 }
 
 - (IBAction)openEditor:(id)sender
