@@ -58,7 +58,7 @@
     warnings = [w retain];
     
     // Setup extensions to copy
-    copyExtensions = [[NSArray alloc] initWithObjects:@"jpg",@"png", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf", nil];
+    copyExtensions = [[NSArray alloc] initWithObjects:@"jpg",@"png", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
     
     publishedSpriteSheetNames = [[NSMutableArray alloc] init];
     
@@ -377,6 +377,17 @@
 
 - (BOOL) publishRegularFile:(NSString*) srcPath to:(NSString*) dstPath
 {
+    // Check if file already exists
+    if ([[NSFileManager defaultManager] fileExistsAtPath:dstPath] &&
+        [[CCBFileUtil modificationDateForFile:srcPath] isEqualToDate:[CCBFileUtil modificationDateForFile:dstPath]])
+    {
+        return YES;
+    }
+    
+    // Copy file and make sure modification date is the same as for src file
+    [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:dstPath error:NULL];
+    [CCBFileUtil setModificationDate:[CCBFileUtil modificationDateForFile:srcPath] forFile:dstPath];
+    
     return YES;
 }
 
