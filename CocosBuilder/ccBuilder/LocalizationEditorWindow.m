@@ -491,9 +491,12 @@
 
 - (id < NSPasteboardWriting >)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row
 {
-    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
-    
-    return [handler.translations objectAtIndex:row];
+    if (tableView == tableTranslations)
+    {
+        LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+        return [handler.translations objectAtIndex:row];
+    }
+    return NULL;
 }
 
 - (NSDragOperation)tableView:(NSTableView *)aTableView validateDrop:(id < NSDraggingInfo >)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation
