@@ -23,28 +23,77 @@
  */
 
 #import "InspectorString.h"
+#import "StringPropertySetter.h"
+#import "AppDelegate.h"
+#import "CocosScene.h"
+#import "LocalizationEditorHandler.h"
 
 @implementation InspectorString
 
 - (void) setText:(NSString *)text
 {
-    if (!text) text = @"";
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
-    [self setPropertyForSelection:text];
+    NSString* str = text;
+    if (!str) str = @"";
+    
+    [StringPropertySetter setString:str forNode:selection andProp:propertyName];
+    
+    [self updateAffectedProperties];
+    
+    [self willChangeValueForKey:@"hasTranslation"];
+    [self didChangeValueForKey:@"hasTranslation"];
 }
 
 - (NSString*) text
 {
-    return [self propertyForSelection];
+    return [StringPropertySetter stringForNode:selection andProp:propertyName];
 }
 
 - (void)controlTextDidChange:(NSNotification *)note
 {
     NSTextField * changedField = [note object];
     NSString* text = [changedField stringValue];
-    if (!text) text = @"";
+    [self setText:text];
+}
+
+- (void) setLocalize:(BOOL)localize
+{
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
-    [self setPropertyForSelection:text];
+    [StringPropertySetter setLocalized:localize forNode:selection andProp:propertyName];
+    
+    [self updateAffectedProperties];
+}
+
+- (BOOL) localize
+{
+    return [StringPropertySetter isLocalizedNode:selection andProp:propertyName];
+}
+
+- (BOOL) hasTranslation
+{
+    return [StringPropertySetter hasTranslationForNode:selection andProp:propertyName];
+}
+
+- (void) refresh
+{
+    [self willChangeValueForKey:@"text"];
+    [self willChangeValueForKey:@"localize"];
+    [self willChangeValueForKey:@"hasTranslation"];
+    
+    [self didChangeValueForKey:@"text"];
+    [self didChangeValueForKey:@"localize"];
+    [self didChangeValueForKey:@"hasTranslation"];
+    
+    [StringPropertySetter refreshStringProp:propertyName forNode:selection];
+}
+
+- (IBAction)pressedEditTranslation:(id)sender
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    [handler openEditor:sender];
+    [handler createOrEditTranslationForKey:[self text]];
 }
 
 @end

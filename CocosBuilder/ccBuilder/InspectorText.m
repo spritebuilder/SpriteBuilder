@@ -37,7 +37,6 @@
     NSString* str = [text string];
     if (!str) str = @"";
     
-    //[self setPropertyForSelection:str];
     [StringPropertySetter setString:str forNode:selection andProp:propertyName];
     
     [self updateAffectedProperties];
@@ -48,9 +47,6 @@
 
 - (NSAttributedString*) text
 {
-    //NSAttributedString* text = [[[NSAttributedString alloc] initWithString:[self propertyForSelection]] autorelease];
-    //return text;
-    
     NSString* str = [StringPropertySetter stringForNode:selection andProp:propertyName];
     return [[[NSAttributedString alloc] initWithString:str] autorelease];
 }
@@ -58,10 +54,6 @@
 - (void)controlTextDidChange:(NSNotification *)note
 {
     NSTextField * changedField = [note object];
-    //NSString* text = [changedField stringValue];
-    //if (!text) text = @"";
-    
-    //[self setPropertyForSelection:text];
     [self setText:[changedField attributedStringValue]];
 }
 
