@@ -32,6 +32,7 @@
 {
     btns = [[NSMutableDictionary alloc] init];
     
+    /*
     selectedEvents = [[selection extraPropForKey:[NSString stringWithFormat:@"%@CtrlEvts", propertyName]] intValue];
     
     [btns setObject:btnDown forKey:[NSNumber numberWithInt:CCControlEventTouchDown]];
@@ -43,6 +44,7 @@
     [btns setObject:btnUpOutside forKey:[NSNumber numberWithInt:CCControlEventTouchUpOutside]];
     [btns setObject:btnCancel forKey:[NSNumber numberWithInt:CCControlEventTouchCancel]];
     [btns setObject:btnValueChanged forKey:[NSNumber numberWithInt:CCControlEventValueChanged]];
+    
     
     for (NSNumber* evtVal in btns)
     {
@@ -62,6 +64,7 @@
         [btn setAction:@selector(toggledCheck:)];
         [btn setTag:evt];
     }
+    */
 }
 
 - (void) dealloc
@@ -95,6 +98,7 @@
 
 - (void) toggledCheck:(id)sender
 {
+    /*
     NSButton* btn = sender;
     
     CCControlEvent evt = [btn tag];
@@ -109,6 +113,7 @@
     }
     
     [selection setExtraProp:[NSNumber numberWithInt:selectedEvents] forKey:[NSString stringWithFormat:@"%@CtrlEvts", propertyName]];
+     */
 }
 
 @end

@@ -34,14 +34,14 @@
     self = [super init];
     if (!self) return NULL;
     
-    bgVertical = [CCScale9Sprite spriteWithFile:@"ruler-bg-vertical.png"];
-    bgVertical.anchorPoint = ccp(0,0);
+//    bgVertical = [CCScale9Sprite spriteWithFile:@"ruler-bg-vertical.png"];
+//    bgVertical.anchorPoint = ccp(0,0);
     
-    bgHorizontal = [CCScale9Sprite spriteWithFile:@"ruler-bg-horizontal.png"];
-    bgHorizontal.anchorPoint = ccp(0,0);
+//    bgHorizontal = [CCScale9Sprite spriteWithFile:@"ruler-bg-horizontal.png"];
+//    bgHorizontal.anchorPoint = ccp(0,0);
     
-    [self addChild:bgVertical];
-    [self addChild:bgHorizontal z:2];
+//    [self addChild:bgVertical];
+//    [self addChild:bgHorizontal z:2];
     
     marksVertical = [CCNode node];
     marksHorizontal = [CCNode node];
@@ -98,8 +98,8 @@
     zoom = zm;
     
     // Resize backrounds
-    bgHorizontal.preferedSize = CGSizeMake(winSize.width, kCCBRulerWidth);
-    bgVertical.preferedSize = CGSizeMake(kCCBRulerWidth, winSize.height);
+//    bgHorizontal.preferedSize = CGSizeMake(winSize.width, kCCBRulerWidth);
+//    bgVertical.preferedSize = CGSizeMake(kCCBRulerWidth, winSize.height);
     
     // Add marks and numbers
     [marksVertical removeAllChildrenWithCleanup:YES];

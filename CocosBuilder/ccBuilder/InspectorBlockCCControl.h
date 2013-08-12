@@ -23,7 +23,7 @@
  */
 
 #import "InspectorValue.h"
-#import "CCControl.h"
+//#import "CCControl.h"
 
 @interface InspectorBlockCCControl : InspectorValue
 {
@@ -39,7 +39,7 @@
     
     NSMutableDictionary* btns;
     
-    CCControlEvent selectedEvents;
+    //CCControlEvent selectedEvents;
 }
 
 

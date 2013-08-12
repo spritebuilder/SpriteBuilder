@@ -22,8 +22,10 @@
  * THE SOFTWARE.
  */
 
+#warning Fix with new CCScale9!
+
 #import "StickyNote.h"
-#import "CCScale9Sprite.h"
+//#import "CCScale9Sprite.h"
 #import "CCBGlobals.h"
 
 @implementation StickyNote
@@ -38,10 +40,10 @@
     self.anchorPoint = ccp(0,1);
     self.ignoreAnchorPointForPosition = NO;
     
-    bg = [CCScale9Sprite spriteWithFile:@"notes-bg.png"];
-    bg.anchorPoint = ccp(0,0);
-    bg.position = ccp(0,0);
-    [self addChild:bg z:0];
+    //bg = [CCScale9Sprite spriteWithFile:@"notes-bg.png"];
+    //bg.anchorPoint = ccp(0,0);
+    //bg.position = ccp(0,0);
+    //[self addChild:bg z:0];
     
     lbl = [CCLabelTTF labelWithString:@"Double click to edit" fontName:@"MarkerFelt-Thin" fontSize:14];
     lbl.anchorPoint = ccp(0,0);
@@ -59,7 +61,7 @@
 
 - (void) setContentSize:(CGSize)contentSize
 {
-    bg.preferedSize = contentSize;
+    //bg.preferedSize = contentSize;
     
     NSLog(@"set lbl.dimensions: (%f,%f)", contentSize.width - (2*kCCBNoteLblInsetH), contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot);
     

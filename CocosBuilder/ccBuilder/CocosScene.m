@@ -43,7 +43,7 @@
 #import "SequencerSequence.h"
 #import "SequencerNodeProperty.h"
 #import "SequencerKeyframe.h"
-#import "CCScale9Sprite.h"
+//#import "CCScale9Sprite.h"
 #import "Tupac.h"
 
 #define kCCBSelectionOutset 3
