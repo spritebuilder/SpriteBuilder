@@ -27,8 +27,6 @@
 //#import "CCScale9Sprite.h"
 #import "AppDelegate.h"
 
-#warning FIX with new scale 9
-
 #define kCCBGuideGrabAreaWidth 15
 #define kCCBGuideMoveAreaRadius 4
 #define kCCBGuideSnapDistance 4
@@ -84,11 +82,11 @@
             
             if (CGRectContainsPoint(viewRect, viewPos))
             {
-                //CCScale9Sprite* sprtGuide = [CCScale9Sprite spriteWithFile:@"ruler-guide.png"];
-                //sprtGuide.preferedSize = CGSizeMake(winSize.width, 2);
-                //sprtGuide.anchorPoint = ccp(0, 0.5f);
-                //sprtGuide.position = viewPos;
-                //[self addChild:sprtGuide];
+                CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithFile:@"ruler-guide.png"];
+                sprtGuide.contentSize = CGSizeMake(winSize.width, 2);
+                sprtGuide.anchorPoint = ccp(0, 0.5f);
+                sprtGuide.position = viewPos;
+                [self addChild:sprtGuide];
             }
         }
         else
@@ -98,12 +96,12 @@
             
             if (CGRectContainsPoint(viewRect, viewPos))
             {
-                //CCScale9Sprite* sprtGuide = [CCScale9Sprite spriteWithFile:@"ruler-guide.png"];
-                //sprtGuide.preferedSize = CGSizeMake(winSize.height, 2);
-                //sprtGuide.anchorPoint = ccp(0, 0.5f);
-                //sprtGuide.rotation = -90;
-                //sprtGuide.position = viewPos;
-                //[self addChild:sprtGuide];
+                CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithFile:@"ruler-guide.png"];
+                sprtGuide.contentSize = CGSizeMake(winSize.height, 2);
+                sprtGuide.anchorPoint = ccp(0, 0.5f);
+                sprtGuide.rotation = -90;
+                sprtGuide.position = viewPos;
+                [self addChild:sprtGuide];
             }
         }
     }

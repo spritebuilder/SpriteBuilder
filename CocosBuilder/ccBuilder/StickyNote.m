@@ -22,8 +22,6 @@
  * THE SOFTWARE.
  */
 
-#warning Fix with new CCScale9!
-
 #import "StickyNote.h"
 #import "CCSprite9Slice.h"
 #import "CCBGlobals.h"

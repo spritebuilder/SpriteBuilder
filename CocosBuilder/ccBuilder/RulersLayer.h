@@ -23,12 +23,11 @@
  */
 
 #import "cocos2d.h"
-//#import "CCScale9Sprite.h"
 
 @interface RulersLayer : CCLayer
 {
-//    CCScale9Sprite* bgHorizontal;
-//    CCScale9Sprite* bgVertical;
+    CCSprite9Slice* bgHorizontal;
+    CCSprite9Slice* bgVertical;
     
     CCNode* marksVertical;
     CCNode* marksHorizontal;
