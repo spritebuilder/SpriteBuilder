@@ -68,7 +68,7 @@
     PlugInNode* plugIn = info.plugIn;
     if (!plugIn.canHaveChildren) return;
     
-    CCArray* children = [node children];
+    NSArray* children = [node children];
     for (int i = 0; i < [children count]; i++)
     {
         CCNode* child = [children objectAtIndex:i];

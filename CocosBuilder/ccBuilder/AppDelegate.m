@@ -1967,7 +1967,7 @@ static BOOL hideAllToNextSeparator;
     else
     {
         // Update zValues of children after this node
-        CCArray* children = parent.children;
+        NSArray* children = parent.children;
         for (int i = index; i < [children count]; i++)
         {
             CCNode* child = [children objectAtIndex:i];
@@ -2309,7 +2309,7 @@ static BOOL hideAllToNextSeparator;
     
     // Change zOrder of nodes after this one
     int zOrder = node.zOrder;
-    CCArray* siblings = [node.parent children];
+    NSArray* siblings = [node.parent children];
     for (int i = zOrder+1; i < [siblings count]; i++)
     {
         CCNode* sibling = [siblings objectAtIndex:i];
@@ -3674,7 +3674,7 @@ static BOOL hideAllToNextSeparator;
     CCNode* node = self.selectedNode;
     CCNode* parent = node.parent;
     
-    CCArray* siblings = [node.parent children];
+    NSArray* siblings = [node.parent children];
     
     // Check bounds
     if ((type == kCCBArrangeSendToBack || type == kCCBArrangeSendBackward)

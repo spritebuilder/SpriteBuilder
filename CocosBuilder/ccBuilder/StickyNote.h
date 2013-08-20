@@ -30,7 +30,7 @@
 #define kCCBNoteLblInsetTop 10
 #define kCCBNoteLblInsetBot 20
 
-@class CCScale9Sprite;
+@class CCSprite9Slice;
 
 enum
 {
@@ -41,7 +41,7 @@ enum
 
 @interface StickyNote : CCNode
 {
-    CCScale9Sprite* bg;
+    CCSprite9Slice* bg;
     CCLabelTTF* lbl;
     CGPoint docPos;
     NSString* noteText;

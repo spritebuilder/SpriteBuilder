@@ -267,7 +267,7 @@ static SequencerHandler* sharedSequencerHandler;
     if (item == nil) return 3;
     
     CCNode* node = (CCNode*)item;
-    CCArray* arr = [node children];
+    NSArray* arr = [node children];
     
     return [arr count];
 }
@@ -284,7 +284,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     CCNode* node = (CCNode*)item;
-    CCArray* arr = [node children];
+    NSArray* arr = [node children];
     NodeInfo* info = node.userObject;
     PlugInNode* plugIn = info.plugIn;
     
@@ -319,7 +319,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     CCNode* node = (CCNode*)item;
-    CCArray* arr = [node children];
+    NSArray* arr = [node children];
     return [arr objectAtIndex:index];
 }
 
@@ -598,7 +598,7 @@ static SequencerHandler* sharedSequencerHandler;
         if (expanded) [outlineHierarchy expandItem:node];
         else [outlineHierarchy collapseItem:node];
         
-        CCArray* childs = [node children];
+        NSArray* childs = [node children];
         for (int i = 0; i < [childs count]; i++)
         {
             CCNode* child = [childs objectAtIndex:i];
@@ -672,9 +672,7 @@ static SequencerHandler* sharedSequencerHandler;
     [node deselectAllKeyframes];
     
     // Also deselect keyframes of children
-    CCArray* children = [node children];
-    CCNode* child = NULL;
-    CCARRAY_FOREACH(children, child)
+    for (CCNode* child in node.children)
     {
         [self deselectKeyframesForNode:child];
     }
@@ -738,9 +736,7 @@ static SequencerHandler* sharedSequencerHandler;
     [node addSelectedKeyframesToArray:keyframes];
     
     // Also add selected keyframes of children
-    CCArray* children = [node children];
-    CCNode* child = NULL;
-    CCARRAY_FOREACH(children, child)
+    for (CCNode* child in node.children)
     {
         [self addSelectedKeyframesForNode:child toArray:keyframes];
     }
@@ -769,9 +765,7 @@ static SequencerHandler* sharedSequencerHandler;
     [node updatePropertiesTime:time sequenceId:seqId];
     
     // Also deselect keyframes of children
-    CCArray* children = [node children];
-    CCNode* child = NULL;
-    CCARRAY_FOREACH(children, child)
+    for (CCNode* child in node.children)
     {
         int childSeqId = seqId;
         float localTime = time;

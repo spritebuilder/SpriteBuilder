@@ -88,9 +88,7 @@
     }
     
     // Refresh all children also
-    CCArray* childs = [node children];
-    CCNode* child = NULL;
-    CCARRAY_FOREACH(childs, child)
+    for (CCNode* child in node.children)
     {
         [StringPropertySetter refreshStringPropsForNodeTree:child];
     }

@@ -221,8 +221,7 @@
     
     
     // Also do for children
-    CCNode* child = NULL;
-    CCARRAY_FOREACH([self children], child)
+    for (CCNode* child in self.children)
     {
         [child duplicateKeyframesFromSequenceId:fromSeqId toSequenceId:toSeqId];
     }
@@ -423,8 +422,7 @@
     [info.animatableProperties removeObjectForKey:[NSNumber numberWithInt:seqId]];
     
     // Also remove for children
-    CCNode* child = NULL;
-    CCARRAY_FOREACH([self children], child)
+    for (CCNode* child in self.children)
     {
         [child deleteSequenceId:seqId];
     }
@@ -468,8 +466,7 @@
     }
     
     // Also remove keyframes for children
-    CCNode* child = NULL;
-    CCARRAY_FOREACH([self children], child)
+    for (CCNode* child in self.children)
     {
         if ([child deleteSelectedKeyframesForSequenceId:seqId])
         {
@@ -499,8 +496,7 @@
     }
     
     // Also remove keyframes for children
-    CCNode* child = NULL;
-    CCARRAY_FOREACH([self children], child)
+    for (CCNode* child in self.children)
     {
         if ([child deleteDuplicateKeyframesForSequenceId:seqId])
         {
@@ -524,8 +520,7 @@
         }
     }
     // Also remove keyframes for children
-    CCNode* child = NULL;
-    CCARRAY_FOREACH([self children], child)
+    for (CCNode* child in self.children)
     {
         [child deleteKeyframesAfterTime:time sequenceId:seqId];
     }

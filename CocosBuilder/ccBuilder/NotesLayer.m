@@ -109,7 +109,7 @@
     int hit = kCCBStickyNoteHitNone;
     StickyNote* note = NULL;
     
-    CCArray* notes = [self children];
+    NSArray* notes = [self children];
     for (int i = [notes count]-1; i >= 0; i--)
     {
         note = [notes objectAtIndex:i];
@@ -208,7 +208,7 @@
     [super setVisible: (zoom == 1 && notesVisible)];
     
     
-    CCArray* notes = [self children];
+    NSArray* notes = [self children];
     for (int i = 0; i < [notes count]; i++)
     {
         StickyNote* note = [notes objectAtIndex:i];
@@ -231,7 +231,7 @@
 {
     modifiedNote = NULL;
     
-    CCArray* notes = [self children];
+    NSArray* notes = [self children];
     for (int i = 0; i < [notes count]; i++)
     {
         StickyNote* note = [notes objectAtIndex:i];
@@ -270,7 +270,7 @@
 {
     NSMutableArray* ser = [NSMutableArray array];
     
-    CCArray* notes = [self children];
+    NSArray* notes = [self children];
     for (int i = 0; i < [notes count]; i++)
     {
         StickyNote* note = [notes objectAtIndex:i];
