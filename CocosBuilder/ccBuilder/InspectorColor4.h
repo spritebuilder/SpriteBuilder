@@ -22,19 +22,10 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-#import "cocos2d.h"
+#import "InspectorValue.h"
 
-#define kCCBUseRegularFile @"Use regular file"
+@interface InspectorColor4 : InspectorValue
 
-@interface CCBWriterInternal : NSObject {
-@private
-    
-}
-+ (id) serializePropertyForNode:(CCNode*) node propInfo:(NSMutableDictionary*) propInfo excludeProps:(NSArray*) excludeProps;
-+ (NSMutableDictionary*) dictionaryFromCCObject: (CCNode*) node;
-
-+ (id) serializeColor3:(ccColor3B)c;
-+ (id) serializeColor4:(ccColor4B)c;
+@property (nonatomic,retain) NSColor* color;
 
 @end

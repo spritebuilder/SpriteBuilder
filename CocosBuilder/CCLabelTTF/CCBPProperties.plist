@@ -47,6 +47,20 @@
 				<string>contentSize</string>
 			</array>
 			<key>default</key>
+			<string>Sample Text</string>
+			<key>displayName</key>
+			<string>Label text</string>
+			<key>type</key>
+			<string>Text</string>
+			<key>name</key>
+			<string>string</string>
+		</dict>
+		<dict>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>default</key>
 			<string>Helvetica</string>
 			<key>displayName</key>
 			<string>Font name</string>
@@ -136,18 +150,126 @@
 			<string>Top|0|Center|1|Bottom|2</string>
 		</dict>
 		<dict>
+			<key>displayName</key>
+			<string>Font Effects</string>
+			<key>name</key>
+			<string>Font Effects</string>
+			<key>type</key>
+			<string>SeparatorSub</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>fontColor</string>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<string>255</string>
+				<string>255</string>
+				<string>255</string>
+			</array>
+			<key>displayName</key>
+			<string>Draw Color</string>
+			<key>type</key>
+			<string>Color4</string>
+			<key>default</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+		</dict>
+		<dict>
 			<key>affectsProperties</key>
 			<array>
 				<string>contentSize</string>
 			</array>
-			<key>default</key>
-			<string>Sample Text</string>
-			<key>displayName</key>
-			<string>Label text</string>
-			<key>type</key>
-			<string>Text</string>
 			<key>name</key>
-			<string>string</string>
+			<string>outlineColor</string>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<string>0</string>
+				<string>0</string>
+				<string>0</string>
+			</array>
+			<key>displayName</key>
+			<string>Outline color</string>
+			<key>type</key>
+			<string>Color4</string>
+			<key>default</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>displayName</key>
+			<string>Outline width</string>
+			<key>type</key>
+			<string>FloatScale</string>
+			<key>name</key>
+			<string>outlineWidth</string>
+		</dict>
+		<dict>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>name</key>
+			<string>shadowColor</string>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<string>0</string>
+				<string>0</string>
+				<string>0</string>
+			</array>
+			<key>displayName</key>
+			<string>Shadow color</string>
+			<key>type</key>
+			<string>Color4</string>
+			<key>default</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>displayName</key>
+			<string>Shadow blur radius</string>
+			<key>type</key>
+			<string>FloatScale</string>
+			<key>name</key>
+			<string>shadowBlurRadius</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>displayName</key>
+			<string>Shadow offset</string>
+			<key>type</key>
+			<string>Position</string>
+			<key>name</key>
+			<string>shadowOffset</string>
 		</dict>
 	</array>
 </dict>

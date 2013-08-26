@@ -242,6 +242,12 @@ NSDictionary* renamedProperties = NULL;
         NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor3B)];
         [node setValue:colorValue forKey:name];
     }
+    else if ([type isEqualToString:@"Color4"])
+    {
+        ccColor4B c = [CCBReaderInternal deserializeColor4:serializedValue];
+        NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor4B)];
+        [node setValue:colorValue forKey:name];
+    }
     else if ([type isEqualToString:@"Color4FVar"])
     {
         ccColor4F c = [CCBReaderInternal deserializeColor4F:[serializedValue objectAtIndex:0]];

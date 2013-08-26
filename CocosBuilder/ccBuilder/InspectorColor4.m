@@ -22,19 +22,35 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-#import "cocos2d.h"
+#import "InspectorColor4.h"
+#import "CCBWriterInternal.h"
 
-#define kCCBUseRegularFile @"Use regular file"
+@implementation InspectorColor4
 
-@interface CCBWriterInternal : NSObject {
-@private
+- (void) setColor:(NSColor *)color
+{
+    CGFloat r, g, b, a;
+    
+    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+    
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    
+    ccColor4B c = ccc4(r*255, g*255, b*255, a*255);
+    
+    NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor4B)];
+    [self setPropertyForSelection:colorValue];
+    
+    [self updateAnimateablePropertyValue: [CCBWriterInternal serializeColor4:c]];
     
 }
-+ (id) serializePropertyForNode:(CCNode*) node propInfo:(NSMutableDictionary*) propInfo excludeProps:(NSArray*) excludeProps;
-+ (NSMutableDictionary*) dictionaryFromCCObject: (CCNode*) node;
 
-+ (id) serializeColor3:(ccColor3B)c;
-+ (id) serializeColor4:(ccColor4B)c;
+- (NSColor*) color
+{
+    NSValue* colorValue = [self propertyForSelection];
+    ccColor4B c;
+    [colorValue getValue:&c];
+    
+    return [NSColor colorWithCalibratedRed:c.r/255.0 green:c.g/255.0 blue:c.b/255.0 alpha:c.a/255.0];
+}
 
 @end

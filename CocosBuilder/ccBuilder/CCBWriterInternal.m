@@ -323,6 +323,13 @@
         [colorValue getValue:&c];
         serializedValue = [CCBWriterInternal serializeColor3:c];
     }
+    else if ([type isEqualToString:@"Color4"])
+    {
+        NSValue* colorValue = [node valueForKey:name];
+        ccColor4B c;
+        [colorValue getValue:&c];
+        serializedValue = [CCBWriterInternal serializeColor4:c];
+    }
     else if ([type isEqualToString:@"Color4FVar"])
     {
         NSValue* cValue = NULL;
