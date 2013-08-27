@@ -39,6 +39,7 @@ enum
     kCCBKeyframeTypeColor3,
     kCCBKeyframeTypeSpriteFrame,
     kCCBKeyframeTypeFloatXY,
+    kCCBKeyframeTypeColor4,
     
     // Channels
     kCCBKeyframeTypeSoundEffects,

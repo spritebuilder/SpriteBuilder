@@ -65,6 +65,7 @@
     [propTypes addObject:@"BlockCCControl"];
     [propTypes addObject:@"FloatScale"];
     [propTypes addObject:@"FloatXY"];
+    [propTypes addObject:@"Color4"];
 }
 
 - (id) init
@@ -437,6 +438,17 @@
         [self writeByte:a];
         [self writeByte:b];
         [self writeByte:c];
+    }
+    else if ([type isEqualToString:@"Color4"])
+    {
+        int a = [[prop objectAtIndex:0] intValue];
+        int b = [[prop objectAtIndex:1] intValue];
+        int c = [[prop objectAtIndex:2] intValue];
+        int d = [[prop objectAtIndex:3] intValue];
+        [self writeByte:a];
+        [self writeByte:b];
+        [self writeByte:c];
+        [self writeByte:d];
     }
     else if ([type isEqualToString:@"Color4FVar"])
     {
@@ -824,6 +836,17 @@
         [self writeByte:b];
         [self writeByte:c];
     }
+    else if ([type isEqualToString:@"Color4"])
+    {
+        int a = [[value objectAtIndex:0] intValue];
+        int b = [[value objectAtIndex:1] intValue];
+        int c = [[value objectAtIndex:2] intValue];
+        int d = [[value objectAtIndex:3] intValue];
+        [self writeByte:a];
+        [self writeByte:b];
+        [self writeByte:c];
+        [self writeByte:d];
+    }
     else if ([type isEqualToString:@"Degrees"])
     {
         [self writeFloat:[value floatValue]];
@@ -917,6 +940,7 @@
             if (kfType == kCCBKeyframeTypeToggle) propType = @"Check";
             else if (kfType == kCCBKeyframeTypeByte) propType = @"Byte";
             else if (kfType == kCCBKeyframeTypeColor3) propType = @"Color3";
+            else if (kfType == kCCBKeyframeTypeColor4) propType = @"Color4";
             else if (kfType == kCCBKeyframeTypeDegrees) propType = @"Degrees";
             else if (kfType == kCCBKeyframeTypeScaleLock) propType = @"ScaleLock";
             else if (kfType == kCCBKeyframeTypeSpriteFrame) propType = @"SpriteFrame";
