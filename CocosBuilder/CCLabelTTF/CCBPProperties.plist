@@ -82,6 +82,18 @@
 			<string>fontSize</string>
 		</dict>
 		<dict>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>displayName</key>
+			<string>Adjusts font size to fit</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>adjustsFontSizeToFit</string>
+		</dict>
+		<dict>
 			<key>defaultSerialization</key>
 			<integer>255</integer>
 			<key>animatable</key>
