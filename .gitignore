@@ -30,7 +30,7 @@ project.xcworkspace/
 VersionX-revision.h
 # build products
 build/
-*.[oa]
+# *.[oa]
 # Other source repository archive directories (protects when importing)
 .hg
 .svn
