@@ -4142,7 +4142,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)reportBug:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/cocos2d/CocosBuilder/issues"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/apportable/SpriteBuilder/issues"]];
 }
 
 - (IBAction)visitCommunity:(id)sender

@@ -187,6 +187,9 @@
 		B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */; };
 		B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D0918417C2C12B0007FE7F /* libcocos2d.a */; };
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
+		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
+		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
+		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -857,8 +860,6 @@
 		7789ACE9133AB47A00CEFCC7 /* CocosScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosScene.m; sourceTree = "<group>"; };
 		7789ACED133AB6A700CEFCC7 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		7789ACF0133BD5E800CEFCC7 /* header-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-bg.png"; sourceTree = "<group>"; };
-		77AC50221360A05300B04360 /* CocosBuilderIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CocosBuilderIcon.png; path = ../CocosBuilderIcon.png; sourceTree = "<group>"; };
-		77AC50241360A0FB00B04360 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = ../Icon.icns; sourceTree = "<group>"; };
 		77D33E94138E714700012A88 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = System/Library/Frameworks/ExceptionHandling.framework; sourceTree = SDKROOT; };
 		77D33EA9138EA4F800012A88 /* CCBUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBUtil.h; sourceTree = "<group>"; };
 		77D33EAA138EA4F800012A88 /* CCBUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBUtil.m; sourceTree = "<group>"; };
@@ -1055,7 +1056,11 @@
 		B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplate.m; sourceTree = "<group>"; };
 		B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultTemplates.zip; sourceTree = "<group>"; };
 		B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d-osx.xcodeproj"; path = "cocos2d-iphone/cocos2d-osx.xcodeproj"; sourceTree = "<group>"; };
-		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SpriteBuilder.icns; sourceTree = "<group>"; };
+		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SpriteBuilder.icns; path = ../SpriteBuilder.icns; sourceTree = "<group>"; };
+		B7F02D4617D12DB1008A2E2D /* about-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg.png"; sourceTree = "<group>"; };
+		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
+		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
+		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -1356,7 +1361,6 @@
 		E3A16AF21536D096004B528A /* GuidesLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidesLayer.m; sourceTree = "<group>"; };
 		E3A16AF41536D69A004B528A /* CCBPLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLabelTTF.h; sourceTree = "<group>"; };
 		E3A16AF51536D69A004B528A /* CCBPLabelTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLabelTTF.m; sourceTree = "<group>"; };
-		E3A16D8E156E145700F6C326 /* CocosBuilderPlayerIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CocosBuilderPlayerIcon.icns; path = ../CocosBuilderPlayerIcon.icns; sourceTree = "<group>"; };
 		E3A4745E16D4389D00DB0D61 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		E3A4745F16D4389D00DB0D61 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
 		E3A4746016D4389D00DB0D61 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
@@ -1861,6 +1865,7 @@
 		776041E41498F6AF0078095D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B7F02D4517D12D9E008A2E2D /* About Box */,
 				776041F01498FD630078095D /* GUI */,
 				776041EF1498FCE50078095D /* Stage Assets */,
 				776041E61498F7980078095D /* Icons & Logos */,
@@ -1892,13 +1897,11 @@
 		776041E61498F7980078095D /* Icons & Logos */ = {
 			isa = PBXGroup;
 			children = (
-				E3A16D8E156E145700F6C326 /* CocosBuilderPlayerIcon.icns */,
+				B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */,
 				E3BF89D8156D36B6001A24CE /* SpriteBuilderProjectIcon.icns */,
-				77AC50241360A0FB00B04360 /* Icon.icns */,
 				776C687513872CA700153214 /* SpriteBuilderDocIcon.icns */,
 				77055FB313D0E5CA009DD63A /* logo-icon.png */,
 				77055FB413D0E5CA009DD63A /* logo.png */,
-				77AC50221360A05300B04360 /* CocosBuilderIcon.png */,
 			);
 			name = "Icons & Logos";
 			sourceTree = "<group>";
@@ -1964,6 +1967,8 @@
 				B7AC69B617A1B9930041B8BD /* CCBImageBrowserView.m */,
 				B7AC69C117A320E30041B8BD /* CCBColorView.h */,
 				B7AC69C217A320E30041B8BD /* CCBColorView.m */,
+				B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */,
+				B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */,
 			);
 			name = "Styled Components";
 			sourceTree = "<group>";
@@ -2125,7 +2130,6 @@
 		7789ABB3133AA82000CEFCC7 = {
 			isa = PBXGroup;
 			children = (
-				B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */,
 				E3D08A321524581100E55891 /* README.md */,
 				E3D59118150F50D1004180CA /* AUTHORS */,
 				E395DC7D1511FDF70075979E /* CHANGELOG */,
@@ -2597,6 +2601,15 @@
 				B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */,
 			);
 			name = Cocos2d;
+			sourceTree = "<group>";
+		};
+		B7F02D4517D12D9E008A2E2D /* About Box */ = {
+			isa = PBXGroup;
+			children = (
+				B7F02D4617D12DB1008A2E2D /* about-bg.png */,
+				B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */,
+			);
+			name = "About Box";
 			sourceTree = "<group>";
 		};
 		E3214C3F15D3B9D0002413A7 /* Custom Properties */ = {
@@ -4103,6 +4116,8 @@
 				B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */,
 				B71BF5AD17D1103F00F6C554 /* Icon.png in Resources */,
 				B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */,
+				B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */,
+				B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4493,6 +4508,7 @@
 				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
+				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

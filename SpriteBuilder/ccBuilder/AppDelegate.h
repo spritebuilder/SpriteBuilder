@@ -404,4 +404,9 @@ enum {
 - (void) modalStatusWindowFinish;
 - (void) modalStatusWindowUpdateStatusText:(NSString*) text;
 
+// Help
+- (IBAction)reportBug:(id)sender;
+- (IBAction)visitCommunity:(id)sender;
+- (IBAction)showHelp:(id)sender;
+
 @end

@@ -27,5 +27,15 @@
 @interface AboutWindow : NSWindowController
 {
     IBOutlet NSTextField* txtVersion;
+    IBOutlet NSButton* btnVersion;
 }
+
+@property (nonatomic,retain) NSString* version;
+
+- (IBAction)btnViewOnGithub:(id)sender;
+- (IBAction)btnSupportForum:(id)sender;
+- (IBAction)btnReportBug:(id)sender;
+- (IBAction)btnGetSource:(id)sender;
+- (IBAction)btnUserGuide:(id)sender;
+
 @end

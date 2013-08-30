@@ -23,6 +23,7 @@
  */
 
 #import "AboutWindow.h"
+#import "AppDelegate.h"
 
 @interface AboutWindow ()
 
@@ -53,6 +54,57 @@
     {
         [txtVersion setStringValue:version];
     }
+    else
+    {
+        [btnVersion setEnabled:NO];
+    }
+    
+    self.version = [version substringWithRange:NSMakeRange(version.length-11, 10)];
+    
+    // Add close button
+    NSButton* closeButton = [NSWindow standardWindowButton:NSWindowCloseButton forStyleMask:NSTitledWindowMask];
+    [closeButton setFrameOrigin:NSMakePoint(21, 317)];
+    NSView* contentView = self.window.contentView;
+    [contentView addSubview:closeButton];
+}
+
+- (IBAction)btnViewOnGithub:(id)sender
+{
+    if (self.version)
+    {
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://github.com/apportable/SpriteBuilder/commit/%@",self.version]]];
+    }
+    [self.window orderOut:sender];
+}
+
+- (IBAction)btnSupportForum:(id)sender
+{
+    [[AppDelegate appDelegate] visitCommunity:sender];
+    [self.window orderOut:sender];
+}
+
+- (IBAction)btnReportBug:(id)sender
+{
+    [[AppDelegate appDelegate] reportBug:sender];
+    [self.window orderOut:sender];
+}
+
+- (IBAction)btnGetSource:(id)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/apportable/SpriteBuilder"]];
+    [self.window orderOut:sender];
+}
+
+- (IBAction)btnUserGuide:(id)sender
+{
+    [[AppDelegate appDelegate] showHelp:sender];
+    [self.window orderOut:sender];
+}
+
+- (void) dealloc
+{
+    self.version = NULL;
+    [super dealloc];
 }
 
 @end
