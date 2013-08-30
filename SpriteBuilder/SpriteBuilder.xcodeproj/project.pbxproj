@@ -65,8 +65,6 @@
 		7789ACEA133AB47A00CEFCC7 /* CocosScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789ACE9133AB47A00CEFCC7 /* CocosScene.m */; };
 		7789ACEF133AB6A700CEFCC7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7789ACED133AB6A700CEFCC7 /* icon.icns */; };
 		7789ACF1133BD5E800CEFCC7 /* header-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7789ACF0133BD5E800CEFCC7 /* header-bg.png */; };
-		77AC50231360A05400B04360 /* CocosBuilderIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 77AC50221360A05300B04360 /* CocosBuilderIcon.png */; };
-		77AC50251360A0FB00B04360 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 77AC50241360A0FB00B04360 /* Icon.icns */; };
 		77D33E95138E714700012A88 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D33E94138E714700012A88 /* ExceptionHandling.framework */; };
 		77D33EAB138EA4F900012A88 /* CCBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D33EAA138EA4F800012A88 /* CCBUtil.m */; };
 		77D33EAD138EFBD800012A88 /* StageSizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D33EAC138EFBD800012A88 /* StageSizeWindow.xib */; };
@@ -142,6 +140,7 @@
 		B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0317B32623006628C7 /* LocalizationEditorLanguageTableView.m */; };
 		B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */; };
 		B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0917B567E5006628C7 /* StringPropertySetter.m */; };
+		B71BF5AD17D1103F00F6C554 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCBB15E4E16B00CF95EF /* Icon.png */; };
 		B732A1841799736500333C56 /* TB_build.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1821799736500333C56 /* TB_build.png */; };
 		B732A1851799736500333C56 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1831799736500333C56 /* TB_build@2x.png */; };
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
@@ -187,6 +186,7 @@
 		B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */; };
 		B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */; };
 		B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D0918417C2C12B0007FE7F /* libcocos2d.a */; };
+		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
 		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
@@ -1055,6 +1055,7 @@
 		B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplate.m; sourceTree = "<group>"; };
 		B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultTemplates.zip; sourceTree = "<group>"; };
 		B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d-osx.xcodeproj"; path = "cocos2d-iphone/cocos2d-osx.xcodeproj"; sourceTree = "<group>"; };
+		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = SpriteBuilder.icns; sourceTree = "<group>"; };
 		E3127AA316C1D8E600D09AA4 /* CCBDirectoryComparer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryComparer.h; sourceTree = "<group>"; };
 		E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryComparer.m; sourceTree = "<group>"; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
@@ -2124,6 +2125,7 @@
 		7789ABB3133AA82000CEFCC7 = {
 			isa = PBXGroup;
 			children = (
+				B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */,
 				E3D08A321524581100E55891 /* README.md */,
 				E3D59118150F50D1004180CA /* AUTHORS */,
 				E395DC7D1511FDF70075979E /* CHANGELOG */,
@@ -3865,8 +3867,6 @@
 				7789ACF1133BD5E800CEFCC7 /* header-bg.png in Resources */,
 				772BE567133E40D60009B5B9 /* missing-texture.png in Resources */,
 				772BE57C134398EE0009B5B9 /* NewDocWindow.xib in Resources */,
-				77AC50231360A05400B04360 /* CocosBuilderIcon.png in Resources */,
-				77AC50251360A0FB00B04360 /* Icon.icns in Resources */,
 				774F95C613638D74005D43EB /* missing-particle-texture.png in Resources */,
 				774E4EC2136D98AB0025D0A8 /* select-bl.png in Resources */,
 				774E4EC3136D98AB0025D0A8 /* select-br.png in Resources */,
@@ -4101,6 +4101,8 @@
 				B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */,
 				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
 				B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */,
+				B71BF5AD17D1103F00F6C554 /* Icon.png in Resources */,
+				B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
