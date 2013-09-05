@@ -140,7 +140,6 @@
 		B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0317B32623006628C7 /* LocalizationEditorLanguageTableView.m */; };
 		B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */; };
 		B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0917B567E5006628C7 /* StringPropertySetter.m */; };
-		B71BF5AD17D1103F00F6C554 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCBB15E4E16B00CF95EF /* Icon.png */; };
 		B732A1841799736500333C56 /* TB_build.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1821799736500333C56 /* TB_build.png */; };
 		B732A1851799736500333C56 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1831799736500333C56 /* TB_build@2x.png */; };
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
@@ -354,7 +353,6 @@
 		E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E380B24D1642FC3C0006D31C /* TexturePacker.cpp */; };
 		E380B2531642FC3C0006D31C /* Tupac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E380B2501642FC3C0006D31C /* Tupac.mm */; };
 		E380B25A164330360006D31C /* PlayerDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E380B259164330360006D31C /* PlayerDeviceInfo.m */; };
-		E383BF6B152478940032F371 /* CCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E383BF6A152478940032F371 /* CCScrollView.m */; };
 		E3850809150AA9AE007E162A /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3850808150AA9AE007E162A /* ImageAndTextCell.m */; };
 		E385080B150AB232007E162A /* segmctrl-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E385080A150AB232007E162A /* segmctrl-bg.png */; };
 		E385A41E14F6993E00DFB12D /* CCBPMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E385A41D14F6993E00DFB12D /* CCBPMenu.m */; };
@@ -454,7 +452,6 @@
 		E3B7BCB215E4171700CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCB115E4171700CF95EF /* Icon.png */; };
 		E3B7BCB415E4176800CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCB315E4176800CF95EF /* Icon.png */; };
 		E3B7BCBA15E4E14200CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCB915E4E14200CF95EF /* Icon.png */; };
-		E3B7BCBC15E4E16B00CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCBB15E4E16B00CF95EF /* Icon.png */; };
 		E3B7BCBE15E505CC00CF95EF /* TB_plugins.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCBD15E505CC00CF95EF /* TB_plugins.png */; };
 		E3B9AF431538612200489438 /* ruler-xy.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B9AF421538612200489438 /* ruler-xy.png */; };
 		E3B9AF4B153C150D00489438 /* CCBTransparentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3B9AF4A153C150D00489438 /* CCBTransparentWindow.m */; };
@@ -561,10 +558,6 @@
 		E3F59CD115B5B9330015523B /* PlayerConsolePairingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F59CD015B5B9330015523B /* PlayerConsolePairingWindow.m */; };
 		E3F73DB61593908A00D74084 /* SequencerDurationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F73DB51593908A00D74084 /* SequencerDurationWindow.m */; };
 		E3F73DB81593916E00D74084 /* SequencerDurationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3F73DB71593916E00D74084 /* SequencerDurationWindow.xib */; };
-		E3FCE8671524856D0028E8E7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
-		E3FCE86D1524856D0028E8E7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E3FCE86B1524856D0028E8E7 /* InfoPlist.strings */; };
-		E3FCE874152485A20028E8E7 /* CCScrollView.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = E3FCE8661524856D0028E8E7 /* CCScrollView.ccbPlugNode */; };
-		E3FCE876152486030028E8E7 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3FCE875152486030028E8E7 /* CCBPProperties.plist */; };
 		E3FD4DCF15A09F6D0032C2DD /* SequencerKeyframeEasingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FD4DCE15A09F6D0032C2DD /* SequencerKeyframeEasingWindow.xib */; };
 		E3FD4DD315A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FD4DD215A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m */; };
 		E3FD4DDB15A301EF0032C2DD /* seq-next-seq.png in Resources */ = {isa = PBXBuildFile; fileRef = E3FD4DDA15A301EF0032C2DD /* seq-next-seq.png */; };
@@ -722,13 +715,6 @@
 			remoteGlobalIDString = AB69B62A118B745700903D1D;
 			remoteInfo = MGSFragaria;
 		};
-		E3FCE8721524859A0028E8E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E3FCE8651524856D0028E8E7;
-			remoteInfo = CCScrollView;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -750,7 +736,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				E3FCE874152485A20028E8E7 /* CCScrollView.ccbPlugNode in Copy PlugIns */,
 				E3D5912F150F53EA004180CA /* CCBFile.ccbPlugNode in Copy PlugIns */,
 				E398C03014FB82170078E771 /* Cocos2D iPhone.ccbPlugExport in Copy PlugIns */,
 				E325F66A14F6611F00D29BCF /* CCMenuItemImage.ccbPlugNode in Copy PlugIns */,
@@ -1299,8 +1284,6 @@
 		E380B2501642FC3C0006D31C /* Tupac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Tupac.mm; path = Tupac/Tupac.mm; sourceTree = "<group>"; };
 		E380B258164330360006D31C /* PlayerDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerDeviceInfo.h; sourceTree = "<group>"; };
 		E380B259164330360006D31C /* PlayerDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerDeviceInfo.m; sourceTree = "<group>"; };
-		E383BF69152478940032F371 /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
-		E383BF6A152478940032F371 /* CCScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScrollView.m; sourceTree = "<group>"; };
 		E3850807150AA9AE007E162A /* ImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAndTextCell.h; sourceTree = "<group>"; };
 		E3850808150AA9AE007E162A /* ImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAndTextCell.m; sourceTree = "<group>"; };
 		E385080A150AB232007E162A /* segmctrl-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "segmctrl-bg.png"; sourceTree = "<group>"; };
@@ -1446,7 +1429,6 @@
 		E3B7BCB115E4171700CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCB315E4176800CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCB915E4E14200CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		E3B7BCBB15E4E16B00CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCBD15E505CC00CF95EF /* TB_plugins.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_plugins.png; sourceTree = "<group>"; };
 		E3B9AF421538612200489438 /* ruler-xy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ruler-xy.png"; sourceTree = "<group>"; };
 		E3B9AF49153C150D00489438 /* CCBTransparentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindow.h; sourceTree = "<group>"; };
@@ -1601,11 +1583,6 @@
 		E3F73DB41593908A00D74084 /* SequencerDurationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerDurationWindow.h; sourceTree = "<group>"; };
 		E3F73DB51593908A00D74084 /* SequencerDurationWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerDurationWindow.m; sourceTree = "<group>"; };
 		E3F73DB71593916E00D74084 /* SequencerDurationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerDurationWindow.xib; sourceTree = "<group>"; };
-		E3FCE8661524856D0028E8E7 /* CCScrollView.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCScrollView.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		E3FCE86A1524856D0028E8E7 /* CCScrollView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCScrollView-Info.plist"; sourceTree = "<group>"; };
-		E3FCE86C1524856D0028E8E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E3FCE86E1524856D0028E8E7 /* CCScrollView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCScrollView-Prefix.pch"; sourceTree = "<group>"; };
-		E3FCE875152486030028E8E7 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		E3FD4DCE15A09F6D0032C2DD /* SequencerKeyframeEasingWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerKeyframeEasingWindow.xib; sourceTree = "<group>"; };
 		E3FD4DD115A0A2C10032C2DD /* SequencerKeyframeEasingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerKeyframeEasingWindow.h; sourceTree = "<group>"; };
 		E3FD4DD215A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerKeyframeEasingWindow.m; sourceTree = "<group>"; };
@@ -1756,14 +1733,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3D59122150F5367004180CA /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E3FCE8631524856D0028E8E7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E3FCE8671524856D0028E8E7 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2164,7 +2133,6 @@
 				E325F65A14F65C8E00D29BCF /* CCMenuItemImage.ccbPlugNode */,
 				E398C02214FB81A30078E771 /* Cocos2D iPhone.ccbPlugExport */,
 				E3D59121150F5367004180CA /* CCBFile.ccbPlugNode */,
-				E3FCE8661524856D0028E8E7 /* CCScrollView.ccbPlugNode */,
 				FA98CFC1154E7D1C006E58C5 /* ccbpublish */,
 			);
 			name = Products;
@@ -2271,7 +2239,6 @@
 				E3F541BA15AED66D00EAAFBD /* Fragaria */,
 				E3E087611566907F008F1FDB /* JSCocoa */,
 				E32BBCAA156135C300C58395 /* HashValue */,
-				E383BF68152478940032F371 /* CCScrollView */,
 				E3C5C1A51504D30C000CF6F3 /* SCEvents */,
 				77E198DB13858CD1006C361B /* TabBar */,
 				E36F3C3A152C756D00AAD805 /* RelativePath */,
@@ -2777,7 +2744,6 @@
 		E35392481518AD4100471721 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E3FCE8681524856D0028E8E7 /* CCScrollView */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -3021,15 +2987,6 @@
 				E39108071679365600391C3B /* Rect.h */,
 			);
 			name = Tupac;
-			sourceTree = "<group>";
-		};
-		E383BF68152478940032F371 /* CCScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				E383BF69152478940032F371 /* CCScrollView.h */,
-				E383BF6A152478940032F371 /* CCScrollView.m */,
-			);
-			path = CCScrollView;
 			sourceTree = "<group>";
 		};
 		E390C77A170A2C20003E9E92 /* About Box */ = {
@@ -3466,26 +3423,6 @@
 			name = "JavaScript Editor";
 			sourceTree = "<group>";
 		};
-		E3FCE8681524856D0028E8E7 /* CCScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				E3FCE8691524856D0028E8E7 /* Supporting Files */,
-			);
-			path = CCScrollView;
-			sourceTree = "<group>";
-		};
-		E3FCE8691524856D0028E8E7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E3B7BCBB15E4E16B00CF95EF /* Icon.png */,
-				E3FCE86A1524856D0028E8E7 /* CCScrollView-Info.plist */,
-				E3FCE86B1524856D0028E8E7 /* InfoPlist.strings */,
-				E3FCE86E1524856D0028E8E7 /* CCScrollView-Prefix.pch */,
-				E3FCE875152486030028E8E7 /* CCBPProperties.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		FA98CFC5154E7D1C006E58C5 /* ccbpublish */ = {
 			isa = PBXGroup;
 			children = (
@@ -3535,7 +3472,6 @@
 				E325F66914F6611300D29BCF /* PBXTargetDependency */,
 				E3D5912E150F53CD004180CA /* PBXTargetDependency */,
 				E35DBC1614F4D7920070A6E4 /* PBXTargetDependency */,
-				E3FCE8731524859A0028E8E7 /* PBXTargetDependency */,
 			);
 			name = SpriteBuilder;
 			productName = ccBuilder;
@@ -3746,23 +3682,6 @@
 			productReference = E3D59121150F5367004180CA /* CCBFile.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E3FCE8651524856D0028E8E7 /* CCScrollView */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E3FCE86F1524856D0028E8E7 /* Build configuration list for PBXNativeTarget "CCScrollView" */;
-			buildPhases = (
-				E3FCE8621524856D0028E8E7 /* Sources */,
-				E3FCE8631524856D0028E8E7 /* Frameworks */,
-				E3FCE8641524856D0028E8E7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CCScrollView;
-			productName = CCScrollView;
-			productReference = E3FCE8661524856D0028E8E7 /* CCScrollView.ccbPlugNode */;
-			productType = "com.apple.product-type.bundle";
-		};
 		FA98CFC0154E7D1C006E58C5 /* ccbpublish */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA98CFCE154E7D1C006E58C5 /* Build configuration list for PBXNativeTarget "ccbpublish" */;
@@ -3822,7 +3741,6 @@
 				E35DBC0814F4D72B0070A6E4 /* CCParticleSystem */,
 				E325F65914F65C8E00D29BCF /* CCMenuItemImage */,
 				E3D59120150F5367004180CA /* CCBFile */,
-				E3FCE8651524856D0028E8E7 /* CCScrollView */,
 				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
 				FA98CFC0154E7D1C006E58C5 /* ccbpublish */,
 			);
@@ -4114,7 +4032,6 @@
 				B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */,
 				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
 				B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */,
-				B71BF5AD17D1103F00F6C554 /* Icon.png in Resources */,
 				B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */,
 				B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */,
 				B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */,
@@ -4245,16 +4162,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E3FCE8641524856D0028E8E7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E3FCE86D1524856D0028E8E7 /* InfoPlist.strings in Resources */,
-				E3FCE876152486030028E8E7 /* CCBPProperties.plist in Resources */,
-				E3B7BCBC15E4E16B00CF95EF /* Icon.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -4382,7 +4289,6 @@
 				E33BC1B81510E4B6009AE29A /* NodeGraphPropertySetter.m in Sources */,
 				E3C6510A151A65ED00D639C0 /* InspectorString.m in Sources */,
 				E3C6512B151C7E3700D639C0 /* InspectorBlockCCControl.m in Sources */,
-				E383BF6B152478940032F371 /* CCScrollView.m in Sources */,
 				E36F3C3D152C756D00AAD805 /* NSString+RelativePath.m in Sources */,
 				E34E5D6615357CF2000201FB /* RulersLayer.m in Sources */,
 				E3A16AF31536D096004B528A /* GuidesLayer.m in Sources */,
@@ -4602,13 +4508,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E3FCE8621524856D0028E8E7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FA98CFBD154E7D1C006E58C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4692,11 +4591,6 @@
 			isa = PBXTargetDependency;
 			name = MGSFragaria;
 			targetProxy = E3F541CD15AED85800EAAFBD /* PBXContainerItemProxy */;
-		};
-		E3FCE8731524859A0028E8E7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E3FCE8651524856D0028E8E7 /* CCScrollView */;
-			targetProxy = E3FCE8721524859A0028E8E7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -4817,14 +4711,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				E3D59127150F5367004180CA /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E3FCE86B1524856D0028E8E7 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E3FCE86C1524856D0028E8E7 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -5548,56 +5434,6 @@
 			};
 			name = Release;
 		};
-		E3FCE8701524856D0028E8E7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CCScrollView/CCScrollView-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				INFOPLIST_FILE = "CCScrollView/CCScrollView-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = ccbPlugNode;
-			};
-			name = Debug;
-		};
-		E3FCE8711524856D0028E8E7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CCScrollView/CCScrollView-Prefix.pch";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				INFOPLIST_FILE = "CCScrollView/CCScrollView-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = ccbPlugNode;
-			};
-			name = Release;
-		};
 		FA98CFCC154E7D1C006E58C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -5773,15 +5609,6 @@
 			buildConfigurations = (
 				E3D5912B150F5367004180CA /* Debug */,
 				E3D5912C150F5367004180CA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E3FCE86F1524856D0028E8E7 /* Build configuration list for PBXNativeTarget "CCScrollView" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E3FCE8701524856D0028E8E7 /* Debug */,
-				E3FCE8711524856D0028E8E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

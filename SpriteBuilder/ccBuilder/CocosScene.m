@@ -43,7 +43,6 @@
 #import "SequencerSequence.h"
 #import "SequencerNodeProperty.h"
 #import "SequencerKeyframe.h"
-//#import "CCScale9Sprite.h"
 #import "Tupac.h"
 
 #define kCCBSelectionOutset 3
@@ -591,15 +590,15 @@ CGPoint ccpRound(CGPoint pt)
     return (isMirroredX ^ isMirroredY);
 }
 
-- (BOOL) ccMouseDown:(NSEvent *)event
+- (void) mouseDown:(NSEvent *)event
 {
-    if (!appDelegate.hasOpenedDocument) return YES;
+    if (!appDelegate.hasOpenedDocument) return;
     
     NSPoint posRaw = [event locationInWindow];
     CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
     
-    if ([notesLayer mouseDown:pos event:event]) return YES;
-    if ([guideLayer mouseDown:pos event:event]) return YES;
+    if ([notesLayer mouseDown:pos event:event]) return;
+    if ([guideLayer mouseDown:pos event:event]) return;
     
     mouseDownPos = pos;
     
@@ -609,7 +608,7 @@ CGPoint ccpRound(CGPoint pt)
         [[NSCursor closedHandCursor] push];
         isPanning = YES;
         panningStartScrollOffset = scrollOffset;
-        return YES;
+        return;
     }
     
     // Find out which objects were clicked
@@ -622,19 +621,19 @@ CGPoint ccpRound(CGPoint pt)
         // Anchor points are fixed for singel point nodes
         if (transformScalingNode.contentSize.width == 0 || transformScalingNode.contentSize.height == 0)
         {
-            return YES;
+            return;
         }
         
         BOOL readOnly = [[[transformScalingNode.plugIn.nodePropertiesDict objectForKey:@"anchorPoint"] objectForKey:@"readOnly"] boolValue];
         if (readOnly)
         {
-            return YES;
+            return;
         }
         
         // Transform anchor point
         currentMouseTransform = kCCBTransformHandleAnchorPoint;
         transformScalingNode.transformStartPosition = transformScalingNode.anchorPoint;
-        return YES;
+        return;
     }
     if (th == kCCBTransformHandleScale && appDelegate.selectedNode != rootNode)
     {
@@ -644,7 +643,7 @@ CGPoint ccpRound(CGPoint pt)
             // Start rotation transform (instead of scale)
             currentMouseTransform = kCCBTransformHandleRotate;
             transformStartRotation = transformScalingNode.rotation;
-            return YES;
+            return;
         }
         else
         {
@@ -652,7 +651,7 @@ CGPoint ccpRound(CGPoint pt)
             currentMouseTransform = kCCBTransformHandleScale;
             transformStartScaleX = [PositionPropertySetter scaleXForNode:transformScalingNode prop:@"scale"];
             transformStartScaleY = [PositionPropertySetter scaleYForNode:transformScalingNode prop:@"scale"];
-            return YES;
+            return;
         }
     }
     
@@ -673,7 +672,7 @@ CGPoint ccpRound(CGPoint pt)
         if ([event modifierFlags] & NSShiftKeyMask)
         {
             // Ignore
-            return YES;
+            return;
         }
         else
         {
@@ -682,19 +681,20 @@ CGPoint ccpRound(CGPoint pt)
         }
     }
     
-    return YES;
+    return;
 }
 
-- (BOOL) ccMouseDragged:(NSEvent *)event
+- (void) mouseDragged:(NSEvent *)event
+//- (BOOL) ccMouseDragged:(NSEvent *)event
 {
-    if (!appDelegate.hasOpenedDocument) return YES;
+    if (!appDelegate.hasOpenedDocument) return;
     [self mouseMoved:event];
     
     NSPoint posRaw = [event locationInWindow];
     CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
     
-    if ([notesLayer mouseDragged:pos event:event]) return YES;
-    if ([guideLayer mouseDragged:pos event:event]) return YES;
+    if ([notesLayer mouseDragged:pos event:event]) return;
+    if ([guideLayer mouseDragged:pos event:event]) return;
     
     if (currentMouseTransform == kCCBTransformHandleDownInside)
     {
@@ -936,7 +936,7 @@ CGPoint ccpRound(CGPoint pt)
         scrollOffset = ccpAdd(panningStartScrollOffset, delta);
     }
     
-    return YES;
+    return;
 }
 
 - (void) updateAnimateablePropertyValue:(id)value propName:(NSString*)propertyName type:(int)type
@@ -979,9 +979,10 @@ CGPoint ccpRound(CGPoint pt)
     }
 }
 
-- (BOOL) ccMouseUp:(NSEvent *)event
+- (void) mouseUp:(NSEvent *)event
+//- (BOOL) ccMouseUp:(NSEvent *)event
 {
-    if (!appDelegate.hasOpenedDocument) return YES;
+    if (!appDelegate.hasOpenedDocument) return;
     
     CCNode* selectedNode = appDelegate.selectedNode;
     
@@ -1059,8 +1060,8 @@ CGPoint ccpRound(CGPoint pt)
         }
     }
     
-    if ([notesLayer mouseUp:pos event:event]) return YES;
-    if ([guideLayer mouseUp:pos event:event]) return YES;
+    if ([notesLayer mouseUp:pos event:event]) return;
+    if ([guideLayer mouseUp:pos event:event]) return;
     
     isMouseTransforming = NO;
     
@@ -1071,7 +1072,7 @@ CGPoint ccpRound(CGPoint pt)
     }
     
     currentMouseTransform = kCCBTransformHandleNone;
-    return YES;
+    return;
 }
 
 - (void)mouseMoved:(NSEvent *)event
@@ -1280,7 +1281,8 @@ CGPoint ccpRound(CGPoint pt)
         
         [self schedule:@selector(nextFrame:)];
         
-        self.mouseEnabled = YES;
+        // self.mouseEnabled = YES;
+        self.userInteractionEnabled = YES;
         
         stageZoom = 1;
         
