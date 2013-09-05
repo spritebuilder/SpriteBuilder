@@ -17,7 +17,7 @@
 	<key>className</key>
 	<string>CCMenuItemImage</string>
 	<key>editorClassName</key>
-	<string>CCMenuItemImage</string>
+	<string>CCBPMenuItemImage</string>
 	<key>propertiesOverridden</key>
 	<array>
 		<dict>
