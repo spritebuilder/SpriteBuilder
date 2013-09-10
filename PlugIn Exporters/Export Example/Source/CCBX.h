@@ -1,1 +1,1 @@
-../../../CocosBuilder/ccBuilder/CCBX.h
+../../../SpriteBuilder/ccBuilder/CCBX.h
