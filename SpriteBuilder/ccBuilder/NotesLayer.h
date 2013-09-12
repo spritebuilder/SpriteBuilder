@@ -33,7 +33,7 @@ enum
 
 @class StickyNote;
 
-@interface NotesLayer : CCLayer <NSTextViewDelegate>
+@interface NotesLayer : CCNode <NSTextViewDelegate>
 {
     CGSize winSize;
     CGPoint stageOrigin;

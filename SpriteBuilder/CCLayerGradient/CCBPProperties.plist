@@ -15,7 +15,7 @@
 	<key>className</key>
 	<string>CCLayerGradient</string>
 	<key>editorClassName</key>
-	<string>CCLayerGradient</string>
+	<string>CCBPLayerGradient</string>
 	<key>spriteFrameDrop</key>
 	<dict>
 		<key>className</key>

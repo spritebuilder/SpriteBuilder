@@ -32,7 +32,7 @@ enum
     kCCBGuideOrientationVertical
 };
 
-@interface GuidesLayer : CCLayer
+@interface GuidesLayer : CCNode
 {
     NSMutableArray* guides;
     int draggingGuide;

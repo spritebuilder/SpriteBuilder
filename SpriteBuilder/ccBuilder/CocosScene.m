@@ -106,11 +106,11 @@ CGPoint ccpRound(CGPoint pt)
     [self addChild:notesLayer z:5];
     
     // Selection layer
-    selectionLayer = [CCLayer node];
+    selectionLayer = [CCNode node];
     [self addChild:selectionLayer z:4];
     
     // Border layer
-    borderLayer = [CCLayer node];
+    borderLayer = [CCNode node];
     [self addChild:borderLayer z:1];
     
     ccColor4B borderColor = ccc4(128, 128, 128, 180);
@@ -119,6 +119,11 @@ CGPoint ccpRound(CGPoint pt)
     borderTop = [CCLayerColor layerWithColor:borderColor];
     borderLeft = [CCLayerColor layerWithColor:borderColor];
     borderRight = [CCLayerColor layerWithColor:borderColor];
+    
+    borderBottom.userInteractionEnabled = NO;
+    borderTop.userInteractionEnabled = NO;
+    borderLeft.userInteractionEnabled = NO;
+    borderRight.userInteractionEnabled = NO;
     
     [borderLayer addChild:borderBottom];
     [borderLayer addChild:borderTop];
@@ -132,15 +137,17 @@ CGPoint ccpRound(CGPoint pt)
     bgLayer = [CCLayerColor layerWithColor:ccc4(128, 128, 128, 255) width:4096 height:4096];
     bgLayer.position = ccp(0,0);
     bgLayer.anchorPoint = ccp(0,0);
+    bgLayer.userInteractionEnabled = NO;
     [self addChild:bgLayer z:-1];
     
     // Black content layer
     stageBgLayer = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255) width:0 height:0];
     stageBgLayer.anchorPoint = ccp(0.5,0.5);
-    stageBgLayer.ignoreAnchorPointForPosition = NO;
+    stageBgLayer.userInteractionEnabled = NO;
+    //stageBgLayer.ignoreAnchorPointForPosition = NO;
     [self addChild:stageBgLayer z:0];
     
-    contentLayer = [CCLayer node];
+    contentLayer = [CCNode node];
     [stageBgLayer addChild:contentLayer];
 }
 
@@ -402,11 +409,6 @@ CGPoint ccpRound(CGPoint pt)
             CCSprite* anchorPointSprite = [CCSprite spriteWithFile:@"select-pt.png"];
             anchorPointSprite.position = anchorPointPos;
             [selectionLayer addChild:anchorPointSprite z:1];
-            
-            if (node.ignoreAnchorPointForPosition)
-            {
-                anchorPointSprite.opacity = 127;
-            }
             
             //CGPoint minCorner = center;
             

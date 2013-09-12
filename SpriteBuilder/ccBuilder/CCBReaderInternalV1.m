@@ -145,7 +145,7 @@
     
     node.anchorPoint = [CCBReaderInternalV1 pointValFromDict:props forKey:@"anchorPoint"];
     node.rotation = [CCBReaderInternalV1 floatValFromDict:props forKey:@"rotation"];
-    node.ignoreAnchorPointForPosition = ![CCBReaderInternalV1 boolValFromDict:props forKey:@"isRelativeAnchorPoint"];
+    //node.ignoreAnchorPointForPosition = ![CCBReaderInternalV1 boolValFromDict:props forKey:@"isRelativeAnchorPoint"];
     node.visible = [CCBReaderInternalV1 boolValFromDict:props forKey:@"visible"];
     node.tag = [CCBReaderInternalV1 intValFromDict:props forKey:@"tag"];
         
@@ -208,7 +208,7 @@
 
 + (void) setPropsForMenu: (CCMenu*) node props:(NSDictionary*)props
 {
-    node.mouseEnabled = NO;
+    //node.mouseEnabled = NO;
 }
 
 + (void) setPropsForMenuItem: (CCMenuItem*) node props:(NSDictionary*)props

@@ -24,7 +24,7 @@
 
 #import "cocos2d.h"
 
-@interface RulersLayer : CCLayer
+@interface RulersLayer : CCNode
 {
     CCSprite9Slice* bgHorizontal;
     CCSprite9Slice* bgVertical;

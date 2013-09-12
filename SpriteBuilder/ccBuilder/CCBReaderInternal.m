@@ -110,6 +110,9 @@ NSDictionary* renamedProperties = NULL;
 
 + (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize
 {
+    // Handle removed ignoreAnchorPointForPosition property
+    if ([name isEqualToString:@"ignoreAnchorPointForPosition"]) return;
+    
     // Fetch info and extra properties
     NodeInfo* nodeInfo = node.userObject;
     NSMutableDictionary* extraProps = nodeInfo.extraProps;

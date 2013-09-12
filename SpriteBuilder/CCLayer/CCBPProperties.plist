@@ -19,7 +19,7 @@
 	<key>properties</key>
 	<array/>
 	<key>editorClassName</key>
-	<string>CCLayer</string>
+	<string>CCBPLayer</string>
 	<key>propertiesOverridden</key>
 	<array/>
 	<key>spriteFrameDrop</key>

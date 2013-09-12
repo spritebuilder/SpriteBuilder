@@ -36,7 +36,7 @@
     if (!self) return NULL;
     
     self.anchorPoint = ccp(0,1);
-    self.ignoreAnchorPointForPosition = NO;
+    //self.ignoreAnchorPointForPosition = NO;
     
     bg = [CCSprite9Slice spriteWithFile:@"notes-bg.png"];
     bg.anchorPoint = ccp(0,0);

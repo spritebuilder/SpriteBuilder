@@ -144,6 +144,9 @@
 		B732A1851799736500333C56 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1831799736500333C56 /* TB_build@2x.png */; };
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
 		B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7737D4E17CC102D005F775A /* InspectorColor4.xib */; };
+		B78AE44417E245870028BE0B /* CCBPLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44317E245870028BE0B /* CCBPLayer.m */; };
+		B78AE44B17E263B20028BE0B /* CCBPLayerColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */; };
+		B78AE44E17E263FC0028BE0B /* CCBPLayerGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */; };
 		B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */; };
 		B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3681773EA0E00B85CC0 /* NSPasteboard+CCB.m */; };
 		B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */ = {isa = PBXBuildFile; fileRef = B794AB90177A30EB004FF493 /* ui-nopreview.png */; };
@@ -977,6 +980,12 @@
 		B7737D4C17CC102D005F775A /* InspectorColor4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorColor4.h; sourceTree = "<group>"; };
 		B7737D4D17CC102D005F775A /* InspectorColor4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor4.m; sourceTree = "<group>"; };
 		B7737D4E17CC102D005F775A /* InspectorColor4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorColor4.xib; sourceTree = "<group>"; };
+		B78AE44217E245870028BE0B /* CCBPLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayer.h; sourceTree = "<group>"; };
+		B78AE44317E245870028BE0B /* CCBPLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayer.m; sourceTree = "<group>"; };
+		B78AE44917E263B20028BE0B /* CCBPLayerColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerColor.h; sourceTree = "<group>"; };
+		B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayerColor.m; sourceTree = "<group>"; };
+		B78AE44C17E263FC0028BE0B /* CCBPLayerGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerGradient.h; sourceTree = "<group>"; };
+		B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayerGradient.m; sourceTree = "<group>"; };
 		B78DA3621773A89B00B85CC0 /* CCBButtonUnclickable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBButtonUnclickable.h; sourceTree = "<group>"; };
 		B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBButtonUnclickable.m; sourceTree = "<group>"; };
 		B78DA3671773EA0E00B85CC0 /* NSPasteboard+CCB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPasteboard+CCB.h"; sourceTree = "<group>"; };
@@ -2815,6 +2824,8 @@
 			isa = PBXGroup;
 			children = (
 				E35DBB6B14F21E7D0070A6E4 /* Supporting Files */,
+				B78AE44217E245870028BE0B /* CCBPLayer.h */,
+				B78AE44317E245870028BE0B /* CCBPLayer.m */,
 			);
 			path = CCLayer;
 			sourceTree = "<group>";
@@ -2835,6 +2846,8 @@
 			isa = PBXGroup;
 			children = (
 				E35DBB8314F225D30070A6E4 /* Supporting Files */,
+				B78AE44917E263B20028BE0B /* CCBPLayerColor.h */,
+				B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */,
 			);
 			path = CCLayerColor;
 			sourceTree = "<group>";
@@ -2855,6 +2868,8 @@
 			isa = PBXGroup;
 			children = (
 				E35DBB9B14F244BC0070A6E4 /* Supporting Files */,
+				B78AE44C17E263FC0028BE0B /* CCBPLayerGradient.h */,
+				B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */,
 			);
 			path = CCLayerGradient;
 			sourceTree = "<group>";
@@ -4435,6 +4450,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78AE44417E245870028BE0B /* CCBPLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4442,6 +4458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78AE44B17E263B20028BE0B /* CCBPLayerColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4449,6 +4466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B78AE44E17E263FC0028BE0B /* CCBPLayerGradient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

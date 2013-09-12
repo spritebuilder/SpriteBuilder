@@ -58,13 +58,13 @@ enum {
     kCCBToolGrab
 };
 
-@interface CocosScene : CCLayer
+@interface CocosScene : CCNode
 {
     CCLayerColor* bgLayer;
     CCLayerColor* stageBgLayer;
-    CCLayer* contentLayer;
-    CCLayer* selectionLayer;
-    CCLayer* borderLayer;
+    CCNode* contentLayer;
+    CCNode* selectionLayer;
+    CCNode* borderLayer;
     RulersLayer* rulerLayer;
     GuidesLayer* guideLayer;
     NotesLayer* notesLayer;
