@@ -35,6 +35,9 @@
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    if (type.xUnit == kCCPositionUnitNormalized) posX /= 100.0f;
+    
 	NSPoint pt = [PositionPropertySetter positionForNode:selection prop:propertyName];
     pt.x = posX;
     [PositionPropertySetter setPosition:pt type:[PositionPropertySetter positionTypeForNode:selection prop:propertyName] forNode:selection prop:propertyName];
@@ -46,23 +49,22 @@
     [self updateAnimateablePropertyValue:animValue];
     
     [self updateAffectedProperties];
-    
-    /*
-    float posY = [self posY];
-    NSPoint pt = NSMakePoint(posX, posY);
-    [self setPropertyForSelection:[NSValue valueWithPoint:pt]];
-     */
 }
 
 - (float) posX
 {
-    //return [PositionPropertySetter positionForNode:selection prop:propertyName].x;
-    return [[selection valueForKey:propertyName] pointValue].x;
+    float posX = [[selection valueForKey:propertyName] pointValue].x;
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    if (type.xUnit == kCCPositionUnitNormalized) posX *= 100.0f;
+    return posX;
 }
 
 - (void) setPosY:(float)posY
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    if (type.yUnit == kCCPositionUnitNormalized) posY /= 100.0f;
     
     NSPoint pt = [PositionPropertySetter positionForNode:selection prop:propertyName];
     pt.y = posY;
@@ -75,18 +77,14 @@
     [self updateAnimateablePropertyValue:animValue];
     
     [self updateAffectedProperties];
-    
-    /*
-    float posX = [self posX];
-    NSPoint pt = NSMakePoint(posX, posY);
-    [self setPropertyForSelection:[NSValue valueWithPoint:pt]];
-     */
 }
 
 - (float) posY
 {
-    //return [PositionPropertySetter positionForNode:selection prop:propertyName].y;
-    return [[selection valueForKey:propertyName] pointValue].y;
+    float posY = [[selection valueForKey:propertyName] pointValue].y;
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    if (type.yUnit == kCCPositionUnitNormalized) posY *= 100.0f;
+    return posY;
 }
 
 - (id) convertAnimatableValue:(id)value fromType:(CCPositionType)fromType toType:(CCPositionType)toType
@@ -168,12 +166,6 @@
     CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
     return type.corner;
 }
-
-/*
-- (int) positionType
-{
-    return [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
-}*/
 
 - (void) refresh
 {

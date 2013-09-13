@@ -687,7 +687,6 @@ CGPoint ccpRound(CGPoint pt)
 }
 
 - (void) mouseDragged:(NSEvent *)event
-//- (BOOL) ccMouseDragged:(NSEvent *)event
 {
     if (!appDelegate.hasOpenedDocument) return;
     [self mouseMoved:event];
@@ -732,7 +731,7 @@ CGPoint ccpRound(CGPoint pt)
         
         for (CCNode* selectedNode in appDelegate.selectedNodes)
         {
-            CGPoint pos = NSPointToCGPoint([PositionPropertySetter positionForNode:selectedNode prop:@"position"]);
+            CGPoint pos = NSPointToCGPoint(selectedNode.positionInPoints);
             
             selectedNode.transformStartPosition = [selectedNode.parent convertToWorldSpace:pos];
         }
@@ -749,48 +748,6 @@ CGPoint ccpRound(CGPoint pt)
         {
             float xDelta = (int)(pos.x - mouseDownPos.x);
             float yDelta = (int)(pos.y - mouseDownPos.y);
-            
-            CGSize parentSize = [PositionPropertySetter getParentSize:selectedNode];
-            
-            // Swap axis for relative positions
-            CCPositionType positionType = [PositionPropertySetter positionTypeForNode:selectedNode prop:@"position"];
-            
-#warning FIX!!
-            /*
-            if (positionType == kCCBPositionTypeRelativeBottomRight)
-            {
-                xDelta = -xDelta;
-            }
-            else if (positionType == kCCBPositionTypeRelativeTopLeft)
-            {
-                yDelta = -yDelta;
-            }
-            else if (positionType == kCCBPositionTypeRelativeTopRight)
-            {
-                xDelta = -xDelta;
-                yDelta = -yDelta;
-            }
-            else if (positionType == kCCBPositionTypePercent)
-            {
-                // Handle percental positions
-                if (parentSize.width > 0)
-                {
-                    xDelta = (xDelta/parentSize.width)*100.0f;
-                }
-                else
-                {
-                    xDelta = 0;
-                }
-                
-                if (parentSize.height > 0)
-                {
-                    yDelta = (yDelta/parentSize.height)*100.0f;
-                }
-                else
-                {
-                    yDelta = 0;
-                }
-            }*/
             
             // Handle shift key (straight drags)
             if ([event modifierFlags] & NSShiftKeyMask)
@@ -835,7 +792,7 @@ CGPoint ccpRound(CGPoint pt)
             
             [appDelegate saveUndoStateWillChangeProperty:@"position"];
             
-            [PositionPropertySetter setPosition:NSPointFromCGPoint(newLocalPos) forNode:selectedNode prop:@"position"];
+            selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos];
         }
         [appDelegate refreshProperty:@"position"];
     }
