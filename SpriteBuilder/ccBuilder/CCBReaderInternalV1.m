@@ -129,7 +129,7 @@
 + (void) setPropsForNode: (CCNode*) node props:(NSDictionary*)props
 {
     CGPoint position = [CCBReaderInternalV1 pointValFromDict:props forKey:@"position"];
-    [PositionPropertySetter setPosition:NSPointFromCGPoint(position) type:0 forNode:node prop:@"position"];
+    [PositionPropertySetter setPosition:NSPointFromCGPoint(position) type:kCCPositionTypePoints forNode:node prop:@"position"];
     
     if (![node isKindOfClass:[CCSprite class]] &&
         ![node isKindOfClass:[CCMenuItemImage class]] &&

@@ -38,6 +38,17 @@
 #import "StringPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 
+// Old positioning constants
+enum
+{
+    kCCBPositionTypeRelativeBottomLeft,
+    kCCBPositionTypeRelativeTopLeft,
+    kCCBPositionTypeRelativeTopRight,
+    kCCBPositionTypeRelativeBottomRight,
+    kCCBPositionTypePercent,
+    kCCBPositionTypeMultiplyResolution,
+};
+
 NSDictionary* renamedProperties = NULL;
 
 @implementation CCBReaderInternal
@@ -121,9 +132,34 @@ NSDictionary* renamedProperties = NULL;
     {
         float x = [[serializedValue objectAtIndex:0] floatValue];
         float y = [[serializedValue objectAtIndex:1] floatValue];
-        int posType = 0;
-        if ([(NSArray*)serializedValue count] == 3) posType = [[serializedValue objectAtIndex:2] intValue];
-        [PositionPropertySetter setPosition:NSMakePoint(x, y) type:posType forNode:node prop:name parentSize:parentSize];
+        CCPositionType posType = kCCPositionTypePoints;
+        if ([(NSArray*)serializedValue count] == 3)
+        {
+            // Position is stored in old format - do conversion
+            int oldPosType = [[serializedValue objectAtIndex:2] intValue];
+            if (oldPosType == kCCBPositionTypeRelativeBottomLeft) posType.corner = kCCPositionReferenceCornerBottomLeft;
+            else if (oldPosType == kCCBPositionTypeRelativeTopLeft) posType.corner = kCCPositionReferenceCornerTopLeft;
+            else if (oldPosType == kCCBPositionTypeRelativeTopRight) posType.corner = kCCPositionReferenceCornerTopRight;
+            else if (oldPosType == kCCBPositionTypeRelativeBottomRight) posType.corner = kCCPositionReferenceCornerBottomRight;
+            else if (oldPosType == kCCBPositionTypePercent)
+            {
+                posType = kCCPositionTypeNormalized;
+                x /= 100.0;
+                y /= 100.0;
+            }
+            else if (oldPosType == kCCBPositionTypeMultiplyResolution)
+            {
+                posType = kCCPositionTypeScaled;
+            }
+        }
+        else if ([(NSArray*)serializedValue count] == 5)
+        {
+            // New positioning type
+            posType.corner = [[serializedValue objectAtIndex:2] intValue];
+            posType.xUnit = [[serializedValue objectAtIndex:3] intValue];
+            posType.yUnit = [[serializedValue objectAtIndex:4] intValue];
+        }
+        [PositionPropertySetter setPosition:NSMakePoint(x, y) type:posType forNode:node prop:name];
     }
     else if ([type isEqualToString:@"Point"]
         || [type isEqualToString:@"PointLock"])

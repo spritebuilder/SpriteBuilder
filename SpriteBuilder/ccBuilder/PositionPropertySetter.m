@@ -113,7 +113,7 @@
     NSSize rootNodeSize = [PositionPropertySetter sizeForNode:cs.rootNode prop:@"contentSize"];
     [PositionPropertySetter setSize:rootNodeSize forNode:cs.rootNode prop:@"contentSize"];
 }
-
+/*
 + (NSPoint) calcAbsolutePositionFromRelative:(NSPoint)pos type:(int)type parentSize:(CGSize) parentSize
 {
     // Get parent size
@@ -157,8 +157,9 @@
     }
     
     return absPos;
-}
+}*/
 
+/*
 + (NSPoint) calcRelativePositionFromAbsolute:(NSPoint)pos type:(int)type parentSize:(CGSize)parentSize
 {
     // Get parent size
@@ -216,14 +217,22 @@
     }
     
     return relPos;
-}
+}*/
 
 
-+ (void) setPosition:(NSPoint)pos type:(int)type forNode:(CCNode*) node prop:(NSString*)prop
++ (void) setPosition:(NSPoint)pos type:(CCPositionType)type forNode:(CCNode*) node prop:(NSString*)prop
 {
-    [PositionPropertySetter setPosition:pos type:type forNode:node prop:prop parentSize:[PositionPropertySetter getParentSize:node]];
+    // Set the position type
+    NSValue* typeValue = [NSValue value:&type withObjCType:@encode(CCPositionType)];
+    [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
+    
+    // Set position
+    [node setValue:[NSValue valueWithPoint:pos] forKey:prop];
+    
+    //[PositionPropertySetter setPosition:pos type:type forNode:node prop:prop parentSize:[PositionPropertySetter getParentSize:node]];
 }
 
+/*
 + (void) setPosition:(NSPoint)pos type:(int)type forNode:(CCNode*) node prop:(NSString*)prop parentSize:(CGSize)parentSize
 {
     NSPoint absPos = [PositionPropertySetter calcAbsolutePositionFromRelative:pos type:type parentSize:parentSize];
@@ -234,7 +243,7 @@
     // Set the extra properties
     [node setExtraProp:[NSValue valueWithPoint:pos] forKey:prop];
     [node setExtraProp:[NSNumber numberWithInt:type] forKey:[NSString stringWithFormat:@"%@Type", prop]];
-}
+}*/
 
 + (void) addPositionKeyframeForNode:(CCNode*)node
 {
@@ -274,35 +283,66 @@
 
 + (void) setPosition:(NSPoint)pos forNode:(CCNode *)node prop:(NSString *)prop
 {
-    int type = [PositionPropertySetter positionTypeForNode:node prop:prop];
-    [PositionPropertySetter setPosition:pos type:type forNode:node prop:prop];
+    //int type = [PositionPropertySetter positionTypeForNode:node prop:prop];
+    //[PositionPropertySetter setPosition:pos type:type forNode:node prop:prop];
+    [node setValue:[NSValue valueWithPoint:pos] forKey:prop];
 }
 
-+ (void) setPositionType:(int)type forNode:(CCNode*)node prop:(NSString*)prop
++ (void) setPositionType:(CCPositionType)type forNode:(CCNode*)node prop:(NSString*)prop
 {
-    NSPoint oldAbsPos = [[node valueForKey:prop] pointValue];
-    NSPoint relPos = [PositionPropertySetter calcRelativePositionFromAbsolute:oldAbsPos type:type parentSize:[PositionPropertySetter getParentSize:node]];
-    [PositionPropertySetter setPosition:relPos type:type forNode:node prop:prop];
+    // Get position in points
+    CGPoint absPos = NSPointToCGPoint([[node valueForKey:[prop stringByAppendingString:@"InPoints"]] pointValue]);
+    
+    // Set the position type
+    NSValue* typeValue = [NSValue value:&type withObjCType:@encode(CCPositionType)];
+    [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
+    
+    // Calculate new position (from old value)
+    CGPoint relPos = [node convertPositionFromPoints:absPos];
+    
+    // Update the position
+    NSValue* pointValue = [NSValue valueWithPoint: NSPointFromCGPoint(relPos)];
+    [node setValue:pointValue forKey:prop];
+    
+    //NSPoint oldAbsPos = [[node valueForKey:prop] pointValue];
+    //NSPoint relPos = [PositionPropertySetter calcRelativePositionFromAbsolute:oldAbsPos type:type parentSize:[PositionPropertySetter getParentSize:node]];
+    //[PositionPropertySetter setPosition:relPos type:type forNode:node prop:prop];
 }
 
 + (NSPoint) positionForNode:(CCNode*)node prop:(NSString*)prop
 {
-    return [[node extraPropForKey:prop] pointValue];
+    return [[node valueForKey:prop] pointValue];
 }
 
-+ (int) positionTypeForNode:(CCNode*)node prop:(NSString*)prop
++ (CCPositionType) positionTypeForNode:(CCNode*)node prop:(NSString*)prop
 {
-    return [[node extraPropForKey:[NSString stringWithFormat:@"%@Type", prop]] intValue];
+    NSValue* typeValue = [node valueForKey:[prop stringByAppendingString:@"Type"]];
+    CCPositionType type;
+    [typeValue getValue:&type];
+    
+    return type;
+    //return [[node extraPropForKey:[NSString stringWithFormat:@"%@Type", prop]] intValue];
 }
 
-+ (NSPoint) convertPosition:(NSPoint)pos fromType:(int)fromType toType:(int)toType forNode:(CCNode*) node
++ (NSPoint) convertPosition:(NSPoint)pos fromType:(CCPositionType)fromType toType:(CCPositionType)toType forNode:(CCNode*) node
 {
-    if (fromType == toType) return pos;
+    // Ignore non conversions
+    if (fromType.xUnit == toType.xUnit && fromType.yUnit == toType.yUnit && fromType.corner == toType.corner) return pos;
     
-    CGSize parentSize = [PositionPropertySetter getParentSize:node];
+    // Save old type
+    CCPositionType oldType = node.positionType;
     
-    NSPoint absPos = [PositionPropertySetter calcAbsolutePositionFromRelative:pos type:fromType parentSize:parentSize];
-    return [PositionPropertySetter calcRelativePositionFromAbsolute:absPos type:toType parentSize:parentSize];
+    // Do the conversion
+    node.positionType = fromType;
+    CGPoint absPos = [node convertPositionToPoints:pos];
+    node.positionType = toType;
+    CGPoint newPos = [node convertPositionFromPoints:absPos];
+    
+    // Restore old type
+    node.positionType = oldType;
+    
+    // Return converted value
+    return newPos;
 }
 
 + (void) setSize:(NSSize)size type:(int)type forNode:(CCNode*)node prop:(NSString*)prop

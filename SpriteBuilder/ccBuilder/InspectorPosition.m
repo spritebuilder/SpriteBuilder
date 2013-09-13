@@ -46,11 +46,18 @@
     [self updateAnimateablePropertyValue:animValue];
     
     [self updateAffectedProperties];
+    
+    /*
+    float posY = [self posY];
+    NSPoint pt = NSMakePoint(posX, posY);
+    [self setPropertyForSelection:[NSValue valueWithPoint:pt]];
+     */
 }
 
 - (float) posX
 {
-    return [PositionPropertySetter positionForNode:selection prop:propertyName].x;
+    //return [PositionPropertySetter positionForNode:selection prop:propertyName].x;
+    return [[selection valueForKey:propertyName] pointValue].x;
 }
 
 - (void) setPosY:(float)posY
@@ -68,14 +75,21 @@
     [self updateAnimateablePropertyValue:animValue];
     
     [self updateAffectedProperties];
+    
+    /*
+    float posX = [self posX];
+    NSPoint pt = NSMakePoint(posX, posY);
+    [self setPropertyForSelection:[NSValue valueWithPoint:pt]];
+     */
 }
 
 - (float) posY
 {
-    return [PositionPropertySetter positionForNode:selection prop:propertyName].y;
+    //return [PositionPropertySetter positionForNode:selection prop:propertyName].y;
+    return [[selection valueForKey:propertyName] pointValue].y;
 }
 
-- (id) convertAnimatableValue:(id)value fromType:(int)fromType toType:(int)toType
+- (id) convertAnimatableValue:(id)value fromType:(CCPositionType)fromType toType:(CCPositionType)toType
 {
     NSPoint relPos = NSZeroPoint;
     relPos.x = [[value objectAtIndex:0] floatValue];
@@ -89,11 +103,11 @@
                               NULL];
 }
 
-- (void) setPositionType:(int)positionType
+- (void) setPositionType:(CCPositionType)positionType
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
-    int oldPositionType = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    CCPositionType oldPositionType = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
     
     // Update keyframes
     NSArray* keyframes = [selection keyframesForProperty:propertyName];
@@ -116,10 +130,50 @@
     [self updateAffectedProperties];
 }
 
+- (void) setPositionUnitX:(int)positionUnitX
+{
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    type.xUnit = positionUnitX;
+    [self setPositionType:type];
+}
+
+- (void) setPositionUnitY:(int)positionUnitY
+{
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    type.yUnit = positionUnitY;
+    [self setPositionType:type];
+}
+
+- (void) setReferenceCorner:(int)referenceCorner
+{
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    type.corner = referenceCorner;
+    [self setPositionType:type];
+}
+
+- (int) positionUnitX
+{
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    return type.xUnit;
+}
+
+- (int) positionUnitY
+{
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    return type.yUnit;
+}
+
+- (int) referenceCorner
+{
+    CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
+    return type.corner;
+}
+
+/*
 - (int) positionType
 {
     return [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
-}
+}*/
 
 - (void) refresh
 {
@@ -129,8 +183,14 @@
     [self willChangeValueForKey:@"posY"];
     [self didChangeValueForKey:@"posY"];
     
-    [self willChangeValueForKey:@"positionType"];
-    [self didChangeValueForKey:@"positionType"];
+    [self willChangeValueForKey:@"positionUnitX"];
+    [self didChangeValueForKey:@"positionUnitX"];
+    
+    [self willChangeValueForKey:@"positionUnitY"];
+    [self didChangeValueForKey:@"positionUnitY"];
+    
+    [self willChangeValueForKey:@"referenceCorner"];
+    [self didChangeValueForKey:@"referenceCorner"];
 }
 
 @end

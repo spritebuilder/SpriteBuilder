@@ -753,7 +753,10 @@ CGPoint ccpRound(CGPoint pt)
             CGSize parentSize = [PositionPropertySetter getParentSize:selectedNode];
             
             // Swap axis for relative positions
-            int positionType = [PositionPropertySetter positionTypeForNode:selectedNode prop:@"position"];
+            CCPositionType positionType = [PositionPropertySetter positionTypeForNode:selectedNode prop:@"position"];
+            
+#warning FIX!!
+            /*
             if (positionType == kCCBPositionTypeRelativeBottomRight)
             {
                 xDelta = -xDelta;
@@ -787,7 +790,7 @@ CGPoint ccpRound(CGPoint pt)
                 {
                     yDelta = 0;
                 }
-            }
+            }*/
             
             // Handle shift key (straight drags)
             if ([event modifierFlags] & NSShiftKeyMask)

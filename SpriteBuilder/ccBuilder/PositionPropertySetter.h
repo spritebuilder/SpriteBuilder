@@ -27,16 +27,6 @@
 
 enum
 {
-    kCCBPositionTypeRelativeBottomLeft,
-    kCCBPositionTypeRelativeTopLeft,
-    kCCBPositionTypeRelativeTopRight,
-    kCCBPositionTypeRelativeBottomRight,
-    kCCBPositionTypePercent,
-    kCCBPositionTypeMultiplyResolution,
-};
-
-enum
-{
     kCCBSizeTypeAbsolute,
     kCCBSizeTypePercent,
     kCCBSizeTypeRelativeContainer,
@@ -56,18 +46,18 @@ enum
 + (CGSize) getParentSize:(CCNode*) node;
 
 // Setting/getting positions
-+ (void) setPosition:(NSPoint)pos type:(int)type forNode:(CCNode*) node prop:(NSString*)prop;
-+ (void) setPosition:(NSPoint)pos type:(int)type forNode:(CCNode*) node prop:(NSString*)prop parentSize:(CGSize)parentSize;
++ (void) setPosition:(NSPoint)pos type:(CCPositionType)type forNode:(CCNode*) node prop:(NSString*)prop;
+//+ (void) setPosition:(NSPoint)pos type:(int)type forNode:(CCNode*) node prop:(NSString*)prop parentSize:(CGSize)parentSize;
 + (void) setPosition:(NSPoint)pos forNode:(CCNode *)node prop:(NSString *)prop;
-+ (void) setPositionType:(int)type forNode:(CCNode*)node prop:(NSString*)prop;
++ (void) setPositionType:(CCPositionType)type forNode:(CCNode*)node prop:(NSString*)prop;
 + (NSPoint) positionForNode:(CCNode*)node prop:(NSString*)prop;
-+ (int) positionTypeForNode:(CCNode*)node prop:(NSString*)prop;
++ (CCPositionType) positionTypeForNode:(CCNode*)node prop:(NSString*)prop;
 + (void) addPositionKeyframeForNode:(CCNode*)node;
 
 // Positioning helpers
-+ (NSPoint) calcAbsolutePositionFromRelative:(NSPoint)pos type:(int)type parentSize:(CGSize) parentSize;
-+ (NSPoint) calcRelativePositionFromAbsolute:(NSPoint)pos type:(int)type parentSize:(CGSize)parentSize;
-+ (NSPoint) convertPosition:(NSPoint)pos fromType:(int)fromType toType:(int)toType forNode:(CCNode*) node;
+//+ (NSPoint) calcAbsolutePositionFromRelative:(NSPoint)pos type:(int)type parentSize:(CGSize) parentSize;
+//+ (NSPoint) calcRelativePositionFromAbsolute:(NSPoint)pos type:(int)type parentSize:(CGSize)parentSize;
++ (NSPoint) convertPosition:(NSPoint)pos fromType:(CCPositionType)fromType toType:(CCPositionType)toType forNode:(CCNode*) node;
 
 
 // Setting/getting sizes

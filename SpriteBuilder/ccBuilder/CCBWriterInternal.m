@@ -60,12 +60,14 @@
             nil];
 }
 
-+ (id) serializePosition:(NSPoint)pt type:(int)type
++ (id) serializePosition:(NSPoint)pt type:(CCPositionType)type
 {
     return [NSArray arrayWithObjects:
             [NSNumber numberWithFloat:pt.x],
             [NSNumber numberWithFloat:pt.y],
-            [NSNumber numberWithInt:type],
+            [NSNumber numberWithInt:type.corner],
+            [NSNumber numberWithInt:type.xUnit],
+            [NSNumber numberWithInt:type.yUnit],
             nil];
 }
 
@@ -230,7 +232,7 @@
     else if ([type isEqualToString:@"Position"])
     {
         NSPoint pt = [PositionPropertySetter positionForNode:node prop:name];
-        int type = [PositionPropertySetter positionTypeForNode:node prop:name];
+        CCPositionType type = [PositionPropertySetter positionTypeForNode:node prop:name];
         serializedValue = [CCBWriterInternal serializePosition:pt type:type];
     }
     else if([type isEqualToString:@"Point"]

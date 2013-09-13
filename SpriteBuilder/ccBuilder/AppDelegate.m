@@ -2117,7 +2117,7 @@ static BOOL hideAllToNextSeparator;
     
     CCNode* node = [plugInManager createDefaultNodeOfType:@"CCBFile"];
     [NodeGraphPropertySetter setNodeGraphForNode:node andProperty:@"ccbFile" withFile:ccbFile parentSize:parent.contentSize];
-    [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) type:kCCBPositionTypeRelativeBottomLeft forNode:node prop:@"position" parentSize:parent.contentSize];
+    [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) type:kCCPositionTypePoints forNode:node prop:@"position"];
     [self addCCObject:node toParent:parent];
 }
 
@@ -2360,13 +2360,14 @@ static BOOL hideAllToNextSeparator;
         [self saveUndoStateWillChangeProperty:@"position"];
         
         // Get and update absolute position
-        CGPoint absPos = selectedNode.position;
+        CGPoint absPos = selectedNode.positionInPoints;
         absPos = ccpAdd(absPos, delta);
         
         // Convert to relative position
-        CGSize parentSize = [PositionPropertySetter getParentSize:selectedNode];
-        int positionType = [PositionPropertySetter positionTypeForNode:selectedNode prop:@"position"];
-        NSPoint newPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(absPos) type:positionType parentSize:parentSize];
+        //CGSize parentSize = [PositionPropertySetter getParentSize:selectedNode];
+        //CCPositionType positionType = [PositionPropertySetter positionTypeForNode:selectedNode prop:@"position"];
+        NSPoint newPos = [selectedNode convertPositionFromPoints:absPos];
+        //NSPoint newPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(absPos) type:positionType];
         
         // Update the selected node
         [PositionPropertySetter setPosition:newPos forNode:selectedNode prop:@"position"];
@@ -3347,11 +3348,18 @@ static BOOL hideAllToNextSeparator;
     // Check if node can have children
     for (CCNode* c in self.selectedNodes)
     {
-        int positionType = [PositionPropertySetter positionTypeForNode:c prop:@"position"];
-        if (positionType != kCCBPositionTypePercent)
+        CCPositionType positionType = [PositionPropertySetter positionTypeForNode:c prop:@"position"];
+        if (positionType.xUnit != kCCPositionUnitNormalized)
         {
             CGPoint pos = NSPointToCGPoint([PositionPropertySetter positionForNode:c prop:@"position"]);
-            pos = ccp(roundf(pos.x), roundf(pos.y));
+            pos = ccp(roundf(pos.x), pos.y);
+            [PositionPropertySetter setPosition:NSPointFromCGPoint(pos) forNode:c prop:@"position"];
+            [PositionPropertySetter addPositionKeyframeForNode:c];
+        }
+        if (positionType.yUnit != kCCPositionUnitNormalized)
+        {
+            CGPoint pos = NSPointToCGPoint([PositionPropertySetter positionForNode:c prop:@"position"]);
+            pos = ccp(pos.x, roundf(pos.y));
             [PositionPropertySetter setPosition:NSPointFromCGPoint(pos) forNode:c prop:@"position"];
             [PositionPropertySetter addPositionKeyframeForNode:c];
         }
@@ -3369,11 +3377,11 @@ static BOOL hideAllToNextSeparator;
     {
         if (alignmentType == kCCBAlignHorizontalCenter)
         {
-            alignmentValue += node.position.x;
+            alignmentValue += node.positionInPoints.x;
         }
         else if (alignmentType == kCCBAlignVerticalCenter)
         {
-            alignmentValue += node.position.y;
+            alignmentValue += node.positionInPoints.y;
         }
     }
     alignmentValue = alignmentValue/self.selectedNodes.count;
@@ -3381,7 +3389,7 @@ static BOOL hideAllToNextSeparator;
     // Align objects
     for (CCNode* node in self.selectedNodes)
     {
-        CGPoint newAbsPosition = node.position;
+        CGPoint newAbsPosition = node.positionInPoints;
         if (alignmentType == kCCBAlignHorizontalCenter)
         {
             newAbsPosition.x = alignmentValue;
@@ -3391,8 +3399,11 @@ static BOOL hideAllToNextSeparator;
             newAbsPosition.y = alignmentValue;
         }
         
-        int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
-        NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        
+        //CCPositionType posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
+        //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        
         [PositionPropertySetter setPosition:newRelPos forNode:node prop:@"position"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
     }
@@ -3415,28 +3426,28 @@ static BOOL hideAllToNextSeparator;
         switch (alignmentType)
         {
             case kCCBAlignLeft:
-                x = nodeAnchor.position.x
+                x = nodeAnchor.positionInPoints.x
                 - nodeAnchor.contentSize.width * nodeAnchor.scaleX * nodeAnchor.anchorPoint.x;
                 
                 newAbsPosition.x = x
                 + node.contentSize.width * node.scaleX * node.anchorPoint.x;
                 break;
             case kCCBAlignRight:
-                x = nodeAnchor.position.x
+                x = nodeAnchor.positionInPoints.x
                 + nodeAnchor.contentSize.width * nodeAnchor.scaleX * nodeAnchor.anchorPoint.x;
                 
                 newAbsPosition.x = x
                 - node.contentSize.width * node.scaleX * node.anchorPoint.x;
                 break;
             case kCCBAlignTop:
-                y = nodeAnchor.position.y
+                y = nodeAnchor.positionInPoints.y
                 + nodeAnchor.contentSize.height * nodeAnchor.scaleY * nodeAnchor.anchorPoint.y;
                 
                 newAbsPosition.y = y
                 - node.contentSize.height * node.scaleY * node.anchorPoint.y;
                 break;
             case kCCBAlignBottom:
-                y = nodeAnchor.position.y
+                y = nodeAnchor.positionInPoints.y
                 - nodeAnchor.contentSize.height * nodeAnchor.scaleY * nodeAnchor.anchorPoint.y;
                 
                 newAbsPosition.y = y
@@ -3444,8 +3455,11 @@ static BOOL hideAllToNextSeparator;
                 break;
         }
         
-        int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
-        NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        //CCPositionType posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
+        //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        
         [PositionPropertySetter setPosition:newRelPos forNode:node prop:@"position"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
     }
@@ -3473,7 +3487,7 @@ static BOOL hideAllToNextSeparator;
         
         cxNode = node.contentSize.width * node.scaleX;
         
-        x = node.position.x - cxNode * node.anchorPoint.x;
+        x = node.positionInPoints.x - cxNode * node.anchorPoint.x;
         
         if (xMin > x)
             xMin = x;
@@ -3491,9 +3505,9 @@ static BOOL hideAllToNextSeparator;
     NSArray* sortedNodes = [self.selectedNodes sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         CCNode* lhs = obj1;
         CCNode* rhs = obj2;
-        if (lhs.position.x < rhs.position.x)
+        if (lhs.positionInPoints.x < rhs.position.x)
             return NSOrderedAscending;
-        if (lhs.position.x > rhs.position.x)
+        if (lhs.positionInPoints.x > rhs.position.x)
             return NSOrderedDescending;
         return NSOrderedSame;
     }];
@@ -3502,7 +3516,7 @@ static BOOL hideAllToNextSeparator;
     {
         CCNode* node = [sortedNodes objectAtIndex:i];
         
-        CGPoint newAbsPosition = node.position;
+        CGPoint newAbsPosition = node.positionInPoints;
         
         cxNode = node.contentSize.width * node.scaleX;
         
@@ -3510,8 +3524,10 @@ static BOOL hideAllToNextSeparator;
         
         x = x + cxNode + cxInterval;
         
-        int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
-        NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        //int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
+        //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        
         [PositionPropertySetter setPosition:newRelPos forNode:node prop:@"position"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
     }
@@ -3540,7 +3556,7 @@ static BOOL hideAllToNextSeparator;
         
         cyNode = node.contentSize.height * node.scaleY;
         
-        y = node.position.y - cyNode * node.anchorPoint.y;
+        y = node.positionInPoints.y - cyNode * node.anchorPoint.y;
         
         if (yMin > y)
             yMin = y;
@@ -3569,7 +3585,7 @@ static BOOL hideAllToNextSeparator;
     {
         CCNode* node = [sortedNodes objectAtIndex:i];
         
-        CGPoint newAbsPosition = node.position;
+        CGPoint newAbsPosition = node.positionInPoints;
         
         cyNode = node.contentSize.height * node.scaleY;
         
@@ -3577,8 +3593,10 @@ static BOOL hideAllToNextSeparator;
         
         y = y + cyNode + cyInterval;
         
-        int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
-        NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        //int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
+        //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        
         [PositionPropertySetter setPosition:newRelPos forNode:node prop:@"position"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
     }
@@ -3586,6 +3604,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) menuAlignObjectsSize:(id)sender alignmentType:(int)alignmentType
 {
+    /*
     CGFloat x;
     CGFloat y;
     
@@ -3625,6 +3644,7 @@ static BOOL hideAllToNextSeparator;
         [PositionPropertySetter setScaledX:x Y:y type:posType forNode:node prop:@"scale"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
     }
+     */
 }
 
 
