@@ -1219,6 +1219,8 @@ static BOOL hideAllToNextSeparator;
         int currentResolution = [[doc objectForKey:@"currentResolution"] intValue];
         ResolutionSetting* resolution = [resolutions objectAtIndex:currentResolution];
         
+        [self updatePositionScaleFactor];
+        
         // Update CocosScene
         [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
         
@@ -2892,10 +2894,18 @@ static BOOL hideAllToNextSeparator;
     return 0;
 }
 
+- (void) updatePositionScaleFactor
+{
+    ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
+    
+    [CCDirector sharedDirector].positionScaleFactor = res.scale;
+}
+
 - (void) setResolution:(int)r
 {
-    
     currentDocument.currentResolution = r;
+    
+    [self updatePositionScaleFactor];
     
     //
     // No need to call setStageSize here, since it gets called from reloadResources
