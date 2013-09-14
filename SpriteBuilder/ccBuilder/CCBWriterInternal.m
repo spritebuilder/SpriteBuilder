@@ -79,12 +79,13 @@
             nil];
 }
 
-+ (id) serializeSize:(NSSize)size type:(int)type
++ (id) serializeSize:(NSSize)size type:(CCContentSizeType)type
 {
     return [NSArray arrayWithObjects:
             [NSNumber numberWithFloat:size.width],
             [NSNumber numberWithFloat:size.height],
-            [NSNumber numberWithInt:type],
+            [NSNumber numberWithInt:type.widthUnit],
+            [NSNumber numberWithInt:type.heightUnit],
             nil];
 }
 
@@ -245,7 +246,7 @@
     {
         //CGSize size = NSSizeToCGSize( [[node valueForKey:name] sizeValue] );
         NSSize size = [PositionPropertySetter sizeForNode:node prop:name];
-        int type = [PositionPropertySetter sizeTypeForNode:node prop:name];
+        CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:node prop:name];
         serializedValue = [CCBWriterInternal serializeSize:size type:type];
     }
     else if ([type isEqualToString:@"FloatXY"])

@@ -1219,14 +1219,14 @@ static BOOL hideAllToNextSeparator;
         int currentResolution = [[doc objectForKey:@"currentResolution"] intValue];
         ResolutionSetting* resolution = [resolutions objectAtIndex:currentResolution];
         
-        [self updatePositionScaleFactor];
-        
         // Update CocosScene
         [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
         
         // Save in current document
         currentDocument.resolutions = resolutions;
         currentDocument.currentResolution = currentResolution;
+        
+        [self updatePositionScaleFactor];
     }
     else
     {
@@ -1677,7 +1677,7 @@ static BOOL hideAllToNextSeparator;
     sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
     sequenceHandler.currentSequence.timelinePosition = 0;
     [self reloadResources];
-    [PositionPropertySetter refreshAllPositions];
+    //[PositionPropertySetter refreshAllPositions];
     
     // Save preview
     [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:@"ppng"]];
@@ -1686,7 +1686,7 @@ static BOOL hideAllToNextSeparator;
     currentDocument.currentResolution = currentResolution;
     sequenceHandler.currentSequence = currentSeq;
     [self reloadResources];
-    [PositionPropertySetter refreshAllPositions];
+    //[PositionPropertySetter refreshAllPositions];
     sequenceHandler.currentSequence.timelinePosition = currentTime;
     [currentSeq release];
     
@@ -1747,7 +1747,7 @@ static BOOL hideAllToNextSeparator;
     if (([type isEqualToString:@"CCNode"] || [type isEqualToString:@"CCLayer"])
         && stageSize.width != 0 && stageSize.height != 0)
     {
-        [PositionPropertySetter setSize:NSMakeSize(100, 100) type:kCCBSizeTypePercent forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSMakeSize(1, 1) type:kCCContentSizeTypeNormalized forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     
     [outlineHierarchy reloadData];
@@ -2918,7 +2918,7 @@ static BOOL hideAllToNextSeparator;
     [self reloadResources];
     
     // Update size of root node
-    [PositionPropertySetter refreshAllPositions];
+    //[PositionPropertySetter refreshAllPositions];
 }
 
 - (IBAction) menuEditResolutionSettings:(id)sender

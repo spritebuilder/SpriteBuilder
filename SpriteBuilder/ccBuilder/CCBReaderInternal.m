@@ -49,6 +49,16 @@ enum
     kCCBPositionTypeMultiplyResolution,
 };
 
+enum
+{
+    kCCBSizeTypeAbsolute,
+    kCCBSizeTypePercent,
+    kCCBSizeTypeRelativeContainer,
+    kCCBSizeTypeHorizontalPercent,
+    kCCBSzieTypeVerticalPercent,
+    kCCBSizeTypeMultiplyResolution,
+};
+
 NSDictionary* renamedProperties = NULL;
 
 @implementation CCBReaderInternal
@@ -172,10 +182,47 @@ NSDictionary* renamedProperties = NULL;
     {
         float w = [[serializedValue objectAtIndex:0] floatValue];
         float h = [[serializedValue objectAtIndex:1] floatValue];
+        
+        CCContentSizeType sizeType = kCCContentSizeTypePoints;
+        if ([(NSArray*)serializedValue count] == 3)
+        {
+            // Convert old content size type
+            int oldSizeType = [[serializedValue objectAtIndex:2] intValue];
+            if (oldSizeType == kCCBSizeTypePercent)
+            {
+                sizeType = kCCContentSizeTypeNormalized;
+                w /= 100.0f;
+                h /= 100.0f;
+            }
+            else if (oldSizeType == kCCBSizeTypeRelativeContainer)
+            {
+                sizeType.widthUnit = kCCContentSizeUnitInsetPoints;
+                sizeType.heightUnit = kCCContentSizeUnitInsetPoints;
+            }
+            else if (oldSizeType == kCCBSizeTypeHorizontalPercent)
+            {
+                sizeType.widthUnit = kCCContentSizeUnitNormalized;
+                w /= 100.0f;
+            }
+            else if (oldSizeType == kCCBSzieTypeVerticalPercent)
+            {
+                sizeType.heightUnit = kCCContentSizeUnitNormalized;
+                h /= 100.0f;
+            }
+            else if (oldSizeType == kCCBSizeTypeMultiplyResolution)
+            {
+                sizeType = kCCContentSizeTypeScaled;
+            }
+        }
+        else if ([(NSArray*)serializedValue count] == 4)
+        {
+            // Uses new content size type
+            sizeType.widthUnit = [[serializedValue objectAtIndex:2] intValue];
+            sizeType.heightUnit = [[serializedValue objectAtIndex:3] intValue];
+        }
+        
         NSSize size =  NSMakeSize(w, h);
-        int sizeType = 0;
-        if ([(NSArray*)serializedValue count] == 3) sizeType = [[serializedValue objectAtIndex:2] intValue];
-        [PositionPropertySetter setSize:size type:sizeType forNode:node prop:name parentSize:parentSize];
+        [PositionPropertySetter setSize:size type:sizeType forNode:node prop:name];
     }
     else if ([type isEqualToString:@"Scale"]
              || [type isEqualToString:@"ScaleLock"])

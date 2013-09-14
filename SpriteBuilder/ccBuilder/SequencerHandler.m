@@ -466,7 +466,7 @@ static SequencerHandler* sharedSequencerHandler;
         
         [appDelegate setSelectedNodes:[NSArray arrayWithObject: clipNode]];
         
-        [PositionPropertySetter refreshAllPositions];
+        //[PositionPropertySetter refreshAllPositions];
         
         return YES;
     }
@@ -478,7 +478,7 @@ static SequencerHandler* sharedSequencerHandler;
     for (NSDictionary* dict in pbTextures)
     {
         [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
-        [PositionPropertySetter refreshAllPositions];
+        //[PositionPropertySetter refreshAllPositions];
         addedObject = YES;
     }
     

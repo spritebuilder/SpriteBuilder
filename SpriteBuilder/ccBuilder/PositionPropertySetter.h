@@ -27,16 +27,6 @@
 
 enum
 {
-    kCCBSizeTypeAbsolute,
-    kCCBSizeTypePercent,
-    kCCBSizeTypeRelativeContainer,
-    kCCBSizeTypeHorizontalPercent,
-    kCCBSzieTypeVerticalPercent,
-    kCCBSizeTypeMultiplyResolution,
-};
-
-enum
-{
     kCCBScaleTypeAbsolute,
     kCCBScaleTypeMultiplyResolution
 };
@@ -61,13 +51,12 @@ enum
 
 
 // Setting/getting sizes
-+ (void) setSize:(NSSize)size type:(int)type forNode:(CCNode*)node prop:(NSString*)prop;
-+ (void) setSize:(NSSize)size type:(int)type forNode:(CCNode*)node prop:(NSString*)prop parentSize:(CGSize)parentSize;
++ (void) setSize:(NSSize)size type:(CCContentSizeType)type forNode:(CCNode*)node prop:(NSString*)prop;
 + (void) setSize:(NSSize)size forNode:(CCNode *)node prop:(NSString *)prop;
 + (NSSize) sizeForNode:(CCNode*)node prop:(NSString*)prop;
-+ (int) sizeTypeForNode:(CCNode*)node prop:(NSString*)prop;
-+ (void) setSizeType:(int)type forNode:(CCNode*)node prop:(NSString*)prop;
-+ (void) refreshSizeForNode:(CCNode*)node prop:(NSString*)prop;
++ (CCContentSizeType) sizeTypeForNode:(CCNode*)node prop:(NSString*)prop;
++ (void) setSizeType:(CCContentSizeType)type forNode:(CCNode*)node prop:(NSString*)prop;
+//+ (void) refreshSizeForNode:(CCNode*)node prop:(NSString*)prop;
 
 // Setting/getting scale
 + (void) setScaledX:(float)scaleX Y:(float)scaleY type:(int)type forNode:(CCNode*)node prop:(NSString*)prop;
@@ -80,7 +69,7 @@ enum
 + (int) floatScaleTypeForNode:(CCNode*)node prop:(NSString*)prop;
 
 // Refreshing positions
-+ (void) refreshPositionsForChildren:(CCNode*)node;
-+ (void) refreshAllPositions;
+//+ (void) refreshPositionsForChildren:(CCNode*)node;
+//+ (void) refreshAllPositions;
 
 @end

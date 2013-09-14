@@ -28,6 +28,8 @@
 
 @property (nonatomic, assign) float width;
 @property (nonatomic, assign) float height;
-@property (nonatomic, assign) int type;
+
+@property (nonatomic,assign) int widthUnit;
+@property (nonatomic,assign) int heightUnit;
 
 @end

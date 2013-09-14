@@ -148,6 +148,8 @@ CGPoint ccpRound(CGPoint pt)
     [self addChild:stageBgLayer z:0];
     
     contentLayer = [CCNode node];
+    contentLayer.contentSizeType = kCCContentSizeTypeNormalized;
+    contentLayer.contentSize = CGSizeMake(1, 1);
     [stageBgLayer addChild:contentLayer];
 }
 
@@ -414,13 +416,11 @@ CGPoint ccpRound(CGPoint pt)
             
             if (node.contentSize.width > 0 && node.contentSize.height > 0)
             {
-                CGAffineTransform transform = [node nodeToWorldTransform];
-                
                 // Selection corners in world space
                 CGPoint bl = ccpRound([node convertToWorldSpace: ccp(0,0)]);
-                CGPoint br = ccpRound([node convertToWorldSpace: ccp(node.contentSize.width,0)]);
-                CGPoint tl = ccpRound([node convertToWorldSpace: ccp(0,node.contentSize.height)]);
-                CGPoint tr = ccpRound([node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)]);
+                CGPoint br = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,0)]);
+                CGPoint tl = ccpRound([node convertToWorldSpace: ccp(0,node.contentSizeInPoints.height)]);
+                CGPoint tr = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,node.contentSizeInPoints.height)]);
                 
                 CCSprite* blSprt = [CCSprite spriteWithFile:@"select-corner.png"];
                 CCSprite* brSprt = [CCSprite spriteWithFile:@"select-corner.png"];
@@ -558,12 +558,7 @@ CGPoint ccpRound(CGPoint pt)
     }
     else
     {
-        CGRect hitRect = [node boundingBox];
-        
-        CCNode* parent = node.parent;
-        CGPoint ptLocal = [parent convertToNodeSpace:pt];
-        
-        if (CGRectContainsPoint(hitRect, ptLocal))
+        if ([node hitTestWithWorldPos:pt])
         {
             [nodes addObject:node];
         }

@@ -33,6 +33,9 @@
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    if (type.widthUnit == kCCContentSizeUnitNormalized) width /= 100.0f;
+    
     NSSize size = [PositionPropertySetter sizeForNode:selection prop:propertyName];
     size.width = width;
     [PositionPropertySetter setSize:size forNode:selection prop:propertyName];
@@ -42,12 +45,20 @@
 
 - (float) width
 {
-    return [PositionPropertySetter sizeForNode:selection prop:propertyName].width;
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    float width = [PositionPropertySetter sizeForNode:selection prop:propertyName].width;
+    
+    if (type.widthUnit == kCCContentSizeUnitNormalized) width *= 100.0f;
+    
+    return width;
 }
 
 - (void) setHeight:(float)height
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    if (type.heightUnit == kCCContentSizeUnitNormalized) height /= 100.0f;
     
 	NSSize size = [PositionPropertySetter sizeForNode:selection prop:propertyName];
     size.height = height;
@@ -58,43 +69,64 @@
 
 - (float) height
 {
-    return [PositionPropertySetter sizeForNode:selection prop:propertyName].height;
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    float height = [PositionPropertySetter sizeForNode:selection prop:propertyName].height;
+    
+    if (type.heightUnit == kCCContentSizeUnitNormalized) height *= 100.0f;
+    
+    return height;
 }
 
-- (void) setType:(int)type
+- (void) setWidthUnit:(int)widthUnit
+{
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    type.widthUnit = widthUnit;
+    [self setType:type];
+}
+
+- (int) widthUnit
+{
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    return type.widthUnit;
+}
+
+- (void) setHeightUnit:(int)heightUnit
+{
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    type.heightUnit = heightUnit;
+    [self setType:type];
+}
+
+- (int) heightUnit
+{
+    CCContentSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
+    return type.heightUnit;
+}
+
+- (void) setType:(CCContentSizeType)type
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
-    //NSSize size = [PositionPropertySetter sizeForNode:selection prop:propertyName];
-    //[PositionPropertySetter setSize:size type:type forNode:selection prop:propertyName];
     [PositionPropertySetter setSizeType:type forNode:selection prop:propertyName];
     
-    [self willChangeValueForKey:@"width"];
-    [self didChangeValueForKey:@"width"];
-    
-    [self willChangeValueForKey:@"height"];
-    [self didChangeValueForKey:@"height"];
+    [self refresh];
     
     [self updateAffectedProperties];
 }
 
-- (int) type
-{
-    return [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
-}
-
 - (void) refresh
 {
-    [PositionPropertySetter refreshSizeForNode:selection prop:propertyName];
-    
     [self willChangeValueForKey:@"width"];
     [self didChangeValueForKey:@"width"];
     
     [self willChangeValueForKey:@"height"];
     [self didChangeValueForKey:@"height"];
     
-    [self willChangeValueForKey:@"type"];
-    [self didChangeValueForKey:@"type"];
+    [self willChangeValueForKey:@"widthUnit"];
+    [self didChangeValueForKey:@"widthUnit"];
+    
+    [self willChangeValueForKey:@"heightUnit"];
+    [self didChangeValueForKey:@"heightUnit"];
 }
 
 @end
