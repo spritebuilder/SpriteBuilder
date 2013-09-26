@@ -35,6 +35,22 @@
 			<string>block</string>
 		</dict>
 		<dict>
+			<key>codeConnection</key>
+			<true/>
+			<key>dontSetInEditor</key>
+			<true/>
+			<key>default</key>
+			<false/>
+			<key>defaultSerialization</key>
+			<false/>
+			<key>displayName</key>
+			<string>Continuous</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>continuous</string>
+		</dict>
+		<dict>
 			<key>displayName</key>
 			<string>CCControl</string>
 			<key>name</key>

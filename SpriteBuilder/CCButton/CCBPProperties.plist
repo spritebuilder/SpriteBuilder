@@ -28,6 +28,28 @@
 			<key>displayName</key>
 			<string>Content size</string>
 		</dict>
+		<dict>
+			<key>default</key>
+			<array>
+				<integer>40</integer>
+				<integer>40</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>affectsProperties</key>
+			<array>
+				<string>maxSize</string>
+				<string>contentSize</string>
+			</array>
+			<key>readOnly</key>
+			<false/>
+			<key>type</key>
+			<string>Size</string>
+			<key>name</key>
+			<string>preferredSize</string>
+			<key>displayName</key>
+			<string>Preferred size</string>
+		</dict>
 	</array>
 	<key>properties</key>
 	<array>
@@ -56,6 +78,293 @@
 			<string>title</string>
 		</dict>
 		<dict>
+			<key>dontSetInEditor</key>
+			<true/>
+			<key>default</key>
+			<false/>
+			<key>defaultSerialization</key>
+			<false/>
+			<key>displayName</key>
+			<string>Zoom when highlighted</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>zoomWhenHighlighted</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Normal State</string>
+			<key>name</key>
+			<string>Normal State</string>
+			<key>type</key>
+			<string>SeparatorSub</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>default</key>
+			<array>
+				<string></string>
+				<string>ccbResources/ccbButtonNormal.png</string>
+			</array>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>displayName</key>
+			<string>Sprite frame</string>
+			<key>type</key>
+			<string>SpriteFrame</string>
+			<key>name</key>
+			<string>backgroundSpriteFrame|Normal</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>255</integer>
+			<key>default</key>
+			<integer>255</integer>
+			<key>displayName</key>
+			<string>Background opacity</string>
+			<key>type</key>
+			<string>Byte</string>
+			<key>name</key>
+			<string>backgroundOpacity|Normal</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>displayName</key>
+			<string>Background color</string>
+			<key>type</key>
+			<string>Color3</string>
+			<key>name</key>
+			<string>backgroundColor|Normal</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>255</integer>
+			<key>default</key>
+			<integer>255</integer>
+			<key>displayName</key>
+			<string>Label opacity</string>
+			<key>type</key>
+			<string>Byte</string>
+			<key>name</key>
+			<string>labelOpacity|Normal</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>displayName</key>
+			<string>Label color</string>
+			<key>type</key>
+			<string>Color3</string>
+			<key>name</key>
+			<string>labelColor|Normal</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Highlighted State</string>
+			<key>name</key>
+			<string>Highlighted State</string>
+			<key>type</key>
+			<string>SeparatorSub</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>default</key>
+			<array>
+				<string></string>
+				<string>ccbResources/ccbButtonHighlighted.png</string>
+			</array>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>displayName</key>
+			<string>Sprite frame</string>
+			<key>type</key>
+			<string>SpriteFrame</string>
+			<key>name</key>
+			<string>backgroundSpriteFrame|Highlighted</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>255</integer>
+			<key>default</key>
+			<integer>255</integer>
+			<key>displayName</key>
+			<string>Background opacity</string>
+			<key>type</key>
+			<string>Byte</string>
+			<key>name</key>
+			<string>backgroundOpacity|Highlighted</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>displayName</key>
+			<string>Background color</string>
+			<key>type</key>
+			<string>Color3</string>
+			<key>name</key>
+			<string>backgroundColor|Highlighted</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>255</integer>
+			<key>default</key>
+			<integer>255</integer>
+			<key>displayName</key>
+			<string>Label opacity</string>
+			<key>type</key>
+			<string>Byte</string>
+			<key>name</key>
+			<string>labelOpacity|Highlighted</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>displayName</key>
+			<string>Label color</string>
+			<key>type</key>
+			<string>Color3</string>
+			<key>name</key>
+			<string>labelColor|Highlighted</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Disabled State</string>
+			<key>name</key>
+			<string>Disabled State</string>
+			<key>type</key>
+			<string>SeparatorSub</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>default</key>
+			<array>
+				<string></string>
+				<string>ccbResources/ccbButtonNormal.png</string>
+			</array>
+			<key>affectsProperties</key>
+			<array>
+				<string>contentSize</string>
+			</array>
+			<key>displayName</key>
+			<string>Sprite frame</string>
+			<key>type</key>
+			<string>SpriteFrame</string>
+			<key>name</key>
+			<string>backgroundSpriteFrame|Disabled</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>255</integer>
+			<key>default</key>
+			<integer>127</integer>
+			<key>displayName</key>
+			<string>Background opacity</string>
+			<key>type</key>
+			<string>Byte</string>
+			<key>name</key>
+			<string>backgroundOpacity|Disabled</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>displayName</key>
+			<string>Background color</string>
+			<key>type</key>
+			<string>Color3</string>
+			<key>name</key>
+			<string>backgroundColor|Disabled</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>255</integer>
+			<key>default</key>
+			<integer>255</integer>
+			<key>displayName</key>
+			<string>Label opacity</string>
+			<key>type</key>
+			<string>Byte</string>
+			<key>name</key>
+			<string>labelOpacity|Disabled</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>displayName</key>
+			<string>Label color</string>
+			<key>type</key>
+			<string>Color3</string>
+			<key>name</key>
+			<string>labelColor|Disabled</string>
+		</dict>
+		<dict>
 			<key>displayName</key>
 			<string>CCLabelTTF</string>
 			<key>name</key>
@@ -80,6 +389,11 @@
 			<string>fontName</string>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<integer>17</integer>
+				<integer>0</integer>
+			</array>
 			<key>affectsProperties</key>
 			<array>
 				<string>contentSize</string>
@@ -92,42 +406,11 @@
 			<string>fontSize</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<integer>255</integer>
-			<key>animatable</key>
-			<true/>
-			<key>default</key>
-			<integer>255</integer>
-			<key>displayName</key>
-			<string>Opacity</string>
-			<key>type</key>
-			<string>Byte</string>
-			<key>name</key>
-			<string>opacity</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
-			</array>
-			<key>animatable</key>
-			<true/>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>10</integer>
+				<integer>0</integer>
 			</array>
-			<key>displayName</key>
-			<string>Color</string>
-			<key>type</key>
-			<string>Color3</string>
-			<key>name</key>
-			<string>color</string>
-		</dict>
-		<dict>
 			<key>affectsProperties</key>
 			<array>
 				<string>contentSize</string>
@@ -244,10 +527,15 @@
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>0</integer>
+				<integer>127</integer>
 			</array>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
 			<key>affectsProperties</key>
 			<array>
 				<string>contentSize</string>
@@ -260,6 +548,12 @@
 			<string>shadowBlurRadius</string>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<integer>0</integer>
+				<integer>-2</integer>
+				<integer>0</integer>
+			</array>
 			<key>defaultSerialization</key>
 			<array>
 				<integer>0</integer>
