@@ -191,6 +191,16 @@
 		B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */; };
 		B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */; };
 		B7B276E617D939F500F4F4B1 /* CCBPMenuItemImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B276E517D939F500F4F4B1 /* CCBPMenuItemImage.m */; };
+		B7C623B317F383CE00928F91 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
+		B7C623B917F383CE00928F91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C623B717F383CE00928F91 /* InfoPlist.strings */; };
+		B7C623C017F384E400928F91 /* CCButton.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */; };
+		B7C623C217F3860A00928F91 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C623C117F3860A00928F91 /* Icon.png */; };
+		B7C623C417F3868C00928F91 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C623C317F3868C00928F91 /* CCBPProperties.plist */; };
+		B7C623C717F3870A00928F91 /* CCBPButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C623C617F3870A00928F91 /* CCBPButton.m */; };
+		B7C623CE17F38B7800928F91 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
+		B7C623D417F38B7800928F91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C623D217F38B7800928F91 /* InfoPlist.strings */; };
+		B7C623DB17F3903900928F91 /* CCControl.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */; };
+		B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C623DC17F392FE00928F91 /* CCBPProperties.plist */; };
 		B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D0918417C2C12B0007FE7F /* libcocos2d.a */; };
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
@@ -582,6 +592,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B7C623BE17F384B200928F91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7C623B017F383CE00928F91;
+			remoteInfo = CCButton;
+		};
+		B7C623D917F3902900928F91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7C623CC17F38B7800928F91;
+			remoteInfo = CCControl;
+		};
 		B7D0918317C2C12B0007FE7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */;
@@ -736,6 +760,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B7C623DB17F3903900928F91 /* CCControl.ccbPlugNode in Copy PlugIns */,
+				B7C623C017F384E400928F91 /* CCButton.ccbPlugNode in Copy PlugIns */,
 				E3D5912F150F53EA004180CA /* CCBFile.ccbPlugNode in Copy PlugIns */,
 				E398C03014FB82170078E771 /* Cocos2D iPhone.ccbPlugExport in Copy PlugIns */,
 				E325F66A14F6611F00D29BCF /* CCMenuItemImage.ccbPlugNode in Copy PlugIns */,
@@ -1051,6 +1077,20 @@
 		B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultTemplates.zip; sourceTree = "<group>"; };
 		B7B276E417D939F500F4F4B1 /* CCBPMenuItemImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPMenuItemImage.h; sourceTree = "<group>"; };
 		B7B276E517D939F500F4F4B1 /* CCBPMenuItemImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPMenuItemImage.m; sourceTree = "<group>"; };
+		B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCButton.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7C623B217F383CE00928F91 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		B7C623B617F383CE00928F91 /* CCButton-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCButton-Info.plist"; sourceTree = "<group>"; };
+		B7C623B817F383CE00928F91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B7C623BA17F383CE00928F91 /* CCButton-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCButton-Prefix.pch"; sourceTree = "<group>"; };
+		B7C623C117F3860A00928F91 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B7C623C317F3868C00928F91 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		B7C623C517F3870A00928F91 /* CCBPButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPButton.h; sourceTree = "<group>"; };
+		B7C623C617F3870A00928F91 /* CCBPButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPButton.m; sourceTree = "<group>"; };
+		B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCControl.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7C623D117F38B7800928F91 /* CCControl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCControl-Info.plist"; sourceTree = "<group>"; };
+		B7C623D317F38B7800928F91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B7C623D517F38B7800928F91 /* CCControl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCControl-Prefix.pch"; sourceTree = "<group>"; };
+		B7C623DC17F392FE00928F91 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d-osx.xcodeproj"; path = "cocos2d-iphone/cocos2d-osx.xcodeproj"; sourceTree = "<group>"; };
 		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SpriteBuilder.icns; path = ../SpriteBuilder.icns; sourceTree = "<group>"; };
 		B7F02D4617D12DB1008A2E2D /* about-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg.png"; sourceTree = "<group>"; };
@@ -1644,6 +1684,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C623AE17F383CE00928F91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C623B317F383CE00928F91 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C623CA17F38B7800928F91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C623CE17F38B7800928F91 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E325F65714F65C8E00D29BCF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2135,6 +2191,8 @@
 				E398C02214FB81A30078E771 /* Cocos2D iPhone.ccbPlugExport */,
 				E3D59121150F5367004180CA /* CCBFile.ccbPlugNode */,
 				FA98CFC1154E7D1C006E58C5 /* ccbpublish */,
+				B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */,
+				B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2157,6 +2215,7 @@
 				77D33E94138E714700012A88 /* ExceptionHandling.framework */,
 				7789ABC2133AA82000CEFCC7 /* Cocoa.framework */,
 				FA98CFC3154E7D1C006E58C5 /* Foundation.framework */,
+				B7C623B217F383CE00928F91 /* CoreFoundation.framework */,
 				7789ABC4133AA82000CEFCC7 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -2553,6 +2612,47 @@
 			name = "Property Inspector";
 			sourceTree = "<group>";
 		};
+		B7C623B417F383CE00928F91 /* CCButton */ = {
+			isa = PBXGroup;
+			children = (
+				B7C623B517F383CE00928F91 /* Supporting Files */,
+				B7C623C517F3870A00928F91 /* CCBPButton.h */,
+				B7C623C617F3870A00928F91 /* CCBPButton.m */,
+			);
+			path = CCButton;
+			sourceTree = "<group>";
+		};
+		B7C623B517F383CE00928F91 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B7C623C117F3860A00928F91 /* Icon.png */,
+				B7C623B617F383CE00928F91 /* CCButton-Info.plist */,
+				B7C623B717F383CE00928F91 /* InfoPlist.strings */,
+				B7C623BA17F383CE00928F91 /* CCButton-Prefix.pch */,
+				B7C623C317F3868C00928F91 /* CCBPProperties.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B7C623CF17F38B7800928F91 /* CCControl */ = {
+			isa = PBXGroup;
+			children = (
+				B7C623D017F38B7800928F91 /* Supporting Files */,
+			);
+			path = CCControl;
+			sourceTree = "<group>";
+		};
+		B7C623D017F38B7800928F91 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B7C623D117F38B7800928F91 /* CCControl-Info.plist */,
+				B7C623D217F38B7800928F91 /* InfoPlist.strings */,
+				B7C623D517F38B7800928F91 /* CCControl-Prefix.pch */,
+				B7C623DC17F392FE00928F91 /* CCBPProperties.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B7D0917E17C2C12A0007FE7F /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2743,11 +2843,13 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
-		E35392481518AD4100471721 /* Extensions */ = {
+		E35392481518AD4100471721 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				B7C623CF17F38B7800928F91 /* CCControl */,
+				B7C623B417F383CE00928F91 /* CCButton */,
 			);
-			name = Extensions;
+			name = UI;
 			sourceTree = "<group>";
 		};
 		E35A134E15B038D700C9AA15 /* ThoMoNetworking */ = {
@@ -3109,7 +3211,7 @@
 			isa = PBXGroup;
 			children = (
 				E35392461518AD0A00471721 /* Core */,
-				E35392481518AD4100471721 /* Extensions */,
+				E35392481518AD4100471721 /* UI */,
 			);
 			name = "PlugIns (Nodes)";
 			sourceTree = "<group>";
@@ -3466,6 +3568,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				B7C623DA17F3902900928F91 /* PBXTargetDependency */,
+				B7C623BF17F384B200928F91 /* PBXTargetDependency */,
 				B7D0918917C2C16E0007FE7F /* PBXTargetDependency */,
 				E3F541CE15AED85800EAAFBD /* PBXTargetDependency */,
 				E398C02F14FB82090078E771 /* PBXTargetDependency */,
@@ -3485,6 +3589,40 @@
 			productName = ccBuilder;
 			productReference = 7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B7C623B017F383CE00928F91 /* CCButton */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7C623BB17F383CE00928F91 /* Build configuration list for PBXNativeTarget "CCButton" */;
+			buildPhases = (
+				B7C623AD17F383CE00928F91 /* Sources */,
+				B7C623AE17F383CE00928F91 /* Frameworks */,
+				B7C623AF17F383CE00928F91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCButton;
+			productName = CCButton;
+			productReference = B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		B7C623CC17F38B7800928F91 /* CCControl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7C623D617F38B7800928F91 /* Build configuration list for PBXNativeTarget "CCControl" */;
+			buildPhases = (
+				B7C623C917F38B7800928F91 /* Sources */,
+				B7C623CA17F38B7800928F91 /* Frameworks */,
+				B7C623CB17F38B7800928F91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCControl;
+			productName = CCControl;
+			productReference = B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
 		};
 		E325F65914F65C8E00D29BCF /* CCMenuItemImage */ = {
 			isa = PBXNativeTarget;
@@ -3751,6 +3889,8 @@
 				E3D59120150F5367004180CA /* CCBFile */,
 				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
 				FA98CFC0154E7D1C006E58C5 /* ccbpublish */,
+				B7C623B017F383CE00928F91 /* CCButton */,
+				B7C623CC17F38B7800928F91 /* CCControl */,
 			);
 		};
 /* End PBXProject section */
@@ -4039,6 +4179,25 @@
 				B78AE45217E3B1600028BE0B /* scale-2.png in Resources */,
 				B78AE45317E3B1600028BE0B /* scale-3.png in Resources */,
 				B78AE45417E3B1600028BE0B /* scale-4.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C623AF17F383CE00928F91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C623C417F3868C00928F91 /* CCBPProperties.plist in Resources */,
+				B7C623C217F3860A00928F91 /* Icon.png in Resources */,
+				B7C623B917F383CE00928F91 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C623CB17F38B7800928F91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C623D417F38B7800928F91 /* InfoPlist.strings in Resources */,
+				B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4422,6 +4581,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C623AD17F383CE00928F91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C623C717F3870A00928F91 /* CCBPButton.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C623C917F38B7800928F91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E325F65614F65C8E00D29BCF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4530,6 +4704,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B7C623BF17F384B200928F91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7C623B017F383CE00928F91 /* CCButton */;
+			targetProxy = B7C623BE17F384B200928F91 /* PBXContainerItemProxy */;
+		};
+		B7C623DA17F3902900928F91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7C623CC17F38B7800928F91 /* CCControl */;
+			targetProxy = B7C623D917F3902900928F91 /* PBXContainerItemProxy */;
+		};
 		B7D0918917C2C16E0007FE7F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2d;
@@ -4625,6 +4809,22 @@
 				7789ABD8133AA82000CEFCC7 /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		B7C623B717F383CE00928F91 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7C623B817F383CE00928F91 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B7C623D217F38B7800928F91 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7C623D317F38B7800928F91 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		E325F65F14F65C8F00D29BCF /* InfoPlist.strings */ = {
@@ -4788,6 +4988,7 @@
 					libs/Fragaria,
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
 					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
 				);
 				INFOPLIST_FILE = "ccBuilder/SpriteBuilder-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -4826,6 +5027,7 @@
 					libs/Fragaria,
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
 					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
 				);
 				INFOPLIST_FILE = "ccBuilder/SpriteBuilder-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -4837,6 +5039,184 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B7C623BC17F383CE00928F91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCButton/CCButton-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCButton/CCButton-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		B7C623BD17F383CE00928F91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCButton/CCButton-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCButton/CCButton-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
+		B7C623D717F38B7800928F91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCControl/CCControl-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCControl/CCControl-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		B7C623D817F38B7800928F91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCControl/CCControl-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCControl/CCControl-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;
 		};
@@ -4856,6 +5236,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCMenuItemImage/CCMenuItemImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -4879,6 +5263,10 @@
 				GCC_PREFIX_HEADER = "CCMenuItemImage/CCMenuItemImage-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCMenuItemImage/CCMenuItemImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -4906,6 +5294,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLayer/CCLayer-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -4929,6 +5321,10 @@
 				GCC_PREFIX_HEADER = "CCLayer/CCLayer-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLayer/CCLayer-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -4956,6 +5352,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLayerColor/CCLayerColor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -4979,6 +5379,10 @@
 				GCC_PREFIX_HEADER = "CCLayerColor/CCLayerColor-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLayerColor/CCLayerColor-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5006,6 +5410,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLayerGradient/CCLayerGradient-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5029,6 +5437,10 @@
 				GCC_PREFIX_HEADER = "CCLayerGradient/CCLayerGradient-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLayerGradient/CCLayerGradient-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5056,6 +5468,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCMenu/CCMenu-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5079,6 +5495,10 @@
 				GCC_PREFIX_HEADER = "CCMenu/CCMenu-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCMenu/CCMenu-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5106,6 +5526,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLabelBMFont/CCLabelBMFont-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5129,6 +5553,10 @@
 				GCC_PREFIX_HEADER = "CCLabelBMFont/CCLabelBMFont-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLabelBMFont/CCLabelBMFont-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5156,6 +5584,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLabelTTF/CCLabelTTF-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5179,6 +5611,10 @@
 				GCC_PREFIX_HEADER = "CCLabelTTF/CCLabelTTF-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCLabelTTF/CCLabelTTF-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5206,6 +5642,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCParticleSystem/CCParticleSystem-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5229,6 +5669,10 @@
 				GCC_PREFIX_HEADER = "CCParticleSystem/CCParticleSystem-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCParticleSystem/CCParticleSystem-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5306,6 +5750,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCNode/CCNode-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
@@ -5330,6 +5778,10 @@
 				GCC_PREFIX_HEADER = "CCNode/CCNode-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCNode/CCNode-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
@@ -5358,6 +5810,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCSprite/CCSprite-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5381,6 +5837,10 @@
 				GCC_PREFIX_HEADER = "CCSprite/CCSprite-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCSprite/CCSprite-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5408,6 +5868,10 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCBFile/CCBFile-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5431,6 +5895,10 @@
 				GCC_PREFIX_HEADER = "CCBFile/CCBFile-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
 				INFOPLIST_FILE = "CCBFile/CCBFile-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -5512,6 +5980,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B7C623BB17F383CE00928F91 /* Build configuration list for PBXNativeTarget "CCButton" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7C623BC17F383CE00928F91 /* Debug */,
+				B7C623BD17F383CE00928F91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B7C623D617F38B7800928F91 /* Build configuration list for PBXNativeTarget "CCControl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7C623D717F38B7800928F91 /* Debug */,
+				B7C623D817F38B7800928F91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		E325F66314F65C8F00D29BCF /* Build configuration list for PBXNativeTarget "CCMenuItemImage" */ = {
 			isa = XCConfigurationList;
