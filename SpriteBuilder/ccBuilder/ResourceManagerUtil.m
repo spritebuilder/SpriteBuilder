@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 
+#define kCCBNullString @"<NULL>"
+
 #import "ResourceManagerUtil.h"
 #import "ResourceManager.h"
 
@@ -143,6 +145,15 @@
     // Clear the menu and add items to it!
     [menu removeAllItems];
     
+    // Sprite frames can be null
+    if (resType == kCCBResTypeImage && allowSpriteFrames)
+    {
+        NSMenuItem* menuItem = [[[NSMenuItem alloc] initWithTitle:kCCBNullString action:@selector(selectedResource:) keyEquivalent:@""] autorelease];
+        menuItem.target = target;
+        menuItem.representedObject = NULL;
+        [menu addItem:menuItem];
+    }
+    
     ResourceManager* rm = [ResourceManager sharedManager];
     
     if ([rm.activeDirectories count] == 0)
@@ -191,6 +202,10 @@
     else
     {
         selectedTitle = file;
+    }
+    if (!file || [file isEqualToString:@""])
+    {
+        selectedTitle = kCCBNullString;
     }
     
     [self setTitle:selectedTitle forPopup:popup];

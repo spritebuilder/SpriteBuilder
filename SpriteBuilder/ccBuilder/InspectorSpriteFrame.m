@@ -62,7 +62,12 @@
     NSString* sf = NULL;
     NSString* ssf = NULL;
     
-    if ([item isKindOfClass:[RMResource class]])
+    if (!item)
+    {
+        sf = @"";
+        ssf = @"";
+    }
+    else if ([item isKindOfClass:[RMResource class]])
     {
         RMResource* res = item;
         

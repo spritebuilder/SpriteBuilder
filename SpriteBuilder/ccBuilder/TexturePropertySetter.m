@@ -34,6 +34,13 @@
 
 + (void) setSpriteFrameForNode:(CCNode*)node andProperty:(NSString*) prop withFile:(NSString*)spriteFile andSheetFile:(NSString*)spriteSheetFile
 {
+    if (!spriteFile || [spriteFile isEqualToString:@""])
+    {
+        // There is no sprite set, just set it to NULL
+        [node setValue:NULL forKey:prop];
+        return;
+    }
+    
     CCSpriteFrame* spriteFrame = NULL;
     
     if (spriteSheetFile && ![spriteSheetFile isEqualToString:@""] && ![spriteSheetFile isEqualToString:kCCBUseRegularFile]
