@@ -254,12 +254,6 @@
 			<string>labelOpacity|Highlighted</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
-			</array>
 			<key>default</key>
 			<array>
 				<integer>255</integer>
@@ -333,8 +327,6 @@
 			<string>backgroundColor|Disabled</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<integer>255</integer>
 			<key>default</key>
 			<integer>255</integer>
 			<key>displayName</key>

@@ -5664,6 +5664,7 @@
 				B7C623BD17F383CE00928F91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B7C623D617F38B7800928F91 /* Build configuration list for PBXNativeTarget "CCControl" */ = {
 			isa = XCConfigurationList;
@@ -5672,6 +5673,7 @@
 				B7C623D817F38B7800928F91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E35DBB7314F21E7D0070A6E4 /* Build configuration list for PBXNativeTarget "CCLayer" */ = {
 			isa = XCConfigurationList;
