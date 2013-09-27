@@ -403,8 +403,8 @@ CGPoint ccpRound(CGPoint pt)
     {
         for (CCNode* node in nodes)
         {
-            CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSize.width,
-                                      node.anchorPoint.y * node.contentSize.height);
+            CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
+                                      node.anchorPoint.y * node.contentSizeInPoints.height);
             
             CGPoint anchorPointPos = [node convertToWorldSpace:localAnchor];
             
@@ -449,7 +449,7 @@ CGPoint ccpRound(CGPoint pt)
                 CGPoint pos = [node convertToWorldSpace: ccp(0,0)];
                 
                 CCSprite* sel = [CCSprite spriteWithFile:@"sel-round.png"];
-                sel.anchorPoint = ccp(0.5f, 00.5f);
+                sel.anchorPoint = ccp(0.5f, 0.5f);
                 sel.position = pos;
                 [selectionLayer addChild:sel];
             }
@@ -503,8 +503,8 @@ CGPoint ccpRound(CGPoint pt)
     {
         transformScalingNode = node;
         
-        CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSize.width,
-                                  node.anchorPoint.y * node.contentSize.height);
+        CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
+                                  node.anchorPoint.y * node.contentSizeInPoints.height);
         
         CGPoint center = [node convertToWorldSpace:localAnchor];
         if (ccpDistance(pt, center) < kCCBAnchorPointRadius) return kCCBTransformHandleAnchorPoint;
@@ -616,7 +616,7 @@ CGPoint ccpRound(CGPoint pt)
     if (th == kCCBTransformHandleAnchorPoint)
     {
         // Anchor points are fixed for singel point nodes
-        if (transformScalingNode.contentSize.width == 0 || transformScalingNode.contentSize.height == 0)
+        if (transformScalingNode.contentSizeInPoints.width == 0 || transformScalingNode.contentSizeInPoints.height == 0)
         {
             return;
         }
@@ -881,7 +881,7 @@ CGPoint ccpRound(CGPoint pt)
         CGPoint localDownPos = [transformScalingNode convertToNodeSpace:mouseDownPos];
         
         CGPoint deltaLocal = ccpSub(localPos, localDownPos);
-        CGPoint deltaAnchorPoint = ccp(deltaLocal.x / transformScalingNode.contentSize.width, deltaLocal.y / transformScalingNode.contentSize.height);
+        CGPoint deltaAnchorPoint = ccp(deltaLocal.x / transformScalingNode.contentSizeInPoints.width, deltaLocal.y / transformScalingNode.contentSizeInPoints.height);
         
         [appDelegate saveUndoStateWillChangeProperty:@"anchorPoint"];
         transformScalingNode.anchorPoint = ccpAdd(transformScalingNode.transformStartPosition, deltaAnchorPoint);
