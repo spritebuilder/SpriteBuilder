@@ -297,21 +297,27 @@
     
     if ([type isEqualToString:@"Position"])
     {
-        float a = [[prop objectAtIndex:0] floatValue];
-        float b = [[prop objectAtIndex:1] floatValue];
-        int positionType = [[prop objectAtIndex:2] intValue];
-        [self writeFloat:a];
-        [self writeFloat:b];
-        [self writeInt:positionType withSign:NO];
+        float x = [[prop objectAtIndex:0] floatValue];
+        float y = [[prop objectAtIndex:1] floatValue];
+        int corner = [[prop objectAtIndex:2] intValue];
+        int xUnit = [[prop objectAtIndex:3] intValue];
+        int yUnit = [[prop objectAtIndex:4] intValue];
+        [self writeFloat:x];
+        [self writeFloat:y];
+        [self writeByte:corner];
+        [self writeByte:xUnit];
+        [self writeByte:yUnit];
     }
     else if([type isEqualToString:@"Size"])
     {
-        float a = [[prop objectAtIndex:0] floatValue];
-        float b = [[prop objectAtIndex:1] floatValue];
-        int sizeType = [[prop objectAtIndex:2] intValue];
-        [self writeFloat:a];
-        [self writeFloat:b];
-        [self writeInt:sizeType withSign:NO];
+        float w = [[prop objectAtIndex:0] floatValue];
+        float h = [[prop objectAtIndex:1] floatValue];
+        int xUnit = [[prop objectAtIndex:2] intValue];
+        int yUnit = [[prop objectAtIndex:3] intValue];
+        [self writeFloat:w];
+        [self writeFloat:h];
+        [self writeByte:xUnit];
+        [self writeByte:yUnit];
     }
     else if ([type isEqualToString:@"Point"]
              || [type isEqualToString:@"PointLock"]
@@ -333,7 +339,7 @@
 
         [self writeFloat:a];
         [self writeFloat:b];
-        [self writeInt:scaleType withSign:NO];
+        [self writeByte:scaleType];
     }
     else if ([type isEqualToString:@"Degrees"]
              || [type isEqualToString:@"Float"])
@@ -1023,6 +1029,8 @@
                          [baseValue objectAtIndex:0],
                          [baseValue objectAtIndex:1],
                          [value objectAtIndex:2],
+                         [value objectAtIndex:3],
+                         [value objectAtIndex:4],
                          nil];
             }
             else if ([type isEqualToString:@"ScaleLock"])
