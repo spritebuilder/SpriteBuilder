@@ -360,18 +360,62 @@
 
 + (void) setSizeType:(CCContentSizeType)type forNode:(CCNode*)node prop:(NSString*)prop
 {
-    // Get absolute size
-    CGSize oldSize = [PositionPropertySetter sizeForNode:node prop:prop];
-    CGSize absSize = [node convertContentSizeToPoints:oldSize];
+    // Figure out which properties to update
+    PlugInNode* plugIn = node.plugIn;
+    NSDictionary* properties = plugIn.nodePropertiesDict;
+    
+    NSArray* affectedProps = [[properties objectForKey:prop] objectForKey:@"affectsProperties"];
+    NSMutableArray* propsToUpdate = [affectedProps mutableCopy];
+    
+    for (int i = propsToUpdate.count -1; i >= 0; i--)
+    {
+        NSString* canditate = [propsToUpdate objectAtIndex:i];
+        BOOL removeCandidate = NO;
+        
+        // Remove candidates that are read only
+        if ([[[properties objectForKey:canditate] objectForKey:@"readOnly"] boolValue])
+        {
+            removeCandidate = YES;
+        }
+        
+        // Remove candidates that are not size type
+        if (![[[properties objectForKey:canditate] objectForKey:@"type"] isEqualToString:@"Size"])
+        {
+            removeCandidate = YES;
+        }
+        
+        if (removeCandidate) [propsToUpdate removeObjectAtIndex:i];
+    }
+    
+    // Always update this property
+    [propsToUpdate addObject:prop];
+
+    // Update the values
+    NSMutableArray* absSizes = [NSMutableArray array];
+    
+    for (NSString* prop in propsToUpdate)
+    {
+        // Get absolute size
+        CGSize oldSize = [PositionPropertySetter sizeForNode:node prop:prop];
+        CGSize absSize = [node convertContentSizeToPoints:oldSize];
+        
+        [absSizes addObject:[NSValue valueWithSize:absSize]];
+    }
     
     // Change the type
     NSValue* typeValue = [NSValue value:&type withObjCType:@encode(CCContentSizeType)];
     [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
     
-    // Calculate relative size for new type
-    CGSize newSize = [node convertContentSizeFromPoints:absSize];
-    
-    [node setValue:[NSValue valueWithSize:newSize] forKey:prop];
+    int i = 0;
+    for (NSString* prop in propsToUpdate)
+    {
+        // Calculate relative size for new type
+        CGSize absSize = [[absSizes objectAtIndex:i] sizeValue];
+        CGSize newSize = [node convertContentSizeFromPoints:absSize];
+        
+        [node setValue:[NSValue valueWithSize:newSize] forKey:prop];
+        i++;
+    }
 }
 
 + (void) setSize:(NSSize)size forNode:(CCNode *)node prop:(NSString *)prop
