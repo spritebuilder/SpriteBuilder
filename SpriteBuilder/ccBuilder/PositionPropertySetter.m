@@ -301,7 +301,7 @@
     [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
     
     // Calculate new position (from old value)
-    CGPoint relPos = [node convertPositionFromPoints:absPos];
+    CGPoint relPos = [node convertPositionFromPoints:absPos type:node.positionType];
     
     // Update the position
     NSValue* pointValue = [NSValue valueWithPoint: NSPointFromCGPoint(relPos)];
@@ -337,9 +337,9 @@
     
     // Do the conversion
     node.positionType = fromType;
-    CGPoint absPos = [node convertPositionToPoints:pos];
+    CGPoint absPos = [node convertPositionToPoints:pos type:node.positionType];
     node.positionType = toType;
-    CGPoint newPos = [node convertPositionFromPoints:absPos];
+    CGPoint newPos = [node convertPositionFromPoints:absPos type:node.positionType];
     
     // Restore old type
     node.positionType = oldType;
@@ -366,6 +366,7 @@
     
     NSArray* affectedProps = [[properties objectForKey:prop] objectForKey:@"affectsProperties"];
     NSMutableArray* propsToUpdate = [affectedProps mutableCopy];
+    if (!propsToUpdate) propsToUpdate = [NSMutableArray array];
     
     for (int i = propsToUpdate.count -1; i >= 0; i--)
     {
@@ -397,7 +398,7 @@
     {
         // Get absolute size
         CGSize oldSize = [PositionPropertySetter sizeForNode:node prop:prop];
-        CGSize absSize = [node convertContentSizeToPoints:oldSize];
+        CGSize absSize = [node convertContentSizeToPoints:oldSize type:node.contentSizeType];
         
         [absSizes addObject:[NSValue valueWithSize:absSize]];
     }
@@ -411,7 +412,7 @@
     {
         // Calculate relative size for new type
         CGSize absSize = [[absSizes objectAtIndex:i] sizeValue];
-        CGSize newSize = [node convertContentSizeFromPoints:absSize];
+        CGSize newSize = [node convertContentSizeFromPoints:absSize type:node.contentSizeType];
         
         [node setValue:[NSValue valueWithSize:newSize] forKey:prop];
         i++;

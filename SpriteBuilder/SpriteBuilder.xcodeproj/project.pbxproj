@@ -190,6 +190,11 @@
 		B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */; };
 		B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */; };
 		B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */; };
+		B7C3532317F65547005697C1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
+		B7C3532917F65547005697C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C3532717F65547005697C1 /* InfoPlist.strings */; };
+		B7C3532F17F65585005697C1 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C3532E17F65585005697C1 /* CCBPProperties.plist */; };
+		B7C3533117F655B5005697C1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C3533017F655B5005697C1 /* Icon.png */; };
+		B7C3533417F6565F005697C1 /* CCSprite9Slice.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */; };
 		B7C623B317F383CE00928F91 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7C623B917F383CE00928F91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C623B717F383CE00928F91 /* InfoPlist.strings */; };
 		B7C623C017F384E400928F91 /* CCButton.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */; };
@@ -580,6 +585,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B7C3533217F65652005697C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7C3532117F65547005697C1;
+			remoteInfo = CCSprite9Slice;
+		};
 		B7C623BE17F384B200928F91 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -734,6 +746,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B7C3533417F6565F005697C1 /* CCSprite9Slice.ccbPlugNode in Copy PlugIns */,
 				B7C623DB17F3903900928F91 /* CCControl.ccbPlugNode in Copy PlugIns */,
 				B7C623C017F384E400928F91 /* CCButton.ccbPlugNode in Copy PlugIns */,
 				E3D5912F150F53EA004180CA /* CCBFile.ccbPlugNode in Copy PlugIns */,
@@ -1047,6 +1060,12 @@
 		B7AC69D517A827470041B8BD /* PropertyInspectorTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplate.h; sourceTree = "<group>"; };
 		B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplate.m; sourceTree = "<group>"; };
 		B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultTemplates.zip; sourceTree = "<group>"; };
+		B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCSprite9Slice.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7C3532617F65547005697C1 /* CCSprite9Slice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCSprite9Slice-Info.plist"; sourceTree = "<group>"; };
+		B7C3532817F65547005697C1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B7C3532A17F65547005697C1 /* CCSprite9Slice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCSprite9Slice-Prefix.pch"; sourceTree = "<group>"; };
+		B7C3532E17F65585005697C1 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		B7C3533017F655B5005697C1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCButton.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7C623B217F383CE00928F91 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B7C623B617F383CE00928F91 /* CCButton-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCButton-Info.plist"; sourceTree = "<group>"; };
@@ -1640,6 +1659,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C3531F17F65547005697C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C3532317F65547005697C1 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7C623AE17F383CE00928F91 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2131,6 +2158,7 @@
 				FA98CFC1154E7D1C006E58C5 /* ccbpublish */,
 				B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */,
 				B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */,
+				B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2550,6 +2578,26 @@
 			name = "Property Inspector";
 			sourceTree = "<group>";
 		};
+		B7C3532417F65547005697C1 /* CCSprite9Slice */ = {
+			isa = PBXGroup;
+			children = (
+				B7C3532517F65547005697C1 /* Supporting Files */,
+			);
+			path = CCSprite9Slice;
+			sourceTree = "<group>";
+		};
+		B7C3532517F65547005697C1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B7C3533017F655B5005697C1 /* Icon.png */,
+				B7C3532617F65547005697C1 /* CCSprite9Slice-Info.plist */,
+				B7C3532717F65547005697C1 /* InfoPlist.strings */,
+				B7C3532A17F65547005697C1 /* CCSprite9Slice-Prefix.pch */,
+				B7C3532E17F65585005697C1 /* CCBPProperties.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B7C623B417F383CE00928F91 /* CCButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -2747,6 +2795,7 @@
 				E3D59123150F5367004180CA /* CCBFile */,
 				E3B7AEC714E3193500DFD402 /* CCNode */,
 				E3C365ED14E9E4D1007CD5FF /* CCSprite */,
+				B7C3532417F65547005697C1 /* CCSprite9Slice */,
 				E35DBB6A14F21E7D0070A6E4 /* CCLayer */,
 				E35DBB8214F225D30070A6E4 /* CCLayerColor */,
 				E35DBB9A14F244BC0070A6E4 /* CCLayerGradient */,
@@ -3460,6 +3509,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B7C3533317F65652005697C1 /* PBXTargetDependency */,
 				B7C623DA17F3902900928F91 /* PBXTargetDependency */,
 				B7C623BF17F384B200928F91 /* PBXTargetDependency */,
 				B7D0918917C2C16E0007FE7F /* PBXTargetDependency */,
@@ -3479,6 +3529,23 @@
 			productName = ccBuilder;
 			productReference = 7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B7C3532117F65547005697C1 /* CCSprite9Slice */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7C3532B17F65548005697C1 /* Build configuration list for PBXNativeTarget "CCSprite9Slice" */;
+			buildPhases = (
+				B7C3531E17F65547005697C1 /* Sources */,
+				B7C3531F17F65547005697C1 /* Frameworks */,
+				B7C3532017F65547005697C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCSprite9Slice;
+			productName = CCSprite9Slice;
+			productReference = B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
 		};
 		B7C623B017F383CE00928F91 /* CCButton */ = {
 			isa = PBXNativeTarget;
@@ -3734,6 +3801,7 @@
 				E398C02114FB81A30078E771 /* Cocos2D iPhone */,
 				E3B7AEC414E3193500DFD402 /* CCNode */,
 				E3C365EA14E9E4D1007CD5FF /* CCSprite */,
+				B7C3532117F65547005697C1 /* CCSprite9Slice */,
 				E35DBB6714F21E7D0070A6E4 /* CCLayer */,
 				E35DBB7F14F225D30070A6E4 /* CCLayerColor */,
 				E35DBB9714F244BB0070A6E4 /* CCLayerGradient */,
@@ -3741,10 +3809,10 @@
 				E35DBBE814F3E2390070A6E4 /* CCLabelTTF */,
 				E35DBC0814F4D72B0070A6E4 /* CCParticleSystem */,
 				E3D59120150F5367004180CA /* CCBFile */,
-				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
-				FA98CFC0154E7D1C006E58C5 /* ccbpublish */,
 				B7C623B017F383CE00928F91 /* CCButton */,
 				B7C623CC17F38B7800928F91 /* CCControl */,
+				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
+				FA98CFC0154E7D1C006E58C5 /* ccbpublish */,
 			);
 		};
 /* End PBXProject section */
@@ -4033,6 +4101,16 @@
 				B78AE45217E3B1600028BE0B /* scale-2.png in Resources */,
 				B78AE45317E3B1600028BE0B /* scale-3.png in Resources */,
 				B78AE45417E3B1600028BE0B /* scale-4.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7C3532017F65547005697C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7C3533117F655B5005697C1 /* Icon.png in Resources */,
+				B7C3532917F65547005697C1 /* InfoPlist.strings in Resources */,
+				B7C3532F17F65585005697C1 /* CCBPProperties.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4415,6 +4493,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7C3531E17F65547005697C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B7C623AD17F383CE00928F91 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4522,6 +4607,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B7C3533317F65652005697C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7C3532117F65547005697C1 /* CCSprite9Slice */;
+			targetProxy = B7C3533217F65652005697C1 /* PBXContainerItemProxy */;
+		};
 		B7C623BF17F384B200928F91 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B7C623B017F383CE00928F91 /* CCButton */;
@@ -4617,6 +4707,14 @@
 				7789ABD8133AA82000CEFCC7 /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		B7C3532717F65547005697C1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7C3532817F65547005697C1 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		B7C623B717F383CE00928F91 /* InfoPlist.strings */ = {
@@ -4831,6 +4929,95 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B7C3532C17F65548005697C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCSprite9Slice/CCSprite9Slice-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCSprite9Slice/CCSprite9Slice-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		B7C3532D17F65548005697C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCSprite9Slice/CCSprite9Slice-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCSprite9Slice/CCSprite9Slice-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;
 		};
@@ -5656,6 +5843,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B7C3532B17F65548005697C1 /* Build configuration list for PBXNativeTarget "CCSprite9Slice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7C3532C17F65548005697C1 /* Debug */,
+				B7C3532D17F65548005697C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		B7C623BB17F383CE00928F91 /* Build configuration list for PBXNativeTarget "CCButton" */ = {
 			isa = XCConfigurationList;

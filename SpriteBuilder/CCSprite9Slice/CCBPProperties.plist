@@ -5,17 +5,17 @@
 	<key>ordering</key>
 	<string>2000</string>
 	<key>displayName</key>
-	<string>Sprite</string>
+	<string>Sprite 9 Slice</string>
 	<key>description</key>
-	<string>Displays a texture.</string>
+	<string>Displays stretchable 9-sliced texture with configurable margins.</string>
 	<key>inheritsFrom</key>
-	<string>CCNode</string>
+	<string>CCSprite</string>
 	<key>canHaveChildren</key>
 	<true/>
 	<key>canBeRootNode</key>
 	<true/>
 	<key>className</key>
-	<string>CCSprite</string>
+	<string>CCSprite9Slice</string>
 	<key>spriteFrameDrop</key>
 	<dict>
 		<key>className</key>
@@ -24,12 +24,12 @@
 		<string>displayFrame</string>
 	</dict>
 	<key>editorClassName</key>
-	<string>CCSprite</string>
+	<string>CCSprite9Slice</string>
 	<key>propertiesOverridden</key>
 	<array>
 		<dict>
 			<key>readOnly</key>
-			<true/>
+			<false/>
 			<key>type</key>
 			<string>Size</string>
 			<key>name</key>
@@ -42,7 +42,7 @@
 	<array>
 		<dict>
 			<key>displayName</key>
-			<string>CCSprite</string>
+			<string>CCSprite9Slice</string>
 			<key>name</key>
 			<string>CCSprite</string>
 			<key>type</key>
@@ -51,78 +51,44 @@
 			<true/>
 		</dict>
 		<dict>
-			<key>animatable</key>
-			<true/>
 			<key>default</key>
-			<array>
-				<string></string>
-				<string></string>
-			</array>
-			<key>affectsProperties</key>
-			<array>
-				<string>blendFunc</string>
-				<string>contentSize</string>
-			</array>
+			<real>0.33</real>
 			<key>displayName</key>
-			<string>Sprite frame</string>
+			<string>Margin left</string>
 			<key>type</key>
-			<string>SpriteFrame</string>
+			<string>Float</string>
 			<key>name</key>
-			<string>spriteFrame</string>
+			<string>marginLeft</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<integer>255</integer>
-			<key>animatable</key>
-			<true/>
+			<key>default</key>
+			<real>0.33</real>
 			<key>displayName</key>
-			<string>Opacity</string>
+			<string>Margin right</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
-			<string>opacity</string>
+			<string>marginRight</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
-			</array>
-			<key>animatable</key>
-			<true/>
+			<key>default</key>
+			<real>0.33</real>
 			<key>displayName</key>
-			<string>Color</string>
+			<string>Margin top</string>
 			<key>type</key>
-			<string>Color3</string>
+			<string>Float</string>
 			<key>name</key>
-			<string>color</string>
+			<string>marginTop</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<false/>
-				<false/>
-			</array>
+			<key>default</key>
+			<real>0.33</real>
 			<key>displayName</key>
-			<string></string>
+			<string>Margin bottom</string>
 			<key>type</key>
-			<string>Flip</string>
+			<string>Float</string>
 			<key>name</key>
-			<string>flip</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>1</integer>
-				<integer>771</integer>
-			</array>
-			<key>displayName</key>
-			<string></string>
-			<key>type</key>
-			<string>Blendmode</string>
-			<key>name</key>
-			<string>blendFunc</string>
+			<string>marginBottom</string>
 		</dict>
 	</array>
 </dict>

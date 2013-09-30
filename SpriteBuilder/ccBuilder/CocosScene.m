@@ -787,7 +787,7 @@ CGPoint ccpRound(CGPoint pt)
             
             [appDelegate saveUndoStateWillChangeProperty:@"position"];
             
-            selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos];
+            selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos type:selectedNode.positionType];
         }
         [appDelegate refreshProperty:@"position"];
     }

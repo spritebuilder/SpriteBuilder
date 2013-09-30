@@ -2368,7 +2368,7 @@ static BOOL hideAllToNextSeparator;
         // Convert to relative position
         //CGSize parentSize = [PositionPropertySetter getParentSize:selectedNode];
         //CCPositionType positionType = [PositionPropertySetter positionTypeForNode:selectedNode prop:@"position"];
-        NSPoint newPos = [selectedNode convertPositionFromPoints:absPos];
+        NSPoint newPos = [selectedNode convertPositionFromPoints:absPos type:selectedNode.positionType];
         //NSPoint newPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(absPos) type:positionType];
         
         // Update the selected node
@@ -3409,7 +3409,7 @@ static BOOL hideAllToNextSeparator;
             newAbsPosition.y = alignmentValue;
         }
         
-        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition type:node.positionType];
         
         //CCPositionType posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
         //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
@@ -3468,7 +3468,7 @@ static BOOL hideAllToNextSeparator;
         //CCPositionType posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
         //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
         
-        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition type:node.positionType];
         
         [PositionPropertySetter setPosition:newRelPos forNode:node prop:@"position"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
@@ -3536,7 +3536,7 @@ static BOOL hideAllToNextSeparator;
         
         //int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
         //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
-        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition type:node.positionType];
         
         [PositionPropertySetter setPosition:newRelPos forNode:node prop:@"position"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
@@ -3605,7 +3605,7 @@ static BOOL hideAllToNextSeparator;
         
         //int posType = [PositionPropertySetter positionTypeForNode:node prop:@"position"];
         //NSPoint newRelPos = [PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPosition) type:posType parentSize:node.parent.contentSize];
-        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition];
+        NSPoint newRelPos = [node convertPositionFromPoints:newAbsPosition type:node.positionType];
         
         [PositionPropertySetter setPosition:newRelPos forNode:node prop:@"position"];
         [PositionPropertySetter addPositionKeyframeForNode:node];
