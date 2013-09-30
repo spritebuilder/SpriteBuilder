@@ -195,6 +195,8 @@
 		B7C3532F17F65585005697C1 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C3532E17F65585005697C1 /* CCBPProperties.plist */; };
 		B7C3533117F655B5005697C1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C3533017F655B5005697C1 /* Icon.png */; };
 		B7C3533417F6565F005697C1 /* CCSprite9Slice.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */; };
+		B7C3533717FA0FEF005697C1 /* inspector-physics.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C3533517FA0FEF005697C1 /* inspector-physics.png */; };
+		B7C3533817FA0FEF005697C1 /* inspector-physics@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C3533617FA0FEF005697C1 /* inspector-physics@2x.png */; };
 		B7C623B317F383CE00928F91 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7C623B917F383CE00928F91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C623B717F383CE00928F91 /* InfoPlist.strings */; };
 		B7C623C017F384E400928F91 /* CCButton.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */; };
@@ -1066,6 +1068,8 @@
 		B7C3532A17F65547005697C1 /* CCSprite9Slice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCSprite9Slice-Prefix.pch"; sourceTree = "<group>"; };
 		B7C3532E17F65585005697C1 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		B7C3533017F655B5005697C1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B7C3533517FA0FEF005697C1 /* inspector-physics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-physics.png"; sourceTree = "<group>"; };
+		B7C3533617FA0FEF005697C1 /* inspector-physics@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-physics@2x.png"; sourceTree = "<group>"; };
 		B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCButton.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7C623B217F383CE00928F91 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B7C623B617F383CE00928F91 /* CCButton-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCButton-Info.plist"; sourceTree = "<group>"; };
@@ -2026,6 +2030,8 @@
 		776041F01498FD630078095D /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B7C3533517FA0FEF005697C1 /* inspector-physics.png */,
+				B7C3533617FA0FEF005697C1 /* inspector-physics@2x.png */,
 				B7AC69C417A70A4A0041B8BD /* inspector-codeconnections.png */,
 				B7AC69C517A70A4A0041B8BD /* inspector-codeconnections@2x.png */,
 				B7AC69C617A70A4A0041B8BD /* inspector-props.png */,
@@ -3887,6 +3893,7 @@
 				77E1995613858DE0006C361B /* TabClose_Dirty_Rollover.png in Resources */,
 				77E1995713858DE0006C361B /* TabClose_Dirty.png in Resources */,
 				77E1995813858DE0006C361B /* TabClose_Front_Pressed.png in Resources */,
+				B7C3533717FA0FEF005697C1 /* inspector-physics.png in Resources */,
 				77E1995913858DE0006C361B /* TabClose_Front_Rollover.png in Resources */,
 				77E1995A13858DE0006C361B /* TabClose_Front.png in Resources */,
 				77E1995B13858DE0006C361B /* TabNewMetal.png in Resources */,
@@ -3980,6 +3987,7 @@
 				E3E8B49E15793AF800373983 /* seq-btn-stop.png in Resources */,
 				E3E8B4A4157CD5DB00373983 /* seq-scrub-handle.png in Resources */,
 				E3E8B4A5157CD5DB00373983 /* seq-scrub-line.png in Resources */,
+				B7C3533817FA0FEF005697C1 /* inspector-physics@2x.png in Resources */,
 				E3E8B4AA157D127300373983 /* seq-scaleslide-bg.png in Resources */,
 				E36ECD6415869779003C177E /* seq-btn-back.png in Resources */,
 				E36ECD6515869779003C177E /* seq-keyframe-sel.png in Resources */,

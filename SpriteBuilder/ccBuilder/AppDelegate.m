@@ -282,6 +282,13 @@ static AppDelegate* sharedAppDelegate;
     itemCode.keyEquivalent = @"";
     [items addObject:itemCode];
     
+    NSImage* imgPhysics = [NSImage imageNamed:@"inspector-physics"];
+    [imgPhysics setTemplate:YES];
+    SMTabBarItem* itemPhysics = [[[SMTabBarItem alloc] initWithImage:imgPhysics tag:0] autorelease];
+    itemPhysics.toolTip = @"Item Templates";
+    itemPhysics.keyEquivalent = @"";
+    [items addObject:itemPhysics];
+    
     NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template.png"];
     [imgTemplate setTemplate:YES];
     SMTabBarItem* itemTemplate = [[[SMTabBarItem alloc] initWithImage:imgTemplate tag:0] autorelease];
@@ -335,7 +342,7 @@ static AppDelegate* sharedAppDelegate;
     }
     
     BOOL templateEnable = (itemEnable && self.selectedNode.plugIn.supportsTemplates);
-    SMTabBarItem* templateItem = [itemViewTabs.items objectAtIndex:2];
+    SMTabBarItem* templateItem = [itemViewTabs.items objectAtIndex:3];
     templateItem.enabled = templateEnable;
 
     if (!templateEnable && [itemViewTabs selectedItem] == templateItem)
