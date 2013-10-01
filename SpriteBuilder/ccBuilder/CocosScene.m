@@ -1105,6 +1105,7 @@ CGPoint ccpRound(CGPoint pt)
     
     stageBgLayer.position = stageCenter;
     renderedScene.position = stageCenter;
+    renderedScene.anchorPoint = ccp(0.0f, 0.0f);
     
     if (stageZoom <= 1 || !renderedScene)
     {
