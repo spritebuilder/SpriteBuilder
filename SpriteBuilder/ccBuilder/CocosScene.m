@@ -596,8 +596,6 @@ CGPoint ccpRound(CGPoint pt)
     NSPoint posRaw = [event locationInWindow];
     CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
     
-    NSLog(@"mouseDown at: (%f,%f)", pos.x, pos.y);
-    
     if ([notesLayer mouseDown:pos event:event]) return;
     if ([guideLayer mouseDown:pos event:event]) return;
     if ([appDelegate.physicsHandler mouseDown:pos event:event]) return;
