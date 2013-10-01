@@ -17,6 +17,14 @@
     
     [self setupDefaultPolygonForNode:node];
     
+    _dynamic = YES;
+    _affectedByGravity = YES;
+    _allowsRotation = YES;
+    
+    _density = 1.0f;
+    _friction = 0.3f;
+    _elasticity = 0.3f;
+    
     return self;
 }
 

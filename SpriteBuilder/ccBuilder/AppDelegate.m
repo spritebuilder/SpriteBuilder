@@ -648,6 +648,7 @@ static AppDelegate* sharedAppDelegate;
 {
     [self willChangeValueForKey:@"selectedNode"];
     [self willChangeValueForKey:@"selectedNodes"];
+    [physicsHandler willChangeSelection];
     
     // Close the color picker
     [[NSColorPanel sharedColorPanel] close];
@@ -698,10 +699,11 @@ static AppDelegate* sharedAppDelegate;
     [self updateSmallTabBarsEnabled];
     [propertyInspectorHandler updateTemplates];
     
-    [physicsHandler selectionChanged];
-    
     [self didChangeValueForKey:@"selectedNode"];
     [self didChangeValueForKey:@"selectedNodes"];
+    
+    physicsHandler.selectedNodePhysicsBody = self.selectedNode.nodePhysicsBody;
+    [physicsHandler didChangeSelection];
 }
 
 - (CCNode*) selectedNode

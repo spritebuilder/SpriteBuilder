@@ -20,9 +20,10 @@
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;
 @property (nonatomic,assign) BOOL selectedNodePhysicsEnabled;
-@property (nonatomic,readonly) NodePhysicsBody* selectedNodePhysicsBody;
+@property (nonatomic,retain) NodePhysicsBody* selectedNodePhysicsBody;
 
-- (void) selectionChanged;
+- (void) willChangeSelection;
+- (void) didChangeSelection;
 
 - (void) updatePhysicsEditor:(CCNode*) editorView;
 

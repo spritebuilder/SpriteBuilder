@@ -1643,6 +1643,9 @@ CA
                                                                                 </items>
                                                                             </menu>
                                                                         </popUpButtonCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="KgE-Ht-Ug4"/>
+                                                                        </connections>
                                                                     </popUpButton>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ro7-0f-xIv" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="594" width="78" height="14"/>
@@ -1652,6 +1655,9 @@ CA
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="Peb-jX-sf7"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ext-Gr-AoA" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="495" width="44" height="14"/>
@@ -1661,6 +1667,9 @@ CA
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="2gy-yR-5UQ"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="a1T-Tl-JdY">
                                                                         <rect key="frame" x="0.0" y="614" width="283" height="5"/>
@@ -1684,36 +1693,51 @@ CA
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="3l0-gi-JDB"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="LAn-QT-8u4">
                                                                         <rect key="frame" x="90" y="570" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="yYP-03-s7p">
-                                                                            <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="3" id="frf-Ux-3PH">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" localizesFormat="NO" numberStyle="decimal" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="frf-Ux-3PH">
                                                                                 <real key="roundingIncrement" value="0.0"/>
+                                                                                <real key="minimum" value="0.0"/>
+                                                                                <real key="maximum" value="255"/>
                                                                                 <metadata>
-                                                                                    <bool key="localizesFormat" value="YES"/>
+                                                                                    <bool key="localizesFormat" value="NO"/>
                                                                                 </metadata>
                                                                             </numberFormatter>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="jQp-80-wwS"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.cornerRadius" id="Bp0-lm-EeR"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="WSz-ut-Vav">
                                                                         <rect key="frame" x="90" y="493" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="AIF-qZ-QWA">
-                                                                            <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="3" id="s8k-Fr-05d">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" localizesFormat="NO" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="s8k-Fr-05d">
                                                                                 <real key="roundingIncrement" value="0.0"/>
+                                                                                <real key="minimum" value="0.0"/>
+                                                                                <real key="maximum" value="255"/>
                                                                                 <metadata>
-                                                                                    <bool key="localizesFormat" value="YES"/>
+                                                                                    <bool key="localizesFormat" value="NO"/>
                                                                                 </metadata>
                                                                             </numberFormatter>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="RjM-lY-AI9"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.density" id="Rup-06-ikT"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="j37-bv-oYR" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="473" width="45" height="14"/>
@@ -1723,13 +1747,18 @@ CA
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="Lir-zR-FWt"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="lwb-8F-FwC">
                                                                         <rect key="frame" x="90" y="471" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ngd-b1-YHU">
-                                                                            <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="3" id="urP-Pl-E0K">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="urP-Pl-E0K">
                                                                                 <real key="roundingIncrement" value="0.0"/>
+                                                                                <real key="minimum" value="0.0"/>
+                                                                                <real key="maximum" value="1"/>
                                                                                 <metadata>
                                                                                     <bool key="localizesFormat" value="YES"/>
                                                                                 </metadata>
@@ -1738,6 +1767,10 @@ CA
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="SGl-03-uD8"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.friction" id="AoD-39-Bbn"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Bg2-8I-Ea8" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="451" width="51" height="14"/>
@@ -1747,13 +1780,18 @@ CA
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="wG4-c8-NW1"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="tmU-k8-xth">
                                                                         <rect key="frame" x="90" y="449" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="kIE-o5-om9">
-                                                                            <numberFormatter key="formatter" formatterBehavior="default10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="3" id="W6b-Ic-ph1">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="W6b-Ic-ph1">
                                                                                 <real key="roundingIncrement" value="0.0"/>
+                                                                                <real key="minimum" value="0.0"/>
+                                                                                <real key="maximum" value="1"/>
                                                                                 <metadata>
                                                                                     <bool key="localizesFormat" value="YES"/>
                                                                                 </metadata>
@@ -1762,6 +1800,10 @@ CA
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="Rz6-L6-c74"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.elasticity" id="fdY-yG-022"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" id="OQY-uM-tEf">
                                                                         <rect key="frame" x="8" y="526" width="79" height="38"/>
@@ -1785,6 +1827,10 @@ CA
                                                                                 </buttonCell>
                                                                             </column>
                                                                         </cells>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="kRr-5C-6Jq"/>
+                                                                            <binding destination="494" name="selectedTag" keyPath="physicsHandler.selectedNodePhysicsBody.dynamic" id="LOq-O0-Z8E"/>
+                                                                        </connections>
                                                                     </matrix>
                                                                     <button id="EXb-j5-Wp1">
                                                                         <rect key="frame" x="108" y="545" width="122" height="20"/>
@@ -1793,6 +1839,18 @@ CA
                                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                         </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled2" keyPath="physicsHandler.selectedNodePhysicsBody.dynamic" previousBinding="X8c-Ah-VO6" id="c0v-BC-eDp">
+                                                                                <dictionary key="options">
+                                                                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="X8c-Ah-VO6"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.affectedByGravity" id="9Dw-9K-nL9"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <button id="c6C-i7-Duv">
                                                                         <rect key="frame" x="108" y="525" width="103" height="20"/>
@@ -1801,6 +1859,18 @@ CA
                                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                         </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled2" keyPath="physicsHandler.selectedNodePhysicsBody.dynamic" previousBinding="9hf-40-9Yz" id="eD2-Ov-Z9Z">
+                                                                                <dictionary key="options">
+                                                                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                                    <integer key="NSNullPlaceholder" value="-1"/>
+                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="9hf-40-9Yz"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.allowsRotation" id="CMv-Ag-5if"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <connections>

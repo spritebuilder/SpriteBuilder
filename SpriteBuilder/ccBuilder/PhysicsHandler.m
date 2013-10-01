@@ -72,19 +72,15 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     _mouseDownInHandle = -1;
 }
 
-- (void) selectionChanged
+- (void) willChangeSelection
 {
-    // Update properties
     [self willChangeValueForKey:@"selectedNodePhysicsEnabled"];
-    [self didChangeValueForKey:@"selectedNodePhysicsEnabled"];
-    
-    [self willChangeValueForKey:@"selectedNodePhysicsBody"];
-    [self didChangeValueForKey:@"selectedNodePhysicsBody"];
 }
 
-- (NodePhysicsBody*) selectedNodePhysicsBody
+- (void) didChangeSelection
 {
-    return [AppDelegate appDelegate].selectedNode.nodePhysicsBody;
+    // Update properties
+    [self didChangeValueForKey:@"selectedNodePhysicsEnabled"];
 }
 
 - (void) setSelectedNodePhysicsEnabled:(BOOL)enabled
@@ -97,6 +93,9 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     {
         [AppDelegate appDelegate].selectedNode.nodePhysicsBody = NULL;
     }
+    
+    // Update physics body
+    self.selectedNodePhysicsBody = [AppDelegate appDelegate].selectedNode.nodePhysicsBody;
 }
 
 - (BOOL) selectedNodePhysicsEnabled
