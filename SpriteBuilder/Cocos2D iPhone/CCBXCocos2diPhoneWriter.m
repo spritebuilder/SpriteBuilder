@@ -1101,6 +1101,52 @@
         [self writeProperty:value type:type name:name platform:kCCBXPlatformAll];
     }
     
+    // Write physics
+    NSDictionary* physicsBody = [node objectForKey:@"physicsBody"];
+    if (physicsBody)
+    {
+        [self writeBool:YES];
+        
+        // Shape
+        int bodyShape = [[physicsBody objectForKey:@"bodyShape"] intValue];
+        float cornerRadius = [[physicsBody objectForKey:@"cornerRadius"] floatValue];
+        NSArray* points = [physicsBody objectForKey:@"points"];
+        
+        // Props
+        BOOL dynamic = [[physicsBody objectForKey:@"dynamic"] boolValue];
+        BOOL affectedByGravity = [[physicsBody objectForKey:@"affectedByGravity"] boolValue];
+        BOOL allowsRotation = [[physicsBody objectForKey:@"allowsRotation"] boolValue];
+        
+        float density = [[physicsBody objectForKey:@"density"] floatValue];
+        float friction = [[physicsBody objectForKey:@"friction"] floatValue];
+        float elasticity = [[physicsBody objectForKey:@"elasticity"] floatValue];
+        
+        // Write physics body
+        [self writeInt:bodyShape withSign:NO];
+        [self writeFloat:cornerRadius];
+        [self writeInt:(int)points.count withSign:NO];
+        for (NSArray* serPt in points)
+        {
+            float x = [[serPt objectAtIndex:0] floatValue];
+            float y = [[serPt objectAtIndex:1] floatValue];
+            
+            [self writeFloat:x];
+            [self writeFloat:y];
+        }
+        
+        [self writeBool:dynamic];
+        [self writeBool:affectedByGravity];
+        [self writeBool:allowsRotation];
+        
+        [self writeFloat:density];
+        [self writeFloat:friction];
+        [self writeFloat:elasticity];
+    }
+    else
+    {
+        [self writeBool:NO];
+    }
+    
     // Write children
     NSArray* children = [node objectForKey:@"children"];
     [self writeInt:(int)[children count] withSign:NO];
