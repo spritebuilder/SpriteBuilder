@@ -44,7 +44,14 @@
 - (void) setExtraProp:(id)prop forKey:(NSString *)key
 {
     NodeInfo* info = self.userObject;
-    [info.extraProps setObject:prop forKey:key];
+    if (prop)
+    {
+        [info.extraProps setObject:prop forKey:key];
+    }
+    else
+    {
+        [info.extraProps removeObjectForKey:key];
+    }
 }
 
 - (void)removeExtraPropForKey:(NSString*)key
@@ -774,6 +781,16 @@
 - (BOOL) usesFlashSkew
 {
     return [[self extraPropForKey:@"usesFlashSkew"] boolValue];
+}
+
+- (void) setNodePhysicsBody:(NodePhysicsBody *)nodePhysicsBody
+{
+    [self setExtraProp:nodePhysicsBody forKey:@"nodePhysicsBody"];
+}
+
+- (NodePhysicsBody*) nodePhysicsBody
+{
+    return [self extraPropForKey:@"nodePhysicsBody"];
 }
 
 @end

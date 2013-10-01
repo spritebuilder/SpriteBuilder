@@ -1621,10 +1621,18 @@ CA
                                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                         </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="selectedNode" id="T09-Ez-jKK">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="3rw-9i-Dbe"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <popUpButton verticalHuggingPriority="750" id="0Ex-EX-gU6">
                                                                         <rect key="frame" x="87" y="589" width="190" height="22"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="YcA-X2-jqd">
                                                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                             <font key="font" metaFont="smallSystem"/>
@@ -1636,7 +1644,7 @@ CA
                                                                             </menu>
                                                                         </popUpButtonCell>
                                                                     </popUpButton>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ro7-0f-xIv">
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ro7-0f-xIv" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="594" width="78" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Physics shape" id="Jde-yE-DxV">
@@ -1645,7 +1653,7 @@ CA
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                     </textField>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ext-Gr-AoA">
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ext-Gr-AoA" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="495" width="44" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Density" id="hO5-Og-Qfj">
@@ -1668,7 +1676,7 @@ CA
                                                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <font key="titleFont" metaFont="system"/>
                                                                     </box>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="PQS-eD-oNf">
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="PQS-eD-oNf" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="572" width="77" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Corner radius" id="6vB-Jc-BlL">
@@ -1707,7 +1715,7 @@ CA
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                     </textField>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="j37-bv-oYR">
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="j37-bv-oYR" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="473" width="45" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Friction" id="gnw-IR-keb">
@@ -1731,7 +1739,7 @@ CA
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                     </textField>
-                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Bg2-8I-Ea8">
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Bg2-8I-Ea8" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="451" width="51" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Elasticity" id="JHk-Kz-cSM">
@@ -1795,6 +1803,13 @@ CA
                                                                         </buttonCell>
                                                                     </button>
                                                                 </subviews>
+                                                                <connections>
+                                                                    <binding destination="494" name="hidden" keyPath="selectedNode" id="SbN-x8-4tb">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSIsNil</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
                                                             </view>
                                                         </subviews>
                                                     </clipView>
@@ -1980,6 +1995,7 @@ CA
                 <outlet property="outlineHierarchy" destination="570" id="1040"/>
                 <outlet property="outlineProject" destination="1499" id="1504"/>
                 <outlet property="panelVisibilityControl" destination="1786" id="1794"/>
+                <outlet property="physicsHandler" destination="fa4-D5-pFD" id="ZWp-5N-Rhs"/>
                 <outlet property="plugInNodeCollectionView" destination="2015" id="2022"/>
                 <outlet property="previewViewContainer" destination="1957" id="1962"/>
                 <outlet property="projectImageBrowserView" destination="1986" id="1987"/>
@@ -2241,6 +2257,7 @@ CA
                 <outlet property="languageMenu" destination="2102" id="2104"/>
             </connections>
         </customObject>
+        <customObject id="fa4-D5-pFD" customClass="PhysicsHandler"/>
     </objects>
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>

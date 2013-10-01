@@ -44,6 +44,7 @@
 #import "SequencerNodeProperty.h"
 #import "SequencerKeyframe.h"
 #import "Tupac.h"
+#import "PhysicsHandler.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -103,11 +104,15 @@ CGPoint ccpRound(CGPoint pt)
     
     // Sticky notes
     notesLayer = [NotesLayer node];
-    [self addChild:notesLayer z:5];
+    [self addChild:notesLayer z:6];
     
     // Selection layer
     selectionLayer = [CCNode node];
     [self addChild:selectionLayer z:4];
+    
+    // Physics layer
+    physicsLayer = [CCNode node];
+    [self addChild:physicsLayer z:5];
     
     // Border layer
     borderLayer = [CCNode node];
@@ -396,9 +401,6 @@ CGPoint ccpRound(CGPoint pt)
 {
     NSArray* nodes = appDelegate.selectedNodes;
     
-    // Clear selection
-    [selectionLayer removeAllChildrenWithCleanup:YES];
-    
     if (nodes.count > 0)
     {
         for (CCNode* node in nodes)
@@ -596,6 +598,7 @@ CGPoint ccpRound(CGPoint pt)
     
     if ([notesLayer mouseDown:pos event:event]) return;
     if ([guideLayer mouseDown:pos event:event]) return;
+    if ([appDelegate.physicsHandler mouseDown:pos event:event]) return;
     
     mouseDownPos = pos;
     
@@ -691,6 +694,7 @@ CGPoint ccpRound(CGPoint pt)
     
     if ([notesLayer mouseDragged:pos event:event]) return;
     if ([guideLayer mouseDragged:pos event:event]) return;
+    if ([appDelegate.physicsHandler mouseDragged:pos event:event]) return;
     
     if (currentMouseTransform == kCCBTransformHandleDownInside)
     {
@@ -1120,7 +1124,18 @@ CGPoint ccpRound(CGPoint pt)
         [[borderDevice texture] setAliasTexParameters];
     }
     
-    [self updateSelection];
+    // Update selection & physics editor
+    [selectionLayer removeAllChildrenWithCleanup:YES];
+    [physicsLayer removeAllChildrenWithCleanup:YES];
+    
+    if (appDelegate.physicsHandler.editingPhysicsBody)
+    {
+        [appDelegate.physicsHandler updatePhysicsEditor:physicsLayer];
+    }
+    else
+    {
+        [self updateSelection];
+    }
     
     // Setup border layer
     CGRect bounds = [stageBgLayer boundingBox];

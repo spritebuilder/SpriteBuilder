@@ -197,6 +197,9 @@
 		B7C3533417F6565F005697C1 /* CCSprite9Slice.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */; };
 		B7C3533717FA0FEF005697C1 /* inspector-physics.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C3533517FA0FEF005697C1 /* inspector-physics.png */; };
 		B7C3533817FA0FEF005697C1 /* inspector-physics@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C3533617FA0FEF005697C1 /* inspector-physics@2x.png */; };
+		B7C3533A17FA2EDA005697C1 /* select-physics-corner.png in Resources */ = {isa = PBXBuildFile; fileRef = B7C3533917FA2EDA005697C1 /* select-physics-corner.png */; };
+		B7C3533E17FA30BB005697C1 /* NodePhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C3533D17FA30BB005697C1 /* NodePhysicsBody.m */; };
+		B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C3534017FA3DF1005697C1 /* PhysicsHandler.m */; };
 		B7C623B317F383CE00928F91 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7C623B917F383CE00928F91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C623B717F383CE00928F91 /* InfoPlist.strings */; };
 		B7C623C017F384E400928F91 /* CCButton.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */; };
@@ -1070,6 +1073,11 @@
 		B7C3533017F655B5005697C1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		B7C3533517FA0FEF005697C1 /* inspector-physics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-physics.png"; sourceTree = "<group>"; };
 		B7C3533617FA0FEF005697C1 /* inspector-physics@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-physics@2x.png"; sourceTree = "<group>"; };
+		B7C3533917FA2EDA005697C1 /* select-physics-corner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-physics-corner.png"; sourceTree = "<group>"; };
+		B7C3533C17FA30BB005697C1 /* NodePhysicsBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodePhysicsBody.h; sourceTree = "<group>"; };
+		B7C3533D17FA30BB005697C1 /* NodePhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodePhysicsBody.m; sourceTree = "<group>"; };
+		B7C3533F17FA3DF1005697C1 /* PhysicsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsHandler.h; sourceTree = "<group>"; };
+		B7C3534017FA3DF1005697C1 /* PhysicsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsHandler.m; sourceTree = "<group>"; };
 		B7C623B117F383CE00928F91 /* CCButton.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCButton.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7C623B217F383CE00928F91 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		B7C623B617F383CE00928F91 /* CCButton-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCButton-Info.plist"; sourceTree = "<group>"; };
@@ -1988,6 +1996,7 @@
 		776041EF1498FCE50078095D /* Stage Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B7C3533917FA2EDA005697C1 /* select-physics-corner.png */,
 				B7AC6968179E03BF0041B8BD /* select-corner.png */,
 				E3DFE830160226760068CB50 /* frame-iphone5.png */,
 				E36078BB15EE0B2C0040A172 /* sel-round.png */,
@@ -2216,6 +2225,7 @@
 				B7AC69CE17A756950041B8BD /* Property Inspector */,
 				E335CAED1576031B00A612EE /* Sequencer */,
 				E3C5C1A11504D144000CF6F3 /* Resource Manager */,
+				B7C3533B17FA306C005697C1 /* Physics Editor */,
 				776041E11498F56D0078095D /* Application Settings & Globals */,
 				776041E01498F4A00078095D /* Document Readers & Writers */,
 				E346286D155D21F10043EAB1 /* Publishing */,
@@ -2602,6 +2612,17 @@
 				B7C3532E17F65585005697C1 /* CCBPProperties.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B7C3533B17FA306C005697C1 /* Physics Editor */ = {
+			isa = PBXGroup;
+			children = (
+				B7C3533F17FA3DF1005697C1 /* PhysicsHandler.h */,
+				B7C3534017FA3DF1005697C1 /* PhysicsHandler.m */,
+				B7C3533C17FA30BB005697C1 /* NodePhysicsBody.h */,
+				B7C3533D17FA30BB005697C1 /* NodePhysicsBody.m */,
+			);
+			name = "Physics Editor";
 			sourceTree = "<group>";
 		};
 		B7C623B417F383CE00928F91 /* CCButton */ = {
@@ -4060,6 +4081,7 @@
 				E3DA6FFA16CB2B8700B12FFB /* InspectorPopoverSpriteFrame.xib in Resources */,
 				E3DA6FFC16CB2BEB00B12FFB /* InspectorPopoverByte.xib in Resources */,
 				E3DA6FFE16CB2C3C00B12FFB /* InspectorPopoverColor3.xib in Resources */,
+				B7C3533A17FA2EDA005697C1 /* select-physics-corner.png in Resources */,
 				E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */,
 				E312973516CC677400A09155 /* SequencerPopoverSound.xib in Resources */,
 				E3A4747116D4389D00DB0D61 /* README.md in Resources */,
@@ -4436,6 +4458,7 @@
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
 				E380B25A164330360006D31C /* PlayerDeviceInfo.m in Sources */,
+				B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */,
 				E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */,
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
@@ -4458,6 +4481,7 @@
 				E390C777170A294E003E9E92 /* DebuggerConnection.m in Sources */,
 				E390C77E170A2C9B003E9E92 /* AboutWindow.m in Sources */,
 				E334A4E4170CFDE3001604F7 /* CCBTextField.m in Sources */,
+				B7C3533E17FA30BB005697C1 /* NodePhysicsBody.m in Sources */,
 				E398541A170D2409000F4465 /* DebuggerTextField.m in Sources */,
 				E3D839E31713A75B004F6127 /* JavaScriptSyntaxChecker.m in Sources */,
 				E38654B0171771DA00A345B9 /* JavaScriptVariableExtractor.m in Sources */,

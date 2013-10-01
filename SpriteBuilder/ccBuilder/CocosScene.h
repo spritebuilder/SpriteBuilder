@@ -64,6 +64,7 @@ enum {
     CCLayerColor* stageBgLayer;
     CCNode* contentLayer;
     CCNode* selectionLayer;
+    CCNode* physicsLayer;
     CCNode* borderLayer;
     RulersLayer* rulerLayer;
     GuidesLayer* guideLayer;

@@ -27,6 +27,7 @@
 @class PlugInNode;
 @class SequencerNodeProperty;
 @class SequencerKeyframe;
+@class NodePhysicsBody;
 
 @interface CCNode (NodeInfo)
 
@@ -35,6 +36,7 @@
 @property (nonatomic,copy) NSString* displayName;
 @property (nonatomic,retain) NSMutableArray* customProperties;
 @property (nonatomic,assign) CGPoint transformStartPosition;
+@property (nonatomic,retain) NodePhysicsBody* nodePhysicsBody;
 
 - (id) extraPropForKey:(NSString*)key;
 - (void) setExtraProp:(id)prop forKey:(NSString*)key;

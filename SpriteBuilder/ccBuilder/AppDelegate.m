@@ -101,6 +101,7 @@
 #import "PlugInNodeViewHandler.h"
 #import "PropertyInspectorHandler.h"
 #import "LocalizationEditorHandler.h"
+#import "PhysicsHandler.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -134,6 +135,8 @@
 @synthesize connection;
 @synthesize propertyInspectorHandler;
 @synthesize localizationEditorHandler;
+@synthesize physicsHandler;
+@synthesize itemTabView;
 
 static AppDelegate* sharedAppDelegate;
 
@@ -643,6 +646,9 @@ static AppDelegate* sharedAppDelegate;
 
 - (void) setSelectedNodes:(NSArray*) selection
 {
+    [self willChangeValueForKey:@"selectedNode"];
+    [self willChangeValueForKey:@"selectedNodes"];
+    
     // Close the color picker
     [[NSColorPanel sharedColorPanel] close];
     
@@ -691,6 +697,11 @@ static AppDelegate* sharedAppDelegate;
     
     [self updateSmallTabBarsEnabled];
     [propertyInspectorHandler updateTemplates];
+    
+    [physicsHandler selectionChanged];
+    
+    [self didChangeValueForKey:@"selectedNode"];
+    [self didChangeValueForKey:@"selectedNodes"];
 }
 
 - (CCNode*) selectedNode

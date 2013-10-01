@@ -107,6 +107,7 @@ enum {
 @class PlugInNodeViewHandler;
 @class PropertyInspectorHandler;
 @class LocalizationEditorHandler;
+@class PhysicsHandler;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -264,6 +265,9 @@ enum {
     // Localization editor
     IBOutlet LocalizationEditorHandler* localizationEditorHandler;
     
+    // Physics editor
+    IBOutlet PhysicsHandler* physicsHandler;
+    
 @private
     MainWindow *window;
     
@@ -317,6 +321,10 @@ enum {
 - (void) refreshPropertiesOfType:(NSString*)type;
 
 @property (nonatomic,readonly) IBOutlet LocalizationEditorHandler* localizationEditorHandler;
+
+// Physics
+@property (nonatomic,readonly) PhysicsHandler* physicsHandler;
+@property (nonatomic,readonly) NSTabView* itemTabView;
 
 // Methods
 + (AppDelegate*) appDelegate;
