@@ -31,6 +31,7 @@
 #import "StringPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 #import "AppDelegate.h"
+#import "NodePhysicsBody.h"
 
 @implementation CCBWriterInternal
 
@@ -517,6 +518,12 @@
     if (node.usesFlashSkew)
     {
         [dict setValue:[NSNumber numberWithBool:YES] forKey:@"usesFlashSkew"];
+    }
+    
+    // Physics
+    if (node.nodePhysicsBody)
+    {
+        [dict setValue:[node.nodePhysicsBody serialization] forKey:@"physicsBody"];
     }
     
     // Selection

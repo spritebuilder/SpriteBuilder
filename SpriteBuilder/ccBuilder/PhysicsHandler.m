@@ -14,6 +14,7 @@
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
+#define kCCBPhysicsSnapDist 10
 
 float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 {
@@ -85,9 +86,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (void) setSelectedNodePhysicsEnabled:(BOOL)enabled
 {
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*physicsBody"];
+    
     if (enabled)
     {
-        [AppDelegate appDelegate].selectedNode.nodePhysicsBody = [[NodePhysicsBody alloc] initWithNode:[AppDelegate appDelegate].selectedNode];
+        [AppDelegate appDelegate].selectedNode.nodePhysicsBody = [[[NodePhysicsBody alloc] initWithNode:[AppDelegate appDelegate].selectedNode] autorelease];
     }
     else
     {
@@ -184,7 +187,6 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         if (distance <= kCCBPhysicsLineSegmFuzz)
         {
-            NSLog(@"distance: %f", distance);
             return idx;
         }
     }
@@ -215,6 +217,33 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
     
     self.selectedNodePhysicsBody.points = hull;
+}
+
+- (CGPoint) snapPoint:(CGPoint)src toPt0:(CGPoint)pt0 andPt1:(CGPoint)pt1
+{
+    CGPoint snapped = src;
+    
+    // Snap x value
+    float xDist0 = fabsf(src.x - pt0.x);
+    float xDist1 = fabsf(src.x - pt1.x);
+    
+    if (min(xDist0, xDist1) < kCCBPhysicsSnapDist)
+    {
+        if (xDist0 < xDist1) snapped.x = pt0.x;
+        else snapped.x = pt1.x;
+    }
+    
+    // Snap y value
+    float yDist0 = fabsf(src.y - pt0.y);
+    float yDist1 = fabsf(src.y - pt1.y);
+    
+    if (min(yDist0, yDist1) < kCCBPhysicsSnapDist)
+    {
+        if (yDist0 < yDist1) snapped.y = pt0.y;
+        else snapped.y = pt1.y;
+    }
+    
+    return snapped;
 }
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event
@@ -262,10 +291,19 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     if (_mouseDownInHandle != -1)
     {
         CGPoint delta = ccpSub(pos, _mouseDownPos);
-        
         CGPoint newPos = ccpAdd(_handleStartPos, delta);
         
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
+        
+        if ([event modifierFlags] & NSShiftKeyMask)
+        {
+            // Handle snapping if shift is down
+            CGPoint pt0 = [[points objectAtIndex:(_mouseDownInHandle + points.count - 1) % points.count] pointValue];
+            CGPoint pt1 = [[points objectAtIndex:(_mouseDownInHandle + 1) % points.count] pointValue];
+            
+            newPos = [self snapPoint:newPos toPt0:pt0 andPt1:pt1];
+        }
+        
         [points replaceObjectAtIndex:_mouseDownInHandle withObject:[NSValue valueWithPoint:newPos]];
         self.selectedNodePhysicsBody.points = points;
         

@@ -37,6 +37,7 @@
 #import "PositionPropertySetter.h"
 #import "StringPropertySetter.h"
 #import "CCNode+NodeInfo.h"
+#import "NodePhysicsBody.h"
 
 // Old positioning constants
 enum
@@ -511,6 +512,12 @@ NSDictionary* renamedProperties = NULL;
     {
         CCNode* child = [CCBReaderInternal nodeGraphFromDictionary:[children objectAtIndex:i] parentSize:contentSize];
         [node addChild:child z:i];
+    }
+    
+    // Physics
+    if ([dict objectForKey:@"physicsBody"])
+    {
+        node.nodePhysicsBody = [[[NodePhysicsBody alloc] initWithSerialization:[dict objectForKey:@"physicsBody"]] autorelease];
     }
     
     // Selections

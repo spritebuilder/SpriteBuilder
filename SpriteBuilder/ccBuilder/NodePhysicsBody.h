@@ -31,6 +31,10 @@ enum
 @property (nonatomic,assign) float friction;
 @property (nonatomic,assign) float elasticity;
 
+// Init and serialization
 - (id) initWithNode:(CCNode*) node;
+- (id) initWithSerialization:(id)ser;
+
+- (id) serialization;
 
 @end
