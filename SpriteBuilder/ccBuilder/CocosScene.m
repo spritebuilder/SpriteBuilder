@@ -596,6 +596,8 @@ CGPoint ccpRound(CGPoint pt)
     NSPoint posRaw = [event locationInWindow];
     CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
     
+    NSLog(@"mouseDown at: (%f,%f)", pos.x, pos.y);
+    
     if ([notesLayer mouseDown:pos event:event]) return;
     if ([guideLayer mouseDown:pos event:event]) return;
     if ([appDelegate.physicsHandler mouseDown:pos event:event]) return;
@@ -941,7 +943,6 @@ CGPoint ccpRound(CGPoint pt)
 }
 
 - (void) mouseUp:(NSEvent *)event
-//- (BOOL) ccMouseUp:(NSEvent *)event
 {
     if (!appDelegate.hasOpenedDocument) return;
     
@@ -949,6 +950,8 @@ CGPoint ccpRound(CGPoint pt)
     
     NSPoint posRaw = [event locationInWindow];
     CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
+    
+    if ([appDelegate.physicsHandler mouseUp:pos event:event]) return;
     
     if (currentMouseTransform == kCCBTransformHandleDownInside)
     {

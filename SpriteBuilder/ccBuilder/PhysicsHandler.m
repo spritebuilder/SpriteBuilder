@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 #import "NodePhysicsBody.h"
+#import "chipmunk.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -65,6 +66,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 }
 
 @implementation PhysicsHandler
+
+- (void) awakeFromNib
+{
+    _mouseDownInHandle = -1;
+}
 
 - (void) selectionChanged
 {
@@ -186,6 +192,32 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     return -1;
 }
 
+- (void) makeConvexHull
+{
+    NSArray* pts = self.selectedNodePhysicsBody.points;
+    int numPts = pts.count;
+    
+    cpVect* verts = malloc(sizeof(cpVect) * numPts);
+    int idx = 0;
+    for (NSValue* ptVal in pts)
+    {
+        CGPoint pt = [ptVal pointValue];
+        verts[idx].x = pt.x;
+        verts[idx].y = pt.y;
+        idx++;
+    }
+    
+    int newNumPts = cpConvexHull(numPts, verts, NULL, NULL, 0.0f);
+    
+    NSMutableArray* hull = [NSMutableArray array];
+    for (idx = 0; idx < newNumPts; idx++)
+    {
+        [hull addObject:[NSValue valueWithPoint:ccp(verts[idx].x, verts[idx].y)]];
+    }
+    
+    self.selectedNodePhysicsBody.points = hull;
+}
+
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event
 {
     if (!self.editingPhysicsBody) return NO;
@@ -199,11 +231,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     if (handleIdx != -1)
     {
         _handleStartPos = [[self.selectedNodePhysicsBody.points objectAtIndex:handleIdx] pointValue];
+        
+        return YES;
     }
     else if (lineIdx != -1)
     {
-        NSLog(@"Clicked line segment: %d", lineIdx);
-        
         // Add new segment
         CGPoint localPos = ccpSub(pos, [self selectedAnchorInWorld]);
         
@@ -214,14 +246,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         // Set this segment as edited
         _handleStartPos = localPos;
         _mouseDownInHandle = lineIdx + 1;
+        
+        return YES;
     }
     else
     {
         // Clicked outside handle, pass event down to selections
         return NO;
     }
-    
-    return YES;
 }
 
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event
@@ -237,14 +269,26 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
         [points replaceObjectAtIndex:_mouseDownInHandle withObject:[NSValue valueWithPoint:newPos]];
         self.selectedNodePhysicsBody.points = points;
+        
+        return YES;
     }
     else
     {
         // Not doing any physics editing
         return NO;
     }
+}
+
+- (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event
+{
+    if (_mouseDownInHandle != -1)
+    {
+        [self makeConvexHull];
+        
+        return YES;
+    }
     
-    return YES;
+    return NO;
 }
 
 - (CGPoint) selectedAnchorInWorld
