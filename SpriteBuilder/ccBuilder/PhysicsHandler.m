@@ -269,14 +269,16 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
     else if (lineIdx != -1)
     {
-        // Add new segment
+        // Add new control point
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points"];
+        
         CGPoint localPos = ccpMult(ccpSub(pos, [self selectedAnchorInWorld]), 1.0f/scale);
         
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
         [points insertObject:[NSValue valueWithPoint:localPos] atIndex:lineIdx + 1];
         self.selectedNodePhysicsBody.points = points;
         
-        // Set this segment as edited
+        // Set this point as edited
         _handleStartPos = localPos;
         _mouseDownInHandle = lineIdx + 1;
         
@@ -297,6 +299,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     if (_mouseDownInHandle != -1)
     {
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points"];
+        
         CGPoint delta = ccpSub(pos, _mouseDownPos);
         delta = ccpMult(delta, 1.0f/scale);
         CGPoint newPos = ccpAdd(_handleStartPos, delta);

@@ -144,8 +144,6 @@
 - (void) setPoints:(NSArray *)points
 {
     if (points == _points) return;
-    
-    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points"];
     [_points release];
     _points = [points retain];
 }

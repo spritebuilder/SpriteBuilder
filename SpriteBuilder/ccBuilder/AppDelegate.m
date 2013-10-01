@@ -1657,12 +1657,11 @@ static BOOL hideAllToNextSeparator;
     [self checkForTooManyDirectoriesInCurrentDoc];
     
     // Remove selections
+    physicsHandler.selectedNodePhysicsBody = NULL;
     [self setSelectedNodes:NULL];
     
-    // Make sure timeline is up to date
-    //[sequenceHandler updatePropertiesToTimelinePosition];
-    
 	[[[CCDirector sharedDirector] view] unlockOpenGLContext];
+    
 }
 
 - (void) saveFile:(NSString*) fileName
