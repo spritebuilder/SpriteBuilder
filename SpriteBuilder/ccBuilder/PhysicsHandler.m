@@ -11,6 +11,7 @@
 #import "CCNode+NodeInfo.h"
 #import "NodePhysicsBody.h"
 #import "chipmunk.h"
+#import "CocosScene.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -118,13 +119,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 - (int) handleIndexForPos:(CGPoint) pos
 {
     CGPoint anchorPointPos = [self selectedAnchorInWorld];
+    float scale = [self scaleFactor];
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
     int idx = 0;
     for (NSValue* ptVal in body.points)
     {
-        CGPoint pt = ccpAdd(anchorPointPos, [ptVal pointValue]);
+        CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
         
         float distance = ccpDistance(pt, pos);
         
@@ -172,6 +174,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 - (int) lineSegmIndexForPos:(CGPoint) pos
 {
     CGPoint anchorPointPos = [self selectedAnchorInWorld];
+    float scale = [self scaleFactor];
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
@@ -180,8 +183,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         NSValue* ptVal0 = [body.points objectAtIndex:idx];
         NSValue* ptVal1 = [body.points objectAtIndex:(idx + 1) % body.points.count];
         
-        CGPoint pt0 = ccpAdd(anchorPointPos, [ptVal0 pointValue]);
-        CGPoint pt1 = ccpAdd(anchorPointPos, [ptVal1 pointValue]);
+        CGPoint pt0 = ccpAdd(anchorPointPos, ccpMult([ptVal0 pointValue], scale));
+        CGPoint pt1 = ccpAdd(anchorPointPos, ccpMult([ptVal1 pointValue], scale));
         
         float distance = distanceFromLineSegment(pt0, pt1, pos);
         
@@ -250,6 +253,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 {
     if (!self.editingPhysicsBody) return NO;
     
+    float scale = [self scaleFactor];
+    
     int handleIdx = [self handleIndexForPos:pos];
     int lineIdx = [self lineSegmIndexForPos:pos];
     
@@ -265,7 +270,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     else if (lineIdx != -1)
     {
         // Add new segment
-        CGPoint localPos = ccpSub(pos, [self selectedAnchorInWorld]);
+        CGPoint localPos = ccpMult(ccpSub(pos, [self selectedAnchorInWorld]), 1.0f/scale);
         
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
         [points insertObject:[NSValue valueWithPoint:localPos] atIndex:lineIdx + 1];
@@ -288,9 +293,12 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 {
     if (!self.editingPhysicsBody) return NO;
     
+    float scale = [self scaleFactor];
+    
     if (_mouseDownInHandle != -1)
     {
         CGPoint delta = ccpSub(pos, _mouseDownPos);
+        delta = ccpMult(delta, 1.0f/scale);
         CGPoint newPos = ccpAdd(_handleStartPos, delta);
         
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
@@ -343,6 +351,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (void) updatePhysicsEditor:(CCNode*) editorView
 {
+    float scale = [self scaleFactor];
+    
     if (self.editingPhysicsBody)
     {
         CCNode* node = [AppDelegate appDelegate].selectedNode;
@@ -357,7 +367,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         for (NSValue* ptVal in body.points)
         {
             // Absolute handle position
-            CGPoint pt = ccpAdd(anchorPointPos, [ptVal pointValue]);
+            CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
             points[i] = pt;
             
             CCSprite* handle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
@@ -373,5 +383,10 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         free(points);
     }
+}
+
+- (float) scaleFactor
+{
+    return [[CocosScene cocosScene] stageZoom];
 }
 @end
