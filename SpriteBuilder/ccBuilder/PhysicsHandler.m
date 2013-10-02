@@ -491,6 +491,16 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (float) radiusScaleFactor
 {
-    return [[CocosScene cocosScene] stageZoom];
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
+    
+    float scale = 1;
+    
+    while (node != NULL)
+    {
+        scale *= node.scaleX;
+        node = node.parent;
+    }
+    
+    return scale;
 }
 @end
