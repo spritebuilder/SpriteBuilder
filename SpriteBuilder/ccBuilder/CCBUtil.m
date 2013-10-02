@@ -25,6 +25,13 @@
 
 #import "CCBUtil.h"
 
+CGPoint ccpRound(CGPoint pt)
+{
+    CGPoint rounded;
+    rounded.x = roundf(pt.x);
+    rounded.y = roundf(pt.y);
+    return rounded;
+}
 
 @implementation CCBUtil
 

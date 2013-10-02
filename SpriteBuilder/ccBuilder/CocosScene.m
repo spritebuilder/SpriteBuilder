@@ -45,6 +45,7 @@
 #import "SequencerKeyframe.h"
 #import "Tupac.h"
 #import "PhysicsHandler.h"
+#import "CCBUtil.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -52,14 +53,6 @@
 #define kCCBTransformHandleRadius 5
 
 static CocosScene* sharedCocosScene;
-
-CGPoint ccpRound(CGPoint pt)
-{
-    CGPoint rounded;
-    rounded.x = roundf(pt.x);
-    rounded.y = roundf(pt.y);
-    return rounded;
-}
 
 @implementation CocosScene
 

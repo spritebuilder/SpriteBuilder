@@ -28,6 +28,7 @@
 #import "NodePhysicsBody.h"
 #import "chipmunk.h"
 #import "CocosScene.h"
+#import "CCBUtil.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -433,7 +434,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 CGPoint pt = [ptVal pointValue];
                 pt = [node convertToWorldSpaceAR:pt];
                 
-                points[i] = pt;
+                points[i] = ccpRound(pt);
                 
                 CCSprite* handle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
                 handle.position = pt;
@@ -479,11 +480,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             
             // Draw handles
             CCSprite* centerHandle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
-            centerHandle.position = center;
+            centerHandle.position = ccpRound(center);
             [editorView addChild:centerHandle];
             
             CCSprite* edgeHandle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
-            edgeHandle.position = edge;
+            edgeHandle.position = ccpRound(edge);
             [editorView addChild:edgeHandle];
         }
     }

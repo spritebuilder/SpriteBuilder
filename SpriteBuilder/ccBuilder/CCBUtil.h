@@ -25,6 +25,7 @@
 
 #import <Foundation/Foundation.h>
 
+CGPoint ccpRound(CGPoint pt);
 
 @interface CCBUtil : NSObject
 + (void) setSelectedSubmenuItemForMenu:(NSMenu*)menu tag:(int)tag;
