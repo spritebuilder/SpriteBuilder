@@ -118,17 +118,15 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (int) handleIndexForPos:(CGPoint) pos
 {
-    CGPoint anchorPointPos = [self selectedAnchorInWorld];
-    float scale = [self scaleFactor];
-    
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
     {
         int idx = 0;
         for (NSValue* ptVal in body.points)
         {
-            CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
+            CGPoint pt = [node convertToWorldSpaceAR:[ptVal pointValue]];
             
             float distance = ccpDistance(pt, pos);
             
@@ -142,8 +140,9 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
     {
         CGPoint center = [[body.points objectAtIndex:0] pointValue];
-        center = ccpAdd(anchorPointPos, ccpMult(center, scale));
-        CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * scale, 0));
+        center = [node convertToWorldSpaceAR:center];
+        
+        CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * [self radiusScaleFactor], 0));
         
         
         if (ccpDistance(center, pos) < kCCBPhysicsHandleRadius) return 0;
@@ -186,10 +185,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (int) lineSegmIndexForPos:(CGPoint) pos
 {
-    CGPoint anchorPointPos = [self selectedAnchorInWorld];
-    float scale = [self scaleFactor];
-    
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
     {
@@ -198,8 +195,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             NSValue* ptVal0 = [body.points objectAtIndex:idx];
             NSValue* ptVal1 = [body.points objectAtIndex:(idx + 1) % body.points.count];
             
-            CGPoint pt0 = ccpAdd(anchorPointPos, ccpMult([ptVal0 pointValue], scale));
-            CGPoint pt1 = ccpAdd(anchorPointPos, ccpMult([ptVal1 pointValue], scale));
+            CGPoint pt0 = [node convertToWorldSpaceAR:[ptVal0 pointValue]];
+            CGPoint pt1 = [node convertToWorldSpaceAR:[ptVal1 pointValue]];
             
             float distance = distanceFromLineSegment(pt0, pt1, pos);
             
@@ -270,8 +267,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     if (!self.editingPhysicsBody) return NO;
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
-    
-    float scale = [self scaleFactor];
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     int handleIdx = [self handleIndexForPos:pos];
     int lineIdx = [self lineSegmIndexForPos:pos];
@@ -304,7 +300,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         // Add new control point
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points"];
         
-        CGPoint localPos = ccpMult(ccpSub(pos, [self selectedAnchorInWorld]), 1.0f/scale);
+        CGPoint localPos = [node convertToNodeSpaceAR:pos];
         
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
         [points insertObject:[NSValue valueWithPoint:localPos] atIndex:lineIdx + 1];
@@ -328,19 +324,17 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     if (!self.editingPhysicsBody) return NO;
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
-    
-    float scale = [self scaleFactor];
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     if (_mouseDownInHandle != -1)
     {
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points"];
         
         CGPoint delta = ccpSub(pos, _mouseDownPos);
-        delta = ccpMult(delta, 1.0f/scale);
         
         if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
-            CGPoint newPos = ccpAdd(_handleStartPos, delta);
+            CGPoint newPos = [node convertToNodeSpaceAR:ccpAdd(_mouseDownPos,delta)];
             
             NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
             
@@ -361,16 +355,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             if (_mouseDownInHandle == 0)
             {
                 // Position handle
-                CGPoint newPos = ccpAdd(_handleStartPos, delta);
+                CGPoint newPos = [node convertToNodeSpaceAR:ccpAdd(_mouseDownPos,delta)];
                 
                 body.points = [NSArray arrayWithObject:[NSValue valueWithPoint:newPos]];
             }
             else if (_mouseDownInHandle == 1)
             {
-                NSLog(@"_mouseDownPos.x: %f delta.x: %f", _handleStartPos.x, delta.x);
-                
                 // Radius handle
-                body.cornerRadius = _handleStartPos.x + delta.x;
+                body.cornerRadius = _handleStartPos.x + delta.x / [self radiusScaleFactor];
                 if (body.cornerRadius < 0) body.cornerRadius = 0;
             }
         }
@@ -401,27 +393,13 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     return NO;
 }
 
-- (CGPoint) selectedAnchorInWorld
-{
-    CCNode* node = [AppDelegate appDelegate].selectedNode;
-    
-    // Find the anchor point
-    CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
-                              node.anchorPoint.y * node.contentSizeInPoints.height);
-    
-    CGPoint anchorPointPos = [node convertToWorldSpace:localAnchor];
-    
-    return anchorPointPos;
-}
-
 - (void) updatePhysicsEditor:(CCNode*) editorView
 {
-    float scale = [self scaleFactor];
+    float scale = [self radiusScaleFactor];
     
     if (self.editingPhysicsBody)
     {
         CCNode* node = [AppDelegate appDelegate].selectedNode;
-        CGPoint anchorPointPos = [self selectedAnchorInWorld];
         
         // Position physic corners
         NodePhysicsBody* body = node.nodePhysicsBody;
@@ -434,7 +412,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             for (NSValue* ptVal in body.points)
             {
                 // Absolute handle position
-                CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
+                
+                // TODO: Handle position scale
+                CGPoint pt = [ptVal pointValue];
+                pt = [node convertToWorldSpaceAR:pt];
+                
                 points[i] = pt;
                 
                 CCSprite* handle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
@@ -453,8 +435,9 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
         {
             CGPoint center = [[body.points objectAtIndex:0] pointValue];
-            center = ccpAdd(anchorPointPos, ccpMult(center, scale));
+            center = [node convertToWorldSpaceAR:center];
             
+            // TODO: Better handling of scale
             CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * scale, 0));
             
             
@@ -490,7 +473,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
 }
 
-- (float) scaleFactor
+- (float) radiusScaleFactor
 {
     return [[CocosScene cocosScene] stageZoom];
 }
