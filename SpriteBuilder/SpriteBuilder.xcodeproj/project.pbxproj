@@ -6107,6 +6107,7 @@
 				B7C3532D17F65548005697C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B7C623BB17F383CE00928F91 /* Build configuration list for PBXNativeTarget "CCButton" */ = {
 			isa = XCConfigurationList;

@@ -9,6 +9,8 @@
 #import "NodePhysicsBody.h"
 #import "AppDelegate.h"
 
+#define kCCBPhysicsMinimumDefaultCircleRadius 16
+
 @implementation NodePhysicsBody
 
 - (id) initWithNode:(CCNode*) node
@@ -99,6 +101,7 @@
 - (void) setupDefaultPolygonForNode:(CCNode*) node
 {
     _bodyShape = kCCBPhysicsBodyShapePolygon;
+    self.cornerRadius = 0;
     
     float w = node.contentSize.width;
     float h = node.contentSize.height;
@@ -129,10 +132,33 @@
                    nil];
 }
 
+- (void) setupDefaultCircleForNode:(CCNode*) node
+{
+    _bodyShape = kCCBPhysicsBodyShapeCircle;
+    
+    float radius = max(node.contentSize.width/2, node.contentSize.height/2);
+    if (radius < kCCBPhysicsMinimumDefaultCircleRadius) radius = kCCBPhysicsMinimumDefaultCircleRadius;
+    
+    self.cornerRadius = radius;
+    
+    self.points = [NSArray arrayWithObject:[NSValue valueWithPoint:CGPointZero]];
+}
+
 - (void) setBodyShape:(int)bodyShape
 {
+    if (bodyShape == _bodyShape) return;
+    
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*bodyShape"];
     _bodyShape = bodyShape;
+    
+    if (bodyShape == kCCBPhysicsBodyShapePolygon)
+    {
+        [self setupDefaultPolygonForNode:[AppDelegate appDelegate].selectedNode];
+    }
+    else if (bodyShape == kCCBPhysicsBodyShapeCircle)
+    {
+        [self setupDefaultCircleForNode:[AppDelegate appDelegate].selectedNode];
+    }
 }
 
 - (void) setCornerRadius:(float)cornerRadius

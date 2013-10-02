@@ -123,18 +123,31 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
-    int idx = 0;
-    for (NSValue* ptVal in body.points)
+    if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
     {
-        CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
-        
-        float distance = ccpDistance(pt, pos);
-        
-        if (distance <= kCCBPhysicsHandleRadius)
+        int idx = 0;
+        for (NSValue* ptVal in body.points)
         {
-            return idx;
+            CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
+            
+            float distance = ccpDistance(pt, pos);
+            
+            if (distance <= kCCBPhysicsHandleRadius)
+            {
+                return idx;
+            }
+            idx ++;
         }
-        idx ++;
+    }
+    else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
+    {
+        CGPoint center = [[body.points objectAtIndex:0] pointValue];
+        center = ccpAdd(anchorPointPos, ccpMult(center, scale));
+        CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * scale, 0));
+        
+        
+        if (ccpDistance(center, pos) < kCCBPhysicsHandleRadius) return 0;
+        else if (ccpDistance(edge, pos) < kCCBPhysicsHandleRadius) return 1;
     }
     
     return -1;
@@ -178,19 +191,22 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
-    for (int idx = 0; idx < body.points.count; idx++)
+    if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
     {
-        NSValue* ptVal0 = [body.points objectAtIndex:idx];
-        NSValue* ptVal1 = [body.points objectAtIndex:(idx + 1) % body.points.count];
-        
-        CGPoint pt0 = ccpAdd(anchorPointPos, ccpMult([ptVal0 pointValue], scale));
-        CGPoint pt1 = ccpAdd(anchorPointPos, ccpMult([ptVal1 pointValue], scale));
-        
-        float distance = distanceFromLineSegment(pt0, pt1, pos);
-        
-        if (distance <= kCCBPhysicsLineSegmFuzz)
+        for (int idx = 0; idx < body.points.count; idx++)
         {
-            return idx;
+            NSValue* ptVal0 = [body.points objectAtIndex:idx];
+            NSValue* ptVal1 = [body.points objectAtIndex:(idx + 1) % body.points.count];
+            
+            CGPoint pt0 = ccpAdd(anchorPointPos, ccpMult([ptVal0 pointValue], scale));
+            CGPoint pt1 = ccpAdd(anchorPointPos, ccpMult([ptVal1 pointValue], scale));
+            
+            float distance = distanceFromLineSegment(pt0, pt1, pos);
+            
+            if (distance <= kCCBPhysicsLineSegmFuzz)
+            {
+                return idx;
+            }
         }
     }
     return -1;
@@ -253,6 +269,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 {
     if (!self.editingPhysicsBody) return NO;
     
+    NodePhysicsBody* body = self.selectedNodePhysicsBody;
+    
     float scale = [self scaleFactor];
     
     int handleIdx = [self handleIndexForPos:pos];
@@ -263,7 +281,21 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     if (handleIdx != -1)
     {
-        _handleStartPos = [[self.selectedNodePhysicsBody.points objectAtIndex:handleIdx] pointValue];
+        if (body.bodyShape ==  kCCBPhysicsBodyShapePolygon)
+        {
+            _handleStartPos = [[self.selectedNodePhysicsBody.points objectAtIndex:handleIdx] pointValue];
+        }
+        else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
+        {
+            if (handleIdx == 0)
+            {
+                _handleStartPos = [[self.selectedNodePhysicsBody.points objectAtIndex:0] pointValue];
+            }
+            else
+            {
+                _handleStartPos = ccp(body.cornerRadius, 0);
+            }
+        }
         
         return YES;
     }
@@ -295,6 +327,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 {
     if (!self.editingPhysicsBody) return NO;
     
+    NodePhysicsBody* body = self.selectedNodePhysicsBody;
+    
     float scale = [self scaleFactor];
     
     if (_mouseDownInHandle != -1)
@@ -303,21 +337,43 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         CGPoint delta = ccpSub(pos, _mouseDownPos);
         delta = ccpMult(delta, 1.0f/scale);
-        CGPoint newPos = ccpAdd(_handleStartPos, delta);
         
-        NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
-        
-        if ([event modifierFlags] & NSShiftKeyMask)
+        if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
-            // Handle snapping if shift is down
-            CGPoint pt0 = [[points objectAtIndex:(_mouseDownInHandle + points.count - 1) % points.count] pointValue];
-            CGPoint pt1 = [[points objectAtIndex:(_mouseDownInHandle + 1) % points.count] pointValue];
+            CGPoint newPos = ccpAdd(_handleStartPos, delta);
             
-            newPos = [self snapPoint:newPos toPt0:pt0 andPt1:pt1];
+            NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
+            
+            if ([event modifierFlags] & NSShiftKeyMask)
+            {
+                // Handle snapping if shift is down
+                CGPoint pt0 = [[points objectAtIndex:(_mouseDownInHandle + points.count - 1) % points.count] pointValue];
+                CGPoint pt1 = [[points objectAtIndex:(_mouseDownInHandle + 1) % points.count] pointValue];
+                
+                newPos = [self snapPoint:newPos toPt0:pt0 andPt1:pt1];
+            }
+            
+            [points replaceObjectAtIndex:_mouseDownInHandle withObject:[NSValue valueWithPoint:newPos]];
+            self.selectedNodePhysicsBody.points = points;
         }
-        
-        [points replaceObjectAtIndex:_mouseDownInHandle withObject:[NSValue valueWithPoint:newPos]];
-        self.selectedNodePhysicsBody.points = points;
+        else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
+        {
+            if (_mouseDownInHandle == 0)
+            {
+                // Position handle
+                CGPoint newPos = ccpAdd(_handleStartPos, delta);
+                
+                body.points = [NSArray arrayWithObject:[NSValue valueWithPoint:newPos]];
+            }
+            else if (_mouseDownInHandle == 1)
+            {
+                NSLog(@"_mouseDownPos.x: %f delta.x: %f", _handleStartPos.x, delta.x);
+                
+                // Radius handle
+                body.cornerRadius = _handleStartPos.x + delta.x;
+                if (body.cornerRadius < 0) body.cornerRadius = 0;
+            }
+        }
         
         return YES;
     }
@@ -330,9 +386,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event
 {
+    NodePhysicsBody* body = self.selectedNodePhysicsBody;
+    
     if (_mouseDownInHandle != -1)
     {
-        [self makeConvexHull];
+        if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
+        {
+            [self makeConvexHull];
+        }
         
         return YES;
     }
@@ -365,27 +426,67 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         // Position physic corners
         NodePhysicsBody* body = node.nodePhysicsBody;
         
-        CGPoint* points = malloc(sizeof(CGPoint)*body.points.count);
-        
-        int i = 0;
-        for (NSValue* ptVal in body.points)
+        if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
-            // Absolute handle position
-            CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
-            points[i] = pt;
+            CGPoint* points = malloc(sizeof(CGPoint)*body.points.count);
             
-            CCSprite* handle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
-            handle.position = pt;
-            [editorView addChild:handle];
-            i++;
+            int i = 0;
+            for (NSValue* ptVal in body.points)
+            {
+                // Absolute handle position
+                CGPoint pt = ccpAdd(anchorPointPos, ccpMult([ptVal pointValue], scale));
+                points[i] = pt;
+                
+                CCSprite* handle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
+                handle.position = pt;
+                [editorView addChild:handle];
+                i++;
+            }
+            
+            CCDrawNode* drawing = [CCDrawNode node];
+            [drawing drawPolyWithVerts:points count:body.points.count fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
+            
+            [editorView addChild:drawing z:-1];
+            
+            free(points);
         }
-        
-        CCDrawNode* drawing = [CCDrawNode node];
-        [drawing drawPolyWithVerts:points count:body.points.count fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
-        
-        [editorView addChild:drawing z:-1];
-        
-        free(points);
+        else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
+        {
+            CGPoint center = [[body.points objectAtIndex:0] pointValue];
+            center = ccpAdd(anchorPointPos, ccpMult(center, scale));
+            
+            CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * scale, 0));
+            
+            
+            // Circle shape
+            CGPoint* points = malloc(sizeof(CGPoint)*32);
+            
+            for (int i = 0; i < 32; i++)
+            {
+                float angle = (2.0f * M_PI * i)/32;
+                CGPoint pt = ccp(cosf(angle), sinf(angle));
+                pt = ccpMult(pt, scale * body.cornerRadius);
+                pt = ccpAdd(pt, center);
+                
+                points[i] = pt;
+            }
+            
+            CCDrawNode* drawing = [CCDrawNode node];
+            [drawing drawPolyWithVerts:points count:32 fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
+            
+            [editorView addChild:drawing z:-1];
+            
+            free(points);
+            
+            // Draw handles
+            CCSprite* centerHandle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
+            centerHandle.position = center;
+            [editorView addChild:centerHandle];
+            
+            CCSprite* edgeHandle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
+            edgeHandle.position = edge;
+            [editorView addChild:edgeHandle];
+        }
     }
 }
 

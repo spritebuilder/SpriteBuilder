@@ -1639,12 +1639,13 @@ CA
                                                                             <menu key="menu" title="OtherViews" id="Xse-Q3-lf3">
                                                                                 <items>
                                                                                     <menuItem title="Polygon" id="pn6-We-V7Y"/>
-                                                                                    <menuItem title="Circle" id="FEA-oX-ERe"/>
+                                                                                    <menuItem title="Circle" tag="1" id="FEA-oX-ERe"/>
                                                                                 </items>
                                                                             </menu>
                                                                         </popUpButtonCell>
                                                                         <connections>
                                                                             <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="KgE-Ht-Ug4"/>
+                                                                            <binding destination="494" name="selectedTag" keyPath="physicsHandler.selectedNodePhysicsBody.bodyShape" id="YX9-iK-1WQ"/>
                                                                         </connections>
                                                                     </popUpButton>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ro7-0f-xIv" customClass="CCBTextFieldLabel">
