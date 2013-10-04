@@ -143,7 +143,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         int idx = 0;
         for (NSValue* ptVal in body.points)
         {
-            CGPoint pt = [node convertToWorldSpaceAR:[ptVal pointValue]];
+            CGPoint pt = [node convertToWorldSpace:[ptVal pointValue]];
             
             float distance = ccpDistance(pt, pos);
             
@@ -157,7 +157,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
     {
         CGPoint center = [[body.points objectAtIndex:0] pointValue];
-        center = [node convertToWorldSpaceAR:center];
+        center = [node convertToWorldSpace:center];
         
         CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * [self radiusScaleFactor], 0));
         
@@ -212,8 +212,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             NSValue* ptVal0 = [body.points objectAtIndex:idx];
             NSValue* ptVal1 = [body.points objectAtIndex:(idx + 1) % body.points.count];
             
-            CGPoint pt0 = [node convertToWorldSpaceAR:[ptVal0 pointValue]];
-            CGPoint pt1 = [node convertToWorldSpaceAR:[ptVal1 pointValue]];
+            CGPoint pt0 = [node convertToWorldSpace:[ptVal0 pointValue]];
+            CGPoint pt1 = [node convertToWorldSpace:[ptVal1 pointValue]];
             
             float distance = distanceFromLineSegment(pt0, pt1, pos);
             
@@ -241,7 +241,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         idx++;
     }
     
-    int newNumPts = cpConvexHull(numPts, verts, NULL, NULL, 0.0f);
+    int newNumPts = cpConvexHull(numPts, verts, verts, NULL, 0.0f);
     
     NSMutableArray* hull = [NSMutableArray array];
     for (idx = 0; idx < newNumPts; idx++)
@@ -317,7 +317,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         // Add new control point
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points"];
         
-        CGPoint localPos = [node convertToNodeSpaceAR:pos];
+        CGPoint localPos = [node convertToNodeSpace:pos];
         
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
         [points insertObject:[NSValue valueWithPoint:localPos] atIndex:lineIdx + 1];
@@ -351,7 +351,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
-            CGPoint newPos = [node convertToNodeSpaceAR:ccpAdd(_mouseDownPos,delta)];
+            CGPoint newPos = [node convertToNodeSpace:ccpAdd(_mouseDownPos,delta)];
             
             NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
             
@@ -372,7 +372,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             if (_mouseDownInHandle == 0)
             {
                 // Position handle
-                CGPoint newPos = [node convertToNodeSpaceAR:ccpAdd(_mouseDownPos,delta)];
+                CGPoint newPos = [node convertToNodeSpace:ccpAdd(_mouseDownPos,delta)];
                 
                 body.points = [NSArray arrayWithObject:[NSValue valueWithPoint:newPos]];
             }
@@ -432,7 +432,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 
                 // TODO: Handle position scale
                 CGPoint pt = [ptVal pointValue];
-                pt = [node convertToWorldSpaceAR:pt];
+                pt = [node convertToWorldSpace:pt];
                 
                 points[i] = ccpRound(pt);
                 
@@ -452,7 +452,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
         {
             CGPoint center = [[body.points objectAtIndex:0] pointValue];
-            center = [node convertToWorldSpaceAR:center];
+            center = [node convertToWorldSpace:center];
             
             // TODO: Better handling of scale
             CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * scale, 0));

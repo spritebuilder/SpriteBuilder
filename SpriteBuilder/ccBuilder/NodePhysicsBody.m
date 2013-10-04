@@ -121,24 +121,23 @@
     
     float w = node.contentSize.width;
     float h = node.contentSize.height;
-    CGPoint anchorPoint = node.anchorPoint;
+    //CGPoint anchorPoint = node.anchorPoint;
+    
     
     if (w == 0)
     {
         w = 32;
-        anchorPoint = ccp(0.5f, 0.5f);
     }
     if (h == 0)
     {
         h = 32;
-        anchorPoint = ccp(0.5f, 0.5f);
     }
     
     // Calculate corners
-    CGPoint a = ccp((1.0f - anchorPoint.x) * w, (1.0f - anchorPoint.y) * h);
-    CGPoint b = ccp(- anchorPoint.x * w, (1.0f - anchorPoint.y) * h);
-    CGPoint c = ccp(- anchorPoint.x * w, - anchorPoint.y * h);
-    CGPoint d = ccp((1.0f - anchorPoint.x) * w, - anchorPoint.y * h);
+    CGPoint a = ccp(0, 0);
+    CGPoint b = ccp(0, h);
+    CGPoint c = ccp(w, h);
+    CGPoint d = ccp(w, 0);
     
     self.points = [NSArray arrayWithObjects:
                    [NSValue valueWithPoint:a],
@@ -157,7 +156,10 @@
     
     self.cornerRadius = radius;
     
-    self.points = [NSArray arrayWithObject:[NSValue valueWithPoint:CGPointZero]];
+    float w = node.contentSize.width;
+    float h = node.contentSize.height;
+    
+    self.points = [NSArray arrayWithObject:[NSValue valueWithPoint:ccp(w/2, h/2)]];
 }
 
 - (void) setBodyShape:(int)bodyShape
