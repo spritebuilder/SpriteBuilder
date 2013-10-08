@@ -7,7 +7,7 @@
 	<key>ordering</key>
 	<integer>4010</integer>
 	<key>description</key>
-	<string>The button can have a label and a stretchable background and generates events when touched.</string>
+	<string>Generates events when touched, can have a stretchable backround and a label.</string>
 	<key>inheritsFrom</key>
 	<string>CCControl</string>
 	<key>canHaveChildren</key>
