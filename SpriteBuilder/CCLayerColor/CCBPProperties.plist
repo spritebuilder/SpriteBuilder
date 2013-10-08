@@ -9,7 +9,7 @@
 	<key>description</key>
 	<string>A layer filled with a solid color.</string>
 	<key>inheritsFrom</key>
-	<string>CCLayer</string>
+	<string>CCNode</string>
 	<key>canHaveChildren</key>
 	<true/>
 	<key>className</key>

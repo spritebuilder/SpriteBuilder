@@ -144,7 +144,6 @@
 		B732A1851799736500333C56 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1831799736500333C56 /* TB_build@2x.png */; };
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
 		B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7737D4E17CC102D005F775A /* InspectorColor4.xib */; };
-		B78AE44417E245870028BE0B /* CCBPLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44317E245870028BE0B /* CCBPLayer.m */; };
 		B78AE44B17E263B20028BE0B /* CCBPLayerColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */; };
 		B78AE44E17E263FC0028BE0B /* CCBPLayerGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */; };
 		B78AE45217E3B1600028BE0B /* scale-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B78AE44F17E3B1600028BE0B /* scale-2.png */; };
@@ -332,10 +331,6 @@
 		E35A2D9C1540207000F78B72 /* PositionPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A2D9B1540207000F78B72 /* PositionPropertySetter.m */; };
 		E35D78D516826C0100A53BEF /* SpriteSheetSettingsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E35D78D316826C0100A53BEF /* SpriteSheetSettingsWindow.m */; };
 		E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E35D78D416826C0100A53BEF /* SpriteSheetSettingsWindow.xib */; };
-		E35DBB6914F21E7D0070A6E4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
-		E35DBB6F14F21E7D0070A6E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E35DBB6D14F21E7D0070A6E4 /* InfoPlist.strings */; };
-		E35DBB7414F21EEE0070A6E4 /* CCLayer.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = E35DBB6814F21E7D0070A6E4 /* CCLayer.ccbPlugNode */; };
-		E35DBB7814F21F350070A6E4 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = E35DBB7714F21F350070A6E4 /* CCBPProperties.plist */; };
 		E35DBB8114F225D30070A6E4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		E35DBB8714F225D30070A6E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E35DBB8514F225D30070A6E4 /* InfoPlist.strings */; };
 		E35DBB8C14F226190070A6E4 /* CCLayerColor.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = E35DBB8014F225D30070A6E4 /* CCLayerColor.ccbPlugNode */; };
@@ -491,7 +486,6 @@
 		E3B7BCA215E4166000CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCA115E4166000CF95EF /* Icon.png */; };
 		E3B7BCA415E4167900CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCA315E4167900CF95EF /* Icon.png */; };
 		E3B7BCA615E4168D00CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCA515E4168D00CF95EF /* Icon.png */; };
-		E3B7BCA815E4169D00CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCA715E4169D00CF95EF /* Icon.png */; };
 		E3B7BCAA15E416BF00CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCA915E416BF00CF95EF /* Icon.png */; };
 		E3B7BCAC15E416D200CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCAB15E416D200CF95EF /* Icon.png */; };
 		E3B7BCB015E4170400CF95EF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E3B7BCAF15E4170400CF95EF /* Icon.png */; };
@@ -674,13 +668,6 @@
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
 		};
-		E35DBB7514F21EF50070A6E4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E35DBB6714F21E7D0070A6E4;
-			remoteInfo = CCLayer;
-		};
 		E35DBB8D14F226230070A6E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -804,7 +791,6 @@
 				E35DBBDA14F2AA7C0070A6E4 /* CCLabelBMFont.ccbPlugNode in Copy PlugIns */,
 				E35DBBA614F245030070A6E4 /* CCLayerGradient.ccbPlugNode in Copy PlugIns */,
 				E35DBB8C14F226190070A6E4 /* CCLayerColor.ccbPlugNode in Copy PlugIns */,
-				E35DBB7414F21EEE0070A6E4 /* CCLayer.ccbPlugNode in Copy PlugIns */,
 				E3C365FE14E9F147007CD5FF /* CCSprite.ccbPlugNode in Copy PlugIns */,
 				E3B7AED514E31E6C00DFD402 /* CCNode.ccbPlugNode in Copy PlugIns */,
 			);
@@ -1035,8 +1021,6 @@
 		B7737D4C17CC102D005F775A /* InspectorColor4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorColor4.h; sourceTree = "<group>"; };
 		B7737D4D17CC102D005F775A /* InspectorColor4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor4.m; sourceTree = "<group>"; };
 		B7737D4E17CC102D005F775A /* InspectorColor4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorColor4.xib; sourceTree = "<group>"; };
-		B78AE44217E245870028BE0B /* CCBPLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayer.h; sourceTree = "<group>"; };
-		B78AE44317E245870028BE0B /* CCBPLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayer.m; sourceTree = "<group>"; };
 		B78AE44917E263B20028BE0B /* CCBPLayerColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerColor.h; sourceTree = "<group>"; };
 		B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayerColor.m; sourceTree = "<group>"; };
 		B78AE44C17E263FC0028BE0B /* CCBPLayerGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerGradient.h; sourceTree = "<group>"; };
@@ -1331,11 +1315,6 @@
 		E35D78D216826C0100A53BEF /* SpriteSheetSettingsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteSheetSettingsWindow.h; sourceTree = "<group>"; };
 		E35D78D316826C0100A53BEF /* SpriteSheetSettingsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteSheetSettingsWindow.m; sourceTree = "<group>"; };
 		E35D78D416826C0100A53BEF /* SpriteSheetSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpriteSheetSettingsWindow.xib; sourceTree = "<group>"; };
-		E35DBB6814F21E7D0070A6E4 /* CCLayer.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCLayer.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		E35DBB6C14F21E7D0070A6E4 /* CCLayer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCLayer-Info.plist"; sourceTree = "<group>"; };
-		E35DBB6E14F21E7D0070A6E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E35DBB7014F21E7D0070A6E4 /* CCLayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCLayer-Prefix.pch"; sourceTree = "<group>"; };
-		E35DBB7714F21F350070A6E4 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		E35DBB8014F225D30070A6E4 /* CCLayerColor.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCLayerColor.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		E35DBB8414F225D30070A6E4 /* CCLayerColor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCLayerColor-Info.plist"; sourceTree = "<group>"; };
 		E35DBB8614F225D30070A6E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1562,7 +1541,6 @@
 		E3B7BCA115E4166000CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCA315E4167900CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCA515E4168D00CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		E3B7BCA715E4169D00CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCA915E416BF00CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCAB15E416D200CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E3B7BCAF15E4170400CF95EF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -1806,14 +1784,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7C623CE17F38B7800928F91 /* CoreFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E35DBB6514F21E7D0070A6E4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E35DBB6914F21E7D0070A6E4 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2276,7 +2246,6 @@
 				7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */,
 				E3B7AEC514E3193500DFD402 /* CCNode.ccbPlugNode */,
 				E3C365EB14E9E4D1007CD5FF /* CCSprite.ccbPlugNode */,
-				E35DBB6814F21E7D0070A6E4 /* CCLayer.ccbPlugNode */,
 				E35DBB8014F225D30070A6E4 /* CCLayerColor.ccbPlugNode */,
 				E35DBB9814F244BB0070A6E4 /* CCLayerGradient.ccbPlugNode */,
 				E35DBBCC14F2AA350070A6E4 /* CCLabelBMFont.ccbPlugNode */,
@@ -3057,7 +3026,6 @@
 				E3B7AEC714E3193500DFD402 /* CCNode */,
 				E3C365ED14E9E4D1007CD5FF /* CCSprite */,
 				B7C3532417F65547005697C1 /* CCSprite9Slice */,
-				E35DBB6A14F21E7D0070A6E4 /* CCLayer */,
 				E35DBB8214F225D30070A6E4 /* CCLayerColor */,
 				E35DBB9A14F244BC0070A6E4 /* CCLayerGradient */,
 				E35DBBCE14F2AA360070A6E4 /* CCLabelBMFont */,
@@ -3132,28 +3100,6 @@
 				E3985419170D2409000F4465 /* DebuggerTextField.m */,
 			);
 			name = "Player Connection";
-			sourceTree = "<group>";
-		};
-		E35DBB6A14F21E7D0070A6E4 /* CCLayer */ = {
-			isa = PBXGroup;
-			children = (
-				E35DBB6B14F21E7D0070A6E4 /* Supporting Files */,
-				B78AE44217E245870028BE0B /* CCBPLayer.h */,
-				B78AE44317E245870028BE0B /* CCBPLayer.m */,
-			);
-			path = CCLayer;
-			sourceTree = "<group>";
-		};
-		E35DBB6B14F21E7D0070A6E4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E3B7BCA715E4169D00CF95EF /* Icon.png */,
-				E35DBB6C14F21E7D0070A6E4 /* CCLayer-Info.plist */,
-				E35DBB6D14F21E7D0070A6E4 /* InfoPlist.strings */,
-				E35DBB7014F21E7D0070A6E4 /* CCLayer-Prefix.pch */,
-				E35DBB7714F21F350070A6E4 /* CCBPProperties.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		E35DBB8214F225D30070A6E4 /* CCLayerColor */ = {
@@ -3780,7 +3726,6 @@
 				E398C02F14FB82090078E771 /* PBXTargetDependency */,
 				E3B7AED314E31AEF00DFD402 /* PBXTargetDependency */,
 				E3C365F814E9E4DD007CD5FF /* PBXTargetDependency */,
-				E35DBB7614F21EF50070A6E4 /* PBXTargetDependency */,
 				E35DBB8E14F226230070A6E4 /* PBXTargetDependency */,
 				E35DBBA514F244FA0070A6E4 /* PBXTargetDependency */,
 				E35DBBD914F2AA720070A6E4 /* PBXTargetDependency */,
@@ -3859,23 +3804,6 @@
 			name = CCControl;
 			productName = CCControl;
 			productReference = B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */;
-			productType = "com.apple.product-type.bundle";
-		};
-		E35DBB6714F21E7D0070A6E4 /* CCLayer */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E35DBB7314F21E7D0070A6E4 /* Build configuration list for PBXNativeTarget "CCLayer" */;
-			buildPhases = (
-				E35DBB6414F21E7D0070A6E4 /* Sources */,
-				E35DBB6514F21E7D0070A6E4 /* Frameworks */,
-				E35DBB6614F21E7D0070A6E4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CCLayer;
-			productName = CCLayer;
-			productReference = E35DBB6814F21E7D0070A6E4 /* CCLayer.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		E35DBB7F14F225D30070A6E4 /* CCLayerColor */ = {
@@ -4082,7 +4010,6 @@
 				E3B7AEC414E3193500DFD402 /* CCNode */,
 				E3C365EA14E9E4D1007CD5FF /* CCSprite */,
 				B7C3532117F65547005697C1 /* CCSprite9Slice */,
-				E35DBB6714F21E7D0070A6E4 /* CCLayer */,
 				E35DBB7F14F225D30070A6E4 /* CCLayerColor */,
 				E35DBB9714F244BB0070A6E4 /* CCLayerGradient */,
 				E35DBBCB14F2AA350070A6E4 /* CCLabelBMFont */,
@@ -4425,16 +4352,6 @@
 			files = (
 				B7C623D417F38B7800928F91 /* InfoPlist.strings in Resources */,
 				B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E35DBB6614F21E7D0070A6E4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E35DBB6F14F21E7D0070A6E4 /* InfoPlist.strings in Resources */,
-				E35DBB7814F21F350070A6E4 /* CCBPProperties.plist in Resources */,
-				E3B7BCA815E4169D00CF95EF /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4848,14 +4765,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E35DBB6414F21E7D0070A6E4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B78AE44417E245870028BE0B /* CCBPLayer.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E35DBB7C14F225D30070A6E4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4965,11 +4874,6 @@
 			name = cocos2d;
 			targetProxy = B7D0918817C2C16E0007FE7F /* PBXContainerItemProxy */;
 		};
-		E35DBB7614F21EF50070A6E4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E35DBB6714F21E7D0070A6E4 /* CCLayer */;
-			targetProxy = E35DBB7514F21EF50070A6E4 /* PBXContainerItemProxy */;
-		};
 		E35DBB8E14F226230070A6E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E35DBB7F14F225D30070A6E4 /* CCLayerColor */;
@@ -5075,14 +4979,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				B7C623D317F38B7800928F91 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E35DBB6D14F21E7D0070A6E4 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E35DBB6E14F21E7D0070A6E4 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -5627,64 +5523,6 @@
 				INFOPLIST_FILE = "CCControl/CCControl-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = ccbPlugNode;
-			};
-			name = Release;
-		};
-		E35DBB7114F21E7D0070A6E4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CCLayer/CCLayer-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				HEADER_SEARCH_PATHS = (
-					"libs/cocos2d-iphone/cocos2d/**",
-					"libs/cocos2d-iphone/cocos2d-ui/**",
-				);
-				INFOPLIST_FILE = "CCLayer/CCLayer-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = ccbPlugNode;
-			};
-			name = Debug;
-		};
-		E35DBB7214F21E7D0070A6E4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CCLayer/CCLayer-Prefix.pch";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				HEADER_SEARCH_PATHS = (
-					"libs/cocos2d-iphone/cocos2d/**",
-					"libs/cocos2d-iphone/cocos2d-ui/**",
-				);
-				INFOPLIST_FILE = "CCLayer/CCLayer-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -6288,6 +6126,7 @@
 				B79F90E317FF30DC00908504 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B7C3532B17F65548005697C1 /* Build configuration list for PBXNativeTarget "CCSprite9Slice" */ = {
 			isa = XCConfigurationList;
@@ -6312,15 +6151,6 @@
 			buildConfigurations = (
 				B7C623D717F38B7800928F91 /* Debug */,
 				B7C623D817F38B7800928F91 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E35DBB7314F21E7D0070A6E4 /* Build configuration list for PBXNativeTarget "CCLayer" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E35DBB7114F21E7D0070A6E4 /* Debug */,
-				E35DBB7214F21E7D0070A6E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
