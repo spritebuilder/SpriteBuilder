@@ -12,7 +12,7 @@
 				<string>ccb</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>SpriteBuilderDocIcon</string>
+			<string>ccb.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>SpriteBuilder Document</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -32,13 +32,25 @@
 				<string>ccbproj</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>SpriteBuilderProjectIcon</string>
+			<string>ccbproj.icns</string>
 			<key>CFBundleTypeName</key>
 			<string>SpriteBuilder Project</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>NSDocumentClass</key>
 			<string>AppDelegate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ccbi</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>ccbi.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>SpriteBuilder Published Document</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
