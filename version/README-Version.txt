@@ -1,1 +1,0 @@
-Version is set when using the BuildDistribution.sh script in the script folder.

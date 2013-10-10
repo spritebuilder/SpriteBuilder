@@ -51,6 +51,7 @@ enum {
     NSMutableSet* publishedResources;
     NSMutableDictionary* renamedFiles;
     NSMutableArray* publishedSpriteSheetNames;
+    NSMutableSet* publishedSpriteSheetFiles;
     int targetType;
 }
 

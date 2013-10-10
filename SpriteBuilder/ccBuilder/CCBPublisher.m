@@ -61,6 +61,7 @@
     copyExtensions = [[NSArray alloc] initWithObjects:@"jpg",@"png", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
     
     publishedSpriteSheetNames = [[NSMutableArray alloc] init];
+    publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
     
     // Set format to use for exports
     self.publishFormat = projectSettings.exporter;
@@ -583,6 +584,8 @@
         NSString* spriteSheetDir = [outDir stringByDeletingLastPathComponent];
         NSString* spriteSheetName = [outDir lastPathComponent];
         
+        [publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
+        
         // Load settings
         BOOL isDirty = [projectSettings isDirtyRelPath:subPath];
         int format_ios = [[projectSettings valueForRelPath:subPath andKey:@"format_ios"] intValue];
@@ -836,6 +839,20 @@
     NSString* lookupFile = [outputDir stringByAppendingPathComponent:@"fileLookup.plist"];
     
     [fileLookup writeToFile:lookupFile atomically:YES];
+    
+    // Generate sprite sheet lookup
+    NSMutableDictionary* spriteSheetLookup = [NSMutableDictionary dictionary];
+    
+    metadata = [NSMutableDictionary dictionary];
+    [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
+    
+    [spriteSheetLookup setObject:metadata forKey:@"metadata"];
+    
+    [spriteSheetLookup setObject:[publishedSpriteSheetFiles allObjects] forKey:@"spriteFrameFiles"];
+    
+    NSString* spriteSheetLookupFile = [outputDir stringByAppendingPathComponent:@"spriteFrameFileList.plist"];
+    
+    [spriteSheetLookup writeToFile:spriteSheetLookupFile atomically:YES];
 }
 
 - (BOOL) publishAllToDirectory:(NSString*)dir
@@ -1178,6 +1195,7 @@
     [warnings release];
     [projectSettings release];
     [publishedSpriteSheetNames release];
+    [publishedSpriteSheetFiles release];
     [super dealloc];
 }
 

@@ -380,7 +380,7 @@
             a = [[b stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
         }
         
-        [self writeCachedString:a isPath:YES];
+        //[self writeCachedString:a isPath:YES];
         [self writeCachedString:b isPath:[a isEqualToString:@""]];
     }
     else if ([type isEqualToString:@"Animation"])
@@ -527,7 +527,7 @@
                         a = [[b stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
                     }
                     
-                    [self addToStringCache:a isPath:YES];
+                    //[self addToStringCache:a isPath:YES];
                     [self addToStringCache:b isPath:[a isEqualToString:@""]];
                 }
             }
@@ -596,7 +596,7 @@
                 a = [[b stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
             }
             
-            [self addToStringCache: a isPath:YES];
+            //[self addToStringCache: a isPath:YES];
             [self addToStringCache:b isPath:[a isEqualToString:@""]];
         }
 		else if( [type isEqualToString:@"Animation"])
@@ -879,7 +879,7 @@
             a = [[b stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
         }
         
-        [self writeCachedString:a isPath:YES];
+        //[self writeCachedString:a isPath:YES];
         [self writeCachedString:b isPath:[a isEqualToString:@""]];
     }
 }
