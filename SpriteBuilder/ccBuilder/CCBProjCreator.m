@@ -45,7 +45,15 @@
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"]];
     
     // Update workspace data
-    [self setName:projName inFile:[[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace"] stringByAppendingPathComponent:@"contents.xcworkspacedata"]];
+    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace/contents.xcworkspacedata"]];
+    
+    // Update scheme
+    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"xcshareddata/xcschemes/PROJECTNAME.xcscheme"]];
+    
+    // Rename scheme file
+    NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:@"xcshareddata/xcschemes/PROJECTNAME.xcscheme"];
+    NSString* newSchemeFile = [[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcscheme"];
+    [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
     
     // Rename Xcode project file
     NSString* newXcodeFileName = [[[xcodeFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcodeproj"];
