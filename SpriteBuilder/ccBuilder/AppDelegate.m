@@ -102,6 +102,7 @@
 #import "PropertyInspectorHandler.h"
 #import "LocalizationEditorHandler.h"
 #import "PhysicsHandler.h"
+#import "CCBProjCreator.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -1476,23 +1477,8 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) createProject:(NSString*) fileName
 {
-    NSFileManager* fm = [NSFileManager defaultManager];
-    
-    // Unzip resources
-    NSString* zipFile = [[NSBundle mainBundle] pathForResource:@"defaultProject" ofType:@"zip"];
-    NSTask* zipTask = [[NSTask alloc] init];
-    [zipTask setCurrentDirectoryPath:[fileName stringByDeletingLastPathComponent]];
-    [zipTask setLaunchPath:@"/usr/bin/unzip"];
-    NSArray* args = [NSArray arrayWithObjects:zipFile, nil];
-    [zipTask setArguments:args];
-    [zipTask launch];
-    [zipTask waitUntilExit];
-    [zipTask release];
-    
-    // Rename
-    [fm moveItemAtPath:[[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Default.ccbproj"] toPath:fileName error:NULL];
-    
-    return [fm fileExistsAtPath:fileName];
+    CCBProjCreator* creator = [[[CCBProjCreator alloc] init] autorelease];
+    return [creator createDefaultProjectAtPath:fileName];
 }
 
 - (void) updateResourcePathsFromProjectSettings

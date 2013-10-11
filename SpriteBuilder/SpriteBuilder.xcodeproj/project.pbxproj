@@ -149,6 +149,7 @@
 		B73788F91804D8690076A88C /* ccbi.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F81804D8690076A88C /* ccbi.icns */; };
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
 		B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7737D4E17CC102D005F775A /* InspectorColor4.xib */; };
+		B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EC96518087011004C09FF /* CCBProjCreator.m */; };
 		B78AE44B17E263B20028BE0B /* CCBPLayerColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */; };
 		B78AE44E17E263FC0028BE0B /* CCBPLayerGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */; };
 		B78AE45217E3B1600028BE0B /* scale-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B78AE44F17E3B1600028BE0B /* scale-2.png */; };
@@ -1041,6 +1042,8 @@
 		B7737D4C17CC102D005F775A /* InspectorColor4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorColor4.h; sourceTree = "<group>"; };
 		B7737D4D17CC102D005F775A /* InspectorColor4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor4.m; sourceTree = "<group>"; };
 		B7737D4E17CC102D005F775A /* InspectorColor4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorColor4.xib; sourceTree = "<group>"; };
+		B77EC96418087011004C09FF /* CCBProjCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProjCreator.h; sourceTree = "<group>"; };
+		B77EC96518087011004C09FF /* CCBProjCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBProjCreator.m; sourceTree = "<group>"; };
 		B78AE44917E263B20028BE0B /* CCBPLayerColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerColor.h; sourceTree = "<group>"; };
 		B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayerColor.m; sourceTree = "<group>"; };
 		B78AE44C17E263FC0028BE0B /* CCBPLayerGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerGradient.h; sourceTree = "<group>"; };
@@ -1910,6 +1913,8 @@
 				E3C3660214EB2C1B007CD5FF /* CCBReaderInternal.h */,
 				E3C3660314EB2C1B007CD5FF /* CCBReaderInternal.m */,
 				E312EDC516AF71FE000778C8 /* CCBReaderInternalRenamedProps.plist */,
+				B77EC96418087011004C09FF /* CCBProjCreator.h */,
+				B77EC96518087011004C09FF /* CCBProjCreator.m */,
 			);
 			name = "Document Readers & Writers";
 			sourceTree = "<group>";
@@ -4625,6 +4630,7 @@
 				B79F90C417FF27B300908504 /* cpSlideJoint.c in Sources */,
 				B79F90BD17FF27B300908504 /* cpPinJoint.c in Sources */,
 				E3FEA8B414E4874C00119FBE /* InspectorPointLock.m in Sources */,
+				B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */,
 				E3FEA8B914E492DA00119FBE /* InspectorScaleLock.m in Sources */,
 				E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */,
 				E3B4221114E49DEB004547D6 /* InspectorInteger.m in Sources */,
