@@ -2711,21 +2711,31 @@ static BOOL hideAllToNextSeparator;
         if (result == NSOKButton)
         {
             NSString* fileName = [[saveDlg URL] path];
-            [[NSFileManager defaultManager] createDirectoryAtPath:fileName withIntermediateDirectories:NO attributes:NULL error:NULL];
-            NSString* projectName = [fileName lastPathComponent];
-            fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
-
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
-                if ([self createProject: fileName])
-                {
-                    [self openProject:fileName];
-                }
-                else
-                {
-                    [self modalDialogTitle:@"Failed to Create Project" message:@"Failed to create the project, make sure you are saving it to a writable directory."];
-                }
-            });
+            
+            // Check validity of file name
+            NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+            if ([[fileName lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
+            {
+                [[NSFileManager defaultManager] createDirectoryAtPath:fileName withIntermediateDirectories:NO attributes:NULL error:NULL];
+                NSString* projectName = [fileName lastPathComponent];
+                fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
+                               dispatch_get_current_queue(), ^{
+                                   if ([self createProject: fileName])
+                                   {
+                                       [self openProject:fileName];
+                                   }
+                                   else
+                                   {
+                                       [self modalDialogTitle:@"Failed to Create Project" message:@"Failed to create the project, make sure you are saving it to a writable directory."];
+                                   }
+                               });
+            }
+            else
+            {
+                [self modalDialogTitle:@"Failed to Create Project" message:@"Failed to create the project, make sure to only use letters and numbers for the file name (no spaces allowed)."];
+            }
         }
     }];
 }
