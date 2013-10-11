@@ -41,24 +41,29 @@
     NSString* xcodeFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"PROJECTNAME.xcodeproj"];
     NSString* projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
     
-    //[self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"]];
+    // Update the project
+    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"]];
     
+    // Update workspace data
+    [self setName:projName inFile:[[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace"] stringByAppendingPathComponent:@"contents.xcworkspacedata"]];
+    
+    // Rename Xcode project file
     NSString* newXcodeFileName = [[[xcodeFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcodeproj"];
     
-    // Rename Xcode project
-    //[fm moveItemAtPath:xcodeFileName toPath:newXcodeFileName error:NULL];
+    [fm moveItemAtPath:xcodeFileName toPath:newXcodeFileName error:NULL];
     
     return [fm fileExistsAtPath:fileName];
 }
 
 - (void) setName:(NSString*) name inFile:(NSString*)fileName
 {
-    NSString* regExp = [NSString stringWithFormat:@"'s/PROJECTNAME/%@/g'", name];
+    NSString* regExp = [NSString stringWithFormat:@"s/PROJECTNAME/%@/g", name];
     
     NSTask* renameTask = [[NSTask alloc] init];
     [renameTask setCurrentDirectoryPath:[fileName stringByDeletingLastPathComponent]];
     [renameTask setLaunchPath:@"/usr/bin/sed"];
-    NSArray* args = [NSArray arrayWithObjects:@"-i", regExp, fileName, nil];
+    NSArray* args = [NSArray arrayWithObjects:@"-ie", regExp, fileName, nil];
+    NSLog(@"ARGS: %@", args);
     [renameTask setArguments:args];
     [renameTask launch];
     [renameTask waitUntilExit];

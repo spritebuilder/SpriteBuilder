@@ -18,6 +18,8 @@ touch Generated/Version.txt
 # Generate default project
 echo "=== GENERATING DEFAULT SB-PROJECT ==="
 cd Support/PROJECTNAME/
+rm -rf PROJECTNAME.xcodeproj/xcuserdata/
+rm -rf PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
 rm ../../Generated/PROJECTNAME.zip
 zip -r ../../Generated/PROJECTNAME.zip * -x *.git*
 cd ../..
