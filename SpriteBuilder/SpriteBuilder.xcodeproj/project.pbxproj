@@ -127,7 +127,6 @@
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		A77EF590171FD30E00451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
 		A77EF594171FD3B200451DA4 /* cwebp in Resources */ = {isa = PBXBuildFile; fileRef = A77EF58F171FD30E00451DA4 /* cwebp */; };
-		B7074DCE17AAE8B200652E77 /* defaultProject.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7074DCD17AAE8B200652E77 /* defaultProject.zip */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
 		B7083DF917B1CBC8006628C7 /* LocalizationEditorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */; };
@@ -1011,7 +1010,6 @@
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		A77EF58F171FD30E00451DA4 /* cwebp */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = cwebp; sourceTree = "<group>"; };
-		B7074DCD17AAE8B200652E77 /* defaultProject.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultProject.zip; sourceTree = "<group>"; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
 		B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorWindow.m; sourceTree = "<group>"; };
@@ -2411,7 +2409,6 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B7074DCD17AAE8B200652E77 /* defaultProject.zip */,
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
 				E3618D57166562DA009F5805 /* publishTemplates */,
@@ -4378,7 +4375,6 @@
 				B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */,
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
 				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
-				B7074DCE17AAE8B200652E77 /* defaultProject.zip in Resources */,
 				B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */,
 				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
 				B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */,
