@@ -2099,6 +2099,7 @@ static BOOL hideAllToNextSeparator;
     if (addedNode)
     {
         [PositionPropertySetter setPosition:[addedNode.parent convertToNodeSpace:pt] forNode:addedNode prop:@"position"];
+        [self updateInspectorFromSelection];
     }
 }
 
