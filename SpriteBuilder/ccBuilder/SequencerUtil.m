@@ -142,12 +142,12 @@
         SequencerKeyframe* kf = [[[SequencerKeyframe alloc] init] autorelease];
         kf.time = currentTime;
         kf.type = kCCBKeyframeTypeSpriteFrame;
-        kf.name = @"displayFrame";
+        kf.name = @"spriteFrame";
         kf.value = [NSArray arrayWithObjects: spriteFile, spriteSheetFile, nil];
         kf.easing.type = kCCBKeyframeEasingInstant;
         
         // Add the keyframe
-        [selectedNode addKeyframe:kf forProperty:@"displayFrame" atTime:currentTime sequenceId:seq.sequenceId];
+        [selectedNode addKeyframe:kf forProperty:@"spriteFrame" atTime:currentTime sequenceId:seq.sequenceId];
         
         // Step one keyframe ahead
         currentTime = [seq alignTimeToResolution: currentTime + 1/seq.timelineResolution];

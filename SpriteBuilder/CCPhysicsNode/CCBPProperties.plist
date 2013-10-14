@@ -54,7 +54,7 @@
 		<key>className</key>
 		<string>CCSprite</string>
 		<key>property</key>
-		<string>displayFrame</string>
+		<string>spriteFrame</string>
 	</dict>
 </dict>
 </plist>
