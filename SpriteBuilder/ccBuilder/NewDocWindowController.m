@@ -29,80 +29,20 @@
 
 @implementation NewDocWindowController
 
-@synthesize documentName;
-@synthesize rootObjectType;
-@synthesize rootObjectTypes;
-@synthesize resolutions;
-@synthesize fullScreen;
-@synthesize canBeFullScreen;
-
-- (void) addFullScreenResolutions
-{
-    // iOS resolutions
-    ResolutionSetting* iPhoneLandscape = [ResolutionSetting settingIPhoneLandscape];
-    iPhoneLandscape.enabled = YES;
-    [resolutionsController addObject:iPhoneLandscape];
-    [resolutionsController addObject:[ResolutionSetting settingIPhonePortrait]];
-    [resolutionsController addObject:[ResolutionSetting settingIPhone5Landscape]];
-    [resolutionsController addObject:[ResolutionSetting settingIPhone5Portrait]];
-    [resolutionsController addObject:[ResolutionSetting settingIPadLandscape]];
-    [resolutionsController addObject:[ResolutionSetting settingIPadPortrait]];
-    
-    // Android resolutions
-    [resolutionsController addObject:[ResolutionSetting settingAndroidXSmallLandscape]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidXSmallPortrait]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidSmallLandscape]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidSmallPortrait]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidMediumLandscape]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidMediumPortrait]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidLargeLandscape]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidLargePortrait]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidXLargeLandscape]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidXLargePortrait]];
-    
-    // HTML 5
-    [resolutionsController addObject:[ResolutionSetting settingHTML5Landscape]];
-    [resolutionsController addObject:[ResolutionSetting settingHTML5Portrait]];
-}
-
-- (void) addCustomSizeScreenResolutions
-{
-    // iOS resolutions
-    ResolutionSetting* iPhone = [ResolutionSetting settingIPhone];
-    iPhone.enabled = YES;
-    [resolutionsController addObject:iPhone];
-    [resolutionsController addObject:[ResolutionSetting settingIPad]];
-    
-    // Android resolutions
-    [resolutionsController addObject:[ResolutionSetting settingAndroidXSmall]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidSmall]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidMedium]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidLarge]];
-    [resolutionsController addObject:[ResolutionSetting settingAndroidXLarge]];
-    
-    // HTML 5
-    [resolutionsController addObject:[ResolutionSetting settingHTML5]];
-}
-
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (!self) return NULL;
-    
-    self.rootObjectTypes = [PlugInManager sharedManager].plugInsNodeNamesCanBeRoot;
-    self.rootObjectType = [rootObjectTypes objectAtIndex:0];
-    
-    // Setup default resolutions
-    self.resolutions = [NSMutableArray array];
-    self.fullScreen = YES;
-    self.canBeFullScreen = YES;
     
     return self;
 }
 
 - (void) awakeFromNib
 {
-    [self addFullScreenResolutions];
+    [_btnScene setState:NSOnState];
+    self.width = 0;
+    self.height = 0;
+    self.canSetSize = NO;
     
     self.documentName = @"Untitled.ccb";
     
@@ -113,54 +53,82 @@
     [textEditor setSelectedRange:range];
 }
 
-- (BOOL) canBeFullScreen:(NSString*) rot
+- (IBAction)pressedObjectTypeButton:(id)sender
 {
-    if ([rot isEqualToString:@"CCNode"]) return YES;
-    else if ([rot isEqualToString:@"CCLayer"]) return YES;
-    else return NO;
+    NSButton* btn = sender;
+    
+    // Update button states
+    [_btnScene setState:NSOffState];
+    [_btnNode setState:NSOffState];
+    [_btnLayer setState:NSOffState];
+    [_btnSprite setState:NSOffState];
+    [_btnParticleSystem setState:NSOffState];
+    
+    [btn setState:NSOnState];
+    
+    int objectType = btn.tag;
+    self.rootObjectType = objectType;
+    
+    if (objectType == kCCBNewDocTypeScene)
+    {
+        // Scene
+        self.canSetSize = NO;
+        self.width = 0;
+        self.height = 0;
+    }
+    else if (objectType == kCCBNewDocTypeNode)
+    {
+        // Node
+        self.canSetSize = NO;
+        self.width = 0;
+        self.height = 0;
+    }
+    else if (objectType == kCCBNewDocTypeLayer)
+    {
+        // Layer
+        self.canSetSize = YES;
+        self.width = 100;
+        self.height = 100;
+    }
+    else if (objectType == kCCBNewDocTypeSprite)
+    {
+        // Sprite
+        self.canSetSize = NO;
+        self.width = 0;
+        self.height = 0;
+    }
+    else if (objectType == kCCBNewDocTypeParticleSystem)
+    {
+        // Particle system
+        self.canSetSize = NO;
+        self.width = 0;
+        self.height = 0;
+    }
 }
 
-- (void) setRootObjectType:(NSString *)rot
+-(NSMutableArray*) availableResolutions
 {
-    if (rot != rootObjectType)
-    {
-        [rootObjectType release];
-        rootObjectType = [rot retain];
-        
-        self.canBeFullScreen = [self canBeFullScreen:rot];
-        
-        if (!canBeFullScreen && fullScreen)
-        {
-            [resolutionsController removeObjects:resolutions];
-            [self addCustomSizeScreenResolutions];
-            self.fullScreen = NO;
-        }
-    }
-}
-
-- (void) setFullScreen:(BOOL)fs
-{
-    fullScreen = fs;
+    NSMutableArray* arr = [NSMutableArray array];
     
-    // Remove current resolutions
-    [resolutionsController removeObjects:resolutions];
-    self.resolutions = resolutions;
+    if (self.rootObjectType == kCCBNewDocTypeLayer)
+    {
+        // Add resolutions
+        ResolutionSetting* phoneSetting = [ResolutionSetting settingIPhone];
+        phoneSetting.width = self.width;
+        phoneSetting.height = self.height;
+        
+        [arr addObject: phoneSetting];
+    }
     
-    // Create new resolutions
-    if (fullScreen)
-    {
-        [self addFullScreenResolutions];
-    }
-    else
-    {
-        [self addCustomSizeScreenResolutions];
-    }
+    return arr;
 }
 
 - (IBAction)acceptSheet:(id)sender
 {
     if ([[self window] makeFirstResponder:[self window]])
     {
+        [NSApp stopModalWithCode:1];
+        /*
         // Verify resolutions
         BOOL foundEnabledResolution = NO;
         for (ResolutionSetting* setting in resolutions)
@@ -177,22 +145,10 @@
             // Display warning!
             NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Resolution" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one resolution enabled to create a new document."];
             [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-        }
+        }*/
     }
 }
 
-- (NSMutableArray*) availableResolutions
-{
-    NSMutableArray* availableResolutions = [NSMutableArray array];
-    for (ResolutionSetting* setting in resolutions)
-    {
-        if (setting.enabled)
-        {
-            [availableResolutions addObject:setting];
-        }
-    }
-    return availableResolutions;
-}
 
 - (IBAction)cancelSheet:(id)sender
 {
@@ -203,7 +159,6 @@
 {
     self.documentName = NULL;
     self.rootObjectType = NULL;
-    self.resolutions = NULL;
     [super dealloc];
 }
 

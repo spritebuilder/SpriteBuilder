@@ -27,6 +27,33 @@
 #define kCCBProjectSettingsVersion 1
 #define kCCBDefaultExportPlugIn @"ccbi"
 
+enum
+{
+    kCCBDesignTargetAdaptive,
+    kCCBDesignTargetPhone,
+    kCCBDesignTargetTablet,
+};
+
+enum
+{
+    kCCBDeviceScalingCrop,
+    kCCBDeviceScalingBlackBorders,
+    kCCBDeviceScalingStretchTallSide,
+};
+
+enum
+{
+    kCCBOrientationLandscape,
+    kCCBOrientationPortrait,
+};
+
+enum
+{
+    kCCBTabletScale200,
+    kCCBTabletScale180,
+    kCCBTabletScale240,
+};
+
 @class RMResource;
 @class CCBWarnings;
 
@@ -138,6 +165,12 @@
 @property (nonatomic,readonly) NSDictionary* breakpoints;
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
+
+@property (nonatomic, assign) int designTarget;
+@property (nonatomic, assign) int defaultOrientation;
+@property (nonatomic, assign) int deviceScaling;
+@property (nonatomic, assign) float tabletPositionScaleFactor;
+@property (nonatomic, assign) int tabletPositionScaleFactorType;
 
 @property (nonatomic, retain) CCBWarnings* lastWarnings;
 

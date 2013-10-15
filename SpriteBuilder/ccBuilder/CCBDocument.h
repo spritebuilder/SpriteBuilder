@@ -40,6 +40,7 @@
     
     NSMutableArray* resolutions;
     int currentResolution;
+    int docDimensionsType;
     
     NSMutableArray* sequences;
     int currentSequenceId;
@@ -61,4 +62,5 @@
 @property (nonatomic,assign) int currentResolution;
 @property (nonatomic,retain) NSMutableArray* sequences;
 @property (nonatomic,assign) int currentSequenceId;
+@property (nonatomic,assign) int docDimensionsType;
 @end

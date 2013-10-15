@@ -75,6 +75,12 @@ enum {
     kCCBArrangeSendToBack,
 };
 
+enum {
+    kCCBDocDimensionsTypeFullScreen,
+    kCCBDocDimensionsTypeNode,
+    kCCBDocDimensionsTypeLayer,
+};
+
 
 @class CCBDocument;
 @class ProjectSettings;

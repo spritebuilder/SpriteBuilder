@@ -1170,6 +1170,8 @@ static BOOL hideAllToNextSeparator;
     [dict setObject:[[CocosScene cocosScene].guideLayer serializeGuides] forKey:@"guides"];
     [dict setObject:[[CocosScene cocosScene].notesLayer serializeNotes] forKey:@"notes"];
     
+    [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
+    
     // Resolutions
     if (doc.resolutions)
     {
@@ -1215,6 +1217,100 @@ static BOOL hideAllToNextSeparator;
     currentDocument.stageScrollOffset = [cs scrollOffset];
 }
 
+- (NSMutableArray*) updateResolutions:(NSMutableArray*) resolutions forDocDimensionType:(int) type
+{
+    NSMutableArray* updatedResolutions = [NSMutableArray array];
+    
+    if (type == kCCBDocDimensionsTypeNode)
+    {
+        if (projectSettings.designTarget == kCCBDesignTargetPhone ||
+            projectSettings.designTarget == kCCBDesignTargetAdaptive)
+        {
+            [updatedResolutions addObject:[ResolutionSetting settingIPhone]];
+        }
+        if (projectSettings.designTarget == kCCBDesignTargetTablet ||
+            projectSettings.designTarget == kCCBDesignTargetAdaptive)
+        {
+            [updatedResolutions addObject:[ResolutionSetting settingIPad]];
+        }
+    }
+    else if (type == kCCBDocDimensionsTypeLayer)
+    {
+        ResolutionSetting* settingDefault = [resolutions objectAtIndex:0];
+        
+        if (projectSettings.designTarget == kCCBDesignTargetPhone)
+        {
+            settingDefault.name = @"Phone";
+            [updatedResolutions addObject:settingDefault];
+        }
+        else if (projectSettings.designTarget == kCCBDesignTargetTablet)
+        {
+            settingDefault.name = @"Tablet";
+            [updatedResolutions addObject:settingDefault];
+        }
+        else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
+        {
+            settingDefault.name = @"Phone";
+            [updatedResolutions addObject:settingDefault];
+            
+            ResolutionSetting* settingTablet = [settingDefault copy];
+            settingTablet.name = @"Tablet";
+            settingTablet.width *= projectSettings.tabletPositionScaleFactor;
+            settingTablet.height *= projectSettings.tabletPositionScaleFactor;
+            [updatedResolutions addObject:settingTablet];
+        }
+    }
+    else if (type == kCCBDocDimensionsTypeFullScreen)
+    {
+        if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+        {
+            // Full screen landscape
+            if (projectSettings.designTarget == kCCBDesignTargetPhone)
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
+                if (projectSettings.deviceScaling == kCCBDeviceScalingStretchTallSide)
+                {
+                    [updatedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
+                }
+            }
+            else if (projectSettings.designTarget == kCCBDesignTargetTablet)
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
+            }
+            else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
+            }
+        }
+        else
+        {
+            // Full screen portrait
+            if (projectSettings.designTarget == kCCBDesignTargetPhone)
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
+                if (projectSettings.deviceScaling == kCCBDeviceScalingStretchTallSide)
+                {
+                    [updatedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
+                }
+            }
+            else if (projectSettings.designTarget == kCCBDesignTargetTablet)
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
+            }
+            else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
+            }
+        }
+    }
+    
+    return updatedResolutions;
+}
+
 - (void) replaceDocumentData:(NSMutableDictionary*)doc
 {
     CCBGlobals* g = [CCBGlobals globals];
@@ -1225,6 +1321,10 @@ static BOOL hideAllToNextSeparator;
     
     // Check for jsControlled
     jsControlled = [[doc objectForKey:@"jsControlled"] boolValue];
+    
+    int docDimType = [[doc objectForKey:@"docDimensionsType"] intValue];
+    if (docDimType == kCCBDocDimensionsTypeNode) centered = YES;
+    else centered = NO;
     
     // Setup stage & resolutions
     NSMutableArray* serializedResolutions = [doc objectForKey:@"resolutions"];
@@ -1237,8 +1337,15 @@ static BOOL hideAllToNextSeparator;
             ResolutionSetting* resolution = [[[ResolutionSetting alloc] initWithSerialization:serRes] autorelease];
             [resolutions addObject:resolution];
         }
+        
+        resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
+        
+        currentDocument.docDimensionsType = docDimType;
         int currentResolution = [[doc objectForKey:@"currentResolution"] intValue];
+        currentResolution = clampf(currentResolution, 0, resolutions.count - 1);
         ResolutionSetting* resolution = [resolutions objectAtIndex:currentResolution];
+        
+        
         
         // Update CocosScene
         [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
@@ -1724,9 +1831,26 @@ static BOOL hideAllToNextSeparator;
     [self openJSFile:fileName];
 }
 
-- (void) newFile:(NSString*) fileName type:(NSString*)type resolutions: (NSMutableArray*) resolutions;
+- (void) newFile:(NSString*) fileName type:(int)type resolutions: (NSMutableArray*) resolutions;
 {
-    BOOL origin = NO;
+    BOOL centered = NO;
+    if (type == kCCBNewDocTypeNode ||
+        type == kCCBNewDocTypeParticleSystem ||
+        type == kCCBNewDocTypeSprite) centered = YES;
+    
+    int docDimType = kCCBDocDimensionsTypeNode;
+    if (type == kCCBNewDocTypeScene) docDimType = kCCBDocDimensionsTypeFullScreen;
+    else if (type == kCCBNewDocTypeLayer) docDimType = kCCBDocDimensionsTypeLayer;
+    
+    NSString* class = NULL;
+    if (type == kCCBNewDocTypeNode ||
+        type == kCCBNewDocTypeLayer) class = @"CCNode";
+    else if (type == kCCBNewDocTypeScene) class = @"CCNode";
+    else if (type == kCCBNewDocTypeSprite) class = @"CCSprite";
+    else if (type == kCCBNewDocTypeParticleSystem) class = @"CCParticleSystemQuad";
+    
+    resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
+    
     ResolutionSetting* resolution = [resolutions objectAtIndex:0];
     CGSize stageSize = CGSizeMake(resolution.width, resolution.height);
     
@@ -1743,16 +1867,20 @@ static BOOL hideAllToNextSeparator;
     [[CocosScene cocosScene].notesLayer removeAllNotes];
     
     self.selectedNodes = NULL;
-    [[CocosScene cocosScene] setStageSize:stageSize centeredOrigin:origin];
+    [[CocosScene cocosScene] setStageSize:stageSize centeredOrigin:centered];
     
     // Create new node
-    [[CocosScene cocosScene] replaceRootNodeWith:[[PlugInManager sharedManager] createDefaultNodeOfType:type]];
+    [[CocosScene cocosScene] replaceRootNodeWith:[[PlugInManager sharedManager] createDefaultNodeOfType:class]];
     
-    // Set default contentSize to 100% x 100%
-    if (([type isEqualToString:@"CCNode"] || [type isEqualToString:@"CCLayer"])
-        && stageSize.width != 0 && stageSize.height != 0)
+    if (type == kCCBNewDocTypeScene)
     {
+        // Set default contentSize to 100% x 100% for scenes
         [PositionPropertySetter setSize:NSMakeSize(1, 1) type:kCCContentSizeTypeNormalized forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+    }
+    else if (type == kCCBNewDocTypeLayer)
+    {
+        // Set contentSize to w x h in scaled coordinates for layers
+        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:kCCContentSizeTypeScaled forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     
     [outlineHierarchy reloadData];
@@ -1762,6 +1890,7 @@ static BOOL hideAllToNextSeparator;
     self.currentDocument = [[[CCBDocument alloc] init] autorelease];
     self.currentDocument.resolutions = resolutions;
     self.currentDocument.currentResolution = 0;
+    self.currentDocument.docDimensionsType = docDimType;
     [self updateResolutionMenu];
     
     [self saveFile:fileName];
@@ -2833,7 +2962,7 @@ static BOOL hideAllToNextSeparator;
         }
         else
         {
-            NSString *type = wc.rootObjectType;
+            int type = wc.rootObjectType;
             NSMutableArray *resolutions = wc.availableResolutions;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_current_queue(), ^{

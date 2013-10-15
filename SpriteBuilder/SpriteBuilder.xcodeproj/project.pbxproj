@@ -136,6 +136,15 @@
 		B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0317B32623006628C7 /* LocalizationEditorLanguageTableView.m */; };
 		B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */; };
 		B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083E0917B567E5006628C7 /* StringPropertySetter.m */; };
+		B7096E26180CD98E00164A8A /* doc-layer.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E1D180CD98E00164A8A /* doc-layer.png */; };
+		B7096E27180CD98E00164A8A /* doc-layer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E1E180CD98E00164A8A /* doc-layer@2x.png */; };
+		B7096E28180CD98E00164A8A /* doc-node.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E1F180CD98E00164A8A /* doc-node.png */; };
+		B7096E29180CD98E00164A8A /* doc-node@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E20180CD98E00164A8A /* doc-node@2x.png */; };
+		B7096E2A180CD98E00164A8A /* doc-particlesystem.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E21180CD98E00164A8A /* doc-particlesystem.png */; };
+		B7096E2B180CD98E00164A8A /* doc-scene.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E22180CD98E00164A8A /* doc-scene.png */; };
+		B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E23180CD98E00164A8A /* doc-scene@2x.png */; };
+		B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E24180CD98E00164A8A /* doc-sprite.png */; };
+		B7096E2E180CD98E00164A8A /* doc-sprite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E25180CD98E00164A8A /* doc-sprite@2x.png */; };
 		B732A1841799736500333C56 /* TB_build.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1821799736500333C56 /* TB_build.png */; };
 		B732A1851799736500333C56 /* TB_build@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B732A1831799736500333C56 /* TB_build@2x.png */; };
 		B73788DA1804AC5E0076A88C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
@@ -1026,6 +1035,15 @@
 		B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTranslationTableView.m; sourceTree = "<group>"; };
 		B7083E0817B567E5006628C7 /* StringPropertySetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringPropertySetter.h; sourceTree = "<group>"; };
 		B7083E0917B567E5006628C7 /* StringPropertySetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringPropertySetter.m; sourceTree = "<group>"; };
+		B7096E1D180CD98E00164A8A /* doc-layer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-layer.png"; sourceTree = "<group>"; };
+		B7096E1E180CD98E00164A8A /* doc-layer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-layer@2x.png"; sourceTree = "<group>"; };
+		B7096E1F180CD98E00164A8A /* doc-node.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-node.png"; sourceTree = "<group>"; };
+		B7096E20180CD98E00164A8A /* doc-node@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-node@2x.png"; sourceTree = "<group>"; };
+		B7096E21180CD98E00164A8A /* doc-particlesystem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-particlesystem.png"; sourceTree = "<group>"; };
+		B7096E22180CD98E00164A8A /* doc-scene.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-scene.png"; sourceTree = "<group>"; };
+		B7096E23180CD98E00164A8A /* doc-scene@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-scene@2x.png"; sourceTree = "<group>"; };
+		B7096E24180CD98E00164A8A /* doc-sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-sprite.png"; sourceTree = "<group>"; };
+		B7096E25180CD98E00164A8A /* doc-sprite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-sprite@2x.png"; sourceTree = "<group>"; };
 		B732A1821799736500333C56 /* TB_build.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_build.png; sourceTree = "<group>"; };
 		B732A1831799736500333C56 /* TB_build@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TB_build@2x.png"; sourceTree = "<group>"; };
 		B73788D91804AC5D0076A88C /* CCScrollView.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCScrollView.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2154,6 +2172,15 @@
 		776041F01498FD630078095D /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B7096E1D180CD98E00164A8A /* doc-layer.png */,
+				B7096E1E180CD98E00164A8A /* doc-layer@2x.png */,
+				B7096E1F180CD98E00164A8A /* doc-node.png */,
+				B7096E20180CD98E00164A8A /* doc-node@2x.png */,
+				B7096E21180CD98E00164A8A /* doc-particlesystem.png */,
+				B7096E22180CD98E00164A8A /* doc-scene.png */,
+				B7096E23180CD98E00164A8A /* doc-scene@2x.png */,
+				B7096E24180CD98E00164A8A /* doc-sprite.png */,
+				B7096E25180CD98E00164A8A /* doc-sprite@2x.png */,
 				B7C3533517FA0FEF005697C1 /* inspector-physics.png */,
 				B7C3533617FA0FEF005697C1 /* inspector-physics@2x.png */,
 				B7AC69C417A70A4A0041B8BD /* inspector-codeconnections.png */,
@@ -4175,6 +4202,7 @@
 				77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */,
 				776C68911388107400153214 /* missing-font.fnt in Resources */,
 				776C68921388107400153214 /* missing-font.png in Resources */,
+				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
 				776C6896138874C200153214 /* dsa_pub.pem in Resources */,
 				77D33EAD138EFBD800012A88 /* StageSizeWindow.xib in Resources */,
 				7729F03A1390215400CAA44F /* frame-iphone.png in Resources */,
@@ -4182,6 +4210,7 @@
 				776A370B139544A200960E94 /* TB_actualSize.png in Resources */,
 				776A370C139544A200960E94 /* TB_grab.png in Resources */,
 				776A370D139544A200960E94 /* TB_select.png in Resources */,
+				B7096E27180CD98E00164A8A /* doc-layer@2x.png in Resources */,
 				776A370E139544A200960E94 /* TB_zoomIn.png in Resources */,
 				776A370F139544A200960E94 /* TB_zoomOut.png in Resources */,
 				776A37B8139BCE3600960E94 /* TB_imageAssets.png in Resources */,
@@ -4217,12 +4246,14 @@
 				E385A42014F69FF300DFB12D /* InspectorBlock.xib in Resources */,
 				E398C04014FBC9D00078E771 /* PublishTypeAccessoryView.xib in Resources */,
 				E3C5C1CB15090259000CF6F3 /* InspectorAnimation.xib in Resources */,
+				B7096E28180CD98E00164A8A /* doc-node.png in Resources */,
 				E385080B150AB232007E162A /* segmctrl-bg.png in Resources */,
 				E3D59133150F85D8004180CA /* InspectorCCBFile.xib in Resources */,
 				E3C65106151A3B7C00D639C0 /* InspectorString.xib in Resources */,
 				E3C65128151C7B9000D639C0 /* InspectorBlockCCControl.xib in Resources */,
 				E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */,
 				E34E5D6B153585EC000201FB /* ruler-bg-vertical.png in Resources */,
+				B7096E2B180CD98E00164A8A /* doc-scene.png in Resources */,
 				E34E5D6E1535AA78000201FB /* ruler-mark-major.png in Resources */,
 				E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */,
 				E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */,
@@ -4249,6 +4280,7 @@
 				E3E8B48A1578FEB100373983 /* seq-tl-bg.png in Resources */,
 				E3E8B48E15791FFB00373983 /* seq-tl-mark-major.png in Resources */,
 				E3E8B48F15791FFB00373983 /* seq-tl-mark-minor.png in Resources */,
+				B7096E2E180CD98E00164A8A /* doc-sprite@2x.png in Resources */,
 				E3E8B49015791FFB00373983 /* seq-tl-mark-origin.png in Resources */,
 				E3E8B4921579326A00373983 /* seq-timedisplay-bg.png in Resources */,
 				B73788F71804D8200076A88C /* ccbproj.icns in Resources */,
@@ -4302,6 +4334,7 @@
 				E3B7BCBE15E505CC00CF95EF /* TB_plugins.png in Resources */,
 				E3B19F6D15E65229000B023E /* DefaultResourcesList.plist in Resources */,
 				E360789015EBA5420040A172 /* sel-frame.png in Resources */,
+				B7096E29180CD98E00164A8A /* doc-node@2x.png in Resources */,
 				E36078BC15EE0B2C0040A172 /* sel-round.png in Resources */,
 				E3AF6CD815F0A7E10048DB2A /* HelpWindow.xib in Resources */,
 				E3AF6CE115F0CFAE0048DB2A /* Documentation in Resources */,
@@ -4320,6 +4353,7 @@
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
 				E3618D58166562DA009F5805 /* publishTemplates in Resources */,
 				B79F90B117FF27B200908504 /* CMakeLists.txt in Resources */,
+				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
 				E3366A39168159F30094BD94 /* PVRTexToolCL in Resources */,
 				E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */,
 				E3DEF5B7169B359C00B9DCF4 /* lame in Resources */,
@@ -4344,6 +4378,7 @@
 				E318CB3916D83F3B00348E0D /* InspectorPopoverFloatXY.xib in Resources */,
 				E390C77F170A2C9B003E9E92 /* AboutWindow.xib in Resources */,
 				E390C781170A371E003E9E92 /* Generated in Resources */,
+				B7096E2A180CD98E00164A8A /* doc-particlesystem.png in Resources */,
 				E334A4DE170CF475001604F7 /* seq-btn-end.png in Resources */,
 				E334A4DF170CF475001604F7 /* toolbar-bottom-noborder.png in Resources */,
 				E334A4E6170D0020001604F7 /* debugger-bug.png in Resources */,
@@ -4357,6 +4392,7 @@
 				E39C917B174C134C00092BD1 /* toolbar-btn-add.png in Resources */,
 				E3583FB01756C228002DF0B0 /* ResourceManagerPreviewView.xib in Resources */,
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
+				B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
 				B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */,
 				B732A1841799736500333C56 /* TB_build.png in Resources */,

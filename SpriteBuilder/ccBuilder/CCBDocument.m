@@ -40,6 +40,7 @@
 @synthesize exportFlattenPaths;
 @synthesize resolutions;
 @synthesize currentResolution;
+@synthesize docDimensionsType;
 @synthesize sequences;
 @synthesize currentSequenceId;
 

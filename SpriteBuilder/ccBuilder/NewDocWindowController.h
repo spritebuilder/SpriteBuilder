@@ -25,28 +25,33 @@
 
 #import <Cocoa/Cocoa.h>
 
+enum {
+    kCCBNewDocTypeScene,
+    kCCBNewDocTypeNode,
+    kCCBNewDocTypeLayer,
+    kCCBNewDocTypeSprite,
+    kCCBNewDocTypeParticleSystem,
+};
+
 
 @interface NewDocWindowController : NSWindowController
 {
-    NSString* documentName;
     IBOutlet NSTextField* documentNameField;
     
-    NSArray* rootObjectTypes;
-    NSString* rootObjectType;
+    IBOutlet NSButton* _btnScene;
+    IBOutlet NSButton* _btnNode;
+    IBOutlet NSButton* _btnLayer;
+    IBOutlet NSButton* _btnSprite;
+    IBOutlet NSButton* _btnParticleSystem;
     
-    NSMutableArray* resolutions;
-    IBOutlet NSArrayController* resolutionsController;
-    BOOL fullScreen;
-    BOOL canBeFullScreen;
 }
 
 @property (nonatomic,copy) NSString* documentName;
-@property (nonatomic,retain) NSArray* rootObjectTypes;
-@property (nonatomic,retain) NSString* rootObjectType;
-@property (nonatomic,retain) NSMutableArray* resolutions;
+@property (nonatomic,assign) int rootObjectType;
+@property (nonatomic,assign) BOOL canSetSize;
+@property (nonatomic,assign) int width;
+@property (nonatomic,assign) int height;
 @property (nonatomic,readonly) NSMutableArray* availableResolutions;
-@property (nonatomic,assign) BOOL fullScreen;
-@property (nonatomic,assign) BOOL canBeFullScreen;
 
 - (IBAction)acceptSheet:(id)sender;
 - (IBAction)cancelSheet:(id)sender;

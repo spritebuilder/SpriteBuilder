@@ -110,7 +110,7 @@
 {
     ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
     
-    setting.name = @"iPhone";
+    setting.name = @"Phone";
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
@@ -123,7 +123,7 @@
 {
     ResolutionSetting* setting = [self settingIPhone];
     
-    setting.name = @"iPhone Landscape";
+    setting.name = @"Phone Landscape (short)";
     setting.width = 480;
     setting.height = 320;
     
@@ -134,7 +134,7 @@
 {
     ResolutionSetting* setting = [self settingIPhone];
     
-    setting.name = @"iPhone Portrait";
+    setting.name = @"iPhone Portrait (short)";
     setting.width = 320;
     setting.height = 480;
     
@@ -145,7 +145,7 @@
 {
     ResolutionSetting* setting = [self settingIPhone];
     
-    setting.name = @"iPhone 5 Landscape";
+    setting.name = @"Phone Landscape";
     setting.width = 568;
     setting.height = 320;
     
@@ -156,7 +156,7 @@
 {
     ResolutionSetting* setting = [self settingIPhone];
     
-    setting.name = @"iPhone 5 Portrait";
+    setting.name = @"Phone Portrait";
     setting.width = 320;
     setting.height = 568;
     
@@ -167,7 +167,7 @@
 {
     ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
     
-    setting.name = @"iPad";
+    setting.name = @"Tablet";
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"tablet phonehd";
@@ -180,7 +180,7 @@
 {
     ResolutionSetting* setting = [self settingIPad];
     
-    setting.name = @"iPad Landscape";
+    setting.name = @"Tablet Landscape";
     setting.width = 1024;
     setting.height = 768;
     
@@ -191,7 +191,7 @@
 {
     ResolutionSetting* setting = [self settingIPad];
     
-    setting.name = @"iPad Portrait";
+    setting.name = @"Tablet Portrait";
     setting.width = 768;
     setting.height = 1024;
     
