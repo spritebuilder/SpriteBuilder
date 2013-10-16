@@ -631,10 +631,11 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Resolution" id="1264"/>
                             </menuItem>
-                            <menuItem title="Edit Resolutions..." id="1471">
+                            <menuItem title="Edit Stage Size..." id="1471">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuEditResolutionSettings:" target="494" id="1473"/>
+                                    <binding destination="494" name="enabled" keyPath="canEditStageSize" id="3Yc-17-um7"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="2100"/>

@@ -72,7 +72,7 @@ Gw
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="c9X-lD-W75">
-                        <rect key="frame" x="20" y="108" width="498" height="5"/>
+                        <rect key="frame" x="20" y="88" width="498" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -91,7 +91,7 @@ Gw
                         </connections>
                     </textField>
                     <button id="GII-c6-xFL">
-                        <rect key="frame" x="18" y="135" width="90" height="64"/>
+                        <rect key="frame" x="81" y="125" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="doc-scene" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jzI-TP-J1W">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -102,7 +102,7 @@ Gw
                         </connections>
                     </button>
                     <button tag="1" id="BOn-7y-Z1Z">
-                        <rect key="frame" x="121" y="135" width="90" height="64"/>
+                        <rect key="frame" x="159" y="125" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="doc-node" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ahQ-ra-qeO">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -113,7 +113,7 @@ Gw
                         </connections>
                     </button>
                     <button tag="2" id="Mdf-6M-gzu">
-                        <rect key="frame" x="224" y="135" width="90" height="64"/>
+                        <rect key="frame" x="237" y="125" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="doc-layer" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MuE-8A-l8I">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -124,7 +124,7 @@ Gw
                         </connections>
                     </button>
                     <button tag="3" id="B7g-Yq-1s6">
-                        <rect key="frame" x="328" y="135" width="90" height="64"/>
+                        <rect key="frame" x="315" y="125" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="doc-sprite" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="njb-Lq-rcU">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -135,7 +135,7 @@ Gw
                         </connections>
                     </button>
                     <button tag="4" id="r35-WD-JW2">
-                        <rect key="frame" x="430" y="135" width="90" height="64"/>
+                        <rect key="frame" x="393" y="125" width="64" height="64"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="doc-particlesystem" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VRo-3g-Y6E">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -146,7 +146,7 @@ Gw
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ciu-RS-Cvd">
-                        <rect key="frame" x="42" y="119" width="38" height="14"/>
+                        <rect key="frame" x="94" y="109" width="38" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scene" id="wec-Bt-iVR">
                             <font key="font" metaFont="smallSystem"/>
@@ -155,7 +155,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="r4J-px-CzM">
-                        <rect key="frame" x="145" y="119" width="38" height="14"/>
+                        <rect key="frame" x="172" y="109" width="38" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Node" id="kOr-E7-Qza">
                             <font key="font" metaFont="smallSystem"/>
@@ -164,7 +164,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="LWU-rf-a3u">
-                        <rect key="frame" x="248" y="119" width="38" height="14"/>
+                        <rect key="frame" x="248" y="109" width="38" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Layer" id="WAd-9j-XCq">
                             <font key="font" metaFont="smallSystem"/>
@@ -173,7 +173,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="W4g-an-3XP">
-                        <rect key="frame" x="352" y="119" width="38" height="14"/>
+                        <rect key="frame" x="328" y="109" width="38" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sprite" id="pCp-1E-8d5">
                             <font key="font" metaFont="smallSystem"/>
@@ -182,7 +182,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="YpT-Ns-s2H">
-                        <rect key="frame" x="449" y="119" width="49" height="14"/>
+                        <rect key="frame" x="401" y="109" width="49" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Particles" id="OSQ-kb-gkR">
                             <font key="font" metaFont="smallSystem"/>
@@ -191,7 +191,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="PIr-bw-Lub" customClass="CCBTextFieldLabel">
-                        <rect key="frame" x="17" y="85" width="334" height="17"/>
+                        <rect key="frame" x="17" y="65" width="334" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Content size (in points multiplied by position scale):" id="soM-BH-KwC">
                             <font key="font" metaFont="system"/>
@@ -203,7 +203,7 @@ Gw
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" id="7Ye-2d-1x2">
-                        <rect key="frame" x="359" y="83" width="70" height="22"/>
+                        <rect key="frame" x="359" y="63" width="70" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="OGC-2f-ht5">
                             <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" negativeFormat="#0" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" nilSymbol="XoxoXo!!" id="oX8-P0-kz4">
@@ -224,7 +224,7 @@ Gw
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" id="5Xd-sM-0ga">
-                        <rect key="frame" x="448" y="83" width="70" height="22"/>
+                        <rect key="frame" x="448" y="63" width="70" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="HsW-0M-iey">
                             <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" negativeFormat="#0" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" nilSymbol="XoxoXo!!" id="guT-O1-dlM">
@@ -245,7 +245,7 @@ Gw
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="bas-OC-k2V" customClass="CCBTextFieldLabel">
-                        <rect key="frame" x="432" y="85" width="12" height="17"/>
+                        <rect key="frame" x="432" y="65" width="12" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="x" id="CD2-cO-zRi">
                             <font key="font" metaFont="system"/>

@@ -1326,6 +1326,9 @@ static BOOL hideAllToNextSeparator;
     if (docDimType == kCCBDocDimensionsTypeNode) centered = YES;
     else centered = NO;
     
+    if (docDimType == kCCBDocDimensionsTypeLayer) self.canEditStageSize = YES;
+    else self.canEditStageSize = NO;
+    
     // Setup stage & resolutions
     NSMutableArray* serializedResolutions = [doc objectForKey:@"resolutions"];
     if (serializedResolutions)
@@ -3070,13 +3073,21 @@ static BOOL hideAllToNextSeparator;
 {
     if (!currentDocument) return;
     
-    ResolutionSettingsWindow* wc = [[[ResolutionSettingsWindow alloc] initWithWindowNibName:@"ResolutionSettingsWindow"] autorelease];
-    [wc copyResolutions: currentDocument.resolutions];
+    ResolutionSetting* setting = [currentDocument.resolutions objectAtIndex:0];
+    
+    StageSizeWindow* wc = [[[StageSizeWindow alloc] initWithWindowNibName:@"StageSizeWindow"] autorelease];
+    wc.wStage = setting.width;
+    wc.hStage = setting.height;
     
     int success = [wc runModalSheetForWindow:window];
     if (success)
     {
-        currentDocument.resolutions = wc.resolutions;
+        [self saveUndoStateWillChangeProperty:@"*stageSize"];
+        
+        setting.width = wc.wStage;
+        setting.height = wc.hStage;
+        
+        currentDocument.resolutions = [self updateResolutions:currentDocument.resolutions forDocDimensionType:kCCBDocDimensionsTypeLayer];
         [self updateResolutionMenu];
         [self setResolution:0];
     }

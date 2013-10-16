@@ -295,6 +295,7 @@ enum {
 @property (nonatomic,assign) BOOL canEditContentSize;
 @property (nonatomic,assign) BOOL defaultCanvasSize;
 @property (nonatomic,assign) BOOL canEditCustomClass;
+@property (nonatomic,assign) BOOL canEditStageSize;
 
 @property (nonatomic,readonly) CCNode* selectedNode;
 
@@ -331,6 +332,7 @@ enum {
 // Physics
 @property (nonatomic,readonly) PhysicsHandler* physicsHandler;
 @property (nonatomic,readonly) NSTabView* itemTabView;
+
 
 // Methods
 + (AppDelegate*) appDelegate;
