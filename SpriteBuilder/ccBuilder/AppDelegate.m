@@ -1872,6 +1872,15 @@ static BOOL hideAllToNextSeparator;
     self.selectedNodes = NULL;
     [[CocosScene cocosScene] setStageSize:stageSize centeredOrigin:centered];
     
+    if (type == kCCBNewDocTypeScene)
+    {
+        [[CocosScene cocosScene] setStageBorder:0];
+    }
+    else
+    {
+        [[CocosScene cocosScene] setStageBorder:1];
+    }
+    
     // Create new node
     [[CocosScene cocosScene] replaceRootNodeWith:[[PlugInManager sharedManager] createDefaultNodeOfType:class]];
     
