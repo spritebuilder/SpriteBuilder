@@ -50,6 +50,7 @@
     if (cf)
     {
         [self addChild:cf];
+        self.contentSizeType = ccbFile.contentSizeType;
         self.contentSize = ccbFile.contentSize;
         self.anchorPoint = ccbFile.anchorPoint;
         cf.anchorPoint = ccp(0,0);

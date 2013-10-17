@@ -1257,6 +1257,7 @@ static BOOL hideAllToNextSeparator;
             settingTablet.name = @"Tablet";
             settingTablet.width *= projectSettings.tabletPositionScaleFactor;
             settingTablet.height *= projectSettings.tabletPositionScaleFactor;
+            settingTablet.scale = projectSettings.tabletPositionScaleFactor;
             [updatedResolutions addObject:settingTablet];
         }
     }
@@ -1280,8 +1281,8 @@ static BOOL hideAllToNextSeparator;
             else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
-                [updatedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
             }
         }
         else
@@ -1302,8 +1303,8 @@ static BOOL hideAllToNextSeparator;
             else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
-                [updatedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
             }
         }
     }
