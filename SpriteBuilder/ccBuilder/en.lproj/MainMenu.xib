@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
@@ -912,7 +912,7 @@ CA
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                         <subviews>
                             <tabView focusRingType="none" type="noTabsNoBorder" initialItem="1972" id="1971">
-                                <rect key="frame" x="0.0" y="16" width="250" height="640"/>
+                                <rect key="frame" x="0.0" y="16" width="249" height="640"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
@@ -987,7 +987,7 @@ CA
                                     <tabViewItem label="Tileless Editor" identifier="1" id="1974">
                                         <view key="view" id="1975">
                                             <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <splitView dividerStyle="thin" id="1979">
                                                     <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
@@ -997,15 +997,15 @@ CA
                                                             <rect key="frame" x="0.0" y="0.0" width="250" height="450"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <scrollView horizontalLineScroll="65" horizontalPageScroll="10" verticalLineScroll="85" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1988">
+                                                                <scrollView borderType="none" horizontalLineScroll="65" horizontalPageScroll="10" verticalLineScroll="85" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1988">
                                                                     <rect key="frame" x="-1" y="-1" width="251" height="452"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                                                     <clipView key="contentView" copiesOnScroll="NO" id="8K5-4q-KVz">
-                                                                        <rect key="frame" x="1" y="1" width="249" height="450"/>
-                                                                        <autoresizingMask key="autoresizingMask"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.073521465063095093" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="450"/>
+                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.073323555290699005" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <ikCellsStyle key="cellsStyleMask" none="YES" titled="YES"/>
                                                                                 <autoresizingMask key="contentResizingMask" heightSizable="YES"/>
@@ -1014,11 +1014,11 @@ CA
                                                                         </subviews>
                                                                     </clipView>
                                                                     <scroller key="horizontalScroller" verticalHuggingPriority="750" id="1990">
-                                                                        <rect key="frame" x="1" y="435" width="249" height="16"/>
+                                                                        <rect key="frame" x="0.0" y="436" width="251" height="16"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" id="1991">
-                                                                        <rect key="frame" x="234" y="1" width="16" height="450"/>
+                                                                        <rect key="frame" x="236" y="0.0" width="15" height="452"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                 </scrollView>
@@ -1033,7 +1033,7 @@ CA
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <clipView key="contentView" id="e7m-k0-z2l">
                                                                         <rect key="frame" x="0.0" y="0.0" width="250" height="173"/>
-                                                                        <autoresizingMask key="autoresizingMask"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="14" id="1993" customClass="CCBTableView">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="250" height="173"/>
@@ -1108,18 +1108,18 @@ CA
                                     </tabViewItem>
                                     <tabViewItem label="Node Library" identifier="" id="1977">
                                         <view key="view" id="1978">
-                                            <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="2014">
-                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <clipView key="contentView" copiesOnScroll="NO" id="92y-mP-XwZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <collectionView selectable="YES" id="2015" customClass="PlugInNodeCollectionView">
-                                                                <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <color key="primaryBackgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                 <connections>
@@ -2263,7 +2263,7 @@ CA
             </connections>
         </collectionViewItem>
         <view id="2019" userLabel="PlugIn view">
-            <rect key="frame" x="0.0" y="0.0" width="250" height="52"/>
+            <rect key="frame" x="0.0" y="0.0" width="249" height="52"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView tag="3" id="2023">
