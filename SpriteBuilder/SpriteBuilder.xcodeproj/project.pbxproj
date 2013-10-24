@@ -260,6 +260,13 @@
 		B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C623DC17F392FE00928F91 /* CCBPProperties.plist */; };
 		B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D0918417C2C12B0007FE7F /* libcocos2d.a */; };
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
+		B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
+		B7EE699C18188E0900B983FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7EE699A18188E0900B983FE /* InfoPlist.strings */; };
+		B7EE69A718188ECC00B983FE /* CCTextField.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */; };
+		B7EE69AA18188EF900B983FE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EE69A818188EF900B983FE /* Icon.png */; };
+		B7EE69AB18188EF900B983FE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EE69A918188EF900B983FE /* Icon@2x.png */; };
+		B7EE69AD18188F2800B983FE /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7EE69AC18188F2800B983FE /* CCBPProperties.plist */; };
+		B7EE69B01819822500B983FE /* CCBPTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69AF1819822500B983FE /* CCBPTextField.m */; };
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
@@ -688,6 +695,13 @@
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
 		};
+		B7EE69A518188EB800B983FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7EE699418188E0800B983FE;
+			remoteInfo = CCTextField;
+		};
 		E35DBB8D14F226230070A6E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -800,6 +814,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				B7EE69A718188ECC00B983FE /* CCTextField.ccbPlugNode in Copy PlugIns */,
 				B73788EF1804AF6D0076A88C /* CCScrollView.ccbPlugNode in Copy PlugIns */,
 				B79F90E617FF31B600908504 /* CCPhysicsNode.ccbPlugNode in Copy PlugIns */,
 				B7C3533417F6565F005697C1 /* CCSprite9Slice.ccbPlugNode in Copy PlugIns */,
@@ -1223,6 +1238,15 @@
 		B7C623DC17F392FE00928F91 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d-osx.xcodeproj"; path = "cocos2d-iphone/cocos2d-osx.xcodeproj"; sourceTree = "<group>"; };
 		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SpriteBuilder.icns; path = ../SpriteBuilder.icns; sourceTree = "<group>"; };
+		B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCTextField.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7EE699918188E0900B983FE /* CCTextField-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCTextField-Info.plist"; sourceTree = "<group>"; };
+		B7EE699B18188E0900B983FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B7EE699D18188E0900B983FE /* CCTextField-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCTextField-Prefix.pch"; sourceTree = "<group>"; };
+		B7EE69A818188EF900B983FE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B7EE69A918188EF900B983FE /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		B7EE69AC18188F2800B983FE /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		B7EE69AE1819822500B983FE /* CCBPTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPTextField.h; sourceTree = "<group>"; };
+		B7EE69AF1819822500B983FE /* CCBPTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPTextField.m; sourceTree = "<group>"; };
 		B7F02D4617D12DB1008A2E2D /* about-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg.png"; sourceTree = "<group>"; };
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
@@ -1833,6 +1857,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7EE699218188E0800B983FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E35DBB7D14F225D30070A6E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2317,6 +2349,7 @@
 				B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */,
 				B79F90D817FF30DB00908504 /* CCPhysicsNode.ccbPlugNode */,
 				B73788D91804AC5D0076A88C /* CCScrollView.ccbPlugNode */,
+				B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2964,6 +2997,29 @@
 			name = Cocos2d;
 			sourceTree = "<group>";
 		};
+		B7EE699718188E0900B983FE /* CCTextField */ = {
+			isa = PBXGroup;
+			children = (
+				B7EE699818188E0900B983FE /* Supporting Files */,
+				B7EE69AE1819822500B983FE /* CCBPTextField.h */,
+				B7EE69AF1819822500B983FE /* CCBPTextField.m */,
+			);
+			path = CCTextField;
+			sourceTree = "<group>";
+		};
+		B7EE699818188E0900B983FE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B7EE69AC18188F2800B983FE /* CCBPProperties.plist */,
+				B7EE699918188E0900B983FE /* CCTextField-Info.plist */,
+				B7EE699A18188E0900B983FE /* InfoPlist.strings */,
+				B7EE699D18188E0900B983FE /* CCTextField-Prefix.pch */,
+				B7EE69A818188EF900B983FE /* Icon.png */,
+				B7EE69A918188EF900B983FE /* Icon@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B7F02D4517D12D9E008A2E2D /* About Box */ = {
 			isa = PBXGroup;
 			children = (
@@ -3119,6 +3175,7 @@
 				B7C623CF17F38B7800928F91 /* CCControl */,
 				B7C623B417F383CE00928F91 /* CCButton */,
 				B73788DB1804AC5E0076A88C /* CCScrollView */,
+				B7EE699718188E0900B983FE /* CCTextField */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -3796,6 +3853,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B7EE69A618188EB800B983FE /* PBXTargetDependency */,
 				B73788EE1804AF5E0076A88C /* PBXTargetDependency */,
 				B79F90E517FF31A300908504 /* PBXTargetDependency */,
 				B7C3533317F65652005697C1 /* PBXTargetDependency */,
@@ -3901,6 +3959,23 @@
 			name = CCControl;
 			productName = CCControl;
 			productReference = B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		B7EE699418188E0800B983FE /* CCTextField */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7EE69A418188E0900B983FE /* Build configuration list for PBXNativeTarget "CCTextField" */;
+			buildPhases = (
+				B7EE699118188E0800B983FE /* Sources */,
+				B7EE699218188E0800B983FE /* Frameworks */,
+				B7EE699318188E0800B983FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCTextField;
+			productName = CCTextField;
+			productReference = B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		E35DBB7F14F225D30070A6E4 /* CCLayerColor */ = {
@@ -4115,6 +4190,7 @@
 				E3D59120150F5367004180CA /* CCBFile */,
 				B7C623B017F383CE00928F91 /* CCButton */,
 				B7C623CC17F38B7800928F91 /* CCControl */,
+				B7EE699418188E0800B983FE /* CCTextField */,
 				B73788D81804AC5D0076A88C /* CCScrollView */,
 				B79F90D717FF30DB00908504 /* CCPhysicsNode */,
 				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
@@ -4469,6 +4545,17 @@
 			files = (
 				B7C623D417F38B7800928F91 /* InfoPlist.strings in Resources */,
 				B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7EE699318188E0800B983FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7EE69AA18188EF900B983FE /* Icon.png in Resources */,
+				B7EE69AB18188EF900B983FE /* Icon@2x.png in Resources */,
+				B7EE699C18188E0900B983FE /* InfoPlist.strings in Resources */,
+				B7EE69AD18188F2800B983FE /* CCBPProperties.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4888,6 +4975,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B7EE699118188E0800B983FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7EE69B01819822500B983FE /* CCBPTextField.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E35DBB7C14F225D30070A6E4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5002,6 +5097,11 @@
 			name = cocos2d;
 			targetProxy = B7D0918817C2C16E0007FE7F /* PBXContainerItemProxy */;
 		};
+		B7EE69A618188EB800B983FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7EE699418188E0800B983FE /* CCTextField */;
+			targetProxy = B7EE69A518188EB800B983FE /* PBXContainerItemProxy */;
+		};
 		E35DBB8E14F226230070A6E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E35DBB7F14F225D30070A6E4 /* CCLayerColor */;
@@ -5115,6 +5215,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				B7C623D317F38B7800928F91 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B7EE699A18188E0900B983FE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B7EE699B18188E0900B983FE /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -5759,6 +5867,95 @@
 			};
 			name = Release;
 		};
+		B7EE699E18188E0900B983FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCTextField/CCTextField-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCTextField/CCTextField-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		B7EE699F18188E0900B983FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCTextField/CCTextField-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCTextField/CCTextField-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
 		E35DBB8A14F225D30070A6E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -6390,6 +6587,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B7EE69A418188E0900B983FE /* Build configuration list for PBXNativeTarget "CCTextField" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7EE699E18188E0900B983FE /* Debug */,
+				B7EE699F18188E0900B983FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		E35DBB8914F225D30070A6E4 /* Build configuration list for PBXNativeTarget "CCLayerColor" */ = {
 			isa = XCConfigurationList;
