@@ -6595,6 +6595,7 @@
 				B7EE699F18188E0900B983FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E35DBB8914F225D30070A6E4 /* Build configuration list for PBXNativeTarget "CCLayerColor" */ = {
 			isa = XCConfigurationList;

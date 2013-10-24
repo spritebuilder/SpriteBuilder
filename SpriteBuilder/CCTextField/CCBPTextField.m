@@ -20,4 +20,10 @@
     return self;
 }
 
+- (void) addUITextView
+{}
+
+- (void) removeUITextView
+{}
+
 @end
