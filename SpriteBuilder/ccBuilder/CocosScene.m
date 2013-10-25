@@ -728,7 +728,8 @@ static CocosScene* sharedCocosScene;
             selectedNode.transformStartPosition = [selectedNode.parent convertToWorldSpace:pos];
         }
     
-        if (appDelegate.selectedNode != rootNode)
+        if (appDelegate.selectedNode != rootNode &&
+            ![[[appDelegate.selectedNodes objectAtIndex:0] parent] isKindOfClass:[CCLayout class]])
         {
             currentMouseTransform = kCCBTransformHandleMove;
         }
