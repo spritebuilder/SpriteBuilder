@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>defaultOrientation</key>
+	<integer>0</integer>
+	<key>designTarget</key>
+	<integer>0</integer>
 	<key>deviceOrientationLandscapeLeft</key>
 	<true/>
 	<key>deviceOrientationLandscapeRight</key>
@@ -10,6 +14,8 @@
 	<false/>
 	<key>deviceOrientationUpsideDown</key>
 	<false/>
+	<key>deviceScaling</key>
+	<integer>0</integer>
 	<key>exporter</key>
 	<string>ccbi</string>
 	<key>fileType</key>
@@ -23,7 +29,7 @@
 	<key>javascriptMainCCB</key>
 	<string>MainScene</string>
 	<key>needRepublish</key>
-	<true/>
+	<false/>
 	<key>onlyPublishCCBs</key>
 	<false/>
 	<key>publishAudioQuality_android</key>
@@ -138,10 +144,48 @@
 			<key>tabletScale</key>
 			<integer>1</integer>
 		</dict>
+		<key>ccbResources/ccbSliderBgHighlighted.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
+		<key>ccbResources/ccbSliderBgNormal.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
+		<key>ccbResources/ccbSliderHandle.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
+		<key>ccbResources/ccbTextField.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
+	<key>tabletPositionScaleFactorType</key>
+	<integer>0</integer>
 	<key>versionStr</key>
-	<string>Version: v0.5.1
-GitHub: fa488f3eea
+	<string>Version: 0.6b3
+GitHub: bbe1f0c90c
 </string>
 </dict>
 </plist>

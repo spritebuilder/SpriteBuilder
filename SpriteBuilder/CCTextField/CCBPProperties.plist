@@ -96,6 +96,11 @@
 			<string>backgroundSpriteFrame</string>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<integer>7</integer>
+				<integer>0</integer>
+			</array>
 			<key>affectsProperties</key>
 			<array>
 				<string>contentSize</string>
