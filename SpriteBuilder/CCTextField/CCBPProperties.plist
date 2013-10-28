@@ -7,7 +7,7 @@
 	<key>ordering</key>
 	<integer>4010</integer>
 	<key>description</key>
-	<string>Generates events when touched, can have a stretchable backround and a label.</string>
+	<string>Allows the user to enter text, sends events when the text finishes editing.</string>
 	<key>inheritsFrom</key>
 	<string>CCControl</string>
 	<key>canHaveChildren</key>

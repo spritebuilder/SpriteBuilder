@@ -7,7 +7,7 @@
 	<key>displayName</key>
 	<string>Physics Node</string>
 	<key>description</key>
-	<string>Applies physics to all nodes with physic bodies below the physics node.</string>
+	<string>Applies physics to all nodes with physics bodies below the physics node.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
@@ -29,6 +29,11 @@
 			<string>CCPhysicsNode</string>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<integer>0</integer>
+				<integer>-100</integer>
+			</array>
 			<key>type</key>
 			<string>Point</string>
 			<key>name</key>

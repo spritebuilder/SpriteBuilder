@@ -1085,10 +1085,10 @@ static CocosScene* sharedCocosScene;
 
 - (void) forceRedraw
 {
-    [self nextFrame:0];
+    [self update:0];
 }
 
-- (void) nextFrame:(ccTime) time
+- (void) update:(ccTime)delta
 {
     // Recenter the content layer
     BOOL winSizeChanged = !CGSizeEqualToSize(winSize, [[CCDirector sharedDirector] winSize]);
@@ -1247,14 +1247,12 @@ static CocosScene* sharedCocosScene;
         [self setupEditorNodes];
         [self setupDefaultNodes];
         
-        [self schedule:@selector(nextFrame:)];
-        
         // self.mouseEnabled = YES;
         self.userInteractionEnabled = YES;
         
         stageZoom = 1;
         
-        [self nextFrame:0];
+        [self update:0];
 	}
 	return self;
 }

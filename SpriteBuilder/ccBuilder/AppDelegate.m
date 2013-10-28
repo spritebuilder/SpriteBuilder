@@ -730,7 +730,7 @@ static AppDelegate* sharedAppDelegate;
         if (![[CCDirector sharedDirector] isPaused])
         {
             [[CCDirector sharedDirector] pause];
-            [cs pauseSchedulerAndActions];
+            cs.paused = YES;
         }
     }
 }
@@ -744,7 +744,7 @@ static AppDelegate* sharedAppDelegate;
         if ([[CCDirector sharedDirector] isPaused])
         {
             [[CCDirector sharedDirector] resume];
-            [cs resumeSchedulerAndActions];
+            cs.paused = NO;
         }
     }
 }

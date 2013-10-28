@@ -5,9 +5,9 @@
 	<key>ordering</key>
 	<string>1050</string>
 	<key>displayName</key>
-	<string>Layout Box</string>
+	<string>Box Layout</string>
 	<key>description</key>
-	<string>Displays a texture.</string>
+	<string>Positions the children below it in a horizontal or vertical box layout.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
