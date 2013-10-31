@@ -542,9 +542,6 @@
 		E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1AB1504D30C000CF6F3 /* SCEvents.m */; };
 		E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1B415075CDD000CF6F3 /* ResourceManagerUtil.m */; };
 		E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1C81508F35E000CF6F3 /* CCBAnimationParser.m */; };
-		E3C5C1CB15090259000CF6F3 /* InspectorAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3C5C1CA15090259000CF6F3 /* InspectorAnimation.xib */; };
-		E3C5C1CE150902B3000CF6F3 /* InspectorAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1CD150902B3000CF6F3 /* InspectorAnimation.m */; };
-		E3C5C1D115090CF4000CF6F3 /* AnimationPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1D015090CF3000CF6F3 /* AnimationPropertySetter.m */; };
 		E3C65106151A3B7C00D639C0 /* InspectorString.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3C65105151A3B7C00D639C0 /* InspectorString.xib */; };
 		E3C6510A151A65ED00D639C0 /* InspectorString.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C65109151A65ED00D639C0 /* InspectorString.m */; };
 		E3C65128151C7B9000D639C0 /* InspectorBlockCCControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3C65127151C7B8F00D639C0 /* InspectorBlockCCControl.xib */; };
@@ -1684,11 +1681,6 @@
 		E3C5C1B415075CDD000CF6F3 /* ResourceManagerUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerUtil.m; sourceTree = "<group>"; };
 		E3C5C1C71508F35E000CF6F3 /* CCBAnimationParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationParser.h; sourceTree = "<group>"; };
 		E3C5C1C81508F35E000CF6F3 /* CCBAnimationParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationParser.m; sourceTree = "<group>"; };
-		E3C5C1CA15090259000CF6F3 /* InspectorAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorAnimation.xib; sourceTree = "<group>"; };
-		E3C5C1CC150902B3000CF6F3 /* InspectorAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorAnimation.h; sourceTree = "<group>"; };
-		E3C5C1CD150902B3000CF6F3 /* InspectorAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorAnimation.m; sourceTree = "<group>"; };
-		E3C5C1CF15090CF3000CF6F3 /* AnimationPropertySetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationPropertySetter.h; sourceTree = "<group>"; };
-		E3C5C1D015090CF3000CF6F3 /* AnimationPropertySetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPropertySetter.m; sourceTree = "<group>"; };
 		E3C65105151A3B7C00D639C0 /* InspectorString.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorString.xib; sourceTree = "<group>"; };
 		E3C65108151A65ED00D639C0 /* InspectorString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorString.h; sourceTree = "<group>"; };
 		E3C65109151A65ED00D639C0 /* InspectorString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorString.m; sourceTree = "<group>"; };
@@ -2059,8 +2051,6 @@
 				E3C5C1C81508F35E000CF6F3 /* CCBAnimationParser.m */,
 				77D33EA9138EA4F800012A88 /* CCBUtil.h */,
 				77D33EAA138EA4F800012A88 /* CCBUtil.m */,
-				E3C5C1CF15090CF3000CF6F3 /* AnimationPropertySetter.h */,
-				E3C5C1D015090CF3000CF6F3 /* AnimationPropertySetter.m */,
 				E3C365FF14EA0507007CD5FF /* TexturePropertySetter.h */,
 				E3C3660014EA0507007CD5FF /* TexturePropertySetter.m */,
 				E33BC1B61510E4B6009AE29A /* NodeGraphPropertySetter.h */,
@@ -3699,9 +3689,6 @@
 				E35DBC2414F4FEF80070A6E4 /* InspectorTexture.xib */,
 				E35DBC2614F4FF3E0070A6E4 /* InspectorTexture.h */,
 				E35DBC2714F4FF3F0070A6E4 /* InspectorTexture.m */,
-				E3C5C1CA15090259000CF6F3 /* InspectorAnimation.xib */,
-				E3C5C1CC150902B3000CF6F3 /* InspectorAnimation.h */,
-				E3C5C1CD150902B3000CF6F3 /* InspectorAnimation.m */,
 				E3B4221C14E58C35004547D6 /* InspectorByte.xib */,
 				E3DA6FFB16CB2BEB00B12FFB /* InspectorPopoverByte.xib */,
 				E3B4221E14E58C75004547D6 /* InspectorByte.h */,
@@ -4468,7 +4455,6 @@
 				E325F64F14F5622200D29BCF /* InspectorSeparatorSub.xib in Resources */,
 				E385A42014F69FF300DFB12D /* InspectorBlock.xib in Resources */,
 				E398C04014FBC9D00078E771 /* PublishTypeAccessoryView.xib in Resources */,
-				E3C5C1CB15090259000CF6F3 /* InspectorAnimation.xib in Resources */,
 				B7096E28180CD98E00164A8A /* doc-node.png in Resources */,
 				E385080B150AB232007E162A /* segmctrl-bg.png in Resources */,
 				E3D59133150F85D8004180CA /* InspectorCCBFile.xib in Resources */,
@@ -4954,8 +4940,6 @@
 				E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */,
 				E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */,
 				E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */,
-				E3C5C1CE150902B3000CF6F3 /* InspectorAnimation.m in Sources */,
-				E3C5C1D115090CF4000CF6F3 /* AnimationPropertySetter.m in Sources */,
 				E3850809150AA9AE007E162A /* ImageAndTextCell.m in Sources */,
 				E3D59136150F861E004180CA /* InspectorCCBFile.m in Sources */,
 				E33BC1B81510E4B6009AE29A /* NodeGraphPropertySetter.m in Sources */,

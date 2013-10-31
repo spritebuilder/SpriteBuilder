@@ -103,6 +103,8 @@
 #import "LocalizationEditorHandler.h"
 #import "PhysicsHandler.h"
 #import "CCBProjCreator.h"
+#import "CCTextureCache.h"
+#import "CCLabelBMFont_Private.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
 
@@ -173,7 +175,7 @@ static AppDelegate* sharedAppDelegate;
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
 	[director setDisplayStats:NO];
-	[director setProjection:kCCDirectorProjection2D];
+	[director setProjection:CCDirectorProjection2D];
     //[cocosView openGLContext];
     
 	[director setView:cocosView];
@@ -1888,12 +1890,12 @@ static BOOL hideAllToNextSeparator;
     if (type == kCCBNewDocTypeScene)
     {
         // Set default contentSize to 100% x 100% for scenes
-        [PositionPropertySetter setSize:NSMakeSize(1, 1) type:kCCContentSizeTypeNormalized forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSMakeSize(1, 1) type:CCContentSizeTypeNormalized forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     else if (type == kCCBNewDocTypeLayer)
     {
         // Set contentSize to w x h in scaled coordinates for layers
-        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:kCCContentSizeTypeScaled forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:CCContentSizeTypeScaled forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     
     [outlineHierarchy reloadData];
@@ -2267,7 +2269,7 @@ static BOOL hideAllToNextSeparator;
     
     CCNode* node = [plugInManager createDefaultNodeOfType:@"CCBFile"];
     [NodeGraphPropertySetter setNodeGraphForNode:node andProperty:@"ccbFile" withFile:ccbFile parentSize:parent.contentSize];
-    [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) type:kCCPositionTypePoints forNode:node prop:@"position"];
+    [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) type:CCPositionTypePoints forNode:node prop:@"position"];
     [self addCCObject:node toParent:parent];
 }
 
@@ -3525,14 +3527,14 @@ static BOOL hideAllToNextSeparator;
     for (CCNode* c in self.selectedNodes)
     {
         CCPositionType positionType = [PositionPropertySetter positionTypeForNode:c prop:@"position"];
-        if (positionType.xUnit != kCCPositionUnitNormalized)
+        if (positionType.xUnit != CCPositionUnitNormalized)
         {
             CGPoint pos = NSPointToCGPoint([PositionPropertySetter positionForNode:c prop:@"position"]);
             pos = ccp(roundf(pos.x), pos.y);
             [PositionPropertySetter setPosition:NSPointFromCGPoint(pos) forNode:c prop:@"position"];
             [PositionPropertySetter addPositionKeyframeForNode:c];
         }
-        if (positionType.yUnit != kCCPositionUnitNormalized)
+        if (positionType.yUnit != CCPositionUnitNormalized)
         {
             CGPoint pos = NSPointToCGPoint([PositionPropertySetter positionForNode:c prop:@"position"]);
             pos = ccp(pos.x, roundf(pos.y));

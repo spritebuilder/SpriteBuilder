@@ -2,11 +2,11 @@
 
 SpriteBuilder is a free tool (released under MIT-licence) for rapidly developing games and apps. SpriteBuilder is built for cocos2d-iphone.
 
-For more info and binary downloads, please visit [spritebuilder.org](http://spritebuilder.org). *(Website is not yet up!)*
+For more info and binary downloads, please visit www.spritebuilder.com.
 
 ## Getting started with the source
 
-Cocos2d and other extensions are provided as a submodules to this project. To be able to compile the source code you need first check out the module. Change directory into the top (this) directory of SpriteBuilder and run:
+Change directory into the top (this) directory of SpriteBuilder and run:
 
     git clone https://github.com/apportable/SpriteBuilder
     cd SpriteBuilder
@@ -35,4 +35,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-SpriteBuilder: [http://spritebuilder.org](http://spritebuilder.org) *(Website is not yet up!)*
+SpriteBuilder: www.spritebuilder.com

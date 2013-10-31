@@ -24,6 +24,7 @@
 
 #import "RulersLayer.h"
 #import "CCBGlobals.h"
+#import "CCLabelAtlas.h"
 
 #define kCCBRulerWidth 15
 
@@ -34,10 +35,10 @@
     self = [super init];
     if (!self) return NULL;
     
-    bgVertical = [CCSprite9Slice spriteWithFile:@"ruler-bg-vertical.png"];
+    bgVertical = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-vertical.png"];
     bgVertical.anchorPoint = ccp(0,0);
     
-    bgHorizontal = [CCSprite9Slice spriteWithFile:@"ruler-bg-horizontal.png"];
+    bgHorizontal = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-horizontal.png"];
     bgHorizontal.anchorPoint = ccp(0,0);
     
     [self addChild:bgVertical];
@@ -48,18 +49,18 @@
     [self addChild:marksVertical z:1];
     [self addChild:marksHorizontal z:3];
     
-    mouseMarkVertical = [CCSprite spriteWithFile:@"ruler-guide.png"];
+    mouseMarkVertical = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
     mouseMarkVertical.anchorPoint = ccp(0, 0.5f);
     mouseMarkVertical.visible = NO;
     [self addChild:mouseMarkVertical z:4];
     
-    mouseMarkHorizontal = [CCSprite spriteWithFile:@"ruler-guide.png"];
+    mouseMarkHorizontal = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
     mouseMarkHorizontal.rotation = -90;
     mouseMarkHorizontal.anchorPoint = ccp(0, 0.5f);
     mouseMarkHorizontal.visible = NO;
     [self addChild:mouseMarkHorizontal z:4];
     
-    CCSprite* xyBg = [CCSprite spriteWithFile:@"ruler-xy.png"];
+    CCSprite* xyBg = [CCSprite spriteWithImageNamed:@"ruler-xy.png"];
     [self addChild:xyBg z:5];
     xyBg.anchorPoint = ccp(0,0);
     xyBg.position = ccp(0,0);
@@ -115,17 +116,17 @@
         BOOL addLabel = NO;
         if (yDist == 0)
         {
-            mark = [CCSprite spriteWithFile:@"ruler-mark-origin.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-origin.png"];
             addLabel = YES;
         }
         else if (yDist % 50 == 0)
         {
-            mark = [CCSprite spriteWithFile:@"ruler-mark-major.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-major.png"];
             addLabel = YES;
         }
         else
         {
-            mark = [CCSprite spriteWithFile:@"ruler-mark-minor.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-minor.png"];
         }
         mark.anchorPoint = ccp(0, 0.5f);
         mark.position = ccp(0, y);
@@ -161,17 +162,17 @@
         BOOL addLabel = NO;
         if (xDist == 0)
         {
-            mark = [CCSprite spriteWithFile:@"ruler-mark-origin.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-origin.png"];
             addLabel = YES;
         }
         else if (xDist % 50 == 0)
         {
-            mark = [CCSprite spriteWithFile:@"ruler-mark-major.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-major.png"];
             addLabel = YES;
         }
         else
         {
-            mark = [CCSprite spriteWithFile:@"ruler-mark-minor.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-minor.png"];
         }
         mark.anchorPoint = ccp(0, 0.5f);
         mark.position = ccp(x, 0);

@@ -129,14 +129,13 @@
 + (void) setPropsForNode: (CCNode*) node props:(NSDictionary*)props
 {
     CGPoint position = [CCBReaderInternalV1 pointValFromDict:props forKey:@"position"];
-    [PositionPropertySetter setPosition:NSPointFromCGPoint(position) type:kCCPositionTypePoints forNode:node prop:@"position"];
+    [PositionPropertySetter setPosition:NSPointFromCGPoint(position) type:CCPositionTypePoints forNode:node prop:@"position"];
     
     if (![node isKindOfClass:[CCSprite class]] &&
-        ![node isKindOfClass:[CCMenuItemImage class]] &&
         ![node isKindOfClass:[CCLabelBMFont class]])
     {
         CGSize contentSize = [CCBReaderInternalV1 sizeValFromDict:props forKey:@"contentSize"];
-        [PositionPropertySetter setSize:NSSizeFromCGSize(contentSize) type:kCCContentSizeTypePoints forNode:node prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSSizeFromCGSize(contentSize) type:CCContentSizeTypePoints forNode:node prop:@"contentSize"];
     }
     float scaleX = [CCBReaderInternalV1 floatValFromDict:props forKey:@"scaleX"];
     float scaleY = [CCBReaderInternalV1 floatValFromDict:props forKey:@"scaleY"];
@@ -147,7 +146,7 @@
     node.rotation = [CCBReaderInternalV1 floatValFromDict:props forKey:@"rotation"];
     //node.ignoreAnchorPointForPosition = ![CCBReaderInternalV1 boolValFromDict:props forKey:@"isRelativeAnchorPoint"];
     node.visible = [CCBReaderInternalV1 boolValFromDict:props forKey:@"visible"];
-    node.tag = [CCBReaderInternalV1 intValFromDict:props forKey:@"tag"];
+    //node.tag = [CCBReaderInternalV1 intValFromDict:props forKey:@"tag"];
         
         [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"customClass"] forKey:@"customClass" andNode:node];
         [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"memberVarAssignmentType"] forKey:@"memberVarAssignmentType" andNode:node];
@@ -163,7 +162,7 @@
         [CCBReaderInternalV1 setExtraProp:[NSNumber numberWithBool:isExpanded] forKey:@"isExpanded" andNode:node];
 }
 
-+ (void) setPropsForLayer: (CCLayer*) node props:(NSDictionary*)props
++ (void) setPropsForLayer: (CCNode*) node props:(NSDictionary*)props
 {
     [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"touchEnabled"] forKey:@"touchEnabled" andNode:node];
     [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"accelerometerEnabled"] forKey:@"accelerometerEnabled" andNode:node];
@@ -204,30 +203,6 @@
     node.flipX = [CCBReaderInternalV1 boolValFromDict:props forKey:@"flipX"];
     node.flipY = [CCBReaderInternalV1 boolValFromDict:props forKey:@"flipY"];
     node.blendFunc = [CCBReaderInternalV1 blendFuncValFromDict:props forKey:@"blendFunc"];
-}
-
-+ (void) setPropsForMenu: (CCMenu*) node props:(NSDictionary*)props
-{
-    //node.mouseEnabled = NO;
-}
-
-+ (void) setPropsForMenuItem: (CCMenuItem*) node props:(NSDictionary*)props
-{
-    [node setIsEnabled:[CCBReaderInternalV1 boolValFromDict:props forKey:@"isEnabled"]];
-    [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"selector"] forKey:@"block" andNode:node];
-    [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"target"] forKey:@"blockTarget" andNode:node];
-    NSString* spriteFramesFile = [props objectForKey:@"spriteFramesFile"];
-    if (spriteFramesFile)
-    {
-        [CCBReaderInternalV1 setExtraProp:spriteFramesFile forKey:@"spriteSheetFile" andNode:node];
-    }
-}
-
-+ (void) setPropsForMenuItemImage: (CCMenuItemImage*) node props:(NSDictionary*)props
-{
-    [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"spriteFileNormal"] forKey:@"spriteFileNormal" andNode:node];
-    [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"spriteFileSelected"] forKey:@"spriteFileSelected" andNode:node];
-    [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"spriteFileDisabled"] forKey:@"spriteFileDisabled" andNode:node];
 }
 
 + (void) setPropsForLabelBMFont: (CCLabelBMFont*) node props:(NSDictionary*)props
@@ -278,7 +253,7 @@
     node.endColorVar = [CCBReaderInternalV1 color4fValFromDict:props forKey:@"endColorVar"];
     node.blendFunc = [CCBReaderInternalV1 blendFuncValFromDict:props forKey:@"blendFunc"];
     
-    if (node.emitterMode == kCCParticleModeGravity)
+    if (node.emitterMode == CCParticleSystemModeGravity)
     {
         node.gravity = [CCBReaderInternalV1 pointValFromDict:props forKey:@"gravity"];
         node.angle = [CCBReaderInternalV1 intValFromDict:props forKey:@"angle"];
@@ -319,43 +294,6 @@
         [CCBReaderInternalV1 setPropsForParticleSystem:(CCParticleSystem*)node props:props];
         
         [TexturePropertySetter setTextureForNode:node andProperty:@"texture" withFile:[props objectForKey:@"spriteFile"]];
-    }
-    else if ([class isEqualToString:@"CCMenuItemImage"])
-    {
-        node = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCMenuItemImage"];
-        
-        NSString* fileNor = [props objectForKey:@"spriteFileNormal"];
-        NSString* fileSel = [props objectForKey:@"spriteFileSelected"];
-        NSString* fileDis = [props objectForKey:@"spriteFileDisabled"];
-        NSString* fileSheet = [props objectForKey:@"spriteFramesFile"];
-        
-        if (!fileNor) fileNor = @"";
-        if (!fileSel) fileSel = @"";
-        if (!fileDis) fileDis = @"";
-        if (!fileSheet || [fileSheet isEqualToString:@""]) fileSheet = kCCBUseRegularFile;
-        
-        [TexturePropertySetter setSpriteFrameForNode:node andProperty:@"normalSpriteFrame" withFile:fileNor andSheetFile:fileSheet];
-        [node setExtraProp:fileNor forKey:@"normalSpriteFrame"];
-        [node setExtraProp:fileSheet forKey:@"normalSpriteFrameSheet"];
-        
-        [TexturePropertySetter setSpriteFrameForNode:node andProperty:@"selectedSpriteFrame" withFile:fileSel andSheetFile:fileSheet];
-        [node setExtraProp:fileSel forKey:@"selectedSpriteFrame"];
-        [node setExtraProp:fileSheet forKey:@"selectedSpriteFrameSheet"];
-        
-        [TexturePropertySetter setSpriteFrameForNode:node andProperty:@"disabledSpriteFrame" withFile:fileDis andSheetFile:fileSheet];
-        [node setExtraProp:fileDis forKey:@"disabledSpriteFrame"];
-        [node setExtraProp:fileSheet forKey:@"disabledSpriteFrameSheet"];
-        
-        [CCBReaderInternalV1 setPropsForNode:node props:props];
-        [CCBReaderInternalV1 setPropsForMenuItem:(CCMenuItem*)node props:props];
-        [CCBReaderInternalV1 setPropsForMenuItemImage:(CCMenuItemImage*)node props:props];
-    }
-    else if ([class isEqualToString:@"CCMenu"])
-    {
-        node = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCMenu"];
-        [CCBReaderInternalV1 setPropsForNode:node props:props];
-        [CCBReaderInternalV1 setPropsForLayer:(CCLayer*)node props:props];
-        [CCBReaderInternalV1 setPropsForMenu:(CCMenu*)node props:props];
     }
     else if ([class isEqualToString:@"CCNineSlice"])
     {
@@ -422,7 +360,7 @@
         node = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCLayerGradient"];
         
         [CCBReaderInternalV1 setPropsForNode:node props:props];
-        [CCBReaderInternalV1 setPropsForLayer:(CCLayer*)node props:props];
+        [CCBReaderInternalV1 setPropsForLayer:(CCNode*)node props:props];
         [CCBReaderInternalV1 setPropsForLayerColor:(CCLayerColor*)node props:props];
         [CCBReaderInternalV1 setPropsForLayerGradient:(CCLayerGradient*)node props:props];
     }
@@ -431,7 +369,7 @@
         node = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCLayerColor"];
         
         [CCBReaderInternalV1 setPropsForNode:node props:props];
-        [CCBReaderInternalV1 setPropsForLayer:(CCLayer*)node props:props];
+        [CCBReaderInternalV1 setPropsForLayer:(CCNode*)node props:props];
         [CCBReaderInternalV1 setPropsForLayerColor:(CCLayerColor*)node props:props];
     }
     else if ([class isEqualToString:@"CCLayer"])
@@ -439,7 +377,7 @@
         node = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCLayer"];
         
         [CCBReaderInternalV1 setPropsForNode:node props:props];
-        [CCBReaderInternalV1 setPropsForLayer:(CCLayer*)node props:props];
+        [CCBReaderInternalV1 setPropsForLayer:(CCNode*)node props:props];
     }
     else if ([class isEqualToString:@"CCBTemplateNode"])
     {

@@ -36,7 +36,7 @@
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
-    if (type.xUnit == kCCPositionUnitNormalized) posX /= 100.0f;
+    if (type.xUnit == CCPositionUnitNormalized) posX /= 100.0f;
     
 	NSPoint pt = [PositionPropertySetter positionForNode:selection prop:propertyName];
     pt.x = posX;
@@ -55,7 +55,7 @@
 {
     float posX = [[selection valueForKey:propertyName] pointValue].x;
     CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
-    if (type.xUnit == kCCPositionUnitNormalized) posX *= 100.0f;
+    if (type.xUnit == CCPositionUnitNormalized) posX *= 100.0f;
     return posX;
 }
 
@@ -64,7 +64,7 @@
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
     CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
-    if (type.yUnit == kCCPositionUnitNormalized) posY /= 100.0f;
+    if (type.yUnit == CCPositionUnitNormalized) posY /= 100.0f;
     
     NSPoint pt = [PositionPropertySetter positionForNode:selection prop:propertyName];
     pt.y = posY;
@@ -83,7 +83,7 @@
 {
     float posY = [[selection valueForKey:propertyName] pointValue].y;
     CCPositionType type = [PositionPropertySetter positionTypeForNode:selection prop:propertyName];
-    if (type.yUnit == kCCPositionUnitNormalized) posY *= 100.0f;
+    if (type.yUnit == CCPositionUnitNormalized) posY *= 100.0f;
     return posY;
 }
 

@@ -46,6 +46,7 @@
 #import "Tupac.h"
 #import "PhysicsHandler.h"
 #import "CCBUtil.h"
+#import "CCTextureCache.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -146,7 +147,7 @@ static CocosScene* sharedCocosScene;
     [self addChild:stageBgLayer z:0];
     
     contentLayer = [CCNode node];
-    contentLayer.contentSizeType = kCCContentSizeTypeNormalized;
+    contentLayer.contentSizeType = CCContentSizeTypeNormalized;
     contentLayer.contentSize = CGSizeMake(1, 1);
     [stageBgLayer addChild:contentLayer];
 }
@@ -172,7 +173,7 @@ static CocosScene* sharedCocosScene;
         [borderLeft setOpacity:255];
         [borderRight setOpacity:255];
         
-        CCTexture2D* deviceTexture = NULL;
+        CCTexture* deviceTexture = NULL;
         BOOL rotateDevice = NO;
         
         int devType = [appDelegate orientedDeviceTypeForSize:stageBgLayer.contentSize];
@@ -403,7 +404,7 @@ static CocosScene* sharedCocosScene;
             
             CGPoint anchorPointPos = [node convertToWorldSpace:localAnchor];
             
-            CCSprite* anchorPointSprite = [CCSprite spriteWithFile:@"select-pt.png"];
+            CCSprite* anchorPointSprite = [CCSprite spriteWithImageNamed:@"select-pt.png"];
             anchorPointSprite.position = anchorPointPos;
             [selectionLayer addChild:anchorPointSprite z:1];
             
@@ -417,10 +418,10 @@ static CocosScene* sharedCocosScene;
                 CGPoint tl = ccpRound([node convertToWorldSpace: ccp(0,node.contentSizeInPoints.height)]);
                 CGPoint tr = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,node.contentSizeInPoints.height)]);
                 
-                CCSprite* blSprt = [CCSprite spriteWithFile:@"select-corner.png"];
-                CCSprite* brSprt = [CCSprite spriteWithFile:@"select-corner.png"];
-                CCSprite* tlSprt = [CCSprite spriteWithFile:@"select-corner.png"];
-                CCSprite* trSprt = [CCSprite spriteWithFile:@"select-corner.png"];
+                CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
                 
                 blSprt.position = bl;
                 brSprt.position = br;
@@ -443,7 +444,7 @@ static CocosScene* sharedCocosScene;
             {
                 CGPoint pos = [node convertToWorldSpace: ccp(0,0)];
                 
-                CCSprite* sel = [CCSprite spriteWithFile:@"sel-round.png"];
+                CCSprite* sel = [CCSprite spriteWithImageNamed:@"sel-round.png"];
                 sel.anchorPoint = ccp(0.5f, 0.5f);
                 sel.position = pos;
                 [selectionLayer addChild:sel];
@@ -1088,11 +1089,11 @@ static CocosScene* sharedCocosScene;
     [self update:0];
 }
 
-- (void) update:(ccTime)delta
+- (void) update:(CCTime)delta
 {
     // Recenter the content layer
-    BOOL winSizeChanged = !CGSizeEqualToSize(winSize, [[CCDirector sharedDirector] winSize]);
-    winSize = [[CCDirector sharedDirector] winSize];
+    BOOL winSizeChanged = !CGSizeEqualToSize(winSize, [[CCDirector sharedDirector] viewSize]);
+    winSize = [[CCDirector sharedDirector] viewSize];
     CGPoint stageCenter = ccp((int)(winSize.width/2+scrollOffset.x) , (int)(winSize.height/2+scrollOffset.y));
     
     self.contentSize = winSize;
@@ -1106,7 +1107,7 @@ static CocosScene* sharedCocosScene;
         // Use normal rendering
         stageBgLayer.visible = YES;
         renderedScene.visible = NO;
-        [[borderDevice texture] setAntiAliasTexParameters];
+        [borderDevice texture].antialiased = YES;;
     }
     else
     {
@@ -1117,7 +1118,7 @@ static CocosScene* sharedCocosScene;
         [renderedScene beginWithClear:0 g:0 b:0 a:1];
         [contentLayer visit];
         [renderedScene end];
-        [[borderDevice texture] setAliasTexParameters];
+        [borderDevice texture].antialiased = NO;
     }
     
     // Update selection & physics editor

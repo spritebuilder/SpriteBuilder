@@ -29,7 +29,6 @@
 #import "NodeInfo.h"
 #import "CCBWriterInternal.h"
 #import "TexturePropertySetter.h"
-#import "AnimationPropertySetter.h"
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
 #import "ResourceManager.h"
@@ -143,24 +142,24 @@ NSDictionary* renamedProperties = NULL;
     {
         float x = [[serializedValue objectAtIndex:0] floatValue];
         float y = [[serializedValue objectAtIndex:1] floatValue];
-        CCPositionType posType = kCCPositionTypePoints;
+        CCPositionType posType = CCPositionTypePoints;
         if ([(NSArray*)serializedValue count] == 3)
         {
             // Position is stored in old format - do conversion
             int oldPosType = [[serializedValue objectAtIndex:2] intValue];
-            if (oldPosType == kCCBPositionTypeRelativeBottomLeft) posType.corner = kCCPositionReferenceCornerBottomLeft;
-            else if (oldPosType == kCCBPositionTypeRelativeTopLeft) posType.corner = kCCPositionReferenceCornerTopLeft;
-            else if (oldPosType == kCCBPositionTypeRelativeTopRight) posType.corner = kCCPositionReferenceCornerTopRight;
-            else if (oldPosType == kCCBPositionTypeRelativeBottomRight) posType.corner = kCCPositionReferenceCornerBottomRight;
+            if (oldPosType == kCCBPositionTypeRelativeBottomLeft) posType.corner = CCPositionReferenceCornerBottomLeft;
+            else if (oldPosType == kCCBPositionTypeRelativeTopLeft) posType.corner = CCPositionReferenceCornerTopLeft;
+            else if (oldPosType == kCCBPositionTypeRelativeTopRight) posType.corner = CCPositionReferenceCornerTopRight;
+            else if (oldPosType == kCCBPositionTypeRelativeBottomRight) posType.corner = CCPositionReferenceCornerBottomRight;
             else if (oldPosType == kCCBPositionTypePercent)
             {
-                posType = kCCPositionTypeNormalized;
+                posType = CCPositionTypeNormalized;
                 x /= 100.0;
                 y /= 100.0;
             }
             else if (oldPosType == kCCBPositionTypeMultiplyResolution)
             {
-                posType = kCCPositionTypeScaled;
+                posType = CCPositionTypeScaled;
             }
         }
         else if ([(NSArray*)serializedValue count] == 5)
@@ -184,35 +183,35 @@ NSDictionary* renamedProperties = NULL;
         float w = [[serializedValue objectAtIndex:0] floatValue];
         float h = [[serializedValue objectAtIndex:1] floatValue];
         
-        CCContentSizeType sizeType = kCCContentSizeTypePoints;
+        CCContentSizeType sizeType = CCContentSizeTypePoints;
         if ([(NSArray*)serializedValue count] == 3)
         {
             // Convert old content size type
             int oldSizeType = [[serializedValue objectAtIndex:2] intValue];
             if (oldSizeType == kCCBSizeTypePercent)
             {
-                sizeType = kCCContentSizeTypeNormalized;
+                sizeType = CCContentSizeTypeNormalized;
                 w /= 100.0f;
                 h /= 100.0f;
             }
             else if (oldSizeType == kCCBSizeTypeRelativeContainer)
             {
-                sizeType.widthUnit = kCCContentSizeUnitInsetPoints;
-                sizeType.heightUnit = kCCContentSizeUnitInsetPoints;
+                sizeType.widthUnit = CCContentSizeUnitInsetPoints;
+                sizeType.heightUnit = CCContentSizeUnitInsetPoints;
             }
             else if (oldSizeType == kCCBSizeTypeHorizontalPercent)
             {
-                sizeType.widthUnit = kCCContentSizeUnitNormalized;
+                sizeType.widthUnit = CCContentSizeUnitNormalized;
                 w /= 100.0f;
             }
             else if (oldSizeType == kCCBSzieTypeVerticalPercent)
             {
-                sizeType.heightUnit = kCCContentSizeUnitNormalized;
+                sizeType.heightUnit = CCContentSizeUnitNormalized;
                 h /= 100.0f;
             }
             else if (oldSizeType == kCCBSizeTypeMultiplyResolution)
             {
-                sizeType = kCCContentSizeTypeScaled;
+                sizeType = CCContentSizeTypeScaled;
             }
         }
         else if ([(NSArray*)serializedValue count] == 4)
@@ -304,17 +303,6 @@ NSDictionary* renamedProperties = NULL;
         [extraProps setObject:spriteSheetFile forKey:[NSString stringWithFormat:@"%@Sheet",name]];
         [extraProps setObject:spriteFile forKey:name];
         [TexturePropertySetter setSpriteFrameForNode:node andProperty:name withFile:spriteFile andSheetFile:spriteSheetFile];
-    }
-    else if ([type isEqualToString:@"Animation"])
-    {
-        NSString* animationFile = [serializedValue objectAtIndex:0];
-        NSString* animationName = [serializedValue objectAtIndex:1];
-        if (!animationFile) animationFile = @"";
-        if (!animationName) animationName = @"";
-        
-        [extraProps setObject:animationFile forKey:[NSString stringWithFormat:@"%@Animation",name]];
-        [extraProps setObject:animationName forKey:name];
-        [AnimationPropertySetter setAnimationForNode:node andProperty:name withName:animationName andFile:animationFile];
     }
     else if ([type isEqualToString:@"Texture"])
     {

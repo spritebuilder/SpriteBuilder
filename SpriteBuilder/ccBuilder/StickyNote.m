@@ -38,7 +38,7 @@
     self.anchorPoint = ccp(0,1);
     //self.ignoreAnchorPointForPosition = NO;
     
-    bg = [CCSprite9Slice spriteWithFile:@"notes-bg.png"];
+    bg = [CCSprite9Slice spriteWithImageNamed:@"notes-bg.png"];
     bg.anchorPoint = ccp(0,0);
     bg.position = ccp(0,0);
     [bg setMargin:0.3];
@@ -47,8 +47,8 @@
     lbl = [CCLabelTTF labelWithString:@"Double click to edit" fontName:@"MarkerFelt-Thin" fontSize:14];
     lbl.anchorPoint = ccp(0,0);
     lbl.position = ccp(kCCBNoteLblInsetH, kCCBNoteLblInsetBot);
-    lbl.verticalAlignment = kCCVerticalTextAlignmentTop;
-    lbl.horizontalAlignment = kCCTextAlignmentLeft;
+    lbl.verticalAlignment = CCVerticalTextAlignmentTop;
+    lbl.horizontalAlignment = CCTextAlignmentLeft;
     lbl.color = ccc3(67, 49, 33);
     
     [self addChild:lbl z:1];

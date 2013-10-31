@@ -157,16 +157,6 @@
 			<key>displayName</key>
 			<string>Skew</string>
 		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<integer>-1</integer>
-			<key>type</key>
-			<string>Integer</string>
-			<key>name</key>
-			<string>tag</string>
-			<key>displayName</key>
-			<string>Tag</string>
-		</dict>
 	</array>
 	<key>propertiesOverridden</key>
 	<array/>
