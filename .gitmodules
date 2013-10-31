@@ -8,6 +8,3 @@
 	path = SpriteBuilder/libs/Fragaria
 	url = https://github.com/vlidholt/Fragaria.git
 
-[submodule "Support/PROJECTNAME/Source/libs/SpriteBuilder-Reader"]
-	path = Support/PROJECTNAME/Source/libs/SpriteBuilder-Reader
-	url = git@github.com:apportable/SpriteBuilder-Reader.git

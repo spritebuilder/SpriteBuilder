@@ -9,13 +9,6 @@
 /* Begin PBXBuildFile section */
 		B737893B180761570076A88C /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = B737893A180761570076A88C /* Published-iOS */; };
 		B737893F1807617C0076A88C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
-		B7378963180761C30076A88C /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378953180761C30076A88C /* CCBAnimationManager.m */; };
-		B7378964180761C30076A88C /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378955180761C30076A88C /* CCBKeyframe.m */; };
-		B7378965180761C30076A88C /* CCBLocalizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378957180761C30076A88C /* CCBLocalizationManager.m */; };
-		B7378966180761C30076A88C /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378959180761C30076A88C /* CCBReader.m */; };
-		B7378967180761C30076A88C /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = B737895B180761C30076A88C /* CCBsequence.m */; };
-		B7378968180761C30076A88C /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = B737895D180761C30076A88C /* CCBSequenceProperty.m */; };
-		B737896A180761C30076A88C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B7378962180761C30076A88C /* README.md */; };
 		B7378975180762440076A88C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896B180762440076A88C /* Default-568h@2x.png */; };
 		B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896C180762440076A88C /* Default-Landscape~ipad.png */; };
 		B7378977180762440076A88C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896D180762440076A88C /* Default.png */; };
@@ -55,13 +48,6 @@
 			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		B737894C180761A90076A88C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 502C65EE0DFEF3DD00E4107D;
-			remoteInfo = "cocos2d-documentation";
-		};
 		B737894E180761A90076A88C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
@@ -76,6 +62,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		B7D2733E1822FA2E0054849B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D36F7E35181580A000E94F72;
+			remoteInfo = UnitTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -83,20 +76,6 @@
 		B737893D1807617C0076A88C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Source/AppDelegate.h; sourceTree = "<group>"; };
 		B737893E1807617C0076A88C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Source/AppDelegate.m; sourceTree = "<group>"; };
 		B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d-ios.xcodeproj"; path = "Source/libs/cocos2d-iphone/cocos2d-ios.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		B7378952180761C30076A88C /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
-		B7378953180761C30076A88C /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
-		B7378954180761C30076A88C /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
-		B7378955180761C30076A88C /* CCBKeyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBKeyframe.m; sourceTree = "<group>"; };
-		B7378956180761C30076A88C /* CCBLocalizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBLocalizationManager.h; sourceTree = "<group>"; };
-		B7378957180761C30076A88C /* CCBLocalizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBLocalizationManager.m; sourceTree = "<group>"; };
-		B7378958180761C30076A88C /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
-		B7378959180761C30076A88C /* CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader.m; sourceTree = "<group>"; };
-		B737895A180761C30076A88C /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
-		B737895B180761C30076A88C /* CCBsequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBsequence.m; sourceTree = "<group>"; };
-		B737895C180761C30076A88C /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
-		B737895D180761C30076A88C /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
-		B737895E180761C30076A88C /* CCBuilderReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBuilderReader.h; sourceTree = "<group>"; };
-		B7378962180761C30076A88C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		B737896B180762440076A88C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Source/Resources/Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		B737896C180762440076A88C /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "Source/Resources/Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		B737896D180762440076A88C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Source/Resources/Default.png; sourceTree = SOURCE_ROOT; };
@@ -161,40 +140,10 @@
 			children = (
 				B7378949180761A90076A88C /* libbuild all libs.a */,
 				B737894B180761A90076A88C /* libcocos2d.a */,
-				B737894D180761A90076A88C /* libcocos2d-documentation.a */,
 				B737894F180761A90076A88C /* libkazmath.a */,
+				B7D2733F1822FA2E0054849B /* UnitTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B7378950180761C30076A88C /* SpriteBuilder-Reader */ = {
-			isa = PBXGroup;
-			children = (
-				B7378951180761C30076A88C /* CCBReader */,
-				B7378962180761C30076A88C /* README.md */,
-			);
-			name = "SpriteBuilder-Reader";
-			path = "Source/libs/SpriteBuilder-Reader";
-			sourceTree = SOURCE_ROOT;
-		};
-		B7378951180761C30076A88C /* CCBReader */ = {
-			isa = PBXGroup;
-			children = (
-				B7378952180761C30076A88C /* CCBAnimationManager.h */,
-				B7378953180761C30076A88C /* CCBAnimationManager.m */,
-				B7378954180761C30076A88C /* CCBKeyframe.h */,
-				B7378955180761C30076A88C /* CCBKeyframe.m */,
-				B7378956180761C30076A88C /* CCBLocalizationManager.h */,
-				B7378957180761C30076A88C /* CCBLocalizationManager.m */,
-				B7378958180761C30076A88C /* CCBReader.h */,
-				B7378959180761C30076A88C /* CCBReader.m */,
-				B737895A180761C30076A88C /* CCBSequence.h */,
-				B737895B180761C30076A88C /* CCBsequence.m */,
-				B737895C180761C30076A88C /* CCBSequenceProperty.h */,
-				B737895D180761C30076A88C /* CCBSequenceProperty.m */,
-				B737895E180761C30076A88C /* CCBuilderReader.h */,
-			);
-			path = CCBReader;
 			sourceTree = "<group>";
 		};
 		B73789911807667A0076A88C /* Icons */ = {
@@ -264,7 +213,6 @@
 		B77F1B5E17B978D7009739AE /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				B7378950180761C30076A88C /* SpriteBuilder-Reader */,
 				B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */,
 			);
 			name = libs;
@@ -359,18 +307,18 @@
 			remoteRef = B737894A180761A90076A88C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B737894D180761A90076A88C /* libcocos2d-documentation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2d-documentation.a";
-			remoteRef = B737894C180761A90076A88C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B737894F180761A90076A88C /* libkazmath.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libkazmath.a;
 			remoteRef = B737894E180761A90076A88C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B7D2733F1822FA2E0054849B /* UnitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTests.xctest;
+			remoteRef = B7D2733E1822FA2E0054849B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -382,7 +330,6 @@
 			files = (
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
 				B737897E180762440076A88C /* Icon@2x.png in Resources */,
-				B737896A180761C30076A88C /* README.md in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
 				B737897C180762440076A88C /* Icon-Small@2x.png in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
@@ -402,14 +349,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7378964180761C30076A88C /* CCBKeyframe.m in Sources */,
-				B7378967180761C30076A88C /* CCBsequence.m in Sources */,
-				B7378966180761C30076A88C /* CCBReader.m in Sources */,
-				B7378963180761C30076A88C /* CCBAnimationManager.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
-				B7378968180761C30076A88C /* CCBSequenceProperty.m in Sources */,
-				B7378965180761C30076A88C /* CCBLocalizationManager.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
