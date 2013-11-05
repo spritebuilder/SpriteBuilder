@@ -2946,18 +2946,19 @@ static BOOL hideAllToNextSeparator;
 -(void)deleteDocument:(RMResource*)document
 {
 
-    NSAlert* alert = [NSAlert alertWithMessageText:@"Delete Interface" defaultButton:@"Cancel" alternateButton:@"OK" otherButton:NULL informativeTextWithFormat: @"Are you sure you'd like to delete %@?",document.filePath.lastPathComponent];
-    [alert setAlertStyle:NSWarningAlertStyle];
+    // Confirm remove of items
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?" defaultButton:@"Cancel" alternateButton:@"Delete" otherButton:NULL informativeTextWithFormat:@"You cannot undo this operation."];
     NSInteger result = [alert runModal];
-    if (result == NSAlertDefaultReturn)
-        return;
     
-    NSError * error;
-    if(![[NSFileManager defaultManager] removeItemAtPath:document.filePath error:&error])
+    if (result == NSAlertDefaultReturn)
     {
-        [self modalDialogTitle:@"Failed to remove file" message:@"Failed to remove the interface file."];
+        return;
     }
-
+    
+    [ResourceManager removeResource:document];
+    
+    [[AppDelegate appDelegate].resManager reloadAllResources];
+    
 }
 
 - (IBAction) newDocument:(id)sender
