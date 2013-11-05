@@ -291,7 +291,7 @@ static AppDelegate* sharedAppDelegate;
     NSImage* imgPhysics = [NSImage imageNamed:@"inspector-physics"];
     [imgPhysics setTemplate:YES];
     SMTabBarItem* itemPhysics = [[[SMTabBarItem alloc] initWithImage:imgPhysics tag:0] autorelease];
-    itemPhysics.toolTip = @"Item Templates";
+    itemPhysics.toolTip = @"Item Physics";
     itemPhysics.keyEquivalent = @"";
     [items addObject:itemPhysics];
     
