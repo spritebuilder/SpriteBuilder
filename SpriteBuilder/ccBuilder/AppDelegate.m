@@ -2943,6 +2943,23 @@ static BOOL hideAllToNextSeparator;
     [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
 }
 
+-(void)deleteDocument:(RMResource*)document
+{
+
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Delete Interface" defaultButton:@"Cancel" alternateButton:@"OK" otherButton:NULL informativeTextWithFormat: @"Are you sure you'd like to delete %@?",document.filePath.lastPathComponent];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    NSInteger result = [alert runModal];
+    if (result == NSAlertDefaultReturn)
+        return;
+    
+    NSError * error;
+    if(![[NSFileManager defaultManager] removeItemAtPath:document.filePath error:&error])
+    {
+        [self modalDialogTitle:@"Failed to remove file" message:@"Failed to remove the interface file."];
+    }
+
+}
+
 - (IBAction) newDocument:(id)sender
 {
     NewDocWindowController* wc = [[NewDocWindowController alloc] initWithWindowNibName:@"NewDocWindow"];
@@ -4007,6 +4024,28 @@ static BOOL hideAllToNextSeparator;
             [projectSettings makeSmartSpriteSheet:res];
         }
     }
+}
+- (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender
+{
+    int selectedRow = [sender tag];
+    
+    if (selectedRow >= 0 && projectSettings)
+    {
+        RMResource* res = [outlineProject itemAtRow:selectedRow];
+        [self deleteDocument:res];
+    }
+    else
+    {
+        //forward to normal handler.
+        [self newDocument:sender];
+    }
+}
+
+- (IBAction)menuActionNewFolder:(NSMenuItem*)sender
+{
+    //forward to normal handler.
+    [self newFolder:sender];
+
 }
 
 /*

@@ -86,6 +86,29 @@
                 }
             }
         }
+        else if (item.action == @selector(menuActionInterfaceFile:))
+        {
+            //default behavior.
+            item.title = @"New Interface File...";
+            item.tag = -1;
+            
+            if([clickedItem isKindOfClass:[RMResource class]])
+            {
+                RMResource* clickedResource = clickedItem;
+                if(clickedResource.type == kCCBResTypeCCBFile)
+                {
+                    item.tag = row;
+                    item.title = @"Delete Interface File...";
+                }
+            }
+            
+        }
+        else if (item.action == @selector(menuActionNewFolder:))
+        {
+            item.title = @"New Folder...";
+            item.tag = -1;
+            
+        }
         else if (item.action == @selector(menuOpenExternal:))
         {
             item.title = @"Open With External Editor";
