@@ -7,7 +7,7 @@
 	<key>displayName</key>
 	<string>Box Layout</string>
 	<key>description</key>
-	<string>Positions the children below it in a horizontal or vertical box layout.</string>
+	<string>Positions its child nodes below it in a horizontal or vertical box layout.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
