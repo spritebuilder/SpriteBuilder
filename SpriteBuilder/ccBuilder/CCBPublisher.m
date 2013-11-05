@@ -936,7 +936,7 @@
 - (BOOL) publish_
 {
     // Remove all old publish directories if user has cleaned the cache
-    if (projectSettings.needRepublish)
+    if (projectSettings.needRepublish && !projectSettings.onlyPublishCCBs)
     {
         NSFileManager *fm = [NSFileManager defaultManager];
         NSString* publishDir;
