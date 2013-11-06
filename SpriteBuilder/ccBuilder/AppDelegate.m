@@ -4220,9 +4220,9 @@ static BOOL hideAllToNextSeparator;
 
 #pragma mark Playback countrols
 
-- (void) playbackStep:(id) sender
+- (void) updatePlayback
 {
-    int frames = [sender intValue];
+    
     if (!currentDocument)
     {
         [self playbackStop:NULL];
@@ -4231,7 +4231,13 @@ static BOOL hideAllToNextSeparator;
     if (playingBack)
     {
         // Step forward
-        [sequenceHandler.currentSequence stepForward:frames];
+        
+        double thisTime = [NSDate timeIntervalSinceReferenceDate];
+        double deltaTime = thisTime - playbackLastFrameTime;
+        double updateDelta = 1.0/sequenceHandler.currentSequence.timelineResolution;
+        
+        int steps = (int)(deltaTime/updateDelta);
+        [sequenceHandler.currentSequence stepForward:steps];
         
         if (sequenceHandler.currentSequence.timelinePosition >= sequenceHandler.currentSequence.timelineLength)
         {
@@ -4239,22 +4245,10 @@ static BOOL hideAllToNextSeparator;
         }
         else
         {
-            double thisTime = [NSDate timeIntervalSinceReferenceDate];
-            double requestedDelay = 1/sequenceHandler.currentSequence.timelineResolution;
-            double extraTime = thisTime - (playbackLastFrameTime + requestedDelay);
-            
-            double delayTime = requestedDelay - extraTime;
-            playbackLastFrameTime = thisTime;
-            int nextStep = 1;
-            while (delayTime < 0)
-            {
-                delayTime += requestedDelay;
-                nextStep++;
-                
-            }
+            playbackLastFrameTime += steps * updateDelta;
             
             // Call this method again in a little while
-            [self performSelector:@selector(playbackStep:) withObject:[NSNumber numberWithInt:nextStep] afterDelay:delayTime];
+            [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:updateDelta];
         }
     }
 }
@@ -4276,7 +4270,7 @@ static BOOL hideAllToNextSeparator;
     // Start playback
     playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
     playingBack = YES;
-    [self playbackStep:[NSNumber numberWithInt:1]];
+    [self updatePlayback];
 }
 
 - (IBAction)playbackStop:(id)sender
