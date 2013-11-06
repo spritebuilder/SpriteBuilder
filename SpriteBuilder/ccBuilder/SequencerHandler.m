@@ -783,6 +783,7 @@ static SequencerHandler* sharedSequencerHandler;
             {
                 localTime -= seq.timelineLength;
                 seq = [self seqId:seq.chainedSequenceId inArray:childSequences];
+                childSeqId = seq.sequenceId;
             }
         }
         
