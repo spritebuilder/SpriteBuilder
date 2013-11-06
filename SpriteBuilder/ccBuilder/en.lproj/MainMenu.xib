@@ -2097,16 +2097,25 @@ CA
         <userDefaultsController representsSharedInstance="YES" id="1042"/>
         <arrayController id="1056"/>
         <customObject id="1448" customClass="SUUpdater"/>
-        <menu title="Keyframe" id="1600">
+        <menu title="Keyframe" autoenablesItems="NO" id="1600">
             <items>
                 <menuItem title="Cut" id="1601">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuCutKeyframe:" target="494" id="Caf-4E-15b"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Copy" id="1602">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuCopyKeyframe:" target="494" id="Q0z-6v-6yH"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Delete" id="1603">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuDeleteKeyframe:" target="494" id="vNR-5j-jJU"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>

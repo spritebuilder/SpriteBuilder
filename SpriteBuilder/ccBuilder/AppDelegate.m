@@ -4148,6 +4148,21 @@ static BOOL hideAllToNextSeparator;
     [sequenceHandler menuAddKeyframeNamed:[self keyframePropNameFromTag:tag]];
 }
 
+- (IBAction)menuCutKeyframe:(id)sender
+{
+    [self cut:sender];
+}
+
+- (IBAction)menuCopyKeyframe:(id)sender
+{
+    [self copy:sender];
+}
+
+- (IBAction)menuDeleteKeyframe:(id)sender
+{
+    [self cut:sender];
+}
+
 - (IBAction)menuJavaScriptControlled:(id)sender
 {
     [self saveUndoStateWillChangeProperty:@"*javascriptcontrolled"];
