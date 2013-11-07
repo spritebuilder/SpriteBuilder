@@ -94,6 +94,7 @@
 		77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 77E1995113858DE0006C361B /* TabNewMetalRollover.png */; };
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
+		8098525A182C40170054BBF3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80985259182C40170054BBF3 /* CoreMedia.framework */; };
 		835DB052171561B8003A2F7B /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835DAFA7171561B7003A2F7B /* LICENSE.txt */; };
 		835DB053171561B8003A2F7B /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 835DAFA8171561B7003A2F7B /* README.markdown */; };
 		835DB08B171561B8003A2F7B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835DB040171561B7003A2F7B /* README.txt */; };
@@ -998,6 +999,7 @@
 		77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBModalSheetController.m; sourceTree = "<group>"; };
 		77E7D04D138F78F600E8EE67 /* StageSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StageSizeWindow.h; sourceTree = "<group>"; };
 		77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StageSizeWindow.m; sourceTree = "<group>"; };
+		80985259182C40170054BBF3 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		835DAF3F17156161003A2F7B /* CCBHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBHTTPServer.h; sourceTree = "<group>"; };
 		835DAF4017156161003A2F7B /* CCBHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBHTTPServer.m; sourceTree = "<group>"; };
 		835DAF81171561B7003A2F7B /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -1831,6 +1833,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8098525A182C40170054BBF3 /* CoreMedia.framework in Frameworks */,
 				B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */,
 				B794AB95177A55B7004FF493 /* QTKit.framework in Frameworks */,
 				835DB0CB17156421003A2F7B /* Security.framework in Frameworks */,
@@ -2410,6 +2413,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80985259182C40170054BBF3 /* CoreMedia.framework */,
 				B794AB94177A55B7004FF493 /* QTKit.framework */,
 				835DB0CA17156421003A2F7B /* Security.framework */,
 				E3A4747B16D43BF300DB0D61 /* AVFoundation.framework */,
