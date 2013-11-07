@@ -125,7 +125,7 @@
 {
     for (SequencerKeyframe* keyframe in keyframes)
     {
-        if (keyframe.time >= minTime && keyframe.time <= maxTime)
+        if (keyframe.time >= minTime && keyframe.time < maxTime)
         {
             return keyframe;
         }
@@ -138,7 +138,7 @@
     NSMutableArray* kfs = [NSMutableArray array];
     for (SequencerKeyframe* keyframe in keyframes)
     {
-        if (keyframe.time >= minTime && keyframe.time <= maxTime)
+        if (keyframe.time >= minTime && keyframe.time < maxTime)
         {
             [kfs addObject:keyframe];
         }

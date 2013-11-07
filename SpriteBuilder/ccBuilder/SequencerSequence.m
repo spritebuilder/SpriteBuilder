@@ -228,11 +228,14 @@
 
 - (void) stepForward:(int)numSteps
 {
+    if(numSteps == 0)
+        return;
+    
     // Calculate new time
     float newTime = [self alignTimeToResolution: timelinePosition + numSteps/timelineResolution];
     
     // Handle audio
-    NSArray* soundKeyframes = [soundChannel.seqNodeProp keyframesBetweenMinTime:timelinePosition maxTime:newTime - 1.0f/timelineResolution];
+    NSArray* soundKeyframes = [soundChannel.seqNodeProp keyframesBetweenMinTime:timelinePosition maxTime:newTime];
     
     for (SequencerKeyframe* keyframe in soundKeyframes)
     {
