@@ -1012,9 +1012,15 @@
     
     int wSrc = CGImageGetWidth(imageSrc);
     int hSrc = CGImageGetHeight(imageSrc);
+
     
     int wDst = wSrc * scaleFactor;
+    if(wDst == 0)
+        wDst = 1;
+    
     int hDst = hSrc * scaleFactor;
+    if(hDst == 0)
+        hDst = 1;
     
     BOOL save8BitPNG = NO;
     

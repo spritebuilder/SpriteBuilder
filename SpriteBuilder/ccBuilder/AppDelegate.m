@@ -291,7 +291,7 @@ static AppDelegate* sharedAppDelegate;
     NSImage* imgPhysics = [NSImage imageNamed:@"inspector-physics"];
     [imgPhysics setTemplate:YES];
     SMTabBarItem* itemPhysics = [[[SMTabBarItem alloc] initWithImage:imgPhysics tag:0] autorelease];
-    itemPhysics.toolTip = @"Item Templates";
+    itemPhysics.toolTip = @"Item Physics";
     itemPhysics.keyEquivalent = @"";
     [items addObject:itemPhysics];
     
@@ -2943,6 +2943,24 @@ static BOOL hideAllToNextSeparator;
     [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
 }
 
+-(void)deleteDocument:(RMResource*)document
+{
+
+    // Confirm remove of items
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?" defaultButton:@"Cancel" alternateButton:@"Delete" otherButton:NULL informativeTextWithFormat:@"You cannot undo this operation."];
+    NSInteger result = [alert runModal];
+    
+    if (result == NSAlertDefaultReturn)
+    {
+        return;
+    }
+    
+    [ResourceManager removeResource:document];
+    
+    [[AppDelegate appDelegate].resManager reloadAllResources];
+    
+}
+
 - (IBAction) newDocument:(id)sender
 {
     NewDocWindowController* wc = [[NewDocWindowController alloc] initWithWindowNibName:@"NewDocWindow"];
@@ -4008,6 +4026,28 @@ static BOOL hideAllToNextSeparator;
         }
     }
 }
+- (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender
+{
+    int selectedRow = [sender tag];
+    
+    if (selectedRow >= 0 && projectSettings)
+    {
+        RMResource* res = [outlineProject itemAtRow:selectedRow];
+        [self deleteDocument:res];
+    }
+    else
+    {
+        //forward to normal handler.
+        [self newDocument:sender];
+    }
+}
+
+- (IBAction)menuActionNewFolder:(NSMenuItem*)sender
+{
+    //forward to normal handler.
+    [self newFolder:sender];
+
+}
 
 /*
 - (IBAction)menuEditSmartSpriteSheet:(id)sender
@@ -4108,6 +4148,21 @@ static BOOL hideAllToNextSeparator;
     [sequenceHandler menuAddKeyframeNamed:[self keyframePropNameFromTag:tag]];
 }
 
+- (IBAction)menuCutKeyframe:(id)sender
+{
+    [self cut:sender];
+}
+
+- (IBAction)menuCopyKeyframe:(id)sender
+{
+    [self copy:sender];
+}
+
+- (IBAction)menuDeleteKeyframe:(id)sender
+{
+    [self cut:sender];
+}
+
 - (IBAction)menuJavaScriptControlled:(id)sender
 {
     [self saveUndoStateWillChangeProperty:@"*javascriptcontrolled"];
@@ -4180,9 +4235,9 @@ static BOOL hideAllToNextSeparator;
 
 #pragma mark Playback countrols
 
-- (void) playbackStep:(id) sender
+- (void) updatePlayback
 {
-    int frames = [sender intValue];
+    
     if (!currentDocument)
     {
         [self playbackStop:NULL];
@@ -4191,7 +4246,13 @@ static BOOL hideAllToNextSeparator;
     if (playingBack)
     {
         // Step forward
-        [sequenceHandler.currentSequence stepForward:frames];
+        
+        double thisTime = [NSDate timeIntervalSinceReferenceDate];
+        double deltaTime = thisTime - playbackLastFrameTime;
+        double updateDelta = 1.0/sequenceHandler.currentSequence.timelineResolution;
+        
+        int steps = (int)(deltaTime/updateDelta);
+        [sequenceHandler.currentSequence stepForward:steps];
         
         if (sequenceHandler.currentSequence.timelinePosition >= sequenceHandler.currentSequence.timelineLength)
         {
@@ -4199,22 +4260,10 @@ static BOOL hideAllToNextSeparator;
         }
         else
         {
-            double thisTime = [NSDate timeIntervalSinceReferenceDate];
-            double requestedDelay = 1/sequenceHandler.currentSequence.timelineResolution;
-            double extraTime = thisTime - (playbackLastFrameTime + requestedDelay);
-            
-            double delayTime = requestedDelay - extraTime;
-            playbackLastFrameTime = thisTime;
-            int nextStep = 1;
-            while (delayTime < 0)
-            {
-                delayTime += requestedDelay;
-                nextStep++;
-                
-            }
+            playbackLastFrameTime += steps * updateDelta;
             
             // Call this method again in a little while
-            [self performSelector:@selector(playbackStep:) withObject:[NSNumber numberWithInt:nextStep] afterDelay:delayTime];
+            [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:updateDelta];
         }
     }
 }
@@ -4236,7 +4285,7 @@ static BOOL hideAllToNextSeparator;
     // Start playback
     playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
     playingBack = YES;
-    [self playbackStep:[NSNumber numberWithInt:1]];
+    [self updatePlayback];
 }
 
 - (IBAction)playbackStop:(id)sender

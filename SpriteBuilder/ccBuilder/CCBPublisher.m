@@ -872,7 +872,10 @@
     }
     
     // Publish generated files
-    [self publishGeneratedFiles];
+    if(!projectSettings.onlyPublishCCBs)
+    {
+        [self publishGeneratedFiles];
+    }
     
     // Yiee Haa!
     return YES;
@@ -936,7 +939,7 @@
 - (BOOL) publish_
 {
     // Remove all old publish directories if user has cleaned the cache
-    if (projectSettings.needRepublish)
+    if (projectSettings.needRepublish && !projectSettings.onlyPublishCCBs)
     {
         NSFileManager *fm = [NSFileManager defaultManager];
         NSString* publishDir;
