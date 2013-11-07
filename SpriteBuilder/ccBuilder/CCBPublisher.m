@@ -872,7 +872,10 @@
     }
     
     // Publish generated files
-    [self publishGeneratedFiles];
+    if(!projectSettings.onlyPublishCCBs)
+    {
+        [self publishGeneratedFiles];
+    }
     
     // Yiee Haa!
     return YES;
