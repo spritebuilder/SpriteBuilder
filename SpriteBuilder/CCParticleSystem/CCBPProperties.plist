@@ -257,6 +257,18 @@
 			<string>blendFunc</string>
 		</dict>
 		<dict>
+			<key>saveInTemplate</key>
+			<true/>
+			<key>default</key>
+			<integer>1</integer>
+			<key>displayName</key>
+			<string>reset on visibility toggle</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>resetOnVisibilityToggle</string>
+		</dict>
+		<dict>
 			<key>displayName</key>
 			<string>Gravity mode</string>
 			<key>type</key>
