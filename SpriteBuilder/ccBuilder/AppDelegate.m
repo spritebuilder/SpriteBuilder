@@ -2928,15 +2928,10 @@ static BOOL hideAllToNextSeparator;
             if(res.type == kCCBResTypeDirectory)
             {
                 dirPath = res.filePath;
-                dir = res.data;
             }
             else
             {
                 dirPath = [res.filePath stringByDeletingLastPathComponent];
-                if([[ResourceManager sharedManager].directories objectForKey:dirPath])
-                {
-                    dir = [[ResourceManager sharedManager].directories objectForKey:dirPath];
-                }
             }
         }
     }
@@ -2964,7 +2959,7 @@ static BOOL hideAllToNextSeparator;
     
     res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
     
-    id parentResource = [[ResourceManager sharedManager] resourceForPath:dir.dirPath];
+    id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
     [outlineProject expandItem:parentResource];
     
     [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
@@ -2982,7 +2977,30 @@ static BOOL hideAllToNextSeparator;
     
     if (acceptedModal)
     {
-        NSString* filePath = [[[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath] stringByAppendingPathComponent:wc.documentName];
+        NSString* dirPath = [[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath];
+        
+        int selectedRow = [sender tag];
+        RMResource* res = nil;
+        if(selectedRow != -1)
+        {
+            if (selectedRow >= 0 && projectSettings)
+            {
+                res = [outlineProject itemAtRow:selectedRow];
+                
+                if(res.type == kCCBResTypeDirectory)
+                {
+                    dirPath = res.filePath;
+                }
+                else
+                {
+                    dirPath = [res.filePath stringByDeletingLastPathComponent];
+                }
+            }
+        }
+        
+        NSString* filePath = [dirPath stringByAppendingPathComponent:wc.documentName];
+        
+        
         if (![[filePath pathExtension] isEqualToString:@"ccb"])
         {
             filePath = [filePath stringByAppendingPathExtension:@"ccb"];
@@ -3009,6 +3027,8 @@ static BOOL hideAllToNextSeparator;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_current_queue(), ^{
                                [self newFile:filePath type:type resolutions:resolutions];
+                               id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
+                               [outlineProject expandItem:parentResource];
                            });
             [wc release];
         }
