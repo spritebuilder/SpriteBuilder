@@ -2962,7 +2962,7 @@ static BOOL hideAllToNextSeparator;
     [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     [[ResourceManager sharedManager] reloadAllResources];
     
-    res = [[ResourceManager sharedManager] resourceForPath:newDirPath inDir:dir];
+    res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
     
     id parentResource = [[ResourceManager sharedManager] resourceForPath:dir.dirPath];
     [outlineProject expandItem:parentResource];
