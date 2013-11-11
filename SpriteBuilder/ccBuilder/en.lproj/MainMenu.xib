@@ -2247,10 +2247,16 @@ CA
                         <action selector="menuActionInterfaceFile:" target="494" id="uq1-bu-kIq"/>
                     </connections>
                 </menuItem>
-                <menuItem title="New Folder..." id="ZnY-Uc-6ar">
+                <menuItem title="New Folder" id="ZnY-Uc-6ar">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuActionNewFolder:" target="494" id="jqi-Pb-64m"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Delete" id="dCr-Uf-VbD">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuActionDelete:" target="494" id="5g5-MT-Dbi"/>
                     </connections>
                 </menuItem>
             </items>
