@@ -172,6 +172,8 @@ enum
 + (void) touchResource:(RMResource*) res;
 
 - (RMResource*) resourceForPath:(NSString*) path;
+- (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir;
+
 
 - (void) debugPrintDirectories;
 

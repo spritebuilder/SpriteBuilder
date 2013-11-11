@@ -711,6 +711,11 @@
                     needsUpdate = YES;
                 }
                 resourcesChanged = YES;
+                
+                if(res.type == kCCBResTypeDirectory)
+                {
+                    [self updateResourcesForPath:res.filePath];
+                }
             }
         }
         else
@@ -1445,12 +1450,19 @@
 {
     for (RMResource* res in dir.any)
     {
-        if ([res.filePath isEqualToString:path]) return res;
+        if ([res.filePath isEqualToString:path])
+        {
+            return res;
+        }
+        
         if (res.type == kCCBResTypeDirectory)
         {
             RMDirectory* subDir = res.data;
             RMResource* found = [self resourceForPath:path inDir:subDir];
-            if (found) return found;
+            if (found)
+            {
+                return found;
+            }
         }
     }
     return NULL;

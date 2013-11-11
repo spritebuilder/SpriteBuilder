@@ -57,6 +57,7 @@
 #import "PublishSettingsWindow.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerOutlineHandler.h"
+#import "ResourceManagerOutlineView.h"
 #import "SavePanelLimiter.h"
 #import "CCBPublisher.h"
 #import "CCBWarnings.h"
@@ -2909,9 +2910,36 @@ static BOOL hideAllToNextSeparator;
     
     // Find directory
     NSArray* dirs = [ResourceManager sharedManager].activeDirectories;
-    if (dirs.count == 0) return;
+    if (dirs.count == 0)
+        return;
+    
+    
     RMDirectory* dir = [dirs objectAtIndex:0];
     NSString* dirPath = dir.dirPath;
+
+    int selectedRow = [sender tag];
+    RMResource* res = nil;
+    if(selectedRow != -1)
+    {
+        if (selectedRow >= 0 && projectSettings)
+        {
+            res = [outlineProject itemAtRow:selectedRow];
+            
+            if(res.type == kCCBResTypeDirectory)
+            {
+                dirPath = res.filePath;
+                dir = res.data;
+            }
+            else
+            {
+                dirPath = [res.filePath stringByDeletingLastPathComponent];
+                if([[ResourceManager sharedManager].directories objectForKey:dirPath])
+                {
+                    dir = [[ResourceManager sharedManager].directories objectForKey:dirPath];
+                }
+            }
+        }
+    }
     
     int attempt = 0;
     NSString* newDirPath = NULL;
@@ -2934,31 +2962,12 @@ static BOOL hideAllToNextSeparator;
     [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     [[ResourceManager sharedManager] reloadAllResources];
     
-    if (dirs.count > 1)
-    {
-        [outlineProject expandItem:[dirs objectAtIndex:0]];
-    }
+    res = [[ResourceManager sharedManager] resourceForPath:newDirPath inDir:dir];
     
-    RMResource* res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
+    id parentResource = [[ResourceManager sharedManager] resourceForPath:dir.dirPath];
+    [outlineProject expandItem:parentResource];
+    
     [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
-}
-
--(void)deleteDocument:(RMResource*)document
-{
-
-    // Confirm remove of items
-    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?" defaultButton:@"Cancel" alternateButton:@"Delete" otherButton:NULL informativeTextWithFormat:@"You cannot undo this operation."];
-    NSInteger result = [alert runModal];
-    
-    if (result == NSAlertDefaultReturn)
-    {
-        return;
-    }
-    
-    [ResourceManager removeResource:document];
-    
-    [[AppDelegate appDelegate].resManager reloadAllResources];
-    
 }
 
 - (IBAction) newDocument:(id)sender
@@ -4026,19 +4035,22 @@ static BOOL hideAllToNextSeparator;
         }
     }
 }
+
 - (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender
+{
+    //forward to normal handler.
+    [self newDocument:sender];
+}
+
+- (IBAction)menuActionDelete:(id)sender
 {
     int selectedRow = [sender tag];
     
     if (selectedRow >= 0 && projectSettings)
     {
-        RMResource* res = [outlineProject itemAtRow:selectedRow];
-        [self deleteDocument:res];
-    }
-    else
-    {
-        //forward to normal handler.
-        [self newDocument:sender];
+        ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
+        
+        [resManagerOutlineView deleteSelectedResource];
     }
 }
 
@@ -4046,7 +4058,6 @@ static BOOL hideAllToNextSeparator;
 {
     //forward to normal handler.
     [self newFolder:sender];
-
 }
 
 /*
