@@ -33,8 +33,8 @@
 #import "SequencerSoundChannel.h"
 #import "SequencerNodeProperty.h"
 #import "SequencerKeyframe.h"
-#import "SimpleAudioEngine.h"
 #import "ResourceManager.h"
+#import "OALSimpleAudio.h"
 
 @implementation SequencerSequence
 
@@ -247,7 +247,7 @@
         NSString* absFile = [[AppDelegate appDelegate].resManager toAbsolutePath:soundFile];
         if ([[NSFileManager defaultManager] fileExistsAtPath:absFile])
         {
-            [[SimpleAudioEngine sharedEngine] playEffect:absFile pitch:pitch pan:pan gain:gain];
+            [[OALSimpleAudio sharedInstance] playEffect:absFile volume:gain pitch:pitch pan:pan loop:NO];
         }
     }
     
