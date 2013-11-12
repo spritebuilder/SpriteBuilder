@@ -923,7 +923,7 @@
         //Enabled 'Paste Keyframes' if its available
         for (NSMenuItem* item in menu.itemArray)
         {
-            if([item.title isEqualToString:@"Paste Keyframes"])
+            if(item.action == @selector(menuPasteKeyframes:))
             {
                 NSPasteboard* cb = [NSPasteboard generalPasteboard];
                 NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
@@ -943,7 +943,7 @@
         //Enabled 'Paste Keyframes' if its available
         for (NSMenuItem* item in menu.itemArray)
         {
-            if([item.title isEqualToString:@"Paste Keyframes"])
+            if(item.action == @selector(menuPasteKeyframes:))
             {
                 NSPasteboard* cb = [NSPasteboard generalPasteboard];
                 NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
