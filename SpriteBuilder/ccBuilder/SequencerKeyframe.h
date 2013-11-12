@@ -46,6 +46,9 @@ enum
     kCCBKeyframeTypeCallbacks,
 };
 
+NSString * kClipboardKeyFrames;
+NSString * kClipboardChannelKeyframes;
+
 @interface SequencerKeyframe : NSObject
 {
     id value;

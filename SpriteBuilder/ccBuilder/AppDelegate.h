@@ -180,6 +180,7 @@ enum {
     IBOutlet NSMenu* menuContextKeyframe;
     IBOutlet NSMenu* menuContextKeyframeInterpol;
     IBOutlet NSMenu* menuContextResManager;
+    IBOutlet NSMenu *menuContextKeyframeNoselection;
     
     IBOutlet NSPopUpButton* menuTimelinePopup;
     IBOutlet NSMenu* menuTimeline;
@@ -312,6 +313,7 @@ enum {
 @property (nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
 @property (nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
 @property (nonatomic,readonly) IBOutlet NSMenu* menuContextResManager;
+@property (nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;
 @property (nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
 
 @property (nonatomic,retain) ProjectSettings* projectSettings;

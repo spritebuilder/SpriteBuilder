@@ -57,6 +57,7 @@
 #import "PublishSettingsWindow.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerOutlineHandler.h"
+#import "ResourceManagerOutlineView.h"
 #import "SavePanelLimiter.h"
 #import "CCBPublisher.h"
 #import "CCBWarnings.h"
@@ -130,6 +131,7 @@
 @synthesize menuContextKeyframe;
 @synthesize menuContextKeyframeInterpol;
 @synthesize menuContextResManager;
+@synthesize menuContextKeyframeNoselection;
 @synthesize outlineProject;
 @synthesize errorDescription;
 @synthesize selectedNodes;
@@ -2327,10 +2329,10 @@ static BOOL hideAllToNextSeparator;
             return;
         }
         
-        NSString* clipType = @"com.cocosbuilder.keyframes";
+        NSString* clipType = kClipboardKeyFrames;
         if (hasChannelKeyframes)
         {
-            clipType = @"com.cocosbuilder.channelkeyframes";
+            clipType = kClipboardChannelKeyframes;
         }
         
         // Serialize keyframe
@@ -2384,11 +2386,11 @@ static BOOL hideAllToNextSeparator;
     
     // Paste keyframes
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:@"com.cocosbuilder.keyframes", @"com.cocosbuilder.channelkeyframes", nil]];
+    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
     
     if (type)
     {
-        if (!self.selectedNode && [type isEqualToString:@"com.cocosbuilder.keyframes"])
+        if (!self.selectedNode && [type isEqualToString:kClipboardKeyFrames])
         {
             [self modalDialogTitle:@"Paste Failed" message:@"You need to select a node to paste keyframes"];
             return;
@@ -2420,11 +2422,11 @@ static BOOL hideAllToNextSeparator;
             keyframe.time = [seq alignTimeToResolution:keyframe.time - firstTime + seq.timelinePosition];
             
             // Add the keyframe
-            if ([type isEqualToString:@"com.cocosbuilder.keyframes"])
+            if ([type isEqualToString:kClipboardKeyFrames])
             {
                 [self.selectedNode addKeyframe:keyframe forProperty:keyframe.name atTime:keyframe.time sequenceId:seq.sequenceId];
             }
-            else if ([type isEqualToString:@"com.cocosbuilder.channelkeyframes"])
+            else if ([type isEqualToString:kClipboardChannelKeyframes])
             {
                 if (keyframe.type == kCCBKeyframeTypeCallbacks)
                 {
@@ -2909,9 +2911,31 @@ static BOOL hideAllToNextSeparator;
     
     // Find directory
     NSArray* dirs = [ResourceManager sharedManager].activeDirectories;
-    if (dirs.count == 0) return;
+    if (dirs.count == 0)
+        return;
+    
+    
     RMDirectory* dir = [dirs objectAtIndex:0];
     NSString* dirPath = dir.dirPath;
+
+    int selectedRow = [sender tag];
+    RMResource* res = nil;
+    if(selectedRow != -1)
+    {
+        if (selectedRow >= 0 && projectSettings)
+        {
+            res = [outlineProject itemAtRow:selectedRow];
+            
+            if(res.type == kCCBResTypeDirectory)
+            {
+                dirPath = res.filePath;
+            }
+            else
+            {
+                dirPath = [res.filePath stringByDeletingLastPathComponent];
+            }
+        }
+    }
     
     int attempt = 0;
     NSString* newDirPath = NULL;
@@ -2934,31 +2958,12 @@ static BOOL hideAllToNextSeparator;
     [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     [[ResourceManager sharedManager] reloadAllResources];
     
-    if (dirs.count > 1)
-    {
-        [outlineProject expandItem:[dirs objectAtIndex:0]];
-    }
+    res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
     
-    RMResource* res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
+    id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
+    [outlineProject expandItem:parentResource];
+    
     [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
-}
-
--(void)deleteDocument:(RMResource*)document
-{
-
-    // Confirm remove of items
-    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?" defaultButton:@"Cancel" alternateButton:@"Delete" otherButton:NULL informativeTextWithFormat:@"You cannot undo this operation."];
-    NSInteger result = [alert runModal];
-    
-    if (result == NSAlertDefaultReturn)
-    {
-        return;
-    }
-    
-    [ResourceManager removeResource:document];
-    
-    [[AppDelegate appDelegate].resManager reloadAllResources];
-    
 }
 
 - (IBAction) newDocument:(id)sender
@@ -2973,7 +2978,30 @@ static BOOL hideAllToNextSeparator;
     
     if (acceptedModal)
     {
-        NSString* filePath = [[[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath] stringByAppendingPathComponent:wc.documentName];
+        NSString* dirPath = [[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath];
+        
+        int selectedRow = [sender tag];
+        RMResource* res = nil;
+        if(selectedRow != -1)
+        {
+            if (selectedRow >= 0 && projectSettings)
+            {
+                res = [outlineProject itemAtRow:selectedRow];
+                
+                if(res.type == kCCBResTypeDirectory)
+                {
+                    dirPath = res.filePath;
+                }
+                else
+                {
+                    dirPath = [res.filePath stringByDeletingLastPathComponent];
+                }
+            }
+        }
+        
+        NSString* filePath = [dirPath stringByAppendingPathComponent:wc.documentName];
+        
+        
         if (![[filePath pathExtension] isEqualToString:@"ccb"])
         {
             filePath = [filePath stringByAppendingPathExtension:@"ccb"];
@@ -3000,6 +3028,8 @@ static BOOL hideAllToNextSeparator;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_current_queue(), ^{
                                [self newFile:filePath type:type resolutions:resolutions];
+                               id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
+                               [outlineProject expandItem:parentResource];
                            });
             [wc release];
         }
@@ -4026,19 +4056,22 @@ static BOOL hideAllToNextSeparator;
         }
     }
 }
+
 - (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender
+{
+    //forward to normal handler.
+    [self newDocument:sender];
+}
+
+- (IBAction)menuActionDelete:(id)sender
 {
     int selectedRow = [sender tag];
     
     if (selectedRow >= 0 && projectSettings)
     {
-        RMResource* res = [outlineProject itemAtRow:selectedRow];
-        [self deleteDocument:res];
-    }
-    else
-    {
-        //forward to normal handler.
-        [self newDocument:sender];
+        ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
+        
+        [resManagerOutlineView deleteSelectedResource];
     }
 }
 
@@ -4046,7 +4079,6 @@ static BOOL hideAllToNextSeparator;
 {
     //forward to normal handler.
     [self newFolder:sender];
-
 }
 
 /*
@@ -4156,6 +4188,11 @@ static BOOL hideAllToNextSeparator;
 - (IBAction)menuCopyKeyframe:(id)sender
 {
     [self copy:sender];
+}
+
+- (IBAction)menuPasteKeyframes:(id)sender
+{
+    [self paste:sender];
 }
 
 - (IBAction)menuDeleteKeyframe:(id)sender
