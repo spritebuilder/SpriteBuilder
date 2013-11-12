@@ -878,6 +878,15 @@
     SequencerKeyframe* keyframe = [self keyframeForRow:row sub:subRow minTime:timeMin maxTime:timeMax];
     if (keyframe)
     {
+        mouseDownKeyframe = keyframe;
+        // Handle selections
+        if (!mouseDownKeyframe.selected)
+        {
+            [[SequencerHandler sharedHandler] deselectAllKeyframes];
+            mouseDownKeyframe.selected = YES;
+        }
+
+        
         [SequencerHandler sharedHandler].contextKeyframe = keyframe;
         return [AppDelegate appDelegate].menuContextKeyframe;
     }
@@ -911,6 +920,39 @@
         NSMenuItem* itemOpt = [menu itemWithTag:-1];
         [itemOpt setEnabled: keyframe.easing.hasOptions];
         
+        //Enabled 'Paste Keyframes' if its available
+        for (NSMenuItem* item in menu.itemArray)
+        {
+            if([item.title isEqualToString:@"Paste Keyframes"])
+            {
+                NSPasteboard* cb = [NSPasteboard generalPasteboard];
+                NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
+                
+                //We've got a copy paste of a keyframe. Enable the Paste menuitem.
+                [item setEnabled:type != nil ? YES : NO];
+
+            }
+        }
+        
+        return menu;
+    }
+    else
+    {
+        NSMenu* menu = [AppDelegate appDelegate].menuContextKeyframeNoselection;
+        
+        //Enabled 'Paste Keyframes' if its available
+        for (NSMenuItem* item in menu.itemArray)
+        {
+            if([item.title isEqualToString:@"Paste Keyframes"])
+            {
+                NSPasteboard* cb = [NSPasteboard generalPasteboard];
+                NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
+                
+                //We've got a copy paste of a keyframe. Enable the Paste menuitem.
+                [item setEnabled:type != nil ? YES : NO];
+                
+            }
+        }
         return menu;
     }
     
