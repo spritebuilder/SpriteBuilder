@@ -2439,6 +2439,8 @@ static BOOL hideAllToNextSeparator;
                 [keyframe.parent deleteKeyframesAfterTime:seq.timelineLength];
                 [[SequencerHandler sharedHandler] redrawTimeline];
             }
+
+            [[SequencerHandler sharedHandler] deleteDuplicateKeyframesForCurrentSequence];
         }
         
     }
