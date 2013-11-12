@@ -744,7 +744,7 @@ CA
                                                 <action selector="menuAddKeyframe:" target="494" id="1749"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Scale" tag="2" keyEquivalent="s" id="1743">
+                                        <menuItem title="Scale" tag="7" keyEquivalent="s" id="1743">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuAddKeyframe:" target="494" id="1750"/>
@@ -754,6 +754,12 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuAddKeyframe:" target="494" id="1751"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Skew" tag="7" keyEquivalent="k" id="4hh-cy-c0A">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuAddKeyframe:" target="494" id="DRa-S2-geZ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Sprite Frame" tag="4" keyEquivalent="f" id="1745">
