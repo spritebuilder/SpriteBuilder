@@ -2061,6 +2061,7 @@ CA
                 <outlet property="menuCanvasSize" destination="1264" id="1281"/>
                 <outlet property="menuContextKeyframe" destination="1600" id="1612"/>
                 <outlet property="menuContextKeyframeInterpol" destination="1604" id="1613"/>
+                <outlet property="menuContextKeyframeNoselection" destination="o0p-0U-Ks5" id="H9k-Jz-Iau"/>
                 <outlet property="menuContextResManager" destination="1696" id="1703"/>
                 <outlet property="menuResolution" destination="1264" id="1474"/>
                 <outlet property="menuTimeline" destination="1581" id="1585"/>
@@ -2264,6 +2265,16 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuActionDelete:" target="494" id="5g5-MT-Dbi"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+        <menu title="KeyframeNoselection" autoenablesItems="NO" id="o0p-0U-Ks5">
+            <items>
+                <menuItem title="Paste Keyframes" id="FHf-6L-GDN">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuPasteKeyframes:" target="494" id="ghw-bV-eRX"/>
                     </connections>
                 </menuItem>
             </items>
