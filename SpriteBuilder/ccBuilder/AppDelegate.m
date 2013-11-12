@@ -2328,10 +2328,10 @@ static BOOL hideAllToNextSeparator;
             return;
         }
         
-        NSString* clipType = @"com.cocosbuilder.keyframes";
+        NSString* clipType = kClipboardKeyFrames;
         if (hasChannelKeyframes)
         {
-            clipType = @"com.cocosbuilder.channelkeyframes";
+            clipType = kClipboardChannelKeyframes;
         }
         
         // Serialize keyframe
@@ -2385,11 +2385,11 @@ static BOOL hideAllToNextSeparator;
     
     // Paste keyframes
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:@"com.cocosbuilder.keyframes", @"com.cocosbuilder.channelkeyframes", nil]];
+    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
     
     if (type)
     {
-        if (!self.selectedNode && [type isEqualToString:@"com.cocosbuilder.keyframes"])
+        if (!self.selectedNode && [type isEqualToString:kClipboardKeyFrames])
         {
             [self modalDialogTitle:@"Paste Failed" message:@"You need to select a node to paste keyframes"];
             return;
@@ -2421,11 +2421,11 @@ static BOOL hideAllToNextSeparator;
             keyframe.time = [seq alignTimeToResolution:keyframe.time - firstTime + seq.timelinePosition];
             
             // Add the keyframe
-            if ([type isEqualToString:@"com.cocosbuilder.keyframes"])
+            if ([type isEqualToString:kClipboardKeyFrames])
             {
                 [self.selectedNode addKeyframe:keyframe forProperty:keyframe.name atTime:keyframe.time sequenceId:seq.sequenceId];
             }
-            else if ([type isEqualToString:@"com.cocosbuilder.channelkeyframes"])
+            else if ([type isEqualToString:kClipboardChannelKeyframes])
             {
                 if (keyframe.type == kCCBKeyframeTypeCallbacks)
                 {
@@ -4187,6 +4187,11 @@ static BOOL hideAllToNextSeparator;
 - (IBAction)menuCopyKeyframe:(id)sender
 {
     [self copy:sender];
+}
+
+- (IBAction)menuPasteKeyframes:(id)sender
+{
+    [self paste:sender];
 }
 
 - (IBAction)menuDeleteKeyframe:(id)sender
