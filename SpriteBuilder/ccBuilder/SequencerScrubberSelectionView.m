@@ -540,7 +540,8 @@
     }
     
     NSOutlineView* outlineView = [SequencerHandler sharedHandler].outlineHierarchy;
-    
+    [self.window makeFirstResponder:nil];
+
     lastMousePosition = mouseLocation;
     
     SequencerSequence* seq = [SequencerHandler sharedHandler].currentSequence;
