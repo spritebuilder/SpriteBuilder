@@ -19,6 +19,7 @@
 @property (nonatomic, weak) SMTabBarItem *selectedItem;
 @property (nonatomic, weak) IBOutlet id<SMTabBarDelegate> delegate;
 
+-(void)selectBarButtonIndex:(NSInteger)index;
 @end
 
 

@@ -992,7 +992,7 @@ CA
                                     </tabViewItem>
                                     <tabViewItem label="Tileless Editor" identifier="1" id="1974">
                                         <view key="view" id="1975">
-                                            <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <splitView dividerStyle="thin" id="1979">
@@ -1020,11 +1020,11 @@ CA
                                                                         </subviews>
                                                                     </clipView>
                                                                     <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="1990">
-                                                                        <rect key="frame" x="0.0" y="436" width="251" height="16"/>
+                                                                        <rect key="frame" x="0.0" y="437" width="236" height="15"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1991">
-                                                                        <rect key="frame" x="236" y="0.0" width="15" height="452"/>
+                                                                        <rect key="frame" x="236" y="0.0" width="15" height="437"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                 </scrollView>
@@ -1140,6 +1140,55 @@ CA
                                                     </scroller>
                                                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2017">
                                                         <rect key="frame" x="234" y="1" width="15" height="143"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    </scroller>
+                                                </scrollView>
+                                            </subviews>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="Warnings" identifier="" id="OMr-Cd-S3b">
+                                        <view key="view" id="ElF-wg-3Hc">
+                                            <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="GKQ-Vs-kFr">
+                                                    <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <clipView key="contentView" copiesOnScroll="NO" id="wgL-QG-0ne">
+                                                        <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" indentationPerLevel="16" outlineTableColumn="8ja-Ep-Val" id="kpe-5y-lAC" customClass="WarningOutlineView">
+                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <size key="intercellSpacing" width="3" height="2"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="gridColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                                                <tableColumns>
+                                                                    <tableColumn width="246" minWidth="16" maxWidth="1000" id="8ja-Ep-Val">
+                                                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        </tableHeaderCell>
+                                                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Text" id="6pC-XH-Zqm">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                    </tableColumn>
+                                                                </tableColumns>
+                                                            </outlineView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </clipView>
+                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="sVT-tw-T8n">
+                                                        <rect key="frame" x="-100" y="-100" width="223" height="15"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                    </scroller>
+                                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="dY2-Gb-goh">
+                                                        <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                 </scrollView>
@@ -1990,18 +2039,15 @@ CA
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1358"/>
                     <toolbarItem implicitItemIdentifier="13E602E1-2514-4F5A-BE05-2AF5460BB7D6" label="Publish" paletteLabel="Publish" id="1306">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="73" height="25"/>
-                        <size key="maxSize" width="87" height="25"/>
+                        <size key="minSize" width="45" height="25"/>
+                        <size key="maxSize" width="50" height="25"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="1304">
-                            <rect key="frame" x="0.0" y="14" width="87" height="25"/>
+                            <rect key="frame" x="0.0" y="14" width="46" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <segmentedCell key="cell" alignment="left" style="texturedSquare" trackingMode="momentary" id="1305">
                                 <font key="font" metaFont="system"/>
                                 <segments>
-                                    <segment toolTip="Publish" image="TB_build" width="42">
-                                        <nil key="label"/>
-                                    </segment>
-                                    <segment toolTip="Warnings" image="editor-check" width="42" tag="1">
+                                    <segment toolTip="Publish" image="TB_build" width="44">
                                         <nil key="label"/>
                                     </segment>
                                 </segments>
@@ -2076,6 +2122,7 @@ CA
                 <outlet property="menuTimelinePopup" destination="1573" id="1588"/>
                 <outlet property="outlineHierarchy" destination="570" id="1040"/>
                 <outlet property="outlineProject" destination="1499" id="1504"/>
+                <outlet property="outlineWarnings" destination="kpe-5y-lAC" id="4g7-0S-tek"/>
                 <outlet property="panelVisibilityControl" destination="1786" id="1794"/>
                 <outlet property="physicsHandler" destination="fa4-D5-pFD" id="ZWp-5N-Rhs"/>
                 <outlet property="plugInNodeCollectionView" destination="2015" id="2022"/>
@@ -2385,6 +2432,14 @@ CA
             </connections>
         </customObject>
         <customObject id="fa4-D5-pFD" customClass="PhysicsHandler"/>
+        <collectionViewItem id="19X-cC-WDn"/>
+        <collectionViewItem id="0wd-3s-3IL"/>
+        <collectionViewItem id="J5b-i6-X22"/>
+        <collectionViewItem id="B7O-dp-0YO"/>
+        <customView id="9y0-Gx-WWs">
+            <rect key="frame" x="0.0" y="0.0" width="248" height="27"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+        </customView>
     </objects>
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>
@@ -2394,7 +2449,6 @@ CA
         <image name="TB_plugins" width="36" height="16"/>
         <image name="TB_rightPanel" width="25" height="22"/>
         <image name="btn-dropdown-arrows" width="16" height="9"/>
-        <image name="editor-check" width="16" height="16"/>
         <image name="header-bg" width="19" height="17"/>
         <image name="seq-btn-play" width="22" height="16"/>
         <image name="seq-btn-restart" width="22" height="16"/>

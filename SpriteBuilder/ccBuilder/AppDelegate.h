@@ -114,6 +114,7 @@ enum {
 @class PropertyInspectorHandler;
 @class LocalizationEditorHandler;
 @class PhysicsHandler;
+@class WarningOutlineHandler;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -225,6 +226,10 @@ enum {
     // Project display
     IBOutlet NSOutlineView* outlineProject;
     ResourceManagerOutlineHandler* projectOutlineHandler;
+    
+    // Project Warnings.
+    IBOutlet NSOutlineView *outlineWarnings;
+    WarningOutlineHandler * warningOutlineHandler;
     
     // Documents
     NSMutableArray* delayOpenFiles;
