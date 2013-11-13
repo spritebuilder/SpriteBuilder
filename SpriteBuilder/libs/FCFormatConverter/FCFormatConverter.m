@@ -220,18 +220,8 @@ static FCFormatConverter* gDefaultConverter = NULL;
     else if (format == kFCSoundFormatMP4)
     {
         // Convert to AAC
-        int bitRate = 0;
-        if (quality == 1) bitRate = 64000;
-        else if (quality == 2) bitRate = 80000;
-        else if (quality == 3) bitRate = 96000;
-        else if (quality == 4) bitRate = 128000;
-        else if (quality == 5) bitRate = 160000;
-        else if (quality == 6) bitRate = 192000;
-        else if (quality == 7) bitRate = 224000;
-        else if (quality == 8) bitRate = 256000;
-        //else if (quality == 9) bitRate = 288000;
-        //else if (quality == 10) bitRate = 320000;
-        if (!bitRate) return NULL;
+        
+        int qualityScaled = ((quality -1) * 127) / 7;//Quality [1,8]
         
         // Do the conversion
         NSTask* sndTask = [[NSTask alloc] init];
@@ -241,9 +231,9 @@ static FCFormatConverter* gDefaultConverter = NULL;
                                 @"-f", @"m4af",
                                 @"-d", @"aac",
                                 @"-u", @"pgcm", @"2",
-                                @"-b", [NSString stringWithFormat:@"%d", bitRate],
+                                @"-u", @"vbrq", [NSString stringWithFormat:@"%i",qualityScaled],
                                 @"-q", @"127",
-                                @"-s", @"2",
+                                @"-s", @"3",
                                 srcPath, dstPath, nil];
         [sndTask setArguments:args];
         [sndTask launch];
