@@ -28,7 +28,7 @@
     NSTask* zipTask = [[NSTask alloc] init];
     [zipTask setCurrentDirectoryPath:[fileName stringByDeletingLastPathComponent]];
     [zipTask setLaunchPath:@"/usr/bin/unzip"];
-    NSArray* args = [NSArray arrayWithObjects:zipFile, nil];
+    NSArray* args = [NSArray arrayWithObjects:@"-o", zipFile, nil];
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
