@@ -4308,6 +4308,18 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+- (IBAction)togglePlayback:(id)sender {
+    if(!playingBack)
+    {
+        [self playbackPlay:sender];
+    }
+    else
+    {
+        [self playbackStop:sender];
+    }
+}
+
+
 - (IBAction)playbackPlay:(id)sender
 {
     if (!self.hasOpenedDocument) return;

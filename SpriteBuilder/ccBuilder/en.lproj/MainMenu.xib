@@ -716,15 +716,10 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Animation" id="1706">
                         <items>
-                            <menuItem title="Play" keyEquivalent="R" id="1715">
+                            <menuItem title="Play/Stop" keyEquivalent=" " id="1715">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="playbackPlay:" target="494" id="1716"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Stop" keyEquivalent="." id="1723">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                                <connections>
-                                    <action selector="playbackStop:" target="494" id="1725"/>
+                                    <action selector="togglePlayback:" target="494" id="6lX-ux-ZY5"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1741"/>
