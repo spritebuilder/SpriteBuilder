@@ -403,7 +403,6 @@
 		E360789015EBA5420040A172 /* sel-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E360788F15EBA5420040A172 /* sel-frame.png */; };
 		E36078BC15EE0B2C0040A172 /* sel-round.png in Resources */ = {isa = PBXBuildFile; fileRef = E36078BB15EE0B2C0040A172 /* sel-round.png */; };
 		E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3618D5516655041009F5805 /* CCBPublisherTemplate.m */; };
-		E3618D58166562DA009F5805 /* publishTemplates in Resources */ = {isa = PBXBuildFile; fileRef = E3618D57166562DA009F5805 /* publishTemplates */; };
 		E367E32016384F0C00247F12 /* orientation-landscapeleft.png in Resources */ = {isa = PBXBuildFile; fileRef = E367E31C16384F0C00247F12 /* orientation-landscapeleft.png */; };
 		E367E32116384F0C00247F12 /* orientation-landscaperight.png in Resources */ = {isa = PBXBuildFile; fileRef = E367E31D16384F0C00247F12 /* orientation-landscaperight.png */; };
 		E367E32316384F0C00247F12 /* orientation-upsidedown.png in Resources */ = {isa = PBXBuildFile; fileRef = E367E31F16384F0C00247F12 /* orientation-upsidedown.png */; };
@@ -1464,7 +1463,6 @@
 		E36078BB15EE0B2C0040A172 /* sel-round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sel-round.png"; sourceTree = "<group>"; };
 		E3618D5416655041009F5805 /* CCBPublisherTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublisherTemplate.h; sourceTree = "<group>"; };
 		E3618D5516655041009F5805 /* CCBPublisherTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisherTemplate.m; sourceTree = "<group>"; };
-		E3618D57166562DA009F5805 /* publishTemplates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = publishTemplates; sourceTree = "<group>"; };
 		E367E31C16384F0C00247F12 /* orientation-landscapeleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orientation-landscapeleft.png"; sourceTree = "<group>"; };
 		E367E31D16384F0C00247F12 /* orientation-landscaperight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orientation-landscaperight.png"; sourceTree = "<group>"; };
 		E367E31F16384F0C00247F12 /* orientation-upsidedown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orientation-upsidedown.png"; sourceTree = "<group>"; };
@@ -2502,7 +2500,6 @@
 			children = (
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
-				E3618D57166562DA009F5805 /* publishTemplates */,
 				E3AF6CE015F0CFAE0048DB2A /* Documentation */,
 				E35DBBDD14F3D1830070A6E4 /* Configurations */,
 				776041E71498F7DE0078095D /* Sparkle (for updates) */,
@@ -4516,7 +4513,6 @@
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
 				E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
-				E3618D58166562DA009F5805 /* publishTemplates in Resources */,
 				B79F90B117FF27B200908504 /* CMakeLists.txt in Resources */,
 				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
 				E3366A39168159F30094BD94 /* PVRTexToolCL in Resources */,
