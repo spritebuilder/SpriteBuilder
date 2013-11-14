@@ -61,6 +61,14 @@
         [sh toggleSeqExpanderForRow:(int)[self rowAtPoint:mouseLocationInTable]];
         return;
     }
+    else if (column == [self columnWithIdentifier:@"hidden"])
+    {
+        
+    }
+    else if (column == [self columnWithIdentifier:@"locked"])
+    {
+        
+    }
     else
     {
         sh.dragAndDropEnabled = YES;
