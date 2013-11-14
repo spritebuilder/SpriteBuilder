@@ -1,31 +1,14 @@
 #!/bin/bash
 
-CCB_VERSION=$1
+CCB_VERSION="`/usr/libexec/PlistBuddy -c "print :CFBundleVersion" ../SpriteBuilder/ccBuilder/SpriteBuilder-Info.plist`"
 
-# Remove build directory
+# Clean and build CocosBuilder
 cd ..
-CCB_DIR=$(pwd)
+
+echo "=== CLEANING ==="
 
 rm -Rf build/
 rm -Rf SpriteBuilder/build/
-
-# Update version for about box
-echo "Version: $1" > Generated/Version.txt
-echo -n "GitHub: " >> Generated/Version.txt
-git rev-parse --short=10 HEAD >> Generated/Version.txt
-touch Generated/Version.txt
-
-# Generate default project
-echo "=== GENERATING DEFAULT SB-PROJECT ==="
-cd Support/PROJECTNAME/
-rm -rf PROJECTNAME.xcodeproj/xcuserdata/
-rm -rf PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
-rm ../../Generated/PROJECTNAME.zip
-zip -r ../../Generated/PROJECTNAME.zip * -x *.git*
-cd ../..
-
-# Clean and build CocosBuilder
-echo "=== CLEANING ==="
 
 cd SpriteBuilder/
 xcodebuild -alltargets clean
