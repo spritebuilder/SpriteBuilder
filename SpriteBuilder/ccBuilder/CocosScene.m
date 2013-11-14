@@ -412,33 +412,41 @@ static CocosScene* sharedCocosScene;
             
             if (node.contentSize.width > 0 && node.contentSize.height > 0)
             {
-                // Selection corners in world space
-                CGPoint bl = ccpRound([node convertToWorldSpace: ccp(0,0)]);
-                CGPoint br = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,0)]);
-                CGPoint tl = ccpRound([node convertToWorldSpace: ccp(0,node.contentSizeInPoints.height)]);
-                CGPoint tr = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,node.contentSizeInPoints.height)]);
-                
-                CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-                CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-                CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-                CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-                
-                blSprt.position = bl;
-                brSprt.position = br;
-                tlSprt.position = tl;
-                trSprt.position = tr;
-                
-                [selectionLayer addChild:blSprt];
-                [selectionLayer addChild:brSprt];
-                [selectionLayer addChild:tlSprt];
-                [selectionLayer addChild:trSprt];
-                
-                CCDrawNode* drawing = [CCDrawNode node];
-                CGPoint points[] = {bl, br, tr, tl};
-                
-                [drawing drawPolyWithVerts:points count:4 fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
-                
-                [selectionLayer addChild:drawing z:-1];
+                if(!node.locked)
+                {
+                    // Selection corners in world space
+                    CGPoint bl = ccpRound([node convertToWorldSpace: ccp(0,0)]);
+                    CGPoint br = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,0)]);
+                    CGPoint tl = ccpRound([node convertToWorldSpace: ccp(0,node.contentSizeInPoints.height)]);
+                    CGPoint tr = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,node.contentSizeInPoints.height)]);
+                    
+                    CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                    CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                    CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                    CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                    
+                    blSprt.position = bl;
+                    brSprt.position = br;
+                    tlSprt.position = tl;
+                    trSprt.position = tr;
+                    
+                    [selectionLayer addChild:blSprt];
+                    [selectionLayer addChild:brSprt];
+                    [selectionLayer addChild:tlSprt];
+                    [selectionLayer addChild:trSprt];
+                    
+                    CCDrawNode* drawing = [CCDrawNode node];
+                    CGPoint points[] = {bl, br, tr, tl};
+                    
+                    [drawing drawPolyWithVerts:points count:4 fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
+                    
+                    [selectionLayer addChild:drawing z:-1];
+                }
+                else
+                {
+                    CCSprite* lockedSprt = [CCSprite spriteWithImageNamed:@"editor-lock.png"];
+                    [selectionLayer addChild:lockedSprt];
+                }
             }
             else
             {

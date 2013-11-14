@@ -76,6 +76,27 @@
     return [[self extraPropForKey:@"seqExpanded"] boolValue];
 }
 
+
+- (void) setLocked:(BOOL)locked
+{
+    [self setExtraProp:[NSNumber numberWithBool:locked] forKey:@"locked"];
+}
+
+- (BOOL) locked
+{
+    return [[self extraPropForKey:@"locked"] boolValue];
+}
+
+- (void) setHidden:(BOOL)hidden
+{
+    [self setExtraProp:[NSNumber numberWithBool:hidden] forKey:@"hidden"];
+}
+
+- (BOOL) hidden
+{
+    return [[self extraPropForKey:@"hidden"] boolValue];
+}
+
 - (PlugInNode*) plugIn
 {
     NodeInfo* info = self.userObject;

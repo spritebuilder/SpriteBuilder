@@ -565,6 +565,10 @@ static SequencerHandler* sharedSequencerHandler;
                 seqCell.channel = (SequencerSoundChannel*) item;
             }
         }
+        else
+        {
+            int break_here = 1;
+        }
         return;
     }
     
