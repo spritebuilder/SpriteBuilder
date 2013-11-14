@@ -16,8 +16,8 @@ echo "=== GENERATING DEFAULT SB-PROJECT ==="
 cd Support/PROJECTNAME/
 rm -rf PROJECTNAME.xcodeproj/xcuserdata/
 rm -rf PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
-rm ../../Generated/PROJECTNAME.zip
-zip -r ../../Generated/PROJECTNAME.zip * -x *.git*
+# rm ../../Generated/PROJECTNAME.zip
+zip -r -u ../../Generated/PROJECTNAME.zip * -x "*.git*" "*test*" "*Resources*" "*/templates*" "*/tools*"
 cd ../..
 
 
