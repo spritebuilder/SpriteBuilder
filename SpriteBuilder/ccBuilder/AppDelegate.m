@@ -108,6 +108,8 @@
 #import "CCLabelBMFont_Private.h"
 
 #import <ExceptionHandling/NSExceptionHandler.h>
+#import <objc/runtime.h>
+#import <objc/message.h>
 
 
 @implementation AppDelegate
@@ -171,8 +173,25 @@ static AppDelegate* sharedAppDelegate;
     [inspectorCodeScroll setDocumentView:inspectorCodeDocumentView];
 }
 
+
+//This function replaces the current CCNode visit with "customVisit" to ensure that 'hidden' flagged nodes are invisible.
+//However it then proceeds to call the real '[CCNode visit]' (now renamed oldVisit).
+void ApplyCustomNodeVisitSwizzle()
+{
+    Method origMethod = class_getInstanceMethod([CCNode class], @selector(visit));
+    Method newMethod = class_getInstanceMethod([CCNode class], @selector(customVisit));
+    
+    IMP origImp = method_getImplementation(origMethod);
+    IMP newImp = method_getImplementation(newMethod);
+    
+    class_replaceMethod([CCNode class], @selector(visit), newImp, method_getTypeEncoding(newMethod));
+    class_addMethod([CCNode class], @selector(oldVisit), origImp, method_getTypeEncoding(origMethod));
+    
+}
+
 - (void) setupCocos2d
 {
+    ApplyCustomNodeVisitSwizzle();
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	

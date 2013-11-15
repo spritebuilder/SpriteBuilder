@@ -97,6 +97,11 @@
     return [[self extraPropForKey:@"hidden"] boolValue];
 }
 
+- (void)setHiddenVisiblility:(BOOL)hiddenVisiblility
+{
+    
+}
+
 - (PlugInNode*) plugIn
 {
     NodeInfo* info = self.userObject;
@@ -182,6 +187,14 @@
     [self updateProperty:name time:[SequencerHandler sharedHandler].currentSequence.timelinePosition sequenceId:seqId];
 }
 
+-(void)customVisit
+{
+    if(self.hidden)
+        return;
+    
+    [self performSelector:@selector(oldVisit) withObject:nil];
+}
+
 - (void) addDefaultKeyframeForProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId
 {
     // Get property type
@@ -254,6 +267,7 @@
         [child duplicateKeyframesFromSequenceId:fromSeqId toSequenceId:toSeqId];
     }
 }
+
 
 - (id) valueForProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId
 {

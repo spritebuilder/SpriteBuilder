@@ -1408,7 +1408,7 @@ CA
                                                             </customCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                         </tableColumn>
-                                                        <tableColumn identifier="sequencer" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="1541">
+                                                        <tableColumn identifier="sequencer" width="315" minWidth="10" maxWidth="3.4028234663852886e+38" id="1541">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Sequencer">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

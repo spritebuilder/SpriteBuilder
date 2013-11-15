@@ -390,6 +390,15 @@ static SequencerHandler* sharedSequencerHandler;
     return node.displayName;
 }
 
+-(void)setChildrenHidden:(bool)hidden withChildren:(NSArray*)children
+{
+    for(CCNode * child in children)
+    {
+        child.hidden = hidden;
+        [self setChildrenHidden:hidden withChildren:child.children];
+    }
+}
+
 - (void) outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
     CCNode* node = item;
@@ -397,6 +406,9 @@ static SequencerHandler* sharedSequencerHandler;
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
         node.hidden = [(NSNumber*)object boolValue];
+        [self setChildrenHidden:node.hidden withChildren:node.children];
+        [outlineView reloadItem:node reloadChildren:YES];
+        
     }
     else if([tableColumn.identifier isEqualToString:@"locked"])
     {
@@ -414,11 +426,11 @@ static SequencerHandler* sharedSequencerHandler;
     NSLog(@"should edit?");
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
-     //   [outline performClickOnCellAtColumn:[outline columnWithIdentifier:tableColumn.identifier] row:[outline selectedRow]];
+        return NO;
     }
     else if([tableColumn.identifier isEqualToString:@"locked"])
     {
-       // [outline performClickOnCellAtColumn:[outline columnWithIdentifier:tableColumn.identifier] row:[outline selectedRow]];
+        return NO;
     }
     else
     {
