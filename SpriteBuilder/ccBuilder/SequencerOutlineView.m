@@ -25,6 +25,7 @@
 #import "SequencerOutlineView.h"
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
+#import "CCNode+NodeInfo.h"
 
 @implementation SequencerOutlineView
 
@@ -60,14 +61,6 @@
         sh.dragAndDropEnabled = NO;
         [sh toggleSeqExpanderForRow:(int)[self rowAtPoint:mouseLocationInTable]];
         return;
-    }
-    else if (column == [self columnWithIdentifier:@"hidden"])
-    {
-        
-    }
-    else if (column == [self columnWithIdentifier:@"locked"])
-    {
-        
     }
     else
     {

@@ -4443,6 +4443,8 @@ static BOOL hideAllToNextSeparator;
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/apportable/SpriteBuilder/issues"]];
 }
+- (IBAction)menuHiddenNode:(id)sender {
+}
 
 - (IBAction)visitCommunity:(id)sender
 {

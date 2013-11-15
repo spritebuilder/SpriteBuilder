@@ -412,7 +412,9 @@ static CocosScene* sharedCocosScene;
             
             if (node.contentSize.width > 0 && node.contentSize.height > 0)
             {
-                if(!node.locked)
+#warning FIX THIS. TEMP CODE.
+                
+                //if(!node.locked)
                 {
                     // Selection corners in world space
                     CGPoint bl = ccpRound([node convertToWorldSpace: ccp(0,0)]);
@@ -442,7 +444,8 @@ static CocosScene* sharedCocosScene;
                     
                     [selectionLayer addChild:drawing z:-1];
                 }
-                else
+#warning FIX THIS. TEMP CODE.                
+                if(false)
                 {
                     CCSprite* lockedSprt = [CCSprite spriteWithImageNamed:@"editor-lock.png"];
                     [selectionLayer addChild:lockedSprt];

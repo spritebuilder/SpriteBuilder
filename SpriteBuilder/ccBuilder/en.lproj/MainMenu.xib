@@ -1261,12 +1261,12 @@ CA
                                     </imageView>
                                     <imageView id="dPQ-Rb-BA0">
                                         <rect key="frame" x="256" y="85" width="9" height="12"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="NSLockLockedTemplate" id="oVw-QF-mZA"/>
                                     </imageView>
                                     <imageView id="Leg-Js-aVx">
                                         <rect key="frame" x="238" y="83" width="11" height="12"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="visible-icon" id="fVq-qx-BCa"/>
                                     </imageView>
                                     <imageView id="1664">
@@ -1347,11 +1347,11 @@ CA
                                         <rect key="frame" x="0.0" y="16" width="601" height="66"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" copiesOnScroll="NO" id="hnC-KY-Yea">
-                                            <rect key="frame" x="0.0" y="0.0" width="601" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="601" height="66"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" autosaveColumns="NO" rowHeight="14" indentationPerLevel="16" autoresizesOutlineColumn="YES" outlineTableColumn="571" id="570" customClass="SequencerOutlineView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="637" height="55"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="601" height="66"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="0.0" height="2"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1376,9 +1376,12 @@ CA
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
-                                                            <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" inset="2" id="9UQ-CC-5my">
+                                                            <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="mini" state="on" inset="2" id="9UQ-CC-5my">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="smallSystem"/>
+                                                                <font key="font" metaFont="miniSystem"/>
+                                                                <connections>
+                                                                    <action selector="menuHiddenNode:" target="494" id="qcI-oH-F9z"/>
+                                                                </connections>
                                                             </buttonCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                         </tableColumn>
@@ -1388,9 +1391,9 @@ CA
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
-                                                            <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="small" inset="2" id="qzj-vd-6ad">
+                                                            <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="above" alignment="center" controlSize="mini" inset="2" id="qzj-vd-6ad">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="smallSystem"/>
+                                                                <font key="font" metaFont="miniSystem"/>
                                                             </buttonCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                         </tableColumn>
@@ -1405,7 +1408,7 @@ CA
                                                             </customCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                         </tableColumn>
-                                                        <tableColumn identifier="sequencer" width="351" minWidth="10" maxWidth="3.4028234663852886e+38" id="1541">
+                                                        <tableColumn identifier="sequencer" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="1541">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Sequencer">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1421,7 +1424,7 @@ CA
                                             </subviews>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </clipView>
-                                        <scroller key="horizontalScroller" verticalHuggingPriority="750" controlSize="small" horizontal="YES" id="569">
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" controlSize="small" horizontal="YES" id="569">
                                             <rect key="frame" x="0.0" y="55" width="601" height="11"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
