@@ -94,6 +94,10 @@
 		77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 77E1995113858DE0006C361B /* TabNewMetalRollover.png */; };
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
+		80E95C551836E41C00D864CA /* select-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E95C541836E41C00D864CA /* select-locked.png */; };
+		80E95C5A1836E44900D864CA /* select-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E95C541836E41C00D864CA /* select-locked.png */; };
+		80FBACD81834530100C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
+		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB052171561B8003A2F7B /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835DAFA7171561B7003A2F7B /* LICENSE.txt */; };
 		835DB053171561B8003A2F7B /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 835DAFA8171561B7003A2F7B /* README.markdown */; };
 		835DB08B171561B8003A2F7B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 835DB040171561B7003A2F7B /* README.txt */; };
@@ -990,6 +994,8 @@
 		77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBModalSheetController.m; sourceTree = "<group>"; };
 		77E7D04D138F78F600E8EE67 /* StageSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StageSizeWindow.h; sourceTree = "<group>"; };
 		77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StageSizeWindow.m; sourceTree = "<group>"; };
+		80E95C541836E41C00D864CA /* select-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-locked.png"; sourceTree = "<group>"; };
+		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
 		835DAF3F17156161003A2F7B /* CCBHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBHTTPServer.h; sourceTree = "<group>"; };
 		835DAF4017156161003A2F7B /* CCBHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBHTTPServer.m; sourceTree = "<group>"; };
 		835DAF81171561B7003A2F7B /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -2223,6 +2229,7 @@
 				774E4EBF136D98AB0025D0A8 /* select-pt.png */,
 				774E4EC0136D98AB0025D0A8 /* select-tl.png */,
 				774E4EC1136D98AB0025D0A8 /* select-tr.png */,
+				80E95C541836E41C00D864CA /* select-locked.png */,
 				774F95C513638D74005D43EB /* missing-particle-texture.png */,
 				772BE566133E40D60009B5B9 /* missing-texture.png */,
 			);
@@ -2232,6 +2239,7 @@
 		776041F01498FD630078095D /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				80FBACD71834530100C4BB69 /* visible-icon.png */,
 				B7096E1D180CD98E00164A8A /* doc-layer.png */,
 				B7096E1E180CD98E00164A8A /* doc-layer@2x.png */,
 				B7096E1F180CD98E00164A8A /* doc-node.png */,
@@ -4329,6 +4337,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80E95C5A1836E44900D864CA /* select-locked.png in Resources */,
+				80FBACD91834553000C4BB69 /* visible-icon.png in Resources */,
 				A77EF594171FD3B200451DA4 /* cwebp in Resources */,
 				7789ABCD133AA82000CEFCC7 /* InfoPlist.strings in Resources */,
 				7789ABD3133AA82000CEFCC7 /* Credits.rtf in Resources */,
@@ -4721,6 +4731,8 @@
 			files = (
 				E398C02914FB81A30078E771 /* InfoPlist.strings in Resources */,
 				835DB052171561B8003A2F7B /* LICENSE.txt in Resources */,
+				80E95C551836E41C00D864CA /* select-locked.png in Resources */,
+				80FBACD81834530100C4BB69 /* visible-icon.png in Resources */,
 				835DB053171561B8003A2F7B /* README.markdown in Resources */,
 				835DB08B171561B8003A2F7B /* README.txt in Resources */,
 				A77EF590171FD30E00451DA4 /* cwebp in Resources */,

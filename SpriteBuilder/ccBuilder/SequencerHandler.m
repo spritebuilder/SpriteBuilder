@@ -363,6 +363,9 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if (item == nil) return @"Root";
     
+    
+    CCNode* node = item;
+    
     if ([item isKindOfClass:[SequencerChannel class]])
     {
         SequencerChannel* channel = item;
@@ -374,15 +377,62 @@ static SequencerHandler* sharedSequencerHandler;
         return @"";
     }
     
-    CCNode* node = item;
+    if ([tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        return @(node.hidden);
+    }
+
+    if ([tableColumn.identifier isEqualToString:@"locked"])
+    {
+        return @(node.locked);
+    }
+
     return node.displayName;
+}
+
+-(void)setChildrenHidden:(bool)hidden withChildren:(NSArray*)children
+{
+    for(CCNode * child in children)
+    {
+        child.hidden = hidden;
+        [self setChildrenHidden:hidden withChildren:child.children];
+    }
 }
 
 - (void) outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
     CCNode* node = item;
     
-    if (![object isEqualToString:node.displayName])
+    if([tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        bool hidden = [(NSNumber*)object boolValue];
+
+        //Ensure that we can hide this child. If its parent is hidden, this is an incorrect operation.
+        if(!hidden)
+        {
+            CCNode * parent = node.parent;
+            while(parent)
+            {
+                if(parent.hidden)
+                {
+
+                    return;//If the parent is hidden, we cannot remove the hidden flag.
+                }
+                
+                parent = parent.parent;
+            }
+        }
+        
+        node.hidden = hidden;
+        [self setChildrenHidden:node.hidden withChildren:node.children];
+        [outlineView reloadItem:node reloadChildren:YES];
+        
+    }
+    else if([tableColumn.identifier isEqualToString:@"locked"])
+    {
+        node.locked = [(NSNumber*)object boolValue];
+    }
+    else if (![object isEqualToString:node.displayName])
     {
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*nodeDisplayName"];
         node.displayName = object;
@@ -392,7 +442,18 @@ static SequencerHandler* sharedSequencerHandler;
 - (BOOL) outlineView:(NSOutlineView *)outline shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
     NSLog(@"should edit?");
-    [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
+    if([tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        return NO;
+    }
+    else if([tableColumn.identifier isEqualToString:@"locked"])
+    {
+        return NO;
+    }
+    else
+    {
+        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
+    }
     return YES;
 }
 
@@ -565,7 +626,30 @@ static SequencerHandler* sharedSequencerHandler;
                 seqCell.channel = (SequencerSoundChannel*) item;
             }
         }
+        else if([tableColumn.identifier isEqualToString:@"locked"] ||
+             [tableColumn.identifier isEqualToString:@"hidden"])
+        {
+            NSButtonCell * buttonCell = cell;
+            
+            if ([item isKindOfClass:[SequencerCallbackChannel class]] ||
+                [item isKindOfClass:[SequencerSoundChannel class]])
+            {
+                [buttonCell setTransparent:YES];
+            }
+            else
+            {
+                [buttonCell setTransparent:NO];
+            }
+            
+        }
         return;
+    }
+    
+    if([tableColumn.identifier isEqualToString:@"locked"] ||
+       [tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        NSButtonCell * buttonCell = cell;
+        [buttonCell setTransparent:NO];
     }
     
     CCNode* node = item;
