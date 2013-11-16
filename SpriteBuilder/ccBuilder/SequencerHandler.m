@@ -646,7 +646,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     if([tableColumn.identifier isEqualToString:@"locked"] ||
-      [tableColumn.identifier isEqualToString:@"hidden"])
+       [tableColumn.identifier isEqualToString:@"hidden"])
     {
         NSButtonCell * buttonCell = cell;
         [buttonCell setTransparent:NO];
