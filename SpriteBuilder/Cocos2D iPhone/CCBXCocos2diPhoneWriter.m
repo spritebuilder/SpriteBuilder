@@ -280,21 +280,6 @@
     // Property name
     [self writeCachedString:name isPath:NO];
     
-    // Supported platforms
-    if (!platform) [self writeByte:kCCBXPlatformAll];
-    else if ([platform isEqualToString:@"iOS"])
-    {
-        [self writeByte:kCCBXPlatformIOS];
-    }
-    else if ([platform isEqualToString:@"Mac"])
-    {
-        [self writeByte:kCCBXPlatformMac];
-    }
-    else
-    {
-        [self writeByte:kCCBXPlatformAll];
-    }
-    
     if ([type isEqualToString:@"Position"])
     {
         float x = [[prop objectAtIndex:0] floatValue];
@@ -491,14 +476,6 @@
     [self addToStringCache:[node objectForKey:@"baseClass"] isPath:NO];
     [self addToStringCache:[node objectForKey:@"customClass"] isPath:NO];
     [self addToStringCache:[node objectForKey:@"memberVarAssignmentName"] isPath:NO];
-    
-    // Add JS controller class
-    if (jsControlled)
-    {
-        NSString* jsController = [node objectForKey:@"jsController"];
-        if (!jsController) jsController = @"";
-        [self addToStringCache:jsController isPath:NO];
-    }
     
     // Animated properties
     NSDictionary* animatedProps = [node objectForKey:@"animatedProperties"];
@@ -792,9 +769,6 @@
     
     // Version
     [self writeInt:kCCBXVersion withSign:NO];
-    
-    // JavaScript or not
-    [self writeBool:jsControlled];
 }
 
 - (void) writeStringCache
@@ -888,7 +862,6 @@
 {
     // Write class
     NSString* class = [node objectForKey:@"customClass"];
-    if (jsControlled) class = @"";
     
     BOOL hasCustomClass = YES;
     if (!class || [class isEqualToString:@""])
@@ -897,14 +870,6 @@
         hasCustomClass = NO;
     }
     [self writeCachedString:class isPath:NO];
-    
-    // Write controller
-    if (jsControlled)
-    {
-        NSString* jsController = [node objectForKey:@"jsController"];
-        if (!jsController) jsController = @"";
-        [self writeCachedString:jsController isPath:NO];
-    }
     
     // Write assignment type and name
     int memberVarAssignmentType = [[node objectForKey:@"memberVarAssignmentType"] intValue];
@@ -1159,7 +1124,6 @@
 - (void) writeDocument:(NSDictionary*)doc
 {
     NSDictionary* nodeGraph = [doc objectForKey:@"nodeGraph"];
-    jsControlled = [[doc objectForKey:@"jsControlled"] boolValue];
     
     [self cacheStringsForNode:nodeGraph];
     [self cacheStringsForSequences:doc];
