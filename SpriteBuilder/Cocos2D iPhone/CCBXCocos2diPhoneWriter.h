@@ -45,7 +45,6 @@ enum {
 @interface CCBXCocos2diPhoneWriter : NSObject
 {
     BOOL flattenPaths;
-    BOOL jsControlled;
     NSDictionary* serializedProjectSettings;
     
     NSMutableData* data;

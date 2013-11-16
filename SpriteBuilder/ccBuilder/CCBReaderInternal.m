@@ -439,6 +439,18 @@ NSDictionary* renamedProperties = NULL;
         [node setUsesFlashSkew:YES];
     }
     
+    // Hidden node graph
+    if ([[dict objectForKey:@"hidden"] boolValue])
+    {
+        node.hidden = YES;
+    }
+    
+    // Locked node
+    if ([[dict objectForKey:@"locked"] boolValue])
+    {
+        node.locked = YES;
+    }
+    
     // Set properties for the node
     int numProps = [props count];
     for (int i = 0; i < numProps; i++)

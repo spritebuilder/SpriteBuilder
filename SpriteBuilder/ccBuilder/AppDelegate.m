@@ -107,8 +107,10 @@
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
 #import "WarningOutlineHandler.h"
-
+#import "CCNode+NodeInfo.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
+#import <objc/runtime.h>
+#import <objc/message.h>
 
 
 @implementation AppDelegate
@@ -172,8 +174,25 @@ static AppDelegate* sharedAppDelegate;
     [inspectorCodeScroll setDocumentView:inspectorCodeDocumentView];
 }
 
+
+//This function replaces the current CCNode visit with "customVisit" to ensure that 'hidden' flagged nodes are invisible.
+//However it then proceeds to call the real '[CCNode visit]' (now renamed oldVisit).
+void ApplyCustomNodeVisitSwizzle()
+{
+    Method origMethod = class_getInstanceMethod([CCNode class], @selector(visit));
+    Method newMethod = class_getInstanceMethod([CCNode class], @selector(customVisit));
+    
+    IMP origImp = method_getImplementation(origMethod);
+    IMP newImp = method_getImplementation(newMethod);
+    
+    class_replaceMethod([CCNode class], @selector(visit), newImp, method_getTypeEncoding(newMethod));
+    class_addMethod([CCNode class], @selector(oldVisit), origImp, method_getTypeEncoding(origMethod));
+    
+}
+
 - (void) setupCocos2d
 {
+    ApplyCustomNodeVisitSwizzle();
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
@@ -679,7 +698,7 @@ static AppDelegate* sharedAppDelegate;
         return;
     }
     
-    // Remove any nodes that are part of sub ccb-files
+    // Remove any nodes that are part of sub ccb-files OR any nodes that are Locked.
     NSMutableArray* mutableSelection = [NSMutableArray arrayWithArray: selection];
     for (int i = mutableSelection.count -1; i >= 0; i--)
     {
@@ -969,7 +988,7 @@ static BOOL hideAllToNextSeparator;
             if (!usesFlashSkew && [name isEqualToString:@"rotationY"]) continue;
             
             // Handle read only for animated properties
-            if ([self isDisabledProperty:name animatable:animated])
+            if ([self isDisabledProperty:name animatable:animated] || self.selectedNode.locked)
             {
                 readOnly = YES;
             }
@@ -2131,6 +2150,7 @@ static BOOL hideAllToNextSeparator;
     {
         // Add at end of array
         [parent addChild:obj z:[parent.children count]];
+        
     }
     else
     {
@@ -2143,6 +2163,11 @@ static BOOL hideAllToNextSeparator;
         }
         [parent addChild:obj z:index];
         [parent sortAllChildren];
+    }
+    
+    if(parent.hidden)
+    {
+        obj.hidden = YES;
     }
     
     [outlineHierarchy reloadData];
@@ -2528,6 +2553,9 @@ static BOOL hideAllToNextSeparator;
     
     for (CCNode* selectedNode in self.selectedNodes)
     {
+        if(selectedNode.locked)
+            continue;
+        
         [self saveUndoStateWillChangeProperty:@"position"];
         
         // Get and update absolute position
@@ -3595,6 +3623,9 @@ static BOOL hideAllToNextSeparator;
     // Check if node can have children
     for (CCNode* c in self.selectedNodes)
     {
+        if(c.locked)
+            continue;
+        
         CCPositionType positionType = [PositionPropertySetter positionTypeForNode:c prop:@"position"];
         if (positionType.xUnit != CCPositionUnitNormalized)
         {
@@ -3636,6 +3667,9 @@ static BOOL hideAllToNextSeparator;
     // Align objects
     for (CCNode* node in self.selectedNodes)
     {
+        if(node.locked)
+            continue;
+        
         CGPoint newAbsPosition = node.positionInPoints;
         if (alignmentType == kCCBAlignHorizontalCenter)
         {
@@ -3667,6 +3701,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count - 1; ++i)
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         CGPoint newAbsPosition = node.position;
         
@@ -3732,6 +3769,8 @@ static BOOL hideAllToNextSeparator;
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
         
+
+        
         cxNode = node.contentSize.width * node.scaleX;
         
         x = node.positionInPoints.x - cxNode * node.anchorPoint.x;
@@ -3762,6 +3801,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count; ++i)
     {
         CCNode* node = [sortedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         CGPoint newAbsPosition = node.positionInPoints;
         
@@ -3800,6 +3842,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count; ++i)
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         cyNode = node.contentSize.height * node.scaleY;
         
@@ -4327,6 +4372,18 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+- (IBAction)togglePlayback:(id)sender {
+    if(!playingBack)
+    {
+        [self playbackPlay:sender];
+    }
+    else
+    {
+        [self playbackStop:sender];
+    }
+}
+
+
 - (IBAction)playbackPlay:(id)sender
 {
     if (!self.hasOpenedDocument) return;
@@ -4449,6 +4506,8 @@ static BOOL hideAllToNextSeparator;
 - (IBAction)reportBug:(id)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/apportable/SpriteBuilder/issues"]];
+}
+- (IBAction)menuHiddenNode:(id)sender {
 }
 
 - (IBAction)visitCommunity:(id)sender
