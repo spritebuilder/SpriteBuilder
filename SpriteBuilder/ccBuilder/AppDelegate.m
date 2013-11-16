@@ -106,7 +106,7 @@
 #import "CCBProjCreator.h"
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
-
+#import "CCNode+NodeInfo.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
@@ -683,7 +683,7 @@ void ApplyCustomNodeVisitSwizzle()
         return;
     }
     
-    // Remove any nodes that are part of sub ccb-files
+    // Remove any nodes that are part of sub ccb-files OR any nodes that are Locked.
     NSMutableArray* mutableSelection = [NSMutableArray arrayWithArray: selection];
     for (int i = mutableSelection.count -1; i >= 0; i--)
     {
@@ -973,7 +973,7 @@ static BOOL hideAllToNextSeparator;
             if (!usesFlashSkew && [name isEqualToString:@"rotationY"]) continue;
             
             // Handle read only for animated properties
-            if ([self isDisabledProperty:name animatable:animated])
+            if ([self isDisabledProperty:name animatable:animated] || self.selectedNode.locked)
             {
                 readOnly = YES;
             }
@@ -2532,6 +2532,9 @@ static BOOL hideAllToNextSeparator;
     
     for (CCNode* selectedNode in self.selectedNodes)
     {
+        if(selectedNode.locked)
+            continue;
+        
         [self saveUndoStateWillChangeProperty:@"position"];
         
         // Get and update absolute position
@@ -3595,6 +3598,9 @@ static BOOL hideAllToNextSeparator;
     // Check if node can have children
     for (CCNode* c in self.selectedNodes)
     {
+        if(c.locked)
+            continue;
+        
         CCPositionType positionType = [PositionPropertySetter positionTypeForNode:c prop:@"position"];
         if (positionType.xUnit != CCPositionUnitNormalized)
         {
@@ -3636,6 +3642,9 @@ static BOOL hideAllToNextSeparator;
     // Align objects
     for (CCNode* node in self.selectedNodes)
     {
+        if(node.locked)
+            continue;
+        
         CGPoint newAbsPosition = node.positionInPoints;
         if (alignmentType == kCCBAlignHorizontalCenter)
         {
@@ -3667,6 +3676,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count - 1; ++i)
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         CGPoint newAbsPosition = node.position;
         
@@ -3732,6 +3744,8 @@ static BOOL hideAllToNextSeparator;
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
         
+
+        
         cxNode = node.contentSize.width * node.scaleX;
         
         x = node.positionInPoints.x - cxNode * node.anchorPoint.x;
@@ -3762,6 +3776,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count; ++i)
     {
         CCNode* node = [sortedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         CGPoint newAbsPosition = node.positionInPoints;
         
@@ -3800,6 +3817,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count; ++i)
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         cyNode = node.contentSize.height * node.scaleY;
         

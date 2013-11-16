@@ -78,7 +78,7 @@
     [super drawGridInClipRect:finalClipRect];
 }
 
-const int kSequencerNameWidth = 285;
+const int kSequencerNameWidth = 290;
 
 - (void) drawRect:(NSRect)dirtyRect
 {

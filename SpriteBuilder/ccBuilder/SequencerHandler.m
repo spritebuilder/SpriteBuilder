@@ -405,7 +405,25 @@ static SequencerHandler* sharedSequencerHandler;
     
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
-        node.hidden = [(NSNumber*)object boolValue];
+        bool hidden = [(NSNumber*)object boolValue];
+
+        //Ensure that we can hide this child. If its parent is hidden, this is an incorrect operation.
+        if(!hidden)
+        {
+            CCNode * parent = node.parent;
+            while(parent)
+            {
+                if(parent.hidden)
+                {
+
+                    return;//If the parent is hidden, we cannot remove the hidden flag.
+                }
+                
+                parent = parent.parent;
+            }
+        }
+        
+        node.hidden = hidden;
         [self setChildrenHidden:node.hidden withChildren:node.children];
         [outlineView reloadItem:node reloadChildren:YES];
         
