@@ -626,11 +626,30 @@ static SequencerHandler* sharedSequencerHandler;
                 seqCell.channel = (SequencerSoundChannel*) item;
             }
         }
-        else
+        else if([tableColumn.identifier isEqualToString:@"locked"] ||
+             [tableColumn.identifier isEqualToString:@"hidden"])
         {
-            int break_here = 1;
+            NSButtonCell * buttonCell = cell;
+            
+            if ([item isKindOfClass:[SequencerCallbackChannel class]] ||
+                [item isKindOfClass:[SequencerSoundChannel class]])
+            {
+                [buttonCell setTransparent:YES];
+            }
+            else
+            {
+                [buttonCell setTransparent:NO];
+            }
+            
         }
         return;
+    }
+    
+    if([tableColumn.identifier isEqualToString:@"locked"] ||
+      [tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        NSButtonCell * buttonCell = cell;
+        [buttonCell setTransparent:NO];
     }
     
     CCNode* node = item;
