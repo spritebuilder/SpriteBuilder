@@ -526,6 +526,19 @@
         [dict setValue:[node.nodePhysicsBody serialization] forKey:@"physicsBody"];
     }
     
+    //hidden node graph
+    if(node.hidden)
+    {
+        [dict setValue:[NSNumber numberWithBool:YES] forKey:@"hidden"];
+    }
+
+    //locked node graph
+    if(node.locked)
+    {
+        [dict setValue:[NSNumber numberWithBool:YES] forKey:@"locked"];
+    }
+
+    
     // Selection
     NSArray* selection = [AppDelegate appDelegate].selectedNodes;
     if (selection && [selection containsObject:node])
