@@ -228,6 +228,8 @@
 
 - (void) stepForward:(int)numSteps
 {
+    if(numSteps == 0)
+        return;
     
     // Calculate new time
     float newTime = [self alignTimeToResolution: timelinePosition + numSteps/timelineResolution];

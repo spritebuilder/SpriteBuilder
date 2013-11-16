@@ -97,11 +97,6 @@
     return [[self extraPropForKey:@"hidden"] boolValue];
 }
 
-- (void)setHiddenVisiblility:(BOOL)hiddenVisiblility
-{
-    
-}
-
 - (PlugInNode*) plugIn
 {
     NodeInfo* info = self.userObject;
