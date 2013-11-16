@@ -2135,6 +2135,7 @@ static BOOL hideAllToNextSeparator;
     {
         // Add at end of array
         [parent addChild:obj z:[parent.children count]];
+        
     }
     else
     {
@@ -2147,6 +2148,11 @@ static BOOL hideAllToNextSeparator;
         }
         [parent addChild:obj z:index];
         [parent sortAllChildren];
+    }
+    
+    if(parent.hidden)
+    {
+        obj.hidden = YES;
     }
     
     [outlineHierarchy reloadData];
