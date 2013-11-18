@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface WarningCellController : NSViewController
+@interface WarningCell : NSCell
 
 @end
