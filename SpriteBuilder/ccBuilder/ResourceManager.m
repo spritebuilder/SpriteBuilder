@@ -1058,6 +1058,7 @@
     
     // Release created objects
     CFRelease(destination);
+    CGImageRelease(imageDst);
     CGImageRelease(imageSrc);
     CFRelease(dataProvider);
     CFRelease(newContext);
