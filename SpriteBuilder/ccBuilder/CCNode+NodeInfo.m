@@ -545,6 +545,8 @@
 
 - (void) deleteKeyframesAfterTime:(float)time sequenceId:(int)seqId
 {
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*deletekeyframes"];
+    
     NodeInfo* info = self.userObject;
     NSMutableDictionary* seq = [info.animatableProperties objectForKey:[NSNumber numberWithInt:seqId]];
     if (seq)
