@@ -1063,6 +1063,20 @@ static BOOL hideAllToNextSeparator;
     [inspectorCodeDocumentView setFrameSize:NSMakeSize([inspectorCodeScroll contentSize].width, paneCodeOffset)];
     
     [propertyInspectorHandler updateTemplates];
+    
+    //Undocumented function that resets the KeyViewLoop.
+    if([inspectorDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    {
+        [inspectorDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+    }
+    
+    //Undocumented function that resets the KeyViewLoop.
+    if([inspectorCodeDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    {
+        [inspectorCodeDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+    }
+    
+
 }
 
 #pragma mark Populating menus
