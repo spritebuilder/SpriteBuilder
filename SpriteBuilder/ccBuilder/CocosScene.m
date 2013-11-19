@@ -397,15 +397,13 @@ static CocosScene* sharedCocosScene;
     
     if (nodes.count > 0)
     {
-        for (CCNode* node in nodes)        {
+        for (CCNode* node in nodes)
+        {
             if(node.locked)
             {
-                CGPoint pos = [node convertToWorldSpace: ccp(node.contentSizeInPoints.width/2,node.contentSizeInPoints.height/2)];
-                
-                CCSprite* sel = [CCSprite spriteWithImageNamed:@"select-locked.png"];
-                sel.anchorPoint = ccp(0.5f, 0.5f);
-                sel.position = pos;
-                [selectionLayer addChild:sel];
+                //Locked nodes shouldn't render
+                continue;
+  
             }
             else
             {
@@ -583,11 +581,12 @@ static CocosScene* sharedCocosScene;
         [self nodesUnderPt:pt rootNode:[node.children objectAtIndex:i] nodes:nodes];
     }
   
-    NSArray * unlockedNodes = [nodes filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CCNode * node, NSDictionary *bindings) {
-        return !node.locked;
+    //Don't select nodes that are locked or hidden.
+    NSArray * selectableNodes = [nodes filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CCNode * node, NSDictionary *bindings) {
+        return !node.locked && !node.hidden && !node.parentHidden;
     }]];
     [nodes removeAllObjects];
-    [nodes addObjectsFromArray:unlockedNodes];
+    [nodes addObjectsFromArray:selectableNodes];
 
     
 }

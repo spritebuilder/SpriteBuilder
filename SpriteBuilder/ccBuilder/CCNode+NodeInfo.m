@@ -97,6 +97,20 @@
     return [[self extraPropForKey:@"hidden"] boolValue];
 }
 
+- (BOOL) parentHidden
+{
+    CCNode * parent = self.parent;
+    while(parent)
+    {
+        if(parent.hidden)
+            return YES;
+
+        parent = parent.parent;
+    }
+    
+    return NO;
+}
+
 - (PlugInNode*) plugIn
 {
     NodeInfo* info = self.userObject;
