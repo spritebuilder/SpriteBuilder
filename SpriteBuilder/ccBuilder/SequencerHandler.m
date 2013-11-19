@@ -638,18 +638,16 @@ static SequencerHandler* sharedSequencerHandler;
     {
         SequencerButtonCell * buttonCell = cell;
         buttonCell.node = node;
+        [buttonCell setTransparent:NO];
         
         if(node.parentHidden)
         {
             [buttonCell setEnabled:NO];
-            [buttonCell setTransparent:YES];
         }
         else
         {
             [buttonCell setEnabled:YES];
-            [buttonCell setTransparent:NO];
         }
-        
     }
     
     

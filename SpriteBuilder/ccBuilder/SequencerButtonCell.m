@@ -29,4 +29,19 @@
 
     [super drawWithFrame:cellFrame inView:controlView];
 }
+
+-(void)setEnabled:(BOOL)flag
+{
+    [super setEnabled:flag];
+    
+    if(![self isEnabled])
+    {
+        self.image = [NSImage imageNamed:@"seq-visible-faint.png"];
+    }
+    else
+    {
+        self.image = [NSImage imageNamed:@"seq-visible.png"];
+    }
+    
+}
 @end
