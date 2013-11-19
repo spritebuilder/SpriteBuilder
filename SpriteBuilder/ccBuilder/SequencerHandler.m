@@ -39,6 +39,7 @@
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "SequencerNodeProperty.h"
+#import "SequencerButtonCell.h"
 #import "CCNode+NodeInfo.h"
 #import "CCBDocument.h"
 #import "CCBPCCBFile.h"
@@ -407,26 +408,8 @@ static SequencerHandler* sharedSequencerHandler;
     {
         bool hidden = [(NSNumber*)object boolValue];
 
-        //Ensure that we can hide this child. If its parent is hidden, this is an incorrect operation.
-        if(!hidden)
-        {
-            CCNode * parent = node.parent;
-            while(parent)
-            {
-                if(parent.hidden)
-                {
-
-                    return;//If the parent is hidden, we cannot remove the hidden flag.
-                }
-                
-                parent = parent.parent;
-            }
-        }
-        
         node.hidden = hidden;
-        [self setChildrenHidden:node.hidden withChildren:node.children];
         [outlineView reloadItem:node reloadChildren:YES];
-        
     }
     else if([tableColumn.identifier isEqualToString:@"locked"])
     {
@@ -452,7 +435,8 @@ static SequencerHandler* sharedSequencerHandler;
     }
     else
     {
-        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
+        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES
+         ];
     }
     return YES;
 }
@@ -629,7 +613,8 @@ static SequencerHandler* sharedSequencerHandler;
         else if([tableColumn.identifier isEqualToString:@"locked"] ||
              [tableColumn.identifier isEqualToString:@"hidden"])
         {
-            NSButtonCell * buttonCell = cell;
+            SequencerButtonCell * buttonCell = cell;
+            buttonCell.node = nil;
             
             if ([item isKindOfClass:[SequencerCallbackChannel class]] ||
                 [item isKindOfClass:[SequencerSoundChannel class]])
@@ -645,16 +630,36 @@ static SequencerHandler* sharedSequencerHandler;
         return;
     }
     
-    if([tableColumn.identifier isEqualToString:@"locked"] ||
-       [tableColumn.identifier isEqualToString:@"hidden"])
-    {
-        NSButtonCell * buttonCell = cell;
-        [buttonCell setTransparent:NO];
-    }
-    
     CCNode* node = item;
     BOOL isRootNode = (node == [CocosScene cocosScene].rootNode);
     
+    
+    if([tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        SequencerButtonCell * buttonCell = cell;
+        buttonCell.node = node;
+        
+        if(node.parentHidden)
+        {
+            [buttonCell setEnabled:NO];
+            [buttonCell setTransparent:YES];
+        }
+        else
+        {
+            [buttonCell setEnabled:YES];
+            [buttonCell setTransparent:NO];
+        }
+        
+    }
+    
+    
+    if([tableColumn.identifier isEqualToString:@"locked"])
+    {
+        SequencerButtonCell * buttonCell = cell;
+        [buttonCell setTransparent:NO];
+        buttonCell.node = node;
+    }
+
     if ([tableColumn.identifier isEqualToString:@"expander"])
     {
         SequencerExpandBtnCell* expCell = cell;

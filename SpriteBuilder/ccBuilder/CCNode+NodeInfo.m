@@ -97,6 +97,20 @@
     return [[self extraPropForKey:@"hidden"] boolValue];
 }
 
+- (BOOL) parentHidden
+{
+    CCNode * parent = self.parent;
+    while(parent)
+    {
+        if(parent.hidden)
+            return YES;
+
+        parent = parent.parent;
+    }
+    
+    return NO;
+}
+
 - (PlugInNode*) plugIn
 {
     NodeInfo* info = self.userObject;
@@ -545,6 +559,8 @@
 
 - (void) deleteKeyframesAfterTime:(float)time sequenceId:(int)seqId
 {
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*deletekeyframes"];
+    
     NodeInfo* info = self.userObject;
     NSMutableDictionary* seq = [info.animatableProperties objectForKey:[NSNumber numberWithInt:seqId]];
     if (seq)

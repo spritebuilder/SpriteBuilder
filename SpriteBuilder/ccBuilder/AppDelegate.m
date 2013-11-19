@@ -106,6 +106,7 @@
 #import "CCBProjCreator.h"
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
+#import "WarningOutlineHandler.h"
 #import "CCNode+NodeInfo.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
@@ -287,6 +288,13 @@ void ApplyCustomNodeVisitSwizzle()
     itemNodes.keyEquivalent = @"";
     [items addObject:itemNodes];
     
+    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning.png"];
+    [imgWarnings setTemplate:YES];
+    SMTabBarItem* itemWarnings = [[[SMTabBarItem alloc] initWithImage:imgWarnings tag:3] autorelease];
+    itemWarnings.toolTip = @"Warnings view";
+    itemWarnings.keyEquivalent = @"";
+    [items addObject:itemWarnings];
+
     projectViewTabs.items = items;
     projectViewTabs.delegate = self;
 }
@@ -423,6 +431,13 @@ void ApplyCustomNodeVisitSwizzle()
     resourceManagerSplitView.delegate = previewViewOwner;
     
     [previewViewOwner setPreviewFile:NULL];
+    
+    //Setup warnings outline
+    warningOutlineHandler = [[WarningOutlineHandler alloc] init];
+    outlineWarnings.delegate = warningOutlineHandler;
+    outlineWarnings.target = warningOutlineHandler;
+    outlineWarnings.dataSource = warningOutlineHandler;
+    [self updateWarningsOutline];
 }
 
 - (void) setupGUIWindow
@@ -2728,7 +2743,10 @@ static BOOL hideAllToNextSeparator;
     // Update warnings button in toolbar
     [self updateWarningsButton];
     
-    if (warnings.warnings.count) [self pressedPublishTB:NULL];
+    if (warnings.warnings.count)
+    {
+        [projectViewTabs selectBarButtonIndex:3];
+    }
     
     // Run in Browser
     if (publisher.runAfterPublishing && publisher.browser)
@@ -2744,6 +2762,8 @@ static BOOL hideAllToNextSeparator;
     }
     
     [publisher release];
+    
+    
 }
 
 - (IBAction)openCocosPlayerConsole:(id)sender
@@ -3285,14 +3305,13 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updateWarningsButton
 {
-    if (projectSettings.lastWarnings.warnings.count)
-    {
-        [segmPublishBtn setImage:[NSImage imageNamed:@"editor-warning.png"] forSegment:1];
-    }
-    else
-    {
-        [segmPublishBtn setImage:[NSImage imageNamed:@"editor-check.png"] forSegment:1];
-    }
+    [self updateWarningsOutline];
+}
+
+- (void) updateWarningsOutline
+{
+    [warningOutlineHandler updateWithWarnings:projectSettings.lastWarnings];
+    [outlineWarnings reloadData];
 }
 
 - (IBAction) menuSetCanvasBorder:(id)sender
