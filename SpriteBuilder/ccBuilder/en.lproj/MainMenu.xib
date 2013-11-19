@@ -1421,7 +1421,7 @@ CA
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
-                                                            <buttonCell key="dataCell" type="bevel" bezelStyle="regularSquare" image="seq-notset" imagePosition="above" alignment="center" alternateImage="seq-visible" controlSize="mini" state="on" inset="2" id="9UQ-CC-5my" customClass="SequencerButtonCell">
+                                                            <buttonCell key="dataCell" type="bevel" bezelStyle="regularSquare" image="seq-visible" imagePosition="above" alignment="center" alternateImage="seq-notset" controlSize="mini" state="on" inset="2" id="9UQ-CC-5my" customClass="SequencerButtonCell">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="miniSystem"/>
                                                                 <connections>
