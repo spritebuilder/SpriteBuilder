@@ -172,7 +172,8 @@
 - (void) drawPropertyRowForSeq:(SequencerSequence*) seq nodeProp:(SequencerNodeProperty*)nodeProp row:(int)row withFrame:(NSRect)cellFrame inView:(NSView*)controlView isChannel:(BOOL) isChannel
 {
     // Draw background
-    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y+row*kCCBSeqDefaultRowHeight, cellFrame.size.width, kCCBSeqDefaultRowHeight);
+    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y+row*cellFrame.size.height, cellFrame.size.width, cellFrame.size.height);
+    
     if (isChannel)
     {
         [imgRowBgChannel drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];

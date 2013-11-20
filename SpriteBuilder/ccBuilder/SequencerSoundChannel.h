@@ -27,4 +27,6 @@
 
 @interface SequencerSoundChannel : SequencerChannel
 
+@property (nonatomic) BOOL isEpanded;
+
 @end

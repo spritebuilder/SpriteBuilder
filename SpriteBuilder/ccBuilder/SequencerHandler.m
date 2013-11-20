@@ -561,7 +561,11 @@ static SequencerHandler* sharedSequencerHandler;
     }
     else if ([item isKindOfClass:[SequencerSoundChannel class]])
     {
-        return kCCBSeqDefaultRowHeight;//+1;
+        SequencerSoundChannel * channel = item;
+        if(!channel.isEpanded)
+            return kCCBSeqDefaultRowHeight;
+        else
+            return kCCBSeqAudioRowHeight;//+1;
     }
     
     CCNode* node = item;
@@ -587,9 +591,20 @@ static SequencerHandler* sharedSequencerHandler;
         if ([tableColumn.identifier isEqualToString:@"expander"])
         {
             SequencerExpandBtnCell* expCell = cell;
-            expCell.isExpanded = NO;
-            expCell.canExpand = NO;
             expCell.node = NULL;
+            
+            if ([item isKindOfClass:[SequencerCallbackChannel class]])
+            {
+                expCell.isExpanded = NO;
+                expCell.canExpand = NO;
+            }
+            else if ([item isKindOfClass:[SequencerSoundChannel class]])
+            {
+                SequencerSoundChannel * soundChannel = item;
+                
+                expCell.isExpanded = soundChannel.isEpanded;
+                expCell.canExpand = YES;
+            }
         }
         else if ([tableColumn.identifier isEqualToString:@"structure"])
         {
@@ -698,17 +713,26 @@ static SequencerHandler* sharedSequencerHandler;
 {
     id item = [outlineHierarchy itemAtRow:row];
     
-    if ([item isKindOfClass:[SequencerChannel class]])
+    if ([item isKindOfClass:[SequencerCallbackChannel class]])
     {
         return;
     }
-    
-    CCNode* node = item;
-    
-    if (node == [CocosScene cocosScene].rootNode && !node.seqExpanded) return;
-    //if ([NSStringFromClass(node.class) isEqualToString:@"CCBPCCBFile"] && !node.seqExpanded) return;
-    
-    node.seqExpanded = !node.seqExpanded;
+    else if([item isKindOfClass:[SequencerSoundChannel class]])
+    {
+        SequencerSoundChannel * soundChannel = item;
+        soundChannel.isEpanded = !soundChannel.isEpanded;
+    }
+    else
+    {
+        CCNode* node = item;
+        
+        if (node == [CocosScene cocosScene].rootNode && !node.seqExpanded)
+            return;
+        
+        //if ([NSStringFromClass(node.class) isEqualToString:@"CCBPCCBFile"] && !node.seqExpanded) return;
+        
+        node.seqExpanded = !node.seqExpanded;
+    }
     
     // Need to reload all data when changing heights of rows
     [outlineHierarchy reloadData];

@@ -26,6 +26,7 @@
 #import "SequencerKeyframeEasing.h"
 
 @implementation SequencerSoundChannel
+@synthesize isEpanded;
 
 - (id) init
 {

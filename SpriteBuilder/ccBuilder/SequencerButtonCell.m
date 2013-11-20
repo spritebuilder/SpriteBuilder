@@ -22,7 +22,7 @@
     
     if (!node)
     {
-        NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, cellFrame.size.width+16, kCCBSeqDefaultRowHeight);
+        NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, cellFrame.size.width+16, cellFrame.size.height);
         [imgRowBgChannel drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
         return;
     }
