@@ -32,6 +32,8 @@
 #import "SequencerKeyframeEasing.h"
 #import "SequencerTimelineDrawDelegate.h"
 #import "SequencerChannel.h"
+#import "SequencerSoundChannel.h"
+
 
 @implementation SequencerCell
 
@@ -260,19 +262,33 @@
                 }
             }
             
+            
+            bool isExpanded = NO;
+            
+            if(isChannel)
+            {
+                if([channel isKindOfClass:[SequencerSoundChannel class]])
+                {
+                    SequencerSoundChannel * soundChannel = (SequencerSoundChannel*)channel;
+                    isExpanded = soundChannel.isEpanded;
+                }
+                
+            }
+            
             // Draw keyframe
             NSImage* img = NULL;
             if ([self shouldDrawSelectedKeyframe:keyframe forNodeProp:nodeProp])
             {
-                img = imgKeyframeSel;
+                img = (isChannel && isExpanded) ? imgKeyframeSelLrg : imgKeyframeSel;
             }
             else
             {
-                img = imgKeyframe;
+                img = (isChannel && isExpanded) ? imgKeyframeLrg : imgKeyframe;
             }
             
             if (isChannel)
             {
+                
                 [img drawAtPoint:NSMakePoint(cellFrame.origin.x + xPos-3, cellFrame.origin.y+kCCBSeqDefaultRowHeight*row) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
             }
             else
@@ -375,6 +391,16 @@
         
         imgKeyframeHint = [[NSImage imageNamed:@"seq-keyframe-hint.png"] retain];
         [imgKeyframeHint setFlipped:YES];
+        
+  
+        
+        
+        imgKeyframeLrg = [[NSImage imageNamed:@"seq-keyframe-x4.png"] retain];
+        [imgKeyframeLrg setFlipped:YES];
+        
+        imgKeyframeSelLrg = [[NSImage imageNamed:@"seq-keyframe-x4-sel.png"] retain];
+        [imgKeyframeSelLrg setFlipped:YES];
+        
     }
     
     if (node)
