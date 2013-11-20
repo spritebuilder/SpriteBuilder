@@ -106,8 +106,11 @@
 #import "CCBProjCreator.h"
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
-
+#import "WarningOutlineHandler.h"
+#import "CCNode+NodeInfo.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
+#import <objc/runtime.h>
+#import <objc/message.h>
 
 
 @implementation AppDelegate
@@ -131,6 +134,7 @@
 @synthesize menuContextKeyframe;
 @synthesize menuContextKeyframeInterpol;
 @synthesize menuContextResManager;
+@synthesize menuContextKeyframeNoselection;
 @synthesize outlineProject;
 @synthesize errorDescription;
 @synthesize selectedNodes;
@@ -170,8 +174,25 @@ static AppDelegate* sharedAppDelegate;
     [inspectorCodeScroll setDocumentView:inspectorCodeDocumentView];
 }
 
+
+//This function replaces the current CCNode visit with "customVisit" to ensure that 'hidden' flagged nodes are invisible.
+//However it then proceeds to call the real '[CCNode visit]' (now renamed oldVisit).
+void ApplyCustomNodeVisitSwizzle()
+{
+    Method origMethod = class_getInstanceMethod([CCNode class], @selector(visit));
+    Method newMethod = class_getInstanceMethod([CCNode class], @selector(customVisit));
+    
+    IMP origImp = method_getImplementation(origMethod);
+    IMP newImp = method_getImplementation(newMethod);
+    
+    class_replaceMethod([CCNode class], @selector(visit), newImp, method_getTypeEncoding(newMethod));
+    class_addMethod([CCNode class], @selector(oldVisit), origImp, method_getTypeEncoding(origMethod));
+    
+}
+
 - (void) setupCocos2d
 {
+    ApplyCustomNodeVisitSwizzle();
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 	
@@ -267,6 +288,13 @@ static AppDelegate* sharedAppDelegate;
     itemNodes.keyEquivalent = @"";
     [items addObject:itemNodes];
     
+    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning.png"];
+    [imgWarnings setTemplate:YES];
+    SMTabBarItem* itemWarnings = [[[SMTabBarItem alloc] initWithImage:imgWarnings tag:3] autorelease];
+    itemWarnings.toolTip = @"Warnings view";
+    itemWarnings.keyEquivalent = @"";
+    [items addObject:itemWarnings];
+
     projectViewTabs.items = items;
     projectViewTabs.delegate = self;
 }
@@ -403,6 +431,13 @@ static AppDelegate* sharedAppDelegate;
     resourceManagerSplitView.delegate = previewViewOwner;
     
     [previewViewOwner setPreviewFile:NULL];
+    
+    //Setup warnings outline
+    warningOutlineHandler = [[WarningOutlineHandler alloc] init];
+    outlineWarnings.delegate = warningOutlineHandler;
+    outlineWarnings.target = warningOutlineHandler;
+    outlineWarnings.dataSource = warningOutlineHandler;
+    [self updateWarningsOutline];
 }
 
 - (void) setupGUIWindow
@@ -663,7 +698,7 @@ static AppDelegate* sharedAppDelegate;
         return;
     }
     
-    // Remove any nodes that are part of sub ccb-files
+    // Remove any nodes that are part of sub ccb-files OR any nodes that are Locked.
     NSMutableArray* mutableSelection = [NSMutableArray arrayWithArray: selection];
     for (int i = mutableSelection.count -1; i >= 0; i--)
     {
@@ -953,7 +988,7 @@ static BOOL hideAllToNextSeparator;
             if (!usesFlashSkew && [name isEqualToString:@"rotationY"]) continue;
             
             // Handle read only for animated properties
-            if ([self isDisabledProperty:name animatable:animated])
+            if ([self isDisabledProperty:name animatable:animated] || self.selectedNode.locked)
             {
                 readOnly = YES;
             }
@@ -1028,6 +1063,20 @@ static BOOL hideAllToNextSeparator;
     [inspectorCodeDocumentView setFrameSize:NSMakeSize([inspectorCodeScroll contentSize].width, paneCodeOffset)];
     
     [propertyInspectorHandler updateTemplates];
+    
+    //Undocumented function that resets the KeyViewLoop.
+    if([inspectorDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    {
+        [inspectorDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+    }
+    
+    //Undocumented function that resets the KeyViewLoop.
+    if([inspectorCodeDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    {
+        [inspectorCodeDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+    }
+    
+
 }
 
 #pragma mark Populating menus
@@ -2115,6 +2164,7 @@ static BOOL hideAllToNextSeparator;
     {
         // Add at end of array
         [parent addChild:obj z:[parent.children count]];
+        
     }
     else
     {
@@ -2127,6 +2177,11 @@ static BOOL hideAllToNextSeparator;
         }
         [parent addChild:obj z:index];
         [parent sortAllChildren];
+    }
+    
+    if(parent.hidden)
+    {
+        obj.hidden = YES;
     }
     
     [outlineHierarchy reloadData];
@@ -2328,10 +2383,10 @@ static BOOL hideAllToNextSeparator;
             return;
         }
         
-        NSString* clipType = @"com.cocosbuilder.keyframes";
+        NSString* clipType = kClipboardKeyFrames;
         if (hasChannelKeyframes)
         {
-            clipType = @"com.cocosbuilder.channelkeyframes";
+            clipType = kClipboardChannelKeyframes;
         }
         
         // Serialize keyframe
@@ -2385,11 +2440,11 @@ static BOOL hideAllToNextSeparator;
     
     // Paste keyframes
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:@"com.cocosbuilder.keyframes", @"com.cocosbuilder.channelkeyframes", nil]];
+    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
     
     if (type)
     {
-        if (!self.selectedNode && [type isEqualToString:@"com.cocosbuilder.keyframes"])
+        if (!self.selectedNode && [type isEqualToString:kClipboardKeyFrames])
         {
             [self modalDialogTitle:@"Paste Failed" message:@"You need to select a node to paste keyframes"];
             return;
@@ -2421,11 +2476,11 @@ static BOOL hideAllToNextSeparator;
             keyframe.time = [seq alignTimeToResolution:keyframe.time - firstTime + seq.timelinePosition];
             
             // Add the keyframe
-            if ([type isEqualToString:@"com.cocosbuilder.keyframes"])
+            if ([type isEqualToString:kClipboardKeyFrames])
             {
                 [self.selectedNode addKeyframe:keyframe forProperty:keyframe.name atTime:keyframe.time sequenceId:seq.sequenceId];
             }
-            else if ([type isEqualToString:@"com.cocosbuilder.channelkeyframes"])
+            else if ([type isEqualToString:kClipboardChannelKeyframes])
             {
                 if (keyframe.type == kCCBKeyframeTypeCallbacks)
                 {
@@ -2438,6 +2493,8 @@ static BOOL hideAllToNextSeparator;
                 [keyframe.parent deleteKeyframesAfterTime:seq.timelineLength];
                 [[SequencerHandler sharedHandler] redrawTimeline];
             }
+
+            [[SequencerHandler sharedHandler] deleteDuplicateKeyframesForCurrentSequence];
         }
         
     }
@@ -2510,6 +2567,9 @@ static BOOL hideAllToNextSeparator;
     
     for (CCNode* selectedNode in self.selectedNodes)
     {
+        if(selectedNode.locked)
+            continue;
+        
         [self saveUndoStateWillChangeProperty:@"position"];
         
         // Get and update absolute position
@@ -2697,7 +2757,10 @@ static BOOL hideAllToNextSeparator;
     // Update warnings button in toolbar
     [self updateWarningsButton];
     
-    if (warnings.warnings.count) [self pressedPublishTB:NULL];
+    if (warnings.warnings.count)
+    {
+        [projectViewTabs selectBarButtonIndex:3];
+    }
     
     // Run in Browser
     if (publisher.runAfterPublishing && publisher.browser)
@@ -2713,6 +2776,8 @@ static BOOL hideAllToNextSeparator;
     }
     
     [publisher release];
+    
+    
 }
 
 - (IBAction)openCocosPlayerConsole:(id)sender
@@ -2928,15 +2993,10 @@ static BOOL hideAllToNextSeparator;
             if(res.type == kCCBResTypeDirectory)
             {
                 dirPath = res.filePath;
-                dir = res.data;
             }
             else
             {
                 dirPath = [res.filePath stringByDeletingLastPathComponent];
-                if([[ResourceManager sharedManager].directories objectForKey:dirPath])
-                {
-                    dir = [[ResourceManager sharedManager].directories objectForKey:dirPath];
-                }
             }
         }
     }
@@ -2962,9 +3022,9 @@ static BOOL hideAllToNextSeparator;
     [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     [[ResourceManager sharedManager] reloadAllResources];
     
-    res = [[ResourceManager sharedManager] resourceForPath:newDirPath inDir:dir];
+    res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
     
-    id parentResource = [[ResourceManager sharedManager] resourceForPath:dir.dirPath];
+    id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
     [outlineProject expandItem:parentResource];
     
     [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
@@ -2982,7 +3042,30 @@ static BOOL hideAllToNextSeparator;
     
     if (acceptedModal)
     {
-        NSString* filePath = [[[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath] stringByAppendingPathComponent:wc.documentName];
+        NSString* dirPath = [[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath];
+        
+        int selectedRow = [sender tag];
+        RMResource* res = nil;
+        if(selectedRow != -1)
+        {
+            if (selectedRow >= 0 && projectSettings)
+            {
+                res = [outlineProject itemAtRow:selectedRow];
+                
+                if(res.type == kCCBResTypeDirectory)
+                {
+                    dirPath = res.filePath;
+                }
+                else
+                {
+                    dirPath = [res.filePath stringByDeletingLastPathComponent];
+                }
+            }
+        }
+        
+        NSString* filePath = [dirPath stringByAppendingPathComponent:wc.documentName];
+        
+        
         if (![[filePath pathExtension] isEqualToString:@"ccb"])
         {
             filePath = [filePath stringByAppendingPathExtension:@"ccb"];
@@ -3009,6 +3092,8 @@ static BOOL hideAllToNextSeparator;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_current_queue(), ^{
                                [self newFile:filePath type:type resolutions:resolutions];
+                               id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
+                               [outlineProject expandItem:parentResource];
                            });
             [wc release];
         }
@@ -3234,14 +3319,13 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updateWarningsButton
 {
-    if (projectSettings.lastWarnings.warnings.count)
-    {
-        [segmPublishBtn setImage:[NSImage imageNamed:@"editor-warning.png"] forSegment:1];
-    }
-    else
-    {
-        [segmPublishBtn setImage:[NSImage imageNamed:@"editor-check.png"] forSegment:1];
-    }
+    [self updateWarningsOutline];
+}
+
+- (void) updateWarningsOutline
+{
+    [warningOutlineHandler updateWithWarnings:projectSettings.lastWarnings];
+    [outlineWarnings reloadData];
 }
 
 - (IBAction) menuSetCanvasBorder:(id)sender
@@ -3553,6 +3637,9 @@ static BOOL hideAllToNextSeparator;
     // Check if node can have children
     for (CCNode* c in self.selectedNodes)
     {
+        if(c.locked)
+            continue;
+        
         CCPositionType positionType = [PositionPropertySetter positionTypeForNode:c prop:@"position"];
         if (positionType.xUnit != CCPositionUnitNormalized)
         {
@@ -3594,6 +3681,9 @@ static BOOL hideAllToNextSeparator;
     // Align objects
     for (CCNode* node in self.selectedNodes)
     {
+        if(node.locked)
+            continue;
+        
         CGPoint newAbsPosition = node.positionInPoints;
         if (alignmentType == kCCBAlignHorizontalCenter)
         {
@@ -3625,6 +3715,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count - 1; ++i)
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         CGPoint newAbsPosition = node.position;
         
@@ -3690,6 +3783,8 @@ static BOOL hideAllToNextSeparator;
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
         
+
+        
         cxNode = node.contentSize.width * node.scaleX;
         
         x = node.positionInPoints.x - cxNode * node.anchorPoint.x;
@@ -3720,6 +3815,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count; ++i)
     {
         CCNode* node = [sortedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         CGPoint newAbsPosition = node.positionInPoints;
         
@@ -3758,6 +3856,9 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < self.selectedNodes.count; ++i)
     {
         CCNode* node = [self.selectedNodes objectAtIndex:i];
+        
+        if(node.locked)
+            continue;
         
         cyNode = node.contentSize.height * node.scaleY;
         
@@ -4150,6 +4251,7 @@ static BOOL hideAllToNextSeparator;
     else if (tag == 4) return @"displayFrame";
     else if (tag == 5) return @"opacity";
     else if (tag == 6) return @"color";
+    else if (tag == 7) return @"skew";
     else return NULL;
 }
 
@@ -4167,6 +4269,11 @@ static BOOL hideAllToNextSeparator;
 - (IBAction)menuCopyKeyframe:(id)sender
 {
     [self copy:sender];
+}
+
+- (IBAction)menuPasteKeyframes:(id)sender
+{
+    [self paste:sender];
 }
 
 - (IBAction)menuDeleteKeyframe:(id)sender
@@ -4278,6 +4385,18 @@ static BOOL hideAllToNextSeparator;
         }
     }
 }
+
+- (IBAction)togglePlayback:(id)sender {
+    if(!playingBack)
+    {
+        [self playbackPlay:sender];
+    }
+    else
+    {
+        [self playbackStop:sender];
+    }
+}
+
 
 - (IBAction)playbackPlay:(id)sender
 {
@@ -4401,6 +4520,8 @@ static BOOL hideAllToNextSeparator;
 - (IBAction)reportBug:(id)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/apportable/SpriteBuilder/issues"]];
+}
+- (IBAction)menuHiddenNode:(id)sender {
 }
 
 - (IBAction)visitCommunity:(id)sender

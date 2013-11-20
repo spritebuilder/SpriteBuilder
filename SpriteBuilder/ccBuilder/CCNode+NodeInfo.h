@@ -32,6 +32,10 @@
 @interface CCNode (NodeInfo)
 
 @property (nonatomic,assign) BOOL seqExpanded;
+@property (nonatomic,assign) BOOL locked;
+@property (nonatomic,assign) BOOL hidden;
+@property (readonly)         BOOL parentHidden;
+
 @property (nonatomic,readonly) PlugInNode* plugIn;
 @property (nonatomic,copy) NSString* displayName;
 @property (nonatomic,retain) NSMutableArray* customProperties;

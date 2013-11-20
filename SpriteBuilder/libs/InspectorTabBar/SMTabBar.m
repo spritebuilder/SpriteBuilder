@@ -57,6 +57,11 @@ static char SMObservationContext;
 
 #pragma mark - Actions
 
+-(void)selectBarButtonIndex:(NSInteger)index
+{
+    [self selectBarButton:self.barButtons[index]];
+}
+
 - (void)selectBarButton:(id)sender {
     // select a bar button
     

@@ -676,6 +676,7 @@
                 {
                     resourcesChanged = YES;
                 }
+                [self updateResourcesForPath:res.filePath];
             }
             
             if ([res.modifiedTime compare:modifiedTime] == NSOrderedSame)
@@ -712,10 +713,6 @@
                 }
                 resourcesChanged = YES;
                 
-                if(res.type == kCCBResTypeDirectory)
-                {
-                    [self updateResourcesForPath:res.filePath];
-                }
             }
         }
         else
@@ -1061,6 +1058,7 @@
     
     // Release created objects
     CFRelease(destination);
+    CGImageRelease(imageDst);
     CGImageRelease(imageSrc);
     CFRelease(dataProvider);
     CFRelease(newContext);

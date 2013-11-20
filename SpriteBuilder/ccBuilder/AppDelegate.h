@@ -114,6 +114,7 @@ enum {
 @class PropertyInspectorHandler;
 @class LocalizationEditorHandler;
 @class PhysicsHandler;
+@class WarningOutlineHandler;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
 {
@@ -180,6 +181,7 @@ enum {
     IBOutlet NSMenu* menuContextKeyframe;
     IBOutlet NSMenu* menuContextKeyframeInterpol;
     IBOutlet NSMenu* menuContextResManager;
+    IBOutlet NSMenu *menuContextKeyframeNoselection;
     
     IBOutlet NSPopUpButton* menuTimelinePopup;
     IBOutlet NSMenu* menuTimeline;
@@ -224,6 +226,10 @@ enum {
     // Project display
     IBOutlet NSOutlineView* outlineProject;
     ResourceManagerOutlineHandler* projectOutlineHandler;
+    
+    // Project Warnings.
+    IBOutlet NSOutlineView *outlineWarnings;
+    WarningOutlineHandler * warningOutlineHandler;
     
     // Documents
     NSMutableArray* delayOpenFiles;
@@ -312,6 +318,7 @@ enum {
 @property (nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
 @property (nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
 @property (nonatomic,readonly) IBOutlet NSMenu* menuContextResManager;
+@property (nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;
 @property (nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
 
 @property (nonatomic,retain) ProjectSettings* projectSettings;
