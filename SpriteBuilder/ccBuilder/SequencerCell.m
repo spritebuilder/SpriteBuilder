@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+#import "ResourceManager.h"
 #import "SequencerCell.h"
 #import "CCNode+NodeInfo.h"
 #import "SequencerHandler.h"
@@ -33,7 +34,7 @@
 #import "SequencerTimelineDrawDelegate.h"
 #import "SequencerChannel.h"
 #import "SequencerSoundChannel.h"
-
+#import "SoundFileImageController.h"
 
 @implementation SequencerCell
 
@@ -171,6 +172,33 @@
     }
 }
 
+-(void)drawSoundFileKeyframe:(SequencerSequence*)seq forKeyframe:(SequencerKeyframe*)keyframe withFrame:(NSRect)cellFrame inView:(NSView*)controlView
+{
+    NSString * fileName = (NSString*)(NSArray*)keyframe.value[0];
+    
+    if([fileName isEqualToString:@""])
+    {
+        return;
+    }
+    
+    ResourceManager * resourceManager = [ResourceManager sharedManager];
+    NSString* absFile = [resourceManager toAbsolutePath:fileName];
+    
+    float      pitch =[((NSNumber*)(NSArray*)keyframe.value[1]) floatValue];
+    SoundFileImageController * soundFileController = [SoundFileImageController sharedInstance];
+    float duration = [soundFileController getFileDuration:absFile];
+    float repitchedDuration = duration / pitch;
+    
+    
+    int xStarPos = [seq timeToPosition:keyframe.time];
+    int xFinishPos = [seq timeToPosition:keyframe.time + repitchedDuration];
+    
+    cellFrame.size.width = xFinishPos - xStarPos;
+    cellFrame.origin.x = cellFrame.origin.x + xStarPos;
+    
+    [soundFileController drawFrame:absFile withFrame:cellFrame];
+}
+
 - (void) drawPropertyRowForSeq:(SequencerSequence*) seq nodeProp:(SequencerNodeProperty*)nodeProp row:(int)row withFrame:(NSRect)cellFrame inView:(NSView*)controlView isChannel:(BOOL) isChannel
 {
     // Draw background
@@ -263,27 +291,33 @@
             }
             
             
-            bool isExpanded = NO;
-            
+            BOOL isExpanded = NO;
+            BOOL isSoundChannel = NO;
             if(isChannel)
             {
                 if([channel isKindOfClass:[SequencerSoundChannel class]])
                 {
                     SequencerSoundChannel * soundChannel = (SequencerSoundChannel*)channel;
                     isExpanded = soundChannel.isEpanded;
+                    isSoundChannel = YES;
                 }
-                
+            }
+            
+            //Draw audio image
+            if(isSoundChannel)
+            {
+                [self drawSoundFileKeyframe:seq forKeyframe:keyframe withFrame:cellFrame inView:controlView];
             }
             
             // Draw keyframe
             NSImage* img = NULL;
             if ([self shouldDrawSelectedKeyframe:keyframe forNodeProp:nodeProp])
             {
-                img = (isChannel && isExpanded) ? imgKeyframeSelLrg : imgKeyframeSel;
+                img = (isSoundChannel && isExpanded) ? imgKeyframeSelLrg : imgKeyframeSel;
             }
             else
             {
-                img = (isChannel && isExpanded) ? imgKeyframeLrg : imgKeyframe;
+                img = (isSoundChannel && isExpanded) ? imgKeyframeLrg : imgKeyframe;
             }
             
             if (isChannel)
@@ -391,10 +425,7 @@
         
         imgKeyframeHint = [[NSImage imageNamed:@"seq-keyframe-hint.png"] retain];
         [imgKeyframeHint setFlipped:YES];
-        
-  
-        
-        
+
         imgKeyframeLrg = [[NSImage imageNamed:@"seq-keyframe-x4.png"] retain];
         [imgKeyframeLrg setFlipped:YES];
         
