@@ -9,6 +9,7 @@
 #import "SoundFileImageController.h"
 #import <AVFoundation/AVFoundation.h>
 
+NSString * kSoundFileImageLoaded = @"kSoundFileImageLoaded";
 
 @implementation SoundFileImageController
 
@@ -19,6 +20,7 @@
     {
         soundFileImages = [[[NSMutableDictionary alloc] init] retain];
         soundFileImages[@"_default_"] =[[NSMutableDictionary alloc] init];
+
     }
     return self;
 }
@@ -50,6 +52,10 @@ typedef struct MaxMin MaxMin;
     
     NSError * error = nil;
     AVAssetReader * reader = [[AVAssetReader alloc] initWithAsset:audioAssets error:&error];
+    if(reader == nil)
+    {
+        return [self defaultImage:size];
+    }
     AVAssetTrack * songTrack = [audioAssets.tracks objectAtIndex:0];
     
     NSDictionary* outputSettingsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -321,16 +327,18 @@ typedef struct MaxMin MaxMin;
 {
     NSMutableDictionary * images = [self getSoundFileProperties:fileName];
     
-    NSString* sizeIdentifier = [self sizeIdentifier:size];
-    images[sizeIdentifier] = [self defaultImage:size];
-    
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         
         NSImage * image = [self renderImageForAudioAsset:fileName withSize:size];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
-            images[sizeIdentifier] = image; 
+            NSString* sizeIdentifier = [self sizeIdentifier:size];
+            images[sizeIdentifier] = image;
+            
+            id userData = @{@"image":image, @"size":[self sizeIdentifier:size]};
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSoundFileImageLoaded object:images userInfo:userData];
+            
         });
     });
 
@@ -378,6 +386,7 @@ static const int kMaxImageHeight = 256;
     
     [image unlockFocus];
     
+    
     return image;
 }
 
@@ -394,6 +403,46 @@ static const int kMaxImageHeight = 256;
     images[sizeIdentifier] = defaultImage;
     
     return defaultImage;
+}
+
+-(NSImage*)closestMatch:(NSString*)fileName withSize:(CGSize)size
+{
+    NSMutableDictionary * images = [self getSoundFileProperties:fileName];
+    
+    NSImage * closestMatch = nil;
+    
+    float targetArea = size.height * size.width;
+    
+    for(id obj in images.allValues)
+    {
+        if([obj isKindOfClass:[NSImage class]])
+        {
+            NSImage * image = obj;
+            
+            if(closestMatch == nil)
+            {
+                closestMatch = image;
+                continue;
+            }
+            
+            float closestArea = closestMatch.size.height * closestMatch.size.width;
+            float currentArea = image.size.height * image.size.width;
+            
+            if(abs(closestArea - targetArea) > abs(currentArea - targetArea))
+            {
+                closestMatch = image;
+            }
+        }
+    }
+ 
+    if(closestMatch == nil)
+    {
+        NSString * sizeIdentifier = [self sizeIdentifier:size];
+        closestMatch =  [self defaultImage:size];
+        images[sizeIdentifier] = closestMatch;
+    }
+    
+    return closestMatch;
 }
 
 -(NSMutableDictionary*)getSoundFileProperties:(NSString*)fileName
@@ -417,7 +466,7 @@ static const int kMaxImageHeight = 256;
     if(soundFileImages[fileName] == nil)
     {
         [self queueImageRendering:fileName withSize:roundedSize];
-        return [self defaultImage:roundedSize];
+        return [self closestMatch:fileName withSize:roundedSize];
     }
     
     NSMutableDictionary * images = soundFileImages[fileName];
@@ -427,7 +476,7 @@ static const int kMaxImageHeight = 256;
     if(images[sizeIdentifier] == nil)
     {
         [self queueImageRendering:fileName withSize:roundedSize];
-        return [self defaultImage:roundedSize];
+        return [self closestMatch:fileName withSize:roundedSize];
     }
     
     NSImage * waveformImage = images[sizeIdentifier];

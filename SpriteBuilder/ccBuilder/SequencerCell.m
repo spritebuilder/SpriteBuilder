@@ -177,12 +177,12 @@
     NSString * fileName = (NSString*)(NSArray*)keyframe.value[0];
     
     if([fileName isEqualToString:@""])
-    {
         return;
-    }
     
     ResourceManager * resourceManager = [ResourceManager sharedManager];
     NSString* absFile = [resourceManager toAbsolutePath:fileName];
+    if(absFile == nil)
+        return;
     
     float      pitch =[((NSNumber*)(NSArray*)keyframe.value[1]) floatValue];
     SoundFileImageController * soundFileController = [SoundFileImageController sharedInstance];
