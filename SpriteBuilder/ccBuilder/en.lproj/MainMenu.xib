@@ -2062,38 +2062,12 @@ CA
                     </customView>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="6C6ECFE0-CD8C-41C0-A926-B653D69B96E6" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="1224">
+            <toolbar key="toolbar" implicitIdentifier="6C6ECFE0-CD8C-41C0-A926-B653D69B96E6" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="1224">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1358"/>
-                    <toolbarItem implicitItemIdentifier="13E602E1-2514-4F5A-BE05-2AF5460BB7D6" label="Publish" paletteLabel="Publish" id="1306">
+                    <toolbarItem implicitItemIdentifier="192F0C33-B31A-4EB0-B19F-5D6E22DE76FC" label="" paletteLabel="" id="1788">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="45" height="25"/>
-                        <size key="maxSize" width="50" height="25"/>
-                        <segmentedControl key="view" verticalHuggingPriority="750" id="1304">
-                            <rect key="frame" x="0.0" y="14" width="46" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" alignment="left" style="texturedSquare" trackingMode="momentary" id="1305">
-                                <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment toolTip="Publish" image="TB_build" width="44">
-                                        <nil key="label"/>
-                                    </segment>
-                                </segments>
-                            </segmentedCell>
-                            <connections>
-                                <action selector="pressedPublishTB:" target="494" id="1967"/>
-                                <binding destination="494" name="enabled" keyPath="projectSettings" id="1966">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">NSIsNotNil</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </segmentedControl>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="192F0C33-B31A-4EB0-B19F-5D6E22DE76FC" label="View" paletteLabel="View" id="1788">
-                        <nil key="toolTip"/>
-                        <size key="minSize" width="50" height="23"/>
-                        <size key="maxSize" width="132" height="25"/>
+                        <size key="minSize" width="132" height="23"/>
+                        <size key="maxSize" width="132" height="23"/>
                         <segmentedControl key="view" wantsLayer="YES" verticalHuggingPriority="750" id="1786">
                             <rect key="frame" x="0.0" y="14" width="132" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2116,11 +2090,24 @@ CA
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1358"/>
+                    <toolbarItem implicitItemIdentifier="5B441B81-8CFC-4E92-9164-E5FEC7BE3C84" label="Publish" paletteLabel="Publish" tag="-1" image="TB_build" autovalidates="NO" id="Nkp-mV-yYQ">
+                        <size key="minSize" width="40" height="0.0"/>
+                        <size key="maxSize" width="40" height="0.0"/>
+                        <connections>
+                            <action selector="menuPublishProject:" target="494" id="4AI-Q3-eEF"/>
+                            <binding destination="494" name="enabled" keyPath="projectSettings" id="DI7-MQ-jtn">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="1306"/>
-                    <toolbarItem reference="1788"/>
+                    <toolbarItem reference="Nkp-mV-yYQ"/>
                     <toolbarItem reference="1358"/>
+                    <toolbarItem reference="1788"/>
                 </defaultToolbarItems>
             </toolbar>
         </window>
@@ -2162,7 +2149,6 @@ CA
                 <outlet property="resourceManagerSplitView" destination="1956" id="1960"/>
                 <outlet property="rightPanel" destination="1795" id="1796"/>
                 <outlet property="scrubberSelectionView" destination="1561" id="1562"/>
-                <outlet property="segmPublishBtn" destination="1304" id="1968"/>
                 <outlet property="sequenceScrollView" destination="566" id="1570"/>
                 <outlet property="splitHorizontalView" destination="1530" id="1793"/>
                 <outlet property="tabBar" destination="1233" id="1234"/>
@@ -2472,7 +2458,7 @@ CA
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>
         <image name="TB_bottomPanel" width="25" height="22"/>
-        <image name="TB_build" width="16" height="16"/>
+        <image name="TB_build" width="32" height="32"/>
         <image name="TB_leftPanel" width="25" height="22"/>
         <image name="TB_plugins" width="36" height="16"/>
         <image name="TB_rightPanel" width="25" height="22"/>
