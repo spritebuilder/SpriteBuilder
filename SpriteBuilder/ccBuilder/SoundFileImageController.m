@@ -207,21 +207,16 @@ typedef struct MaxMin MaxMin;
     
     if (reader.status == AVAssetReaderStatusFailed || reader.status == AVAssetReaderStatusUnknown){
         // Something went wrong. return nil
-        
         return nil;
     }
     
     if (reader.status == AVAssetReaderStatusCompleted){
-        
-        NSLog(@"rendering output graphics using normalizeMax %d",normalizeMax);
         
         waveformImage = [self audioImageGraph:(SInt16 *)fullSongData.bytes
                                  normalizeMax:normalizeMax
                                   sampleCount:fullSongData.length / (4 * channelCount)
                                  channelCount:channelCount
                                   imageHeight:size.height];
-        
-        
     }
     
     [fullSongData release];
