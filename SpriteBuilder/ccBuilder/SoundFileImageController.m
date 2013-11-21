@@ -139,7 +139,6 @@ typedef struct MaxMin MaxMin;
                 SInt16 right;
                 if (channelCount==2) {
                     right = *samples++;
-                    
                     if(right  > maxRight.max)
                         maxRight.max = right;
                     
@@ -331,7 +330,7 @@ typedef struct MaxMin MaxMin;
         NSImage * image = [self renderImageForAudioAsset:fileName withSize:size];
         
         dispatch_sync(dispatch_get_main_queue(), ^{
-            images[sizeIdentifier] = image;
+            images[sizeIdentifier] = image; 
         });
     });
 
@@ -363,8 +362,20 @@ static const int kMaxImageHeight = 256;
     
     NSImage *image = [[[NSImage alloc] initWithSize:size] autorelease];
     NSColor * color = [NSColor grayColor];
-    [image lockFocus];
+    [image lockFocusFlipped:YES];
+    
     [color drawSwatchInRect:NSMakeRect(0, 0, size.width, size.height)];
+
+
+    NSGraphicsContext* graphicsContext = [NSGraphicsContext currentContext];
+    CGContextRef context = [graphicsContext graphicsPort];
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, 0.0f, size.height);
+    CGContextScaleCTM(context, 1.0f, -1.0f);
+    NSString * loadingText = @"Loading...";
+    [loadingText drawAtPoint:CGPointMake(8, 3)withAttributes:nil];
+    CGContextRestoreGState(context);
+    
     [image unlockFocus];
     
     return image;
