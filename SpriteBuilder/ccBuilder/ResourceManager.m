@@ -183,6 +183,11 @@
         [dict setObject:self.relativePath forKey:@"ccbFile"];
         return dict;
     }
+    else if ([pbType isEqualToString:@"com.cocosbuilder.wav"])
+    {
+        [dict setObject:self.relativePath forKey:@"wavFile"];
+        return dict;
+    }
     return NULL;
 }
 
@@ -197,6 +202,10 @@
     {
         [pbTypes addObject:@"com.cocosbuilder.ccb"];
     }
+    else if(type == kCCBResTypeAudio)
+    {
+        [pbTypes addObject:@"com.cocosbuilder.wav"];
+    }
     
     return pbTypes;
 }
@@ -206,6 +215,7 @@
     if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"]) return NSPasteboardWritingPromised;
     if ([pbType isEqualToString:@"com.cocosbuilder.texture"] && type == kCCBResTypeImage) return NSPasteboardWritingPromised;
     if ([pbType isEqualToString:@"com.cocosbuilder.ccb"] && type == kCCBResTypeCCBFile) return NSPasteboardWritingPromised;
+    if ([pbType isEqualToString:@"com.cocosbuilder.wav"] && type == kCCBResTypeAudio) return NSPasteboardWritingPromised;
     return 0;
 }
 

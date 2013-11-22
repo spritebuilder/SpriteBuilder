@@ -201,6 +201,19 @@
 
 - (void) drawPropertyRowForSeq:(SequencerSequence*) seq nodeProp:(SequencerNodeProperty*)nodeProp row:(int)row withFrame:(NSRect)cellFrame inView:(NSView*)controlView isChannel:(BOOL) isChannel
 {
+    BOOL isExpanded = NO;
+    BOOL isSoundChannel = NO;
+    if(isChannel)
+    {
+        if([channel isKindOfClass:[SequencerSoundChannel class]])
+        {
+            SequencerSoundChannel * soundChannel = (SequencerSoundChannel*)channel;
+            isExpanded = soundChannel.isEpanded;
+            isSoundChannel = YES;
+        }
+    }
+    
+    
     // Draw background
     NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y+row*cellFrame.size.height, cellFrame.size.width, cellFrame.size.height);
     
@@ -290,19 +303,6 @@
                 }
             }
             
-            
-            BOOL isExpanded = NO;
-            BOOL isSoundChannel = NO;
-            if(isChannel)
-            {
-                if([channel isKindOfClass:[SequencerSoundChannel class]])
-                {
-                    SequencerSoundChannel * soundChannel = (SequencerSoundChannel*)channel;
-                    isExpanded = soundChannel.isEpanded;
-                    isSoundChannel = YES;
-                }
-            }
-            
             //Draw audio image
             if(isSoundChannel)
             {
@@ -331,6 +331,36 @@
             }
         }
     }
+    
+    if(isSoundChannel)
+    {
+        [self drawSoundDragAndDrop:seq withFrame:cellFrame];
+    }
+}
+
+- (void) drawSoundDragAndDrop:(SequencerSequence*) seq withFrame:(NSRect)cellFrame
+{
+    if(!seq.soundChannel.needDragAndDropRedraw)
+        return;
+    
+    seq.soundChannel.needDragAndDropRedraw = NO;
+    
+    int xPos = [seq timeToPosition:seq.soundChannel.dragAndDropTimeStamp];
+
+    
+    CGColorRef blueColor = [[NSColor blueColor] CGColor];
+    
+    NSGraphicsContext * graphicsContext = [NSGraphicsContext currentContext];
+    CGContextRef context = [graphicsContext graphicsPort];
+    
+    CGContextSetLineWidth(context, 1.0);
+    CGContextMoveToPoint(context, xPos + cellFrame.origin.x, cellFrame.origin.y );
+
+    CGContextAddLineToPoint(context, xPos + cellFrame.origin.x, cellFrame.origin.y + cellFrame.size.height);
+    
+    CGContextSetStrokeColorWithColor(context, blueColor);
+    CGContextStrokePath(context);
+
 }
 
 - (void) drawPropertyRow:(int) row property:(NSString*)propName withFrame:(NSRect)cellFrame inView:(NSView*)controlView

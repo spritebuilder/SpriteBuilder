@@ -78,7 +78,7 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy setDelegate:self];
     [outlineHierarchy reloadData];
     
-    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", NULL]];
+    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode",@"com.cocosbuilder.wav", NULL]];
     
     [[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
@@ -435,8 +435,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     else
     {
-        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES
-         ];
+        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
     }
     return YES;
 }
@@ -466,31 +465,60 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (item == NULL) return NSDragOperationNone;
+    if (item == NULL)
+        return NSDragOperationNone;
     
-    if (![item isKindOfClass:[CCNode class]]) return NSDragOperationNone;
     
     CCBGlobals* g = [CCBGlobals globals];
     NSPasteboard* pb = [info draggingPasteboard];
     
-    NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
-    if (nodeData)
+    if ([item isKindOfClass:[CCNode class]])
     {
-        NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
-        CCNode* draggedNode = (CCNode*)[[clipDict objectForKey:@"srcNode"] longLongValue];
-        
-        CCNode* node = item;
-        CCNode* parent = [node parent];
-        while (parent && parent != g.rootNode)
+        NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
+        if (nodeData)
         {
-            if (parent == draggedNode) return NSDragOperationNone;
-            parent = [parent parent];
+            NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
+            CCNode* draggedNode = (CCNode*)[[clipDict objectForKey:@"srcNode"] longLongValue];
+            
+            CCNode* node = item;
+            CCNode* parent = [node parent];
+            while (parent && parent != g.rootNode)
+            {
+                if (parent == draggedNode) return NSDragOperationNone;
+                parent = [parent parent];
+            }
+            
+            return NSDragOperationGeneric;
         }
-        
-        return NSDragOperationGeneric;
     }
     
-    return NSDragOperationGeneric;
+    if([item isKindOfClass:[SequencerSoundChannel class]])
+    {
+        // Dropped WavFile;
+        NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
+        for (NSDictionary* dict in pbWavs)
+        {
+            NSPoint mouseLocationInWindow = info.draggingLocation;
+            NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
+            
+            currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:mouseLocation.x];
+            
+            currentSequence.soundChannel.needDragAndDropRedraw = YES;
+            [scrubberSelectionView setNeedsDisplay:YES];
+            
+
+            NSLog(@"validate draggin");
+            
+            return NSDragOperationGeneric;
+        }
+    }
+            
+    return NSDragOperationNone;
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView updateDraggingItemsForDrag:(id <NSDraggingInfo>)draggingInfo
+{
+    NSLog(@"updatedragging");
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
@@ -524,6 +552,26 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
         //[PositionPropertySetter refreshAllPositions];
+        addedObject = YES;
+    }
+    
+    // Dropped WavFile;
+    NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
+    for (NSDictionary* dict in pbWavs)
+    {
+        //[appDelegate dropAddCCBFileNamed:[dict objectForKey:@"wav"] at:ccp(0, 0) parent:item];
+
+        NSPoint mouseLocationInWindow = info.draggingLocation;
+        NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
+        
+        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:mouseLocation.x]];
+
+        NSMutableArray* newArr = [NSMutableArray arrayWithArray:keyFrame.value];
+        [newArr replaceObjectAtIndex:kSoundChannelKeyFrameName withObject:dict[@"wavFile"]];
+        
+        keyFrame.value = newArr;
+
+        
         addedObject = YES;
     }
     

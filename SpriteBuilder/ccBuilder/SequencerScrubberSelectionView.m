@@ -347,7 +347,7 @@
     {
         SequencerChannel* channel = item;
         [channel addDefaultKeyframeAtTime:time];
-        
+    
         return;
     }
     
