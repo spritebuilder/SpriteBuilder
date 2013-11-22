@@ -106,14 +106,11 @@
         imagesLoaded = YES;
     }
     
-    if (!node && !canExpand)
+    if (!node )
     {
         NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, cellFrame.size.width, cellFrame.size.height);
         [imgRowBgChannel drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-        
-        return;
     }
-    
     
     if (canExpand)
     {
