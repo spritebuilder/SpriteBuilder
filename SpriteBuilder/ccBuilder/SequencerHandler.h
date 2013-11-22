@@ -54,6 +54,7 @@
 }
 
 @property (nonatomic,assign) BOOL dragAndDropEnabled;
+@property (nonatomic,assign) BOOL loopPlayback;
 
 @property (nonatomic,retain) SequencerSequence* currentSequence;
 @property (nonatomic,retain) SequencerScrubberSelectionView* scrubberSelectionView;
