@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+#import "ResourceManager.h"
 #import "SequencerCell.h"
 #import "CCNode+NodeInfo.h"
 #import "SequencerHandler.h"
@@ -32,6 +33,8 @@
 #import "SequencerKeyframeEasing.h"
 #import "SequencerTimelineDrawDelegate.h"
 #import "SequencerChannel.h"
+#import "SequencerSoundChannel.h"
+#import "SoundFileImageController.h"
 
 @implementation SequencerCell
 
@@ -169,10 +172,51 @@
     }
 }
 
+-(void)drawSoundFileKeyframe:(SequencerSequence*)seq forKeyframe:(SequencerKeyframe*)keyframe withFrame:(NSRect)cellFrame inView:(NSView*)controlView
+{
+    NSString * fileName = (NSString*)(NSArray*)keyframe.value[0];
+    
+    if([fileName isEqualToString:@""])
+        return;
+    
+    ResourceManager * resourceManager = [ResourceManager sharedManager];
+    NSString* absFile = [resourceManager toAbsolutePath:fileName];
+    if(absFile == nil)
+        return;
+    
+    float      pitch =[((NSNumber*)(NSArray*)keyframe.value[1]) floatValue];
+    SoundFileImageController * soundFileController = [SoundFileImageController sharedInstance];
+    float duration = [soundFileController getFileDuration:absFile];
+    float repitchedDuration = duration / pitch;
+    
+    
+    int xStarPos = [seq timeToPosition:keyframe.time];
+    int xFinishPos = [seq timeToPosition:keyframe.time + repitchedDuration];
+    
+    cellFrame.size.width = xFinishPos - xStarPos;
+    cellFrame.origin.x = cellFrame.origin.x + xStarPos;
+    
+    [soundFileController drawFrame:absFile withFrame:cellFrame];
+}
+
 - (void) drawPropertyRowForSeq:(SequencerSequence*) seq nodeProp:(SequencerNodeProperty*)nodeProp row:(int)row withFrame:(NSRect)cellFrame inView:(NSView*)controlView isChannel:(BOOL) isChannel
 {
+    BOOL isExpanded = NO;
+    BOOL isSoundChannel = NO;
+    if(isChannel)
+    {
+        if([channel isKindOfClass:[SequencerSoundChannel class]])
+        {
+            SequencerSoundChannel * soundChannel = (SequencerSoundChannel*)channel;
+            isExpanded = soundChannel.isEpanded;
+            isSoundChannel = YES;
+        }
+    }
+    
+    
     // Draw background
-    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y+row*kCCBSeqDefaultRowHeight, cellFrame.size.width, kCCBSeqDefaultRowHeight);
+    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y+row*cellFrame.size.height, cellFrame.size.width, cellFrame.size.height);
+    
     if (isChannel)
     {
         [imgRowBgChannel drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
@@ -259,19 +303,26 @@
                 }
             }
             
+            //Draw audio image
+            if(isSoundChannel)
+            {
+                [self drawSoundFileKeyframe:seq forKeyframe:keyframe withFrame:cellFrame inView:controlView];
+            }
+            
             // Draw keyframe
             NSImage* img = NULL;
             if ([self shouldDrawSelectedKeyframe:keyframe forNodeProp:nodeProp])
             {
-                img = imgKeyframeSel;
+                img = (isSoundChannel && isExpanded) ? imgKeyframeSelLrg : imgKeyframeSel;
             }
             else
             {
-                img = imgKeyframe;
+                img = (isSoundChannel && isExpanded) ? imgKeyframeLrg : imgKeyframe;
             }
             
             if (isChannel)
             {
+                
                 [img drawAtPoint:NSMakePoint(cellFrame.origin.x + xPos-3, cellFrame.origin.y+kCCBSeqDefaultRowHeight*row) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
             }
             else
@@ -280,6 +331,36 @@
             }
         }
     }
+    
+    if(isSoundChannel)
+    {
+        [self drawSoundDragAndDrop:seq withFrame:cellFrame];
+    }
+}
+
+- (void) drawSoundDragAndDrop:(SequencerSequence*) seq withFrame:(NSRect)cellFrame
+{
+    if(!seq.soundChannel.needDragAndDropRedraw)
+        return;
+    
+    seq.soundChannel.needDragAndDropRedraw = NO;
+    
+    int xPos = [seq timeToPosition:seq.soundChannel.dragAndDropTimeStamp];
+
+    
+    CGColorRef blueColor = [[NSColor blueColor] CGColor];
+    
+    NSGraphicsContext * graphicsContext = [NSGraphicsContext currentContext];
+    CGContextRef context = [graphicsContext graphicsPort];
+    
+    CGContextSetLineWidth(context, 1.0);
+    CGContextMoveToPoint(context, xPos + cellFrame.origin.x, cellFrame.origin.y );
+
+    CGContextAddLineToPoint(context, xPos + cellFrame.origin.x, cellFrame.origin.y + cellFrame.size.height);
+    
+    CGContextSetStrokeColorWithColor(context, blueColor);
+    CGContextStrokePath(context);
+
 }
 
 - (void) drawPropertyRow:(int) row property:(NSString*)propName withFrame:(NSRect)cellFrame inView:(NSView*)controlView
@@ -374,6 +455,13 @@
         
         imgKeyframeHint = [[NSImage imageNamed:@"seq-keyframe-hint.png"] retain];
         [imgKeyframeHint setFlipped:YES];
+
+        imgKeyframeLrg = [[NSImage imageNamed:@"seq-keyframe-x4.png"] retain];
+        [imgKeyframeLrg setFlipped:YES];
+        
+        imgKeyframeSelLrg = [[NSImage imageNamed:@"seq-keyframe-x4-sel.png"] retain];
+        [imgKeyframeSelLrg setFlipped:YES];
+        
     }
     
     if (node)

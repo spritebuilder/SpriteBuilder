@@ -26,6 +26,7 @@
 #import "cocos2d.h"
 
 #define kCCBSeqDefaultRowHeight 16
+#define kCCBSeqAudioRowHeight 64
 #define kCCBDefaultTimelineScale 128
 #define kCCBTimelineScaleLowBound 64
 

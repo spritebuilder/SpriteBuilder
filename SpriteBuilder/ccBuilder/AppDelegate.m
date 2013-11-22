@@ -79,6 +79,7 @@
 #import "SequencerStretchWindow.h"
 #import "SequencerSoundChannel.h"
 #import "SequencerCallbackChannel.h"
+#import "SoundFileImageController.h"
 #import "CustomPropSettingsWindow.h"
 #import "CustomPropSetting.h"
 #import "MainToolbarDelegate.h"
@@ -224,8 +225,15 @@ void ApplyCustomNodeVisitSwizzle()
     sequenceHandler.scroller = timelineScroller;
     sequenceHandler.scrollView = sequenceScrollView;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSoundImages:) name:kSoundFileImageLoaded object:nil];
+    
     [self updateTimelineMenu];
     [sequenceHandler updateScaleSlider];
+}
+
+-(void)updateSoundImages:(NSNotification*)notice
+{
+    [outlineHierarchy reloadData];
 }
 
 - (void) setupTabBar

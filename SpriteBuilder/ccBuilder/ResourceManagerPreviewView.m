@@ -29,6 +29,7 @@
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "FCFormatConverter.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation ResourceManagerPreviewView
 
@@ -186,6 +187,8 @@
             self.enabled = YES;
             
             [viewSound setHidden:NO];
+          
+            
         }
         else if (res.type == kCCBResTypeCCBFile)
         {

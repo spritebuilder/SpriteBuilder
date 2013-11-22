@@ -347,7 +347,7 @@
     {
         SequencerChannel* channel = item;
         [channel addDefaultKeyframeAtTime:time];
-        
+    
         return;
     }
     
@@ -551,6 +551,7 @@
     
     float timeMin = [seq positionToTime:mouseLocation.x - 3];
     float timeMax = [seq positionToTime:mouseLocation.x + 3];
+    timeMax = max(timeMax, timeMax +  1.0/(double)[SequencerHandler sharedHandler].currentSequence.timelineResolution);//Ensure at least one delta time step.
     
     int row = [self yMousePosToRow:mouseLocation.y];
     int subRow = [self yMousePosToSubRow:mouseLocation.y];

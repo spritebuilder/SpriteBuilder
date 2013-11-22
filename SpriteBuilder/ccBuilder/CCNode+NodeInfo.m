@@ -204,7 +204,7 @@
     [self performSelector:@selector(oldVisit) withObject:nil];
 }
 
-- (void) addDefaultKeyframeForProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId
+- (SequencerKeyframe*) addDefaultKeyframeForProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId
 {
     // Get property type
     NSString* propType = [self.plugIn propertyTypeForProperty:name];
@@ -213,17 +213,18 @@
     // Ensure that the keyframe type is supported
     if (!keyframeType)
     {
-        return;
+        return nil;
     }
     
     // Ensure that the keyframe type is animated
     if (![[self.plugIn animatablePropertiesForNode:self] containsObject:name])
     {
-        return;
+        return nil;
     }
     
     // Do not add keyframes for disabled properties
-    if ([self shouldDisableProperty:name]) return;
+    if ([self shouldDisableProperty:name])
+        return nil;
     
     // Create keyframe
     SequencerKeyframe* keyframe = [[[SequencerKeyframe alloc] init] autorelease];
@@ -248,6 +249,7 @@
     }
     
     [self addKeyframe:keyframe forProperty:name atTime:time sequenceId:seqId];
+    return keyframe;
 }
 
 - (void) duplicateKeyframesFromSequenceId:(int)fromSeqId toSequenceId:(int)toSeqId
