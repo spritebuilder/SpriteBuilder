@@ -517,13 +517,15 @@ static SequencerHandler* sharedSequencerHandler;
         else
             return NSDragOperationNone;
     }
+    
+    if([item isKindOfClass:[SequencerSoundChannel class]] || [item isKindOfClass:[SequencerCallbackChannel class]] )
+    {
+        return NSDragOperationNone;//Restrict drag and drop
+    }
+    
     return NSDragOperationGeneric;
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView updateDraggingItemsForDrag:(id <NSDraggingInfo>)draggingInfo
-{
-    NSLog(@"updatedragging");
-}
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
