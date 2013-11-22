@@ -490,30 +490,34 @@ static SequencerHandler* sharedSequencerHandler;
             
             return NSDragOperationGeneric;
         }
+        
     }
     
-    if([item isKindOfClass:[SequencerSoundChannel class]])
+    // Dropped WavFile;
+    NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
+    
+    if(pbWavs.count != 0)
     {
-        // Dropped WavFile;
-        NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
-        for (NSDictionary* dict in pbWavs)
+        if([item isKindOfClass:[SequencerSoundChannel class]])
         {
-            NSPoint mouseLocationInWindow = info.draggingLocation;
-            NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
+            // Dropped WavFile;
+            for (NSDictionary* dict in pbWavs)
+            {
+                NSPoint mouseLocationInWindow = info.draggingLocation;
+                NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
+                
+                currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:mouseLocation.x];
+                
+                currentSequence.soundChannel.needDragAndDropRedraw = YES;
+                [scrubberSelectionView setNeedsDisplay:YES];
             
-            currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:mouseLocation.x];
-            
-            currentSequence.soundChannel.needDragAndDropRedraw = YES;
-            [scrubberSelectionView setNeedsDisplay:YES];
-            
-
-            NSLog(@"validate draggin");
-            
-            return NSDragOperationGeneric;
+                return NSDragOperationGeneric;
+            }
         }
+        else
+            return NSDragOperationNone;
     }
-            
-    return NSDragOperationNone;
+    return NSDragOperationGeneric;
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView updateDraggingItemsForDrag:(id <NSDraggingInfo>)draggingInfo
@@ -559,19 +563,15 @@ static SequencerHandler* sharedSequencerHandler;
     NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
     for (NSDictionary* dict in pbWavs)
     {
-        //[appDelegate dropAddCCBFileNamed:[dict objectForKey:@"wav"] at:ccp(0, 0) parent:item];
-
         NSPoint mouseLocationInWindow = info.draggingLocation;
         NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
-        
-        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:mouseLocation.x]];
 
+        //Create Keyframe
+        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:mouseLocation.x]];
         NSMutableArray* newArr = [NSMutableArray arrayWithArray:keyFrame.value];
         [newArr replaceObjectAtIndex:kSoundChannelKeyFrameName withObject:dict[@"wavFile"]];
-        
         keyFrame.value = newArr;
 
-        
         addedObject = YES;
     }
     
