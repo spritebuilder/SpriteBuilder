@@ -458,21 +458,25 @@ CA
                                 <menu key="submenu" title="Nudge" id="1089" userLabel="Menu - Nudge">
                                     <items>
                                         <menuItem title="Left" keyEquivalent="" id="1090">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1095"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Right" tag="1" keyEquivalent="" id="1091">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1094"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Up" tag="2" keyEquivalent="" id="1092">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1096"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Down" tag="3" keyEquivalent="" id="1093">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1097"/>
                                             </connections>
@@ -485,25 +489,21 @@ CA
                                 <menu key="submenu" title="Move" id="1108" userLabel="Menu - Nudge">
                                     <items>
                                         <menuItem title="Left" keyEquivalent="" id="1112">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1118"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Right" tag="1" keyEquivalent="" id="1111">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1119"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Up" tag="2" keyEquivalent="" id="1110">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1120"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Down" tag="3" keyEquivalent="" id="1109">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1121"/>
                                             </connections>
