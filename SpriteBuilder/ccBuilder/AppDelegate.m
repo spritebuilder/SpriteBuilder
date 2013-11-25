@@ -4375,22 +4375,36 @@ static BOOL hideAllToNextSeparator;
         
         double thisTime = [NSDate timeIntervalSinceReferenceDate];
         double deltaTime = thisTime - playbackLastFrameTime;
-        double updateDelta = 1.0/sequenceHandler.currentSequence.timelineResolution;
+        double frameDelta = 1.0/sequenceHandler.currentSequence.timelineResolution;
+        float targetNewTime =  sequenceHandler.currentSequence.timelinePosition + deltaTime;
         
-        int steps = (int)(deltaTime/updateDelta);
+        int steps = (int)(deltaTime/frameDelta);
+        
+        //determine new time in to the future.
+        
         [sequenceHandler.currentSequence stepForward:steps];
         
         if (sequenceHandler.currentSequence.timelinePosition >= sequenceHandler.currentSequence.timelineLength)
         {
-            [self playbackStop:NULL];
+            //If we loop, calulate the overhang
+            if(targetNewTime >= sequenceHandler.currentSequence.timelinePosition && sequenceHandler.loopPlayback)
+            {
+                [self playbackJumpToStart:nil];
+                steps = (int)((targetNewTime - sequenceHandler.currentSequence.timelineLength)/frameDelta);
+                [sequenceHandler.currentSequence stepForward:steps];
+            }
+            else
+            {
+                [self playbackStop:NULL];
+                return;
+            }
         }
-        else
-        {
-            playbackLastFrameTime += steps * updateDelta;
-            
-            // Call this method again in a little while
-            [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:updateDelta];
-        }
+    
+        playbackLastFrameTime += steps * frameDelta;
+        
+        // Call this method again in a little while
+        [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:frameDelta];
+        
     }
 }
 
@@ -4405,6 +4419,10 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+- (IBAction)toggleLoopingPlayback:(id)sender
+{
+    sequenceHandler.loopPlayback = [(NSButton*)sender state] == 1 ? YES : NO;
+}
 
 - (IBAction)playbackPlay:(id)sender
 {
@@ -4434,6 +4452,7 @@ static BOOL hideAllToNextSeparator;
 - (IBAction)playbackJumpToStart:(id)sender
 {
     if (!self.hasOpenedDocument) return;
+    playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
     sequenceHandler.currentSequence.timelinePosition = 0;
     [[SequencerHandler sharedHandler] updateScrollerToShowCurrentTime];
 }

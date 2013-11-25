@@ -61,6 +61,7 @@ static SequencerHandler* sharedSequencerHandler;
 @synthesize scroller;
 @synthesize scrollView;
 @synthesize contextKeyframe;
+@synthesize loopPlayback;
 
 #pragma mark Init and singleton object
 
