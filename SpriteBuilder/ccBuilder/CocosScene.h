@@ -87,7 +87,9 @@ typedef enum {
     float transformStartScaleX;
     float transformStartScaleY;
     CCNode* transformScalingNode;
-    //CGPoint transformStartPosition;
+    float transformStartSkewX;
+    float transformStartSkewY;
+    
     int currentMouseTransform;
     BOOL isMouseTransforming;
     BOOL isPanning;
@@ -112,7 +114,7 @@ typedef enum {
     
     CCBTool currentTool;
     CGPoint skewSegmentOrientation;
-    bool    skewXAxis; //X or y?
+    BOOL    skewXAxis; //X or y?
     int     rotationCornerIndex;//Which corner of the object are we rotating?
     CGPoint rotationCornerOrientation;//which way is the corner facing.
 }

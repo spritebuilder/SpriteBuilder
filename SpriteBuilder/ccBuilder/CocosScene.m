@@ -453,9 +453,9 @@ static CocosScene* sharedCocosScene;
                     
                     [selectionLayer addChild:drawing z:-1];
                     
-                    if(!isOverSkew)
+                    if(!isOverSkew && currentMouseTransform == kCCBTransformHandleNone)
                     {
-                        isOverSkew = [self isOverSkew:mousePos withPoints:points];
+                        isOverSkew = [self isOverSkew:mousePos withPoints:points withOrientation:&skewSegmentOrientation alongAxis:&skewXAxis];
                     }
                     
                     if(!isOverRotation && currentMouseTransform == kCCBTransformHandleNone)
@@ -517,7 +517,7 @@ static CocosScene* sharedCocosScene;
   
 }
 
-- (BOOL) isOverSkew:(CGPoint)_mousePos withPoints:(const CGPoint*)points  //{bl,br,tr,tl}
+- (BOOL) isOverSkew:(CGPoint)_mousePos withPoints:(const CGPoint*)points withOrientation:(CGPoint*)orientation alongAxis:(BOOL*)isXAxis  //{bl,br,tr,tl}
 {
     for (int i = 0; i < 4; i++)
     {
@@ -541,10 +541,22 @@ static CocosScene* sharedCocosScene;
         CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, _mousePos);
         float dotProduct = ccpDot( ccpNormalize(ccpSub(adj1, adj2)),ccpNormalize(ccpSub(_mousePos, closestPoint)));
         
+        CGPoint vectorFromLine = ccpSub(_mousePos, closestPoint);
+        
         //Its close to the line, and perpendicular.
-     if(ccpLength(ccpSub(closestPoint,_mousePos)) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f)
+        if((ccpLength(vectorFromLine) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f) ||
+           (ccpLength(vectorFromLine) < 0.001 /*very small*/ && fabsf(dotProduct) == 1.0f) /*we're on the line*/)
         {
-            skewSegmentOrientation = unitSegment;
+            if(orientation)
+           	 {
+                *orientation = unitSegment;
+            }
+            
+            if(isXAxis)
+            {
+                *isXAxis = i == 0 || i == 2 ? YES : NO;
+            }
+            
             return YES;
         }
     }
@@ -567,7 +579,7 @@ static CocosScene* sharedCocosScene;
         CGPoint segment2 = ccpSub(p2, p3);
         CGPoint unitSegment2 = ccpNormalize(segment2);
         
-        const float kMinDistanceForRotation = 10.0f;
+        const float kMinDistanceForRotation = 6.0f;
         const float kMaxDistanceForRotation = 25.0f;
        
         
@@ -641,7 +653,7 @@ static CocosScene* sharedCocosScene;
         if( [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleRotate;
 
-        if( [self isOverSkew:pt withPoints:points])
+        if( [self isOverSkew:pt withPoints:points  withOrientation:nil alongAxis:nil])
             return kCCBTransformHandleSkew;
         
         CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
@@ -804,7 +816,12 @@ static CocosScene* sharedCocosScene;
     }
     if(th == kCCBTransformHandleSkew && appDelegate.selectedNode != rootNode)
     {
+        currentMouseTransform = kCCBTransformHandleSkew;
         
+        transformStartSkewX = transformScalingNode.skewX;
+        transformStartSkewY = transformScalingNode.skewY;
+        return;
+
     }
     
     // Clicks inside objects
@@ -1025,6 +1042,12 @@ static CocosScene* sharedCocosScene;
             deltaRotation += 360.0f;
         
         float newRotation = (transformStartRotation + deltaRotation);
+                // Handle shift key (fixed rotation angles)
+        if ([event modifierFlags] & NSShiftKeyMask)
+        {
+            float factor = 360.0f/16.0f;
+            newRotation = roundf(newRotation/factor)*factor;
+        }
         
         //Update the rotation tool.
         float cursorRotationRad = -M_PI * (newRotation - transformScalingNode.rotation) / 180.0f;
@@ -1032,6 +1055,37 @@ static CocosScene* sharedCocosScene;
         rotationCornerOrientation = CGPointApplyAffineTransform(rotationCornerOrientation, rotationTransform);
         self.currentTool = kCCBToolRotate;
         
+        [appDelegate saveUndoStateWillChangeProperty:@"rotation"];
+        transformScalingNode.rotation = newRotation;
+        [appDelegate refreshProperty:@"rotation"];
+    }
+    else if (currentMouseTransform == kCCBTransformHandleSkew)
+    {
+        CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.position];
+        
+        CGPoint handleAngleVectorStart = ccpSub(nodePos, mouseDownPos);
+        CGPoint handleAngleVectorNew = ccpSub(nodePos, pos);
+        
+        float handleAngleRadStart = atan2f(handleAngleVectorStart.y, handleAngleVectorStart.x);
+        float handleAngleRadNew = atan2f(handleAngleVectorNew.y, handleAngleVectorNew.x);
+        
+        float deltaRotationRad = handleAngleRadNew - handleAngleRadStart;
+        float deltaRotation = (deltaRotationRad/(2*M_PI))*360;
+        deltaRotation *= (skewXAxis ?  -1.0f : 1.0f);
+        
+        if ([self isLocalCoordinateSystemFlipped:transformScalingNode.parent])
+        {
+            deltaRotation = -deltaRotation;
+        }
+        
+        while ( deltaRotation > 180.0f )
+            deltaRotation -= 360.0f;
+        while ( deltaRotation < -180.0f )
+            deltaRotation += 360.0f;
+        
+        float startRotation = skewXAxis ? transformStartSkewX : transformStartSkewY;
+        
+        float newRotation = (startRotation + deltaRotation);
         // Handle shift key (fixed rotation angles)
         if ([event modifierFlags] & NSShiftKeyMask)
         {
@@ -1039,12 +1093,19 @@ static CocosScene* sharedCocosScene;
             newRotation = roundf(newRotation/factor)*factor;
         }
         
-        [appDelegate saveUndoStateWillChangeProperty:@"rotation"];
-        transformScalingNode.rotation = newRotation;
-        [appDelegate refreshProperty:@"rotation"];
-    }
-    else if (currentMouseTransform == kCCBTransformHandleSkew)
-    {
+        if(skewXAxis)
+        {
+            [appDelegate saveUndoStateWillChangeProperty:@"skew"];
+            transformScalingNode.skewX = newRotation;
+            [appDelegate refreshProperty:@"skew"];
+        }
+        else
+        {
+            [appDelegate saveUndoStateWillChangeProperty:@"skew"];
+            transformScalingNode.skewY = newRotation;
+            [appDelegate refreshProperty:@"skew"];
+        }
+
         
         
     }
