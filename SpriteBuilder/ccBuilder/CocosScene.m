@@ -455,12 +455,12 @@ static CocosScene* sharedCocosScene;
                     
                     if(!isOverSkew)
                     {
-                        isOverSkew = [self isOverSkew:points];
+                        isOverSkew = [self isOverSkew:mousePos withPoints:points];
                     }
                     
-                    if(!isOverRotation)
+                    if(!isOverRotation && currentMouseTransform == kCCBTransformHandleNone)
                     {
-                        isOverRotation = [self isOverRotation:points];
+                        isOverRotation = [self isOverRotation:mousePos withPoints:points withCorner:&rotationCornerIndex withOrientation:&rotationCornerOrientation];
                     }
                 }
                 else
@@ -476,17 +476,21 @@ static CocosScene* sharedCocosScene;
         }
     }
     
-    if(isOverSkew && currentTool != kCCBToolSkew)
+    if(currentMouseTransform == kCCBTransformHandleNone)
     {
-        self.currentTool = kCCBToolSkew;
-    }
-    else if(isOverRotation && currentTool != kCCBToolRotate)
-    {
-        self.currentTool = kCCBToolRotate;
-    }
-    else if(!isOverSkew && !isOverRotation && currentTool != kCCBToolSelection)
-    {
-        self.currentTool = kCCBToolSelection;
+        if(isOverSkew && currentTool != kCCBToolSkew)
+        {
+            self.currentTool = kCCBToolSkew;
+        }
+        else if(isOverRotation && currentTool != kCCBToolRotate)
+        {
+            self.currentTool = kCCBToolRotate;
+        }
+        else if(!isOverSkew && !isOverRotation && currentTool != kCCBToolSelection)
+        {
+            self.currentTool = kCCBToolSelection;
+        }
+
     }
 }
 
@@ -513,7 +517,7 @@ static CocosScene* sharedCocosScene;
   
 }
 
-- (BOOL) isOverSkew:(const CGPoint*)points //{bl,br,tr,tl}
+- (BOOL) isOverSkew:(CGPoint)_mousePos withPoints:(const CGPoint*)points  //{bl,br,tr,tl}
 {
     for (int i = 0; i < 4; i++)
     {
@@ -534,11 +538,11 @@ static CocosScene* sharedCocosScene;
         CGPoint adj2 = ccpSub(p2, ccpMult(unitSegment, kInsetFromEdge));
         
         
-        CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, mousePos);
-        float dotProduct = ccpDot( ccpNormalize(ccpSub(adj1, adj2)),ccpNormalize(ccpSub(mousePos, closestPoint)));
+        CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, _mousePos);
+        float dotProduct = ccpDot( ccpNormalize(ccpSub(adj1, adj2)),ccpNormalize(ccpSub(_mousePos, closestPoint)));
         
         //Its close to the line, and perpendicular.
-     if(ccpLength(ccpSub(closestPoint,mousePos)) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f)
+     if(ccpLength(ccpSub(closestPoint,_mousePos)) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f)
         {
             skewSegmentOrientation = unitSegment;
             return YES;
@@ -548,7 +552,7 @@ static CocosScene* sharedCocosScene;
     return NO;
 }
 
-- (BOOL) isOverRotation:(const CGPoint*)points //{bl,br,tr,tl}
+- (BOOL) isOverRotation:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/ withCorner:(int*)cornerIndex withOrientation:(CGPoint*)orientation
 {
     for (int i = 0; i < 4; i++)
     {
@@ -567,19 +571,24 @@ static CocosScene* sharedCocosScene;
         const float kMaxDistanceForRotation = 25.0f;
        
         
-        CGPoint mouseVector = ccpSub(mousePos, p2);
+        CGPoint mouseVector = ccpSub(_mousePos, p2);
         
         float dot1 = ccpDot(mouseVector, unitSegment1);
         float dot2 = ccpDot(mouseVector, unitSegment2);
-        
-        
-        //CGPoint targetCentre = ccpAdd(p2, ccpAdd(ccpMult(unitSegment1, kDistanceForRotation), ccpMult(unitSegment2, kDistanceForRotation)));
-        
         float distanceToCorner = ccpLength(mouseVector);
-        
         
         if(dot1 > 0.0f && dot2 > 0.0f && distanceToCorner > kMinDistanceForRotation && distanceToCorner < kMaxDistanceForRotation)
         {
+            if(cornerIndex)
+            {
+                *cornerIndex = (i + 1) % 4;
+            }
+            
+            if(orientation)
+            {
+                *orientation = ccpNormalize(ccpAdd(unitSegment1, unitSegment2));
+            }
+
             return YES;
         }
         
@@ -617,7 +626,7 @@ static CocosScene* sharedCocosScene;
 
 
 
-- (int) transformHandleUnderPt:(CGPoint)pt
+- (CCBTransformHandle) transformHandleUnderPt:(CGPoint)pt
 {
     for (CCNode* node in appDelegate.selectedNodes)
     {
@@ -625,12 +634,22 @@ static CocosScene* sharedCocosScene;
             continue;
         
         transformScalingNode = node;
+        CGPoint points[4];
+        
+        [self getCornerPointsForNode:node withPoints:points];
+
+        if( [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
+            return kCCBTransformHandleRotate;
+
+        if( [self isOverSkew:pt withPoints:points])
+            return kCCBTransformHandleSkew;
         
         CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
                                   node.anchorPoint.y * node.contentSizeInPoints.height);
         
         CGPoint center = [node convertToWorldSpace:localAnchor];
-        if (ccpDistance(pt, center) < kCCBAnchorPointRadius) return kCCBTransformHandleAnchorPoint;
+        if (ccpDistance(pt, center) < kCCBAnchorPointRadius)
+            return kCCBTransformHandleAnchorPoint;
         
         if (node.contentSize.width == 0 || node.contentSize.height == 0)
         {
@@ -745,7 +764,7 @@ static CocosScene* sharedCocosScene;
     // Find out which objects were clicked
     
     // Transform handles
-    int th = [self transformHandleUnderPt:pos];
+    CCBTransformHandle th = [self transformHandleUnderPt:pos];
     
     if (th == kCCBTransformHandleAnchorPoint)
     {
@@ -766,24 +785,26 @@ static CocosScene* sharedCocosScene;
         transformScalingNode.transformStartPosition = transformScalingNode.anchorPoint;
         return;
     }
+    if(th == kCCBTransformHandleRotate && appDelegate.selectedNode != rootNode)
+    {
+        // Start rotation transform
+        currentMouseTransform = kCCBTransformHandleRotate;
+        transformStartRotation = transformScalingNode.rotation;
+        return;
+    }
+    
     if (th == kCCBTransformHandleScale && appDelegate.selectedNode != rootNode)
     {
-        if (([event modifierFlags] & NSAlternateKeyMask) &&
-            ![appDelegate.selectedNode usesFlashSkew])
-        {
-            // Start rotation transform (instead of scale)
-            currentMouseTransform = kCCBTransformHandleRotate;
-            transformStartRotation = transformScalingNode.rotation;
-            return;
-        }
-        else
-        {
-            // Start scale transform
-            currentMouseTransform = kCCBTransformHandleScale;
-            transformStartScaleX = [PositionPropertySetter scaleXForNode:transformScalingNode prop:@"scale"];
-            transformStartScaleY = [PositionPropertySetter scaleYForNode:transformScalingNode prop:@"scale"];
-            return;
-        }
+        // Start scale transform
+        currentMouseTransform = kCCBTransformHandleScale;
+        transformStartScaleX = [PositionPropertySetter scaleXForNode:transformScalingNode prop:@"scale"];
+        transformStartScaleY = [PositionPropertySetter scaleYForNode:transformScalingNode prop:@"scale"];
+        return;
+        
+    }
+    if(th == kCCBTransformHandleSkew && appDelegate.selectedNode != rootNode)
+    {
+        
     }
     
     // Clicks inside objects
@@ -1005,6 +1026,12 @@ static CocosScene* sharedCocosScene;
         
         float newRotation = (transformStartRotation + deltaRotation);
         
+        //Update the rotation tool.
+        float cursorRotationRad = -M_PI * (newRotation - transformScalingNode.rotation) / 180.0f;
+        CGAffineTransform rotationTransform = CGAffineTransformMakeRotation(cursorRotationRad);
+        rotationCornerOrientation = CGPointApplyAffineTransform(rotationCornerOrientation, rotationTransform);
+        self.currentTool = kCCBToolRotate;
+        
         // Handle shift key (fixed rotation angles)
         if ([event modifierFlags] & NSShiftKeyMask)
         {
@@ -1015,6 +1042,11 @@ static CocosScene* sharedCocosScene;
         [appDelegate saveUndoStateWillChangeProperty:@"rotation"];
         transformScalingNode.rotation = newRotation;
         [appDelegate refreshProperty:@"rotation"];
+    }
+    else if (currentMouseTransform == kCCBTransformHandleSkew)
+    {
+        
+        
     }
     else if (currentMouseTransform == kCCBTransformHandleAnchorPoint)
     {
@@ -1206,6 +1238,48 @@ static CocosScene* sharedCocosScene;
     if (!appDelegate.hasOpenedDocument) return;
     
 }
+- (NSImage *)rotateImage:(NSImage *)image rotation:(float)rotation
+{
+    CGSize imageSize = image.size;
+    CGRect rect ={ 0,0, imageSize };
+    
+    
+    NSBitmapImageRep *offscreenRep = [[[NSBitmapImageRep alloc]
+                                       initWithBitmapDataPlanes:NULL
+                                       pixelsWide:imageSize.width
+                                       pixelsHigh:imageSize.height
+                                       bitsPerSample:8
+                                       samplesPerPixel:4
+                                       hasAlpha:YES
+                                       isPlanar:NO
+                                       colorSpaceName:NSDeviceRGBColorSpace
+                                       bitmapFormat:NSAlphaFirstBitmapFormat
+                                       bytesPerRow:0
+                                       bitsPerPixel:0] autorelease]; ;
+    
+    NSGraphicsContext * graphicsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
+    
+    CGContextRef context = [graphicsContext graphicsPort];
+    
+    CGPoint centerPoint=CGPointMake( imageSize.width/2, imageSize.height/2);
+    CGPoint vertex = CGPointMake( -imageSize.width/2, -imageSize.height/2);
+    CGAffineTransform tranform = CGAffineTransformMakeRotation(rotation);
+    CGPoint vertex2 = CGPointApplyAffineTransform(vertex, tranform);
+    CGPoint vertex3 = CGPointMake(centerPoint.x + vertex2.x, centerPoint.y + vertex2.y);
+    
+    
+    CGContextTranslateCTM(context, vertex3.x,vertex3.y);
+    CGContextRotateCTM(context, rotation);
+    
+    CGImageRef maskImage = [image CGImageForProposedRect:nil context:graphicsContext hints:nil];
+    CGContextDrawImage(context, rect, maskImage);
+    
+    
+    NSImage*img = [[[NSImage alloc] initWithSize:imageSize] autorelease];;
+    [img addRepresentation:offscreenRep];
+    return img;
+}
+
 
 -(CCBTool)currentTool
 {
@@ -1214,78 +1288,43 @@ static CocosScene* sharedCocosScene;
 
 - (void)setCurrentTool:(CCBTool)_currentTool
 {
-    if(currentTool != _currentTool)
+    
+    //First pop any non-selection tools.
+    if (currentTool != kCCBToolSelection)
     {
-        //First pop any non-selection tools.
-        if (currentTool != kCCBToolSelection)
-        {
-            [NSCursor pop];
-        }
+        [NSCursor pop];
+    }
+    
+    currentTool = _currentTool;
+    
+    if (currentTool == kCCBToolGrab)
+    {
+        [[NSCursor closedHandCursor] push];
+    }
+    if (currentTool == kCCBToolRotate)
+    {
+        NSImage * image = [NSImage imageNamed:@"select-rotation.png"];
         
-        currentTool = _currentTool;
-        
-        if (currentTool == kCCBToolGrab)
-        {
-            [[NSCursor closedHandCursor] push];
-        }
-        if (currentTool == kCCBToolRotate)
-        {
-            NSImage * image = [NSImage imageNamed:@"select-rotation.png"];
-            CGPoint centerPoint =CGPointMake( image.size.width/2, image.size.height/2);
-            NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
-            [cursor push];
-            
-        }
-        if(currentTool == kCCBToolSkew)
-        {
-            
-            float rotation = atan2f(skewSegmentOrientation.y, skewSegmentOrientation.x);
+        float rotation = atan2f(rotationCornerOrientation.y, rotationCornerOrientation.x) - 3.1415f/4.0f;
+        NSImage *img =[self rotateImage:image rotation:rotation];
+        CGPoint centerPoint = CGPointMake(img.size.width/2, img.size.height/2);
+        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
+        [cursor push];
+    }
 
-            //Rotate the Skew image.
-            NSImage * image = [NSImage imageNamed:@"select-skew.png"];
-            
-            CGSize imageSize = image.size;
-            CGRect rect ={ 0,0, imageSize };
-            
-            
-            NSBitmapImageRep *offscreenRep = [[[NSBitmapImageRep alloc]
-                                              initWithBitmapDataPlanes:NULL
-                                              pixelsWide:imageSize.width
-                                              pixelsHigh:imageSize.height
-                                              bitsPerSample:8
-                                              samplesPerPixel:4
-                                              hasAlpha:YES
-                                              isPlanar:NO
-                                              colorSpaceName:NSDeviceRGBColorSpace
-                                              bitmapFormat:NSAlphaFirstBitmapFormat
-                                              bytesPerRow:0
-                                               bitsPerPixel:0] autorelease]; ;
-            
-            NSGraphicsContext * graphicsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
-            
-            CGContextRef context = [graphicsContext graphicsPort];
-            
-            CGPoint centerPoint =CGPointMake( imageSize.width/2, imageSize.height/2);
-            CGPoint vertex = CGPointMake( -imageSize.width/2, -imageSize.height/2);
-            CGAffineTransform tranform = CGAffineTransformMakeRotation(rotation);
-            CGPoint vertex2 = CGPointApplyAffineTransform(vertex, tranform);
-            CGPoint vertex3 = CGPointMake(centerPoint.x + vertex2.x, centerPoint.y + vertex2.y);
-            
-            
-            CGContextTranslateCTM(context, vertex3.x,vertex3.y);
-            CGContextRotateCTM(context, rotation);
-            
-            CGImageRef maskImage = [image CGImageForProposedRect:nil context:graphicsContext hints:nil];
-            CGContextDrawImage(context, rect, maskImage);
-            
-            
-            NSImage *img = [[[NSImage alloc] initWithSize:imageSize] autorelease];;
-            [img addRepresentation:offscreenRep];
-            
-            NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
-            [cursor push];
-            
-        }
+    if(currentTool == kCCBToolSkew)
+    {
+        float rotation = atan2f(skewSegmentOrientation.y, skewSegmentOrientation.x);
+
+        //Rotate the Skew image.
+        NSImage * image = [NSImage imageNamed:@"select-skew.png"];
+        
+        NSImage *img =[self rotateImage:image rotation:rotation];
+
+        CGPoint centerPoint = CGPointMake(img.size.width/2, img.size.height/2);
+
+        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
+        [cursor push];
         
     }
     

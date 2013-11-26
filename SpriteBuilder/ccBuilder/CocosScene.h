@@ -44,7 +44,7 @@ enum {
     kCCBParticleTypeSun
 };
 
-enum {
+typedef enum {
     kCCBTransformHandleNone = 0,
     kCCBTransformHandleDownInside,
     kCCBTransformHandleMove,
@@ -52,7 +52,7 @@ enum {
     kCCBTransformHandleRotate,
     kCCBTransformHandleAnchorPoint,
     kCCBTransformHandleSkew,
-};
+} CCBTransformHandle;
 
 typedef enum {
     kCCBToolSelection = 0,
@@ -112,6 +112,9 @@ typedef enum {
     
     CCBTool currentTool;
     CGPoint skewSegmentOrientation;
+    bool    skewXAxis; //X or y?
+    int     rotationCornerIndex;//Which corner of the object are we rotating?
+    CGPoint rotationCornerOrientation;//which way is the corner facing.
 }
 
 @property (nonatomic,assign) CCNode* rootNode;
