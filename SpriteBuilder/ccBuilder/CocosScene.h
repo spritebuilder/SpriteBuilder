@@ -51,12 +51,15 @@ enum {
     kCCBTransformHandleScale,
     kCCBTransformHandleRotate,
     kCCBTransformHandleAnchorPoint,
+    kCCBTransformHandleSkew,
 };
 
-enum {
+typedef enum {
     kCCBToolSelection = 0,
-    kCCBToolGrab
-};
+    kCCBToolGrab,
+    kCCBToolSkew,
+    kCCBToolRotate,    
+}CCBTool;
 
 @interface CocosScene : CCNode
 {
@@ -107,14 +110,15 @@ enum {
     int stageBorderType;
     float stageZoom;
     
-    int currentTool;
+    CCBTool currentTool;
+    CGPoint skewSegmentOrientation;
 }
 
 @property (nonatomic,assign) CCNode* rootNode;
 @property (nonatomic,readonly) BOOL isMouseTransforming;
 @property (nonatomic,assign) CGPoint scrollOffset;
 
-@property (nonatomic,assign) int currentTool;
+@property (nonatomic,assign) CCBTool currentTool;
 
 @property (nonatomic,readonly) GuidesLayer* guideLayer;
 @property (nonatomic,readonly) RulersLayer* rulerLayer;
