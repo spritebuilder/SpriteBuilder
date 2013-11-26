@@ -24,6 +24,7 @@
  */
 
 #import "CCBUtil.h"
+#import "CGPointExtension.h"
 
 CGPoint ccpRound(CGPoint pt)
 {
@@ -32,6 +33,27 @@ CGPoint ccpRound(CGPoint pt)
     rounded.y = roundf(pt.y);
     return rounded;
 }
+
+// Return closest point on line segment vw and point p
+CGPoint ccpClosestPointOnLine(CGPoint v, CGPoint w, CGPoint p)
+{
+    const float l2 =  ccpLengthSQ(ccpSub(w, v));  // i.e. |w-v|^2 -  avoid a sqrt
+    if (l2 == 0.0)
+        return v;   // v == w case
+
+    // Consider the line extending the segment, parameterized as v + t (w - v).
+    // We find projection of point p onto the line.
+    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    const float t = ccpDot(ccpSub(p, v),ccpSub(w , v)) / l2;
+    if (t < 0.0)
+        return v;        // Beyond the 'v' end of the segment
+    else if (t > 1.0)
+        return w;  // Beyond the 'w' end of the segment
+    
+    const CGPoint projection =  ccpAdd(v,  ccpMult(ccpSub(w, v),t));  // v + t * (w - v);  Projection falls on the segment
+    return projection;
+}
+
 
 @implementation CCBUtil
 

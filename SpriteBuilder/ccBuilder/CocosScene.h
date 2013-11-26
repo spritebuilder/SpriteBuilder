@@ -44,19 +44,22 @@ enum {
     kCCBParticleTypeSun
 };
 
-enum {
+typedef enum {
     kCCBTransformHandleNone = 0,
     kCCBTransformHandleDownInside,
     kCCBTransformHandleMove,
     kCCBTransformHandleScale,
     kCCBTransformHandleRotate,
     kCCBTransformHandleAnchorPoint,
-};
+    kCCBTransformHandleSkew,
+} CCBTransformHandle;
 
-enum {
+typedef enum {
     kCCBToolSelection = 0,
-    kCCBToolGrab
-};
+    kCCBToolGrab,
+    kCCBToolSkew,
+    kCCBToolRotate,    
+}CCBTool;
 
 @interface CocosScene : CCNode
 {
@@ -84,7 +87,9 @@ enum {
     float transformStartScaleX;
     float transformStartScaleY;
     CCNode* transformScalingNode;
-    //CGPoint transformStartPosition;
+    float transformStartSkewX;
+    float transformStartSkewY;
+    
     int currentMouseTransform;
     BOOL isMouseTransforming;
     BOOL isPanning;
@@ -107,14 +112,18 @@ enum {
     int stageBorderType;
     float stageZoom;
     
-    int currentTool;
+    CCBTool currentTool;
+    CGPoint skewSegmentOrientation;
+    BOOL    skewXAxis; //X or y?
+    int     rotationCornerIndex;//Which corner of the object are we rotating?
+    CGPoint rotationCornerOrientation;//which way is the corner facing.
 }
 
 @property (nonatomic,assign) CCNode* rootNode;
 @property (nonatomic,readonly) BOOL isMouseTransforming;
 @property (nonatomic,assign) CGPoint scrollOffset;
 
-@property (nonatomic,assign) int currentTool;
+@property (nonatomic,assign) CCBTool currentTool;
 
 @property (nonatomic,readonly) GuidesLayer* guideLayer;
 @property (nonatomic,readonly) RulersLayer* rulerLayer;
