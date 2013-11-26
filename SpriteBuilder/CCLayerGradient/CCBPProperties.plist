@@ -5,7 +5,7 @@
 	<key>displayName</key>
 	<string>Layer Gradient</string>
 	<key>ordering</key>
-	<integer>1030</integer>
+	<integer>5000</integer>
 	<key>description</key>
 	<string>A layer filled with a gradient.</string>
 	<key>inheritsFrom</key>

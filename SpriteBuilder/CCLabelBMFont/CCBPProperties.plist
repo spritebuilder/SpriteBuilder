@@ -5,7 +5,7 @@
 	<key>displayName</key>
 	<string>Label BM-Font</string>
 	<key>ordering</key>
-	<integer>3000</integer>
+	<integer>10000</integer>
 	<key>description</key>
 	<string>Displays a bitmap font label.</string>
 	<key>inheritsFrom</key>

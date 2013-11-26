@@ -5,7 +5,7 @@
 	<key>description</key>
 	<string>Incorporates another SpriteBuilder interface file.</string>
 	<key>ordering</key>
-	<integer>7000</integer>
+	<integer>2000</integer>
 	<key>displayName</key>
 	<string>Sub File</string>
 	<key>inheritsFrom</key>

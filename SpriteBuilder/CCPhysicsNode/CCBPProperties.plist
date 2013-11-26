@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<integer>1010</integer>
+	<integer>3000</integer>
 	<key>displayName</key>
 	<string>Physics Node</string>
 	<key>description</key>

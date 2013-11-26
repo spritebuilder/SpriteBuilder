@@ -7,7 +7,7 @@
 	<key>displayName</key>
 	<string>Particle System</string>
 	<key>ordering</key>
-	<integer>6000</integer>
+	<integer>8000</integer>
 	<key>description</key>
 	<string>Emits particles for effects such as smoke, fire and rain.</string>
 	<key>inheritsFrom</key>

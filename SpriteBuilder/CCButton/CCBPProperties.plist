@@ -5,7 +5,7 @@
 	<key>displayName</key>
 	<string>Button</string>
 	<key>ordering</key>
-	<integer>4010</integer>
+	<integer>11000</integer>
 	<key>description</key>
 	<string>Generates events when touched, can have a stretchable backround and a label.</string>
 	<key>inheritsFrom</key>

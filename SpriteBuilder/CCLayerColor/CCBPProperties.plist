@@ -5,7 +5,7 @@
 	<key>displayName</key>
 	<string>Layer Color</string>
 	<key>ordering</key>
-	<integer>1020</integer>
+	<integer>4000</integer>
 	<key>description</key>
 	<string>A layer filled with a solid color.</string>
 	<key>inheritsFrom</key>
