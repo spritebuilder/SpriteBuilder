@@ -397,6 +397,7 @@ static CocosScene* sharedCocosScene;
     
     
     BOOL isOverSkew = NO;
+    BOOL isOverRotation = NO;
     
     
     if (nodes.count > 0)
@@ -425,20 +426,20 @@ static CocosScene* sharedCocosScene;
                 if (node.contentSize.width > 0 && node.contentSize.height > 0)
                 {
                     // Selection corners in world space
-                    CGPoint bl = ccpRound([node convertToWorldSpace: ccp(0,0)]);
-                    CGPoint br = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,0)]);
-                    CGPoint tl = ccpRound([node convertToWorldSpace: ccp(0,node.contentSizeInPoints.height)]);
-                    CGPoint tr = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,node.contentSizeInPoints.height)]);
                     
                     CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
                     CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
                     CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
                     CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
                     
-                    blSprt.position = bl;
-                    brSprt.position = br;
-                    tlSprt.position = tl;
-                    trSprt.position = tr;
+                    
+                    CGPoint points[4]; //{bl,br,tr,tl}
+                    [self getCornerPointsForNode:node withPoints:points];
+                    
+                    blSprt.position = points[0];
+                    brSprt.position = points[1];
+                    trSprt.position = points[2];
+                    tlSprt.position = points[3];
                     
                     [selectionLayer addChild:blSprt];
                     [selectionLayer addChild:brSprt];
@@ -446,7 +447,7 @@ static CocosScene* sharedCocosScene;
                     [selectionLayer addChild:trSprt];
                     
                     CCDrawNode* drawing = [CCDrawNode node];
-                    CGPoint points[] = {bl, br, tr, tl};
+                
                     
                     [drawing drawPolyWithVerts:points count:4 fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
                     
@@ -454,9 +455,13 @@ static CocosScene* sharedCocosScene;
                     
                     if(!isOverSkew)
                     {
-                        isOverSkew = [self isOverSkew:node withPoints:points];
+                        isOverSkew = [self isOverSkew:points];
                     }
-                  
+                    
+                    if(!isOverRotation)
+                    {
+                        isOverRotation = [self isOverRotation:points];
+                    }
                 }
                 else
                 {
@@ -475,7 +480,11 @@ static CocosScene* sharedCocosScene;
     {
         self.currentTool = kCCBToolSkew;
     }
-    else if(!isOverSkew && currentTool == kCCBToolSkew)
+    else if(isOverRotation && currentTool != kCCBToolRotate)
+    {
+        self.currentTool = kCCBToolRotate;
+    }
+    else if(!isOverSkew && !isOverRotation && currentTool != kCCBToolSelection)
     {
         self.currentTool = kCCBToolSelection;
     }
@@ -494,14 +503,24 @@ static CocosScene* sharedCocosScene;
     [appDelegate setSelectedNodes:[NSArray arrayWithObject:[nodesAtSelectionPt objectAtIndex:currentNodeAtSelectionPtIdx]]];
 }
 
-- (BOOL) isOverSkew:(CCNode*)node withPoints:(const CGPoint*)points //{bl,br,tr,tl}
+-(void)getCornerPointsForNode:(CCNode*)node withPoints:(CGPoint*)points
+{
+    // Selection corners in world space
+    points[0] = ccpRound([node convertToWorldSpace: ccp(0,0)]);
+    points[1] = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,0)]);
+    points[2] = ccpRound([node convertToWorldSpace: ccp(node.contentSizeInPoints.width,node.contentSizeInPoints.height)]);
+    points[3] = ccpRound([node convertToWorldSpace: ccp(0,node.contentSizeInPoints.height)]);
+  
+}
+
+- (BOOL) isOverSkew:(const CGPoint*)points //{bl,br,tr,tl}
 {
     for (int i = 0; i < 4; i++)
     {
         CGPoint p1 = points[i % 4];
         CGPoint p2 = points[(i + 1) % 4];
         CGPoint segment = ccpSub(p2, p1);
-        CGPoint normalSegment = ccpNormalize(segment);
+        CGPoint unitSegment = ccpNormalize(segment);
 
         const int kInsetFromEdge = 8;
         const float kDistanceFromSegment = 3.0f;
@@ -511,8 +530,8 @@ static CocosScene* sharedCocosScene;
             continue;//Its simply too small for Skew.
         }
         
-        CGPoint adj1 = ccpAdd(p1, ccpMult(normalSegment, kInsetFromEdge));
-        CGPoint adj2 = ccpSub(p2, ccpMult(normalSegment, kInsetFromEdge));
+        CGPoint adj1 = ccpAdd(p1, ccpMult(unitSegment, kInsetFromEdge));
+        CGPoint adj2 = ccpSub(p2, ccpMult(unitSegment, kInsetFromEdge));
         
         
         CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, mousePos);
@@ -521,7 +540,7 @@ static CocosScene* sharedCocosScene;
         //Its close to the line, and perpendicular.
      if(ccpLength(ccpSub(closestPoint,mousePos)) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f)
         {
-            skewSegmentOrientation = normalSegment;
+            skewSegmentOrientation = unitSegment;
             return YES;
         }
     }
@@ -529,6 +548,45 @@ static CocosScene* sharedCocosScene;
     return NO;
 }
 
+- (BOOL) isOverRotation:(const CGPoint*)points //{bl,br,tr,tl}
+{
+    for (int i = 0; i < 4; i++)
+    {
+        CGPoint p1 = points[i % 4];
+        CGPoint p2 = points[(i + 1) % 4];
+        CGPoint p3 = points[(i + 2) % 4];
+
+        CGPoint segment1 = ccpSub(p2, p1);
+        CGPoint unitSegment1 = ccpNormalize(segment1);
+
+        
+        CGPoint segment2 = ccpSub(p2, p3);
+        CGPoint unitSegment2 = ccpNormalize(segment2);
+        
+        const float kMinDistanceForRotation = 10.0f;
+        const float kMaxDistanceForRotation = 25.0f;
+       
+        
+        CGPoint mouseVector = ccpSub(mousePos, p2);
+        
+        float dot1 = ccpDot(mouseVector, unitSegment1);
+        float dot2 = ccpDot(mouseVector, unitSegment2);
+        
+        
+        //CGPoint targetCentre = ccpAdd(p2, ccpAdd(ccpMult(unitSegment1, kDistanceForRotation), ccpMult(unitSegment2, kDistanceForRotation)));
+        
+        float distanceToCorner = ccpLength(mouseVector);
+        
+        
+        if(dot1 > 0.0f && dot2 > 0.0f && distanceToCorner > kMinDistanceForRotation && distanceToCorner < kMaxDistanceForRotation)
+        {
+            return YES;
+        }
+        
+    }
+    
+    return NO;
+}
 
 #pragma mark Handle mouse input
 
@@ -1169,6 +1227,14 @@ static CocosScene* sharedCocosScene;
         if (currentTool == kCCBToolGrab)
         {
             [[NSCursor closedHandCursor] push];
+        }
+        if (currentTool == kCCBToolRotate)
+        {
+            NSImage * image = [NSImage imageNamed:@"select-rotation.png"];
+            CGPoint centerPoint =CGPointMake( image.size.width/2, image.size.height/2);
+            NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
+            [cursor push];
+            
         }
         if(currentTool == kCCBToolSkew)
         {
