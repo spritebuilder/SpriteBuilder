@@ -5,7 +5,7 @@
 	<key>displayName</key>
 	<string>Text Field</string>
 	<key>ordering</key>
-	<integer>4010</integer>
+	<integer>12000</integer>
 	<key>description</key>
 	<string>Allows the user to enter text, sends events when the text finishes editing.</string>
 	<key>inheritsFrom</key>
