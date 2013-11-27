@@ -1248,6 +1248,9 @@ static BOOL hideAllToNextSeparator;
 {
     [self.window makeKeyWindow];
     CocosScene* cs = [CocosScene cocosScene];
+		
+		// Setup the rulers with the new contentScale
+		[cs.rulerLayer setup];
     
     if (![self hasOpenedDocument]) return;
     currentDocument.docData = [self docDataFromCurrentNodeGraph];

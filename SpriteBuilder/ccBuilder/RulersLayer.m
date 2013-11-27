@@ -30,53 +30,64 @@
 
 @implementation RulersLayer
 
+- (void) setup
+{
+	[self removeAllChildren];
+	
+	bgVertical = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-vertical.png"];
+	bgVertical.anchorPoint = ccp(0,0);
+	
+	bgHorizontal = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-horizontal.png"];
+	bgHorizontal.anchorPoint = ccp(0,0);
+	
+	[self addChild:bgVertical];
+	[self addChild:bgHorizontal z:2];
+	
+	marksVertical = [CCNode node];
+	marksHorizontal = [CCNode node];
+	[self addChild:marksVertical z:1];
+	[self addChild:marksHorizontal z:3];
+	
+	mouseMarkVertical = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
+	mouseMarkVertical.anchorPoint = ccp(0, 0.5f);
+	mouseMarkVertical.visible = NO;
+	[self addChild:mouseMarkVertical z:4];
+	
+	mouseMarkHorizontal = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
+	mouseMarkHorizontal.rotation = -90;
+	mouseMarkHorizontal.anchorPoint = ccp(0, 0.5f);
+	mouseMarkHorizontal.visible = NO;
+	[self addChild:mouseMarkHorizontal z:4];
+	
+	CCSprite* xyBg = [CCSprite spriteWithImageNamed:@"ruler-xy.png"];
+	[self addChild:xyBg z:5];
+	xyBg.anchorPoint = ccp(0,0);
+	xyBg.position = ccp(0,0);
+	
+//	lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
+//	lblX.anchorPoint = ccp(1,0);
+//	lblX.position = ccp(47,3);
+//	lblX.visible = NO;
+//	[self addChild:lblX z:6];
+//	
+//	lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
+//	lblY.anchorPoint = ccp(1,0);
+//	lblY.position = ccp(97,3);
+//	lblY.visible = NO;
+//	[self addChild:lblY z:6];
+	//lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'0'];
+	
+	// Need to force it to update the rulers.
+	winSize = CGSizeZero;
+	[[CocosScene cocosScene] forceRedraw];
+}
+
 - (id) init
 {
     self = [super init];
     if (!self) return NULL;
     
-    bgVertical = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-vertical.png"];
-    bgVertical.anchorPoint = ccp(0,0);
-    
-    bgHorizontal = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-horizontal.png"];
-    bgHorizontal.anchorPoint = ccp(0,0);
-    
-    [self addChild:bgVertical];
-    [self addChild:bgHorizontal z:2];
-    
-    marksVertical = [CCNode node];
-    marksHorizontal = [CCNode node];
-    [self addChild:marksVertical z:1];
-    [self addChild:marksHorizontal z:3];
-    
-    mouseMarkVertical = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
-    mouseMarkVertical.anchorPoint = ccp(0, 0.5f);
-    mouseMarkVertical.visible = NO;
-    [self addChild:mouseMarkVertical z:4];
-    
-    mouseMarkHorizontal = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
-    mouseMarkHorizontal.rotation = -90;
-    mouseMarkHorizontal.anchorPoint = ccp(0, 0.5f);
-    mouseMarkHorizontal.visible = NO;
-    [self addChild:mouseMarkHorizontal z:4];
-    
-    CCSprite* xyBg = [CCSprite spriteWithImageNamed:@"ruler-xy.png"];
-    [self addChild:xyBg z:5];
-    xyBg.anchorPoint = ccp(0,0);
-    xyBg.position = ccp(0,0);
-    
-    lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
-    lblX.anchorPoint = ccp(1,0);
-    lblX.position = ccp(47,3);
-    lblX.visible = NO;
-    [self addChild:lblX z:6];
-    
-    lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
-    lblY.anchorPoint = ccp(1,0);
-    lblY.position = ccp(97,3);
-    lblY.visible = NO;
-    [self addChild:lblY z:6];
-    //lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'0'];
+		[self setup];
     
     return self;
 }
@@ -99,8 +110,8 @@
     zoom = zm;
     
     // Resize backrounds
-    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth);
-    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth, winSize.height);
+    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth/CC_CONTENT_SCALE_FACTOR());
+    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth/CC_CONTENT_SCALE_FACTOR(), winSize.height);
     
     // Add marks and numbers
     [marksVertical removeAllChildrenWithCleanup:YES];
@@ -132,7 +143,7 @@
         mark.position = ccp(0, y);
         [marksVertical addChild:mark];
         
-        if (addLabel)
+        if (addLabel && FALSE)
         {
             int displayDist = yDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
@@ -180,7 +191,7 @@
         [marksHorizontal addChild:mark];
         
         
-        if (addLabel)
+        if (addLabel && FALSE)
         {
             int displayDist = xDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
