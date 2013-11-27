@@ -489,8 +489,8 @@ void ApplyCustomNodeVisitSwizzle()
     defaultCanvasSizes[kCCBCanvasSizeIPhonePortrait] = CGSizeMake(320, 480);
     defaultCanvasSizes[kCCBCanvasSizeIPhone5Landscape] = CGSizeMake(568, 320);
     defaultCanvasSizes[kCCBCanvasSizeIPhone5Portrait] = CGSizeMake(320, 568);
-    defaultCanvasSizes[kCCBCanvasSizeIPadLandscape] = CGSizeMake(1024, 768);
-    defaultCanvasSizes[kCCBCanvasSizeIPadPortrait] = CGSizeMake(768, 1024);
+    defaultCanvasSizes[kCCBCanvasSizeIPadLandscape] = CGSizeMake(512, 384);
+    defaultCanvasSizes[kCCBCanvasSizeIPadPortrait] = CGSizeMake(384, 512);
     
     // Android
     defaultCanvasSizes[kCCBCanvasSizeAndroidXSmallLandscape] = CGSizeMake(320, 240);
@@ -1291,11 +1291,13 @@ static BOOL hideAllToNextSeparator;
             settingDefault.name = @"Phone";
             [updatedResolutions addObject:settingDefault];
             
+						// TODO not sure if this part is correct or not...
             ResolutionSetting* settingTablet = [settingDefault copy];
             settingTablet.name = @"Tablet";
             settingTablet.width *= projectSettings.tabletPositionScaleFactor;
             settingTablet.height *= projectSettings.tabletPositionScaleFactor;
-            settingTablet.scale = projectSettings.tabletPositionScaleFactor;
+            settingTablet.contentScale = projectSettings.tabletPositionScaleFactor;
+            settingTablet.positionScale = 1.0/projectSettings.tabletPositionScaleFactor; // TODO should add a separate setting for this.
             [updatedResolutions addObject:settingTablet];
         }
     }
@@ -3156,7 +3158,8 @@ static BOOL hideAllToNextSeparator;
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
     
-    [CCDirector sharedDirector].positionScaleFactor = res.scale;
+    [CCDirector sharedDirector].contentScaleFactor = res.contentScale;
+    [CCDirector sharedDirector].positionScaleFactor = res.positionScale;
 }
 
 - (void) setResolution:(int)r

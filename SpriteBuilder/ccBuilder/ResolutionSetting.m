@@ -31,7 +31,7 @@
 @synthesize width;
 @synthesize height;
 @synthesize ext;
-@synthesize scale;
+@synthesize positionScale, contentScale;
 @synthesize centeredOrigin;
 @synthesize exts;
 
@@ -45,7 +45,7 @@
     self.width = 1000;
     self.height = 1000;
     self.ext = @" ";
-    self.scale = 1;
+    self.contentScale = self.positionScale = 1;
     
     return self;
 }
@@ -60,7 +60,9 @@
     self.width = [[serialization objectForKey:@"width"] intValue];
     self.height = [[serialization objectForKey:@"height"] intValue];
     self.ext = [serialization objectForKey:@"ext"];
-    self.scale = [[serialization objectForKey:@"scale"] floatValue];
+		// TODO should store separate values for these.
+    self.contentScale = [[serialization objectForKey:@"scale"] floatValue];
+    self.positionScale = 1.0/self.contentScale;
     self.centeredOrigin = [[serialization objectForKey:@"centeredOrigin"] boolValue];
     
     return self;
@@ -114,7 +116,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.scale = 1;
+    setting.contentScale = 1;
+		setting.positionScale = 1;
     
     return setting;
 }
@@ -171,7 +174,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"tablet phonehd";
-    setting.scale = 2;
+    setting.contentScale = 2;
+    setting.positionScale = 0.5;
     
     return setting;
 }
@@ -181,8 +185,8 @@
     ResolutionSetting* setting = [self settingIPad];
     
     setting.name = @"Tablet Landscape";
-    setting.width = 1024;
-    setting.height = 768;
+    setting.width = 512;
+    setting.height = 384;
     
     return setting;
 }
@@ -192,8 +196,8 @@
     ResolutionSetting* setting = [self settingIPad];
     
     setting.name = @"Tablet Portrait";
-    setting.width = 768;
-    setting.height = 1024;
+    setting.width = 384;
+    setting.height = 512;
     
     return setting;
 }
@@ -206,7 +210,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.scale = 0.5f;
+    setting.contentScale = 0.5;
+    setting.positionScale = 2;
     
     return setting;
 }
@@ -241,7 +246,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.scale = 1;
+    setting.contentScale = 1;
+    setting.positionScale = 1;
     
     return setting;
 }
@@ -276,7 +282,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.scale = 1.5f;
+    setting.contentScale = 1.5;
+    setting.positionScale = 2.0/3.0;
     
     return setting;
 }
@@ -311,7 +318,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phonehd";
-    setting.scale = 2;
+    setting.contentScale = 2;
+    setting.positionScale = 0.5;
     
     return setting;
 }
@@ -346,7 +354,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"tablethd";
-    setting.scale = 4;
+    setting.contentScale = 4;
+    setting.positionScale = 0.25;
     
     return setting;
 }
@@ -381,7 +390,8 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"html5";
-    setting.scale = 2;
+    setting.contentScale = 2;
+    setting.positionScale = 0.5;
     
     return setting;
 }
@@ -423,7 +433,8 @@
     copy.width = width;
     copy.height = height;
     copy.ext = ext;
-    copy.scale = scale;
+    copy.contentScale = contentScale;
+    copy.positionScale = positionScale;
     copy.centeredOrigin = centeredOrigin;
     
     return copy;
