@@ -974,27 +974,50 @@ static CocosScene* sharedCocosScene;
     {
         CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.position];
         
+        //Where did we start.
         CGPoint deltaStart = ccpSub(nodePos, mouseDownPos);
+
+        //Where are we now.
         CGPoint deltaNew = ccpSub(nodePos, pos);
         
-        // Rotate deltas
-        CGPoint anglePos0 = [transformScalingNode convertToWorldSpace:ccp(0,0)];
-        CGPoint anglePos1 = [transformScalingNode convertToWorldSpace:ccp(1,0)];
-        CGPoint angleVector = ccpSub(anglePos1, anglePos0);
         
-        float angle = atan2f(angleVector.y, angleVector.x);
+        //First, unwind the current mouse down position to form an untransformed 'root' position: ie where on an untransformed image would you have clicked.
+        CGSize contentSizeInPoints = transformScalingNode.contentSizeInPoints;
+        CGPoint anchorPointInPoints = ccp( contentSizeInPoints.width * transformScalingNode.anchorPoint.x, contentSizeInPoints.height * transformScalingNode.anchorPoint.y );
         
-        deltaStart = ccpRotateByAngle(deltaStart, CGPointZero, -angle);
-        deltaNew = ccpRotateByAngle(deltaNew, CGPointZero, -angle);
+        //T
+        CGAffineTransform translateTranform = CGAffineTransformTranslate(CGAffineTransformIdentity, -anchorPointInPoints.x, -anchorPointInPoints.y);
+
+        //S
+        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(transformStartScaleX, transformStartScaleY);
+        
+        //K
+        CGAffineTransform skewTransform = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(transformScalingNode.skewY)),
+                                                             tanf(CC_DEGREES_TO_RADIANS(transformScalingNode.skewX)), 1.0f,
+                                                             0.0f, 0.0f );
+        
+        //R
+        CGAffineTransform rotationTransform = CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(-transformScalingNode.rotation));
+        
+        //Root position == x,   xTKSR=mouseDown
+        //We've got a root position now.
+        CGPoint rootPosition = CGPointApplyAffineTransform(deltaStart,CGAffineTransformInvert(CGAffineTransformConcat(CGAffineTransformConcat(CGAffineTransformConcat(translateTranform,skewTransform),scaleTransform), rotationTransform)));
+        
+        //What scale (S') would be have to adjust to in order to achieve the new mouseDragg position
+        //  xTKS'R=mouseDrag,    [xTK]S'=mouseDrag*R^-1
+        // [xTK]==known==intermediate==I, R^-1==known, mouseDrag==known, solve so S'
+        
+        
+        //xTK
+        CGPoint intermediate = CGPointApplyAffineTransform(CGPointApplyAffineTransform(rootPosition, translateTranform), skewTransform);
+        CGPoint unRotatedMouse = CGPointApplyAffineTransform(deltaNew, CGAffineTransformInvert(rotationTransform));
+        
+        CGPoint scale = CGPointMake(unRotatedMouse.x/intermediate.x , unRotatedMouse.y / intermediate.y);
+        
         
         // Calculate new scale
-        float xScaleNew;
-        float yScaleNew;
-        
-        if (fabs(deltaStart.x) > 4) xScaleNew = (deltaNew.x  * transformStartScaleX)/deltaStart.x;
-        else xScaleNew = transformStartScaleX;
-        if (fabs(deltaStart.y) > 4) yScaleNew = (deltaNew.y  * transformStartScaleY)/deltaStart.y;
-        else yScaleNew = transformStartScaleY;
+        float xScaleNew = scale.x;
+        float yScaleNew = scale.y;
         
         // Handle shift key (uniform scale)
         if ([event modifierFlags] & NSShiftKeyMask)
