@@ -874,12 +874,6 @@ CA
                                     <action selector="showHelp:" target="494" id="1806"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="JavaScript API Documentation" keyEquivalent="?" id="1807">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="showAPIDocs:" target="494" id="1808"/>
-                                </connections>
-                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="1775"/>
                             <menuItem title="Report a Bug" id="1776">
                                 <modifierMask key="keyEquivalentModifierMask"/>
