@@ -455,7 +455,7 @@ static CocosScene* sharedCocosScene;
                     
                     if(!isOverSkew && currentMouseTransform == kCCBTransformHandleNone)
                     {
-                        isOverSkew = [self isOverSkew:mousePos withPoints:points withOrientation:&skewSegmentOrientation alongAxis:&skewXAxis];
+                        isOverSkew = [self isOverSkew:mousePos withPoints:points withAnchorPoint:node.anchorPoint withOrientation:&skewSegmentOrientation alongAxis:&skewSegment];
                     }
                     
                     if(!isOverRotation && currentMouseTransform == kCCBTransformHandleNone)
@@ -527,10 +527,11 @@ static CocosScene* sharedCocosScene;
   
 }
 
-- (BOOL) isOverSkew:(CGPoint)_mousePos withPoints:(const CGPoint*)points withOrientation:(CGPoint*)orientation alongAxis:(BOOL*)isXAxis  //{bl,br,tr,tl}
+- (BOOL) isOverSkew:(CGPoint)_mousePos withPoints:(const CGPoint*)points withAnchorPoint:(CGPoint)anchorPoint withOrientation:(CGPoint*)orientation alongAxis:(int*)isXAxis  //{b,r,t,l}
 {
     for (int i = 0; i < 4; i++)
     {
+        
         CGPoint p1 = points[i % 4];
         CGPoint p2 = points[(i + 1) % 4];
         CGPoint segment = ccpSub(p2, p1);
@@ -557,6 +558,11 @@ static CocosScene* sharedCocosScene;
         if((ccpLength(vectorFromLine) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f) ||
            (ccpLength(vectorFromLine) < 0.001 /*very small*/ && fabsf(dotProduct) == 1.0f) /*we're on the line*/)
         {
+            CGPoint lockedVertex = [self vertexLocked:anchorPoint];
+            if(i == lockedVertex.x || i == lockedVertex.y)
+                continue;
+
+            
             if(orientation)
            	 {
                 *orientation = unitSegment;
@@ -564,7 +570,7 @@ static CocosScene* sharedCocosScene;
             
             if(isXAxis)
             {
-                *isXAxis = i == 0 || i == 2 ? YES : NO;
+                *isXAxis = i;
             }
             
             return YES;
@@ -700,7 +706,7 @@ static CocosScene* sharedCocosScene;
         if( [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleRotate;
 
-        if( [self isOverSkew:pt withPoints:points  withOrientation:nil alongAxis:nil])
+        if( [self isOverSkew:pt withPoints:points withAnchorPoint:node.anchorPoint withOrientation:nil alongAxis:nil])
             return kCCBTransformHandleSkew;
         
         CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
@@ -900,19 +906,48 @@ static CocosScene* sharedCocosScene;
     return;
 }
 
+
+//0=bottom, 1=right  2=top 3=left
+-(CGPoint)vertexLocked:(CGPoint)anchorPoint
+{
+    CGPoint vertexScaler = ccp(-1.0f,-1.0f);
+    
+    const float kTolerance = 0.01f;
+    if(fabsf(anchorPoint.x) <= kTolerance)
+    {
+        vertexScaler.x = 3;
+    }
+    
+    if(fabsf(anchorPoint.x) >=  1.0f - kTolerance)
+    {
+        vertexScaler.x = 1;
+    }
+    
+    if(fabsf(anchorPoint.y) <= kTolerance)
+    {
+        vertexScaler.y = 0;
+    }
+    if(fabsf(anchorPoint.y) >=  1.0f - kTolerance)
+    {
+        vertexScaler.y = 2;
+    }
+    return vertexScaler;
+}
+
+
 -(CGPoint)vertexLockedScaler:(CGPoint)anchorPoint withCorner:(int) cornerSelected /*{bl,br,tr,tl} */
 {
     CGPoint vertexScaler = {1.0f,1.0f};
     
     const float kTolerance = 0.01f;
-    if(fabs(anchorPoint.x) < kTolerance)
+    if(fabsf(anchorPoint.x) < kTolerance)
     {
         if(cornerSelected == 0 || cornerSelected == 3)
         {
             vertexScaler.x = 0.0f;
         }
     }
-    if(fabs(anchorPoint.x) >  1.0f - kTolerance)
+    if(fabsf(anchorPoint.x) >  1.0f - kTolerance)
     {
         if(cornerSelected == 1 || cornerSelected == 2)
         {
@@ -920,14 +955,14 @@ static CocosScene* sharedCocosScene;
         }
     }
     
-    if(fabs(anchorPoint.y) < kTolerance)
+    if(fabsf(anchorPoint.y) < kTolerance)
     {
         if(cornerSelected == 0 || cornerSelected == 1)
         {
             vertexScaler.y = 0.0f;
         }
     }
-    if(fabs(anchorPoint.y) >  1.0f - kTolerance)
+    if(fabsf(anchorPoint.y) >  1.0f - kTolerance)
     {
         if(cornerSelected == 2 || cornerSelected == 3)
         {
@@ -937,26 +972,44 @@ static CocosScene* sharedCocosScene;
     return vertexScaler;
 }
 
-
--(CGPoint)projectOntoVertex:(CCNode*)node withPoint:(CGPoint)deltaNew withVertexOrientation:(BOOL)_skewXAxis
+-(CGPoint)projectOntoVertex:(CGPoint)point withContentSize:(CGSize)size alongAxis:(int)axis//b,r,t,l
 {
-    CGPoint points[4]; //{bl,br,tr,tl}
-    [self getCornerPointsForNode:node withPoints:points];
+    CGPoint v;
+    CGPoint w;
     
-    CGPoint normal;
-    if(_skewXAxis)
-    {
-        normal = ccpNormalize(ccpSub(points[1], points[0]));
+    switch (axis) {
+        case 0:
+            v = CGPointZero;
+            w = CGPointMake(size.width, 0.0f);
+            break;
+        case 1:
+            v = CGPointMake(size.width, 0.0f);
+            w = CGPointMake(size.width, size.height);
+            
+            break;
+        case 2:
+            v = CGPointMake(size.width, size.height);
+            w = CGPointMake(0, size.height);
+            
+            break;
+        case 3:
+            v =  CGPointMake(0, size.height);
+            w = CGPointZero;
+            break;
+            
+        default:
+            break;
     }
-    else
-    {
-        normal = ccpNormalize(ccpSub(points[2], points[1]));
-    }
+   
+    //see ccpClosestPointOnLine for notes.
+    const float l2 =  ccpLengthSQ(ccpSub(w, v));  // i.e. |w-v|^2 -  avoid a sqrt
+    const float t = ccpDot(ccpSub(point, v),ccpSub(w , v)) / l2;
+    const CGPoint projection =  ccpAdd(v,  ccpMult(ccpSub(w, v),t));  // v + t * (w - v);  Projection falls on the segment
+    return projection;
+
     
-    float dot = ccpDot(deltaNew, normal);
-    
-    return ccpMult(normal, dot);
 }
+
 
 - (void) mouseDragged:(NSEvent *)event
 {
@@ -1212,32 +1265,32 @@ static CocosScene* sharedCocosScene;
     else if (currentMouseTransform == kCCBTransformHandleSkew)
     {
         CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.positionInPoints];
+        CGPoint anchorInPoint = transformScalingNode.anchorPointInPoints;
         
         //Where did we start.
-        CGPoint deltaStart = ccpSub(nodePos, mouseDownPos);
+        CGPoint deltaStart = ccpSub(mouseDownPos, nodePos);
         
         //Where are we now.
-        CGPoint deltaNew = ccpSub(nodePos, pos);
+        CGPoint deltaNew = ccpSub(pos,nodePos);
         
-        CGPoint deltaPosTotal = ccpSub(deltaNew, deltaStart);
         
         //Delta New needs to be projected onto the vertex we're dragging as we're only effecting one skew at the moment.
        
-        
         //First, unwind the current mouse down position to form an untransformed 'root' position: ie where on an untransformed image would you have clicked.
-        CGSize contentSizeInPoints = transformScalingNode.contentSizeInPoints;
-        CGPoint anchorPointInPoints = ccp( contentSizeInPoints.width * transformScalingNode.anchorPoint.x, contentSizeInPoints.height * transformScalingNode.anchorPoint.y );
+        //CGSize contentSizeInPoints = transformScalingNode.contentSizeInPoints;
+        // CGPoint anchorPointInPoints = ccp( contentSizeInPoints.width * transformScalingNode.anchorPoint.x, contentSizeInPoints.height * transformScalingNode.anchorPoint.y );
         
+       
         //T
-        CGAffineTransform translateTranform = CGAffineTransformTranslate(CGAffineTransformIdentity, -anchorPointInPoints.x, -anchorPointInPoints.y);
+        CGAffineTransform translateTranform = CGAffineTransformTranslate(CGAffineTransformIdentity, -anchorInPoint.x, -anchorInPoint.y);
         
+        //S
+        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(transformScalingNode.scaleX,transformScalingNode.scaleY);
         
         //K
         CGAffineTransform skewTransform = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(transformStartSkewY)),
                                                                 tanf(CC_DEGREES_TO_RADIANS(transformStartSkewX)), 1.0f,
                                                                 0.0f, 0.0f );
-        //S
-        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(transformScalingNode.scaleX, transformScalingNode.scaleY);
         
         //R
         CGAffineTransform rotationTransform = CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(-transformScalingNode.rotation));
@@ -1247,29 +1300,36 @@ static CocosScene* sharedCocosScene;
         
         //Root position == x,   xTKSR=mouseDown
         
-        //We've got a root position now.
+        //We've got a root position now.cecream
         CGPoint rootStart = CGPointApplyAffineTransform(deltaStart,CGAffineTransformInvert(transform));
         CGPoint rootNew   = CGPointApplyAffineTransform(deltaNew,CGAffineTransformInvert(transform));
-
+        
         //Project the delta mouse position onto
-        CGPoint adjustedRootNew = skewXAxis ? ccp(rootNew.x, rootStart.y) : ccp(rootStart.x,rootNew.y);
-        CGPoint adjustedNew = CGPointApplyAffineTransform(adjustedRootNew, transform);
+        rootStart   = [self projectOntoVertex:rootStart withContentSize:transformScalingNode.contentSize alongAxis:skewSegment];
+        rootNew     = [self projectOntoVertex:rootNew   withContentSize:transformScalingNode.contentSize alongAxis:skewSegment];
         
-        
+        //CGPoint adjustedMouseDown =CGPointApplyAffineTransform(rootStart,transform);
+        CGPoint adjustedMouseDrag = CGPointApplyAffineTransform(rootNew,transform);
         //What skew (K') would be have to adjust to in order to achieve the new mouseDragg position
         //  xTK'SR=mouseDrag,    xTK'=mouseDrag*R^-1*S^-1
         // [xT]==known==intermediate==I, R^-1==known, mouseDrag==known, solve so K'
         
         //xTK
         CGPoint intermediate =  CGPointApplyAffineTransform(rootStart, translateTranform);
-        CGPoint unRotatedMouse =  CGPointApplyAffineTransform(CGPointApplyAffineTransform(adjustedNew, CGAffineTransformInvert(rotationTransform)),CGAffineTransformInvert(scaleTransform));
-
+        CGPoint unRotatedMouse =  CGPointApplyAffineTransform(CGPointApplyAffineTransform(adjustedMouseDrag, CGAffineTransformInvert(rotationTransform)),CGAffineTransformInvert(scaleTransform));
+        
+        
+        //Solve for K'
+        //[(1, Ky),(Kx,1)]
         CGPoint skew = CGPointMake((unRotatedMouse.x - intermediate.x)/intermediate.y,(unRotatedMouse.y - intermediate.y)/intermediate.x);
         
-       
+
+        float skewXFinal = CC_RADIANS_TO_DEGREES(atanf(skew.x));
+        float skewYFinal = CC_RADIANS_TO_DEGREES(atanf(skew.y));
+
         [appDelegate saveUndoStateWillChangeProperty:@"skew"];
-        transformScalingNode.skewX = CC_RADIANS_TO_DEGREES(atanf(skew.x));
-        transformScalingNode.skewY = CC_RADIANS_TO_DEGREES(atanf(skew.y));
+        transformScalingNode.skewX = skewXFinal;
+        transformScalingNode.skewY = skewYFinal;
         [appDelegate refreshProperty:@"skew"];
         
         

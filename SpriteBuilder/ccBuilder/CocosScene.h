@@ -115,7 +115,7 @@ typedef enum {
     
     CCBTool currentTool;
     CGPoint skewSegmentOrientation;
-    BOOL    skewXAxis; //X or y?
+    int     skewSegment;
     CGPoint cornerOrientation;//which way is the corner facing.
     int     cornerIndex;//Which corner of the object are we rotating?
 }
