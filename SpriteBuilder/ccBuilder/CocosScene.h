@@ -56,6 +56,7 @@ typedef enum {
 
 typedef enum {
     kCCBToolSelection = 0,
+    kCCBToolScale,
     kCCBToolGrab,
     kCCBToolSkew,
     kCCBToolRotate,    
@@ -115,8 +116,8 @@ typedef enum {
     CCBTool currentTool;
     CGPoint skewSegmentOrientation;
     BOOL    skewXAxis; //X or y?
-    int     rotationCornerIndex;//Which corner of the object are we rotating?
-    CGPoint rotationCornerOrientation;//which way is the corner facing.
+    CGPoint cornerOrientation;//which way is the corner facing.
+    int     cornerIndex;//Which corner of the object are we rotating?
 }
 
 @property (nonatomic,assign) CCNode* rootNode;
