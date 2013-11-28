@@ -1304,28 +1304,24 @@ static CocosScene* sharedCocosScene;
         CGPoint rootStart = CGPointApplyAffineTransform(deltaStart,CGAffineTransformInvert(transform));
         CGPoint rootNew   = CGPointApplyAffineTransform(deltaNew,CGAffineTransformInvert(transform));
         
+        
         //Project the delta mouse position onto
         rootStart   = [self projectOntoVertex:rootStart withContentSize:transformScalingNode.contentSize alongAxis:skewSegment];
         rootNew     = [self projectOntoVertex:rootNew   withContentSize:transformScalingNode.contentSize alongAxis:skewSegment];
         
-        //CGPoint adjustedMouseDown =CGPointApplyAffineTransform(rootStart,transform);
-        CGPoint adjustedMouseDrag = CGPointApplyAffineTransform(rootNew,transform);
-        //What skew (K') would be have to adjust to in order to achieve the new mouseDragg position
-        //  xTK'SR=mouseDrag,    xTK'=mouseDrag*R^-1*S^-1
-        // [xT]==known==intermediate==I, R^-1==known, mouseDrag==known, solve so K'
+        //Apply translation
+        rootStart = CGPointApplyAffineTransform(rootStart,translateTranform);
+        rootNew   = CGPointApplyAffineTransform(rootNew,translateTranform);
+        CGPoint skew = CGPointMake((rootNew.x - rootStart.x)/rootStart.y,(rootNew.y - rootStart.y)/rootStart.x);
         
-        //xTK
-        CGPoint intermediate =  CGPointApplyAffineTransform(rootStart, translateTranform);
-        CGPoint unRotatedMouse =  CGPointApplyAffineTransform(CGPointApplyAffineTransform(adjustedMouseDrag, CGAffineTransformInvert(rotationTransform)),CGAffineTransformInvert(scaleTransform));
+        CGAffineTransform skewTransform2 = CGAffineTransformMake(1.0f, skew.y,
+                                                                skew.x, 1.0f,
+                                                                0.0f, 0.0f );
+        CGAffineTransform newSkew = CGAffineTransformConcat(skewTransform, skewTransform2);
         
-        
-        //Solve for K'
-        //[(1, Ky),(Kx,1)]
-        CGPoint skew = CGPointMake((unRotatedMouse.x - intermediate.x)/intermediate.y,(unRotatedMouse.y - intermediate.y)/intermediate.x);
-        
-
-        float skewXFinal = CC_RADIANS_TO_DEGREES(atanf(skew.x));
-        float skewYFinal = CC_RADIANS_TO_DEGREES(atanf(skew.y));
+       
+        float skewXFinal = CC_RADIANS_TO_DEGREES(atanf(newSkew.c));
+        float skewYFinal = CC_RADIANS_TO_DEGREES(atanf(newSkew.b));
 
         [appDelegate saveUndoStateWillChangeProperty:@"skew"];
         transformScalingNode.skewX = skewXFinal;
