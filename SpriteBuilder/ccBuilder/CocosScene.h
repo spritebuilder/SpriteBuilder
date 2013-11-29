@@ -55,10 +55,13 @@ typedef enum {
 } CCBTransformHandle;
 
 typedef enum {
-    kCCBToolSelection = 0,
-    kCCBToolGrab,
-    kCCBToolSkew,
-    kCCBToolRotate,    
+    kCCBToolAnchor      = (1 << 0),
+    kCCBToolScale       =(1 << 1),
+    kCCBToolGrab        =(1 << 2),
+    kCCBToolSkew        =(1 << 3),
+    kCCBToolRotate      =(1 << 4),
+    kCCBToolSelection   =(1 << 5),
+    kCCBToolMax         =(1 << 6)
 }CCBTool;
 
 @interface CocosScene : CCNode
@@ -114,9 +117,9 @@ typedef enum {
     
     CCBTool currentTool;
     CGPoint skewSegmentOrientation;
-    BOOL    skewXAxis; //X or y?
-    int     rotationCornerIndex;//Which corner of the object are we rotating?
-    CGPoint rotationCornerOrientation;//which way is the corner facing.
+    int     skewSegment;
+    CGPoint cornerOrientation;//which way is the corner facing.
+    int     cornerIndex;//Which corner of the object are we rotating?
 }
 
 @property (nonatomic,assign) CCNode* rootNode;

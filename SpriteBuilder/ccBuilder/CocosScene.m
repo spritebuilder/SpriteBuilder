@@ -396,9 +396,9 @@ static CocosScene* sharedCocosScene;
     NSArray* nodes = appDelegate.selectedNodes;
     
     
-    BOOL isOverSkew = NO;
-    BOOL isOverRotation = NO;
+ 
     
+    uint overTypeField = 0x0;
     
     if (nodes.count > 0)
     {
@@ -420,8 +420,6 @@ static CocosScene* sharedCocosScene;
                 CCSprite* anchorPointSprite = [CCSprite spriteWithImageNamed:@"select-pt.png"];
                 anchorPointSprite.position = anchorPointPos;
                 [selectionLayer addChild:anchorPointSprite z:1];
-                
-                //CGPoint minCorner = center;
                 
                 if (node.contentSize.width > 0 && node.contentSize.height > 0)
                 {
@@ -453,15 +451,38 @@ static CocosScene* sharedCocosScene;
                     
                     [selectionLayer addChild:drawing z:-1];
                     
-                    if(!isOverSkew && currentMouseTransform == kCCBTransformHandleNone)
+                    
+                    if(!(overTypeField & kCCBToolAnchor) && currentMouseTransform == kCCBTransformHandleNone)
                     {
-                        isOverSkew = [self isOverSkew:mousePos withPoints:points withOrientation:&skewSegmentOrientation alongAxis:&skewXAxis];
+                        if([self isOverAnchor:node withPoint:mousePos])
+                        {
+                            overTypeField |= kCCBToolAnchor;
+                        }
                     }
                     
-                    if(!isOverRotation && currentMouseTransform == kCCBTransformHandleNone)
+                    if(!(overTypeField & kCCBToolSkew) && currentMouseTransform == kCCBTransformHandleNone)
                     {
-                        isOverRotation = [self isOverRotation:mousePos withPoints:points withCorner:&rotationCornerIndex withOrientation:&rotationCornerOrientation];
+                        if([self isOverSkew:node withPoint:mousePos withOrientation:&skewSegmentOrientation alongAxis:&skewSegment])
+                        {
+                            overTypeField |= kCCBToolSkew;
+                        }
                     }
+                    
+                    if(!(overTypeField & kCCBToolRotate) && currentMouseTransform == kCCBTransformHandleNone)
+                    {
+                        if([self isOverRotation:mousePos withPoints:points withCorner:&cornerIndex withOrientation:&cornerOrientation])
+                        {
+                            overTypeField |= kCCBToolRotate;
+                        }
+                    }
+                    
+                    if(!(overTypeField & kCCBToolScale) && currentMouseTransform == kCCBTransformHandleNone)
+                   {
+                       if([self isOverScale:mousePos withPoints:points withCorner:&cornerIndex withOrientation:&cornerOrientation])
+                       {
+                           overTypeField |= kCCBToolScale;
+                       }
+                   }
                 }
                 else
                 {
@@ -476,21 +497,26 @@ static CocosScene* sharedCocosScene;
         }
     }
     
+    
+    
     if(currentMouseTransform == kCCBTransformHandleNone)
     {
-        if(isOverSkew && currentTool != kCCBToolSkew)
-        {
-            self.currentTool = kCCBToolSkew;
-        }
-        else if(isOverRotation && currentTool != kCCBToolRotate)
-        {
-            self.currentTool = kCCBToolRotate;
-        }
-        else if(!isOverSkew && !isOverRotation && currentTool != kCCBToolSelection)
+        if(currentTool != kCCBToolSelection && (overTypeField == 0x0))
         {
             self.currentTool = kCCBToolSelection;
         }
-
+        else if (overTypeField)
+        {
+            for(int i = 1; i < kCCBToolMax; i++)
+            {
+                CCBTool type = (1 << i);
+                if(overTypeField & type && self.currentTool > type)
+                {
+                    self.currentTool = type;
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -517,10 +543,67 @@ static CocosScene* sharedCocosScene;
   
 }
 
-- (BOOL) isOverSkew:(CGPoint)_mousePos withPoints:(const CGPoint*)points withOrientation:(CGPoint*)orientation alongAxis:(BOOL*)isXAxis  //{bl,br,tr,tl}
+- (BOOL) isOverAnchor:(CCNode*)node withPoint:(CGPoint)pt
 {
+    CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
+                              node.anchorPoint.y * node.contentSizeInPoints.height);
+    
+    CGPoint center = [node convertToWorldSpace:localAnchor];
+
+       if (ccpDistance(pt, center) < kCCBAnchorPointRadius)
+        return YES;
+    
+    return NO;
+}
+
+
+- (BOOL) isOverScale:(CCNode*)node withPoint:(CGPoint)pt
+{
+    CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
+                              node.anchorPoint.y * node.contentSizeInPoints.height);
+    
+    CGPoint center = [node convertToWorldSpace:localAnchor];
+    
+    if (node.contentSize.width == 0 || node.contentSize.height == 0)
+    {
+        CGPoint bl = ccpAdd(center, ccp(-18, -18));
+        CGPoint br = ccpAdd(center, ccp(18, -18));
+        CGPoint tl = ccpAdd(center, ccp(-18, 18));
+        CGPoint tr = ccpAdd(center, ccp(18, 18));
+        
+        if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return YES;
+    }
+    else
+    {
+        CGPoint bl = [node convertToWorldSpace: ccp(0,0)];
+        CGPoint br = [node convertToWorldSpace: ccp(node.contentSize.width,0)];
+        CGPoint tl = [node convertToWorldSpace: ccp(0,node.contentSize.height)];
+        CGPoint tr = [node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)];
+        
+        transformScalingNode = node;
+        if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return YES;
+    }
+    
+    return NO;
+}
+
+
+- (BOOL) isOverSkew:(CCNode*)node withPoint:(CGPoint)pt withOrientation:(CGPoint*)orientation alongAxis:(int*)isXAxis  //{b,r,t,l}
+{
+    
+    CGPoint points[4]; //{bl,br,tr,tl}
+    [self getCornerPointsForNode:node withPoints:points];
+    
+    
     for (int i = 0; i < 4; i++)
     {
+        
         CGPoint p1 = points[i % 4];
         CGPoint p2 = points[(i + 1) % 4];
         CGPoint segment = ccpSub(p2, p1);
@@ -538,15 +621,20 @@ static CocosScene* sharedCocosScene;
         CGPoint adj2 = ccpSub(p2, ccpMult(unitSegment, kInsetFromEdge));
         
         
-        CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, _mousePos);
-        float dotProduct = ccpDot( ccpNormalize(ccpSub(adj1, adj2)),ccpNormalize(ccpSub(_mousePos, closestPoint)));
+        CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, pt);
+        float dotProduct = ccpDot( ccpNormalize(ccpSub(adj1, adj2)),ccpNormalize(ccpSub(pt, closestPoint)));
         
-        CGPoint vectorFromLine = ccpSub(_mousePos, closestPoint);
+        CGPoint vectorFromLine = ccpSub(pt, closestPoint);
         
         //Its close to the line, and perpendicular.
         if((ccpLength(vectorFromLine) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f) ||
            (ccpLength(vectorFromLine) < 0.001 /*very small*/ && fabsf(dotProduct) == 1.0f) /*we're on the line*/)
         {
+            CGPoint lockedVertex = [self vertexLocked:node.anchorPoint];
+            if(i == lockedVertex.x || i == lockedVertex.y)
+                continue;
+
+            
             if(orientation)
            	 {
                 *orientation = unitSegment;
@@ -554,7 +642,7 @@ static CocosScene* sharedCocosScene;
             
             if(isXAxis)
             {
-                *isXAxis = i == 0 || i == 2 ? YES : NO;
+                *isXAxis = i;
             }
             
             return YES;
@@ -564,7 +652,44 @@ static CocosScene* sharedCocosScene;
     return NO;
 }
 
-- (BOOL) isOverRotation:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/ withCorner:(int*)cornerIndex withOrientation:(CGPoint*)orientation
+
+- (BOOL) isOverScale:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/  withCorner:(int*)_cornerIndex withOrientation:(CGPoint*)orientation
+{
+    for (int i = 0; i < 4; i++)
+    {
+        CGPoint p1 = points[i % 4];
+        CGPoint p2 = points[(i + 1) % 4];
+        CGPoint p3 = points[(i + 2) % 4];
+        
+        const float kDistanceToCorner = 8.0f;
+        
+        if(ccpLength(ccpSub(_mousePos, p2)) < kDistanceToCorner )
+        {
+            
+            if(orientation)
+            {
+                CGPoint segment1 = ccpSub(p2, p1);
+                CGPoint segment2 = ccpSub(p2, p3);
+        
+                *orientation = ccpNormalize(ccpAdd(segment1, segment2));
+            }
+            
+            if(_cornerIndex)
+            {
+                *_cornerIndex = (i + 1) % 4;
+            }
+
+            
+            return YES;
+        }
+        
+    }
+    
+    return NO;
+    
+}
+
+- (BOOL) isOverRotation:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/ withCorner:(int*)_cornerIndex withOrientation:(CGPoint*)orientation
 {
     for (int i = 0; i < 4; i++)
     {
@@ -579,7 +704,7 @@ static CocosScene* sharedCocosScene;
         CGPoint segment2 = ccpSub(p2, p3);
         CGPoint unitSegment2 = ccpNormalize(segment2);
         
-        const float kMinDistanceForRotation = 6.0f;
+        const float kMinDistanceForRotation = 10.0f;
         const float kMaxDistanceForRotation = 25.0f;
        
         
@@ -591,9 +716,9 @@ static CocosScene* sharedCocosScene;
         
         if(dot1 > 0.0f && dot2 > 0.0f && distanceToCorner > kMinDistanceForRotation && distanceToCorner < kMaxDistanceForRotation)
         {
-            if(cornerIndex)
+            if(_cornerIndex)
             {
-                *cornerIndex = (i + 1) % 4;
+                *_cornerIndex = (i + 1) % 4;
             }
             
             if(orientation)
@@ -653,41 +778,18 @@ static CocosScene* sharedCocosScene;
         if( [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleRotate;
 
-        if( [self isOverSkew:pt withPoints:points  withOrientation:nil alongAxis:nil])
+        if( [self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
             return kCCBTransformHandleSkew;
         
-        CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
-                                  node.anchorPoint.y * node.contentSizeInPoints.height);
-        
-        CGPoint center = [node convertToWorldSpace:localAnchor];
-        if (ccpDistance(pt, center) < kCCBAnchorPointRadius)
+      
+        if([self isOverAnchor:node withPoint:pt])
             return kCCBTransformHandleAnchorPoint;
         
-        if (node.contentSize.width == 0 || node.contentSize.height == 0)
-        {
-            CGPoint bl = ccpAdd(center, ccp(-18, -18));
-            CGPoint br = ccpAdd(center, ccp(18, -18));
-            CGPoint tl = ccpAdd(center, ccp(-18, 18));
-            CGPoint tr = ccpAdd(center, ccp(18, 18));
-            
-            if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-        }
-        else
-        {
-            CGPoint bl = [node convertToWorldSpace: ccp(0,0)];
-            CGPoint br = [node convertToWorldSpace: ccp(node.contentSize.width,0)];
-            CGPoint tl = [node convertToWorldSpace: ccp(0,node.contentSize.height)];
-            CGPoint tr = [node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)];
-            
-            transformScalingNode = node;
-            if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-        }
+        
+        if([self isOverScale:node withPoint:pt])
+            return kCCBTransformHandleScale;
+       
+    
     }
     
     transformScalingNode = NULL;
@@ -853,6 +955,111 @@ static CocosScene* sharedCocosScene;
     return;
 }
 
+
+//0=bottom, 1=right  2=top 3=left
+-(CGPoint)vertexLocked:(CGPoint)anchorPoint
+{
+    CGPoint vertexScaler = ccp(-1.0f,-1.0f);
+    
+    const float kTolerance = 0.01f;
+    if(fabsf(anchorPoint.x) <= kTolerance)
+    {
+        vertexScaler.x = 3;
+    }
+    
+    if(fabsf(anchorPoint.x) >=  1.0f - kTolerance)
+    {
+        vertexScaler.x = 1;
+    }
+    
+    if(fabsf(anchorPoint.y) <= kTolerance)
+    {
+        vertexScaler.y = 0;
+    }
+    if(fabsf(anchorPoint.y) >=  1.0f - kTolerance)
+    {
+        vertexScaler.y = 2;
+    }
+    return vertexScaler;
+}
+
+
+-(CGPoint)vertexLockedScaler:(CGPoint)anchorPoint withCorner:(int) cornerSelected /*{bl,br,tr,tl} */
+{
+    CGPoint vertexScaler = {1.0f,1.0f};
+    
+    const float kTolerance = 0.01f;
+    if(fabsf(anchorPoint.x) < kTolerance)
+    {
+        if(cornerSelected == 0 || cornerSelected == 3)
+        {
+            vertexScaler.x = 0.0f;
+        }
+    }
+    if(fabsf(anchorPoint.x) >  1.0f - kTolerance)
+    {
+        if(cornerSelected == 1 || cornerSelected == 2)
+        {
+            vertexScaler.x = 0.0f;
+        }
+    }
+    
+    if(fabsf(anchorPoint.y) < kTolerance)
+    {
+        if(cornerSelected == 0 || cornerSelected == 1)
+        {
+            vertexScaler.y = 0.0f;
+        }
+    }
+    if(fabsf(anchorPoint.y) >  1.0f - kTolerance)
+    {
+        if(cornerSelected == 2 || cornerSelected == 3)
+        {
+            vertexScaler.y = 0.0f;
+        }
+    }
+    return vertexScaler;
+}
+
+-(CGPoint)projectOntoVertex:(CGPoint)point withContentSize:(CGSize)size alongAxis:(int)axis//b,r,t,l
+{
+    CGPoint v;
+    CGPoint w;
+    
+    switch (axis) {
+        case 0:
+            v = CGPointZero;
+            w = CGPointMake(size.width, 0.0f);
+            break;
+        case 1:
+            v = CGPointMake(size.width, 0.0f);
+            w = CGPointMake(size.width, size.height);
+            
+            break;
+        case 2:
+            v = CGPointMake(size.width, size.height);
+            w = CGPointMake(0, size.height);
+            
+            break;
+        case 3:
+            v =  CGPointMake(0, size.height);
+            w = CGPointZero;
+            break;
+            
+        default:
+            break;
+    }
+   
+    //see ccpClosestPointOnLine for notes.
+    const float l2 =  ccpLengthSQ(ccpSub(w, v));  // i.e. |w-v|^2 -  avoid a sqrt
+    const float t = ccpDot(ccpSub(point, v),ccpSub(w , v)) / l2;
+    const CGPoint projection =  ccpAdd(v,  ccpMult(ccpSub(w, v),t));  // v + t * (w - v);  Projection falls on the segment
+    return projection;
+
+    
+}
+
+
 - (void) mouseDragged:(NSEvent *)event
 {
     if (!appDelegate.hasOpenedDocument) return;
@@ -972,7 +1179,7 @@ static CocosScene* sharedCocosScene;
     }
     else if (currentMouseTransform == kCCBTransformHandleScale)
     {
-        CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.position];
+        CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.positionInPoints];
         
         //Where did we start.
         CGPoint deltaStart = ccpSub(nodePos, mouseDownPos);
@@ -984,7 +1191,8 @@ static CocosScene* sharedCocosScene;
         //First, unwind the current mouse down position to form an untransformed 'root' position: ie where on an untransformed image would you have clicked.
         CGSize contentSizeInPoints = transformScalingNode.contentSizeInPoints;
         CGPoint anchorPointInPoints = ccp( contentSizeInPoints.width * transformScalingNode.anchorPoint.x, contentSizeInPoints.height * transformScalingNode.anchorPoint.y );
-        
+        CGPoint vertexScaler = [self vertexLockedScaler:transformScalingNode.anchorPoint withCorner:cornerIndex];
+
         //T
         CGAffineTransform translateTranform = CGAffineTransformTranslate(CGAffineTransformIdentity, -anchorPointInPoints.x, -anchorPointInPoints.y);
 
@@ -993,8 +1201,8 @@ static CocosScene* sharedCocosScene;
         
         //K
         CGAffineTransform skewTransform = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(transformScalingNode.skewY)),
-                                                             tanf(CC_DEGREES_TO_RADIANS(transformScalingNode.skewX)), 1.0f,
-                                                             0.0f, 0.0f );
+                                                                tanf(CC_DEGREES_TO_RADIANS(transformScalingNode.skewX)), 1.0f,
+                                                                0.0f, 0.0f );
         
         //R
         CGAffineTransform rotationTransform = CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(-transformScalingNode.rotation));
@@ -1007,17 +1215,27 @@ static CocosScene* sharedCocosScene;
         //  xTKS'R=mouseDrag,    [xTK]S'=mouseDrag*R^-1
         // [xTK]==known==intermediate==I, R^-1==known, mouseDrag==known, solve so S'
         
-        
         //xTK
         CGPoint intermediate = CGPointApplyAffineTransform(CGPointApplyAffineTransform(rootPosition, translateTranform), skewTransform);
         CGPoint unRotatedMouse = CGPointApplyAffineTransform(deltaNew, CGAffineTransformInvert(rotationTransform));
         
         CGPoint scale = CGPointMake(unRotatedMouse.x/intermediate.x , unRotatedMouse.y / intermediate.y);
-        
+        if(isinf(scale.x) || isnan(scale.x))
+        {
+            scale.x = 0.0;
+            vertexScaler.x = 0.0f;
+        }
+
+        if(isinf(scale.y) || isnan(scale.y))
+        {
+            scale.y = 0.0;
+            vertexScaler.y = 0.0f;
+        }
+
         
         // Calculate new scale
-        float xScaleNew = scale.x;
-        float yScaleNew = scale.y;
+        float xScaleNew = scale.x * vertexScaler.x + transformStartScaleX * (1.0f - vertexScaler.x);
+        float yScaleNew = scale.y * vertexScaler.y + transformStartScaleY * (1.0f - vertexScaler.y);
         
         // Handle shift key (uniform scale)
         if ([event modifierFlags] & NSShiftKeyMask)
@@ -1035,11 +1253,22 @@ static CocosScene* sharedCocosScene;
         
         // Set new scale
         [appDelegate saveUndoStateWillChangeProperty:@"scale"];
-        
         int type = [PositionPropertySetter scaledFloatTypeForNode:transformScalingNode prop:@"scale"];
         [PositionPropertySetter setScaledX:xScaleNew Y:yScaleNew type:type forNode:transformScalingNode prop:@"scale"];
-        
         [appDelegate refreshProperty:@"scale"];
+        
+        
+        //UpdateTheScaleTool
+        CGPoint points[4]; //{bl,br,tr,tl}
+        [self getCornerPointsForNode:transformScalingNode withPoints:points];
+        CGPoint p1 = points[(cornerIndex - 1 + 4) % 4];
+        CGPoint p2 = points[cornerIndex];
+        CGPoint p3 = points[(cornerIndex + 1) % 4];
+        CGPoint segment1 = ccpSub(p2, p1);
+        CGPoint segment2 = ccpSub(p2, p3);
+        cornerOrientation =ccpNormalize(ccpAdd(segment1, segment2));
+        self.currentTool = kCCBToolScale;//force it to update.
+
     }
     else if (currentMouseTransform == kCCBTransformHandleRotate)
     {
@@ -1075,8 +1304,8 @@ static CocosScene* sharedCocosScene;
         //Update the rotation tool.
         float cursorRotationRad = -M_PI * (newRotation - transformScalingNode.rotation) / 180.0f;
         CGAffineTransform rotationTransform = CGAffineTransformMakeRotation(cursorRotationRad);
-        rotationCornerOrientation = CGPointApplyAffineTransform(rotationCornerOrientation, rotationTransform);
-        self.currentTool = kCCBToolRotate;
+        cornerOrientation = CGPointApplyAffineTransform(cornerOrientation, rotationTransform);
+        self.currentTool = kCCBToolRotate; //Force it to update.
         
         [appDelegate saveUndoStateWillChangeProperty:@"rotation"];
         transformScalingNode.rotation = newRotation;
@@ -1084,51 +1313,69 @@ static CocosScene* sharedCocosScene;
     }
     else if (currentMouseTransform == kCCBTransformHandleSkew)
     {
-        CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.position];
+        CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.positionInPoints];
+        CGPoint anchorInPoint = transformScalingNode.anchorPointInPoints;
         
-        CGPoint handleAngleVectorStart = ccpSub(nodePos, mouseDownPos);
-        CGPoint handleAngleVectorNew = ccpSub(nodePos, pos);
+        //Where did we start.
+        CGPoint deltaStart = ccpSub(mouseDownPos, nodePos);
         
-        float handleAngleRadStart = atan2f(handleAngleVectorStart.y, handleAngleVectorStart.x);
-        float handleAngleRadNew = atan2f(handleAngleVectorNew.y, handleAngleVectorNew.x);
+        //Where are we now.
+        CGPoint deltaNew = ccpSub(pos,nodePos);
         
-        float deltaRotationRad = handleAngleRadNew - handleAngleRadStart;
-        float deltaRotation = (deltaRotationRad/(2*M_PI))*360;
-        deltaRotation *= (skewXAxis ?  -1.0f : 1.0f);
         
-        if ([self isLocalCoordinateSystemFlipped:transformScalingNode.parent])
-        {
-            deltaRotation = -deltaRotation;
-        }
+        //Delta New needs to be projected onto the vertex we're dragging as we're only effecting one skew at the moment.
+       
+        //First, unwind the current mouse down position to form an untransformed 'root' position: ie where on an untransformed image would you have clicked.
+        //CGSize contentSizeInPoints = transformScalingNode.contentSizeInPoints;
+        // CGPoint anchorPointInPoints = ccp( contentSizeInPoints.width * transformScalingNode.anchorPoint.x, contentSizeInPoints.height * transformScalingNode.anchorPoint.y );
         
-        while ( deltaRotation > 180.0f )
-            deltaRotation -= 360.0f;
-        while ( deltaRotation < -180.0f )
-            deltaRotation += 360.0f;
+       
+        //T
+        CGAffineTransform translateTranform = CGAffineTransformTranslate(CGAffineTransformIdentity, -anchorInPoint.x, -anchorInPoint.y);
         
-        float startRotation = skewXAxis ? transformStartSkewX : transformStartSkewY;
+        //S
+        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(transformScalingNode.scaleX,transformScalingNode.scaleY);
         
-        float newRotation = (startRotation + deltaRotation);
-        // Handle shift key (fixed rotation angles)
-        if ([event modifierFlags] & NSShiftKeyMask)
-        {
-            float factor = 360.0f/16.0f;
-            newRotation = roundf(newRotation/factor)*factor;
-        }
+        //K
+        CGAffineTransform skewTransform = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(transformStartSkewY)),
+                                                                tanf(CC_DEGREES_TO_RADIANS(transformStartSkewX)), 1.0f,
+                                                                0.0f, 0.0f );
         
-        if(skewXAxis)
-        {
-            [appDelegate saveUndoStateWillChangeProperty:@"skew"];
-            transformScalingNode.skewX = newRotation;
-            [appDelegate refreshProperty:@"skew"];
-        }
-        else
-        {
-            [appDelegate saveUndoStateWillChangeProperty:@"skew"];
-            transformScalingNode.skewY = newRotation;
-            [appDelegate refreshProperty:@"skew"];
-        }
+        //R
+        CGAffineTransform rotationTransform = CGAffineTransformMakeRotation(CC_DEGREES_TO_RADIANS(-transformScalingNode.rotation));
+        
+        
+        CGAffineTransform transform = CGAffineTransformConcat(CGAffineTransformConcat(CGAffineTransformConcat(translateTranform,skewTransform),scaleTransform), rotationTransform);
+        
+        //Root position == x,   xTKSR=mouseDown
+        
+        //We've got a root position now.cecream
+        CGPoint rootStart = CGPointApplyAffineTransform(deltaStart,CGAffineTransformInvert(transform));
+        CGPoint rootNew   = CGPointApplyAffineTransform(deltaNew,CGAffineTransformInvert(transform));
+        
+        
+        //Project the delta mouse position onto
+        rootStart   = [self projectOntoVertex:rootStart withContentSize:transformScalingNode.contentSize alongAxis:skewSegment];
+        rootNew     = [self projectOntoVertex:rootNew   withContentSize:transformScalingNode.contentSize alongAxis:skewSegment];
+        
+        //Apply translation
+        rootStart = CGPointApplyAffineTransform(rootStart,translateTranform);
+        rootNew   = CGPointApplyAffineTransform(rootNew,translateTranform);
+        CGPoint skew = CGPointMake((rootNew.x - rootStart.x)/rootStart.y,(rootNew.y - rootStart.y)/rootStart.x);
+        
+        CGAffineTransform skewTransform2 = CGAffineTransformMake(1.0f, skew.y,
+                                                                skew.x, 1.0f,
+                                                                0.0f, 0.0f );
+        CGAffineTransform newSkew = CGAffineTransformConcat(skewTransform, skewTransform2);
+        
+       
+        float skewXFinal = CC_RADIANS_TO_DEGREES(atanf(newSkew.c));
+        float skewYFinal = CC_RADIANS_TO_DEGREES(atanf(newSkew.b));
 
+        [appDelegate saveUndoStateWillChangeProperty:@"skew"];
+        transformScalingNode.skewX = skewXFinal;
+        transformScalingNode.skewY = skewYFinal;
+        [appDelegate refreshProperty:@"skew"];
         
         
     }
@@ -1372,7 +1619,6 @@ static CocosScene* sharedCocosScene;
 
 - (void)setCurrentTool:(CCBTool)_currentTool
 {
-    
     //First pop any non-selection tools.
     if (currentTool != kCCBToolSelection)
     {
@@ -1385,17 +1631,37 @@ static CocosScene* sharedCocosScene;
     {
         [[NSCursor closedHandCursor] push];
     }
+    
+    if(currentTool == kCCBToolAnchor)
+    {
+        NSImage * image = [NSImage imageNamed:@"select-crosshair.png"];
+        CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
+        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
+        [cursor push];
+    }
     if (currentTool == kCCBToolRotate)
     {
         NSImage * image = [NSImage imageNamed:@"select-rotation.png"];
         
-        float rotation = atan2f(rotationCornerOrientation.y, rotationCornerOrientation.x) - 3.1415f/4.0f;
+        float rotation = atan2f(cornerOrientation.y, cornerOrientation.x) - M_PI/4.0f;
         NSImage *img =[self rotateImage:image rotation:rotation];
         CGPoint centerPoint = CGPointMake(img.size.width/2, img.size.height/2);
         NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
         [cursor push];
     }
 
+    if(currentTool == kCCBToolScale)
+    {
+        NSImage * image = [NSImage imageNamed:@"select-scale.png"];
+        
+        float rotation = atan2f(cornerOrientation.y, cornerOrientation.x) + M_PI/2.0f;
+        NSImage *img =[self rotateImage:image rotation:rotation];
+        CGPoint centerPoint = CGPointMake(img.size.width/2, img.size.height/2);
+        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
+        [cursor push];
+        
+    }
+    
     if(currentTool == kCCBToolSkew)
     {
         float rotation = atan2f(skewSegmentOrientation.y, skewSegmentOrientation.x);
