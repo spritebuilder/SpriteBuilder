@@ -55,11 +55,13 @@ typedef enum {
 } CCBTransformHandle;
 
 typedef enum {
-    kCCBToolSelection = 0,
-    kCCBToolScale,
-    kCCBToolGrab,
-    kCCBToolSkew,
-    kCCBToolRotate,    
+    kCCBToolAnchor      = (1 << 0),
+    kCCBToolScale       =(1 << 1),
+    kCCBToolGrab        =(1 << 2),
+    kCCBToolSkew        =(1 << 3),
+    kCCBToolRotate      =(1 << 4),
+    kCCBToolSelection   =(1 << 5),
+    kCCBToolMax         =(1 << 6)
 }CCBTool;
 
 @interface CocosScene : CCNode

@@ -396,9 +396,9 @@ static CocosScene* sharedCocosScene;
     NSArray* nodes = appDelegate.selectedNodes;
     
     
-    BOOL isOverSkew = NO;
-    BOOL isOverRotation = NO;
-    BOOL isOverScale = NO;
+ 
+    
+    uint overTypeField = 0x0;
     
     if (nodes.count > 0)
     {
@@ -420,8 +420,6 @@ static CocosScene* sharedCocosScene;
                 CCSprite* anchorPointSprite = [CCSprite spriteWithImageNamed:@"select-pt.png"];
                 anchorPointSprite.position = anchorPointPos;
                 [selectionLayer addChild:anchorPointSprite z:1];
-                
-                //CGPoint minCorner = center;
                 
                 if (node.contentSize.width > 0 && node.contentSize.height > 0)
                 {
@@ -453,20 +451,37 @@ static CocosScene* sharedCocosScene;
                     
                     [selectionLayer addChild:drawing z:-1];
                     
-                    if(!isOverSkew && currentMouseTransform == kCCBTransformHandleNone)
+                    
+                    if(!(overTypeField & kCCBToolAnchor) && currentMouseTransform == kCCBTransformHandleNone)
                     {
-                        isOverSkew = [self isOverSkew:mousePos withPoints:points withAnchorPoint:node.anchorPoint withOrientation:&skewSegmentOrientation alongAxis:&skewSegment];
+                        if([self isOverAnchor:node withPoint:mousePos])
+                        {
+                            overTypeField |= kCCBToolAnchor;
+                        }
                     }
                     
-                    if(!isOverRotation && currentMouseTransform == kCCBTransformHandleNone)
+                    if(!(overTypeField & kCCBToolSkew) && currentMouseTransform == kCCBTransformHandleNone)
                     {
-                        isOverRotation = [self isOverRotation:mousePos withPoints:points withCorner:&cornerIndex withOrientation:&cornerOrientation];
+                        if([self isOverSkew:node withPoint:mousePos withOrientation:&skewSegmentOrientation alongAxis:&skewSegment])
+                        {
+                            overTypeField |= kCCBToolSkew;
+                        }
                     }
                     
-                    if(!isOverScale && currentMouseTransform == kCCBTransformHandleNone)
+                    if(!(overTypeField & kCCBToolRotate) && currentMouseTransform == kCCBTransformHandleNone)
+                    {
+                        if([self isOverRotation:mousePos withPoints:points withCorner:&cornerIndex withOrientation:&cornerOrientation])
+                        {
+                            overTypeField |= kCCBToolRotate;
+                        }
+                    }
+                    
+                    if(!(overTypeField & kCCBToolScale) && currentMouseTransform == kCCBTransformHandleNone)
                    {
-                       isOverScale = [self isOverScale:mousePos withPoints:points withCorner:&cornerIndex withOrientation:&cornerOrientation];
-                       
+                       if([self isOverScale:mousePos withPoints:points withCorner:&cornerIndex withOrientation:&cornerOrientation])
+                       {
+                           overTypeField |= kCCBToolScale;
+                       }
                    }
                 }
                 else
@@ -482,25 +497,26 @@ static CocosScene* sharedCocosScene;
         }
     }
     
+    
+    
     if(currentMouseTransform == kCCBTransformHandleNone)
     {
-        if(isOverSkew && currentTool != kCCBToolSkew)
-        {
-            self.currentTool = kCCBToolSkew;
-        }
-        else if(isOverRotation && currentTool != kCCBToolRotate)
-        {
-            self.currentTool = kCCBToolRotate;
-        }
-        else if(isOverScale && currentTool != kCCBToolScale)
-        {
-            self.currentTool = kCCBToolScale;
-        }
-        else if(currentTool != kCCBToolSelection && (!isOverScale && !isOverRotation && !isOverSkew))
+        if(currentTool != kCCBToolSelection && (overTypeField == 0x0))
         {
             self.currentTool = kCCBToolSelection;
         }
-       
+        else if (overTypeField)
+        {
+            for(int i = 1; i < kCCBToolMax; i++)
+            {
+                CCBTool type = (1 << i);
+                if(overTypeField & type && self.currentTool > type)
+                {
+                    self.currentTool = type;
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -527,8 +543,64 @@ static CocosScene* sharedCocosScene;
   
 }
 
-- (BOOL) isOverSkew:(CGPoint)_mousePos withPoints:(const CGPoint*)points withAnchorPoint:(CGPoint)anchorPoint withOrientation:(CGPoint*)orientation alongAxis:(int*)isXAxis  //{b,r,t,l}
+- (BOOL) isOverAnchor:(CCNode*)node withPoint:(CGPoint)pt
 {
+    CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
+                              node.anchorPoint.y * node.contentSizeInPoints.height);
+    
+    CGPoint center = [node convertToWorldSpace:localAnchor];
+
+       if (ccpDistance(pt, center) < kCCBAnchorPointRadius)
+        return YES;
+    
+    return NO;
+}
+
+
+- (BOOL) isOverScale:(CCNode*)node withPoint:(CGPoint)pt
+{
+    CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
+                              node.anchorPoint.y * node.contentSizeInPoints.height);
+    
+    CGPoint center = [node convertToWorldSpace:localAnchor];
+    
+    if (node.contentSize.width == 0 || node.contentSize.height == 0)
+    {
+        CGPoint bl = ccpAdd(center, ccp(-18, -18));
+        CGPoint br = ccpAdd(center, ccp(18, -18));
+        CGPoint tl = ccpAdd(center, ccp(-18, 18));
+        CGPoint tr = ccpAdd(center, ccp(18, 18));
+        
+        if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return YES;
+    }
+    else
+    {
+        CGPoint bl = [node convertToWorldSpace: ccp(0,0)];
+        CGPoint br = [node convertToWorldSpace: ccp(node.contentSize.width,0)];
+        CGPoint tl = [node convertToWorldSpace: ccp(0,node.contentSize.height)];
+        CGPoint tr = [node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)];
+        
+        transformScalingNode = node;
+        if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return YES;
+        if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return YES;
+    }
+    
+    return NO;
+}
+
+
+- (BOOL) isOverSkew:(CCNode*)node withPoint:(CGPoint)pt withOrientation:(CGPoint*)orientation alongAxis:(int*)isXAxis  //{b,r,t,l}
+{
+    
+    CGPoint points[4]; //{bl,br,tr,tl}
+    [self getCornerPointsForNode:node withPoints:points];
+    
+    
     for (int i = 0; i < 4; i++)
     {
         
@@ -549,16 +621,16 @@ static CocosScene* sharedCocosScene;
         CGPoint adj2 = ccpSub(p2, ccpMult(unitSegment, kInsetFromEdge));
         
         
-        CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, _mousePos);
-        float dotProduct = ccpDot( ccpNormalize(ccpSub(adj1, adj2)),ccpNormalize(ccpSub(_mousePos, closestPoint)));
+        CGPoint closestPoint = ccpClosestPointOnLine(adj1, adj2, pt);
+        float dotProduct = ccpDot( ccpNormalize(ccpSub(adj1, adj2)),ccpNormalize(ccpSub(pt, closestPoint)));
         
-        CGPoint vectorFromLine = ccpSub(_mousePos, closestPoint);
+        CGPoint vectorFromLine = ccpSub(pt, closestPoint);
         
         //Its close to the line, and perpendicular.
         if((ccpLength(vectorFromLine) < kDistanceFromSegment && fabsf(dotProduct) < 0.01f) ||
            (ccpLength(vectorFromLine) < 0.001 /*very small*/ && fabsf(dotProduct) == 1.0f) /*we're on the line*/)
         {
-            CGPoint lockedVertex = [self vertexLocked:anchorPoint];
+            CGPoint lockedVertex = [self vertexLocked:node.anchorPoint];
             if(i == lockedVertex.x || i == lockedVertex.y)
                 continue;
 
@@ -589,7 +661,7 @@ static CocosScene* sharedCocosScene;
         CGPoint p2 = points[(i + 1) % 4];
         CGPoint p3 = points[(i + 2) % 4];
         
-        const float kDistanceToCorner = 6.0f;
+        const float kDistanceToCorner = 8.0f;
         
         if(ccpLength(ccpSub(_mousePos, p2)) < kDistanceToCorner )
         {
@@ -632,7 +704,7 @@ static CocosScene* sharedCocosScene;
         CGPoint segment2 = ccpSub(p2, p3);
         CGPoint unitSegment2 = ccpNormalize(segment2);
         
-        const float kMinDistanceForRotation = 6.0f;
+        const float kMinDistanceForRotation = 10.0f;
         const float kMaxDistanceForRotation = 25.0f;
        
         
@@ -706,41 +778,18 @@ static CocosScene* sharedCocosScene;
         if( [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleRotate;
 
-        if( [self isOverSkew:pt withPoints:points withAnchorPoint:node.anchorPoint withOrientation:nil alongAxis:nil])
+        if( [self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
             return kCCBTransformHandleSkew;
         
-        CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
-                                  node.anchorPoint.y * node.contentSizeInPoints.height);
-        
-        CGPoint center = [node convertToWorldSpace:localAnchor];
-        if (ccpDistance(pt, center) < kCCBAnchorPointRadius)
+      
+        if([self isOverAnchor:node withPoint:pt])
             return kCCBTransformHandleAnchorPoint;
         
-        if (node.contentSize.width == 0 || node.contentSize.height == 0)
-        {
-            CGPoint bl = ccpAdd(center, ccp(-18, -18));
-            CGPoint br = ccpAdd(center, ccp(18, -18));
-            CGPoint tl = ccpAdd(center, ccp(-18, 18));
-            CGPoint tr = ccpAdd(center, ccp(18, 18));
-            
-            if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-        }
-        else
-        {
-            CGPoint bl = [node convertToWorldSpace: ccp(0,0)];
-            CGPoint br = [node convertToWorldSpace: ccp(node.contentSize.width,0)];
-            CGPoint tl = [node convertToWorldSpace: ccp(0,node.contentSize.height)];
-            CGPoint tr = [node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)];
-            
-            transformScalingNode = node;
-            if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-            if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return kCCBTransformHandleScale;
-        }
+        
+        if([self isOverScale:node withPoint:pt])
+            return kCCBTransformHandleScale;
+       
+    
     }
     
     transformScalingNode = NULL;
@@ -1570,7 +1619,6 @@ static CocosScene* sharedCocosScene;
 
 - (void)setCurrentTool:(CCBTool)_currentTool
 {
-    
     //First pop any non-selection tools.
     if (currentTool != kCCBToolSelection)
     {
@@ -1582,6 +1630,14 @@ static CocosScene* sharedCocosScene;
     if (currentTool == kCCBToolGrab)
     {
         [[NSCursor closedHandCursor] push];
+    }
+    
+    if(currentTool == kCCBToolAnchor)
+    {
+        NSImage * image = [NSImage imageNamed:@"select-crosshair.png"];
+        CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
+        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
+        [cursor push];
     }
     if (currentTool == kCCBToolRotate)
     {
