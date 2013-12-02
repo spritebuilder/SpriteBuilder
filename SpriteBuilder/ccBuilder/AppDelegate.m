@@ -109,6 +109,7 @@
 #import "CCLabelBMFont_Private.h"
 #import "WarningOutlineHandler.h"
 #import "CCNode+NodeInfo.h"
+#import "UsageManager.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
@@ -478,6 +479,9 @@ void ApplyCustomNodeVisitSwizzle()
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
     [self.window center];
+    
+    UsageManager* usageManager = [[[UsageManager alloc] init] autorelease];
+    [usageManager registerUsage];
     
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];

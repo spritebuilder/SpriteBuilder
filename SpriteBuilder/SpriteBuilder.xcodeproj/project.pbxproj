@@ -203,6 +203,7 @@
 		B73788F91804D8690076A88C /* ccbi.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F81804D8690076A88C /* ccbi.icns */; };
 		B75CB46518468FA70036259F /* seq-btn-loop.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CB46318468FA70036259F /* seq-btn-loop.png */; };
 		B75CB46618468FA70036259F /* seq-btn-loop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CB46418468FA70036259F /* seq-btn-loop@2x.png */; };
+		B75CB48B184D31270036259F /* UsageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75CB48A184D31270036259F /* UsageManager.m */; };
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
 		B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7737D4E17CC102D005F775A /* InspectorColor4.xib */; };
 		B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EC96518087011004C09FF /* CCBProjCreator.m */; };
@@ -1165,6 +1166,8 @@
 		B73788F81804D8690076A88C /* ccbi.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccbi.icns; path = ../ccbi.icns; sourceTree = "<group>"; };
 		B75CB46318468FA70036259F /* seq-btn-loop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-btn-loop.png"; sourceTree = "<group>"; };
 		B75CB46418468FA70036259F /* seq-btn-loop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-btn-loop@2x.png"; sourceTree = "<group>"; };
+		B75CB489184D31270036259F /* UsageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsageManager.h; sourceTree = "<group>"; };
+		B75CB48A184D31270036259F /* UsageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsageManager.m; sourceTree = "<group>"; };
 		B7737D4C17CC102D005F775A /* InspectorColor4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorColor4.h; sourceTree = "<group>"; };
 		B7737D4D17CC102D005F775A /* InspectorColor4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor4.m; sourceTree = "<group>"; };
 		B7737D4E17CC102D005F775A /* InspectorColor4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorColor4.xib; sourceTree = "<group>"; };
@@ -2111,6 +2114,8 @@
 				B78DA3681773EA0E00B85CC0 /* NSPasteboard+CCB.m */,
 				B7083E0817B567E5006628C7 /* StringPropertySetter.h */,
 				B7083E0917B567E5006628C7 /* StringPropertySetter.m */,
+				B75CB489184D31270036259F /* UsageManager.h */,
+				B75CB48A184D31270036259F /* UsageManager.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4934,6 +4939,7 @@
 				835DB0AB171562D6003A2F7B /* HTTPFileResponse.m in Sources */,
 				835DB0AD171562D6003A2F7B /* HTTPRedirectResponse.m in Sources */,
 				B79F90B317FF27B200908504 /* cpArray.c in Sources */,
+				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
 				835DB0AF171562D6003A2F7B /* WebSocket.m in Sources */,
 				835DB0B3171562D6003A2F7B /* DDAbstractDatabaseLogger.m in Sources */,
 				835DB0B5171562D6003A2F7B /* DDASLLogger.m in Sources */,
