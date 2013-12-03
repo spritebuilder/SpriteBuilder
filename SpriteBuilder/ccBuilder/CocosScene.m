@@ -395,9 +395,6 @@ static CocosScene* sharedCocosScene;
 {
     NSArray* nodes = appDelegate.selectedNodes;
     
-    
- 
-    
     uint overTypeField = 0x0;
     
     if (nodes.count > 0)
@@ -501,11 +498,13 @@ static CocosScene* sharedCocosScene;
     
     if(currentMouseTransform == kCCBTransformHandleNone)
     {
-        if(currentTool != kCCBToolSelection && (overTypeField == 0x0))
+        if(!(overTypeField & currentTool))
         {
             self.currentTool = kCCBToolSelection;
         }
-        else if (overTypeField)
+        
+        
+        if (overTypeField)
         {
             for(int i = 1; i < kCCBToolMax; i++)
             {
@@ -555,45 +554,6 @@ static CocosScene* sharedCocosScene;
     
     return NO;
 }
-
-
-- (BOOL) isOverScale:(CCNode*)node withPoint:(CGPoint)pt
-{
-    CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
-                              node.anchorPoint.y * node.contentSizeInPoints.height);
-    
-    CGPoint center = [node convertToWorldSpace:localAnchor];
-    
-    if (node.contentSize.width == 0 || node.contentSize.height == 0)
-    {
-        CGPoint bl = ccpAdd(center, ccp(-18, -18));
-        CGPoint br = ccpAdd(center, ccp(18, -18));
-        CGPoint tl = ccpAdd(center, ccp(-18, 18));
-        CGPoint tr = ccpAdd(center, ccp(18, 18));
-        
-        if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return YES;
-        if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return YES;
-        if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return YES;
-        if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return YES;
-    }
-    else
-    {
-        CGPoint bl = [node convertToWorldSpace: ccp(0,0)];
-        CGPoint br = [node convertToWorldSpace: ccp(node.contentSize.width,0)];
-        CGPoint tl = [node convertToWorldSpace: ccp(0,node.contentSize.height)];
-        CGPoint tr = [node convertToWorldSpace: ccp(node.contentSize.width,node.contentSize.height)];
-        
-        transformScalingNode = node;
-        if (ccpDistance(pt, bl) < kCCBTransformHandleRadius) return YES;
-        if (ccpDistance(pt, br) < kCCBTransformHandleRadius) return YES;
-        if (ccpDistance(pt, tl) < kCCBTransformHandleRadius) return YES;
-        if (ccpDistance(pt, tr) < kCCBTransformHandleRadius) return YES;
-    }
-    
-    return NO;
-}
-
-
 - (BOOL) isOverSkew:(CCNode*)node withPoint:(CGPoint)pt withOrientation:(CGPoint*)orientation alongAxis:(int*)isXAxis  //{b,r,t,l}
 {
     
@@ -665,7 +625,6 @@ static CocosScene* sharedCocosScene;
         
         if(ccpLength(ccpSub(_mousePos, p2)) < kDistanceToCorner )
         {
-            
             if(orientation)
             {
                 CGPoint segment1 = ccpSub(p2, p1);
@@ -678,7 +637,6 @@ static CocosScene* sharedCocosScene;
             {
                 *_cornerIndex = (i + 1) % 4;
             }
-
             
             return YES;
         }
@@ -704,7 +662,7 @@ static CocosScene* sharedCocosScene;
         CGPoint segment2 = ccpSub(p2, p3);
         CGPoint unitSegment2 = ccpNormalize(segment2);
         
-        const float kMinDistanceForRotation = 10.0f;
+        const float kMinDistanceForRotation = 8.0f;
         const float kMaxDistanceForRotation = 25.0f;
        
         
@@ -775,21 +733,24 @@ static CocosScene* sharedCocosScene;
         
         [self getCornerPointsForNode:node withPoints:points];
 
-        if( [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
-            return kCCBTransformHandleRotate;
-
-        if( [self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
-            return kCCBTransformHandleSkew;
+        //NOTE The following return statements should go in order of the CCBTool enumeration.
         
-      
+        //kCCBToolAnchor
         if([self isOverAnchor:node withPoint:pt])
             return kCCBTransformHandleAnchorPoint;
-        
-        
-        if([self isOverScale:node withPoint:pt])
+            
+        //kCCBToolScale
+        if([self isOverScale:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleScale;
-       
-    
+        
+        //kCCBToolSkew
+        if([self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
+            return kCCBTransformHandleSkew;
+
+        //kCCBToolRotate
+        if([self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
+            return kCCBTransformHandleRotate;
+        
     }
     
     transformScalingNode = NULL;
