@@ -1300,7 +1300,6 @@ static BOOL hideAllToNextSeparator;
             settingTablet.width *= projectSettings.tabletPositionScaleFactor;
             settingTablet.height *= projectSettings.tabletPositionScaleFactor;
             settingTablet.contentScale = projectSettings.tabletPositionScaleFactor;
-            settingTablet.positionScale = 1.0/projectSettings.tabletPositionScaleFactor; // TODO should add a separate setting for this.
             [updatedResolutions addObject:settingTablet];
         }
     }
@@ -3162,7 +3161,8 @@ static BOOL hideAllToNextSeparator;
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
     
     [CCDirector sharedDirector].contentScaleFactor = res.contentScale;
-    [CCDirector sharedDirector].positionScaleFactor = res.positionScale;
+    [CCDirector sharedDirector].positionScaleFactor = 1.0/res.contentScale;
+    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.contentScale];
 }
 
 - (void) setResolution:(int)r

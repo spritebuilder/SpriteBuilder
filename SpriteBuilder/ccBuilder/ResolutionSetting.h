@@ -41,7 +41,6 @@
 @property (nonatomic,assign) int width;
 @property (nonatomic,assign) int height;
 @property (nonatomic,copy) NSString* ext;
-@property (nonatomic,assign) float positionScale;
 @property (nonatomic,assign) float contentScale;
 @property (nonatomic,assign) BOOL centeredOrigin;
 @property (nonatomic,readonly) NSArray* exts;

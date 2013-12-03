@@ -31,7 +31,7 @@
 @synthesize width;
 @synthesize height;
 @synthesize ext;
-@synthesize positionScale, contentScale;
+@synthesize contentScale;
 @synthesize centeredOrigin;
 @synthesize exts;
 
@@ -45,7 +45,7 @@
     self.width = 1000;
     self.height = 1000;
     self.ext = @" ";
-    self.contentScale = self.positionScale = 1;
+    self.contentScale = 1;
     
     return self;
 }
@@ -62,10 +62,22 @@
     self.ext = [serialization objectForKey:@"ext"];
 		// TODO should store separate values for these.
     self.contentScale = [[serialization objectForKey:@"scale"] floatValue];
-    self.positionScale = 1.0/self.contentScale;
     self.centeredOrigin = [[serialization objectForKey:@"centeredOrigin"] boolValue];
     
     return self;
+}
+
+-(void)setContentScale:(float)_contentScale
+{
+//	NSAssert(_contentScale > 0.0, @"contentScale must be positive.");
+	
+	// TODO this is a temporary workaround for "layer" ccb files setting a contentScale of 0.
+	if(_contentScale <= 0.0){
+		NSLog(@"WARNING: contentScale must be positive. (1.0 was substituted for %f)", _contentScale);
+		_contentScale = 1.0;
+	}
+	
+	contentScale = _contentScale;
 }
 
 - (id) serialize
@@ -117,7 +129,6 @@
     setting.height = 0;
     setting.ext = @"phone";
     setting.contentScale = 1;
-		setting.positionScale = 1;
     
     return setting;
 }
@@ -175,7 +186,6 @@
     setting.height = 0;
     setting.ext = @"tablet phonehd";
     setting.contentScale = 2;
-    setting.positionScale = 0.5;
     
     return setting;
 }
@@ -211,7 +221,6 @@
     setting.height = 0;
     setting.ext = @"phone";
     setting.contentScale = 0.5;
-    setting.positionScale = 2;
     
     return setting;
 }
@@ -247,7 +256,6 @@
     setting.height = 0;
     setting.ext = @"phone";
     setting.contentScale = 1;
-    setting.positionScale = 1;
     
     return setting;
 }
@@ -283,7 +291,6 @@
     setting.height = 0;
     setting.ext = @"phone";
     setting.contentScale = 1.5;
-    setting.positionScale = 2.0/3.0;
     
     return setting;
 }
@@ -319,7 +326,6 @@
     setting.height = 0;
     setting.ext = @"phonehd";
     setting.contentScale = 2;
-    setting.positionScale = 0.5;
     
     return setting;
 }
@@ -355,7 +361,6 @@
     setting.height = 0;
     setting.ext = @"tablethd";
     setting.contentScale = 4;
-    setting.positionScale = 0.25;
     
     return setting;
 }
@@ -391,7 +396,6 @@
     setting.height = 0;
     setting.ext = @"html5";
     setting.contentScale = 2;
-    setting.positionScale = 0.5;
     
     return setting;
 }
@@ -434,7 +438,6 @@
     copy.height = height;
     copy.ext = ext;
     copy.contentScale = contentScale;
-    copy.positionScale = positionScale;
     copy.centeredOrigin = centeredOrigin;
     
     return copy;
