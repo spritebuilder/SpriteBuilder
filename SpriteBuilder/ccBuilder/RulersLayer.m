@@ -64,17 +64,19 @@
 	xyBg.anchorPoint = ccp(0,0);
 	xyBg.position = ccp(0,0);
 	
-//	lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
-//	lblX.anchorPoint = ccp(1,0);
-//	lblX.position = ccp(47,3);
-//	lblX.visible = NO;
-//	[self addChild:lblX z:6];
-//	
-//	lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
-//	lblY.anchorPoint = ccp(1,0);
-//	lblY.position = ccp(97,3);
-//	lblY.visible = NO;
-//	[self addChild:lblY z:6];
+	
+	CGFloat scale = CC_CONTENT_SCALE_FACTOR();
+	lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+	lblX.anchorPoint = ccp(1,0);
+	lblX.position = ccp(47/scale,3/scale);
+	lblX.visible = NO;
+	[self addChild:lblX z:6];
+	
+	lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+	lblY.anchorPoint = ccp(1,0);
+	lblY.position = ccp(97/scale,3/scale);
+	lblY.visible = NO;
+	[self addChild:lblY z:6];
 	//lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'0'];
 	
 	// Need to force it to update the rulers.
@@ -117,6 +119,7 @@
     [marksVertical removeAllChildrenWithCleanup:YES];
     [marksHorizontal removeAllChildrenWithCleanup:YES];
     
+		CGFloat scale = CC_CONTENT_SCALE_FACTOR();
     // Vertical marks
     int y = (int)so.y - (((int)so.y)/10)*10;
     while (y < winSize.height)
@@ -143,7 +146,7 @@
         mark.position = ccp(0, y);
         [marksVertical addChild:mark];
         
-        if (addLabel && FALSE)
+        if (addLabel)
         {
             int displayDist = yDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
@@ -153,9 +156,9 @@
             {
                 NSString* ch = [str substringWithRange:NSMakeRange(i, 1)];
                 
-                CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:ch charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
+                CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:ch charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
                 lbl.anchorPoint = ccp(0,0);
-                lbl.position = ccp(2, y + 1 + 8* (strLen - i - 1));
+                lbl.position = ccp(2, y + 1 + 8*(strLen - i - 1)/scale);
             
                 [marksVertical addChild:lbl z:1];
             }
@@ -191,14 +194,14 @@
         [marksHorizontal addChild:mark];
         
         
-        if (addLabel && FALSE)
+        if (addLabel)
         {
             int displayDist = xDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
             
-            CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:str charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'-'];
+            CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:str charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
             lbl.anchorPoint = ccp(0,0);
-            lbl.position = ccp(x+1, 1);
+            lbl.position = ccp((x+1), 1);
             [marksHorizontal addChild:lbl z:1];
         }
         x+=10;
