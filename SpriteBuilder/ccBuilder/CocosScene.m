@@ -465,7 +465,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 }
                 
                 
-                if(!(overTypeField & kCCBToolAnchor) && currentMouseTransform == kCCBTransformHandleNone)
+                if(!isContentSizeZero && !(overTypeField & kCCBToolAnchor) && currentMouseTransform == kCCBTransformHandleNone)
                 {
                     if([self isOverAnchor:node withPoint:mousePos])
                     {
@@ -771,7 +771,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         //NOTE The following return statements should go in order of the CCBTool enumeration.
         //kCCBToolAnchor
-        if([self isOverAnchor:node withPoint:pt])
+        if(!isContentSizeZero && [self isOverAnchor:node withPoint:pt])
             return kCCBTransformHandleAnchorPoint;
             
         //kCCBToolScale
