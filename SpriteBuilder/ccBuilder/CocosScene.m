@@ -1233,7 +1233,7 @@ static CocosScene* sharedCocosScene;
     }
     else if (currentMouseTransform == kCCBTransformHandleRotate)
     {
-        CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.position];
+        CGPoint nodePos = [transformScalingNode.parent convertToWorldSpace:transformScalingNode.positionInPoints];
         
         CGPoint handleAngleVectorStart = ccpSub(nodePos, mouseDownPos);
         CGPoint handleAngleVectorNew = ccpSub(nodePos, pos);
