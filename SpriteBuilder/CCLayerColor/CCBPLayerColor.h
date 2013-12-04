@@ -6,8 +6,8 @@
 //
 //
 
-#import "CCLayer.h"
+#import "CCNodeColor.h"
 
-@interface CCBPLayerColor : CCLayerColor
+@interface CCBPLayerColor : CCNodeColor
 
 @end

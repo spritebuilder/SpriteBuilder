@@ -66,8 +66,8 @@ typedef enum {
 
 @interface CocosScene : CCNode
 {
-    CCLayerColor* bgLayer;
-    CCLayerColor* stageBgLayer;
+    CCNodeColor* bgLayer;
+    CCNodeColor* stageBgLayer;
     CCNode* contentLayer;
     CCNode* selectionLayer;
     CCNode* physicsLayer;
@@ -106,10 +106,10 @@ typedef enum {
     NSMutableArray* nodesAtSelectionPt;
     int currentNodeAtSelectionPtIdx;
     
-    CCLayerColor* borderBottom;
-    CCLayerColor* borderTop;
-    CCLayerColor* borderLeft;
-    CCLayerColor* borderRight;
+    CCNodeColor* borderBottom;
+    CCNodeColor* borderTop;
+    CCNodeColor* borderLeft;
+    CCNodeColor* borderRight;
     CCSprite* borderDevice;
     
     int stageBorderType;

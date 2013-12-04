@@ -170,14 +170,14 @@
     [CCBReaderInternalV1 setExtraProp:[props objectForKey:@"keyboardEnabled"] forKey:@"keyboardEnabled" andNode:node];
 }
 
-+ (void) setPropsForLayerColor: (CCLayerColor*) node props:(NSDictionary*)props
++ (void) setPropsForLayerColor: (CCNodeColor*) node props:(NSDictionary*)props
 {
     [node setColor: [CCBReaderInternalV1 color3ValFromDict:props forKey:@"color"]];
     [node setOpacity: [CCBReaderInternalV1 intValFromDict:props forKey:@"opacity"]];
     node.blendFunc = [CCBReaderInternalV1 blendFuncValFromDict:props forKey:@"blendFunc"];
 }
 
-+ (void) setPropsForLayerGradient: (CCLayerGradient*) node props:(NSDictionary*)props
++ (void) setPropsForLayerGradient: (CCNodeGradient*) node props:(NSDictionary*)props
 {
     [node setStartColor: [CCBReaderInternalV1 color3ValFromDict:props forKey:@"color"]];
     [node setStartOpacity: [CCBReaderInternalV1 intValFromDict:props forKey:@"opacity"]];
@@ -361,8 +361,8 @@
         
         [CCBReaderInternalV1 setPropsForNode:node props:props];
         [CCBReaderInternalV1 setPropsForLayer:(CCNode*)node props:props];
-        [CCBReaderInternalV1 setPropsForLayerColor:(CCLayerColor*)node props:props];
-        [CCBReaderInternalV1 setPropsForLayerGradient:(CCLayerGradient*)node props:props];
+        [CCBReaderInternalV1 setPropsForLayerColor:(CCNodeColor*)node props:props];
+        [CCBReaderInternalV1 setPropsForLayerGradient:(CCNodeGradient*)node props:props];
     }
     else if ([class isEqualToString:@"CCLayerColor"])
     {
@@ -370,7 +370,7 @@
         
         [CCBReaderInternalV1 setPropsForNode:node props:props];
         [CCBReaderInternalV1 setPropsForLayer:(CCNode*)node props:props];
-        [CCBReaderInternalV1 setPropsForLayerColor:(CCLayerColor*)node props:props];
+        [CCBReaderInternalV1 setPropsForLayerColor:(CCNodeColor*)node props:props];
     }
     else if ([class isEqualToString:@"CCLayer"])
     {

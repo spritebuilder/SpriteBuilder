@@ -115,10 +115,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     ccColor4B borderColor = ccc4(128, 128, 128, 180);
     
-    borderBottom = [CCLayerColor layerWithColor:borderColor];
-    borderTop = [CCLayerColor layerWithColor:borderColor];
-    borderLeft = [CCLayerColor layerWithColor:borderColor];
-    borderRight = [CCLayerColor layerWithColor:borderColor];
+    borderBottom = [CCNodeColor nodeWithColor:borderColor];
+    borderTop = [CCNodeColor nodeWithColor:borderColor];
+    borderLeft = [CCNodeColor nodeWithColor:borderColor];
+    borderRight = [CCNodeColor nodeWithColor:borderColor];
     
     borderBottom.userInteractionEnabled = NO;
     borderTop.userInteractionEnabled = NO;
@@ -134,14 +134,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [borderLayer addChild:borderDevice z:1];
     
     // Gray background
-    bgLayer = [CCLayerColor layerWithColor:ccc4(128, 128, 128, 255) width:4096 height:4096];
+    bgLayer = [CCNodeColor nodeWithColor:ccc4(128, 128, 128, 255) width:4096 height:4096];
     bgLayer.position = ccp(0,0);
     bgLayer.anchorPoint = ccp(0,0);
     bgLayer.userInteractionEnabled = NO;
     [self addChild:bgLayer z:-1];
     
     // Black content layer
-    stageBgLayer = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255) width:0 height:0];
+    stageBgLayer = [CCNodeColor nodeWithColor:ccc4(0, 0, 0, 255) width:0 height:0];
     stageBgLayer.anchorPoint = ccp(0.5,0.5);
     stageBgLayer.userInteractionEnabled = NO;
     //stageBgLayer.ignoreAnchorPointForPosition = NO;
