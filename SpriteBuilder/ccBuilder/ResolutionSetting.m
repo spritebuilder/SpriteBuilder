@@ -60,10 +60,23 @@
     self.width = [[serialization objectForKey:@"width"] intValue];
     self.height = [[serialization objectForKey:@"height"] intValue];
     self.ext = [serialization objectForKey:@"ext"];
+		// TODO should store separate values for these.
     self.scale = [[serialization objectForKey:@"scale"] floatValue];
     self.centeredOrigin = [[serialization objectForKey:@"centeredOrigin"] boolValue];
     
     return self;
+}
+
+-(void)setScale:(float)_scale
+{
+	NSAssert(_scale > 0.0, @"scale must be positive.");
+	
+//	if(_scale <= 0.0){
+//		NSLog(@"WARNING: scale must be positive. (1.0 was substituted for %f)", _scale);
+//		_scale = 1.0;
+//	}
+	
+	scale = _scale;
 }
 
 - (id) serialize
@@ -181,8 +194,8 @@
     ResolutionSetting* setting = [self settingIPad];
     
     setting.name = @"Tablet Landscape";
-    setting.width = 1024;
-    setting.height = 768;
+    setting.width = 512;
+    setting.height = 384;
     
     return setting;
 }
@@ -192,8 +205,8 @@
     ResolutionSetting* setting = [self settingIPad];
     
     setting.name = @"Tablet Portrait";
-    setting.width = 768;
-    setting.height = 1024;
+    setting.width = 384;
+    setting.height = 512;
     
     return setting;
 }
@@ -206,7 +219,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.scale = 0.5f;
+    setting.scale = 0.5;
     
     return setting;
 }
@@ -276,7 +289,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.scale = 1.5f;
+    setting.scale = 1.5;
     
     return setting;
 }

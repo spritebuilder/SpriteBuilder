@@ -852,8 +852,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     if (!appDelegate.hasOpenedDocument) return;
     
-    NSPoint posRaw = [event locationInWindow];
-    CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDown:pos event:event]) return;
     if ([guideLayer mouseDown:pos event:event]) return;
@@ -1061,8 +1060,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     if (!appDelegate.hasOpenedDocument) return;
     [self mouseMoved:event];
     
-    NSPoint posRaw = [event locationInWindow];
-    CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDragged:pos event:event]) return;
     if ([guideLayer mouseDragged:pos event:event]) return;
@@ -1441,8 +1439,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     CCNode* selectedNode = appDelegate.selectedNode;
     
-    NSPoint posRaw = [event locationInWindow];
-    CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     if ([appDelegate.physicsHandler mouseUp:pos event:event]) return;
     
@@ -1536,8 +1533,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     if (!appDelegate.hasOpenedDocument) return;
     
-    NSPoint posRaw = [event locationInWindow];
-    CGPoint pos = NSPointToCGPoint([appDelegate.cocosView convertPoint:posRaw fromView:NULL]);
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     mousePos = pos;
 }
@@ -1783,7 +1779,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             [trackingArea release];
         }
         
-        trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0, 0, winSize.width, winSize.height) options:NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited | NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow  owner:[appDelegate cocosView] userInfo:NULL];
+				CGSize sizeInPixels = [[CCDirector sharedDirector] viewSizeInPixels];
+        trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0, 0, sizeInPixels.width, sizeInPixels.height) options:NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited | NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow  owner:[appDelegate cocosView] userInfo:NULL];
         [[appDelegate cocosView] addTrackingArea:trackingArea];
     }
 }

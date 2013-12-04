@@ -501,8 +501,8 @@ void ApplyCustomNodeVisitSwizzle()
     defaultCanvasSizes[kCCBCanvasSizeIPhonePortrait] = CGSizeMake(320, 480);
     defaultCanvasSizes[kCCBCanvasSizeIPhone5Landscape] = CGSizeMake(568, 320);
     defaultCanvasSizes[kCCBCanvasSizeIPhone5Portrait] = CGSizeMake(320, 568);
-    defaultCanvasSizes[kCCBCanvasSizeIPadLandscape] = CGSizeMake(1024, 768);
-    defaultCanvasSizes[kCCBCanvasSizeIPadPortrait] = CGSizeMake(768, 1024);
+    defaultCanvasSizes[kCCBCanvasSizeIPadLandscape] = CGSizeMake(512, 384);
+    defaultCanvasSizes[kCCBCanvasSizeIPadPortrait] = CGSizeMake(384, 512);
     
     // Android
     defaultCanvasSizes[kCCBCanvasSizeAndroidXSmallLandscape] = CGSizeMake(320, 240);
@@ -1274,7 +1274,7 @@ static BOOL hideAllToNextSeparator;
 {
     [self.window makeKeyWindow];
     CocosScene* cs = [CocosScene cocosScene];
-    
+		
     if (![self hasOpenedDocument]) return;
     currentDocument.docData = [self docDataFromCurrentNodeGraph];
     currentDocument.stageZoom = [cs stageZoom];
@@ -1317,10 +1317,9 @@ static BOOL hideAllToNextSeparator;
             settingDefault.name = @"Phone";
             [updatedResolutions addObject:settingDefault];
             
+						// TODO not sure if this part is correct or not...
             ResolutionSetting* settingTablet = [settingDefault copy];
             settingTablet.name = @"Tablet";
-            settingTablet.width *= projectSettings.tabletPositionScaleFactor;
-            settingTablet.height *= projectSettings.tabletPositionScaleFactor;
             settingTablet.scale = projectSettings.tabletPositionScaleFactor;
             [updatedResolutions addObject:settingTablet];
         }
@@ -3181,8 +3180,13 @@ static BOOL hideAllToNextSeparator;
 - (void) updatePositionScaleFactor
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
-    
-    [CCDirector sharedDirector].positionScaleFactor = res.scale;
+		
+    [CCDirector sharedDirector].contentScaleFactor = res.scale;
+    [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
+    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
+				
+		// Setup the rulers with the new contentScale
+		[[CocosScene cocosScene].rulerLayer setup];
 }
 
 - (void) setResolution:(int)r
