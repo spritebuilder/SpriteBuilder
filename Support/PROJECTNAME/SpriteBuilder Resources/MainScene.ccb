@@ -26,13 +26,13 @@
 		<array>
 			<dict>
 				<key>baseClass</key>
-				<string>CCLayerGradient</string>
+				<string>CCNodeGradient</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCLayerGradient</string>
+				<string>CCNodeGradient</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -46,7 +46,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>-1</real>
+							<real>0.0</real>
 							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -207,7 +207,7 @@
 						<key>value</key>
 						<array>
 							<real>32</real>
-							<integer>1</integer>
+							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -412,13 +412,13 @@
 			<key>ext</key>
 			<string>tablet phonehd</string>
 			<key>height</key>
-			<integer>768</integer>
+			<integer>384</integer>
 			<key>name</key>
 			<string>Tablet Landscape</string>
 			<key>scale</key>
 			<real>2</real>
 			<key>width</key>
-			<integer>1024</integer>
+			<integer>512</integer>
 		</dict>
 		<dict>
 			<key>centeredOrigin</key>
@@ -465,6 +465,8 @@
 			<integer>0</integer>
 			<key>soundChannel</key>
 			<dict>
+				<key>isExpanded</key>
+				<false/>
 				<key>keyframes</key>
 				<array/>
 				<key>type</key>

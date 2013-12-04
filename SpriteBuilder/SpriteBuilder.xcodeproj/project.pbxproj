@@ -213,8 +213,8 @@
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
 		B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7737D4E17CC102D005F775A /* InspectorColor4.xib */; };
 		B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EC96518087011004C09FF /* CCBProjCreator.m */; };
-		B78AE44B17E263B20028BE0B /* CCBPLayerColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */; };
-		B78AE44E17E263FC0028BE0B /* CCBPLayerGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */; };
+		B78AE44B17E263B20028BE0B /* CCBPNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44A17E263B20028BE0B /* CCBPNodeColor.m */; };
+		B78AE44E17E263FC0028BE0B /* CCBPNodeGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44D17E263FC0028BE0B /* CCBPNodeGradient.m */; };
 		B78AE45217E3B1600028BE0B /* scale-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B78AE44F17E3B1600028BE0B /* scale-2.png */; };
 		B78AE45317E3B1600028BE0B /* scale-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B78AE45017E3B1600028BE0B /* scale-3.png */; };
 		B78AE45417E3B1600028BE0B /* scale-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B78AE45117E3B1600028BE0B /* scale-4.png */; };
@@ -415,11 +415,11 @@
 		E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E35D78D416826C0100A53BEF /* SpriteSheetSettingsWindow.xib */; };
 		E35DBB8114F225D30070A6E4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		E35DBB8714F225D30070A6E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E35DBB8514F225D30070A6E4 /* InfoPlist.strings */; };
-		E35DBB8C14F226190070A6E4 /* CCLayerColor.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = E35DBB8014F225D30070A6E4 /* CCLayerColor.ccbPlugNode */; };
+		E35DBB8C14F226190070A6E4 /* CCNodeColor.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = E35DBB8014F225D30070A6E4 /* CCNodeColor.ccbPlugNode */; };
 		E35DBB9014F226560070A6E4 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = E35DBB8F14F226560070A6E4 /* CCBPProperties.plist */; };
 		E35DBB9914F244BC0070A6E4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		E35DBB9F14F244BC0070A6E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E35DBB9D14F244BC0070A6E4 /* InfoPlist.strings */; };
-		E35DBBA614F245030070A6E4 /* CCLayerGradient.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = E35DBB9814F244BB0070A6E4 /* CCLayerGradient.ccbPlugNode */; };
+		E35DBBA614F245030070A6E4 /* CCNodeGradient.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = E35DBB9814F244BB0070A6E4 /* CCNodeGradient.ccbPlugNode */; };
 		E35DBBA814F245490070A6E4 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = E35DBBA714F245490070A6E4 /* CCBPProperties.plist */; };
 		E35DBBBF14F29E9D0070A6E4 /* InspectorFntFile.xib in Resources */ = {isa = PBXBuildFile; fileRef = E35DBBBE14F29E9D0070A6E4 /* InspectorFntFile.xib */; };
 		E35DBBC214F29EF80070A6E4 /* InspectorFntFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E35DBBC114F29EF80070A6E4 /* InspectorFntFile.m */; };
@@ -891,8 +891,8 @@
 				E35DBC1714F4D79C0070A6E4 /* CCParticleSystem.ccbPlugNode in Copy PlugIns */,
 				E35DBBF714F3E2750070A6E4 /* CCLabelTTF.ccbPlugNode in Copy PlugIns */,
 				E35DBBDA14F2AA7C0070A6E4 /* CCLabelBMFont.ccbPlugNode in Copy PlugIns */,
-				E35DBBA614F245030070A6E4 /* CCLayerGradient.ccbPlugNode in Copy PlugIns */,
-				E35DBB8C14F226190070A6E4 /* CCLayerColor.ccbPlugNode in Copy PlugIns */,
+				E35DBBA614F245030070A6E4 /* CCNodeGradient.ccbPlugNode in Copy PlugIns */,
+				E35DBB8C14F226190070A6E4 /* CCNodeColor.ccbPlugNode in Copy PlugIns */,
 				E3C365FE14E9F147007CD5FF /* CCSprite.ccbPlugNode in Copy PlugIns */,
 				E3B7AED514E31E6C00DFD402 /* CCNode.ccbPlugNode in Copy PlugIns */,
 			);
@@ -1185,10 +1185,10 @@
 		B7737D4E17CC102D005F775A /* InspectorColor4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorColor4.xib; sourceTree = "<group>"; };
 		B77EC96418087011004C09FF /* CCBProjCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProjCreator.h; sourceTree = "<group>"; };
 		B77EC96518087011004C09FF /* CCBProjCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBProjCreator.m; sourceTree = "<group>"; };
-		B78AE44917E263B20028BE0B /* CCBPLayerColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerColor.h; sourceTree = "<group>"; };
-		B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayerColor.m; sourceTree = "<group>"; };
-		B78AE44C17E263FC0028BE0B /* CCBPLayerGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPLayerGradient.h; sourceTree = "<group>"; };
-		B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPLayerGradient.m; sourceTree = "<group>"; };
+		B78AE44917E263B20028BE0B /* CCBPNodeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPNodeColor.h; sourceTree = "<group>"; };
+		B78AE44A17E263B20028BE0B /* CCBPNodeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPNodeColor.m; sourceTree = "<group>"; };
+		B78AE44C17E263FC0028BE0B /* CCBPNodeGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPNodeGradient.h; sourceTree = "<group>"; };
+		B78AE44D17E263FC0028BE0B /* CCBPNodeGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPNodeGradient.m; sourceTree = "<group>"; };
 		B78AE44F17E3B1600028BE0B /* scale-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale-2.png"; sourceTree = "<group>"; };
 		B78AE45017E3B1600028BE0B /* scale-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale-3.png"; sourceTree = "<group>"; };
 		B78AE45117E3B1600028BE0B /* scale-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale-4.png"; sourceTree = "<group>"; };
@@ -1495,12 +1495,12 @@
 		E35D78D216826C0100A53BEF /* SpriteSheetSettingsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteSheetSettingsWindow.h; sourceTree = "<group>"; };
 		E35D78D316826C0100A53BEF /* SpriteSheetSettingsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteSheetSettingsWindow.m; sourceTree = "<group>"; };
 		E35D78D416826C0100A53BEF /* SpriteSheetSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpriteSheetSettingsWindow.xib; sourceTree = "<group>"; };
-		E35DBB8014F225D30070A6E4 /* CCLayerColor.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCLayerColor.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		E35DBB8014F225D30070A6E4 /* CCNodeColor.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCNodeColor.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		E35DBB8414F225D30070A6E4 /* CCLayerColor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCLayerColor-Info.plist"; sourceTree = "<group>"; };
 		E35DBB8614F225D30070A6E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E35DBB8814F225D30070A6E4 /* CCLayerColor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCLayerColor-Prefix.pch"; sourceTree = "<group>"; };
 		E35DBB8F14F226560070A6E4 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
-		E35DBB9814F244BB0070A6E4 /* CCLayerGradient.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCLayerGradient.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		E35DBB9814F244BB0070A6E4 /* CCNodeGradient.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCNodeGradient.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		E35DBB9C14F244BC0070A6E4 /* CCLayerGradient-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCLayerGradient-Info.plist"; sourceTree = "<group>"; };
 		E35DBB9E14F244BC0070A6E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E35DBBA014F244BC0070A6E4 /* CCLayerGradient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCLayerGradient-Prefix.pch"; sourceTree = "<group>"; };
@@ -2474,8 +2474,8 @@
 				7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */,
 				E3B7AEC514E3193500DFD402 /* CCNode.ccbPlugNode */,
 				E3C365EB14E9E4D1007CD5FF /* CCSprite.ccbPlugNode */,
-				E35DBB8014F225D30070A6E4 /* CCLayerColor.ccbPlugNode */,
-				E35DBB9814F244BB0070A6E4 /* CCLayerGradient.ccbPlugNode */,
+				E35DBB8014F225D30070A6E4 /* CCNodeColor.ccbPlugNode */,
+				E35DBB9814F244BB0070A6E4 /* CCNodeGradient.ccbPlugNode */,
 				E35DBBCC14F2AA350070A6E4 /* CCLabelBMFont.ccbPlugNode */,
 				E35DBBE914F3E2390070A6E4 /* CCLabelTTF.ccbPlugNode */,
 				E35DBC0914F4D72B0070A6E4 /* CCParticleSystem.ccbPlugNode */,
@@ -3346,8 +3346,8 @@
 				B7EE69FA1819EE0D00B983FE /* CCLayoutBox */,
 				E3C365ED14E9E4D1007CD5FF /* CCSprite */,
 				B7C3532417F65547005697C1 /* CCSprite9Slice */,
-				E35DBB8214F225D30070A6E4 /* CCLayerColor */,
-				E35DBB9A14F244BC0070A6E4 /* CCLayerGradient */,
+				E35DBB8214F225D30070A6E4 /* CCNodeColor */,
+				E35DBB9A14F244BC0070A6E4 /* CCNodeGradient */,
 				E35DBBCE14F2AA360070A6E4 /* CCLabelBMFont */,
 				E35DBBEB14F3E2390070A6E4 /* CCLabelTTF */,
 				E35DBC0B14F4D72B0070A6E4 /* CCParticleSystem */,
@@ -3425,13 +3425,14 @@
 			name = "Player Connection";
 			sourceTree = "<group>";
 		};
-		E35DBB8214F225D30070A6E4 /* CCLayerColor */ = {
+		E35DBB8214F225D30070A6E4 /* CCNodeColor */ = {
 			isa = PBXGroup;
 			children = (
 				E35DBB8314F225D30070A6E4 /* Supporting Files */,
-				B78AE44917E263B20028BE0B /* CCBPLayerColor.h */,
-				B78AE44A17E263B20028BE0B /* CCBPLayerColor.m */,
+				B78AE44917E263B20028BE0B /* CCBPNodeColor.h */,
+				B78AE44A17E263B20028BE0B /* CCBPNodeColor.m */,
 			);
+			name = CCNodeColor;
 			path = CCLayerColor;
 			sourceTree = "<group>";
 		};
@@ -3447,13 +3448,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		E35DBB9A14F244BC0070A6E4 /* CCLayerGradient */ = {
+		E35DBB9A14F244BC0070A6E4 /* CCNodeGradient */ = {
 			isa = PBXGroup;
 			children = (
 				E35DBB9B14F244BC0070A6E4 /* Supporting Files */,
-				B78AE44C17E263FC0028BE0B /* CCBPLayerGradient.h */,
-				B78AE44D17E263FC0028BE0B /* CCBPLayerGradient.m */,
+				B78AE44C17E263FC0028BE0B /* CCBPNodeGradient.h */,
+				B78AE44D17E263FC0028BE0B /* CCBPNodeGradient.m */,
 			);
+			name = CCNodeGradient;
 			path = CCLayerGradient;
 			sourceTree = "<group>";
 		};
@@ -4182,9 +4184,9 @@
 			productReference = B7EE69F81819EE0D00B983FE /* CCLayoutBox.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E35DBB7F14F225D30070A6E4 /* CCLayerColor */ = {
+		E35DBB7F14F225D30070A6E4 /* CCNodeColor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E35DBB8914F225D30070A6E4 /* Build configuration list for PBXNativeTarget "CCLayerColor" */;
+			buildConfigurationList = E35DBB8914F225D30070A6E4 /* Build configuration list for PBXNativeTarget "CCNodeColor" */;
 			buildPhases = (
 				E35DBB7C14F225D30070A6E4 /* Sources */,
 				E35DBB7D14F225D30070A6E4 /* Frameworks */,
@@ -4194,14 +4196,14 @@
 			);
 			dependencies = (
 			);
-			name = CCLayerColor;
+			name = CCNodeColor;
 			productName = CCLayerColor;
-			productReference = E35DBB8014F225D30070A6E4 /* CCLayerColor.ccbPlugNode */;
+			productReference = E35DBB8014F225D30070A6E4 /* CCNodeColor.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E35DBB9714F244BB0070A6E4 /* CCLayerGradient */ = {
+		E35DBB9714F244BB0070A6E4 /* CCNodeGradient */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E35DBBA114F244BC0070A6E4 /* Build configuration list for PBXNativeTarget "CCLayerGradient" */;
+			buildConfigurationList = E35DBBA114F244BC0070A6E4 /* Build configuration list for PBXNativeTarget "CCNodeGradient" */;
 			buildPhases = (
 				E35DBB9414F244BB0070A6E4 /* Sources */,
 				E35DBB9514F244BB0070A6E4 /* Frameworks */,
@@ -4211,9 +4213,9 @@
 			);
 			dependencies = (
 			);
-			name = CCLayerGradient;
+			name = CCNodeGradient;
 			productName = CCLayerGradient;
-			productReference = E35DBB9814F244BB0070A6E4 /* CCLayerGradient.ccbPlugNode */;
+			productReference = E35DBB9814F244BB0070A6E4 /* CCNodeGradient.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		E35DBBCB14F2AA350070A6E4 /* CCLabelBMFont */ = {
@@ -4387,8 +4389,8 @@
 				B7EE69F71819EE0D00B983FE /* CCLayoutBox */,
 				E3C365EA14E9E4D1007CD5FF /* CCSprite */,
 				B7C3532117F65547005697C1 /* CCSprite9Slice */,
-				E35DBB7F14F225D30070A6E4 /* CCLayerColor */,
-				E35DBB9714F244BB0070A6E4 /* CCLayerGradient */,
+				E35DBB7F14F225D30070A6E4 /* CCNodeColor */,
+				E35DBB9714F244BB0070A6E4 /* CCNodeGradient */,
 				E35DBBCB14F2AA350070A6E4 /* CCLabelBMFont */,
 				E35DBBE814F3E2390070A6E4 /* CCLabelTTF */,
 				E35DBC0814F4D72B0070A6E4 /* CCParticleSystem */,
@@ -5261,7 +5263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B78AE44B17E263B20028BE0B /* CCBPLayerColor.m in Sources */,
+				B78AE44B17E263B20028BE0B /* CCBPNodeColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5269,7 +5271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B78AE44E17E263FC0028BE0B /* CCBPLayerGradient.m in Sources */,
+				B78AE44E17E263FC0028BE0B /* CCBPNodeGradient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5393,12 +5395,12 @@
 		};
 		E35DBB8E14F226230070A6E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E35DBB7F14F225D30070A6E4 /* CCLayerColor */;
+			target = E35DBB7F14F225D30070A6E4 /* CCNodeColor */;
 			targetProxy = E35DBB8D14F226230070A6E4 /* PBXContainerItemProxy */;
 		};
 		E35DBBA514F244FA0070A6E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E35DBB9714F244BB0070A6E4 /* CCLayerGradient */;
+			target = E35DBB9714F244BB0070A6E4 /* CCNodeGradient */;
 			targetProxy = E35DBBA414F244FA0070A6E4 /* PBXContainerItemProxy */;
 		};
 		E35DBBD914F2AA720070A6E4 /* PBXTargetDependency */ = {
@@ -7100,7 +7102,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E35DBB8914F225D30070A6E4 /* Build configuration list for PBXNativeTarget "CCLayerColor" */ = {
+		E35DBB8914F225D30070A6E4 /* Build configuration list for PBXNativeTarget "CCNodeColor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E35DBB8A14F225D30070A6E4 /* Debug */,
@@ -7109,7 +7111,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E35DBBA114F244BC0070A6E4 /* Build configuration list for PBXNativeTarget "CCLayerGradient" */ = {
+		E35DBBA114F244BC0070A6E4 /* Build configuration list for PBXNativeTarget "CCNodeGradient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E35DBBA214F244BC0070A6E4 /* Debug */,

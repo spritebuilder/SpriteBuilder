@@ -6,9 +6,9 @@
 //
 //
 
-#import "CCBPLayerColor.h"
+#import "CCBPNodeColor.h"
 
-@implementation CCBPLayerColor
+@implementation CCBPNodeColor
 
 - (id) init
 {

@@ -3,19 +3,19 @@
 <plist version="1.0">
 <dict>
 	<key>displayName</key>
-	<string>Layer Gradient</string>
+	<string>Gradient Node</string>
 	<key>ordering</key>
 	<integer>5000</integer>
 	<key>description</key>
-	<string>A layer filled with a gradient.</string>
+	<string>Draws a square area filled with a gradient.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
 	<true/>
 	<key>className</key>
-	<string>CCLayerGradient</string>
+	<string>CCNodeGradient</string>
 	<key>editorClassName</key>
-	<string>CCBPLayerGradient</string>
+	<string>CCBPNodeGradient</string>
 	<key>spriteFrameDrop</key>
 	<dict>
 		<key>className</key>
@@ -43,9 +43,9 @@
 	<array>
 		<dict>
 			<key>displayName</key>
-			<string>CCLayerGradient</string>
+			<string>CCNodeGradient</string>
 			<key>name</key>
-			<string>CCLayerGradient</string>
+			<string>CCNodeGradient</string>
 			<key>type</key>
 			<string>Separator</string>
 			<key>dontSetInEditor</key>

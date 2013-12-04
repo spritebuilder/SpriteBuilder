@@ -6,9 +6,9 @@
 //
 //
 
-#import "CCBPLayerGradient.h"
+#import "CCBPNodeGradient.h"
 
-@implementation CCBPLayerGradient
+@implementation CCBPNodeGradient
 
 - (id) init
 {
