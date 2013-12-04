@@ -69,13 +69,12 @@
 
 -(void)setContentScale:(float)_contentScale
 {
-//	NSAssert(_contentScale > 0.0, @"contentScale must be positive.");
+	NSAssert(_contentScale > 0.0, @"contentScale must be positive.");
 	
-	// TODO this is a temporary workaround for "layer" ccb files setting a contentScale of 0.
-	if(_contentScale <= 0.0){
-		NSLog(@"WARNING: contentScale must be positive. (1.0 was substituted for %f)", _contentScale);
-		_contentScale = 1.0;
-	}
+//	if(_contentScale <= 0.0){
+//		NSLog(@"WARNING: contentScale must be positive. (1.0 was substituted for %f)", _contentScale);
+//		_contentScale = 1.0;
+//	}
 	
 	contentScale = _contentScale;
 }
@@ -88,7 +87,7 @@
     [dict setObject:[NSNumber numberWithInt:width] forKey:@"width"];
     [dict setObject:[NSNumber numberWithInt:height] forKey:@"height"];
     [dict setObject:ext forKey:@"ext"];
-    [dict setObject:[NSNumber numberWithFloat:scale] forKey:@"scale"];
+    [dict setObject:[NSNumber numberWithFloat:contentScale] forKey:@"scale"];
     [dict setObject:[NSNumber numberWithBool:centeredOrigin] forKey:@"centeredOrigin"];
     
     return dict;

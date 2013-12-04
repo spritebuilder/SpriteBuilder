@@ -31,7 +31,6 @@
     int width;
     int height;
     NSString* ext;
-    float scale;
     BOOL centeredOrigin;
     NSArray* exts;
 }
