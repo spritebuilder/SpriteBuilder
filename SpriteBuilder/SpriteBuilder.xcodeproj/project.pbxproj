@@ -184,6 +184,12 @@
 		B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E23180CD98E00164A8A /* doc-scene@2x.png */; };
 		B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E24180CD98E00164A8A /* doc-sprite.png */; };
 		B7096E2E180CD98E00164A8A /* doc-sprite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7096E25180CD98E00164A8A /* doc-sprite@2x.png */; };
+		B71706CD184ECD660081720A /* select-crosshair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706C7184ECD660081720A /* select-crosshair@2x.png */; };
+		B71706CE184ECD660081720A /* select-move.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706C8184ECD660081720A /* select-move.png */; };
+		B71706CF184ECD660081720A /* select-move@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706C9184ECD660081720A /* select-move@2x.png */; };
+		B71706D0184ECD660081720A /* select-rotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706CA184ECD660081720A /* select-rotation@2x.png */; };
+		B71706D1184ECD660081720A /* select-scale@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706CB184ECD660081720A /* select-scale@2x.png */; };
+		B71706D2184ECD660081720A /* select-skew@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706CC184ECD660081720A /* select-skew@2x.png */; };
 		B729AC53181F091800BA0D9C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B729AC59181F091800BA0D9C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B729AC57181F091800BA0D9C /* InfoPlist.strings */; };
 		B729AC65181F0B5000BA0D9C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B729AC62181F0B5000BA0D9C /* CCBPProperties.plist */; };
@@ -1144,6 +1150,12 @@
 		B7096E23180CD98E00164A8A /* doc-scene@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-scene@2x.png"; sourceTree = "<group>"; };
 		B7096E24180CD98E00164A8A /* doc-sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-sprite.png"; sourceTree = "<group>"; };
 		B7096E25180CD98E00164A8A /* doc-sprite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-sprite@2x.png"; sourceTree = "<group>"; };
+		B71706C7184ECD660081720A /* select-crosshair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-crosshair@2x.png"; sourceTree = "<group>"; };
+		B71706C8184ECD660081720A /* select-move.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-move.png"; sourceTree = "<group>"; };
+		B71706C9184ECD660081720A /* select-move@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-move@2x.png"; sourceTree = "<group>"; };
+		B71706CA184ECD660081720A /* select-rotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-rotation@2x.png"; sourceTree = "<group>"; };
+		B71706CB184ECD660081720A /* select-scale@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-scale@2x.png"; sourceTree = "<group>"; };
+		B71706CC184ECD660081720A /* select-skew@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-skew@2x.png"; sourceTree = "<group>"; };
 		B729AC52181F091800BA0D9C /* CCSlider.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCSlider.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B729AC56181F091800BA0D9C /* CCSlider-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCSlider-Info.plist"; sourceTree = "<group>"; };
 		B729AC58181F091800BA0D9C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2265,6 +2277,12 @@
 		776041EF1498FCE50078095D /* Stage Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B71706C7184ECD660081720A /* select-crosshair@2x.png */,
+				B71706C8184ECD660081720A /* select-move.png */,
+				B71706C9184ECD660081720A /* select-move@2x.png */,
+				B71706CA184ECD660081720A /* select-rotation@2x.png */,
+				B71706CB184ECD660081720A /* select-scale@2x.png */,
+				B71706CC184ECD660081720A /* select-skew@2x.png */,
 				800C005E1846A40D00544BD2 /* select-scale.png */,
 				800C006F1848178D00544BD2 /* select-crosshair.png */,
 				80E158A018441FF1007242F6 /* select-skew.png */,
@@ -4438,6 +4456,7 @@
 				80B149C5183D4D420085935B /* seq-keyframe-x4.png in Resources */,
 				80F90905183C188400A714FC /* seq-visible-faint.png in Resources */,
 				8045F136183ADA900082BD94 /* seq-visible.png in Resources */,
+				B71706D0184ECD660081720A /* select-rotation@2x.png in Resources */,
 				8045F137183ADA900082BD94 /* seq-notset.png in Resources */,
 				8045F138183ADA900082BD94 /* seq-locked.png in Resources */,
 				80FBACCD183423F800C4BB69 /* inspector-warning@2x.png in Resources */,
@@ -4445,6 +4464,7 @@
 				80E95C5A1836E44900D864CA /* select-locked.png in Resources */,
 				80FBACD91834553000C4BB69 /* visible-icon.png in Resources */,
 				A77EF594171FD3B200451DA4 /* cwebp in Resources */,
+				B71706CD184ECD660081720A /* select-crosshair@2x.png in Resources */,
 				7789ABCD133AA82000CEFCC7 /* InfoPlist.strings in Resources */,
 				7789ABD3133AA82000CEFCC7 /* Credits.rtf in Resources */,
 				7789ABD9133AA82000CEFCC7 /* MainMenu.xib in Resources */,
@@ -4481,6 +4501,7 @@
 				77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */,
 				B75CB46618468FA70036259F /* seq-btn-loop@2x.png in Resources */,
 				776C68911388107400153214 /* missing-font.fnt in Resources */,
+				B71706D1184ECD660081720A /* select-scale@2x.png in Resources */,
 				776C68921388107400153214 /* missing-font.png in Resources */,
 				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
 				776C6896138874C200153214 /* dsa_pub.pem in Resources */,
@@ -4503,6 +4524,7 @@
 				E3FEA8B614E4929300119FBE /* InspectorScaleLock.xib in Resources */,
 				E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */,
 				E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */,
+				B71706D2184ECD660081720A /* select-skew@2x.png in Resources */,
 				E3B4221314E4A350004547D6 /* InspectorCheck.xib in Resources */,
 				E3B4221814E4BE6B004547D6 /* InspectorSpriteFrame.xib in Resources */,
 				E3B4221D14E58C35004547D6 /* InspectorByte.xib in Resources */,
@@ -4511,6 +4533,7 @@
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
 				E3B4223414E5E68B004547D6 /* InspectorSeparator.xib in Resources */,
 				A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */,
+				B71706CE184ECD660081720A /* select-move.png in Resources */,
 				E32D8CC514EC257000F4BD5E /* InspectorCodeConnections.xib in Resources */,
 				E35DBBBF14F29E9D0070A6E4 /* InspectorFntFile.xib in Resources */,
 				E35DBBC414F2A2900070A6E4 /* InspectorText.xib in Resources */,
@@ -4609,6 +4632,7 @@
 				E3214C4115D3BF4D002413A7 /* CustomPropSettingsWindow.xib in Resources */,
 				E3214C4C15D40F01002413A7 /* InspectorCustom.xib in Resources */,
 				E3214C5E15D54356002413A7 /* InspectorCustomEdit.xib in Resources */,
+				B71706CF184ECD660081720A /* select-move@2x.png in Resources */,
 				E3B7BC9C15E3B7F100CF95EF /* NodePlugInsList.plist in Resources */,
 				E3B7BCBE15E505CC00CF95EF /* TB_plugins.png in Resources */,
 				E3B19F6D15E65229000B023E /* DefaultResourcesList.plist in Resources */,
