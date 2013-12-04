@@ -215,12 +215,15 @@
     
     
     // Draw background
-    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y+row*cellFrame.size.height, cellFrame.size.width, cellFrame.size.height);
+    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y + row*kCCBSeqDefaultRowHeight, cellFrame.size.width, kCCBSeqAudioRowHeight);
     
     if (isChannel)
     {
+        rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y + cellFrame.size.height - kCCBSeqDefaultRowHeight, cellFrame.size.width, kCCBSeqDefaultRowHeight);
+
+        
         [imgRowBgChannel drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-    } 
+    }
     else if (row == 0)
     {
         [imgRowBg0 drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
