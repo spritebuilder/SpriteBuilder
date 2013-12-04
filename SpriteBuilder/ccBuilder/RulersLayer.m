@@ -35,9 +35,6 @@
 {
 	[self removeAllChildren];
 	
-	CGFloat scale = CC_CONTENT_SCALE_FACTOR();
-	NSLog(@"Rulers setup. scale:%f", scale);
-	
 	// Flush the textures out of the cache since you can't easily load them externally.
 	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"ruler-bg-vertical.png"];
 	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"ruler-bg-horizontal.png"];
@@ -77,8 +74,8 @@
 	[self addChild:xyBg z:5];
 	xyBg.anchorPoint = ccp(0,0);
 	xyBg.position = ccp(0,0);
-	NSLog(@"xy size: (%f, %f)", xyBg.contentSize.width, xyBg.contentSize.height);
 	
+	CGFloat scale = CC_CONTENT_SCALE_FACTOR();
 	lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
 	lblX.anchorPoint = ccp(1,0);
 	lblX.position = ccp(47/scale,3/scale);

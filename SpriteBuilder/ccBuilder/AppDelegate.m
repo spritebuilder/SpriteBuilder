@@ -3180,7 +3180,6 @@ static BOOL hideAllToNextSeparator;
 - (void) updatePositionScaleFactor
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
-    NSLog(@"scale set to %f", res.scale);
 		
     [CCDirector sharedDirector].contentScaleFactor = res.scale;
     [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
