@@ -76,7 +76,7 @@
     return NULL;
 }
 
-- (void) addDefaultKeyframeAtTime:(float)t
+- (SequencerKeyframe*) addDefaultKeyframeAtTime:(float)t
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*addchannelkeyframe"];
     
@@ -85,6 +85,7 @@
     [self.seqNodeProp setKeyframe:kf];
     
     kf.time = t;
+    return kf;
 }
 
 - (NSArray*) keyframesAtTime:(float)t

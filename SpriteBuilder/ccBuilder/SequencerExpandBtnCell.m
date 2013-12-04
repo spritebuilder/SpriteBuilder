@@ -106,14 +106,11 @@
         imagesLoaded = YES;
     }
     
-    if (!node)
+    if (!node )
     {
-        NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y, cellFrame.size.width, kCCBSeqDefaultRowHeight);
+        NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y + cellFrame.size.height - kCCBSeqDefaultRowHeight, cellFrame.size.width, kCCBSeqDefaultRowHeight);
         [imgRowBgChannel drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-        //[super drawWithFrame:cellFrame inView:controlView];
-        return;
     }
-    
     
     if (canExpand)
     {

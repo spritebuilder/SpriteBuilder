@@ -80,7 +80,7 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
-	<string>http://spritebuilder.org/downloads/updates.xml</string>
+	<string>http://update.spritebuilder.com</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 </dict>

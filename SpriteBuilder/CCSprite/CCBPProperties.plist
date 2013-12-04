@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<string>2000</string>
+	<integer>6000</integer>
 	<key>displayName</key>
 	<string>Sprite</string>
 	<key>description</key>

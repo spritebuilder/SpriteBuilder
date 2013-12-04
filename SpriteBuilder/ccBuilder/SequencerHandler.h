@@ -26,6 +26,7 @@
 #import "cocos2d.h"
 
 #define kCCBSeqDefaultRowHeight 16
+#define kCCBSeqAudioRowHeight 64
 #define kCCBDefaultTimelineScale 128
 #define kCCBTimelineScaleLowBound 64
 
@@ -53,6 +54,7 @@
 }
 
 @property (nonatomic,assign) BOOL dragAndDropEnabled;
+@property (nonatomic,assign) BOOL loopPlayback;
 
 @property (nonatomic,retain) SequencerSequence* currentSequence;
 @property (nonatomic,retain) SequencerScrubberSelectionView* scrubberSelectionView;

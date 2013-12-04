@@ -79,6 +79,7 @@
 #import "SequencerStretchWindow.h"
 #import "SequencerSoundChannel.h"
 #import "SequencerCallbackChannel.h"
+#import "SoundFileImageController.h"
 #import "CustomPropSettingsWindow.h"
 #import "CustomPropSetting.h"
 #import "MainToolbarDelegate.h"
@@ -108,6 +109,7 @@
 #import "CCLabelBMFont_Private.h"
 #import "WarningOutlineHandler.h"
 #import "CCNode+NodeInfo.h"
+#import "UsageManager.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
@@ -224,8 +226,15 @@ void ApplyCustomNodeVisitSwizzle()
     sequenceHandler.scroller = timelineScroller;
     sequenceHandler.scrollView = sequenceScrollView;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSoundImages:) name:kSoundFileImageLoaded object:nil];
+    
     [self updateTimelineMenu];
     [sequenceHandler updateScaleSlider];
+}
+
+-(void)updateSoundImages:(NSNotification*)notice
+{
+    [outlineHierarchy reloadData];
 }
 
 - (void) setupTabBar
@@ -470,6 +479,9 @@ void ApplyCustomNodeVisitSwizzle()
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
     [self.window center];
+    
+    UsageManager* usageManager = [[[UsageManager alloc] init] autorelease];
+    [usageManager registerUsage];
     
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
@@ -1063,6 +1075,20 @@ static BOOL hideAllToNextSeparator;
     [inspectorCodeDocumentView setFrameSize:NSMakeSize([inspectorCodeScroll contentSize].width, paneCodeOffset)];
     
     [propertyInspectorHandler updateTemplates];
+    
+    //Undocumented function that resets the KeyViewLoop.
+    if([inspectorDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    {
+        [inspectorDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+    }
+    
+    //Undocumented function that resets the KeyViewLoop.
+    if([inspectorCodeDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    {
+        [inspectorCodeDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+    }
+    
+
 }
 
 #pragma mark Populating menus
@@ -4359,22 +4385,36 @@ static BOOL hideAllToNextSeparator;
         
         double thisTime = [NSDate timeIntervalSinceReferenceDate];
         double deltaTime = thisTime - playbackLastFrameTime;
-        double updateDelta = 1.0/sequenceHandler.currentSequence.timelineResolution;
+        double frameDelta = 1.0/sequenceHandler.currentSequence.timelineResolution;
+        float targetNewTime =  sequenceHandler.currentSequence.timelinePosition + deltaTime;
         
-        int steps = (int)(deltaTime/updateDelta);
+        int steps = (int)(deltaTime/frameDelta);
+        
+        //determine new time in to the future.
+        
         [sequenceHandler.currentSequence stepForward:steps];
         
         if (sequenceHandler.currentSequence.timelinePosition >= sequenceHandler.currentSequence.timelineLength)
         {
-            [self playbackStop:NULL];
+            //If we loop, calulate the overhang
+            if(targetNewTime >= sequenceHandler.currentSequence.timelinePosition && sequenceHandler.loopPlayback)
+            {
+                [self playbackJumpToStart:nil];
+                steps = (int)((targetNewTime - sequenceHandler.currentSequence.timelineLength)/frameDelta);
+                [sequenceHandler.currentSequence stepForward:steps];
+            }
+            else
+            {
+                [self playbackStop:NULL];
+                return;
+            }
         }
-        else
-        {
-            playbackLastFrameTime += steps * updateDelta;
-            
-            // Call this method again in a little while
-            [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:updateDelta];
-        }
+    
+        playbackLastFrameTime += steps * frameDelta;
+        
+        // Call this method again in a little while
+        [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:frameDelta];
+        
     }
 }
 
@@ -4389,6 +4429,10 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+- (IBAction)toggleLoopingPlayback:(id)sender
+{
+    sequenceHandler.loopPlayback = [(NSButton*)sender state] == 1 ? YES : NO;
+}
 
 - (IBAction)playbackPlay:(id)sender
 {
@@ -4418,6 +4462,7 @@ static BOOL hideAllToNextSeparator;
 - (IBAction)playbackJumpToStart:(id)sender
 {
     if (!self.hasOpenedDocument) return;
+    playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
     sequenceHandler.currentSequence.timelinePosition = 0;
     [[SequencerHandler sharedHandler] updateScrollerToShowCurrentTime];
 }

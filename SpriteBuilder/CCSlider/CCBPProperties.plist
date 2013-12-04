@@ -5,7 +5,7 @@
 	<key>displayName</key>
 	<string>Slider</string>
 	<key>ordering</key>
-	<integer>4010</integer>
+	<integer>13000</integer>
 	<key>description</key>
 	<string>Allows the user to visually select a value</string>
 	<key>inheritsFrom</key>

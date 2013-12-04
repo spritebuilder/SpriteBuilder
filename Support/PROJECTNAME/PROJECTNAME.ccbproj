@@ -146,8 +146,6 @@
 		</dict>
 		<key>ccbResources/ccbSliderBgHighlighted.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -155,8 +153,6 @@
 		</dict>
 		<key>ccbResources/ccbSliderBgNormal.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -164,8 +160,6 @@
 		</dict>
 		<key>ccbResources/ccbSliderHandle.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -173,8 +167,6 @@
 		</dict>
 		<key>ccbResources/ccbTextField.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -184,8 +176,8 @@
 	<key>tabletPositionScaleFactorType</key>
 	<integer>0</integer>
 	<key>versionStr</key>
-	<string>Version: 0.6.beta.3
-GitHub: 373b56e331
+	<string>Version: 0.9.alpha.0
+GitHub: ec29554101
 </string>
 </dict>
 </plist>

@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>description</key>
-	<string>Incorporates another CocosBuilder interface file.</string>
+	<string>Incorporates another SpriteBuilder interface file.</string>
 	<key>ordering</key>
-	<integer>7000</integer>
+	<integer>2000</integer>
 	<key>displayName</key>
-	<string>Interface File</string>
+	<string>Sub File</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>

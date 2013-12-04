@@ -5,7 +5,7 @@
 	<key>displayName</key>
 	<string>Label TTF</string>
 	<key>ordering</key>
-	<integer>3010</integer>
+	<integer>9000</integer>
 	<key>description</key>
 	<string>Displays a true type font label.</string>
 	<key>inheritsFrom</key>

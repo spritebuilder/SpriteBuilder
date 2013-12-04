@@ -53,7 +53,7 @@
 - (void) enableSequenceNodeProperty:(NSString*)name sequenceId:(int)seqId;
 
 - (void) addKeyframe:(SequencerKeyframe*)keyframe forProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId;
-- (void) addDefaultKeyframeForProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId;
+- (SequencerKeyframe*) addDefaultKeyframeForProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId;
 - (void) duplicateKeyframesFromSequenceId:(int)fromSeqId toSequenceId:(int)toSeqId;
 
 - (void) deselectAllKeyframes;

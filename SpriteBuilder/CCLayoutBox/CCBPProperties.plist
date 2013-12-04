@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<string>1050</string>
+	<integer>15000</integer>
 	<key>displayName</key>
 	<string>Box Layout</string>
 	<key>description</key>

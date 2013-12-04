@@ -25,6 +25,18 @@
 #import <Foundation/Foundation.h>
 #import "SequencerChannel.h"
 
+enum
+{
+    kSoundChannelKeyFrameName,
+    kSoundChannelKeyFramePitch,
+    kSoundChannelKeyFramePan,
+    kSoundChannelKeyFrameGain
+};
+
 @interface SequencerSoundChannel : SequencerChannel
+
+@property (nonatomic) BOOL isEpanded;
+@property (nonatomic) BOOL needDragAndDropRedraw;
+@property (nonatomic) float dragAndDropTimeStamp;
 
 @end

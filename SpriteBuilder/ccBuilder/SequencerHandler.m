@@ -61,6 +61,7 @@ static SequencerHandler* sharedSequencerHandler;
 @synthesize scroller;
 @synthesize scrollView;
 @synthesize contextKeyframe;
+@synthesize loopPlayback;
 
 #pragma mark Init and singleton object
 
@@ -78,7 +79,7 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy setDelegate:self];
     [outlineHierarchy reloadData];
     
-    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", NULL]];
+    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode",@"com.cocosbuilder.wav", NULL]];
     
     [[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
@@ -435,8 +436,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     else
     {
-        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES
-         ];
+        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
     }
     return YES;
 }
@@ -466,32 +466,67 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (item == NULL) return NSDragOperationNone;
+    if (item == NULL)
+        return NSDragOperationNone;
     
-    if (![item isKindOfClass:[CCNode class]]) return NSDragOperationNone;
     
     CCBGlobals* g = [CCBGlobals globals];
     NSPasteboard* pb = [info draggingPasteboard];
     
-    NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
-    if (nodeData)
+    if ([item isKindOfClass:[CCNode class]])
     {
-        NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
-        CCNode* draggedNode = (CCNode*)[[clipDict objectForKey:@"srcNode"] longLongValue];
-        
-        CCNode* node = item;
-        CCNode* parent = [node parent];
-        while (parent && parent != g.rootNode)
+        NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
+        if (nodeData)
         {
-            if (parent == draggedNode) return NSDragOperationNone;
-            parent = [parent parent];
+            NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
+            CCNode* draggedNode = (CCNode*)[[clipDict objectForKey:@"srcNode"] longLongValue];
+            
+            CCNode* node = item;
+            CCNode* parent = [node parent];
+            while (parent && parent != g.rootNode)
+            {
+                if (parent == draggedNode) return NSDragOperationNone;
+                parent = [parent parent];
+            }
+            
+            return NSDragOperationGeneric;
         }
         
-        return NSDragOperationGeneric;
+    }
+    
+    // Dropped WavFile;
+    NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
+    
+    if(pbWavs.count != 0)
+    {
+        if([item isKindOfClass:[SequencerSoundChannel class]])
+        {
+            // Dropped WavFile;
+            for (NSDictionary* dict in pbWavs)
+            {
+                NSPoint mouseLocationInWindow = info.draggingLocation;
+                NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
+                
+                currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:mouseLocation.x];
+                
+                currentSequence.soundChannel.needDragAndDropRedraw = YES;
+                [scrubberSelectionView setNeedsDisplay:YES];
+            
+                return NSDragOperationGeneric;
+            }
+        }
+        else
+            return NSDragOperationNone;
+    }
+    
+    if([item isKindOfClass:[SequencerSoundChannel class]] || [item isKindOfClass:[SequencerCallbackChannel class]] )
+    {
+        return NSDragOperationNone;//Restrict drag and drop
     }
     
     return NSDragOperationGeneric;
 }
+
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
@@ -524,6 +559,22 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
         //[PositionPropertySetter refreshAllPositions];
+        addedObject = YES;
+    }
+    
+    // Dropped WavFile;
+    NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
+    for (NSDictionary* dict in pbWavs)
+    {
+        NSPoint mouseLocationInWindow = info.draggingLocation;
+        NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
+
+        //Create Keyframe
+        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:mouseLocation.x]];
+        NSMutableArray* newArr = [NSMutableArray arrayWithArray:keyFrame.value];
+        [newArr replaceObjectAtIndex:kSoundChannelKeyFrameName withObject:dict[@"wavFile"]];
+        keyFrame.value = newArr;
+
         addedObject = YES;
     }
     
@@ -561,7 +612,11 @@ static SequencerHandler* sharedSequencerHandler;
     }
     else if ([item isKindOfClass:[SequencerSoundChannel class]])
     {
-        return kCCBSeqDefaultRowHeight;//+1;
+        SequencerSoundChannel * channel = item;
+        if(!channel.isEpanded)
+            return kCCBSeqDefaultRowHeight;
+        else
+            return kCCBSeqAudioRowHeight;//+1;
     }
     
     CCNode* node = item;
@@ -587,9 +642,20 @@ static SequencerHandler* sharedSequencerHandler;
         if ([tableColumn.identifier isEqualToString:@"expander"])
         {
             SequencerExpandBtnCell* expCell = cell;
-            expCell.isExpanded = NO;
-            expCell.canExpand = NO;
             expCell.node = NULL;
+            
+            if ([item isKindOfClass:[SequencerCallbackChannel class]])
+            {
+                expCell.isExpanded = NO;
+                expCell.canExpand = NO;
+            }
+            else if ([item isKindOfClass:[SequencerSoundChannel class]])
+            {
+                SequencerSoundChannel * soundChannel = item;
+                
+                expCell.isExpanded = soundChannel.isEpanded;
+                expCell.canExpand = YES;
+            }
         }
         else if ([tableColumn.identifier isEqualToString:@"structure"])
         {
@@ -638,18 +704,16 @@ static SequencerHandler* sharedSequencerHandler;
     {
         SequencerButtonCell * buttonCell = cell;
         buttonCell.node = node;
+        [buttonCell setTransparent:NO];
         
         if(node.parentHidden)
         {
             [buttonCell setEnabled:NO];
-            [buttonCell setTransparent:YES];
         }
         else
         {
             [buttonCell setEnabled:YES];
-            [buttonCell setTransparent:NO];
         }
-        
     }
     
     
@@ -700,17 +764,26 @@ static SequencerHandler* sharedSequencerHandler;
 {
     id item = [outlineHierarchy itemAtRow:row];
     
-    if ([item isKindOfClass:[SequencerChannel class]])
+    if ([item isKindOfClass:[SequencerCallbackChannel class]])
     {
         return;
     }
-    
-    CCNode* node = item;
-    
-    if (node == [CocosScene cocosScene].rootNode && !node.seqExpanded) return;
-    //if ([NSStringFromClass(node.class) isEqualToString:@"CCBPCCBFile"] && !node.seqExpanded) return;
-    
-    node.seqExpanded = !node.seqExpanded;
+    else if([item isKindOfClass:[SequencerSoundChannel class]])
+    {
+        SequencerSoundChannel * soundChannel = item;
+        soundChannel.isEpanded = !soundChannel.isEpanded;
+    }
+    else
+    {
+        CCNode* node = item;
+        
+        if (node == [CocosScene cocosScene].rootNode && !node.seqExpanded)
+            return;
+        
+        //if ([NSStringFromClass(node.class) isEqualToString:@"CCBPCCBFile"] && !node.seqExpanded) return;
+        
+        node.seqExpanded = !node.seqExpanded;
+    }
     
     // Need to reload all data when changing heights of rows
     [outlineHierarchy reloadData];

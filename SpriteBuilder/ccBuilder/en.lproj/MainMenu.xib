@@ -458,21 +458,25 @@ CA
                                 <menu key="submenu" title="Nudge" id="1089" userLabel="Menu - Nudge">
                                     <items>
                                         <menuItem title="Left" keyEquivalent="" id="1090">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1095"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Right" tag="1" keyEquivalent="" id="1091">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1094"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Up" tag="2" keyEquivalent="" id="1092">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1096"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Down" tag="3" keyEquivalent="" id="1093">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNudgeObject:" target="494" id="1097"/>
                                             </connections>
@@ -485,25 +489,25 @@ CA
                                 <menu key="submenu" title="Move" id="1108" userLabel="Menu - Nudge">
                                     <items>
                                         <menuItem title="Left" keyEquivalent="" id="1112">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1118"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Right" tag="1" keyEquivalent="" id="1111">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1119"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Up" tag="2" keyEquivalent="" id="1110">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1120"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Down" tag="3" keyEquivalent="" id="1109">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                             <connections>
                                                 <action selector="menuMoveObject:" target="494" id="1121"/>
                                             </connections>
@@ -739,7 +743,7 @@ CA
                                                 <action selector="menuAddKeyframe:" target="494" id="1749"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Scale" tag="7" keyEquivalent="s" id="1743">
+                                        <menuItem title="Scale" tag="2" keyEquivalent="s" id="1743">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuAddKeyframe:" target="494" id="1750"/>
@@ -872,12 +876,6 @@ CA
                             <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492">
                                 <connections>
                                     <action selector="showHelp:" target="494" id="1806"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="JavaScript API Documentation" keyEquivalent="?" id="1807">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="showAPIDocs:" target="494" id="1808"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1775"/>
@@ -1295,7 +1293,7 @@ CA
                                         </textFieldCell>
                                     </textField>
                                     <imageView id="1571">
-                                        <rect key="frame" x="216" y="85" width="16" height="9"/>
+                                        <rect key="frame" x="211" y="85" width="16" height="9"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="btn-dropdown-arrows" id="1572"/>
                                     </imageView>
@@ -1305,14 +1303,14 @@ CA
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="btn-dropdown-arrows" id="1663"/>
                                     </imageView>
                                     <imageView id="dPQ-Rb-BA0">
-                                        <rect key="frame" x="256" y="85" width="9" height="12"/>
+                                        <rect key="frame" x="254" y="83" width="15" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="NSLockLockedTemplate" id="oVw-QF-mZA"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="seq-locked" id="oVw-QF-mZA"/>
                                     </imageView>
                                     <imageView id="Leg-Js-aVx">
-                                        <rect key="frame" x="238" y="83" width="11" height="12"/>
+                                        <rect key="frame" x="236" y="83" width="15" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyUpOrDown" image="visible-icon" id="fVq-qx-BCa"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageAlignment="bottomLeft" imageScaling="proportionallyUpOrDown" image="seq-visible" id="fVq-qx-BCa"/>
                                     </imageView>
                                     <imageView id="1664">
                                         <rect key="frame" x="4" y="3" width="8" height="9"/>
@@ -1320,7 +1318,7 @@ CA
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="seq-next-seq" id="1665"/>
                                     </imageView>
                                     <popUpButton verticalHuggingPriority="750" id="1573">
-                                        <rect key="frame" x="-3" y="83" width="297" height="15"/>
+                                        <rect key="frame" x="-3" y="83" width="238" height="15"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <popUpButtonCell key="cell" type="smallSquare" title="Item" bezelStyle="smallSquare" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" transparent="YES" inset="2" pullsDown="YES" id="1574">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1421,7 +1419,7 @@ CA
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
-                                                            <buttonCell key="dataCell" type="bevel" bezelStyle="regularSquare" image="seq-notset" imagePosition="above" alignment="center" alternateImage="seq-visible" controlSize="mini" state="on" inset="2" id="9UQ-CC-5my" customClass="SequencerButtonCell">
+                                                            <buttonCell key="dataCell" type="bevel" bezelStyle="regularSquare" image="seq-visible" imagePosition="above" alignment="center" alternateImage="seq-notset" controlSize="mini" state="on" inset="2" id="9UQ-CC-5my" customClass="SequencerButtonCell">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="miniSystem"/>
                                                                 <connections>
@@ -1502,6 +1500,18 @@ CA
                                             <binding destination="494" name="enabled" keyPath="hasOpenedDocument" id="1649"/>
                                         </connections>
                                     </segmentedControl>
+                                    <button verticalHuggingPriority="750" id="e6M-L5-cKQ">
+                                        <rect key="frame" x="169" y="100" width="36" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="seq-btn-loop" imagePosition="only" borderStyle="border" inset="2" id="KQc-hl-Mig">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="toggleLoopingPlayback:" target="494" id="nJe-Ul-KfI"/>
+                                            <binding destination="494" name="enabled" keyPath="hasOpenedDocument" id="RA9-Q1-oz6"/>
+                                        </connections>
+                                    </button>
                                     <imageView id="1555">
                                         <rect key="frame" x="510" y="100" width="84" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -1572,10 +1582,10 @@ CA
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="line" titlePosition="noTitle" id="1551">
-                                        <rect key="frame" x="234" y="16" width="1" height="66"/>
+                                        <rect key="frame" x="234" y="16" width="1" height="81"/>
                                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                                         <view key="contentView">
-                                            <rect key="frame" x="1" y="1" width="0.0" height="64"/>
+                                            <rect key="frame" x="1" y="1" width="0.0" height="79"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <color key="borderColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
@@ -2062,38 +2072,12 @@ CA
                     </customView>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="6C6ECFE0-CD8C-41C0-A926-B653D69B96E6" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="1224">
+            <toolbar key="toolbar" implicitIdentifier="6C6ECFE0-CD8C-41C0-A926-B653D69B96E6" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="1224">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1358"/>
-                    <toolbarItem implicitItemIdentifier="13E602E1-2514-4F5A-BE05-2AF5460BB7D6" label="Publish" paletteLabel="Publish" id="1306">
+                    <toolbarItem implicitItemIdentifier="192F0C33-B31A-4EB0-B19F-5D6E22DE76FC" label="" paletteLabel="" id="1788">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="45" height="25"/>
-                        <size key="maxSize" width="50" height="25"/>
-                        <segmentedControl key="view" verticalHuggingPriority="750" id="1304">
-                            <rect key="frame" x="0.0" y="14" width="46" height="25"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" alignment="left" style="texturedSquare" trackingMode="momentary" id="1305">
-                                <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment toolTip="Publish" image="TB_build" width="44">
-                                        <nil key="label"/>
-                                    </segment>
-                                </segments>
-                            </segmentedCell>
-                            <connections>
-                                <action selector="pressedPublishTB:" target="494" id="1967"/>
-                                <binding destination="494" name="enabled" keyPath="projectSettings" id="1966">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">NSIsNotNil</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </segmentedControl>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="192F0C33-B31A-4EB0-B19F-5D6E22DE76FC" label="View" paletteLabel="View" id="1788">
-                        <nil key="toolTip"/>
-                        <size key="minSize" width="50" height="23"/>
-                        <size key="maxSize" width="132" height="25"/>
+                        <size key="minSize" width="132" height="23"/>
+                        <size key="maxSize" width="132" height="23"/>
                         <segmentedControl key="view" wantsLayer="YES" verticalHuggingPriority="750" id="1786">
                             <rect key="frame" x="0.0" y="14" width="132" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2116,11 +2100,24 @@ CA
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1358"/>
+                    <toolbarItem implicitItemIdentifier="5B441B81-8CFC-4E92-9164-E5FEC7BE3C84" label="Publish" paletteLabel="Publish" tag="-1" image="TB_build" autovalidates="NO" id="Nkp-mV-yYQ">
+                        <size key="minSize" width="40" height="0.0"/>
+                        <size key="maxSize" width="40" height="0.0"/>
+                        <connections>
+                            <action selector="menuPublishProject:" target="494" id="4AI-Q3-eEF"/>
+                            <binding destination="494" name="enabled" keyPath="projectSettings" id="DI7-MQ-jtn">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="1306"/>
-                    <toolbarItem reference="1788"/>
+                    <toolbarItem reference="Nkp-mV-yYQ"/>
                     <toolbarItem reference="1358"/>
+                    <toolbarItem reference="1788"/>
                 </defaultToolbarItems>
             </toolbar>
         </window>
@@ -2162,7 +2159,6 @@ CA
                 <outlet property="resourceManagerSplitView" destination="1956" id="1960"/>
                 <outlet property="rightPanel" destination="1795" id="1796"/>
                 <outlet property="scrubberSelectionView" destination="1561" id="1562"/>
-                <outlet property="segmPublishBtn" destination="1304" id="1968"/>
                 <outlet property="sequenceScrollView" destination="566" id="1570"/>
                 <outlet property="splitHorizontalView" destination="1530" id="1793"/>
                 <outlet property="tabBar" destination="1233" id="1234"/>
@@ -2470,15 +2466,15 @@ CA
         </customView>
     </objects>
     <resources>
-        <image name="NSLockLockedTemplate" width="9" height="12"/>
         <image name="NSStopProgressTemplate" width="11" height="11"/>
         <image name="TB_bottomPanel" width="25" height="22"/>
-        <image name="TB_build" width="16" height="16"/>
+        <image name="TB_build" width="32" height="32"/>
         <image name="TB_leftPanel" width="25" height="22"/>
         <image name="TB_plugins" width="36" height="16"/>
         <image name="TB_rightPanel" width="25" height="22"/>
         <image name="btn-dropdown-arrows" width="16" height="9"/>
         <image name="header-bg" width="19" height="17"/>
+        <image name="seq-btn-loop" width="22" height="16"/>
         <image name="seq-btn-play" width="22" height="16"/>
         <image name="seq-btn-restart" width="22" height="16"/>
         <image name="seq-btn-stepback" width="22" height="16"/>
@@ -2492,6 +2488,5 @@ CA
         <image name="seq-timedisplay-bg" width="84" height="24"/>
         <image name="seq-visible" width="15" height="15"/>
         <image name="toolbar-btn-add" width="14" height="14"/>
-        <image name="visible-icon" width="0.52812427282333374" height="0.52812427282333374"/>
     </resources>
 </document>
