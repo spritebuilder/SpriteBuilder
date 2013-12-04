@@ -1187,7 +1187,13 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         //First, unwind the current mouse down position to form an untransformed 'root' position: ie where on an untransformed image would you have clicked.
         CGSize contentSizeInPoints = transformScalingNode.contentSizeInPoints;
         CGPoint anchorPointInPoints = ccp( contentSizeInPoints.width * transformScalingNode.anchorPoint.x, contentSizeInPoints.height * transformScalingNode.anchorPoint.y );
-        CGPoint vertexScaler = [self vertexLockedScaler:transformScalingNode.anchorPoint withCorner:cornerIndex];
+        
+        CGPoint vertexScaler  = {1.0f,1.0f};
+        if(transformScalingNode.contentSize.height != 0 && transformScalingNode.contentSize.height != 0)
+        {
+            vertexScaler = [self vertexLockedScaler:transformScalingNode.anchorPoint withCorner:cornerIndex];
+        }
+       
 
         //T
         CGAffineTransform translateTranform = CGAffineTransformTranslate(CGAffineTransformIdentity, -anchorPointInPoints.x, -anchorPointInPoints.y);
@@ -1255,14 +1261,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         
         //UpdateTheScaleTool
-        CGPoint points[4]; //{bl,br,tr,tl}
-        [self getCornerPointsForNode:transformScalingNode withPoints:points];
-        CGPoint p1 = points[(cornerIndex - 1 + 4) % 4];
-        CGPoint p2 = points[cornerIndex];
-        CGPoint p3 = points[(cornerIndex + 1) % 4];
-        CGPoint segment1 = ccpSub(p2, p1);
-        CGPoint segment2 = ccpSub(p2, p3);
-        cornerOrientation =ccpNormalize(ccpAdd(segment1, segment2));
+        cornerOrientation = ccpNormalize(deltaNew);
         self.currentTool = kCCBToolScale;//force it to update.
 
     }
