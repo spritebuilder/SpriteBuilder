@@ -464,8 +464,8 @@
     }
     else if (type == kCCBScaleTypeMultiplyResolution)
     {
-        absScaleX = scaleX / resolution.contentScale;
-        absScaleY = scaleY / resolution.contentScale;
+        absScaleX = scaleX / resolution.scale;
+        absScaleY = scaleY / resolution.scale;
     }
     
     [node setValue:[NSNumber numberWithFloat:absScaleX] forKey:[prop stringByAppendingString:@"X"]];
@@ -504,7 +504,7 @@
     float absF = f;
     if (type == kCCBScaleTypeMultiplyResolution)
     {
-        absF = f / resolution.contentScale;
+        absF = f / resolution.scale;
     }
     
     [node setValue:[NSNumber numberWithFloat:absF ] forKey:prop];

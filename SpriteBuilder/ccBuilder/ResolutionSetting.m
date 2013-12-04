@@ -31,7 +31,7 @@
 @synthesize width;
 @synthesize height;
 @synthesize ext;
-@synthesize contentScale;
+@synthesize scale;
 @synthesize centeredOrigin;
 @synthesize exts;
 
@@ -45,7 +45,7 @@
     self.width = 1000;
     self.height = 1000;
     self.ext = @" ";
-    self.contentScale = 1;
+    self.scale = 1;
     
     return self;
 }
@@ -61,22 +61,22 @@
     self.height = [[serialization objectForKey:@"height"] intValue];
     self.ext = [serialization objectForKey:@"ext"];
 		// TODO should store separate values for these.
-    self.contentScale = [[serialization objectForKey:@"scale"] floatValue];
+    self.scale = [[serialization objectForKey:@"scale"] floatValue];
     self.centeredOrigin = [[serialization objectForKey:@"centeredOrigin"] boolValue];
     
     return self;
 }
 
--(void)setContentScale:(float)_contentScale
+-(void)setScale:(float)_scale
 {
-	NSAssert(_contentScale > 0.0, @"contentScale must be positive.");
+	NSAssert(_scale > 0.0, @"scale must be positive.");
 	
-//	if(_contentScale <= 0.0){
-//		NSLog(@"WARNING: contentScale must be positive. (1.0 was substituted for %f)", _contentScale);
-//		_contentScale = 1.0;
+//	if(_scale <= 0.0){
+//		NSLog(@"WARNING: scale must be positive. (1.0 was substituted for %f)", _scale);
+//		_scale = 1.0;
 //	}
 	
-	contentScale = _contentScale;
+	scale = _scale;
 }
 
 - (id) serialize
@@ -87,7 +87,7 @@
     [dict setObject:[NSNumber numberWithInt:width] forKey:@"width"];
     [dict setObject:[NSNumber numberWithInt:height] forKey:@"height"];
     [dict setObject:ext forKey:@"ext"];
-    [dict setObject:[NSNumber numberWithFloat:contentScale] forKey:@"scale"];
+    [dict setObject:[NSNumber numberWithFloat:scale] forKey:@"scale"];
     [dict setObject:[NSNumber numberWithBool:centeredOrigin] forKey:@"centeredOrigin"];
     
     return dict;
@@ -127,7 +127,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.contentScale = 1;
+    setting.scale = 1;
     
     return setting;
 }
@@ -184,7 +184,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"tablet phonehd";
-    setting.contentScale = 2;
+    setting.scale = 2;
     
     return setting;
 }
@@ -219,7 +219,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.contentScale = 0.5;
+    setting.scale = 0.5;
     
     return setting;
 }
@@ -254,7 +254,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.contentScale = 1;
+    setting.scale = 1;
     
     return setting;
 }
@@ -289,7 +289,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phone";
-    setting.contentScale = 1.5;
+    setting.scale = 1.5;
     
     return setting;
 }
@@ -324,7 +324,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"phonehd";
-    setting.contentScale = 2;
+    setting.scale = 2;
     
     return setting;
 }
@@ -359,7 +359,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"tablethd";
-    setting.contentScale = 4;
+    setting.scale = 4;
     
     return setting;
 }
@@ -394,7 +394,7 @@
     setting.width = 0;
     setting.height = 0;
     setting.ext = @"html5";
-    setting.contentScale = 2;
+    setting.scale = 2;
     
     return setting;
 }
@@ -436,7 +436,7 @@
     copy.width = width;
     copy.height = height;
     copy.ext = ext;
-    copy.contentScale = contentScale;
+    copy.scale = scale;
     copy.centeredOrigin = centeredOrigin;
     
     return copy;

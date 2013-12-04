@@ -1323,7 +1323,7 @@ static BOOL hideAllToNextSeparator;
 						// TODO not sure if this part is correct or not...
             ResolutionSetting* settingTablet = [settingDefault copy];
             settingTablet.name = @"Tablet";
-            settingTablet.contentScale = projectSettings.tabletPositionScaleFactor;
+            settingTablet.scale = projectSettings.tabletPositionScaleFactor;
             [updatedResolutions addObject:settingTablet];
         }
     }
@@ -3184,9 +3184,9 @@ static BOOL hideAllToNextSeparator;
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
     
-    [CCDirector sharedDirector].contentScaleFactor = res.contentScale;
-    [CCDirector sharedDirector].positionScaleFactor = 1.0/res.contentScale;
-    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.contentScale];
+    [CCDirector sharedDirector].contentScaleFactor = res.scale;
+    [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
+    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
 }
 
 - (void) setResolution:(int)r
