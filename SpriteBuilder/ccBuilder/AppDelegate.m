@@ -1323,8 +1323,6 @@ static BOOL hideAllToNextSeparator;
 						// TODO not sure if this part is correct or not...
             ResolutionSetting* settingTablet = [settingDefault copy];
             settingTablet.name = @"Tablet";
-            settingTablet.width *= projectSettings.tabletPositionScaleFactor;
-            settingTablet.height *= projectSettings.tabletPositionScaleFactor;
             settingTablet.contentScale = projectSettings.tabletPositionScaleFactor;
             [updatedResolutions addObject:settingTablet];
         }
