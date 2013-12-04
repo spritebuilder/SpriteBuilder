@@ -1275,9 +1275,6 @@ static BOOL hideAllToNextSeparator;
     [self.window makeKeyWindow];
     CocosScene* cs = [CocosScene cocosScene];
 		
-		// Setup the rulers with the new contentScale
-		[cs.rulerLayer setup];
-    
     if (![self hasOpenedDocument]) return;
     currentDocument.docData = [self docDataFromCurrentNodeGraph];
     currentDocument.stageZoom = [cs stageZoom];
@@ -3183,10 +3180,14 @@ static BOOL hideAllToNextSeparator;
 - (void) updatePositionScaleFactor
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
-    
+    NSLog(@"scale set to %f", res.scale);
+		
     [CCDirector sharedDirector].contentScaleFactor = res.scale;
     [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
     [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
+				
+		// Setup the rulers with the new contentScale
+		[[CocosScene cocosScene].rulerLayer setup];
 }
 
 - (void) setResolution:(int)r
