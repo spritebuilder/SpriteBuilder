@@ -1951,12 +1951,12 @@ static BOOL hideAllToNextSeparator;
     if (type == kCCBNewDocTypeScene)
     {
         // Set default contentSize to 100% x 100% for scenes
-        [PositionPropertySetter setSize:NSMakeSize(1, 1) type:CCContentSizeTypeNormalized forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSMakeSize(1, 1) type:CCSizeTypeNormalized forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     else if (type == kCCBNewDocTypeLayer)
     {
         // Set contentSize to w x h in scaled coordinates for layers
-        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:CCContentSizeTypeScaled forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:CCSizeTypeUIPoints forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     
     [outlineHierarchy reloadData];

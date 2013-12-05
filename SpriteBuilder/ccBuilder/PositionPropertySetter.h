@@ -51,11 +51,11 @@ enum
 
 
 // Setting/getting sizes
-+ (void) setSize:(NSSize)size type:(CCContentSizeType)type forNode:(CCNode*)node prop:(NSString*)prop;
++ (void) setSize:(NSSize)size type:(CCSizeType)type forNode:(CCNode*)node prop:(NSString*)prop;
 + (void) setSize:(NSSize)size forNode:(CCNode *)node prop:(NSString *)prop;
 + (NSSize) sizeForNode:(CCNode*)node prop:(NSString*)prop;
-+ (CCContentSizeType) sizeTypeForNode:(CCNode*)node prop:(NSString*)prop;
-+ (void) setSizeType:(CCContentSizeType)type forNode:(CCNode*)node prop:(NSString*)prop;
++ (CCSizeType) sizeTypeForNode:(CCNode*)node prop:(NSString*)prop;
++ (void) setSizeType:(CCSizeType)type forNode:(CCNode*)node prop:(NSString*)prop;
 //+ (void) refreshSizeForNode:(CCNode*)node prop:(NSString*)prop;
 
 // Setting/getting scale

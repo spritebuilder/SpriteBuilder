@@ -148,7 +148,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [self addChild:stageBgLayer z:0];
     
     contentLayer = [CCNode node];
-    contentLayer.contentSizeType = CCContentSizeTypeNormalized;
+    contentLayer.contentSizeType = CCSizeTypeNormalized;
     contentLayer.contentSize = CGSizeMake(1, 1);
     [stageBgLayer addChild:contentLayer];
 }

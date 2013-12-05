@@ -159,7 +159,7 @@ NSDictionary* renamedProperties = NULL;
             }
             else if (oldPosType == kCCBPositionTypeMultiplyResolution)
             {
-                posType = CCPositionTypeScaled;
+                posType = CCPositionTypeUIPoints;
             }
         }
         else if ([(NSArray*)serializedValue count] == 5)
@@ -183,35 +183,35 @@ NSDictionary* renamedProperties = NULL;
         float w = [[serializedValue objectAtIndex:0] floatValue];
         float h = [[serializedValue objectAtIndex:1] floatValue];
         
-        CCContentSizeType sizeType = CCContentSizeTypePoints;
+        CCSizeType sizeType = CCSizeTypePoints;
         if ([(NSArray*)serializedValue count] == 3)
         {
             // Convert old content size type
             int oldSizeType = [[serializedValue objectAtIndex:2] intValue];
             if (oldSizeType == kCCBSizeTypePercent)
             {
-                sizeType = CCContentSizeTypeNormalized;
+                sizeType = CCSizeTypeNormalized;
                 w /= 100.0f;
                 h /= 100.0f;
             }
             else if (oldSizeType == kCCBSizeTypeRelativeContainer)
             {
-                sizeType.widthUnit = CCContentSizeUnitInsetPoints;
-                sizeType.heightUnit = CCContentSizeUnitInsetPoints;
+                sizeType.widthUnit = CCSizeUnitInsetPoints;
+                sizeType.heightUnit = CCSizeUnitInsetPoints;
             }
             else if (oldSizeType == kCCBSizeTypeHorizontalPercent)
             {
-                sizeType.widthUnit = CCContentSizeUnitNormalized;
+                sizeType.widthUnit = CCSizeUnitNormalized;
                 w /= 100.0f;
             }
             else if (oldSizeType == kCCBSzieTypeVerticalPercent)
             {
-                sizeType.heightUnit = CCContentSizeUnitNormalized;
+                sizeType.heightUnit = CCSizeUnitNormalized;
                 h /= 100.0f;
             }
             else if (oldSizeType == kCCBSizeTypeMultiplyResolution)
             {
-                sizeType = CCContentSizeTypeScaled;
+                sizeType = CCSizeTypeUIPoints;
             }
         }
         else if ([(NSArray*)serializedValue count] == 4)

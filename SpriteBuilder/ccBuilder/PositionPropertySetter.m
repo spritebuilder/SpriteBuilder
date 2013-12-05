@@ -348,17 +348,17 @@
     return newPos;
 }
 
-+ (void) setSize:(NSSize)size type:(CCContentSizeType)type forNode:(CCNode*)node prop:(NSString*)prop
++ (void) setSize:(NSSize)size type:(CCSizeType)type forNode:(CCNode*)node prop:(NSString*)prop
 {
     // Set type
-    NSValue* typeValue = [NSValue value:&type withObjCType:@encode(CCContentSizeType)];
+    NSValue* typeValue = [NSValue value:&type withObjCType:@encode(CCSizeType)];
     [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
     
     // Set size
     [node setValue:[NSValue valueWithSize:size] forKey:prop];
 }
 
-+ (void) setSizeType:(CCContentSizeType)type forNode:(CCNode*)node prop:(NSString*)prop
++ (void) setSizeType:(CCSizeType)type forNode:(CCNode*)node prop:(NSString*)prop
 {
     // Figure out which properties to update
     PlugInNode* plugIn = node.plugIn;
@@ -404,7 +404,7 @@
     }
     
     // Change the type
-    NSValue* typeValue = [NSValue value:&type withObjCType:@encode(CCContentSizeType)];
+    NSValue* typeValue = [NSValue value:&type withObjCType:@encode(CCSizeType)];
     [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
     
     int i = 0;
@@ -429,10 +429,10 @@
     return [[node valueForKey:prop] sizeValue];
 }
 
-+ (CCContentSizeType) sizeTypeForNode:(CCNode*)node prop:(NSString*)prop
++ (CCSizeType) sizeTypeForNode:(CCNode*)node prop:(NSString*)prop
 {
     NSValue* sizeValue = [node valueForKey:[prop stringByAppendingString:@"Type"]];
-    CCContentSizeType type;
+    CCSizeType type;
     [sizeValue getValue:&type];
     
     return type;

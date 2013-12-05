@@ -29,6 +29,7 @@
 #import "chipmunk.h"
 #import "CocosScene.h"
 #import "CCBUtil.h"
+#import "CCSprite_Private.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
