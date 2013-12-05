@@ -82,7 +82,8 @@
             
             if (CGRectContainsPoint(viewRect, viewPos))
             {
-                CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithFile:@"ruler-guide.png"];
+                CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
+                sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
                 sprtGuide.contentSize = CGSizeMake(winSize.width, 2);
                 sprtGuide.anchorPoint = ccp(0, 0.5f);
                 sprtGuide.position = viewPos;
@@ -96,7 +97,8 @@
             
             if (CGRectContainsPoint(viewRect, viewPos))
             {
-                CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithFile:@"ruler-guide.png"];
+                CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
+                sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
                 sprtGuide.contentSize = CGSizeMake(winSize.height, 2);
                 sprtGuide.anchorPoint = ccp(0, 0.5f);
                 sprtGuide.rotation = -90;

@@ -445,8 +445,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                     
                     CCDrawNode* drawing = [CCDrawNode node];
                 
+                    float borderWidth = 1.0 / [CCDirector sharedDirector].contentScaleFactor;
                     
-                    [drawing drawPolyWithVerts:points count:4 fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
+                    [drawing drawPolyWithVerts:points count:4 fillColor:ccc4f(0, 0, 0, 0) borderWidth:borderWidth borderColor:ccc4f(1, 1, 1, 0.3)];
                     
                     [selectionLayer addChild:drawing z:-1];
                 }

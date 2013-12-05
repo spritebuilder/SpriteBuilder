@@ -36,16 +36,22 @@
     if (!self) return NULL;
     
     self.anchorPoint = ccp(0,1);
+    //self.positionType = CCPositionTypeUIPoints;
+    self.contentSizeType = CCSizeTypeUIPoints;
     //self.ignoreAnchorPointForPosition = NO;
     
     bg = [CCSprite9Slice spriteWithImageNamed:@"notes-bg.png"];
     bg.anchorPoint = ccp(0,0);
+    bg.positionType = CCPositionTypeUIPoints;
+    bg.contentSizeType = CCSizeTypeUIPoints;
     bg.position = ccp(0,0);
     [bg setMargin:0.3];
     [self addChild:bg z:0];
     
-    lbl = [CCLabelTTF labelWithString:@"Double click to edit" fontName:@"MarkerFelt-Thin" fontSize:14];
+    lbl = [CCLabelTTF labelWithString:@"Double click to edit" fontName:@"MarkerFelt-Thin" fontSize:14 / CC_CONTENT_SCALE_FACTOR()];
     lbl.anchorPoint = ccp(0,0);
+    lbl.positionType = CCPositionTypeUIPoints;
+    lbl.contentSizeType = CCSizeTypeUIPoints;
     lbl.position = ccp(kCCBNoteLblInsetH, kCCBNoteLblInsetBot);
     lbl.verticalAlignment = CCVerticalTextAlignmentTop;
     lbl.horizontalAlignment = CCTextAlignmentLeft;
@@ -64,7 +70,7 @@
     
     NSLog(@"set lbl.dimensions: (%f,%f)", contentSize.width - (2*kCCBNoteLblInsetH), contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot);
     
-    lbl.dimensions = CGSizeMake(contentSize.width - (2*kCCBNoteLblInsetH), contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot);
+    lbl.dimensions = CGSizeMake((contentSize.width - (2*kCCBNoteLblInsetH))/CC_CONTENT_SCALE_FACTOR(), (contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot)/CC_CONTENT_SCALE_FACTOR());
     
     [super setContentSize:contentSize];
 }
@@ -83,6 +89,7 @@
 - (int) hitAreaFromPt:(CGPoint)pt
 {
     CGPoint localPt = [self convertToNodeSpace:pt];
+    localPt = ccpMult(localPt, CC_CONTENT_SCALE_FACTOR());
     
     CGRect resizeRect = CGRectMake(self.contentSize.width-22, 11, 16, 16);
     if (CGRectContainsPoint(resizeRect, localPt)) return kCCBStickyNoteHitResize;

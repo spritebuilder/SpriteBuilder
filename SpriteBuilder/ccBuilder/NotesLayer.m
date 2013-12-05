@@ -28,6 +28,7 @@
 #import "AppDelegate.h"
 #import "CCBTransparentView.h"
 #import "CCBTransparentWindow.h"
+#import "CCBUtil.h"
 
 @implementation NotesLayer
 
@@ -55,7 +56,7 @@
     
     // Setup text area and add it to guiLayer
     CGSize size = note.contentSize;
-    CGPoint pos = ccp(note.position.x, note.position.y - note.contentSize.height);
+    CGPoint pos = ccp(note.position.x * CC_CONTENT_SCALE_FACTOR(), note.position.y * CC_CONTENT_SCALE_FACTOR() - note.contentSize.height);
     
     [NSBundle loadNibNamed:@"StickyNoteEditView" owner:self];
     [editView setFrameOrigin:NSPointFromCGPoint(pos)];
@@ -151,7 +152,8 @@
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*notes"];
         
         CGPoint delta = ccpSub(pt, mouseDownPos);
-        modifiedNote.docPos = ccpAdd(noteStartPos, delta);
+        
+        modifiedNote.docPos = ccpRound(ccpAdd(noteStartPos, delta));
         return YES;
     }
     else if (operation == kCCBNoteOperationResizing)
@@ -159,12 +161,16 @@
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*notes"];
         
         CGPoint delta = ccpSub(pt, mouseDownPos);
+        delta = ccpMult(delta, CC_CONTENT_SCALE_FACTOR());
         CGSize newSize;
         newSize.width = noteStartSize.width + delta.x;
         newSize.height = noteStartSize.height - delta.y;
         
         if (newSize.width < 60) newSize.width = 60;
         if (newSize.height < 60) newSize.height = 60;
+        
+        newSize.width = roundf(newSize.width);
+        newSize.height = roundf(newSize.height);
         
         modifiedNote.contentSize = newSize;
         return YES;

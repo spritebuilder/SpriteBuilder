@@ -414,6 +414,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 - (void) updatePhysicsEditor:(CCNode*) editorView
 {
     float scale = [self radiusScaleFactor];
+    float selectionBorderWidth = 1.0 / [CCDirector sharedDirector].contentScaleFactor;
     
     if (self.editingPhysicsBody)
     {
@@ -437,14 +438,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 
                 points[i] = ccpRound(pt);
                 
-                CCSprite* handle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
+                CCSprite* handle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
                 handle.position = pt;
                 [editorView addChild:handle];
                 i++;
             }
             
             CCDrawNode* drawing = [CCDrawNode node];
-            [drawing drawPolyWithVerts:points count:body.points.count fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
+            [drawing drawPolyWithVerts:points count:body.points.count fillColor:ccc4f(0, 0, 0, 0) borderWidth:selectionBorderWidth borderColor:ccc4f(1, 1, 1, 0.3)];
             
             [editorView addChild:drawing z:-1];
             
@@ -473,18 +474,18 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             }
             
             CCDrawNode* drawing = [CCDrawNode node];
-            [drawing drawPolyWithVerts:points count:32 fillColor:ccc4f(0, 0, 0, 0) borderWidth:1 borderColor:ccc4f(1, 1, 1, 0.3)];
+            [drawing drawPolyWithVerts:points count:32 fillColor:ccc4f(0, 0, 0, 0) borderWidth:selectionBorderWidth borderColor:ccc4f(1, 1, 1, 0.3)];
             
             [editorView addChild:drawing z:-1];
             
             free(points);
             
             // Draw handles
-            CCSprite* centerHandle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
+            CCSprite* centerHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
             centerHandle.position = ccpRound(center);
             [editorView addChild:centerHandle];
             
-            CCSprite* edgeHandle = [CCSprite spriteWithFile:@"select-physics-corner.png"];
+            CCSprite* edgeHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
             edgeHandle.position = ccpRound(edge);
             [editorView addChild:edgeHandle];
         }
