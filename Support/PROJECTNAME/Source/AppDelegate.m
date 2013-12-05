@@ -101,6 +101,7 @@
 									sharegroup:nil
 								 multiSampling:NO
 							   numberOfSamples:0];
+    glView.contentScaleFactor = [UIScreen mainScreen].scale;
 	
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
@@ -120,8 +121,8 @@
 	//	[director setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director_ enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
+	//if( ! [director_ enableRetinaDisplay:YES] )
+	//	CCLOG(@"Retina Display Not supported");
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
