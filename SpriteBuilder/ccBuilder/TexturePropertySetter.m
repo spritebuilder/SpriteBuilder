@@ -76,9 +76,7 @@
             
             if (texture)
             {
-                CGRect bounds = CGRectMake(0, 0, texture.contentSize.width, texture.contentSize.height);
-                
-                spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:bounds];
+                spriteFrame = [texture createSpriteFrame];
             }
         }
         @catch (NSException *exception) {
@@ -90,9 +88,9 @@
     {
         // Texture is missing
         CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"missing-texture.png"];
-        CGRect bounds = CGRectMake(0, 0, texture.contentSize.width, texture.contentSize.height);
+        //CGRect bounds = CGRectMake(0, 0, texture.contentSize.width, texture.contentSize.height);
         
-        spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:bounds] ;
+        spriteFrame = [texture createSpriteFrame];
     }
 
     // Actually set the sprite frame
