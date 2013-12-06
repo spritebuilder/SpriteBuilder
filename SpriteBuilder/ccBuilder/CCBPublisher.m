@@ -31,8 +31,6 @@
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
 #import "NSString+AppendToFile.h"
-#import "PlayerConnection.h"
-#import "PlayerDeviceInfo.h"
 #import "ResourceManager.h"
 #import "CCBFileUtil.h"
 #import "Tupac.h"
@@ -992,7 +990,7 @@
                 // Publish archive
                 NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
                 
-                if (![self publishAllToDirectory:projectSettings.publishCacheDirectory] || ![self archiveToFile:zipFile]) return NO;
+                if (![self archiveToFile:zipFile]) return NO;
             } else
             {
                 // Publish files
@@ -1033,7 +1031,7 @@
                 // Publish archive
                 NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
                 
-                if (![self publishAllToDirectory:projectSettings.publishCacheDirectory] || ![self archiveToFile:zipFile]) return NO;
+                if (![self archiveToFile:zipFile]) return NO;
             } else
             {
                 // Publish files
@@ -1072,81 +1070,7 @@
     }
     else
     {
-        if (browser)
-        {
-            /*
-            // Publish for running in browser
-            targetType = kCCBPublisherTargetTypeHTML5;
-            
-            NSMutableArray* resolutions = [NSMutableArray array];
-            [resolutions addObject: @"html5"];
-            publishForResolutions = resolutions;
-            
-            publishToSingleResolution = YES;
-            
-            NSString* publishDir = [projectSettings.publishDirectoryHTML5 absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-            
-            if (![self publishAllToDirectory:publishDir]) return NO;
-             */
-        }
-        else
-        {
-            // Publish for running on device
-            targetType = kCCBPublisherTargetTypeIPhone;
-            warnings.currentTargetType = targetType;
-            
-            PlayerDeviceInfo* deviceInfo = [PlayerConnection sharedPlayerConnection].selectedDeviceInfo;
-            if ([deviceInfo.deviceType isEqualToString:@"iPad"])
-            {
-                // iPad
-                if (deviceInfo.hasRetinaDisplay)
-                {
-                    // iPad retina
-                    publishForResolutions = [NSArray arrayWithObjects:@"tablethd", nil];
-                }
-                else
-                {
-                    // iPad normal
-                    publishForResolutions = [NSArray arrayWithObjects:@"tablet", @"phonehd", nil];
-                }
-            }
-            else if ([deviceInfo.deviceType isEqualToString:@"iPhone"])
-            {
-                // iPhone
-                if (deviceInfo.hasRetinaDisplay)
-                {
-                    publishForResolutions = [NSArray arrayWithObjects:@"phonehd", nil];
-                }
-                else
-                {
-                    publishForResolutions = [NSArray arrayWithObjects:@"phone", nil];
-                }
-            }
-            else if ([deviceInfo.deviceType isEqualToString:@"Android"])
-            {
-                targetType = kCCBPublisherTargetTypeAndroid;
-                warnings.currentTargetType = targetType;
-                
-                publishForResolutions = [NSArray arrayWithObjects:deviceInfo.preferredResourceType, nil];
-            }
-            
-            if (![self publishAllToDirectory:projectSettings.publishCacheDirectory]) return NO;
-            
-            // Zip up and push
-            AppDelegate* ad = [AppDelegate appDelegate];
-            [ad modalStatusWindowUpdateStatusText:@"Zipping up project..."];
-            
-            // Archive
-            NSString *zipFile = [projectSettings.publishCacheDirectory stringByAppendingPathComponent:@"ccb.zip"];
-            [self archiveToFile:zipFile diffFrom:deviceInfo.fileList];
-            // TODO: Fix diffFrom
-            
-            // Send to player
-            [ad modalStatusWindowUpdateStatusText:@"Sending to player..."];
-            
-            PlayerConnection* conn = [PlayerConnection sharedPlayerConnection];
-            [conn sendResourceZip:zipFile];
-        }
+        // Publishing to device no longer supported
     }
     
     // Once published, set needRepublish back to NO

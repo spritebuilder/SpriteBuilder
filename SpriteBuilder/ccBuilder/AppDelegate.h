@@ -84,7 +84,6 @@ enum {
 
 @class CCBDocument;
 @class ProjectSettings;
-@class CCBHTTPServer;
 @class AssetsWindowController;
 @class PlugInManager;
 @class ResourceManager;
@@ -99,11 +98,9 @@ enum {
 @class SequencerHandler;
 @class SequencerScrubberSelectionView;
 @class MainWindow;
-@class PlayerConsoleWindow;
 @class HelpWindow;
 @class APIDocsWindow;
 @class MainToolbarDelegate;
-@class PlayerConnection;
 @class CCBSplitHorizontalView;
 @class AboutWindow;
 @class ResourceManagerPreviewView;
@@ -256,10 +253,6 @@ enum {
     // Modal status window
     TaskStatusWindow* modalTaskStatusWindow;
     
-    // Player
-    PlayerConnection* connection;
-    PlayerConsoleWindow* playerConsoleWindow;
-    
     // Help window
     HelpWindow* helpWindow;
     APIDocsWindow* apiDocsWindow;
@@ -322,7 +315,6 @@ enum {
 @property (nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
 
 @property (nonatomic,retain) ProjectSettings* projectSettings;
-@property (nonatomic,readonly) PlayerConnection* connection;
 
 @property (nonatomic,copy) NSString* errorDescription;
 
@@ -349,9 +341,6 @@ enum {
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
 - (void) openFile:(NSString*) fileName;
-- (void) openJSFile:(NSString*) fileName;
-- (void) openJSFile:(NSString*) fileName highlightLine:(int)line;
-- (void) resetJSFilesLineHighlight;
 
 // Menu options
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent;
@@ -415,9 +404,7 @@ enum {
 
 // Publishing & running
 - (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings;
-- (IBAction)runProject:(id)sender;
 - (IBAction) menuPublishProjectAndRun:(id)sender;
-- (IBAction) menuPublishProjectAndRunInBrowser:(id)sender;
 
 // For warning messages
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;

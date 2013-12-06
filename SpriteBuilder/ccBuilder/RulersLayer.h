@@ -43,6 +43,8 @@
     CCLabelAtlas* lblY;
 }
 
+- (void) setup;
+
 - (void) updateWithSize:(CGSize)winSize stageOrigin:(CGPoint)stageOrigin zoom:(float)zoom;
 
 - (void)mouseEntered:(NSEvent *)event;

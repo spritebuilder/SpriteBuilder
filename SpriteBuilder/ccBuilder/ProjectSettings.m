@@ -30,8 +30,6 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "AppDelegate.h"
-#import "PlayerConnection.h"
-#import "PlayerDeviceInfo.h"
 #import "ResourceManagerOutlineHandler.h"
 
 #import <ApplicationServices/ApplicationServices.h>
@@ -74,7 +72,6 @@
 @synthesize deviceOrientationLandscapeLeft;
 @synthesize deviceOrientationLandscapeRight;
 @synthesize resourceAutoScaleFactor;
-@synthesize breakpoints;
 @synthesize versionStr;
 @synthesize needRepublish;
 @synthesize lastWarnings;
@@ -119,8 +116,6 @@
     self.publishAudioQuality_android = 4;
     
     self.tabletPositionScaleFactorType = kCCBTabletScale200;
-    
-    breakpoints = [[NSMutableDictionary dictionary] retain];
     
     resourceProperties = [[NSMutableDictionary dictionary] retain];
     
@@ -237,7 +232,6 @@
     self.exporter = NULL;
     self.availableExporters = NULL;
     [resourceProperties release];
-    [breakpoints release];
     [super dealloc];
 }
 
@@ -359,6 +353,7 @@
     return [[[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"display"]stringByAppendingPathComponent:self.projectPathHashed];
 }
 
+/*
 - (NSString*) publishCacheDirectory
 {
     NSString* uuid = [PlayerConnection sharedPlayerConnection].selectedDeviceInfo.uuid;
@@ -366,7 +361,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     return [[[[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"publish"]stringByAppendingPathComponent:self.projectPathHashed] stringByAppendingPathComponent:uuid];
-}
+}*/
 
 - (NSString*) tempSpriteSheetCacheDirectory
 {
@@ -528,38 +523,6 @@
     id props = [resourceProperties objectForKey:relPathOld];
     if (props) [resourceProperties setObject:props forKey:relPathNew];
     [resourceProperties removeObjectForKey:relPathOld];
-}
-
-- (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line
-{
-    // Get breakpoints for file
-    NSMutableSet* bps = [breakpoints objectForKey:file];
-    if (!bps)
-    {
-        bps = [NSMutableSet set];
-        [breakpoints setObject:bps forKey:file];
-    }
-    
-    NSNumber* num = [NSNumber numberWithInt:line];
-    if ([bps containsObject:num])
-    {
-        [bps removeObject:num];
-    }
-    else
-    {
-        [bps addObject:num];
-    }
-    
-    // Send new list of bps to player
-    [[PlayerConnection sharedPlayerConnection] debugSendBreakpoints:breakpoints];
-}
-
-- (NSSet*) breakpointsForFile:(NSString*)file
-{
-    NSSet* bps = [breakpoints objectForKey:file];
-    if (!bps) bps = [NSSet set];
-    
-    return bps;
 }
 
 - (void) detectBrowserPresence

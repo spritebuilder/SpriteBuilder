@@ -72,9 +72,6 @@
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "SequencerKeyframeEasingWindow.h"
-#import "JavaScriptDocument.h"
-#import "PlayerConnection.h"
-#import "PlayerConsoleWindow.h"
 #import "SequencerUtil.h"
 #import "SequencerStretchWindow.h"
 #import "SequencerSoundChannel.h"
@@ -90,12 +87,9 @@
 #import "CCBSplitHorizontalView.h"
 #import "SpriteSheetSettingsWindow.h"
 #import "AboutWindow.h"
-#import "CCBHTTPServer.h"
-#import "JavaScriptAutoCompleteHandler.h"
 #import "CCBFileUtil.h"
 #import "ResourceManagerPreviewView.h"
 #import "ResourceManagerUtil.h"
-#import "SMLErrorPopOver.h"
 #import "SMTabBar.h"
 #import "SMTabBarItem.h"
 #import "ResourceManagerTilelessEditorManager.h"
@@ -109,6 +103,7 @@
 #import "CCLabelBMFont_Private.h"
 #import "WarningOutlineHandler.h"
 #import "CCNode+NodeInfo.h"
+#import "CCNode_Private.h"
 #import "UsageManager.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
@@ -142,7 +137,6 @@
 @synthesize selectedNodes;
 @synthesize loadedSelectedNodes;
 @synthesize panelVisibilityControl;
-@synthesize connection;
 @synthesize propertyInspectorHandler;
 @synthesize localizationEditorHandler;
 @synthesize physicsHandler;
@@ -406,12 +400,6 @@ void ApplyCustomNodeVisitSwizzle()
     [tilelessEditorSplitView setDelegate:tilelessEditorManager];
 }
 
-- (void) setupPlayerConnection
-{
-    connection = [[PlayerConnection alloc] init];
-    [connection run];
-}
-
 - (void) setupResourceManager
 {
     // Load resource manager
@@ -466,15 +454,6 @@ void ApplyCustomNodeVisitSwizzle()
     [window addChildWindow:guiWindow ordered:NSWindowAbove];
 }
 
-- (void) setupAutoCompleteHandler
-{
-    JavaScriptAutoCompleteHandler* handler = [JavaScriptAutoCompleteHandler sharedAutoCompleteHandler];
-    
-    NSString* dir = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"autoCompleteDefinitions"];
-    
-    [handler loadGlobalFilesFromDirectory:dir];
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
@@ -491,8 +470,6 @@ void ApplyCustomNodeVisitSwizzle()
     loadedSelectedNodes = [[NSMutableArray alloc] init];
     
     sharedAppDelegate = self;
-    
-    [self setupAutoCompleteHandler];
     
     [[NSExceptionHandler defaultExceptionHandler] setExceptionHandlingMask: NSLogUncaughtExceptionMask | NSLogUncaughtSystemExceptionMask | NSLogUncaughtRuntimeErrorMask];
     
@@ -542,8 +519,6 @@ void ApplyCustomNodeVisitSwizzle()
     [self setupResourceManager];
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
-    
-    [self setupPlayerConnection];
     
     self.showGuides = YES;
     self.snapToGuides = YES;
@@ -1685,12 +1660,7 @@ static BOOL hideAllToNextSeparator;
         }
     }
     
-    [[JavaScriptAutoCompleteHandler sharedAutoCompleteHandler] removeLocalFiles];
-    
     [window setTitle:@"SpriteBuilder"];
-
-    // Stop local web server
-    [[CCBHTTPServer sharedHTTPServer] stop];
     
     // Remove resource paths
     self.projectSettings = NULL;
@@ -1738,19 +1708,8 @@ static BOOL hideAllToNextSeparator;
     NSString* langFile = [resManager.mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
     
-    // Load autocompletions for all JS files
-    NSArray* jsFiles = [CCBFileUtil filesInResourcePathsWithExtension:@"js"];
-    for (NSString* jsFile in jsFiles)
-    {
-        [[JavaScriptAutoCompleteHandler sharedAutoCompleteHandler] loadLocalFile:[resManager toAbsolutePath:jsFile]];
-    }
-    
     // Update the title of the main window
     [window setTitle:[NSString stringWithFormat:@"SpriteBuilder - %@", [fileName lastPathComponent]]];
-
-    // Start local web server
-    NSString* docRoot = [projectSettings.publishDirectoryHTML5 absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-    [[CCBHTTPServer sharedHTTPServer] start:docRoot];
     
     // Open ccb file for project if there is only one
     NSArray* resPaths = project.absoluteResourcePaths;
@@ -1888,14 +1847,6 @@ static BOOL hideAllToNextSeparator;
     {
         [self modalDialogTitle:@"Publish failed" message:@"Failed to publish the document, please try to publish to another location."];
     }
-}
-
-- (void) newJSFile:(NSString*) fileName
-{
-    NSData* jsData = [@"" dataUsingEncoding:NSUTF8StringEncoding];
-    [jsData writeToFile:fileName atomically:YES];
-    
-    [self openJSFile:fileName];
 }
 
 - (void) newFile:(NSString*) fileName type:(int)type resolutions: (NSMutableArray*) resolutions;
@@ -2053,38 +2004,6 @@ static BOOL hideAllToNextSeparator;
 	{
 		[self openFiles:filenames];
 	}
-}
-
-- (void) openJSFile:(NSString*) fileName
-{
-    [self openJSFile:fileName highlightLine:0];
-}
-
-- (void) openJSFile:(NSString*) fileName highlightLine:(int)line
-{
-    NSURL* docURL = [[[NSURL alloc] initFileURLWithPath:fileName] autorelease];
-    
-    JavaScriptDocument* jsDoc = [[NSDocumentController sharedDocumentController] documentForURL:docURL];
-    
-    if (!jsDoc)
-    {
-        jsDoc = [[[JavaScriptDocument alloc] initWithContentsOfURL:docURL ofType:@"JavaScript" error:NULL] autorelease];
-        [[NSDocumentController sharedDocumentController] addDocument:jsDoc];
-        [jsDoc makeWindowControllers];
-    }
-    
-    [jsDoc showWindows];
-    [jsDoc setHighlightedLine:line];
-}
-
-- (void) resetJSFilesLineHighlight
-{
-    NSArray* jsDocs = [[NSDocumentController sharedDocumentController] documents];
-    for (int i = 0; i < [jsDocs count]; i++)
-    {
-        JavaScriptDocument* doc = [jsDocs objectAtIndex:i];
-        [doc setHighlightedLine:0];
-    }
 }
 
 - (IBAction)menuResetSpriteBuilder:(id)sender
@@ -2704,6 +2623,7 @@ static BOOL hideAllToNextSeparator;
     [self switchToDocument:oldCurDoc forceReload:NO];
 }
 
+
 - (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser
 {
     if (!projectSettings.publishEnabledAndroid
@@ -2711,12 +2631,6 @@ static BOOL hideAllToNextSeparator;
         && !projectSettings.publishEnabledHTML5)
     {
         [self modalDialogTitle:@"Published Failed" message:@"There are no configured publish target platforms. Please check your Publish Settings."];
-        return;
-    }
-    
-    if (run && !browser && ![[PlayerConnection sharedPlayerConnection] connected])
-    {
-        [self modalDialogTitle:@"No Player Connected" message:@"There is no Player connected to SpriteBuilder. Make sure that a player is running and that it has the same pairing number as SpriteBuilder."];
         return;
     }
     
@@ -2773,45 +2687,9 @@ static BOOL hideAllToNextSeparator;
         [projectViewTabs selectBarButtonIndex:3];
     }
     
-    // Run in Browser
-    if (publisher.runAfterPublishing && publisher.browser)
-    {
-        [[CCBHTTPServer sharedHTTPServer] openBrowser:publisher.browser];
-        //[self updateDefaultBrowser];
-    }
-    
-    // Run in CocosPlayer
-    if (publisher.runAfterPublishing && !publisher.browser)
-    {
-        [self runProject:self];
-    }
-    
     [publisher release];
     
     
-}
-
-- (IBAction)openCocosPlayerConsole:(id)sender
-{
-    if (!playerConsoleWindow)
-    {
-        playerConsoleWindow = [[PlayerConsoleWindow alloc] initWithWindowNibName:@"PlayerConsoleWindow"];
-    }
-    [playerConsoleWindow.window makeKeyAndOrderFront:self];
-}
-
-- (IBAction)runProject:(id)sender
-{
-    // Open CocosPlayer console
-    [self openCocosPlayerConsole:sender];
-    
-    [playerConsoleWindow cleanConsole];
-    
-    if ([[PlayerConnection sharedPlayerConnection] connected])
-    {
-        [[PlayerConnection sharedPlayerConnection] sendProjectSettings:projectSettings];
-        [[PlayerConnection sharedPlayerConnection] sendRunCommand];
-    }
 }
 
 - (IBAction) menuPublishProject:(id)sender
@@ -2959,24 +2837,6 @@ static BOOL hideAllToNextSeparator;
                 [self modalDialogTitle:@"Failed to Create Project" message:@"Failed to create the project, make sure to only use letters and numbers for the file name (no spaces allowed)."];
             }
         }
-    }];
-}
-
-- (IBAction) newJSDocument:(id)sender
-{
-    NSLog(@"New JS Doc");
-    
-    NSSavePanel* saveDlg = [NSSavePanel savePanel];
-    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"js"]];
-    
-    SavePanelLimiter* limiter = [[SavePanelLimiter alloc] initWithPanel:saveDlg resManager:resManager];
-    
-    [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
-        if (result == NSOKButton)
-        {
-            [self newJSFile:[[saveDlg URL] path]];
-        }
-        [limiter release];
     }];
 }
 
@@ -3185,8 +3045,8 @@ static BOOL hideAllToNextSeparator;
     [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
     [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
 				
-		// Setup the rulers with the new contentScale
-		[[CocosScene cocosScene].rulerLayer setup];
+    // Setup the rulers with the new contentScale
+    [[CocosScene cocosScene].rulerLayer setup];
 }
 
 - (void) setResolution:(int)r
@@ -3294,45 +3154,6 @@ static BOOL hideAllToNextSeparator;
     [CCBUtil setSelectedSubmenuItemForMenu:menuCanvasBorder tag:tag];
 }
 
-/*
-- (void) updateJSControlledMenu
-{
-    if (jsControlled)
-    {
-        [menuItemJSControlled setState:NSOnState];
-    }
-    else
-    {
-        [menuItemJSControlled setState:NSOffState];
-    }
-}
-
-- (void) updateDefaultBrowser
-{
-    [menuItemSafari setKeyEquivalent:@""];
-    [menuItemSafari setState:NSOffState];
-    [menuItemChrome setKeyEquivalent:@""];
-    [menuItemChrome setState:NSOffState];
-    [menuItemFirefox setKeyEquivalent:@""];
-    [menuItemFirefox setState:NSOffState];
-    
-    NSString* defaultBrowser = [[NSUserDefaults standardUserDefaults] valueForKey:@"defaultBrowser"];
-    NSMenuItem* defaultBrowserMenuItem;
-    if([defaultBrowser isEqual:@"Chrome"])
-    {
-        defaultBrowserMenuItem = menuItemChrome;
-    }else if([defaultBrowser isEqual:@"Firefox"])
-    {
-        defaultBrowserMenuItem = menuItemFirefox;
-    }else{
-        defaultBrowserMenuItem = menuItemSafari;
-    }
-    [defaultBrowserMenuItem setKeyEquivalentModifierMask: NSShiftKeyMask | NSCommandKeyMask];
-    [defaultBrowserMenuItem setKeyEquivalent:@"b"];
-    [defaultBrowserMenuItem setState:NSOnState];
-}
- */
-
 - (void) updateWarningsButton
 {
     [self updateWarningsOutline];
@@ -3377,34 +3198,6 @@ static BOOL hideAllToNextSeparator;
     CocosScene* cs = [CocosScene cocosScene];
     cs.scrollOffset = ccp(0,0);
     [cs setStageZoom:1];
-}
-
-- (IBAction) pressedPublishTB:(id)sender
-{
-    NSSegmentedControl* sc = sender;
-    int selectedItem = [[sc cell] selectedSegment];
-    if (!sender) selectedItem = 1;
-    if (selectedItem == 0)
-    {
-        [self menuPublishProject:sender];
-    }
-    else if (selectedItem == 1)
-    {
-        if (projectSettings.lastWarnings.warnings.count)
-        {
-            NSMutableArray* warnings = [NSMutableArray array];
-            for (CCBWarning* warning in projectSettings.lastWarnings.warnings)
-            {
-                [warnings addObject:warning.description];
-            }
-            [SMLErrorPopOver showErrorDescriptions:warnings relativeToView:segmPublishBtn];
-        }
-        else
-        {
-            NSArray* warning = [NSArray arrayWithObject:@"No warnings"];
-            [SMLErrorPopOver showErrorDescriptions:warning relativeToView:segmPublishBtn];
-        }
-    }
 }
 
 - (IBAction) pressedToolSelection:(id)sender

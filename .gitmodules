@@ -4,7 +4,4 @@
 [submodule "SpriteBuilder/libs/ssziparchive"]
 	path = SpriteBuilder/libs/ssziparchive
 	url = https://github.com/vlidholt/ssziparchive.git
-[submodule "SpriteBuilder/libs/Fragaria"]
-	path = SpriteBuilder/libs/Fragaria
-	url = https://github.com/vlidholt/Fragaria.git
 

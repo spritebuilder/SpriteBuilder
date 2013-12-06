@@ -530,10 +530,6 @@
         {
             [[AppDelegate appDelegate] openFile: res.filePath];
         }
-        else if (res.type == kCCBResTypeJS || res.type == kCCBResTypeJSON)
-        {
-            [[AppDelegate appDelegate] openJSFile:res.filePath];
-        }
     }
     
 }

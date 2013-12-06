@@ -61,7 +61,6 @@ enum
 {
     NSString* projectPath;
     NSMutableArray* resourcePaths;
-    NSMutableDictionary* breakpoints;
     NSMutableDictionary* resourceProperties;
     
     NSString* publishDirectory;
@@ -154,7 +153,7 @@ enum
 @property (nonatomic, copy) NSString* exporter;
 @property (nonatomic, retain) NSMutableArray* availableExporters;
 @property (nonatomic, readonly) NSString* displayCacheDirectory;
-@property (nonatomic, readonly) NSString* publishCacheDirectory;
+//@property (nonatomic, readonly) NSString* publishCacheDirectory;
 @property (nonatomic, readonly) NSString* tempSpriteSheetCacheDirectory;
 @property (nonatomic, assign) BOOL deviceOrientationPortrait;
 @property (nonatomic, assign) BOOL deviceOrientationUpsideDown;
@@ -162,7 +161,6 @@ enum
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
 
-@property (nonatomic,readonly) NSDictionary* breakpoints;
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
 
@@ -199,8 +197,4 @@ enum
 // Handling moved and deleted resources
 - (void) removedResourceAt:(NSString*) relPath;
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
-
-// Breakpoints (for JS)
-- (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line;
-- (NSSet*) breakpointsForFile:(NSString*)file;
 @end
