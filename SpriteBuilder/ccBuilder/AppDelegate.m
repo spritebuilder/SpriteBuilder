@@ -1279,17 +1279,21 @@ static BOOL hideAllToNextSeparator;
         if (projectSettings.designTarget == kCCBDesignTargetFixed)
         {
             settingDefault.name = @"Fixed";
+            settingDefault.scale = 2;
+            settingDefault.ext = @"tablet phonehd";
             [updatedResolutions addObject:settingDefault];
         }
         else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
         {
             settingDefault.name = @"Phone";
+            settingDefault.scale = 1;
+            settingDefault.ext = @"phone";
             [updatedResolutions addObject:settingDefault];
             
-			// TODO: not sure if this part is correct or not...
             ResolutionSetting* settingTablet = [settingDefault copy];
             settingTablet.name = @"Tablet";
             settingTablet.scale = projectSettings.tabletPositionScaleFactor;
+            settingTablet.ext = @"tablet phonehd";
             [updatedResolutions addObject:settingTablet];
         }
     }
