@@ -44,6 +44,11 @@
 @property (nonatomic,assign) BOOL centeredOrigin;
 @property (nonatomic,readonly) NSArray* exts;
 
+// Fixed resolutions
++ (ResolutionSetting*) settingFixed;
++ (ResolutionSetting*) settingFixedLandscape;
++ (ResolutionSetting*) settingFixedPortrait;
+
 // iOS resolutions
 + (ResolutionSetting*) settingIPhone;
 + (ResolutionSetting*) settingIPhoneLandscape;
