@@ -35,8 +35,13 @@
     // Configure CCFileUtils to work with SpriteBuilder
     [CCBReader configureCCFileUtils];
     
-    // Use the default Cocos2d options
-    [self setupCocos2dWithOptions:NULL];
+    // Configure Cocos2d with the options set in SpriteBuilder
+    NSMutableDictionary* cocos2dSetup = [NSMutableDictionary dictionaryWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"configCocos2d.plist"]];
+    
+    // Do any extra configuration of Cocos2d here (the example line changes the pixel format for faster rendering, but with less colors)
+    //[cocos2dSetup setObject:kEAGLColorFormatRGB565 forKey:CCConfigPixelFormat];
+    
+    [self setupCocos2dWithOptions:cocos2dSetup];
     
     return YES;
 }

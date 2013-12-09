@@ -851,6 +851,15 @@
     NSString* spriteSheetLookupFile = [outputDir stringByAppendingPathComponent:@"spriteFrameFileList.plist"];
     
     [spriteSheetLookup writeToFile:spriteSheetLookupFile atomically:YES];
+    
+    // Generate Cocos2d setup file
+    NSMutableDictionary* configCocos2d = [NSMutableDictionary dictionary];
+    
+    [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.designTarget] forKey:@"CCConfigScreenMode"];
+    [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.defaultOrientation] forKey:@"CCConfigScreenOrientation"];
+    
+    NSString* configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
+    [configCocos2d writeToFile:configCocos2dFile atomically:YES];
 }
 
 - (BOOL) publishAllToDirectory:(NSString*)dir
