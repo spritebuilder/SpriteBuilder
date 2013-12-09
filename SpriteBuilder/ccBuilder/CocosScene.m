@@ -208,6 +208,16 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-ipad.png"];
             rotateDevice = YES;
         }
+        else if (devType == kCCBCanvasSizeFixedLandscape)
+        {
+            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-fixed.png"];
+            rotateDevice = NO;
+        }
+        else if (devType == kCCBCanvasSizeFixedPortrait)
+        {
+            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-fixed.png"];
+            rotateDevice = YES;
+        }
         else if (devType == kCCBCanvasSizeAndroidXSmallPortrait)
         {
             deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-android-xsmall.png"];
