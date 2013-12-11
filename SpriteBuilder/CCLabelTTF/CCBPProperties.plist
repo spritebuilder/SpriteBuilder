@@ -110,9 +110,10 @@
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>animatable</key>
 			<true/>
@@ -188,10 +189,10 @@
 			<string>Color4</string>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 		</dict>
 		<dict>
