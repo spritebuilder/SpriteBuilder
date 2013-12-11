@@ -144,7 +144,7 @@
     // Create background color layer
     CGFloat r, g, b, a;
     [bgColor getRed:&r green:&g blue:&b alpha:&a];
-    ccColor4B c = ccc4(r*255, g*255, b*255, 255);
+    CCColor* c = [CCColor colorWithRed:r green:g blue:b alpha:a];
     CCNodeColor* bgLayer = [CCNodeColor nodeWithColor:c width:size.width height:size.height];
     
     // Add node to bg

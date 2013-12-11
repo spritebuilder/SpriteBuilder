@@ -24,6 +24,6 @@
 
 #import "cocos2d.h"
 
-@interface CCBPParticleSystem : CCParticleSystemQuad
+@interface CCBPParticleSystem : CCParticleSystem
 
 @end

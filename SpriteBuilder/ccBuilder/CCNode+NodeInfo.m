@@ -334,10 +334,8 @@
     }
     else if (type == kCCBKeyframeTypeColor3)
     {
-        NSValue* colorValue = [self valueForKey:name];
-        ccColor3B c;
-        [colorValue getValue:&c];
-        return [CCBWriterInternal serializeColor3:c];
+        CCColor* colorValue = [self valueForKey:name];
+        return [CCBWriterInternal serializeColor4:colorValue];
     }
     else if (type == kCCBKeyframeTypeSpriteFrame)
     {
@@ -394,8 +392,7 @@
     }
     else if (type == kCCBKeyframeTypeColor3)
     {
-        ccColor3B c = [CCBReaderInternal deserializeColor3:value];
-        NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor3B)];
+        CCColor* colorValue = [CCBReaderInternal deserializeColor4:value];
         [self setValue:colorValue forKey:propName];
         
     }

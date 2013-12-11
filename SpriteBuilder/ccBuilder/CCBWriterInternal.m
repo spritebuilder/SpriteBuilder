@@ -139,32 +139,16 @@
     return [NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil];
 }
 
-+ (id) serializeColor3:(ccColor3B)c
++ (id) serializeColor4:(CCColor*)c
 {
+    CGFloat r,g,b,a;
+    [c getRed:&r green:&g blue:&b alpha:&a];
+    
     return [NSArray arrayWithObjects:
-            [NSNumber numberWithInt:c.r],
-            [NSNumber numberWithInt:c.g],
-            [NSNumber numberWithInt:c.b],
-            nil];
-}
-
-+ (id) serializeColor4:(ccColor4B)c
-{
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithInt:c.r],
-            [NSNumber numberWithInt:c.g],
-            [NSNumber numberWithInt:c.b],
-            [NSNumber numberWithInt:c.a],
-            nil];
-}
-
-+ (id) serializeColor4F:(ccColor4F)c
-{
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:c.r],
-            [NSNumber numberWithFloat:c.g],
-            [NSNumber numberWithFloat:c.b],
-            [NSNumber numberWithFloat:c.a],
+            [NSNumber numberWithFloat:r],
+            [NSNumber numberWithFloat:g],
+            [NSNumber numberWithFloat:b],
+            [NSNumber numberWithFloat:a],
             nil];
 }
 
@@ -322,33 +306,23 @@
     }
     else if ([type isEqualToString:@"Color3"])
     {
-        NSValue* colorValue = [node valueForKey:name];
-        ccColor3B c;
-        [colorValue getValue:&c];
-        serializedValue = [CCBWriterInternal serializeColor3:c];
+        CCColor* colorValue = [node valueForKey:name];
+        serializedValue = [CCBWriterInternal serializeColor4:colorValue];
     }
     else if ([type isEqualToString:@"Color4"])
     {
-        NSValue* colorValue = [node valueForKey:name];
-        ccColor4B c;
-        [colorValue getValue:&c];
-        serializedValue = [CCBWriterInternal serializeColor4:c];
+        CCColor* colorValue = [node valueForKey:name];
+        serializedValue = [CCBWriterInternal serializeColor4:colorValue];
     }
     else if ([type isEqualToString:@"Color4FVar"])
     {
-        NSValue* cValue = NULL;
-        NSValue* cVarValue = NULL;
         NSString* nameVar = [NSString stringWithFormat:@"%@Var",name];
-        cValue = [node valueForKey:name];
-        cVarValue = [node valueForKey:nameVar];
-        ccColor4F c;
-        ccColor4F cVar;
-        [cValue getValue:&c];
-        [cVarValue getValue:&cVar];
+        CCColor* cValue = [node valueForKey:name];
+        CCColor* cVarValue = [node valueForKey:nameVar];
         
         serializedValue = [NSArray arrayWithObjects:
-                           [CCBWriterInternal serializeColor4F:c],
-                           [CCBWriterInternal serializeColor4F:cVar],
+                           [CCBWriterInternal serializeColor4:cValue],
+                           [CCBWriterInternal serializeColor4:cVarValue],
                            nil];
     }
     else if ([type isEqualToString:@"Blendmode"])

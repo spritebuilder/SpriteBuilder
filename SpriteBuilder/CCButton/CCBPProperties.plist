@@ -134,28 +134,30 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Background opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>backgroundOpacity|Normal</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Background color</string>
@@ -166,28 +168,30 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Label opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>labelOpacity|Normal</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Label color</string>
@@ -225,28 +229,30 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Background opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>backgroundOpacity|Highlighted</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Background color</string>
@@ -257,22 +263,23 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Label opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>labelOpacity|Highlighted</string>
 		</dict>
 		<dict>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Label color</string>
@@ -310,28 +317,30 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>127</integer>
+			<real>0.5</real>
 			<key>displayName</key>
 			<string>Background opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>backgroundOpacity|Disabled</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Background color</string>
@@ -342,26 +351,28 @@
 		</dict>
 		<dict>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Label opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>labelOpacity|Disabled</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Label color</string>
@@ -399,28 +410,30 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>127</integer>
+			<real>0.5</real>
 			<key>displayName</key>
 			<string>Background opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>backgroundOpacity|Selected</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Background color</string>
@@ -431,26 +444,28 @@
 		</dict>
 		<dict>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Label opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>labelOpacity|Selected</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Label color</string>

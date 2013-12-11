@@ -113,7 +113,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     borderLayer = [CCNode node];
     [self addChild:borderLayer z:1];
     
-    ccColor4B borderColor = ccc4(128, 128, 128, 180);
+    CCColor* borderColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7];
     
     borderBottom = [CCNodeColor nodeWithColor:borderColor];
     borderTop = [CCNodeColor nodeWithColor:borderColor];
@@ -134,14 +134,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [borderLayer addChild:borderDevice z:1];
     
     // Gray background
-    bgLayer = [CCNodeColor nodeWithColor:ccc4(128, 128, 128, 255) width:4096 height:4096];
+    bgLayer = [CCNodeColor nodeWithColor:[CCColor grayColor] width:4096 height:4096];
     bgLayer.position = ccp(0,0);
     bgLayer.anchorPoint = ccp(0,0);
     bgLayer.userInteractionEnabled = NO;
     [self addChild:bgLayer z:-1];
     
     // Black content layer
-    stageBgLayer = [CCNodeColor nodeWithColor:ccc4(0, 0, 0, 255) width:0 height:0];
+    stageBgLayer = [CCNodeColor nodeWithColor:[CCColor blackColor] width:0 height:0];
     stageBgLayer.anchorPoint = ccp(0.5,0.5);
     stageBgLayer.userInteractionEnabled = NO;
     //stageBgLayer.ignoreAnchorPointForPosition = NO;
@@ -457,7 +457,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 
                     float borderWidth = 1.0 / [CCDirector sharedDirector].contentScaleFactor;
                     
-                    [drawing drawPolyWithVerts:points count:4 fillColor:ccc4f(0, 0, 0, 0) borderWidth:borderWidth borderColor:ccc4f(1, 1, 1, 0.3)];
+                    [drawing drawPolyWithVerts:points count:4 fillColor:[CCColor clearColor] borderWidth:borderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
                     
                     [selectionLayer addChild:drawing z:-1];
                 }

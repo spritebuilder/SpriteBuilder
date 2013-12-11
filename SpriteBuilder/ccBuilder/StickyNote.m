@@ -55,7 +55,7 @@
     lbl.position = ccp(kCCBNoteLblInsetH, kCCBNoteLblInsetBot);
     lbl.verticalAlignment = CCVerticalTextAlignmentTop;
     lbl.horizontalAlignment = CCTextAlignmentLeft;
-    lbl.color = ccc3(67, 49, 33);
+    lbl.color = [CCColor colorWithRed:0.26 green:0.19 blue:0.13 alpha:1];
     
     [self addChild:lbl z:1];
     

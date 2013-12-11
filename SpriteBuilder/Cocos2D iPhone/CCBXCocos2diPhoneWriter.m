@@ -421,25 +421,17 @@
     {
         [self writeCachedString:prop isPath: NO];
     }
-    else if ([type isEqualToString:@"Color3"])
+    else if ([type isEqualToString:@"Color4"] ||
+             [type isEqualToString:@"Color3"])
     {
-        int a = [[prop objectAtIndex:0] intValue];
-        int b = [[prop objectAtIndex:1] intValue];
-        int c = [[prop objectAtIndex:2] intValue];
-        [self writeByte:a];
-        [self writeByte:b];
-        [self writeByte:c];
-    }
-    else if ([type isEqualToString:@"Color4"])
-    {
-        int a = [[prop objectAtIndex:0] intValue];
-        int b = [[prop objectAtIndex:1] intValue];
-        int c = [[prop objectAtIndex:2] intValue];
-        int d = [[prop objectAtIndex:3] intValue];
-        [self writeByte:a];
-        [self writeByte:b];
-        [self writeByte:c];
-        [self writeByte:d];
+        CGFloat a = [[prop objectAtIndex:0] floatValue];
+        CGFloat b = [[prop objectAtIndex:1] floatValue];
+        CGFloat c = [[prop objectAtIndex:2] floatValue];
+        CGFloat d = [[prop objectAtIndex:3] floatValue];
+        [self writeFloat:a];
+        [self writeFloat:b];
+        [self writeFloat:c];
+        [self writeFloat:d];
     }
     else if ([type isEqualToString:@"Color4FVar"])
     {
@@ -807,25 +799,17 @@
     {
         [self writeByte:[value intValue]];
     }
-    else if ([type isEqualToString:@"Color3"])
+    else if ([type isEqualToString:@"Color4"] ||
+             [type isEqualToString:@"Color3"])
     {
-        int a = [[value objectAtIndex:0] intValue];
-        int b = [[value objectAtIndex:1] intValue];
-        int c = [[value objectAtIndex:2] intValue];
-        [self writeByte:a];
-        [self writeByte:b];
-        [self writeByte:c];
-    }
-    else if ([type isEqualToString:@"Color4"])
-    {
-        int a = [[value objectAtIndex:0] intValue];
-        int b = [[value objectAtIndex:1] intValue];
-        int c = [[value objectAtIndex:2] intValue];
-        int d = [[value objectAtIndex:3] intValue];
-        [self writeByte:a];
-        [self writeByte:b];
-        [self writeByte:c];
-        [self writeByte:d];
+        float a = [[value objectAtIndex:0] floatValue];
+        float b = [[value objectAtIndex:1] floatValue];
+        float c = [[value objectAtIndex:2] floatValue];
+        float d = [[value objectAtIndex:3] floatValue];
+        [self writeFloat:a];
+        [self writeFloat:b];
+        [self writeFloat:c];
+        [self writeFloat:d];
     }
     else if ([type isEqualToString:@"Degrees"])
     {
