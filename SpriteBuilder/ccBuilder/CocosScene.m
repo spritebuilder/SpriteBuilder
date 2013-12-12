@@ -475,7 +475,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                     [self getCornerPointsForZeroContentSizeNode:node withImageContentSize:sel.contentSizeInPoints withPoints:points];
                 }
                 
-                
                 if(!isContentSizeZero && !(overTypeField & kCCBToolAnchor) && currentMouseTransform == kCCBTransformHandleNone)
                 {
                     if([self isOverAnchor:node withPoint:mousePos])
@@ -506,6 +505,15 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                    {
                        overTypeField |= kCCBToolScale;
                    }
+                }
+                
+                
+                if(!(overTypeField & kCCBToolTranslate) && currentMouseTransform == kCCBTransformHandleNone)
+                {
+                    if([self isOverContentBorders:mousePos withPoints:points])
+                    {
+                        overTypeField |= kCCBToolTranslate;
+                    }
                 }
             }
         }
@@ -647,6 +655,17 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return NO;
 }
 
+
+- (BOOL) isOverContentBorders:(CGPoint)_mousePoint withPoints:(const CGPoint *)points /*{bl,br,tr,tl}*/ 
+{
+    CGMutablePathRef mutablePath = CGPathCreateMutable();
+    CGPathAddLines(mutablePath, nil, points, 4);
+    CGPathCloseSubpath(mutablePath);
+    BOOL result = CGPathContainsPoint(mutablePath, nil, _mousePoint, NO);
+    CFRelease(mutablePath);
+    return result;
+    
+}
 
 - (BOOL) isOverScale:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/  withCorner:(int*)_cornerIndex withOrientation:(CGPoint*)orientation
 {
@@ -1633,15 +1652,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         [[NSCursor closedHandCursor] push];
     }
-    
-    if(currentTool == kCCBToolAnchor)
+    else if(currentTool == kCCBToolAnchor)
     {
         NSImage * image = [NSImage imageNamed:@"select-crosshair.png"];
         CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
         NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
         [cursor push];
     }
-    if (currentTool == kCCBToolRotate)
+    else if (currentTool == kCCBToolRotate)
     {
         NSImage * image = [NSImage imageNamed:@"select-rotation.png"];
         
@@ -1651,8 +1669,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
         [cursor push];
     }
-
-    if(currentTool == kCCBToolScale)
+    else if(currentTool == kCCBToolScale)
     {
         NSImage * image = [NSImage imageNamed:@"select-scale.png"];
         
@@ -1663,8 +1680,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         [cursor push];
         
     }
-    
-    if(currentTool == kCCBToolSkew)
+    else if (currentTool == kCCBToolSkew)
     {
         float rotation = atan2f(skewSegmentOrientation.y, skewSegmentOrientation.x);
 
@@ -1678,6 +1694,13 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
         [cursor push];
         
+    }
+    else if(currentTool == kCCBToolTranslate)
+    {
+        NSImage * image = [NSImage imageNamed:@"select-move.png"];
+        CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
+        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
+        [cursor push];
     }
     
 }

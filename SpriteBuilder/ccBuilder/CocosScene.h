@@ -60,8 +60,9 @@ typedef enum {
     kCCBToolGrab        =(1 << 2),
     kCCBToolSkew        =(1 << 3),
     kCCBToolRotate      =(1 << 4),
-    kCCBToolSelection   =(1 << 5),
-    kCCBToolMax         =(1 << 6)
+    kCCBToolTranslate   =(1 << 5),
+    kCCBToolSelection   =(1 << 6),
+    kCCBToolMax         =(1 << 7)
 }CCBTool;
 
 @interface CocosScene : CCNode
