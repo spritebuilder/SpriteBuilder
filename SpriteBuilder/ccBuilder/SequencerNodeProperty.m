@@ -354,30 +354,36 @@
     }
     else if (type == kCCBKeyframeTypeColor3)
     {
-        float rStart = [[keyframeStart.value objectAtIndex:0] intValue];
-        float gStart = [[keyframeStart.value objectAtIndex:1] intValue];
-        float bStart = [[keyframeStart.value objectAtIndex:2] intValue];
+        float rStart = [[keyframeStart.value objectAtIndex:0] floatValue];
+        float gStart = [[keyframeStart.value objectAtIndex:1] floatValue];
+        float bStart = [[keyframeStart.value objectAtIndex:2] floatValue];
+        float aStart = [[keyframeStart.value objectAtIndex:3] floatValue];
         
-        float rEnd = [[keyframeEnd.value objectAtIndex:0] intValue];
-        float gEnd = [[keyframeEnd.value objectAtIndex:1] intValue];
-        float bEnd = [[keyframeEnd.value objectAtIndex:2] intValue];
+        float rEnd = [[keyframeEnd.value objectAtIndex:0] floatValue];
+        float gEnd = [[keyframeEnd.value objectAtIndex:1] floatValue];
+        float bEnd = [[keyframeEnd.value objectAtIndex:2] floatValue];
+        float aEnd = [[keyframeEnd.value objectAtIndex:3] floatValue];
         
         float rSpan = rEnd - rStart;
         float gSpan = gEnd - gStart;
         float bSpan = bEnd - bStart;
+        float aSpan = aEnd - aStart;
         
-        int r = (roundf(rStart+rSpan*interpolVal));
-        int g = (roundf(gStart+gSpan*interpolVal));
-        int b = (roundf(bStart+bSpan*interpolVal));
+        float r = rStart+rSpan*interpolVal;
+        float g = gStart+gSpan*interpolVal;
+        float b = bStart+bSpan*interpolVal;
+        float a = aStart+aSpan*interpolVal;
         
-        NSAssert(r >= 0 && r <= 255, @"Color value is out of range");
-        NSAssert(g >= 0 && g <= 255, @"Color value is out of range");
-        NSAssert(b >= 0 && b <= 255, @"Color value is out of range");
+        NSAssert(r >= 0 && r <= 1, @"Color value is out of range");
+        NSAssert(g >= 0 && g <= 1, @"Color value is out of range");
+        NSAssert(b >= 0 && b <= 1, @"Color value is out of range");
+        NSAssert(a >= 0 && a <= 1, @"Color value is out of range");
         
         return [NSArray arrayWithObjects:
-                [NSNumber numberWithInt:r],
-                [NSNumber numberWithInt:g],
-                [NSNumber numberWithInt:b],
+                [NSNumber numberWithFloat:r],
+                [NSNumber numberWithFloat:g],
+                [NSNumber numberWithFloat:b],
+                [NSNumber numberWithFloat:a],
                 nil];
     }
     else if (type == kCCBKeyframeTypeFloatXY)
