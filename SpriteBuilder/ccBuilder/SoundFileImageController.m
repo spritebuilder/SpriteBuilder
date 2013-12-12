@@ -101,8 +101,7 @@ typedef struct MaxMin MaxMin;
     
     
     
-    struct MaxMin maxLeft = {0,0};
-    struct MaxMin maxRight = {0,0};
+    struct MaxMin maxSample = {0,0};
     
     
     NSInteger sampleTally = 0;
@@ -135,21 +134,21 @@ typedef struct MaxMin MaxMin;
                 SInt16 left = *samples++;
 
                 
-                if(left  > maxLeft.max)
-                    maxLeft.max = left;
+                if(left  > maxSample.max)
+                    maxSample.max = left;
                 
-                if(left  < maxLeft.min)
-                    maxLeft.min = left;
+                if(left  < maxSample.min)
+                    maxSample.min = left;
                 
                 
                 SInt16 right;
                 if (channelCount==2) {
                     right = *samples++;
-                    if(right  > maxRight.max)
-                        maxRight.max = right;
+                    if(right  > maxSample.max)
+                        maxSample.max = right;
                     
-                    if(right  < maxRight.min)
-                        maxRight.min = right;
+                    if(right  < maxSample.min)
+                        maxSample.min = right;
                 }
                 
                 sampleTally++;
@@ -157,37 +156,21 @@ typedef struct MaxMin MaxMin;
                 if (sampleTally > samplesPerPixel  ) {
                     
                     
-                    if (abs(maxLeft.max) > normalizeMax) {
-                        normalizeMax = abs(maxLeft.max);
+                    if (abs(maxSample.max) > normalizeMax) {
+                        normalizeMax = abs(maxSample.max);
                     }
                     
-                    if (abs(maxLeft.min) > normalizeMax) {
-                        normalizeMax = abs(maxLeft.min);
+                    if (abs(maxSample.min) > normalizeMax) {
+                        normalizeMax = abs(maxSample.min);
                     }
                     
                     
-                    [fullSongData appendBytes:&maxLeft.max length:sizeof(maxLeft.max)];
-                    [fullSongData appendBytes:&maxLeft.min length:sizeof(maxLeft.min)];
+                    [fullSongData appendBytes:&maxSample.max length:sizeof(maxSample.max)];
+                    [fullSongData appendBytes:&maxSample.min length:sizeof(maxSample.min)];
                     
-                    if (channelCount==2) {
-                        
-                        if (abs(maxRight.max) > normalizeMax) {
-                            normalizeMax = abs(maxRight.max);
-                        }
-                        
-                        if (abs(maxRight.min) > normalizeMax) {
-                            normalizeMax = abs(maxRight.min);
-                        }
-                        
-                        [fullSongData appendBytes:&maxRight.max length:sizeof(maxRight.max)];
-                        [fullSongData appendBytes:&maxRight.min length:sizeof(maxRight.min)];
-                    }
                     
-                    maxLeft.max = 0;
-                    maxLeft.min = 0;
-
-                    maxRight.max = 0;
-                    maxRight.min = 0;
+                    maxSample.max = 0;
+                    maxSample.min = 0;
 
                     sampleTally = 0;
                     
@@ -214,8 +197,7 @@ typedef struct MaxMin MaxMin;
         
         waveformImage = [self audioImageGraph:(SInt16 *)fullSongData.bytes
                                  normalizeMax:normalizeMax
-                                  sampleCount:fullSongData.length / (4 * channelCount)
-                                 channelCount:channelCount
+                                  sampleCount:fullSongData.length / 4
                                   imageHeight:size.height];
     }
     
@@ -229,7 +211,6 @@ typedef struct MaxMin MaxMin;
 -(NSImage *) audioImageGraph:(SInt16 *) samples
                 normalizeMax:(SInt16) normalizeMax
                  sampleCount:(NSInteger) sampleCount
-                channelCount:(NSInteger) channelCount
                  imageHeight:(float) imageHeight {
     
     CGSize imageSize = CGSizeMake(sampleCount, imageHeight);
@@ -263,47 +244,55 @@ typedef struct MaxMin MaxMin;
     CGContextSetAlpha(context,1.0);
 
     
-    CGColorRef leftcolor = [[NSColor blueColor] CGColor];
-    CGColorRef rightcolor = [[NSColor blueColor] CGColor];
+    CGColorRef sampleColor = [[NSColor blueColor] CGColor];
     
     //CGContextFillRect(context, rect);
     
     CGContextSetLineWidth(context, 1.0);
     
-    float halfGraphHeight = (imageHeight / 2) / (float) channelCount ;
+    float halfGraphHeight = (imageHeight / 2) ;
     float centerLeft = halfGraphHeight;
-    float centerRight = (halfGraphHeight*3) ;
-    float sampleAdjustmentFactor = (imageHeight/ (float) channelCount) / (float) normalizeMax / 2.0f;
+    float sampleAdjustmentFactor = (imageHeight) / (float) normalizeMax / 2.0f;
     
+    SInt16 * samplePtr = samples;
+    
+    CGContextMoveToPoint(context, 0, centerLeft);
     for (NSInteger intSample = 0 ; intSample < sampleCount ; intSample ++ ) {
-        SInt16 leftMax = *samples++;
-        SInt16 leftMin = *samples++;
+        SInt16 leftMax = *samplePtr++;
+        samplePtr++;
         
         float pixelsMax = (float) leftMax * sampleAdjustmentFactor;
+
+        CGContextAddLineToPoint(context, intSample, centerLeft+ pixelsMax);
+    }
+    
+   CGContextAddLineToPoint(context, sampleCount - 1, centerLeft);
+
+    samplePtr = samples + sampleCount * 2;
+    for (NSInteger intSample = sampleCount -1 ; intSample >= 0 ; intSample -- ) {
+
+        SInt16 leftMin = *--samplePtr;
+        samplePtr--;
+        
         float pixelsMin = (float) leftMin * sampleAdjustmentFactor;
         
-
-        CGContextMoveToPoint(context, intSample, centerLeft + pixelsMax);
         CGContextAddLineToPoint(context, intSample, centerLeft+ pixelsMin);
-        
-        CGContextSetStrokeColorWithColor(context, leftcolor);
-        CGContextStrokePath(context);
-        
-        if (channelCount==2)
-        {
-            SInt16 rightMax = *samples++;
-            SInt16 rightMin = *samples++;
-            
-            float pixelsMax = (float) rightMax * sampleAdjustmentFactor;
-            float pixelsMin = (float) rightMin * sampleAdjustmentFactor;
-            
-            CGContextMoveToPoint(context, intSample, centerRight + pixelsMax);
-            CGContextAddLineToPoint(context, intSample, centerRight+ pixelsMin);
-            
-            CGContextSetStrokeColorWithColor(context, rightcolor);
-            CGContextStrokePath(context);
-        }
     }
+    
+    CGMutablePathRef mutablePath = CGPathCreateMutable();
+    CGPathAddLines(mutablePath, nil, points, 4);
+    
+    CGPathCloseSubpath(mutablePath);
+    BOOL result = CGPathContainsPoint(mutablePath, nil, _mousePoint, NO);
+    CFRelease(mutablePath);
+
+    
+    
+//    CGContextClosePath(context);
+    CGContextSetStrokeColorWithColor(context, sampleColor);
+    CGContextStrokePath(context);
+    
+    CGContextFillPath(
     
     [NSGraphicsContext restoreGraphicsState];
     
