@@ -32,8 +32,8 @@ enum {
 
 + (FCFormatConverter*) defaultConverter;
 
-- (NSString*) proposedNameForConvertedImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress;
-- (NSString*) convertImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress;
+- (NSString*) proposedNameForConvertedImageAtPath:(NSString*)srcPath format:(int)format compress:(BOOL)compress isSpriteSheet:(BOOL)isSpriteSheet;
+- (NSString*) convertImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress isSpriteSheet:(BOOL)isSpriteSheet;
 
 - (NSString*) proposedNameForConvertedSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality;
 - (NSString*) convertSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality;
