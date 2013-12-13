@@ -26,7 +26,8 @@ static FCFormatConverter* gDefaultConverter = NULL;
     if (format == kFCImageFormatPNG ||
         format == kFCImageFormatPNG_8BIT)
     {
-        return [[srcPath copy] autorelease];
+        // File might be loaded from a .psd file.
+        return [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
     }
     else if (format == kFCImageFormatPVR_RGBA8888 ||
              format == kFCImageFormatPVR_RGBA4444 ||
