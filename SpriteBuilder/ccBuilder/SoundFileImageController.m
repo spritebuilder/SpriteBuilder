@@ -40,8 +40,8 @@ NSString * kSoundFileImageLoaded = @"kSoundFileImageLoaded";
 
 struct MaxMin
 {
-    SInt16 max;
-    SInt16 min;
+    SInt32 max;
+    SInt32 min;
 };
 typedef struct MaxMin MaxMin;
 
@@ -101,7 +101,7 @@ typedef struct MaxMin MaxMin;
     
     
     
-    struct MaxMin maxSample = {0,0};
+    struct MaxMin maxSample = {-99999,99999};
     
     
     NSInteger sampleTally = 0;
@@ -195,9 +195,9 @@ typedef struct MaxMin MaxMin;
     
     if (reader.status == AVAssetReaderStatusCompleted){
         
-        waveformImage = [self audioImageGraph:(SInt16 *)fullSongData.bytes
+        waveformImage = [self audioImageGraph:(SInt32 *)fullSongData.bytes
                                  normalizeMax:normalizeMax
-                                  sampleCount:fullSongData.length / 4
+                                  sampleCount:fullSongData.length / sizeof(MaxMin)
                                   imageHeight:size.height];
     }
     
@@ -208,7 +208,7 @@ typedef struct MaxMin MaxMin;
 }
 
 
--(NSImage *) audioImageGraph:(SInt16 *) samples
+-(NSImage *) audioImageGraph:(SInt32 *) samples
                 normalizeMax:(SInt16) normalizeMax
                  sampleCount:(NSInteger) sampleCount
                  imageHeight:(float) imageHeight {
@@ -238,61 +238,63 @@ typedef struct MaxMin MaxMin;
     rect.origin.x = 0;
     rect.origin.y = 0;
     
-    CGContextClearRect(context, rect);
-    
-    //CGContextSetFillColorWithColor(context, [NSColor blackColor].CGColor);
-    CGContextSetAlpha(context,1.0);
 
-    
-    CGColorRef sampleColor = [[NSColor blueColor] CGColor];
-    
-    //CGContextFillRect(context, rect);
-    
-    CGContextSetLineWidth(context, 1.0);
     
     float halfGraphHeight = (imageHeight / 2) ;
     float centerLeft = halfGraphHeight;
     float sampleAdjustmentFactor = (imageHeight) / (float) normalizeMax / 2.0f;
     
-    SInt16 * samplePtr = samples;
+    SInt32 * samplePtr = samples;
     
-    CGContextMoveToPoint(context, 0, centerLeft);
+    CGPoint * points = malloc(sizeof(CGPoint) * sampleCount * 2);
+    
+    CGPoint * current = points;
     for (NSInteger intSample = 0 ; intSample < sampleCount ; intSample ++ ) {
-        SInt16 leftMax = *samplePtr++;
+        SInt32 leftMax = *samplePtr++;
         samplePtr++;
         
         float pixelsMax = (float) leftMax * sampleAdjustmentFactor;
 
-        CGContextAddLineToPoint(context, intSample, centerLeft+ pixelsMax);
+        current->x = intSample;
+        current->y = centerLeft+ pixelsMax;
+        current++;
+        
     }
     
-   CGContextAddLineToPoint(context, sampleCount - 1, centerLeft);
-
     samplePtr = samples + sampleCount * 2;
-    for (NSInteger intSample = sampleCount -1 ; intSample >= 0 ; intSample -- ) {
-
-        SInt16 leftMin = *--samplePtr;
+    for (NSInteger intSample = sampleCount -1; intSample >= 0 ; intSample-- )
+    {
+        SInt32 leftMin = *--samplePtr;
         samplePtr--;
         
-        float pixelsMin = (float) leftMin * sampleAdjustmentFactor;
+        float pixelsMin = (float)leftMin * sampleAdjustmentFactor;
         
-        CGContextAddLineToPoint(context, intSample, centerLeft+ pixelsMin);
+        current->x = intSample;
+        current->y = centerLeft+ pixelsMin;
+        current++;
+        
     }
     
+    CGContextClearRect(context, rect);
+    
+    CGContextSetAlpha(context,1.0);
+    CGContextSetFillColorWithColor(context, [NSColor blueColor].CGColor);
+    CGContextSetLineWidth(context, 1.0);
+    
     CGMutablePathRef mutablePath = CGPathCreateMutable();
-    CGPathAddLines(mutablePath, nil, points, 4);
+    CGPathAddLines(mutablePath, nil, points, sampleCount * 2);
     
     CGPathCloseSubpath(mutablePath);
-    BOOL result = CGPathContainsPoint(mutablePath, nil, _mousePoint, NO);
-    CFRelease(mutablePath);
 
+    CGContextBeginPath(context);
+    CGContextAddPath(context, mutablePath);
+    CGContextClosePath( context ); //ensure path is closed, not necessary if you know it is
+    CGPathDrawingMode mode = kCGPathFill;
+    CGContextDrawPath( context, mode );
     
-    
-//    CGContextClosePath(context);
-    CGContextSetStrokeColorWithColor(context, sampleColor);
-    CGContextStrokePath(context);
-    
-    CGContextFillPath(
+    CFRelease(mutablePath);
+    free(points);
+   
     
     [NSGraphicsContext restoreGraphicsState];
     

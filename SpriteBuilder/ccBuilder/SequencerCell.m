@@ -351,7 +351,7 @@
     int xPos = [seq timeToPosition:seq.soundChannel.dragAndDropTimeStamp];
 
     
-    CGColorRef blueColor = [[NSColor blueColor] CGColor];
+    CGColorRef blueColor = [[NSColor blackColor] CGColor];
     
     NSGraphicsContext * graphicsContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicsContext graphicsPort];
