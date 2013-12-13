@@ -855,8 +855,15 @@
     // Generate Cocos2d setup file
     NSMutableDictionary* configCocos2d = [NSMutableDictionary dictionary];
     
-    [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.designTarget] forKey:@"CCConfigScreenMode"];
-    [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.defaultOrientation] forKey:@"CCConfigScreenOrientation"];
+    NSString* screenMode = NULL;
+    if (projectSettings.designTarget == kCCBDesignTargetFixed) screenMode = @"CCScreenModeFixed";
+    else if (projectSettings.designTarget == kCCBDesignTargetFlexible) screenMode = @"CCScreenModeFlexible";
+    [configCocos2d setObject:screenMode forKey:@"CCConfigScreenMode"];
+    
+    NSString* screenOrientation = NULL;
+    if (projectSettings.defaultOrientation == kCCBOrientationLandscape) screenOrientation = @"CCScreenOrientationLandscape";
+    else if (projectSettings.defaultOrientation == kCCBOrientationPortrait) screenOrientation = @"CCScreenOrientationPortrait";
+    [configCocos2d setObject:screenOrientation forKey:@"CCConfigScreenOrientation"];
     
     NSString* configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
     [configCocos2d writeToFile:configCocos2dFile atomically:YES];
