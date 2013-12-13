@@ -216,7 +216,6 @@ typedef struct _PVRTexHeader
     for (NSString *filename in self.filenames)
     {
         // Load CGImage
-//				#error HERE!
 				CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:filename], NULL);
 				CGImageRef srcImage = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
         
@@ -247,7 +246,7 @@ typedef struct _PVRTexHeader
         [images addObject:[NSValue valueWithPointer:srcImage]];
         
         // Relase objects (images released later)
-        //CGDataProviderRelease(dataProvider);
+        CFRelease(image_source);
     }
     
     // Check that the output format is valid

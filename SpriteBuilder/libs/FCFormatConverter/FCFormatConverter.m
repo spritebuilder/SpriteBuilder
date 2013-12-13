@@ -25,6 +25,7 @@ static FCFormatConverter* gDefaultConverter = NULL;
 {
     if ( isSpriteSheet )
 		{
+		    // The name of a sprite in a spritesheet never changes.
 		    return [[srcPath copy] autorelease];
 		}
     if (format == kFCImageFormatPNG ||
