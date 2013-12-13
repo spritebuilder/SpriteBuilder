@@ -26,7 +26,8 @@ static FCFormatConverter* gDefaultConverter = NULL;
     if (format == kFCImageFormatPNG ||
         format == kFCImageFormatPNG_8BIT)
     {
-        return [[srcPath copy] autorelease];
+        // File might be loaded from a .psd file.
+        return [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
     }
     else if (format == kFCImageFormatPVR_RGBA8888 ||
              format == kFCImageFormatPVR_RGBA4444 ||
@@ -53,6 +54,26 @@ static FCFormatConverter* gDefaultConverter = NULL;
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* dstDir = [srcPath stringByDeletingLastPathComponent];
     
+		// Convert PSD to PNG as a pre-step.
+		if ( [[srcPath pathExtension] isEqualToString:@"psd"] )
+		{
+				CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
+				CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+				
+				NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
+				CFURLRef out_url = (CFURLRef)[NSURL fileURLWithPath:out_path];
+				CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
+				CGImageDestinationAddImage(image_destination, image, NULL);
+				CGImageDestinationFinalize(image_destination);
+				
+				CFRelease(image_source);
+				CGImageRelease(image);
+				CFRelease(image_destination);
+				
+				[fm removeItemAtPath:srcPath error:nil];
+				srcPath = out_path;
+		}
+		
     if (format == kFCImageFormatPNG)
     {
         // PNG image - no conversion required
