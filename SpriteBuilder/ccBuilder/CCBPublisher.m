@@ -858,12 +858,14 @@
     NSString* screenMode = NULL;
     if (projectSettings.designTarget == kCCBDesignTargetFixed) screenMode = @"CCScreenModeFixed";
     else if (projectSettings.designTarget == kCCBDesignTargetFlexible) screenMode = @"CCScreenModeFlexible";
-    [configCocos2d setObject:screenMode forKey:@"CCConfigScreenMode"];
+    [configCocos2d setObject:screenMode forKey:@"CCSetupScreenMode"];
     
     NSString* screenOrientation = NULL;
     if (projectSettings.defaultOrientation == kCCBOrientationLandscape) screenOrientation = @"CCScreenOrientationLandscape";
     else if (projectSettings.defaultOrientation == kCCBOrientationPortrait) screenOrientation = @"CCScreenOrientationPortrait";
-    [configCocos2d setObject:screenOrientation forKey:@"CCConfigScreenOrientation"];
+    [configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
+    
+    [configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
     
     NSString* configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
     [configCocos2d writeToFile:configCocos2dFile atomically:YES];
