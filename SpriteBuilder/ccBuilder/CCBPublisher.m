@@ -56,7 +56,7 @@
     warnings = [w retain];
     
     // Setup extensions to copy
-    copyExtensions = [[NSArray alloc] initWithObjects:@"jpg",@"png", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
+    copyExtensions = [[NSArray alloc] initWithObjects:@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
     
     publishedSpriteSheetNames = [[NSMutableArray alloc] init];
     publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
@@ -496,7 +496,7 @@
             NSString* ext = [[fileName pathExtension] lowercaseString];
             
             // Skip non png files for generated sprite sheets
-            if (isGeneratedSpriteSheet &&![ext isEqualToString:@"png"])
+            if (isGeneratedSpriteSheet && !([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"]))
             {
                 [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
                 continue;
@@ -520,7 +520,7 @@
                 
             
                 // Copy file (and possibly convert)
-                if ([ext isEqualToString:@"png"])
+                if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
                 {
                     // Publish images
                     [self publishImageFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
