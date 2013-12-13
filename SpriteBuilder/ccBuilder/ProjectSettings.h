@@ -29,29 +29,14 @@
 
 enum
 {
-    kCCBDesignTargetAdaptive,
-    kCCBDesignTargetPhone,
-    kCCBDesignTargetTablet,
-};
-
-enum
-{
-    kCCBDeviceScalingCrop,
-    kCCBDeviceScalingBlackBorders,
-    kCCBDeviceScalingStretchTallSide,
+    kCCBDesignTargetFlexible,
+    kCCBDesignTargetFixed,
 };
 
 enum
 {
     kCCBOrientationLandscape,
     kCCBOrientationPortrait,
-};
-
-enum
-{
-    kCCBTabletScale200,
-    kCCBTabletScale180,
-    kCCBTabletScale240,
 };
 
 @class RMResource;
@@ -168,7 +153,6 @@ enum
 @property (nonatomic, assign) int defaultOrientation;
 @property (nonatomic, assign) int deviceScaling;
 @property (nonatomic, assign) float tabletPositionScaleFactor;
-@property (nonatomic, assign) int tabletPositionScaleFactorType;
 
 @property (nonatomic, retain) CCBWarnings* lastWarnings;
 

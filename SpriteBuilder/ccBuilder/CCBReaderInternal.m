@@ -92,33 +92,14 @@ NSDictionary* renamedProperties = NULL;
     return [val boolValue];
 }
 
-+ (ccColor3B) deserializeColor3:(id) val
++ (CCColor*) deserializeColor4:(id) val
 {
-    ccColor3B c;
-    c.r = [[val objectAtIndex:0] intValue];
-    c.g = [[val objectAtIndex:1] intValue];
-    c.b = [[val objectAtIndex:2] intValue];
-    return c;
-}
-
-+ (ccColor4B) deserializeColor4:(id) val
-{
-    ccColor4B c;
-    c.r = [[val objectAtIndex:0] intValue];
-    c.g = [[val objectAtIndex:1] intValue];
-    c.b = [[val objectAtIndex:2] intValue];
-    c.a = [[val objectAtIndex:3] intValue];
-    return c;
-}
-
-+ (ccColor4F) deserializeColor4F:(id) val
-{
-    ccColor4F c;
-    c.r = [[val objectAtIndex:0] floatValue];
-    c.g = [[val objectAtIndex:1] floatValue];
-    c.b = [[val objectAtIndex:2] floatValue];
-    c.a = [[val objectAtIndex:3] floatValue];
-    return c;
+    CGFloat r,g,b,a;
+    r = [[val objectAtIndex:0] floatValue];
+    g = [[val objectAtIndex:1] floatValue];
+    b = [[val objectAtIndex:2] floatValue];
+    a = [[val objectAtIndex:3] floatValue];
+    return [CCColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 + (ccBlendFunc) deserializeBlendFunc:(id) val
@@ -311,24 +292,16 @@ NSDictionary* renamedProperties = NULL;
         [TexturePropertySetter setTextureForNode:node andProperty:name withFile:spriteFile];
         [extraProps setObject:spriteFile forKey:name];
     }
-    else if ([type isEqualToString:@"Color3"])
+    else if ([type isEqualToString:@"Color4"] ||
+             [type isEqualToString:@"Color3"])
     {
-        ccColor3B c = [CCBReaderInternal deserializeColor3:serializedValue];
-        NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor3B)];
-        [node setValue:colorValue forKey:name];
-    }
-    else if ([type isEqualToString:@"Color4"])
-    {
-        ccColor4B c = [CCBReaderInternal deserializeColor4:serializedValue];
-        NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor4B)];
+        CCColor* colorValue = [CCBReaderInternal deserializeColor4:serializedValue];
         [node setValue:colorValue forKey:name];
     }
     else if ([type isEqualToString:@"Color4FVar"])
     {
-        ccColor4F c = [CCBReaderInternal deserializeColor4F:[serializedValue objectAtIndex:0]];
-        ccColor4F cVar = [CCBReaderInternal deserializeColor4F:[serializedValue objectAtIndex:1]];
-        NSValue* cValue = [NSValue value:&c withObjCType:@encode(ccColor4F)];
-        NSValue* cVarValue = [NSValue value:&cVar withObjCType:@encode(ccColor4F)];
+        CCColor* cValue = [CCBReaderInternal deserializeColor4:[serializedValue objectAtIndex:0]];
+        CCColor* cVarValue = [CCBReaderInternal deserializeColor4:[serializedValue objectAtIndex:1]];
         [node setValue:cValue forKey:name];
         [node setValue:cVarValue forKey:[NSString stringWithFormat:@"%@Var",name]];
     }

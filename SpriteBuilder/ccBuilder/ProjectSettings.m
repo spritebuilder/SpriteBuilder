@@ -115,7 +115,7 @@
     self.publishAudioQuality_ios = 4;
     self.publishAudioQuality_android = 4;
     
-    self.tabletPositionScaleFactorType = kCCBTabletScale200;
+    self.tabletPositionScaleFactor = 2.0f;
     
     resourceProperties = [[NSMutableDictionary dictionary] retain];
     
@@ -191,10 +191,11 @@
     self.resourceAutoScaleFactor = [[dict objectForKey:@"resourceAutoScaleFactor"]intValue];
     if (resourceAutoScaleFactor == 0) self.resourceAutoScaleFactor = 4;
     
-    self.tabletPositionScaleFactorType = [[dict objectForKey:@"tabletPositionScaleFactorType"] intValue];
     self.deviceScaling = [[dict objectForKey:@"deviceScaling"] intValue];
     self.defaultOrientation = [[dict objectForKey:@"defaultOrientation"] intValue];
     self.designTarget = [[dict objectForKey:@"designTarget"] intValue];
+    
+    self.tabletPositionScaleFactor = 2.0f;
     
     NSString* mainCCB = [dict objectForKey:@"javascriptMainCCB"];
     if (!mainCCB) mainCCB = @"";
@@ -286,7 +287,6 @@
     [dict setObject:[NSNumber numberWithBool:deviceOrientationLandscapeRight] forKey:@"deviceOrientationLandscapeRight"];
     [dict setObject:[NSNumber numberWithInt:resourceAutoScaleFactor] forKey:@"resourceAutoScaleFactor"];
     
-    [dict setObject:[NSNumber numberWithInt:self.tabletPositionScaleFactorType] forKey:@"tabletPositionScaleFactorType"];
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
@@ -558,11 +558,4 @@
     return version;
 }
 
-- (void) setTabletPositionScaleFactorType:(int)tabletPositionScaleFactorType
-{
-    _tabletPositionScaleFactorType = tabletPositionScaleFactorType;
-    if (tabletPositionScaleFactorType == kCCBTabletScale200) self.tabletPositionScaleFactor = 2.0f;
-    else if (tabletPositionScaleFactorType == kCCBTabletScale180) self.tabletPositionScaleFactor = 1.8f;
-    else if (tabletPositionScaleFactorType == kCCBTabletScale240) self.tabletPositionScaleFactor = 2.4f;
-}
 @end

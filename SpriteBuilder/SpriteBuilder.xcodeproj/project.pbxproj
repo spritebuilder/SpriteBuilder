@@ -286,6 +286,7 @@
 		B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C623DC17F392FE00928F91 /* CCBPProperties.plist */; };
 		B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D0918417C2C12B0007FE7F /* libcocos2d.a */; };
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
+		B7E775E218563F8C004221AA /* frame-fixed.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E775E118563F8C004221AA /* frame-fixed.png */; };
 		B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7EE699C18188E0900B983FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7EE699A18188E0900B983FE /* InfoPlist.strings */; };
 		B7EE69A718188ECC00B983FE /* CCTextField.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */; };
@@ -1215,6 +1216,7 @@
 		B7C623DC17F392FE00928F91 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d-osx.xcodeproj"; path = "cocos2d-iphone/cocos2d-osx.xcodeproj"; sourceTree = "<group>"; };
 		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SpriteBuilder.icns; path = ../SpriteBuilder.icns; sourceTree = "<group>"; };
+		B7E775E118563F8C004221AA /* frame-fixed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-fixed.png"; sourceTree = "<group>"; };
 		B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCTextField.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7EE699918188E0900B983FE /* CCTextField-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCTextField-Info.plist"; sourceTree = "<group>"; };
 		B7EE699B18188E0900B983FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2118,6 +2120,7 @@
 		776041EF1498FCE50078095D /* Stage Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B7E775E118563F8C004221AA /* frame-fixed.png */,
 				B71706C7184ECD660081720A /* select-crosshair@2x.png */,
 				B71706C8184ECD660081720A /* select-move.png */,
 				B71706C9184ECD660081720A /* select-move@2x.png */,
@@ -4091,6 +4094,7 @@
 				80E95C5A1836E44900D864CA /* select-locked.png in Resources */,
 				80FBACD91834553000C4BB69 /* visible-icon.png in Resources */,
 				A77EF594171FD3B200451DA4 /* cwebp in Resources */,
+				B7E775E218563F8C004221AA /* frame-fixed.png in Resources */,
 				B71706CD184ECD660081720A /* select-crosshair@2x.png in Resources */,
 				7789ABCD133AA82000CEFCC7 /* InfoPlist.strings in Resources */,
 				7789ABD3133AA82000CEFCC7 /* Credits.rtf in Resources */,

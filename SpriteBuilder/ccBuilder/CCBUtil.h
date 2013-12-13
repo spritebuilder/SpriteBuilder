@@ -24,6 +24,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "cocos2d.h"
 
 CGPoint ccpRound(CGPoint pt);
 CGPoint ccpClosestPointOnLine(CGPoint v, CGPoint w, CGPoint p);

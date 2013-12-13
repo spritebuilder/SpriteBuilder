@@ -481,6 +481,10 @@ void ApplyCustomNodeVisitSwizzle()
     defaultCanvasSizes[kCCBCanvasSizeIPadLandscape] = CGSizeMake(512, 384);
     defaultCanvasSizes[kCCBCanvasSizeIPadPortrait] = CGSizeMake(384, 512);
     
+    // Fixed
+    defaultCanvasSizes[kCCBCanvasSizeFixedLandscape] = CGSizeMake(568, 384);
+    defaultCanvasSizes[kCCBCanvasSizeFixedPortrait] = CGSizeMake(384, 568);
+    
     // Android
     defaultCanvasSizes[kCCBCanvasSizeAndroidXSmallLandscape] = CGSizeMake(320, 240);
     defaultCanvasSizes[kCCBCanvasSizeAndroidXSmallPortrait] = CGSizeMake(240, 320);
@@ -1262,40 +1266,38 @@ static BOOL hideAllToNextSeparator;
     
     if (type == kCCBDocDimensionsTypeNode)
     {
-        if (projectSettings.designTarget == kCCBDesignTargetPhone ||
-            projectSettings.designTarget == kCCBDesignTargetAdaptive)
+        if (projectSettings.designTarget == kCCBDesignTargetFlexible)
         {
             [updatedResolutions addObject:[ResolutionSetting settingIPhone]];
-        }
-        if (projectSettings.designTarget == kCCBDesignTargetTablet ||
-            projectSettings.designTarget == kCCBDesignTargetAdaptive)
-        {
             [updatedResolutions addObject:[ResolutionSetting settingIPad]];
+        }
+        else
+        {
+            [updatedResolutions addObject:[ResolutionSetting settingFixed]];
         }
     }
     else if (type == kCCBDocDimensionsTypeLayer)
     {
         ResolutionSetting* settingDefault = [resolutions objectAtIndex:0];
         
-        if (projectSettings.designTarget == kCCBDesignTargetPhone)
+        if (projectSettings.designTarget == kCCBDesignTargetFixed)
         {
-            settingDefault.name = @"Phone";
+            settingDefault.name = @"Fixed";
+            settingDefault.scale = 2;
+            settingDefault.ext = @"tablet phonehd";
             [updatedResolutions addObject:settingDefault];
         }
-        else if (projectSettings.designTarget == kCCBDesignTargetTablet)
-        {
-            settingDefault.name = @"Tablet";
-            [updatedResolutions addObject:settingDefault];
-        }
-        else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
+        else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
         {
             settingDefault.name = @"Phone";
+            settingDefault.scale = 1;
+            settingDefault.ext = @"phone";
             [updatedResolutions addObject:settingDefault];
             
-						// TODO not sure if this part is correct or not...
             ResolutionSetting* settingTablet = [settingDefault copy];
             settingTablet.name = @"Tablet";
             settingTablet.scale = projectSettings.tabletPositionScaleFactor;
+            settingTablet.ext = @"tablet phonehd";
             [updatedResolutions addObject:settingTablet];
         }
     }
@@ -1304,19 +1306,11 @@ static BOOL hideAllToNextSeparator;
         if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
         {
             // Full screen landscape
-            if (projectSettings.designTarget == kCCBDesignTargetPhone)
+            if (projectSettings.designTarget == kCCBDesignTargetFixed)
             {
-                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
-                if (projectSettings.deviceScaling == kCCBDeviceScalingStretchTallSide)
-                {
-                    [updatedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
-                }
+                [updatedResolutions addObject:[ResolutionSetting settingFixedLandscape]];
             }
-            else if (projectSettings.designTarget == kCCBDesignTargetTablet)
-            {
-                [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
-            }
-            else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
+            else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
@@ -1326,19 +1320,11 @@ static BOOL hideAllToNextSeparator;
         else
         {
             // Full screen portrait
-            if (projectSettings.designTarget == kCCBDesignTargetPhone)
+            if (projectSettings.designTarget == kCCBDesignTargetFixed)
             {
-                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
-                if (projectSettings.deviceScaling == kCCBDeviceScalingStretchTallSide)
-                {
-                    [updatedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
-                }
+                [updatedResolutions addObject:[ResolutionSetting settingFixedPortrait]];
             }
-            else if (projectSettings.designTarget == kCCBDesignTargetTablet)
-            {
-                [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
-            }
-            else if (projectSettings.designTarget == kCCBDesignTargetAdaptive)
+            else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];

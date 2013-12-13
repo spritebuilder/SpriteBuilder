@@ -33,20 +33,19 @@
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     
-    ccColor4F c = ccc4f(r, g, b, a);
+    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:a];
     
-    NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor4F)];
     [self setPropertyForSelection:colorValue];
     
 }
 
 - (NSColor*) color
 {
-    NSValue* colorValue = [self propertyForSelection];
-    ccColor4F c;
-    [colorValue getValue:&c];
+    CCColor* colorValue = [self propertyForSelection];
+    CGFloat r, g, b, a;
+    [colorValue getRed:&r green:&g blue:&b alpha:&a];
     
-    return [NSColor colorWithCalibratedRed:c.r green:c.g blue:c.b alpha:c.a];
+    return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
 }
 
 - (void) setColorVar:(NSColor *)color
@@ -56,9 +55,7 @@
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     
-    ccColor4F c = ccc4f(r, g, b, a);
-    
-    NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor4F)];
+    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:a];
     
     [self setPropertyForSelectionVar:colorValue];
     
@@ -66,11 +63,11 @@
 
 - (NSColor*) colorVar
 {
-    NSValue* colorValue = [self propertyForSelectionVar];
-    ccColor4F c;
-    [colorValue getValue:&c];
+    CCColor* colorValue = [self propertyForSelectionVar];
+    CGFloat r,g,b,a;
+    [colorValue getRed:&r green:&g blue:&b alpha:&a];
     
-    return [NSColor colorWithCalibratedRed:c.r green:c.g blue:c.b alpha:c.a];
+    return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
 }
 
 @end

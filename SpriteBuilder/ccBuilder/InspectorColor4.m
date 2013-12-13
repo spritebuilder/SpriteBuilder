@@ -35,22 +35,22 @@
     
     [color getRed:&r green:&g blue:&b alpha:&a];
     
-    ccColor4B c = ccc4(r*255, g*255, b*255, a*255);
     
-    NSValue* colorValue = [NSValue value:&c withObjCType:@encode(ccColor4B)];
+    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:a];
     [self setPropertyForSelection:colorValue];
     
-    [self updateAnimateablePropertyValue: [CCBWriterInternal serializeColor4:c]];
+    [self updateAnimateablePropertyValue: [CCBWriterInternal serializeColor4:colorValue]];
     
 }
 
 - (NSColor*) color
 {
-    NSValue* colorValue = [self propertyForSelection];
-    ccColor4B c;
-    [colorValue getValue:&c];
+    CCColor* colorValue = [self propertyForSelection];
     
-    return [NSColor colorWithCalibratedRed:c.r/255.0 green:c.g/255.0 blue:c.b/255.0 alpha:c.a/255.0];
+    CGFloat r, g, b, a;
+    [colorValue getRed:&r green:&g blue:&b alpha:&a];
+    
+    return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
 }
 
 @end

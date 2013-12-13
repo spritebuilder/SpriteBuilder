@@ -87,8 +87,8 @@
     {
         // Layer
         self.canSetSize = YES;
-        self.width = 100;
-        self.height = 100;
+        self.width = 568;
+        self.height = 384;
     }
     else if (objectType == kCCBNewDocTypeSprite)
     {

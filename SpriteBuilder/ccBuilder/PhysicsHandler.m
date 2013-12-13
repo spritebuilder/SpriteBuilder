@@ -445,7 +445,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             }
             
             CCDrawNode* drawing = [CCDrawNode node];
-            [drawing drawPolyWithVerts:points count:body.points.count fillColor:ccc4f(0, 0, 0, 0) borderWidth:selectionBorderWidth borderColor:ccc4f(1, 1, 1, 0.3)];
+            [drawing drawPolyWithVerts:points count:body.points.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
             
             [editorView addChild:drawing z:-1];
             
@@ -474,7 +474,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             }
             
             CCDrawNode* drawing = [CCDrawNode node];
-            [drawing drawPolyWithVerts:points count:32 fillColor:ccc4f(0, 0, 0, 0) borderWidth:selectionBorderWidth borderColor:ccc4f(1, 1, 1, 0.3)];
+            [drawing drawPolyWithVerts:points count:32 fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
             
             [editorView addChild:drawing z:-1];
             

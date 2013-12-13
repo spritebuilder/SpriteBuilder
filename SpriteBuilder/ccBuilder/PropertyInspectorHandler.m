@@ -75,9 +75,9 @@
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*template"];
     [templ applyToNode:node];
     
-    if ([node isKindOfClass:[CCParticleSystemQuad class]])
+    if ([node isKindOfClass:[CCParticleSystem class]])
     {
-        CCParticleSystemQuad* particles = (CCParticleSystemQuad*)node;
+        CCParticleSystem* particles = (CCParticleSystem*)node;
         [particles stopSystem];
         [particles resetSystem];
     }

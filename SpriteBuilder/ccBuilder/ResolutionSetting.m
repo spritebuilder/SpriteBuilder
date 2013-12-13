@@ -119,6 +119,42 @@
     [super dealloc];
 }
 
++ (ResolutionSetting*) settingFixed
+{
+    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    
+    setting.name = @"Fixed";
+    setting.width = 0;
+    setting.height = 0;
+    setting.ext = @"tablet phonehd";
+    setting.scale = 2;
+    
+    return setting;
+}
+
++ (ResolutionSetting*) settingFixedLandscape
+{
+    ResolutionSetting* setting = [self settingFixed];
+    
+    setting.name = @"Fixed Landscape";
+    setting.width = 568;
+    setting.height = 384;
+    
+    return setting;
+}
+
++ (ResolutionSetting*) settingFixedPortrait
+{
+    ResolutionSetting* setting = [self settingFixed];
+    
+    setting.name = @"Fixed Portrait";
+    setting.width = 384;
+    setting.height = 568;
+    
+    return setting;
+}
+
+
 + (ResolutionSetting*) settingIPhone
 {
     ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];

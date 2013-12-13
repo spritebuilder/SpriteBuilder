@@ -29,7 +29,7 @@
 #import "PSMTabBarControl.h"
 #import "SMTabBar.h"
 
-#define kCCBNumCanvasDevices 12
+#define kCCBNumCanvasDevices 14
 
 enum {
     kCCBCanvasSizeCustom = 0,
@@ -39,6 +39,8 @@ enum {
     kCCBCanvasSizeIPhone5Portrait,
     kCCBCanvasSizeIPadLandscape,
     kCCBCanvasSizeIPadPortrait,
+    kCCBCanvasSizeFixedLandscape,
+    kCCBCanvasSizeFixedPortrait,
     kCCBCanvasSizeAndroidXSmallLandscape,
     kCCBCanvasSizeAndroidXSmallPortrait,
     kCCBCanvasSizeAndroidSmallLandscape,
