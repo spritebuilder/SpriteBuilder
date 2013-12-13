@@ -1065,7 +1065,6 @@
     CFRelease(destination);
     CGImageRelease(imageDst);
     CGImageRelease(imageSrc);
-//    CFRelease(dataProvider);
     CFRelease(newContext);
     
     // Convert file to 8 bit if original uses indexed colors
