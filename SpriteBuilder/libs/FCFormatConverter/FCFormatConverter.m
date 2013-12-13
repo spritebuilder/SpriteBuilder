@@ -21,8 +21,13 @@ static FCFormatConverter* gDefaultConverter = NULL;
     return gDefaultConverter;
 }
 
-- (NSString*) proposedNameForConvertedImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress
+- (NSString*) proposedNameForConvertedImageAtPath:(NSString*)srcPath format:(int)format compress:(BOOL)compress isSpriteSheet:(BOOL)isSpriteSheet
 {
+    if ( isSpriteSheet )
+		{
+		    // The name of a sprite in a spritesheet never changes.
+		    return [[srcPath copy] autorelease];
+		}
     if (format == kFCImageFormatPNG ||
         format == kFCImageFormatPNG_8BIT)
     {
@@ -49,13 +54,14 @@ static FCFormatConverter* gDefaultConverter = NULL;
     return NULL;
 }
 
-- (NSString*) convertImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress
+- (NSString*) convertImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress isSpriteSheet:(BOOL)isSpriteSheet
 {
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* dstDir = [srcPath stringByDeletingLastPathComponent];
     
 		// Convert PSD to PNG as a pre-step.
-		if ( [[srcPath pathExtension] isEqualToString:@"psd"] )
+		// Unless the .psd is part of a spritesheet, then the original name has to be preserved.
+		if ( [[srcPath pathExtension] isEqualToString:@"psd"] && !isSpriteSheet)
 		{
 				CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
 				CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);

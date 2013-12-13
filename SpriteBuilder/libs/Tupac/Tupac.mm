@@ -216,8 +216,8 @@ typedef struct _PVRTexHeader
     for (NSString *filename in self.filenames)
     {
         // Load CGImage
-        CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([filename cStringUsingEncoding:NSUTF8StringEncoding]);
-        CGImageRef srcImage = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
+				CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:filename], NULL);
+				CGImageRef srcImage = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
         
         // Get info
         int w = (int)CGImageGetWidth(srcImage);
@@ -246,7 +246,7 @@ typedef struct _PVRTexHeader
         [images addObject:[NSValue valueWithPointer:srcImage]];
         
         // Relase objects (images released later)
-        CGDataProviderRelease(dataProvider);
+        CFRelease(image_source);
     }
     
     // Check that the output format is valid
@@ -425,7 +425,7 @@ typedef struct _PVRTexHeader
         [[NSFileManager defaultManager] copyItemAtPath:pngFilename toPath:self.previewFile error:NULL];
     }
     
-    textureFileName = [[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_];
+    textureFileName = [[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_ isSpriteSheet:YES];
     
     // Metadata File Export
     textureFileName = [textureFileName lastPathComponent];
@@ -510,7 +510,8 @@ typedef struct _PVRTexHeader
         
         for (NSString* file in files)
         {
-            if ([[[file pathExtension] lowercaseString] isEqualToString:@"png"])
+				    NSString *lower = [[file pathExtension] lowercaseString];
+            if ([lower isEqualToString:@"png"] || [lower isEqualToString:@"psd"])
             {
                 [allFiles addObject:[file lastPathComponent]];
             }
