@@ -57,15 +57,15 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>animatable</key>
 			<true/>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>opacity</string>
 		</dict>
@@ -80,9 +80,10 @@
 			<true/>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Color</string>

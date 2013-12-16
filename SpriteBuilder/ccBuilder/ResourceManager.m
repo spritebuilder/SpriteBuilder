@@ -573,6 +573,7 @@
         return kCCBResTypeNone;
     }
     else if ([ext isEqualToString:@"png"]
+        || [ext isEqualToString:@"psd"]
         || [ext isEqualToString:@"jpg"]
         || [ext isEqualToString:@"jpeg"])
     {
@@ -1011,17 +1012,9 @@
     float scaleFactor = dstScale/srcScale;
     
     // Load src image
-    CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([autoFile UTF8String]);
-    
-    CGImageRef imageSrc;
-    BOOL isPng = [[autoFile lowercaseString] hasSuffix:@"png"];
-    //If it'a png file, use png dataprovider, or use jpg dataprovider
-    if (isPng) {
-        imageSrc= CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
-    }else{
-        imageSrc = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
-    }
-    
+		CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:autoFile], NULL);
+		CGImageRef imageSrc = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+		    
     int wSrc = CGImageGetWidth(imageSrc);
     int hSrc = CGImageGetHeight(imageSrc);
 
@@ -1059,7 +1052,9 @@
     
     // Save the image
     CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:dstFile];
-    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, isPng ? kUTTypePNG : kUTTypeJPEG, 1, NULL);
+		
+		CFStringRef out_type = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, [dstFile pathExtension], NULL);
+    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, out_type, 1, NULL);
     CGImageDestinationAddImage(destination, imageDst, nil);
     
     if (!CGImageDestinationFinalize(destination)) {
@@ -1070,7 +1065,6 @@
     CFRelease(destination);
     CGImageRelease(imageDst);
     CGImageRelease(imageSrc);
-    CFRelease(dataProvider);
     CFRelease(newContext);
     
     // Convert file to 8 bit if original uses indexed colors
@@ -1249,7 +1243,7 @@
     {
         // Handle regular file
         NSString* ext = [[file pathExtension] lowercaseString];
-        if ([ext isEqualToString:@"png"])
+        if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
         {
             // Handle image import
             

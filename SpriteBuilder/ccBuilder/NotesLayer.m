@@ -56,7 +56,7 @@
     
     // Setup text area and add it to guiLayer
     CGSize size = note.contentSize;
-    CGPoint pos = ccp(note.position.x * CC_CONTENT_SCALE_FACTOR(), note.position.y * CC_CONTENT_SCALE_FACTOR() - note.contentSize.height);
+    CGPoint pos = ccp(note.position.x * [CCDirector sharedDirector].contentScaleFactor, note.position.y * [CCDirector sharedDirector].contentScaleFactor - note.contentSize.height);
     
     [NSBundle loadNibNamed:@"StickyNoteEditView" owner:self];
     [editView setFrameOrigin:NSPointFromCGPoint(pos)];
@@ -161,7 +161,7 @@
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*notes"];
         
         CGPoint delta = ccpSub(pt, mouseDownPos);
-        delta = ccpMult(delta, CC_CONTENT_SCALE_FACTOR());
+        delta = ccpMult(delta, [CCDirector sharedDirector].contentScaleFactor);
         CGSize newSize;
         newSize.width = noteStartSize.width + delta.x;
         newSize.height = noteStartSize.height - delta.y;

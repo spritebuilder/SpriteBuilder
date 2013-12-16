@@ -75,7 +75,7 @@
 	xyBg.anchorPoint = ccp(0,0);
 	xyBg.position = ccp(0,0);
 	
-	CGFloat scale = CC_CONTENT_SCALE_FACTOR();
+	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
 	lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
 	lblX.anchorPoint = ccp(1,0);
 	lblX.position = ccp(47/scale,3/scale);
@@ -122,14 +122,14 @@
     zoom = zm;
     
     // Resize backrounds
-    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth/CC_CONTENT_SCALE_FACTOR());
-    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth/CC_CONTENT_SCALE_FACTOR(), winSize.height);
+    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth/[CCDirector sharedDirector].contentScaleFactor);
+    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth/[CCDirector sharedDirector].contentScaleFactor, winSize.height);
     
     // Add marks and numbers
     [marksVertical removeAllChildrenWithCleanup:YES];
     [marksHorizontal removeAllChildrenWithCleanup:YES];
     
-		CGFloat scale = CC_CONTENT_SCALE_FACTOR();
+		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
     // Vertical marks
     int y = (int)so.y - (((int)so.y)/10)*10;
     while (y < winSize.height)

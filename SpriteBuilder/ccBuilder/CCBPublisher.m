@@ -56,7 +56,7 @@
     warnings = [w retain];
     
     // Setup extensions to copy
-    copyExtensions = [[NSArray alloc] initWithObjects:@"jpg",@"png", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
+    copyExtensions = [[NSArray alloc] initWithObjects:@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
     
     publishedSpriteSheetNames = [[NSMutableArray alloc] init];
     publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
@@ -241,10 +241,10 @@
     }
     
     // Fetch new name
-    NSString* dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:dstPath format:format dither:dither compress:compress];
+    NSString* dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:dstPath format:format compress:compress isSpriteSheet:isSpriteSheet];
     
     // Add renaming rule
-    NSString* relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath format:format dither:dither compress:compress];
+    NSString* relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath format:format compress:compress isSpriteSheet:isSpriteSheet];
     [self addRenamingRuleFrom:relPath to:relPathRenamed];
     
     // Copy and convert the image
@@ -267,7 +267,7 @@
         [fm copyItemAtPath:srcPath toPath:dstPath error:NULL];
         
         // Convert it
-        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress];
+        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet];
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
@@ -291,7 +291,7 @@
         [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:dstPath forResolution:resolution];
         
         // Convert it
-        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress];
+        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet];
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
@@ -496,7 +496,7 @@
             NSString* ext = [[fileName pathExtension] lowercaseString];
             
             // Skip non png files for generated sprite sheets
-            if (isGeneratedSpriteSheet &&![ext isEqualToString:@"png"])
+            if (isGeneratedSpriteSheet && !([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"]))
             {
                 [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
                 continue;
@@ -520,7 +520,7 @@
                 
             
                 // Copy file (and possibly convert)
-                if ([ext isEqualToString:@"png"])
+                if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
                 {
                     // Publish images
                     [self publishImageFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
@@ -855,8 +855,17 @@
     // Generate Cocos2d setup file
     NSMutableDictionary* configCocos2d = [NSMutableDictionary dictionary];
     
-    [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.designTarget] forKey:@"CCConfigScreenMode"];
-    [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.defaultOrientation] forKey:@"CCConfigScreenOrientation"];
+    NSString* screenMode = NULL;
+    if (projectSettings.designTarget == kCCBDesignTargetFixed) screenMode = @"CCScreenModeFixed";
+    else if (projectSettings.designTarget == kCCBDesignTargetFlexible) screenMode = @"CCScreenModeFlexible";
+    [configCocos2d setObject:screenMode forKey:@"CCSetupScreenMode"];
+    
+    NSString* screenOrientation = NULL;
+    if (projectSettings.defaultOrientation == kCCBOrientationLandscape) screenOrientation = @"CCScreenOrientationLandscape";
+    else if (projectSettings.defaultOrientation == kCCBOrientationPortrait) screenOrientation = @"CCScreenOrientationPortrait";
+    [configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
+    
+    [configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
     
     NSString* configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
     [configCocos2d writeToFile:configCocos2dFile atomically:YES];

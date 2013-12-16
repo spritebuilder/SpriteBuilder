@@ -54,9 +54,10 @@
 		<dict>
 			<key>default</key>
 			<array>
-				<integer>19</integer>
-				<integer>0</integer>
-				<integer>255</integer>
+				<real>0.6</real>
+				<real>0.75</real>
+				<real>0.92</real>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>Start color</string>
@@ -67,22 +68,23 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Start opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>startOpacity</string>
 		</dict>
 		<dict>
 			<key>default</key>
 			<array>
-				<integer>255</integer>
-				<integer>33</integer>
-				<integer>249</integer>
+				<real>0.76</real>
+				<real>0.49</real>
+				<real>0.92</real>
+				<integer>1</integer>
 			</array>
 			<key>displayName</key>
 			<string>End color</string>
@@ -93,13 +95,13 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>default</key>
-			<integer>255</integer>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>End opacity</string>
 			<key>type</key>
-			<string>Byte</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>endOpacity</string>
 		</dict>

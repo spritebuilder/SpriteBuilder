@@ -29,7 +29,7 @@
 
 @interface CCBReaderInternal : NSObject
 
-+ (ccColor3B) deserializeColor3:(id) val;
++ (CCColor*) deserializeColor4:(id) val;
 
 //+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict;
 + (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize;
