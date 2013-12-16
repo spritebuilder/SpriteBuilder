@@ -141,7 +141,7 @@
 
 + (id) serializeColor4:(CCColor*)c
 {
-    CGFloat r,g,b,a;
+    float r,g,b,a;
     [c getRed:&r green:&g blue:&b alpha:&a];
     
     return [NSArray arrayWithObjects:
