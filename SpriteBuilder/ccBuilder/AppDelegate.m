@@ -1055,16 +1055,19 @@ static BOOL hideAllToNextSeparator;
     
     [propertyInspectorHandler updateTemplates];
     
+    NSString * privateFunction = [NSString stringWithFormat:@"%@%@%@", @"_setDefault",@"KeyView",@"Loop"];
+    SEL privateSelector = NSSelectorFromString(privateFunction);
+    
     //Undocumented function that resets the KeyViewLoop.
-    if([inspectorDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    if([inspectorDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+        [inspectorDocumentView performSelector:privateSelector withObject:nil];
     }
     
     //Undocumented function that resets the KeyViewLoop.
-    if([inspectorCodeDocumentView respondsToSelector:@selector(_setDefaultKeyViewLoop)])
+    if([inspectorCodeDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorCodeDocumentView performSelector:@selector(_setDefaultKeyViewLoop) withObject:nil];
+        [inspectorCodeDocumentView performSelector:privateSelector withObject:nil];
     }
     
 

@@ -351,7 +351,7 @@
     int xPos = [seq timeToPosition:seq.soundChannel.dragAndDropTimeStamp];
 
     
-    CGColorRef blueColor = [[NSColor blueColor] CGColor];
+    CGColorRef blueColor = [[NSColor blackColor] CGColor];
     
     NSGraphicsContext * graphicsContext = [NSGraphicsContext currentContext];
     CGContextRef context = [graphicsContext graphicsPort];
@@ -359,7 +359,7 @@
     CGContextSetLineWidth(context, 1.0);
     CGContextMoveToPoint(context, xPos + cellFrame.origin.x, cellFrame.origin.y );
 
-    CGContextAddLineToPoint(context, xPos + cellFrame.origin.x, cellFrame.origin.y + cellFrame.size.height);
+    CGContextAddLineToPoint(context, xPos + cellFrame.origin.x, cellFrame.origin.y + cellFrame.size.height - 2);
     
     CGContextSetStrokeColorWithColor(context, blueColor);
     CGContextStrokePath(context);
@@ -430,7 +430,6 @@
         [imgRowBgN setFlipped:YES];
         
         imgRowBgChannel = [[NSImage imageNamed:@"seq-row-channel-bg.png"] retain];
-        [imgRowBgN setFlipped:YES];
         
         imgInterpol = [[NSImage imageNamed:@"seq-keyframe-interpol.png"] retain];
         [imgInterpol setFlipped:YES];
