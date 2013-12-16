@@ -45,12 +45,8 @@
 
 - (NSColor*) color
 {
-    CCColor* colorValue = [self propertyForSelection];
-    
-    CGFloat r, g, b, a;
-    [colorValue getRed:&r green:&g blue:&b alpha:&a];
-    
-    return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
+		CCColor* colorValue = [self propertyForSelection];
+		return colorValue.NSColor;
 }
 
 @end
