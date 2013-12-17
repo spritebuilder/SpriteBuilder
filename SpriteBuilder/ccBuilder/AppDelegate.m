@@ -1675,6 +1675,11 @@ static BOOL hideAllToNextSeparator;
     // Add to recent list of opened documents
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
     
+    // Convert folder to actual project file
+    NSString* projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
+    fileName = [[fileName stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"ccbproj"];
+    
+    // Load the project file
     NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fileName];
     if (!projectDict)
     {
@@ -1969,6 +1974,7 @@ static BOOL hideAllToNextSeparator;
 {
 	for( NSString* filename in filenames )
 	{
+        /*
 		if( [filename hasSuffix:@".ccb"] )
 		{
 			NSString* folderPathToSearch = [filename stringByDeletingLastPathComponent];
@@ -1978,8 +1984,8 @@ static BOOL hideAllToNextSeparator;
 				[self openProject:projectFile];
 				[self openFile:filename];
 			}
-		}
-		else if ([filename hasSuffix:@".ccbproj"])
+		}*/
+        if ([filename hasSuffix:@".spritebuilder"])
 		{
 			[self openProject:filename];		
 		}
@@ -2771,7 +2777,7 @@ static BOOL hideAllToNextSeparator;
     // Create the File Open Dialog
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:YES];
-    [openDlg setAllowedFileTypes:[NSArray arrayWithObject:@"ccbproj"]];
+    [openDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
     
     [openDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
@@ -2798,27 +2804,35 @@ static BOOL hideAllToNextSeparator;
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
-    //[saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@""]];
+    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
     //saveDlg.message = @"Save your project file in the same directory as your projects resources.";
     
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
         {
             NSString* fileName = [[saveDlg URL] path];
+            NSString* fileNameRaw = [fileName stringByDeletingPathExtension];
             
             // Check validity of file name
             NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
-            if ([[fileName lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
+            if ([[fileNameRaw lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
             {
+                // Create directory
                 [[NSFileManager defaultManager] createDirectoryAtPath:fileName withIntermediateDirectories:NO attributes:NULL error:NULL];
-                NSString* projectName = [fileName lastPathComponent];
+                
+                // Set icon of created directory
+                NSImage* folderIcon = [NSImage imageNamed:@"Folder.icns"];
+                [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:fileName options:NULL];
+                
+                // Create project file
+                NSString* projectName = [fileNameRaw lastPathComponent];
                 fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_current_queue(), ^{
                                    if ([self createProject: fileName])
                                    {
-                                       [self openProject:fileName];
+                                       [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }
                                    else
                                    {
@@ -4367,7 +4381,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)visitCommunity:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.cocos2d-iphone.org/forum/forum/16"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://forum.spritebuilder.com"]];
 }
 
 #pragma mark Debug

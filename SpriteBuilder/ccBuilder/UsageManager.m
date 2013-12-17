@@ -32,10 +32,10 @@
         [[NSUserDefaults standardUserDefaults] setValue:userID forKey:@"sbUserID"];
         
         // Open welcome screen in browser
-        NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/welcome/%@", userID];
-        NSURL* url = [NSURL URLWithString:urlStr];
+        //NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/welcome/%@", userID];
+        //NSURL* url = [NSURL URLWithString:urlStr];
         
-        [[NSWorkspace sharedWorkspace] openURL:url];
+        //[[NSWorkspace sharedWorkspace] openURL:url];
     }
 }
 
