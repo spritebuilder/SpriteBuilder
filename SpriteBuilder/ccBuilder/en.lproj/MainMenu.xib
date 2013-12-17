@@ -86,7 +86,7 @@
                                         <menuItem isSeparatorItem="YES" id="1936"/>
                                         <menuItem title="File..." keyEquivalent="n" id="1478">
                                             <connections>
-                                                <action selector="newDocument:" target="494" id="1480"/>
+                                                <action selector="menuNewFile:" target="494" id="gUD-bc-xqj"/>
                                                 <binding destination="494" name="enabled" keyPath="projectSettings" id="1511">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSIsNotNil</string>
@@ -97,7 +97,7 @@
                                         <menuItem title="Folder" id="1935">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="newFolder:" target="494" id="1964"/>
+                                                <action selector="menuNewFolder:" target="494" id="O4b-MY-vZy"/>
                                                 <binding destination="494" name="enabled" keyPath="projectSettings" id="1940">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSIsNotNil</string>
@@ -1205,12 +1205,12 @@ CA
                                             <menuItem title="Item 1" state="on" image="toolbar-btn-add" hidden="YES" id="1946"/>
                                             <menuItem title="New File..." id="1947">
                                                 <connections>
-                                                    <action selector="newDocument:" target="494" id="1950"/>
+                                                    <action selector="menuNewFile:" target="494" id="PlH-iG-00y"/>
                                                 </connections>
                                             </menuItem>
                                             <menuItem title="New Folder" id="1948">
                                                 <connections>
-                                                    <action selector="newFolder:" target="494" id="1963"/>
+                                                    <action selector="menuNewFolder:" target="494" id="fEV-XG-RIU"/>
                                                 </connections>
                                             </menuItem>
                                         </items>

@@ -3964,6 +3964,25 @@ static BOOL hideAllToNextSeparator;
     [self newFolder:sender];
 }
 
+- (IBAction)menuNewFolder:(NSMenuItem*)sender
+{
+    ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
+    sender.tag = resManagerOutlineView.selectedRow;
+    
+    [self newFolder:sender];
+}
+
+
+- (IBAction)menuNewFile:(NSMenuItem*)sender
+{
+    ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
+    sender.tag = resManagerOutlineView.selectedRow;
+    
+    [self newDocument:sender];
+}
+
+
+
 /*
 - (IBAction)menuEditSmartSpriteSheet:(id)sender
 {
