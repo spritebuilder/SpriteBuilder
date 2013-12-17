@@ -683,11 +683,16 @@ void ApplyCustomNodeVisitSwizzle()
     // Close the color picker
     [[NSColorPanel sharedColorPanel] close];
     
-    // Finish editing inspector
-    if (![[self window] makeFirstResponder:[self window]])
+    if([[self window] firstResponder] != sequenceHandler.outlineHierarchy)
     {
-        return;
+        // Finish editing inspector
+        if (![[self window] makeFirstResponder:[self window]])
+        {
+            return;
+        }
+
     }
+    
     
     // Remove any nodes that are part of sub ccb-files OR any nodes that are Locked.
     NSMutableArray* mutableSelection = [NSMutableArray arrayWithArray: selection];
@@ -3972,6 +3977,25 @@ static BOOL hideAllToNextSeparator;
     //forward to normal handler.
     [self newFolder:sender];
 }
+
+- (IBAction)menuNewFolder:(NSMenuItem*)sender
+{
+    ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
+    sender.tag = resManagerOutlineView.selectedRow;
+    
+    [self newFolder:sender];
+}
+
+
+- (IBAction)menuNewFile:(NSMenuItem*)sender
+{
+    ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
+    sender.tag = resManagerOutlineView.selectedRow;
+    
+    [self newDocument:sender];
+}
+
+
 
 /*
 - (IBAction)menuEditSmartSpriteSheet:(id)sender

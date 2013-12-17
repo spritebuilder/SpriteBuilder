@@ -114,13 +114,15 @@
     
     if (canExpand)
     {
+        int smallOffset = node ? 0 : 1; //A small offset for sound rows.
+        
         if (isExpanded)
         {
-            [collapsedImage drawAtPoint:cellFrame.origin fromRect:NSMakeRect(0, 0, 16, 16) operation:NSCompositeSourceOver fraction:1];
+            [collapsedImage drawAtPoint:cellFrame.origin fromRect:NSMakeRect(0, 0 + smallOffset, 16, 16) operation:NSCompositeSourceOver fraction:1];
         }
         else
         {
-            [expandedImage drawAtPoint:cellFrame.origin fromRect:NSMakeRect(0, 0, 16, 16) operation:NSCompositeSourceOver fraction:1];
+            [expandedImage drawAtPoint:cellFrame.origin fromRect:NSMakeRect(0, 0 + smallOffset, 16, 16) operation:NSCompositeSourceOver fraction:1];
         }
     }
 }
