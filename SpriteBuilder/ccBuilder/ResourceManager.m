@@ -1261,6 +1261,10 @@
         {
             // Handle sound import
             
+#warning Fix sound import
+            
+            // Code should check the wav file to see if it is longer than 15 seconds and in that case use mp4 instead of caf
+            /*
             QTMovie* movie = [QTMovie movieWithFile:file error:NULL];
             if (movie)
             {
@@ -1280,6 +1284,16 @@
                 }
                 importedFile = YES;
             }
+             */
+            
+            
+            // Temporary code here
+            
+            // Copy the sound
+            NSString* dstPath = [dstDir stringByAppendingPathComponent:[file lastPathComponent]];
+            [fm copyItemAtPath:file toPath:dstPath error:NULL];
+            
+            importedFile = YES;
         }
     }
     
