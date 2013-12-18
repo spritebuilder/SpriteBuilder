@@ -176,6 +176,8 @@
             icon.size = NSMakeSize(128, 128);
             [previewSoundImage setImage:icon];
             
+#warning Fix sound previews
+            /*
             // Update sound
             QTMovie* movie = [QTMovie movieWithFile:res.filePath error:NULL];
             
@@ -183,6 +185,7 @@
             
             [previewSound pause:NULL];
             [previewSound gotoBeginning:NULL];
+             */
             
             self.enabled = YES;
             
