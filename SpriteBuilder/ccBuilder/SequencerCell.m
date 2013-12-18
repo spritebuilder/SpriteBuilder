@@ -215,7 +215,7 @@
     
     
     // Draw background
-    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y + row*kCCBSeqDefaultRowHeight, cellFrame.size.width, kCCBSeqAudioRowHeight);
+    NSRect rowRect = NSMakeRect(cellFrame.origin.x, cellFrame.origin.y + row*kCCBSeqDefaultRowHeight, cellFrame.size.width, kCCBSeqDefaultRowHeight);
     
     if (isChannel)
     {
