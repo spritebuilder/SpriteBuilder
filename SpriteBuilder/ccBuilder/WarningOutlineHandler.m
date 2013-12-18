@@ -8,6 +8,7 @@
 
 #import "WarningOutlineHandler.h"
 #import "CCBWarnings.h"
+#import "WarningCell.h"
 
 @implementation WarningOutlineHandler
 
@@ -44,6 +45,7 @@
     return ccbWarnings.warnings[index];
 }
 
+
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
     return NO;
@@ -55,7 +57,15 @@
 {
     return [(CCBWarning*)item description];
 }
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldShowCellExpansionForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+    return YES;
+}
 
 
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(WarningCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+    cell.title = [NSString stringWithFormat:@"  %@",((CCBWarning*)item).description];
+}
 
 @end

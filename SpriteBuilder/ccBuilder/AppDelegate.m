@@ -2262,8 +2262,20 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) copy:(id) sender
 {
-    // Copy keyframes
+    //Copy warnings.
+    if([[self window] firstResponder] == outlineWarnings)
+    {
+        CCBWarning * warning = projectSettings.lastWarnings.warnings[outlineWarnings.selectedRow];
+        NSString * stringToWrite = warning.description;
+        NSPasteboard* cb = [NSPasteboard generalPasteboard];
+        
+        [cb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+        [cb setString:stringToWrite forType:NSStringPboardType];
+        return;
+    }
+
     
+    // Copy keyframes
     NSArray* keyframes = [sequenceHandler selectedKeyframesForCurrentSequence];
     if ([keyframes count] > 0)
     {
@@ -2332,6 +2344,7 @@ static BOOL hideAllToNextSeparator;
         
         return;
     }
+    
     
     // Copy node
     if (!self.selectedNode) return;
