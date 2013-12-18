@@ -334,10 +334,17 @@
     }
     else if ([type isEqualToString:@"FntFile"])
     {
-        NSString* str = [TexturePropertySetter fontForNode:node andProperty:name];
+        NSString* str = [node valueForKey:name];
         if (!str) str = @"";
         serializedValue = str;
     }
+    else if ([type isEqualToString:@"StringSimple"])
+    {
+        NSString* str = [StringPropertySetter stringForNode:node andProp:name];
+        if (!str) str = @"";
+        serializedValue = str;
+    }
+    
     else if ([type isEqualToString:@"Text"]
              || [type isEqualToString:@"String"])
     {

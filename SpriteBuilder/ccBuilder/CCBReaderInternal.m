@@ -318,6 +318,12 @@ NSDictionary* renamedProperties = NULL;
         [TexturePropertySetter setFontForNode:node andProperty:name withFile:fntFile];
         [extraProps setObject:fntFile forKey:name];
     }
+    else if ([type isEqualToString:@"StringSimple"])
+    {
+        NSString* str = serializedValue;
+        if (!str) str = @"";
+        [node setValue:str forKey:name];
+    }
     else if ([type isEqualToString:@"Text"]
              || [type isEqualToString:@"String"])
     {
