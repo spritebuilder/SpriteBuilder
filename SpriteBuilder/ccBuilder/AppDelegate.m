@@ -2769,6 +2769,7 @@ static BOOL hideAllToNextSeparator;
         [self updateResourcePathsFromProjectSettings];
         [self menuCleanCacheDirectories:sender];
         [self reloadResources];
+        [self setResolution:0];
     }
 }
 
