@@ -93,7 +93,12 @@
 - (int) propTypeIdForName:(NSString*)prop
 {
     NSInteger propType = [propTypes indexOfObject:prop];
-    if (propType == NSNotFound) return -1;
+    if (propType == NSNotFound)
+    {
+        if([prop isEqualToString:@"StringSimple"])
+            return [self propTypeIdForName:@"String"];
+    
+    }
     return (int)propType;
 }
 
@@ -398,7 +403,8 @@
         [self writeCachedString:prop isPath: YES];
     }
     else if ([type isEqualToString:@"Text"]
-             || [type isEqualToString:@"String"])
+             || [type isEqualToString:@"String"]
+             || [type isEqualToString:@"StringSimple"])
     {
         NSString* str = NULL;
         BOOL localized = NO;
@@ -588,7 +594,8 @@
             [self addToStringCache:value isPath:YES];
         }
         else if ([type isEqualToString:@"Text"]
-                 || [type isEqualToString:@"String"])
+                 || [type isEqualToString:@"String"]
+                 || [type isEqualToString:@"StringSimple"] )
         {
             NSString* str = NULL;
             if ([value isKindOfClass:[NSString class]])

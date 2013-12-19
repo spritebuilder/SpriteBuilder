@@ -49,7 +49,7 @@
     IBOutlet CCBImageView* previewSpriteSheet;
     
     // Sound preview
-    IBOutlet QTMovieView* previewSound;
+    //IBOutlet QTMovieView* previewSound;
     IBOutlet NSImageView* previewSoundImage;
     
     // Generic fallback view

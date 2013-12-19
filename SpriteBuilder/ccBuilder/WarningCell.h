@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface WarningCell : NSCell
+@interface WarningCell : NSTextFieldCell
 
 @end

@@ -36,8 +36,8 @@
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="294"/>
@@ -71,8 +71,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="value" keyPath="projectSettings.publishDirectory" id="35"/>
@@ -93,8 +93,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="235"/>
@@ -223,8 +223,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="238"/>
@@ -244,8 +244,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="241"/>
@@ -265,8 +265,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="244"/>
@@ -286,8 +286,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="314"/>
@@ -308,8 +308,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="297"/>
@@ -329,8 +329,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="value" keyPath="projectSettings.publishDirectoryAndroid" id="229"/>
@@ -351,8 +351,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="256"/>
@@ -394,8 +394,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="259"/>
@@ -415,8 +415,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="262"/>
@@ -436,8 +436,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="265"/>
@@ -457,8 +457,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="268"/>
@@ -513,8 +513,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="selectedTag" keyPath="projectSettings.publishAudioQuality_ios" id="456"/>
@@ -535,8 +535,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="387"/>
@@ -583,8 +583,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="selectedTag" keyPath="projectSettings.publishAudioQuality_android" id="458"/>
@@ -605,8 +605,8 @@ DQ
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                     <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                    <integer key="NSNullPlaceholder" value="-1"/>
                                     <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                    <integer key="NSNullPlaceholder" value="-1"/>
                                 </dictionary>
                             </binding>
                             <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="390"/>
@@ -701,9 +701,9 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="aKi-6a-lDu">
-                        <rect key="frame" x="229" y="63" width="109" height="14"/>
+                        <rect key="frame" x="267" y="63" width="68" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default orientation:" id="QyO-4X-ZUI">
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Orientation:" id="QyO-4X-ZUI">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
