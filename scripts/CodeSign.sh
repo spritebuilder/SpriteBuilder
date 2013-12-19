@@ -8,7 +8,7 @@ APP="SpriteBuilder.app"
 cd ../build
 
 # Remove signature from PVR tool (as it is already signed)
-rm "$APP/Contents/Resources/PVRTexToolCL"
+# rm "$APP/Contents/Resources/PVRTexToolCL"
 # codesign --remove-signature "$APP/Contents/Resources/PVRTexToolCL"
 
 # Sign command line tools
@@ -39,6 +39,10 @@ codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCSprite9Slice.ccbP
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCTextField.ccbPlugNode"
 
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
+
+# Sign Frameworks
+codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework"
+codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework"
 
 # Sign App
 codesign --entitlements ../SpriteBuilder/SpriteBuilder.entitlements -s "$ID" "$APP"
