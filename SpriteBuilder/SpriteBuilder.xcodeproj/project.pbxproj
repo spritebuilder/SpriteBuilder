@@ -98,6 +98,7 @@
 		800C00641846A42500544BD2 /* select-scale.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C005E1846A40D00544BD2 /* select-scale.png */; };
 		800C00701848178D00544BD2 /* select-crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C006F1848178D00544BD2 /* select-crosshair.png */; };
 		800C00711848180A00544BD2 /* select-crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C006F1848178D00544BD2 /* select-crosshair.png */; };
+		80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E97F6318370F400052647D /* WarningCell.m */; };
 		8045F12E183AD6D30082BD94 /* seq-visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12C183AD6D30082BD94 /* seq-visible.png */; };
 		8045F12F183AD6D30082BD94 /* seq-notset.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12D183AD6D30082BD94 /* seq-notset.png */; };
@@ -107,6 +108,8 @@
 		8045F138183ADA900082BD94 /* seq-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F134183AD9B90082BD94 /* seq-locked.png */; };
 		8045F13C183AF1DC0082BD94 /* SequencerButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */; };
 		8045F13D183AF3FF0082BD94 /* SequencerButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */; };
+		8076F94E18624318003C4153 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
+		8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		8098525A182C40170054BBF3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80985259182C40170054BBF3 /* CoreMedia.framework */; };
 		80B149BE183D4D280085935B /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		80B149BF183D4D280085935B /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
@@ -114,6 +117,7 @@
 		80B149C5183D4D420085935B /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
 		80B149C8183D55E60085935B /* SoundFileImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B149C7183D55E60085935B /* SoundFileImageController.m */; };
 		80B149C9183D73930085935B /* SoundFileImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B149C7183D55E60085935B /* SoundFileImageController.m */; };
+		80D05D9A186247DE00BE403F /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		80D06082183317F2001F27F9 /* WarningOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D06081183317F2001F27F9 /* WarningOutlineView.m */; };
 		80E158951843DEDC007242F6 /* select-rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158941843DEDC007242F6 /* select-rotation.png */; };
 		80E1589A1843DEEE007242F6 /* select-rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158941843DEDC007242F6 /* select-rotation.png */; };
@@ -976,6 +980,9 @@
 		8045F134183AD9B90082BD94 /* seq-locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked.png"; sourceTree = "<group>"; };
 		8045F13A183AF1DC0082BD94 /* SequencerButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerButtonCell.h; sourceTree = "<group>"; };
 		8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerButtonCell.m; sourceTree = "<group>"; };
+		8076F94C18624318003C4153 /* InspectorStringSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorStringSimple.h; sourceTree = "<group>"; };
+		8076F94D18624318003C4153 /* InspectorStringSimple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorStringSimple.m; sourceTree = "<group>"; };
+		8076F9521862459A003C4153 /* InspectorStringSimple.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorStringSimple.xib; sourceTree = "<group>"; };
 		80985259182C40170054BBF3 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-keyframe-x4-sel.png"; sourceTree = "<group>"; };
 		80B149BD183D4D280085935B /* seq-keyframe-x4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-keyframe-x4.png"; sourceTree = "<group>"; };
@@ -3497,6 +3504,9 @@
 				E35DBBC314F2A2900070A6E4 /* InspectorText.xib */,
 				E35DBBC514F2A2A40070A6E4 /* InspectorText.h */,
 				E35DBBC614F2A2A50070A6E4 /* InspectorText.m */,
+				8076F9521862459A003C4153 /* InspectorStringSimple.xib */,
+				8076F94C18624318003C4153 /* InspectorStringSimple.h */,
+				8076F94D18624318003C4153 /* InspectorStringSimple.m */,
 				E3C65105151A3B7C00D639C0 /* InspectorString.xib */,
 				E3C65108151A65ED00D639C0 /* InspectorString.h */,
 				E3C65109151A65ED00D639C0 /* InspectorString.m */,
@@ -4113,6 +4123,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80D05D9A186247DE00BE403F /* InspectorStringSimple.xib in Resources */,
 				800C00711848180A00544BD2 /* select-crosshair.png in Resources */,
 				800C00641846A42500544BD2 /* select-scale.png in Resources */,
 				80E158A618442006007242F6 /* select-skew.png in Resources */,
@@ -4525,6 +4536,7 @@
 			files = (
 				80FBACCC183422BD00C4BB69 /* inspector-warning.png in Resources */,
 				E398C02914FB81A30078E771 /* InfoPlist.strings in Resources */,
+				8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */,
 				8045F12F183AD6D30082BD94 /* seq-notset.png in Resources */,
 				80E158951843DEDC007242F6 /* select-rotation.png in Resources */,
 				80B149BE183D4D280085935B /* seq-keyframe-x4-sel.png in Resources */,
@@ -4595,6 +4607,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */,
 				80B149C9183D73930085935B /* SoundFileImageController.m in Sources */,
 				8045F13D183AF3FF0082BD94 /* SequencerButtonCell.m in Sources */,
 				80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */,
@@ -4930,6 +4943,7 @@
 			files = (
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
+				8076F94E18624318003C4153 /* InspectorStringSimple.m in Sources */,
 				80F936F21833F8970032454F /* WarningOutlineHandler.m in Sources */,
 				8045F13C183AF1DC0082BD94 /* SequencerButtonCell.m in Sources */,
 				80D06082183317F2001F27F9 /* WarningOutlineView.m in Sources */,
