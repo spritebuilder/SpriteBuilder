@@ -41,6 +41,14 @@
 				<array>
 					<dict>
 						<key>name</key>
+						<string>name</string>
+						<key>type</key>
+						<string>StringSimple</string>
+						<key>value</key>
+						<string></string>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>position</string>
 						<key>type</key>
 						<string>Position</string>
@@ -97,9 +105,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.60000002384185791</real>
-							<real>0.74901962280273438</real>
-							<real>0.91764706373214722</real>
+							<real>0.20999999344348907</real>
+							<real>0.64999997615814209</real>
+							<real>0.87000000476837158</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -110,9 +118,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.75686275959014893</real>
-							<real>0.48627451062202454</real>
-							<real>0.91764706373214722</real>
+							<real>0.12999999523162842</real>
+							<real>0.5</real>
+							<real>0.80000001192092896</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -149,6 +157,14 @@
 				<integer>0</integer>
 				<key>properties</key>
 				<array>
+					<dict>
+						<key>name</key>
+						<string>name</string>
+						<key>type</key>
+						<string>StringSimple</string>
+						<key>value</key>
+						<string></string>
+					</dict>
 					<dict>
 						<key>name</key>
 						<string>position</string>
@@ -346,6 +362,14 @@
 		<array>
 			<dict>
 				<key>name</key>
+				<string>name</string>
+				<key>type</key>
+				<string>StringSimple</string>
+				<key>value</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>name</key>
 				<string>position</string>
 				<key>type</key>
 				<string>Position</string>
@@ -465,7 +489,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.63333332538604736</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

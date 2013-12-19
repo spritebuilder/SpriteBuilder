@@ -29,7 +29,7 @@
 	<key>javascriptMainCCB</key>
 	<string>MainScene</string>
 	<key>needRepublish</key>
-	<true/>
+	<false/>
 	<key>onlyPublishCCBs</key>
 	<false/>
 	<key>publishAudioQuality_android</key>
@@ -174,8 +174,8 @@
 		</dict>
 	</dict>
 	<key>versionStr</key>
-	<string>Version: 
-GitHub: 35d518becb
+	<string>Version: 1.0.0
+GitHub: c5052d6e72
 </string>
 </dict>
 </plist>
