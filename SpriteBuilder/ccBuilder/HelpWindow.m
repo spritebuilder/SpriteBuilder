@@ -45,6 +45,9 @@
     mdFiles = [[NSMutableArray alloc] init];
     for (NSString* file in files)
     {
+#warning This part of documentation should be updated too
+        if ([file characterAtIndex:0] == 'X') continue;
+        
         if ([file hasSuffix:@".md"])
         {
             HelpPage* hp = [[[HelpPage alloc] init] autorelease];
