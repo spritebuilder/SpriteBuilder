@@ -17,7 +17,7 @@ touch Generated/Version.txt
 
 # Generate default project
 echo "=== GENERATING DEFAULT SB-PROJECT ==="
-cd Support/PROJECTNAME/
+cd Support/PROJECTNAME.spritebuilder/
 rm -rf PROJECTNAME.xcodeproj/xcuserdata/
 rm -rf PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
 rm ../../Generated/PROJECTNAME.zip
