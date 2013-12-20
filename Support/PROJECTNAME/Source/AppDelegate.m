@@ -38,6 +38,12 @@
     // Configure Cocos2d with the options set in SpriteBuilder
     NSMutableDictionary* cocos2dSetup = [NSMutableDictionary dictionaryWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"configCocos2d.plist"]];
     
+#ifdef ANDROID
+    if([cocos2dSetup[CCSetupScreenMode] isEqual:CCScreenModeFixed])
+        [UIScreen mainScreen].currentMode = [UIScreenMode emulatedMode:UIScreenAspectFitEmulationMode];
+    // else (defaults to native)
+#endif
+    
     // Do any extra configuration of Cocos2d here (the example line changes the pixel format for faster rendering, but with less colors)
     //[cocos2dSetup setObject:kEAGLColorFormatRGB565 forKey:CCConfigPixelFormat];
     
