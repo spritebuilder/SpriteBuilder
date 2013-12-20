@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
+# ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
+ID="Developer ID Application: Apportable Inc. (U2K5E32W7G)"
 PKGID="3rd Party Mac Developer Installer: Apportable Inc. (U2K5E32W7G)"
 ENT="../SpriteBuilder/PlugIns.entitlements"
 APP="SpriteBuilder.app"
