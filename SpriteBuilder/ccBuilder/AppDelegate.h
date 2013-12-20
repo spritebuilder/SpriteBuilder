@@ -28,6 +28,7 @@
 #import "cocos2d.h"
 #import "PSMTabBarControl.h"
 #import "SMTabBar.h"
+#import <HockeySDK/HockeySDK.h>
 
 #define kCCBNumCanvasDevices 14
 
@@ -115,7 +116,7 @@ enum {
 @class PhysicsHandler;
 @class WarningOutlineHandler;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate>
 {
     
     // Panel Views

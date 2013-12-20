@@ -685,6 +685,8 @@
     
     if (info.displayName && ![info.displayName isEqualToString:@""]) return info.displayName;
     
+    if (node.name != nil && ![node.name isEqualToString:@""]) return node.name;
+    
     // Get class name
     NSString* className = @"";
     NSString* customClass = [node extraPropForKey:@"customClass"];
