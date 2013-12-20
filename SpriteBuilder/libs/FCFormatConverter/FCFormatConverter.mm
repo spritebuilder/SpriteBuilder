@@ -7,6 +7,7 @@
 //
 
 #import "FCFormatConverter.h"
+#import "PVRTexture.h"
 
 static FCFormatConverter* gDefaultConverter = NULL;
 
@@ -120,6 +121,8 @@ static FCFormatConverter* gDefaultConverter = NULL;
         else if (format == kFCImageFormatPVRTC_2BPP) formatStr = @"PVRTC1_2,UBN,lRGB";
         
         // Convert PNG to PVR(TC)
+        
+        /*
         NSTask* pvrTask = [[NSTask alloc] init];
         [pvrTask setCurrentDirectoryPath:dstDir];
         [pvrTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"PVRTexToolCL"]];
@@ -136,6 +139,11 @@ static FCFormatConverter* gDefaultConverter = NULL;
         [pvrTask launch];
         [pvrTask waitUntilExit];
         [pvrTask release];
+        */
+        
+        
+        pvrtexture::CPVRTexture * pvrTexture = new pvrtexture::CPVRTexture([srcPath UTF8String]);
+        
         
         // Remove PNG file
         [[NSFileManager defaultManager] removeItemAtPath:srcPath error:NULL];
