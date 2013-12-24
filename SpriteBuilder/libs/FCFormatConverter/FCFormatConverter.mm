@@ -8,6 +8,8 @@
 
 #import "FCFormatConverter.h"
 #import "PVRTexture.h"
+#import "PVRTextureUtilities.h"
+#import "PNGReader.h"
 
 static FCFormatConverter* gDefaultConverter = NULL;
 
@@ -114,11 +116,42 @@ static FCFormatConverter* gDefaultConverter = NULL;
         NSString *dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"pvr"];
         
         NSString* formatStr = NULL;
-        if (format == kFCImageFormatPVR_RGBA8888) formatStr = @"r8g8b8a8,UBN,lRGB";
+        if (format == kFCImageFormatPVR_RGBA8888)      formatStr = @"r8g8b8a8,UBN,lRGB";
         else if (format == kFCImageFormatPVR_RGBA4444) formatStr = @"r4g4b4a4,USN,lRGB";
-        else if (format == kFCImageFormatPVR_RGB565) formatStr = @"r5g6b5,USN,lRGB";
-        else if (format == kFCImageFormatPVRTC_4BPP) formatStr = @"PVRTC1_4,UBN,lRGB";
-        else if (format == kFCImageFormatPVRTC_2BPP) formatStr = @"PVRTC1_2,UBN,lRGB";
+        else if (format == kFCImageFormatPVR_RGB565)   formatStr = @"r5g6b5,USN,lRGB";
+        else if (format == kFCImageFormatPVRTC_4BPP)   formatStr = @"PVRTC1_4,UBN,lRGB";
+        else if (format == kFCImageFormatPVRTC_2BPP)   formatStr = @"PVRTC1_2,UBN,lRGB";
+        
+        
+        
+        pvrtexture::PixelType pixelType;
+        EPVRTVariableType variableType = ePVRTVarTypeUnsignedByteNorm;
+        
+        if (format == kFCImageFormatPVR_RGBA8888)
+        {
+            pixelType = pvrtexture::PixelType('r','g','b','a',8,8,8,8);
+        }
+        else if (format == kFCImageFormatPVR_RGBA4444)
+        {
+            pixelType = pvrtexture::PixelType('r','g','b','a',4,4,4,4);
+            variableType = ePVRTVarTypeUnsignedShortNorm;
+        }
+        else if (format == kFCImageFormatPVR_RGB565)
+        {
+            pixelType = pvrtexture::PixelType('r','g','b',0,5,6,5,0);
+            variableType = ePVRTVarTypeUnsignedShortNorm;
+        }
+        else if (format == kFCImageFormatPVRTC_4BPP)
+        {
+            pixelType = pvrtexture::PixelType(ePVRTPF_PVRTCI_4bpp_RGB);
+        }
+        else if (format == kFCImageFormatPVRTC_2BPP)
+        {
+            pixelType = pvrtexture::PixelType(ePVRTPF_PVRTCI_2bpp_RGB);
+        }
+
+
+        
         
         // Convert PNG to PVR(TC)
         
@@ -142,8 +175,23 @@ static FCFormatConverter* gDefaultConverter = NULL;
         */
         
         
-        pvrtexture::CPVRTexture * pvrTexture = new pvrtexture::CPVRTexture([srcPath UTF8String]);
+        PNGReader reader([srcPath UTF8String]);
         
+        pvrtexture::CPVRTextureHeader header(pvrtexture::PVRStandard8PixelType.PixelTypeID, reader.width() , reader.height());
+        pvrtexture::CPVRTexture * pvrTexture = new pvrtexture::CPVRTexture(header , reader.data());
+        //pvrTexture->setIsFileCompressed(YES);
+        
+        if(!Transcode(*pvrTexture, pixelType, variableType, ePVRTCSpacelRGB, pvrtexture::ePVRTCBest, dither))
+        {
+            int break_here = 1;
+        }
+        
+        CPVRTString filePath([dstPath UTF8String], dstPath.length);
+        
+        if(!pvrTexture->saveFileLegacyPVR(filePath,  pvrtexture::eOGLES2))
+        {
+            int break_here =1;
+        }
         
         // Remove PNG file
         [[NSFileManager defaultManager] removeItemAtPath:srcPath error:NULL];
