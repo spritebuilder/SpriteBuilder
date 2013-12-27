@@ -15,7 +15,7 @@
 	<key>canHaveChildren</key>
 	<false/>
 	<key>className</key>
-	<string>CCParticleSystemQuad</string>
+	<string>CCParticleSystem</string>
 	<key>canBeRootNode</key>
 	<true/>
 	<key>propertiesOverridden</key>
