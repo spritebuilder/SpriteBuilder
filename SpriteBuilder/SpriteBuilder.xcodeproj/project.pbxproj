@@ -5101,7 +5101,7 @@
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
-					"libs/cocos2d-iphone/external/Chipmunk/include/",
+					"libs/cocos2d-iphone/external/Chipmunk/include/chipmunk",
 					"libs/cocos2d-iphone/external/Chipmunk/objectivec/include/",
 					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
@@ -5144,7 +5144,7 @@
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
-					"libs/cocos2d-iphone/external/Chipmunk/include/",
+					"libs/cocos2d-iphone/external/Chipmunk/include/chipmunk",
 					"libs/cocos2d-iphone/external/Chipmunk/objectivec/include/",
 					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
