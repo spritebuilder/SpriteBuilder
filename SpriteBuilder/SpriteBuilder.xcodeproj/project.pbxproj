@@ -111,6 +111,7 @@
 		8076F94E18624318003C4153 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		8098525A182C40170054BBF3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80985259182C40170054BBF3 /* CoreMedia.framework */; };
+		80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AD79A01863871200B653B7 /* libPVRTexLib.a */; };
 		80B149BE183D4D280085935B /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		80B149BF183D4D280085935B /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
 		80B149C4183D4D420085935B /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
@@ -205,7 +206,7 @@
 		B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */; };
 		B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DA3681773EA0E00B85CC0 /* NSPasteboard+CCB.m */; };
 		B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */ = {isa = PBXBuildFile; fileRef = B794AB90177A30EB004FF493 /* ui-nopreview.png */; };
-		B794AB99177CE09D004FF493 /* FCFormatConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = B794AB98177CE09D004FF493 /* FCFormatConverter.m */; };
+		B794AB99177CE09D004FF493 /* FCFormatConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = B794AB98177CE09D004FF493 /* FCFormatConverter.mm */; };
 		B79F90D917FF30DC00908504 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B79F90DF17FF30DC00908504 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B79F90DD17FF30DC00908504 /* InfoPlist.strings */; };
 		B79F90E617FF31B600908504 /* CCPhysicsNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B79F90D817FF30DB00908504 /* CCPhysicsNode.ccbPlugNode */; };
@@ -333,7 +334,6 @@
 		E335CB0A1577C5FB00A612EE /* CCNode+NodeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E335CB091577C5FB00A612EE /* CCNode+NodeInfo.m */; };
 		E335CB0C1577D64C00A612EE /* seq-btn-collapse.png in Resources */ = {isa = PBXBuildFile; fileRef = E335CB0B1577D64C00A612EE /* seq-btn-collapse.png */; };
 		E335CB0F1578C2C600A612EE /* SequencerStructureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E335CB0E1578C2C600A612EE /* SequencerStructureCell.m */; };
-		E3366A39168159F30094BD94 /* PVRTexToolCL in Resources */ = {isa = PBXBuildFile; fileRef = E3366A38168159F30094BD94 /* PVRTexToolCL */; };
 		E33BC1B81510E4B6009AE29A /* NodeGraphPropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = E33BC1B71510E4B6009AE29A /* NodeGraphPropertySetter.m */; };
 		E33C2AAC15C987EB0043EF9B /* ResourceManagerOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = E33C2AAB15C987EB0043EF9B /* ResourceManagerOutlineView.m */; };
 		E33C2AAF15C9A0D40043EF9B /* SequencerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E33C2AAE15C9A0D40043EF9B /* SequencerUtil.m */; };
@@ -958,6 +958,20 @@
 		8076F94D18624318003C4153 /* InspectorStringSimple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorStringSimple.m; sourceTree = "<group>"; };
 		8076F9521862459A003C4153 /* InspectorStringSimple.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorStringSimple.xib; sourceTree = "<group>"; };
 		80985259182C40170054BBF3 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		80AD79931863871200B653B7 /* PVRTArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTArray.h; sourceTree = "<group>"; };
+		80AD79941863871200B653B7 /* PVRTDecompress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTDecompress.h; sourceTree = "<group>"; };
+		80AD79951863871200B653B7 /* PVRTError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTError.h; sourceTree = "<group>"; };
+		80AD79961863871200B653B7 /* PVRTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTexture.h; sourceTree = "<group>"; };
+		80AD79971863871200B653B7 /* PVRTextureDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTextureDefines.h; sourceTree = "<group>"; };
+		80AD79981863871200B653B7 /* PVRTextureFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTextureFormat.h; sourceTree = "<group>"; };
+		80AD79991863871200B653B7 /* PVRTextureHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTextureHeader.h; sourceTree = "<group>"; };
+		80AD799A1863871200B653B7 /* PVRTextureUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTextureUtilities.h; sourceTree = "<group>"; };
+		80AD799B1863871200B653B7 /* PVRTextureVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTextureVersion.h; sourceTree = "<group>"; };
+		80AD799C1863871200B653B7 /* PVRTGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTGlobal.h; sourceTree = "<group>"; };
+		80AD799D1863871200B653B7 /* PVRTMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTMap.h; sourceTree = "<group>"; };
+		80AD799E1863871200B653B7 /* PVRTString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTString.h; sourceTree = "<group>"; };
+		80AD799F1863871200B653B7 /* PVRTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTTexture.h; sourceTree = "<group>"; };
+		80AD79A01863871200B653B7 /* libPVRTexLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPVRTexLib.a; sourceTree = "<group>"; };
 		80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-keyframe-x4-sel.png"; sourceTree = "<group>"; };
 		80B149BD183D4D280085935B /* seq-keyframe-x4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-keyframe-x4.png"; sourceTree = "<group>"; };
 		80B149C6183D55E60085935B /* SoundFileImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundFileImageController.h; sourceTree = "<group>"; };
@@ -1068,7 +1082,7 @@
 		B78DA3681773EA0E00B85CC0 /* NSPasteboard+CCB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPasteboard+CCB.m"; sourceTree = "<group>"; };
 		B794AB90177A30EB004FF493 /* ui-nopreview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ui-nopreview.png"; sourceTree = "<group>"; };
 		B794AB97177CE09D004FF493 /* FCFormatConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FCFormatConverter.h; path = FCFormatConverter/FCFormatConverter.h; sourceTree = "<group>"; };
-		B794AB98177CE09D004FF493 /* FCFormatConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FCFormatConverter.m; path = FCFormatConverter/FCFormatConverter.m; sourceTree = "<group>"; };
+		B794AB98177CE09D004FF493 /* FCFormatConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FCFormatConverter.mm; path = FCFormatConverter/FCFormatConverter.mm; sourceTree = "<group>"; };
 		B79F90D817FF30DB00908504 /* CCPhysicsNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B79F90DC17FF30DC00908504 /* CCPhysicsNode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCPhysicsNode-Info.plist"; sourceTree = "<group>"; };
 		B79F90DE17FF30DC00908504 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1254,7 +1268,6 @@
 		E335CB0B1577D64C00A612EE /* seq-btn-collapse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-btn-collapse.png"; sourceTree = "<group>"; };
 		E335CB0D1578C2C600A612EE /* SequencerStructureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerStructureCell.h; sourceTree = "<group>"; };
 		E335CB0E1578C2C600A612EE /* SequencerStructureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerStructureCell.m; sourceTree = "<group>"; };
-		E3366A38168159F30094BD94 /* PVRTexToolCL */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = PVRTexToolCL; sourceTree = "<group>"; };
 		E33BC1B61510E4B6009AE29A /* NodeGraphPropertySetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeGraphPropertySetter.h; sourceTree = "<group>"; };
 		E33BC1B71510E4B6009AE29A /* NodeGraphPropertySetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeGraphPropertySetter.m; sourceTree = "<group>"; };
 		E33C2AAA15C987EB0043EF9B /* ResourceManagerOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerOutlineView.h; sourceTree = "<group>"; };
@@ -1387,7 +1400,6 @@
 		E3808DB61641CB6400398456 /* PublishSettingsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSettingsWindow.m; sourceTree = "<group>"; };
 		E3808DB81641D4B800398456 /* CCBTextFieldLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTextFieldLabel.h; sourceTree = "<group>"; };
 		E3808DB91641D4B800398456 /* CCBTextFieldLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTextFieldLabel.m; sourceTree = "<group>"; };
-		E380B24B1642FC3C0006D31C /* libPVRTC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPVRTC.a; path = Tupac/libPVRTC.a; sourceTree = "<group>"; };
 		E380B24C1642FC3C0006D31C /* pvrtc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvrtc.h; path = Tupac/pvrtc.h; sourceTree = "<group>"; };
 		E380B24D1642FC3C0006D31C /* TexturePacker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TexturePacker.cpp; path = Tupac/TexturePacker.cpp; sourceTree = "<group>"; };
 		E380B24E1642FC3C0006D31C /* TexturePacker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TexturePacker.h; path = Tupac/TexturePacker.h; sourceTree = "<group>"; };
@@ -1681,6 +1693,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */,
 				B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */,
 				8098525A182C40170054BBF3 /* CoreMedia.framework in Frameworks */,
 				B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */,
@@ -1700,7 +1713,6 @@
 				7789ABE8133AB10500CEFCC7 /* ApplicationServices.framework in Frameworks */,
 				7789ABC3133AA82000CEFCC7 /* Cocoa.framework in Frameworks */,
 				E3AF6CDF15F0CF8B0048DB2A /* libMMMarkdown-Mac.a in Frameworks */,
-				E380B2511642FC3C0006D31C /* libPVRTC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2372,6 +2384,7 @@
 		7789ABEF133AB17100CEFCC7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				80AD79911863871200B653B7 /* PVRTexTool */,
 				B7D0918717C2C1310007FE7F /* Cocos2d */,
 				B7AC699117A079C80041B8BD /* InspectorTabBar */,
 				B7AC696C179F50850041B8BD /* BFColorPickerPopover */,
@@ -2459,6 +2472,35 @@
 			name = res;
 			sourceTree = "<group>";
 		};
+		80AD79911863871200B653B7 /* PVRTexTool */ = {
+			isa = PBXGroup;
+			children = (
+				80AD79921863871200B653B7 /* Include */,
+				80AD79A01863871200B653B7 /* libPVRTexLib.a */,
+			);
+			path = PVRTexTool;
+			sourceTree = "<group>";
+		};
+		80AD79921863871200B653B7 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				80AD79931863871200B653B7 /* PVRTArray.h */,
+				80AD79941863871200B653B7 /* PVRTDecompress.h */,
+				80AD79951863871200B653B7 /* PVRTError.h */,
+				80AD79961863871200B653B7 /* PVRTexture.h */,
+				80AD79971863871200B653B7 /* PVRTextureDefines.h */,
+				80AD79981863871200B653B7 /* PVRTextureFormat.h */,
+				80AD79991863871200B653B7 /* PVRTextureHeader.h */,
+				80AD799A1863871200B653B7 /* PVRTextureUtilities.h */,
+				80AD799B1863871200B653B7 /* PVRTextureVersion.h */,
+				80AD799C1863871200B653B7 /* PVRTGlobal.h */,
+				80AD799D1863871200B653B7 /* PVRTMap.h */,
+				80AD799E1863871200B653B7 /* PVRTString.h */,
+				80AD799F1863871200B653B7 /* PVRTTexture.h */,
+			);
+			path = Include;
+			sourceTree = "<group>";
+		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -2529,7 +2571,7 @@
 			isa = PBXGroup;
 			children = (
 				B794AB97177CE09D004FF493 /* FCFormatConverter.h */,
-				B794AB98177CE09D004FF493 /* FCFormatConverter.m */,
+				B794AB98177CE09D004FF493 /* FCFormatConverter.mm */,
 			);
 			name = FormatConverter;
 			sourceTree = "<group>";
@@ -3106,8 +3148,6 @@
 		E380B24A1642FC240006D31C /* Tupac */ = {
 			isa = PBXGroup;
 			children = (
-				E3366A38168159F30094BD94 /* PVRTexToolCL */,
-				E380B24B1642FC3C0006D31C /* libPVRTC.a */,
 				E380B24C1642FC3C0006D31C /* pvrtc.h */,
 				E380B24D1642FC3C0006D31C /* TexturePacker.cpp */,
 				E380B24E1642FC3C0006D31C /* TexturePacker.h */,
@@ -4161,7 +4201,6 @@
 				E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
 				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
-				E3366A39168159F30094BD94 /* PVRTexToolCL in Resources */,
 				E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */,
 				E3DEF5B7169B359C00B9DCF4 /* lame in Resources */,
 				E3DEF5B9169B35DF00B9DCF4 /* lame-COPYING in Resources */,
@@ -4585,7 +4624,7 @@
 				E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */,
 				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
 				B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */,
-				B794AB99177CE09D004FF493 /* FCFormatConverter.m in Sources */,
+				B794AB99177CE09D004FF493 /* FCFormatConverter.mm in Sources */,
 				B7AC6980179F50850041B8BD /* BFColorPickerPopover.m in Sources */,
 				B7AC6982179F50850041B8BD /* BFPopoverColorWell.m in Sources */,
 				B7AC6983179F50850041B8BD /* NSColor+BFColorPickerPopover.m in Sources */,
@@ -5110,6 +5149,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/libs/MMMarkdown\"",
 					"\"$(SRCROOT)/libs/Tupac\"",
+					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
@@ -5153,6 +5193,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/libs/MMMarkdown\"",
 					"\"$(SRCROOT)/libs/Tupac\"",
+					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
