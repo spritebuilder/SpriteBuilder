@@ -111,6 +111,7 @@ static FCFormatConverter* gDefaultConverter = NULL;
              format == kFCImageFormatPVRTC_4BPP ||
              format == kFCImageFormatPVRTC_2BPP)
     {
+        
         // PVR(TC) image
         NSString *dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"pvr"];
         
@@ -162,6 +163,10 @@ static FCFormatConverter* gDefaultConverter = NULL;
         
         // Remove PNG file
         [[NSFileManager defaultManager] removeItemAtPath:srcPath error:NULL];
+        
+        //Clean up memory.
+        delete pvrTexture;
+        [image release];
         
         if (compress)
         {
