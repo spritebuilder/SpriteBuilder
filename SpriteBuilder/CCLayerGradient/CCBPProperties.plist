@@ -54,9 +54,9 @@
 		<dict>
 			<key>default</key>
 			<array>
-				<real>0.6</real>
-				<real>0.75</real>
-				<real>0.92</real>
+				<real>0.21</real>
+				<real>0.65</real>
+				<real>0.87</real>
 				<integer>1</integer>
 			</array>
 			<key>displayName</key>
@@ -81,9 +81,9 @@
 		<dict>
 			<key>default</key>
 			<array>
-				<real>0.76</real>
-				<real>0.49</real>
-				<real>0.92</real>
+				<real>0.13</real>
+				<real>0.5</real>
+				<real>0.8</real>
 				<integer>1</integer>
 			</array>
 			<key>displayName</key>

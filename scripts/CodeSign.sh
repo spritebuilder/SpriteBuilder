@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
+# ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
+ID="Developer ID Application: Apportable Inc. (U2K5E32W7G)"
 PKGID="3rd Party Mac Developer Installer: Apportable Inc. (U2K5E32W7G)"
 ENT="../SpriteBuilder/PlugIns.entitlements"
 APP="SpriteBuilder.app"
@@ -8,14 +9,13 @@ APP="SpriteBuilder.app"
 cd ../build
 
 # Remove signature from PVR tool (as it is already signed)
-rm "$APP/Contents/Resources/PVRTexToolCL"
+# rm "$APP/Contents/Resources/PVRTexToolCL"
 # codesign --remove-signature "$APP/Contents/Resources/PVRTexToolCL"
 
 # Sign command line tools
 
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/lame"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/ccz"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/cwebp"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/oggenc"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/pngquant"
 # codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/PVRTexToolCL"
@@ -40,6 +40,10 @@ codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCSprite9Slice.ccbP
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCTextField.ccbPlugNode"
 
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
+
+# Sign Frameworks
+codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework"
+codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework"
 
 # Sign App
 codesign --entitlements ../SpriteBuilder/SpriteBuilder.entitlements -s "$ID" "$APP"
