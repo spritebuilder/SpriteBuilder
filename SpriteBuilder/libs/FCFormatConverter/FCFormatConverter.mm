@@ -7,6 +7,8 @@
 //
 
 #import "FCFormatConverter.h"
+#import "PVRTexture.h"
+#import "PVRTextureUtilities.h"
 
 static FCFormatConverter* gDefaultConverter = NULL;
 
@@ -109,36 +111,62 @@ static FCFormatConverter* gDefaultConverter = NULL;
              format == kFCImageFormatPVRTC_4BPP ||
              format == kFCImageFormatPVRTC_2BPP)
     {
+        
         // PVR(TC) image
         NSString *dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"pvr"];
         
-        NSString* formatStr = NULL;
-        if (format == kFCImageFormatPVR_RGBA8888) formatStr = @"r8g8b8a8,UBN,lRGB";
-        else if (format == kFCImageFormatPVR_RGBA4444) formatStr = @"r4g4b4a4,USN,lRGB";
-        else if (format == kFCImageFormatPVR_RGB565) formatStr = @"r5g6b5,USN,lRGB";
-        else if (format == kFCImageFormatPVRTC_4BPP) formatStr = @"PVRTC1_4,UBN,lRGB";
-        else if (format == kFCImageFormatPVRTC_2BPP) formatStr = @"PVRTC1_2,UBN,lRGB";
+        pvrtexture::PixelType pixelType;
+        EPVRTVariableType variableType = ePVRTVarTypeUnsignedByteNorm;
         
-        // Convert PNG to PVR(TC)
-        NSTask* pvrTask = [[NSTask alloc] init];
-        [pvrTask setCurrentDirectoryPath:dstDir];
-        [pvrTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"PVRTexToolCL"]];
-        NSMutableArray* args = [NSMutableArray arrayWithObjects:
-                                @"-i", srcPath,
-                                @"-o", dstPath,
-                                @"-p",
-                                @"-legacypvr",
-                                @"-f", formatStr,
-                                @"-q", @"pvrtcbest",
-                                nil];
-        if (dither) [args addObject:@"-dither"];
-        [pvrTask setArguments:args];
-        [pvrTask launch];
-        [pvrTask waitUntilExit];
-        [pvrTask release];
+        if (format == kFCImageFormatPVR_RGBA8888)
+        {
+            pixelType = pvrtexture::PixelType('r','g','b','a',8,8,8,8);
+        }
+        else if (format == kFCImageFormatPVR_RGBA4444)
+        {
+            pixelType = pvrtexture::PixelType('r','g','b','a',4,4,4,4);
+            variableType = ePVRTVarTypeUnsignedShortNorm;
+        }
+        else if (format == kFCImageFormatPVR_RGB565)
+        {
+            pixelType = pvrtexture::PixelType('r','g','b',0,5,6,5,0);
+            variableType = ePVRTVarTypeUnsignedShortNorm;
+        }
+        else if (format == kFCImageFormatPVRTC_4BPP)
+        {
+            pixelType = pvrtexture::PixelType(ePVRTPF_PVRTCI_4bpp_RGB);
+        }
+        else if (format == kFCImageFormatPVRTC_2BPP)
+        {
+            pixelType = pvrtexture::PixelType(ePVRTPF_PVRTCI_2bpp_RGB);
+        }
+
+        NSImage * image = [[NSImage alloc] initWithContentsOfFile:srcPath];
+        NSBitmapImageRep* rawImg = [NSBitmapImageRep imageRepWithData:[image TIFFRepresentation]];
+        
+        pvrtexture::CPVRTextureHeader header(pvrtexture::PVRStandard8PixelType.PixelTypeID, image.size.width , image.size.height);
+        pvrtexture::CPVRTexture     * pvrTexture = new pvrtexture::CPVRTexture(header , rawImg.bitmapData);
+        
+        if(!Transcode(*pvrTexture, pixelType, variableType, ePVRTCSpacelRGB, pvrtexture::ePVRTCBest, dither))
+        {
+            #warning TODO: How do I bubble up errors from here.
+            int break_here =1;
+        }
+        
+        CPVRTString filePath([dstPath UTF8String], dstPath.length);
+        
+        if(!pvrTexture->saveFileLegacyPVR(filePath,  pvrtexture::eOGLES2))
+        {
+            #warning TODO: How do I bubble up errors from here.
+            int break_here =1;
+        }
         
         // Remove PNG file
         [[NSFileManager defaultManager] removeItemAtPath:srcPath error:NULL];
+        
+        //Clean up memory.
+        delete pvrTexture;
+        [image release];
         
         if (compress)
         {
