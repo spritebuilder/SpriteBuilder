@@ -238,6 +238,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9222E2B918734FF800A246C7 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,7 +289,7 @@
 			children = (
 				B737893C1807616C0076A88C /* Source */,
 				B77F1B4617B978D7009739AE /* Resources */,
-				B77F1B5E17B978D7009739AE /* libs */,
+				9222E2B918734FF800A246C7 /* libs */,
 				B77F1CCF17B978D8009739AE /* Supporting Files */,
 				B77F1B3017B978D7009739AE /* Frameworks */,
 				B77F1B2F17B978D7009739AE /* Products */,
@@ -320,16 +328,7 @@
 				B737893A180761570076A88C /* Published-iOS */,
 			);
 			name = Resources;
-			path = Example;
-			sourceTree = "<group>";
-		};
-		B77F1B5E17B978D7009739AE /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */,
-			);
-			name = libs;
-			path = Example;
+			path = Source/Resources;
 			sourceTree = "<group>";
 		};
 		B77F1CCF17B978D8009739AE /* Supporting Files */ = {
@@ -339,7 +338,6 @@
 				B73789861807631A0076A88C /* Prefix.pch */,
 			);
 			name = "Supporting Files";
-			path = Example;
 			sourceTree = "<group>";
 		};
 		D2E65BDD1862643A007D0B1F /* libs */ = {
