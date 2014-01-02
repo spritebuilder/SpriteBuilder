@@ -1866,7 +1866,7 @@ static BOOL hideAllToNextSeparator;
         type == kCCBNewDocTypeLayer) class = @"CCNode";
     else if (type == kCCBNewDocTypeScene) class = @"CCNode";
     else if (type == kCCBNewDocTypeSprite) class = @"CCSprite";
-    else if (type == kCCBNewDocTypeParticleSystem) class = @"CCParticleSystemQuad";
+    else if (type == kCCBNewDocTypeParticleSystem) class = @"CCParticleSystem";
     
     resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
     
