@@ -396,15 +396,18 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event
 {
+    if (!self.editingPhysicsBody) return NO;
+    
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
-    if (_mouseDownInHandle != -1)
+    if (_mouseDownInHandle != -1 && body != nil)
     {
         if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
             [self makeConvexHull];
         }
         
+        _mouseDownInHandle = -1;
         return YES;
     }
     
