@@ -555,6 +555,12 @@
     
     if (isDirectory)
     {
+        // Bitmap fonts are directories, but with an extension
+        if ([ext isEqualToString:@"bmfont"])
+        {
+            return kCCBResTypeBMFont;
+        }
+        
         // Hide resolution directories
         if ([[ResourceManager resIndependentDirs] containsObject:[file lastPathComponent]])
         {
@@ -1226,17 +1232,31 @@
     BOOL isDir = NO;
     if ([fm fileExistsAtPath:file isDirectory:&isDir] && isDir)
     {
-        // Handle directory
-        NSString* dirName = [file lastPathComponent];
-        NSString* dstDirNew = [dstDir stringByAppendingPathComponent:dirName];
+        NSString* ext = [[file pathExtension] lowercaseString];
         
-        // Create if not created
-        [fm createDirectoryAtPath:dstDirNew withIntermediateDirectories:YES attributes:NULL error:NULL];
-        
-        NSArray* dirFiles = [fm contentsOfDirectoryAtPath:file error:NULL];
-        for (NSString* fileName in dirFiles)
+        if ([ext isEqualToString:@"bmfont"])
         {
-            importedFile |= [ResourceManager importFile:[file stringByAppendingPathComponent:fileName] intoDir:dstDirNew];
+            // Handle bitmap fonts
+            
+            NSString* dstPath = [dstDir stringByAppendingPathComponent:[file lastPathComponent]];
+            [fm copyItemAtPath:file toPath:dstPath error:NULL];
+            
+            importedFile = YES;
+        }
+        else
+        {
+            // Handle regular directory
+            NSString* dirName = [file lastPathComponent];
+            NSString* dstDirNew = [dstDir stringByAppendingPathComponent:dirName];
+            
+            // Create if not created
+            [fm createDirectoryAtPath:dstDirNew withIntermediateDirectories:YES attributes:NULL error:NULL];
+            
+            NSArray* dirFiles = [fm contentsOfDirectoryAtPath:file error:NULL];
+            for (NSString* fileName in dirFiles)
+            {
+                importedFile |= [ResourceManager importFile:[file stringByAppendingPathComponent:fileName] intoDir:dstDirNew];
+            }
         }
     }
     else
