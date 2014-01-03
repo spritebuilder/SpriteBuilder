@@ -57,11 +57,27 @@
     {
         if ([ext isEqualToString:@""]) continue;
         
-        NSString* resFile = [NSString stringWithFormat:@"%@-%@.%@",fileNoExt,ext,fileType];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:resFile])
+        if ([fileType isEqualToString:@"bmfont"])
         {
-            return resFile;
+            // Bitmap fonts are special directories, return the actual .fnt file
+            NSString* fileName = [fileNoExt lastPathComponent];
+            NSString* resFile = [NSString stringWithFormat:@"%@/resources-%@/%@.fnt", file,ext, fileName];
+            
+            NSLog(@"proposed fnt file: %@", resFile);
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:resFile])
+            {
+                return resFile;
+            }
+        }
+        else
+        {
+            NSString* resFile = [NSString stringWithFormat:@"%@-%@.%@",fileNoExt,ext,fileType];
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:resFile])
+            {
+                return resFile;
+            }
         }
     }
     return file;

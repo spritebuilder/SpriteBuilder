@@ -334,7 +334,7 @@
     }
     else if ([type isEqualToString:@"FntFile"])
     {
-        NSString* str = [node valueForKey:name];
+        NSString* str = [node extraPropForKey:name];
         if (!str) str = @"";
         serializedValue = str;
     }
