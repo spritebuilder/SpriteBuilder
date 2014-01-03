@@ -316,7 +316,6 @@ NSDictionary* renamedProperties = NULL;
         NSString* fntFile = serializedValue;
         if (!fntFile) fntFile = @"";
         [TexturePropertySetter setFontForNode:node andProperty:name withFile:fntFile];
-        [extraProps setObject:fntFile forKey:name];
     }
     else if ([type isEqualToString:@"StringSimple"])
     {
