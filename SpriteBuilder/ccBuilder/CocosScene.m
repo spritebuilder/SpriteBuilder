@@ -1450,6 +1450,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 keyframe.time = seq.timelinePosition;
                 keyframe.value = value;
                 keyframe.type = type;
+                keyframe.name = seqNodeProp.propName;
                 
                 [seqNodeProp setKeyframe:keyframe];
             }
