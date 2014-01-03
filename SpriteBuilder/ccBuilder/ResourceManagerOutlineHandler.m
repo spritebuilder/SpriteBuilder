@@ -285,6 +285,10 @@
         {
             icon = [self smallIconForFileType:@"png"];
         }
+        else if (res.type == kCCBResTypeBMFont)
+        {
+            icon = [self smallIconForFileType:@"ttf"];
+        }
         else
         {
             if (res.type == kCCBResTypeDirectory)
