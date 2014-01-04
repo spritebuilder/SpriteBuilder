@@ -158,6 +158,7 @@ static NSInteger strSort(id num1, id num2, void *context)
     }
     
     [imgFrame unlockFocus];
+	[tex release];
     
     return [imgFrame autorelease];
 }

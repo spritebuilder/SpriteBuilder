@@ -169,7 +169,7 @@ static void ServerStubAcceptCallback(CFSocketRef listenSocket, CFSocketCallBackT
 	if (callbackType == kCFSocketAcceptCallBack) {
 		
 		// we have packaged up the server object in the info pointer
-		ThoMoServerStub *server = (__bridge ThoMoServerStub *)info;
+		ThoMoServerStub *server = (ThoMoServerStub *)info;
 		
 		// get the BSD child socket for the new connection
 		CFSocketNativeHandle childSocketNativeHandle = *(CFSocketNativeHandle *)pChildSocketNativeHandle;
@@ -192,7 +192,7 @@ static void ServerStubAcceptCallback(CFSocketRef listenSocket, CFSocketCallBackT
 		{
 			CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
 			CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
-			[server handleNewConnectionFromAddress:peerSocketAddress inputStream:(__bridge NSInputStream *)readStream outputStream:(__bridge NSOutputStream *)writeStream];
+			[server handleNewConnectionFromAddress:peerSocketAddress inputStream:(NSInputStream *)readStream outputStream:(NSOutputStream *)writeStream];
 		}
 		else
 		{
@@ -251,7 +251,7 @@ static void ServerStubAcceptCallback(CFSocketRef listenSocket, CFSocketCallBackT
 	NSData *listenSocketAddressData		= [NSData dataWithBytes:&listenSocketAddress length:sizeof(listenSocketAddress)];
 	
 	// bind & listen (in cocoa this is done via the CFSocketSetAddress call)
-	if (kCFSocketSuccess != CFSocketSetAddress(listenSocket, (__bridge CFDataRef)listenSocketAddressData))
+	if (kCFSocketSuccess != CFSocketSetAddress(listenSocket, (CFDataRef)listenSocketAddressData))
 	{
 		if (listenSocket) CFRelease(listenSocket);
 		listenSocket = NULL;
