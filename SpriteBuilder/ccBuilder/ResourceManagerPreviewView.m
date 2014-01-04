@@ -30,6 +30,7 @@
 #import "ProjectSettings.h"
 #import "FCFormatConverter.h"
 #import <AVFoundation/AVFoundation.h>
+#import "AVSPDocument.h"
 
 @implementation ResourceManagerPreviewView
 
@@ -176,16 +177,19 @@
             icon.size = NSMakeSize(128, 128);
             [previewSoundImage setImage:icon];
             
-#warning Fix sound previews
-            /*
-            // Update sound
-            QTMovie* movie = [QTMovie movieWithFile:res.filePath error:NULL];
             
-            [previewSound setMovie:movie];
+//            AVPlayerItem * playerItem = [[[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:res.filePath]] autorelease];
+            //[previewSound.player replaceCurrentItemWithPlayerItem:playerItem];
             
-            [previewSound pause:NULL];
-            [previewSound gotoBeginning:NULL];
-             */
+            AVDocumentViewController = [[[AVSPDocument alloc] initWithNibName:@"AVSPDocument" bundle:[NSBundle mainBundle]] retain];
+            
+            AVDocumentViewController.view.frame = CGRectMake(0, 0, previewSound.frame.size.width, previewSound.frame.size.height);
+            
+            [previewSound addSubview:AVDocumentViewController.view];
+            
+            [AVDocumentViewController setupPlayer];
+            [AVDocumentViewController loadAudioFile:res.filePath];
+           
             
             self.enabled = YES;
             
