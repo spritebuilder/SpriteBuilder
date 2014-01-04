@@ -10,6 +10,7 @@
 #import "PSMTabBarControl.h"
 #import "PSMTabBarCell.h"
 #import "PSMTabStyle.h"
+#import "PSMRolloverButton.h"
 #import "NSString_AITruncation.h"
 
 #define MAX_OVERFLOW_MENUITEM_TITLE_LENGTH      60

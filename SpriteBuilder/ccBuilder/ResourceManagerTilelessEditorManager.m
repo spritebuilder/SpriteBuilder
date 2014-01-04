@@ -158,7 +158,7 @@
                 textLayer.bounds = CGRectMake(0, 0, 250, 20);
                 textLayer.frame = CGRectMake(3, -5, 250, 20);
                 textLayer.string = relDirPathName;
-                textLayer.font = [NSFont systemFontOfSize:11];
+                textLayer.font = (__bridge CFTypeRef)([NSFont systemFontOfSize:11]);
                 textLayer.fontSize = 11;
                 textLayer.foregroundColor = cBlack;
                 

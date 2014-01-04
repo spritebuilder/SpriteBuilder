@@ -47,6 +47,7 @@
 #import "SequencerSoundChannel.h"
 #import <objc/runtime.h>
 #import "NSPasteboard+CCB.h"
+#import "MainWindow.h"
 
 static SequencerHandler* sharedSequencerHandler;
 
@@ -479,7 +480,8 @@ static SequencerHandler* sharedSequencerHandler;
         if (nodeData)
         {
             NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
-            CCNode* draggedNode = (CCNode*)[[clipDict objectForKey:@"srcNode"] longLongValue];
+			void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
+            CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
             
             CCNode* node = item;
             CCNode* parent = [node parent];
@@ -541,7 +543,8 @@ static SequencerHandler* sharedSequencerHandler;
         if (![appDelegate addCCObject:clipNode toParent:item atIndex:index]) return NO;
         
         // Remove old node
-        CCNode* draggedNode = (CCNode*)[[clipDict objectForKey:@"srcNode"] longLongValue];
+		void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
+		CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
         [appDelegate deleteNode:draggedNode];
         
         [appDelegate setSelectedNodes:[NSArray arrayWithObject: clipNode]];

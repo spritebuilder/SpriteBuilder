@@ -23,7 +23,8 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         
         // Create url connection and fire request
-        [[[NSURLConnection alloc] initWithRequest:request delegate:NULL] autorelease];
+		NSURLConnection* connection = [[NSURLConnection alloc] initWithRequest:request delegate:NULL];
+        [connection autorelease];
     }
     else
     {
