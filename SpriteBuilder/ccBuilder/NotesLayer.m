@@ -29,6 +29,7 @@
 #import "CCBTransparentView.h"
 #import "CCBTransparentWindow.h"
 #import "CCBUtil.h"
+#import "MainWindow.h"
 
 @implementation NotesLayer
 

@@ -117,7 +117,6 @@ static NSInteger strSort(id num1, id num2, void *context)
     tex = [[NSImage alloc] initWithSize:NSMakeSize([bitmapRep pixelsWide], [bitmapRep pixelsHigh])];
     [tex addRepresentation:bitmapRep];
     [tex setFlipped:YES];
-    [tex autorelease];
     
     NSDictionary* dictFrames = [dict objectForKey:@"frames"];
     NSDictionary* frameInfo = [dictFrames objectForKey:spriteFile];
@@ -159,9 +158,8 @@ static NSInteger strSort(id num1, id num2, void *context)
     }
     
     [imgFrame unlockFocus];
-    [imgFrame autorelease];
-        
-    return imgFrame;
+    
+    return [imgFrame autorelease];
 }
 
 + (NSMutableArray*) listFramesInSheet:(NSString*)file assetsPath:(NSString*) assetsPath

@@ -1054,7 +1054,7 @@
         
         NSAssert(type, @"Failed to find custom type");
         
-        [self writeProperty:value type:type name:name platform:kCCBXPlatformAll];
+        [self writeProperty:value type:type name:name platform:nil];
     }
     
     // Write physics
