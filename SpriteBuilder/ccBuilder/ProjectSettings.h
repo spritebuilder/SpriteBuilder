@@ -181,4 +181,6 @@ enum
 // Handling moved and deleted resources
 - (void) removedResourceAt:(NSString*) relPath;
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
+
+- (NSString* ) getVersion;
 @end
