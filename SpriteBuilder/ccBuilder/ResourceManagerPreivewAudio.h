@@ -49,7 +49,7 @@
 
 @class AVPlayer, AVPlayerLayer;
 
-@interface AVSPDocument : NSViewController
+@interface ResourceManagerPreviewAudio : NSViewController
 {
 	AVPlayer *player;
 	

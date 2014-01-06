@@ -30,7 +30,7 @@
 #import "ProjectSettings.h"
 #import "FCFormatConverter.h"
 #import <AVFoundation/AVFoundation.h>
-#import "AVSPDocument.h"
+#import "ResourceManagerPreivewAudio.h"
 
 @implementation ResourceManagerPreviewView
 
@@ -54,13 +54,13 @@
     [previewTablet setAllowsCutCopyPaste:NO];
     [previewTablethd setAllowsCutCopyPaste:NO];
     
-    AVDocumentViewController = [[[AVSPDocument alloc] initWithNibName:@"AVSPDocument" bundle:[NSBundle mainBundle]] retain];
+    previewAudioViewController = [[[ResourceManagerPreviewAudio alloc] initWithNibName:@"ResourceManagerPreviewAudio" bundle:[NSBundle mainBundle]] retain];
     
-    AVDocumentViewController.view.frame = CGRectMake(0, 0, previewSound.frame.size.width, previewSound.frame.size.height);
+    previewAudioViewController.view.frame = CGRectMake(0, 0, previewSound.frame.size.width, previewSound.frame.size.height);
     
-    [previewSound addSubview:AVDocumentViewController.view];
+    [previewSound addSubview:previewAudioViewController.view];
     
-    [AVDocumentViewController setupPlayer];
+    [previewAudioViewController setupPlayer];
 }
 
 - (AppDelegate*) appDelegate
@@ -190,7 +190,7 @@
             //[previewSound.player replaceCurrentItemWithPlayerItem:playerItem];
             
           
-            [AVDocumentViewController loadAudioFile:res.filePath];
+            [previewAudioViewController loadAudioFile:res.filePath];
            
             
             self.enabled = YES;

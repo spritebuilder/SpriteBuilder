@@ -54,7 +54,7 @@ IA
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" id="eOO-rd-ZxB">
-                    <rect key="frame" x="71" y="32" width="156.5" height="15"/>
+                    <rect key="frame" x="71.000000694599265" y="32" width="156.5" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                     <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="aIC-zP-KWk"/>
                     <connections>
