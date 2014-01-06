@@ -53,6 +53,14 @@
     [previewPhonehd setAllowsCutCopyPaste:NO];
     [previewTablet setAllowsCutCopyPaste:NO];
     [previewTablethd setAllowsCutCopyPaste:NO];
+    
+    AVDocumentViewController = [[[AVSPDocument alloc] initWithNibName:@"AVSPDocument" bundle:[NSBundle mainBundle]] retain];
+    
+    AVDocumentViewController.view.frame = CGRectMake(0, 0, previewSound.frame.size.width, previewSound.frame.size.height);
+    
+    [previewSound addSubview:AVDocumentViewController.view];
+    
+    [AVDocumentViewController setupPlayer];
 }
 
 - (AppDelegate*) appDelegate
@@ -181,13 +189,7 @@
 //            AVPlayerItem * playerItem = [[[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:res.filePath]] autorelease];
             //[previewSound.player replaceCurrentItemWithPlayerItem:playerItem];
             
-            AVDocumentViewController = [[[AVSPDocument alloc] initWithNibName:@"AVSPDocument" bundle:[NSBundle mainBundle]] retain];
-            
-            AVDocumentViewController.view.frame = CGRectMake(0, 0, previewSound.frame.size.width, previewSound.frame.size.height);
-            
-            [previewSound addSubview:AVDocumentViewController.view];
-            
-            [AVDocumentViewController setupPlayer];
+          
             [AVDocumentViewController loadAudioFile:res.filePath];
            
             

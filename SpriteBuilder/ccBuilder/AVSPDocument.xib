@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="channelLabel" destination="PoT-hd-axg" id="8FN-mR-5rZ"/>
                 <outlet property="durationLabel" destination="aV4-wl-4Nj" id="EzR-Ba-Jga"/>
+                <outlet property="imageWaveform" destination="K7p-5X-FKi" id="IBv-Cs-Ekn"/>
                 <outlet property="playPauseButton" destination="nUh-2Y-uYC" id="RR1-B1-KUC"/>
                 <outlet property="sampleRateLabel" destination="vHb-UD-f3p" id="EJT-3d-Yah"/>
                 <outlet property="timeSlider" destination="eOO-rd-ZxB" id="jyT-Gr-dvx"/>
@@ -80,7 +81,7 @@ IA
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" id="eOO-rd-ZxB">
-                    <rect key="frame" x="52.000000220757926" y="41" width="175.5" height="15"/>
+                    <rect key="frame" x="52.00000045364542" y="41" width="175.5" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                     <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="aIC-zP-KWk"/>
                     <connections>
@@ -91,7 +92,7 @@ IA
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="K7p-5X-FKi">
                     <rect key="frame" x="2" y="63" width="236" height="45"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="GNJ-ve-haJ"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="GNJ-ve-haJ" customClass="WaveformImageCell"/>
                 </imageView>
             </subviews>
         </view>

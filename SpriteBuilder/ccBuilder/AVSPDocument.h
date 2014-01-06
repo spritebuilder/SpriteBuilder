@@ -58,6 +58,7 @@
     NSTextField *durationLabel;
     NSTextField *sampleRateLabel;
     NSTextField *channelLabel;
+    NSImageView *imageWaveform;
 	
 	id timeObserverToken;
 }
@@ -73,6 +74,7 @@
 @property (assign) IBOutlet NSTextField *durationLabel;
 @property (assign) IBOutlet NSTextField *sampleRateLabel;
 @property (assign) IBOutlet NSTextField *channelLabel;
+@property (assign) IBOutlet NSImageView *imageWaveform;
 
 @property (retain) id timeObserverToken;
 

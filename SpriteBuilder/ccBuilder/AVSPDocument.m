@@ -47,6 +47,7 @@
 
 #import "AVSPDocument.h"
 #import <AVFoundation/AVFoundation.h>
+#import "SoundFileImageController.h"
 
 static void *AVSPPlayerItemStatusContext = &AVSPPlayerItemStatusContext;
 static void *AVSPPlayerRateContext = &AVSPPlayerRateContext;
@@ -68,6 +69,7 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
 @synthesize durationLabel;
 @synthesize sampleRateLabel;
 @synthesize channelLabel;
+@synthesize imageWaveform;
 @synthesize timeObserverToken;
 
 - (void)dealloc
@@ -85,8 +87,13 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
 	[self addObserver:self forKeyPath:@"player.rate" options:NSKeyValueObservingOptionNew context:AVSPPlayerRateContext];
 	[self addObserver:self forKeyPath:@"player.currentItem.status" options:NSKeyValueObservingOptionNew context:AVSPPlayerItemStatusContext];
 	
-	// Create an asset with our URL, asychronously load its tracks, its duration, and whether it's playable or protected.
-	// When that loading is complete, configure a player to play the asset.
+	   
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSoundImages:) name:kSoundFileImageLoaded object:nil];
+}
+
+-(void)updateSoundImages:(NSNotification*)notice
+{
+    self.imageWaveform.needsDisplay = YES;
 }
 
 - (void)setUpPlaybackOfAsset:(AVAsset *)asset withKeys:(NSArray *)keys
@@ -171,6 +178,9 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
     
     
     self.durationLabel.stringValue = [NSString stringWithFormat:@"Duration:%0.2f",CMTimeGetSeconds(playerItem.duration)];
+    
+    
+    
 }
 
 - (void)stopLoadingAnimationAndHandleError:(NSError *)error
@@ -240,6 +250,9 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
 
 - (void)loadAudioFile:(NSString*)filePath
 {
+    // Create an asset with our URL, asychronously load its tracks, its duration, and whether it's playable or protected.
+	// When that loading is complete, configure a player to play the asset.
+    
     NSURL * url = [NSURL fileURLWithPath:filePath];
     AVURLAsset *asset = [AVAsset assetWithURL:url];
 	NSArray *assetKeysToLoadAndTest = [NSArray arrayWithObjects:@"playable", @"hasProtectedContent", @"tracks", @"duration", nil];
@@ -254,6 +267,9 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
 		});
 		
 	}];
+    
+    WaveformImageCell * waveformCell = imageWaveform.cell;
+    waveformCell.fileName = filePath;
 }
 
 + (NSSet *)keyPathsForValuesAffectingDuration
