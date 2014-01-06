@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3028" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AVSPDocument">
+            <connections>
+                <outlet property="channelLabel" destination="PoT-hd-axg" id="8FN-mR-5rZ"/>
+                <outlet property="durationLabel" destination="aV4-wl-4Nj" id="EzR-Ba-Jga"/>
+                <outlet property="imageWaveform" destination="K7p-5X-FKi" id="IBv-Cs-Ekn"/>
+                <outlet property="playPauseButton" destination="nUh-2Y-uYC" id="RR1-B1-KUC"/>
+                <outlet property="timeSlider" destination="eOO-rd-ZxB" id="jyT-Gr-dvx"/>
+                <outlet property="view" destination="ai8-iA-IMf" id="4LS-0L-tx8"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <view id="ai8-iA-IMf">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="101"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <button verticalHuggingPriority="750" id="nUh-2Y-uYC">
+                    <rect key="frame" x="5" y="25" width="58" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" title="Play" bezelStyle="texturedRounded" imagePosition="overlaps" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xtl-MR-Qku">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+IA
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="playPauseToggle:" target="-2" id="2Lq-QF-3ua"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="aV4-wl-4Nj">
+                    <rect key="frame" x="5" y="5" width="111.5" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Duration:" id="2c3-AW-nuX">
+                        <font key="font" size="9" name="LucidaGrande"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" id="PoT-hd-axg">
+                    <rect key="frame" x="136" y="5" width="105.5" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Channels:" id="8AU-Mt-GLG">
+                        <font key="font" size="9" name="LucidaGrande"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider verticalHuggingPriority="750" id="eOO-rd-ZxB">
+                    <rect key="frame" x="71.000000694599265" y="32" width="156.5" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                    <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" alignment="left" maxValue="100" tickMarkPosition="above" sliderType="linear" id="aIC-zP-KWk"/>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="currentTime" previousBinding="GRF-kc-XMr" id="H9h-4L-odf"/>
+                        <binding destination="-2" name="maxValue" keyPath="duration" id="GRF-kc-XMr"/>
+                    </connections>
+                </slider>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="K7p-5X-FKi">
+                    <rect key="frame" x="2" y="54" width="236" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="GNJ-ve-haJ" customClass="WaveformImageCell"/>
+                </imageView>
+            </subviews>
+        </view>
+    </objects>
+</document>
