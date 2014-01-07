@@ -301,7 +301,7 @@
     [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
     
     // Calculate new position (from old value)
-    CGPoint relPos = [node convertPositionFromPoints:absPos type:node.positionType];
+    CGPoint relPos = [node convertPositionFromPoints:absPos type:type];
     
     // Update the position
     NSValue* pointValue = [NSValue valueWithPoint: NSPointFromCGPoint(relPos)];
