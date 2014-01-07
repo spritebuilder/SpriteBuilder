@@ -248,7 +248,7 @@ enum {
     
     // Transparent window for components on top of cocos scene
     CCBTransparentWindow* guiWindow;
-    CCBTransparentView* __weak guiView;
+    CCBTransparentView* guiView;
     
     // Warnings
     NSString* errorDescription;
@@ -308,7 +308,7 @@ enum {
 @property (nonatomic,assign) BOOL snapToGuides;
 @property (nonatomic,assign) BOOL showStickyNotes;
 
-@property (weak, nonatomic,readonly) CCBTransparentView* guiView;
+@property (nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;
 
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
