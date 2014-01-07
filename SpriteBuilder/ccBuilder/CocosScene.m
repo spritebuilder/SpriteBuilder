@@ -84,6 +84,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 + (CocosScene*) cocosScene
 {
+	WARN(sharedCocosScene, @"sharedCocosScene is nil");
     return sharedCocosScene;
 }
 
@@ -112,8 +113,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Border layer
     borderLayer = [CCNode node];
     [self addChild:borderLayer z:1];
-    
-    CCColor* borderColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7];
+	
+	CCColor* borderColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7];
     
     borderBottom = [CCNodeColor nodeWithColor:borderColor];
     borderTop = [CCNodeColor nodeWithColor:borderColor];
