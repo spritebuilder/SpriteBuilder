@@ -195,6 +195,7 @@ void ApplyCustomNodeVisitSwizzle()
 	[director setProjection:CCDirectorProjection2D];
     //[cocosView openGLContext];
     
+	NSAssert(cocosView, @"cocosView is nil");
 	[director setView:cocosView];
     
 	// EXPERIMENTAL stuff.
@@ -207,7 +208,8 @@ void ApplyCustomNodeVisitSwizzle()
 	
 	[director runWithScene:[CocosScene sceneWithAppDelegate:self]];
 	
-	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread], @"cocos2d shall run on the Main Thread. Compile SpriteBuilder with CC_DIRECTOR_MAC_THREAD=2");
+	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread],
+			 @"cocos2d should run on the Main Thread. Compile SpriteBuilder with CC_DIRECTOR_MAC_THREAD=2");
 }
 
 - (void) setupSequenceHandler

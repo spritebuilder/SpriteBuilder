@@ -32,7 +32,7 @@
     
     NSTrackingRectTag trackingTag;
     
-    IBOutlet AppDelegate* appDelegate;
+    IBOutlet __weak AppDelegate* appDelegate;
 }
 
 @end
