@@ -61,7 +61,7 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
     self.type = [[ser valueForKey:@"type"] intValue];
     self.name = [ser valueForKey:@"name"];
     self.time = [[ser valueForKey:@"time"] floatValue];
-    self.easing = [[[SequencerKeyframeEasing alloc] initWithSerialization:[ser objectForKey:@"easing"]] autorelease];
+    self.easing = [[SequencerKeyframeEasing alloc] initWithSerialization:[ser objectForKey:@"easing"]];
     // fix possible broken easing/type combinations
     if (![self supportsFiniteTimeInterpolations]) {
         easing.type = kCCBKeyframeEasingInstant;
@@ -180,12 +180,5 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
 }
 
 
-- (void) dealloc
-{
-    [value release];
-    [name release];
-    [easing release];
-    [super dealloc];
-}
 
 @end

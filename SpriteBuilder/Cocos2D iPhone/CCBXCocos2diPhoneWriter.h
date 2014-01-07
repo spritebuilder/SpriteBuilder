@@ -60,7 +60,7 @@ enum {
 
 @property (nonatomic,readonly) NSMutableData* data;
 @property (nonatomic,assign) BOOL flattenPaths;
-@property (nonatomic,retain) NSDictionary* serializedProjectSettings;
+@property (nonatomic,strong) NSDictionary* serializedProjectSettings;
 
 - (void) writeDocument:(NSDictionary*)doc;
 

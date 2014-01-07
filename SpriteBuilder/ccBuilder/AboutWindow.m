@@ -101,10 +101,5 @@
     [self.window orderOut:sender];
 }
 
-- (void) dealloc
-{
-    self.version = NULL;
-    [super dealloc];
-}
 
 @end

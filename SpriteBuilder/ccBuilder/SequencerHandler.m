@@ -98,8 +98,7 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if (tss != timeScaleSlider)
     {
-        [timeScaleSlider release];
-        timeScaleSlider = [tss retain];
+        timeScaleSlider = tss;
         
         [timeScaleSlider setTarget:self];
         [timeScaleSlider setAction:@selector(timeScaleSliderUpdated:)];
@@ -184,8 +183,7 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if (s != scroller)
     {
-        [scroller release];
-        scroller = [s retain];
+        scroller = s;
         
         [scroller setTarget:self];
         [scroller setAction:@selector(scrollerUpdated:)];
@@ -965,8 +963,7 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if (seq != currentSequence)
     {
-        [currentSequence release];
-        currentSequence = [seq retain];
+        currentSequence = seq;
         
         [outlineHierarchy reloadData];
         [[AppDelegate appDelegate] updateTimelineMenu];
@@ -1050,11 +1047,8 @@ static SequencerHandler* sharedSequencerHandler;
 - (void) dealloc
 {
     self.currentSequence = NULL;
-    self.scrubberSelectionView = NULL;
-    self.timeDisplay = NULL;
     //self.sequences = NULL;
     
-    [super dealloc];
 }
 
 @end

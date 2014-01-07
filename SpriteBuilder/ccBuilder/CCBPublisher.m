@@ -52,8 +52,8 @@
     if (!self) return NULL;
     
     // Save settings and warning log
-    projectSettings = [settings retain];
-    warnings = [w retain];
+    projectSettings = settings;
+    warnings = w;
     
     // Setup extensions to copy
     copyExtensions = [[NSArray alloc] initWithObjects:@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
@@ -921,7 +921,6 @@
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
-    [zipTask release];
     
     return [manager fileExistsAtPath:file];
 }
@@ -936,7 +935,7 @@
     [manager removeItemAtPath:file error:NULL];
     
     // Create diff
-    CCBDirectoryComparer* dc = [[[CCBDirectoryComparer alloc] init] autorelease];
+    CCBDirectoryComparer* dc = [[CCBDirectoryComparer alloc] init];
     [dc loadDirectory:outputDir];
     NSArray* fileList = [dc diffWithFiles:diffFiles];
     
@@ -955,7 +954,6 @@
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
-    [zipTask release];
     
     return [manager fileExistsAtPath:file];
 }
@@ -1142,14 +1140,5 @@
     [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
 }
 
-- (void) dealloc
-{
-    [copyExtensions release];
-    [warnings release];
-    [projectSettings release];
-    [publishedSpriteSheetNames release];
-    [publishedSpriteSheetFiles release];
-    [super dealloc];
-}
 
 @end

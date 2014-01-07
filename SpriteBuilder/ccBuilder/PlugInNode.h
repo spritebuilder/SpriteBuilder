@@ -39,8 +39,8 @@
     
     NSImage* icon;
     
-    NSString* dropTargetSpriteFrameClass;
-    NSString* dropTargetSpriteFrameProperty;
+    NSString* __weak dropTargetSpriteFrameClass;
+    NSString* __weak dropTargetSpriteFrameProperty;
     
     NSMutableArray* nodeProperties;
     NSMutableDictionary* nodePropertiesDict;
@@ -64,16 +64,16 @@
 @property (nonatomic,readonly) BOOL supportsTemplates;
 @property (nonatomic,readonly) NSMutableArray* nodeProperties;
 @property (nonatomic,readonly) NSMutableDictionary* nodePropertiesDict;
-@property (nonatomic,readonly) NSString* dropTargetSpriteFrameClass;
-@property (nonatomic,readonly) NSString* dropTargetSpriteFrameProperty;
+@property (weak, nonatomic,readonly) NSString* dropTargetSpriteFrameClass;
+@property (weak, nonatomic,readonly) NSString* dropTargetSpriteFrameProperty;
 @property (nonatomic,readonly) BOOL acceptsDroppedSpriteFrameChildren;
 @property (nonatomic,readonly) BOOL canBeRoot;
 @property (nonatomic,readonly) BOOL canHaveChildren;
 @property (nonatomic,readonly) BOOL isAbstract;
 @property (nonatomic,readonly) NSString* requireParentClass;
 @property (nonatomic,readonly) NSArray* requireChildClass;
-@property (nonatomic,readonly) NSString* positionProperty;
-@property (nonatomic,retain) NSImage* icon;
+@property (weak, nonatomic,readonly) NSString* positionProperty;
+@property (nonatomic,strong) NSImage* icon;
 
 - (BOOL) dontSetInEditorProperty: (NSString*) prop;
 

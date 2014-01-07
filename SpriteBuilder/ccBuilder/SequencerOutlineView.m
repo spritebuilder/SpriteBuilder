@@ -86,8 +86,8 @@ const int kSequencerNameWidth = 290;
     
     SequencerSequence* seq = [SequencerHandler sharedHandler].currentSequence;
     float xPos = [seq timeToPosition:seq.timelineLength];
-    if (!imgEndmarker) imgEndmarker = [[NSImage imageNamed:@"seq-endmarker.png"] retain];
-    if (!imgStartmarker) imgStartmarker = [[NSImage imageNamed:@"seq-startmarker.png"] retain];
+    if (!imgEndmarker) imgEndmarker = [NSImage imageNamed:@"seq-endmarker.png"];
+    if (!imgStartmarker) imgStartmarker = [NSImage imageNamed:@"seq-startmarker.png"];
     [imgEndmarker drawInRect:NSMakeRect(xPos+kSequencerNameWidth, 0, 32, self.bounds.size.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
     
     float xStartPos = [seq timeToPosition:0] -TIMELINE_PAD_PIXELS;
@@ -97,11 +97,5 @@ const int kSequencerNameWidth = 290;
     [[NSGraphicsContext currentContext] restoreGraphicsState];
 }
 
-- (void) dealloc
-{
-    [imgEndmarker release];
-    [imgStartmarker release];
-    [super dealloc];
-}
 
 @end

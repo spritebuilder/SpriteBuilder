@@ -63,10 +63,5 @@
     return dragSucceeded;
 }
 
-- (void) dealloc
-{
-    self.imagePath = NULL;
-    [super dealloc];
-}
 
 @end

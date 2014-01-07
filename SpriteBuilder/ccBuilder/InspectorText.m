@@ -48,7 +48,7 @@
 - (NSAttributedString*) text
 {
     NSString* str = [StringPropertySetter stringForNode:selection andProp:propertyName];
-    return [[[NSAttributedString alloc] initWithString:str] autorelease];
+    return [[NSAttributedString alloc] initWithString:str];
 }
 
 - (void)controlTextDidChange:(NSNotification *)note

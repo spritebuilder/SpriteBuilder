@@ -25,10 +25,10 @@
 #import "InspectorValue.h"
 
 @interface InspectorSeparator : InspectorValue {
-    NSButton *disclosureButton;
+    NSButton *__weak disclosureButton;
 }
 
 @property(assign, nonatomic) BOOL isExpanded;
-@property (assign) IBOutlet NSButton *disclosureButton;
+@property (weak) IBOutlet NSButton *disclosureButton;
 
 @end

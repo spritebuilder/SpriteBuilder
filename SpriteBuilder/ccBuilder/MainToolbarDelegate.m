@@ -36,7 +36,7 @@
   willBeInsertedIntoToolbar:(BOOL)flag
 {
     // Setup toolbar item
-    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+    NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     
     // User added plug-ins
     if ([itemIdentifier isEqualToString:@"PlugIns"])
@@ -44,7 +44,7 @@
         toolbarItem.label = @"PlugIns";
         toolbarItem.paletteLabel = @"PlugIns";
         
-        NSSegmentedControl* segmControl = [[[NSSegmentedControl alloc] initWithFrame:NSMakeRect(0, 0, 80, 32)] autorelease];
+        NSSegmentedControl* segmControl = [[NSSegmentedControl alloc] initWithFrame:NSMakeRect(0, 0, 80, 32)];
         NSSegmentedCell* segmCell = [segmControl cell];
         segmCell.trackingMode = NSSegmentSwitchTrackingMomentary;
         
@@ -60,13 +60,13 @@
         
         
         // Add menu with plugIns
-        NSMenu* menu = [[[NSMenu alloc] initWithTitle:@"User PlugIns"] autorelease];
+        NSMenu* menu = [[NSMenu alloc] initWithTitle:@"User PlugIns"];
         
         if (userPlugIns.count > 0)
         {
             for (NSString* plugInName in userPlugIns)
             {
-                NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:plugInName action:@selector(selectedItem:) keyEquivalent:@""] autorelease];
+                NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:plugInName action:@selector(selectedItem:) keyEquivalent:@""];
                 item.target = self;
             
                 [menu addItem:item];
@@ -74,7 +74,7 @@
         }
         else
         {
-            NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:@"No User PlugIns Installed" action:NULL keyEquivalent:@""] autorelease];
+            NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:@"No User PlugIns Installed" action:NULL keyEquivalent:@""];
             [item setEnabled:NO];
             
             [menu addItem:item];
@@ -108,7 +108,7 @@
     toolbarItem.paletteLabel = itemIdentifier;
     
     // Create custom segmented control view
-    NSSegmentedControl* segmControl = [[[NSSegmentedControl alloc] initWithFrame:NSMakeRect(0, 0, 80, 32)] autorelease];
+    NSSegmentedControl* segmControl = [[NSSegmentedControl alloc] initWithFrame:NSMakeRect(0, 0, 80, 32)];
     NSSegmentedCell* segmCell = [segmControl cell];
     segmCell.trackingMode = NSSegmentSwitchTrackingMomentary;
     
@@ -140,7 +140,7 @@
 {
     // Load configuration file
     NSString* path = [[NSBundle mainBundle] pathForResource:@"NodePlugInsList" ofType:@"plist"];
-    plugInSettings = [[NSDictionary dictionaryWithContentsOfFile:path] retain];
+    plugInSettings = [NSDictionary dictionaryWithContentsOfFile:path];
     
     NSArray* plugInGroups = [plugInSettings objectForKey:@"plugInGroups"];
     
@@ -192,10 +192,5 @@
     [[AppDelegate appDelegate] addPlugInNodeNamed:objType asChild:asChild];
 }
 
-- (void) dealloc
-{
-    [plugInSettings release];
-    [super dealloc];
-}
 
 @end

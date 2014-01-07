@@ -43,7 +43,7 @@ enum {
 @property (nonatomic,copy) NSString* relatedFile;
 @property (nonatomic,assign) int targetType;
 @property (nonatomic,copy) NSString* resolution;
-@property (nonatomic,readonly) NSString* description;
+@property (weak, nonatomic,readonly) NSString* description;
 
 @property (nonatomic,assign) BOOL fatal;
 

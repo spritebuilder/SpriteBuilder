@@ -157,9 +157,8 @@
 
 - (void) dealloc
 {
-    self.documentName = NULL;
+	SBLogSelf();
     self.rootObjectType = NULL;
-    [super dealloc];
 }
 
 @end

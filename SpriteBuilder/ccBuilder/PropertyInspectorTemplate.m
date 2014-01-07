@@ -32,7 +32,7 @@
     
     // Generate image
     [self savePreviewForNode:node size:CGSizeMake(256,256) bgColor:c toFile:[self imgFileNamePath]];
-    self.image = [[[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]] autorelease];
+    self.image = [[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]];
     
     // Save properties
     NSMutableArray* props = [NSMutableArray array];
@@ -93,7 +93,7 @@
     self.color = color;
     self.nodeType = [dict objectForKey:@"nodeType"];
     
-    self.image = [[[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]] autorelease];
+    self.image = [[NSImage alloc] initWithContentsOfFile:[self imgFileNamePath]];
     
     self.properties = [dict objectForKey:@"properties"];
     
@@ -160,7 +160,7 @@
     CGImageRef imgRef = [render newCGImage];
     
     // Save preview file
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:path];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:path];
 	CGImageDestinationRef dest = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
 	CGImageDestinationAddImage(dest, imgRef, nil);
 	CGImageDestinationFinalize(dest);
@@ -175,14 +175,6 @@
     [parent addChild:node z:oldZOrder];
 }
 
-- (void) dealloc
-{
-    self.name = NULL;
-    self.image = NULL;
-    self.nodeType = NULL;
-    self.color = NULL;
-    [super dealloc];
-}
 
 @end
 
@@ -213,7 +205,7 @@
             
             for (NSDictionary* serTempl in serTemplates)
             {
-                PropertyInspectorTemplate* templ = [[[PropertyInspectorTemplate alloc] initWithSerialization:serTempl] autorelease];
+                PropertyInspectorTemplate* templ = [[PropertyInspectorTemplate alloc] initWithSerialization:serTempl];
                 [templates addObject:templ];
             }
             
@@ -222,11 +214,6 @@
     }
 }
 
-- (void) dealloc
-{
-    [library release];
-    [super dealloc];
-}
 
 - (BOOL) hasTemplateForNodeType:(NSString*)type andName:(NSString*)name
 {

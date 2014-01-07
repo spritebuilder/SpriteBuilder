@@ -271,28 +271,28 @@ void ApplyCustomNodeVisitSwizzle()
     
     NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder.png"];
     [imgFolder setTemplate:YES];
-    SMTabBarItem* itemFolder = [[[SMTabBarItem alloc] initWithImage:imgFolder tag:0] autorelease];
+    SMTabBarItem* itemFolder = [[SMTabBarItem alloc] initWithImage:imgFolder tag:0];
     itemFolder.toolTip = @"File View";
     itemFolder.keyEquivalent = @"";
     [items addObject:itemFolder];
     
     NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects.png"];
     [imgObjs setTemplate:YES];
-    SMTabBarItem* itemObjs = [[[SMTabBarItem alloc] initWithImage:imgObjs tag:1] autorelease];
+    SMTabBarItem* itemObjs = [[SMTabBarItem alloc] initWithImage:imgObjs tag:1];
     itemObjs.toolTip = @"Tileless Editor View";
     itemObjs.keyEquivalent = @"";
     [items addObject:itemObjs];
     
     NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes.png"];
     [imgNodes setTemplate:YES];
-    SMTabBarItem* itemNodes = [[[SMTabBarItem alloc] initWithImage:imgNodes tag:2] autorelease];
+    SMTabBarItem* itemNodes = [[SMTabBarItem alloc] initWithImage:imgNodes tag:2];
     itemNodes.toolTip = @"Node Library View";
     itemNodes.keyEquivalent = @"";
     [items addObject:itemNodes];
     
     NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning.png"];
     [imgWarnings setTemplate:YES];
-    SMTabBarItem* itemWarnings = [[[SMTabBarItem alloc] initWithImage:imgWarnings tag:3] autorelease];
+    SMTabBarItem* itemWarnings = [[SMTabBarItem alloc] initWithImage:imgWarnings tag:3];
     itemWarnings.toolTip = @"Warnings view";
     itemWarnings.keyEquivalent = @"";
     [items addObject:itemWarnings];
@@ -307,28 +307,28 @@ void ApplyCustomNodeVisitSwizzle()
     
     NSImage* imgProps = [NSImage imageNamed:@"inspector-props.png"];
     [imgProps setTemplate:YES];
-    SMTabBarItem* itemProps = [[[SMTabBarItem alloc] initWithImage:imgProps tag:0] autorelease];
+    SMTabBarItem* itemProps = [[SMTabBarItem alloc] initWithImage:imgProps tag:0];
     itemProps.toolTip = @"Item Properties";
     itemProps.keyEquivalent = @"";
     [items addObject:itemProps];
     
     NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections.png"];
     [imgCode setTemplate:YES];
-    SMTabBarItem* itemCode = [[[SMTabBarItem alloc] initWithImage:imgCode tag:0] autorelease];
+    SMTabBarItem* itemCode = [[SMTabBarItem alloc] initWithImage:imgCode tag:0];
     itemCode.toolTip = @"Item Code Connections";
     itemCode.keyEquivalent = @"";
     [items addObject:itemCode];
     
     NSImage* imgPhysics = [NSImage imageNamed:@"inspector-physics"];
     [imgPhysics setTemplate:YES];
-    SMTabBarItem* itemPhysics = [[[SMTabBarItem alloc] initWithImage:imgPhysics tag:0] autorelease];
+    SMTabBarItem* itemPhysics = [[SMTabBarItem alloc] initWithImage:imgPhysics tag:0];
     itemPhysics.toolTip = @"Item Physics";
     itemPhysics.keyEquivalent = @"";
     [items addObject:itemPhysics];
     
     NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template.png"];
     [imgTemplate setTemplate:YES];
-    SMTabBarItem* itemTemplate = [[[SMTabBarItem alloc] initWithImage:imgTemplate tag:0] autorelease];
+    SMTabBarItem* itemTemplate = [[SMTabBarItem alloc] initWithImage:imgTemplate tag:0];
     itemTemplate.toolTip = @"Item Templates";
     itemTemplate.keyEquivalent = @"";
     [items addObject:itemTemplate];
@@ -446,7 +446,7 @@ void ApplyCustomNodeVisitSwizzle()
     
     guiWindow = [[CCBTransparentWindow alloc] initWithContentRect:frame];
     
-    guiView = [[[CCBTransparentView alloc] initWithFrame:cocosView.frame] autorelease];
+    guiView = [[CCBTransparentView alloc] initWithFrame:cocosView.frame];
     [guiWindow setContentView:guiView];
     guiWindow.delegate = self;
     
@@ -461,7 +461,7 @@ void ApplyCustomNodeVisitSwizzle()
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
     [self.window center];
     
-    UsageManager* usageManager = [[[UsageManager alloc] init] autorelease];
+    UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
     
     // Install default templates
@@ -536,7 +536,6 @@ void ApplyCustomNodeVisitSwizzle()
     if(delayOpenFiles)
 	{
 		[self openFiles:delayOpenFiles];
-		[delayOpenFiles release];
 		delayOpenFiles = nil;
 	}
     
@@ -608,7 +607,7 @@ void ApplyCustomNodeVisitSwizzle()
 
 - (void) addTab:(CCBDocument*)doc
 {
-    NSTabViewItem *newItem = [[[NSTabViewItem alloc] initWithIdentifier:doc] autorelease];
+    NSTabViewItem *newItem = [[NSTabViewItem alloc] initWithIdentifier:doc];
 	[newItem setLabel:[doc formattedName]];
 	[tabView addTabViewItem:newItem];
     [tabView selectTabViewItem:newItem]; // this is optional, but expected behavior
@@ -1096,7 +1095,7 @@ static BOOL hideAllToNextSeparator;
         NSString* keyEquivalent = @"";
         if (i < 10) keyEquivalent = [NSString stringWithFormat:@"%d",i+1];
         
-        NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:resolution.name action:@selector(menuResolution:) keyEquivalent:keyEquivalent] autorelease];
+        NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:resolution.name action:@selector(menuResolution:) keyEquivalent:keyEquivalent];
         item.target = self;
         item.tag = i;
         
@@ -1129,11 +1128,11 @@ static BOOL hideAllToNextSeparator;
     int chainedId = sequenceHandler.currentSequence.chainedSequenceId;
     
     // Add dummy item
-    NSMenuItem* itemDummy = [[[NSMenuItem alloc] initWithTitle:@"Dummy" action:NULL keyEquivalent:@""] autorelease];
+    NSMenuItem* itemDummy = [[NSMenuItem alloc] initWithTitle:@"Dummy" action:NULL keyEquivalent:@""];
     [menuTimelineChained addItem:itemDummy];
     
     // Add empty option for chained seq
-    NSMenuItem* itemCh = [[[NSMenuItem alloc] initWithTitle: @"No Chained Timeline" action:@selector(menuSetChainedSequence:) keyEquivalent:@""] autorelease];
+    NSMenuItem* itemCh = [[NSMenuItem alloc] initWithTitle: @"No Chained Timeline" action:@selector(menuSetChainedSequence:) keyEquivalent:@""];
     itemCh.target = sequenceHandler;
     itemCh.tag = -1;
     if (chainedId == -1) [itemCh setState:NSOnState];
@@ -1145,14 +1144,14 @@ static BOOL hideAllToNextSeparator;
     for (SequencerSequence* seq in currentDocument.sequences)
     {
         // Add to sequence selector
-        NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:seq.name action:@selector(menuSetSequence:) keyEquivalent:@""] autorelease];
+        NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:seq.name action:@selector(menuSetSequence:) keyEquivalent:@""];
         item.target = sequenceHandler;
         item.tag = seq.sequenceId;
         if (currentId == seq.sequenceId) [item setState:NSOnState];
         [menuTimeline addItem:item];
         
         // Add to chained sequence selector
-        itemCh = [[[NSMenuItem alloc] initWithTitle: seq.name action:@selector(menuSetChainedSequence:) keyEquivalent:@""] autorelease];
+        itemCh = [[NSMenuItem alloc] initWithTitle: seq.name action:@selector(menuSetChainedSequence:) keyEquivalent:@""];
         itemCh.target = sequenceHandler;
         itemCh.tag = seq.sequenceId;
         if (chainedId == seq.sequenceId) [itemCh setState:NSOnState];
@@ -1372,7 +1371,7 @@ static BOOL hideAllToNextSeparator;
         NSMutableArray* resolutions = [NSMutableArray array];
         for (id serRes in serializedResolutions)
         {
-            ResolutionSetting* resolution = [[[ResolutionSetting alloc] initWithSerialization:serRes] autorelease];
+            ResolutionSetting* resolution = [[ResolutionSetting alloc] initWithSerialization:serRes];
             [resolutions addObject:resolution];
         }
         
@@ -1403,7 +1402,7 @@ static BOOL hideAllToNextSeparator;
         [[CocosScene cocosScene] setStageSize:CGSizeMake(stageW, stageH) centeredOrigin:centered];
         
         // Setup a basic resolution and attach it to the current document
-        ResolutionSetting* resolution = [[[ResolutionSetting alloc] init] autorelease];
+        ResolutionSetting* resolution = [[ResolutionSetting alloc] init];
         resolution.width = stageW;
         resolution.height = stageH;
         resolution.centeredOrigin = centered;
@@ -1432,7 +1431,6 @@ static BOOL hideAllToNextSeparator;
         {
             SequencerSequence* seq = [[SequencerSequence alloc] initWithSerialization:serSeq];
             [sequences addObject:seq];
-            [seq release];
             
             if (seq.sequenceId == currentSequenceId)
             {
@@ -1453,7 +1451,6 @@ static BOOL hideAllToNextSeparator;
         seq.sequenceId = 0;
         seq.autoPlay = YES;
         [sequences addObject:seq];
-        [seq release];
     
         currentDocument.sequences = sequences;
         sequenceHandler.currentSequence = seq;
@@ -1622,7 +1619,7 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) createProject:(NSString*) fileName
 {
-    CCBProjCreator* creator = [[[CCBProjCreator alloc] init] autorelease];
+    CCBProjCreator* creator = [[CCBProjCreator alloc] init];
     return [creator createDefaultProjectAtPath:fileName];
 }
 
@@ -1689,7 +1686,7 @@ static BOOL hideAllToNextSeparator;
         return NO;
     }
     
-    ProjectSettings* project = [[[ProjectSettings alloc] initWithSerialization:projectDict] autorelease];
+    ProjectSettings* project = [[ProjectSettings alloc] initWithSerialization:projectDict];
     if (!project)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
@@ -1762,7 +1759,7 @@ static BOOL hideAllToNextSeparator;
     
     NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithContentsOfFile:fileName];
     
-    CCBDocument* newDoc = [[[CCBDocument alloc] init] autorelease];
+    CCBDocument* newDoc = [[CCBDocument alloc] init];
     newDoc.fileName = fileName;
     newDoc.docData = doc;
     newDoc.exportPath = [doc objectForKey:@"exportPath"];
@@ -1810,7 +1807,7 @@ static BOOL hideAllToNextSeparator;
     // Reset to first frame in first timeline in first resolution
     float currentTime = sequenceHandler.currentSequence.timelinePosition;
     int currentResolution = currentDocument.currentResolution;
-    SequencerSequence* currentSeq = [sequenceHandler.currentSequence retain];
+    SequencerSequence* currentSeq = sequenceHandler.currentSequence;
     
     currentDocument.currentResolution = 0;
     sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
@@ -1827,7 +1824,6 @@ static BOOL hideAllToNextSeparator;
     [self reloadResources];
     //[PositionPropertySetter refreshAllPositions];
     sequenceHandler.currentSequence.timelinePosition = currentTime;
-    [currentSeq release];
     
     [projectOutlineHandler updateSelectionPreview];
 }
@@ -1915,7 +1911,7 @@ static BOOL hideAllToNextSeparator;
     [sequenceHandler updateOutlineViewSelection];
     [self updateInspectorFromSelection];
     
-    self.currentDocument = [[[CCBDocument alloc] init] autorelease];
+    self.currentDocument = [[CCBDocument alloc] init];
     self.currentDocument.resolutions = resolutions;
     self.currentDocument.currentResolution = 0;
     self.currentDocument.docDimensionsType = docDimType;
@@ -1928,7 +1924,7 @@ static BOOL hideAllToNextSeparator;
     // Setup a default timeline
     NSMutableArray* sequences = [NSMutableArray array];
     
-    SequencerSequence* seq = [[[SequencerSequence alloc] init] autorelease];
+    SequencerSequence* seq = [[SequencerSequence alloc] init];
     seq.name = @"Default Timeline";
     seq.sequenceId = 0;
     seq.autoPlay = YES;
@@ -2291,7 +2287,7 @@ static BOOL hideAllToNextSeparator;
         {
             SequencerKeyframe* keyframe = [keyframes objectAtIndex:i];
             
-            NSValue* seqVal = [NSValue valueWithPointer:keyframe.parent];
+            NSValue* seqVal = [NSValue valueWithPointer:(__bridge const void *)(keyframe.parent)];
             if (![seqsSet containsObject:seqVal])
             {
                 NSString* propName = keyframe.name;
@@ -2404,7 +2400,7 @@ static BOOL hideAllToNextSeparator;
         float firstTime = MAXFLOAT;
         for (id serKeyframe in serKeyframes)
         {
-            SequencerKeyframe* keyframe = [[[SequencerKeyframe alloc] initWithSerialization:serKeyframe] autorelease];
+            SequencerKeyframe* keyframe = [[SequencerKeyframe alloc] initWithSerialization:serKeyframe];
             if (keyframe.time < firstTime)
             {
                 firstTime = keyframe.time;
@@ -2593,7 +2589,6 @@ static BOOL hideAllToNextSeparator;
                 [[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
-        [limter release];
     }];
 }
 
@@ -2649,7 +2644,7 @@ static BOOL hideAllToNextSeparator;
         return;
     }
     
-    CCBWarnings* warnings = [[[CCBWarnings alloc] init] autorelease];
+    CCBWarnings* warnings = [[CCBWarnings alloc] init];
     warnings.warningsDescription = @"Publisher Warnings";
     
     // Setup publisher, publisher is released in publisher:finishedWithWarnings:
@@ -2702,7 +2697,6 @@ static BOOL hideAllToNextSeparator;
         [projectViewTabs selectBarButtonIndex:3];
     }
     
-    [publisher release];
     
     
 }
@@ -2774,7 +2768,7 @@ static BOOL hideAllToNextSeparator;
 {
     if (!projectSettings) return;
     
-    PublishSettingsWindow* wc = [[[PublishSettingsWindow alloc] initWithWindowNibName:@"PublishSettingsWindow"] autorelease];
+    PublishSettingsWindow* wc = [[PublishSettingsWindow alloc] initWithWindowNibName:@"PublishSettingsWindow"];
     wc.projectSettings = self.projectSettings;
     
     int success = [wc runModalSheetForWindow:window];
@@ -2990,12 +2984,10 @@ static BOOL hideAllToNextSeparator;
                                id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
                                [outlineProject expandItem:parentResource];
                            });
-            [wc release];
         }
     }
     else
     {
-        [wc release];
     }
 }
 
@@ -3099,7 +3091,7 @@ static BOOL hideAllToNextSeparator;
     
     ResolutionSetting* setting = [currentDocument.resolutions objectAtIndex:0];
     
-    StageSizeWindow* wc = [[[StageSizeWindow alloc] initWithWindowNibName:@"StageSizeWindow"] autorelease];
+    StageSizeWindow* wc = [[StageSizeWindow alloc] initWithWindowNibName:@"StageSizeWindow"];
     wc.wStage = setting.width;
     wc.hStage = setting.height;
     
@@ -3137,7 +3129,7 @@ static BOOL hideAllToNextSeparator;
         return;
     }
     
-    CustomPropSettingsWindow* wc = [[[CustomPropSettingsWindow alloc] initWithWindowNibName:@"CustomPropSettingsWindow"] autorelease];
+    CustomPropSettingsWindow* wc = [[CustomPropSettingsWindow alloc] initWithWindowNibName:@"CustomPropSettingsWindow"];
     [wc copySettingsForNode:self.selectedNode];
     
     int success = [wc runModalSheetForWindow:window];
@@ -3353,7 +3345,7 @@ static BOOL hideAllToNextSeparator;
 {
     if (!currentDocument) return;
     
-    SequencerSettingsWindow* wc = [[[SequencerSettingsWindow alloc] initWithWindowNibName:@"SequencerSettingsWindow"] autorelease];
+    SequencerSettingsWindow* wc = [[SequencerSettingsWindow alloc] initWithWindowNibName:@"SequencerSettingsWindow"];
     [wc copySequences:currentDocument.sequences];
     
     int success = [wc runModalSheetForWindow:window];
@@ -3402,7 +3394,7 @@ static BOOL hideAllToNextSeparator;
     if (!currentDocument) return;
     
     // Create new sequence and assign unique id
-    SequencerSequence* newSeq = [[[SequencerSequence alloc] init] autorelease];
+    SequencerSequence* newSeq = [[SequencerSequence alloc] init];
     newSeq.name = @"Untitled Timeline";
     newSeq.sequenceId = [self uniqueSequenceIdFromSequences:currentDocument.sequences];
     
@@ -3432,7 +3424,7 @@ static BOOL hideAllToNextSeparator;
 {
     if (!currentDocument) return;
     
-    SequencerDurationWindow* wc = [[[SequencerDurationWindow alloc] initWithWindowNibName:@"SequencerDurationWindow"] autorelease];
+    SequencerDurationWindow* wc = [[SequencerDurationWindow alloc] initWithWindowNibName:@"SequencerDurationWindow"];
     wc.duration = sequenceHandler.currentSequence.timelineLength;
     
     int success = [wc runModalSheetForWindow:window];
@@ -3894,7 +3886,7 @@ static BOOL hideAllToNextSeparator;
     float opt = [sequenceHandler.contextKeyframe.easing.options floatValue];
     
     
-    SequencerKeyframeEasingWindow* wc = [[[SequencerKeyframeEasingWindow alloc] initWithWindowNibName:@"SequencerKeyframeEasingWindow"] autorelease];
+    SequencerKeyframeEasingWindow* wc = [[SequencerKeyframeEasingWindow alloc] initWithWindowNibName:@"SequencerKeyframeEasingWindow"];
     wc.option = opt;
     
     int type = sequenceHandler.contextKeyframe.easing.type;
@@ -4071,7 +4063,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuStretchSelectedKeyframes:(id)sender
 {
-    SequencerStretchWindow* wc = [[[SequencerStretchWindow alloc] initWithWindowNibName:@"SequencerStretchWindow"] autorelease];
+    SequencerStretchWindow* wc = [[SequencerStretchWindow alloc] initWithWindowNibName:@"SequencerStretchWindow"];
     wc.factor = 1;
     
     int success = [wc runModalSheetForWindow:window];
@@ -4409,11 +4401,5 @@ static BOOL hideAllToNextSeparator;
     [resManager debugPrintDirectories];
 }
 
-- (void) dealloc
-{
-    [toolbarDelegate release];
-    
-    [super dealloc];
-}
 
 @end

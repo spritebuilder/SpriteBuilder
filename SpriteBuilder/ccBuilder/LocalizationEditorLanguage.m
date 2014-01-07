@@ -31,7 +31,7 @@
     }
     else
     {
-        NSLocale* enLocale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en"] autorelease];
+        NSLocale* enLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en"];
         self.name = [enLocale displayNameForKey:NSLocaleLanguageCode value:code];
     }
     
@@ -42,12 +42,5 @@
     return self;
 }
 
-- (void) dealloc
-{
-    self.isoLangCode = NULL;
-    self.name = NULL;
-    
-    [super dealloc];
-}
 
 @end

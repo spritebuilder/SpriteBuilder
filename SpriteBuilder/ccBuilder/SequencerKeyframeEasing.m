@@ -35,7 +35,7 @@
 
 + (id) easing
 {
-    return [[[SequencerKeyframeEasing alloc] init] autorelease];
+    return [[SequencerKeyframeEasing alloc] init];
 }
 
 - (id) init
@@ -267,10 +267,5 @@
     type = t;
 }
 
-- (void) dealloc
-{
-    self.options = NULL;
-    [super dealloc];
-}
 
 @end

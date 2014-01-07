@@ -29,7 +29,7 @@
 
 @interface NodeInfo : NSObject
 {
-    PlugInNode* plugIn;
+    PlugInNode* __weak plugIn;
     NSMutableDictionary* extraProps;
     NSMutableDictionary* animatableProperties;
     NSMutableDictionary* baseValues;
@@ -38,12 +38,12 @@
     NSString* displayName;
 }
 
-@property (nonatomic,assign) PlugInNode* plugIn;
+@property (nonatomic,weak) PlugInNode* plugIn;
 @property (nonatomic,readonly) NSMutableDictionary* extraProps;
-@property (nonatomic,retain) NSMutableDictionary* animatableProperties;
+@property (nonatomic,strong) NSMutableDictionary* animatableProperties;
 @property (nonatomic,readonly) NSMutableDictionary* baseValues;
 @property (nonatomic,copy) NSString* displayName;
-@property (nonatomic,retain) NSMutableArray* customProperties;
+@property (nonatomic,strong) NSMutableArray* customProperties;
 @property (nonatomic,assign) CGPoint transformStartPosition;
 
 + (id) nodeInfoWithPlugIn:(PlugInNode*)pin;

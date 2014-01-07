@@ -112,17 +112,16 @@
     if (!self) return NULL;
     
     bundle = b;
-    [bundle retain];
     
     // Load properties
     NSURL* propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
     NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
     
-    nodeClassName = [[props objectForKey:@"className"] retain];
-    nodeEditorClassName = [[props objectForKey:@"editorClassName"] retain];
+    nodeClassName = [props objectForKey:@"className"];
+    nodeEditorClassName = [props objectForKey:@"editorClassName"];
     
-    displayName = [[props objectForKey:@"displayName"] retain];
-    descr = [[props objectForKey:@"description"] retain];
+    displayName = [props objectForKey:@"displayName"];
+    descr = [props objectForKey:@"description"];
     ordering = [[props objectForKey:@"ordering"] intValue];
     supportsTemplates = [[props objectForKey:@"supportsTemplates"] boolValue];
     
@@ -142,17 +141,15 @@
         dropTargetSpriteFrameClass = [spriteFrameDrop objectForKey:@"className"];
         dropTargetSpriteFrameProperty = [spriteFrameDrop objectForKey:@"property"];
         
-        [dropTargetSpriteFrameClass retain];
-        [dropTargetSpriteFrameProperty retain];
     }
     
     // Check if node type can be root node and which children are allowed
     canBeRoot = [[props objectForKey:@"canBeRootNode"] boolValue];
     canHaveChildren = [[props objectForKey:@"canHaveChildren"] boolValue];
     isAbstract = [[props objectForKey:@"isAbstract"] boolValue];
-    requireChildClass = [[props objectForKey:@"requireChildClass"] retain];
-    requireParentClass = [[props objectForKey:@"requireParentClass"] retain];
-    positionProperty = [[props objectForKey:@"positionProperty"] retain];
+    requireChildClass = [props objectForKey:@"requireChildClass"];
+    requireParentClass = [props objectForKey:@"requireParentClass"];
+    positionProperty = [props objectForKey:@"positionProperty"];
     
     return self;
 }
@@ -222,8 +219,8 @@
         }
     }
     
-    if (!useFlashSkew) cachedAnimatableProperties = [props retain];
-    else cachedAnimatablePropertiesFlashSkew = [props retain];
+    if (!useFlashSkew) cachedAnimatableProperties = props;
+    else cachedAnimatablePropertiesFlashSkew = props;
     
     return props;
 }
@@ -273,22 +270,5 @@
 
 #pragma mark Deallocation
 
-- (void) dealloc
-{
-    [displayName release];
-    [descr release];
-    [cachedAnimatableProperties release];
-    [positionProperty release];
-    [requireChildClass release];
-    [requireParentClass release];
-    [dropTargetSpriteFrameClass release];
-    [dropTargetSpriteFrameProperty release];
-    [nodeProperties release];
-    [nodePropertiesDict release];
-    [nodeClassName release];
-    [nodeEditorClassName release];
-    [bundle release];
-    [super dealloc];
-}
 
 @end

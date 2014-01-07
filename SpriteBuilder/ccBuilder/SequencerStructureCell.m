@@ -37,7 +37,7 @@
 {
     if (!imagesLoaded)
     {
-        imgRowBgChannel = [[NSImage imageNamed:@"seq-row-channel-bg.png"] retain];
+        imgRowBgChannel = [NSImage imageNamed:@"seq-row-channel-bg.png"];
         imagesLoaded = YES;
     }
     
@@ -63,7 +63,7 @@
         propNameRect.size.width -= 5; 
     
         // Right alignment
-        NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
+        NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
         [style setAlignment:NSRightTextAlignment];
     
         // Setup attributes
@@ -142,11 +142,5 @@
     return YES;
 }
 
-- (void) dealloc
-{
-    //self.node = NULL;
-    [imgRowBgChannel release];
-    [super dealloc];
-}
 
 @end

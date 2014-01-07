@@ -155,7 +155,7 @@
     
     id baseValue = [self valueForProperty:name atTime:0 sequenceId:seqId];
     
-    SequencerNodeProperty* seqNodeProp = [[[SequencerNodeProperty alloc] initWithProperty:name node:self] autorelease];
+    SequencerNodeProperty* seqNodeProp = [[SequencerNodeProperty alloc] initWithProperty:name node:self];
     if (![info.baseValues objectForKey:name])
     {
         [info.baseValues setObject:baseValue forKey:name];
@@ -227,7 +227,7 @@
         return nil;
     
     // Create keyframe
-    SequencerKeyframe* keyframe = [[[SequencerKeyframe alloc] init] autorelease];
+    SequencerKeyframe* keyframe = [[SequencerKeyframe alloc] init];
     keyframe.time = time;
     keyframe.type = keyframeType;
     keyframe.name = name;
@@ -666,7 +666,7 @@
         
         for (NSString* propName in serProperties)
         {
-            SequencerNodeProperty* seqNodeProp = [[[SequencerNodeProperty alloc] initWithSerialization:[serProperties objectForKey:propName]] autorelease];
+            SequencerNodeProperty* seqNodeProp = [[SequencerNodeProperty alloc] initWithSerialization:[serProperties objectForKey:propName]];
             [properties setObject:seqNodeProp forKey:propName];
         }
         
@@ -762,7 +762,7 @@
     
     for (id serSetting in ser)
     {
-        [customProps addObject:[[[CustomPropSetting alloc] initWithSerialization:serSetting] autorelease]];
+        [customProps addObject:[[CustomPropSetting alloc] initWithSerialization:serSetting]];
     }
     
     self.customProperties = customProps;
@@ -774,7 +774,7 @@
     
     for (id serSetting in ser)
     {
-        CustomPropSetting* setting = [[[CustomPropSetting alloc] initWithSerialization:serSetting] autorelease];
+        CustomPropSetting* setting = [[CustomPropSetting alloc] initWithSerialization:serSetting];
         [self setCustomPropertyNamed:setting.name value:setting.value];
     }
 }

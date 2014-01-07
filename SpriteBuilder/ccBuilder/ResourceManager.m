@@ -42,12 +42,6 @@
 
 @synthesize spriteFrameName, spriteSheetFile;
 
-- (void) dealloc
-{
-    [spriteFrameName release];
-    [spriteSheetFile release];
-    [super dealloc];
-}
 
 - (NSImage*) preview
 {
@@ -63,12 +57,6 @@
 
 @synthesize animationFile, animationName;
 
-- (void) dealloc
-{
-    self.animationFile = NULL;
-    self.animationName = NULL;
-    [super dealloc];
-}
 
 @end
 
@@ -87,7 +75,7 @@
         NSMutableArray* spriteFrames = [NSMutableArray arrayWithCapacity:[spriteFrameNames count]];
         for (NSString* frameName in spriteFrameNames)
         {
-            RMSpriteFrame* frame = [[[RMSpriteFrame alloc] init] autorelease];
+            RMSpriteFrame* frame = [[RMSpriteFrame alloc] init];
             frame.spriteFrameName = frameName;
             frame.spriteSheetFile = self.filePath;
             
@@ -101,7 +89,7 @@
         NSMutableArray* animations = [NSMutableArray arrayWithCapacity:[animationNames count]];
         for (NSString* animationName in animationNames)
         {
-            RMAnimation* anim = [[[RMAnimation alloc] init] autorelease];
+            RMAnimation* anim = [[RMAnimation alloc] init];
             anim.animationName = animationName;
             anim.animationFile = self.filePath;
             
@@ -136,7 +124,7 @@
         
         NSString* autoPath = [[dirPath stringByAppendingPathComponent:resDirName] stringByAppendingPathComponent:fileName];
         
-        NSImage* img = [[[NSImage alloc] initWithContentsOfFile:autoPath] autorelease];
+        NSImage* img = [[NSImage alloc] initWithContentsOfFile:autoPath];
         return img;
     }
     
@@ -305,13 +293,6 @@
 
 // Deallocation
 
-- (void) dealloc
-{
-    [data release];
-    [modifiedTime release];
-    [filePath release];
-    [super dealloc];
-}
 
 @end
 
@@ -368,7 +349,7 @@
     {
         ProjectSettings* projectSettings = [AppDelegate appDelegate].projectSettings;
         
-        RMResource* dirRes = [[[RMResource alloc] init] autorelease];
+        RMResource* dirRes = [[RMResource alloc] init];
         dirRes.type = kCCBResTypeDirectory;
         dirRes.filePath = dirPath;
         
@@ -385,24 +366,10 @@
 {
     if (dp != dirPath)
     {
-        [dirPath release];
-        dirPath = [dp retain];
+        dirPath = dp;
     }
 }
 
-- (void) dealloc
-{
-    [resources release];
-    [any release];
-    [images release];
-    [animations release];
-    [bmFonts release];
-    [ttfFonts release];
-    [ccbFiles release];
-    [audioFiles release];
-    [dirPath release];
-    [super dealloc];
-}
 
 - (NSComparisonResult) compare:(RMDirectory*)dir
 {
@@ -456,7 +423,6 @@
 {
     NSMutableDictionary* fontInfo = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FontListTTF" ofType:@"plist"]];
     systemFontList = [fontInfo objectForKey:@"supportedFonts"];
-    [systemFontList retain];
 }
 
 - (id) init
@@ -478,13 +444,7 @@
 
 - (void) dealloc
 {
-    [pathWatcher release];
-    [directories release];
-    [activeDirectories release];
-    [resourceObserver release];
-    [systemFontList release];
     self.activeDirectories = NULL;
-    [super dealloc];
 }
 
 - (NSArray*) getAddedDirs
@@ -753,7 +713,6 @@
             [resources setObject:res forKey:file];
             
             if (res.type != kCCBResTypeNone) resourcesChanged = YES;
-            [res release];
         }
         
         res.touched = YES;
@@ -873,7 +832,7 @@
     }
     else
     {
-        dir = [[[RMDirectory alloc] init] autorelease];
+        dir = [[RMDirectory alloc] init];
         dir.count = 1;
         dir.dirPath = dirPath;
         [directories setObject:dir forKey:dirPath];
@@ -982,7 +941,7 @@
 {
     // Find settings for the file
     NSString* fileName = [autoFile lastPathComponent];
-    RMResource* resource = [[[RMResource alloc] init] autorelease];
+    RMResource* resource = [[RMResource alloc] init];
     resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
     resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
     int tabletScale = [[[AppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
@@ -1018,7 +977,7 @@
     float scaleFactor = dstScale/srcScale;
     
     // Load src image
-		CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:autoFile], NULL);
+		CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:autoFile], NULL);
 		CGImageRef imageSrc = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
 		    
     int wSrc = CGImageGetWidth(imageSrc);
@@ -1057,9 +1016,9 @@
     [[NSFileManager defaultManager] createDirectoryAtPath:[dstFile stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:NULL error:NULL];
     
     // Save the image
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:dstFile];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:dstFile];
 		
-		CFStringRef out_type = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, [dstFile pathExtension], NULL);
+		CFStringRef out_type = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)([dstFile pathExtension]), NULL);
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, out_type, 1, NULL);
     CGImageDestinationAddImage(destination, imageDst, nil);
     
@@ -1085,7 +1044,6 @@
         [pngTask setArguments:args];
         [pngTask launch];
         [pngTask waitUntilExit];
-        [pngTask release];
     }
     
     // Update modification time to match original file
@@ -1136,7 +1094,7 @@
             NSString* defaultDirName = [defaultFile stringByDeletingLastPathComponent];
             
             // Select by resolution
-            for (NSString* ext in res.exts)
+            for (__strong NSString* ext in res.exts)
             {
                 if ([ext isEqualToString:@""]) continue;
                 ext = [@"resources-" stringByAppendingString:ext];

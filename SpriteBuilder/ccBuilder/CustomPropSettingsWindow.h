@@ -31,7 +31,7 @@
     CCNode* node;
 }
 
-@property (nonatomic,retain) NSMutableArray* settings;
+@property (nonatomic,strong) NSMutableArray* settings;
 
 - (void) copySettingsForNode:(CCNode*)n;
 

@@ -50,7 +50,7 @@
         
         if ([file hasSuffix:@".md"])
         {
-            HelpPage* hp = [[[HelpPage alloc] init] autorelease];
+            HelpPage* hp = [[HelpPage alloc] init];
             hp.fileName = file;
             [mdFiles addObject:hp];
         }

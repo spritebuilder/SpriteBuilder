@@ -14,10 +14,10 @@
     NSImage * imgRowBgChannel;
     BOOL      imagesLoaded;
     
-    CCNode * node;
+    CCNode * __weak node;
     
 }
 
-@property (nonatomic,assign) CCNode* node;
+@property (nonatomic,weak) CCNode* node;
 
 @end

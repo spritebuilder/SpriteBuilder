@@ -29,6 +29,6 @@
     CCNode* ccbFile;
 }
 
-@property (nonatomic,retain) CCNode* ccbFile;
+@property (nonatomic,strong) CCNode* ccbFile;
 
 @end

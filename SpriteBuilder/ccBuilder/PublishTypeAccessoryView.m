@@ -48,10 +48,5 @@
     [savePanel setAllowedFileTypes:[NSArray arrayWithObject:type]];
 }
 
-- (void) dealloc
-{
-    self.exporterNames = NULL;
-    [super dealloc];
-}
 
 @end

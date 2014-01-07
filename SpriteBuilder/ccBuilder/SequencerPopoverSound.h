@@ -28,14 +28,14 @@
 
 @interface SequencerPopoverSound : NSObject <NSControlTextEditingDelegate>
 {
-    IBOutlet NSView* view;
+    IBOutlet NSView* __weak view;
     
     IBOutlet NSPopUpButton* popup;
 }
 
-@property (nonatomic,readonly) IBOutlet NSView* view;
-@property (nonatomic,assign) SequencerKeyframe* keyframe;
-@property (nonatomic,retain) NSString* textFieldOriginalValue;
+@property (weak, nonatomic,readonly) IBOutlet NSView* view;
+@property (nonatomic,weak) SequencerKeyframe* keyframe;
+@property (nonatomic,strong) NSString* textFieldOriginalValue;
 
 @property (nonatomic,assign) float pitch;
 @property (nonatomic,assign) float pan;

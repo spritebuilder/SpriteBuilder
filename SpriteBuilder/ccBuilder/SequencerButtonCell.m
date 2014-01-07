@@ -16,7 +16,7 @@
 {
     if (!imagesLoaded)
     {
-        imgRowBgChannel = [[NSImage imageNamed:@"seq-row-channel-bg.png"] retain];
+        imgRowBgChannel = [NSImage imageNamed:@"seq-row-channel-bg.png"];
         imagesLoaded = YES;
     }
     

@@ -77,7 +77,7 @@
     keyframes = [[NSMutableArray alloc] initWithCapacity:serKeyframes.count];
     for (id keyframeSer in serKeyframes)
     {
-        SequencerKeyframe* keyframe = [[[SequencerKeyframe alloc] initWithSerialization:keyframeSer] autorelease];
+        SequencerKeyframe* keyframe = [[SequencerKeyframe alloc] initWithSerialization:keyframeSer];
         [keyframes addObject:keyframe];
         keyframe.parent = self;
     }
@@ -106,12 +106,6 @@
     return ser;
 }
 
-- (void) dealloc
-{
-    [keyframes release];
-    [propName release];
-    [super dealloc];
-}
 
 - (void) setKeyframe:(SequencerKeyframe*)keyframe
 {
@@ -452,7 +446,7 @@
 - (SequencerNodeProperty*) duplicate
 {
     id serialization = [self serialization];
-    SequencerNodeProperty* duplicate = [[[SequencerNodeProperty alloc] initWithSerialization:serialization] autorelease];
+    SequencerNodeProperty* duplicate = [[SequencerNodeProperty alloc] initWithSerialization:serialization];
     return duplicate;
 }
 

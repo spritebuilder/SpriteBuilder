@@ -110,11 +110,6 @@
     _keyframe.value = [self replaceObjectAtIndex:3 inArray:_keyframe.value withObject:[NSNumber numberWithFloat:gain]];
 }
 
-- (void) dealloc
-{
-    self.textFieldOriginalValue = NULL;
-    [super dealloc];
-}
 
 #pragma mark Error handling for validation of text fields
 

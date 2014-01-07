@@ -65,7 +65,7 @@
             NSArray* sequenceDicts = [doc objectForKey:@"sequences"];
             for (NSDictionary* seqDict in sequenceDicts)
             {
-                SequencerSequence* seq = [[[SequencerSequence alloc] initWithSerialization:seqDict] autorelease];
+                SequencerSequence* seq = [[SequencerSequence alloc] initWithSerialization:seqDict];
                 [sequences addObject:seq];
                 
                 if (seq.autoPlay) startSequence = seq.sequenceId;

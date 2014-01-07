@@ -55,12 +55,12 @@
     resManager = [ResourceManager sharedManager];
     [resManager addResourceObserver:self];
     
-    resourceList = [outlineView retain];
-    imagePreview = [p retain];
+    resourceList = outlineView;
+    imagePreview = p;
     //lblNoPreview = [lbl retain];
     resType = rt;
     
-    ImageAndTextCell* imageTextCell = [[[ImageAndTextCell alloc] init] autorelease];
+    ImageAndTextCell* imageTextCell = [[ImageAndTextCell alloc] init];
     [imageTextCell setEditable:YES];
     [[resourceList outlineTableColumn] setDataCell:imageTextCell];
     [[resourceList outlineTableColumn] setEditable:YES];
@@ -559,12 +559,5 @@
     [resourceList reloadData];
 }
 
-- (void) dealloc
-{
-    [resourceList release];
-    [imagePreview release];
-    [lblNoPreview release];
-    [super dealloc];
-}
 
 @end

@@ -73,10 +73,10 @@ typedef enum {
     CCNode* selectionLayer;
     CCNode* physicsLayer;
     CCNode* borderLayer;
-    RulersLayer* rulerLayer;
-    GuidesLayer* guideLayer;
-    NotesLayer* notesLayer;
-    CCNode* rootNode;
+    RulersLayer* __weak rulerLayer;
+    GuidesLayer* __weak guideLayer;
+    NotesLayer* __weak notesLayer;
+    CCNode* __weak rootNode;
     CCRenderTexture* renderedScene;
     AppDelegate* appDelegate;
     CGSize winSize;
@@ -123,15 +123,15 @@ typedef enum {
     int     cornerIndex;//Which corner of the object are we rotating?
 }
 
-@property (nonatomic,assign) CCNode* rootNode;
+@property (nonatomic,weak) CCNode* rootNode;
 @property (nonatomic,readonly) BOOL isMouseTransforming;
 @property (nonatomic,assign) CGPoint scrollOffset;
 
 @property (nonatomic,assign) CCBTool currentTool;
 
-@property (nonatomic,readonly) GuidesLayer* guideLayer;
-@property (nonatomic,readonly) RulersLayer* rulerLayer;
-@property (nonatomic,readonly) NotesLayer* notesLayer;
+@property (weak, nonatomic,readonly) GuidesLayer* guideLayer;
+@property (weak, nonatomic,readonly) RulersLayer* rulerLayer;
+@property (weak, nonatomic,readonly) NotesLayer* notesLayer;
 
 // Used to creat the scene
 +(id) sceneWithAppDelegate:(AppDelegate*)app;

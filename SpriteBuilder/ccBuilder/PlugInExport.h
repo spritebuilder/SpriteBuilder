@@ -36,9 +36,9 @@
 }
 
 @property (nonatomic,readonly) NSString* extension;
-@property (nonatomic,retain) NSString* pluginName;
+@property (nonatomic,strong) NSString* pluginName;
 @property (nonatomic,assign) BOOL flattenPaths;
-@property (nonatomic,retain) ProjectSettings* projectSettings;
+@property (nonatomic,strong) ProjectSettings* projectSettings;
 
 - (id) initWithBundle:(NSBundle*) bundle;
 - (NSData*) exportDocument:(NSDictionary*)doc;
