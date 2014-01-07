@@ -26,7 +26,7 @@
 
 @interface InspectorBlock : InspectorValue
 
-@property (nonatomic,assign) NSString* selector;
+@property (nonatomic,weak) NSString* selector;
 @property (nonatomic,assign) int target;
 
 @end

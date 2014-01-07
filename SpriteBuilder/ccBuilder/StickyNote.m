@@ -102,7 +102,6 @@
 
 - (void) setNoteText:(NSString *)text
 {
-    [noteText release];
     noteText = [text copy];
     
     if (!noteText)
@@ -125,10 +124,5 @@
     return lbl.visible;
 }
 
-- (void) dealloc
-{
-    [noteText release];
-    [super dealloc];
-}
 
 @end

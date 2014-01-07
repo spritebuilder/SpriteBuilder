@@ -29,7 +29,7 @@
 {
     NSMutableArray* sequences;
 }
-@property (nonatomic,retain) NSMutableArray* sequences;
+@property (nonatomic,strong) NSMutableArray* sequences;
 
 - (void) copySequences:(NSMutableArray *)res;
 

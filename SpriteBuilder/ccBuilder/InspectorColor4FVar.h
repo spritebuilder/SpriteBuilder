@@ -26,7 +26,7 @@
 
 @interface InspectorColor4FVar : InspectorValue
 
-@property (nonatomic,retain) NSColor* color;
-@property (nonatomic,retain) NSColor* colorVar;
+@property (nonatomic,strong) NSColor* color;
+@property (nonatomic,strong) NSColor* colorVar;
 
 @end

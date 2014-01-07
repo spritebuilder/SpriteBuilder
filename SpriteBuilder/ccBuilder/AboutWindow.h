@@ -30,7 +30,7 @@
     IBOutlet NSButton* btnVersion;
 }
 
-@property (nonatomic,retain) NSString* version;
+@property (nonatomic,strong) NSString* version;
 
 - (IBAction)btnViewOnGithub:(id)sender;
 - (IBAction)btnSupportForum:(id)sender;

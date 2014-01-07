@@ -36,7 +36,7 @@ enum
 // Shape
 @property (nonatomic,assign) int bodyShape;
 @property (nonatomic,assign) float cornerRadius;
-@property (nonatomic,retain) NSArray* points;
+@property (nonatomic,strong) NSArray* points;
 
 // Basic physic props
 @property (nonatomic,assign) BOOL dynamic;

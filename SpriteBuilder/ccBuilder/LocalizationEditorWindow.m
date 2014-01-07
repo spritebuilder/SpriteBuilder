@@ -68,13 +68,13 @@
     
     for (LocalizationEditorLanguage* lang in langs)
     {
-        NSTableColumn* column = [[[NSTableColumn alloc] initWithIdentifier:lang.isoLangCode] autorelease];
+        NSTableColumn* column = [[NSTableColumn alloc] initWithIdentifier:lang.isoLangCode];
         column.width = 200;
         column.maxWidth = 1000;
         column.minWidth = 100;
         [[column headerCell] setStringValue:lang.name];
         
-        CCBTextFieldCell* cell = [[[CCBTextFieldCell alloc] init] autorelease];
+        CCBTextFieldCell* cell = [[CCBTextFieldCell alloc] init];
         [cell setEditable:YES];
         [cell setFont:[NSFont systemFontOfSize:11]];
         [column setDataCell:cell];
@@ -132,7 +132,7 @@
         
         if (translation.key)
         {
-            self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:translation.key] autorelease];
+            self.inspectorTextKey = [[NSAttributedString alloc] initWithString:translation.key];
         }
         else
         {
@@ -141,7 +141,7 @@
         
         if (translation.comment)
         {
-            self.inspectorTextComment = [[[NSAttributedString alloc] initWithString:translation.comment] autorelease];
+            self.inspectorTextComment = [[NSAttributedString alloc] initWithString:translation.comment];
         }
         else
         {
@@ -152,7 +152,7 @@
         NSString* currentTranslation = [translation.translations objectForKey:lang.isoLangCode];
         if (currentTranslation)
         {
-            self.inspectorTextTranslation = [[[NSAttributedString alloc] initWithString:currentTranslation] autorelease];
+            self.inspectorTextTranslation = [[NSAttributedString alloc] initWithString:currentTranslation];
         }
         else
         {
@@ -279,7 +279,7 @@
     LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
     
     if (!translation.key) return NULL;
-    return [[[NSAttributedString alloc] initWithString:translation.key] autorelease];
+    return [[NSAttributedString alloc] initWithString:translation.key];
 }
 
 - (void) setInspectorTextComment:(NSAttributedString *)inspectorTextComment
@@ -305,7 +305,7 @@
     LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
     
     if (!translation.comment) return NULL;
-    return [[[NSAttributedString alloc] initWithString:translation.comment] autorelease];
+    return [[NSAttributedString alloc] initWithString:translation.comment];
 }
 
 - (void) setInspectorTextTranslation:(NSAttributedString *)inspectorTextTranslation
@@ -346,7 +346,7 @@
     NSString* translationStr = [translation.translations objectForKey:lang.isoLangCode];
     
     if (!translationStr) return NULL;
-    return [[[NSAttributedString alloc] initWithString:translationStr] autorelease];
+    return [[NSAttributedString alloc] initWithString:translationStr];
 }
 
 #pragma mark Table View data provider
@@ -580,7 +580,7 @@
         
         if (!endTextValue || [endTextValue isEqualToString:@""])
         {
-            self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
+            self.inspectorTextKey = [[NSAttributedString alloc] initWithString:self.startTextValue];
             return;
         }
         
@@ -592,7 +592,7 @@
         {
             // Revert to old value
             NSBeep();
-            self.inspectorTextKey = [[[NSAttributedString alloc] initWithString:self.startTextValue] autorelease];
+            self.inspectorTextKey = [[NSAttributedString alloc] initWithString:self.startTextValue];
             return;
         }
         

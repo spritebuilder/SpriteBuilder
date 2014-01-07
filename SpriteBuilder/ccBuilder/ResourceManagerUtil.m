@@ -35,7 +35,7 @@
     if (!str) str = @"";
     
     // Remove items that contains a slash (/ or •)
-    NSArray* items = [[[menu itemArray] copy] autorelease];
+    NSArray* items = [[menu itemArray] copy];
     for (NSMenuItem* item in items)
     {
         NSRange range0 = [item.title rangeOfString:@"/"];
@@ -78,7 +78,7 @@
                 || res.type == kCCBResTypeAudio)
             {
                 NSString* itemName = [res.filePath lastPathComponent];
-                NSMenuItem* menuItem = [[[NSMenuItem alloc] initWithTitle:itemName action:@selector(selectedResource:) keyEquivalent:@""] autorelease];
+                NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:@selector(selectedResource:) keyEquivalent:@""];
                 [menuItem setTarget:target];
                 [menu addItem:menuItem];
                 
@@ -88,18 +88,18 @@
             {
                 NSString* itemName = [res.filePath lastPathComponent];
                 
-                NSMenu* subMenu = [[[NSMenu alloc] initWithTitle:itemName] autorelease];
+                NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
                 
                 NSArray* frames = res.data;
                 for (RMSpriteFrame* frame in frames)
                 {
-                    NSMenuItem* subItem = [[[NSMenuItem alloc] initWithTitle:frame.spriteFrameName action:@selector(selectedResource:) keyEquivalent:@""] autorelease];
+                    NSMenuItem* subItem = [[NSMenuItem alloc] initWithTitle:frame.spriteFrameName action:@selector(selectedResource:) keyEquivalent:@""];
                     [subItem setTarget:target];
                     [subMenu addItem:subItem];
                     subItem.representedObject = frame;
                 }
                 
-                NSMenuItem* menuItem = [[[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""] autorelease];
+                NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
             }
@@ -107,18 +107,18 @@
             {
                 NSString* itemName = [res.filePath lastPathComponent];
                 
-                NSMenu* subMenu = [[[NSMenu alloc] initWithTitle:itemName] autorelease];
+                NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
                 
                 NSArray* anims = res.data;
                 for (RMAnimation* anim in anims)
                 {
-                    NSMenuItem* subItem = [[[NSMenuItem alloc] initWithTitle:anim.animationName action:@selector(selectedResource:) keyEquivalent:@""] autorelease];
+                    NSMenuItem* subItem = [[NSMenuItem alloc] initWithTitle:anim.animationName action:@selector(selectedResource:) keyEquivalent:@""];
                     [subItem setTarget:target];
                     [subMenu addItem:subItem];
                     subItem.representedObject = anim;
                 }
                 
-                NSMenuItem* menuItem = [[[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""] autorelease];
+                NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
             }
@@ -128,11 +128,11 @@
                 
                 NSString* itemName = [subDir.dirPath lastPathComponent];
                 
-                NSMenu* subMenu = [[[NSMenu alloc] initWithTitle:itemName] autorelease];
+                NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
                 
                 [ResourceManagerUtil addDirectory:subDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
                 
-                NSMenuItem* menuItem = [[[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""] autorelease];
+                NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
             }
@@ -148,7 +148,7 @@
     // Sprite frames can be null
     if (resType == kCCBResTypeImage && allowSpriteFrames)
     {
-        NSMenuItem* menuItem = [[[NSMenuItem alloc] initWithTitle:kCCBNullString action:@selector(selectedResource:) keyEquivalent:@""] autorelease];
+        NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:kCCBNullString action:@selector(selectedResource:) keyEquivalent:@""];
         menuItem.target = target;
         menuItem.representedObject = NULL;
         [menu addItem:menuItem];
@@ -176,11 +176,11 @@
         {
             NSString* itemName = [activeDir.dirPath lastPathComponent];
             
-            NSMenu* subMenu = [[[NSMenu alloc] initWithTitle:itemName] autorelease];
+            NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
             
             [ResourceManagerUtil addDirectory:activeDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
             
-            NSMenuItem* menuItem = [[[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""] autorelease];
+            NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
             [menu addItem:menuItem];
             [menu setSubmenu:subMenu forItem:menuItem];
         }
@@ -217,15 +217,15 @@
     [menu removeAllItems];
     
     // System fonts submenu
-    NSMenu* menuSubSystemFonts = [[[NSMenu alloc] initWithTitle:@"System Fonts"] autorelease];
-    NSMenuItem* itemSystemFonts = [[[NSMenuItem alloc] initWithTitle:@"System Fonts" action:NULL keyEquivalent:@""] autorelease];
+    NSMenu* menuSubSystemFonts = [[NSMenu alloc] initWithTitle:@"System Fonts"];
+    NSMenuItem* itemSystemFonts = [[NSMenuItem alloc] initWithTitle:@"System Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemSystemFonts];
     [menu setSubmenu:menuSubSystemFonts forItem:itemSystemFonts];
     
     NSArray* systemFonts = [[ResourceManager sharedManager] systemFontList];
     for (NSString* fontName in systemFonts)
     {
-        NSMenuItem* itemFont = [[[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""] autorelease];
+        NSMenuItem* itemFont = [[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""];
         [itemFont setTarget:target];
         itemFont.representedObject = fontName;
         
@@ -233,8 +233,8 @@
     }
     
     // User fonts submenu
-    NSMenu* menuSubUserFonts = [[[NSMenu alloc] initWithTitle:@"User Fonts"] autorelease];
-    NSMenuItem* itemUserFonts = [[[NSMenuItem alloc] initWithTitle:@"User Fonts" action:NULL keyEquivalent:@""] autorelease];
+    NSMenu* menuSubUserFonts = [[NSMenu alloc] initWithTitle:@"User Fonts"];
+    NSMenuItem* itemUserFonts = [[NSMenuItem alloc] initWithTitle:@"User Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemUserFonts];
     [menu setSubmenu:menuSubUserFonts forItem:itemUserFonts];
     

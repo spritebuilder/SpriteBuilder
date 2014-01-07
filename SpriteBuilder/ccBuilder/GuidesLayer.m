@@ -58,11 +58,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [guides release];
-    [super dealloc];
-}
 
 - (void) updateGuides
 {
@@ -111,7 +106,7 @@
 
 - (int) addGuideWithOrientation:(int)orientation
 {
-    Guide* g = [[[Guide alloc] init] autorelease];
+    Guide* g = [[Guide alloc] init];
     g->orientation = orientation;
     
     [guides addObject:g];
@@ -284,7 +279,7 @@
         int orientation = [[gDict objectForKey:@"orientation"] intValue];
         float pos = [[gDict objectForKey:@"position"] floatValue];
         
-        Guide* g = [[[Guide alloc] init] autorelease];
+        Guide* g = [[Guide alloc] init];
         g->position = pos;
         g->orientation = orientation;
         [guides addObject:g];

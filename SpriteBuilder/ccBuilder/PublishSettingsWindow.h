@@ -33,6 +33,6 @@
     IBOutlet NSArrayController* resDirArrayController;
 }
 
-@property (nonatomic,retain) ProjectSettings* projectSettings;
+@property (nonatomic,strong) ProjectSettings* projectSettings;
 
 @end

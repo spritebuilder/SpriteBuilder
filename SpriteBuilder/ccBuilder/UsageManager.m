@@ -24,7 +24,6 @@
         
         // Create url connection and fire request
 		NSURLConnection* connection = [[NSURLConnection alloc] initWithRequest:request delegate:NULL];
-        [connection autorelease];
     }
     else
     {

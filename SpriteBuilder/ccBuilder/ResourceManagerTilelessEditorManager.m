@@ -280,10 +280,5 @@
 
 #pragma mark Dealloc
 
-- (void) dealloc
-{
-    [imageResources release];
-    [super dealloc];
-}
 
 @end

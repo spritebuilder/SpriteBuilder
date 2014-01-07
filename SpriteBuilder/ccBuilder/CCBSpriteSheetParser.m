@@ -32,10 +32,6 @@ static NSInteger strSort(id num1, id num2, void *context)
 
 @implementation CCBSpriteSheetParser
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 + (BOOL) isSpriteSheetFile:(NSString*) file
 {
@@ -158,9 +154,8 @@ static NSInteger strSort(id num1, id num2, void *context)
     }
     
     [imgFrame unlockFocus];
-	[tex release];
     
-    return [imgFrame autorelease];
+    return imgFrame;
 }
 
 + (NSMutableArray*) listFramesInSheet:(NSString*)file assetsPath:(NSString*) assetsPath

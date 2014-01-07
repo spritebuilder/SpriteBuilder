@@ -494,7 +494,7 @@ __strong NSDictionary* renamedProperties = nil;
     // Physics
     if ([dict objectForKey:@"physicsBody"])
     {
-        node.nodePhysicsBody = [[[NodePhysicsBody alloc] initWithSerialization:[dict objectForKey:@"physicsBody"]] autorelease];
+        node.nodePhysicsBody = [[NodePhysicsBody alloc] initWithSerialization:[dict objectForKey:@"physicsBody"]];
     }
     
     // Selections

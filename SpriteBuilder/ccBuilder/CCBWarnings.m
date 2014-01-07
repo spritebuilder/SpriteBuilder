@@ -39,13 +39,6 @@
     return @"Undefined";
 }
 
-- (void) dealloc
-{
-    self.message = NULL;
-    self.relatedFile = NULL;
-    self.resolution = NULL;
-    [super dealloc];
-}
 
 - (NSString*) description
 {
@@ -69,8 +62,8 @@
     self = [super init];
     if (!self) return NULL;
     
-    warnings = [[NSMutableArray array] retain];
-    warningsFiles = [[NSMutableDictionary dictionary] retain];
+    warnings = [NSMutableArray array];
+    warningsFiles = [NSMutableDictionary dictionary];
     self.warningsDescription = @"Warnings";
     
     return self;
@@ -88,7 +81,7 @@
 
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution
 {
-    CCBWarning* warning = [[[CCBWarning alloc] init] autorelease];
+    CCBWarning* warning = [[CCBWarning alloc] init];
     warning.message = description;
     warning.relatedFile = relatedFile;
     warning.fatal = fatal;
@@ -98,7 +91,7 @@
 
 - (void) addWarningWithDescription:(NSString*)description
 {
-    CCBWarning* warning = [[[CCBWarning alloc] init] autorelease];
+    CCBWarning* warning = [[CCBWarning alloc] init];
     warning.message = description;
     [self addWarning:warning];
 }
@@ -129,11 +122,5 @@
     return [warningsFiles objectForKey:relatedFile];
 }
 
-- (void) dealloc
-{
-    [warnings release];
-    [warningsFiles release];
-    [super dealloc];
-}
 
 @end

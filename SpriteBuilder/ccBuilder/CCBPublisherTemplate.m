@@ -46,7 +46,7 @@
 
 + (id) templateWithFile:(NSString*)fileName
 {
-    return [[[self alloc] initWithTemplateFile:fileName] autorelease];
+    return [[self alloc] initWithTemplateFile:fileName];
 }
 
 - (void) setString:(NSString*)str forMarker:(NSString*)marker
@@ -73,10 +73,5 @@
     //NSLog(@"writeToFile: %@ contents: %@", fileName, contents);
 }
 
-- (void) dealloc
-{
-    [contents release];
-    [super dealloc];
-}
 
 @end

@@ -29,7 +29,7 @@
     NSDictionary* serializedProjectSettings;
 }
 
-@property (nonatomic,retain) NSDictionary* serializedProjectSettings;
+@property (nonatomic,strong) NSDictionary* serializedProjectSettings;
 
 - (NSString*) extension;
 - (NSData*) exportDocument:(NSDictionary *)doc flattenPaths:(BOOL) flattenPaths;

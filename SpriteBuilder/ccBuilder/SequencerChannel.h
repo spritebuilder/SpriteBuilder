@@ -30,7 +30,7 @@
 @interface SequencerChannel : NSObject
 
 @property (nonatomic, copy) NSString* displayName;
-@property (nonatomic, retain) SequencerNodeProperty* seqNodeProp;
+@property (nonatomic, strong) SequencerNodeProperty* seqNodeProp;
 @property (nonatomic, readonly) int keyframeType;
 
 - (id) initWithSerialization:(id)ser;

@@ -188,8 +188,7 @@
 - (void) setPoints:(NSArray *)points
 {
     if (points == _points) return;
-    [_points release];
-    _points = [points retain];
+    _points = points;
 }
 
 - (void) setDynamic:(BOOL)dynamic
@@ -231,7 +230,6 @@
 - (void) dealloc
 {
     self.points = NULL;
-    [super dealloc];
 }
 
 @end

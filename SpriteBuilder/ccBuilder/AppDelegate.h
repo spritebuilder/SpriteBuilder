@@ -122,10 +122,10 @@ enum {
     // Panel Views
     IBOutlet NSView* leftPanel;
     IBOutlet NSView* rightPanel;
-    IBOutlet NSSegmentedControl *panelVisibilityControl;
+    IBOutlet NSSegmentedControl *__weak panelVisibilityControl;
     
     // Cocos2D view
-    IBOutlet CCBGLView* cocosView;
+    IBOutlet CCBGLView* __weak cocosView;
     IBOutlet NSView* mainView;
     IBOutlet CCBSplitHorizontalView* splitHorizontalView;
     
@@ -159,7 +159,7 @@ enum {
     IBOutlet NSTabView* projectTabView;
     
     IBOutlet SMTabBar* itemViewTabs;
-    IBOutlet NSTabView* itemTabView;
+    IBOutlet NSTabView* __weak itemTabView;
     
     // Outline view heirarchy
     SequencerHandler* sequenceHandler;
@@ -178,10 +178,10 @@ enum {
     IBOutlet NSMenu* menuCanvasSize;
     IBOutlet NSMenu* menuCanvasBorder;
     IBOutlet NSMenu* menuResolution;
-    IBOutlet NSMenu* menuContextKeyframe;
-    IBOutlet NSMenu* menuContextKeyframeInterpol;
-    IBOutlet NSMenu* menuContextResManager;
-    IBOutlet NSMenu *menuContextKeyframeNoselection;
+    IBOutlet NSMenu* __weak menuContextKeyframe;
+    IBOutlet NSMenu* __weak menuContextKeyframeInterpol;
+    IBOutlet NSMenu* __weak menuContextResManager;
+    IBOutlet NSMenu *__weak menuContextKeyframeNoselection;
     
     IBOutlet NSPopUpButton* menuTimelinePopup;
     IBOutlet NSMenu* menuTimeline;
@@ -203,7 +203,7 @@ enum {
     IBOutlet NSSegmentedControl* segmPublishBtn;
     
     // Resource manager
-    ResourceManager* resManager;
+    ResourceManager* __weak resManager;
     IBOutlet NSView* previewViewContainer;
     NSView* previewViewImage;
     NSView* previewViewGeneric;
@@ -224,7 +224,7 @@ enum {
     ProjectSettings* projectSettings;
     
     // Project display
-    IBOutlet NSOutlineView* outlineProject;
+    IBOutlet NSOutlineView* __weak outlineProject;
     ResourceManagerOutlineHandler* projectOutlineHandler;
     
     // Project Warnings.
@@ -237,7 +237,7 @@ enum {
     BOOL hasOpenedDocument;
     
     // PlugIns (nodes)
-    PlugInManager* plugInManager;
+    PlugInManager* __weak plugInManager;
     
     // Guides
     BOOL showGuides;
@@ -248,7 +248,7 @@ enum {
     
     // Transparent window for components on top of cocos scene
     CCBTransparentWindow* guiWindow;
-    CCBTransparentView* guiView;
+    CCBTransparentView* __weak guiView;
     
     // Warnings
     NSString* errorDescription;
@@ -271,53 +271,53 @@ enum {
     BOOL jsControlled;
     
     // Localization editor
-    IBOutlet LocalizationEditorHandler* localizationEditorHandler;
+    IBOutlet LocalizationEditorHandler* __weak localizationEditorHandler;
     
     // Physics editor
-    IBOutlet PhysicsHandler* physicsHandler;
+    IBOutlet PhysicsHandler* __weak physicsHandler;
     
 @private
-    MainWindow *window;
+    MainWindow *__weak window;
     
 }
 
-@property (assign) IBOutlet MainWindow *window;
+@property (weak) IBOutlet MainWindow *window;
 
-@property (nonatomic,readonly) IBOutlet NSOutlineView* outlineProject;
+@property (weak, nonatomic,readonly) IBOutlet NSOutlineView* outlineProject;
 
 
-@property (nonatomic,readonly) ResourceManager* resManager;
+@property (weak, nonatomic,readonly) ResourceManager* resManager;
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
-@property (nonatomic,retain) CCBDocument* currentDocument;
+@property (nonatomic,strong) CCBDocument* currentDocument;
 @property (nonatomic,assign) BOOL hasOpenedDocument;
-@property (nonatomic,readonly) CCBGLView* cocosView;
+@property (weak, nonatomic,readonly) CCBGLView* cocosView;
 
-@property (nonatomic,retain) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic,strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
 
 @property (nonatomic,assign) BOOL canEditContentSize;
 @property (nonatomic,assign) BOOL defaultCanvasSize;
 @property (nonatomic,assign) BOOL canEditCustomClass;
 @property (nonatomic,assign) BOOL canEditStageSize;
 
-@property (nonatomic,readonly) CCNode* selectedNode;
+@property (weak, nonatomic,readonly) CCNode* selectedNode;
 
-@property (nonatomic,retain) NSArray* selectedNodes;
+@property (nonatomic,strong) NSArray* selectedNodes;
 @property (nonatomic,readonly) NSMutableArray* loadedSelectedNodes;
 
 @property (nonatomic,assign) BOOL showGuides;
 @property (nonatomic,assign) BOOL snapToGuides;
 @property (nonatomic,assign) BOOL showStickyNotes;
 
-@property (nonatomic,readonly) CCBTransparentView* guiView;
+@property (weak, nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;
 
-@property (nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
-@property (nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
-@property (nonatomic,readonly) IBOutlet NSMenu* menuContextResManager;
-@property (nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;
-@property (nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
+@property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
+@property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
+@property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextResManager;
+@property (weak, nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;
+@property (weak, nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
 
-@property (nonatomic,retain) ProjectSettings* projectSettings;
+@property (nonatomic,strong) ProjectSettings* projectSettings;
 
 @property (nonatomic,copy) NSString* errorDescription;
 
@@ -325,15 +325,15 @@ enum {
 - (void) resizeGUIWindow:(NSSize)size;
 
 // PlugIns and properties
-@property (nonatomic,readonly) PlugInManager* plugInManager;
+@property (weak, nonatomic,readonly) PlugInManager* plugInManager;
 - (void) refreshProperty:(NSString*) name;
 - (void) refreshPropertiesOfType:(NSString*)type;
 
-@property (nonatomic,readonly) IBOutlet LocalizationEditorHandler* localizationEditorHandler;
+@property (weak, nonatomic,readonly) IBOutlet LocalizationEditorHandler* localizationEditorHandler;
 
 // Physics
-@property (nonatomic,readonly) PhysicsHandler* physicsHandler;
-@property (nonatomic,readonly) NSTabView* itemTabView;
+@property (weak, nonatomic,readonly) PhysicsHandler* physicsHandler;
+@property (weak, nonatomic,readonly) NSTabView* itemTabView;
 
 
 // Methods

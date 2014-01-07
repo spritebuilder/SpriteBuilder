@@ -80,6 +80,6 @@ enum
     BOOL didAutoScroll;
 }
 
-@property (nonatomic,retain) NSEvent* lastDragEvent;
+@property (nonatomic,strong) NSEvent* lastDragEvent;
 
 @end

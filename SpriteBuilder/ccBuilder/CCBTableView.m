@@ -30,10 +30,10 @@
 
 - (void) gradientFillRect:(NSRect)rect
 {
-    NSGradient* gradient = [[[NSGradient alloc]
+    NSGradient* gradient = [[NSGradient alloc]
                              initWithColorsAndLocations:[NSColor colorWithCalibratedRed:0.62 green:0.70 blue:0.80 alpha:1.0], (CGFloat)0.0,
                              [NSColor colorWithCalibratedRed:0.46 green:0.53 blue:0.71 alpha:1.0], (CGFloat)1.0,
-                             nil] autorelease];
+                             nil];
     
     [gradient drawInRect:rect angle:90];
     

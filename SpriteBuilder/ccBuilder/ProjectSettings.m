@@ -117,7 +117,7 @@
     
     self.tabletPositionScaleFactor = 2.0f;
     
-    resourceProperties = [[NSMutableDictionary dictionary] retain];
+    resourceProperties = [NSMutableDictionary dictionary];
     
     // Load available exporters
     self.availableExporters = [NSMutableArray array];
@@ -140,7 +140,6 @@
     // Check filetype
     if (![[dict objectForKey:@"fileType"] isEqualToString:@"CocosBuilderProject"])
     {
-        [self release];
         return NULL;
     }
     
@@ -202,7 +201,6 @@
     self.javascriptMainCCB = mainCCB;
     
     // Load resource properties
-    [resourceProperties release];
     resourceProperties = [[dict objectForKey:@"resourceProperties"] mutableCopy];
     
     [self detectBrowserPresence];
@@ -224,17 +222,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    self.versionStr = NULL;
-    self.resourcePaths = NULL;
-    self.projectPath = NULL;
-    self.publishDirectory = NULL;
-    self.exporter = NULL;
-    self.availableExporters = NULL;
-    [resourceProperties release];
-    [super dealloc];
-}
 
 - (NSString*) exporter
 {

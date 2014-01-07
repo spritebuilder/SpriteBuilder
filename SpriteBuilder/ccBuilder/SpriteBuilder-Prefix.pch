@@ -8,6 +8,8 @@
 
 #ifdef DEBUG
 #   define DLog(fmt, ...) NSLog((@"%s, line %d: " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#	define SBLogSelf() NSLog(@"%@: %@ (%@)", NSStringFromSelector(_cmd), self, NSStringFromClass([self class]));
 #else
 #   define DLog(...)
+#	define SBLogSelf() do{} while(0);
 #endif

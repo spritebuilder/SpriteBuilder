@@ -28,7 +28,7 @@
     imgPreview.image = templ.image;
     
     // Create background view
-    CCBColorView* bg = [[[CCBColorView alloc] initWithFrame:NSMakeRect(2, view.bounds.size.height - view.bounds.size.width + 2, view.bounds.size.width - 4, view.bounds.size.width - 4)] autorelease];
+    CCBColorView* bg = [[CCBColorView alloc] initWithFrame:NSMakeRect(2, view.bounds.size.height - view.bounds.size.width + 2, view.bounds.size.width - 4, view.bounds.size.width - 4)];
     bg.backgroundColor = templ.color;
     bg.radius = 5;
     

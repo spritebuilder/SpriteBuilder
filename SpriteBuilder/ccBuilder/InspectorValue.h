@@ -36,7 +36,7 @@
     
     AppDelegate* resourceManager;
     
-    IBOutlet NSView* view;
+    IBOutlet NSView* __weak view;
     BOOL readOnly;
     NSArray* affectsProperties;
     InspectorValue* inspectorValueBelow;
@@ -47,14 +47,14 @@
 }
 
 @property (nonatomic,readonly) NSString* displayName;
-@property (nonatomic,readonly) NSView* view;
+@property (weak, nonatomic,readonly) NSView* view;
 @property (nonatomic,readonly) NSString* extra;
 @property (nonatomic,assign) BOOL readOnly;
 @property (nonatomic,assign) BOOL rootNode;
-@property (nonatomic,retain) NSArray* affectsProperties;
-@property (nonatomic,retain) InspectorValue* inspectorValueBelow;
+@property (nonatomic,strong) NSArray* affectsProperties;
+@property (nonatomic,strong) InspectorValue* inspectorValueBelow;
 @property (nonatomic,assign) BOOL inPopoverWindow;
-@property (nonatomic,retain) NSString* textFieldOriginalValue;
+@property (nonatomic,strong) NSString* textFieldOriginalValue;
 @property (nonatomic,copy) NSString* propertyType;
 
 + (id) inspectorOfType:(NSString*) t withSelection:(CCNode*)s andPropertyName:(NSString*)pn andDisplayName:(NSString*) dn andExtra:(NSString*)e;

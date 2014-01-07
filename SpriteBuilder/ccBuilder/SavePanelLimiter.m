@@ -33,17 +33,12 @@
     self = [super init];
     if (!self) return NULL;
     
-    resManager = [rm retain];
+    resManager = rm;
     [savePanel setDelegate:self];
     
     return self;
 }
 
-- (void) dealloc
-{
-    [resManager release];
-    [super dealloc];
-}
 
 
 - (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError

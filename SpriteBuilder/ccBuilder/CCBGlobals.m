@@ -63,11 +63,6 @@
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:hasDonated] forKey:@"hasDonated"];
 }
 
-- (void)dealloc
-{
-    self.rootNode = NULL;
-    [super dealloc];
-}
 
 
 

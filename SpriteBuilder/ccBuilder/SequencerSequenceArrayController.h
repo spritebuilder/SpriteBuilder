@@ -28,9 +28,9 @@
 
 @interface SequencerSequenceArrayController : NSArrayController
 {
-    IBOutlet SequencerSettingsWindow* settingsWindow;
+    IBOutlet SequencerSettingsWindow* __unsafe_unretained settingsWindow;
 }
 
-@property (nonatomic,assign) SequencerSettingsWindow* settingsWindow;
+@property (nonatomic,unsafe_unretained) SequencerSettingsWindow* settingsWindow;
 
 @end

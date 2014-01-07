@@ -40,10 +40,5 @@
     self.name = @"Edit Custom Properties";
 }
 
-- (void) dealloc
-{
-    self.name = NULL;
-    [super dealloc];
-}
 
 @end

@@ -49,7 +49,7 @@
 {
     NSString* inspectorClassName = [NSString stringWithFormat:@"Inspector%@",t];
     
-    InspectorValue* inspector = [[[NSClassFromString(inspectorClassName) alloc] initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e] autorelease];
+    InspectorValue* inspector = [[NSClassFromString(inspectorClassName) alloc] initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e];
     inspector.propertyType = t;
     
     return inspector;
@@ -60,10 +60,10 @@
     self = [super init];
     if (!self) return NULL;
     
-    propertyName = [pn retain];
-    displayName = [dn retain];
-    selection = [s retain];
-    extra = [e retain];
+    propertyName = pn;
+    displayName = dn;
+    selection = s;
+    extra = e;
     
     resourceManager = [AppDelegate appDelegate];
     
@@ -207,18 +207,6 @@
     [self updateAffectedProperties];
 }
 
-- (void)dealloc
-{
-    self.propertyType = NULL;
-    self.affectsProperties = NULL;
-    self.textFieldOriginalValue = NULL;
-    [selection release];
-    [propertyName release];
-    [displayName release];
-    [inspectorValueBelow release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Disclosure

@@ -34,7 +34,7 @@
     BOOL isExpanded;
     BOOL canExpand;
     
-    CCNode* node;
+    CCNode* __weak node;
     BOOL imagesLoaded;
     NSImage* imgRowBgChannel;
 }
@@ -42,9 +42,9 @@
 
 @property (nonatomic,assign) BOOL isExpanded;
 @property (nonatomic,assign) BOOL canExpand;
-@property (nonatomic,retain) NSImage* expandedImage;
-@property (nonatomic,retain) NSImage* collapsedImage;
-@property (nonatomic,assign) CCNode* node;
+@property (nonatomic,strong) NSImage* expandedImage;
+@property (nonatomic,strong) NSImage* collapsedImage;
+@property (nonatomic,weak) CCNode* node;
 
 
 

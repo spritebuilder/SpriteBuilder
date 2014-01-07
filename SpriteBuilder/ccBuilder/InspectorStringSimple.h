@@ -9,5 +9,5 @@
 #import "InspectorValue.h"
 
 @interface InspectorStringSimple : InspectorValue<NSTextFieldDelegate>
-@property (nonatomic, assign) NSString * text;
+@property (nonatomic, weak) NSString * text;
 @end

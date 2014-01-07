@@ -50,12 +50,11 @@
 {
     node = n;
     
-    [settings release];
-    settings = [[NSMutableArray arrayWithCapacity:[node.customProperties count]] retain];
+    settings = [NSMutableArray arrayWithCapacity:[node.customProperties count]];
     
     for (CustomPropSetting* setting in node.customProperties)
     {
-        [settings addObject:[[setting copy] autorelease]];
+        [settings addObject:[setting copy]];
     }
 }
 
@@ -111,10 +110,5 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
-- (void) dealloc
-{
-    self.settings = NULL;
-    [super dealloc];
-}
 
 @end

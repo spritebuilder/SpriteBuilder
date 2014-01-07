@@ -70,9 +70,7 @@
 
 - (void) dealloc
 {
-    self.name = NULL;
     self.value = NULL;
-    [super dealloc];
 }
 
 - (NSString*) formatValue:(NSString*) val
@@ -119,8 +117,7 @@
     NSString* newVal = [self formatValue:val];
     if (newVal == value) return;
     
-    [value release];
-    value = [newVal retain];
+    value = newVal;
 }
 
 - (NSString*) value

@@ -37,7 +37,7 @@
 
 @interface SequencerHandler : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-    NSOutlineView* outlineHierarchy;
+    NSOutlineView* __weak outlineHierarchy;
     BOOL dragAndDropEnabled;
     
     AppDelegate* appDelegate;
@@ -56,17 +56,17 @@
 @property (nonatomic,assign) BOOL dragAndDropEnabled;
 @property (nonatomic,assign) BOOL loopPlayback;
 
-@property (nonatomic,retain) SequencerSequence* currentSequence;
-@property (nonatomic,retain) SequencerScrubberSelectionView* scrubberSelectionView;
-@property (nonatomic,retain) NSTextField* timeDisplay;
-@property (nonatomic,retain) NSSlider* timeScaleSlider;
-@property (nonatomic,retain) NSScroller* scroller;
-@property (nonatomic,retain) NSScrollView* scrollView;
+@property (nonatomic,strong) SequencerSequence* currentSequence;
+@property (nonatomic,strong) SequencerScrubberSelectionView* scrubberSelectionView;
+@property (nonatomic,strong) NSTextField* timeDisplay;
+@property (nonatomic,strong) NSSlider* timeScaleSlider;
+@property (nonatomic,strong) NSScroller* scroller;
+@property (nonatomic,strong) NSScrollView* scrollView;
 //@property (nonatomic,retain) NSMutableArray* sequences;
 
-@property (nonatomic,readonly) NSOutlineView* outlineHierarchy;
+@property (weak, nonatomic,readonly) NSOutlineView* outlineHierarchy;
 
-@property (nonatomic,retain) SequencerKeyframe* contextKeyframe;
+@property (nonatomic,strong) SequencerKeyframe* contextKeyframe;
 
 
 // Obtain the shared instance

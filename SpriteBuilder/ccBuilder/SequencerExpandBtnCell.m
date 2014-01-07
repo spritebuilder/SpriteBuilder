@@ -102,7 +102,7 @@
 {
     if (!imagesLoaded)
     {
-        imgRowBgChannel = [[NSImage imageNamed:@"seq-row-channel-bg.png"] retain];
+        imgRowBgChannel = [NSImage imageNamed:@"seq-row-channel-bg.png"];
         imagesLoaded = YES;
     }
     
@@ -134,17 +134,11 @@
     copy->expandedImage = nil;
     copy.collapsedImage = [self.collapsedImage copyWithZone:zone];
     copy.expandedImage = [self.expandedImage copyWithZone:zone];
-    [copy.collapsedImage release];
-    [copy.expandedImage release];
+    copy.collapsedImage;
+    copy.expandedImage;
     
     return copy;
 }
 
-- (void) dealloc
-{
-    [expandedImage release];
-    [collapsedImage release];
-    [super dealloc];
-}
 
 @end

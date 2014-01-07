@@ -109,7 +109,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     if (enabled)
     {
-        [AppDelegate appDelegate].selectedNode.nodePhysicsBody = [[[NodePhysicsBody alloc] initWithNode:[AppDelegate appDelegate].selectedNode] autorelease];
+        [AppDelegate appDelegate].selectedNode.nodePhysicsBody = [[NodePhysicsBody alloc] initWithNode:[AppDelegate appDelegate].selectedNode];
     }
     else
     {

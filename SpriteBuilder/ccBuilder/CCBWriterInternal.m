@@ -36,10 +36,6 @@
 @implementation CCBWriterInternal
 
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 #pragma mark Shortcuts for serializing properties
 

@@ -80,15 +80,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [data release];
-    [propTypes release];
-    [stringCacheLookup release];
-    [stringCache release];
-    [serializedProjectSettings release];
-    [super dealloc];
-}
 
 - (int) propTypeIdForName:(NSString*)prop
 {
@@ -757,7 +748,7 @@
         [stringCacheLookup setObject:[NSNumber numberWithInt:i] forKey:str];
     }
     
-    stringCache = [stringCacheSortedReverse retain];
+    stringCache = stringCacheSortedReverse;
 }
 
 - (void) writeHeader

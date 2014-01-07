@@ -37,7 +37,7 @@
 
 + (id) nodeInfoWithPlugIn:(PlugInNode*)pin
 {
-    NodeInfo* info = [[[NodeInfo alloc] init] autorelease];
+    NodeInfo* info = [[NodeInfo alloc] init];
     info.plugIn = pin;
     return info;
 }
@@ -62,14 +62,5 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [extraProps release];
-    self.animatableProperties = NULL;
-    self.displayName = NULL;
-    self.customProperties = NULL;
-    [baseValues release];
-    [super dealloc];
-}
 
 @end

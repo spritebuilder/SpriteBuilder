@@ -12,10 +12,10 @@
 @interface PropertyInspectorTemplate : NSObject
 
 @property (nonatomic,copy) NSString* name;
-@property (nonatomic,retain) NSImage* image;
+@property (nonatomic,strong) NSImage* image;
 @property (nonatomic,copy) NSString* nodeType;
-@property (nonatomic,retain) NSColor* color;
-@property (nonatomic,retain) NSArray* properties;
+@property (nonatomic,strong) NSColor* color;
+@property (nonatomic,strong) NSArray* properties;
 
 - (id) initWithNode:(CCNode*)node name:(NSString*)n bgColor:(NSColor*)c;
 - (void) applyToNode:(CCNode*) node;

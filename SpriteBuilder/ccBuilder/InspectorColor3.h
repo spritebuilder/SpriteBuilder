@@ -26,6 +26,6 @@
 
 @interface InspectorColor3 : InspectorValue
 
-@property (nonatomic,retain) NSColor* color;
+@property (nonatomic,strong) NSColor* color;
 
 @end

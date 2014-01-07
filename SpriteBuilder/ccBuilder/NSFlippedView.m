@@ -38,10 +38,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 - (BOOL) isFlipped
 {
