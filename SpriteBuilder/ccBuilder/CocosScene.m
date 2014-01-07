@@ -1049,12 +1049,11 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 -(CGPoint)projectOntoVertex:(CGPoint)point withContentSize:(CGSize)size alongAxis:(int)axis//b,r,t,l
 {
-    CGPoint v;
-    CGPoint w;
+    CGPoint v = CGPointZero;
+    CGPoint w = CGPointZero;
     
     switch (axis) {
         case 0:
-            v = CGPointZero;
             w = CGPointMake(size.width, 0.0f);
             break;
         case 1:
@@ -1068,8 +1067,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             
             break;
         case 3:
-            v =  CGPointMake(0, size.height);
-            w = CGPointZero;
+            v = CGPointMake(0, size.height);
             break;
             
         default:

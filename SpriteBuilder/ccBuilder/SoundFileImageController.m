@@ -76,7 +76,7 @@ typedef struct MaxMin MaxMin;
     
     [reader addOutput:output];
     
-    UInt32 sampleRate,channelCount;
+    UInt32 sampleRate, channelCount;
     
     NSArray* formatDesc = songTrack.formatDescriptions;
     for(unsigned int i = 0; i < [formatDesc count]; ++i) {
@@ -87,7 +87,7 @@ typedef struct MaxMin MaxMin;
             sampleRate = fmtDesc->mSampleRate;
             channelCount = fmtDesc->mChannelsPerFrame;
             
-            //    NSLog(@"channels:%u, bytes/packet: %u, sampleRate %f",fmtDesc->mChannelsPerFrame, fmtDesc->mBytesPerPacket,fmtDesc->mSampleRate);
+            // NSLog(@"channels:%u, bytes/packet: %u, sampleRate %f",fmtDesc->mChannelsPerFrame, fmtDesc->mBytesPerPacket,fmtDesc->mSampleRate);
         }
     }
     
