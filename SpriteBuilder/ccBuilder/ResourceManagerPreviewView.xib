@@ -1088,6 +1088,10 @@
                         <action selector="droppedFile:" target="-2" id="1047"/>
                     </connections>
                 </imageView>
+                <customView id="Acd-rN-rb4">
+                    <rect key="frame" x="5" y="45" width="240" height="110"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
+                </customView>
                 <textField verticalHuggingPriority="750" id="986" customClass="CCBTextFieldLabel">
                     <rect key="frame" x="2" y="26" width="38" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1305,13 +1309,9 @@
                 </popUpButton>
                 <imageView id="1051">
                     <rect key="frame" x="17" y="163" width="216" height="58"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="1052"/>
                 </imageView>
-                <customView id="Acd-rN-rb4">
-                    <rect key="frame" x="5" y="45" width="240" height="110"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                </customView>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="130"/>
@@ -1328,10 +1328,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewPhone.image" previousBinding="380" id="384">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
@@ -1352,10 +1352,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewPhonehd.image" previousBinding="392" id="406">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
@@ -1376,10 +1376,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewTablet.image" previousBinding="397" id="408">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
@@ -1400,10 +1400,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewTablethd.image" previousBinding="402" id="409">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
