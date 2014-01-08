@@ -29,7 +29,7 @@
 @class CCBImageView;
 @class AppDelegate;
 @class RMResource;
-@class AVSPDocument;
+@class ResourceManagerPreviewAudio;
 
 @interface ResourceManagerPreviewView : NSObject <NSSplitViewDelegate>
 {
@@ -54,7 +54,7 @@
     //IBOutlet QTMovieView* previewSound;
     IBOutlet NSImageView* previewSoundImage;
     IBOutlet NSView     * previewSound;
-    AVSPDocument        * AVDocumentViewController;
+    ResourceManagerPreviewAudio        * previewAudioViewController;
 
     
     // Generic fallback view
