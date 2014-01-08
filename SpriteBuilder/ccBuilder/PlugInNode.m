@@ -270,5 +270,9 @@
 
 #pragma mark Deallocation
 
+-(void) dealloc
+{
+	SBLogSelf();
+}
 
 @end

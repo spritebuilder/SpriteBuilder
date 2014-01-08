@@ -52,12 +52,12 @@ enum {
 @interface CCBWarnings : NSObject
 {
     NSString* warningsDescription;
-    NSMutableArray* warnings;
+    NSMutableArray* __weak warnings;
     NSMutableDictionary* warningsFiles;
     
     int currentTargetType;
 }
-@property (nonatomic,readonly) NSMutableArray* warnings;
+@property (weak, nonatomic,readonly) NSMutableArray* warnings;
 @property (nonatomic,copy) NSString* warningsDescription;
 @property (nonatomic,assign) int currentTargetType;
 

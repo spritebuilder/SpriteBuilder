@@ -57,15 +57,14 @@
 
 + (HashValue *)md5HashWithData:(NSData *)data
 {
-	return [[[HashValue alloc]
+	return [[HashValue alloc]
 		initHashValueMD5HashWithBytes:[data bytes]
-		length:[data length]]
-	autorelease];
+		length:[data length]];
 }
 
 + (HashValue *)md5HashWithString:(NSString*) string
 {
-    return [[[HashValue alloc] initHashValueMD5HashWithBytes:[string UTF8String] length:strlen([string UTF8String])] autorelease];
+    return [[HashValue alloc] initHashValueMD5HashWithBytes:[string UTF8String] length:strlen([string UTF8String])];
 }
 
 - (id)initSha256HashWithBytes:(const void *)bytes length:(NSUInteger)length
@@ -81,10 +80,9 @@
 
 + (HashValue *)sha256HashWithData:(NSData *)data
 {
-	return [[[HashValue alloc]
+	return [[HashValue alloc]
 		initSha256HashWithBytes:[data bytes]
-		length:[data length]]
-	autorelease];
+		length:[data length]];
 }
 
 - (NSString *)description

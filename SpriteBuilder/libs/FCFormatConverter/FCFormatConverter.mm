@@ -28,7 +28,7 @@ static FCFormatConverter* gDefaultConverter = NULL;
     if ( isSpriteSheet )
 		{
 		    // The name of a sprite in a spritesheet never changes.
-		    return [[srcPath copy] autorelease];
+		    return [srcPath copy];
 		}
     if (format == kFCImageFormatPNG ||
         format == kFCImageFormatPNG_8BIT)
@@ -65,11 +65,11 @@ static FCFormatConverter* gDefaultConverter = NULL;
 		// Unless the .psd is part of a spritesheet, then the original name has to be preserved.
 		if ( [[srcPath pathExtension] isEqualToString:@"psd"] && !isSpriteSheet)
 		{
-				CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
+				CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
 				CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
 				
 				NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
-				CFURLRef out_url = (CFURLRef)[NSURL fileURLWithPath:out_path];
+				CFURLRef out_url = (__bridge CFURLRef)[NSURL fileURLWithPath:out_path];
 				CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
 				CGImageDestinationAddImage(image_destination, image, NULL);
 				CGImageDestinationFinalize(image_destination);
@@ -85,7 +85,7 @@ static FCFormatConverter* gDefaultConverter = NULL;
     if (format == kFCImageFormatPNG)
     {
         // PNG image - no conversion required
-        return [[srcPath copy] autorelease];
+        return [srcPath copy];
     }
     if (format == kFCImageFormatPNG_8BIT)
     {
@@ -98,11 +98,10 @@ static FCFormatConverter* gDefaultConverter = NULL;
         [pngTask setArguments:args];
         [pngTask launch];
         [pngTask waitUntilExit];
-        [pngTask release];
         
         if ([fm fileExistsAtPath:srcPath])
         {
-            return [[srcPath copy] autorelease];
+            return [srcPath copy];
         }
     }
     else if (format == kFCImageFormatPVR_RGBA8888 ||
@@ -166,7 +165,6 @@ static FCFormatConverter* gDefaultConverter = NULL;
         
         //Clean up memory.
         delete pvrTexture;
-        [image release];
         
         if (compress)
         {
@@ -178,7 +176,6 @@ static FCFormatConverter* gDefaultConverter = NULL;
             [zipTask setArguments:args];
             [zipTask launch];
             [zipTask waitUntilExit];
-            [zipTask release];
             
             // Remove uncompressed file
             [[NSFileManager defaultManager] removeItemAtPath:dstPath error:NULL];
@@ -262,7 +259,6 @@ static FCFormatConverter* gDefaultConverter = NULL;
         [sndTask launch];
         [sndTask waitUntilExit];
         
-        [sndTask release];
         
         // Remove old file
         if (![srcPath isEqualToString:dstPath])
@@ -294,7 +290,6 @@ static FCFormatConverter* gDefaultConverter = NULL;
         [sndTask launch];
         [sndTask waitUntilExit];
         
-        [sndTask release];
         
         // Remove old file
         if (![srcPath isEqualToString:dstPath])
@@ -317,7 +312,6 @@ static FCFormatConverter* gDefaultConverter = NULL;
         [sndTask setArguments:args];
         [sndTask launch];
         [sndTask waitUntilExit];
-        [sndTask release];
 
         // Remove old file
         if (![srcPath isEqualToString:dstPath])
