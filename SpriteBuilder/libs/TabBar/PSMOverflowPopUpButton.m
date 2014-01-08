@@ -27,11 +27,6 @@
 	return self;
 }
 
-- (void)dealloc {
-	[_PSMTabBarOverflowPopUpImage release];
-	[_PSMTabBarOverflowDownPopUpImage release];
-	[super dealloc];
-}
 
 - (void)drawRect:(NSRect)rect {
 	if(_PSMTabBarOverflowPopUpImage == nil) {
@@ -141,8 +136,8 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	if((self = [super initWithCoder:aDecoder])) {
 		if([aDecoder allowsKeyedCoding]) {
-			_PSMTabBarOverflowPopUpImage = [[aDecoder decodeObjectForKey:@"PSMTabBarOverflowPopUpImage"] retain];
-			_PSMTabBarOverflowDownPopUpImage = [[aDecoder decodeObjectForKey:@"PSMTabBarOverflowDownPopUpImage"] retain];
+			_PSMTabBarOverflowPopUpImage = [aDecoder decodeObjectForKey:@"PSMTabBarOverflowPopUpImage"];
+			_PSMTabBarOverflowDownPopUpImage = [aDecoder decodeObjectForKey:@"PSMTabBarOverflowDownPopUpImage"];
 			[self setAnimatingAlternateImage:[aDecoder decodeBoolForKey:@"PSMTabBarOverflowAnimatingAlternateImage"]];
 		}
 	}

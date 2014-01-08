@@ -42,12 +42,6 @@
 	return self;
 }
 
-- (void)dealloc {
-	[_cellTrackingRects release];
-	[_closeButtonTrackingRects release];
-	[_cellFrames release];
-	[super dealloc];
-}
 
 /*!
     @method     addButtonRect
@@ -508,7 +502,7 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 	NSTabViewItem *selectedTabViewItem = [[_control tabView] selectedTabViewItem];
 	NSMenuItem *menuItem;
 
-	[_overflowMenu release], _overflowMenu = nil;
+	_overflowMenu = nil;
 
 	for(i = 0; i < cellCount; i++) {
 		cell = [cells objectAtIndex:i];
