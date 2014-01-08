@@ -112,6 +112,18 @@
 			<key>name</key>
 			<string>padding</string>
 		</dict>
+		<dict>
+			<key>type</key>
+			<string>Float</string>
+			<key>dontSetInEditor</key>
+			<true/>
+			<key>name</key>
+			<string>fontSize</string>
+			<key>displayName</key>
+			<string>Font size</string>
+			<key>default</key>
+			<integer>17</integer>
+		</dict>
 	</array>
 </dict>
 </plist>
