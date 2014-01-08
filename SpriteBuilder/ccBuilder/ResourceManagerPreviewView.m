@@ -582,7 +582,7 @@
 
 - (CGFloat) splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
 {
-    if (proposedMinimumPosition < 160) return 160;
+    if (proposedMinimumPosition < 220) return 220;
     else return proposedMinimumPosition;
 }
 
