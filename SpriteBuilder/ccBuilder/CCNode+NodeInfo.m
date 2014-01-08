@@ -179,6 +179,12 @@
     }
     if (time > seq.timelineLength) return;
     
+    //If not supported as animatable type, don't add.
+    if(![[self.plugIn animatablePropertiesForNode:self] containsObject:name])
+    {
+        return;
+    }
+    
     // Save undo state
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*addkeyframe"];
     
@@ -294,7 +300,8 @@
     {
         seqValue = [seqNodeProp valueAtTime:time];
     }
-    if (seqValue) return seqValue;
+    if (seqValue)
+        return seqValue;
     
     // Check for base value
     NodeInfo* info = self.userObject;
@@ -307,7 +314,8 @@
     
     // Just use standard value
     if (type == kCCBKeyframeTypeDegrees
-        || type == kCCBKeyframeTypeByte)
+        || type == kCCBKeyframeTypeByte
+        || type == kCCBKeyframeTypeFloat)
     {
         return [self valueForKey:name];
     }
@@ -403,7 +411,8 @@
         
         [TexturePropertySetter setSpriteFrameForNode:self andProperty:propName withFile:sprite andSheetFile:sheet];
     }
-    else if (type == kCCBKeyframeTypeByte)
+    else if (type == kCCBKeyframeTypeByte
+             ||type == kCCBKeyframeTypeFloat)
     {
         [self setValue:value forKey:propName];
     }
@@ -415,6 +424,7 @@
         [self setValue:[NSNumber numberWithFloat:x] forKey:[propName stringByAppendingString:@"X"]];
         [self setValue:[NSNumber numberWithFloat:y] forKey:[propName stringByAppendingString:@"Y"]];
     }
+    
 }
 
 - (void) updatePropertiesTime:(float)time sequenceId:(int)seqId

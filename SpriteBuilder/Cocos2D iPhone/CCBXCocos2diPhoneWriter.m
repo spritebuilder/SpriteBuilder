@@ -921,6 +921,7 @@
             else if (kfType == kCCBKeyframeTypeSpriteFrame) propType = @"SpriteFrame";
             else if (kfType == kCCBKeyframeTypePosition) propType = @"Position";
             else if (kfType == kCCBKeyframeTypeFloatXY) propType = @"FloatXY";
+            else if (kfType == kCCBKeyframeTypeFloat) propType = @"Float";
             
             NSAssert(propType, @"Unknown animated property type");
             

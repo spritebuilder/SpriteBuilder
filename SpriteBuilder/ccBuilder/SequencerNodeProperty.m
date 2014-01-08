@@ -343,6 +343,15 @@
                 [NSNumber numberWithFloat:inter.y],
                 NULL];
     }
+    else if (type == kCCBKeyframeTypeFloat)
+    {
+        float fStart = [keyframeStart.value floatValue];
+        float fEnd = [keyframeEnd.value floatValue];
+        
+        float span = fEnd - fStart;
+        
+        return [NSNumber numberWithFloat:fStart+span*interpolVal];
+    }
     else if (type == kCCBKeyframeTypeByte)
     {
         float fStart = [keyframeStart.value intValue];
