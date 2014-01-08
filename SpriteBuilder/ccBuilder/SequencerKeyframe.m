@@ -117,6 +117,10 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
     {
         return kCCBKeyframeTypeFloatXY;
     }
+    else if([type isEqualToString:@"Float"])
+    {
+        return kCCBKeyframeTypeFloat;
+    }
     else
     {
         return kCCBKeyframeTypeUndefined;
@@ -155,7 +159,7 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
         return ([[value objectAtIndex:0] floatValue] == [[keyframe.value objectAtIndex:0] floatValue]
                 && [[value objectAtIndex:1] floatValue] == [[keyframe.value objectAtIndex:1] floatValue]);
     }
-    else if (type == kCCBKeyframeTypeByte)
+    else if (type == kCCBKeyframeTypeByte || type == kCCBKeyframeTypeFloat)
     {
         return ([value intValue] == [keyframe.value intValue]);
     }
