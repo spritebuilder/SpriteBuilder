@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3028" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -1088,10 +1088,6 @@
                         <action selector="droppedFile:" target="-2" id="1047"/>
                     </connections>
                 </imageView>
-                <customView id="Acd-rN-rb4">
-                    <rect key="frame" x="5" y="45" width="240" height="110"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
-                </customView>
                 <textField verticalHuggingPriority="750" id="986" customClass="CCBTextFieldLabel">
                     <rect key="frame" x="2" y="26" width="38" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1309,9 +1305,13 @@
                 </popUpButton>
                 <imageView id="1051">
                     <rect key="frame" x="17" y="163" width="216" height="58"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="1052"/>
                 </imageView>
+                <customView id="Acd-rN-rb4">
+                    <rect key="frame" x="5" y="45" width="240" height="110"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </customView>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="130"/>
