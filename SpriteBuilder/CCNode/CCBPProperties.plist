@@ -36,14 +36,6 @@
 			<string>CCNode</string>
 		</dict>
 		<dict>
-			<key>name</key>
-			<string>name</string>
-			<key>displayName</key>
-			<string>Name</string>
-			<key>type</key>
-			<string>StringSimple</string>
-		</dict>
-		<dict>
 			<key>animatable</key>
 			<true/>
 			<key>defaultSerialization</key>
@@ -54,6 +46,14 @@
 			<string>visible</string>
 			<key>displayName</key>
 			<string>Visible</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>name</string>
+			<key>displayName</key>
+			<string>Name</string>
+			<key>type</key>
+			<string>StringSimple</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>

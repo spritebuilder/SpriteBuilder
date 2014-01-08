@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface UsageManager : NSObject
+{
+    NSString* _userID;
+}
 
 - (void) registerUsage;
 

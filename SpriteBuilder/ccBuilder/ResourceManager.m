@@ -35,6 +35,7 @@
 #import <CoreGraphics/CGImage.h>
 #import <QTKit/QTKit.h>
 #import "CCBPublisher.h"
+#import "SoundFileImageController.h"
 
 #pragma mark RMSpriteFrame
 
@@ -1239,39 +1240,22 @@
         {
             // Handle sound import
             
-#warning Fix sound import
-            
             // Code should check the wav file to see if it is longer than 15 seconds and in that case use mp4 instead of caf
-            /*
-            QTMovie* movie = [QTMovie movieWithFile:file error:NULL];
-            if (movie)
-            {
-                QTTime duration = movie.duration;
-                float durationSeconds = ((float)duration.timeValue) / ((float)duration.timeScale);
-                
-                // Copy the sound
-                NSString* dstPath = [dstDir stringByAppendingPathComponent:[file lastPathComponent]];
-                [fm copyItemAtPath:file toPath:dstPath error:NULL];
-                
-                if (durationSeconds > 15)
-                {
-                    // Set iOS format to mp4 for long sounds
-                    ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
-                    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
-                    [settings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
-                }
-                importedFile = YES;
-            }
-             */
-            
-            
-            // Temporary code here
+            NSTimeInterval duration = [[SoundFileImageController sharedInstance] getFileDuration:file];
             
             // Copy the sound
             NSString* dstPath = [dstDir stringByAppendingPathComponent:[file lastPathComponent]];
             [fm copyItemAtPath:file toPath:dstPath error:NULL];
             
+            if (duration > 15)
+            {
+                // Set iOS format to mp4 for long sounds
+                ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
+                NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
+                [settings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
+            }
             importedFile = YES;
+        
         }
         else if ([ext isEqualToString:@"ttf"])
         {

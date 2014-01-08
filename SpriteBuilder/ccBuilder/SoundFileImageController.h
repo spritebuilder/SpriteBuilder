@@ -10,6 +10,11 @@
 
 extern NSString * kSoundFileImageLoaded;
 
+@interface WaveformImageCell : NSImageCell
+
+@property (retain) NSString * fileName;
+@end
+
 @interface SoundFileImageController : NSObject
 {
     NSMutableDictionary * soundFileImages;

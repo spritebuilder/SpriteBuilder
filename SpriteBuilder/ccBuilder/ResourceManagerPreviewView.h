@@ -24,10 +24,12 @@
 
 #import <Foundation/Foundation.h>
 #import <QTKit/QTKit.h>
+#import <AVKit/AVKit.h>
 
 @class CCBImageView;
 @class AppDelegate;
 @class RMResource;
+@class ResourceManagerPreviewAudio;
 
 @interface ResourceManagerPreviewView : NSObject <NSSplitViewDelegate>
 {
@@ -51,6 +53,9 @@
     // Sound preview
     //IBOutlet QTMovieView* previewSound;
     IBOutlet NSImageView* previewSoundImage;
+    IBOutlet NSView     * previewSound;
+    ResourceManagerPreviewAudio        * previewAudioViewController;
+
     
     // Generic fallback view
     IBOutlet NSImageView* previewGeneric;

@@ -11,6 +11,30 @@
 
 NSString * kSoundFileImageLoaded = @"kSoundFileImageLoaded";
 
+@implementation WaveformImageCell
+
+@synthesize fileName;
+
+-(void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+    
+    [super drawWithFrame:cellFrame inView:controlView];
+    
+    CGRect interiorRect = cellFrame;
+    interiorRect.origin.x += 3;
+    interiorRect.origin.y += 3;
+    interiorRect.size.height -= 6;
+    interiorRect.size.width  -= 6;
+    
+    
+    [[SoundFileImageController sharedInstance] drawFrame:self.fileName withFrame:interiorRect];
+
+
+}
+
+@end
+
+
 @implementation SoundFileImageController
 
 -(id)init
