@@ -980,10 +980,17 @@
     
     if (!runAfterPublishing)
     {
+        bool publishEnablediPhone  = projectSettings.publishEnablediPhone;
+        bool publishEnabledAndroid  = projectSettings.publishEnabledAndroid;
+        
+        //iOS is forced on. Android is disabled.
+        publishEnablediPhone = YES;
+        publishEnabledAndroid = NO;
+        
         // Normal publishing
         
         // iOS
-        if (projectSettings.publishEnablediPhone)
+        if (publishEnablediPhone)
         {
             targetType = kCCBPublisherTargetTypeIPhone;
             warnings.currentTargetType = targetType;
@@ -1025,7 +1032,7 @@
         }
         
         // Android
-        if (projectSettings.publishEnabledAndroid)
+        if (publishEnabledAndroid)
         {
             targetType = kCCBPublisherTargetTypeAndroid;
             warnings.currentTargetType = targetType;

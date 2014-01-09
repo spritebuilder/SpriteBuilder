@@ -1383,16 +1383,15 @@ static BOOL hideAllToNextSeparator;
         currentResolution = clampf(currentResolution, 0, resolutions.count - 1);
         ResolutionSetting* resolution = [resolutions objectAtIndex:currentResolution];
         
-        
-        
-        // Update CocosScene
-        [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
-        
         // Save in current document
         currentDocument.resolutions = resolutions;
         currentDocument.currentResolution = currentResolution;
         
         [self updatePositionScaleFactor];
+        
+        // Update CocosScene
+        [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
+        
     }
     else
     {
