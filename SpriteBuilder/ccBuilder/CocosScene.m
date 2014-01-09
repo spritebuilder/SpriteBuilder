@@ -169,10 +169,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     if (type == kCCBBorderDevice)
     {
-        [borderBottom setOpacity:255];
-        [borderTop setOpacity:255];
-        [borderLeft setOpacity:255];
-        [borderRight setOpacity:255];
+        [borderBottom setOpacity:1.0f];
+        [borderTop setOpacity:1.0f];
+        [borderLeft setOpacity:1.0f];
+        [borderRight setOpacity:1.0f];
         
         CCTexture* deviceTexture = NULL;
         BOOL rotateDevice = NO;
@@ -263,19 +263,19 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     else if (type == kCCBBorderTransparent)
     {
-        [borderBottom setOpacity:180];
-        [borderTop setOpacity:180];
-        [borderLeft setOpacity:180];
-        [borderRight setOpacity:180];
+        [borderBottom setOpacity:0.5f];
+        [borderTop setOpacity:0.5f];
+        [borderLeft setOpacity:0.5f];
+        [borderRight setOpacity:0.5f];
         
         borderLayer.visible = YES;
     }
     else if (type == kCCBBorderOpaque)
     {
-        [borderBottom setOpacity:255];
-        [borderTop setOpacity:255];
-        [borderLeft setOpacity:255];
-        [borderRight setOpacity:255];
+        [borderBottom setOpacity:1.0f];
+        [borderTop setOpacity:1.0f];
+        [borderLeft setOpacity:1.0f];
+        [borderRight setOpacity:1.0f];
         borderLayer.visible = YES;
     }
     else
