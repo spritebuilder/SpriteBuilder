@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>activeLanguages</key>
+	<array>
+		<string>en</string>
+		<string>de</string>
+	</array>
+	<key>fileType</key>
+	<string>SpriteBuilderTranslations</string>
+	<key>fileVersion</key>
+	<integer>1</integer>
+	<key>translations</key>
+	<array>
+		<dict>
+			<key>comment</key>
+			<string>test</string>
+			<key>key</key>
+			<string>TestText</string>
+			<key>translations</key>
+			<dict>
+				<key>de</key>
+				<string>Das ist deutsch.</string>
+				<key>en</key>
+				<string>This is english.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string></string>
+			<key>key</key>
+			<string>Sample Text</string>
+			<key>translations</key>
+			<dict>
+				<key>de</key>
+				<string>Das ist deutsch.</string>
+				<key>en</key>
+				<string>This is english.</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

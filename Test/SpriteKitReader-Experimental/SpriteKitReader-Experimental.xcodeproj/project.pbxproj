@@ -1,0 +1,558 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC58534B187EF8BE00C118E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534A187EF8BE00C118E8 /* Foundation.framework */; };
+		DC58534D187EF8BE00C118E8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */; };
+		DC58534F187EF8BE00C118E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534E187EF8BE00C118E8 /* UIKit.framework */; };
+		DC585351187EF8BE00C118E8 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC585350187EF8BE00C118E8 /* SpriteKit.framework */; };
+		DC585357187EF8BE00C118E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC585355187EF8BE00C118E8 /* InfoPlist.strings */; };
+		DC585359187EF8BE00C118E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC585358187EF8BE00C118E8 /* main.m */; };
+		DC58535D187EF8BE00C118E8 /* SBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58535C187EF8BE00C118E8 /* SBAppDelegate.m */; };
+		DC585360187EF8BE00C118E8 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC58535E187EF8BE00C118E8 /* Main_iPhone.storyboard */; };
+		DC585363187EF8BE00C118E8 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC585361187EF8BE00C118E8 /* Main_iPad.storyboard */; };
+		DC585366187EF8BE00C118E8 /* SBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC585365187EF8BE00C118E8 /* SBViewController.m */; };
+		DC585369187EF8BE00C118E8 /* SBMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = DC585368187EF8BE00C118E8 /* SBMyScene.m */; };
+		DC58536B187EF8BE00C118E8 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = DC58536A187EF8BE00C118E8 /* Spaceship.png */; };
+		DC58536D187EF8BE00C118E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC58536C187EF8BE00C118E8 /* Images.xcassets */; };
+		DC585374187EF8BF00C118E8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC585373187EF8BF00C118E8 /* XCTest.framework */; };
+		DC585375187EF8BF00C118E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534A187EF8BE00C118E8 /* Foundation.framework */; };
+		DC585376187EF8BF00C118E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534E187EF8BE00C118E8 /* UIKit.framework */; };
+		DC58537E187EF8BF00C118E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC58537C187EF8BF00C118E8 /* InfoPlist.strings */; };
+		DC585380187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58537F187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m */; };
+		DC585391187EFB9500C118E8 /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = DC585390187EFB9500C118E8 /* Published-iOS */; };
+		DC5853A1187EFC5A00C118E8 /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC585394187EFC5A00C118E8 /* CCBAnimationManager.m */; };
+		DC5853A2187EFC5A00C118E8 /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = DC585396187EFC5A00C118E8 /* CCBKeyframe.m */; };
+		DC5853A3187EFC5A00C118E8 /* CCBLocalizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC585398187EFC5A00C118E8 /* CCBLocalizationManager.m */; };
+		DC5853A4187EFC5A00C118E8 /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58539A187EFC5A00C118E8 /* CCBReader.m */; };
+		DC5853A5187EFC5A00C118E8 /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58539D187EFC5A00C118E8 /* CCBsequence.m */; };
+		DC5853A6187EFC5A00C118E8 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58539F187EFC5A00C118E8 /* CCBSequenceProperty.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DC585377187EF8BF00C118E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC58533F187EF8BE00C118E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC585346187EF8BE00C118E8;
+			remoteInfo = "SpriteKitReader-Experimental";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DC585347187EF8BE00C118E8 /* SpriteKitReader-Experimental.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SpriteKitReader-Experimental.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC58534A187EF8BE00C118E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DC58534E187EF8BE00C118E8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		DC585350187EF8BE00C118E8 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		DC585354187EF8BE00C118E8 /* SpriteKitReader-Experimental-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpriteKitReader-Experimental-Info.plist"; sourceTree = "<group>"; };
+		DC585356187EF8BE00C118E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC585358187EF8BE00C118E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DC58535A187EF8BE00C118E8 /* SpriteKitReader-Experimental-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteKitReader-Experimental-Prefix.pch"; sourceTree = "<group>"; };
+		DC58535B187EF8BE00C118E8 /* SBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBAppDelegate.h; sourceTree = "<group>"; };
+		DC58535C187EF8BE00C118E8 /* SBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBAppDelegate.m; sourceTree = "<group>"; };
+		DC58535F187EF8BE00C118E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		DC585362187EF8BE00C118E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		DC585364187EF8BE00C118E8 /* SBViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBViewController.h; sourceTree = "<group>"; };
+		DC585365187EF8BE00C118E8 /* SBViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBViewController.m; sourceTree = "<group>"; };
+		DC585367187EF8BE00C118E8 /* SBMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBMyScene.h; sourceTree = "<group>"; };
+		DC585368187EF8BE00C118E8 /* SBMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBMyScene.m; sourceTree = "<group>"; };
+		DC58536A187EF8BE00C118E8 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
+		DC58536C187EF8BE00C118E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DC585372187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpriteKitReader-ExperimentalTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC585373187EF8BF00C118E8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DC58537B187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpriteKitReader-ExperimentalTests-Info.plist"; sourceTree = "<group>"; };
+		DC58537D187EF8BF00C118E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC58537F187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpriteKitReader_ExperimentalTests.m; sourceTree = "<group>"; };
+		DC585390187EFB9500C118E8 /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "FlyingFeathers.spritebuilder/Source/Resources/Published-iOS"; sourceTree = "<group>"; };
+		DC585393187EFC5A00C118E8 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
+		DC585394187EFC5A00C118E8 /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
+		DC585395187EFC5A00C118E8 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
+		DC585396187EFC5A00C118E8 /* CCBKeyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBKeyframe.m; sourceTree = "<group>"; };
+		DC585397187EFC5A00C118E8 /* CCBLocalizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBLocalizationManager.h; sourceTree = "<group>"; };
+		DC585398187EFC5A00C118E8 /* CCBLocalizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBLocalizationManager.m; sourceTree = "<group>"; };
+		DC585399187EFC5A00C118E8 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
+		DC58539A187EFC5A00C118E8 /* CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader.m; sourceTree = "<group>"; };
+		DC58539B187EFC5A00C118E8 /* CCBReader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader_Private.h; sourceTree = "<group>"; };
+		DC58539C187EFC5A00C118E8 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
+		DC58539D187EFC5A00C118E8 /* CCBsequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBsequence.m; sourceTree = "<group>"; };
+		DC58539E187EFC5A00C118E8 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
+		DC58539F187EFC5A00C118E8 /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
+		DC5853A0187EFC5A00C118E8 /* CCBuilderReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBuilderReader.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC585344187EF8BE00C118E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC58534D187EF8BE00C118E8 /* CoreGraphics.framework in Frameworks */,
+				DC58534F187EF8BE00C118E8 /* UIKit.framework in Frameworks */,
+				DC585351187EF8BE00C118E8 /* SpriteKit.framework in Frameworks */,
+				DC58534B187EF8BE00C118E8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC58536F187EF8BF00C118E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC585374187EF8BF00C118E8 /* XCTest.framework in Frameworks */,
+				DC585376187EF8BF00C118E8 /* UIKit.framework in Frameworks */,
+				DC585375187EF8BF00C118E8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC58533E187EF8BE00C118E8 = {
+			isa = PBXGroup;
+			children = (
+				DC585352187EF8BE00C118E8 /* SpriteKitReader-Experimental */,
+				DC585379187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests */,
+				DC585349187EF8BE00C118E8 /* Frameworks */,
+				DC585348187EF8BE00C118E8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DC585348187EF8BE00C118E8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC585347187EF8BE00C118E8 /* SpriteKitReader-Experimental.app */,
+				DC585372187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC585349187EF8BE00C118E8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC58534A187EF8BE00C118E8 /* Foundation.framework */,
+				DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */,
+				DC58534E187EF8BE00C118E8 /* UIKit.framework */,
+				DC585350187EF8BE00C118E8 /* SpriteKit.framework */,
+				DC585373187EF8BF00C118E8 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC585352187EF8BE00C118E8 /* SpriteKitReader-Experimental */ = {
+			isa = PBXGroup;
+			children = (
+				DC585392187EFC5A00C118E8 /* SpriteKitReader */,
+				DC585390187EFB9500C118E8 /* Published-iOS */,
+				DC58535B187EF8BE00C118E8 /* SBAppDelegate.h */,
+				DC58535C187EF8BE00C118E8 /* SBAppDelegate.m */,
+				DC58535E187EF8BE00C118E8 /* Main_iPhone.storyboard */,
+				DC585361187EF8BE00C118E8 /* Main_iPad.storyboard */,
+				DC585364187EF8BE00C118E8 /* SBViewController.h */,
+				DC585365187EF8BE00C118E8 /* SBViewController.m */,
+				DC585367187EF8BE00C118E8 /* SBMyScene.h */,
+				DC585368187EF8BE00C118E8 /* SBMyScene.m */,
+				DC58536A187EF8BE00C118E8 /* Spaceship.png */,
+				DC58536C187EF8BE00C118E8 /* Images.xcassets */,
+				DC585353187EF8BE00C118E8 /* Supporting Files */,
+			);
+			path = "SpriteKitReader-Experimental";
+			sourceTree = "<group>";
+		};
+		DC585353187EF8BE00C118E8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC585354187EF8BE00C118E8 /* SpriteKitReader-Experimental-Info.plist */,
+				DC585355187EF8BE00C118E8 /* InfoPlist.strings */,
+				DC585358187EF8BE00C118E8 /* main.m */,
+				DC58535A187EF8BE00C118E8 /* SpriteKitReader-Experimental-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC585379187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests */ = {
+			isa = PBXGroup;
+			children = (
+				DC58537F187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m */,
+				DC58537A187EF8BF00C118E8 /* Supporting Files */,
+			);
+			path = "SpriteKitReader-ExperimentalTests";
+			sourceTree = "<group>";
+		};
+		DC58537A187EF8BF00C118E8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DC58537B187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests-Info.plist */,
+				DC58537C187EF8BF00C118E8 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DC585392187EFC5A00C118E8 /* SpriteKitReader */ = {
+			isa = PBXGroup;
+			children = (
+				DC585393187EFC5A00C118E8 /* CCBAnimationManager.h */,
+				DC585394187EFC5A00C118E8 /* CCBAnimationManager.m */,
+				DC585395187EFC5A00C118E8 /* CCBKeyframe.h */,
+				DC585396187EFC5A00C118E8 /* CCBKeyframe.m */,
+				DC585397187EFC5A00C118E8 /* CCBLocalizationManager.h */,
+				DC585398187EFC5A00C118E8 /* CCBLocalizationManager.m */,
+				DC585399187EFC5A00C118E8 /* CCBReader.h */,
+				DC58539A187EFC5A00C118E8 /* CCBReader.m */,
+				DC58539B187EFC5A00C118E8 /* CCBReader_Private.h */,
+				DC58539C187EFC5A00C118E8 /* CCBSequence.h */,
+				DC58539D187EFC5A00C118E8 /* CCBsequence.m */,
+				DC58539E187EFC5A00C118E8 /* CCBSequenceProperty.h */,
+				DC58539F187EFC5A00C118E8 /* CCBSequenceProperty.m */,
+				DC5853A0187EFC5A00C118E8 /* CCBuilderReader.h */,
+			);
+			path = SpriteKitReader;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DC585346187EF8BE00C118E8 /* SpriteKitReader-Experimental */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC585383187EF8BF00C118E8 /* Build configuration list for PBXNativeTarget "SpriteKitReader-Experimental" */;
+			buildPhases = (
+				DC585343187EF8BE00C118E8 /* Sources */,
+				DC585344187EF8BE00C118E8 /* Frameworks */,
+				DC585345187EF8BE00C118E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SpriteKitReader-Experimental";
+			productName = "SpriteKitReader-Experimental";
+			productReference = DC585347187EF8BE00C118E8 /* SpriteKitReader-Experimental.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DC585371187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC585386187EF8BF00C118E8 /* Build configuration list for PBXNativeTarget "SpriteKitReader-ExperimentalTests" */;
+			buildPhases = (
+				DC58536E187EF8BF00C118E8 /* Sources */,
+				DC58536F187EF8BF00C118E8 /* Frameworks */,
+				DC585370187EF8BF00C118E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC585378187EF8BF00C118E8 /* PBXTargetDependency */,
+			);
+			name = "SpriteKitReader-ExperimentalTests";
+			productName = "SpriteKitReader-ExperimentalTests";
+			productReference = DC585372187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC58533F187EF8BE00C118E8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SB;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Steffen Itterheim";
+				TargetAttributes = {
+					DC585371187EF8BF00C118E8 = {
+						TestTargetID = DC585346187EF8BE00C118E8;
+					};
+				};
+			};
+			buildConfigurationList = DC585342187EF8BE00C118E8 /* Build configuration list for PBXProject "SpriteKitReader-Experimental" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DC58533E187EF8BE00C118E8;
+			productRefGroup = DC585348187EF8BE00C118E8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC585346187EF8BE00C118E8 /* SpriteKitReader-Experimental */,
+				DC585371187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC585345187EF8BE00C118E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC58536B187EF8BE00C118E8 /* Spaceship.png in Resources */,
+				DC58536D187EF8BE00C118E8 /* Images.xcassets in Resources */,
+				DC585363187EF8BE00C118E8 /* Main_iPad.storyboard in Resources */,
+				DC585391187EFB9500C118E8 /* Published-iOS in Resources */,
+				DC585360187EF8BE00C118E8 /* Main_iPhone.storyboard in Resources */,
+				DC585357187EF8BE00C118E8 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC585370187EF8BF00C118E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC58537E187EF8BF00C118E8 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC585343187EF8BE00C118E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC5853A2187EFC5A00C118E8 /* CCBKeyframe.m in Sources */,
+				DC5853A4187EFC5A00C118E8 /* CCBReader.m in Sources */,
+				DC585359187EF8BE00C118E8 /* main.m in Sources */,
+				DC585366187EF8BE00C118E8 /* SBViewController.m in Sources */,
+				DC58535D187EF8BE00C118E8 /* SBAppDelegate.m in Sources */,
+				DC585369187EF8BE00C118E8 /* SBMyScene.m in Sources */,
+				DC5853A6187EFC5A00C118E8 /* CCBSequenceProperty.m in Sources */,
+				DC5853A3187EFC5A00C118E8 /* CCBLocalizationManager.m in Sources */,
+				DC5853A5187EFC5A00C118E8 /* CCBsequence.m in Sources */,
+				DC5853A1187EFC5A00C118E8 /* CCBAnimationManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC58536E187EF8BF00C118E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC585380187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DC585378187EF8BF00C118E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC585346187EF8BE00C118E8 /* SpriteKitReader-Experimental */;
+			targetProxy = DC585377187EF8BF00C118E8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DC585355187EF8BE00C118E8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC585356187EF8BE00C118E8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DC58535E187EF8BE00C118E8 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC58535F187EF8BE00C118E8 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		DC585361187EF8BE00C118E8 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC585362187EF8BE00C118E8 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		DC58537C187EF8BF00C118E8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC58537D187EF8BF00C118E8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DC585381187EF8BF00C118E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DC585382187EF8BF00C118E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DC585384187EF8BF00C118E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpriteKitReader-Experimental/SpriteKitReader-Experimental-Prefix.pch";
+				INFOPLIST_FILE = "SpriteKitReader-Experimental/SpriteKitReader-Experimental-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DC585385187EF8BF00C118E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpriteKitReader-Experimental/SpriteKitReader-Experimental-Prefix.pch";
+				INFOPLIST_FILE = "SpriteKitReader-Experimental/SpriteKitReader-Experimental-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		DC585387187EF8BF00C118E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SpriteKitReader-Experimental.app/SpriteKitReader-Experimental";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpriteKitReader-Experimental/SpriteKitReader-Experimental-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "SpriteKitReader-ExperimentalTests/SpriteKitReader-ExperimentalTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		DC585388187EF8BF00C118E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SpriteKitReader-Experimental.app/SpriteKitReader-Experimental";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpriteKitReader-Experimental/SpriteKitReader-Experimental-Prefix.pch";
+				INFOPLIST_FILE = "SpriteKitReader-ExperimentalTests/SpriteKitReader-ExperimentalTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC585342187EF8BE00C118E8 /* Build configuration list for PBXProject "SpriteKitReader-Experimental" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC585381187EF8BF00C118E8 /* Debug */,
+				DC585382187EF8BF00C118E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC585383187EF8BF00C118E8 /* Build configuration list for PBXNativeTarget "SpriteKitReader-Experimental" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC585384187EF8BF00C118E8 /* Debug */,
+				DC585385187EF8BF00C118E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DC585386187EF8BF00C118E8 /* Build configuration list for PBXNativeTarget "SpriteKitReader-ExperimentalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC585387187EF8BF00C118E8 /* Debug */,
+				DC585388187EF8BF00C118E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DC58533F187EF8BE00C118E8 /* Project object */;
+}
