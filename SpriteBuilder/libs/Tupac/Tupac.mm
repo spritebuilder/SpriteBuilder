@@ -375,7 +375,7 @@ typedef struct _PVRTexHeader
         if (rot)
         {
             // Rotate image 90 degrees
-            CGContextRef rotContext = CGBitmapContextCreate(NULL, w, h, 8, 32*h, colorSpace, kCGImageAlphaPremultipliedLast);
+            CGContextRef rotContext = CGBitmapContextCreate(NULL, w, h, 8, 32*w, colorSpace, kCGImageAlphaPremultipliedLast);
             CGContextSaveGState(rotContext);
             CGContextRotateCTM(rotContext, -M_PI/2);
             CGContextTranslateCTM(rotContext, -h, 0);

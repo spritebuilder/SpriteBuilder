@@ -831,7 +831,7 @@
         [self writeFloat:c];
         [self writeFloat:d];
     }
-    else if ([type isEqualToString:@"Degrees"])
+    else if ([type isEqualToString:@"Degrees"] || [type isEqualToString:@"Float"])
     {
         [self writeFloat:[value floatValue]];
     }
