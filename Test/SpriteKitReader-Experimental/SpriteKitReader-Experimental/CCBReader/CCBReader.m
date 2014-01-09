@@ -37,6 +37,8 @@
 #import "SSZipArchive.h"
 #endif
 
+#import "CCBSpriteKitCompatibility.h"
+
 
 @interface CCBFile : CCNode
 {
