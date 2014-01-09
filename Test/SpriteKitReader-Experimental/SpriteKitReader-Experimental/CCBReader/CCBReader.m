@@ -810,10 +810,10 @@ static inline float readFloat(CCBReader *self)
         memberVarAssignmentName = [self readCachedString];
     }
     
-    Class class = NSClassFromString(className);
+    Class class = CCBClassFromString(className);
     if (!class)
     {
-        NSLog(@"CCBReader: Could not create class of type %@",className);
+        NSLog(@"CCBReader: Could not create class named: %@", className);
         return NULL;
     }
     CCNode* node = [[class alloc] init];
@@ -981,7 +981,9 @@ static inline float readFloat(CCBReader *self)
     for (int i = 0; i < numChildren; i++)
     {
         CCNode* child = [self readNodeGraphParent:node];
-        [node addChild:child];
+		if (child) {
+			[node addChild:child];
+		}
     }
     
     return node;

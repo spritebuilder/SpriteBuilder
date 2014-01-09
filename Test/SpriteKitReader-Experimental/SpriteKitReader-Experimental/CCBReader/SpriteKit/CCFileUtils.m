@@ -94,8 +94,12 @@ static CCFileUtils *fileUtils = nil;
 }
 -(NSString*) fullPathForFilename:(NSString*)filename
 {
-	NOTIMPLEMENTED();
-	return nil;
+	NSString* file = [filename stringByDeletingPathExtension];
+	NSString* extension = [filename pathExtension];
+	NSString* path = [[NSBundle mainBundle] pathForResource:file ofType:extension inDirectory:@"Published-iOS"];
+	
+	NSLog(@"CCFileUtils fullPathForFilename:'%@' returns '%@'", filename, path);
+	return path;
 }
 -(NSString*) fullPathForFilename:(NSString*)filename contentScale:(CGFloat *)contentScale
 {

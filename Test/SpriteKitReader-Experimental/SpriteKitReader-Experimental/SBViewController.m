@@ -8,6 +8,7 @@
 
 #import "SBViewController.h"
 #import "SBMyScene.h"
+#import "CCBReader.h"
 
 @implementation SBViewController
 
@@ -21,7 +22,8 @@
     skView.showsNodeCount = YES;
     
     // Create and configure the scene.
-    SKScene * scene = [SBMyScene sceneWithSize:skView.bounds.size];
+	SKScene* scene = [CCBReader loadAsScene:@"MainScene"];
+	//SKScene * scene = [SBMyScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.

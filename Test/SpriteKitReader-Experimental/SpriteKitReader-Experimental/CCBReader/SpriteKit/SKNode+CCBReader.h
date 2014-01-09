@@ -12,13 +12,15 @@
 @interface SKNode (CCBReader)
 
 @property id userObject;
-@property (readonly) CGSize contentSize;
+@property CGSize contentSize;
+@property CCSizeType contentSizeType;
 @property CGFloat rotation;
 @property CGFloat skewX;
 @property CGFloat skewY;
 @property BOOL visible;
 @property CCPositionType positionType;
 @property SKTexture* spriteFrame;
+@property CGPoint anchorPoint;
 
 -(CGFloat) scale;
 

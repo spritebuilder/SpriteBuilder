@@ -15,8 +15,12 @@
 
 +(instancetype) sharedDirector
 {
-	NOTIMPLEMENTED();
-	return nil;
+	static CCBSpriteKitDummy* sharedDirector = nil;
+	if (sharedDirector == nil)
+	{
+		sharedDirector = [[CCBSpriteKitDummy alloc] init];
+	}
+	return sharedDirector;
 }
 
 -(CGFloat) UIScaleFactor
@@ -41,8 +45,12 @@
 
 +(instancetype) sharedSpriteFrameCache
 {
-	NOTIMPLEMENTED();
-	return nil;
+	static CCBSpriteKitDummy* sharedSpriteFrameCache = nil;
+	if (sharedSpriteFrameCache == nil)
+	{
+		sharedSpriteFrameCache = [[CCBSpriteKitDummy alloc] init];
+	}
+	return sharedSpriteFrameCache;
 }
 
 -(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)file
@@ -54,8 +62,12 @@
 
 +(instancetype) sharedInstance
 {
-	NOTIMPLEMENTED();
-	return nil;
+	static CCBSpriteKitDummy* sharedSimpleAudioEngine = nil;
+	if (sharedSimpleAudioEngine == nil)
+	{
+		sharedSimpleAudioEngine = [[CCBSpriteKitDummy alloc] init];
+	}
+	return sharedSimpleAudioEngine;
 }
 
 -(void) playEffect:(NSString*)soundFile volume:(CGFloat)gain pitch:(CGFloat)pitch pan:(CGFloat)pan loop:(BOOL)loop
