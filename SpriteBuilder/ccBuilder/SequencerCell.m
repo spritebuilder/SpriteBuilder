@@ -463,7 +463,7 @@
         
         imgKeyframeSelLrg = [[NSImage imageNamed:@"seq-keyframe-x4-sel.png"] retain];
         [imgKeyframeSelLrg setFlipped:YES];
-        
+        imagesLoaded = true;
     }
     
     if (node)
