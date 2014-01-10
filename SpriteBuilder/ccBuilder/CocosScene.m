@@ -1453,6 +1453,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 keyframe.name = seqNodeProp.propName;
                 
                 [seqNodeProp setKeyframe:keyframe];
+                [appDelegate updateInspectorFromSelection];
             }
             
             [sh redrawTimeline];
