@@ -630,13 +630,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		92DC2165188073C500C8DCCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D37EE9FC187D4E7700CB5EF2;
-			remoteInfo = ObjectiveChipmunk;
-		};
 		B729AC6B181F0D1400BA0D9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -650,6 +643,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = B73788D81804AC5D0076A88C;
 			remoteInfo = CCScrollView;
+		};
+		B759E4B2187F794C00E8166C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D37EE9FC187D4E7700CB5EF2;
+			remoteInfo = ObjectiveChipmunk;
 		};
 		B79F90E417FF31A300908504 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2771,7 +2771,7 @@
 			children = (
 				B7D0918417C2C12B0007FE7F /* libcocos2d.a */,
 				B7D0918617C2C12B0007FE7F /* libkazmath.a */,
-				92DC2166188073C500C8DCCD /* libObjectiveChipmunk.a */,
+				B759E4B3187F794C00E8166C /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3993,11 +3993,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		92DC2166188073C500C8DCCD /* libObjectiveChipmunk.a */ = {
+		B759E4B3187F794C00E8166C /* libObjectiveChipmunk.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libObjectiveChipmunk.a;
-			remoteRef = 92DC2165188073C500C8DCCD /* PBXContainerItemProxy */;
+			remoteRef = B759E4B2187F794C00E8166C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B7D0918417C2C12B0007FE7F /* libcocos2d.a */ = {
@@ -5119,7 +5119,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/";
+				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/**";
 			};
 			name = Debug;
 		};
@@ -5139,7 +5139,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/";
+				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/**";
 			};
 			name = Release;
 		};
