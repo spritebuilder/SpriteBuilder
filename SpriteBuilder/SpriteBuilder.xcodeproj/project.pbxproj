@@ -191,6 +191,9 @@
 		B73788F51804D80B0076A88C /* ccb.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F41804D80B0076A88C /* ccb.icns */; };
 		B73788F71804D8200076A88C /* ccbproj.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F61804D8200076A88C /* ccbproj.icns */; };
 		B73788F91804D8690076A88C /* ccbi.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F81804D8690076A88C /* ccbi.icns */; };
+		B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B41880B4D000E8166C /* help-logo@2x.png */; };
+		B759E4B81880B60B00E8166C /* logo-white.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B61880B60B00E8166C /* logo-white.png */; };
+		B759E4B91880B60B00E8166C /* logo-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B71880B60B00E8166C /* logo-white@2x.png */; };
 		B75CB46518468FA70036259F /* seq-btn-loop.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CB46318468FA70036259F /* seq-btn-loop.png */; };
 		B75CB46618468FA70036259F /* seq-btn-loop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CB46418468FA70036259F /* seq-btn-loop@2x.png */; };
 		B75CB48B184D31270036259F /* UsageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75CB48A184D31270036259F /* UsageManager.m */; };
@@ -1068,6 +1071,9 @@
 		B73788F41804D80B0076A88C /* ccb.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccb.icns; path = ../ccb.icns; sourceTree = "<group>"; };
 		B73788F61804D8200076A88C /* ccbproj.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccbproj.icns; path = ../ccbproj.icns; sourceTree = "<group>"; };
 		B73788F81804D8690076A88C /* ccbi.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccbi.icns; path = ../ccbi.icns; sourceTree = "<group>"; };
+		B759E4B41880B4D000E8166C /* help-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help-logo@2x.png"; sourceTree = "<group>"; };
+		B759E4B61880B60B00E8166C /* logo-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white.png"; sourceTree = "<group>"; };
+		B759E4B71880B60B00E8166C /* logo-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white@2x.png"; sourceTree = "<group>"; };
 		B75CB46318468FA70036259F /* seq-btn-loop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-btn-loop.png"; sourceTree = "<group>"; };
 		B75CB46418468FA70036259F /* seq-btn-loop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-btn-loop@2x.png"; sourceTree = "<group>"; };
 		B75CB489184D31270036259F /* UsageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsageManager.h; sourceTree = "<group>"; };
@@ -2144,6 +2150,9 @@
 		776041F01498FD630078095D /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B759E4B61880B60B00E8166C /* logo-white.png */,
+				B759E4B71880B60B00E8166C /* logo-white@2x.png */,
+				B759E4B41880B4D000E8166C /* help-logo@2x.png */,
 				B75CB46318468FA70036259F /* seq-btn-loop.png */,
 				B75CB46418468FA70036259F /* seq-btn-loop@2x.png */,
 				80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */,
@@ -4093,6 +4102,7 @@
 				B71706D2184ECD660081720A /* select-skew@2x.png in Resources */,
 				E3B4221314E4A350004547D6 /* InspectorCheck.xib in Resources */,
 				E3B4221814E4BE6B004547D6 /* InspectorSpriteFrame.xib in Resources */,
+				B759E4B81880B60B00E8166C /* logo-white.png in Resources */,
 				E3B4221D14E58C35004547D6 /* InspectorByte.xib in Resources */,
 				E3B4222214E58FEE004547D6 /* InspectorColor3.xib in Resources */,
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
@@ -4197,6 +4207,7 @@
 				E3214C4C15D40F01002413A7 /* InspectorCustom.xib in Resources */,
 				E3214C5E15D54356002413A7 /* InspectorCustomEdit.xib in Resources */,
 				B71706CF184ECD660081720A /* select-move@2x.png in Resources */,
+				B759E4B91880B60B00E8166C /* logo-white@2x.png in Resources */,
 				E3B7BC9C15E3B7F100CF95EF /* NodePlugInsList.plist in Resources */,
 				E3B7BCBE15E505CC00CF95EF /* TB_plugins.png in Resources */,
 				E3B19F6D15E65229000B023E /* DefaultResourcesList.plist in Resources */,
@@ -4218,6 +4229,7 @@
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
 				E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
+				B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */,
 				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
 				E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */,
 				E3DEF5B7169B359C00B9DCF4 /* lame in Resources */,
