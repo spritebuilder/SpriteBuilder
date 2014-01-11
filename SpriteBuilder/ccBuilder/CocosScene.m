@@ -903,53 +903,58 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Find out which objects were clicked
     
     // Transform handles
-    CCBTransformHandle th = [self transformHandleUnderPt:pos];
     
-    if (th == kCCBTransformHandleAnchorPoint)
+    if (!appDelegate.physicsHandler.editingPhysicsBody)
     {
-        // Anchor points are fixed for singel point nodes
-        if (transformScalingNode.contentSizeInPoints.width == 0 || transformScalingNode.contentSizeInPoints.height == 0)
+        CCBTransformHandle th = [self transformHandleUnderPt:pos];
+        
+        if (th == kCCBTransformHandleAnchorPoint)
         {
+            // Anchor points are fixed for singel point nodes
+            if (transformScalingNode.contentSizeInPoints.width == 0 || transformScalingNode.contentSizeInPoints.height == 0)
+            {
+                return;
+            }
+            
+            BOOL readOnly = [[[transformScalingNode.plugIn.nodePropertiesDict objectForKey:@"anchorPoint"] objectForKey:@"readOnly"] boolValue];
+            if (readOnly)
+            {
+                return;
+            }
+            
+            // Transform anchor point
+            currentMouseTransform = kCCBTransformHandleAnchorPoint;
+            transformScalingNode.transformStartPosition = transformScalingNode.anchorPoint;
+            return;
+        }
+        if(th == kCCBTransformHandleRotate && appDelegate.selectedNode != rootNode)
+        {
+            // Start rotation transform
+            currentMouseTransform = kCCBTransformHandleRotate;
+            transformStartRotation = transformScalingNode.rotation;
             return;
         }
         
-        BOOL readOnly = [[[transformScalingNode.plugIn.nodePropertiesDict objectForKey:@"anchorPoint"] objectForKey:@"readOnly"] boolValue];
-        if (readOnly)
+        if (th == kCCBTransformHandleScale && appDelegate.selectedNode != rootNode)
         {
+            // Start scale transform
+            currentMouseTransform = kCCBTransformHandleScale;
+            transformStartScaleX = [PositionPropertySetter scaleXForNode:transformScalingNode prop:@"scale"];
+            transformStartScaleY = [PositionPropertySetter scaleYForNode:transformScalingNode prop:@"scale"];
             return;
+            
         }
-        
-        // Transform anchor point
-        currentMouseTransform = kCCBTransformHandleAnchorPoint;
-        transformScalingNode.transformStartPosition = transformScalingNode.anchorPoint;
-        return;
-    }
-    if(th == kCCBTransformHandleRotate && appDelegate.selectedNode != rootNode)
-    {
-        // Start rotation transform
-        currentMouseTransform = kCCBTransformHandleRotate;
-        transformStartRotation = transformScalingNode.rotation;
-        return;
+        if(th == kCCBTransformHandleSkew && appDelegate.selectedNode != rootNode)
+        {
+            currentMouseTransform = kCCBTransformHandleSkew;
+            
+            transformStartSkewX = transformScalingNode.skewX;
+            transformStartSkewY = transformScalingNode.skewY;
+            return;
+            
+        }
     }
     
-    if (th == kCCBTransformHandleScale && appDelegate.selectedNode != rootNode)
-    {
-        // Start scale transform
-        currentMouseTransform = kCCBTransformHandleScale;
-        transformStartScaleX = [PositionPropertySetter scaleXForNode:transformScalingNode prop:@"scale"];
-        transformStartScaleY = [PositionPropertySetter scaleYForNode:transformScalingNode prop:@"scale"];
-        return;
-        
-    }
-    if(th == kCCBTransformHandleSkew && appDelegate.selectedNode != rootNode)
-    {
-        currentMouseTransform = kCCBTransformHandleSkew;
-        
-        transformStartSkewX = transformScalingNode.skewX;
-        transformStartSkewY = transformScalingNode.skewY;
-        return;
-
-    }
     
     // Clicks inside objects
     [nodesAtSelectionPt removeAllObjects];
