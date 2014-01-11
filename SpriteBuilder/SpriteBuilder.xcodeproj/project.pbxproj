@@ -139,6 +139,10 @@
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
+		92DC215F188073C500C8DCCD /* select-scale.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C005E1846A40D00544BD2 /* select-scale.png */; };
+		92DC2160188073C500C8DCCD /* select-crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C006F1848178D00544BD2 /* select-crosshair.png */; };
+		92DC2161188073C500C8DCCD /* select-skew.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158A018441FF1007242F6 /* select-skew.png */; };
+		92DC2162188073C500C8DCCD /* select-rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158941843DEDC007242F6 /* select-rotation.png */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -4026,6 +4030,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92DC215F188073C500C8DCCD /* select-scale.png in Resources */,
+				92DC2160188073C500C8DCCD /* select-crosshair.png in Resources */,
+				92DC2161188073C500C8DCCD /* select-skew.png in Resources */,
+				92DC2162188073C500C8DCCD /* select-rotation.png in Resources */,
 				929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 				92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */,
 				92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */,
