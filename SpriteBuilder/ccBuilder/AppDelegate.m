@@ -2877,20 +2877,30 @@ static BOOL hideAllToNextSeparator;
     NSString* dirPath = dir.dirPath;
 
     int selectedRow = [sender tag];
-    RMResource* res = nil;
+
     if(selectedRow != -1)
     {
         if (selectedRow >= 0 && projectSettings)
         {
-            res = [outlineProject itemAtRow:selectedRow];
+            RMResource* res = [outlineProject itemAtRow:selectedRow];
             
-            if(res.type == kCCBResTypeDirectory)
+            if([res isKindOfClass:[RMDirectory class]])
             {
-                dirPath = res.filePath;
+                RMDirectory * directoryResource = (RMDirectory *)res;
+                dirPath = directoryResource.dirPath;
+                
             }
             else
             {
-                dirPath = [res.filePath stringByDeletingLastPathComponent];
+                
+                if(res.type == kCCBResTypeDirectory)
+                {
+                    dirPath = res.filePath;
+                }
+                else
+                {
+                    dirPath = [res.filePath stringByDeletingLastPathComponent];
+                }
             }
         }
     }
@@ -2916,7 +2926,7 @@ static BOOL hideAllToNextSeparator;
     [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     [[ResourceManager sharedManager] reloadAllResources];
     
-    res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
+    RMResource * res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
     
     id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
     [outlineProject expandItem:parentResource];
@@ -2939,20 +2949,29 @@ static BOOL hideAllToNextSeparator;
         NSString* dirPath = [[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath];
         
         int selectedRow = [sender tag];
-        RMResource* res = nil;
+
         if(selectedRow != -1)
         {
             if (selectedRow >= 0 && projectSettings)
             {
-                res = [outlineProject itemAtRow:selectedRow];
+                RMResource* res = [outlineProject itemAtRow:selectedRow];
                 
-                if(res.type == kCCBResTypeDirectory)
+                if([res isKindOfClass:[RMDirectory class]])
                 {
-                    dirPath = res.filePath;
+                    RMDirectory * directoryResource = (RMDirectory *)res;
+                    dirPath = directoryResource.dirPath;
                 }
                 else
                 {
-                    dirPath = [res.filePath stringByDeletingLastPathComponent];
+                    
+                    if(res.type == kCCBResTypeDirectory)
+                    {
+                        dirPath = res.filePath;
+                    }
+                    else
+                    {
+                        dirPath = [res.filePath stringByDeletingLastPathComponent];
+                    }
                 }
             }
         }
