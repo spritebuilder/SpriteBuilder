@@ -21,9 +21,6 @@
 -(CCBSpriteKitDummyAction*) getActionByTag:(int)tag target:(id)target;
 -(void) removeActionByTag:(int)tag target:(id)target;
 
-+(instancetype) sharedSpriteFrameCache;
--(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)file;
-
 +(instancetype) sharedInstance;
 -(void) playEffect:(NSString*)soundFile volume:(CGFloat)gain pitch:(CGFloat)pitch pan:(CGFloat)pan loop:(BOOL)loop;
 

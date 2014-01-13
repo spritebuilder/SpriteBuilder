@@ -41,22 +41,6 @@
 	NOTIMPLEMENTED();
 }
 
-#pragma mark Sprite Frame
-
-+(instancetype) sharedSpriteFrameCache
-{
-	static CCBSpriteKitDummy* sharedSpriteFrameCache = nil;
-	if (sharedSpriteFrameCache == nil)
-	{
-		sharedSpriteFrameCache = [[CCBSpriteKitDummy alloc] init];
-	}
-	return sharedSpriteFrameCache;
-}
-
--(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)file
-{
-	NOTIMPLEMENTED();
-}
 
 #pragma mark ObjectAL
 

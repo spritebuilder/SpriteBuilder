@@ -7,18 +7,19 @@
 //
 
 #import "SKTexture+CCBReader.h"
+#import "CCSpriteFrameCache.h"
 
 @implementation SKTexture (CCBReader)
 
 +(instancetype) frameWithImageNamed:(NSString*)name
 {
-	NOTIMPLEMENTED();
-	return nil;
+	return [SKTexture textureWithFile:name];
 }
 
 +(instancetype) textureWithFile:(NSString*)file
 {
-	return [SKTexture textureWithImageNamed:file];
+	SKTexture* texture = [SKTexture textureWithImageNamed:file];
+	return texture;
 }
 
 

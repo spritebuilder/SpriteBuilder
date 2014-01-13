@@ -12,22 +12,24 @@
 
 @implementation SBViewController
 
-- (void)viewDidLoad
+- (void) viewDidLayoutSubviews
 {
-    [super viewDidLoad];
+    [super viewDidLayoutSubviews];
 
-    // Configure the view.
-    SKView * skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
-    
-    // Create and configure the scene.
-	SKScene* scene = [CCBReader loadAsScene:@"MainScene"];
-	//SKScene * scene = [SBMyScene sceneWithSize:skView.bounds.size];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
-    
-    // Present the scene.
-    [skView presentScene:scene];
+    SKView* skView = (SKView *)self.view;
+	if (skView.scene == nil)
+	{
+		skView.showsFPS = YES;
+		skView.showsNodeCount = YES;
+		
+		// Create and configure the scene.
+		[CCBReader setSceneSize:skView.bounds.size];
+		SKScene* scene = [CCBReader loadAsScene:@"MainScene"];
+		NSLog(@"scene %@ %p: %@", NSStringFromClass([scene class]), scene, scene);
+		scene.scaleMode = SKSceneScaleModeAspectFill;
+
+		[skView presentScene:scene];
+	}
 }
 
 - (BOOL)shouldAutorotate

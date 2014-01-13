@@ -18,6 +18,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "CCFileUtils.h"
+#import "CCSpriteFrameCache.h"
 #import "CCBSpriteKitDummy.h"
 #import "CGPointExtension.h"
 
@@ -104,7 +105,6 @@ typedef SKTexture CCTexture;
 @class CCBSpriteKitDummy;
 typedef CCBSpriteKitDummy CCActionManager;
 typedef CCBSpriteKitDummy CCDirector;
-typedef CCBSpriteKitDummy CCSpriteFrameCache;
 typedef CCBSpriteKitDummy OALSimpleAudio;
 
 @class CCBSpriteKitDummyAction;

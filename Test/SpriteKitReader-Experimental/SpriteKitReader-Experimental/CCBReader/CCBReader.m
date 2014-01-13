@@ -797,6 +797,12 @@ static inline float readFloat(CCBReader *self)
 - (void) didLoadFromCCB
 {}
 
+-(CCNode*) nodeFromClass:(Class)nodeClass
+{
+	CCNode* node = [[nodeClass alloc] init];
+	return node;
+}
+
 - (CCNode*) readNodeGraphParent:(CCNode*)parent
 {
     // Read class
@@ -816,7 +822,7 @@ static inline float readFloat(CCBReader *self)
         NSLog(@"CCBReader: Could not create class named: %@", className);
         return NULL;
     }
-    CCNode* node = [[class alloc] init];
+    CCNode* node = [self nodeFromClass:class];
     
     // Set root node
     if (!animationManager.rootNode) animationManager.rootNode = node;
@@ -1174,7 +1180,7 @@ static inline float readFloat(CCBReader *self)
     
     NSMutableDictionary* animationManagers = [NSMutableDictionary dictionary];
     CCNode* nodeGraph = [self readFileWithCleanUp:YES actionManagers:animationManagers];
-    
+
     if (nodeGraph && self.animationManager.autoPlaySequenceId != -1)
     {
         // Auto play animations
@@ -1225,6 +1231,13 @@ static inline float readFloat(CCBReader *self)
 
 + (CCBReader*) reader
 {
+	// if available, create an instance of Sprite Kit Reader class instead
+	Class spriteKitReaderClass = NSClassFromString(@"CCBSpriteKitReader");
+	if (spriteKitReaderClass)
+	{
+		return [[spriteKitReaderClass alloc] init];
+	}
+	
     return [[CCBReader alloc] init];
 }
 
@@ -1253,10 +1266,15 @@ static inline float readFloat(CCBReader *self)
     return [CCBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[CCDirector sharedDirector].designSize];
 }
 
+-(CCScene*) createScene
+{
+	return [CCScene node];
+}
+
 + (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner parentSize:(CGSize)parentSize
 {
     CCNode* node = [CCBReader load:file owner:owner parentSize:parentSize];
-    CCScene* scene = [CCScene node];
+    CCScene* scene = [[CCBReader reader] createScene];
     [scene addChild:node];
     return scene;
 }
@@ -1270,6 +1288,16 @@ static inline float readFloat(CCBReader *self)
 {
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     return [[searchPaths objectAtIndex:0] stringByAppendingPathComponent:@"ccb"];
+}
+
++(void) setSceneSize:(CGSize)sceneSize
+{
+	[[CCBReader reader] setSceneSize:sceneSize];
+}
+
+-(void) setSceneSize:(CGSize)sceneSize
+{
+	// does nothing, only needed for CCBSpriteKitReader
 }
 
 @end

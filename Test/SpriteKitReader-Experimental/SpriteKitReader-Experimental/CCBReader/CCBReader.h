@@ -162,5 +162,11 @@
  */
 @property (nonatomic,strong) CCBAnimationManager* animationManager;
 
+
+// Internal use: override methods for Sprite Kit Reader subclass
++(void) setSceneSize:(CGSize)sceneSize;
+-(CCNode*) nodeFromClass:(Class)nodeClass;
+-(CCScene*) createScene;
+
 @end
 
