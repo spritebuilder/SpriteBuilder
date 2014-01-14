@@ -294,6 +294,11 @@ static inline float readFloat(CCBReader *self)
     return [stringCache objectAtIndex:n];
 }
 
+-(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node
+{
+	// does nothing, overridden by Sprite Kit reader
+}
+
 - (void) readPropertyForNode:(CCNode*) node parent:(CCNode*)parent isExtraProp:(BOOL)isExtraProp
 {
     // Read type and property name
@@ -504,6 +509,7 @@ static inline float readFloat(CCBReader *self)
         {
             CCSpriteFrame* spriteFrame = [CCSpriteFrame frameWithImageNamed:spriteFile];
             [node setValue:spriteFrame forKey:name];
+			[self readerDidSetSpriteFrame:spriteFrame node:node];
             
             if ([animatedProps containsObject:name])
             {

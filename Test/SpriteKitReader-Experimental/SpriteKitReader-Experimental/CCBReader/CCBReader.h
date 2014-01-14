@@ -167,6 +167,7 @@
 +(void) setSceneSize:(CGSize)sceneSize;
 -(CCNode*) nodeFromClass:(Class)nodeClass;
 -(CCScene*) createScene;
+-(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node;
 
 @end
 

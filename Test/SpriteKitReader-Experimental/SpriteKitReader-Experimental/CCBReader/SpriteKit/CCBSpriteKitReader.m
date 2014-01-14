@@ -20,22 +20,17 @@
 	return self;
 }
 
+/*
 -(CCNode*) nodeFromClass:(Class)nodeClass
 {
 	// map CC nodes to SK nodes
 	CCNode* node = nil;
 	
-	if ([nodeClass isSubclassOfClass:[SKSpriteNode class]])
-	{
-		node = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:1 green:0 blue:1 alpha:1] size:CGSizeMake(64, 64)];
-	}
-	else
-	{
-		node =[nodeClass node];
-	}
-	
+	node = [nodeClass node];
+
 	return node;
 }
+*/
 
 -(void) setSceneSize:(CGSize)sceneSize
 {
@@ -57,6 +52,13 @@
 	}
 	
 	return [SKScene sceneWithSize:_sceneSize];
+}
+
+#pragma mark Property Overrides
+
+-(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node
+{
+	[node setValue:[NSValue valueWithCGSize:spriteFrame.size] forKey:@"size"];
 }
 
 @end

@@ -26,7 +26,7 @@
 		[CCBReader setSceneSize:skView.bounds.size];
 		SKScene* scene = [CCBReader loadAsScene:@"MainScene"];
 		NSLog(@"scene %@ %p: %@", NSStringFromClass([scene class]), scene, scene);
-		scene.scaleMode = SKSceneScaleModeAspectFill;
+		scene.scaleMode = SKSceneScaleModeResizeFill;
 
 		[skView presentScene:scene];
 	}
