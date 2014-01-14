@@ -459,7 +459,6 @@ void ApplyCustomNodeVisitSwizzle()
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
-    [self.window center];
     
     UsageManager* usageManager = [[[UsageManager alloc] init] autorelease];
     [usageManager registerUsage];
