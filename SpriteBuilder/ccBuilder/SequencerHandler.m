@@ -414,6 +414,10 @@ static SequencerHandler* sharedSequencerHandler;
     else if([tableColumn.identifier isEqualToString:@"locked"])
     {
         node.locked = [(NSNumber*)object boolValue];
+        if([AppDelegate appDelegate].selectedNode == node)
+        {
+            [[AppDelegate appDelegate] updateInspectorFromSelection];
+        }
     }
     else if (![object isEqualToString:node.displayName])
     {
