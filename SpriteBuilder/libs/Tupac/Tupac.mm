@@ -400,6 +400,9 @@ typedef struct _PVRTexHeader
         NSLog(@"Failed to write image to %@", pngFilename);
     }
     
+    CGImageRelease(imageDst);
+    CGContextRelease(dstContext);
+    
     textureFileName = pngFilename;
     
     if (createdColorSpace)
