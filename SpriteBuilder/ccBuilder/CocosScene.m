@@ -1272,8 +1272,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         float xScaleNew = scale.x * vertexScaler.x + transformStartScaleX * (1.0f - vertexScaler.x);
         float yScaleNew = scale.y * vertexScaler.y + transformStartScaleY * (1.0f - vertexScaler.y);
         
+        NodeInfo* nodeInfo = transformScalingNode.userObject;
+        
         // Handle shift key (uniform scale)
-        if ([event modifierFlags] & NSShiftKeyMask)
+        if ([event modifierFlags] & NSShiftKeyMask ||  [nodeInfo.extraProps[@"scaleLock"] boolValue])
         {
             // Use the smallest scale composit
             if (fabs(xScaleNew) < fabs(yScaleNew))
