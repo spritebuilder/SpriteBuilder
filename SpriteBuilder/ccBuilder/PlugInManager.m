@@ -107,7 +107,7 @@
             
             [bundle load];
             
-            PlugInNode* plugIn = [[[PlugInNode alloc] initWithBundle:bundle] autorelease];
+            PlugInNode* plugIn = [[PlugInNode alloc] initWithBundle:bundle];
             if (plugIn && !plugIn.isAbstract)
             {
                 [plugInsNode setObject:plugIn forKey:plugIn.nodeClassName];
@@ -120,7 +120,7 @@
             }
             
             // Load icon
-            plugIn.icon = [[[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"Icon.png"]] autorelease];
+            plugIn.icon = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"Icon.png"]];
         }
     }
 #endif
@@ -141,7 +141,7 @@
             
             [bundle load];
             
-            PlugInExport* plugIn = [[[PlugInExport alloc] initWithBundle:bundle] autorelease];
+            PlugInExport* plugIn = [[PlugInExport alloc] initWithBundle:bundle];
             if (plugIn)
             {
                 NSString* plugInName = [[plugInPath lastPathComponent] stringByDeletingPathExtension];
@@ -153,15 +153,6 @@
     }
 }
 
-- (void) dealloc
-{
-#if !CCB_BUILDING_COMMANDLINE
-    [plugInsNode release];
-    [plugInsNodeNames release];
-    [plugInsNodeNamesCanBeRoot release];
-#endif
-    [super dealloc];
-}
 
 #if !CCB_BUILDING_COMMANDLINE
 - (PlugInNode*) plugInNodeNamed:(NSString*)name
@@ -176,7 +167,7 @@
     
     Class editorClass = NSClassFromString(plugin.nodeEditorClassName);
     
-    CCNode* node = [[[editorClass alloc] init] autorelease];
+    CCNode* node = [[editorClass alloc] init];
     [node setUserObject: [NodeInfo nodeInfoWithPlugIn:plugin]];
     
     NodeInfo* nodeInfo = node.userObject;

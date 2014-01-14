@@ -139,7 +139,7 @@
         if (!spriteSheetFile) spriteSheetFile = kCCBUseRegularFile;
         
         // Create keyframe
-        SequencerKeyframe* kf = [[[SequencerKeyframe alloc] init] autorelease];
+        SequencerKeyframe* kf = [[SequencerKeyframe alloc] init];
         kf.time = currentTime;
         kf.type = kCCBKeyframeTypeSpriteFrame;
         kf.name = @"spriteFrame";

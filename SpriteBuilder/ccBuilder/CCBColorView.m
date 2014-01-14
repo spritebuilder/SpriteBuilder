@@ -14,7 +14,6 @@
 {
     if (backgroundColor != _backgroundColor)
     {
-        [_backgroundColor release];
         _backgroundColor = [backgroundColor copy];
         
         [self setNeedsDisplay:YES];
@@ -25,7 +24,6 @@
 {
     if (borderColor != _borderColor)
     {
-        [_borderColor release];
         _borderColor = [borderColor copy];
         
         [self setNeedsDisplay:YES];
@@ -52,10 +50,5 @@
     [super drawRect:dirtyRect];
 }
 
-- (void) dealloc
-{
-    self.backgroundColor = NULL;
-    [super dealloc];
-}
 
 @end

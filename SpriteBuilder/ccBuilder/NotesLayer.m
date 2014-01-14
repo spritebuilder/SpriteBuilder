@@ -29,6 +29,7 @@
 #import "CCBTransparentView.h"
 #import "CCBTransparentWindow.h"
 #import "CCBUtil.h"
+#import "MainWindow.h"
 
 @implementation NotesLayer
 
@@ -45,7 +46,7 @@
 - (void) addNote
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*notes"];
-    StickyNote* note = [[[StickyNote alloc] init] autorelease];
+    StickyNote* note = [[StickyNote alloc] init];
     note.docPos = ccp(10,150);
     [self addChild:note];
 }
@@ -127,10 +128,8 @@
         modifiedNote = note;
         
         // Reorder the child to the top
-        [note retain];
         [self removeChild:note cleanup:NO];
         [self addChild:note];
-        [note release];
         
         return YES;
     }
@@ -256,7 +255,7 @@
     
     for (NSDictionary* serNote in ser)
     {
-        StickyNote* note = [[[StickyNote alloc] init] autorelease];
+        StickyNote* note = [[StickyNote alloc] init];
         
         // Load text
         note.noteText = [serNote objectForKey:@"text"];

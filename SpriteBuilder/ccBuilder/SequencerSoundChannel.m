@@ -55,7 +55,7 @@
 
 - (SequencerKeyframe*) defaultKeyframe
 {
-    SequencerKeyframe* kf = [[[SequencerKeyframe alloc] init] autorelease];
+    SequencerKeyframe* kf = [[SequencerKeyframe alloc] init];
     
     kf.value = [NSArray arrayWithObjects:
                 @"",
@@ -65,7 +65,7 @@
                 nil];
     kf.type = kCCBKeyframeTypeSoundEffects;
     kf.name = NULL;
-    kf.easing = [[[SequencerKeyframeEasing alloc] init] autorelease];
+    kf.easing = [[SequencerKeyframeEasing alloc] init];
     kf.easing.type = kCCBKeyframeEasingInstant;
     
     return kf;

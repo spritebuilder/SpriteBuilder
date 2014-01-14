@@ -51,7 +51,7 @@ enum {
 @property (nonatomic,assign) BOOL canSetSize;
 @property (nonatomic,assign) int width;
 @property (nonatomic,assign) int height;
-@property (nonatomic,readonly) NSMutableArray* availableResolutions;
+@property (weak, nonatomic,readonly) NSMutableArray* availableResolutions;
 
 - (IBAction)acceptSheet:(id)sender;
 - (IBAction)cancelSheet:(id)sender;

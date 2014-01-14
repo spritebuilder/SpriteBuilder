@@ -38,12 +38,12 @@
     self = [super init];
     if (!self) return NULL;
     
-    bundle = [b retain];
+    bundle = b;
     
     // Load plug-in properties
     Class exporterClass = [bundle principalClass];
-    CCBX* exporter = [[[exporterClass alloc] init] autorelease];
-    extension = [[exporter extension] retain];
+    CCBX* exporter = [[exporterClass alloc] init];
+    extension = [exporter extension];
     
     return self;
 }
@@ -51,19 +51,11 @@
 - (NSData*) exportDocument:(NSDictionary*)doc
 {
     Class exporterClass = [bundle principalClass];
-    CCBX* exporter = [[[exporterClass alloc] init] autorelease];
+    CCBX* exporter = [[exporterClass alloc] init];
     exporter.serializedProjectSettings = [projectSettings serialize];
     
     return [exporter exportDocument:doc flattenPaths:flattenPaths];
 }
 
-- (void) dealloc
-{
-    self.pluginName = NULL;
-    [bundle release];
-    [extension release];
-    [projectSettings release];
-    [super dealloc];
-}
 
 @end

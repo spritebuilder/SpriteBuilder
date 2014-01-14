@@ -72,18 +72,10 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
 @synthesize imageWaveform;
 @synthesize timeObserverToken;
 
-- (void)dealloc
-{
-	[player release];
-	[playerLayer release];
-	
-	[super dealloc];
-}
-
 -(void)setupPlayer
 {
 	// Create the AVPlayer, add rate and status observers
-	[self setPlayer:[[[AVPlayer alloc] init] autorelease]];
+	[self setPlayer:[[AVPlayer alloc] init]];
 	[self addObserver:self forKeyPath:@"player.rate" options:NSKeyValueObservingOptionNew context:AVSPPlayerRateContext];
 	[self addObserver:self forKeyPath:@"player.currentItem.status" options:NSKeyValueObservingOptionNew context:AVSPPlayerItemStatusContext];
 	
@@ -159,7 +151,7 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
             
             if(formatDescriptions.count > 0)
             {
-                CMAudioFormatDescriptionRef audioDescription = (CMAudioFormatDescriptionRef)formatDescriptions[0];
+                CMAudioFormatDescriptionRef audioDescription = (__bridge CMAudioFormatDescriptionRef)formatDescriptions[0];
 
                 size_t formatListSize;
                 const AudioFormatListItem * formatList= CMAudioFormatDescriptionGetFormatList(audioDescription,&formatListSize);

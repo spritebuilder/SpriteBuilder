@@ -46,21 +46,21 @@
     int currentSequenceId;
 }
 
-@property (nonatomic,retain) NSString* fileName;
-@property (nonatomic,retain) NSString* exportPath;
-@property (nonatomic,retain) NSString* exportPlugIn;
+@property (nonatomic,strong) NSString* fileName;
+@property (nonatomic,strong) NSString* exportPath;
+@property (nonatomic,strong) NSString* exportPlugIn;
 @property (nonatomic,assign) BOOL exportFlattenPaths;
-@property (nonatomic,retain) NSMutableDictionary* docData;
-@property (nonatomic,retain) NSUndoManager* undoManager;
-@property (nonatomic,retain) NSString* lastEditedProperty;
+@property (nonatomic,strong) NSMutableDictionary* docData;
+@property (nonatomic,strong) NSUndoManager* undoManager;
+@property (nonatomic,strong) NSString* lastEditedProperty;
 @property (nonatomic,assign) BOOL isDirty;
 @property (nonatomic,assign) CGPoint stageScrollOffset;
 @property (nonatomic,assign) float stageZoom;
-@property (nonatomic,readonly) NSString* rootPath;
+@property (weak, nonatomic,readonly) NSString* rootPath;
 - (NSString*) formattedName;
-@property (nonatomic,retain) NSMutableArray* resolutions;
+@property (nonatomic,strong) NSMutableArray* resolutions;
 @property (nonatomic,assign) int currentResolution;
-@property (nonatomic,retain) NSMutableArray* sequences;
+@property (nonatomic,strong) NSMutableArray* sequences;
 @property (nonatomic,assign) int currentSequenceId;
 @property (nonatomic,assign) int docDimensionsType;
 @end

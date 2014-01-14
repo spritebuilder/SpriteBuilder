@@ -41,11 +41,11 @@
     IBOutlet NSView* viewCCB;
     
     // Image previews
-    IBOutlet CCBImageView* previewMain;
-    IBOutlet CCBImageView* previewPhone;
-    IBOutlet CCBImageView* previewPhonehd;
-    IBOutlet CCBImageView* previewTablet;
-    IBOutlet CCBImageView* previewTablethd;
+    IBOutlet CCBImageView* __weak previewMain;
+    IBOutlet CCBImageView* __weak previewPhone;
+    IBOutlet CCBImageView* __weak previewPhonehd;
+    IBOutlet CCBImageView* __weak previewTablet;
+    IBOutlet CCBImageView* __weak previewTablethd;
     
     // Sprite sheet previews
     IBOutlet CCBImageView* previewSpriteSheet;
@@ -65,19 +65,19 @@
     
     RMResource* _previewedResource;
 }
-@property (nonatomic,readonly) AppDelegate* appDelegate;
+@property (weak, nonatomic,readonly) AppDelegate* appDelegate;
 
-@property (nonatomic,readonly) IBOutlet CCBImageView* previewMain;
-@property (nonatomic,readonly) IBOutlet CCBImageView* previewPhone;
-@property (nonatomic,readonly) IBOutlet CCBImageView* previewPhonehd;
-@property (nonatomic,readonly) IBOutlet CCBImageView* previewTablet;
-@property (nonatomic,readonly) IBOutlet CCBImageView* previewTablethd;
+@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewMain;
+@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewPhone;
+@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewPhonehd;
+@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewTablet;
+@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewTablethd;
 
-@property (nonatomic,retain) NSImage* imgMain;
-@property (nonatomic,retain) NSImage* imgPhone;
-@property (nonatomic,retain) NSImage* imgPhonehd;
-@property (nonatomic,retain) NSImage* imgTablet;
-@property (nonatomic,retain) NSImage* imgTablethd;
+@property (nonatomic,strong) NSImage* imgMain;
+@property (nonatomic,strong) NSImage* imgPhone;
+@property (nonatomic,strong) NSImage* imgPhonehd;
+@property (nonatomic,strong) NSImage* imgTablet;
+@property (nonatomic,strong) NSImage* imgTablethd;
 
 @property (nonatomic,readwrite) BOOL enabled;
 

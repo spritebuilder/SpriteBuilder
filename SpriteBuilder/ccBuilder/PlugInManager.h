@@ -44,7 +44,7 @@
 @property (nonatomic,readonly) NSMutableArray* plugInsNodeNamesCanBeRoot;
 #endif
 
-@property (nonatomic,retain) NSMutableArray* plugInsExporters;
+@property (nonatomic,strong) NSMutableArray* plugInsExporters;
 
 + (PlugInManager*) sharedManager;
 - (void) loadPlugIns;

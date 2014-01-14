@@ -271,16 +271,9 @@
     
     [[CocosScene cocosScene].rootNode duplicateKeyframesFromSequenceId:sequenceId toSequenceId:seqId];
     
-    return [copy autorelease];
+    return copy;
 }
 
-- (void) dealloc
-{
-    self.name = NULL;
-    [callbackChannel release];
-    [soundChannel release];
-    [super dealloc];
-}
 
 - (id) copyWithZone:(NSZone*)zone
 {
@@ -296,8 +289,6 @@
     copy.chainedSequenceId = chainedSequenceId;
     copy.autoPlay = autoPlay;
     
-    [copy->callbackChannel release];
-    [copy->soundChannel release];
     
     copy->callbackChannel = [callbackChannel copy];
     copy->soundChannel = [soundChannel copy];

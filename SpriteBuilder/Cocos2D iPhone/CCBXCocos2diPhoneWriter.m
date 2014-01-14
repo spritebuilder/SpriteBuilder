@@ -80,15 +80,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [data release];
-    [propTypes release];
-    [stringCacheLookup release];
-    [stringCache release];
-    [serializedProjectSettings release];
-    [super dealloc];
-}
 
 - (int) propTypeIdForName:(NSString*)prop
 {
@@ -770,7 +761,7 @@
         [stringCacheLookup setObject:[NSNumber numberWithInt:i] forKey:str];
     }
     
-    stringCache = [stringCacheSortedReverse retain];
+    stringCache = stringCacheSortedReverse;
 }
 
 - (void) writeHeader
@@ -1068,7 +1059,7 @@
         
         NSAssert(type, @"Failed to find custom type");
         
-        [self writeProperty:value type:type name:name platform:kCCBXPlatformAll];
+        [self writeProperty:value type:type name:name platform:nil];
     }
     
     // Write physics

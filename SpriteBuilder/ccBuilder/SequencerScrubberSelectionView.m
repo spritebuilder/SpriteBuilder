@@ -45,8 +45,8 @@
     self = [super initWithFrame:frame];
     if (!self) return NULL;
     
-    imgScrubHandle = [[NSImage imageNamed:@"seq-scrub-handle.png"] retain];
-    imgScrubLine = [[NSImage imageNamed:@"seq-scrub-line.png"] retain];
+    imgScrubHandle = [NSImage imageNamed:@"seq-scrub-handle.png"];
+    imgScrubLine = [NSImage imageNamed:@"seq-scrub-line.png"];
     
     return self;
 }
@@ -961,12 +961,5 @@
     return NULL;
 }
 
-- (void) dealloc
-{
-    [imgScrubHandle release];
-    [imgScrubLine release];
-    self.lastDragEvent = NULL;
-    [super dealloc];
-}
 
 @end

@@ -33,7 +33,7 @@
     IBOutlet NSArrayController* arrayController;
 }
 
-@property (nonatomic,retain) NSMutableArray* resolutions;
+@property (nonatomic,strong) NSMutableArray* resolutions;
 - (void) copyResolutions:(NSMutableArray *)res;
 
 @end

@@ -53,18 +53,15 @@
 }
 
 - (void)dealloc {
-    [image release];
-    [imageAlt release];
     image = nil;
     imageAlt = nil;
-    [super dealloc];
 }
 
 - copyWithZone:(NSZone *)zone
 {
     ImageAndTextCell *cell = (ImageAndTextCell *)[super copyWithZone:zone];
-    cell->image = [image retain];
-    cell->imageAlt = [imageAlt retain];
+    cell->image = image;
+    cell->imageAlt = imageAlt;
     return cell;
 }
 
@@ -72,8 +69,7 @@
 {
     if (anImage != image)
 	{
-        [image release];
-        image = [anImage retain];
+        image = anImage;
     }
 }
 
@@ -86,8 +82,7 @@
 {
     if (anImage != imageAlt)
     {
-        [imageAlt release];
-        imageAlt = [anImage retain];
+        imageAlt = anImage;
     }
 }
 

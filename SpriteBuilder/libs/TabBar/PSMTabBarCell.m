@@ -73,12 +73,9 @@
 }
 
 - (void)dealloc {
-	[_countColor release];
 
 	[_indicator removeFromSuperviewWithoutNeedingDisplay];
 
-	[_indicator release];
-	[super dealloc];
 }
 
 #pragma mark -
@@ -233,8 +230,7 @@
 }
 
 - (void)setCountColor:(NSColor *)color {
-	[_countColor release];
-	_countColor = [color retain];
+	_countColor = color;
 }
 
 - (BOOL)isPlaceholder {
@@ -358,11 +354,11 @@
 	//NSRect cellFrame = [self frame];
 
 	[_ctrlView lockFocus];
-	NSBitmapImageRep *rep = [[[NSBitmapImageRep alloc] initWithFocusedViewRect:cellFrame] autorelease];
+	NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithFocusedViewRect:cellFrame];
 	[_ctrlView unlockFocus];
-	NSImage *image = [[[NSImage alloc] initWithSize:[rep size]] autorelease];
+	NSImage *image = [[NSImage alloc] initWithSize:[rep size]];
 	[image addRepresentation:rep];
-	NSImage *returnImage = [[[NSImage alloc] initWithSize:[rep size]] autorelease];
+	NSImage *returnImage = [[NSImage alloc] initWithSize:[rep size]];
 	[returnImage lockFocus];
 	[image compositeToPoint:NSMakePoint(0.0, 0.0) operation:NSCompositeSourceOver fraction:1.0];
 	[returnImage unlockFocus];
@@ -372,7 +368,6 @@
 		NSPoint indicatorPoint = NSMakePoint([self frame].size.width - MARGIN_X - kPSMTabBarIndicatorWidth, MARGIN_Y);
 		[pi compositeToPoint:indicatorPoint operation:NSCompositeSourceOver fraction:1.0];
 		[returnImage unlockFocus];
-		[pi release];
 	}
 	return returnImage;
 }
@@ -416,7 +411,7 @@
 			_cellTrackingTag = [aDecoder decodeIntegerForKey:@"cellTrackingTag"];
 			_closeButtonOver = [aDecoder decodeBoolForKey:@"closeButtonOver"];
 			_closeButtonPressed = [aDecoder decodeBoolForKey:@"closeButtonPressed"];
-			_indicator = [[aDecoder decodeObjectForKey:@"indicator"] retain];
+			_indicator = [aDecoder decodeObjectForKey:@"indicator"];
 			_isInOverflowMenu = [aDecoder decodeBoolForKey:@"isInOverflowMenu"];
 			_hasCloseButton = [aDecoder decodeBoolForKey:@"hasCloseButton"];
 			_isCloseButtonSuppressed = [aDecoder decodeBoolForKey:@"isCloseButtonSuppressed"];

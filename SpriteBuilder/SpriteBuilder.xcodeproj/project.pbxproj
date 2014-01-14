@@ -299,9 +299,9 @@
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
 		E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3127AA416C1D8E600D09AA4 /* CCBDirectoryComparer.m */; };
 		E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */; };
-		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; };
+		E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973216CC377700A09155 /* SequencerPopoverBlock.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E312973516CC677400A09155 /* SequencerPopoverSound.xib in Resources */ = {isa = PBXBuildFile; fileRef = E312973416CC677400A09155 /* SequencerPopoverSound.xib */; };
-		E312973816CC67CB00A09155 /* SequencerPopoverSound.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973716CC67CA00A09155 /* SequencerPopoverSound.m */; };
+		E312973816CC67CB00A09155 /* SequencerPopoverSound.m in Sources */ = {isa = PBXBuildFile; fileRef = E312973716CC67CA00A09155 /* SequencerPopoverSound.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		E312EDC616AF71FE000778C8 /* CCBReaderInternalRenamedProps.plist in Resources */ = {isa = PBXBuildFile; fileRef = E312EDC516AF71FE000778C8 /* CCBReaderInternalRenamedProps.plist */; };
 		E318CB3916D83F3B00348E0D /* InspectorPopoverFloatXY.xib in Resources */ = {isa = PBXBuildFile; fileRef = E318CB3816D83F3B00348E0D /* InspectorPopoverFloatXY.xib */; };
 		E3214C4115D3BF4D002413A7 /* CustomPropSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3214C4015D3BF4D002413A7 /* CustomPropSettingsWindow.xib */; };
@@ -362,10 +362,10 @@
 		E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */ = {isa = PBXBuildFile; fileRef = E34E5D701535B34F000201FB /* ruler-mark-origin.png */; };
 		E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = E34E5D721535BC5E000201FB /* ruler-numbers.png */; };
 		E3583FB01756C228002DF0B0 /* ResourceManagerPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3583FAF1756C228002DF0B0 /* ResourceManagerPreviewView.xib */; };
-		E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135115B038D700C9AA15 /* ThoMoClientStub.m */; };
-		E35A136015B038D700C9AA15 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135615B038D700C9AA15 /* ThoMoNetworkStub.m */; };
-		E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135915B038D700C9AA15 /* ThoMoServerStub.m */; };
-		E35A136215B038D700C9AA15 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135D15B038D700C9AA15 /* ThoMoTCPConnection.m */; };
+		E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135115B038D700C9AA15 /* ThoMoClientStub.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E35A136015B038D700C9AA15 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135615B038D700C9AA15 /* ThoMoNetworkStub.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135915B038D700C9AA15 /* ThoMoServerStub.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E35A136215B038D700C9AA15 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135D15B038D700C9AA15 /* ThoMoTCPConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E35A2D8D1540111A00F78B72 /* position-0.png in Resources */ = {isa = PBXBuildFile; fileRef = E35A2D871540111A00F78B72 /* position-0.png */; };
 		E35A2D8E1540111A00F78B72 /* position-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E35A2D881540111A00F78B72 /* position-1.png */; };
 		E35A2D8F1540111A00F78B72 /* position-2.png in Resources */ = {isa = PBXBuildFile; fileRef = E35A2D891540111A00F78B72 /* position-2.png */; };
@@ -532,8 +532,8 @@
 		E3C3660114EA0507007CD5FF /* TexturePropertySetter.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C3660014EA0507007CD5FF /* TexturePropertySetter.m */; };
 		E3C3660414EB2C1B007CD5FF /* CCBReaderInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C3660314EB2C1B007CD5FF /* CCBReaderInternal.m */; };
 		E3C5C1A41504D17E000CF6F3 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1A31504D17E000CF6F3 /* ResourceManager.m */; };
-		E3C5C1AC1504D30C000CF6F3 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1A81504D30C000CF6F3 /* SCEvent.m */; };
-		E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1AB1504D30C000CF6F3 /* SCEvents.m */; };
+		E3C5C1AC1504D30C000CF6F3 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1A81504D30C000CF6F3 /* SCEvent.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1AB1504D30C000CF6F3 /* SCEvents.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1B415075CDD000CF6F3 /* ResourceManagerUtil.m */; };
 		E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C5C1C81508F35E000CF6F3 /* CCBAnimationParser.m */; };
 		E3C65106151A3B7C00D639C0 /* InspectorString.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3C65105151A3B7C00D639C0 /* InspectorString.xib */; };
@@ -5163,6 +5163,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5207,6 +5209,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5251,6 +5255,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5297,6 +5302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5340,6 +5346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5386,6 +5393,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5429,6 +5437,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5475,6 +5484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5518,6 +5528,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5564,6 +5575,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5607,6 +5619,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5653,6 +5666,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5696,6 +5710,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5742,6 +5757,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5785,6 +5801,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5831,6 +5848,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5874,6 +5892,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5920,6 +5939,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5964,6 +5984,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -5995,6 +6016,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6022,6 +6044,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6053,6 +6076,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6080,6 +6104,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6111,6 +6136,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6138,6 +6164,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6169,6 +6196,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6196,6 +6224,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6227,6 +6256,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6254,6 +6284,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6281,6 +6312,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6304,6 +6336,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6336,6 +6369,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6364,6 +6398,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6395,6 +6430,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6422,6 +6458,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6453,6 +6490,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;

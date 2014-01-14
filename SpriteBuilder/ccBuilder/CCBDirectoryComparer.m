@@ -31,7 +31,7 @@
     self = [super init];
     if (!self) return NULL;
     
-    _files = [[NSMutableDictionary dictionary] retain];
+    _files = [NSMutableDictionary dictionary];
     
     return self;
 }
@@ -116,10 +116,5 @@
     return diff;
 }
 
-- (void) dealloc
-{
-    [super dealloc];
-    [_files release];
-}
 
 @end

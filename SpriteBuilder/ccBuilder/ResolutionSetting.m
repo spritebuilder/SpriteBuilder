@@ -95,8 +95,6 @@
 
 - (void) setExt:(NSString *)e
 {
-    [ext release];
-    [exts release];
     
     ext = [e copy];
     
@@ -106,22 +104,19 @@
     }
     else
     {
-        exts = [[e componentsSeparatedByString:@" "] retain];
+        exts = [e componentsSeparatedByString:@" "];
     }
 }
 
 - (void) dealloc
 {
-    self.name = NULL;
     self.ext = NULL;
-    [exts release];
     
-    [super dealloc];
 }
 
 + (ResolutionSetting*) settingFixed
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Fixed";
     setting.width = 0;
@@ -157,7 +152,7 @@
 
 + (ResolutionSetting*) settingIPhone
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Phone";
     setting.width = 0;
@@ -214,7 +209,7 @@
 
 + (ResolutionSetting*) settingIPad
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Tablet";
     setting.width = 0;
@@ -249,7 +244,7 @@
 
 + (ResolutionSetting*) settingAndroidXSmall
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Android X-Small";
     setting.width = 0;
@@ -284,7 +279,7 @@
 
 + (ResolutionSetting*) settingAndroidSmall
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Android Small";
     setting.width = 0;
@@ -319,7 +314,7 @@
 
 + (ResolutionSetting*) settingAndroidMedium
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Android Medium";
     setting.width = 0;
@@ -354,7 +349,7 @@
 
 + (ResolutionSetting*) settingAndroidLarge
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Android Large";
     setting.width = 0;
@@ -389,7 +384,7 @@
 
 + (ResolutionSetting*) settingAndroidXLarge
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"Android X-Large";
     setting.width = 0;
@@ -424,7 +419,7 @@
 
 + (ResolutionSetting*) settingHTML5
 {
-    ResolutionSetting* setting = [[[ResolutionSetting alloc] init] autorelease];
+    ResolutionSetting* setting = [[ResolutionSetting alloc] init];
     
     setting.name = @"HTML 5";
     setting.width = 0;

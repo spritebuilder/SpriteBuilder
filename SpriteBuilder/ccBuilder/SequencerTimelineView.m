@@ -36,21 +36,21 @@
     // Load graphic assets
     
     // Background
-    imgBg = [[NSImage imageNamed:@"seq-tl-bg.png"] retain];
+    imgBg = [NSImage imageNamed:@"seq-tl-bg.png"];
     [imgBg setFlipped:YES];
     
     // Markers
-    imgMarkMajor = [[NSImage imageNamed:@"seq-tl-mark-major.png"] retain];
-    imgMarkMinor = [[NSImage imageNamed:@"seq-tl-mark-minor.png"] retain];
+    imgMarkMajor = [NSImage imageNamed:@"seq-tl-mark-major.png"];
+    imgMarkMinor = [NSImage imageNamed:@"seq-tl-mark-minor.png"];
     
     [imgMarkMajor setFlipped:YES];
     [imgMarkMinor setFlipped:YES];
     
-    imgEndmarker = [[NSImage imageNamed:@"seq-endmarker.png"] retain];
-    imgStartmarker = [[NSImage imageNamed:@"seq-startmarker.png"] retain];
+    imgEndmarker = [NSImage imageNamed:@"seq-endmarker.png"];
+    imgStartmarker = [NSImage imageNamed:@"seq-startmarker.png"];
     
     // Numbers
-    imgNumbers = [[NSImage imageNamed:@"ruler-numbers.png"] retain];
+    imgNumbers = [NSImage imageNamed:@"ruler-numbers.png"];
     
     // Rects for the individual numbers
     for (int i = 0; i < 10; i++)
@@ -132,12 +132,5 @@
 
 }
 
-- (void) dealloc
-{
-    [imgBg release];
-    [imgEndmarker release];
-    [imgStartmarker release];
-    [super dealloc];
-}
 
 @end

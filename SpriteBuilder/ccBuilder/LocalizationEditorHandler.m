@@ -33,7 +33,7 @@
     languages = [[NSMutableArray alloc] init];
     for (NSString* isoCode in isoCodes)
     {
-        LocalizationEditorLanguage* lang = [[[LocalizationEditorLanguage alloc] initWithIsoLangCode:isoCode] autorelease];
+        LocalizationEditorLanguage* lang = [[LocalizationEditorLanguage alloc] initWithIsoLangCode:isoCode];
         [languages addObject:lang];
     }
     
@@ -113,7 +113,7 @@
     for (id serTransl in serTranslations)
     {
         // Decode a translation and add it
-        LocalizationEditorTranslation* transl = [[[LocalizationEditorTranslation alloc] initWithSerialization:serTransl] autorelease];
+        LocalizationEditorTranslation* transl = [[LocalizationEditorTranslation alloc] initWithSerialization:serTransl];
         if (transl) [translations addObject:transl];
     }
     
@@ -129,7 +129,7 @@
     
     if (activeLanguages.count == 0)
     {
-        NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:@"No Languages Available" action:NULL keyEquivalent:@""] autorelease];
+        NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:@"No Languages Available" action:NULL keyEquivalent:@""];
         [item setEnabled:NO];
         [languageMenu addItem:item];
     }
@@ -159,7 +159,6 @@
 {
     if (file == managedFile) return;
     
-    [managedFile release];
     managedFile = [file copy];
     
     [self reset];
@@ -328,7 +327,7 @@
 {
     if (![self hasTranslationForKey:key])
     {
-        LocalizationEditorTranslation* transl = [[[LocalizationEditorTranslation alloc] init] autorelease];
+        LocalizationEditorTranslation* transl = [[LocalizationEditorTranslation alloc] init];
         transl.key = key;
         [translations addObject:transl];
         [windowController reload];
@@ -347,13 +346,5 @@
     }
 }
 
-- (void) dealloc
-{
-    [languages release];
-    [activeLanguages release];
-    [windowController release];
-    [translations release];
-    [super dealloc];
-}
 
 @end

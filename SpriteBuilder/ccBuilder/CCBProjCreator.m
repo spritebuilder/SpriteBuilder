@@ -32,7 +32,6 @@
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
-    [zipTask release];
     
     // Rename ccbproj
     [fm moveItemAtPath:[[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"PROJECTNAME.ccbproj"] toPath:fileName error:NULL];
@@ -94,7 +93,6 @@
     [renameTask setArguments:args];
     [renameTask launch];
     [renameTask waitUntilExit];
-    [renameTask release];
 }
 
 

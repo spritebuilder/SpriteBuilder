@@ -38,8 +38,8 @@
     self.stopName = [bntNames objectAtIndex:1];
     
     NSArray* methodNames = [extra componentsSeparatedByString:@"|"];
-    startMethod = [[methodNames objectAtIndex:0] retain];
-    stopMethod = [[methodNames objectAtIndex:1] retain];
+    startMethod = [methodNames objectAtIndex:0];
+    stopMethod = [methodNames objectAtIndex:1];
     
     return self;
 }
@@ -58,11 +58,8 @@
 
 - (void) dealloc
 {
-    [startMethod release];
-    [stopMethod release];
     self.startName = NULL;
     self.stopName = NULL;
-    [super dealloc];
 }
 
 @end

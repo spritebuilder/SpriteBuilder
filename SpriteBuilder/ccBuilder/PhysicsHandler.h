@@ -36,7 +36,7 @@
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;
 @property (nonatomic,assign) BOOL selectedNodePhysicsEnabled;
-@property (nonatomic,retain) NodePhysicsBody* selectedNodePhysicsBody;
+@property (nonatomic,strong) NodePhysicsBody* selectedNodePhysicsBody;
 
 - (void) willChangeSelection;
 - (void) didChangeSelection;

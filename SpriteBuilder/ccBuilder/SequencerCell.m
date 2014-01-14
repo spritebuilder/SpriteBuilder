@@ -414,54 +414,54 @@
     
     if (!imagesLoaded)
     {
-        imgKeyframe = [[NSImage imageNamed:@"seq-keyframe.png"] retain];
+        imgKeyframe = [NSImage imageNamed:@"seq-keyframe.png"];
         [imgKeyframe setFlipped:YES];
         
-        imgKeyframeSel = [[NSImage imageNamed:@"seq-keyframe-sel.png"] retain];
+        imgKeyframeSel = [NSImage imageNamed:@"seq-keyframe-sel.png"];
         [imgKeyframeSel setFlipped:YES];
         
-        imgRowBg0 = [[NSImage imageNamed:@"seq-row-0-bg.png"] retain];
+        imgRowBg0 = [NSImage imageNamed:@"seq-row-0-bg.png"];
         [imgRowBg0 setFlipped:YES];
         
-        imgRowBg1 = [[NSImage imageNamed:@"seq-row-1-bg.png"] retain];
+        imgRowBg1 = [NSImage imageNamed:@"seq-row-1-bg.png"];
         [imgRowBg1 setFlipped:YES];
         
-        imgRowBgN = [[NSImage imageNamed:@"seq-row-n-bg.png"] retain];
+        imgRowBgN = [NSImage imageNamed:@"seq-row-n-bg.png"];
         [imgRowBgN setFlipped:YES];
         
-        imgRowBgChannel = [[NSImage imageNamed:@"seq-row-channel-bg.png"] retain];
+        imgRowBgChannel = [NSImage imageNamed:@"seq-row-channel-bg.png"];
         
-        imgInterpol = [[NSImage imageNamed:@"seq-keyframe-interpol.png"] retain];
+        imgInterpol = [NSImage imageNamed:@"seq-keyframe-interpol.png"];
         [imgInterpol setFlipped:YES];
         
-        imgEaseIn = [[NSImage imageNamed:@"seq-keyframe-easein.png"] retain];
+        imgEaseIn = [NSImage imageNamed:@"seq-keyframe-easein.png"];
         [imgEaseIn setFlipped:YES];
         
-        imgEaseOut = [[NSImage imageNamed:@"seq-keyframe-easeout.png"] retain];
+        imgEaseOut = [NSImage imageNamed:@"seq-keyframe-easeout.png"];
         [imgEaseOut setFlipped:YES];
         
-        imgInterpolVis = [[NSImage imageNamed:@"seq-keyframe-interpol-vis.png"] retain];
+        imgInterpolVis = [NSImage imageNamed:@"seq-keyframe-interpol-vis.png"];
         [imgInterpolVis setFlipped:YES];
         
-        imgKeyframeL = [[NSImage imageNamed:@"seq-keyframe-l.png"] retain];
+        imgKeyframeL = [NSImage imageNamed:@"seq-keyframe-l.png"];
         [imgKeyframeL setFlipped:YES];
         
-        imgKeyframeR = [[NSImage imageNamed:@"seq-keyframe-r.png"] retain];
+        imgKeyframeR = [NSImage imageNamed:@"seq-keyframe-r.png"];
         [imgKeyframeR setFlipped:YES];
         
-        imgKeyframeLSel = [[NSImage imageNamed:@"seq-keyframe-l-sel.png"] retain];
+        imgKeyframeLSel = [NSImage imageNamed:@"seq-keyframe-l-sel.png"];
         [imgKeyframeLSel setFlipped:YES];
         
-        imgKeyframeRSel = [[NSImage imageNamed:@"seq-keyframe-r-sel.png"] retain];
+        imgKeyframeRSel = [NSImage imageNamed:@"seq-keyframe-r-sel.png"];
         [imgKeyframeRSel setFlipped:YES];
         
-        imgKeyframeHint = [[NSImage imageNamed:@"seq-keyframe-hint.png"] retain];
+        imgKeyframeHint = [NSImage imageNamed:@"seq-keyframe-hint.png"];
         [imgKeyframeHint setFlipped:YES];
 
-        imgKeyframeLrg = [[NSImage imageNamed:@"seq-keyframe-x4.png"] retain];
+        imgKeyframeLrg = [NSImage imageNamed:@"seq-keyframe-x4.png"];
         [imgKeyframeLrg setFlipped:YES];
         
-        imgKeyframeSelLrg = [[NSImage imageNamed:@"seq-keyframe-x4-sel.png"] retain];
+        imgKeyframeSelLrg = [NSImage imageNamed:@"seq-keyframe-x4-sel.png"];
         [imgKeyframeSelLrg setFlipped:YES];
         
     }
@@ -497,23 +497,5 @@
     [gc restoreGraphicsState];
 }
 
-- (void) dealloc
-{
-    [imgKeyframe release];
-    [imgKeyframeSel release];
-    [imgRowBg0 release];
-    [imgRowBg1 release];
-    [imgRowBgN release];
-    [imgInterpol release];
-    [imgEaseIn release];
-    [imgEaseOut release];
-    [imgInterpolVis release];
-    [imgKeyframeL release];
-    [imgKeyframeR release];
-    [imgKeyframeLSel release];
-    [imgKeyframeRSel release];
-    [imgKeyframeHint release];
-    [super dealloc];
-}
 
 @end

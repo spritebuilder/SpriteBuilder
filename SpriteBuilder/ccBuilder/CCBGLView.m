@@ -127,4 +127,9 @@
     [[CocosScene cocosScene] cursorUpdate:event];
 }
 
+-(void) dealloc
+{
+	SBLogSelf();
+}
+
 @end

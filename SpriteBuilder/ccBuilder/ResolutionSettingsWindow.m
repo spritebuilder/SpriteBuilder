@@ -70,7 +70,7 @@
     int i = 0;
     for (ResolutionSetting* setting in predefinedResolutions)
     {
-        NSMenuItem* item = [[[NSMenuItem alloc] initWithTitle:setting.name action:@selector(addPredefined:) keyEquivalent:@""] autorelease];
+        NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:setting.name action:@selector(addPredefined:) keyEquivalent:@""];
         item.target = self;
         item.tag = i;
         [addPredefinedPopup.menu addItem:item];
@@ -81,12 +81,11 @@
 
 - (void) copyResolutions:(NSMutableArray *)res
 {
-    [resolutions release];
-    resolutions = [[NSMutableArray arrayWithCapacity:[res count]] retain];
+    resolutions = [NSMutableArray arrayWithCapacity:[res count]];
     
     for (ResolutionSetting* resolution in res)
     {
-        [resolutions addObject:[[resolution copy] autorelease]];
+        [resolutions addObject:[resolution copy]];
     }
 }
 
@@ -112,11 +111,5 @@
     [arrayController addObject:setting];
 }
 
-- (void) dealloc
-{
-    [resolutions release];
-    [predefinedResolutions release];
-    [super dealloc];
-}
 
 @end

@@ -29,6 +29,6 @@
     NSString* imagePath;
 }
 
-@property (nonatomic,retain) NSString* imagePath;
+@property (nonatomic,strong) NSString* imagePath;
 
 @end

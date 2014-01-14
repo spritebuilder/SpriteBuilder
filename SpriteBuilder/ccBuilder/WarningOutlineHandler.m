@@ -14,19 +14,15 @@
 
 -(void)updateWithWarnings:(CCBWarnings *)_ccbWarnings
 {
-    [ccbWarnings release];
     ccbWarnings = nil;
     
     ccbWarnings = _ccbWarnings;
-    [ccbWarnings retain];
     
 }
 
 -(void)dealloc
 {
-    [super dealloc];
     
-    [ccbWarnings release];
     ccbWarnings = nil;
 }
 

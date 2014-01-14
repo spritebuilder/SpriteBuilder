@@ -29,7 +29,7 @@
     NSString* contents;
 }
 
-@property (nonatomic,retain) NSString* contents;
+@property (nonatomic,strong) NSString* contents;
 
 - (id) initWithTemplateFile:(NSString*)fileName;
 

@@ -73,7 +73,7 @@
 @property (nonatomic,readonly) NSString* requireParentClass;
 @property (nonatomic,readonly) NSArray* requireChildClass;
 @property (nonatomic,readonly) NSString* positionProperty;
-@property (nonatomic,retain) NSImage* icon;
+@property (nonatomic,strong) NSImage* icon;
 
 - (BOOL) dontSetInEditorProperty: (NSString*) prop;
 

@@ -52,8 +52,8 @@
     if (!self) return NULL;
     
     // Save settings and warning log
-    projectSettings = [settings retain];
-    warnings = [w retain];
+    projectSettings = settings;
+    warnings = w;
     
     // Setup extensions to copy
     copyExtensions = [[NSArray alloc] initWithObjects:@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
@@ -523,10 +523,6 @@
                     dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
                 }
                 
-                NSString* relPath = fileName;
-                if (subPath) relPath = [subPath stringByAppendingPathComponent:fileName];
-                
-            
                 // Copy file (and possibly convert)
                 if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
                 {
@@ -863,14 +859,18 @@
     // Generate Cocos2d setup file
     NSMutableDictionary* configCocos2d = [NSMutableDictionary dictionary];
     
-    NSString* screenMode = NULL;
-    if (projectSettings.designTarget == kCCBDesignTargetFixed) screenMode = @"CCScreenModeFixed";
-    else if (projectSettings.designTarget == kCCBDesignTargetFlexible) screenMode = @"CCScreenModeFlexible";
+    NSString* screenMode = @"";
+    if (projectSettings.designTarget == kCCBDesignTargetFixed)
+		screenMode = @"CCScreenModeFixed";
+    else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+		screenMode = @"CCScreenModeFlexible";
     [configCocos2d setObject:screenMode forKey:@"CCSetupScreenMode"];
     
-    NSString* screenOrientation = NULL;
-    if (projectSettings.defaultOrientation == kCCBOrientationLandscape) screenOrientation = @"CCScreenOrientationLandscape";
-    else if (projectSettings.defaultOrientation == kCCBOrientationPortrait) screenOrientation = @"CCScreenOrientationPortrait";
+    NSString* screenOrientation = @"";
+    if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+		screenOrientation = @"CCScreenOrientationLandscape";
+    else if (projectSettings.defaultOrientation == kCCBOrientationPortrait)
+		screenOrientation = @"CCScreenOrientationPortrait";
     [configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
     
     [configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
@@ -921,7 +921,6 @@
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
-    [zipTask release];
     
     return [manager fileExistsAtPath:file];
 }
@@ -936,7 +935,7 @@
     [manager removeItemAtPath:file error:NULL];
     
     // Create diff
-    CCBDirectoryComparer* dc = [[[CCBDirectoryComparer alloc] init] autorelease];
+    CCBDirectoryComparer* dc = [[CCBDirectoryComparer alloc] init];
     [dc loadDirectory:outputDir];
     NSArray* fileList = [dc diffWithFiles:diffFiles];
     
@@ -955,7 +954,6 @@
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
-    [zipTask release];
     
     return [manager fileExistsAtPath:file];
 }
@@ -1149,14 +1147,5 @@
     [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
 }
 
-- (void) dealloc
-{
-    [copyExtensions release];
-    [warnings release];
-    [projectSettings release];
-    [publishedSpriteSheetNames release];
-    [publishedSpriteSheetFiles release];
-    [super dealloc];
-}
 
 @end

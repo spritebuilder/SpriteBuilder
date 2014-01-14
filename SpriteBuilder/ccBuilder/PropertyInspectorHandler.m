@@ -48,7 +48,7 @@
         return;
     }
     
-    PropertyInspectorTemplate* templ = [[[PropertyInspectorTemplate alloc] initWithNode:node name:newName bgColor:newTemplateBgColor.color] autorelease];
+    PropertyInspectorTemplate* templ = [[PropertyInspectorTemplate alloc] initWithNode:node name:newName bgColor:newTemplateBgColor.color];
     
     [templateLibrary addTemplate:templ];
     
@@ -111,7 +111,6 @@
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
-    [zipTask release];
 }
 
 - (void) loadTemplateLibrary

@@ -53,12 +53,12 @@
 {
 	AVPlayer *player;
 	
-    NSButton *playPauseButton;
-	NSSlider *timeSlider;
-    NSTextField *durationLabel;
-    NSTextField *sampleRateLabel;
-    NSTextField *channelLabel;
-    NSImageView *imageWaveform;
+    __weak NSButton *playPauseButton;
+	__weak NSSlider *timeSlider;
+    __weak NSTextField *durationLabel;
+    __weak NSTextField *sampleRateLabel;
+    __weak NSTextField *channelLabel;
+    __weak NSImageView *imageWaveform;
 	
 	id timeObserverToken;
 }
@@ -69,12 +69,12 @@
 @property (readonly) double duration;
 @property (assign) float volume;
 
-@property (assign) IBOutlet NSButton *playPauseButton;
-@property (assign) IBOutlet NSSlider *timeSlider;
-@property (assign) IBOutlet NSTextField *durationLabel;
-@property (assign) IBOutlet NSTextField *sampleRateLabel;
-@property (assign) IBOutlet NSTextField *channelLabel;
-@property (assign) IBOutlet NSImageView *imageWaveform;
+@property (weak) IBOutlet NSButton *playPauseButton;
+@property (weak) IBOutlet NSSlider *timeSlider;
+@property (weak) IBOutlet NSTextField *durationLabel;
+@property (weak) IBOutlet NSTextField *sampleRateLabel;
+@property (weak) IBOutlet NSTextField *channelLabel;
+@property (weak) IBOutlet NSImageView *imageWaveform;
 
 @property (retain) id timeObserverToken;
 

@@ -43,10 +43,6 @@ static NSInteger strSort(id num1, id num2, void *context)
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 + (BOOL) isAnimationFileDict:(NSDictionary*)dict
 {    

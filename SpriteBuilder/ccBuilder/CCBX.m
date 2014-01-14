@@ -38,10 +38,5 @@
     return NULL;
 }
 
-- (void) dealloc
-{
-    [serializedProjectSettings release];
-    [super dealloc];
-}
 
 @end

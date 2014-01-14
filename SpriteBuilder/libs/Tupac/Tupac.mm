@@ -72,7 +72,7 @@ typedef struct _PVRTexHeader
 
 + (Tupac*) tupac
 {
-    return [[[Tupac alloc] init] autorelease];
+    return [[Tupac alloc] init];
 }
 
 - (id)init
@@ -89,23 +89,12 @@ typedef struct _PVRTexHeader
     return self;
 }
 
-- (void)dealloc
-{
-    [filenames_ release];
-    [outputName_ release];
-    [outputFormat_ release];
-    [errorMessage release];
-    [_previewFile release];
-    
-    [super dealloc];
-}
 
 - (void)setErrorMessage:(NSString *)em
 {
     if (em != errorMessage)
     {
-        [errorMessage release];
-        errorMessage = [em retain];
+        errorMessage = em;
     }
 }
 
@@ -194,7 +183,6 @@ typedef struct _PVRTexHeader
     // Reset the error message
     if (errorMessage)
     {
-        [errorMessage release];
         errorMessage = NULL;
     }
     
@@ -216,7 +204,7 @@ typedef struct _PVRTexHeader
     for (NSString *filename in self.filenames)
     {
         // Load CGImage
-				CGImageSourceRef image_source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:filename], NULL);
+				CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:filename], NULL);
 				CGImageRef srcImage = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
         
         // Get info
@@ -403,7 +391,7 @@ typedef struct _PVRTexHeader
     
     NSString *pngFilename  = [self.outputName stringByAppendingPathExtension:@"png"];
     
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:pngFilename];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:pngFilename];
     CGImageRef imageDst = CGBitmapContextCreateImage(dstContext);
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
     CGImageDestinationAddImage(destination, imageDst, nil);
@@ -489,7 +477,6 @@ typedef struct _PVRTexHeader
         [metadata setObject:NSStringFromSize(NSMakeSize(outW, outH))        forKey:@"size"];
         
         [outDict writeToFile:[self.outputName stringByAppendingPathExtension:@"plist"] atomically:YES];
-        [outDict release];
     }
     else if ([self.outputFormat isEqualToString:TupacOutputFormatAndEngine]) {
         fprintf(stderr, "[MO] output format %s not yet supported\n", [self.outputFormat UTF8String]);

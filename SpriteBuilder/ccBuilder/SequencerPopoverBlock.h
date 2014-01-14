@@ -28,13 +28,13 @@
 
 @interface SequencerPopoverBlock : NSObject
 {
-    IBOutlet NSView* view;
+    IBOutlet NSView* __weak view;
 }
 
-@property (nonatomic,readonly) IBOutlet NSView* view;
+@property (weak, nonatomic,readonly) IBOutlet NSView* view;
 
-@property (nonatomic,assign) SequencerKeyframe* keyframe;
-@property (nonatomic,assign) NSString* selector;
+@property (nonatomic,weak) SequencerKeyframe* keyframe;
+@property (nonatomic,weak) NSString* selector;
 @property (nonatomic,assign) int target;
 
 @end

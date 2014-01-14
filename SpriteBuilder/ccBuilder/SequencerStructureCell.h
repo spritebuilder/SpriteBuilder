@@ -27,12 +27,12 @@
 
 @interface SequencerStructureCell : CCBTextFieldCell
 {
-    CCNode* node;
+    CCNode* __weak node;
     
     BOOL imagesLoaded;
     NSImage* imgRowBgChannel;
 }
 
-@property (nonatomic,assign) CCNode* node;
+@property (nonatomic,weak) CCNode* node;
 
 @end

@@ -54,7 +54,7 @@
     [previewTablet setAllowsCutCopyPaste:NO];
     [previewTablethd setAllowsCutCopyPaste:NO];
     
-    previewAudioViewController = [[[ResourceManagerPreviewAudio alloc] initWithNibName:@"ResourceManagerPreviewAudio" bundle:[NSBundle mainBundle]] retain];
+    previewAudioViewController = [[ResourceManagerPreviewAudio alloc] initWithNibName:@"ResourceManagerPreviewAudio" bundle:[NSBundle mainBundle]];
     
     previewAudioViewController.view.frame = CGRectMake(0, 0, previewSound.frame.size.width, previewSound.frame.size.height);
     
@@ -158,7 +158,7 @@
             self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
             
             NSString* imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
-            NSImage* img = [[[NSImage alloc] initWithContentsOfFile:imgPreviewPath] autorelease];
+            NSImage* img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
             if (!img)
             {
                 img = [NSImage imageNamed:@"ui-nopreview.png"];
@@ -202,7 +202,7 @@
         else if (res.type == kCCBResTypeCCBFile)
         {
             NSString* imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
-            NSImage* img = [[[NSImage alloc] initWithContentsOfFile:imgPreviewPath] autorelease];
+            NSImage* img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
             if (!img)
             {
                 img = [NSImage imageNamed:@"ui-nopreview.png"];
@@ -593,15 +593,5 @@
     else return proposedMaximumPosition;
 }
 
-- (void) dealloc
-{
-    self.imgMain = NULL;
-    self.imgPhone = NULL;
-    self.imgPhonehd = NULL;
-    self.imgTablet = NULL;
-    self.imgTablethd = NULL;
-    
-    [super dealloc];
-}
 
 @end

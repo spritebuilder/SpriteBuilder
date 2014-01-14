@@ -47,7 +47,7 @@
     
     BOOL autoPlay;
     
-    SequencerSettingsWindow* settingsWindow;
+    SequencerSettingsWindow* __weak settingsWindow;
 }
 
 @property (nonatomic,assign) float timelineScale;
@@ -62,12 +62,12 @@
 @property (nonatomic,readonly) SequencerSoundChannel* soundChannel;
 
 
-@property (nonatomic,readonly) NSString* currentDisplayTime;
-@property (nonatomic,readonly) NSString* lengthDisplayTime;
+@property (weak, nonatomic,readonly) NSString* currentDisplayTime;
+@property (weak, nonatomic,readonly) NSString* lengthDisplayTime;
 
 @property (nonatomic,assign) BOOL autoPlay;
 
-@property (nonatomic,assign) SequencerSettingsWindow* settingsWindow;
+@property (nonatomic,weak) SequencerSettingsWindow* settingsWindow;
 
 // Convert between actual time and position in sequence view
 - (float) timeToPosition:(float)time;

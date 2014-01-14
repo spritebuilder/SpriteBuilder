@@ -32,9 +32,9 @@
     BOOL flattenPaths;
 }
 
-@property (nonatomic,retain) NSArray* exporterNames;
+@property (nonatomic,strong) NSArray* exporterNames;
 @property (nonatomic,assign) int selectedIndex;
-@property (nonatomic,retain) NSSavePanel* savePanel;
+@property (nonatomic,strong) NSSavePanel* savePanel;
 @property (nonatomic,assign) BOOL flattenPaths;
 
 @end

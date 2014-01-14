@@ -40,7 +40,7 @@
     
 }
 
-@property (nonatomic,retain) CCNode* rootNode;
+@property (nonatomic,strong) CCNode* rootNode;
 
 // Settings
 @property (nonatomic,assign) int numRuns;

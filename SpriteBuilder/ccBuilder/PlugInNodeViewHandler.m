@@ -56,10 +56,5 @@
     return plugIn.icon;
 }
 
-- (void) dealloc
-{
-    [plugIns release];
-    [super dealloc];
-}
 
 @end

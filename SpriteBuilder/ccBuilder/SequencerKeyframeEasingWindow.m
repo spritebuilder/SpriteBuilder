@@ -33,10 +33,5 @@
 @synthesize option;
 @synthesize optionName;
 
-- (void) dealloc
-{
-    self.optionName = NULL;
-    [super dealloc];
-}
 
 @end

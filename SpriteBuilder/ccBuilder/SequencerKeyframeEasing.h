@@ -59,7 +59,7 @@ enum
 - (id) serialization;
 
 @property (nonatomic,assign) int type;
-@property (nonatomic,retain) id options;
+@property (nonatomic,strong) id options;
 @property (nonatomic,readonly) BOOL hasEaseIn;
 @property (nonatomic,readonly) BOOL hasEaseOut;
 @property (nonatomic,readonly) BOOL hasOptions;

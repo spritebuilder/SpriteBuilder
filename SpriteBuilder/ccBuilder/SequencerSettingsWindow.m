@@ -31,11 +31,11 @@
 
 - (void) copySequences:(NSMutableArray *)seqs
 {
-    self.sequences = [[[NSMutableArray arrayWithCapacity:[seqs count]] retain] autorelease];
+    self.sequences = [NSMutableArray arrayWithCapacity:[seqs count]];
     
     for (SequencerSequence* seq in seqs)
     {
-        SequencerSequence* seqCopy = [[seq copy] autorelease];
+        SequencerSequence* seqCopy = [seq copy];
         seqCopy.settingsWindow = self;
         [sequences addObject:seqCopy];
     }
@@ -68,10 +68,5 @@
     }
 }
 
-- (void) dealloc
-{
-    self.sequences = NULL;
-    [super dealloc];
-}
 
 @end

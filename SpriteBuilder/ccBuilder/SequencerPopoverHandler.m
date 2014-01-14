@@ -57,7 +57,7 @@
     if (!type) return;
     
     // Create a inspector value and view
-    NSViewController* vc = [[[NSViewController alloc] initWithNibName:@"SequencerPopoverView" bundle:[NSBundle mainBundle]] autorelease];
+    NSViewController* vc = [[NSViewController alloc] initWithNibName:@"SequencerPopoverView" bundle:[NSBundle mainBundle]];
     
     NSString* inspectorNibName = [NSString stringWithFormat:@"InspectorPopover%@",type];
     
@@ -74,7 +74,7 @@
     [inspectorValue willBeAdded];
     
     // Open the popover
-    NSPopover* popover = [[[NSPopover alloc] init] autorelease];
+    NSPopover* popover = [[NSPopover alloc] init];
     popover.behavior = NSPopoverBehaviorTransient;
     popover.contentSize = view.bounds.size;
     popover.contentViewController = vc;
@@ -85,7 +85,7 @@
 
 + (void) popoverChannelKeyframes:(NSArray*)kfs kfBounds:(NSRect)kfBounds overView:(NSView*) parent
 {
-    NSViewController* vc = [[[NSViewController alloc] initWithNibName:@"SequencerPopoverView" bundle:[NSBundle mainBundle]] autorelease];
+    NSViewController* vc = [[NSViewController alloc] initWithNibName:@"SequencerPopoverView" bundle:[NSBundle mainBundle]];
     
     float w = 0;
     float h = 0;
@@ -94,7 +94,7 @@
     {
         if (kf.type == kCCBKeyframeTypeCallbacks)
         {
-            SequencerPopoverBlock* owner = [[[SequencerPopoverBlock alloc] init] autorelease];
+            SequencerPopoverBlock* owner = [[SequencerPopoverBlock alloc] init];
             owner.keyframe = kf;
             [NSBundle loadNibNamed:@"SequencerPopoverBlock" owner:owner];
             NSView* view = owner.view;
@@ -110,7 +110,7 @@
         }
         else if (kf.type == kCCBKeyframeTypeSoundEffects)
         {
-            SequencerPopoverSound* owner = [[[SequencerPopoverSound alloc] init] autorelease];
+            SequencerPopoverSound* owner = [[SequencerPopoverSound alloc] init];
             owner.keyframe = kf;
             [NSBundle loadNibNamed:@"SequencerPopoverSound" owner:owner];
             NSView* view = owner.view;
@@ -129,7 +129,7 @@
     }
     
     // Open the popover
-    NSPopover* popover = [[[NSPopover alloc] init] autorelease];
+    NSPopover* popover = [[NSPopover alloc] init];
     popover.behavior = NSPopoverBehaviorTransient;
     popover.contentSize = NSMakeSize(w, h);
     popover.contentViewController = vc;

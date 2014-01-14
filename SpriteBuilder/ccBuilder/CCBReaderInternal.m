@@ -59,7 +59,7 @@ enum
     kCCBSizeTypeMultiplyResolution,
 };
 
-NSDictionary* renamedProperties = NULL;
+__strong NSDictionary* renamedProperties = nil;
 
 @implementation CCBReaderInternal
 
@@ -390,7 +390,6 @@ NSDictionary* renamedProperties = NULL;
         renamedProperties = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"CCBReaderInternalRenamedProps" ofType:@"plist"]];
         
         NSAssert(renamedProperties, @"Failed to load renamed properties dict");
-        [renamedProperties retain];
     }
     
     NSArray* props = [dict objectForKey:@"properties"];
@@ -495,7 +494,7 @@ NSDictionary* renamedProperties = NULL;
     // Physics
     if ([dict objectForKey:@"physicsBody"])
     {
-        node.nodePhysicsBody = [[[NodePhysicsBody alloc] initWithSerialization:[dict objectForKey:@"physicsBody"]] autorelease];
+        node.nodePhysicsBody = [[NodePhysicsBody alloc] initWithSerialization:[dict objectForKey:@"physicsBody"]];
     }
     
     // Selections

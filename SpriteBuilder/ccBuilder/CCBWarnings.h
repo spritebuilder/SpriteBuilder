@@ -43,7 +43,7 @@ enum {
 @property (nonatomic,copy) NSString* relatedFile;
 @property (nonatomic,assign) int targetType;
 @property (nonatomic,copy) NSString* resolution;
-@property (nonatomic,readonly) NSString* description;
+@property (weak, nonatomic,readonly) NSString* description;
 
 @property (nonatomic,assign) BOOL fatal;
 
@@ -52,12 +52,12 @@ enum {
 @interface CCBWarnings : NSObject
 {
     NSString* warningsDescription;
-    NSMutableArray* warnings;
+    NSMutableArray* __weak warnings;
     NSMutableDictionary* warningsFiles;
     
     int currentTargetType;
 }
-@property (nonatomic,readonly) NSMutableArray* warnings;
+@property (weak, nonatomic,readonly) NSMutableArray* warnings;
 @property (nonatomic,copy) NSString* warningsDescription;
 @property (nonatomic,assign) int currentTargetType;
 

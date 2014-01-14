@@ -123,7 +123,7 @@ typedef enum {
     int     cornerIndex;//Which corner of the object are we rotating?
 }
 
-@property (nonatomic,assign) CCNode* rootNode;
+@property (nonatomic) CCNode* rootNode;
 @property (nonatomic,readonly) BOOL isMouseTransforming;
 @property (nonatomic,assign) CGPoint scrollOffset;
 

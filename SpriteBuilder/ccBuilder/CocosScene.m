@@ -72,7 +72,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	CocosScene *layer = [[[CocosScene alloc] initWithAppDelegate:app] autorelease];
+	CocosScene *layer = [[CocosScene alloc] initWithAppDelegate:app];
     sharedCocosScene = layer;
 	
 	// add layer as a child to scene
@@ -84,6 +84,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 + (CocosScene*) cocosScene
 {
+	WARN(sharedCocosScene, @"sharedCocosScene is nil");
     return sharedCocosScene;
 }
 
@@ -112,8 +113,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Border layer
     borderLayer = [CCNode node];
     [self addChild:borderLayer z:1];
-    
-    CCColor* borderColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7];
+	
+	CCColor* borderColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7];
     
     borderBottom = [CCNodeColor nodeWithColor:borderColor];
     borderTop = [CCNodeColor nodeWithColor:borderColor];
@@ -319,13 +320,13 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         // Use a new autorelease pool
         // Otherwise, two successive calls to the running method (_cmd) cause a crash!
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        @autoreleasepool {
         
-        renderedScene = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
-        renderedScene.anchorPoint = ccp(0.5f,0.5f);
-        [self addChild:renderedScene];
+            renderedScene = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
+            renderedScene.anchorPoint = ccp(0.5f,0.5f);
+            [self addChild:renderedScene];
 
-        [pool drain];
+        }
     }
     
     
@@ -1053,12 +1054,11 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 -(CGPoint)projectOntoVertex:(CGPoint)point withContentSize:(CGSize)size alongAxis:(int)axis//b,r,t,l
 {
-    CGPoint v;
-    CGPoint w;
+    CGPoint v = CGPointZero;
+    CGPoint w = CGPointZero;
     
     switch (axis) {
         case 0:
-            v = CGPointZero;
             w = CGPointMake(size.width, 0.0f);
             break;
         case 1:
@@ -1072,8 +1072,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             
             break;
         case 3:
-            v =  CGPointMake(0, size.height);
-            w = CGPointZero;
+            v = CGPointMake(0, size.height);
             break;
             
         default:
@@ -1453,7 +1452,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             }
             else
             {
-                SequencerKeyframe* keyframe = [[[SequencerKeyframe alloc] init] autorelease];
+                SequencerKeyframe* keyframe = [[SequencerKeyframe alloc] init];
                 keyframe.time = seq.timelinePosition;
                 keyframe.value = value;
                 keyframe.type = type;
@@ -1605,7 +1604,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGRect rect ={ 0,0, imageSize };
     
     
-    NSBitmapImageRep *offscreenRep = [[[NSBitmapImageRep alloc]
+    NSBitmapImageRep *offscreenRep = [[NSBitmapImageRep alloc]
                                        initWithBitmapDataPlanes:NULL
                                        pixelsWide:imageSize.width
                                        pixelsHigh:imageSize.height
@@ -1616,7 +1615,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                                        colorSpaceName:NSDeviceRGBColorSpace
                                        bitmapFormat:NSAlphaFirstBitmapFormat
                                        bytesPerRow:0
-                                       bitsPerPixel:0] autorelease]; ;
+                                       bitsPerPixel:0]; ;
     
     NSGraphicsContext * graphicsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
     
@@ -1636,7 +1635,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGContextDrawImage(context, rect, maskImage);
     
     
-    NSImage*img = [[[NSImage alloc] initWithSize:imageSize] autorelease];;
+    NSImage*img = [[NSImage alloc] initWithSize:imageSize];;
     [img addRepresentation:offscreenRep];
     return img;
 }
@@ -1665,7 +1664,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         NSImage * image = [NSImage imageNamed:@"select-crosshair.png"];
         CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
-        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
+        NSCursor * cursor =  [[NSCursor alloc] initWithImage:image hotSpot:centerPoint];
         [cursor push];
     }
     else if (currentTool == kCCBToolRotate)
@@ -1675,7 +1674,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         float rotation = atan2f(cornerOrientation.y, cornerOrientation.x) - M_PI/4.0f;
         NSImage *img =[self rotateImage:image rotation:rotation];
         CGPoint centerPoint = CGPointMake(img.size.width/2, img.size.height/2);
-        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
+        NSCursor * cursor =  [[NSCursor alloc] initWithImage:img hotSpot:centerPoint];
         [cursor push];
     }
     else if(currentTool == kCCBToolScale)
@@ -1685,7 +1684,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         float rotation = atan2f(cornerOrientation.y, cornerOrientation.x) + M_PI/2.0f;
         NSImage *img =[self rotateImage:image rotation:rotation];
         CGPoint centerPoint = CGPointMake(img.size.width/2, img.size.height/2);
-        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
+        NSCursor * cursor =  [[NSCursor alloc] initWithImage:img hotSpot:centerPoint];
         [cursor push];
         
     }
@@ -1700,7 +1699,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
         CGPoint centerPoint = CGPointMake(img.size.width/2, img.size.height/2);
 
-        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:img hotSpot:centerPoint] autorelease];
+        NSCursor * cursor =  [[NSCursor alloc] initWithImage:img hotSpot:centerPoint];
         [cursor push];
         
     }
@@ -1708,7 +1707,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         NSImage * image = [NSImage imageNamed:@"select-move.png"];
         CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
-        NSCursor * cursor =  [[[NSCursor alloc] initWithImage:image hotSpot:centerPoint] autorelease];
+        NSCursor * cursor =  [[NSCursor alloc] initWithImage:image hotSpot:centerPoint];
         [cursor push];
     }
     
@@ -1819,7 +1818,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         if (trackingArea)
         {
             [[appDelegate cocosView] removeTrackingArea:trackingArea];
-            [trackingArea release];
         }
         
 				CGSize sizeInPixels = [[CCDirector sharedDirector] viewSizeInPixels];
@@ -1870,7 +1868,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     
     // Save preview file
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:path];
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:path];
 	CGImageDestinationRef dest = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
 	CGImageDestinationAddImage(dest, imgRef, nil);
 	CGImageDestinationFinalize(dest);
@@ -1886,7 +1884,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     appDelegate = app;
     
-    nodesAtSelectionPt = [[NSMutableArray array] retain];
+    nodesAtSelectionPt = [NSMutableArray array];
     
 	if( (self=[super init] ))
     {
@@ -1904,11 +1902,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 	return self;
 }
 
-- (void) dealloc
+-(void) dealloc
 {
-    [trackingArea release];
-    [nodesAtSelectionPt release];
-	[super dealloc];
+	SBLogSelf();
 }
 
 #pragma mark Debug
