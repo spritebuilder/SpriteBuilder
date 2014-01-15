@@ -2136,8 +2136,16 @@ static BOOL hideAllToNextSeparator;
     if (asChild)
     {
         parent = self.selectedNode;
-        if (!parent) self.selectedNodes = [NSArray arrayWithObject: g.rootNode];
+        
+        if(!parent && !g.rootNode)
+            return NO;
+        
+        if (!parent)
+        {
+            self.selectedNodes = [NSArray arrayWithObject: g.rootNode];
+        }
     }
+    
     
     BOOL success = [self addCCObject:obj toParent:parent];
     
