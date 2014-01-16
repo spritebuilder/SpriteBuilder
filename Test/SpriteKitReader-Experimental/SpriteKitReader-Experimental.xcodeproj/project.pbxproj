@@ -40,6 +40,7 @@
 		DC5853D618844C1200C118E8 /* CCBSpriteKitReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853D518844C1200C118E8 /* CCBSpriteKitReader.m */; };
 		DC5853D9188467EE00C118E8 /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853D8188467EE00C118E8 /* CCSpriteFrameCache.m */; };
 		DC5853DB1884738300C118E8 /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = DC5853DA1884738300C118E8 /* Published-iOS */; };
+		DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853E21886FF6A00C118E8 /* CCConfiguration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,8 @@
 		DC5853D7188467EE00C118E8 /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
 		DC5853D8188467EE00C118E8 /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
 		DC5853DA1884738300C118E8 /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "SKReaderTestData.spritebuilder/Source/Resources/Published-iOS"; sourceTree = "<group>"; };
+		DC5853E11886FF6A00C118E8 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
+		DC5853E21886FF6A00C118E8 /* CCConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCConfiguration.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,22 +249,40 @@
 				DC5853C4187F039E00C118E8 /* CCBSpriteKitMacros.h */,
 				DC5853D418844C1200C118E8 /* CCBSpriteKitReader.h */,
 				DC5853D518844C1200C118E8 /* CCBSpriteKitReader.m */,
-				DC5853CB187F1AFF00C118E8 /* CGPointExtension.h */,
-				DC5853CC187F1AFF00C118E8 /* CGPointExtension.m */,
+				DC5853C5187F0BCC00C118E8 /* CCBSpriteKitDummy.h */,
+				DC5853C6187F0BCC00C118E8 /* CCBSpriteKitDummy.m */,
+				DC5853E5188700EA00C118E8 /* Cocos2D Classes (ported) */,
+				DC5853E4188700D900C118E8 /* Sprite Kit Categories */,
+			);
+			path = SpriteKit;
+			sourceTree = "<group>";
+		};
+		DC5853E4188700D900C118E8 /* Sprite Kit Categories */ = {
+			isa = PBXGroup;
+			children = (
+				DC5853C8187F0DD100C118E8 /* SKNode+CCBReader.h */,
+				DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */,
+				DC5853D1187F2D9900C118E8 /* SKPhysicsBody+CCBReader.h */,
+				DC5853D2187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m */,
+				DC5853CE187F2C3500C118E8 /* SKTexture+CCBReader.h */,
+				DC5853CF187F2C3500C118E8 /* SKTexture+CCBReader.m */,
+			);
+			name = "Sprite Kit Categories";
+			sourceTree = "<group>";
+		};
+		DC5853E5188700EA00C118E8 /* Cocos2D Classes (ported) */ = {
+			isa = PBXGroup;
+			children = (
+				DC5853E11886FF6A00C118E8 /* CCConfiguration.h */,
+				DC5853E21886FF6A00C118E8 /* CCConfiguration.m */,
 				DC5853C1187F032400C118E8 /* CCFileUtils.h */,
 				DC5853C2187F032400C118E8 /* CCFileUtils.m */,
 				DC5853D7188467EE00C118E8 /* CCSpriteFrameCache.h */,
 				DC5853D8188467EE00C118E8 /* CCSpriteFrameCache.m */,
-				DC5853C5187F0BCC00C118E8 /* CCBSpriteKitDummy.h */,
-				DC5853C6187F0BCC00C118E8 /* CCBSpriteKitDummy.m */,
-				DC5853C8187F0DD100C118E8 /* SKNode+CCBReader.h */,
-				DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */,
-				DC5853CE187F2C3500C118E8 /* SKTexture+CCBReader.h */,
-				DC5853CF187F2C3500C118E8 /* SKTexture+CCBReader.m */,
-				DC5853D1187F2D9900C118E8 /* SKPhysicsBody+CCBReader.h */,
-				DC5853D2187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m */,
+				DC5853CB187F1AFF00C118E8 /* CGPointExtension.h */,
+				DC5853CC187F1AFF00C118E8 /* CGPointExtension.m */,
 			);
-			path = SpriteKit;
+			name = "Cocos2D Classes (ported)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,6 +402,7 @@
 				DC5853BD187F030B00C118E8 /* CCBLocalizationManager.m in Sources */,
 				DC5853C7187F0BCC00C118E8 /* CCBSpriteKitDummy.m in Sources */,
 				DC5853CA187F0DD100C118E8 /* SKNode+CCBReader.m in Sources */,
+				DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */,
 				DC5853BF187F030B00C118E8 /* CCBsequence.m in Sources */,
 				DC5853BB187F030B00C118E8 /* CCBAnimationManager.m in Sources */,
 			);

@@ -1,9 +1,7 @@
 /*
  * SpriteBuilder: http://www.spritebuilder.org
  *
- * Copyright (c) 2009 Jason Booth
- * Copyright (c) 2009 Robert J Payne
- * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
  * Copyright (c) 2014 Apportable Inc.
  *
@@ -26,18 +24,27 @@
  * THE SOFTWARE.
  */
 
+
 #import <Foundation/Foundation.h>
-#import <SpriteKit/SpriteKit.h>
 
-@interface CCSpriteFrameCache : NSObject
-{
-	@private
-	NSMutableDictionary* _atlases;
-    NSMutableDictionary *_spriteFrameFileLookup;
-}
+typedef NS_ENUM(NSUInteger, CCDevice) {
+	CCDeviceiPhone,
+	CCDeviceiPhoneRetinaDisplay,
+	CCDeviceiPhone5,
+	CCDeviceiPhone5RetinaDisplay,
+	CCDeviceiPad,
+	CCDeviceiPadRetinaDisplay,
+	
+	CCDeviceMac,
+	CCDeviceMacRetinaDisplay,
+	
+	CCDeviceUnknown = -1,
+};
 
-+(instancetype) sharedSpriteFrameCache;
--(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)file;
--(SKTexture*) textureNamed:(NSString*)name;
+@interface CCConfiguration : NSObject
+
+@property (readonly) CCDevice runningDevice;
+
++(CCConfiguration*) sharedConfiguration;
 
 @end
