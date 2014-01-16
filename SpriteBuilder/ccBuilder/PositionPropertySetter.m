@@ -479,14 +479,24 @@
 + (float) scaleXForNode:(CCNode*)node prop:(NSString*)prop
 {
     NSNumber* scale = [node extraPropForKey:[prop stringByAppendingString:@"X"]];
-    if (!scale) return 1;
+    if(!scale)
+        scale = [node valueForKey:[prop stringByAppendingString:@"X"]];
+        
+    if (!scale)
+        return 1;
+    
     return [scale floatValue];
 }
 
 + (float) scaleYForNode:(CCNode*)node prop:(NSString*)prop
 {
     NSNumber* scale = [node extraPropForKey:[prop stringByAppendingString:@"Y"]];
-    if (!scale) return 1;
+    
+    if(!scale)
+        scale = [node valueForKey:[prop stringByAppendingString:@"Y"]];
+
+    if (!scale)
+        return 1;
     return [scale floatValue];
 }
 
