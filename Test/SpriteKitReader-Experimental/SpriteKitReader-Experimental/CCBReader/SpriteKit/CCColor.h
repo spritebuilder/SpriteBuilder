@@ -107,3 +107,8 @@
 - (BOOL) isEqualToColor:(CCColor*) color;
 
 @end
+
+@interface CCColor (CCBReader)
++(id) colorWithSKColor:(SKColor*)skColor;
+@property (nonatomic, readonly) SKColor* skColor;
+@end

@@ -45,6 +45,7 @@
 		DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853E21886FF6A00C118E8 /* CCConfiguration.m */; };
 		DCF621AB18898B4400ECCA9B /* SKLabelNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */; };
 		DCF621AE18898CBB00ECCA9B /* CCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621AD18898CBB00ECCA9B /* CCColor.m */; };
+		DCF621FC1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621FB1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,8 @@
 		DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+CCBReader.m"; sourceTree = "<group>"; };
 		DCF621AC18898CBB00ECCA9B /* CCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColor.h; sourceTree = "<group>"; };
 		DCF621AD18898CBB00ECCA9B /* CCColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCColor.m; sourceTree = "<group>"; };
+		DCF621FA1889B98C00ECCA9B /* SKEmitterNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKEmitterNode+CCBReader.h"; sourceTree = "<group>"; };
+		DCF621FB1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+CCBReader.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,14 +277,16 @@
 		DC5853E4188700D900C118E8 /* Sprite Kit Categories */ = {
 			isa = PBXGroup;
 			children = (
+				DCF621FA1889B98C00ECCA9B /* SKEmitterNode+CCBReader.h */,
+				DCF621FB1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m */,
 				DCF621A918898B4400ECCA9B /* SKLabelNode+CCBReader.h */,
 				DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */,
 				DC5853C8187F0DD100C118E8 /* SKNode+CCBReader.h */,
 				DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */,
-				DC00624F18889976008D5D30 /* SKSpriteNode+CCBReader.h */,
-				DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */,
 				DC5853D1187F2D9900C118E8 /* SKPhysicsBody+CCBReader.h */,
 				DC5853D2187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m */,
+				DC00624F18889976008D5D30 /* SKSpriteNode+CCBReader.h */,
+				DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */,
 				DC5853CE187F2C3500C118E8 /* SKTexture+CCBReader.h */,
 				DC5853CF187F2C3500C118E8 /* SKTexture+CCBReader.m */,
 			);
@@ -414,6 +419,7 @@
 				DC585366187EF8BE00C118E8 /* SBViewController.m in Sources */,
 				DC5853D0187F2C3500C118E8 /* SKTexture+CCBReader.m in Sources */,
 				DC58535D187EF8BE00C118E8 /* SBAppDelegate.m in Sources */,
+				DCF621FC1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m in Sources */,
 				DC00625118889976008D5D30 /* SKSpriteNode+CCBReader.m in Sources */,
 				DC5853D9188467EE00C118E8 /* CCSpriteFrameCache.m in Sources */,
 				DC585369187EF8BE00C118E8 /* SBMyScene.m in Sources */,

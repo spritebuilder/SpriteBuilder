@@ -387,3 +387,22 @@
 }
 
 @end
+
+@implementation CCColor (CCBReader)
+
++(id) colorWithSKColor:(SKColor*)skColor
+{
+	CGFloat r, g, b, a;
+	[skColor getRed:&r green:&g blue:&b alpha:&a];
+	return [CCColor colorWithRed:r green:g blue:b alpha:a];
+}
+
+-(SKColor*) skColor
+{
+	return [SKColor colorWithRed:self.red
+						   green:self.green
+							blue:self.blue
+						   alpha:self.alpha];
+}
+
+@end

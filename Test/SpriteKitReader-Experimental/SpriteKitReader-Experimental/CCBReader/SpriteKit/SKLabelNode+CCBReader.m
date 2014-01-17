@@ -19,18 +19,22 @@
 	return self.text;
 }
 
--(void) setOutlineColor:(CCColor*)outlineColor
+-(void) setColor:(CCColor*)color
 {
-	self.fontColor = [SKColor colorWithRed:outlineColor.red
-									 green:outlineColor.green
-									  blue:outlineColor.blue
-									 alpha:outlineColor.alpha];
+	self.color = color.skColor;
 }
--(CCColor*) outlineColor
+-(CCColor*) color
 {
-	CGFloat r, g, b, a;
-	[self.color getRed:&r green:&g blue:&b alpha:&a];
-	return [CCColor colorWithRed:r green:g blue:b alpha:a];
+	return [CCColor colorWithSKColor:self.color];
+}
+
+-(void) setCcb_fontColor:(CCColor*)fontColor
+{
+	self.fontColor = fontColor.skColor;
+}
+-(CCColor*) ccb_fontColor
+{
+	return [CCColor colorWithSKColor:self.fontColor];
 }
 
 @end

@@ -8,7 +8,10 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+@class CCColor;
+
 @interface SKSpriteNode (CCBReader)
 
+@property (nonatomic) CCColor* ccb_color;
 
 @end

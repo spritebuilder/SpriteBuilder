@@ -172,13 +172,18 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 
 -(void) setValue:(id)value forKey:(NSString *)key
 {
-	if ([key isEqualToString:@"color"] || [key isEqualToString:@"outlineColor"] || [key isEqualToString:@"fontColor"])
+	if ([key isEqualToString:@"color"])
 	{
-		NSLog(@"IGNORING '%@' property to prevent componentRGBA crash", key);
-		return;
+		[super setValue:value forKey:@"ccb_color"];
 	}
-	
-	[super setValue:value forKey:key];
+	else if ([key isEqualToString:@"fontColor"])
+	{
+		[super setValue:value forKey:@"ccb_fontColor"];
+	}
+	else
+	{
+		[super setValue:value forKey:key];
+	}
 }
 
 -(void) setValue:(id)value forUndefinedKey:(NSString *)key

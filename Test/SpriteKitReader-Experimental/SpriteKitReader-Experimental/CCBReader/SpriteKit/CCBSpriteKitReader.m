@@ -72,7 +72,9 @@
 		{
 			theClass = [SKNode class];
 		}
-		else if ([className isEqualToString:@"CCSprite"] || [className isEqualToString:@"CCNodeColor"] || [className isEqualToString:@"CCNodeGradient"])
+		else if ([className isEqualToString:@"CCSprite"] ||
+				 [className isEqualToString:@"CCNodeColor"] ||
+				 [className isEqualToString:@"CCNodeGradient"])
 		{
 			theClass = [SKSpriteNode class];
 		}
