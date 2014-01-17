@@ -505,7 +505,7 @@ static inline float readFloat(CCBReader *self)
     {
         NSString* spriteFile = [self readCachedString];
         
-        if (setProp && ![spriteFile isEqualToString:@""])
+        if (setProp && spriteFile.length > 0)
         {
             CCSpriteFrame* spriteFrame = [CCSpriteFrame frameWithImageNamed:spriteFile];
             [node setValue:spriteFrame forKey:name];
@@ -521,7 +521,7 @@ static inline float readFloat(CCBReader *self)
     {
         NSString* spriteFile = [self readCachedString];
         
-        if (setProp && ![spriteFile isEqualToString:@""])
+        if (setProp && spriteFile.length > 0)
         {
             CCTexture* texture = [CCTexture textureWithFile:spriteFile];
             [node setValue:texture forKey:name];
