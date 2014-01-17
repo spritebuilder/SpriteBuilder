@@ -70,7 +70,7 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 
 -(void) setRotation:(CGFloat)rotation
 {
-	self.zRotation = rotation;
+	self.zRotation = CC_DEGREES_TO_RADIANS(-rotation);
 }
 -(CGFloat) rotation
 {
@@ -133,12 +133,20 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 	return nil;
 }
 
+-(void) setScaleX:(CGFloat)scaleX
+{
+	self.xScale = scaleX;
+}
+-(void) setScaleY:(CGFloat)scaleY
+{
+	self.yScale = scaleY;
+}
 -(CGFloat) scale
 {
 	return self.xScale;
 }
 
--(void) setAnchorPoint:(CGPoint)anchorPoint
+-(void) ccb_setAnchorPoint:(CGPoint)anchorPoint
 {
 	if ([self isKindOfClass:[SKSpriteNode class]] ||
 		[self isKindOfClass:[SKScene class]] ||
@@ -147,7 +155,8 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 		((SKScene*)self).anchorPoint = anchorPoint;
 	}
 }
--(CGPoint) anchorPoint
+/*
+-(CGPoint) ccb_anchorPoint
 {
 	if ([self isKindOfClass:[SKSpriteNode class]] ||
 		[self isKindOfClass:[SKScene class]] ||
@@ -158,10 +167,11 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 	
 	return CGPointZero;
 }
+ */
 
 -(void) setValue:(id)value forUndefinedKey:(NSString *)key
 {
-	NSLog(@"IGNORED: undefined key '%@' for value: %@", key, value);
+	NSLog(@"IGNORED: %@ undefined key '%@' for value: %@", NSStringFromClass([self class]), key, value);
 }
 
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC00624E1888928E008D5D30 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC00624D1888928E008D5D30 /* JRSwizzle.m */; };
+		DC00625118889976008D5D30 /* SKSpriteNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */; };
 		DC58534B187EF8BE00C118E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534A187EF8BE00C118E8 /* Foundation.framework */; };
 		DC58534D187EF8BE00C118E8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */; };
 		DC58534F187EF8BE00C118E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534E187EF8BE00C118E8 /* UIKit.framework */; };
@@ -54,6 +56,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC00624C1888928E008D5D30 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		DC00624D1888928E008D5D30 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		DC00624F18889976008D5D30 /* SKSpriteNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKSpriteNode+CCBReader.h"; sourceTree = "<group>"; };
+		DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKSpriteNode+CCBReader.m"; sourceTree = "<group>"; };
 		DC585347187EF8BE00C118E8 /* SpriteKitReader-Experimental.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SpriteKitReader-Experimental.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC58534A187EF8BE00C118E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -251,6 +257,8 @@
 				DC5853D518844C1200C118E8 /* CCBSpriteKitReader.m */,
 				DC5853C5187F0BCC00C118E8 /* CCBSpriteKitDummy.h */,
 				DC5853C6187F0BCC00C118E8 /* CCBSpriteKitDummy.m */,
+				DC00624C1888928E008D5D30 /* JRSwizzle.h */,
+				DC00624D1888928E008D5D30 /* JRSwizzle.m */,
 				DC5853E5188700EA00C118E8 /* Cocos2D Classes (ported) */,
 				DC5853E4188700D900C118E8 /* Sprite Kit Categories */,
 			);
@@ -262,6 +270,8 @@
 			children = (
 				DC5853C8187F0DD100C118E8 /* SKNode+CCBReader.h */,
 				DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */,
+				DC00624F18889976008D5D30 /* SKSpriteNode+CCBReader.h */,
+				DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */,
 				DC5853D1187F2D9900C118E8 /* SKPhysicsBody+CCBReader.h */,
 				DC5853D2187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m */,
 				DC5853CE187F2C3500C118E8 /* SKTexture+CCBReader.h */,
@@ -393,6 +403,7 @@
 				DC585366187EF8BE00C118E8 /* SBViewController.m in Sources */,
 				DC5853D0187F2C3500C118E8 /* SKTexture+CCBReader.m in Sources */,
 				DC58535D187EF8BE00C118E8 /* SBAppDelegate.m in Sources */,
+				DC00625118889976008D5D30 /* SKSpriteNode+CCBReader.m in Sources */,
 				DC5853D9188467EE00C118E8 /* CCSpriteFrameCache.m in Sources */,
 				DC585369187EF8BE00C118E8 /* SBMyScene.m in Sources */,
 				DC5853CD187F1AFF00C118E8 /* CGPointExtension.m in Sources */,
@@ -400,6 +411,7 @@
 				DC5853D3187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m in Sources */,
 				DC5853C3187F032400C118E8 /* CCFileUtils.m in Sources */,
 				DC5853BD187F030B00C118E8 /* CCBLocalizationManager.m in Sources */,
+				DC00624E1888928E008D5D30 /* JRSwizzle.m in Sources */,
 				DC5853C7187F0BCC00C118E8 /* CCBSpriteKitDummy.m in Sources */,
 				DC5853CA187F0DD100C118E8 /* SKNode+CCBReader.m in Sources */,
 				DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */,

@@ -32,6 +32,9 @@
 #define __CC_PLATFORM_MAC 1
 #endif
 
+#define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) * 0.01745329252f) // PI / 180
+#define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
+
 #import <SpriteKit/SpriteKit.h>
 
 #import "CCFileUtils.h"

@@ -24,6 +24,7 @@
 
 
 #import "CCBSpriteKitReader.h"
+#import "JRSwizzle.h"
 
 @implementation CCBSpriteKitReader
 
@@ -33,8 +34,31 @@
 	if (self)
 	{
 		[CCBReader configureCCFileUtils];
+		
+		[self swizzleMethodNamed:@"setAnchorPoint:" classNames:@[@"SKScene", @"SKSpriteNode", @"SKVideoNode"]];
 	}
 	return self;
+}
+
+-(void) swizzleMethodNamed:(NSString*)methodName classNames:(NSArray*)classNames
+{
+	for (NSString* className in classNames)
+	{
+		[self swizzleMethodNamed:methodName className:className];
+	}
+}
+
+-(void) swizzleMethodNamed:(NSString*)methodName className:(NSString*)className
+{
+	NSError* error = nil;
+	Class klass = NSClassFromString(className);
+	NSAssert2(klass, @"CCBSpriteKitReader: unknown class '%@' - can't swizzle method '%@'", className, methodName);
+	
+	NSString* newMethod = [NSString stringWithFormat:@"ccb_%@", methodName];
+	[klass jr_swizzleMethod:NSSelectorFromString(methodName)
+				 withMethod:NSSelectorFromString(newMethod)
+					  error:&error];
+	NSAssert2(error == nil, @"CCBSpriteKitReader: method '%@' swizzle error: %@", methodName, error);
 }
 
 /*

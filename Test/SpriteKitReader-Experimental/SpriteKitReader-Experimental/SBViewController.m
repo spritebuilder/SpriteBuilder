@@ -28,7 +28,25 @@
 		NSLog(@"scene %@ %p: %@", NSStringFromClass([scene class]), scene, scene);
 		scene.scaleMode = SKSceneScaleModeResizeFill;
 
+		SKSpriteNode* s = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(10, 10)];
+		s.texture = [SKTexture textureWithImageNamed:@"Published-iOS/resources-phone/bird.png"];
+		s.size = s.texture.size;
+		s.xScale = 5;
+		NSLog(@"tex: %@", s.texture);
+		s.position = CGPointMake(100, 100);
+		[scene addChild:s];
+		
 		[skView presentScene:scene];
+		
+		for (SKNode* node in [scene.children.firstObject children])
+		{
+			NSLog(@"node: %@", node);
+			if ([node isKindOfClass:[SKSpriteNode class]])
+			{
+				//[(SKSpriteNode*)node setYScale:3.0];
+				//[node setValue:[NSNumber numberWithFloat:3.0] forKey:@"yScale"];
+			}
+		}
 	}
 }
 
