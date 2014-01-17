@@ -61,17 +61,51 @@
 	NSAssert2(error == nil, @"CCBSpriteKitReader: method '%@' swizzle error: %@", methodName, error);
 }
 
-/*
+-(Class) nodeClassFromString:(NSString*)className
+{
+	Class theClass = NSClassFromString(className);
+	
+	if (theClass == nil)
+	{
+		// TODO: CCButton, CCTextField, CCSlider, CCScrollView, CCLayoutBox, CCPhysicsNode
+		if ([className isEqualToString:@"CCNode"])
+		{
+			theClass = [SKNode class];
+		}
+		else if ([className isEqualToString:@"CCSprite"] || [className isEqualToString:@"CCNodeColor"] || [className isEqualToString:@"CCNodeGradient"])
+		{
+			theClass = [SKSpriteNode class];
+		}
+		else if ([className isEqualToString:@"CCLabelTTF"])
+		{
+			theClass = [SKLabelNode class];
+		}
+		else if ([className isEqualToString:@"CCParticleSystem"])
+		{
+			theClass = [SKEmitterNode class];
+		}
+		else
+		{
+			theClass = [SKNode class];
+		}
+		
+		NSLog(@"MAPPED CLASS: %@ => %@", className, NSStringFromClass(theClass));
+	}
+	
+	return theClass;
+}
+
 -(CCNode*) nodeFromClass:(Class)nodeClass
 {
 	// map CC nodes to SK nodes
 	CCNode* node = nil;
 	
 	node = [nodeClass node];
+	
+	NSLog(@"CREATING NODE: ~~~~~~~~~ %@ ~~~~~~~~~", NSStringFromClass(nodeClass));
 
 	return node;
 }
-*/
 
 -(void) setSceneSize:(CGSize)sceneSize
 {

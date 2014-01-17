@@ -37,6 +37,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+#import "CCColor.h"
 #import "CCFileUtils.h"
 #import "CCSpriteFrameCache.h"
 #import "CGPointExtension.h"
@@ -114,7 +115,6 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType)
 #import "SKTexture+CCBReader.h"
 
 typedef double CCTime;
-typedef SKColor CCColor;
 typedef SKNode CCNode;
 typedef SKPhysicsBody CCPhysicsBody;
 typedef SKScene CCScene;
@@ -156,36 +156,3 @@ typedef CCBSpriteKitDummyAction CCActionSequence;
 typedef CCBSpriteKitDummyAction CCActionShow;
 typedef CCBSpriteKitDummyAction CCActionSkewTo;
 typedef CCBSpriteKitDummyAction CCActionTintTo;
-
-static inline Class CCBClassFromString(NSString* className)
-{
-	Class theClass = NSClassFromString(className);
-	
-	if (theClass == nil)
-	{
-		// TODO: CCButton, CCTextField, CCSlider, CCScrollView, CCLayoutBox, CCPhysicsNode
-		if ([className isEqualToString:@"CCNode"])
-		{
-			theClass = [SKNode class];
-		}
-		else if ([className isEqualToString:@"CCSprite"] || [className isEqualToString:@"CCNodeColor"] || [className isEqualToString:@"CCNodeGradient"])
-		{
-			theClass = [SKSpriteNode class];
-		}
-		else if ([className isEqualToString:@"CCLabelTTF"])
-		{
-			theClass = [SKLabelNode class];
-		}
-		else if ([className isEqualToString:@"CCParticleSystem"])
-		{
-			theClass = [SKEmitterNode class];
-		}
-		else
-		{
-			theClass = [SKNode class];
-		}
-		NSLog(@"CCBClassFromString('%@') = %@", className, NSStringFromClass(theClass));
-	}
-	
-	return theClass;
-}

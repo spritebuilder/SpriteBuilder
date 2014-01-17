@@ -43,6 +43,8 @@
 		DC5853D9188467EE00C118E8 /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853D8188467EE00C118E8 /* CCSpriteFrameCache.m */; };
 		DC5853DB1884738300C118E8 /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = DC5853DA1884738300C118E8 /* Published-iOS */; };
 		DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853E21886FF6A00C118E8 /* CCConfiguration.m */; };
+		DCF621AB18898B4400ECCA9B /* SKLabelNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */; };
+		DCF621AE18898CBB00ECCA9B /* CCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621AD18898CBB00ECCA9B /* CCColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,10 @@
 		DC5853DA1884738300C118E8 /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "SKReaderTestData.spritebuilder/Source/Resources/Published-iOS"; sourceTree = "<group>"; };
 		DC5853E11886FF6A00C118E8 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		DC5853E21886FF6A00C118E8 /* CCConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCConfiguration.m; sourceTree = "<group>"; };
+		DCF621A918898B4400ECCA9B /* SKLabelNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKLabelNode+CCBReader.h"; sourceTree = "<group>"; };
+		DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+CCBReader.m"; sourceTree = "<group>"; };
+		DCF621AC18898CBB00ECCA9B /* CCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColor.h; sourceTree = "<group>"; };
+		DCF621AD18898CBB00ECCA9B /* CCColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCColor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +274,8 @@
 		DC5853E4188700D900C118E8 /* Sprite Kit Categories */ = {
 			isa = PBXGroup;
 			children = (
+				DCF621A918898B4400ECCA9B /* SKLabelNode+CCBReader.h */,
+				DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */,
 				DC5853C8187F0DD100C118E8 /* SKNode+CCBReader.h */,
 				DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */,
 				DC00624F18889976008D5D30 /* SKSpriteNode+CCBReader.h */,
@@ -283,6 +291,8 @@
 		DC5853E5188700EA00C118E8 /* Cocos2D Classes (ported) */ = {
 			isa = PBXGroup;
 			children = (
+				DCF621AC18898CBB00ECCA9B /* CCColor.h */,
+				DCF621AD18898CBB00ECCA9B /* CCColor.m */,
 				DC5853E11886FF6A00C118E8 /* CCConfiguration.h */,
 				DC5853E21886FF6A00C118E8 /* CCConfiguration.m */,
 				DC5853C1187F032400C118E8 /* CCFileUtils.h */,
@@ -398,6 +408,7 @@
 			files = (
 				DC5853BC187F030B00C118E8 /* CCBKeyframe.m in Sources */,
 				DC5853D618844C1200C118E8 /* CCBSpriteKitReader.m in Sources */,
+				DCF621AE18898CBB00ECCA9B /* CCColor.m in Sources */,
 				DC5853BE187F030B00C118E8 /* CCBReader.m in Sources */,
 				DC585359187EF8BE00C118E8 /* main.m in Sources */,
 				DC585366187EF8BE00C118E8 /* SBViewController.m in Sources */,
@@ -414,6 +425,7 @@
 				DC00624E1888928E008D5D30 /* JRSwizzle.m in Sources */,
 				DC5853C7187F0BCC00C118E8 /* CCBSpriteKitDummy.m in Sources */,
 				DC5853CA187F0DD100C118E8 /* SKNode+CCBReader.m in Sources */,
+				DCF621AB18898B4400ECCA9B /* SKLabelNode+CCBReader.m in Sources */,
 				DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */,
 				DC5853BF187F030B00C118E8 /* CCBsequence.m in Sources */,
 				DC5853BB187F030B00C118E8 /* CCBAnimationManager.m in Sources */,

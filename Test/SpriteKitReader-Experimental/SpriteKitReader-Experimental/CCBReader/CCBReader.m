@@ -809,6 +809,12 @@ static inline float readFloat(CCBReader *self)
 	return node;
 }
 
+-(Class) nodeClassFromString:(NSString*)className
+{
+	// default implementation for cocos2d, SK reader overrides this
+	return NSClassFromString(className);
+}
+
 - (CCNode*) readNodeGraphParent:(CCNode*)parent
 {
     // Read class
@@ -822,7 +828,7 @@ static inline float readFloat(CCBReader *self)
         memberVarAssignmentName = [self readCachedString];
     }
     
-    Class class = CCBClassFromString(className);
+    Class class = [self nodeClassFromString:className];
     if (!class)
     {
         NSLog(@"CCBReader: Could not create class named: %@", className);

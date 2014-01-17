@@ -59,6 +59,7 @@
 /** Hue in degrees 
  HSV-RGB Conversion adapted from code by Mr. Evil, beyondunreal wiki
  */
+/*
 - (CCColor*) initWithHue:(float)hue saturation:(float)saturation brightness:(float)brightness alpha:(float)alpha
 {
 	self = [super init];
@@ -98,6 +99,7 @@
 
 	return [CCColor colorWithCcColor4f:rgb];
 }
+*/
 
 - (CCColor*) initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha
 {
@@ -209,10 +211,12 @@
     return YES;
 }
 
+/*
 - (CCColor*) interpolateTo:(CCColor *) toColor time:(float) t
 {
 	return [CCColor colorWithCcColor4f:ccc4FInterpolated(self.ccColor4f, toColor.ccColor4f, t)];
 }
+ */
 
 + (CCColor*) blackColor
 {
@@ -294,6 +298,7 @@
 
 @implementation CCColor (OpenGL)
 
+/*
 + (CCColor*) colorWithCcColor3b:(ccColor3B)c
 {
     return [[CCColor alloc] initWithCcColor3b:c];
@@ -338,7 +343,7 @@
 {
     return ccc4f(_r, _g, _b, _a);
 }
-
+*/
 @end
 
 @implementation CCColor (ExtraProperties)
@@ -363,6 +368,7 @@
     return _a;
 }
 
+/*
 - (BOOL) isEqual:(id)color
 {
     if (self == color) return YES;
@@ -373,6 +379,7 @@
     
     return ccc4FEqual(c4f0, c4f1);
 }
+*/
 
 - (BOOL) isEqualToColor:(CCColor*) color
 {

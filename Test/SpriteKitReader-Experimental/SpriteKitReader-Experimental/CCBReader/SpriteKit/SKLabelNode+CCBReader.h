@@ -7,7 +7,11 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "CCBSpriteKitCompatibility.h"
 
 @interface SKLabelNode (CCBReader)
+
+@property (nonatomic) NSString* string;
+@property (nonatomic) CCColor* outlineColor;
 
 @end

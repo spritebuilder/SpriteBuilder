@@ -28,12 +28,6 @@
 
 @class CCBAnimationManager;
 
-#ifndef CCB_SPRITEKIT_READER
-#define CCBClassFromString NSClassFromString
-#else
-// use CCBClassFromString defined in CCBSpriteKitCompatibility
-#endif
-
 /**
  The CCBReader loads node graphs created by SpriteBuilder (or other editors using the same format). If you are using SpriteBuilder it's strongly recommended that you set up the CCFileUtils using the configureCCFileUtils method or use the Xcode project file created by SpriteBuilder.
  
@@ -165,6 +159,7 @@
 
 // Internal use: override methods for Sprite Kit Reader subclass
 +(void) setSceneSize:(CGSize)sceneSize;
+-(Class) nodeClassFromString:(NSString*)className;
 -(CCNode*) nodeFromClass:(Class)nodeClass;
 -(CCScene*) createScene;
 -(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node;

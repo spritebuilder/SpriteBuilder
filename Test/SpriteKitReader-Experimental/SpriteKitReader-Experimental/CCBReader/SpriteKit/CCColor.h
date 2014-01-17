@@ -6,8 +6,7 @@
 //
 //
 
-#import "ccMacros.h"
-#import "ccTypes.h"
+#import "CCBSpriteKitCompatibility.h"
 
 /**
  *  Defines a color to use with cocos2d.
@@ -76,12 +75,13 @@
  *
  *  @return Interpolated color.
  */
-- (CCColor*) interpolateTo:(CCColor *) toColor time:(float) t;
+//- (CCColor*) interpolateTo:(CCColor *) toColor time:(float) t;
 
 @end
 
 @interface CCColor (OpenGL)
 
+/*
 + (CCColor*) colorWithCcColor3b: (ccColor3B) c;
 + (CCColor*) colorWithCcColor4b: (ccColor4B) c;
 + (CCColor*) colorWithCcColor4f: (ccColor4F) c;
@@ -90,10 +90,10 @@
 - (CCColor*) initWithCcColor4b: (ccColor4B) c;
 - (CCColor*) initWithCcColor4f: (ccColor4F) c;
 
-
 @property (nonatomic, readonly) ccColor3B ccColor3b;
 @property (nonatomic, readonly) ccColor4B ccColor4b;
 @property (nonatomic, readonly) ccColor4F ccColor4f;
+ */
 
 @end
 

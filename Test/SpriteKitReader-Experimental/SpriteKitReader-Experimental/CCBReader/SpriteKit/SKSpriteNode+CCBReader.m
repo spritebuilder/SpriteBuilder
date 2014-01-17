@@ -7,9 +7,9 @@
 //
 
 #import "SKSpriteNode+CCBReader.h"
+#import "CCBSpriteKitCompatibility.h"
 
 @implementation SKSpriteNode (CCBReader)
-
 
 
 @end

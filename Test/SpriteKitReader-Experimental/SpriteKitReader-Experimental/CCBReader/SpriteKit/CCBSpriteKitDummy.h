@@ -26,6 +26,7 @@
 #import "CCBSpriteKitCompatibility.h"
 
 @class CCBSpriteKitDummyAction;
+@class CCColor;
 
 @interface CCBSpriteKitDummy : NSObject
 
@@ -59,7 +60,7 @@
 +(instancetype) actionWithArray:(NSArray*)array;
 +(instancetype) actionWithDuration:(double)duration;
 +(instancetype) actionWithDuration:(double)duration opacity:(uint8_t)opacity;
-+(instancetype) actionWithDuration:(double)duration color:(SKColor*)color;
++(instancetype) actionWithDuration:(double)duration color:(CCColor*)color;
 +(instancetype) actionWithDuration:(double)duration position:(CGPoint)position;
 +(instancetype) actionWithDuration:(double)duration scaleX:(CGFloat)scaleX scaleY:(CGFloat)scaleY;
 +(instancetype) actionWithDuration:(double)duration skewX:(CGFloat)skewX skewY:(CGFloat)skewY;

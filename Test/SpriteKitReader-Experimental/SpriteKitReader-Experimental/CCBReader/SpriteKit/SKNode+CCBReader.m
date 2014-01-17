@@ -152,7 +152,8 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 		[self isKindOfClass:[SKScene class]] ||
 		[self isKindOfClass:[SKVideoNode class]])
 	{
-		((SKScene*)self).anchorPoint = anchorPoint;
+		// FIXME: infinite recursion
+		//((SKScene*)self).anchorPoint = anchorPoint;
 	}
 }
 /*
@@ -168,6 +169,17 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 	return CGPointZero;
 }
  */
+
+-(void) setValue:(id)value forKey:(NSString *)key
+{
+	if ([key isEqualToString:@"color"] || [key isEqualToString:@"outlineColor"] || [key isEqualToString:@"fontColor"])
+	{
+		NSLog(@"IGNORING '%@' property to prevent componentRGBA crash", key);
+		return;
+	}
+	
+	[super setValue:value forKey:key];
+}
 
 -(void) setValue:(id)value forUndefinedKey:(NSString *)key
 {
