@@ -1129,6 +1129,11 @@
     [self writeStringCache];
     [self writeSequences:doc];
     [self writeNodeGraph:nodeGraph];
+
+    //Elias Gamma reader reads a full int off the end, reading outside the bounds by 3 bytes and setting off Guard Malloc detections. Pad file with 3 bytes.
+    [self writeBool:NO];
+    [self writeBool:NO];
+    [self writeBool:NO];
 }
 
 @end
