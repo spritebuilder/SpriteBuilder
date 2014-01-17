@@ -172,18 +172,14 @@ const NSString* kNodeUserObjectKey = @"CCBReader:UserObject";
 
 -(void) setValue:(id)value forKey:(NSString *)key
 {
+	[super setValue:value forKey:key];
+	
+	/*
 	if ([key isEqualToString:@"color"])
 	{
-		[super setValue:value forKey:@"ccb_color"];
+		NSLog(@"NODE COLOR: %@ - READER COLOR: %@", [self performSelector:NSSelectorFromString(@"color")], value);
 	}
-	else if ([key isEqualToString:@"fontColor"])
-	{
-		[super setValue:value forKey:@"ccb_fontColor"];
-	}
-	else
-	{
-		[super setValue:value forKey:key];
-	}
+	 */
 }
 
 -(void) setValue:(id)value forUndefinedKey:(NSString *)key

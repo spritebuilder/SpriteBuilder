@@ -19,22 +19,4 @@
 	return self.text;
 }
 
--(void) setColor:(CCColor*)color
-{
-	self.color = color.skColor;
-}
--(CCColor*) color
-{
-	return [CCColor colorWithSKColor:self.color];
-}
-
--(void) setCcb_fontColor:(CCColor*)fontColor
-{
-	self.fontColor = fontColor.skColor;
-}
--(CCColor*) ccb_fontColor
-{
-	return [CCColor colorWithSKColor:self.fontColor];
-}
-
 @end

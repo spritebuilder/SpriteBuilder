@@ -111,9 +111,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
-							<real>1</real>
+							<real>0.0</real>
+							<real>0.97697943449020386</real>
+							<real>0.0</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -163,8 +163,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.45707640051841736</real>
+							<real>0.51491552591323853</real>
 						</array>
 					</dict>
 					<dict>
@@ -431,8 +431,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

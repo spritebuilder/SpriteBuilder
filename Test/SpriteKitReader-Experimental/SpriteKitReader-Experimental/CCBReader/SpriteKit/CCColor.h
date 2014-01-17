@@ -11,7 +11,7 @@
 /**
  *  Defines a color to use with cocos2d.
  */
-@interface CCColor : NSObject
+@interface CCColor : NSObject<NSCopying>
 {
     GLfloat _r;
     GLfloat _g;
@@ -108,7 +108,13 @@
 
 @end
 
+typedef struct {
+    CGFloat r, g, b, a;
+} CCColorComponentRGBA;
+
 @interface CCColor (CCBReader)
 +(id) colorWithSKColor:(SKColor*)skColor;
 @property (nonatomic, readonly) SKColor* skColor;
+-(CCColorComponentRGBA) componentRGBA;
+-(NSString*) description;
 @end

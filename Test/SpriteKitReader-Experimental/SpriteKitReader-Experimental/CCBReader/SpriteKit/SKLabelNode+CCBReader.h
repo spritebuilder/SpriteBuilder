@@ -12,6 +12,4 @@
 @interface SKLabelNode (CCBReader)
 
 @property (nonatomic) NSString* string;
-@property (nonatomic) CCColor* color;
-@property (nonatomic) CCColor* ccb_fontColor;
 @end

@@ -293,6 +293,12 @@
     return [CCColor colorWithRed:0 green:0 blue:0 alpha:0];
 }
 
+-(instancetype) copyWithZone:(NSZone *)zone
+{
+	CCColor* copy = [[CCColor allocWithZone:zone] initWithRed:self.red green:self.green blue:self.blue alpha:self.alpha];
+	return copy;
+}
+
 @end
 
 
@@ -403,6 +409,21 @@
 						   green:self.green
 							blue:self.blue
 						   alpha:self.alpha];
+}
+
+-(CCColorComponentRGBA) componentRGBA
+{
+    CCColorComponentRGBA rgba;
+	rgba.r = self.red;
+	rgba.g = self.green;
+	rgba.b = self.blue;
+	rgba.a = self.alpha;
+    return rgba;
+}
+
+-(NSString*) description
+{
+	return [NSString stringWithFormat:@"%@ %.2f %.2f %.2f %.2f", NSStringFromClass([self class]), self.red, self.green, self.blue, self.alpha];
 }
 
 @end

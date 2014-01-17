@@ -309,7 +309,7 @@ static CCFileUtils *fileUtils = nil;
 		filePath.fullpath = fullPath;
 		filePath.contentScale = contentScale;
 		[_fullPathCache setObject:filePath forKey:filename];
-		NSLog(@"CCFileUtils cached: %@", filePath);
+		//NSLog(@"CCFileUtils cached: %@", filePath);
 	}
 	
 	return filePath;
