@@ -29,6 +29,6 @@
     IBOutlet NSTextField* textField;
 }
 
-@property (nonatomic,weak) NSString* text;
+@property (nonatomic) NSString* text;
 
 @end

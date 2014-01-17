@@ -108,6 +108,7 @@
     }
 }
 
+@dynamic relativePath;
 - (NSString*) relativePath
 {
     return [ResourceManagerUtil relativePathFromAbsolutePath: self.filePath];

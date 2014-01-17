@@ -64,6 +64,7 @@
     return [[self.fileName lastPathComponent] stringByDeletingPathExtension];
 }
 
+@dynamic rootPath;
 - (NSString*) rootPath
 {
     return [fileName stringByDeletingLastPathComponent];

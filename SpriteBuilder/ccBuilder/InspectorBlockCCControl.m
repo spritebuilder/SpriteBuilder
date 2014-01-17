@@ -67,7 +67,7 @@
     */
 }
 
-
+@dynamic selector;
 - (void) setSelector:(NSString *)selector
 {
     if (!selector) selector = @"";

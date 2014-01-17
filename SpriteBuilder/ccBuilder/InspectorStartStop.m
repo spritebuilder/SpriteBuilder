@@ -26,18 +26,16 @@
 
 @implementation InspectorStartStop
 
-@synthesize startName,stopName;
-
 - (id) initWithSelection:(CCNode *)s andPropertyName:(NSString *)pn andDisplayName:(NSString *)dn andExtra:(NSString *)e
 {
     self = [super initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e];
     if (!self) return NULL;
     
-    NSArray* bntNames = [displayName componentsSeparatedByString:@"|"];
+    NSArray* bntNames = [self.displayName componentsSeparatedByString:@"|"];
     self.startName = [bntNames objectAtIndex:0];
     self.stopName = [bntNames objectAtIndex:1];
     
-    NSArray* methodNames = [extra componentsSeparatedByString:@"|"];
+    NSArray* methodNames = [self.extra componentsSeparatedByString:@"|"];
     startMethod = [methodNames objectAtIndex:0];
     stopMethod = [methodNames objectAtIndex:1];
     
@@ -54,12 +52,6 @@
 {
     SEL selector = NSSelectorFromString(stopMethod);
     [selection performSelector:selector];
-}
-
-- (void) dealloc
-{
-    self.startName = NULL;
-    self.stopName = NULL;
 }
 
 @end
