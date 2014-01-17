@@ -56,7 +56,7 @@
 @property (nonatomic,assign) BOOL isDirty;
 @property (nonatomic,assign) CGPoint stageScrollOffset;
 @property (nonatomic,assign) float stageZoom;
-@property (weak, nonatomic,readonly) NSString* rootPath;
+@property (nonatomic,readonly) NSString* rootPath;
 - (NSString*) formattedName;
 @property (nonatomic,strong) NSMutableArray* resolutions;
 @property (nonatomic,assign) int currentResolution;

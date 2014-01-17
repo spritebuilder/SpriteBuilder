@@ -28,9 +28,8 @@
 
 @interface SavePanelLimiter : NSObject <NSOpenSavePanelDelegate>
 {
-    ResourceManager* resManager;
 }
 
-- (id) initWithPanel:(NSSavePanel*)savePanel resManager:(ResourceManager*)rm;
+- (id) initWithPanel:(NSSavePanel*)savePanel;
 
 @end

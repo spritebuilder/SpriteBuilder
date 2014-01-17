@@ -39,7 +39,7 @@
     return @"Undefined";
 }
 
-
+@dynamic description;
 - (NSString*) description
 {
     NSString* resString = @"";
@@ -54,7 +54,6 @@
 @implementation CCBWarnings
 
 @synthesize warningsDescription;
-@synthesize warnings;
 @synthesize currentTargetType;
 
 - (id) init
@@ -62,7 +61,7 @@
     self = [super init];
     if (!self) return NULL;
     
-    warnings = [NSMutableArray array];
+	_warnings = [NSMutableArray array];
     warningsFiles = [NSMutableDictionary dictionary];
     self.warningsDescription = @"Warnings";
     
@@ -100,7 +99,7 @@
 {
     warning.targetType = currentTargetType;
     
-    [warnings addObject:warning];
+    [_warnings addObject:warning];
     NSLog(@"CCB WARNING: %@", warning.description);
     
     if (warning.relatedFile)
