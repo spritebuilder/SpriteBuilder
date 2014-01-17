@@ -62,8 +62,8 @@
 @property (nonatomic,readonly) SequencerSoundChannel* soundChannel;
 
 
-@property (weak, nonatomic,readonly) NSString* currentDisplayTime;
-@property (weak, nonatomic,readonly) NSString* lengthDisplayTime;
+@property (nonatomic,readonly) NSString* currentDisplayTime;
+@property (nonatomic,readonly) NSString* lengthDisplayTime;
 
 @property (nonatomic,assign) BOOL autoPlay;
 

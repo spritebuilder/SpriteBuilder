@@ -98,7 +98,7 @@ enum
 }
 
 @property (nonatomic, copy) NSString* projectPath;
-@property (weak, nonatomic, readonly) NSString* projectPathHashed;
+@property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 
 @property (nonatomic,assign) BOOL publishEnablediPhone;
@@ -134,12 +134,12 @@ enum
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL javascriptBased;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
-@property (weak, nonatomic, readonly) NSArray* absoluteResourcePaths;
+@property (nonatomic, readonly) NSArray* absoluteResourcePaths;
 @property (nonatomic, copy) NSString* exporter;
 @property (nonatomic, strong) NSMutableArray* availableExporters;
-@property (weak, nonatomic, readonly) NSString* displayCacheDirectory;
+@property (nonatomic, readonly) NSString* displayCacheDirectory;
 //@property (nonatomic, readonly) NSString* publishCacheDirectory;
-@property (weak, nonatomic, readonly) NSString* tempSpriteSheetCacheDirectory;
+@property (nonatomic, readonly) NSString* tempSpriteSheetCacheDirectory;
 @property (nonatomic, assign) BOOL deviceOrientationPortrait;
 @property (nonatomic, assign) BOOL deviceOrientationUpsideDown;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;

@@ -106,6 +106,7 @@
     }
 }
 
+@dynamic availableResolutions;
 -(NSMutableArray*) availableResolutions
 {
     NSMutableArray* arr = [NSMutableArray array];

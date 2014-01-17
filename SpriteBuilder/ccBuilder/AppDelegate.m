@@ -119,8 +119,6 @@
 @synthesize canEditCustomClass;
 @synthesize hasOpenedDocument;
 @synthesize defaultCanvasSize;
-@synthesize plugInManager;
-@synthesize resManager;
 @synthesize projectOutlineHandler;
 @synthesize showGuides;
 @synthesize snapToGuides;
@@ -404,7 +402,7 @@ void ApplyCustomNodeVisitSwizzle()
 - (void) setupResourceManager
 {
     // Load resource manager
-    resManager = [ResourceManager sharedManager];
+	[ResourceManager sharedManager];
     
     // Setup preview
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
@@ -513,8 +511,7 @@ void ApplyCustomNodeVisitSwizzle()
     //[self updateDefaultBrowser];
     
     // Load plug-ins
-    plugInManager = [PlugInManager sharedManager];
-    [plugInManager loadPlugIns];
+    [[PlugInManager sharedManager] loadPlugIns];
     
     // Update toolbar with plug-ins
     [self setupToolbar];
@@ -532,9 +529,10 @@ void ApplyCustomNodeVisitSwizzle()
     self.showStickyNotes = YES;
     
     [self.window makeKeyWindow];
+	_applicationLaunchComplete = YES;
     
     // Open files
-    if(delayOpenFiles)
+    if (delayOpenFiles)
 	{
 		[self openFiles:delayOpenFiles];
 		delayOpenFiles = nil;
@@ -1625,12 +1623,12 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updateResourcePathsFromProjectSettings
 {
-    [resManager removeAllDirectories];
+    [[ResourceManager sharedManager] removeAllDirectories];
     
     // Setup links to directories
     for (NSString* dir in [projectSettings absoluteResourcePaths])
     {
-        [resManager addDirectory:dir];
+        [[ResourceManager sharedManager] addDirectory:dir];
     }
     [[ResourceManager sharedManager] setActiveDirectories:[projectSettings absoluteResourcePaths]];
 }
@@ -1657,7 +1655,7 @@ static BOOL hideAllToNextSeparator;
     
     // Remove resource paths
     self.projectSettings = NULL;
-    [resManager removeAllDirectories];
+    [[ResourceManager sharedManager] removeAllDirectories];
     
     // Remove language file
     localizationEditorHandler.managedFile = NULL;
@@ -1703,7 +1701,7 @@ static BOOL hideAllToNextSeparator;
     if (!success) return NO;
     
     // Load or create language file
-    NSString* langFile = [resManager.mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
+    NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
     
     // Update the title of the main window
@@ -1992,10 +1990,10 @@ static BOOL hideAllToNextSeparator;
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
-	// if resManager isn't initialized wait for it to initialize before opening assets.	
-	if(!resManager)
+	// must wait for resource manager & rest of app to have completed the launch process before opening file(s)
+	if (_applicationLaunchComplete == NO)
 	{
-		NSAssert( delayOpenFiles == NULL, @"This shouldn't be set to anything since this value will only get applied once.");
+		NSAssert(delayOpenFiles == NULL, @"This shouldn't be set to anything since this value will only get applied once.");
 		delayOpenFiles = [[NSMutableArray alloc] initWithArray:filenames];
 	}
 	else 
@@ -2161,7 +2159,7 @@ static BOOL hideAllToNextSeparator;
 - (CCNode*) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild
 {
     self.errorDescription = NULL;
-    CCNode* node = [plugInManager createDefaultNodeOfType:name];
+    CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:name];
     BOOL success = [self addCCObject:node asChild:asChild];
     
     if (!success && self.errorDescription)
@@ -2187,7 +2185,7 @@ static BOOL hideAllToNextSeparator;
     if (class && prop)
     {
         // Create the node
-        CCNode* node = [plugInManager createDefaultNodeOfType:class];
+        CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:class];
         
         // Round position
         pt.x = roundf(pt.x);
@@ -2259,7 +2257,7 @@ static BOOL hideAllToNextSeparator;
         pt = [parent convertToNodeSpace:pt];
     }
     
-    CCNode* node = [plugInManager createDefaultNodeOfType:@"CCBFile"];
+    CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCBFile"];
     [NodeGraphPropertySetter setNodeGraphForNode:node andProperty:@"ccbFile" withFile:ccbFile parentSize:parent.contentSize];
     [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) type:CCPositionTypePoints forNode:node prop:@"position"];
     [self addCCObject:node toParent:parent];
@@ -2575,7 +2573,7 @@ static BOOL hideAllToNextSeparator;
     
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
     [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"ccb"]];
-    SavePanelLimiter* limter = [[SavePanelLimiter alloc] initWithPanel:saveDlg resManager:resManager];
+    SavePanelLimiter* limter = [[SavePanelLimiter alloc] initWithPanel:saveDlg];
     
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
@@ -4425,7 +4423,7 @@ static BOOL hideAllToNextSeparator;
 {
     NSLog(@"DEBUG");
     
-    [resManager debugPrintDirectories];
+    [[ResourceManager sharedManager] debugPrintDirectories];
 }
 
 

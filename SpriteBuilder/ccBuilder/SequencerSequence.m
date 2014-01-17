@@ -200,6 +200,7 @@
     return [NSString stringWithFormat:@"%02d:%02d:%02d", mins,secs,frames];
 }
 
+@dynamic currentDisplayTime;
 - (NSString*) currentDisplayTime
 {
     return [self formatTime:timelinePosition];
@@ -216,6 +217,7 @@
     autoPlay = ap;
 }
 
+@dynamic lengthDisplayTime;
 - (NSString*) lengthDisplayTime
 {
     return [self formatTime:timelineLength];
@@ -244,7 +246,7 @@
         float pan = [[keyframe.value objectAtIndex:2] floatValue];
         float gain = [[keyframe.value objectAtIndex:3] floatValue];
         
-        NSString* absFile = [[AppDelegate appDelegate].resManager toAbsolutePath:soundFile];
+        NSString* absFile = [[ResourceManager sharedManager] toAbsolutePath:soundFile];
         if ([[NSFileManager defaultManager] fileExistsAtPath:absFile])
         {
             [[OALSimpleAudio sharedInstance] playEffect:absFile volume:gain pitch:pitch pan:pan loop:NO];

@@ -34,7 +34,7 @@
 @property (weak, nonatomic,readonly) IBOutlet NSView* view;
 
 @property (nonatomic,weak) SequencerKeyframe* keyframe;
-@property (nonatomic,weak) NSString* selector;
-@property (nonatomic,assign) int target;
+@property (nonatomic) NSString* selector;
+@property (nonatomic) int target;
 
 @end
