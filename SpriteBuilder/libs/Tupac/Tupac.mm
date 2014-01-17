@@ -416,7 +416,15 @@ typedef struct _PVRTexHeader
         [[NSFileManager defaultManager] copyItemAtPath:pngFilename toPath:self.previewFile error:NULL];
     }
     
-    textureFileName = [[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_ isSpriteSheet:YES];
+
+    
+    NSError * error = nil;
+    
+    if(![[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_ isSpriteSheet:YES outputFilename:&textureFileName error:&error])
+    {
+        [self setErrorMessage:error.localizedDescription];
+        
+    }
     
     // Metadata File Export
     textureFileName = [textureFileName lastPathComponent];

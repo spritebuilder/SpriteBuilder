@@ -1545,6 +1545,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             propName = @"position";
             type = kCCBKeyframeTypePosition;
         }
+        else if( currentMouseTransform == kCCBTransformHandleSkew)
+        {
+            float x = [PositionPropertySetter scaleXForNode:selectedNode prop:@"skew"];
+            float y = [PositionPropertySetter scaleYForNode:selectedNode prop:@"skew"];
+            value = [NSArray arrayWithObjects:
+                     [NSNumber numberWithFloat:x],
+                     [NSNumber numberWithFloat:y],
+                     nil];
+
+            propName = @"skew";
+            type = kCCBKeyframeTypeFloatXY;
+        }
         
         if (value)
         {
