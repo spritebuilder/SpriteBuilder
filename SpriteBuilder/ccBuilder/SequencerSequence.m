@@ -244,7 +244,7 @@
         float pan = [[keyframe.value objectAtIndex:2] floatValue];
         float gain = [[keyframe.value objectAtIndex:3] floatValue];
         
-        NSString* absFile = [[AppDelegate appDelegate].resManager toAbsolutePath:soundFile];
+        NSString* absFile = [[ResourceManager sharedManager] toAbsolutePath:soundFile];
         if ([[NSFileManager defaultManager] fileExistsAtPath:absFile])
         {
             [[OALSimpleAudio sharedInstance] playEffect:absFile volume:gain pitch:pitch pan:pan loop:NO];

@@ -503,7 +503,7 @@
     if (movedFile)
     {
         [resourceList deselectAll:NULL];
-        [[AppDelegate appDelegate].resManager reloadAllResources];
+        [[ResourceManager sharedManager] reloadAllResources];
     }
     
     return movedFile;

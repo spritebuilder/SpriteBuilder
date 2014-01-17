@@ -1332,7 +1332,7 @@
     [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources
-    [[AppDelegate appDelegate].resManager reloadAllResources];
+    [[ResourceManager sharedManager] reloadAllResources];
     
     return YES;
 }
@@ -1378,7 +1378,7 @@
     [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources
-    [[AppDelegate appDelegate].resManager reloadAllResources];
+    [[ResourceManager sharedManager] reloadAllResources];
 }
 
 + (void) removeResource:(RMResource*) res
