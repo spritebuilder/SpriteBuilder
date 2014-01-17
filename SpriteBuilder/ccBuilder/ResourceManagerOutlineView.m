@@ -197,8 +197,7 @@
     
     [self deselectAll:NULL];
     
-    [[AppDelegate appDelegate].resManager reloadAllResources];
-
+    [[ResourceManager sharedManager] reloadAllResources];
 }
 
 - (void) keyDown:(NSEvent *)theEvent

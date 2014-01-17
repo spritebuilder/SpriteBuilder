@@ -28,7 +28,7 @@
 {
 }
 
-@property (weak, nonatomic,readonly) NSMutableDictionary* files;
+@property (nonatomic,readonly) NSMutableDictionary* files;
 
 - (void) loadDirectory: (NSString*) dir;
 

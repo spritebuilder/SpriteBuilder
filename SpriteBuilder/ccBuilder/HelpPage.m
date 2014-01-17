@@ -29,6 +29,7 @@
 @synthesize fileName;
 @synthesize contents;
 
+@dynamic pageName;
 - (NSString*) pageName
 {
     return [fileName stringByDeletingPathExtension];

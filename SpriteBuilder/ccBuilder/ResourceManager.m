@@ -108,6 +108,7 @@
     }
 }
 
+@dynamic relativePath;
 - (NSString*) relativePath
 {
     return [ResourceManagerUtil relativePathFromAbsolutePath: self.filePath];
@@ -930,7 +931,7 @@
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
-
+@dynamic mainActiveDirectoryPath; // prevent auto-synthesis of property ivar of the same name
 - (NSString*) mainActiveDirectoryPath
 {
     if ([activeDirectories count] == 0) return NULL;
@@ -1332,7 +1333,7 @@
     [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources
-    [[AppDelegate appDelegate].resManager reloadAllResources];
+    [[ResourceManager sharedManager] reloadAllResources];
     
     return YES;
 }
@@ -1378,7 +1379,7 @@
     [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources
-    [[AppDelegate appDelegate].resManager reloadAllResources];
+    [[ResourceManager sharedManager] reloadAllResources];
 }
 
 + (void) removeResource:(RMResource*) res
