@@ -39,7 +39,7 @@
     // Setup menu
     [menu removeAllItems];
     
-    NSArray* strComps = [extra componentsSeparatedByString:@"|"];
+    NSArray* strComps = [self.extra componentsSeparatedByString:@"|"];
     
     for (int i = 0; i < [strComps count]/2; i++)
     {

@@ -26,7 +26,6 @@
 #import "AppDelegate.h"
 
 @implementation InspectorSeparator
-@synthesize disclosureButton;
 
 - (BOOL)isExpanded
 {
@@ -55,7 +54,7 @@
     
     [self setSuperviewFrameHeight];*/
     
-    [self setPropertyForSelection:[NSNumber numberWithInt:disclosureButton.state]];
+    [self setPropertyForSelection:[NSNumber numberWithInt:_disclosureButton.state]];
     
     [[AppDelegate appDelegate] updateInspectorFromSelection];
 }

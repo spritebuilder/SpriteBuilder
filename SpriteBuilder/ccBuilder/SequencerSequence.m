@@ -200,6 +200,7 @@
     return [NSString stringWithFormat:@"%02d:%02d:%02d", mins,secs,frames];
 }
 
+@dynamic currentDisplayTime;
 - (NSString*) currentDisplayTime
 {
     return [self formatTime:timelinePosition];
@@ -216,6 +217,7 @@
     autoPlay = ap;
 }
 
+@dynamic lengthDisplayTime;
 - (NSString*) lengthDisplayTime
 {
     return [self formatTime:timelineLength];

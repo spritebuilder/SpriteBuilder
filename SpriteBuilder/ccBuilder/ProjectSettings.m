@@ -300,6 +300,7 @@
     return dict;
 }
 
+@dynamic absoluteResourcePaths;
 - (NSArray*) absoluteResourcePaths
 {
     NSString* projectDirectory = [self.projectPath stringByDeletingLastPathComponent];
@@ -321,6 +322,7 @@
     return paths;
 }
 
+@dynamic projectPathHashed;
 - (NSString*) projectPathHashed
 {
     if (projectPath)
@@ -334,6 +336,7 @@
     }
 }
 
+@dynamic displayCacheDirectory;
 - (NSString*) displayCacheDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -350,6 +353,7 @@
     return [[[[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"publish"]stringByAppendingPathComponent:self.projectPathHashed] stringByAppendingPathComponent:uuid];
 }*/
 
+@dynamic tempSpriteSheetCacheDirectory;
 - (NSString*) tempSpriteSheetCacheDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);

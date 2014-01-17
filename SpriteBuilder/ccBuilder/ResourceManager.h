@@ -75,7 +75,7 @@ enum
 }
 
 @property (nonatomic,strong) NSString* filePath;
-@property (weak, nonatomic,readonly) NSString* relativePath;
+@property (nonatomic,readonly) NSString* relativePath;
 @property (nonatomic,strong) NSDate* modifiedTime;
 @property (nonatomic,assign) int type;
 @property (nonatomic,assign) BOOL touched;

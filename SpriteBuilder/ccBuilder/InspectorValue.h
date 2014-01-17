@@ -31,10 +31,6 @@
 {
     CCNode* selection;
     NSString* propertyName;
-    NSString* __weak displayName;
-    NSString* __weak extra;
-    
-    AppDelegate* resourceManager;
     
     IBOutlet NSView* __weak view;
     BOOL readOnly;
@@ -46,9 +42,9 @@
     NSString* textFieldOriginalValue;
 }
 
-@property (weak, nonatomic,readonly) NSString* displayName;
+@property (nonatomic,readonly) NSString* displayName;
 @property (weak, nonatomic,readonly) NSView* view;
-@property (weak, nonatomic,readonly) NSString* extra;
+@property (nonatomic,readonly) NSString* extra;
 @property (nonatomic,assign) BOOL readOnly;
 @property (nonatomic,assign) BOOL rootNode;
 @property (nonatomic,strong) NSArray* affectsProperties;

@@ -35,9 +35,7 @@
 
 @implementation InspectorValue
 
-@synthesize displayName;
 @synthesize view;
-@synthesize extra;
 @synthesize readOnly;
 @synthesize affectsProperties;
 @synthesize inspectorValueBelow;
@@ -58,14 +56,12 @@
 - (id) initWithSelection:(CCNode*)s andPropertyName:(NSString*)pn andDisplayName:(NSString*) dn andExtra:(NSString*)e;
 {
     self = [super init];
-    if (!self) return NULL;
+    if (!self) return nil;
     
     propertyName = pn;
-    displayName = dn;
+	_displayName = dn;
     selection = s;
-    extra = e;
-    
-    resourceManager = [AppDelegate appDelegate];
+    _extra = e;
     
     return self;
 }
