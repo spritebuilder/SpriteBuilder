@@ -29,6 +29,7 @@
 
 @implementation InspectorBlock
 
+@dynamic selector;
 - (void) setSelector:(NSString *)selector
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"selector"];

@@ -31,7 +31,7 @@
 }
 
 @property (nonatomic,strong) NSString* fileName;
-@property (weak, nonatomic,readonly) NSString* pageName;
+@property (nonatomic,readonly) NSString* pageName;
 @property (nonatomic,strong) NSString* contents;
 
 @end
