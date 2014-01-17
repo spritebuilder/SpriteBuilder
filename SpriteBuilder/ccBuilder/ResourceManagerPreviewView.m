@@ -41,6 +41,7 @@
 @synthesize previewPhonehd;
 @synthesize previewTablet;
 @synthesize previewTablethd;
+@dynamic    format_supportsPVRTC;
 
 #pragma mark Setup
 
@@ -317,6 +318,27 @@
 }
 
 #pragma mark Edit properties
+
+-(BOOL)format_supportsPVRTC
+{
+    //early out.
+    if(_previewedResource.type != kCCBResTypeImage)
+        return YES;
+    
+    NSBitmapImageRep * bitmapRep = self.imgMain.representations[0];
+    if(bitmapRep == nil)
+        return YES;
+    
+    if(bitmapRep.pixelsHigh != bitmapRep.pixelsWide)
+        return NO;
+    
+    //Is power of 2?
+    double result = log((double)bitmapRep.pixelsHigh)/log(2.0);
+    if((1 << (int)result) != bitmapRep.pixelsHigh)
+        return NO;
+    
+    return YES;
+}
 
 - (void) setScaleFrom:(int)scaleFrom
 {

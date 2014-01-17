@@ -12,6 +12,8 @@
 
 static FCFormatConverter* gDefaultConverter = NULL;
 
+static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
+
 @implementation FCFormatConverter
 
 + (FCFormatConverter*) defaultConverter
@@ -55,37 +57,45 @@ static FCFormatConverter* gDefaultConverter = NULL;
     }
     return NULL;
 }
-
-- (NSString*) convertImageAtPath:(NSString*)srcPath format:(int)format dither:(BOOL)dither compress:(BOOL)compress isSpriteSheet:(BOOL)isSpriteSheet
+-(BOOL)convertImageAtPath:(NSString*)srcPath
+                   format:(int)format
+                   dither:(BOOL)dither
+                 compress:(BOOL)compress
+            isSpriteSheet:(BOOL)isSpriteSheet
+           outputFilename:(NSString**)outputFilename
+                    error:(NSError**)error;
 {
+    
+    
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* dstDir = [srcPath stringByDeletingLastPathComponent];
     
-		// Convert PSD to PNG as a pre-step.
-		// Unless the .psd is part of a spritesheet, then the original name has to be preserved.
-		if ( [[srcPath pathExtension] isEqualToString:@"psd"] && !isSpriteSheet)
-		{
-				CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
-				CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
-				
-				NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
-				CFURLRef out_url = (__bridge CFURLRef)[NSURL fileURLWithPath:out_path];
-				CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
-				CGImageDestinationAddImage(image_destination, image, NULL);
-				CGImageDestinationFinalize(image_destination);
-				
-				CFRelease(image_source);
-				CGImageRelease(image);
-				CFRelease(image_destination);
-				
-				[fm removeItemAtPath:srcPath error:nil];
-				srcPath = out_path;
-		}
+    // Convert PSD to PNG as a pre-step.
+    // Unless the .psd is part of a spritesheet, then the original name has to be preserved.
+    if ( [[srcPath pathExtension] isEqualToString:@"psd"] && !isSpriteSheet)
+    {
+            CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
+            CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+            
+            NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
+            CFURLRef out_url = (__bridge CFURLRef)[NSURL fileURLWithPath:out_path];
+            CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
+            CGImageDestinationAddImage(image_destination, image, NULL);
+            CGImageDestinationFinalize(image_destination);
+            
+            CFRelease(image_source);
+            CGImageRelease(image);
+            CFRelease(image_destination);
+            
+            [fm removeItemAtPath:srcPath error:nil];
+            srcPath = out_path;
+    }
 		
     if (format == kFCImageFormatPNG)
     {
         // PNG image - no conversion required
-        return [srcPath copy];
+        *outputFilename = [srcPath copy];
+        return YES;
     }
     if (format == kFCImageFormatPNG_8BIT)
     {
@@ -101,7 +111,8 @@ static FCFormatConverter* gDefaultConverter = NULL;
         
         if ([fm fileExistsAtPath:srcPath])
         {
-            return [srcPath copy];
+            *outputFilename = [srcPath copy];
+            return YES;
         }
     }
     else if (format == kFCImageFormatPVR_RGBA8888 ||
@@ -143,28 +154,42 @@ static FCFormatConverter* gDefaultConverter = NULL;
         NSImage * image = [[NSImage alloc] initWithContentsOfFile:srcPath];
         NSBitmapImageRep* rawImg = [NSBitmapImageRep imageRepWithData:[image TIFFRepresentation]];
         
-        pvrtexture::CPVRTextureHeader header(pvrtexture::PVRStandard8PixelType.PixelTypeID, image.size.width , image.size.height);
+        pvrtexture::CPVRTextureHeader header(pvrtexture::PVRStandard8PixelType.PixelTypeID, image.size.height , image.size.width);
         pvrtexture::CPVRTexture     * pvrTexture = new pvrtexture::CPVRTexture(header , rawImg.bitmapData);
+        
+        bool hasError = NO;
         
         if(!Transcode(*pvrTexture, pixelType, variableType, ePVRTCSpacelRGB, pvrtexture::ePVRTCBest, dither))
         {
-            #warning TODO: How do I bubble up errors from here.
-            int break_here =1;
+            NSString * errorMessage = [NSString stringWithFormat:@"Failure to transcode image: %@", srcPath];
+            NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
+            *error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+            hasError = YES;
         }
         
-        CPVRTString filePath([dstPath UTF8String], dstPath.length);
-        
-        if(!pvrTexture->saveFileLegacyPVR(filePath,  pvrtexture::eOGLES2))
+        if(!hasError)
         {
-            #warning TODO: How do I bubble up errors from here.
-            int break_here =1;
+            CPVRTString filePath([dstPath UTF8String], dstPath.length);
+            
+            if(!pvrTexture->saveFileLegacyPVR(filePath,  pvrtexture::eOGLES2))
+            {
+                NSString * errorMessage = [NSString stringWithFormat:@"Failure to save image: %@", dstPath];
+                NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
+                *error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+                hasError = YES;
+            }
         }
+        
         
         // Remove PNG file
         [[NSFileManager defaultManager] removeItemAtPath:srcPath error:NULL];
-        
         //Clean up memory.
         delete pvrTexture;
+        
+        if(hasError)
+        {
+            return NO;//return failure;
+        }
         
         if (compress)
         {
@@ -186,7 +211,8 @@ static FCFormatConverter* gDefaultConverter = NULL;
         
         if ([fm fileExistsAtPath:dstPath])
         {
-            return dstPath;
+            *outputFilename = [dstPath copy];
+            return YES;
         }
     }
     else if (format == kFCImageFormatJPG_Low ||
@@ -216,13 +242,21 @@ static FCFormatConverter* gDefaultConverter = NULL;
             [fm removeItemAtPath:srcPath error:NULL];
         }
         
-        return dstPath;
+        *outputFilename = [dstPath copy];
+        return YES;
         
-        return NULL;
+    }
+    else
+    {
+        // Conversion failed
+        if(error != nil)
+        {
+            *error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:@{NSLocalizedDescriptionKey:@"Unhandled format"}];
+        }
+        
+        return NO;
     }
     
-    // Conversion failed
-    return NULL;
 }
 
 - (NSString*) proposedNameForConvertedSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality

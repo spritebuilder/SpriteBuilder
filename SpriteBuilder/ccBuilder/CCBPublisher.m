@@ -267,7 +267,14 @@
         [fm copyItemAtPath:srcPath toPath:dstPath error:NULL];
         
         // Convert it
-        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet];
+        NSString* dstPathConverted = nil;
+        NSError  * error;
+        if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
+        {
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
+            
+            return NO;
+        }
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
@@ -291,7 +298,14 @@
         [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:dstPath forResolution:resolution];
         
         // Convert it
-        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet];
+        NSString* dstPathConverted = nil;
+        NSError  * error;
+        
+        if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
+        {
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
+            return NO;
+        }
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
