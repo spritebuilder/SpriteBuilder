@@ -384,7 +384,7 @@
     [self setValue:[NSNumber numberWithBool:YES] forResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
-    [[AppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
+    [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
     [[AppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
 }
 
@@ -395,7 +395,7 @@
     [self removeObjectForResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
-    [[AppDelegate appDelegate].resManager notifyResourceObserversResourceListUpdated];
+    [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
     [[AppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
 }
 

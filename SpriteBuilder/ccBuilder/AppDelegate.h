@@ -203,7 +203,6 @@ enum {
     IBOutlet NSSegmentedControl* segmPublishBtn;
     
     // Resource manager
-    ResourceManager* __weak resManager;
     IBOutlet NSView* previewViewContainer;
     NSView* previewViewImage;
     NSView* previewViewGeneric;
@@ -235,9 +234,6 @@ enum {
     NSMutableArray* delayOpenFiles;
     CCBDocument* currentDocument;
     BOOL hasOpenedDocument;
-    
-    // PlugIns (nodes)
-    PlugInManager* __weak plugInManager;
     
     // Guides
     BOOL showGuides;
@@ -278,6 +274,7 @@ enum {
     
 @private
     MainWindow *__weak window;
+	BOOL _applicationLaunchComplete;
     
 }
 
@@ -286,7 +283,6 @@ enum {
 @property (weak, nonatomic,readonly) IBOutlet NSOutlineView* outlineProject;
 
 
-@property (weak, nonatomic,readonly) ResourceManager* resManager;
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
 @property (nonatomic,strong) CCBDocument* currentDocument;
 @property (nonatomic,assign) BOOL hasOpenedDocument;
@@ -325,7 +321,6 @@ enum {
 - (void) resizeGUIWindow:(NSSize)size;
 
 // PlugIns and properties
-@property (weak, nonatomic,readonly) PlugInManager* plugInManager;
 - (void) refreshProperty:(NSString*) name;
 - (void) refreshPropertiesOfType:(NSString*)type;
 
