@@ -930,7 +930,7 @@
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
-
+@dynamic mainActiveDirectoryPath; // prevent auto-synthesis of property ivar of the same name
 - (NSString*) mainActiveDirectoryPath
 {
     if ([activeDirectories count] == 0) return NULL;

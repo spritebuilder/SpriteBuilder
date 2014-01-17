@@ -131,7 +131,7 @@ enum
     SCEvents* pathWatcher;
     NSMutableArray* resourceObserver;
     
-    NSArray* __weak systemFontList;
+    NSArray* systemFontList;
     
     BOOL tooManyDirectoriesAdded;
 }
@@ -140,10 +140,10 @@ enum
 
 @property (nonatomic,readonly) NSMutableDictionary* directories;
 @property (nonatomic,strong) NSArray* activeDirectories;
-@property (weak, nonatomic,readonly) NSString* mainActiveDirectoryPath;
+@property (nonatomic,readonly) NSString* mainActiveDirectoryPath;
 @property (nonatomic,assign) BOOL tooManyDirectoriesAdded;
 
-@property (weak, nonatomic,readonly) NSArray* systemFontList;
+@property (nonatomic,readonly) NSArray* systemFontList;
 
 - (void) addDirectory:(NSString*)dir;
 - (void) removeDirectory:(NSString*)dir;
