@@ -54,8 +54,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>329</real>
-							<real>120</real>
+							<real>341</real>
+							<real>80</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -80,7 +80,7 @@
 						<key>value</key>
 						<array>
 							<real>5.0671248435974121</real>
-							<real>8.9207334518432617</real>
+							<real>7.8589873313903809</real>
 							<false/>
 							<integer>0</integer>
 						</array>
@@ -132,6 +132,32 @@
 				<string></string>
 				<key>memberVarAssignmentType</key>
 				<integer>0</integer>
+				<key>physicsBody</key>
+				<dict>
+					<key>affectedByGravity</key>
+					<true/>
+					<key>allowsRotation</key>
+					<true/>
+					<key>bodyShape</key>
+					<integer>1</integer>
+					<key>cornerRadius</key>
+					<real>12</real>
+					<key>density</key>
+					<real>1</real>
+					<key>dynamic</key>
+					<true/>
+					<key>elasticity</key>
+					<real>0.30000001192092896</real>
+					<key>friction</key>
+					<real>0.30000001192092896</real>
+					<key>points</key>
+					<array>
+						<array>
+							<real>12.5</real>
+							<real>12.5</real>
+						</array>
+					</array>
+				</dict>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -149,8 +175,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>353</real>
-							<real>120</real>
+							<real>314</real>
+							<real>121</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -174,8 +200,8 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>2</real>
-							<real>1</real>
+							<real>3.5828549861907959</real>
+							<real>2.6745874881744385</real>
 							<false/>
 							<integer>1</integer>
 						</array>
@@ -186,7 +212,7 @@
 						<key>type</key>
 						<string>Degrees</string>
 						<key>value</key>
-						<real>45</real>
+						<real>-18.747100830078125</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -213,6 +239,10 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
+				<key>seqExpanded</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -244,7 +274,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>227</real>
+							<real>226</real>
 							<real>103</real>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -258,8 +288,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>0.35166341066360474</real>
+							<real>1.394542932510376</real>
 						</array>
 					</dict>
 					<dict>
@@ -315,6 +345,14 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>opacity</string>
+						<key>type</key>
+						<string>Float</string>
+						<key>value</key>
+						<real>0.69999998807907104</real>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>color</string>
 						<key>type</key>
 						<string>Color3</string>
@@ -323,7 +361,7 @@
 							<real>1</real>
 							<real>0.98914235830307007</real>
 							<real>0.99171823263168335</real>
-							<real>1</real>
+							<real>0.69999998807907104</real>
 						</array>
 					</dict>
 					<dict>
@@ -553,6 +591,44 @@
 				<string></string>
 				<key>memberVarAssignmentType</key>
 				<integer>0</integer>
+				<key>physicsBody</key>
+				<dict>
+					<key>affectedByGravity</key>
+					<true/>
+					<key>allowsRotation</key>
+					<true/>
+					<key>bodyShape</key>
+					<integer>0</integer>
+					<key>cornerRadius</key>
+					<real>0.0</real>
+					<key>density</key>
+					<real>1</real>
+					<key>dynamic</key>
+					<true/>
+					<key>elasticity</key>
+					<real>0.30000001192092896</real>
+					<key>friction</key>
+					<real>0.30000001192092896</real>
+					<key>points</key>
+					<array>
+						<array>
+							<real>0.0</real>
+							<real>0.0</real>
+						</array>
+						<array>
+							<real>0.0</real>
+							<real>100</real>
+						</array>
+						<array>
+							<real>100</real>
+							<real>100</real>
+						</array>
+						<array>
+							<real>100</real>
+							<real>0.0</real>
+						</array>
+					</array>
+				</dict>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -1078,11 +1154,11 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>0.033333335071802139</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
-			<real>128</real>
+			<real>110.91854095458984</real>
 			<key>sequenceId</key>
 			<integer>0</integer>
 			<key>soundChannel</key>
