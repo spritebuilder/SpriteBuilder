@@ -109,7 +109,7 @@
 @end
 
 typedef struct {
-    CGFloat r, g, b, a;
+    float r, g, b, a;
 } CCColorComponentRGBA;
 
 @interface CCColor (CCBReader)
