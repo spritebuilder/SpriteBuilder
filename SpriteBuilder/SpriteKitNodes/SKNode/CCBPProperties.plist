@@ -158,7 +158,7 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>animatable</key>
 			<true/>
 			<key>type</key>
@@ -170,7 +170,7 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>animatable</key>
 			<true/>
 			<key>type</key>
@@ -184,7 +184,7 @@
 			<key>animatable</key>
 			<true/>
 			<key>defaultSerialization</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>type</key>
 			<string>Float</string>
 			<key>name</key>
