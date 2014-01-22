@@ -3457,6 +3457,7 @@ static BOOL hideAllToNextSeparator;
     {
         [sequenceHandler deleteKeyframesForCurrentSequenceAfterTime:wc.duration];
         sequenceHandler.currentSequence.timelineLength = wc.duration;
+        [self updateInspectorFromSelection];
     }
 }
 
