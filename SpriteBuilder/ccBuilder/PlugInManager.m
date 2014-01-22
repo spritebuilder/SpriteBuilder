@@ -166,6 +166,11 @@
     if (!plugin) return NULL;
     
     Class editorClass = NSClassFromString(plugin.nodeEditorClassName);
+	if (!editorClass)
+	{
+		NSLog(@"WARNING: class %@ not found, defined in plugin %@.", plugin.nodeEditorClassName, name);
+		return nil;
+	}
     
     CCNode* node = [[editorClass alloc] init];
     [node setUserObject: [NodeInfo nodeInfoWithPlugIn:plugin]];
