@@ -1612,20 +1612,25 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     NSGraphicsContext * graphicsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
     
     CGContextRef context = [graphicsContext graphicsPort];
-    
-    CGPoint centerPoint=CGPointMake( imageSize.width/2, imageSize.height/2);
-    CGPoint vertex = CGPointMake( -imageSize.width/2, -imageSize.height/2);
-    CGAffineTransform tranform = CGAffineTransformMakeRotation(rotation);
-    CGPoint vertex2 = CGPointApplyAffineTransform(vertex, tranform);
-    CGPoint vertex3 = CGPointMake(centerPoint.x + vertex2.x, centerPoint.y + vertex2.y);
-    
-    
-    CGContextTranslateCTM(context, vertex3.x,vertex3.y);
-    CGContextRotateCTM(context, rotation);
-    
-    CGImageRef maskImage = [image CGImageForProposedRect:nil context:graphicsContext hints:nil];
-    CGContextDrawImage(context, rect, maskImage);
-    
+	if (context)
+	{
+		CGPoint centerPoint=CGPointMake( imageSize.width/2, imageSize.height/2);
+		CGPoint vertex = CGPointMake( -imageSize.width/2, -imageSize.height/2);
+		CGAffineTransform tranform = CGAffineTransformMakeRotation(rotation);
+		CGPoint vertex2 = CGPointApplyAffineTransform(vertex, tranform);
+		CGPoint vertex3 = CGPointMake(centerPoint.x + vertex2.x, centerPoint.y + vertex2.y);
+		
+		
+		CGContextTranslateCTM(context, vertex3.x,vertex3.y);
+		CGContextRotateCTM(context, rotation);
+		
+		CGImageRef maskImage = [image CGImageForProposedRect:nil context:graphicsContext hints:nil];
+		CGContextDrawImage(context, rect, maskImage);
+	}
+	else
+	{
+		NSLog(@"CocosScene rotateImage: CG draw context is nil");
+	}
     
     NSImage*img = [[NSImage alloc] initWithSize:imageSize];;
     [img addRepresentation:offscreenRep];
