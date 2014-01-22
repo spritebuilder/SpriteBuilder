@@ -838,6 +838,8 @@ static BOOL hideAllToNextSeparator;
     
     // Create inspector
     InspectorValue* inspectorValue = [InspectorValue inspectorOfType:type withSelection:self.selectedNode andPropertyName:prop andDisplayName:displayName andExtra:e];
+	NSAssert3(inspectorValue, @"property '%@' (%@) not found in class %@", prop, type, NSStringFromClass([self.selectedNode class]));
+	
     lastInspectorValue.inspectorValueBelow = inspectorValue;
     lastInspectorValue = inspectorValue;
     inspectorValue.readOnly = readOnly;
