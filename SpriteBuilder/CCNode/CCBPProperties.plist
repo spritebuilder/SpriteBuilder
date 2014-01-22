@@ -7,7 +7,7 @@
 	<key>displayName</key>
 	<string>Node</string>
 	<key>description</key>
-	<string>The base class of all Cocos2d nodes.</string>
+	<string>Non-visual node. Mainly used to group other nodes.</string>
 	<key>className</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
