@@ -1005,6 +1005,7 @@
     
     // Create new, scaled image
     CGContextRef newContext = CGBitmapContextCreate(NULL, wDst, hDst, 8, wDst*32, colorSpace, kCGImageAlphaPremultipliedLast);
+	NSAssert(newContext != nil, @"CG draw context is nil");
     
     // Enable anti-aliasing
     CGContextSetInterpolationQuality(newContext, kCGInterpolationHigh);

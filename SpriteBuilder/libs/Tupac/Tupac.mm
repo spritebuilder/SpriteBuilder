@@ -322,7 +322,8 @@ typedef struct _PVRTexHeader
     
     // Create the output graphics context
     CGContextRef dstContext = CGBitmapContextCreate(NULL, outW, outH, 8, outW*32, colorSpace, kCGImageAlphaPremultipliedLast);
-    
+	NSAssert(dstContext != nil, @"CG bitmap context is nil");
+
     // Draw all the individual images
     int index = 0;
     while (index < outRects.size())
