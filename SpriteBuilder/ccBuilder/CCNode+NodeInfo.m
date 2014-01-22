@@ -572,13 +572,29 @@
     
     NodeInfo* info = self.userObject;
     NSMutableDictionary* seq = [info.animatableProperties objectForKey:[NSNumber numberWithInt:seqId]];
+    
     if (seq)
     {
+        
         NSEnumerator* seqEnum = [seq objectEnumerator];
         SequencerNodeProperty* seqNodeProp;
+        NSMutableArray* emptyProps = [NSMutableArray array];
+        
         while ((seqNodeProp = [seqEnum nextObject]))
         {
             [seqNodeProp deleteKeyframesAfterTime:time];
+            
+            if (seqNodeProp.keyframes.count == 0)
+            {
+                [emptyProps addObject:seqNodeProp.propName];
+            }
+            
+        }
+        
+        // Remove empty seq node props
+        for (NSString* propName in emptyProps)
+        {
+            [seq removeObjectForKey:propName];
         }
     }
     // Also remove keyframes for children
