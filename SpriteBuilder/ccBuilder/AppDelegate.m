@@ -2569,7 +2569,7 @@ static BOOL hideAllToNextSeparator;
     
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
     [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"ccb"]];
-    SavePanelLimiter* limter = [[SavePanelLimiter alloc] initWithPanel:saveDlg];
+	__block SavePanelLimiter* limiter = [[SavePanelLimiter alloc] initWithPanel:saveDlg];
     
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
@@ -2591,6 +2591,9 @@ static BOOL hideAllToNextSeparator;
                 [[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
+		
+		// ensures the limiter remains in memory until the block finishes
+		limiter = nil;
     }];
 }
 
