@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<real>3000</real>
+	<integer>1</integer>
 	<key>displayName</key>
 	<string>Label (Sprite Kit)</string>
 	<key>description</key>
@@ -36,6 +36,58 @@
 			<string>SKLabelNode</string>
 			<key>name</key>
 			<string>SKLabelNode</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>Label</string>
+			<key>name</key>
+			<string>text</string>
+			<key>displayName</key>
+			<string>Text</string>
+			<key>type</key>
+			<string>StringSimple</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>Chalkduster</string>
+			<key>displayName</key>
+			<string>Font Name</string>
+			<key>type</key>
+			<string>FontTTF</string>
+			<key>name</key>
+			<string>fontName</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<integer>24</integer>
+			<key>displayName</key>
+			<string>Font Size</string>
+			<key>type</key>
+			<string>FloatScale</string>
+			<key>name</key>
+			<string>fontSize</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>fontColor</string>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>1</integer>
+				<string>1</string>
+				<string>1</string>
+				<string>1</string>
+			</array>
+			<key>displayName</key>
+			<string>Font Color</string>
+			<key>type</key>
+			<string>Color4</string>
+			<key>default</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>

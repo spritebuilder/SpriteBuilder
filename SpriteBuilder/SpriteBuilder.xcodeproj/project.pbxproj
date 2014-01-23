@@ -303,6 +303,7 @@
 		DC680340189169510060BE39 /* SKColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032B189156910060BE39 /* SKColorSpriteNode.m */; };
 		DC680341189169D50060BE39 /* CCBPluginSKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F15C1890607D00128D78 /* CCBPluginSKNode.m */; };
 		DC680343189169E10060BE39 /* CCBPluginSKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */; };
+		DCB6755618919E9400E187E5 /* CCLabelTTF+SKLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB6755418919E8E00E187E5 /* CCLabelTTF+SKLabelNode.m */; };
 		DCB9F1501890600D00128D78 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DCB9F1651890607D00128D78 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCB9F15D1890607D00128D78 /* CCBPProperties.plist */; };
 		DCB9F1671890607D00128D78 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB9F1601890607D00128D78 /* Icon.png */; };
@@ -1275,6 +1276,8 @@
 		DC680331189156A60060BE39 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DC680332189156A60060BE39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		DC68033A189168390060BE39 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		DCB6755318919E8E00E187E5 /* CCLabelTTF+SKLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCLabelTTF+SKLabelNode.h"; sourceTree = "<group>"; };
+		DCB6755418919E8E00E187E5 /* CCLabelTTF+SKLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCLabelTTF+SKLabelNode.m"; sourceTree = "<group>"; };
 		DCB9F1421890500E00128D78 /* SKLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKLabelNode.h; sourceTree = "<group>"; };
 		DCB9F1431890500E00128D78 /* SKLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKLabelNode.m; sourceTree = "<group>"; };
 		DCB9F1441890500E00128D78 /* SKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKNode.h; sourceTree = "<group>"; };
@@ -3003,6 +3006,8 @@
 			children = (
 				DC68031918914E650060BE39 /* CCNode+SKNode.h */,
 				DC68031A18914E650060BE39 /* CCNode+SKNode.m */,
+				DCB6755318919E8E00E187E5 /* CCLabelTTF+SKLabelNode.h */,
+				DCB6755418919E8E00E187E5 /* CCLabelTTF+SKLabelNode.m */,
 				DCB9F1441890500E00128D78 /* SKNode.h */,
 				DCB9F1451890500E00128D78 /* SKNode.m */,
 				DCB9F1421890500E00128D78 /* SKLabelNode.h */,
@@ -4829,6 +4834,7 @@
 				B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */,
 				E3FEA8B914E492DA00119FBE /* InspectorScaleLock.m in Sources */,
 				E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */,
+				DCB6755618919E9400E187E5 /* CCLabelTTF+SKLabelNode.m in Sources */,
 				E3B4221114E49DEB004547D6 /* InspectorInteger.m in Sources */,
 				E3B4221614E4A381004547D6 /* InspectorCheck.m in Sources */,
 				E3B4221B14E4BE87004547D6 /* InspectorSpriteFrame.m in Sources */,
