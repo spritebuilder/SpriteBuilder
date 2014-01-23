@@ -21,13 +21,22 @@
 	{
 		skView.showsFPS = YES;
 		skView.showsNodeCount = YES;
+		skView.showsDrawCount = YES;
 		
+		[skView setValue:@YES forKey:@"_showsTotalAreaRendered"];
+		[skView setValue:@YES forKey:@"_showsCulledNodesInNodeCount"];
+		[skView setValue:@YES forKey:@"_showsCoreAnimationFPS"];
+		[skView setValue:@YES forKey:@"_showsGPUStats"];
+		[skView setValue:@YES forKey:@"_showsCPUStats"];
+
+
 		// Create and configure the scene.
 		[CCBReader setSceneSize:skView.bounds.size];
 		SKScene* scene = [CCBReader loadAsScene:@"MainScene"];
 		NSLog(@"scene %@ %p: %@", NSStringFromClass([scene class]), scene, scene);
 		scene.scaleMode = SKSceneScaleModeResizeFill;
 
+		/*
 		SKSpriteNode* s = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(10, 10)];
 		s.texture = [SKTexture textureWithImageNamed:@"Published-iOS/resources-phone/bird.png"];
 		s.size = s.texture.size;
@@ -35,9 +44,11 @@
 		NSLog(@"tex: %@", s.texture);
 		s.position = CGPointMake(100, 100);
 		[scene addChild:s];
+		 */
 		
 		[skView presentScene:scene];
 		
+		NSLog(@"================== SCENE CONTENTS ==================");
 		for (SKNode* node in [scene.children.firstObject children])
 		{
 			NSLog(@"node: %@", node);

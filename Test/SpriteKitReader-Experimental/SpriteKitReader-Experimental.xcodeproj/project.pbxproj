@@ -12,7 +12,6 @@
 		DC58534B187EF8BE00C118E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534A187EF8BE00C118E8 /* Foundation.framework */; };
 		DC58534D187EF8BE00C118E8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */; };
 		DC58534F187EF8BE00C118E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534E187EF8BE00C118E8 /* UIKit.framework */; };
-		DC585351187EF8BE00C118E8 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC585350187EF8BE00C118E8 /* SpriteKit.framework */; };
 		DC585357187EF8BE00C118E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC585355187EF8BE00C118E8 /* InfoPlist.strings */; };
 		DC585359187EF8BE00C118E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC585358187EF8BE00C118E8 /* main.m */; };
 		DC58535D187EF8BE00C118E8 /* SBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58535C187EF8BE00C118E8 /* SBAppDelegate.m */; };
@@ -137,7 +136,6 @@
 			files = (
 				DC58534D187EF8BE00C118E8 /* CoreGraphics.framework in Frameworks */,
 				DC58534F187EF8BE00C118E8 /* UIKit.framework in Frameworks */,
-				DC585351187EF8BE00C118E8 /* SpriteKit.framework in Frameworks */,
 				DC58534B187EF8BE00C118E8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
