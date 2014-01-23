@@ -104,25 +104,19 @@
 		8045F136183ADA900082BD94 /* seq-visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12C183AD6D30082BD94 /* seq-visible.png */; };
 		8045F137183ADA900082BD94 /* seq-notset.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12D183AD6D30082BD94 /* seq-notset.png */; };
 		8045F138183ADA900082BD94 /* seq-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F134183AD9B90082BD94 /* seq-locked.png */; };
-		8045F13C183AF1DC0082BD94 /* SequencerButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */; };
 		8045F13D183AF3FF0082BD94 /* SequencerButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */; };
-		8076F94E18624318003C4153 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		8098525A182C40170054BBF3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80985259182C40170054BBF3 /* CoreMedia.framework */; };
 		80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AD79A01863871200B653B7 /* libPVRTexLib.a */; };
 		80B149BE183D4D280085935B /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		80B149BF183D4D280085935B /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
-		80B149C8183D55E60085935B /* SoundFileImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B149C7183D55E60085935B /* SoundFileImageController.m */; };
 		80B149C9183D73930085935B /* SoundFileImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B149C7183D55E60085935B /* SoundFileImageController.m */; };
-		80D06082183317F2001F27F9 /* WarningOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D06081183317F2001F27F9 /* WarningOutlineView.m */; };
 		80E158951843DEDC007242F6 /* select-rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158941843DEDC007242F6 /* select-rotation.png */; };
 		80E158A118441FF1007242F6 /* select-skew.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158A018441FF1007242F6 /* select-skew.png */; };
 		80E95C551836E41C00D864CA /* select-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E95C541836E41C00D864CA /* select-locked.png */; };
 		80E95C5A1836E44900D864CA /* select-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E95C541836E41C00D864CA /* select-locked.png */; };
-		80E97F6418370F400052647D /* WarningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E97F6318370F400052647D /* WarningCell.m */; };
 		80F90900183C186200A714FC /* seq-visible-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F908FF183C186200A714FC /* seq-visible-faint.png */; };
 		80F90905183C188400A714FC /* seq-visible-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F908FF183C186200A714FC /* seq-visible-faint.png */; };
-		80F936F21833F8970032454F /* WarningOutlineHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F936F11833F8970032454F /* WarningOutlineHandler.m */; };
 		80FBACC31833FAE000C4BB69 /* WarningOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D06081183317F2001F27F9 /* WarningOutlineView.m */; };
 		80FBACC41833FAE000C4BB69 /* WarningOutlineHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 80F936F11833F8970032454F /* WarningOutlineHandler.m */; };
 		80FBACCB183422BD00C4BB69 /* inspector-warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACC9183422BD00C4BB69 /* inspector-warning@2x.png */; };
@@ -132,7 +126,6 @@
 		80FBACD81834530100C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
-		9297636A187775A0008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
@@ -298,7 +291,7 @@
 		DC680317189146FE0060BE39 /* SKSpriteNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */; };
 		DC680318189146FE0060BE39 /* SKLabelNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */; };
 		DC680321189156310060BE39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
-		DC680333189156A60060BE39 /* CCBPluginSKSpriteNodeWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032F189156A60060BE39 /* CCBPluginSKSpriteNodeWithColor.m */; };
+		DC680333189156A60060BE39 /* CCBPluginSKColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032F189156A60060BE39 /* CCBPluginSKColorSpriteNode.m */; };
 		DC680334189156A60060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC680330189156A60060BE39 /* CCBPProperties.plist */; };
 		DC680335189156A60060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680331189156A60060BE39 /* Icon.png */; };
 		DC680336189156A60060BE39 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680332189156A60060BE39 /* Icon@2x.png */; };
@@ -307,7 +300,7 @@
 		DC68033D189169510060BE39 /* SKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1451890500E00128D78 /* SKNode.m */; };
 		DC68033E189169510060BE39 /* SKLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1431890500E00128D78 /* SKLabelNode.m */; };
 		DC68033F189169510060BE39 /* SKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1471890500E00128D78 /* SKSpriteNode.m */; };
-		DC680340189169510060BE39 /* SKSpriteNodeWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032B189156910060BE39 /* SKSpriteNodeWithColor.m */; };
+		DC680340189169510060BE39 /* SKColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032B189156910060BE39 /* SKColorSpriteNode.m */; };
 		DC680341189169D50060BE39 /* CCBPluginSKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F15C1890607D00128D78 /* CCBPluginSKNode.m */; };
 		DC680343189169E10060BE39 /* CCBPluginSKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */; };
 		DCB9F1501890600D00128D78 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
@@ -1274,10 +1267,10 @@
 		DC68031918914E650060BE39 /* CCNode+SKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+SKNode.h"; sourceTree = "<group>"; };
 		DC68031A18914E650060BE39 /* CCNode+SKNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+SKNode.m"; sourceTree = "<group>"; };
 		DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNodeWithColor.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC68032A189156910060BE39 /* SKSpriteNodeWithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSpriteNodeWithColor.h; sourceTree = "<group>"; };
-		DC68032B189156910060BE39 /* SKSpriteNodeWithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSpriteNodeWithColor.m; sourceTree = "<group>"; };
-		DC68032E189156A60060BE39 /* CCBPluginSKSpriteNodeWithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNodeWithColor.h; sourceTree = "<group>"; };
-		DC68032F189156A60060BE39 /* CCBPluginSKSpriteNodeWithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNodeWithColor.m; sourceTree = "<group>"; };
+		DC68032A189156910060BE39 /* SKColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorSpriteNode.h; sourceTree = "<group>"; };
+		DC68032B189156910060BE39 /* SKColorSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorSpriteNode.m; sourceTree = "<group>"; };
+		DC68032E189156A60060BE39 /* CCBPluginSKColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKColorSpriteNode.h; sourceTree = "<group>"; };
+		DC68032F189156A60060BE39 /* CCBPluginSKColorSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKColorSpriteNode.m; sourceTree = "<group>"; };
 		DC680330189156A60060BE39 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		DC680331189156A60060BE39 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DC680332189156A60060BE39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -2984,8 +2977,8 @@
 		DC68032D189156A60060BE39 /* SKSpriteNodeWithColor */ = {
 			isa = PBXGroup;
 			children = (
-				DC68032E189156A60060BE39 /* CCBPluginSKSpriteNodeWithColor.h */,
-				DC68032F189156A60060BE39 /* CCBPluginSKSpriteNodeWithColor.m */,
+				DC68032E189156A60060BE39 /* CCBPluginSKColorSpriteNode.h */,
+				DC68032F189156A60060BE39 /* CCBPluginSKColorSpriteNode.m */,
 				DC680330189156A60060BE39 /* CCBPProperties.plist */,
 				DC680331189156A60060BE39 /* Icon.png */,
 				DC680332189156A60060BE39 /* Icon@2x.png */,
@@ -3016,8 +3009,8 @@
 				DCB9F1431890500E00128D78 /* SKLabelNode.m */,
 				DCB9F1461890500E00128D78 /* SKSpriteNode.h */,
 				DCB9F1471890500E00128D78 /* SKSpriteNode.m */,
-				DC68032A189156910060BE39 /* SKSpriteNodeWithColor.h */,
-				DC68032B189156910060BE39 /* SKSpriteNodeWithColor.m */,
+				DC68032A189156910060BE39 /* SKColorSpriteNode.h */,
+				DC68032B189156910060BE39 /* SKColorSpriteNode.m */,
 			);
 			name = "stand-in nodes";
 			sourceTree = "<group>";
@@ -4955,7 +4948,7 @@
 				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
 				B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */,
 				B794AB99177CE09D004FF493 /* FCFormatConverter.mm in Sources */,
-				DC680340189169510060BE39 /* SKSpriteNodeWithColor.m in Sources */,
+				DC680340189169510060BE39 /* SKColorSpriteNode.m in Sources */,
 				B7AC6980179F50850041B8BD /* BFColorPickerPopover.m in Sources */,
 				B7AC6982179F50850041B8BD /* BFPopoverColorWell.m in Sources */,
 				B7AC6983179F50850041B8BD /* NSColor+BFColorPickerPopover.m in Sources */,
@@ -5074,7 +5067,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC680333189156A60060BE39 /* CCBPluginSKSpriteNodeWithColor.m in Sources */,
+				DC680333189156A60060BE39 /* CCBPluginSKColorSpriteNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5132,13 +5125,6 @@
 			files = (
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
-				9297636A187775A0008F997B /* ResourceManagerPreviewAudio.m in Sources */,
-				8076F94E18624318003C4153 /* InspectorStringSimple.m in Sources */,
-				80F936F21833F8970032454F /* WarningOutlineHandler.m in Sources */,
-				8045F13C183AF1DC0082BD94 /* SequencerButtonCell.m in Sources */,
-				80D06082183317F2001F27F9 /* WarningOutlineView.m in Sources */,
-				80B149C8183D55E60085935B /* SoundFileImageController.m in Sources */,
-				80E97F6418370F400052647D /* WarningCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,13 +10,17 @@
 
 @interface CCNode (SKNode)
 
-@property CGSize frameSize;
+// SKNode
 @property CGFloat alpha;
 @property CGFloat speed;
 @property CGFloat xScale;
 @property CGFloat yScale;
 @property CGFloat zRotation;
-@property CCSizeType frameSizeType;
 @property BOOL hidden;
+
+// SKSpriteNode
+@property CGFloat colorBlendFactor;
+@property CGSize size;
+@property CCSizeType sizeType;
 
 @end

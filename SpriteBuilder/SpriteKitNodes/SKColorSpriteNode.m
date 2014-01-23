@@ -6,8 +6,8 @@
 //
 //
 
-#import "SKSpriteNodeWithColor.h"
+#import "SKColorSpriteNode.h"
 
-@implementation SKSpriteNodeWithColor
+@implementation SKColorSpriteNode
 
 @end

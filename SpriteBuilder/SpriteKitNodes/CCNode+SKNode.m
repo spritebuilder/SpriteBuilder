@@ -7,6 +7,7 @@
 //
 
 #import "CCNode+SKNode.h"
+#import "CCNodeColor.h"
 
 @implementation CCNode (SKNode)
 
@@ -21,31 +22,18 @@
 	return nil;
 }
 
--(void) setFrameSize:(CGSize)frameSize
-{
-	self.contentSize = frameSize;
-}
--(CGSize) frameSize
-{
-	return self.contentSize;
-}
-
--(void) setFrameSizeType:(CCSizeType)frameSizeType
-{
-	self.contentSizeType = frameSizeType;
-}
--(CCSizeType) frameSizeType
-{
-	return self.contentSizeType;
-}
+#pragma mark SKNode
 
 -(void) setAlpha:(CGFloat)alpha
 {
-	self.opacity = 255.0 * alpha;
+	_displayColor.a = alpha;
 }
 -(CGFloat) alpha
 {
-	return (CGFloat)self.opacity / 255.0;
+	if ([self isKindOfClass:[CCNodeColor class]])
+		return 1.0;
+	
+	return (CGFloat)_displayColor.a;
 }
 
 // TODO: implement speed property
@@ -91,6 +79,34 @@
 -(BOOL) hidden
 {
 	return !self.visible;
+}
+
+#pragma mark SKSpriteNode
+
+-(void) setColorBlendFactor:(CGFloat)colorBlendFactor
+{
+}
+-(CGFloat) colorBlendFactor
+{
+	return 1.0;
+}
+
+-(void) setSize:(CGSize)size
+{
+	self.contentSize = size;
+}
+-(CGSize) size
+{
+	return self.contentSize;
+}
+
+-(void) setSizeType:(CCSizeType)sizeType
+{
+	self.contentSizeType = sizeType;
+}
+-(CCSizeType) sizeType
+{
+	return self.contentSizeType;
 }
 
 @end
