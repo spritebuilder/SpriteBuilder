@@ -7,6 +7,7 @@
 //
 
 #import "SKSpriteNode.h"
+#import "cocos2d.h"
 
 @implementation SKSpriteNode
 

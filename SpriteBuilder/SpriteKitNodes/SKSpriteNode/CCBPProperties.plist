@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ordering</key>
+	<real>2000</real>
+	<key>displayName</key>
+	<string>Sprite (Sprite Kit)</string>
+	<key>description</key>
+	<string>Displays a texture.</string>
+	<key>className</key>
+	<string>SKSpriteNode</string>
+	<key>inheritsFrom</key>
+	<string>SKNode</string>
+	<key>canHaveChildren</key>
+	<true/>
+	<key>canBeRootNode</key>
+	<true/>
+	<key>spriteFrameDrop</key>
+	<dict>
+		<key>className</key>
+		<string>SKSpriteNode</string>
+		<key>property</key>
+		<string>texture</string>
+	</dict>
+	<key>editorClassName</key>
+	<string>SKSpriteNode</string>
+	<key>properties</key>
+	<array>
+		<dict>
+			<key>type</key>
+			<string>Separator</string>
+			<key>dontSetInEditor</key>
+			<true/>
+			<key>displayName</key>
+			<string>SKSpriteNode</string>
+			<key>name</key>
+			<string>SKSpriteNode</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<string>0</string>
+				<integer>0</integer>
+			</array>
+			<key>type</key>
+			<string>Size</string>
+			<key>name</key>
+			<string>size</string>
+			<key>displayName</key>
+			<string>Content Size</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>Point</string>
+			<key>name</key>
+			<string>anchorPoint</string>
+			<key>displayName</key>
+			<string>Anchor Point</string>
+		</dict>
+		<dict>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<array>
+				<string></string>
+				<string></string>
+			</array>
+			<key>affectsProperties</key>
+			<array>
+				<string>blendFunc</string>
+				<string>contentSize</string>
+			</array>
+			<key>displayName</key>
+			<string>Sprite frame</string>
+			<key>type</key>
+			<string>SpriteFrame</string>
+			<key>name</key>
+			<string>spriteFrame</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>255</integer>
+				<integer>255</integer>
+				<integer>255</integer>
+			</array>
+			<key>animatable</key>
+			<true/>
+			<key>displayName</key>
+			<string>Color</string>
+			<key>type</key>
+			<string>Color3</string>
+			<key>name</key>
+			<string>color</string>
+		</dict>
+		<dict>
+			<key>animatable</key>
+			<true/>
+			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>colorBlendFactor</string>
+			<key>displayName</key>
+			<string>Color Blend Factor</string>
+		</dict>
+	</array>
+	<key>propertiesOverridden</key>
+	<array/>
+</dict>
+</plist>

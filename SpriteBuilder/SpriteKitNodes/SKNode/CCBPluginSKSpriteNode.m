@@ -6,8 +6,8 @@
 //
 //
 
-#import "CCBPluginSKNode.h"
+#import "CCBPluginSKSpriteNode.h"
 
-@implementation CCBPluginSKNode
+@implementation CCBPluginSKSpriteNode
 
 @end

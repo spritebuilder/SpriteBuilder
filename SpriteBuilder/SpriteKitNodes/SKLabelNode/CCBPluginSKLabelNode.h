@@ -8,6 +8,6 @@
 
 #import "SKNode.h"
 
-@interface CCBPluginSKNode : SKNode
+@interface CCBPluginSKLabelNode : SKNode
 
 @end
