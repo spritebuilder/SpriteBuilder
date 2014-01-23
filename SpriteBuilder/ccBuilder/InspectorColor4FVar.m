@@ -42,7 +42,9 @@
 - (NSColor*) color
 {
 	CCColor* colorValue = [self propertyForSelection];
-	return colorValue.NSColor;
+    NSColor * calibratedColor = [colorValue.NSColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    return calibratedColor;
 }
 
 - (void) setColorVar:(NSColor *)color
@@ -61,7 +63,9 @@
 - (NSColor*) colorVar
 {
 	CCColor* colorValue = [self propertyForSelectionVar];
-	return colorValue.NSColor;
+    NSColor * calibratedColor = [colorValue.NSColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    return calibratedColor;
 }
 
 @end
