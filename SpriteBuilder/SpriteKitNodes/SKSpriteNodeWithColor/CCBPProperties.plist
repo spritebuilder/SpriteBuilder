@@ -46,8 +46,8 @@
 			</array>
 			<key>default</key>
 			<array>
-				<string>0</string>
-				<integer>0</integer>
+				<string>64</string>
+				<integer>64</integer>
 			</array>
 			<key>type</key>
 			<string>Size</string>
@@ -65,18 +65,19 @@
 			<string>Anchor Point</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>255</integer>
-				<integer>255</integer>
-				<integer>255</integer>
-			</array>
 			<key>animatable</key>
 			<true/>
+			<key>default</key>
+			<array>
+				<real>0.41</real>
+				<real>0.65</real>
+				<real>0.87</real>
+				<integer>1</integer>
+			</array>
 			<key>displayName</key>
 			<string>Color</string>
 			<key>type</key>
-			<string>Color3</string>
+			<string>Color4</string>
 			<key>name</key>
 			<string>color</string>
 		</dict>
@@ -91,6 +92,18 @@
 			<string>colorBlendFactor</string>
 			<key>displayName</key>
 			<string>Color Blend Factor</string>
+		</dict>
+		<dict>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<integer>1</integer>
+			<key>displayName</key>
+			<string>Opacity</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>opacity</string>
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>
