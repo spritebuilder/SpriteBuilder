@@ -1,16 +1,15 @@
 //
-//  SKLabelNode.h
+//  CCNode+SKNode.h
 //  SpriteBuilder
 //
-//  Created by Steffen Itterheim on 22/01/14.
+//  Created by Steffen Itterheim on 23/01/14.
 //
 //
 
-#import "CCLabelTTF.h"
+#import "CCNode.h"
 
-@interface SKLabelNode : CCLabelTTF
+@interface CCNode (SKNode)
 
-// SKNode properties
 @property CGSize frameSize;
 @property CGFloat alpha;
 @property CGFloat speed;

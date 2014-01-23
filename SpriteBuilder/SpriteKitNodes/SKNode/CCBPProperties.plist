@@ -36,6 +36,14 @@
 			<string>SKNode</string>
 		</dict>
 		<dict>
+			<key>name</key>
+			<string>name</string>
+			<key>displayName</key>
+			<string>Name</string>
+			<key>type</key>
+			<string>StringSimple</string>
+		</dict>
+		<dict>
 			<key>animatable</key>
 			<true/>
 			<key>defaultSerialization</key>
@@ -43,9 +51,9 @@
 			<key>type</key>
 			<string>Check</string>
 			<key>name</key>
-			<string>userInteractionEnabled</string>
+			<string>hidden</string>
 			<key>displayName</key>
-			<string>User Interaction Enabled</string>
+			<string>Hidden</string>
 		</dict>
 		<dict>
 			<key>animatable</key>
@@ -67,29 +75,9 @@
 			<key>type</key>
 			<string>Check</string>
 			<key>name</key>
-			<string>hidden</string>
+			<string>userInteractionEnabled</string>
 			<key>displayName</key>
-			<string>Hidden</string>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>name</string>
-			<key>displayName</key>
-			<string>Name</string>
-			<key>type</key>
-			<string>StringSimple</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<integer>1</integer>
-			<key>animatable</key>
-			<true/>
-			<key>type</key>
-			<string>Float</string>
-			<key>name</key>
-			<string>speed</string>
-			<key>displayName</key>
-			<string>Speed</string>
+			<string>User Interaction Enabled</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
@@ -106,27 +94,6 @@
 			<string>Position</string>
 			<key>name</key>
 			<string>position</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<key>default</key>
-			<array>
-				<string>0</string>
-				<integer>0</integer>
-			</array>
-			<key>type</key>
-			<string>Size</string>
-			<key>name</key>
-			<string>frameSize</string>
-			<key>displayName</key>
-			<string>Frame Size</string>
-			<key>readOnly</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
@@ -154,31 +121,7 @@
 			<key>name</key>
 			<string>zRotation</string>
 			<key>displayName</key>
-			<string>z Rotation</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<integer>1</integer>
-			<key>animatable</key>
-			<true/>
-			<key>type</key>
-			<string>Float</string>
-			<key>name</key>
-			<string>xScale</string>
-			<key>displayName</key>
-			<string>x Scale</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<integer>1</integer>
-			<key>animatable</key>
-			<true/>
-			<key>type</key>
-			<string>Float</string>
-			<key>name</key>
-			<string>yScale</string>
-			<key>displayName</key>
-			<string>y Scale</string>
+			<string>Rotation</string>
 		</dict>
 		<dict>
 			<key>animatable</key>
@@ -191,6 +134,18 @@
 			<string>alpha</string>
 			<key>displayName</key>
 			<string>Alpha</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>1</integer>
+			<key>animatable</key>
+			<true/>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>speed</string>
+			<key>displayName</key>
+			<string>Speed</string>
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>

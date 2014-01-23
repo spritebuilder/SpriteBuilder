@@ -286,11 +286,31 @@
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
+		DC5129C11891450D0091873D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
+		DC6802F8189145840060BE39 /* CCBPluginSKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */; };
+		DC6802F9189145840060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F5189145840060BE39 /* CCBPProperties.plist */; };
+		DC6802FA189145840060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F6189145840060BE39 /* Icon.png */; };
+		DC6802FB189145840060BE39 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F7189145840060BE39 /* Icon@2x.png */; };
+		DC6803001891466C0060BE39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
+		DC68030F189146900060BE39 /* CCBPluginSKLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68030B189146900060BE39 /* CCBPluginSKLabelNode.m */; };
+		DC680310189146900060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC68030C189146900060BE39 /* CCBPProperties.plist */; };
+		DC680311189146900060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC68030D189146900060BE39 /* Icon.png */; };
+		DC680312189146900060BE39 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC68030E189146900060BE39 /* Icon@2x.png */; };
+		DC680317189146FE0060BE39 /* SKSpriteNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */; };
+		DC680318189146FE0060BE39 /* SKLabelNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */; };
+		DC68031C18914E720060BE39 /* CCNode+SKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68031A18914E650060BE39 /* CCNode+SKNode.m */; };
+		DC680321189156310060BE39 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
+		DC68032C189156910060BE39 /* SKSpriteNodeWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032B189156910060BE39 /* SKSpriteNodeWithColor.m */; };
+		DC680333189156A60060BE39 /* CCBPluginSKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032F189156A60060BE39 /* CCBPluginSKSpriteNode.m */; };
+		DC680334189156A60060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC680330189156A60060BE39 /* CCBPProperties.plist */; };
+		DC680335189156A60060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680331189156A60060BE39 /* Icon.png */; };
+		DC680336189156A60060BE39 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680332189156A60060BE39 /* Icon@2x.png */; };
+		DC680339189157B90060BE39 /* SKSpriteNodeWithColor.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */; };
 		DCB9F1481890500E00128D78 /* SKLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1431890500E00128D78 /* SKLabelNode.m */; };
 		DCB9F1491890500E00128D78 /* SKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1451890500E00128D78 /* SKNode.m */; };
 		DCB9F14A1890500E00128D78 /* SKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1471890500E00128D78 /* SKSpriteNode.m */; };
 		DCB9F1501890600D00128D78 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
-		DCB9F1641890607D00128D78 /* CCBPluginSKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F15C1890607D00128D78 /* CCBPluginSKNode.m */; };
+		DCB9F1641890607D00128D78 /* CCBPluginSKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F15C1890607D00128D78 /* CCBPluginSKSpriteNode.m */; };
 		DCB9F1651890607D00128D78 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCB9F15D1890607D00128D78 /* CCBPProperties.plist */; };
 		DCB9F1671890607D00128D78 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB9F1601890607D00128D78 /* Icon.png */; };
 		DCB9F1681890607D00128D78 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB9F1611890607D00128D78 /* Icon@2x.png */; };
@@ -710,6 +730,27 @@
 			remoteGlobalIDString = B7EE69F71819EE0D00B983FE;
 			remoteInfo = CCLayoutBox;
 		};
+		DC680313189146C80060BE39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC5129BD1891450D0091873D;
+			remoteInfo = SKSpriteNode;
+		};
+		DC680315189146C80060BE39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC6802FC1891466C0060BE39;
+			remoteInfo = SKLabelNode;
+		};
+		DC680337189157B00060BE39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC68031D189156310060BE39;
+			remoteInfo = SKSpriteNodeWithColor;
+		};
 		DCB9F16A189060DF00128D78 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -800,6 +841,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				DC680339189157B90060BE39 /* SKSpriteNodeWithColor.ccbPlugNode in Copy PlugIns */,
+				DC680317189146FE0060BE39 /* SKSpriteNode.ccbPlugNode in Copy PlugIns */,
+				DC680318189146FE0060BE39 /* SKLabelNode.ccbPlugNode in Copy PlugIns */,
 				DCB9F16C189060E900128D78 /* SKNode.ccbPlugNode in Copy PlugIns */,
 				B729AC6D181F0D2300BA0D9C /* CCSlider.ccbPlugNode in Copy PlugIns */,
 				B7EE6A0A1819EE6E00B983FE /* CCLayoutBox.ccbPlugNode in Copy PlugIns */,
@@ -1215,6 +1259,28 @@
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
+		DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC6802F3189145830060BE39 /* CCBPluginSKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNode.h; sourceTree = "<group>"; };
+		DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNode.m; sourceTree = "<group>"; };
+		DC6802F5189145840060BE39 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		DC6802F6189145840060BE39 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		DC6802F7189145840060BE39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKLabelNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC68030A189146900060BE39 /* CCBPluginSKLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKLabelNode.h; sourceTree = "<group>"; };
+		DC68030B189146900060BE39 /* CCBPluginSKLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKLabelNode.m; sourceTree = "<group>"; };
+		DC68030C189146900060BE39 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		DC68030D189146900060BE39 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		DC68030E189146900060BE39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		DC68031918914E650060BE39 /* CCNode+SKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+SKNode.h"; sourceTree = "<group>"; };
+		DC68031A18914E650060BE39 /* CCNode+SKNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+SKNode.m"; sourceTree = "<group>"; };
+		DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNodeWithColor.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC68032A189156910060BE39 /* SKSpriteNodeWithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSpriteNodeWithColor.h; sourceTree = "<group>"; };
+		DC68032B189156910060BE39 /* SKSpriteNodeWithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSpriteNodeWithColor.m; sourceTree = "<group>"; };
+		DC68032E189156A60060BE39 /* CCBPluginSKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNode.h; sourceTree = "<group>"; };
+		DC68032F189156A60060BE39 /* CCBPluginSKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNode.m; sourceTree = "<group>"; };
+		DC680330189156A60060BE39 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		DC680331189156A60060BE39 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		DC680332189156A60060BE39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		DCB9F1421890500E00128D78 /* SKLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKLabelNode.h; sourceTree = "<group>"; };
 		DCB9F1431890500E00128D78 /* SKLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKLabelNode.m; sourceTree = "<group>"; };
 		DCB9F1441890500E00128D78 /* SKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKNode.h; sourceTree = "<group>"; };
@@ -1222,8 +1288,8 @@
 		DCB9F1461890500E00128D78 /* SKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSpriteNode.h; sourceTree = "<group>"; };
 		DCB9F1471890500E00128D78 /* SKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSpriteNode.m; sourceTree = "<group>"; };
 		DCB9F1581890600D00128D78 /* SKNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCB9F15B1890607D00128D78 /* CCBPluginSKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKNode.h; sourceTree = "<group>"; };
-		DCB9F15C1890607D00128D78 /* CCBPluginSKNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKNode.m; sourceTree = "<group>"; };
+		DCB9F15B1890607D00128D78 /* CCBPluginSKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNode.h; sourceTree = "<group>"; };
+		DCB9F15C1890607D00128D78 /* CCBPluginSKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNode.m; sourceTree = "<group>"; };
 		DCB9F15D1890607D00128D78 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		DCB9F1601890607D00128D78 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DCB9F1611890607D00128D78 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -1809,6 +1875,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC5129C01891450D0091873D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC5129C11891450D0091873D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC6802FF1891466C0060BE39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC6803001891466C0060BE39 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC680320189156310060BE39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC680321189156310060BE39 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCB9F14F1890600D00128D78 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2331,6 +2421,9 @@
 				B7EE69F81819EE0D00B983FE /* CCLayoutBox.ccbPlugNode */,
 				B729AC52181F091800BA0D9C /* CCSlider.ccbPlugNode */,
 				DCB9F1581890600D00128D78 /* SKNode.ccbPlugNode */,
+				DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */,
+				DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */,
+				DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2862,10 +2955,49 @@
 			name = "About Box";
 			sourceTree = "<group>";
 		};
+		DC6802F2189145830060BE39 /* SKSpriteNode */ = {
+			isa = PBXGroup;
+			children = (
+				DC6802F3189145830060BE39 /* CCBPluginSKSpriteNode.h */,
+				DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */,
+				DC6802F5189145840060BE39 /* CCBPProperties.plist */,
+				DC6802F6189145840060BE39 /* Icon.png */,
+				DC6802F7189145840060BE39 /* Icon@2x.png */,
+			);
+			path = SKSpriteNode;
+			sourceTree = "<group>";
+		};
+		DC680309189146900060BE39 /* SKLabelNode */ = {
+			isa = PBXGroup;
+			children = (
+				DC68030A189146900060BE39 /* CCBPluginSKLabelNode.h */,
+				DC68030B189146900060BE39 /* CCBPluginSKLabelNode.m */,
+				DC68030C189146900060BE39 /* CCBPProperties.plist */,
+				DC68030D189146900060BE39 /* Icon.png */,
+				DC68030E189146900060BE39 /* Icon@2x.png */,
+			);
+			path = SKLabelNode;
+			sourceTree = "<group>";
+		};
+		DC68032D189156A60060BE39 /* SKSpriteNodeWithColor */ = {
+			isa = PBXGroup;
+			children = (
+				DC68032E189156A60060BE39 /* CCBPluginSKSpriteNode.h */,
+				DC68032F189156A60060BE39 /* CCBPluginSKSpriteNode.m */,
+				DC680330189156A60060BE39 /* CCBPProperties.plist */,
+				DC680331189156A60060BE39 /* Icon.png */,
+				DC680332189156A60060BE39 /* Icon@2x.png */,
+			);
+			path = SKSpriteNodeWithColor;
+			sourceTree = "<group>";
+		};
 		DCB9F1411890500E00128D78 /* SpriteKitNodes */ = {
 			isa = PBXGroup;
 			children = (
 				DCB9F15A1890607D00128D78 /* SKNode */,
+				DC680309189146900060BE39 /* SKLabelNode */,
+				DC6802F2189145830060BE39 /* SKSpriteNode */,
+				DC68032D189156A60060BE39 /* SKSpriteNodeWithColor */,
 				DCB9F14B1890506E00128D78 /* stand-in nodes */,
 			);
 			path = SpriteKitNodes;
@@ -2874,12 +3006,16 @@
 		DCB9F14B1890506E00128D78 /* stand-in nodes */ = {
 			isa = PBXGroup;
 			children = (
-				DCB9F1421890500E00128D78 /* SKLabelNode.h */,
-				DCB9F1431890500E00128D78 /* SKLabelNode.m */,
+				DC68031918914E650060BE39 /* CCNode+SKNode.h */,
+				DC68031A18914E650060BE39 /* CCNode+SKNode.m */,
 				DCB9F1441890500E00128D78 /* SKNode.h */,
 				DCB9F1451890500E00128D78 /* SKNode.m */,
+				DCB9F1421890500E00128D78 /* SKLabelNode.h */,
+				DCB9F1431890500E00128D78 /* SKLabelNode.m */,
 				DCB9F1461890500E00128D78 /* SKSpriteNode.h */,
 				DCB9F1471890500E00128D78 /* SKSpriteNode.m */,
+				DC68032A189156910060BE39 /* SKSpriteNodeWithColor.h */,
+				DC68032B189156910060BE39 /* SKSpriteNodeWithColor.m */,
 			);
 			name = "stand-in nodes";
 			sourceTree = "<group>";
@@ -2887,8 +3023,8 @@
 		DCB9F15A1890607D00128D78 /* SKNode */ = {
 			isa = PBXGroup;
 			children = (
-				DCB9F15B1890607D00128D78 /* CCBPluginSKNode.h */,
-				DCB9F15C1890607D00128D78 /* CCBPluginSKNode.m */,
+				DCB9F15B1890607D00128D78 /* CCBPluginSKSpriteNode.h */,
+				DCB9F15C1890607D00128D78 /* CCBPluginSKSpriteNode.m */,
 				DCB9F15D1890607D00128D78 /* CCBPProperties.plist */,
 				DCB9F1601890607D00128D78 /* Icon.png */,
 				DCB9F1611890607D00128D78 /* Icon@2x.png */,
@@ -3660,6 +3796,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				DC680338189157B00060BE39 /* PBXTargetDependency */,
+				DC680314189146C80060BE39 /* PBXTargetDependency */,
+				DC680316189146C80060BE39 /* PBXTargetDependency */,
 				DCB9F16B189060DF00128D78 /* PBXTargetDependency */,
 				B729AC6C181F0D1400BA0D9C /* PBXTargetDependency */,
 				B7EE6A091819EE6000B983FE /* PBXTargetDependency */,
@@ -3819,6 +3958,57 @@
 			name = CCLayoutBox;
 			productName = CCLayoutBox;
 			productReference = B7EE69F81819EE0D00B983FE /* CCLayoutBox.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		DC5129BD1891450D0091873D /* SKSpriteNode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC5129C61891450D0091873D /* Build configuration list for PBXNativeTarget "SKSpriteNode" */;
+			buildPhases = (
+				DC5129BE1891450D0091873D /* Sources */,
+				DC5129C01891450D0091873D /* Frameworks */,
+				DC5129C21891450D0091873D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SKSpriteNode;
+			productName = CCNode;
+			productReference = DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		DC6802FC1891466C0060BE39 /* SKLabelNode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC6803051891466C0060BE39 /* Build configuration list for PBXNativeTarget "SKLabelNode" */;
+			buildPhases = (
+				DC6802FD1891466C0060BE39 /* Sources */,
+				DC6802FF1891466C0060BE39 /* Frameworks */,
+				DC6803011891466C0060BE39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SKLabelNode;
+			productName = CCNode;
+			productReference = DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		DC68031D189156310060BE39 /* SKSpriteNodeWithColor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC680326189156310060BE39 /* Build configuration list for PBXNativeTarget "SKSpriteNodeWithColor" */;
+			buildPhases = (
+				DC68031E189156310060BE39 /* Sources */,
+				DC680320189156310060BE39 /* Frameworks */,
+				DC680322189156310060BE39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SKSpriteNodeWithColor;
+			productName = CCNode;
+			productReference = DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		DCB9F14C1890600D00128D78 /* SKNode */ = {
@@ -4064,6 +4254,9 @@
 				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
 				FA98CFC0154E7D1C006E58C5 /* ccbpublish */,
 				DCB9F14C1890600D00128D78 /* SKNode */,
+				DC5129BD1891450D0091873D /* SKSpriteNode */,
+				DC6802FC1891466C0060BE39 /* SKLabelNode */,
+				DC68031D189156310060BE39 /* SKSpriteNodeWithColor */,
 			);
 		};
 /* End PBXProject section */
@@ -4437,6 +4630,36 @@
 				B7EE6A101819EF1500B983FE /* Icon@2x.png in Resources */,
 				B7EE69FF1819EE0D00B983FE /* InfoPlist.strings in Resources */,
 				B7EE6A0E1819EF1500B983FE /* CCBPProperties.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC5129C21891450D0091873D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC6802FA189145840060BE39 /* Icon.png in Resources */,
+				DC6802FB189145840060BE39 /* Icon@2x.png in Resources */,
+				DC6802F9189145840060BE39 /* CCBPProperties.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC6803011891466C0060BE39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC680311189146900060BE39 /* Icon.png in Resources */,
+				DC680312189146900060BE39 /* Icon@2x.png in Resources */,
+				DC680310189146900060BE39 /* CCBPProperties.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC680322189156310060BE39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC680335189156A60060BE39 /* Icon.png in Resources */,
+				DC680336189156A60060BE39 /* Icon@2x.png in Resources */,
+				DC680334189156A60060BE39 /* CCBPProperties.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4824,11 +5047,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC5129BE1891450D0091873D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC6802F8189145840060BE39 /* CCBPluginSKSpriteNode.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC6802FD1891466C0060BE39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC68030F189146900060BE39 /* CCBPluginSKLabelNode.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC68031E189156310060BE39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC680333189156A60060BE39 /* CCBPluginSKSpriteNode.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCB9F14D1890600D00128D78 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCB9F1641890607D00128D78 /* CCBPluginSKNode.m in Sources */,
+				DCB9F1641890607D00128D78 /* CCBPluginSKSpriteNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4879,8 +5126,10 @@
 				DCB9F14A1890500E00128D78 /* SKSpriteNode.m in Sources */,
 				DCB9F1481890500E00128D78 /* SKLabelNode.m in Sources */,
 				DCB9F1491890500E00128D78 /* SKNode.m in Sources */,
+				DC68031C18914E720060BE39 /* CCNode+SKNode.m in Sources */,
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
+				DC68032C189156910060BE39 /* SKSpriteNodeWithColor.m in Sources */,
 				9297636A187775A0008F997B /* ResourceManagerPreviewAudio.m in Sources */,
 				8076F94E18624318003C4153 /* InspectorStringSimple.m in Sources */,
 				80F936F21833F8970032454F /* WarningOutlineHandler.m in Sources */,
@@ -4973,6 +5222,21 @@
 			isa = PBXTargetDependency;
 			target = B7EE69F71819EE0D00B983FE /* CCLayoutBox */;
 			targetProxy = B7EE6A081819EE6000B983FE /* PBXContainerItemProxy */;
+		};
+		DC680314189146C80060BE39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC5129BD1891450D0091873D /* SKSpriteNode */;
+			targetProxy = DC680313189146C80060BE39 /* PBXContainerItemProxy */;
+		};
+		DC680316189146C80060BE39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC6802FC1891466C0060BE39 /* SKLabelNode */;
+			targetProxy = DC680315189146C80060BE39 /* PBXContainerItemProxy */;
+		};
+		DC680338189157B00060BE39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC68031D189156310060BE39 /* SKSpriteNodeWithColor */;
+			targetProxy = DC680337189157B00060BE39 /* PBXContainerItemProxy */;
 		};
 		DCB9F16B189060DF00128D78 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6052,6 +6316,174 @@
 			};
 			name = Release;
 		};
+		DC5129C71891450D0091873D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKSpriteNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		DC5129C81891450D0091873D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKSpriteNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
+		DC6803061891466C0060BE39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKLabelNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		DC6803071891466C0060BE39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKLabelNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
+		DC680327189156310060BE39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKSpriteNodeWithColor;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		DC680328189156310060BE39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKSpriteNodeWithColor;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
 		DCB9F1561890600D00128D78 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -6781,6 +7213,33 @@
 			buildConfigurations = (
 				B7EE6A011819EE0D00B983FE /* Debug */,
 				B7EE6A021819EE0D00B983FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC5129C61891450D0091873D /* Build configuration list for PBXNativeTarget "SKSpriteNode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC5129C71891450D0091873D /* Debug */,
+				DC5129C81891450D0091873D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC6803051891466C0060BE39 /* Build configuration list for PBXNativeTarget "SKLabelNode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC6803061891466C0060BE39 /* Debug */,
+				DC6803071891466C0060BE39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC680326189156310060BE39 /* Build configuration list for PBXNativeTarget "SKSpriteNodeWithColor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC680327189156310060BE39 /* Debug */,
+				DC680328189156310060BE39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
