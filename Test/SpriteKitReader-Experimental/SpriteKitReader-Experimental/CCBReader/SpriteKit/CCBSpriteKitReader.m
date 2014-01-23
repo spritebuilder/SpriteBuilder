@@ -61,50 +61,47 @@
 	NSAssert2(error == nil, @"CCBSpriteKitReader: method '%@' swizzle error: %@", methodName, error);
 }
 
--(Class) nodeClassFromString:(NSString*)className
-{
-	Class theClass = NSClassFromString(className);
-	
-	if (theClass == nil)
-	{
-		// TODO: CCButton, CCTextField, CCSlider, CCScrollView, CCLayoutBox, CCPhysicsNode
-		if ([className isEqualToString:@"CCNode"])
-		{
-			theClass = [SKNode class];
-		}
-		else if ([className isEqualToString:@"CCSprite"] ||
-				 [className isEqualToString:@"CCNodeColor"] ||
-				 [className isEqualToString:@"CCNodeGradient"])
-		{
-			theClass = [SKSpriteNode class];
-		}
-		else if ([className isEqualToString:@"CCLabelTTF"])
-		{
-			theClass = [SKLabelNode class];
-		}
-		else if ([className isEqualToString:@"CCParticleSystem"])
-		{
-			theClass = [SKEmitterNode class];
-		}
-		else
-		{
-			theClass = [SKNode class];
-		}
-		
-		NSLog(@"MAPPED CLASS: %@ => %@", className, NSStringFromClass(theClass));
-	}
-	
-	return theClass;
-}
-
--(CCNode*) nodeFromClass:(Class)nodeClass
+-(CCNode*) nodeFromClassName:(NSString *)nodeClassName
 {
 	// map CC nodes to SK nodes
 	CCNode* node = nil;
-	
-	node = [nodeClass node];
-	
-	NSLog(@"CREATING NODE: ~~~~~~~~~ %@ ~~~~~~~~~", NSStringFromClass(nodeClass));
+
+	if ([nodeClassName isEqualToString:@"CCNode"])
+	{
+		node = [SKNode node];
+	}
+	else if ([nodeClassName isEqualToString:@"CCSprite"] ||
+			 [nodeClassName isEqualToString:@"CCNodeColor"] ||
+			 [nodeClassName isEqualToString:@"CCNodeGradient"])
+	{
+		node = [SKSpriteNode node];
+	}
+	else if ([nodeClassName isEqualToString:@"SKColorSpriteNode"])
+	{
+		node = [SKSpriteNode spriteNodeWithColor:[SKColor magentaColor] size:CGSizeMake(32, 32)];
+	}
+	else if ([nodeClassName isEqualToString:@"CCLabelTTF"])
+	{
+		node = [SKLabelNode node];
+	}
+	else if ([nodeClassName isEqualToString:@"CCParticleSystem"])
+	{
+		node = [SKEmitterNode node];
+	}
+	else
+	{
+		Class nodeClass = NSClassFromString(nodeClassName);
+		node = [[nodeClass alloc] init];
+	}
+
+#if DEBUG
+	NSLog(@" ");
+	NSLog(@"~~~~~~~~~~~~~~~~~~ %@ - %p ~~~~~~~~~~~~~~~~~~", nodeClassName, node);
+	if ([node class] != NSClassFromString(nodeClassName))
+	{
+		NSLog(@"MAPPED CLASS: %@ => %@", nodeClassName, NSStringFromClass([node class]));
+	}
+#endif
 
 	return node;
 }

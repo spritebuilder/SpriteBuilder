@@ -8,6 +8,6 @@
 
 #import "SKNode.h"
 
-@interface CCBPluginSKSpriteNodeWithColor : SKNode
+@interface CCBPluginSKColorSpriteNode : SKNode
 
 @end

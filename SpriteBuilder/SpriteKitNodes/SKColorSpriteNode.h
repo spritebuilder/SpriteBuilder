@@ -8,6 +8,6 @@
 
 #import "CCNodeColor.h"
 
-@interface SKSpriteNodeWithColor : CCNodeColor
+@interface SKColorSpriteNode : CCNodeColor
 
 @end

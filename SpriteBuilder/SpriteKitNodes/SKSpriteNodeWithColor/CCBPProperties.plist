@@ -9,7 +9,7 @@
 	<key>description</key>
 	<string>Displays a filled rectangle.</string>
 	<key>className</key>
-	<string>SKSpriteNodeWithColor</string>
+	<string>SKColorSpriteNode</string>
 	<key>inheritsFrom</key>
 	<string>SKNode</string>
 	<key>canHaveChildren</key>
@@ -24,7 +24,7 @@
 		<string>texture</string>
 	</dict>
 	<key>editorClassName</key>
-	<string>SKSpriteNodeWithColor</string>
+	<string>SKColorSpriteNode</string>
 	<key>properties</key>
 	<array>
 		<dict>
@@ -33,9 +33,9 @@
 			<key>dontSetInEditor</key>
 			<true/>
 			<key>displayName</key>
-			<string>SKSpriteNode (Color)</string>
+			<string>SKColorSpriteNode</string>
 			<key>name</key>
-			<string>SKSpriteNodeWithColor</string>
+			<string>SKColorSpriteNode</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
