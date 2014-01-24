@@ -64,7 +64,7 @@ CGPoint ccpClosestPointOnLine(CGPoint v, CGPoint w, CGPoint p)
     NSArray* items = [menu itemArray];
     for (int i = 0; i < [items count]; i++)
     {
-        [[items objectAtIndex:i] setState:NSOffState];
+        [(NSCell*)[items objectAtIndex:i] setState:NSOffState];
     }
     [[menu itemWithTag:tag] setState:NSOnState];
 }
