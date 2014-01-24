@@ -277,7 +277,7 @@
     
     // Time is between two keyframes, interpolate between them
     int endFrameNum = 1;
-    while ([[keyframes objectAtIndex:endFrameNum] time] < time)
+    while ([(SequencerKeyframe*)[keyframes objectAtIndex:endFrameNum] time] < time)
     {
         endFrameNum++;
     }
