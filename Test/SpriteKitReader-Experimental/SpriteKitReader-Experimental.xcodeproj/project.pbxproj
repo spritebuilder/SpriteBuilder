@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC00624E1888928E008D5D30 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC00624D1888928E008D5D30 /* JRSwizzle.m */; };
-		DC00625118889976008D5D30 /* SKSpriteNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */; };
 		DC58534B187EF8BE00C118E8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534A187EF8BE00C118E8 /* Foundation.framework */; };
 		DC58534D187EF8BE00C118E8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */; };
 		DC58534F187EF8BE00C118E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534E187EF8BE00C118E8 /* UIKit.framework */; };
@@ -26,25 +24,27 @@
 		DC585376187EF8BF00C118E8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC58534E187EF8BE00C118E8 /* UIKit.framework */; };
 		DC58537E187EF8BF00C118E8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DC58537C187EF8BF00C118E8 /* InfoPlist.strings */; };
 		DC585380187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC58537F187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m */; };
-		DC5853BB187F030B00C118E8 /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853AC187F030B00C118E8 /* CCBAnimationManager.m */; };
-		DC5853BC187F030B00C118E8 /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853AE187F030B00C118E8 /* CCBKeyframe.m */; };
-		DC5853BD187F030B00C118E8 /* CCBLocalizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853B0187F030B00C118E8 /* CCBLocalizationManager.m */; };
-		DC5853BE187F030B00C118E8 /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853B2187F030B00C118E8 /* CCBReader.m */; };
-		DC5853BF187F030B00C118E8 /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853B5187F030B00C118E8 /* CCBsequence.m */; };
-		DC5853C0187F030B00C118E8 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853B7187F030B00C118E8 /* CCBSequenceProperty.m */; };
-		DC5853C3187F032400C118E8 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853C2187F032400C118E8 /* CCFileUtils.m */; };
-		DC5853C7187F0BCC00C118E8 /* CCBSpriteKitDummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853C6187F0BCC00C118E8 /* CCBSpriteKitDummy.m */; };
-		DC5853CA187F0DD100C118E8 /* SKNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */; };
-		DC5853CD187F1AFF00C118E8 /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853CC187F1AFF00C118E8 /* CGPointExtension.m */; };
-		DC5853D0187F2C3500C118E8 /* SKTexture+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853CF187F2C3500C118E8 /* SKTexture+CCBReader.m */; };
-		DC5853D3187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853D2187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m */; };
-		DC5853D618844C1200C118E8 /* CCBSpriteKitReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853D518844C1200C118E8 /* CCBSpriteKitReader.m */; };
-		DC5853D9188467EE00C118E8 /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853D8188467EE00C118E8 /* CCSpriteFrameCache.m */; };
 		DC5853DB1884738300C118E8 /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = DC5853DA1884738300C118E8 /* Published-iOS */; };
-		DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5853E21886FF6A00C118E8 /* CCConfiguration.m */; };
-		DCF621AB18898B4400ECCA9B /* SKLabelNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */; };
-		DCF621AE18898CBB00ECCA9B /* CCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621AD18898CBB00ECCA9B /* CCColor.m */; };
-		DCF621FC1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF621FB1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m */; };
+		DC6CA1BC1892DE940082202B /* CCBSpriteKitDummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA19A1892DE940082202B /* CCBSpriteKitDummy.m */; };
+		DC6CA1BD1892DE940082202B /* CCBSpriteKitReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA19D1892DE940082202B /* CCBSpriteKitReader.m */; };
+		DC6CA1BE1892DE940082202B /* CCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA19F1892DE940082202B /* CCColor.m */; };
+		DC6CA1BF1892DE940082202B /* CCConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1A11892DE940082202B /* CCConfiguration.m */; };
+		DC6CA1C01892DE940082202B /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1A31892DE940082202B /* CCFileUtils.m */; };
+		DC6CA1C11892DE940082202B /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1A51892DE940082202B /* CCSpriteFrameCache.m */; };
+		DC6CA1C21892DE940082202B /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1A71892DE940082202B /* CGPointExtension.m */; };
+		DC6CA1C31892DE940082202B /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1A91892DE940082202B /* JRSwizzle.m */; };
+		DC6CA1C41892DE940082202B /* SKEmitterNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1AB1892DE940082202B /* SKEmitterNode+CCBReader.m */; };
+		DC6CA1C51892DE940082202B /* SKLabelNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1AD1892DE940082202B /* SKLabelNode+CCBReader.m */; };
+		DC6CA1C61892DE940082202B /* SKNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1AF1892DE940082202B /* SKNode+CCBReader.m */; };
+		DC6CA1C71892DE940082202B /* SKPhysicsBody+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1B11892DE940082202B /* SKPhysicsBody+CCBReader.m */; };
+		DC6CA1C81892DE940082202B /* SKSpriteNode+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1B31892DE940082202B /* SKSpriteNode+CCBReader.m */; };
+		DC6CA1C91892DE940082202B /* SKTexture+CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1B51892DE940082202B /* SKTexture+CCBReader.m */; };
+		DC6CA1D91892E25E0082202B /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1CC1892E25E0082202B /* CCBAnimationManager.m */; };
+		DC6CA1DA1892E25E0082202B /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1CE1892E25E0082202B /* CCBKeyframe.m */; };
+		DC6CA1DB1892E25E0082202B /* CCBLocalizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1D01892E25E0082202B /* CCBLocalizationManager.m */; };
+		DC6CA1DC1892E25E0082202B /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1D21892E25E0082202B /* CCBReader.m */; };
+		DC6CA1DD1892E25F0082202B /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1D51892E25E0082202B /* CCBsequence.m */; };
+		DC6CA1DE1892E25F0082202B /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6CA1D71892E25E0082202B /* CCBSequenceProperty.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,10 +58,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DC00624C1888928E008D5D30 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
-		DC00624D1888928E008D5D30 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
-		DC00624F18889976008D5D30 /* SKSpriteNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKSpriteNode+CCBReader.h"; sourceTree = "<group>"; };
-		DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKSpriteNode+CCBReader.m"; sourceTree = "<group>"; };
 		DC585347187EF8BE00C118E8 /* SpriteKitReader-Experimental.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SpriteKitReader-Experimental.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC58534A187EF8BE00C118E8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DC58534C187EF8BE00C118E8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -86,47 +82,51 @@
 		DC58537B187EF8BF00C118E8 /* SpriteKitReader-ExperimentalTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpriteKitReader-ExperimentalTests-Info.plist"; sourceTree = "<group>"; };
 		DC58537D187EF8BF00C118E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC58537F187EF8BF00C118E8 /* SpriteKitReader_ExperimentalTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpriteKitReader_ExperimentalTests.m; sourceTree = "<group>"; };
-		DC5853AB187F030B00C118E8 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
-		DC5853AC187F030B00C118E8 /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
-		DC5853AD187F030B00C118E8 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
-		DC5853AE187F030B00C118E8 /* CCBKeyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBKeyframe.m; sourceTree = "<group>"; };
-		DC5853AF187F030B00C118E8 /* CCBLocalizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBLocalizationManager.h; sourceTree = "<group>"; };
-		DC5853B0187F030B00C118E8 /* CCBLocalizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBLocalizationManager.m; sourceTree = "<group>"; };
-		DC5853B1187F030B00C118E8 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
-		DC5853B2187F030B00C118E8 /* CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader.m; sourceTree = "<group>"; };
-		DC5853B3187F030B00C118E8 /* CCBReader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader_Private.h; sourceTree = "<group>"; };
-		DC5853B4187F030B00C118E8 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
-		DC5853B5187F030B00C118E8 /* CCBsequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBsequence.m; sourceTree = "<group>"; };
-		DC5853B6187F030B00C118E8 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
-		DC5853B7187F030B00C118E8 /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
-		DC5853B8187F030B00C118E8 /* CCBuilderReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBuilderReader.h; sourceTree = "<group>"; };
-		DC5853BA187F030B00C118E8 /* CCBSpriteKitCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitCompatibility.h; sourceTree = "<group>"; };
-		DC5853C1187F032400C118E8 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
-		DC5853C2187F032400C118E8 /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
-		DC5853C4187F039E00C118E8 /* CCBSpriteKitMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitMacros.h; sourceTree = "<group>"; };
-		DC5853C5187F0BCC00C118E8 /* CCBSpriteKitDummy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitDummy.h; sourceTree = "<group>"; };
-		DC5853C6187F0BCC00C118E8 /* CCBSpriteKitDummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSpriteKitDummy.m; sourceTree = "<group>"; };
-		DC5853C8187F0DD100C118E8 /* SKNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+CCBReader.h"; sourceTree = "<group>"; };
-		DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+CCBReader.m"; sourceTree = "<group>"; };
-		DC5853CB187F1AFF00C118E8 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
-		DC5853CC187F1AFF00C118E8 /* CGPointExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtension.m; sourceTree = "<group>"; };
-		DC5853CE187F2C3500C118E8 /* SKTexture+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKTexture+CCBReader.h"; sourceTree = "<group>"; };
-		DC5853CF187F2C3500C118E8 /* SKTexture+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKTexture+CCBReader.m"; sourceTree = "<group>"; };
-		DC5853D1187F2D9900C118E8 /* SKPhysicsBody+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKPhysicsBody+CCBReader.h"; sourceTree = "<group>"; };
-		DC5853D2187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKPhysicsBody+CCBReader.m"; sourceTree = "<group>"; };
-		DC5853D418844C1200C118E8 /* CCBSpriteKitReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitReader.h; sourceTree = "<group>"; };
-		DC5853D518844C1200C118E8 /* CCBSpriteKitReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSpriteKitReader.m; sourceTree = "<group>"; };
-		DC5853D7188467EE00C118E8 /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
-		DC5853D8188467EE00C118E8 /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
 		DC5853DA1884738300C118E8 /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "SKReaderTestData.spritebuilder/Source/Resources/Published-iOS"; sourceTree = "<group>"; };
-		DC5853E11886FF6A00C118E8 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
-		DC5853E21886FF6A00C118E8 /* CCConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCConfiguration.m; sourceTree = "<group>"; };
-		DCF621A918898B4400ECCA9B /* SKLabelNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKLabelNode+CCBReader.h"; sourceTree = "<group>"; };
-		DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+CCBReader.m"; sourceTree = "<group>"; };
-		DCF621AC18898CBB00ECCA9B /* CCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColor.h; sourceTree = "<group>"; };
-		DCF621AD18898CBB00ECCA9B /* CCColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCColor.m; sourceTree = "<group>"; };
-		DCF621FA1889B98C00ECCA9B /* SKEmitterNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKEmitterNode+CCBReader.h"; sourceTree = "<group>"; };
-		DCF621FB1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+CCBReader.m"; sourceTree = "<group>"; };
+		DC6CA1981892DE940082202B /* CCBSpriteKitCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitCompatibility.h; sourceTree = "<group>"; };
+		DC6CA1991892DE940082202B /* CCBSpriteKitDummy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitDummy.h; sourceTree = "<group>"; };
+		DC6CA19A1892DE940082202B /* CCBSpriteKitDummy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSpriteKitDummy.m; sourceTree = "<group>"; };
+		DC6CA19B1892DE940082202B /* CCBSpriteKitMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitMacros.h; sourceTree = "<group>"; };
+		DC6CA19C1892DE940082202B /* CCBSpriteKitReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteKitReader.h; sourceTree = "<group>"; };
+		DC6CA19D1892DE940082202B /* CCBSpriteKitReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSpriteKitReader.m; sourceTree = "<group>"; };
+		DC6CA19E1892DE940082202B /* CCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColor.h; sourceTree = "<group>"; };
+		DC6CA19F1892DE940082202B /* CCColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCColor.m; sourceTree = "<group>"; };
+		DC6CA1A01892DE940082202B /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
+		DC6CA1A11892DE940082202B /* CCConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCConfiguration.m; sourceTree = "<group>"; };
+		DC6CA1A21892DE940082202B /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
+		DC6CA1A31892DE940082202B /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
+		DC6CA1A41892DE940082202B /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
+		DC6CA1A51892DE940082202B /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
+		DC6CA1A61892DE940082202B /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
+		DC6CA1A71892DE940082202B /* CGPointExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtension.m; sourceTree = "<group>"; };
+		DC6CA1A81892DE940082202B /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		DC6CA1A91892DE940082202B /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		DC6CA1AA1892DE940082202B /* SKEmitterNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKEmitterNode+CCBReader.h"; sourceTree = "<group>"; };
+		DC6CA1AB1892DE940082202B /* SKEmitterNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKEmitterNode+CCBReader.m"; sourceTree = "<group>"; };
+		DC6CA1AC1892DE940082202B /* SKLabelNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKLabelNode+CCBReader.h"; sourceTree = "<group>"; };
+		DC6CA1AD1892DE940082202B /* SKLabelNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKLabelNode+CCBReader.m"; sourceTree = "<group>"; };
+		DC6CA1AE1892DE940082202B /* SKNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+CCBReader.h"; sourceTree = "<group>"; };
+		DC6CA1AF1892DE940082202B /* SKNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+CCBReader.m"; sourceTree = "<group>"; };
+		DC6CA1B01892DE940082202B /* SKPhysicsBody+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKPhysicsBody+CCBReader.h"; sourceTree = "<group>"; };
+		DC6CA1B11892DE940082202B /* SKPhysicsBody+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKPhysicsBody+CCBReader.m"; sourceTree = "<group>"; };
+		DC6CA1B21892DE940082202B /* SKSpriteNode+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKSpriteNode+CCBReader.h"; sourceTree = "<group>"; };
+		DC6CA1B31892DE940082202B /* SKSpriteNode+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKSpriteNode+CCBReader.m"; sourceTree = "<group>"; };
+		DC6CA1B41892DE940082202B /* SKTexture+CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKTexture+CCBReader.h"; sourceTree = "<group>"; };
+		DC6CA1B51892DE940082202B /* SKTexture+CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKTexture+CCBReader.m"; sourceTree = "<group>"; };
+		DC6CA1CB1892E25E0082202B /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
+		DC6CA1CC1892E25E0082202B /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
+		DC6CA1CD1892E25E0082202B /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
+		DC6CA1CE1892E25E0082202B /* CCBKeyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBKeyframe.m; sourceTree = "<group>"; };
+		DC6CA1CF1892E25E0082202B /* CCBLocalizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBLocalizationManager.h; sourceTree = "<group>"; };
+		DC6CA1D01892E25E0082202B /* CCBLocalizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBLocalizationManager.m; sourceTree = "<group>"; };
+		DC6CA1D11892E25E0082202B /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
+		DC6CA1D21892E25E0082202B /* CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader.m; sourceTree = "<group>"; };
+		DC6CA1D31892E25E0082202B /* CCBReader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader_Private.h; sourceTree = "<group>"; };
+		DC6CA1D41892E25E0082202B /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
+		DC6CA1D51892E25E0082202B /* CCBsequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBsequence.m; sourceTree = "<group>"; };
+		DC6CA1D61892E25E0082202B /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
+		DC6CA1D71892E25E0082202B /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
+		DC6CA1D81892E25E0082202B /* CCBuilderReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBuilderReader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,8 +187,9 @@
 		DC585352187EF8BE00C118E8 /* SpriteKitReader-Experimental */ = {
 			isa = PBXGroup;
 			children = (
+				DC6CA1CA1892E25E0082202B /* CCBReader */,
+				DC6CA1971892DE940082202B /* CCBReader+SpriteKitExtensions */,
 				DC5853DA1884738300C118E8 /* Published-iOS */,
-				DC5853AA187F030B00C118E8 /* CCBReader */,
 				DC58535B187EF8BE00C118E8 /* SBAppDelegate.h */,
 				DC58535C187EF8BE00C118E8 /* SBAppDelegate.m */,
 				DC585364187EF8BE00C118E8 /* SBViewController.h */,
@@ -233,79 +234,64 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DC5853AA187F030B00C118E8 /* CCBReader */ = {
+		DC6CA1971892DE940082202B /* CCBReader+SpriteKitExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				DC5853AB187F030B00C118E8 /* CCBAnimationManager.h */,
-				DC5853AC187F030B00C118E8 /* CCBAnimationManager.m */,
-				DC5853AD187F030B00C118E8 /* CCBKeyframe.h */,
-				DC5853AE187F030B00C118E8 /* CCBKeyframe.m */,
-				DC5853AF187F030B00C118E8 /* CCBLocalizationManager.h */,
-				DC5853B0187F030B00C118E8 /* CCBLocalizationManager.m */,
-				DC5853B1187F030B00C118E8 /* CCBReader.h */,
-				DC5853B2187F030B00C118E8 /* CCBReader.m */,
-				DC5853B3187F030B00C118E8 /* CCBReader_Private.h */,
-				DC5853B4187F030B00C118E8 /* CCBSequence.h */,
-				DC5853B5187F030B00C118E8 /* CCBsequence.m */,
-				DC5853B6187F030B00C118E8 /* CCBSequenceProperty.h */,
-				DC5853B7187F030B00C118E8 /* CCBSequenceProperty.m */,
-				DC5853B8187F030B00C118E8 /* CCBuilderReader.h */,
-				DC5853B9187F030B00C118E8 /* SpriteKit */,
+				DC6CA1981892DE940082202B /* CCBSpriteKitCompatibility.h */,
+				DC6CA1991892DE940082202B /* CCBSpriteKitDummy.h */,
+				DC6CA19A1892DE940082202B /* CCBSpriteKitDummy.m */,
+				DC6CA19B1892DE940082202B /* CCBSpriteKitMacros.h */,
+				DC6CA19C1892DE940082202B /* CCBSpriteKitReader.h */,
+				DC6CA19D1892DE940082202B /* CCBSpriteKitReader.m */,
+				DC6CA19E1892DE940082202B /* CCColor.h */,
+				DC6CA19F1892DE940082202B /* CCColor.m */,
+				DC6CA1A01892DE940082202B /* CCConfiguration.h */,
+				DC6CA1A11892DE940082202B /* CCConfiguration.m */,
+				DC6CA1A21892DE940082202B /* CCFileUtils.h */,
+				DC6CA1A31892DE940082202B /* CCFileUtils.m */,
+				DC6CA1A41892DE940082202B /* CCSpriteFrameCache.h */,
+				DC6CA1A51892DE940082202B /* CCSpriteFrameCache.m */,
+				DC6CA1A61892DE940082202B /* CGPointExtension.h */,
+				DC6CA1A71892DE940082202B /* CGPointExtension.m */,
+				DC6CA1A81892DE940082202B /* JRSwizzle.h */,
+				DC6CA1A91892DE940082202B /* JRSwizzle.m */,
+				DC6CA1AA1892DE940082202B /* SKEmitterNode+CCBReader.h */,
+				DC6CA1AB1892DE940082202B /* SKEmitterNode+CCBReader.m */,
+				DC6CA1AC1892DE940082202B /* SKLabelNode+CCBReader.h */,
+				DC6CA1AD1892DE940082202B /* SKLabelNode+CCBReader.m */,
+				DC6CA1AE1892DE940082202B /* SKNode+CCBReader.h */,
+				DC6CA1AF1892DE940082202B /* SKNode+CCBReader.m */,
+				DC6CA1B01892DE940082202B /* SKPhysicsBody+CCBReader.h */,
+				DC6CA1B11892DE940082202B /* SKPhysicsBody+CCBReader.m */,
+				DC6CA1B21892DE940082202B /* SKSpriteNode+CCBReader.h */,
+				DC6CA1B31892DE940082202B /* SKSpriteNode+CCBReader.m */,
+				DC6CA1B41892DE940082202B /* SKTexture+CCBReader.h */,
+				DC6CA1B51892DE940082202B /* SKTexture+CCBReader.m */,
 			);
-			path = CCBReader;
+			name = "CCBReader+SpriteKitExtensions";
+			path = "../../../SpriteBuilder/libs/SpriteKit/CCBReader+SpriteKitExtensions";
 			sourceTree = "<group>";
 		};
-		DC5853B9187F030B00C118E8 /* SpriteKit */ = {
+		DC6CA1CA1892E25E0082202B /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
-				DC5853BA187F030B00C118E8 /* CCBSpriteKitCompatibility.h */,
-				DC5853C4187F039E00C118E8 /* CCBSpriteKitMacros.h */,
-				DC5853D418844C1200C118E8 /* CCBSpriteKitReader.h */,
-				DC5853D518844C1200C118E8 /* CCBSpriteKitReader.m */,
-				DC5853C5187F0BCC00C118E8 /* CCBSpriteKitDummy.h */,
-				DC5853C6187F0BCC00C118E8 /* CCBSpriteKitDummy.m */,
-				DC00624C1888928E008D5D30 /* JRSwizzle.h */,
-				DC00624D1888928E008D5D30 /* JRSwizzle.m */,
-				DC5853E5188700EA00C118E8 /* Cocos2D Classes (ported) */,
-				DC5853E4188700D900C118E8 /* Sprite Kit Categories */,
+				DC6CA1CB1892E25E0082202B /* CCBAnimationManager.h */,
+				DC6CA1CC1892E25E0082202B /* CCBAnimationManager.m */,
+				DC6CA1CD1892E25E0082202B /* CCBKeyframe.h */,
+				DC6CA1CE1892E25E0082202B /* CCBKeyframe.m */,
+				DC6CA1CF1892E25E0082202B /* CCBLocalizationManager.h */,
+				DC6CA1D01892E25E0082202B /* CCBLocalizationManager.m */,
+				DC6CA1D11892E25E0082202B /* CCBReader.h */,
+				DC6CA1D21892E25E0082202B /* CCBReader.m */,
+				DC6CA1D31892E25E0082202B /* CCBReader_Private.h */,
+				DC6CA1D41892E25E0082202B /* CCBSequence.h */,
+				DC6CA1D51892E25E0082202B /* CCBsequence.m */,
+				DC6CA1D61892E25E0082202B /* CCBSequenceProperty.h */,
+				DC6CA1D71892E25E0082202B /* CCBSequenceProperty.m */,
+				DC6CA1D81892E25E0082202B /* CCBuilderReader.h */,
 			);
-			path = SpriteKit;
-			sourceTree = "<group>";
-		};
-		DC5853E4188700D900C118E8 /* Sprite Kit Categories */ = {
-			isa = PBXGroup;
-			children = (
-				DCF621FA1889B98C00ECCA9B /* SKEmitterNode+CCBReader.h */,
-				DCF621FB1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m */,
-				DCF621A918898B4400ECCA9B /* SKLabelNode+CCBReader.h */,
-				DCF621AA18898B4400ECCA9B /* SKLabelNode+CCBReader.m */,
-				DC5853C8187F0DD100C118E8 /* SKNode+CCBReader.h */,
-				DC5853C9187F0DD100C118E8 /* SKNode+CCBReader.m */,
-				DC5853D1187F2D9900C118E8 /* SKPhysicsBody+CCBReader.h */,
-				DC5853D2187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m */,
-				DC00624F18889976008D5D30 /* SKSpriteNode+CCBReader.h */,
-				DC00625018889976008D5D30 /* SKSpriteNode+CCBReader.m */,
-				DC5853CE187F2C3500C118E8 /* SKTexture+CCBReader.h */,
-				DC5853CF187F2C3500C118E8 /* SKTexture+CCBReader.m */,
-			);
-			name = "Sprite Kit Categories";
-			sourceTree = "<group>";
-		};
-		DC5853E5188700EA00C118E8 /* Cocos2D Classes (ported) */ = {
-			isa = PBXGroup;
-			children = (
-				DCF621AC18898CBB00ECCA9B /* CCColor.h */,
-				DCF621AD18898CBB00ECCA9B /* CCColor.m */,
-				DC5853E11886FF6A00C118E8 /* CCConfiguration.h */,
-				DC5853E21886FF6A00C118E8 /* CCConfiguration.m */,
-				DC5853C1187F032400C118E8 /* CCFileUtils.h */,
-				DC5853C2187F032400C118E8 /* CCFileUtils.m */,
-				DC5853D7188467EE00C118E8 /* CCSpriteFrameCache.h */,
-				DC5853D8188467EE00C118E8 /* CCSpriteFrameCache.m */,
-				DC5853CB187F1AFF00C118E8 /* CGPointExtension.h */,
-				DC5853CC187F1AFF00C118E8 /* CGPointExtension.m */,
-			);
-			name = "Cocos2D Classes (ported)";
+			name = CCBReader;
+			path = "../../../SpriteBuilder/libs/cocos2d-iphone/cocos2d-ui/CCBReader";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,30 +395,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC5853BC187F030B00C118E8 /* CCBKeyframe.m in Sources */,
-				DC5853D618844C1200C118E8 /* CCBSpriteKitReader.m in Sources */,
-				DCF621AE18898CBB00ECCA9B /* CCColor.m in Sources */,
-				DC5853BE187F030B00C118E8 /* CCBReader.m in Sources */,
+				DC6CA1C21892DE940082202B /* CGPointExtension.m in Sources */,
+				DC6CA1BD1892DE940082202B /* CCBSpriteKitReader.m in Sources */,
+				DC6CA1BF1892DE940082202B /* CCConfiguration.m in Sources */,
+				DC6CA1DC1892E25E0082202B /* CCBReader.m in Sources */,
+				DC6CA1C01892DE940082202B /* CCFileUtils.m in Sources */,
+				DC6CA1C41892DE940082202B /* SKEmitterNode+CCBReader.m in Sources */,
 				DC585359187EF8BE00C118E8 /* main.m in Sources */,
+				DC6CA1C61892DE940082202B /* SKNode+CCBReader.m in Sources */,
 				DC585366187EF8BE00C118E8 /* SBViewController.m in Sources */,
-				DC5853D0187F2C3500C118E8 /* SKTexture+CCBReader.m in Sources */,
+				DC6CA1DA1892E25E0082202B /* CCBKeyframe.m in Sources */,
 				DC58535D187EF8BE00C118E8 /* SBAppDelegate.m in Sources */,
-				DCF621FC1889B98C00ECCA9B /* SKEmitterNode+CCBReader.m in Sources */,
-				DC00625118889976008D5D30 /* SKSpriteNode+CCBReader.m in Sources */,
-				DC5853D9188467EE00C118E8 /* CCSpriteFrameCache.m in Sources */,
+				DC6CA1C81892DE940082202B /* SKSpriteNode+CCBReader.m in Sources */,
 				DC585369187EF8BE00C118E8 /* SBMyScene.m in Sources */,
-				DC5853CD187F1AFF00C118E8 /* CGPointExtension.m in Sources */,
-				DC5853C0187F030B00C118E8 /* CCBSequenceProperty.m in Sources */,
-				DC5853D3187F2D9900C118E8 /* SKPhysicsBody+CCBReader.m in Sources */,
-				DC5853C3187F032400C118E8 /* CCFileUtils.m in Sources */,
-				DC5853BD187F030B00C118E8 /* CCBLocalizationManager.m in Sources */,
-				DC00624E1888928E008D5D30 /* JRSwizzle.m in Sources */,
-				DC5853C7187F0BCC00C118E8 /* CCBSpriteKitDummy.m in Sources */,
-				DC5853CA187F0DD100C118E8 /* SKNode+CCBReader.m in Sources */,
-				DCF621AB18898B4400ECCA9B /* SKLabelNode+CCBReader.m in Sources */,
-				DC5853E31886FF6A00C118E8 /* CCConfiguration.m in Sources */,
-				DC5853BF187F030B00C118E8 /* CCBsequence.m in Sources */,
-				DC5853BB187F030B00C118E8 /* CCBAnimationManager.m in Sources */,
+				DC6CA1C91892DE940082202B /* SKTexture+CCBReader.m in Sources */,
+				DC6CA1DE1892E25F0082202B /* CCBSequenceProperty.m in Sources */,
+				DC6CA1DD1892E25F0082202B /* CCBsequence.m in Sources */,
+				DC6CA1BE1892DE940082202B /* CCColor.m in Sources */,
+				DC6CA1C71892DE940082202B /* SKPhysicsBody+CCBReader.m in Sources */,
+				DC6CA1C51892DE940082202B /* SKLabelNode+CCBReader.m in Sources */,
+				DC6CA1C11892DE940082202B /* CCSpriteFrameCache.m in Sources */,
+				DC6CA1D91892E25E0082202B /* CCBAnimationManager.m in Sources */,
+				DC6CA1BC1892DE940082202B /* CCBSpriteKitDummy.m in Sources */,
+				DC6CA1DB1892E25E0082202B /* CCBLocalizationManager.m in Sources */,
+				DC6CA1C31892DE940082202B /* JRSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +499,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					CCB_SPRITEKIT_READER,
 					"DEBUG=1",
 					"$(inherited)",
 				);

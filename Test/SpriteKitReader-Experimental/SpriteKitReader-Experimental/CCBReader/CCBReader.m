@@ -37,8 +37,10 @@
 #import "SSZipArchive.h"
 #endif
 
-#import "CCBSpriteKitCompatibility.h"
-
+// Set to 1 to log assignment of properties in the form: "propertyname = value"
+#ifndef DEBUG_READER_PROPERTIES
+#define DEBUG_READER_PROPERTIES 0
+#endif
 
 @interface CCBFile : CCNode
 {
@@ -333,7 +335,9 @@ static inline float readFloat(CCBReader *self)
         [extraPropNames addObject:name];
     }
     
+#if DEBUG_READER_PROPERTIES
 	NSString* valueString = nil;
+#endif
 	
     if (type == kCCBPropTypePosition)
     {
@@ -343,7 +347,7 @@ static inline float readFloat(CCBReader *self)
         int xUnit = readByte(self);
         int yUnit = readByte(self);
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%f, %f}", x, y];
 #endif
 
@@ -377,7 +381,7 @@ static inline float readFloat(CCBReader *self)
         float x = readFloat(self);
         float y = readFloat(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%f, %f}", x, y];
 #endif
 
@@ -398,7 +402,7 @@ static inline float readFloat(CCBReader *self)
         int xUnit = readByte(self);
         int yUnit = readByte(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%f, %f}", w, h];
 #endif
 
@@ -421,7 +425,7 @@ static inline float readFloat(CCBReader *self)
         float y = readFloat(self);
         int sType = readByte(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%f, %f}", x, y];
 #endif
 
@@ -447,7 +451,7 @@ static inline float readFloat(CCBReader *self)
         float xFloat = readFloat(self);
         float yFloat = readFloat(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%f, %f}", xFloat, yFloat];
 #endif
 
@@ -464,7 +468,7 @@ static inline float readFloat(CCBReader *self)
     {
         float f = readFloat(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%f", f];
 #endif
 
@@ -484,7 +488,7 @@ static inline float readFloat(CCBReader *self)
         float f = readFloat(self);
         int sType = readIntWithSign(self, NO);
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%f (%i)", f, sType];
 #endif
 
@@ -499,7 +503,7 @@ static inline float readFloat(CCBReader *self)
     {
         int d = readIntWithSign(self, YES);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%d", d];
 #endif
 
@@ -513,7 +517,7 @@ static inline float readFloat(CCBReader *self)
         float f = readFloat(self);
         float fVar = readFloat(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%f (%f)", f, fVar];
 #endif
 
@@ -528,7 +532,7 @@ static inline float readFloat(CCBReader *self)
     {
         BOOL b = readBool(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%@", b ? @"YES" : @"NO"];
 #endif
 
@@ -547,7 +551,7 @@ static inline float readFloat(CCBReader *self)
     {
         NSString* spriteFile = [self readCachedString];
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%@", spriteFile];
 #endif
 
@@ -557,7 +561,7 @@ static inline float readFloat(CCBReader *self)
             [node setValue:spriteFrame forKey:name];
 			[self readerDidSetSpriteFrame:spriteFrame node:node];
             
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 			valueString = [NSString stringWithFormat:@"%@ (%@)", valueString, spriteFrame];
 #endif
 
@@ -571,7 +575,7 @@ static inline float readFloat(CCBReader *self)
     {
         NSString* spriteFile = [self readCachedString];
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%@", spriteFile];
 #endif
 
@@ -580,7 +584,7 @@ static inline float readFloat(CCBReader *self)
             CCTexture* texture = [CCTexture textureWithFile:spriteFile];
             [node setValue:texture forKey:name];
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 			valueString = [NSString stringWithFormat:@"%@ (%@)", valueString, texture];
 #endif
         }
@@ -589,7 +593,7 @@ static inline float readFloat(CCBReader *self)
     {
         int byte = readByte(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%d", byte];
 #endif
 
@@ -612,7 +616,7 @@ static inline float readFloat(CCBReader *self)
         CGFloat b = readFloat(self);
         CGFloat a = readFloat(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%.2f, %.2f, %.2f, %.2f}", r, g, b, a];
 #endif
 
@@ -639,7 +643,7 @@ static inline float readFloat(CCBReader *self)
         float bVar = readFloat(self);
         float aVar = readFloat(self);
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%.2f, %.2f, %.2f, %.2f}", r, g, b, a];
 #endif
 
@@ -657,7 +661,7 @@ static inline float readFloat(CCBReader *self)
         BOOL xFlip = readBool(self);
         BOOL yFlip = readBool(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"x:%@", xFlip ? @"YES" : @"NO"];
 		valueString = [NSString stringWithFormat:@"%@ y:%@", valueString, yFlip ? @"YES" : @"NO"];
 #endif
@@ -675,7 +679,7 @@ static inline float readFloat(CCBReader *self)
         int src = readIntWithSign(self, NO);
         int dst = readIntWithSign(self, NO);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%i, %i}", src, dst];
 #endif
 
@@ -693,7 +697,7 @@ static inline float readFloat(CCBReader *self)
         NSString* fntFile = [self readCachedString];
         [node setValue:fntFile forKey:name];
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%@", fntFile];
 #endif
     }
@@ -703,14 +707,14 @@ static inline float readFloat(CCBReader *self)
         NSString* txt = [self readCachedString];
         BOOL localized = readBool(self);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"\"%@\"", txt];
 #endif
 
         if (localized)
         {
             txt = CCBLocalize(txt);
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 			valueString = [NSString stringWithFormat:@"%@ localized: \"%@\"", txt];
 #endif
         }
@@ -724,7 +728,7 @@ static inline float readFloat(CCBReader *self)
     {
         NSString* fnt = [self readCachedString];
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%@", fnt];
 #endif
 
@@ -742,7 +746,7 @@ static inline float readFloat(CCBReader *self)
         NSString* selectorName = [self readCachedString];
         int selectorTarget = readIntWithSign(self, NO);
         
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"@selector(%@) target:%i", selectorName, selectorTarget];
 #endif
 
@@ -777,7 +781,7 @@ static inline float readFloat(CCBReader *self)
                         NSLog(@"CCBReader: Failed to set selector/target block for %@",selectorName);
                     }
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 					valueString = [NSString stringWithFormat:@"%@ (%@)", valueString, t];
 #endif
                 }
@@ -797,7 +801,7 @@ static inline float readFloat(CCBReader *self)
         
         ccbFileName = [NSString stringWithFormat:@"%@.ccbi", ccbFileName];
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%@", ccbFileName];
 #endif
 
@@ -836,7 +840,7 @@ static inline float readFloat(CCBReader *self)
         NSLog(@"CCBReader: Failed to read property type %d",type);
     }
 
-#if DEBUG
+#if DEBUG_READER_PROPERTIES
 	NSLog(@"%@ = %@", name, valueString);
 #endif
 }
