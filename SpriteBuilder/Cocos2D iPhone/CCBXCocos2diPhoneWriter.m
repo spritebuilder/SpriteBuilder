@@ -871,6 +871,12 @@
     [self writeInt:memberVarAssignmentType withSign:NO];
     if (memberVarAssignmentType)
     {
+        if([[node objectForKey:@"memberVarAssignmentName"] isEqualToString:@""])
+        {
+
+            [self.delegate addWarningWithDescription:[NSString stringWithFormat:@"Member ivar assigned with <blank> name. This will likely fail at runtime. Node %@", node[@"displayName"]] isFatal:NO relatedFile:Nil resolution:nil];
+            
+        }
         [self writeCachedString:[node objectForKey:@"memberVarAssignmentName"] isPath:NO];
     }
     

@@ -53,6 +53,7 @@
     Class exporterClass = [bundle principalClass];
     CCBX* exporter = [[exporterClass alloc] init];
     exporter.serializedProjectSettings = [projectSettings serialize];
+    exporter.delegate = self.delegate;
     
     return [exporter exportDocument:doc flattenPaths:flattenPaths];
 }

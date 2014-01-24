@@ -45,7 +45,11 @@
     NSString* resString = @"";
     if (self.resolution) resString = [NSString stringWithFormat:@" (%@)", self.resolution];
     
-    return [NSString stringWithFormat:@"%@%@: %@", [CCBWarning formatTargetType:self.targetType], resString, self.message];
+    NSString * relaventFile = @"";
+    if(self.relatedFile) relaventFile = [NSString stringWithFormat:@" (%@)", self.relatedFile];
+    
+    
+    return [NSString stringWithFormat:@"%@%@%@: %@", [CCBWarning formatTargetType:self.targetType], resString, relaventFile, self.message];
 }
 
 @end
