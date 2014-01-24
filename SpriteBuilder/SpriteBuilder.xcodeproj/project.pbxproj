@@ -295,7 +295,7 @@
 		DC680334189156A60060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC680330189156A60060BE39 /* CCBPProperties.plist */; };
 		DC680335189156A60060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680331189156A60060BE39 /* Icon.png */; };
 		DC680336189156A60060BE39 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680332189156A60060BE39 /* Icon@2x.png */; };
-		DC680339189157B90060BE39 /* SKSpriteNodeWithColor.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */; };
+		DC680339189157B90060BE39 /* SKColorSpriteNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */; };
 		DC68033C189169510060BE39 /* CCNode+SKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68031A18914E650060BE39 /* CCNode+SKNode.m */; };
 		DC68033D189169510060BE39 /* SKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1451890500E00128D78 /* SKNode.m */; };
 		DC68033E189169510060BE39 /* SKLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1431890500E00128D78 /* SKLabelNode.m */; };
@@ -835,7 +835,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				DC680339189157B90060BE39 /* SKSpriteNodeWithColor.ccbPlugNode in Copy PlugIns */,
+				DC680339189157B90060BE39 /* SKColorSpriteNode.ccbPlugNode in Copy PlugIns */,
 				DC680317189146FE0060BE39 /* SKSpriteNode.ccbPlugNode in Copy PlugIns */,
 				DC680318189146FE0060BE39 /* SKLabelNode.ccbPlugNode in Copy PlugIns */,
 				DCB9F16C189060E900128D78 /* SKNode.ccbPlugNode in Copy PlugIns */,
@@ -1267,7 +1267,7 @@
 		DC68030E189146900060BE39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		DC68031918914E650060BE39 /* CCNode+SKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+SKNode.h"; sourceTree = "<group>"; };
 		DC68031A18914E650060BE39 /* CCNode+SKNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+SKNode.m"; sourceTree = "<group>"; };
-		DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNodeWithColor.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKColorSpriteNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC68032A189156910060BE39 /* SKColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorSpriteNode.h; sourceTree = "<group>"; };
 		DC68032B189156910060BE39 /* SKColorSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorSpriteNode.m; sourceTree = "<group>"; };
 		DC68032E189156A60060BE39 /* CCBPluginSKColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKColorSpriteNode.h; sourceTree = "<group>"; };
@@ -2420,7 +2420,7 @@
 				DCB9F1581890600D00128D78 /* SKNode.ccbPlugNode */,
 				DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */,
 				DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */,
-				DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */,
+				DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3994,9 +3994,9 @@
 			productReference = DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
-		DC68031D189156310060BE39 /* SKSpriteNodeWithColor */ = {
+		DC68031D189156310060BE39 /* SKColorSpriteNode */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC680326189156310060BE39 /* Build configuration list for PBXNativeTarget "SKSpriteNodeWithColor" */;
+			buildConfigurationList = DC680326189156310060BE39 /* Build configuration list for PBXNativeTarget "SKColorSpriteNode" */;
 			buildPhases = (
 				DC68031E189156310060BE39 /* Sources */,
 				DC680320189156310060BE39 /* Frameworks */,
@@ -4006,9 +4006,9 @@
 			);
 			dependencies = (
 			);
-			name = SKSpriteNodeWithColor;
+			name = SKColorSpriteNode;
 			productName = CCNode;
-			productReference = DC680329189156310060BE39 /* SKSpriteNodeWithColor.ccbPlugNode */;
+			productReference = DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		DCB9F14C1890600D00128D78 /* SKNode */ = {
@@ -4256,7 +4256,7 @@
 				DCB9F14C1890600D00128D78 /* SKNode */,
 				DC5129BD1891450D0091873D /* SKSpriteNode */,
 				DC6802FC1891466C0060BE39 /* SKLabelNode */,
-				DC68031D189156310060BE39 /* SKSpriteNodeWithColor */,
+				DC68031D189156310060BE39 /* SKColorSpriteNode */,
 			);
 		};
 /* End PBXProject section */
@@ -5229,7 +5229,7 @@
 		};
 		DC680338189157B00060BE39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DC68031D189156310060BE39 /* SKSpriteNodeWithColor */;
+			target = DC68031D189156310060BE39 /* SKColorSpriteNode */;
 			targetProxy = DC680337189157B00060BE39 /* PBXContainerItemProxy */;
 		};
 		DCB9F16B189060DF00128D78 /* PBXTargetDependency */ = {
@@ -5462,7 +5462,10 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/cocos2d/**";
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -5482,7 +5485,10 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/cocos2d/**";
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -5616,6 +5622,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCSlider/CCSlider-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -5660,6 +5667,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCSlider/CCSlider-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -5889,6 +5897,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCSprite9Slice/CCSprite9Slice-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -5933,6 +5942,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCSprite9Slice/CCSprite9Slice-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -6162,6 +6172,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCTextField/CCTextField-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -6206,6 +6217,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCTextField/CCTextField-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -6447,7 +6459,7 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PRODUCT_NAME = SKSpriteNodeWithColor;
+				PRODUCT_NAME = SKColorSpriteNode;
 				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Debug;
@@ -6473,7 +6485,7 @@
 					"-undefined",
 					dynamic_lookup,
 				);
-				PRODUCT_NAME = SKSpriteNodeWithColor;
+				PRODUCT_NAME = SKColorSpriteNode;
 				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;
@@ -6734,6 +6746,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCLabelTTF/CCLabelTTF-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -6762,6 +6775,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCLabelTTF/CCLabelTTF-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -6794,6 +6808,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCParticleSystem/CCParticleSystem-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -6822,6 +6837,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCParticleSystem/CCParticleSystem-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -6853,6 +6869,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = "Cocos2D iPhone/Cocos2D iPhone-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/depot-koboldkit/SpriteBuilder/SpriteBuilder/libs/cocos2d-iphone/external/Chipmunk/objectivec",
+				);
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -6877,6 +6897,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = "Cocos2D iPhone/Cocos2D iPhone-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/depot-koboldkit/SpriteBuilder/SpriteBuilder/libs/cocos2d-iphone/external/Chipmunk/objectivec",
+				);
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -7028,6 +7052,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCBFile/CCBFile-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -7056,6 +7081,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libs/cocos2d-iphone/cocos2d/**",
 					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "CCBFile/CCBFile-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -7229,7 +7255,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC680326189156310060BE39 /* Build configuration list for PBXNativeTarget "SKSpriteNodeWithColor" */ = {
+		DC680326189156310060BE39 /* Build configuration list for PBXNativeTarget "SKColorSpriteNode" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC680327189156310060BE39 /* Debug */,
