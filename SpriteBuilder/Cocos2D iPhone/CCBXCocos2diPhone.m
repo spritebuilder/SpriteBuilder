@@ -37,6 +37,7 @@
     CCBXCocos2diPhoneWriter* writer = [[CCBXCocos2diPhoneWriter alloc] init];
     writer.flattenPaths = flattenPaths;
     writer.serializedProjectSettings = serializedProjectSettings;
+    writer.delegate = self.delegate;
     [writer writeDocument:doc];
     
     return [writer.data copy];

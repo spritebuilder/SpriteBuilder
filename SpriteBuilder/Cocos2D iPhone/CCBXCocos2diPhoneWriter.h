@@ -23,6 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "CCBPublishDelegate.h"
 
 #define kCCBXTempBufferSize 8
 #define kCCBXVersion 6
@@ -61,6 +62,7 @@ enum {
 @property (nonatomic,readonly) NSMutableData* data;
 @property (nonatomic,assign) BOOL flattenPaths;
 @property (nonatomic,strong) NSDictionary* serializedProjectSettings;
+@property (nonatomic,strong) id<CCBPublishDelegate> delegate;
 
 - (void) writeDocument:(NSDictionary*)doc;
 

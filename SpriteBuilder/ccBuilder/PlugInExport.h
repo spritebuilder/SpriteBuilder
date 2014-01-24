@@ -23,22 +23,23 @@
  */
 
 #import <Foundation/Foundation.h>
-
+#import "CCBPublishDelegate.h"
 @class ProjectSettings;
 
 @interface PlugInExport : NSObject
 {
     NSBundle* bundle;
-    NSString* __weak extension;
+    NSString* extension;
     NSString* pluginName;
     ProjectSettings* projectSettings;
     BOOL flattenPaths;
 }
 
-@property (weak, nonatomic,readonly) NSString* extension;
+@property (nonatomic,readonly)NSString* extension;
 @property (nonatomic,strong) NSString* pluginName;
 @property (nonatomic,assign) BOOL flattenPaths;
 @property (nonatomic,strong) ProjectSettings* projectSettings;
+@property (nonatomic,strong) id<CCBPublishDelegate> delegate;
 
 - (id) initWithBundle:(NSBundle*) bundle;
 - (NSData*) exportDocument:(NSDictionary*)doc;

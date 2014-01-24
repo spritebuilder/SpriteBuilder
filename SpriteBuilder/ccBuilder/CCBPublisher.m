@@ -116,6 +116,8 @@
 
 - (BOOL) publishCCBFile:(NSString*)srcFile to:(NSString*)dstFile
 {
+    currentWorkingFile = [dstFile lastPathComponent];
+    
     PlugInExport* plugIn = [[PlugInManager sharedManager] plugInExportForExtension:publishFormat];
     if (!plugIn)
     {
@@ -134,6 +136,7 @@
     // Export file
     plugIn.flattenPaths = projectSettings.flattenPaths;
     plugIn.projectSettings = projectSettings;
+    plugIn.delegate = self;
     NSData* data = [plugIn exportDocument:doc];
     if (!data)
     {
@@ -970,6 +973,11 @@
     [zipTask waitUntilExit];
     
     return [manager fileExistsAtPath:file];
+}
+
+- (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution
+{
+    [warnings addWarningWithDescription:description isFatal:fatal relatedFile:(relatedFile == nil? currentWorkingFile : relatedFile) resolution:resolution];
 }
 
 - (BOOL) publish_
