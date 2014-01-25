@@ -117,6 +117,12 @@
     NSURL* propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
     NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
     
+	_targetEngine = CCBTargetEngineCocos2d;
+	if ([[[props objectForKey:@"targetEngine"] lowercaseString] isEqualToString:@"spritekit"])
+	{
+		_targetEngine = CCBTargetEngineSpriteKit;
+	}
+	
     nodeClassName = [props objectForKey:@"className"];
     nodeEditorClassName = [props objectForKey:@"editorClassName"];
     

@@ -2,12 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>targetEngine</key>
+	<string>SpriteKit</string>
 	<key>ordering</key>
-	<integer>1</integer>
+	<integer>12</integer>
 	<key>displayName</key>
-	<string>Color Sprite (Sprite Kit)</string>
+	<string>Colored Sprite (Sprite Kit)</string>
 	<key>description</key>
-	<string>Displays a filled rectangle.</string>
+	<string>Displays a colored rectangle.</string>
 	<key>className</key>
 	<string>SKColorSpriteNode</string>
 	<key>inheritsFrom</key>

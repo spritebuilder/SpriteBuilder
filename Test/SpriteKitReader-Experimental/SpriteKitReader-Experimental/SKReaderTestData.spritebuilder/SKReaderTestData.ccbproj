@@ -16,6 +16,8 @@
 	<false/>
 	<key>deviceScaling</key>
 	<integer>0</integer>
+	<key>engine</key>
+	<integer>0</integer>
 	<key>exporter</key>
 	<string>ccbi</string>
 	<key>fileType</key>
@@ -175,7 +177,7 @@
 	</dict>
 	<key>versionStr</key>
 	<string>Version: 1
-GitHub: b8dff1f86f
+GitHub: d9e0b6f495
 </string>
 </dict>
 </plist>
