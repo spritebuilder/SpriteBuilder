@@ -16,12 +16,20 @@ git rev-parse --short=10 HEAD >> Generated/Version.txt
 touch Generated/Version.txt
 
 # Generate default project
-echo "=== GENERATING DEFAULT SB-PROJECT ==="
+echo "=== GENERATING COCOS2D SB-PROJECT ==="
 cd Support/PROJECTNAME.spritebuilder/
 rm -rf PROJECTNAME.xcodeproj/xcuserdata/
 rm -rf PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
 rm ../../Generated/PROJECTNAME.zip
 zip -r ../../Generated/PROJECTNAME.zip * -x *.git*
+cd ../..
+
+echo "=== GENERATING SPRITE KIT SB-PROJECT ==="
+cd Support/SPRITEKITPROJECTNAME.spritebuilder/
+rm -rf SPRITEKITPROJECTNAME.xcodeproj/xcuserdata/
+rm -rf SPRITEKITPROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
+rm ../../Generated/SPRITEKITPROJECTNAME.zip
+zip -r ../../Generated/SPRITEKITPROJECTNAME.zip * -x *.git*
 cd ../..
 
 # Clean and build CocosBuilder
