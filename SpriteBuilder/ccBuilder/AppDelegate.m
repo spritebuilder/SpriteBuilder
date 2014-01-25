@@ -1619,10 +1619,10 @@ static BOOL hideAllToNextSeparator;
     return YES;
 }
 
-- (BOOL) createProject:(NSString*) fileName
+- (BOOL) createProject:(NSString*)fileName engine:(CCBTargetEngine)engine
 {
     CCBProjCreator* creator = [[CCBProjCreator alloc] init];
-    return [creator createDefaultProjectAtPath:fileName];
+    return [creator createDefaultProjectAtPath:fileName engine:engine];
 }
 
 - (void) updateResourcePathsFromProjectSettings
@@ -2815,7 +2815,7 @@ static BOOL hideAllToNextSeparator;
     [self closeProject];
 }
 
-- (IBAction) menuNewProject:(id)sender
+-(void) createNewProjectTargetting:(CCBTargetEngine)engine
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
@@ -2845,7 +2845,7 @@ static BOOL hideAllToNextSeparator;
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_current_queue(), ^{
-                                   if ([self createProject: fileName])
+                                   if ([self createProject:fileName engine:engine])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }
@@ -2861,6 +2861,16 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }];
+}
+
+- (IBAction) menuNewProject:(id)sender
+{
+	[self createNewProjectTargetting:CCBTargetEngineCocos2d];
+}
+
+-(IBAction) menuNewSpriteKitProject:(id)sender
+{
+	[self createNewProjectTargetting:CCBTargetEngineSpriteKit];
 }
 
 - (IBAction) newFolder:(id)sender

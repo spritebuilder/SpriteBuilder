@@ -80,7 +80,9 @@
 {
     self = [super init];
     if (!self) return NULL;
-    
+
+	_engine = CCBTargetEngineCocos2d;
+
     resourcePaths = [[NSMutableArray alloc] init];
     [resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:@"Resources" forKey:@"path"]];
     self.publishDirectory = @"Published-iOS";
@@ -144,6 +146,8 @@
     }
     
     // Read settings
+	_engine = [[dict objectForKey:@"engine"] intValue];
+
     self.resourcePaths = [dict objectForKey:@"resourcePaths"];
     self.publishDirectory = [dict objectForKey:@"publishDirectory"];
     self.publishDirectoryAndroid = [dict objectForKey:@"publishDirectoryAndroid"];
@@ -232,7 +236,9 @@
 - (id) serialize
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    
+
+	[dict setObject:[NSNumber numberWithInt:_engine] forKey:@"engine"];
+
     [dict setObject:@"CocosBuilderProject" forKey:@"fileType"];
     [dict setObject:[NSNumber numberWithInt:kCCBProjectSettingsVersion] forKey:@"fileVersion"];
     [dict setObject:resourcePaths forKey:@"resourcePaths"];
