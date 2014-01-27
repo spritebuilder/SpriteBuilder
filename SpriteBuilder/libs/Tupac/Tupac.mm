@@ -537,6 +537,7 @@ typedef struct _PVRTexHeader
     // Generate the sprite sheet
     self.filenames = absoluteFilepaths;
     [self createTextureAtlas];
+    self.errorMessage = @"ERRORRORO fksdfksd fs";
 }
 @end
 
