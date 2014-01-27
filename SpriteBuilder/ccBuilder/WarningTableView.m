@@ -6,8 +6,8 @@
 //
 //
 
-#import "WarningOutlineView.h"
+#import "WarningTableView.h"
 
-@implementation WarningOutlineView
+@implementation WarningTableView
 
 @end

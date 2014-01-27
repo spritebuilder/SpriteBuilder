@@ -101,7 +101,7 @@
 #import "CCBProjCreator.h"
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
-#import "WarningOutlineHandler.h"
+#import "WarningTableViewHandler.h"
 #import "CCNode+NodeInfo.h"
 #import "CCNode_Private.h"
 #import "UsageManager.h"
@@ -401,6 +401,21 @@ void ApplyCustomNodeVisitSwizzle()
 
 - (void) setupResourceManager
 {
+    
+    NSColor * color = [NSColor colorWithCalibratedRed:0.0f green:0.50f blue:0.50f alpha:1.0f];
+    
+    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+
+    CGFloat r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    
+    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:1];
+    
+    NSColor * color2 = [NSColor colorWithDeviceRed:r green:g blue:b alpha:a];
+    NSColor * calibratedColor = [color2 colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+
+    NSLog(@"R:%f G:%f B:%f A:%f",calibratedColor.redComponent, calibratedColor.greenComponent, calibratedColor.blueComponent, calibratedColor.alphaComponent);
+    
     // Load resource manager
 	[ResourceManager sharedManager];
     
@@ -429,10 +444,12 @@ void ApplyCustomNodeVisitSwizzle()
     [previewViewOwner setPreviewFile:NULL];
     
     //Setup warnings outline
-    warningOutlineHandler = [[WarningOutlineHandler alloc] init];
-    outlineWarnings.delegate = warningOutlineHandler;
-    outlineWarnings.target = warningOutlineHandler;
-    outlineWarnings.dataSource = warningOutlineHandler;
+    warningHandler = [[WarningTableViewHandler alloc] init];
+    
+    self.warningTableView.delegate = warningHandler;
+    self.warningTableView.target = warningHandler;
+    self.warningTableView.dataSource = warningHandler;
+   // [self.warningTableView setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
     [self updateWarningsOutline];
 }
 
@@ -2269,9 +2286,9 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) copy:(id) sender
 {
     //Copy warnings.
-    if([[self window] firstResponder] == outlineWarnings)
+    if([[self window] firstResponder] == _warningTableView)
     {
-        CCBWarning * warning = projectSettings.lastWarnings.warnings[outlineWarnings.selectedRow];
+        CCBWarning * warning = projectSettings.lastWarnings.warnings[_warningTableView.selectedRow];
         NSString * stringToWrite = warning.description;
         NSPasteboard* cb = [NSPasteboard generalPasteboard];
         
@@ -3204,8 +3221,8 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updateWarningsOutline
 {
-    [warningOutlineHandler updateWithWarnings:projectSettings.lastWarnings];
-    [outlineWarnings reloadData];
+    [warningHandler updateWithWarnings:projectSettings.lastWarnings];
+    [self.warningTableView reloadData];
 }
 
 - (IBAction) menuSetCanvasBorder:(id)sender
