@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "CCBOutlineView.h"
 
-@interface WarningOutlineView : CCBOutlineView
+
+@interface WarningTableView : NSTableView
 
 @end

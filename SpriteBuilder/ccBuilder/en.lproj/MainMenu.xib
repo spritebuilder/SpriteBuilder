@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3028" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -1006,7 +1006,7 @@ CA
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1991">
-                                                                        <rect key="frame" x="235" y="0.0" width="16" height="452"/>
+                                                                        <rect key="frame" x="236" y="0.0" width="15" height="452"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                 </scrollView>
@@ -1133,44 +1133,44 @@ CA
                                             <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="GKQ-Vs-kFr">
+                                                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="XRE-yL-GbY">
                                                     <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <clipView key="contentView" copiesOnScroll="NO" id="wgL-QG-0ne">
-                                                        <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
+                                                    <clipView key="contentView" id="c9e-44-Yg2">
+                                                        <rect key="frame" x="1" y="1" width="247" height="638"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" indentationPerLevel="16" outlineTableColumn="8ja-Ep-Val" id="kpe-5y-lAC" customClass="WarningOutlineView">
-                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
+                                                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="8cF-q7-mD1" customClass="WarningTableView">
+                                                                <rect key="frame" x="0.0" y="0.0" width="247" height="638"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
-                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="gridColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                 <tableColumns>
-                                                                    <tableColumn editable="NO" width="245" minWidth="16" maxWidth="1000" id="8ja-Ep-Val">
+                                                                    <tableColumn width="244" minWidth="40" maxWidth="1000" id="9wJ-gA-SBO">
                                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                                                         </tableHeaderCell>
-                                                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Text" id="1Mq-5i-bWQ" customClass="WarningCell">
+                                                                        <textFieldCell key="dataCell" selectable="YES" alignment="left" title="Text Cell" id="pPM-bz-kYC" customClass="WarningCell">
                                                                             <font key="font" metaFont="system"/>
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                     </tableColumn>
                                                                 </tableColumns>
-                                                            </outlineView>
+                                                            </tableView>
                                                         </subviews>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </clipView>
-                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="sVT-tw-T8n">
-                                                        <rect key="frame" x="-100" y="-100" width="223" height="15"/>
+                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="khv-f3-Kua">
+                                                        <rect key="frame" x="1" y="623" width="247" height="16"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
-                                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="dY2-Gb-goh">
-                                                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="qa3-sP-ojy">
+                                                        <rect key="frame" x="222" y="0.0" width="16" height="0.0"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                 </scrollView>
@@ -2140,7 +2140,6 @@ CA
                 <outlet property="menuTimelinePopup" destination="1573" id="1588"/>
                 <outlet property="outlineHierarchy" destination="570" id="1040"/>
                 <outlet property="outlineProject" destination="1499" id="1504"/>
-                <outlet property="outlineWarnings" destination="kpe-5y-lAC" id="4g7-0S-tek"/>
                 <outlet property="panelVisibilityControl" destination="1786" id="1794"/>
                 <outlet property="physicsHandler" destination="fa4-D5-pFD" id="ZWp-5N-Rhs"/>
                 <outlet property="plugInNodeCollectionView" destination="2015" id="2022"/>
@@ -2161,6 +2160,7 @@ CA
                 <outlet property="timeScaleSlider" destination="1564" id="1568"/>
                 <outlet property="timelineScroller" destination="1543" id="1569"/>
                 <outlet property="toolbar" destination="1224" id="1755"/>
+                <outlet property="warningTableView" destination="8cF-q7-mD1" id="Rtv-ig-OyD"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>
