@@ -3106,7 +3106,15 @@ static BOOL hideAllToNextSeparator;
 - (void) updatePositionScaleFactor
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
-		
+	
+	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
+    {
+        [[CCTextureCache sharedTextureCache] removeAllTextures];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
+        FNTConfigRemoveCache();
+    }
+    
+    
     [CCDirector sharedDirector].contentScaleFactor = res.scale;
     [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
     [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
