@@ -2619,6 +2619,12 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) saveDocument:(id)sender
 {
+    // Finish editing inspector
+    if (![[self window] makeFirstResponder:[self window]])
+    {
+        return;
+    }
+    
     if (currentDocument && currentDocument.fileName)
     {
         [self saveFile:currentDocument.fileName];
