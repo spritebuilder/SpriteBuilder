@@ -1921,7 +1921,7 @@ static BOOL hideAllToNextSeparator;
     else if (type == kCCBNewDocTypeLayer)
     {
         // Set contentSize to w x h in scaled coordinates for layers
-        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:CCSizeTypeUIPoints forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:CCSizeTypePoints forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     
     [outlineHierarchy reloadData];
