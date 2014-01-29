@@ -28,8 +28,6 @@
 
 - (void) setColor:(NSColor *)color
 {
-    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-    
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     
@@ -42,15 +40,13 @@
 - (NSColor*) color
 {
 	CCColor* colorValue = [self propertyForSelection];
-    NSColor * calibratedColor = [colorValue.NSColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    NSColor * calibratedColor = colorValue.NSColor;
     
     return calibratedColor;
 }
 
 - (void) setColorVar:(NSColor *)color
 {
-    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-  
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     
@@ -63,7 +59,7 @@
 - (NSColor*) colorVar
 {
 	CCColor* colorValue = [self propertyForSelectionVar];
-    NSColor * calibratedColor = [colorValue.NSColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    NSColor * calibratedColor = colorValue.NSColor;
     
     return calibratedColor;
 }
