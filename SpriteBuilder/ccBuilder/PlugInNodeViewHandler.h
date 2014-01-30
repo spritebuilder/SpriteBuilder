@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ProjectSettings.h"
 
 @interface PlugInNodeViewHandler : NSObject <NSCollectionViewDelegate>
 {
@@ -15,5 +16,7 @@
 }
 
 - (id) initWithCollectionView:(NSCollectionView*)cv;
+
+-(void) showNodePluginsForEngine:(CCBTargetEngine)engine;
 
 @end

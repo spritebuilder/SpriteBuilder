@@ -108,6 +108,7 @@
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
+#import "PlugInNodeCollectionView.h"
 
 @implementation AppDelegate
 
@@ -1700,7 +1701,10 @@ static BOOL hideAllToNextSeparator;
     
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
-    
+
+    // Update Node Plugins list
+	[plugInNodeViewHandler showNodePluginsForEngine:project.engine];
+	
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success) return NO;
     
