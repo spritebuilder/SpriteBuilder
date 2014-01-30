@@ -26,14 +26,12 @@
 
 -(void) setAlpha:(CGFloat)alpha
 {
-	_displayColor.a = alpha;
+	NSLog(@"%@ alpha = %f", NSStringFromClass([self class]), alpha);
+	self.opacity = alpha;
 }
 -(CGFloat) alpha
 {
-	if ([self isKindOfClass:[CCNodeColor class]])
-		return 1.0;
-	
-	return (CGFloat)_displayColor.a;
+	return self.opacity;
 }
 
 // TODO: implement speed property
@@ -83,6 +81,7 @@
 
 #pragma mark SKSpriteNode
 
+// TODO: implement color blend factor
 -(void) setColorBlendFactor:(CGFloat)colorBlendFactor
 {
 }
