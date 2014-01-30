@@ -32,7 +32,6 @@
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
 		D2E65C3C1862647B007D0B1F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C1E1862647B007D0B1F /* chipmunk.c */; };
-		D2E65C3D1862647B007D0B1F /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = D2E65C1F1862647B007D0B1F /* CMakeLists.txt */; };
 		D2E65C3E1862647B007D0B1F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C201862647B007D0B1F /* cpArbiter.c */; };
 		D2E65C3F1862647B007D0B1F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C211862647B007D0B1F /* cpArray.c */; };
 		D2E65C401862647B007D0B1F /* cpBBTree.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C221862647B007D0B1F /* cpBBTree.c */; };
@@ -61,8 +60,6 @@
 		D2E65C571862647B007D0B1F /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C391862647B007D0B1F /* cpSpatialIndex.c */; };
 		D2E65C581862647B007D0B1F /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C3A1862647B007D0B1F /* cpSweep1D.c */; };
 		D2E65C9B18626890007D0B1F /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C8B18626890007D0B1F /* aabb.c */; };
-		D2E65C9C18626890007D0B1F /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = D2E65C8C18626890007D0B1F /* ChangeLog */; };
-		D2E65C9D18626890007D0B1F /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = D2E65C8D18626890007D0B1F /* CMakeLists.txt */; };
 		D2E65C9E18626890007D0B1F /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C8F18626890007D0B1F /* mat4stack.c */; };
 		D2E65C9F18626890007D0B1F /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9018626890007D0B1F /* matrix.c */; };
 		D2E65CA018626890007D0B1F /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9118626890007D0B1F /* mat3.c */; };
@@ -577,16 +574,13 @@
 				B737897E180762440076A88C /* Icon@2x.png in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
 				B737897C180762440076A88C /* Icon-Small@2x.png in Resources */,
-				D2E65C9D18626890007D0B1F /* CMakeLists.txt in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
 				B737897A180762440076A88C /* Icon-Small-50.png in Resources */,
 				B7378979180762440076A88C /* Icon-72.png in Resources */,
-				D2E65C9C18626890007D0B1F /* ChangeLog in Resources */,
 				B737897D180762440076A88C /* Icon.png in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
 				B737897B180762440076A88C /* Icon-Small.png in Resources */,
-				D2E65C3D1862647B007D0B1F /* CMakeLists.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +653,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -667,8 +663,12 @@
 					"COCOS2D_DEBUG=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
@@ -680,14 +680,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					"NS_BLOCK_ASSERTIONS=1",
 				);
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
@@ -718,11 +724,7 @@
 				INFOPLIST_FILE = Source/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lz",
-					"-lsqlite3",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = PROJECTNAME;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -750,11 +752,7 @@
 				);
 				INFOPLIST_FILE = Source/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_LDFLAGS = (
-					"-lz",
-					"-lsqlite3",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = PROJECTNAME;
 				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
