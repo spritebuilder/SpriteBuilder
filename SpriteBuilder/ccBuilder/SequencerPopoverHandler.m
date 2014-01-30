@@ -61,7 +61,7 @@
     
     NSString* inspectorNibName = [NSString stringWithFormat:@"InspectorPopover%@",type];
     
-    InspectorValue* inspectorValue = [InspectorValue inspectorOfType:type withSelection:node andPropertyName:prop andDisplayName:@"Position" andExtra:NULL];
+    InspectorValue* inspectorValue = [InspectorValue inspectorOfType:type withSelection:node andPropertyName:prop andDisplayName:prop andExtra:NULL];
     inspectorValue.inPopoverWindow = YES;
     
     [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];

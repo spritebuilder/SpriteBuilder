@@ -101,7 +101,7 @@
 #import "CCBProjCreator.h"
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
-#import "WarningOutlineHandler.h"
+#import "WarningTableViewHandler.h"
 #import "CCNode+NodeInfo.h"
 #import "CCNode_Private.h"
 #import "UsageManager.h"
@@ -402,6 +402,21 @@ void ApplyCustomNodeVisitSwizzle()
 
 - (void) setupResourceManager
 {
+    
+    NSColor * color = [NSColor colorWithCalibratedRed:0.0f green:0.50f blue:0.50f alpha:1.0f];
+    
+    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+
+    CGFloat r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    
+    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:1];
+    
+    NSColor * color2 = [NSColor colorWithDeviceRed:r green:g blue:b alpha:a];
+    NSColor * calibratedColor = [color2 colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+
+    NSLog(@"R:%f G:%f B:%f A:%f",calibratedColor.redComponent, calibratedColor.greenComponent, calibratedColor.blueComponent, calibratedColor.alphaComponent);
+    
     // Load resource manager
 	[ResourceManager sharedManager];
     
@@ -430,10 +445,12 @@ void ApplyCustomNodeVisitSwizzle()
     [previewViewOwner setPreviewFile:NULL];
     
     //Setup warnings outline
-    warningOutlineHandler = [[WarningOutlineHandler alloc] init];
-    outlineWarnings.delegate = warningOutlineHandler;
-    outlineWarnings.target = warningOutlineHandler;
-    outlineWarnings.dataSource = warningOutlineHandler;
+    warningHandler = [[WarningTableViewHandler alloc] init];
+    
+    self.warningTableView.delegate = warningHandler;
+    self.warningTableView.target = warningHandler;
+    self.warningTableView.dataSource = warningHandler;
+   // [self.warningTableView setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
     [self updateWarningsOutline];
 }
 
@@ -460,7 +477,6 @@ void ApplyCustomNodeVisitSwizzle()
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
-    [self.window center];
     
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
@@ -1385,16 +1401,15 @@ static BOOL hideAllToNextSeparator;
         currentResolution = clampf(currentResolution, 0, resolutions.count - 1);
         ResolutionSetting* resolution = [resolutions objectAtIndex:currentResolution];
         
-        
-        
-        // Update CocosScene
-        [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
-        
         // Save in current document
         currentDocument.resolutions = resolutions;
         currentDocument.currentResolution = currentResolution;
         
         [self updatePositionScaleFactor];
+        
+        // Update CocosScene
+        [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
+        
     }
     else
     {
@@ -1910,7 +1925,7 @@ static BOOL hideAllToNextSeparator;
     else if (type == kCCBNewDocTypeLayer)
     {
         // Set contentSize to w x h in scaled coordinates for layers
-        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:CCSizeTypeUIPoints forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
+        [PositionPropertySetter setSize:NSMakeSize(resolution.width, resolution.height) type:CCSizeTypePoints forNode:[CocosScene cocosScene].rootNode prop:@"contentSize"];
     }
     
     [outlineHierarchy reloadData];
@@ -2142,8 +2157,16 @@ static BOOL hideAllToNextSeparator;
     if (asChild)
     {
         parent = self.selectedNode;
-        if (!parent) self.selectedNodes = [NSArray arrayWithObject: g.rootNode];
+        
+        if(!parent && !g.rootNode)
+            return NO;
+        
+        if (!parent)
+        {
+            self.selectedNodes = [NSArray arrayWithObject: g.rootNode];
+        }
     }
+    
     
     BOOL success = [self addCCObject:obj toParent:parent];
     
@@ -2267,9 +2290,9 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) copy:(id) sender
 {
     //Copy warnings.
-    if([[self window] firstResponder] == outlineWarnings)
+    if([[self window] firstResponder] == _warningTableView)
     {
-        CCBWarning * warning = projectSettings.lastWarnings.warnings[outlineWarnings.selectedRow];
+        CCBWarning * warning = projectSettings.lastWarnings.warnings[_warningTableView.selectedRow];
         NSString * stringToWrite = warning.description;
         NSPasteboard* cb = [NSPasteboard generalPasteboard];
         
@@ -2603,6 +2626,12 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) saveDocument:(id)sender
 {
+    // Finish editing inspector
+    if (![[self window] makeFirstResponder:[self window]])
+    {
+        return;
+    }
+    
     if (currentDocument && currentDocument.fileName)
     {
         [self saveFile:currentDocument.fileName];
@@ -2891,20 +2920,30 @@ static BOOL hideAllToNextSeparator;
     NSString* dirPath = dir.dirPath;
 
     int selectedRow = [sender tag];
-    RMResource* res = nil;
+
     if(selectedRow != -1)
     {
         if (selectedRow >= 0 && projectSettings)
         {
-            res = [outlineProject itemAtRow:selectedRow];
+            RMResource* res = [outlineProject itemAtRow:selectedRow];
             
-            if(res.type == kCCBResTypeDirectory)
+            if([res isKindOfClass:[RMDirectory class]])
             {
-                dirPath = res.filePath;
+                RMDirectory * directoryResource = (RMDirectory *)res;
+                dirPath = directoryResource.dirPath;
+                
             }
             else
             {
-                dirPath = [res.filePath stringByDeletingLastPathComponent];
+                
+                if(res.type == kCCBResTypeDirectory)
+                {
+                    dirPath = res.filePath;
+                }
+                else
+                {
+                    dirPath = [res.filePath stringByDeletingLastPathComponent];
+                }
             }
         }
     }
@@ -2930,7 +2969,7 @@ static BOOL hideAllToNextSeparator;
     [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     [[ResourceManager sharedManager] reloadAllResources];
     
-    res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
+    RMResource * res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
     
     id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
     [outlineProject expandItem:parentResource];
@@ -2953,20 +2992,29 @@ static BOOL hideAllToNextSeparator;
         NSString* dirPath = [[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath];
         
         int selectedRow = [sender tag];
-        RMResource* res = nil;
+
         if(selectedRow != -1)
         {
             if (selectedRow >= 0 && projectSettings)
             {
-                res = [outlineProject itemAtRow:selectedRow];
+                RMResource* res = [outlineProject itemAtRow:selectedRow];
                 
-                if(res.type == kCCBResTypeDirectory)
+                if([res isKindOfClass:[RMDirectory class]])
                 {
-                    dirPath = res.filePath;
+                    RMDirectory * directoryResource = (RMDirectory *)res;
+                    dirPath = directoryResource.dirPath;
                 }
                 else
                 {
-                    dirPath = [res.filePath stringByDeletingLastPathComponent];
+                    
+                    if(res.type == kCCBResTypeDirectory)
+                    {
+                        dirPath = res.filePath;
+                    }
+                    else
+                    {
+                        dirPath = [res.filePath stringByDeletingLastPathComponent];
+                    }
                 }
             }
         }
@@ -3075,7 +3123,15 @@ static BOOL hideAllToNextSeparator;
 - (void) updatePositionScaleFactor
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
-		
+	
+	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
+    {
+        [[CCTextureCache sharedTextureCache] removeAllTextures];
+        [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
+        FNTConfigRemoveCache();
+    }
+    
+    
     [CCDirector sharedDirector].contentScaleFactor = res.scale;
     [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
     [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
@@ -3196,8 +3252,8 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updateWarningsOutline
 {
-    [warningOutlineHandler updateWithWarnings:projectSettings.lastWarnings];
-    [outlineWarnings reloadData];
+    [warningHandler updateWithWarnings:projectSettings.lastWarnings];
+    [self.warningTableView reloadData];
 }
 
 - (IBAction) menuSetCanvasBorder:(id)sender
@@ -3451,6 +3507,7 @@ static BOOL hideAllToNextSeparator;
     {
         [sequenceHandler deleteKeyframesForCurrentSequenceAfterTime:wc.duration];
         sequenceHandler.currentSequence.timelineLength = wc.duration;
+        [self updateInspectorFromSelection];
     }
 }
 
@@ -4111,7 +4168,7 @@ static BOOL hideAllToNextSeparator;
     else if (tag == 1) return @"position";
     else if (tag == 2) return @"scale";
     else if (tag == 3) return @"rotation";
-    else if (tag == 4) return @"displayFrame";
+    else if (tag == 4) return @"spriteFrame";
     else if (tag == 5) return @"opacity";
     else if (tag == 6) return @"color";
     else if (tag == 7) return @"skew";

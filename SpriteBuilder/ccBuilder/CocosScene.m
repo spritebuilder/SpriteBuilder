@@ -170,10 +170,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     if (type == kCCBBorderDevice)
     {
-        [borderBottom setOpacity:255];
-        [borderTop setOpacity:255];
-        [borderLeft setOpacity:255];
-        [borderRight setOpacity:255];
+        [borderBottom setOpacity:1.0f];
+        [borderTop setOpacity:1.0f];
+        [borderLeft setOpacity:1.0f];
+        [borderRight setOpacity:1.0f];
         
         CCTexture* deviceTexture = NULL;
         BOOL rotateDevice = NO;
@@ -264,19 +264,19 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     else if (type == kCCBBorderTransparent)
     {
-        [borderBottom setOpacity:180];
-        [borderTop setOpacity:180];
-        [borderLeft setOpacity:180];
-        [borderRight setOpacity:180];
+        [borderBottom setOpacity:0.5f];
+        [borderTop setOpacity:0.5f];
+        [borderLeft setOpacity:0.5f];
+        [borderRight setOpacity:0.5f];
         
         borderLayer.visible = YES;
     }
     else if (type == kCCBBorderOpaque)
     {
-        [borderBottom setOpacity:255];
-        [borderTop setOpacity:255];
-        [borderLeft setOpacity:255];
-        [borderRight setOpacity:255];
+        [borderBottom setOpacity:1.0f];
+        [borderTop setOpacity:1.0f];
+        [borderLeft setOpacity:1.0f];
+        [borderRight setOpacity:1.0f];
         borderLayer.visible = YES;
     }
     else
@@ -904,53 +904,58 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Find out which objects were clicked
     
     // Transform handles
-    CCBTransformHandle th = [self transformHandleUnderPt:pos];
     
-    if (th == kCCBTransformHandleAnchorPoint)
+    if (!appDelegate.physicsHandler.editingPhysicsBody)
     {
-        // Anchor points are fixed for singel point nodes
-        if (transformScalingNode.contentSizeInPoints.width == 0 || transformScalingNode.contentSizeInPoints.height == 0)
+        CCBTransformHandle th = [self transformHandleUnderPt:pos];
+        
+        if (th == kCCBTransformHandleAnchorPoint)
         {
+            // Anchor points are fixed for singel point nodes
+            if (transformScalingNode.contentSizeInPoints.width == 0 || transformScalingNode.contentSizeInPoints.height == 0)
+            {
+                return;
+            }
+            
+            BOOL readOnly = [[[transformScalingNode.plugIn.nodePropertiesDict objectForKey:@"anchorPoint"] objectForKey:@"readOnly"] boolValue];
+            if (readOnly)
+            {
+                return;
+            }
+            
+            // Transform anchor point
+            currentMouseTransform = kCCBTransformHandleAnchorPoint;
+            transformScalingNode.transformStartPosition = transformScalingNode.anchorPoint;
+            return;
+        }
+        if(th == kCCBTransformHandleRotate && appDelegate.selectedNode != rootNode)
+        {
+            // Start rotation transform
+            currentMouseTransform = kCCBTransformHandleRotate;
+            transformStartRotation = transformScalingNode.rotation;
             return;
         }
         
-        BOOL readOnly = [[[transformScalingNode.plugIn.nodePropertiesDict objectForKey:@"anchorPoint"] objectForKey:@"readOnly"] boolValue];
-        if (readOnly)
+        if (th == kCCBTransformHandleScale && appDelegate.selectedNode != rootNode)
         {
+            // Start scale transform
+            currentMouseTransform = kCCBTransformHandleScale;
+            transformStartScaleX = [PositionPropertySetter scaleXForNode:transformScalingNode prop:@"scale"];
+            transformStartScaleY = [PositionPropertySetter scaleYForNode:transformScalingNode prop:@"scale"];
             return;
+            
         }
-        
-        // Transform anchor point
-        currentMouseTransform = kCCBTransformHandleAnchorPoint;
-        transformScalingNode.transformStartPosition = transformScalingNode.anchorPoint;
-        return;
-    }
-    if(th == kCCBTransformHandleRotate && appDelegate.selectedNode != rootNode)
-    {
-        // Start rotation transform
-        currentMouseTransform = kCCBTransformHandleRotate;
-        transformStartRotation = transformScalingNode.rotation;
-        return;
+        if(th == kCCBTransformHandleSkew && appDelegate.selectedNode != rootNode)
+        {
+            currentMouseTransform = kCCBTransformHandleSkew;
+            
+            transformStartSkewX = transformScalingNode.skewX;
+            transformStartSkewY = transformScalingNode.skewY;
+            return;
+            
+        }
     }
     
-    if (th == kCCBTransformHandleScale && appDelegate.selectedNode != rootNode)
-    {
-        // Start scale transform
-        currentMouseTransform = kCCBTransformHandleScale;
-        transformStartScaleX = [PositionPropertySetter scaleXForNode:transformScalingNode prop:@"scale"];
-        transformStartScaleY = [PositionPropertySetter scaleYForNode:transformScalingNode prop:@"scale"];
-        return;
-        
-    }
-    if(th == kCCBTransformHandleSkew && appDelegate.selectedNode != rootNode)
-    {
-        currentMouseTransform = kCCBTransformHandleSkew;
-        
-        transformStartSkewX = transformScalingNode.skewX;
-        transformStartSkewY = transformScalingNode.skewY;
-        return;
-
-    }
     
     // Clicks inside objects
     [nodesAtSelectionPt removeAllObjects];
@@ -1266,8 +1271,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         float xScaleNew = scale.x * vertexScaler.x + transformStartScaleX * (1.0f - vertexScaler.x);
         float yScaleNew = scale.y * vertexScaler.y + transformStartScaleY * (1.0f - vertexScaler.y);
         
+        NodeInfo* nodeInfo = transformScalingNode.userObject;
+        
         // Handle shift key (uniform scale)
-        if ([event modifierFlags] & NSShiftKeyMask)
+        if ([event modifierFlags] & NSShiftKeyMask ||  [nodeInfo.extraProps[@"scaleLock"] boolValue])
         {
             // Use the smallest scale composit
             if (fabs(xScaleNew) < fabs(yScaleNew))
@@ -1452,6 +1459,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 keyframe.name = seqNodeProp.propName;
                 
                 [seqNodeProp setKeyframe:keyframe];
+                [appDelegate updateInspectorFromSelection];
             }
             
             [sh redrawTimeline];
@@ -1536,6 +1544,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                      nil];
             propName = @"position";
             type = kCCBKeyframeTypePosition;
+        }
+        else if( currentMouseTransform == kCCBTransformHandleSkew)
+        {
+            float x = [PositionPropertySetter scaleXForNode:selectedNode prop:@"skew"];
+            float y = [PositionPropertySetter scaleYForNode:selectedNode prop:@"skew"];
+            value = [NSArray arrayWithObjects:
+                     [NSNumber numberWithFloat:x],
+                     [NSNumber numberWithFloat:y],
+                     nil];
+
+            propName = @"skew";
+            type = kCCBKeyframeTypeFloatXY;
         }
         
         if (value)

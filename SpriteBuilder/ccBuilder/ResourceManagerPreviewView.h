@@ -83,7 +83,9 @@
 
 @property (nonatomic,readwrite) int scaleFrom;
 
-@property (nonatomic,readwrite) int format_ios;
+@property (nonatomic,readonly) BOOL format_supportsPVRTC;
+
+@property (nonatomic,readwrite) int  format_ios;
 @property (nonatomic,readwrite) BOOL format_ios_dither;
 @property (nonatomic,readwrite) BOOL format_ios_compress;
 @property (nonatomic,readwrite) BOOL format_ios_dither_enabled;

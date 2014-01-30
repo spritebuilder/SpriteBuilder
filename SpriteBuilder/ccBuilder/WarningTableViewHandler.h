@@ -10,7 +10,7 @@
 
 @class CCBWarnings;
 
-@interface WarningOutlineHandler : NSObject <NSOutlineViewDelegate, NSOutlineViewDataSource>
+@interface WarningTableViewHandler : NSObject <NSTableViewDelegate, NSTableViewDataSource>
 {
     CCBWarnings * ccbWarnings;
 }

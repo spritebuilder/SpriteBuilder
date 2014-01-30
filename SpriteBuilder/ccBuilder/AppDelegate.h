@@ -114,7 +114,7 @@ enum {
 @class PropertyInspectorHandler;
 @class LocalizationEditorHandler;
 @class PhysicsHandler;
-@class WarningOutlineHandler;
+@class WarningTableViewHandler;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate>
 {
@@ -227,8 +227,8 @@ enum {
     ResourceManagerOutlineHandler* projectOutlineHandler;
     
     // Project Warnings.
-    IBOutlet NSOutlineView *outlineWarnings;
-    WarningOutlineHandler * warningOutlineHandler;
+
+    WarningTableViewHandler * warningHandler;
     
     // Documents
     NSMutableArray* delayOpenFiles;
@@ -416,5 +416,7 @@ enum {
 - (IBAction)reportBug:(id)sender;
 - (IBAction)visitCommunity:(id)sender;
 - (IBAction)showHelp:(id)sender;
+
+@property (weak) IBOutlet NSTableView *warningTableView;
 
 @end

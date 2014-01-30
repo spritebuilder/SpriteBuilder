@@ -822,7 +822,7 @@
         [self writeFloat:c];
         [self writeFloat:d];
     }
-    else if ([type isEqualToString:@"Degrees"])
+    else if ([type isEqualToString:@"Degrees"] || [type isEqualToString:@"Float"])
     {
         [self writeFloat:[value floatValue]];
     }
@@ -871,6 +871,12 @@
     [self writeInt:memberVarAssignmentType withSign:NO];
     if (memberVarAssignmentType)
     {
+        if([[node objectForKey:@"memberVarAssignmentName"] isEqualToString:@""])
+        {
+
+            [self.delegate addWarningWithDescription:[NSString stringWithFormat:@"Member ivar assigned with <blank> name. This will likely fail at runtime. Node %@", node[@"displayName"]] isFatal:NO relatedFile:Nil resolution:nil];
+            
+        }
         [self writeCachedString:[node objectForKey:@"memberVarAssignmentName"] isPath:NO];
     }
     
@@ -912,6 +918,7 @@
             else if (kfType == kCCBKeyframeTypeSpriteFrame) propType = @"SpriteFrame";
             else if (kfType == kCCBKeyframeTypePosition) propType = @"Position";
             else if (kfType == kCCBKeyframeTypeFloatXY) propType = @"FloatXY";
+            else if (kfType == kCCBKeyframeTypeFloat) propType = @"Float";
             
             NSAssert(propType, @"Unknown animated property type");
             
@@ -1128,6 +1135,11 @@
     [self writeStringCache];
     [self writeSequences:doc];
     [self writeNodeGraph:nodeGraph];
+
+    //Elias Gamma reader reads a full int off the end, reading outside the bounds by 3 bytes and setting off Guard Malloc detections. Pad file with 3 bytes.
+    [self writeBool:NO];
+    [self writeBool:NO];
+    [self writeBool:NO];
 }
 
 @end

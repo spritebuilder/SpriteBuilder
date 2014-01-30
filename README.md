@@ -1,8 +1,17 @@
 # SpriteBuilder
 
-SpriteBuilder is a free tool (released under MIT-licence) for rapidly developing games and apps. SpriteBuilder is built for cocos2d-iphone.
+SpriteBuilder is the first game development suite for rapidly building native iOS and Android games with Objective-C and Xcode. SpriteBuilder is free and open source (MIT licensed) and available for download in the [Mac App Store](https://itunes.apple.com/us/app/spritebuilder/id784912885?mt=12).
 
-For more info and binary downloads, please visit www.spritebuilder.com.
+Core Features:
+
+* Designer-friendly UI
+* Animation editor for scenes, characters and boned animations
+* Tileless editor
+* User interface designer
+* Asset management & sprite sheet generation
+* Tools for localization
+
+For more info, please visit [spritebuilder.com](http://spritebuilder.com).
 
 ## Getting started with the source
 
@@ -11,8 +20,10 @@ Change directory into the top (this) directory of SpriteBuilder and run:
     git clone https://github.com/apportable/SpriteBuilder
     cd SpriteBuilder
     git submodule update --init --recursive
+    cd scripts
+    ./BuildDistribution.sh 1.x
 
-When building SpriteBuilder, make sure that "SpriteBuilder" is the selected target (it may be some of the plug-in targets by default).
+You need to use the BuildDistribution.sh script the first time you build SpriteBuilder, after that you can build it from within Xcode.
 
 ## Still having trouble compiling SpriteBuilder?
 

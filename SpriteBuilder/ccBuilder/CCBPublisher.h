@@ -23,9 +23,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "CCBPublishDelegate.h"
 
 @class ProjectSettings;
 @class CCBWarnings;
+
 
 enum {
     kCCBPublishFormatSound_ios_caf,
@@ -37,7 +39,7 @@ enum {
 };
 
 
-@interface CCBPublisher : NSObject
+@interface CCBPublisher : NSObject <CCBPublishDelegate>
 {
     ProjectSettings* projectSettings;
     CCBWarnings* warnings;
@@ -53,6 +55,7 @@ enum {
     NSMutableArray* publishedSpriteSheetNames;
     NSMutableSet* publishedSpriteSheetFiles;
     int targetType;
+    NSString * currentWorkingFile;//Used to help with warnings description.
 }
 
 @property (nonatomic,copy) NSString* publishFormat;

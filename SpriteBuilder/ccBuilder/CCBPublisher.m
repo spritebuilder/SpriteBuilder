@@ -116,6 +116,8 @@
 
 - (BOOL) publishCCBFile:(NSString*)srcFile to:(NSString*)dstFile
 {
+    currentWorkingFile = [dstFile lastPathComponent];
+    
     PlugInExport* plugIn = [[PlugInManager sharedManager] plugInExportForExtension:publishFormat];
     if (!plugIn)
     {
@@ -134,6 +136,7 @@
     // Export file
     plugIn.flattenPaths = projectSettings.flattenPaths;
     plugIn.projectSettings = projectSettings;
+    plugIn.delegate = self;
     NSData* data = [plugIn exportDocument:doc];
     if (!data)
     {
@@ -267,7 +270,14 @@
         [fm copyItemAtPath:srcPath toPath:dstPath error:NULL];
         
         // Convert it
-        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet];
+        NSString* dstPathConverted = nil;
+        NSError  * error;
+        if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
+        {
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
+            
+            return NO;
+        }
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
@@ -291,7 +301,14 @@
         [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:dstPath forResolution:resolution];
         
         // Convert it
-        NSString* dstPathConverted = [[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet];
+        NSString* dstPathConverted = nil;
+        NSError  * error;
+        
+        if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
+        {
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
+            return NO;
+        }
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
@@ -958,6 +975,11 @@
     return [manager fileExistsAtPath:file];
 }
 
+- (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution
+{
+    [warnings addWarningWithDescription:description isFatal:fatal relatedFile:(relatedFile == nil? currentWorkingFile : relatedFile) resolution:resolution];
+}
+
 - (BOOL) publish_
 {
     // Remove all old publish directories if user has cleaned the cache
@@ -978,10 +1000,17 @@
     
     if (!runAfterPublishing)
     {
+        bool publishEnablediPhone  = projectSettings.publishEnablediPhone;
+        bool publishEnabledAndroid  = projectSettings.publishEnabledAndroid;
+        
+        //iOS is forced on. Android is disabled.
+        publishEnablediPhone = YES;
+        publishEnabledAndroid = NO;
+        
         // Normal publishing
         
         // iOS
-        if (projectSettings.publishEnablediPhone)
+        if (publishEnablediPhone)
         {
             targetType = kCCBPublisherTargetTypeIPhone;
             warnings.currentTargetType = targetType;
@@ -1023,7 +1052,7 @@
         }
         
         // Android
-        if (projectSettings.publishEnabledAndroid)
+        if (publishEnabledAndroid)
         {
             targetType = kCCBPublisherTargetTypeAndroid;
             warnings.currentTargetType = targetType;

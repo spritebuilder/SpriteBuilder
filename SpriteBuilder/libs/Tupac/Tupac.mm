@@ -364,7 +364,7 @@ typedef struct _PVRTexHeader
         if (rot)
         {
             // Rotate image 90 degrees
-            CGContextRef rotContext = CGBitmapContextCreate(NULL, w, h, 8, 32*h, colorSpace, kCGImageAlphaPremultipliedLast);
+            CGContextRef rotContext = CGBitmapContextCreate(NULL, w, h, 8, 32*w, colorSpace, kCGImageAlphaPremultipliedLast);
             CGContextSaveGState(rotContext);
             CGContextRotateCTM(rotContext, -M_PI/2);
             CGContextTranslateCTM(rotContext, -h, 0);
@@ -401,6 +401,9 @@ typedef struct _PVRTexHeader
         NSLog(@"Failed to write image to %@", pngFilename);
     }
     
+    CGImageRelease(imageDst);
+    CGContextRelease(dstContext);
+    
     textureFileName = pngFilename;
     
     if (createdColorSpace)
@@ -414,7 +417,15 @@ typedef struct _PVRTexHeader
         [[NSFileManager defaultManager] copyItemAtPath:pngFilename toPath:self.previewFile error:NULL];
     }
     
-    textureFileName = [[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_ isSpriteSheet:YES];
+
+    
+    NSError * error = nil;
+    
+    if(![[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_ isSpriteSheet:YES outputFilename:&textureFileName error:&error])
+    {
+        [self setErrorMessage:error.localizedDescription];
+        
+    }
     
     // Metadata File Export
     textureFileName = [textureFileName lastPathComponent];

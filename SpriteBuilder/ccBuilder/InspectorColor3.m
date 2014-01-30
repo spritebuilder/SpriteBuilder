@@ -31,11 +31,9 @@
 {
     CGFloat r, g, b, a;
     
-    color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-    
     [color getRed:&r green:&g blue:&b alpha:&a];
 
-		CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:1];
+    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:1];
     [self setPropertyForSelection:colorValue];
     
     [self updateAnimateablePropertyValue: [CCBWriterInternal serializeColor4:colorValue]];
@@ -45,7 +43,9 @@
 - (NSColor*) color
 {
 	CCColor* colorValue = [self propertyForSelection];
-	return colorValue.NSColor;
+    NSColor * calibratedColor = [colorValue.NSColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+
+    return calibratedColor;
 }
 
 @end
