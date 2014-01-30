@@ -7,7 +7,7 @@
 	<key>ordering</key>
 	<integer>4000</integer>
 	<key>description</key>
-	<string>Draws a square area filled with a gradient.</string>
+	<string>Draws a rectangular area filled with a gradient.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
