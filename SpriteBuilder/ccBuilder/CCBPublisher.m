@@ -384,6 +384,7 @@
     }
     
     // Copy file and make sure modification date is the same as for src file
+    [[NSFileManager defaultManager] removeItemAtPath:dstPath error:NULL];
     [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:dstPath error:NULL];
     [CCBFileUtil setModificationDate:[CCBFileUtil modificationDateForFile:srcPath] forFile:dstPath];
     
@@ -465,6 +466,13 @@
         BOOL fileExists = [fm fileExistsAtPath:filePath isDirectory:&isDirectory];
         if (fileExists && isDirectory)
         {
+            if ([[filePath pathExtension] isEqualToString:@"bmfont"])
+            {
+                // This is a bitmap font, just copy it
+                [self publishRegularFile:filePath to:[outDir stringByAppendingPathComponent:fileName]];
+                continue;
+            }
+            
             // This is a directory
             
             NSString* childPath = NULL;

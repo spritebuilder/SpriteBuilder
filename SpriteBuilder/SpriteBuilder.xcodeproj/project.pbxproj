@@ -94,6 +94,8 @@
 		77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 77E1995113858DE0006C361B /* TabNewMetalRollover.png */; };
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
+		800C005F1846A40D00544BD2 /* select-scale.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C005E1846A40D00544BD2 /* select-scale.png */; };
+		800C00701848178D00544BD2 /* select-crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C006F1848178D00544BD2 /* select-crosshair.png */; };
 		80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E97F6318370F400052647D /* WarningCell.m */; };
 		8045F136183ADA900082BD94 /* seq-visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12C183AD6D30082BD94 /* seq-visible.png */; };
@@ -103,7 +105,14 @@
 		8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		8098525A182C40170054BBF3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80985259182C40170054BBF3 /* CoreMedia.framework */; };
 		80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80AD79A01863871200B653B7 /* libPVRTexLib.a */; };
+		80B149BE183D4D280085935B /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
+		80B149BF183D4D280085935B /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
+		80B149C8183D55E60085935B /* SoundFileImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B149C7183D55E60085935B /* SoundFileImageController.m */; };
 		80B149C9183D73930085935B /* SoundFileImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80B149C7183D55E60085935B /* SoundFileImageController.m */; };
+		80D06082183317F2001F27F9 /* WarningOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D06081183317F2001F27F9 /* WarningOutlineView.m */; };
+		80E158951843DEDC007242F6 /* select-rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158941843DEDC007242F6 /* select-rotation.png */; };
+		80E158A118441FF1007242F6 /* select-skew.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158A018441FF1007242F6 /* select-skew.png */; };
+		80E95C551836E41C00D864CA /* select-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E95C541836E41C00D864CA /* select-locked.png */; };
 		80E95C5A1836E44900D864CA /* select-locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E95C541836E41C00D864CA /* select-locked.png */; };
 		80F90905183C188400A714FC /* seq-visible-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 80F908FF183C186200A714FC /* seq-visible-faint.png */; };
 		80FBACC31833FAE000C4BB69 /* WarningOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D06081183317F2001F27F9 /* WarningOutlineView.m */; };
@@ -112,6 +121,7 @@
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		9297636A187775A0008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
@@ -5103,6 +5113,13 @@
 			files = (
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
+				9297636A187775A0008F997B /* ResourceManagerPreviewAudio.m in Sources */,
+				8076F94E18624318003C4153 /* InspectorStringSimple.m in Sources */,
+				80F936F21833F8970032454F /* WarningOutlineHandler.m in Sources */,
+				8045F13C183AF1DC0082BD94 /* SequencerButtonCell.m in Sources */,
+				80D06082183317F2001F27F9 /* WarningOutlineView.m in Sources */,
+				80B149C8183D55E60085935B /* SoundFileImageController.m in Sources */,
+				80E97F6418370F400052647D /* WarningCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5490,6 +5507,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5535,6 +5553,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -5580,6 +5599,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5626,6 +5646,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5669,6 +5690,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5714,6 +5736,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5756,6 +5779,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5801,6 +5825,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5843,6 +5868,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5889,6 +5915,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5932,6 +5959,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -5977,6 +6005,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6019,6 +6048,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6064,6 +6094,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6106,6 +6137,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6152,6 +6184,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6195,6 +6228,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -6240,6 +6274,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;

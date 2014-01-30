@@ -388,10 +388,18 @@
         [self writeInt:[c intValue] withSign:NO];
     }
     else if ([type isEqualToString:@"Texture"]
-             || [type isEqualToString:@"FntFile"]
              || [type isEqualToString:@"CCBFile"])
     {
         [self writeCachedString:prop isPath: YES];
+    }
+    else if ([type isEqualToString:@"FntFile"])
+    {
+        NSString* fntName = [[prop lastPathComponent] stringByDeletingPathExtension];
+        NSString* path = [[prop stringByAppendingPathComponent:fntName] stringByAppendingPathExtension:@"fnt"];
+        
+        NSLog(@"FNT file: %@", path);
+        
+        [self writeCachedString:path isPath: YES];
     }
     else if ([type isEqualToString:@"Text"]
              || [type isEqualToString:@"String"]
@@ -578,11 +586,16 @@
         {
             [self addToStringCache:[value objectAtIndex:0] isPath:NO];
         }
-        else if ([type isEqualToString:@"FntFile"]
-                 || [type isEqualToString:@"Texture"]
+        else if ([type isEqualToString:@"Texture"]
                  || [type isEqualToString:@"CCBFile"])
         {
             [self addToStringCache:value isPath:YES];
+        }
+        else if ([type isEqualToString:@"FntFile"])
+        {
+            NSString* fntName = [[value lastPathComponent] stringByDeletingPathExtension];
+            NSString* path = [[value stringByAppendingPathComponent:fntName] stringByAppendingPathExtension:@"fnt"];
+            [self addToStringCache:path isPath:YES];
         }
         else if ([type isEqualToString:@"Text"]
                  || [type isEqualToString:@"String"]
