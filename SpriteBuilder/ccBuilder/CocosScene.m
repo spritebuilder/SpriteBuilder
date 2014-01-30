@@ -50,7 +50,7 @@
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
-#define kCCBAnchorPointRadius 6
+#define kCCBAnchorPointRadius 3
 #define kCCBTransformHandleRadius 5
 
 static CocosScene* sharedCocosScene;
@@ -532,12 +532,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         if (overTypeField)
         {
-            for(int i = 1; i < kCCBToolMax; i++)
+            for(int i = 0; (1 << i) != kCCBToolMax; i++)
             {
                 CCBTool type = (1 << i);
                 if(overTypeField & type && self.currentTool > type)
                 {
-                    self.currentTool = type;
+                    self.currentTool = type; 
                     break;
                 }
             }
@@ -604,6 +604,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGPoint points[4]; //{bl,br,tr,tl}
     [self getCornerPointsForNode:node withPoints:points];
     
+    if([self isOverContentBorders:mousePos withPoints:points])
+        return NO;
     
     for (int i = 0; i < 4; i++)
     {
@@ -668,8 +670,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
 }
 
-- (BOOL) isOverScale:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/  withCorner:(int*)_cornerIndex withOrientation:(CGPoint*)orientation
+- (BOOL) isOverScale:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/  withCorner:(int*)_cornerIndex withOrientation:(CGPoint*)_orientation
 {
+    int lCornerIndex = -1;
+    CGPoint orientation;
+    float minDistance = INFINITY;
+    
     for (int i = 0; i < 4; i++)
     {
         CGPoint p1 = points[i % 4];
@@ -678,24 +684,33 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         const float kDistanceToCorner = 8.0f;
         
-        if(ccpLength(ccpSub(_mousePos, p2)) < kDistanceToCorner )
-        {
-            if(orientation)
-            {
-                CGPoint segment1 = ccpSub(p2, p1);
-                CGPoint segment2 = ccpSub(p2, p3);
+        float distance = ccpLength(ccpSub(_mousePos, p2));
         
-                *orientation = ccpNormalize(ccpAdd(segment1, segment2));
-            }
-            
-            if(_cornerIndex)
-            {
-                *_cornerIndex = (i + 1) % 4;
-            }
-            
-            return YES;
+        if(distance < kDistanceToCorner  && distance < minDistance)
+        {
+            CGPoint segment1 = ccpSub(p2, p1);
+            CGPoint segment2 = ccpSub(p2, p3);
+    
+            orientation = ccpNormalize(ccpAdd(segment1, segment2));
+            lCornerIndex = (i + 1) % 4;
+            minDistance = distance;
+
         }
         
+    }
+    
+    if(lCornerIndex != -1)
+    {
+        if(_orientation)
+        {
+            *_orientation = orientation;
+        }
+        
+        if(_cornerIndex)
+        {
+            *_cornerIndex = lCornerIndex;
+        }
+        return YES;
     }
     
     return NO;
@@ -804,7 +819,11 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         //kCCBToolAnchor
         if(!isContentSizeZero && [self isOverAnchor:node withPoint:pt])
             return kCCBTransformHandleAnchorPoint;
-            
+        
+        if([self isOverContentBorders:pt withPoints:points])
+            return kCCBTransformHandleDownInside;
+        
+        
         //kCCBToolScale
         if([self isOverScale:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleScale;

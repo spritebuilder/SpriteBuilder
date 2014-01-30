@@ -55,12 +55,12 @@ typedef enum {
 } CCBTransformHandle;
 
 typedef enum {
-    kCCBToolAnchor      = (1 << 0),
-    kCCBToolScale       =(1 << 1),
-    kCCBToolGrab        =(1 << 2),
-    kCCBToolSkew        =(1 << 3),
-    kCCBToolRotate      =(1 << 4),
-    kCCBToolTranslate   =(1 << 5),
+    kCCBToolAnchor      =(1 << 0),
+    kCCBToolTranslate   =(1 << 1),
+    kCCBToolScale       =(1 << 2),
+    kCCBToolGrab        =(1 << 3),
+    kCCBToolSkew        =(1 << 4),
+    kCCBToolRotate      =(1 << 5),
     kCCBToolSelection   =(1 << 6),
     kCCBToolMax         =(1 << 7)
 }CCBTool;
