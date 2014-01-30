@@ -659,8 +659,8 @@
         {
             BOOL useFlashSkews = [self usesFlashSkew];
             if (useFlashSkews && [propName isEqualToString:@"rotation"]) continue;
-            if (!useFlashSkews && [propName isEqualToString:@"rotationX"]) continue;
-            if (!useFlashSkews && [propName isEqualToString:@"rotationY"]) continue;
+            if (!useFlashSkews && [propName isEqualToString:@"rotationalSkewX"]) continue;
+            if (!useFlashSkews && [propName isEqualToString:@"rotationalSkewY"]) continue;
             
             SequencerNodeProperty* seqNodeProp = [properties objectForKey:propName];
             [serProperties setObject:[seqNodeProp serialization] forKey:propName];

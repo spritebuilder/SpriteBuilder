@@ -134,9 +134,9 @@
 			<key>type</key>
 			<string>Degrees</string>
 			<key>name</key>
-			<string>rotationX</string>
+			<string>rotationalSkewX</string>
 			<key>displayName</key>
-			<string>RotationX</string>
+			<string>Rotational Skew X</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
@@ -146,9 +146,9 @@
 			<key>type</key>
 			<string>Degrees</string>
 			<key>name</key>
-			<string>rotationY</string>
+			<string>rotationalSkewY</string>
 			<key>displayName</key>
-			<string>RotationY</string>
+			<string>Rotational Skew Y</string>
 		</dict>
 		<dict>
 			<key>animatable</key>
