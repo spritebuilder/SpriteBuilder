@@ -36,14 +36,6 @@
 			<string>SKNode</string>
 		</dict>
 		<dict>
-			<key>name</key>
-			<string>name</string>
-			<key>displayName</key>
-			<string>Name</string>
-			<key>type</key>
-			<string>StringSimple</string>
-		</dict>
-		<dict>
 			<key>animatable</key>
 			<true/>
 			<key>defaultSerialization</key>
@@ -63,21 +55,17 @@
 			<key>type</key>
 			<string>Check</string>
 			<key>name</key>
-			<string>paused</string>
-			<key>displayName</key>
-			<string>Paused</string>
-		</dict>
-		<dict>
-			<key>animatable</key>
-			<true/>
-			<key>defaultSerialization</key>
-			<false/>
-			<key>type</key>
-			<string>Check</string>
-			<key>name</key>
 			<string>userInteractionEnabled</string>
 			<key>displayName</key>
 			<string>User Interaction Enabled</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>name</string>
+			<key>displayName</key>
+			<string>Name</string>
+			<key>type</key>
+			<string>StringSimple</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
@@ -146,6 +134,18 @@
 			<string>speed</string>
 			<key>displayName</key>
 			<string>Speed</string>
+		</dict>
+		<dict>
+			<key>animatable</key>
+			<true/>
+			<key>defaultSerialization</key>
+			<false/>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>paused</string>
+			<key>displayName</key>
+			<string>Paused</string>
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>
