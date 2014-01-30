@@ -17,23 +17,31 @@
     self = [super init];
     if (!self) return NULL;
     
+    collectionView = cv;
+    collectionView.delegate = self;
+    
+    return self;
+}
+
+-(void) showNodePluginsForEngine:(CCBTargetEngine)engine
+{
     PlugInManager* pim = [PlugInManager sharedManager];
     
-    plugIns = [[NSMutableArray alloc] init];
+    plugIns = [NSMutableArray array];
     
     NSArray* nodeNames = pim.plugInsNodeNames;
     for (NSString* nodeName in nodeNames)
     {
-        [plugIns addObject:[pim plugInNodeNamed:nodeName]];
+		PlugInNode* pluginNode = [pim plugInNodeNamed:nodeName];
+		if (pluginNode.targetEngine == engine)
+		{
+			[plugIns addObject:pluginNode];
+		}
     }
     
     [plugIns sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ordering" ascending:YES]]];
     
-    collectionView = cv;
     [collectionView setContent:plugIns];
-    collectionView.delegate = self;
-    
-    return self;
 }
 
 - (BOOL)collectionView:(NSCollectionView *)collectionView writeItemsAtIndexes:(NSIndexSet *)indexes toPasteboard:(NSPasteboard *)pasteboard
@@ -55,6 +63,5 @@
     PlugInNode* plugIn = [plugIns objectAtIndex:[indexes firstIndex]];
     return plugIn.icon;
 }
-
 
 @end
