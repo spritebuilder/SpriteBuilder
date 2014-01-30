@@ -7,7 +7,9 @@
 //
 
 #import "CCBPluginSKLabelNode.h"
+#import "cocos2d.h"
 
 @implementation CCBPluginSKLabelNode
+
 
 @end

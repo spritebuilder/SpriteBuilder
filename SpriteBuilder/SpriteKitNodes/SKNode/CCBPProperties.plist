@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<real>1000</real>
+	<integer>1</integer>
 	<key>displayName</key>
 	<string>Node (Sprite Kit)</string>
 	<key>description</key>
