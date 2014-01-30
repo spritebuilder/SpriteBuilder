@@ -182,8 +182,8 @@
     
     BOOL useFlashSkews = [node usesFlashSkew];
     if (useFlashSkews && [name isEqualToString:@"rotation"]) return NULL;
-    if (!useFlashSkews && [name isEqualToString:@"rotationX"]) return NULL;
-    if (!useFlashSkews && [name isEqualToString:@"rotationY"]) return NULL;
+    if (!useFlashSkews && [name isEqualToString:@"rotationalSkewX"]) return NULL;
+    if (!useFlashSkews && [name isEqualToString:@"rotationalSkewY"]) return NULL;
     
     // Check if this property should be excluded
     if (excludeProps && [excludeProps indexOfObject:name] != NSNotFound)

@@ -999,8 +999,8 @@ static BOOL hideAllToNextSeparator;
             // Handle Flash skews
             BOOL usesFlashSkew = [self.selectedNode usesFlashSkew];
             if (usesFlashSkew && [name isEqualToString:@"rotation"]) continue;
-            if (!usesFlashSkew && [name isEqualToString:@"rotationX"]) continue;
-            if (!usesFlashSkew && [name isEqualToString:@"rotationY"]) continue;
+            if (!usesFlashSkew && [name isEqualToString:@"rotationalSkewX"]) continue;
+            if (!usesFlashSkew && [name isEqualToString:@"rotationalSkewY"]) continue;
             
             // Handle read only for animated properties
             if ([self isDisabledProperty:name animatable:animated] || self.selectedNode.locked)
