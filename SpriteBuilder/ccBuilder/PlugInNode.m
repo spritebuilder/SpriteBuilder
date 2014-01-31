@@ -193,8 +193,8 @@
     for (NSDictionary* propInfo in nodeProperties)
     {
         if (useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotation"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationX"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationY"]) continue;
+        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewX"]) continue;
+        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewY"]) continue;
         
         if ([[propInfo objectForKey:@"type"] isEqualToString:type] && ![[propInfo objectForKey:@"readOnly"] boolValue])
         {
@@ -216,8 +216,8 @@
     for (NSDictionary* propInfo in nodeProperties)
     {
         if (useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotation"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationX"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationY"]) continue;
+        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewX"]) continue;
+        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewY"]) continue;
         
         if ([[propInfo objectForKey:@"animatable"] boolValue])
         {
