@@ -734,6 +734,7 @@
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
+					"-ObjC",
 				);
 				PRODUCT_NAME = PROJECTNAME;
 				PROVISIONING_PROFILE = "";
@@ -763,6 +764,7 @@
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
+					"-ObjC",
 				);
 				PRODUCT_NAME = PROJECTNAME;
 				PROVISIONING_PROFILE = "";
