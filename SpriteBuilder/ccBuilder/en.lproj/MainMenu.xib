@@ -2297,7 +2297,13 @@ CA
         </menu>
         <menu title="ResourceManager" autoenablesItems="NO" id="1696">
             <items>
-                <menuItem title="Open With External Editor" id="1837">
+                <menuItem title="Show in Finder" id="IRc-Ms-zaf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuShowInFinder:" target="494" id="GRa-By-GNK"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Open with External Editor" id="1837">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuOpenExternal:" target="494" id="1839"/>

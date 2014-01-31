@@ -378,7 +378,7 @@ enum {
 - (IBAction) menuZoomOut:(id)sender;
 
 - (IBAction)menuCreateSmartSpriteSheet:(id)sender;
-
+- (IBAction)menuShowInFinder:(id)sender;
 - (IBAction) pressedToolSelection:(id)sender;
 - (IBAction) pressedPanelVisibility:(id)sender;
 
