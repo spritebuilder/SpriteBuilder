@@ -43,12 +43,6 @@
     // Rename ccbproj
 	NSString* ccbproj = [NSString stringWithFormat:@"%@.ccbproj", substitutableProjectName];
     [fm moveItemAtPath:[[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:ccbproj] toPath:fileName error:NULL];
-<<<<<<< HEAD
-    
-    // Rename approj
-    [fm moveItemAtPath:[[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"PROJECTNAME.approj"] toPath:fileName error:NULL];
-=======
->>>>>>> refs/heads/cherry-pick-individually-7
     
     // Update the Xcode project
 	NSString* xcodeproj = [NSString stringWithFormat:@"%@.xcodeproj", substitutableProjectName];
