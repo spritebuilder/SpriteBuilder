@@ -29,7 +29,7 @@
 @interface PlugInExport : NSObject
 {
     NSBundle* bundle;
-    NSString* extension;
+    NSString* __weak extension;
     NSString* pluginName;
     ProjectSettings* projectSettings;
     BOOL flattenPaths;

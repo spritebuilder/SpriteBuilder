@@ -6,8 +6,10 @@
 //
 //
 
+#import "ProjectSettings.h"
+
 @interface CCBProjCreator : NSObject
 
-- (BOOL) createDefaultProjectAtPath:(NSString*)fileName;
+- (BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine;
 
 @end

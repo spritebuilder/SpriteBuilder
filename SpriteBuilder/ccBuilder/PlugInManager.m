@@ -173,7 +173,7 @@
 	}
     
     CCNode* node = [[editorClass alloc] init];
-    [node setUserObject: [NodeInfo nodeInfoWithPlugIn:plugin]];
+    [node setUserObject:[NodeInfo nodeInfoWithPlugIn:plugin]];
     
     NodeInfo* nodeInfo = node.userObject;
     NSMutableDictionary* extraProps = nodeInfo.extraProps;
