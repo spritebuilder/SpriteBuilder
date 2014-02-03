@@ -44,6 +44,8 @@
     NSArray* items = [menu itemArray];
     for (NSMenuItem* item in items)
     {
+        item.tag = row;
+
         if (item.action == @selector(menuCreateSmartSpriteSheet:))
         {
             if ([clickedItem isKindOfClass:[RMResource class]]) {
@@ -62,7 +64,6 @@
                     }
 
                     [item setEnabled:YES];
-                    item.tag = row;
                 }
                 else
                 {
@@ -81,14 +82,12 @@
                     if (dir.isDynamicSpriteSheet)
                     {
                         [item setEnabled:YES];
-                        item.tag = row;
                     }
                 }
             }
         }
         else if (item.action == @selector(menuActionDelete:))
         {
-            item.tag = row;
             item.title = @"Delete";
             
             [item setEnabled:NO];
@@ -106,34 +105,24 @@
         {
             //default behavior.
             item.title = @"New File...";
-            item.tag = row;
         }
         else if (item.action == @selector(menuActionNewFolder:))
         {
             item.title = @"New Folder";
-            item.tag = row;
         }
         else if (item.action == @selector(menuOpenExternal:))
         {
-            item.title = @"Open With External Editor";
-
             if ([clickedItem isKindOfClass:[RMResource class]]) {
                 RMResource* clickedResource = clickedItem;
-                if (clickedResource.type == kCCBResTypeCCBFile)
+                if (clickedResource.type == kCCBResTypeCCBFile || clickedResource.type == kCCBResTypeDirectory)
                 {
                     [item setEnabled:NO];
-                }
-                else if (clickedResource.type == kCCBResTypeDirectory)
-                {
-                    [item setEnabled:YES];
-                    item.title = @"Open Folder in Finder";
                 }
                 else
                 {
                     [item setEnabled:YES];
                 }
             }
-            item.tag = row;
         }
     }
     

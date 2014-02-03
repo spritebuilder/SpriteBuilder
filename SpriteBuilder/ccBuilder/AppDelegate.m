@@ -110,6 +110,10 @@
 #import <objc/message.h>
 #import "PlugInNodeCollectionView.h"
 
+@interface AppDelegate()
+- (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
+@end
+
 @implementation AppDelegate
 
 @synthesize window;
@@ -4000,21 +4004,16 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuOpenExternal:(id)sender
 {
-    NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
-    
-    NSUInteger idx = [sender tag];
-    
-    NSString* filename = [[outlineView itemAtRow:idx] filePath];
-    if (![[NSWorkspace sharedWorkspace] openFile:filename])
-    {
-        NSRange slash = [filename rangeOfString:@"/" options:NSBackwardsSearch];
-        
-        if (slash.location != NSNotFound)
-        {
-            filename = [filename stringByReplacingCharactersInRange:slash withString: @"/resources-auto/"];
-            // Try again
-            [[NSWorkspace sharedWorkspace] openFile:filename];
-        }
+    NSString* path = [self getPathOfMenuItem:sender];
+    if (path) {
+        [[NSWorkspace sharedWorkspace] openFile:path];
+    }
+}
+- (IBAction)menuShowInFinder:(id)sender {
+    NSString* path = [self getPathOfMenuItem:sender];
+    if (path) {
+        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
+
     }
 }
 
@@ -4475,6 +4474,29 @@ static BOOL hideAllToNextSeparator;
     NSLog(@"DEBUG");
     
     [[ResourceManager sharedManager] debugPrintDirectories];
+}
+
+- (NSString*)getPathOfMenuItem:(NSMenuItem*)item
+{
+    NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
+    NSUInteger idx = [item tag];
+    NSString* fullpath = [[outlineView itemAtRow:idx] filePath];
+    
+    // if it doesn't exist, peek inside "resources-auto" (only needed in the case of resources, which has a different visual
+    // layout than what is actually on the disk).
+    // Should probably be removed and pulled into [RMResource filePath]
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fullpath] == NO)
+    {
+        NSString* filename = [fullpath lastPathComponent];
+        NSString* directory = [fullpath stringByDeletingLastPathComponent];
+        fullpath = [NSString pathWithComponents:[NSArray arrayWithObjects:directory, @"resources-auto", filename, nil]];
+    }
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fullpath] == NO) {
+        return nil;
+    }
+    
+    return fullpath;
 }
 
 
