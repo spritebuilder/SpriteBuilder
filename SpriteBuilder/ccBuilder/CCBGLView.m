@@ -127,6 +127,32 @@
     [[CocosScene cocosScene] cursorUpdate:event];
 }
 
+#pragma mark Trackpad Events
+
+- (void)magnifyWithEvent:(NSEvent *)event
+{
+    CocosScene* cs = [CocosScene cocosScene];
+    
+    if ([event magnification] > 0)
+    {
+        if ([cs stageZoom] < 1.5f)
+        {
+            [cs setStageZoom:[cs stageZoom] + [event magnification]];
+        }
+    }
+    else if ([event magnification] < 0)
+    {
+        if ([cs stageZoom] + [event magnification] > 0.25)
+        {
+            [cs setStageZoom:[cs stageZoom] + [event magnification]];
+        }
+        else
+        {
+            [cs setStageZoom:0.25];
+        }
+    }
+}
+
 -(void) dealloc
 {
 	SBLogSelf();
