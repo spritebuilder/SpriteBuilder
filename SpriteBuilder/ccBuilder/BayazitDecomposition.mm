@@ -47,7 +47,7 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
         [decompyObjPolys addObject:decompObjPoly];
         for(int j = 0; j < decompPoly.size(); j++)
         {
-            CGPoint point = decompPoly[i];
+            CGPoint point = decompPoly[j];
             [decompObjPoly addObject:[NSValue valueWithPoint:point]];
         }
     }

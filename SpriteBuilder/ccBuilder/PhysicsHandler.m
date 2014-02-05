@@ -220,6 +220,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (void) makeConvexHull
 {
+    return;
+    
     NSArray* pts = self.selectedNodePhysicsBody.points;
     
     NSArray * polys;
@@ -397,10 +399,6 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     if (_mouseDownInHandle != -1 && body != nil)
     {
-        if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
-        {
-            [self makeConvexHull];
-        }
         
         _mouseDownInHandle = -1;
         return YES;
@@ -423,8 +421,6 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
-            CGPoint* points = malloc(sizeof(CGPoint)*body.points.count);
-            
             int i = 0;
             for (NSValue* ptVal in body.points)
             {
@@ -434,20 +430,40 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 CGPoint pt = [ptVal pointValue];
                 pt = [node convertToWorldSpace:pt];
                 
-                points[i] = ccpRound(pt);
-                
                 CCSprite* handle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
                 handle.position = pt;
                 [editorView addChild:handle];
                 i++;
             }
+
             
-            CCDrawNode* drawing = [CCDrawNode node];
-            [drawing drawPolyWithVerts:points count:body.points.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
+            NSArray * polygons;
+            [Bayazit decomposition:body.points outputPoly:&polygons];
             
-            [editorView addChild:drawing z:-1];
-            
-            free(points);
+            for (NSArray * poly in polygons)
+            {
+                CGPoint* points = malloc(sizeof(CGPoint)*poly.count);
+                int i = 0;
+                for (NSValue* ptVal in poly)
+                {
+                    // Absolute handle position
+                    
+                    // TODO: Handle position scale
+                    CGPoint pt = [ptVal pointValue];
+                    pt = [node convertToWorldSpace:pt];
+                    
+                    points[i] = ccpRound(pt);
+                    
+                    i++;
+                }
+                
+                CCDrawNode* drawing = [CCDrawNode node];
+                [drawing drawPolyWithVerts:points count:poly.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
+                
+                [editorView addChild:drawing z:-1];
+                
+                free(points);
+            }
         }
         else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
         {
