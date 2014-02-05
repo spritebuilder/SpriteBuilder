@@ -23,6 +23,7 @@
  */
 
 #import "PhysicsHandler.h"
+#import "BayazitDecomposition.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 #import "NodePhysicsBody.h"
@@ -220,6 +221,10 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 - (void) makeConvexHull
 {
     NSArray* pts = self.selectedNodePhysicsBody.points;
+    
+    NSArray * polys;
+    [Bayazit decomposition:pts outputPoly:&polys];
+    
     int numPts = pts.count;
     
     cpVect* verts = malloc(sizeof(cpVect) * numPts);
