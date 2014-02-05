@@ -218,6 +218,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     return -1;
 }
 
+
+
 - (void) makeConvexHull
 {
     return;
@@ -421,6 +423,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
+            
+            //Draw corner points.
             int i = 0;
             for (NSValue* ptVal in body.points)
             {
@@ -435,12 +439,18 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 [editorView addChild:handle];
                 i++;
             }
-
             
+            //Draw concave polys
             NSArray * polygons;
-            [Bayazit decomposition:body.points outputPoly:&polygons];
+            bool success = [Bayazit decomposition:body.points outputPoly:&polygons];
             
-            for (NSArray * poly in polygons)
+            NSArray * renderPolys =polygons;
+            if (!success)
+            {
+                renderPolys = @[body.points];
+            }
+
+            for (NSArray * poly in renderPolys)
             {
                 CGPoint* points = malloc(sizeof(CGPoint)*poly.count);
                 int i = 0;
@@ -458,12 +468,40 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 }
                 
                 CCDrawNode* drawing = [CCDrawNode node];
+                
+                
                 [drawing drawPolyWithVerts:points count:poly.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
                 
                 [editorView addChild:drawing z:-1];
                 
                 free(points);
             }
+            
+
+            //highlight intersecting segments.
+            
+            NSArray * intersectingSegments;
+            if([Bayazit intersectingLines:body.points outputSegments:&intersectingSegments])
+            {
+                
+                for(int i = 0; i < intersectingSegments.count; i+=2)
+                {
+                    NSPoint ptA = [intersectingSegments[i] pointValue];
+                    NSPoint ptB = [intersectingSegments[i+1] pointValue];
+                    
+                    ptA = [node convertToWorldSpace:ptA];
+                    ptB = [node convertToWorldSpace:ptB];
+
+                    
+                    CCDrawNode* drawing = [CCDrawNode node];
+                    [drawing drawSegmentFrom:ptA to:ptB radius:.7 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
+                    
+                    [editorView addChild:drawing z:-1];
+                }
+                
+            }
+            
+            
         }
         else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
         {

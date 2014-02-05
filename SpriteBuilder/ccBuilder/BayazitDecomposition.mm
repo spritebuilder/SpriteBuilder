@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <vector>
+#import "cocos2d.h"
 
     
 typedef std::vector<CGPoint> Verticies;
@@ -23,8 +24,52 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
 
 @implementation Bayazit
 
-+(void)decomposition:(NSArray *)inputPoly outputPoly:(NSArray *__autoreleasing *)outputPolys
+
+//outSegments array is [ seg1.A, seg1.B, seg2.A, seg2.B, ...]
++(BOOL)intersectingLines:(NSArray*)inputPoly outputSegments:(NSArray**)outSegments
 {
+    NSMutableArray * intersectingSegments = [NSMutableArray array];
+    
+    for (int i=0; i < inputPoly.count; i++) {
+        for (int j = 0; j < inputPoly.count; j++) {
+            if(i == j)
+                continue;
+            
+            CGPoint ptA = [inputPoly[i] pointValue];
+            CGPoint ptB = [inputPoly[(i + 1) % inputPoly.count] pointValue];
+            
+            CGPoint ptC = [inputPoly[j] pointValue];
+            CGPoint ptD = [inputPoly[(j + 1) % inputPoly.count] pointValue];
+            
+            float S, T;
+            
+            if( ccpLineIntersect(ptA, ptB, ptC, ptD, &S, &T )
+               && (S > 0.0f && S < 1.0f && T > 0.0f && T <= 1.0f) )
+            {
+                [intersectingSegments addObject:[NSValue valueWithPoint:ptA]];
+                [intersectingSegments addObject:[NSValue valueWithPoint:ptB]];
+            }
+            
+        }
+    }
+    
+    if(intersectingSegments.count > 0)
+    {
+        if(outSegments)
+            *outSegments = intersectingSegments;
+        
+        return YES;
+    }
+    
+    return NO;
+}
+
++(BOOL)decomposition:(NSArray *)inputPoly outputPoly:(NSArray *__autoreleasing *)outputPolys
+{
+    if([Bayazit intersectingLines:inputPoly outputSegments:nil])
+    {
+        return NO;
+    }
     
     Verticies workingPoly;
     for (int i=0; i < inputPoly.count; i++) {
@@ -40,6 +85,8 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
     
     NSMutableArray * decompyObjPolys = [NSMutableArray array];
     
+    BOOL success = YES;
+    
     for (int i =0; i < workingOutputPolys.size(); i++) {
         const Verticies &decompPoly = workingOutputPolys[i];
         
@@ -50,9 +97,12 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
             CGPoint point = decompPoly[j];
             [decompObjPoly addObject:[NSValue valueWithPoint:point]];
         }
+        if(decompObjPoly.count < 3)
+            success = NO;
     }
     
     *outputPolys = decompyObjPolys;
+    return success;
 }
 
 @end
@@ -106,6 +156,8 @@ void makeCCW(Verticies & poly) {
 bool isReflex(const Verticies &poly, const int &i) {
     return right(at(poly, i - 1), at(poly, i), at(poly, i + 1));
 }
+
+
 
 CGPoint intersection(const CGPoint &p1, const CGPoint &p2, const CGPoint &q1, const CGPoint &q2) {
     CGPoint i;
