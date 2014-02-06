@@ -279,6 +279,12 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     return snapped;
 }
 
+- (BOOL)rightMouseDown:(CGPoint)pos event:(NSEvent*)event
+{
+    
+    return NO;
+}
+
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event
 {
     if (!self.editingPhysicsBody) return NO;
@@ -393,6 +399,27 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
 }
 
+- (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event
+{
+    if (!self.editingPhysicsBody) return NO;
+ 
+    int handleIdx = [self handleIndexForPos:pos];
+    
+    if(handleIdx != -1)
+    {
+        
+        NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
+        [points removeObjectAtIndex:handleIdx];
+        self.selectedNodePhysicsBody.points = points;
+        
+        return YES;
+    }
+
+    
+    return NO;
+    
+}
+
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event
 {
     if (!self.editingPhysicsBody) return NO;
@@ -401,7 +428,6 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     if (_mouseDownInHandle != -1 && body != nil)
     {
-        
         _mouseDownInHandle = -1;
         return YES;
     }
@@ -498,9 +524,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                     
                     [editorView addChild:drawing z:-1];
                 }
-                
             }
-            
             
         }
         else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)

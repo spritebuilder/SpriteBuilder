@@ -898,6 +898,17 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return (isMirroredX ^ isMirroredY);
 }
 
+
+
+- (void)rightMouseDown:(NSEvent *)event
+{
+    if (!appDelegate.hasOpenedDocument) return;
+    
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    if ([appDelegate.physicsHandler rightMouseDown:pos event:event]) return;
+    
+}
+
 - (void) mouseDown:(NSEvent *)event
 {
     if (!appDelegate.hasOpenedDocument) return;
@@ -1005,6 +1016,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return;
 }
 
+
+
+- (void) rightMouseUp:(NSEvent *)event
+{
+    if (!appDelegate.hasOpenedDocument) return;
+    
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    
+    if ([appDelegate.physicsHandler rightMouseUp:pos event:event]) return;
+    
+    
+}
 
 //0=bottom, 1=right  2=top 3=left
 -(CGPoint)vertexLocked:(CGPoint)anchorPoint

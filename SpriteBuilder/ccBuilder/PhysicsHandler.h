@@ -47,4 +47,7 @@
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event;
 
+- (BOOL)rightMouseDown:(CGPoint)pos event:(NSEvent*)event;
+- (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event;
+
 @end
