@@ -34,10 +34,10 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
         CGPoint ptB = [inputPoly[(j + 1) % inputPoly.count] pointValue];
         CGPoint ptC = [inputPoly[(j + 2) % inputPoly.count] pointValue];
         
-        CGPoint segA = ccpNormalize(ccpSub(ptB, ptA));
+        CGPoint segA = ccpNormalize(ccpSub(ptA ,ptB));
         CGPoint segB = ccpNormalize(ccpSub(ptC, ptB));
         
-        if(fabsf(ccpDot(segA, segB)) > cosf(kmDegreesToRadians(kMinimumAcuteAngle)))
+        if(ccpDot(segA, segB) > cosf(kmDegreesToRadians(kMinimumAcuteAngle)))
         {
             [acuteSegments addObject:[NSValue valueWithPoint:ptA]];
             [acuteSegments addObject:[NSValue valueWithPoint:ptB]];

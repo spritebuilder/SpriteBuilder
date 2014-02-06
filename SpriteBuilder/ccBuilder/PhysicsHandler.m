@@ -405,7 +405,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
  
     int handleIdx = [self handleIndexForPos:pos];
     
-    if(handleIdx != -1)
+    if(handleIdx != -1 && self.selectedNodePhysicsBody.points.count > 3)
     {
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points-"];
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
