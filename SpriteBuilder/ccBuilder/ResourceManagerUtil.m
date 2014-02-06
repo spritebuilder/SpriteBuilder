@@ -294,7 +294,7 @@
 {
     NSImage* icon = NULL;
     
-#warning Do all images by type
+	// FIXME: Do all images by type
     if (res.type == kCCBResTypeImage)
     {
         icon = [ResourceManagerUtil smallIconForFileType:@"png"];

@@ -15,3 +15,16 @@
 #   define WARN(...)
 #	define SBLogSelf() do{} while(0)
 #endif
+
+/** Suppress a compiler warning regarding the performSelector: method. */
+#define SUPPRESS_LEAK_WARNING(code)                        \
+_Pragma("clang diagnostic push")                                        \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"")     \
+code;                                                                   \
+_Pragma("clang diagnostic pop")                                         \
+
+#define SUPPRESS_DEPRECATED_WARNING(code) \
+_Pragma("clang diagnostic push")                                        \
+_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")     \
+code;                                                                   \
+_Pragma("clang diagnostic pop")                                         \

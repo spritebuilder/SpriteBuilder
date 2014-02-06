@@ -191,7 +191,7 @@
     NSInteger newRow = handler.translations.count -1;
     
     [tableTranslations selectRowIndexes:[NSIndexSet indexSetWithIndex:newRow] byExtendingSelection:NO];
-    [tableTranslations editColumn:1 row:newRow withEvent:NULL select:sender];
+    [tableTranslations editColumn:1 row:newRow withEvent:NULL select:YES];
 }
 
 - (IBAction)pressedAddGroup:(id)sender

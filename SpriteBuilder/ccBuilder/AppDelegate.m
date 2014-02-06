@@ -414,8 +414,6 @@ void ApplyCustomNodeVisitSwizzle()
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     
-    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:1];
-    
     NSColor * color2 = [NSColor colorWithDeviceRed:r green:g blue:b alpha:a];
     NSColor * calibratedColor = [color2 colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 
@@ -1090,13 +1088,13 @@ static BOOL hideAllToNextSeparator;
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorDocumentView performSelector:privateSelector withObject:nil];
+		SUPPRESS_LEAK_WARNING([inspectorDocumentView performSelector:privateSelector withObject:nil]);
     }
     
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorCodeDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorCodeDocumentView performSelector:privateSelector withObject:nil];
+        SUPPRESS_LEAK_WARNING([inspectorCodeDocumentView performSelector:privateSelector withObject:nil]);
     }
     
 
@@ -2874,7 +2872,7 @@ static BOOL hideAllToNextSeparator;
                 
                 // Set icon of created directory
                 NSImage* folderIcon = [NSImage imageNamed:@"Folder.icns"];
-                [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:fileName options:NULL];
+                [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:fileName options:0];
                 
                 // Create project file
                 NSString* projectName = [fileNameRaw lastPathComponent];
