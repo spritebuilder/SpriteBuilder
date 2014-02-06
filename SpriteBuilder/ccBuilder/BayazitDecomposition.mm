@@ -24,6 +24,34 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
 
 @implementation Bayazit
 
++(BOOL)acuteCorners:(NSArray*)inputPoly outputSegments:(NSArray**)outSegments
+{
+    NSMutableArray * acuteSegments = [NSMutableArray array];
+    
+    for (int j = 0; j < inputPoly.count; j++) {
+        
+        CGPoint ptA = [inputPoly[j] pointValue];
+        CGPoint ptB = [inputPoly[(j + 1) % inputPoly.count] pointValue];
+        CGPoint ptC = [inputPoly[(j + 2) % inputPoly.count] pointValue];
+        
+        CGPoint segA = ccpNormalize(ccpSub(ptB, ptA));
+        CGPoint segB = ccpNormalize(ccpSub(ptC, ptB));
+        
+        if(fabsf(ccpDot(segA, segB)) > cosf(kmDegreesToRadians(kMinimumAcuteAngle)))
+        {
+            [acuteSegments addObject:[NSValue valueWithPoint:ptA]];
+            [acuteSegments addObject:[NSValue valueWithPoint:ptB]];
+            [acuteSegments addObject:[NSValue valueWithPoint:ptC]];
+        }
+    }
+    
+    if(acuteSegments.count > 0 && outSegments)
+    {
+        *outSegments = acuteSegments;
+    }
+    return acuteSegments.count > 0;
+    
+}
 
 //outSegments array is [ seg1.A, seg1.B, seg2.A, seg2.B, ...]
 +(BOOL)intersectingLines:(NSArray*)inputPoly outputSegments:(NSArray**)outSegments
@@ -71,6 +99,11 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
         return NO;
     }
     
+    if([Bayazit acuteCorners:inputPoly outputSegments:nil])
+    {
+        return NO;
+    }
+       
     Verticies workingPoly;
     for (int i=0; i < inputPoly.count; i++) {
         NSValue * value = inputPoly[i];

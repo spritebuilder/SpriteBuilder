@@ -321,7 +321,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     else if (lineIdx != -1)
     {
         // Add new control point
-        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points"];
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points+"];
         
         CGPoint localPos = [node convertToNodeSpace:pos];
         
@@ -400,14 +400,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 }
 
 - (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event
-{
+{   
     if (!self.editingPhysicsBody) return NO;
  
     int handleIdx = [self handleIndexForPos:pos];
     
     if(handleIdx != -1)
     {
-        
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*points-"];
         NSMutableArray* points = [self.selectedNodePhysicsBody.points mutableCopy];
         [points removeObjectAtIndex:handleIdx];
         self.selectedNodePhysicsBody.points = points;
@@ -466,65 +466,112 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 i++;
             }
             
+            
             //Draw concave polys
             NSArray * polygons;
             bool success = [Bayazit decomposition:body.points outputPoly:&polygons];
             
-            NSArray * renderPolys =polygons;
-            if (!success)
+            if(success)
             {
-                renderPolys = @[body.points];
+                for (NSArray * poly in polygons)
+                {
+                    CGPoint* points = malloc(sizeof(CGPoint)*poly.count);
+                    int i = 0;
+                    for (NSValue* ptVal in poly)
+                    {
+                        // Absolute handle position
+                        
+                        // TODO: Handle position scale
+                        CGPoint pt = [ptVal pointValue];
+                        pt = [node convertToWorldSpace:pt];
+                        points[i] = ccpRound(pt);
+                        i++;
+                    }
+                    
+                    CCDrawNode* drawing = [CCDrawNode node];
+                    
+                    
+                    [drawing drawPolyWithVerts:points count:poly.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth/2 borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
+                    
+                    [editorView addChild:drawing z:-1];
+                    
+                    free(points);
+                }
             }
-
-            for (NSArray * poly in renderPolys)
+            
+            
+            //Draw Poly Outline
             {
-                CGPoint* points = malloc(sizeof(CGPoint)*poly.count);
+                CGPoint* points = malloc(sizeof(CGPoint)*body.points.count);
                 int i = 0;
-                for (NSValue* ptVal in poly)
+                for (NSValue* ptVal in body.points)
                 {
                     // Absolute handle position
                     
                     // TODO: Handle position scale
                     CGPoint pt = [ptVal pointValue];
                     pt = [node convertToWorldSpace:pt];
-                    
                     points[i] = ccpRound(pt);
-                    
                     i++;
                 }
                 
                 CCDrawNode* drawing = [CCDrawNode node];
                 
                 
-                [drawing drawPolyWithVerts:points count:poly.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
+                [drawing drawPolyWithVerts:points count:body.points.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.7]];
                 
                 [editorView addChild:drawing z:-1];
                 
                 free(points);
             }
-            
 
             //highlight intersecting segments.
-            
-            NSArray * intersectingSegments;
-            if([Bayazit intersectingLines:body.points outputSegments:&intersectingSegments])
             {
-                
-                for(int i = 0; i < intersectingSegments.count; i+=2)
+                NSArray * intersectingSegments;
+                if([Bayazit intersectingLines:body.points outputSegments:&intersectingSegments])
                 {
-                    NSPoint ptA = [intersectingSegments[i] pointValue];
-                    NSPoint ptB = [intersectingSegments[i+1] pointValue];
-                    
-                    ptA = [node convertToWorldSpace:ptA];
-                    ptB = [node convertToWorldSpace:ptB];
+                    for(int i = 0; i < intersectingSegments.count; i+=2)
+                    {
+                        NSPoint ptA = [intersectingSegments[i] pointValue];
+                        NSPoint ptB = [intersectingSegments[i+1] pointValue];
+                        
+                        ptA = [node convertToWorldSpace:ptA];
+                        ptB = [node convertToWorldSpace:ptB];
 
-                    
-                    CCDrawNode* drawing = [CCDrawNode node];
-                    [drawing drawSegmentFrom:ptA to:ptB radius:.7 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
-                    
-                    [editorView addChild:drawing z:-1];
+                        
+                        CCDrawNode* drawing = [CCDrawNode node];
+                        [drawing drawSegmentFrom:ptA to:ptB radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
+                        
+                        [editorView addChild:drawing z:-1];
+                    }
                 }
             }
+            
+            //highligh Acute Corners
+            {
+                NSArray * acuteCorners;
+                if([Bayazit acuteCorners:body.points outputSegments:&acuteCorners])
+                {
+                    for(int i = 0; i < acuteCorners.count; i+=3)
+                    {
+                        NSPoint ptA = [acuteCorners[i] pointValue];
+                        NSPoint ptB = [acuteCorners[i+1] pointValue];
+                        NSPoint ptC = [acuteCorners[i+2] pointValue];
+                        
+                        ptA = [node convertToWorldSpace:ptA];
+                        ptB = [node convertToWorldSpace:ptB];
+                        ptC = [node convertToWorldSpace:ptC];
+                        
+                        
+                        CCDrawNode* drawing = [CCDrawNode node];
+                        [drawing drawSegmentFrom:ptA to:ptB radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
+                        [drawing drawSegmentFrom:ptB to:ptC radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
+                        [editorView addChild:drawing z:-1];
+                    }
+                }
+            }
+            
+            
             
         }
         else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
