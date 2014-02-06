@@ -59,7 +59,8 @@
     CGSize size = note.contentSize;
     CGPoint pos = ccp(note.position.x * [CCDirector sharedDirector].contentScaleFactor, note.position.y * [CCDirector sharedDirector].contentScaleFactor - note.contentSize.height);
     
-    [NSBundle loadNibNamed:@"StickyNoteEditView" owner:self];
+	// FIXME: fix deprecation warning
+    SUPPRESS_DEPRECATED([NSBundle loadNibNamed:@"StickyNoteEditView" owner:self]);
     [editView setFrameOrigin:NSPointFromCGPoint(pos)];
     [editView setFrameSize:NSSizeFromCGSize(size)];
     [ad.guiView addSubview:editView];

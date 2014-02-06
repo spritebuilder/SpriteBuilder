@@ -876,7 +876,8 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Load it's associated view
-    [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
+	// FIXME: fix deprecation warning
+    SUPPRESS_DEPRECATED([NSBundle loadNibNamed:inspectorNibName owner:inspectorValue]);
     NSView* view = inspectorValue.view;
     
     [inspectorValue willBeAdded];

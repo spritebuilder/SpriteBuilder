@@ -34,3 +34,9 @@ _Pragma("clang diagnostic push")                                        \
 _Pragma("clang diagnostic ignored \"-Wundeclared-selector\"")			\
 code;                                                                   \
 _Pragma("clang diagnostic pop")                                         \
+
+#define SUPPRESS_DEPRECATED(code) \
+_Pragma("clang diagnostic push")                                        \
+_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")		\
+code;                                                                   \
+_Pragma("clang diagnostic pop")                                         \
