@@ -324,7 +324,7 @@
 
 	// scrubtastic
 	if([_ctrlView allowsScrubbing] && ([theEvent modifierFlags] & NSAlternateKeyMask)) {
-		[_ctrlView performSelector:@selector(tabClick:) withObject:self];
+		SUPPRESS_UNDECLARED_SELECTOR([_ctrlView performSelector:@selector(tabClick:) withObject:self]);
 	}
 
 	// tell the control we only need to redraw the affected tab
@@ -469,7 +469,7 @@
 - (void)accessibilityPerformAction:(NSString *)action {
 	if([action isEqualToString:NSAccessibilityPressAction]) {
 		// this tab was selected
-		[_ctrlView performSelector:@selector(tabClick:) withObject:self];
+		SUPPRESS_UNDECLARED_SELECTOR([_ctrlView performSelector:@selector(tabClick:) withObject:self]);
 	}
 }
 

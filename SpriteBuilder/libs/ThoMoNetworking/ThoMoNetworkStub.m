@@ -224,7 +224,7 @@ NSString *const kThoMoNetworkPrefScopeSpecifierKey				= @"kThoMoNetworkPrefScope
 		[self teardown];
 	}
 	
-	[self performSelectorOnMainThread:@selector(networkStubDidShutDownRelayMethod) withObject:nil waitUntilDone:NO];
+	SUPPRESS_UNDECLARED_SELECTOR([self performSelectorOnMainThread:@selector(networkStubDidShutDownRelayMethod) withObject:nil waitUntilDone:NO]);
 	
 	[networkThreadPool release];
 }

@@ -576,6 +576,8 @@
 	[cell unbind:@"countColor"];
 	[cell unbind:@"isEdited"];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
 	if([item identifier] != nil) {
 		if([[item identifier] respondsToSelector:@selector(isProcessing)]) {
 			[[item identifier] removeObserver:cell forKeyPath:@"isProcessing"];
@@ -611,6 +613,7 @@
 			[[item identifier] removeObserver:cell forKeyPath:@"isEdited"];
 		}
 	}
+#pragma clang diagnostic pop
 
 	// stop watching identifier
 	[item removeObserver:self forKeyPath:@"identifier"];
@@ -1738,6 +1741,10 @@
 - (void)_bindPropertiesForCell:(PSMTabBarCell *)cell andTabViewItem:(NSTabViewItem *)item {
 	// bind the indicator to the represented object's status (if it exists)
 	[[cell indicator] setHidden:YES];
+	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+
 	if([item identifier] != nil) {
 		if([[[cell representedObject] identifier] respondsToSelector:@selector(isProcessing)]) {
 			NSMutableDictionary *bindingOptions = [NSMutableDictionary dictionary];
@@ -1795,6 +1802,8 @@
 			[[item identifier] addObserver:cell forKeyPath:@"isEdited" options:0 context:nil];
 		}
 	}
+
+#pragma clang diagnostic pop
 
 	// bind my string value to the label on the represented tab
 	[cell bind:@"title" toObject:item withKeyPath:@"label" options:nil];
