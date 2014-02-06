@@ -23,6 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "ProjectSettings.h"
 #import "cocos2d.h"
 
 @interface PlugInNode : NSObject <NSPasteboardWriting>
@@ -74,6 +75,7 @@
 @property (nonatomic,readonly) NSArray* requireChildClass;
 @property (nonatomic,readonly) NSString* positionProperty;
 @property (nonatomic,strong) NSImage* icon;
+@property (nonatomic, readonly) CCBTargetEngine targetEngine;
 
 - (BOOL) dontSetInEditorProperty: (NSString*) prop;
 
