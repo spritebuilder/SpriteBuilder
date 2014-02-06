@@ -101,4 +101,9 @@
 
 - (void) menuAddKeyframeNamed:(NSString*)keyframeName;
 - (BOOL) canInsertKeyframeNamed:(NSString*)prop;
+
+// selectors exposed to prevent 'undeclared selector' warning
+- (void) menuSetSequence:(id)sender;
+- (void) menuSetChainedSequence:(id)sender;
+
 @end

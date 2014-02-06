@@ -4078,9 +4078,9 @@ static BOOL hideAllToNextSeparator;
 
 
 
-/*
 - (IBAction)menuEditSmartSpriteSheet:(id)sender
 {
+	/*
     int selectedRow = [sender tag];
     
     if (selectedRow >= 0 && projectSettings)
@@ -4127,7 +4127,8 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }
-}*/
+	 */
+}
 
 - (IBAction)menuAlignKeyframeToMarker:(id)sender
 {

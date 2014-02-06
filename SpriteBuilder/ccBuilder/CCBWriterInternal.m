@@ -33,6 +33,10 @@
 #import "AppDelegate.h"
 #import "NodePhysicsBody.h"
 
+@protocol CCBWriterInternal_UndeclaredSelectors <NSObject>
+- (NSArray*) ccbExcludePropertiesForSave;
+@end
+
 @implementation CCBWriterInternal
 
 

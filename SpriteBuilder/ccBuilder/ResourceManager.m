@@ -383,6 +383,11 @@
 
 #pragma mark ResourceManager
 
+@protocol ResourceManager_UndeclaredSelectors <NSObject>
+@optional
+- (void) resourceListUpdated;
+@end
+
 @implementation ResourceManager
 
 @synthesize directories;

@@ -27,6 +27,11 @@
 #import "ResourceManagerUtil.h"
 #import "ResourceManager.h"
 
+@protocol ResourceManagerUtil_UndeclaredSelectors <NSObject>
+@optional
+- (void) selectedResource:(id)sender;
+@end
+
 @implementation ResourceManagerUtil
 
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup forceMarker:(BOOL) forceMarker
