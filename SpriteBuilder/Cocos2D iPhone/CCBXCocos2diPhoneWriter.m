@@ -1078,6 +1078,7 @@
         int bodyShape = [[physicsBody objectForKey:@"bodyShape"] intValue];
         float cornerRadius = [[physicsBody objectForKey:@"cornerRadius"] floatValue];
         NSArray* points = [physicsBody objectForKey:@"points"];
+        NSArray* polygons = [physicsBody objectForKey:@"polygons"];
         
         // Props
         BOOL dynamic = [[physicsBody objectForKey:@"dynamic"] boolValue];
@@ -1091,14 +1092,33 @@
         // Write physics body
         [self writeInt:bodyShape withSign:NO];
         [self writeFloat:cornerRadius];
-        [self writeInt:(int)points.count withSign:NO];
-        for (NSArray* serPt in points)
+        
+        
+        if(bodyShape == 1)
         {
-            float x = [[serPt objectAtIndex:0] floatValue];
-            float y = [[serPt objectAtIndex:1] floatValue];
+            [self writeInt:(int)1 withSign:NO];
+            
+            float x = [[points[0] objectAtIndex:0] floatValue];
+            float y = [[points[0] objectAtIndex:1] floatValue];
             
             [self writeFloat:x];
             [self writeFloat:y];
+        }
+        else
+        {
+            [self writeInt:(int)polygons.count withSign:NO];
+            for (NSArray * polygon in polygons)
+            {
+                [self writeInt:(int)polygon.count withSign:NO];
+                for (NSArray* serPt in polygon)
+                {
+                    float x = [[serPt objectAtIndex:0] floatValue];
+                    float y = [[serPt objectAtIndex:1] floatValue];
+                    
+                    [self writeFloat:x];
+                    [self writeFloat:y];
+                }
+            }
         }
         
         [self writeBool:dynamic];

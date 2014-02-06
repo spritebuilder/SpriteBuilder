@@ -114,8 +114,8 @@
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
-		9297AC0718A1BE94003C3705 /* BayazitDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* BayazitDecomposition.mm */; };
-		9297AC2118A2C0D2003C3705 /* BayazitDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* BayazitDecomposition.mm */; };
+		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
+		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
@@ -646,6 +646,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9297AC2C18A418D0003C3705 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D37EE9FC187D4E7700CB5EF2;
+			remoteInfo = ObjectiveChipmunk;
+		};
 		B729AC6B181F0D1400BA0D9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -1045,8 +1052,10 @@
 		92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreivewAudio.h; sourceTree = "<group>"; };
 		92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewAudio.m; sourceTree = "<group>"; };
 		92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewAudio.xib; sourceTree = "<group>"; };
-		9297AC0518A1BE94003C3705 /* BayazitDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BayazitDecomposition.h; sourceTree = "<group>"; };
-		9297AC0618A1BE94003C3705 /* BayazitDecomposition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BayazitDecomposition.mm; sourceTree = "<group>"; };
+		9297AC0518A1BE94003C3705 /* PolyDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyDecomposition.h; sourceTree = "<group>"; };
+		9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PolyDecomposition.mm; sourceTree = "<group>"; };
+		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
+		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
@@ -2059,6 +2068,8 @@
 				B7083E0917B567E5006628C7 /* StringPropertySetter.m */,
 				B75CB489184D31270036259F /* UsageManager.h */,
 				B75CB48A184D31270036259F /* UsageManager.m */,
+				9297AC2E18A43BCA003C3705 /* NSArray+Query.h */,
+				9297AC2F18A43BCA003C3705 /* NSArray+Query.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -2839,8 +2850,8 @@
 		B7C3533B17FA306C005697C1 /* Physics Editor */ = {
 			isa = PBXGroup;
 			children = (
-				9297AC0518A1BE94003C3705 /* BayazitDecomposition.h */,
-				9297AC0618A1BE94003C3705 /* BayazitDecomposition.mm */,
+				9297AC0518A1BE94003C3705 /* PolyDecomposition.h */,
+				9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */,
 				B7C3533F17FA3DF1005697C1 /* PhysicsHandler.h */,
 				B7C3534017FA3DF1005697C1 /* PhysicsHandler.m */,
 				B7C3533C17FA30BB005697C1 /* NodePhysicsBody.h */,
@@ -2897,6 +2908,7 @@
 			children = (
 				B7D0918417C2C12B0007FE7F /* libcocos2d.a */,
 				B7D0918617C2C12B0007FE7F /* libkazmath.a */,
+				9297AC2D18A418D0003C3705 /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4275,6 +4287,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		9297AC2D18A418D0003C3705 /* libObjectiveChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveChipmunk.a;
+			remoteRef = 9297AC2C18A418D0003C3705 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B7D0918417C2C12B0007FE7F /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -4794,7 +4813,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9297AC2118A2C0D2003C3705 /* BayazitDecomposition.mm in Sources */,
+				9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */,
 				9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */,
 				80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */,
 				80B149C9183D73930085935B /* SoundFileImageController.m in Sources */,
@@ -4865,6 +4884,7 @@
 				E35DBC1E14F4DF050070A6E4 /* InspectorStartStop.m in Sources */,
 				E35DBC2314F4ED980070A6E4 /* InspectorIntegerLabeled.m in Sources */,
 				E35DBC2814F4FF410070A6E4 /* InspectorTexture.m in Sources */,
+				9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */,
 				E325F64814F5336E00D29BCF /* InspectorFloatVar.m in Sources */,
 				E325F64D14F53FF100D29BCF /* InspectorColor4FVar.m in Sources */,
 				E325F65214F5669600D29BCF /* InspectorSeparatorSub.m in Sources */,
@@ -5141,7 +5161,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
-				9297AC0718A1BE94003C3705 /* BayazitDecomposition.mm in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

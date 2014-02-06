@@ -8,12 +8,12 @@
 // Convex decomposition algorithm created by Mark Bayazit (http://mnbayazit.com/)
 
 
-#include "BayazitDecomposition.h"
+#include "PolyDecomposition.h"
 #include <stdlib.h>
 #include <algorithm>
 #include <vector>
 #import "cocos2d.h"
-
+#import "chipmunk.h"
     
 typedef std::vector<CGPoint> Verticies;
 typedef std::vector<Verticies> VerticiesList;
@@ -22,7 +22,34 @@ bool isReflex(const Verticies &p, const int &i);
 void makeCCW(Verticies &poly);
 void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPolys);
 
-@implementation Bayazit
+@implementation PolyDecomposition
+
++(NSArray*)makeConvexHull:(NSArray*)inputPoly
+{
+   int numPts = inputPoly.count;
+    
+    cpVect* verts = (cpVect*)malloc(sizeof(cpVect) * numPts);
+    int idx = 0;
+    for (NSValue* ptVal in inputPoly)
+    {
+        CGPoint pt = [ptVal pointValue];
+        verts[idx].x = pt.x;
+        verts[idx].y = pt.y;
+        idx++;
+    }
+    
+    int newNumPts = cpConvexHull(numPts, verts, verts, NULL, 0.0f);
+    
+    NSMutableArray* hull = [NSMutableArray array];
+    for (idx = 0; idx < newNumPts; idx++)
+    {
+        [hull addObject:[NSValue valueWithPoint:ccp(verts[idx].x, verts[idx].y)]];
+    }
+    
+    free(verts);
+    
+    return hull;
+}
 
 +(BOOL)acuteCorners:(NSArray*)inputPoly outputSegments:(NSArray**)outSegments
 {
@@ -92,14 +119,14 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
     return NO;
 }
 
-+(BOOL)decomposition:(NSArray *)inputPoly outputPoly:(NSArray *__autoreleasing *)outputPolys
++(BOOL)bayazitDecomposition:(NSArray *)inputPoly outputPoly:(NSArray *__autoreleasing *)outputPolys
 {
-    if([Bayazit intersectingLines:inputPoly outputSegments:nil])
+    if([PolyDecomposition intersectingLines:inputPoly outputSegments:nil])
     {
         return NO;
     }
     
-    if([Bayazit acuteCorners:inputPoly outputSegments:nil])
+    if([PolyDecomposition acuteCorners:inputPoly outputSegments:nil])
     {
         return NO;
     }

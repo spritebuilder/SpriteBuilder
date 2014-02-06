@@ -23,7 +23,7 @@
  */
 
 #import "PhysicsHandler.h"
-#import "BayazitDecomposition.h"
+#import "PolyDecomposition.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 #import "NodePhysicsBody.h"
@@ -222,34 +222,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (void) makeConvexHull
 {
-    return;
-    
-    NSArray* pts = self.selectedNodePhysicsBody.points;
-    
-    NSArray * polys;
-    [Bayazit decomposition:pts outputPoly:&polys];
-    
-    int numPts = pts.count;
-    
-    cpVect* verts = malloc(sizeof(cpVect) * numPts);
-    int idx = 0;
-    for (NSValue* ptVal in pts)
-    {
-        CGPoint pt = [ptVal pointValue];
-        verts[idx].x = pt.x;
-        verts[idx].y = pt.y;
-        idx++;
-    }
-    
-    int newNumPts = cpConvexHull(numPts, verts, verts, NULL, 0.0f);
-    
-    NSMutableArray* hull = [NSMutableArray array];
-    for (idx = 0; idx < newNumPts; idx++)
-    {
-        [hull addObject:[NSValue valueWithPoint:ccp(verts[idx].x, verts[idx].y)]];
-    }
-    
-    self.selectedNodePhysicsBody.points = hull;
+   
+    self.selectedNodePhysicsBody.points = [PolyDecomposition makeConvexHull:self.selectedNodePhysicsBody.points];
 }
 
 - (CGPoint) snapPoint:(CGPoint)src toPt0:(CGPoint)pt0 andPt1:(CGPoint)pt1
@@ -469,7 +443,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             
             //Draw concave polys
             NSArray * polygons;
-            bool success = [Bayazit decomposition:body.points outputPoly:&polygons];
+            bool success = [PolyDecomposition bayazitDecomposition:body.points outputPoly:&polygons];
             
             if(success)
             {
@@ -528,7 +502,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             //highlight intersecting segments.
             {
                 NSArray * intersectingSegments;
-                if([Bayazit intersectingLines:body.points outputSegments:&intersectingSegments])
+                if([PolyDecomposition intersectingLines:body.points outputSegments:&intersectingSegments])
                 {
                     for(int i = 0; i < intersectingSegments.count; i+=2)
                     {
@@ -550,7 +524,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             //highligh Acute Corners
             {
                 NSArray * acuteCorners;
-                if([Bayazit acuteCorners:body.points outputSegments:&acuteCorners])
+                if([PolyDecomposition acuteCorners:body.points outputSegments:&acuteCorners])
                 {
                     for(int i = 0; i < acuteCorners.count; i+=3)
                     {

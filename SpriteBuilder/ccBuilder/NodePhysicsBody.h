@@ -36,7 +36,8 @@ typedef enum
 // Shape
 @property (nonatomic,assign) CCBPhysicsBodyShape bodyShape;
 @property (nonatomic,assign) float cornerRadius;
-@property (nonatomic,strong) NSArray* points;
+@property (nonatomic) NSArray* points;
+@property (nonatomic) NSArray* polygons;
 
 // Basic physic props
 @property (nonatomic,assign) BOOL dynamic;
