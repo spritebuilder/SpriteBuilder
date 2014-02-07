@@ -1096,8 +1096,6 @@
         
         if(bodyShape == 1)
         {
-            [self writeInt:(int)1 withSign:NO];
-            
             float x = [[points[0] objectAtIndex:0] floatValue];
             float y = [[points[0] objectAtIndex:1] floatValue];
             
