@@ -183,6 +183,8 @@ enum {
     IBOutlet NSMenu* __weak menuContextResManager;
     IBOutlet NSMenu *__weak menuContextKeyframeNoselection;
     
+    IBOutlet NSMenuItem *__weak menuItemStageColor;
+    
     IBOutlet NSPopUpButton* menuTimelinePopup;
     IBOutlet NSMenu* menuTimeline;
     IBOutlet NSTextField* lblTimeline;
@@ -374,6 +376,7 @@ enum {
 - (IBAction) menuSetStateOriginCentered:(id)sender;
 - (void) updateCanvasBorderMenu;
 - (IBAction) menuSetCanvasBorder:(id)sender;
+- (IBAction) menuSetCanvasColor:(id)sender;
 - (IBAction) menuZoomIn:(id)sender;
 - (IBAction) menuZoomOut:(id)sender;
 

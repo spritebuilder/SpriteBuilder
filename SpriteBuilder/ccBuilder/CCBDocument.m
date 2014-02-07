@@ -25,6 +25,7 @@
 
 #import "CCBDocument.h"
 #import "ResolutionSetting.h"
+#import "CocosScene.h"
 
 @implementation CCBDocument
 
@@ -35,6 +36,7 @@
 @synthesize isDirty;
 @synthesize stageScrollOffset;
 @synthesize stageZoom;
+@synthesize stageColor;
 @synthesize exportPath;
 @synthesize exportPlugIn;
 @synthesize exportFlattenPaths;
@@ -54,6 +56,7 @@
     
     self.stageZoom = 1;
     self.stageScrollOffset = ccp(0,0);
+    self.stageColor = kCCBCanvasColorBlack;
     
     return self;
 }

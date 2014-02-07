@@ -1240,6 +1240,7 @@ static BOOL hideAllToNextSeparator;
     [dict setObject:[NSNumber numberWithBool:[[CocosScene cocosScene] centeredOrigin]] forKey:@"centeredOrigin"];
     
     [dict setObject:[NSNumber numberWithInt:[[CocosScene cocosScene] stageBorder]] forKey:@"stageBorder"];
+    [dict setObject:[NSNumber numberWithInt:doc.stageColor] forKey:@"stageColor"];
     
     // Guides & notes
     [dict setObject:[[CocosScene cocosScene].guideLayer serializeGuides] forKey:@"guides"];
@@ -1440,6 +1441,28 @@ static BOOL hideAllToNextSeparator;
     // Stage border
     [[CocosScene cocosScene] setStageBorder:[[doc objectForKey:@"stageBorder"] intValue]];
     
+    // Stage color
+    NSNumber *stageColorObject = [doc objectForKey: @"stageColor"];
+    int stageColor;
+    if (stageColorObject != nil)
+    {
+        stageColor = [stageColorObject intValue];
+    }
+    else
+    {
+        if (currentDocument.docDimensionsType == kCCBDocDimensionsTypeNode)
+        {
+            stageColor = kCCBCanvasColorGray;
+        }
+        else
+        {
+            stageColor = kCCBCanvasColorBlack;
+        }
+    }
+    currentDocument.stageColor = stageColor;
+    [self updateCanvasColor];
+    [menuItemStageColor setEnabled: currentDocument.docDimensionsType != kCCBDocDimensionsTypeFullScreen];
+
     // Setup sequencer timelines
     NSMutableArray* serializedSequences = [doc objectForKey:@"sequences"];
     if (serializedSequences)
@@ -1940,6 +1963,16 @@ static BOOL hideAllToNextSeparator;
     self.currentDocument.resolutions = resolutions;
     self.currentDocument.currentResolution = 0;
     self.currentDocument.docDimensionsType = docDimType;
+    
+    if (type == kCCBNewDocTypeNode)
+    {
+        self.currentDocument.stageColor = kCCBCanvasColorGray;
+    }
+    else
+    {
+        self.currentDocument.stageColor = kCCBCanvasColorBlack;
+    }
+
     [self updateResolutionMenu];
     
     [self saveFile:fileName];
@@ -3266,6 +3299,28 @@ static BOOL hideAllToNextSeparator;
     
     int tag = (int)[sender tag];
     [cs setStageBorder:tag];
+}
+
+- (void) updateCanvasColor
+{
+    CocosScene* cs = [CocosScene cocosScene];
+    int color = currentDocument.stageColor;
+
+    [cs setStageColor: color forDocDimensionsType: currentDocument.docDimensionsType];
+    
+    for (NSMenuItem *item in menuItemStageColor.submenu.itemArray)
+    {
+        item.state = NSOffState;
+    }
+    
+    [menuItemStageColor.submenu itemWithTag: color].state = NSOnState;
+}
+
+- (IBAction) menuSetCanvasColor:(id)sender
+{
+    [self saveUndoStateWillChangeProperty:@"*stageColor"];
+    currentDocument.stageColor = [sender tag];
+    [self updateCanvasColor];
 }
 
 - (IBAction) menuZoomIn:(id)sender
