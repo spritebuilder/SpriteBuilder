@@ -31,47 +31,6 @@
 		B77F1B3E17B978D7009739AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
 		B77F1B4017B978D7009739AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
 		B77F1B4217B978D7009739AE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
-		D2E65C3C1862647B007D0B1F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C1E1862647B007D0B1F /* chipmunk.c */; };
-		D2E65C3E1862647B007D0B1F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C201862647B007D0B1F /* cpArbiter.c */; };
-		D2E65C3F1862647B007D0B1F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C211862647B007D0B1F /* cpArray.c */; };
-		D2E65C401862647B007D0B1F /* cpBBTree.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C221862647B007D0B1F /* cpBBTree.c */; };
-		D2E65C411862647B007D0B1F /* cpBody.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C231862647B007D0B1F /* cpBody.c */; };
-		D2E65C421862647B007D0B1F /* cpCollision.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C241862647B007D0B1F /* cpCollision.c */; };
-		D2E65C431862647B007D0B1F /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C251862647B007D0B1F /* cpConstraint.c */; };
-		D2E65C441862647B007D0B1F /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C261862647B007D0B1F /* cpDampedRotarySpring.c */; };
-		D2E65C451862647B007D0B1F /* cpDampedSpring.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C271862647B007D0B1F /* cpDampedSpring.c */; };
-		D2E65C461862647B007D0B1F /* cpGearJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C281862647B007D0B1F /* cpGearJoint.c */; };
-		D2E65C471862647B007D0B1F /* cpGrooveJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C291862647B007D0B1F /* cpGrooveJoint.c */; };
-		D2E65C481862647B007D0B1F /* cpHashSet.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C2A1862647B007D0B1F /* cpHashSet.c */; };
-		D2E65C491862647B007D0B1F /* cpPinJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C2B1862647B007D0B1F /* cpPinJoint.c */; };
-		D2E65C4A1862647B007D0B1F /* cpPivotJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C2C1862647B007D0B1F /* cpPivotJoint.c */; };
-		D2E65C4B1862647B007D0B1F /* cpPolyShape.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C2D1862647B007D0B1F /* cpPolyShape.c */; };
-		D2E65C4C1862647B007D0B1F /* cpRatchetJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C2E1862647B007D0B1F /* cpRatchetJoint.c */; };
-		D2E65C4D1862647B007D0B1F /* cpRotaryLimitJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C2F1862647B007D0B1F /* cpRotaryLimitJoint.c */; };
-		D2E65C4E1862647B007D0B1F /* cpShape.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C301862647B007D0B1F /* cpShape.c */; };
-		D2E65C4F1862647B007D0B1F /* cpSimpleMotor.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C311862647B007D0B1F /* cpSimpleMotor.c */; };
-		D2E65C501862647B007D0B1F /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C321862647B007D0B1F /* cpSlideJoint.c */; };
-		D2E65C511862647B007D0B1F /* cpSpace.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C331862647B007D0B1F /* cpSpace.c */; };
-		D2E65C521862647B007D0B1F /* cpSpaceComponent.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C341862647B007D0B1F /* cpSpaceComponent.c */; };
-		D2E65C531862647B007D0B1F /* cpSpaceDebug.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C351862647B007D0B1F /* cpSpaceDebug.c */; };
-		D2E65C541862647B007D0B1F /* cpSpaceHash.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C361862647B007D0B1F /* cpSpaceHash.c */; };
-		D2E65C551862647B007D0B1F /* cpSpaceQuery.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C371862647B007D0B1F /* cpSpaceQuery.c */; };
-		D2E65C561862647B007D0B1F /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C381862647B007D0B1F /* cpSpaceStep.c */; };
-		D2E65C571862647B007D0B1F /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C391862647B007D0B1F /* cpSpatialIndex.c */; };
-		D2E65C581862647B007D0B1F /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C3A1862647B007D0B1F /* cpSweep1D.c */; };
-		D2E65C9B18626890007D0B1F /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C8B18626890007D0B1F /* aabb.c */; };
-		D2E65C9E18626890007D0B1F /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C8F18626890007D0B1F /* mat4stack.c */; };
-		D2E65C9F18626890007D0B1F /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9018626890007D0B1F /* matrix.c */; };
-		D2E65CA018626890007D0B1F /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9118626890007D0B1F /* mat3.c */; };
-		D2E65CA118626890007D0B1F /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9218626890007D0B1F /* mat4.c */; };
-		D2E65CA218626890007D0B1F /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9318626890007D0B1F /* neon_matrix_impl.c */; };
-		D2E65CA318626890007D0B1F /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9418626890007D0B1F /* plane.c */; };
-		D2E65CA418626890007D0B1F /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9518626890007D0B1F /* quaternion.c */; };
-		D2E65CA518626890007D0B1F /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9618626890007D0B1F /* ray2.c */; };
-		D2E65CA618626890007D0B1F /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9718626890007D0B1F /* utility.c */; };
-		D2E65CA718626890007D0B1F /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9818626890007D0B1F /* vec2.c */; };
-		D2E65CA818626890007D0B1F /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9918626890007D0B1F /* vec3.c */; };
-		D2E65CA918626890007D0B1F /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = D2E65C9A18626890007D0B1F /* vec4.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,13 +40,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
-		};
-		B737894E180761A90076A88C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A04A1FEB13B826B300ABAFB7;
-			remoteInfo = kazmath;
 		};
 		B7378988180764180076A88C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -259,7 +211,6 @@
 			isa = PBXGroup;
 			children = (
 				B737894B180761A90076A88C /* libcocos2d.a */,
-				B737894F180761A90076A88C /* libkazmath.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -556,13 +507,6 @@
 			remoteRef = B737894A180761A90076A88C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B737894F180761A90076A88C /* libkazmath.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libkazmath.a;
-			remoteRef = B737894E180761A90076A88C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -591,50 +535,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2E65CA318626890007D0B1F /* plane.c in Sources */,
-				D2E65CA918626890007D0B1F /* vec4.c in Sources */,
-				D2E65C541862647B007D0B1F /* cpSpaceHash.c in Sources */,
-				D2E65C4E1862647B007D0B1F /* cpShape.c in Sources */,
-				D2E65C4C1862647B007D0B1F /* cpRatchetJoint.c in Sources */,
-				D2E65C4F1862647B007D0B1F /* cpSimpleMotor.c in Sources */,
-				D2E65CA518626890007D0B1F /* ray2.c in Sources */,
-				D2E65C3F1862647B007D0B1F /* cpArray.c in Sources */,
-				D2E65CA718626890007D0B1F /* vec2.c in Sources */,
-				D2E65C3E1862647B007D0B1F /* cpArbiter.c in Sources */,
-				D2E65C9E18626890007D0B1F /* mat4stack.c in Sources */,
-				D2E65CA418626890007D0B1F /* quaternion.c in Sources */,
-				D2E65C451862647B007D0B1F /* cpDampedSpring.c in Sources */,
-				D2E65C471862647B007D0B1F /* cpGrooveJoint.c in Sources */,
-				D2E65C411862647B007D0B1F /* cpBody.c in Sources */,
-				D2E65CA218626890007D0B1F /* neon_matrix_impl.c in Sources */,
-				D2E65C461862647B007D0B1F /* cpGearJoint.c in Sources */,
-				D2E65C511862647B007D0B1F /* cpSpace.c in Sources */,
-				D2E65C561862647B007D0B1F /* cpSpaceStep.c in Sources */,
-				D2E65C4B1862647B007D0B1F /* cpPolyShape.c in Sources */,
-				D2E65C531862647B007D0B1F /* cpSpaceDebug.c in Sources */,
-				D2E65C571862647B007D0B1F /* cpSpatialIndex.c in Sources */,
-				D2E65C4A1862647B007D0B1F /* cpPivotJoint.c in Sources */,
-				D2E65CA118626890007D0B1F /* mat4.c in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
-				D2E65C551862647B007D0B1F /* cpSpaceQuery.c in Sources */,
-				D2E65C501862647B007D0B1F /* cpSlideJoint.c in Sources */,
-				D2E65C441862647B007D0B1F /* cpDampedRotarySpring.c in Sources */,
-				D2E65C3C1862647B007D0B1F /* chipmunk.c in Sources */,
-				D2E65C421862647B007D0B1F /* cpCollision.c in Sources */,
-				D2E65C491862647B007D0B1F /* cpPinJoint.c in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
-				D2E65C9F18626890007D0B1F /* matrix.c in Sources */,
-				D2E65C4D1862647B007D0B1F /* cpRotaryLimitJoint.c in Sources */,
-				D2E65C521862647B007D0B1F /* cpSpaceComponent.c in Sources */,
-				D2E65CA818626890007D0B1F /* vec3.c in Sources */,
-				D2E65C481862647B007D0B1F /* cpHashSet.c in Sources */,
-				D2E65CA018626890007D0B1F /* mat3.c in Sources */,
-				D2E65C581862647B007D0B1F /* cpSweep1D.c in Sources */,
-				D2E65C9B18626890007D0B1F /* aabb.c in Sources */,
-				D2E65CA618626890007D0B1F /* utility.c in Sources */,
-				D2E65C401862647B007D0B1F /* cpBBTree.c in Sources */,
-				D2E65C431862647B007D0B1F /* cpConstraint.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
