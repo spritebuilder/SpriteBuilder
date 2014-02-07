@@ -45,13 +45,13 @@
 - (IBAction)pressedStart:(id)sender
 {
     SEL selector = NSSelectorFromString(startMethod);
-    [selection performSelector:selector];
+    SUPPRESS_LEAK_WARNING([selection performSelector:selector]);
 }
 
 - (IBAction)pressedStop:(id)sender
 {
     SEL selector = NSSelectorFromString(stopMethod);
-    [selection performSelector:selector];
+    SUPPRESS_LEAK_WARNING([selection performSelector:selector]);
 }
 
 @end

@@ -280,7 +280,7 @@
     if ([item isKindOfClass:[RMResource class]])
     {
         RMResource* res = item;
-#warning Do all images by type
+		// FIXME: Do all images by type
         if (res.type == kCCBResTypeImage)
         {
             icon = [self smallIconForFileType:@"png"];

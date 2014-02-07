@@ -50,7 +50,7 @@
     }
 }
 
-#warning Doesn't work :/ Edit area is too big
+// FIXME: Doesn't work :/ Edit area is too big
 - (NSText*) setUpFieldEditorAttributes:(NSText *)textObj
 {
     textObj.maxSize = NSMakeSize(40000, 16);

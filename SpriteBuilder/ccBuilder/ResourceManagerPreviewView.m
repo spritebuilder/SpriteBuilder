@@ -349,7 +349,7 @@
     if (_previewedResource)
     {
         // Return if the value hasn't changed
-        int oldScaleFrom = [settings valueForResource:_previewedResource andKey:@"scaleFrom"];
+        int oldScaleFrom = [[settings valueForResource:_previewedResource andKey:@"scaleFrom"] intValue];
         if (oldScaleFrom == scaleFrom) return;
         
         if (scaleFrom)
