@@ -1089,16 +1089,14 @@ static BOOL hideAllToNextSeparator;
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorDocumentView respondsToSelector:privateSelector])
     {
-		SUPPRESS_LEAK_WARNING([inspectorDocumentView performSelector:privateSelector withObject:nil]);
+        objc_msgSend(inspectorDocumentView, privateSelector);
     }
     
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorCodeDocumentView respondsToSelector:privateSelector])
     {
-        SUPPRESS_LEAK_WARNING([inspectorCodeDocumentView performSelector:privateSelector withObject:nil]);
+        objc_msgSend(inspectorCodeDocumentView, privateSelector);
     }
-    
-
 }
 
 #pragma mark Populating menus

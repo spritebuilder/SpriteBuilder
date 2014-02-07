@@ -23,6 +23,7 @@
  */
 
 #import "InspectorStartStop.h"
+#import <objc/message.h>
 
 @implementation InspectorStartStop
 
@@ -45,13 +46,13 @@
 - (IBAction)pressedStart:(id)sender
 {
     SEL selector = NSSelectorFromString(startMethod);
-    SUPPRESS_LEAK_WARNING([selection performSelector:selector]);
+    objc_msgSend(selection, selector);
 }
 
 - (IBAction)pressedStop:(id)sender
 {
     SEL selector = NSSelectorFromString(stopMethod);
-    SUPPRESS_LEAK_WARNING([selection performSelector:selector]);
+    objc_msgSend(selection, selector);
 }
 
 @end
