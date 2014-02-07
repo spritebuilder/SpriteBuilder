@@ -2253,6 +2253,15 @@ static BOOL hideAllToNextSeparator;
 
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt
 {
+    PlugInNode* pluginDescription = [[PlugInManager sharedManager] plugInNodeNamed:nodeName];
+    if(pluginDescription.isJoint)
+    {
+    
+    
+    
+    }
+    
+    
     // New node was dropped in working canvas
     CCNode* addedNode = [self addPlugInNodeNamed:nodeName asChild:NO];
     

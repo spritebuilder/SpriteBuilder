@@ -41,6 +41,7 @@
 @synthesize canBeRoot;
 @synthesize canHaveChildren;
 @synthesize isAbstract;
+@synthesize isJoint;
 @synthesize requireParentClass;
 @synthesize requireChildClass;
 @synthesize icon;
@@ -153,6 +154,7 @@
     canBeRoot = [[props objectForKey:@"canBeRootNode"] boolValue];
     canHaveChildren = [[props objectForKey:@"canHaveChildren"] boolValue];
     isAbstract = [[props objectForKey:@"isAbstract"] boolValue];
+    isJoint = [[props objectForKey:@"isJoint"] boolValue];
     requireChildClass = [props objectForKey:@"requireChildClass"];
     requireParentClass = [props objectForKey:@"requireParentClass"];
     positionProperty = [props objectForKey:@"positionProperty"];

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ordering</key>
+	<integer>3000</integer>
+	<key>displayName</key>
+	<string>Physics Pivot Joint</string>
+	<key>description</key>
+	<string>Creates a pivot joint that joins two bodies together by a circular pivoting hinge.</string>
+	<key>inheritsFrom</key>
+	<string>NSObject</string>
+	<key>canHaveChildren</key>
+	<false/>
+	<key>canBeRootNode</key>
+	<false/>
+	<key>isJoint</key>
+	<true/>
+	<key>className</key>
+	<string>CCPhysicsJoint</string>
+	<key>properties</key>
+	<array>
+		<dict>
+			<key>type</key>
+			<string>Separator</string>
+			<key>dontSetInEditor</key>
+			<true/>
+			<key>displayName</key>
+			<string>CCPhysicsPivotJoint</string>
+			<key>name</key>
+			<string>CCPhysicsPivotJoint</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>animatable</key>
+			<false/>
+			<key>displayName</key>
+			<string>Position</string>
+			<key>type</key>
+			<string>Position</string>
+			<key>name</key>
+			<string>position</string>
+		</dict>
+	</array>
+	<key>editorClassName</key>
+	<string>CCBPPhysicsPivotJoint</string>
+	<key>propertiesOverridden</key>
+	<array/>
+</dict>
+</plist>
