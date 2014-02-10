@@ -10,7 +10,17 @@ cd ../Support/$PROJECTNAME.spritebuilder/
 
 # Generate template project
 echo Generating: $PROJECTNAME
-rm -rf $PROJECTNAME.xcodeproj/xcuserdata/
-rm -rf $PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
-rm ../../Generated/$PROJECTNAME.zip
+
+# only remove files if they exist
+if [ -d $PROJECTNAME.xcodeproj/xcuserdata/ ]; then
+	rm -rf $PROJECTNAME.xcodeproj/xcuserdata/
+fi
+if [ -d $PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata/ ]; then
+	rm -rf $PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata/
+fi
+if [ -f ../../Generated/$PROJECTNAME.zip ]; then
+	rm ../../Generated/$PROJECTNAME.zip
+fi
+
 zip -q -r ../../Generated/$PROJECTNAME.zip * -x *.git*
+echo ""
