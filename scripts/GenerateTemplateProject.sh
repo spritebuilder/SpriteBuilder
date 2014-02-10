@@ -9,6 +9,7 @@ cd $SCRIPT_DIR
 cd ../Support/$PROJECTNAME.spritebuilder/
 
 # Generate template project
+echo Generating: $PROJECTNAME
 rm -rf $PROJECTNAME.xcodeproj/xcuserdata/
 rm -rf $PROJECTNAME.xcodeproj/project.xcworkspace/xcuserdata
 rm ../../Generated/$PROJECTNAME.zip
