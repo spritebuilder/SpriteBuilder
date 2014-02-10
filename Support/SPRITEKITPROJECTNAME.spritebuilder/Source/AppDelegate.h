@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SB+SpriteKit.h"
+#import "SB+KoboldKit.h"
 
 @interface AppDelegate : KKAppDelegate
 
