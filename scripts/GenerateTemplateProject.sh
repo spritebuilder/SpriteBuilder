@@ -22,5 +22,5 @@ if [ -f ../../Generated/$PROJECTNAME.zip ]; then
 	rm ../../Generated/$PROJECTNAME.zip
 fi
 
-zip -q -r ../../Generated/$PROJECTNAME.zip * -x *.git*
+zip -q -r ../../Generated/$PROJECTNAME.zip * -x *.git* */tests/*
 echo ""
