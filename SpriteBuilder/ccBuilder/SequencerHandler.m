@@ -273,6 +273,12 @@ static SequencerHandler* sharedSequencerHandler;
     if ([[CCBGlobals globals] rootNode] == NULL) return 0;
     if (item == nil) return 4;
     
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        SequencerJoints * joints = item;
+        return [joints.all count];
+    }
+    
     CCNode* node = (CCNode*)item;
     NSArray* arr = [node children];
     
@@ -285,9 +291,15 @@ static SequencerHandler* sharedSequencerHandler;
     if (item == nil) return YES;
     
     // Channels are not expandable
-    if ([item isKindOfClass:[SequencerChannel class]] || [item isKindOfClass:[SequencerJoints class]])
+    if ([item isKindOfClass:[SequencerChannel class]])
     {
         return NO;
+    }
+    
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        SequencerJoints * joints = item;
+        return [joints.all count] > 0;
     }
     
     CCNode* node = (CCNode*)item;
@@ -327,6 +339,11 @@ static SequencerHandler* sharedSequencerHandler;
         {
             return g.joints;
         }
+    }
+    
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return g.joints.all[index];
     }
     
     CCNode* node = (CCNode*)item;
@@ -584,12 +601,22 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
 {
+    if([notification.userInfo[@"NSObject"] isKindOfClass:[SequencerJoints class]])
+    {
+        return;
+    }
+
     CCNode* node = [[notification userInfo] objectForKey:@"NSObject"];
     [node setExtraProp:[NSNumber numberWithBool:NO] forKey:@"isExpanded"];
 }
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
 {
+    if([notification.userInfo[@"NSObject"] isKindOfClass:[SequencerJoints class]])
+    {
+        return;
+    }
+    
     CCNode* node = [[notification userInfo] objectForKey:@"NSObject"];
     [node setExtraProp:[NSNumber numberWithBool:YES] forKey:@"isExpanded"];
 }
