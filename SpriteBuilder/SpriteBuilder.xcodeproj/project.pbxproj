@@ -130,6 +130,7 @@
 		921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD318A5760700D864C2 /* joint-pivot-sel@2x.png */; };
 		921EEADC18A5760700D864C2 /* joint-pivot.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD418A5760700D864C2 /* joint-pivot.png */; };
 		921EEADD18A5760700D864C2 /* joint-pivot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD518A5760700D864C2 /* joint-pivot@2x.png */; };
+		921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEADF18A5884300D864C2 /* SequencerJoints.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
@@ -1092,6 +1093,8 @@
 		921EEAD318A5760700D864C2 /* joint-pivot-sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-sel@2x.png"; sourceTree = "<group>"; };
 		921EEAD418A5760700D864C2 /* joint-pivot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot.png"; sourceTree = "<group>"; };
 		921EEAD518A5760700D864C2 /* joint-pivot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot@2x.png"; sourceTree = "<group>"; };
+		921EEADE18A5884300D864C2 /* SequencerJoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerJoints.h; sourceTree = "<group>"; };
+		921EEADF18A5884300D864C2 /* SequencerJoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerJoints.m; sourceTree = "<group>"; };
 		92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreivewAudio.h; sourceTree = "<group>"; };
 		92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewAudio.m; sourceTree = "<group>"; };
 		92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewAudio.xib; sourceTree = "<group>"; };
@@ -3219,6 +3222,8 @@
 				E312973716CC67CA00A09155 /* SequencerPopoverSound.m */,
 				8045F13A183AF1DC0082BD94 /* SequencerButtonCell.h */,
 				8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */,
+				921EEADE18A5884300D864C2 /* SequencerJoints.h */,
+				921EEADF18A5884300D864C2 /* SequencerJoints.m */,
 			);
 			name = Sequencer;
 			sourceTree = "<group>";
@@ -4946,6 +4951,7 @@
 				80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */,
 				80FBACC31833FAE000C4BB69 /* WarningTableView.m in Sources */,
 				80FBACC41833FAE000C4BB69 /* WarningTableViewHandler.m in Sources */,
+				921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */,
 				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
 				7789ABD0133AA82000CEFCC7 /* main.m in Sources */,
 				7789ABD6133AA82000CEFCC7 /* AppDelegate.m in Sources */,

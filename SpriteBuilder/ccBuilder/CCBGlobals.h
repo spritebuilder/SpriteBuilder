@@ -26,6 +26,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "CocosScene.h"
+#import "SequencerJoints.h"
 
 @class AppDelegate;
 
@@ -41,6 +42,7 @@
 }
 
 @property (nonatomic,strong) CCNode* rootNode;
+@property (nonatomic,strong) SequencerJoints * joints;
 
 // Settings
 @property (nonatomic,assign) int numRuns;

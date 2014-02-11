@@ -72,6 +72,7 @@ typedef enum {
     CCNode* contentLayer;
     CCNode* selectionLayer;
     CCNode* physicsLayer;
+    CCNode* jointsLayer;
     CCNode* borderLayer;
     RulersLayer* rulerLayer;
     GuidesLayer* guideLayer;
@@ -124,6 +125,7 @@ typedef enum {
 }
 
 @property (nonatomic) CCNode* rootNode;
+
 @property (nonatomic,readonly) BOOL isMouseTransforming;
 @property (nonatomic,assign) CGPoint scrollOffset;
 
@@ -154,7 +156,7 @@ typedef enum {
 - (void) setStageZoom:(float) zoom;
 - (float) stageZoom;
 
-- (void) replaceRootNodeWith:(CCNode*)node;
+- (void) replaceSceneNodes:(CCNode*)aRootNode joints:(CCNode*)aJointsNode;
 
 - (void) updateSelection;
 - (void) selectBehind;

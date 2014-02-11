@@ -102,6 +102,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     notesLayer = [NotesLayer node];
     [self addChild:notesLayer z:6];
     
+    
     // Selection layer
     selectionLayer = [CCNode node];
     [self addChild:selectionLayer z:4];
@@ -152,6 +153,13 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     contentLayer.contentSizeType = CCSizeTypeNormalized;
     contentLayer.contentSize = CGSizeMake(1, 1);
     [stageBgLayer addChild:contentLayer];
+    
+    // Joints Layer
+    jointsLayer = [CCNode node];
+    jointsLayer.contentSizeType = CCSizeTypeNormalized;
+    jointsLayer.contentSize = CGSizeMake(1, 1);
+    [stageBgLayer addChild:jointsLayer];
+
 }
 
 - (void) setStageBorder:(int)type
@@ -328,8 +336,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
         }
     }
-    
-    
 }
 
 - (CGSize) stageSize
@@ -375,18 +381,23 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 #pragma mark Replacing content
 
-- (void) replaceRootNodeWith:(CCNode*)node
+- (void) replaceSceneNodes:(CCNode*)aRootNode joints:(CCNode*)aJointsNode;
 {
     CCBGlobals* g = [CCBGlobals globals];
     
     [contentLayer removeChild:rootNode cleanup:YES];
+    [jointsLayer removeAllChildrenWithCleanup:YES];
     
-    self.rootNode = node;
-    g.rootNode = node;
+    self.rootNode = aRootNode;
+    g.rootNode = aRootNode;
+    g.joints.node = aJointsNode;
     
-    if (!node) return;
     
-    [contentLayer addChild:node];
+    if (aRootNode)
+        [contentLayer addChild:aRootNode];
+    
+    if(aJointsNode)
+        [jointsLayer addChild:aJointsNode];
 }
 
 #pragma mark Handle selections
@@ -989,7 +1000,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Clicks inside objects
     [nodesAtSelectionPt removeAllObjects];
-    [self nodesUnderPt:pos rootNode:rootNode nodes:nodesAtSelectionPt];
+    
+    [self nodesUnderPt:pos rootNode:jointsLayer.children[0] nodes:nodesAtSelectionPt];
+    if(nodesAtSelectionPt.count == 0)
+    {
+        [self nodesUnderPt:pos rootNode:rootNode nodes:nodesAtSelectionPt];
+    }
+    
+
     currentNodeAtSelectionPtIdx = (int)[nodesAtSelectionPt count] -1;
     
     currentMouseTransform = kCCBTransformHandleNone;

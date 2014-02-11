@@ -76,6 +76,7 @@
 #import "SequencerStretchWindow.h"
 #import "SequencerSoundChannel.h"
 #import "SequencerCallbackChannel.h"
+#import "SequencerJoints.h"
 #import "SoundFileImageController.h"
 #import "CustomPropSettingsWindow.h"
 #import "CustomPropSetting.h"
@@ -1247,6 +1248,15 @@ static BOOL hideAllToNextSeparator;
     
     [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
     
+    NSMutableArray * joints = [NSMutableArray array];
+    for (CCNode * joint in g.joints.all)
+    {
+        [joints addObject:[CCBWriterInternal dictionaryFromCCObject:joint]];
+    }
+    
+    [dict setObject:joints forKey:@"joints"];
+
+    
     // Resolutions
     if (doc.resolutions)
     {
@@ -1481,9 +1491,20 @@ static BOOL hideAllToNextSeparator;
     // Process contents
     CCNode* loadedRoot = [CCBReaderInternal nodeGraphFromDocumentDictionary:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
     
+    CCNode* loadedJoints = [CCNode node];
+    if(doc[@"joints"] != nil)
+    {
+        for (NSDictionary * jointDict in doc[@"joints"])
+        {
+            CCNode * joint = [CCBReaderInternal nodeGraphFromDictionary:jointDict parentSize:CGSizeMake(resolution.width, resolution.height)];
+            
+            [loadedJoints addChild:joint];
+        }
+    }
+    
     // Replace open document
     self.selectedNodes = NULL;
-    [[CocosScene cocosScene] replaceRootNodeWith:loadedRoot];
+    [[CocosScene cocosScene] replaceSceneNodes:loadedRoot joints:loadedJoints];
     [outlineHierarchy reloadData];
     [sequenceHandler updateOutlineViewSelection];
     [self updateInspectorFromSelection];
@@ -1556,7 +1577,7 @@ static BOOL hideAllToNextSeparator;
 - (void) closeLastDocument
 {
     self.selectedNodes = NULL;
-    [[CocosScene cocosScene] replaceRootNodeWith:NULL];
+    [[CocosScene cocosScene] replaceSceneNodes:NULL joints:nil];
     [[CocosScene cocosScene] setStageSize:CGSizeMake(0, 0) centeredOrigin:YES];
     [[CocosScene cocosScene].guideLayer removeAllGuides];
     [[CocosScene cocosScene].notesLayer removeAllNotes];
@@ -1919,7 +1940,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Create new node
-    [[CocosScene cocosScene] replaceRootNodeWith:[[PlugInManager sharedManager] createDefaultNodeOfType:class]];
+    [[CocosScene cocosScene] replaceSceneNodes:[[PlugInManager sharedManager] createDefaultNodeOfType:class] joints:[CCNode node]];
     
     if (type == kCCBNewDocTypeScene)
     {
@@ -2154,9 +2175,18 @@ static BOOL hideAllToNextSeparator;
     CCBGlobals* g = [CCBGlobals globals];
     
     CCNode* parent;
-    if (!self.selectedNode) parent = g.rootNode;
-    else if (self.selectedNode == g.rootNode) parent = g.rootNode;
-    else parent = self.selectedNode.parent;
+    if (!self.selectedNode)
+    {
+        parent = g.rootNode;
+    }
+    else if (self.selectedNode == g.rootNode)
+    {
+        parent = g.rootNode;
+    }
+    else
+    {
+        parent = self.selectedNode.parent;
+    }
     
     if (asChild)
     {
@@ -2251,20 +2281,31 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+-(void)addJoint:(NSString*)jointName at:(CGPoint)pt
+{
+    CCBGlobals* g = [CCBGlobals globals];
+    
+    CCNode* addedNode = [[PlugInManager sharedManager] createDefaultNodeOfType:jointName];
+    [g.joints addJoint:(CCBPhysicsJoint*)addedNode];
+    
+
+    [PositionPropertySetter setPosition:[addedNode.parent convertToNodeSpace:pt] forNode:addedNode prop:@"position"];
+
+}
+
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt
 {
     PlugInNode* pluginDescription = [[PlugInManager sharedManager] plugInNodeNamed:nodeName];
     if(pluginDescription.isJoint)
     {
-    
-    
-    
+        [self addJoint:nodeName at:pt];
+        return;
     }
-    
     
     // New node was dropped in working canvas
     CCNode* addedNode = [self addPlugInNodeNamed:nodeName asChild:NO];
     
+        
     // Set position
     if (addedNode)
     {
