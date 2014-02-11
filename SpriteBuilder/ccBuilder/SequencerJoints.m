@@ -7,7 +7,7 @@
 //
 
 #import "SequencerJoints.h"
-#import "CCBPPhysicsPivotJoint.h"
+#import "CCBPhysicsPivotJoint.h"
 
 @implementation SequencerJoints
 

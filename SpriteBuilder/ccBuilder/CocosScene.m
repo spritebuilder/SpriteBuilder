@@ -312,8 +312,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     
     stageBgLayer.contentSize = size;
-    if (centeredOrigin) contentLayer.position = ccp(size.width/2, size.height/2);
-    else contentLayer.position = ccp(0,0);
+    jointsLayer.contentSize = size;
+    
+    if (centeredOrigin)
+    {
+        contentLayer.position = ccp(size.width/2, size.height/2);
+        jointsLayer.position = contentLayer.position;
+    }
+    else
+    {
+        contentLayer.position = ccp(0,0);
+        jointsLayer.position = contentLayer.position;
+    }
     
     [self setStageBorder:stageBorderType];
     
@@ -1838,6 +1848,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         renderedScene.scale = stageZoom;
         [renderedScene beginWithClear:0 g:0 b:0 a:1];
         [contentLayer visit];
+        [jointsLayer visit];
         [renderedScene end];
         [borderDevice texture].antialiased = NO;
     }
@@ -1846,7 +1857,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [selectionLayer removeAllChildrenWithCleanup:YES];
     [physicsLayer removeAllChildrenWithCleanup:YES];
     
-    if (appDelegate.physicsHandler.editingPhysicsBody)
+    if (appDelegate.physicsHandler.editingPhysicsBody || appDelegate.selectedNode.plugIn.isJoint)
     {
         [appDelegate.physicsHandler updatePhysicsEditor:physicsLayer];
     }

@@ -31,6 +31,8 @@
 #import "CocosScene.h"
 #import "CCBUtil.h"
 #import "CCSprite_Private.h"
+#import "PlugInNode.h"
+#import "CCBPhysicsPivotJoint.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -414,10 +416,19 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     float scale = [self radiusScaleFactor];
     float selectionBorderWidth = 1.0 / [CCDirector sharedDirector].contentScaleFactor;
     
-    if (self.editingPhysicsBody)
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
+    
+    if(node.plugIn.isJoint)
     {
-        CCNode* node = [AppDelegate appDelegate].selectedNode;
+        CCBPhysicsJoint * joint = node;
         
+        if(!joint.bodyA)
+        {
+                        
+        }
+    }
+    else if (self.editingPhysicsBody)
+    {
         // Position physic corners
         NodePhysicsBody* body = node.nodePhysicsBody;
         
@@ -544,9 +555,6 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                     }
                 }
             }
-            
-            
-            
         }
         else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
         {
@@ -587,6 +595,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             [editorView addChild:edgeHandle];
         }
     }
+}
+
+- (void) updateJointEditor
+{
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
+    
+    
+    
 }
 
 - (float) radiusScaleFactor
