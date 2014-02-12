@@ -33,6 +33,8 @@
 
 @end
 
+
+
 @implementation CCBPhysicsJoint
 
 - (id) init
@@ -45,8 +47,6 @@
     
     scaleFreeNode = [ScaleFreeNode node];
     [self addChild:scaleFreeNode];
-    
-
 
     bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
     bodyAOutlet.position = ccp(-10.0f,-10.0f);
@@ -59,6 +59,52 @@
     return self;
 }
 
+-(int)hitTestOutlet:(CGPoint)point
+{
+    point = [self convertToNodeSpace:point];
+    
+    if(ccpDistanceSQ(point, bodyAOutlet.position) < 3.0f * 3.0f)
+    {
+        return 0;
+    }
+    
+    if(ccpDistanceSQ(point, bodyBOutlet.position) < 3.0f * 3.0f)
+    {
+        return 1;
+    }
+    
+    return -1;
+}
+
+-(void)resetOutletStatus
+{
+    bodyAOutlet.visible = self.bodyA ? NO : YES;
+    bodyBOutlet.visible = self.bodyB ? NO : YES;
+    
+    bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+
+}
+
+-(CGPoint)outletPos:(int)idx
+{
+    return idx ==0 ? bodyAOutlet.position : bodyBOutlet.position;    
+}
+
+
+
+-(void)setOutletStatus:(int)idx value:(BOOL)value
+{
+    CCSprite * bodyOutlet = idx == 0 ? bodyAOutlet : bodyBOutlet;
+    if(value)
+    {
+        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    }
+    else
+    {
+        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    }
+}
 
 @end
 

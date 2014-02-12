@@ -821,6 +821,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         transformScalingNode = node;
         
+        BOOL isJoint = node.plugIn.isJoint;
+        
         BOOL isContentSizeZero = NO;
         CGPoint points[4];
         
@@ -838,7 +840,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         //NOTE The following return statements should go in order of the CCBTool enumeration.
         //kCCBToolAnchor
-        if(!isContentSizeZero && [self isOverAnchor:node withPoint:pt])
+        if(!isJoint && !isContentSizeZero && [self isOverAnchor:node withPoint:pt])
             return kCCBTransformHandleAnchorPoint;
         
         if([self isOverContentBorders:pt withPoints:points])
@@ -846,15 +848,15 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         
         //kCCBToolScale
-        if([self isOverScale:pt withPoints:points withCorner:nil withOrientation:nil])
+        if(!isJoint && [self isOverScale:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleScale;
         
         //kCCBToolSkew
-        if(!isContentSizeZero && [self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
+        if(!isJoint && !isContentSizeZero && [self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
             return kCCBTransformHandleSkew;
 
         //kCCBToolRotate
-        if([self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
+        if(!isJoint && [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleRotate;
         
     }

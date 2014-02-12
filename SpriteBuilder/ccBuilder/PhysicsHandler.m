@@ -127,6 +127,16 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     return (node && node.nodePhysicsBody && tabIdx == 2);
 }
 
+-(int) handleInsideJointOutlet:(CCNode*)node pos:(CGPoint)pos
+{
+    if(!node.plugIn.isJoint)
+        return -1;
+    
+    CCBPhysicsJoint * joint = node;
+    
+    
+}
+
 - (int) handleIndexForPos:(CGPoint) pos
 {
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
@@ -263,11 +273,13 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event
 {
-    if (!self.editingPhysicsBody) return NO;
-    
-    NodePhysicsBody* body = self.selectedNodePhysicsBody;
     CCNode* node = [AppDelegate appDelegate].selectedNode;
     
+    if (!self.editingPhysicsBody && !node.plugIn.isJoint) return NO;
+    
+    NodePhysicsBody* body = self.selectedNodePhysicsBody;
+    
+    int outletIdx = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestOutlet:pos] : -1;
     int handleIdx = [self handleIndexForPos:pos];
     int lineIdx = [self lineSegmIndexForPos:pos];
     
@@ -311,6 +323,15 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         return YES;
     }
+    else if(outletIdx != -1)
+    {
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        
+        _mouseDownOutletHandle = outletIdx;
+        [joint setOutletStatus:outletIdx value:YES];
+        _mouseOuletPos = pos;
+        return YES;
+    }
     else
     {
         // Clicked outside handle, pass event down to selections
@@ -320,10 +341,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event
 {
-    if (!self.editingPhysicsBody) return NO;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
+    
+    if (!self.editingPhysicsBody && !node.plugIn.isJoint) return NO;
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
-    CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     if (_mouseDownInHandle != -1)
     {
@@ -368,6 +390,13 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         return YES;
     }
+    else if(_mouseDownOutletHandle != -1)
+    {
+        _mouseOuletPos = pos;
+        
+       
+        return YES;
+    }
     else
     {
         // Not doing any physics editing
@@ -398,13 +427,27 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event
 {
-    if (!self.editingPhysicsBody) return NO;
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
+    
+    if (!self.editingPhysicsBody && !node.plugIn.isJoint) return NO;
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
     if (_mouseDownInHandle != -1 && body != nil)
     {
         _mouseDownInHandle = -1;
+        return YES;
+    }
+    
+    if(_mouseDownOutletHandle != -1)
+    {
+        _mouseDownOutletHandle = -1;
+        
+        CCNode* node = [AppDelegate appDelegate].selectedNode;
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        [joint resetOutletStatus];
+
+        
         return YES;
     }
     
@@ -420,12 +463,24 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     if(node.plugIn.isJoint)
     {
-        CCBPhysicsJoint * joint = node;
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         
         if(!joint.bodyA)
         {
                         
         }
+        
+        
+        if(_mouseDownOutletHandle != -1)
+        {
+            CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+            CGPoint fromPt = [joint convertToWorldSpace:[joint outletPos:_mouseDownOutletHandle]];
+            
+            CCDrawNode* drawing = [CCDrawNode node];
+            [drawing drawSegmentFrom:fromPt to:_mouseOuletPos radius:.5 color:[CCColor blackColor]];
+            [editorView addChild:drawing z:-1];
+        }
+        
     }
     else if (self.editingPhysicsBody)
     {

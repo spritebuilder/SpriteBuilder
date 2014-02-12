@@ -32,6 +32,9 @@
     CGPoint _mouseDownPos;
     int _mouseDownInHandle;
     CGPoint _handleStartPos;
+    
+    int     _mouseDownOutletHandle;
+    CGPoint _mouseOuletPos;
 }
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;
