@@ -1,4 +1,4 @@
-/*
+    /*
  * CocosBuilder: http://www.cocosbuilder.com
  *
  * Copyright (c) 2013 Apportable Inc
@@ -455,8 +455,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             _currentBodyTargeted = body;
         else
         {
-            CGPoint loc1 = [body convertToNodeSpace:_mouseDragPos];
-            CGPoint loc2 = [_currentBodyTargeted convertToNodeSpace:_mouseDragPos];
+            CGPoint loc1 = [body convertToNodeSpaceAR:_mouseDragPos];
+            CGPoint loc2 = [_currentBodyTargeted convertToNodeSpaceAR:_mouseDragPos];
             
             if(ccpDistance(CGPointZero, loc1) < ccpDistance(CGPointZero, loc2))
             {
