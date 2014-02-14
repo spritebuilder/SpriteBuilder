@@ -136,6 +136,8 @@
 		921EEB0718AAE84C00D864C2 /* joint-outlet-unset.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */; };
 		921EEB0818AAE84C00D864C2 /* joint-outlet-unset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */; };
 		921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */; };
+		921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */; };
+		921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
@@ -1106,6 +1108,9 @@
 		921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-unset@2x.png"; sourceTree = "<group>"; };
 		921EEB2218ADB7EA00D864C2 /* GeometryUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeometryUtil.h; sourceTree = "<group>"; };
 		921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeometryUtil.m; sourceTree = "<group>"; };
+		921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorNodeReference.xib; sourceTree = "<group>"; };
+		921EEB2A18ADE5C600D864C2 /* InspectorNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorNodeReference.h; sourceTree = "<group>"; };
+		921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorNodeReference.m; sourceTree = "<group>"; };
 		92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreivewAudio.h; sourceTree = "<group>"; };
 		92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewAudio.m; sourceTree = "<group>"; };
 		92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewAudio.xib; sourceTree = "<group>"; };
@@ -3688,10 +3693,10 @@
 				E35DBC2414F4FEF80070A6E4 /* InspectorTexture.xib */,
 				E35DBC2614F4FF3E0070A6E4 /* InspectorTexture.h */,
 				E35DBC2714F4FF3F0070A6E4 /* InspectorTexture.m */,
-				E3B4221C14E58C35004547D6 /* InspectorByte.xib */,
 				E3DA6FFB16CB2BEB00B12FFB /* InspectorPopoverByte.xib */,
 				E3B4221E14E58C75004547D6 /* InspectorByte.h */,
 				E3B4221F14E58C75004547D6 /* InspectorByte.m */,
+				E3B4221C14E58C35004547D6 /* InspectorByte.xib */,
 				E3B4222114E58FEE004547D6 /* InspectorColor3.xib */,
 				E3DA6FFD16CB2C3C00B12FFB /* InspectorPopoverColor3.xib */,
 				E3B4222314E59034004547D6 /* InspectorColor3.h */,
@@ -3738,6 +3743,9 @@
 				E3C65127151C7B8F00D639C0 /* InspectorBlockCCControl.xib */,
 				E3C65129151C7E3600D639C0 /* InspectorBlockCCControl.h */,
 				E3C6512A151C7E3600D639C0 /* InspectorBlockCCControl.m */,
+				921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */,
+				921EEB2A18ADE5C600D864C2 /* InspectorNodeReference.h */,
+				921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */,
 			);
 			name = "Inspector Properties";
 			sourceTree = "<group>";
@@ -4523,6 +4531,7 @@
 				E3FEA8AC14E47C5700119FBE /* InspectorPoint.xib in Resources */,
 				92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */,
 				E3FEA8B114E4872D00119FBE /* InspectorPointLock.xib in Resources */,
+				921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */,
 				E3FEA8B614E4929300119FBE /* InspectorScaleLock.xib in Resources */,
 				E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */,
 				E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */,
@@ -5034,6 +5043,7 @@
 				E35DBBE414F3DD0B0070A6E4 /* InspectorFontTTF.m in Sources */,
 				E35DBBFE14F3EE410070A6E4 /* InspectorFloat.m in Sources */,
 				E35DBC1E14F4DF050070A6E4 /* InspectorStartStop.m in Sources */,
+				921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */,
 				E35DBC2314F4ED980070A6E4 /* InspectorIntegerLabeled.m in Sources */,
 				E35DBC2814F4FF410070A6E4 /* InspectorTexture.m in Sources */,
 				9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */,
