@@ -26,15 +26,21 @@
 #import "cocos2d.h"
 
 @class NodePhysicsBody;
+@class CCBPhysicsJoint;
 
 @interface PhysicsHandler : NSObject
 {
     CGPoint _mouseDownPos;
+    CGPoint _mouseDragPos;
+    
     int _mouseDownInHandle;
     CGPoint _handleStartPos;
     
     int     _mouseDownOutletHandle;
-    CGPoint _mouseOuletPos;
+
+    CCBPhysicsJoint *_currentJoint;
+    CCNode          *_currentBodyTargeted;
+    
 }
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;

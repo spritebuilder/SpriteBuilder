@@ -135,6 +135,7 @@
 		921EEB0618AAE84C00D864C2 /* joint-outlet-set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */; };
 		921EEB0718AAE84C00D864C2 /* joint-outlet-unset.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */; };
 		921EEB0818AAE84C00D864C2 /* joint-outlet-unset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */; };
+		921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
@@ -1103,6 +1104,8 @@
 		921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-set@2x.png"; sourceTree = "<group>"; };
 		921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-unset.png"; sourceTree = "<group>"; };
 		921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-unset@2x.png"; sourceTree = "<group>"; };
+		921EEB2218ADB7EA00D864C2 /* GeometryUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeometryUtil.h; sourceTree = "<group>"; };
+		921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeometryUtil.m; sourceTree = "<group>"; };
 		92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreivewAudio.h; sourceTree = "<group>"; };
 		92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewAudio.m; sourceTree = "<group>"; };
 		92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewAudio.xib; sourceTree = "<group>"; };
@@ -2104,6 +2107,8 @@
 		776041E21498F5A70078095D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				921EEB2218ADB7EA00D864C2 /* GeometryUtil.h */,
+				921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */,
 				E3E05576159B2322001066C5 /* NSString+AppendToFile.h */,
 				E3E05577159B2322001066C5 /* NSString+AppendToFile.m */,
 				772BE563133C06320009B5B9 /* NSFlippedView.h */,
@@ -5118,6 +5123,7 @@
 				E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
 				E3D6BA2316C46E41006AFE0A /* SequencerCallbackChannel.m in Sources */,
+				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
 				E3D6BA2616C46E91006AFE0A /* SequencerChannel.m in Sources */,
 				E3DA6FEE16CAEC7800B12FFB /* SequencerPopoverHandler.m in Sources */,
 				E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */,

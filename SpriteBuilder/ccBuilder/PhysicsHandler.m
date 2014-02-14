@@ -33,6 +33,8 @@
 #import "CCSprite_Private.h"
 #import "PlugInNode.h"
 #import "CCBPhysicsPivotJoint.h"
+#import "CCBGlobals.h"
+#import "GeometryUtil.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -125,16 +127,6 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     NSUInteger tabIdx = [[AppDelegate appDelegate].itemTabView indexOfTabViewItem:[AppDelegate appDelegate].itemTabView.selectedTabViewItem];
     
     return (node && node.nodePhysicsBody && tabIdx == 2);
-}
-
--(int) handleInsideJointOutlet:(CCNode*)node pos:(CGPoint)pos
-{
-    if(!node.plugIn.isJoint)
-        return -1;
-    
-    CCBPhysicsJoint * joint = node;
-    
-    
 }
 
 - (int) handleIndexForPos:(CGPoint) pos
@@ -279,9 +271,9 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
-    int outletIdx = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestOutlet:pos] : -1;
-    int handleIdx = [self handleIndexForPos:pos];
-    int lineIdx = [self lineSegmIndexForPos:pos];
+    int outletIdx   = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestOutlet:pos] : -1;
+    int handleIdx   = [self handleIndexForPos:pos];
+    int lineIdx     = [self lineSegmIndexForPos:pos];
     
     _mouseDownPos = pos;
     _mouseDownInHandle = handleIdx;
@@ -325,11 +317,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
     else if(outletIdx != -1)
     {
-        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        _currentJoint = (CCBPhysicsJoint*)node;
         
         _mouseDownOutletHandle = outletIdx;
-        [joint setOutletStatus:outletIdx value:YES];
-        _mouseOuletPos = pos;
+        [_currentJoint setOutletStatus:outletIdx value:YES];
+        _mouseDragPos = pos;
         return YES;
     }
     else
@@ -341,6 +333,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event
 {
+    _mouseDragPos = pos;
+    
     CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     if (!self.editingPhysicsBody && !node.plugIn.isJoint) return NO;
@@ -392,9 +386,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
     else if(_mouseDownOutletHandle != -1)
     {
-        _mouseOuletPos = pos;
-        
-       
+        [self mouseDraggedJointOutlets];
         return YES;
     }
     else
@@ -403,6 +395,79 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         return NO;
     }
 }
+
+#pragma mark -
+#pragma mark Joints
+#pragma mark -
+
+- (void) updateJointEditor
+{
+    CCNode* node = [AppDelegate appDelegate].selectedNode;
+    
+}
+
+
+-(int) handleInsideJointOutlet:(CCNode*)node pos:(CGPoint)pos
+{
+    if(!node.plugIn.isJoint)
+        return -1;
+    
+    CCBPhysicsJoint * joint = node;
+}
+
+-(void)findPhysicsNodes:(CCNode*)node nodes:(NSMutableArray*)nodes
+{
+    if(node.nodePhysicsBody)
+    {
+        [nodes addObject:node];
+    }
+    
+    for (CCNode * child in node.children) {
+        [self findPhysicsNodes:child nodes:nodes];
+    }
+}
+
+
+-(void)mouseDraggedJointOutlets
+{
+    CCBGlobals * g = [CCBGlobals globals];
+    
+    NSMutableArray * physicsNodes = [NSMutableArray array];
+    [self findPhysicsNodes:g.rootNode nodes:physicsNodes];
+    
+    _currentBodyTargeted = nil;
+    
+    //Find bodies we're inside the physics poly of.
+    NSMutableArray * possibleBodies = [NSMutableArray array];
+    for (CCNode * physicsNode in physicsNodes)
+    {
+        CGPoint testPoint = [physicsNode convertToNodeSpace:_mouseDragPos];
+        if([GeometryUtil pointInRegion:testPoint poly:physicsNode.nodePhysicsBody.points])
+        {
+            [possibleBodies addObject:physicsNode];
+        }
+    }
+    
+    //Select the one we're closest too.
+
+    for (CCNode * body in possibleBodies) {
+        if(_currentBodyTargeted == nil)
+            _currentBodyTargeted = body;
+        else
+        {
+            CGPoint loc1 = [body convertToNodeSpace:_mouseDragPos];
+            CGPoint loc2 = [_currentBodyTargeted convertToNodeSpace:_mouseDragPos];
+            
+            if(ccpDistance(CGPointZero, loc1) < ccpDistance(CGPointZero, loc2))
+            {
+                _currentBodyTargeted = body;
+            }
+        }
+    }
+}
+
+
+#pragma mark -
 
 - (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event
 {   
@@ -441,12 +506,25 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     if(_mouseDownOutletHandle != -1)
     {
-        _mouseDownOutletHandle = -1;
-        
         CCNode* node = [AppDelegate appDelegate].selectedNode;
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        [joint resetOutletStatus];
+        
+        if(_currentBodyTargeted)
+        {
+            if(_mouseDownOutletHandle == 0)
+            {
+                joint.bodyA = _currentBodyTargeted;
+            }
+            else
+            {
+                joint.bodyB = _currentBodyTargeted;
+            }
+        }
 
+        //Cleanup
+        _mouseDownOutletHandle = -1;
+        [joint resetOutletStatus];
+        _currentBodyTargeted = nil;
         
         return YES;
     }
@@ -454,97 +532,46 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     return NO;
 }
 
-- (void) updatePhysicsEditor:(CCNode*) editorView
+- (void)renderPhysicsBody:(CCNode *)node editorView:(CCNode *)editorView
 {
     float scale = [self radiusScaleFactor];
     float selectionBorderWidth = 1.0 / [CCDirector sharedDirector].contentScaleFactor;
     
-    CCNode* node = [AppDelegate appDelegate].selectedNode;
     
-    if(node.plugIn.isJoint)
+    // Position physic corners
+    NodePhysicsBody* body = node.nodePhysicsBody;
+    
+    if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
     {
-        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         
-        if(!joint.bodyA)
+        //Draw corner points.
+        int i = 0;
+        for (NSValue* ptVal in body.points)
         {
-                        
+            // Absolute handle position
+            
+            // TODO: Handle position scale
+            CGPoint pt = [ptVal pointValue];
+            pt = [node convertToWorldSpace:pt];
+            
+            CCSprite* handle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
+            handle.position = pt;
+            [editorView addChild:handle];
+            i++;
         }
         
         
-        if(_mouseDownOutletHandle != -1)
-        {
-            CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-            CGPoint fromPt = [joint convertToWorldSpace:[joint outletPos:_mouseDownOutletHandle]];
-            
-            CCDrawNode* drawing = [CCDrawNode node];
-            [drawing drawSegmentFrom:fromPt to:_mouseOuletPos radius:.5 color:[CCColor blackColor]];
-            [editorView addChild:drawing z:-1];
-        }
+        //Draw concave polys
+        NSArray * polygons;
+        bool success = [PolyDecomposition bayazitDecomposition:body.points outputPoly:&polygons];
         
-    }
-    else if (self.editingPhysicsBody)
-    {
-        // Position physic corners
-        NodePhysicsBody* body = node.nodePhysicsBody;
-        
-        if (body.bodyShape == kCCBPhysicsBodyShapePolygon)
+        if(success)
         {
-            
-            //Draw corner points.
-            int i = 0;
-            for (NSValue* ptVal in body.points)
+            for (NSArray * poly in polygons)
             {
-                // Absolute handle position
-                
-                // TODO: Handle position scale
-                CGPoint pt = [ptVal pointValue];
-                pt = [node convertToWorldSpace:pt];
-                
-                CCSprite* handle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
-                handle.position = pt;
-                [editorView addChild:handle];
-                i++;
-            }
-            
-            
-            //Draw concave polys
-            NSArray * polygons;
-            bool success = [PolyDecomposition bayazitDecomposition:body.points outputPoly:&polygons];
-            
-            if(success)
-            {
-                for (NSArray * poly in polygons)
-                {
-                    CGPoint* points = malloc(sizeof(CGPoint)*poly.count);
-                    int i = 0;
-                    for (NSValue* ptVal in poly)
-                    {
-                        // Absolute handle position
-                        
-                        // TODO: Handle position scale
-                        CGPoint pt = [ptVal pointValue];
-                        pt = [node convertToWorldSpace:pt];
-                        points[i] = ccpRound(pt);
-                        i++;
-                    }
-                    
-                    CCDrawNode* drawing = [CCDrawNode node];
-                    
-                    
-                    [drawing drawPolyWithVerts:points count:poly.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth/2 borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
-                    
-                    [editorView addChild:drawing z:-1];
-                    
-                    free(points);
-                }
-            }
-            
-            
-            //Draw Poly Outline
-            {
-                CGPoint* points = malloc(sizeof(CGPoint)*body.points.count);
+                CGPoint* points = malloc(sizeof(CGPoint)*poly.count);
                 int i = 0;
-                for (NSValue* ptVal in body.points)
+                for (NSValue* ptVal in poly)
                 {
                     // Absolute handle position
                     
@@ -558,107 +585,162 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
                 CCDrawNode* drawing = [CCDrawNode node];
                 
                 
-                [drawing drawPolyWithVerts:points count:body.points.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.7]];
+                [drawing drawPolyWithVerts:points count:poly.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth/2 borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
                 
                 [editorView addChild:drawing z:-1];
                 
                 free(points);
             }
-
-            //highlight intersecting segments.
-            {
-                NSArray * intersectingSegments;
-                if([PolyDecomposition intersectingLines:body.points outputSegments:&intersectingSegments])
-                {
-                    for(int i = 0; i < intersectingSegments.count; i+=2)
-                    {
-                        NSPoint ptA = [intersectingSegments[i] pointValue];
-                        NSPoint ptB = [intersectingSegments[i+1] pointValue];
-                        
-                        ptA = [node convertToWorldSpace:ptA];
-                        ptB = [node convertToWorldSpace:ptB];
-
-                        
-                        CCDrawNode* drawing = [CCDrawNode node];
-                        [drawing drawSegmentFrom:ptA to:ptB radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
-                        
-                        [editorView addChild:drawing z:-1];
-                    }
-                }
-            }
-            
-            //highligh Acute Corners
-            {
-                NSArray * acuteCorners;
-                if([PolyDecomposition acuteCorners:body.points outputSegments:&acuteCorners])
-                {
-                    for(int i = 0; i < acuteCorners.count; i+=3)
-                    {
-                        NSPoint ptA = [acuteCorners[i] pointValue];
-                        NSPoint ptB = [acuteCorners[i+1] pointValue];
-                        NSPoint ptC = [acuteCorners[i+2] pointValue];
-                        
-                        ptA = [node convertToWorldSpace:ptA];
-                        ptB = [node convertToWorldSpace:ptB];
-                        ptC = [node convertToWorldSpace:ptC];
-                        
-                        
-                        CCDrawNode* drawing = [CCDrawNode node];
-                        [drawing drawSegmentFrom:ptA to:ptB radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
-                        [drawing drawSegmentFrom:ptB to:ptC radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
-                        [editorView addChild:drawing z:-1];
-                    }
-                }
-            }
         }
-        else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
+        
+        
+        //Draw Poly Outline
         {
-            CGPoint center = [[body.points objectAtIndex:0] pointValue];
-            center = [node convertToWorldSpace:center];
-            
-            // TODO: Better handling of scale
-            CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * scale, 0));
-            
-            
-            // Circle shape
-            CGPoint* points = malloc(sizeof(CGPoint)*32);
-            
-            for (int i = 0; i < 32; i++)
+            CGPoint* points = malloc(sizeof(CGPoint)*body.points.count);
+            int i = 0;
+            for (NSValue* ptVal in body.points)
             {
-                float angle = (2.0f * M_PI * i)/32;
-                CGPoint pt = ccp(cosf(angle), sinf(angle));
-                pt = ccpMult(pt, scale * body.cornerRadius);
-                pt = ccpAdd(pt, center);
+                // Absolute handle position
                 
-                points[i] = pt;
+                // TODO: Handle position scale
+                CGPoint pt = [ptVal pointValue];
+                pt = [node convertToWorldSpace:pt];
+                points[i] = ccpRound(pt);
+                i++;
             }
             
             CCDrawNode* drawing = [CCDrawNode node];
-            [drawing drawPolyWithVerts:points count:32 fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
+            
+            
+            [drawing drawPolyWithVerts:points count:body.points.count fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.7]];
             
             [editorView addChild:drawing z:-1];
             
             free(points);
-            
-            // Draw handles
-            CCSprite* centerHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
-            centerHandle.position = ccpRound(center);
-            [editorView addChild:centerHandle];
-            
-            CCSprite* edgeHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
-            edgeHandle.position = ccpRound(edge);
-            [editorView addChild:edgeHandle];
         }
+        
+        //highlight intersecting segments.
+        {
+            NSArray * intersectingSegments;
+            if([PolyDecomposition intersectingLines:body.points outputSegments:&intersectingSegments])
+            {
+                for(int i = 0; i < intersectingSegments.count; i+=2)
+                {
+                    NSPoint ptA = [intersectingSegments[i] pointValue];
+                    NSPoint ptB = [intersectingSegments[i+1] pointValue];
+                    
+                    ptA = [node convertToWorldSpace:ptA];
+                    ptB = [node convertToWorldSpace:ptB];
+                    
+                    
+                    CCDrawNode* drawing = [CCDrawNode node];
+                    [drawing drawSegmentFrom:ptA to:ptB radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
+                    
+                    [editorView addChild:drawing z:-1];
+                }
+            }
+        }
+        
+        //highligh Acute Corners
+        {
+            NSArray * acuteCorners;
+            if([PolyDecomposition acuteCorners:body.points outputSegments:&acuteCorners])
+            {
+                for(int i = 0; i < acuteCorners.count; i+=3)
+                {
+                    NSPoint ptA = [acuteCorners[i] pointValue];
+                    NSPoint ptB = [acuteCorners[i+1] pointValue];
+                    NSPoint ptC = [acuteCorners[i+2] pointValue];
+                    
+                    ptA = [node convertToWorldSpace:ptA];
+                    ptB = [node convertToWorldSpace:ptB];
+                    ptC = [node convertToWorldSpace:ptC];
+                    
+                    
+                    CCDrawNode* drawing = [CCDrawNode node];
+                    [drawing drawSegmentFrom:ptA to:ptB radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
+                    [drawing drawSegmentFrom:ptB to:ptC radius:1 color:[CCColor colorWithRed:1 green:.3 blue:.3 alpha:1.0]];
+                    [editorView addChild:drawing z:-1];
+                }
+            }
+        }
+    }
+    else if (body.bodyShape == kCCBPhysicsBodyShapeCircle)
+    {
+        CGPoint center = [[body.points objectAtIndex:0] pointValue];
+        center = [node convertToWorldSpace:center];
+        
+        // TODO: Better handling of scale
+        CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * scale, 0));
+        
+        
+        // Circle shape
+        CGPoint* points = malloc(sizeof(CGPoint)*32);
+        
+        for (int i = 0; i < 32; i++)
+        {
+            float angle = (2.0f * M_PI * i)/32;
+            CGPoint pt = ccp(cosf(angle), sinf(angle));
+            pt = ccpMult(pt, scale * body.cornerRadius);
+            pt = ccpAdd(pt, center);
+            
+            points[i] = pt;
+        }
+        
+        CCDrawNode* drawing = [CCDrawNode node];
+        [drawing drawPolyWithVerts:points count:32 fillColor:[CCColor clearColor] borderWidth:selectionBorderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
+        
+        [editorView addChild:drawing z:-1];
+        
+        free(points);
+        
+        // Draw handles
+        CCSprite* centerHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
+        centerHandle.position = ccpRound(center);
+        [editorView addChild:centerHandle];
+        
+        CCSprite* edgeHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
+        edgeHandle.position = ccpRound(edge);
+        [editorView addChild:edgeHandle];
     }
 }
 
-- (void) updateJointEditor
+- (void) updatePhysicsEditor:(CCNode*) editorView
 {
+   
     CCNode* node = [AppDelegate appDelegate].selectedNode;
     
-    
-    
+    if(node.plugIn.isJoint)
+    {
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        
+        if(!joint.bodyA)
+        {
+            
+        }
+        
+        if(_mouseDownOutletHandle != -1)
+        {
+            CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+            CGPoint fromPt = [joint convertToWorldSpace:[joint outletPos:_mouseDownOutletHandle]];
+            
+            CCDrawNode* drawing = [CCDrawNode node];
+            [drawing drawSegmentFrom:fromPt to:_mouseDragPos radius:.5 color:[CCColor blackColor]];
+            [editorView addChild:drawing z:-1];
+        }
+        
+        if(_currentBodyTargeted)
+        {
+            [self renderPhysicsBody:_currentBodyTargeted editorView:editorView];
+        }
+    }
+    else if (self.editingPhysicsBody)
+    {
+        [self renderPhysicsBody:node editorView:editorView];
+    }
 }
+
+
 
 - (float) radiusScaleFactor
 {
