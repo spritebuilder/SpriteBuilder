@@ -111,6 +111,16 @@
     return NO;
 }
 
+-(NSUInteger)UUID
+{
+    return [[self extraPropForKey:@"UUID"] unsignedIntegerValue];
+}
+
+-(void)setUUID:(NSUInteger)_UUID
+{
+    [self setExtraProp:@(_UUID) forKey:@"UUID"];
+}
+
 - (PlugInNode*) plugIn
 {
     NodeInfo* info = self.userObject;

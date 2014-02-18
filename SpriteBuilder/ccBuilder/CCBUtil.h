@@ -32,4 +32,5 @@ CGPoint ccpClosestPointOnLine(CGPoint v, CGPoint w, CGPoint p);
 @interface CCBUtil : NSObject
 + (void) setSelectedSubmenuItemForMenu:(NSMenu*)menu tag:(int)tag;
 + (NSArray*) findFilesOfType:(NSString*)type inDirectory:(NSString*)d;
++(CCNode*)findNodeWithUUID:(CCNode*)node UUID:(NSUInteger)uuid;
 @end

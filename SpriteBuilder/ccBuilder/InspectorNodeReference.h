@@ -14,5 +14,8 @@
     
 }
 
+- (IBAction)handleDeleteNode:(id)sender;
+- (IBAction)handleGotoNode:(id)sender;
 @property CCNode * reference;
+@property (readonly) NSString * nodeName;
 @end

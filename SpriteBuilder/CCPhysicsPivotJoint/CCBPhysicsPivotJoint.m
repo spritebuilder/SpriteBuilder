@@ -26,9 +26,7 @@
     self.scale = 1.0f/scale;
     
     [super visit];
-    
-    
-    
+ 
 }
 
 @end
@@ -74,6 +72,28 @@
     }
     
     return -1;
+}
+
+-(void)setBodyA:(CCNode *)aBodyA
+{
+    bodyA = aBodyA;
+    [self resetOutletStatus];
+}
+
+-(void)setBodyB:(CCNode *)aBodyB
+{
+    bodyB = aBodyB;
+    [self resetOutletStatus];
+}
+
+-(CCNode*)bodyA
+{
+    return bodyA;
+}
+
+-(CCNode*)bodyB
+{
+    return bodyB;
 }
 
 -(void)resetOutletStatus
@@ -133,5 +153,17 @@
 {
     [super visit];
 }
+
+-(CGPoint)anchorA
+{
+    return anchorA;
+}
+
+-(void)setAnchorA:(CGPoint)aAnchorA
+{
+    anchorA = aAnchorA;
+    
+}
+
 
 @end

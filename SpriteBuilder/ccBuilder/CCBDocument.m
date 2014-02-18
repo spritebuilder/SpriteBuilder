@@ -54,6 +54,7 @@
     
     self.stageZoom = 1;
     self.stageScrollOffset = ccp(0,0);
+    self.UUID = 0x1;
     
     return self;
 }

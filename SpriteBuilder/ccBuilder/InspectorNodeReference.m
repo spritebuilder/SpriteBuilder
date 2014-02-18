@@ -18,16 +18,40 @@
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     
-    CCSizeType type = [PositionPropertySetter sizeTypeForNode:selection prop:propertyName];
-    if (type.heightUnit == CCSizeUnitNormalized) height /= 100.0f;
-    
-	NSSize size = [PositionPropertySetter sizeForNode:selection prop:propertyName];
-    size.height = height;
-    [PositionPropertySetter setSize:size forNode:selection prop:propertyName];
+    [selection setValue:reference forKey:propertyName];
     
     [self updateAffectedProperties];
+}
 
+-(CCNode*)reference
+{
+    return [selection valueForKey:propertyName];
 }
 
 
+-(NSString*)nodeName
+{
+    return self.reference.displayName;
+}
+
+
+- (void) refresh
+{
+    [self willChangeValueForKey:@"reference"];
+    [self didChangeValueForKey:@"reference"];
+    
+    [self willChangeValueForKey:@"nodeName"];
+    [self didChangeValueForKey:@"nodeName"];
+    
+}
+
+- (IBAction)handleDeleteNode:(id)sender
+{
+    self.reference = nil;
+}
+
+- (IBAction)handleGotoNode:(id)sender
+{
+    
+}
 @end

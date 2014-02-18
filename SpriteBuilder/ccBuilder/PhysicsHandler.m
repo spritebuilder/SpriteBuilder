@@ -85,6 +85,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 - (void) awakeFromNib
 {
     _mouseDownInHandle = -1;
+    _mouseDownOutletHandle = -1;
 }
 
 - (void) willChangeSelection
@@ -514,10 +515,12 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             if(_mouseDownOutletHandle == 0)
             {
                 joint.bodyA = _currentBodyTargeted;
+                [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
             }
             else
             {
                 joint.bodyB = _currentBodyTargeted;
+                [[AppDelegate appDelegate] refreshProperty:@"bodyB"];
             }
         }
 

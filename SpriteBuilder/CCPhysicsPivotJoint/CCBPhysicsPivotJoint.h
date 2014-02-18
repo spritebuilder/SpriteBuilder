@@ -14,6 +14,10 @@
 
     CCSprite * bodyAOutlet;
     CCSprite * bodyBOutlet;
+   
+    CCNode * bodyA;
+    CCNode * bodyB;
+    
 }
 
 @property CCNode * bodyA;
@@ -28,6 +32,10 @@
 @end
 
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
-@property CGPoint * anchorA;
+{
+    CGPoint anchorA;
+}
+
+@property CGPoint anchorA;
 
 @end

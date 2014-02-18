@@ -37,6 +37,7 @@
     // Settings
     int numRuns;
     BOOL hasDonated;
+    
 @private
     
 }
@@ -47,6 +48,7 @@
 // Settings
 @property (nonatomic,assign) int numRuns;
 @property (nonatomic,assign) BOOL hasDonated;
+
 
 + (CCBGlobals*) globals;
 

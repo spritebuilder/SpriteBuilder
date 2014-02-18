@@ -878,8 +878,13 @@ static BOOL hideAllToNextSeparator;
         inspectorValue.affectsProperties = affectsProps;
     }
     
+    @try {
     // Load it's associated view
     [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
+    }@catch (NSException * exception) {
+        int break_here =1 ;
+        
+    }
     NSView* view = inspectorValue.view;
     
     [inspectorValue willBeAdded];
@@ -1255,7 +1260,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     [dict setObject:joints forKey:@"joints"];
-
+    [dict setObject:@(doc.UUID) forKey:@"UUID"];
     
     // Resolutions
     if (doc.resolutions)
@@ -1496,7 +1501,7 @@ static BOOL hideAllToNextSeparator;
     {
         for (NSDictionary * jointDict in doc[@"joints"])
         {
-            CCNode * joint = [CCBReaderInternal nodeGraphFromDictionary:jointDict parentSize:CGSizeMake(resolution.width, resolution.height)];
+            CCNode * joint = [CCBReaderInternal nodeGraphFromDictionary:jointDict parentSize:CGSizeMake(resolution.width, resolution.height) withParentGraph:loadedRoot];
             
             [loadedJoints addChild:joint];
         }
@@ -1562,6 +1567,36 @@ static BOOL hideAllToNextSeparator;
     
     // Make sure timeline is up to date
     [sequenceHandler updatePropertiesToTimelinePosition];
+}
+
+-(void)fixupUUID:(CCBDocument*)doc dict:(NSMutableDictionary*)dict
+{
+    if(!dict[@"UUID"])
+    {
+        dict[@"UUID"] = @(doc.UUID);
+        doc.UUID = doc.UUID + 1;
+    }
+    
+    if(dict[@"children"])
+    {
+        for (NSMutableDictionary * child in dict[@"children"])
+        {
+            [self fixupUUID:doc dict:child];
+        }
+        
+    }
+}
+
+
+-(void)fixupDoc:(CCBDocument*) doc
+{
+    //If UUID is unset, it means the doc is out of date. Fixup.
+    if(doc.UUID == 0x0)
+    {
+        doc.UUID = 0x1;
+        [self fixupUUID:doc dict: doc.docData[@"nodeGraph"]];
+
+    }
 }
 
 - (void) switchToDocument:(CCBDocument*) document
@@ -1810,8 +1845,10 @@ static BOOL hideAllToNextSeparator;
     newDoc.docData = doc;
     newDoc.exportPath = [doc objectForKey:@"exportPath"];
     newDoc.exportPlugIn = [doc objectForKey:@"exportPlugIn"];
-    newDoc.exportFlattenPaths = [[doc objectForKey:@"exportFlattenPaths"] boolValue];
+    newDoc.exportFlattenPaths = [doc[@"exportFlattenPaths"] boolValue];
+    newDoc.UUID = [doc[@"UUID"] unsignedIntegerValue];
     
+    [self fixupDoc:newDoc];
     [self switchToDocument:newDoc];
      
     [self addDocument:newDoc];
@@ -2158,6 +2195,10 @@ static BOOL hideAllToNextSeparator;
         obj.hidden = YES;
     }
     
+    
+    obj.UUID = [AppDelegate appDelegate].currentDocument.UUID;
+    [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    
     [outlineHierarchy reloadData];
     [self setSelectedNodes: [NSArray arrayWithObject: obj]];
     [self updateInspectorFromSelection];
@@ -2251,7 +2292,7 @@ static BOOL hideAllToNextSeparator;
         // Set its position
         [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) forNode:node prop:@"position"];
         
-        [CCBReaderInternal setProp:prop ofType:@"SpriteFrame" toValue:[NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil] forNode:node parentSize:CGSizeZero];
+        [CCBReaderInternal setProp:prop ofType:@"SpriteFrame" toValue:[NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil] forNode:node parentSize:CGSizeZero withParentGraph:nil];
         // Set it's displayName to the name of the spriteFile
         node.displayName = [[spriteFile lastPathComponent] stringByDeletingPathExtension];
         [self addCCObject:node toParent:parent];
