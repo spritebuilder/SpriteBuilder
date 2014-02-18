@@ -33,9 +33,9 @@
 
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
 {
-    CGPoint anchorA;
+    CGPoint anchorPos;
 }
 
-@property CGPoint anchorA;
+@property CGPoint anchorPos;
 
 @end

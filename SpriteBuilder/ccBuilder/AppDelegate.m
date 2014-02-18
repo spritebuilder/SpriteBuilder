@@ -1503,7 +1503,10 @@ static BOOL hideAllToNextSeparator;
         {
             CCNode * joint = [CCBReaderInternal nodeGraphFromDictionary:jointDict parentSize:CGSizeMake(resolution.width, resolution.height) withParentGraph:loadedRoot];
             
-            [loadedJoints addChild:joint];
+            if(joint)
+            {
+                [loadedJoints addChild:joint];
+            }
         }
     }
     
@@ -1515,6 +1518,7 @@ static BOOL hideAllToNextSeparator;
     [self updateInspectorFromSelection];
     
     [sequenceHandler updateExpandedForNode:g.rootNode];
+    [sequenceHandler.outlineHierarchy expandItem:g.joints];
     
     // Setup guides
     id guides = [doc objectForKey:@"guides"];

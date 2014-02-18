@@ -17,7 +17,7 @@
 	<key>isJoint</key>
 	<true/>
 	<key>className</key>
-	<string>CCPhysicsJoint</string>
+	<string>CCPhysicsPivotJoint</string>
 	<key>properties</key>
 	<array>
 		<dict>
@@ -73,6 +73,8 @@
 			<string>Position</string>
 			<key>name</key>
 			<string>position</string>
+			<key>inspectorDisabled</key>
+			<false/>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
@@ -84,11 +86,11 @@
 			<key>animatable</key>
 			<false/>
 			<key>displayName</key>
-			<string>AnchorA</string>
+			<string>AnchorPos</string>
 			<key>type</key>
 			<string>Point</string>
 			<key>name</key>
-			<string>anchorA</string>
+			<string>anchorPos</string>
 		</dict>
 	</array>
 	<key>editorClassName</key>

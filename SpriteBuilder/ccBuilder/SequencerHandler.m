@@ -583,7 +583,7 @@ static SequencerHandler* sharedSequencerHandler;
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop){
         id item = [outlineHierarchy itemAtRow:idx];
         
-        if ([item isKindOfClass:[SequencerChannel class]])
+        if ([item isKindOfClass:[SequencerChannel class]] || [item isKindOfClass:[SequencerJoints class]])
         {
             //
         }
@@ -652,9 +652,11 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
-    if (![item isKindOfClass:[CCNode class]]) return NO;
+    if ([item isKindOfClass:[CCNode class]]) return YES;
     
-    return YES;
+    if([item isKindOfClass:[SequencerJoints class]]) return YES;
+    
+    return NO;
 }
 
 - (CGFloat) outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item

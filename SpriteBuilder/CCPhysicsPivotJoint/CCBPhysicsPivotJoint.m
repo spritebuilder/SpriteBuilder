@@ -7,6 +7,9 @@
 //
 
 #import "CCBPhysicsPivotJoint.h"
+#import "AppDelegate.h"
+
+NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
 @interface  ScaleFreeNode : CCNode
 @end
@@ -80,6 +83,7 @@
     [self resetOutletStatus];
 }
 
+
 -(void)setBodyB:(CCNode *)aBodyB
 {
     bodyB = aBodyB;
@@ -110,6 +114,7 @@
 {
     return idx ==0 ? bodyAOutlet.position : bodyBOutlet.position;    
 }
+
 
 
 
@@ -154,15 +159,81 @@
     [super visit];
 }
 
--(CGPoint)anchorA
+-(CGPoint)anchorPos
 {
-    return anchorA;
+    return anchorPos;
 }
 
--(void)setAnchorA:(CGPoint)aAnchorA
+-(void)setAnchorPos:(CGPoint)aAnchorPos
 {
-    anchorA = aAnchorA;
+    anchorPos = aAnchorPos;
     
+}
+
+-(void)setBodyA:(CCNode *)aBodyA
+{
+    if(bodyA)
+    {
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+        {
+            [bodyA removeObserver:self forKeyPath:dependantProperties[i]];
+        }
+    }
+    
+    [super setBodyA:aBodyA];
+    
+    if(!bodyA)
+    {
+        return;
+    }
+
+    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
+    CGPoint lAnchorPos = [bodyA convertToNodeSpaceAR:worldPos];
+    self.anchorPos = lAnchorPos;
+    
+    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+    {
+        [bodyA addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
+        
+    }
+    
+
+}
+
+-(void)setPosition:(CGPoint)position
+{
+    [super setPosition:position];
+    
+    if(!bodyA)
+    {
+        return;
+    }
+    
+    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
+    CGPoint lAnchorPos = [bodyA convertToNodeSpaceAR:worldPos];
+    self.anchorPos = lAnchorPos;
+    
+    [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
+}
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    CGPoint worldPos = [bodyA convertToWorldSpaceAR:self.anchorPos];
+    CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
+    self.position = localPos;
+}
+
+-(void)dealloc
+{
+    if(bodyA)
+    {
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
+            [bodyA removeObserver:self forKeyPath:dependantProperties[i]];
+        }
+        
+    }
+
 }
 
 
