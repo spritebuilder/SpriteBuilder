@@ -1004,6 +1004,7 @@ static BOOL hideAllToNextSeparator;
             NSString* extra = [propInfo objectForKey:@"extra"];
             BOOL animated = [[propInfo objectForKey:@"animatable"] boolValue];
             BOOL isCodeConnection = [[propInfo objectForKey:@"codeConnection"] boolValue];
+            BOOL inspectorDisabled = [[propInfo objectForKey:@"inspectorDisabled"] boolValue];
             if ([name isEqualToString:@"visible"]) animated = YES;
             if ([self.selectedNode shouldDisableProperty:name]) readOnly = YES;
             
@@ -1024,13 +1025,16 @@ static BOOL hideAllToNextSeparator;
                 name = displayName;
             }
             
-            if (isCodeConnection)
+            if(!inspectorDisabled)
             {
-                paneCodeOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneCodeOffset isCodeConnection:YES];
-            }
-            else
-            {
-                paneOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneOffset isCodeConnection:NO];
+                if (isCodeConnection)
+                {
+                    paneCodeOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneCodeOffset isCodeConnection:YES];
+                }
+                else
+                {
+                    paneOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneOffset isCodeConnection:NO];
+                }
             }
         }
     }

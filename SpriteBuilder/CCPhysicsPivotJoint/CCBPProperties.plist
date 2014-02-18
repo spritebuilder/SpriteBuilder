@@ -74,7 +74,7 @@
 			<key>name</key>
 			<string>position</string>
 			<key>inspectorDisabled</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
