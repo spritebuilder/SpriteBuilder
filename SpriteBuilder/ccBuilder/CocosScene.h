@@ -69,6 +69,7 @@ typedef enum {
 {
     CCNodeColor* bgLayer;
     CCNodeColor* stageBgLayer;
+    CCNode     * stageJointsLayer;
     CCNode* contentLayer;
     CCNode* selectionLayer;
     CCNode* physicsLayer;

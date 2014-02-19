@@ -146,6 +146,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     stageBgLayer = [CCNodeColor nodeWithColor:[CCColor blackColor] width:0 height:0];
     stageBgLayer.anchorPoint = ccp(0.5,0.5);
     stageBgLayer.userInteractionEnabled = NO;
+    stageBgLayer.name = @"stageBgLayer";
     //stageBgLayer.ignoreAnchorPointForPosition = NO;
     [self addChild:stageBgLayer z:0];
     
@@ -154,11 +155,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     contentLayer.contentSize = CGSizeMake(1, 1);
     [stageBgLayer addChild:contentLayer];
     
+    
+    stageJointsLayer = [CCNode node];
+    stageJointsLayer.name = @"stageJointsLayer";
+    stageJointsLayer.anchorPoint = ccp(0.5,0.5);
+    stageJointsLayer.userInteractionEnabled = NO;
+     [self addChild:stageJointsLayer z:1];
+    
     // Joints Layer
     jointsLayer = [CCNode node];
     jointsLayer.contentSizeType = CCSizeTypeNormalized;
     jointsLayer.contentSize = CGSizeMake(1, 1);
-    [stageBgLayer addChild:jointsLayer];
+    [stageJointsLayer addChild:jointsLayer];
 
 }
 
@@ -312,7 +320,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     
     stageBgLayer.contentSize = size;
-    jointsLayer.contentSize = size;
+    stageJointsLayer.contentSize = size;
+
     
     if (centeredOrigin)
     {
@@ -366,6 +375,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     stageBgLayer.scale = zoom;
     borderDevice.scale = zoom;
+    stageJointsLayer.scale = zoom;
     
     stageZoom = zoom;
 }
@@ -1832,6 +1842,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     self.contentSize = winSize;
     
     stageBgLayer.position = stageCenter;
+    stageJointsLayer.position = stageCenter;
     renderedScene.position = stageCenter;
     renderedScene.anchorPoint = ccp(0.0f, 0.0f);
     
@@ -1850,7 +1861,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         renderedScene.scale = stageZoom;
         [renderedScene beginWithClear:0 g:0 b:0 a:1];
         [contentLayer visit];
-        [jointsLayer visit];
         [renderedScene end];
         [borderDevice texture].antialiased = NO;
     }

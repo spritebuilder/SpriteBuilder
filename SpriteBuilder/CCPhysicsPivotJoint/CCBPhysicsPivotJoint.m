@@ -184,12 +184,15 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     
     if(!bodyA)
     {
+        self.anchorPos = CGPointZero;
+        [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
         return;
     }
 
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorPos = [bodyA convertToNodeSpaceAR:worldPos];
+    CGPoint lAnchorPos = [bodyA convertToNodeSpace:worldPos];
     self.anchorPos = lAnchorPos;
+    [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
     
     for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
     {
@@ -210,7 +213,7 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     }
     
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorPos = [bodyA convertToNodeSpaceAR:worldPos];
+    CGPoint lAnchorPos = [bodyA convertToNodeSpace:worldPos];
     self.anchorPos = lAnchorPos;
     
     [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
@@ -219,7 +222,7 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    CGPoint worldPos = [bodyA convertToWorldSpaceAR:self.anchorPos];
+    CGPoint worldPos = [bodyA convertToWorldSpace:self.anchorPos];
     CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
     self.position = localPos;
 }
