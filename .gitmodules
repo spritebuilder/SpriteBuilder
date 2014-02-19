@@ -5,3 +5,6 @@
 	path = SpriteBuilder/libs/ssziparchive
 	url = https://github.com/vlidholt/ssziparchive.git
 
+[submodule "SpriteBuilder/libs/SpriteKit"]
+	path = SpriteBuilder/libs/SpriteKit
+	url = git@github.com:apportable/SpriteBuilder-SK.git

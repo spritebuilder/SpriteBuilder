@@ -121,6 +121,10 @@
             
             // Load icon
             plugIn.icon = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"Icon.png"]];
+			if (plugIn.icon == nil)
+			{
+				NSLog(@"WARNING: missing icon for plugin %@", [plugInPath lastPathComponent]);
+			}
         }
     }
 #endif
