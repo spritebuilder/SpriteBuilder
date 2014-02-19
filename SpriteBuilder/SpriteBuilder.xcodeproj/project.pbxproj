@@ -3943,6 +3943,7 @@
 				776C6897138878FB00153214 /* Copy Files (Sparkle framework) */,
 				E3B7AED414E31E5D00DFD402 /* Copy PlugIns */,
 				E3E086E315663928008F1FDB /* Copy Player */,
+				DC3DD33018A948560004D2AC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4979,6 +4980,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DC3DD33018A948560004D2AC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n# This script updates the generated Xcode projects...\n# Uncomment the lines as needed. Avoid committing comment changes.\n\n# Updates Cocos2D Project ....\n#\"$SRCROOT/../scripts/GenerateTemplateProject.sh\" PROJECTNAME\n# Updates Sprite Kit Project ....\n#\"$SRCROOT/../scripts/GenerateTemplateProject.sh\" SPRITEKITPROJECTNAME\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7789ABBA133AA82000CEFCC7 /* Sources */ = {

@@ -5,13 +5,16 @@
 //  Created by Steffen Itterheim on 24/01/14.
 //
 
-#import "MyScene.h"
+#import "MainScene.h"
 
-@implementation MyScene
+@implementation MainScene
 
--(id)initWithSize:(CGSize)size {    
-    if (self = [super initWithSize:size]) {
-        
+/*
+-(id)initWithSize:(CGSize)size
+{
+	self = [super initWithSize:size];
+    if (self)
+	{
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -25,5 +28,6 @@
     }
     return self;
 }
+ */
 
 @end

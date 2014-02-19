@@ -5,6 +5,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface MyScene : SKScene
+@interface MainScene : SKNode
 
 @end
