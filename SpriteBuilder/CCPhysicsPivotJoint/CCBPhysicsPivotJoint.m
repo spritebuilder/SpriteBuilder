@@ -12,6 +12,10 @@
 NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
 @interface  ScaleFreeNode : CCNode
+{
+    float hiddenScale;
+}
+
 @end
 
 @implementation ScaleFreeNode
@@ -26,14 +30,26 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     }
     
     
-    self.scale = 1.0f/scale;
+    [self setScaleX:(hiddenScale * 1.0f/scale)];
+    [self setScaleY:(hiddenScale * 1.0f/scale)];
     
     [super visit];
  
 }
 
+-(void)setScale:(float)scale
+{
+    [super setScale:scale];
+    hiddenScale = scale;
+}
+
+
+
+
 @end
 
+
+static const float kOutletOffset = 20.0f;
 
 
 @implementation CCBPhysicsJoint
@@ -50,11 +66,11 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     [self addChild:scaleFreeNode];
 
     bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyAOutlet.position = ccp(-10.0f,-10.0f);
+    bodyAOutlet.position = ccp(-kOutletOffset,-kOutletOffset);
     [scaleFreeNode addChild:bodyAOutlet];
     
     bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.position = ccp(10.0f,-10.0f);
+    bodyBOutlet.position = ccp(kOutletOffset,-kOutletOffset);
     [scaleFreeNode addChild:bodyBOutlet];
     
     return self;
@@ -64,7 +80,7 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
 {
     point = [self convertToNodeSpace:point];
     
-    if(ccpDistanceSQ(point, bodyAOutlet.position) < 3.0f * 3.0f)
+    if(ccpDistance(point, bodyAOutlet.position) < 3.0f * 3.0f)
     {
         return 0;
     }
@@ -142,6 +158,8 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     {
         return NULL;
     }
+    
+    scaleFreeNode.scale = 1.0f;
     
     CCSprite* joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
     CCSprite* jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
