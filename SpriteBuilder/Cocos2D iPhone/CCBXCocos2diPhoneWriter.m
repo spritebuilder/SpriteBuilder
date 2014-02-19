@@ -66,6 +66,7 @@
     [propTypes addObject:@"FloatScale"];
     [propTypes addObject:@"FloatXY"];
     [propTypes addObject:@"Color4"];
+    [propTypes addObject:@"NodeReference"];
 }
 
 - (id) init
@@ -464,6 +465,21 @@
         [self writeInt:a withSign:NO];
         [self writeInt:b withSign:NO];
     }
+    else if([type isEqualToString:@"NodeReference"])
+    {
+        [self writeInt:(int)[prop unsignedIntegerValue] withSign:NO];
+    }
+    else
+    {
+        NSLog(@"WARNING: Unknown property Type:%@" , type);
+    }
+}
+
+-(void)cacheStringsForJoints:(NSArray*)joints
+{
+    for (NSDictionary * joint in joints) {
+        [self cacheStringsForNode:joint];
+    }
 }
 
 - (void) cacheStringsForNode:(NSDictionary*) node
@@ -853,7 +869,7 @@
     }
 }
 
-- (void) writeNodeGraph:(NSDictionary*)node
+-(BOOL)writeCodeConnections:(NSDictionary*)node
 {
     // Write class
     NSString* class = [node objectForKey:@"customClass"];
@@ -873,12 +889,19 @@
     {
         if([[node objectForKey:@"memberVarAssignmentName"] isEqualToString:@""])
         {
-
+            
             [self.delegate addWarningWithDescription:[NSString stringWithFormat:@"Member ivar assigned with <blank> name. This will likely fail at runtime. Node %@", node[@"displayName"]] isFatal:NO relatedFile:Nil resolution:nil];
             
         }
         [self writeCachedString:[node objectForKey:@"memberVarAssignmentName"] isPath:NO];
     }
+    
+    return hasCustomClass;
+}
+
+- (void) writeNodeGraph:(NSDictionary*)node
+{
+    BOOL hasCustomClass = [self writeCodeConnections:node];
     
     // Write animated properties
     NSDictionary* animatedProps = [node objectForKey:@"animatedProperties"];
@@ -975,6 +998,8 @@
     // Only write customProps if there is a custom class
     if (!hasCustomClass) customProps = [NSArray array];
     
+    NSUInteger uuid = [node[@"UUID"] unsignedIntegerValue];
+    [self writeInt:(int)uuid withSign:NO];
     [self writeInt:(int)[props count] withSign:NO];
     [self writeInt:(int)[customProps count] withSign:NO];
     
@@ -1078,6 +1103,7 @@
         int bodyShape = [[physicsBody objectForKey:@"bodyShape"] intValue];
         float cornerRadius = [[physicsBody objectForKey:@"cornerRadius"] floatValue];
         NSArray* points = [physicsBody objectForKey:@"points"];
+        NSArray* polygons = [physicsBody objectForKey:@"polygons"];
         
         // Props
         BOOL dynamic = [[physicsBody objectForKey:@"dynamic"] boolValue];
@@ -1091,14 +1117,31 @@
         // Write physics body
         [self writeInt:bodyShape withSign:NO];
         [self writeFloat:cornerRadius];
-        [self writeInt:(int)points.count withSign:NO];
-        for (NSArray* serPt in points)
+        
+        
+        if(bodyShape == 1)
         {
-            float x = [[serPt objectAtIndex:0] floatValue];
-            float y = [[serPt objectAtIndex:1] floatValue];
+            float x = [[points[0] objectAtIndex:0] floatValue];
+            float y = [[points[0] objectAtIndex:1] floatValue];
             
             [self writeFloat:x];
             [self writeFloat:y];
+        }
+        else
+        {
+            [self writeInt:(int)polygons.count withSign:NO];
+            for (NSArray * polygon in polygons)
+            {
+                [self writeInt:(int)polygon.count withSign:NO];
+                for (NSArray* serPt in polygon)
+                {
+                    float x = [[serPt objectAtIndex:0] floatValue];
+                    float y = [[serPt objectAtIndex:1] floatValue];
+                    
+                    [self writeFloat:x];
+                    [self writeFloat:y];
+                }
+            }
         }
         
         [self writeBool:dynamic];
@@ -1123,18 +1166,45 @@
     }
 }
 
+-(void)writeJoint:(NSDictionary*)joint
+{
+    NSString* class = [joint objectForKey:@"baseClass"];
+    [self writeCachedString:class isPath:NO];
+    
+    NSArray * properties = joint[@"properties"];
+    [self writeInt:(int)properties.count withSign:NO];
+    
+    for (NSDictionary* property in properties)
+    {
+        [self writeProperty:property[@"value"] type:property[@"type"] name:property[@"name"] platform:property[@"platform"]];
+    }
+}
+
+-(void)writeJoints:(NSArray*)joints
+{
+    [self writeInt:(int)joints.count withSign:NO];
+    for (NSDictionary * joint in joints)
+    {
+        [self writeJoint:joint];
+    }
+}
+
 - (void) writeDocument:(NSDictionary*)doc
 {
     NSDictionary* nodeGraph = [doc objectForKey:@"nodeGraph"];
+    NSArray* joints = doc[@"joints"];
     
     [self cacheStringsForNode:nodeGraph];
     [self cacheStringsForSequences:doc];
+    [self cacheStringsForJoints:joints];
     [self transformStringCache];
     
     [self writeHeader];
     [self writeStringCache];
     [self writeSequences:doc];
     [self writeNodeGraph:nodeGraph];
+    [self writeJoints:joints];
+
 
     //Elias Gamma reader reads a full int off the end, reading outside the bounds by 3 bytes and setting off Guard Malloc detections. Pad file with 3 bytes.
     [self writeBool:NO];

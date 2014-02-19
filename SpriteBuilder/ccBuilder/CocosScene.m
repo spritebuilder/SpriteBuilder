@@ -50,7 +50,7 @@
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
-#define kCCBAnchorPointRadius 6
+#define kCCBAnchorPointRadius 3
 #define kCCBTransformHandleRadius 5
 
 static CocosScene* sharedCocosScene;
@@ -102,6 +102,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     notesLayer = [NotesLayer node];
     [self addChild:notesLayer z:6];
     
+    
     // Selection layer
     selectionLayer = [CCNode node];
     [self addChild:selectionLayer z:4];
@@ -145,6 +146,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     stageBgLayer = [CCNodeColor nodeWithColor:[CCColor blackColor] width:0 height:0];
     stageBgLayer.anchorPoint = ccp(0.5,0.5);
     stageBgLayer.userInteractionEnabled = NO;
+    stageBgLayer.name = @"stageBgLayer";
     //stageBgLayer.ignoreAnchorPointForPosition = NO;
     [self addChild:stageBgLayer z:0];
     
@@ -152,6 +154,20 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     contentLayer.contentSizeType = CCSizeTypeNormalized;
     contentLayer.contentSize = CGSizeMake(1, 1);
     [stageBgLayer addChild:contentLayer];
+    
+    
+    stageJointsLayer = [CCNode node];
+    stageJointsLayer.name = @"stageJointsLayer";
+    stageJointsLayer.anchorPoint = ccp(0.5,0.5);
+    stageJointsLayer.userInteractionEnabled = NO;
+     [self addChild:stageJointsLayer z:1];
+    
+    // Joints Layer
+    jointsLayer = [CCNode node];
+    jointsLayer.contentSizeType = CCSizeTypeNormalized;
+    jointsLayer.contentSize = CGSizeMake(1, 1);
+    [stageJointsLayer addChild:jointsLayer];
+
 }
 
 - (void) setStageBorder:(int)type
@@ -341,8 +357,19 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     
     stageBgLayer.contentSize = size;
-    if (centeredOrigin) contentLayer.position = ccp(size.width/2, size.height/2);
-    else contentLayer.position = ccp(0,0);
+    stageJointsLayer.contentSize = size;
+
+    
+    if (centeredOrigin)
+    {
+        contentLayer.position = ccp(size.width/2, size.height/2);
+        jointsLayer.position = contentLayer.position;
+    }
+    else
+    {
+        contentLayer.position = ccp(0,0);
+        jointsLayer.position = contentLayer.position;
+    }
     
     [self setStageBorder:stageBorderType];
     
@@ -365,8 +392,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
         }
     }
-    
-    
 }
 
 - (CGSize) stageSize
@@ -387,6 +412,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     stageBgLayer.scale = zoom;
     borderDevice.scale = zoom;
+    stageJointsLayer.scale = zoom;
     
     stageZoom = zoom;
 }
@@ -412,18 +438,23 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 #pragma mark Replacing content
 
-- (void) replaceRootNodeWith:(CCNode*)node
+- (void) replaceSceneNodes:(CCNode*)aRootNode joints:(CCNode*)aJointsNode;
 {
     CCBGlobals* g = [CCBGlobals globals];
     
     [contentLayer removeChild:rootNode cleanup:YES];
+    [jointsLayer removeAllChildrenWithCleanup:YES];
     
-    self.rootNode = node;
-    g.rootNode = node;
+    self.rootNode = aRootNode;
+    g.rootNode = aRootNode;
+    g.joints.node = aJointsNode;
     
-    if (!node) return;
     
-    [contentLayer addChild:node];
+    if (aRootNode)
+        [contentLayer addChild:aRootNode];
+    
+    if(aJointsNode)
+        [jointsLayer addChild:aJointsNode];
 }
 
 #pragma mark Handle selections
@@ -569,12 +600,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         if (overTypeField)
         {
-            for(int i = 1; i < kCCBToolMax; i++)
+            for(int i = 0; (1 << i) != kCCBToolMax; i++)
             {
                 CCBTool type = (1 << i);
                 if(overTypeField & type && self.currentTool > type)
                 {
-                    self.currentTool = type;
+                    self.currentTool = type; 
                     break;
                 }
             }
@@ -641,6 +672,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGPoint points[4]; //{bl,br,tr,tl}
     [self getCornerPointsForNode:node withPoints:points];
     
+    if([self isOverContentBorders:mousePos withPoints:points])
+        return NO;
     
     for (int i = 0; i < 4; i++)
     {
@@ -705,8 +738,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
 }
 
-- (BOOL) isOverScale:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/  withCorner:(int*)_cornerIndex withOrientation:(CGPoint*)orientation
+- (BOOL) isOverScale:(CGPoint)_mousePos withPoints:(const CGPoint*)points/*{bl,br,tr,tl}*/  withCorner:(int*)_cornerIndex withOrientation:(CGPoint*)_orientation
 {
+    int lCornerIndex = -1;
+    CGPoint orientation;
+    float minDistance = INFINITY;
+    
     for (int i = 0; i < 4; i++)
     {
         CGPoint p1 = points[i % 4];
@@ -715,24 +752,33 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         const float kDistanceToCorner = 8.0f;
         
-        if(ccpLength(ccpSub(_mousePos, p2)) < kDistanceToCorner )
-        {
-            if(orientation)
-            {
-                CGPoint segment1 = ccpSub(p2, p1);
-                CGPoint segment2 = ccpSub(p2, p3);
+        float distance = ccpLength(ccpSub(_mousePos, p2));
         
-                *orientation = ccpNormalize(ccpAdd(segment1, segment2));
-            }
-            
-            if(_cornerIndex)
-            {
-                *_cornerIndex = (i + 1) % 4;
-            }
-            
-            return YES;
+        if(distance < kDistanceToCorner  && distance < minDistance)
+        {
+            CGPoint segment1 = ccpSub(p2, p1);
+            CGPoint segment2 = ccpSub(p2, p3);
+    
+            orientation = ccpNormalize(ccpAdd(segment1, segment2));
+            lCornerIndex = (i + 1) % 4;
+            minDistance = distance;
+
         }
         
+    }
+    
+    if(lCornerIndex != -1)
+    {
+        if(_orientation)
+        {
+            *_orientation = orientation;
+        }
+        
+        if(_cornerIndex)
+        {
+            *_cornerIndex = lCornerIndex;
+        }
+        return YES;
     }
     
     return NO;
@@ -822,6 +868,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         transformScalingNode = node;
         
+        BOOL isJoint = node.plugIn.isJoint;
+        
         BOOL isContentSizeZero = NO;
         CGPoint points[4];
         
@@ -839,19 +887,23 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         //NOTE The following return statements should go in order of the CCBTool enumeration.
         //kCCBToolAnchor
-        if(!isContentSizeZero && [self isOverAnchor:node withPoint:pt])
+        if(!isJoint && !isContentSizeZero && [self isOverAnchor:node withPoint:pt])
             return kCCBTransformHandleAnchorPoint;
-            
+        
+        if([self isOverContentBorders:pt withPoints:points])
+            return kCCBTransformHandleDownInside;
+        
+        
         //kCCBToolScale
-        if([self isOverScale:pt withPoints:points withCorner:nil withOrientation:nil])
+        if(!isJoint && [self isOverScale:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleScale;
         
         //kCCBToolSkew
-        if(!isContentSizeZero && [self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
+        if(!isJoint && !isContentSizeZero && [self isOverSkew:node withPoint:pt withOrientation:nil alongAxis:nil])
             return kCCBTransformHandleSkew;
 
         //kCCBToolRotate
-        if([self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
+        if(!isJoint && [self isOverRotation:pt withPoints:points withCorner:nil withOrientation:nil])
             return kCCBTransformHandleRotate;
         
     }
@@ -914,6 +966,17 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     
     return (isMirroredX ^ isMirroredY);
+}
+
+
+
+- (void)rightMouseDown:(NSEvent *)event
+{
+    if (!appDelegate.hasOpenedDocument) return;
+    
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    if ([appDelegate.physicsHandler rightMouseDown:pos event:event]) return;
+    
 }
 
 - (void) mouseDown:(NSEvent *)event
@@ -996,7 +1059,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Clicks inside objects
     [nodesAtSelectionPt removeAllObjects];
-    [self nodesUnderPt:pos rootNode:rootNode nodes:nodesAtSelectionPt];
+    
+    [self nodesUnderPt:pos rootNode:jointsLayer.children[0] nodes:nodesAtSelectionPt];
+    if(nodesAtSelectionPt.count == 0)
+    {
+        [self nodesUnderPt:pos rootNode:rootNode nodes:nodesAtSelectionPt];
+    }
+    
+
     currentNodeAtSelectionPtIdx = (int)[nodesAtSelectionPt count] -1;
     
     currentMouseTransform = kCCBTransformHandleNone;
@@ -1023,6 +1093,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return;
 }
 
+
+
+- (void) rightMouseUp:(NSEvent *)event
+{
+    if (!appDelegate.hasOpenedDocument) return;
+    
+    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    
+    if ([appDelegate.physicsHandler rightMouseUp:pos event:event]) return;
+    
+    
+}
 
 //0=bottom, 1=right  2=top 3=left
 -(CGPoint)vertexLocked:(CGPoint)anchorPoint
@@ -1797,6 +1879,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     self.contentSize = winSize;
     
     stageBgLayer.position = stageCenter;
+    stageJointsLayer.position = stageCenter;
     renderedScene.position = stageCenter;
     renderedScene.anchorPoint = ccp(0.0f, 0.0f);
     
@@ -1823,7 +1906,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [selectionLayer removeAllChildrenWithCleanup:YES];
     [physicsLayer removeAllChildrenWithCleanup:YES];
     
-    if (appDelegate.physicsHandler.editingPhysicsBody)
+    if (appDelegate.physicsHandler.editingPhysicsBody || appDelegate.selectedNode.plugIn.isJoint)
     {
         [appDelegate.physicsHandler updatePhysicsEditor:physicsLayer];
     }

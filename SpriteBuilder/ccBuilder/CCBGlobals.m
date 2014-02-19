@@ -25,6 +25,7 @@
 
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
+#import "SequencerJoints.h"
 
 
 @implementation CCBGlobals
@@ -50,7 +51,7 @@
     
     numRuns = [[[NSUserDefaults standardUserDefaults] valueForKey:@"numRuns"] intValue];
     hasDonated = [[[NSUserDefaults standardUserDefaults] valueForKey:@"hasDonated"] boolValue];
-    
+    _joints = [[SequencerJoints alloc] init];
     numRuns++;
     [self writeSettings];
     

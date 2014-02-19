@@ -24,6 +24,8 @@
 
 #import "NodePhysicsBody.h"
 #import "AppDelegate.h"
+#import "PolyDecomposition.h"
+#import "NSArray+Query.h"
 
 #define kCCBPhysicsMinimumDefaultCircleRadius 16
 
@@ -101,6 +103,24 @@
         [serPoints addObject:serPt];
     }
     [ser setObject:serPoints forKey:@"points"];
+    
+    //Polygons
+    NSMutableArray * serPolygons = [NSMutableArray array];
+    for (NSArray * polygon in _polygons) {
+        
+        NSMutableArray * serPolygon = [NSMutableArray array];
+        for (NSValue* val in polygon)
+        {
+            CGPoint pt = [val pointValue];
+            NSArray* serPt = [NSArray arrayWithObjects:
+                              [NSNumber numberWithFloat:pt.x],
+                              [NSNumber numberWithFloat:pt.y],
+                              nil];
+            [serPolygon addObject:serPt];
+        }
+        [serPolygons addObject:serPolygon];
+    }
+    [ser setObject:serPolygons forKey:@"polygons"];
     
     // Basic physics props
     [ser setObject:[NSNumber numberWithBool:_dynamic] forKey:@"dynamic"];
@@ -189,6 +209,24 @@
 {
     if (points == _points) return;
     _points = points;
+    
+    if(points && _bodyShape == kCCBPhysicsBodyShapePolygon)
+    {
+        NSArray * outputPolygons;
+        if(![PolyDecomposition bayazitDecomposition:points outputPoly:&outputPolygons])
+        {
+            self.polygons = @[[PolyDecomposition makeConvexHull:points]];
+        }
+        else
+        {
+            self.polygons = outputPolygons;
+        }
+    }
+    else
+    {
+        self.polygons = nil;
+    }
+    
 }
 
 - (void) setDynamic:(BOOL)dynamic
@@ -229,7 +267,7 @@
 
 - (void) dealloc
 {
-    self.points = NULL;
+
 }
 
 @end

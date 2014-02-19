@@ -48,6 +48,7 @@
 #import <objc/runtime.h>
 #import "NSPasteboard+CCB.h"
 #import "MainWindow.h"
+#import "SequencerJoints.h"
 
 static SequencerHandler* sharedSequencerHandler;
 
@@ -262,10 +263,21 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy selectRowIndexes:indexes byExtendingSelection:NO];
 }
 
+#pragma mark -
+#pragma mark Data Source Delegate
+#pragma mark -
+
+
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     
     if ([[CCBGlobals globals] rootNode] == NULL) return 0;
-    if (item == nil) return 3;
+    if (item == nil) return 4;
+    
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        SequencerJoints * joints = item;
+        return [joints.all count];
+    }
     
     CCNode* node = (CCNode*)item;
     NSArray* arr = [node children];
@@ -282,6 +294,12 @@ static SequencerHandler* sharedSequencerHandler;
     if ([item isKindOfClass:[SequencerChannel class]])
     {
         return NO;
+    }
+    
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        SequencerJoints * joints = item;
+        return [joints.all count] > 0;
     }
     
     CCNode* node = (CCNode*)item;
@@ -312,52 +330,25 @@ static SequencerHandler* sharedSequencerHandler;
             // Sound channel
             return currentSequence.soundChannel;
         }
-        else
+        else if(index == 2)
         {
             // Nodes
             return g.rootNode;
         }
+        else if(index == 3)
+        {
+            return g.joints;
+        }
+    }
+    
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return g.joints.all[index];
     }
     
     CCNode* node = (CCNode*)item;
     NSArray* arr = [node children];
     return [arr objectAtIndex:index];
-}
-
-- (void)outlineViewSelectionDidChange:(NSNotification *)notification
-{    
-    NSIndexSet* indexes = [outlineHierarchy selectedRowIndexes];
-    NSMutableArray* selectedNodes = [NSMutableArray array];
-    
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop){
-        id item = [outlineHierarchy itemAtRow:idx];
-        
-        if ([item isKindOfClass:[SequencerChannel class]])
-        {
-            //
-        }
-        else
-        {
-            CCNode* node = item;
-            [selectedNodes addObject:node];
-        }
-    }];
-    
-    appDelegate.selectedNodes = selectedNodes;
-    
-    [appDelegate updateInspectorFromSelection];
-}
-
-- (void)outlineViewItemDidCollapse:(NSNotification *)notification
-{
-    CCNode* node = [[notification userInfo] objectForKey:@"NSObject"];
-    [node setExtraProp:[NSNumber numberWithBool:NO] forKey:@"isExpanded"];
-}
-
-- (void)outlineViewItemDidExpand:(NSNotification *)notification
-{
-    CCNode* node = [[notification userInfo] objectForKey:@"NSObject"];
-    [node setExtraProp:[NSNumber numberWithBool:YES] forKey:@"isExpanded"];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
@@ -373,6 +364,11 @@ static SequencerHandler* sharedSequencerHandler;
         return channel.displayName;
     }
     
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return  @"Joints";
+    }
+    
     if ([tableColumn.identifier isEqualToString:@"sequencer"])
     {
         return @"";
@@ -382,22 +378,13 @@ static SequencerHandler* sharedSequencerHandler;
     {
         return @(node.hidden);
     }
-
+    
     if ([tableColumn.identifier isEqualToString:@"locked"])
     {
         return @(node.locked);
     }
-
+    
     return node.displayName;
-}
-
--(void)setChildrenHidden:(bool)hidden withChildren:(NSArray*)children
-{
-    for(CCNode * child in children)
-    {
-        child.hidden = hidden;
-        [self setChildrenHidden:hidden withChildren:child.children];
-    }
 }
 
 - (void) outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
@@ -407,7 +394,7 @@ static SequencerHandler* sharedSequencerHandler;
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
         bool hidden = [(NSNumber*)object boolValue];
-
+        
         node.hidden = hidden;
         [outlineView reloadItem:node reloadChildren:YES];
     }
@@ -426,23 +413,6 @@ static SequencerHandler* sharedSequencerHandler;
     }
 }
 
-- (BOOL) outlineView:(NSOutlineView *)outline shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
-{
-    NSLog(@"should edit?");
-    if([tableColumn.identifier isEqualToString:@"hidden"])
-    {
-        return NO;
-    }
-    else if([tableColumn.identifier isEqualToString:@"locked"])
-    {
-        return NO;
-    }
-    else
-    {
-        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
-    }
-    return YES;
-}
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
@@ -515,7 +485,7 @@ static SequencerHandler* sharedSequencerHandler;
                 
                 currentSequence.soundChannel.needDragAndDropRedraw = YES;
                 [scrubberSelectionView setNeedsDisplay:YES];
-            
+                
                 return NSDragOperationGeneric;
             }
         }
@@ -530,7 +500,6 @@ static SequencerHandler* sharedSequencerHandler;
     
     return NSDragOperationGeneric;
 }
-
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
@@ -573,13 +542,13 @@ static SequencerHandler* sharedSequencerHandler;
     {
         NSPoint mouseLocationInWindow = info.draggingLocation;
         NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
-
+        
         //Create Keyframe
         SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:mouseLocation.x]];
         NSMutableArray* newArr = [NSMutableArray arrayWithArray:keyFrame.value];
         [newArr replaceObjectAtIndex:kSoundChannelKeyFrameName withObject:dict[@"wavFile"]];
         keyFrame.value = newArr;
-
+        
         addedObject = YES;
     }
     
@@ -602,11 +571,92 @@ static SequencerHandler* sharedSequencerHandler;
     return addedObject;
 }
 
+#pragma mark -
+#pragma mark View Delegate
+#pragma mark -
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{    
+    NSIndexSet* indexes = [outlineHierarchy selectedRowIndexes];
+    NSMutableArray* selectedNodes = [NSMutableArray array];
+    
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop){
+        id item = [outlineHierarchy itemAtRow:idx];
+        
+        if ([item isKindOfClass:[SequencerChannel class]] || [item isKindOfClass:[SequencerJoints class]])
+        {
+            //
+        }
+        else
+        {
+            CCNode* node = item;
+            [selectedNodes addObject:node];
+        }
+    }];
+    
+    appDelegate.selectedNodes = selectedNodes;
+    
+    [appDelegate updateInspectorFromSelection];
+}
+
+- (void)outlineViewItemDidCollapse:(NSNotification *)notification
+{
+    if([notification.userInfo[@"NSObject"] isKindOfClass:[SequencerJoints class]])
+    {
+        return;
+    }
+
+    CCNode* node = [[notification userInfo] objectForKey:@"NSObject"];
+    [node setExtraProp:[NSNumber numberWithBool:NO] forKey:@"isExpanded"];
+}
+
+- (void)outlineViewItemDidExpand:(NSNotification *)notification
+{
+    if([notification.userInfo[@"NSObject"] isKindOfClass:[SequencerJoints class]])
+    {
+        return;
+    }
+    
+    CCNode* node = [[notification userInfo] objectForKey:@"NSObject"];
+    [node setExtraProp:[NSNumber numberWithBool:YES] forKey:@"isExpanded"];
+}
+
+-(void)setChildrenHidden:(bool)hidden withChildren:(NSArray*)children
+{
+    for(CCNode * child in children)
+    {
+        child.hidden = hidden;
+        [self setChildrenHidden:hidden withChildren:child.children];
+    }
+}
+
+- (BOOL) outlineView:(NSOutlineView *)outline shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+    NSLog(@"should edit?");
+    if([tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        return NO;
+    }
+    else if([tableColumn.identifier isEqualToString:@"locked"])
+    {
+        return NO;
+    }
+    else
+    {
+        [outline editColumn:0 row:[outline selectedRow] withEvent:[NSApp currentEvent] select:YES];
+    }
+    return YES;
+}
+
+
+
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
-    if (![item isKindOfClass:[CCNode class]]) return NO;
+    if ([item isKindOfClass:[CCNode class]]) return YES;
     
-    return YES;
+    if([item isKindOfClass:[SequencerJoints class]]) return YES;
+    
+    return NO;
 }
 
 - (CGFloat) outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
@@ -622,6 +672,10 @@ static SequencerHandler* sharedSequencerHandler;
             return kCCBSeqDefaultRowHeight;
         else
             return kCCBSeqAudioRowHeight;//+1;
+    }
+    else if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return kCCBSeqDefaultRowHeight;
     }
     
     CCNode* node = item;
@@ -642,6 +696,11 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (void) outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return;
+    }
+    
     if ([item isKindOfClass:[SequencerChannel class]])
     {
         if ([tableColumn.identifier isEqualToString:@"expander"])

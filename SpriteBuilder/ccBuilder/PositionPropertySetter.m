@@ -468,8 +468,13 @@
         absScaleY = scaleY / resolution.scale;
     }
     
+    [node willChangeValueForKey:[prop stringByAppendingString:@"X"]];
     [node setValue:[NSNumber numberWithFloat:absScaleX] forKey:[prop stringByAppendingString:@"X"]];
+    [node didChangeValueForKey:[prop stringByAppendingString:@"X"]];
+    
+    [node willChangeValueForKey:[prop stringByAppendingString:@"Y"]];
     [node setValue:[NSNumber numberWithFloat:absScaleY] forKey:[prop stringByAppendingString:@"Y"]];
+    [node didChangeValueForKey:[prop stringByAppendingString:@"Y"]];
     
     [node setExtraProp:[NSNumber numberWithFloat:scaleX] forKey:[prop stringByAppendingString:@"X"]];
     [node setExtraProp:[NSNumber numberWithFloat:scaleY] forKey:[prop stringByAppendingString:@"Y"]];

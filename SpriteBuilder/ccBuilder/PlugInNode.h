@@ -49,6 +49,8 @@
     BOOL canBeRoot;
     BOOL canHaveChildren;
     BOOL isAbstract;
+    BOOL isJoint;//Its a physics Joint.
+    
     NSString* positionProperty;
     NSString* requireParentClass;
     NSArray* requireChildClass;
@@ -71,6 +73,7 @@
 @property (nonatomic,readonly) BOOL canBeRoot;
 @property (nonatomic,readonly) BOOL canHaveChildren;
 @property (nonatomic,readonly) BOOL isAbstract;
+@property (nonatomic,readonly) BOOL isJoint;
 @property (nonatomic,readonly) NSString* requireParentClass;
 @property (nonatomic,readonly) NSArray* requireChildClass;
 @property (nonatomic,readonly) NSString* positionProperty;

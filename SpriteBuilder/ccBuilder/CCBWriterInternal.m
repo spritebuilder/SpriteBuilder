@@ -390,6 +390,14 @@
         if (!spriteFile) spriteFile = @"";
         serializedValue = spriteFile;
     }
+    else if([type isEqualToString:@"NodeReference"])
+    {
+         CCNode* nodeRef = [node valueForKey:name];
+         if(nodeRef)
+         {
+             serializedValue = @(nodeRef.UUID);
+         }
+    }
     else
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);
@@ -518,6 +526,12 @@
     {
         [dict setValue:[NSNumber numberWithBool:YES] forKey:@"locked"];
     }
+    
+    if(node.UUID)
+    {
+        dict[@"UUID"] = @(node.UUID);
+    }
+    
 
     
     // Selection

@@ -65,4 +65,5 @@
 @property (nonatomic,strong) NSMutableArray* sequences;
 @property (nonatomic,assign) int currentSequenceId;
 @property (nonatomic,assign) int docDimensionsType;
+@property (nonatomic,assign) NSUInteger UUID;
 @end

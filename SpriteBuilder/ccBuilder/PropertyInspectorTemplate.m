@@ -74,7 +74,7 @@
         NSString* name = [propInfo objectForKey:@"name"];
         id serializedValue = [propInfo objectForKey:@"value"];
         
-        [CCBReaderInternal setProp:name ofType:type toValue:serializedValue forNode:node parentSize:CGSizeMake(0, 0)];
+        [CCBReaderInternal setProp:name ofType:type toValue:serializedValue forNode:node parentSize:CGSizeMake(0, 0) withParentGraph:nil];
     }
 }
 

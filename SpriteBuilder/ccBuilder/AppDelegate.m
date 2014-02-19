@@ -76,6 +76,7 @@
 #import "SequencerStretchWindow.h"
 #import "SequencerSoundChannel.h"
 #import "SequencerCallbackChannel.h"
+#import "SequencerJoints.h"
 #import "SoundFileImageController.h"
 #import "CustomPropSettingsWindow.h"
 #import "CustomPropSetting.h"
@@ -878,9 +879,15 @@ static BOOL hideAllToNextSeparator;
         inspectorValue.affectsProperties = affectsProps;
     }
     
-    // Load it's associated view
+    @try {
+        // Load it's associated view
 	// FIXME: fix deprecation warning
-    SUPPRESS_DEPRECATED([NSBundle loadNibNamed:inspectorNibName owner:inspectorValue]);
+        SUPPRESS_DEPRECATED([NSBundle loadNibNamed:inspectorNibName owner:inspectorValue]);
+    [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
+    }@catch (NSException * exception) {
+        int break_here =1 ;
+        
+    }
     NSView* view = inspectorValue.view;
     
     [inspectorValue willBeAdded];
@@ -1000,6 +1007,7 @@ static BOOL hideAllToNextSeparator;
             NSString* extra = [propInfo objectForKey:@"extra"];
             BOOL animated = [[propInfo objectForKey:@"animatable"] boolValue];
             BOOL isCodeConnection = [[propInfo objectForKey:@"codeConnection"] boolValue];
+            BOOL inspectorDisabled = [[propInfo objectForKey:@"inspectorDisabled"] boolValue];
             if ([name isEqualToString:@"visible"]) animated = YES;
             if ([self.selectedNode shouldDisableProperty:name]) readOnly = YES;
             
@@ -1020,6 +1028,8 @@ static BOOL hideAllToNextSeparator;
                 name = displayName;
             }
             
+            if(!inspectorDisabled)
+            {
             if (isCodeConnection)
             {
                 paneCodeOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneCodeOffset isCodeConnection:YES];
@@ -1029,6 +1039,7 @@ static BOOL hideAllToNextSeparator;
                 paneOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneOffset isCodeConnection:NO];
             }
         }
+    }
     }
     else
     {
@@ -1247,6 +1258,15 @@ static BOOL hideAllToNextSeparator;
     [dict setObject:[[CocosScene cocosScene].notesLayer serializeNotes] forKey:@"notes"];
     
     [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
+    
+    NSMutableArray * joints = [NSMutableArray array];
+    for (CCNode * joint in g.joints.all)
+    {
+        [joints addObject:[CCBWriterInternal dictionaryFromCCObject:joint]];
+    }
+    
+    [dict setObject:joints forKey:@"joints"];
+    [dict setObject:@(doc.UUID) forKey:@"UUID"];
     
     // Resolutions
     if (doc.resolutions)
@@ -1504,14 +1524,29 @@ static BOOL hideAllToNextSeparator;
     // Process contents
     CCNode* loadedRoot = [CCBReaderInternal nodeGraphFromDocumentDictionary:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
     
+    CCNode* loadedJoints = [CCNode node];
+    if(doc[@"joints"] != nil)
+    {
+        for (NSDictionary * jointDict in doc[@"joints"])
+        {
+            CCNode * joint = [CCBReaderInternal nodeGraphFromDictionary:jointDict parentSize:CGSizeMake(resolution.width, resolution.height) withParentGraph:loadedRoot];
+            
+            if(joint)
+            {
+                [loadedJoints addChild:joint];
+            }
+        }
+    }
+    
     // Replace open document
     self.selectedNodes = NULL;
-    [[CocosScene cocosScene] replaceRootNodeWith:loadedRoot];
+    [[CocosScene cocosScene] replaceSceneNodes:loadedRoot joints:loadedJoints];
     [outlineHierarchy reloadData];
     [sequenceHandler updateOutlineViewSelection];
     [self updateInspectorFromSelection];
     
     [sequenceHandler updateExpandedForNode:g.rootNode];
+    [sequenceHandler.outlineHierarchy expandItem:g.joints];
     
     // Setup guides
     id guides = [doc objectForKey:@"guides"];
@@ -1566,6 +1601,36 @@ static BOOL hideAllToNextSeparator;
     [sequenceHandler updatePropertiesToTimelinePosition];
 }
 
+-(void)fixupUUID:(CCBDocument*)doc dict:(NSMutableDictionary*)dict
+{
+    if(!dict[@"UUID"])
+    {
+        dict[@"UUID"] = @(doc.UUID);
+        doc.UUID = doc.UUID + 1;
+    }
+    
+    if(dict[@"children"])
+    {
+        for (NSMutableDictionary * child in dict[@"children"])
+        {
+            [self fixupUUID:doc dict:child];
+        }
+        
+    }
+}
+
+
+-(void)fixupDoc:(CCBDocument*) doc
+{
+    //If UUID is unset, it means the doc is out of date. Fixup.
+    if(doc.UUID == 0x0)
+    {
+        doc.UUID = 0x1;
+        [self fixupUUID:doc dict: doc.docData[@"nodeGraph"]];
+
+    }
+}
+
 - (void) switchToDocument:(CCBDocument*) document
 {
     [self switchToDocument:document forceReload:NO];
@@ -1579,7 +1644,7 @@ static BOOL hideAllToNextSeparator;
 - (void) closeLastDocument
 {
     self.selectedNodes = NULL;
-    [[CocosScene cocosScene] replaceRootNodeWith:NULL];
+    [[CocosScene cocosScene] replaceSceneNodes:NULL joints:nil];
     [[CocosScene cocosScene] setStageSize:CGSizeMake(0, 0) centeredOrigin:YES];
     [[CocosScene cocosScene].guideLayer removeAllGuides];
     [[CocosScene cocosScene].notesLayer removeAllNotes];
@@ -1812,8 +1877,10 @@ static BOOL hideAllToNextSeparator;
     newDoc.docData = doc;
     newDoc.exportPath = [doc objectForKey:@"exportPath"];
     newDoc.exportPlugIn = [doc objectForKey:@"exportPlugIn"];
-    newDoc.exportFlattenPaths = [[doc objectForKey:@"exportFlattenPaths"] boolValue];
+    newDoc.exportFlattenPaths = [doc[@"exportFlattenPaths"] boolValue];
+    newDoc.UUID = [doc[@"UUID"] unsignedIntegerValue];
     
+    [self fixupDoc:newDoc];
     [self switchToDocument:newDoc];
      
     [self addDocument:newDoc];
@@ -1942,7 +2009,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Create new node
-    [[CocosScene cocosScene] replaceRootNodeWith:[[PlugInManager sharedManager] createDefaultNodeOfType:class]];
+    [[CocosScene cocosScene] replaceSceneNodes:[[PlugInManager sharedManager] createDefaultNodeOfType:class] joints:[CCNode node]];
     
     if (type == kCCBNewDocTypeScene)
     {
@@ -2170,6 +2237,10 @@ static BOOL hideAllToNextSeparator;
         obj.hidden = YES;
     }
     
+    
+    obj.UUID = [AppDelegate appDelegate].currentDocument.UUID;
+    [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    
     [outlineHierarchy reloadData];
     [self setSelectedNodes: [NSArray arrayWithObject: obj]];
     [self updateInspectorFromSelection];
@@ -2187,9 +2258,18 @@ static BOOL hideAllToNextSeparator;
     CCBGlobals* g = [CCBGlobals globals];
     
     CCNode* parent;
-    if (!self.selectedNode) parent = g.rootNode;
-    else if (self.selectedNode == g.rootNode) parent = g.rootNode;
-    else parent = self.selectedNode.parent;
+    if (!self.selectedNode)
+    {
+        parent = g.rootNode;
+    }
+    else if (self.selectedNode == g.rootNode)
+    {
+        parent = g.rootNode;
+    }
+    else
+    {
+        parent = self.selectedNode.parent;
+    }
     
     if (asChild)
     {
@@ -2254,7 +2334,7 @@ static BOOL hideAllToNextSeparator;
         // Set its position
         [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) forNode:node prop:@"position"];
         
-        [CCBReaderInternal setProp:prop ofType:@"SpriteFrame" toValue:[NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil] forNode:node parentSize:CGSizeZero];
+        [CCBReaderInternal setProp:prop ofType:@"SpriteFrame" toValue:[NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil] forNode:node parentSize:CGSizeZero withParentGraph:nil];
         // Set it's displayName to the name of the spriteFile
         node.displayName = [[spriteFile lastPathComponent] stringByDeletingPathExtension];
         [self addCCObject:node toParent:parent];
@@ -2284,11 +2364,31 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+-(void)addJoint:(NSString*)jointName at:(CGPoint)pt
+{
+    CCBGlobals* g = [CCBGlobals globals];
+    
+    CCNode* addedNode = [[PlugInManager sharedManager] createDefaultNodeOfType:jointName];
+    [g.joints addJoint:(CCBPhysicsJoint*)addedNode];
+    
+
+    [PositionPropertySetter setPosition:[addedNode.parent convertToNodeSpace:pt] forNode:addedNode prop:@"position"];
+
+}
+
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt
 {
+    PlugInNode* pluginDescription = [[PlugInManager sharedManager] plugInNodeNamed:nodeName];
+    if(pluginDescription.isJoint)
+    {
+        [self addJoint:nodeName at:pt];
+        return;
+    }
+    
     // New node was dropped in working canvas
     CCNode* addedNode = [self addPlugInNodeNamed:nodeName asChild:NO];
     
+        
     // Set position
     if (addedNode)
     {

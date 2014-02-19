@@ -26,12 +26,21 @@
 #import "cocos2d.h"
 
 @class NodePhysicsBody;
+@class CCBPhysicsJoint;
 
 @interface PhysicsHandler : NSObject
 {
     CGPoint _mouseDownPos;
+    CGPoint _mouseDragPos;
+    
     int _mouseDownInHandle;
     CGPoint _handleStartPos;
+    
+    int     _mouseDownOutletHandle;
+
+    CCBPhysicsJoint *_currentJoint;
+    CCNode          *_currentBodyTargeted;
+    
 }
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;
@@ -42,9 +51,13 @@
 - (void) didChangeSelection;
 
 - (void) updatePhysicsEditor:(CCNode*) editorView;
+- (void) updateJointEditor;
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event;
+
+- (BOOL)rightMouseDown:(CGPoint)pos event:(NSEvent*)event;
+- (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event;
 
 @end

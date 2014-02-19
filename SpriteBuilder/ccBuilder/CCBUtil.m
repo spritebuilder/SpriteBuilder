@@ -25,6 +25,7 @@
 
 #import "CCBUtil.h"
 #import "CGPointExtension.h"
+#import "CCNode+NodeInfo.h"
 
 
 CGPoint ccpRound(CGPoint pt)
@@ -93,5 +94,21 @@ CGPoint ccpClosestPointOnLine(CGPoint v, CGPoint w, CGPoint p)
 }
 
 
++(CCNode*)findNodeWithUUID:(CCNode*)node UUID:(NSUInteger)uuid
+{
+    if(node.UUID == uuid)
+    {
+        return node;
+    }
+    
+    for (CCNode * child in node.children)
+    {
+        CCNode * found = [self findNodeWithUUID:child UUID:uuid];
+        if(found)
+            return found;
+    }
+    
+    return NULL;
+}
 
 @end

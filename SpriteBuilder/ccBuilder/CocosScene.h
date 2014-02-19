@@ -55,12 +55,12 @@ typedef enum {
 } CCBTransformHandle;
 
 typedef enum {
-    kCCBToolAnchor      = (1 << 0),
-    kCCBToolScale       =(1 << 1),
-    kCCBToolGrab        =(1 << 2),
-    kCCBToolSkew        =(1 << 3),
-    kCCBToolRotate      =(1 << 4),
-    kCCBToolTranslate   =(1 << 5),
+    kCCBToolAnchor      =(1 << 0),
+    kCCBToolTranslate   =(1 << 1),
+    kCCBToolScale       =(1 << 2),
+    kCCBToolGrab        =(1 << 3),
+    kCCBToolSkew        =(1 << 4),
+    kCCBToolRotate      =(1 << 5),
     kCCBToolSelection   =(1 << 6),
     kCCBToolMax         =(1 << 7)
 }CCBTool;
@@ -77,9 +77,11 @@ enum {
 {
     CCNodeColor* bgLayer;
     CCNodeColor* stageBgLayer;
+    CCNode     * stageJointsLayer;
     CCNode* contentLayer;
     CCNode* selectionLayer;
     CCNode* physicsLayer;
+    CCNode* jointsLayer;
     CCNode* borderLayer;
     RulersLayer* rulerLayer;
     GuidesLayer* guideLayer;
@@ -132,6 +134,7 @@ enum {
 }
 
 @property (nonatomic) CCNode* rootNode;
+
 @property (nonatomic,readonly) BOOL isMouseTransforming;
 @property (nonatomic,assign) CGPoint scrollOffset;
 
@@ -163,7 +166,7 @@ enum {
 - (void) setStageZoom:(float) zoom;
 - (float) stageZoom;
 
-- (void) replaceRootNodeWith:(CCNode*)node;
+- (void) replaceSceneNodes:(CCNode*)aRootNode joints:(CCNode*)aJointsNode;
 
 - (void) updateSelection;
 - (void) selectBehind;

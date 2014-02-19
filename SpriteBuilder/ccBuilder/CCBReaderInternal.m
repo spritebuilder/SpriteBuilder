@@ -37,6 +37,7 @@
 #import "StringPropertySetter.h"
 #import "CCNode+NodeInfo.h"
 #import "NodePhysicsBody.h"
+#import "CCBUtil.h"
 
 // Old positioning constants
 enum
@@ -110,7 +111,7 @@ __strong NSDictionary* renamedProperties = nil;
     return bf;
 }
 
-+ (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize
++ (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph
 {
     // Handle removed ignoreAnchorPointForPosition property
     if ([name isEqualToString:@"ignoreAnchorPointForPosition"]) return;
@@ -377,6 +378,22 @@ __strong NSDictionary* renamedProperties = nil;
         [NodeGraphPropertySetter setNodeGraphForNode:node andProperty:name withFile:ccbFile parentSize:parentSize];
         [extraProps setObject:ccbFile forKey:name];
     }
+    else if ([type isEqualToString:@"NodeReference"])
+    {
+        NSUInteger uuid = [serializedValue unsignedIntegerValue];
+        
+        if(uuid != 0x0)
+        {
+            NSAssert(parentGraph != nil,@"You need a parent graph handed in for a NodeReference to work");
+            
+            CCNode * target = [CCBUtil findNodeWithUUID:parentGraph UUID:uuid];
+            if(!target)
+                return;
+            
+            NSAssert(target != nil, @"Failed to find node with UUID %lu", (unsigned long)uuid);
+            [node setValue:target forKey:name];
+        }
+    }
     else
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);
@@ -384,6 +401,11 @@ __strong NSDictionary* renamedProperties = nil;
 }
 
 + (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize
+{
+    return [CCBReaderInternal nodeGraphFromDictionary:dict parentSize:parentSize withParentGraph:nil];
+}
+
++ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph
 {
     if (!renamedProperties)
     {
@@ -409,6 +431,7 @@ __strong NSDictionary* renamedProperties = nil;
     NodeInfo* nodeInfo = node.userObject;
     NSMutableDictionary* extraProps = nodeInfo.extraProps;
     PlugInNode* plugIn = nodeInfo.plugIn;
+    node.UUID = [dict[@"UUID"] unsignedIntegerValue];
     
     // Flash skew compatibility
     if ([[dict objectForKey:@"usesFlashSkew"] boolValue])
@@ -450,7 +473,7 @@ __strong NSDictionary* renamedProperties = nil;
         }
         else
         {
-            [CCBReaderInternal setProp:name ofType:type toValue:serializedValue forNode:node parentSize:parentSize];
+            [CCBReaderInternal setProp:name ofType:type toValue:serializedValue forNode:node parentSize:parentSize withParentGraph:parentGraph];
         }
         id baseValue = [propInfo objectForKey:@"baseValue"];
         if (baseValue) [node setBaseValue:baseValue forProperty:name];
@@ -529,6 +552,11 @@ __strong NSDictionary* renamedProperties = nil;
 }
 
 + (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize
+{
+    return [CCBReaderInternal nodeGraphFromDocumentDictionary:dict parentSize:parentSize withParentGraph:nil];
+}
+
++ (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize withParentGraph:(CCNode*)parentGraph
 {
     if (!dict)
     {

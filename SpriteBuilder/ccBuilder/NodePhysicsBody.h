@@ -25,18 +25,19 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-enum
+typedef enum
 {
     kCCBPhysicsBodyShapePolygon,
     kCCBPhysicsBodyShapeCircle,
-};
+} CCBPhysicsBodyShape;
 
 @interface NodePhysicsBody : NSObject
 
 // Shape
-@property (nonatomic,assign) int bodyShape;
+@property (nonatomic,assign) CCBPhysicsBodyShape bodyShape;
 @property (nonatomic,assign) float cornerRadius;
-@property (nonatomic,strong) NSArray* points;
+@property (nonatomic) NSArray* points;
+@property (nonatomic) NSArray* polygons;
 
 // Basic physic props
 @property (nonatomic,assign) BOOL dynamic;

@@ -469,21 +469,25 @@
     if (node)
     {
         NSArray* props = [node.plugIn animatablePropertiesForNode:node];
-        for (int i = 0; i < [props count]; i++)
+        
+        if(props.count != 0)
         {
-            if (i==0 || (node.seqExpanded)) {
-                NSString *propName = [props objectAtIndex:i];
-                NSString *propType = [node.plugIn propertyTypeForProperty:propName];
-                if ([@"Check" isEqualToString:propType]) {
-                    [self drawPropertyRowToggle:i property:[props objectAtIndex:i] withFrame:cellFrame inView:controlView];
-                } else {
-                    [self drawPropertyRow:i property:[props objectAtIndex:i] withFrame:cellFrame inView:controlView];
+            for (int i = 0; i < [props count]; i++)
+            {
+                if (i==0 || (node.seqExpanded)) {
+                    NSString *propName = [props objectAtIndex:i];
+                    NSString *propType = [node.plugIn propertyTypeForProperty:propName];
+                    if ([@"Check" isEqualToString:propType]) {
+                        [self drawPropertyRowToggle:i property:[props objectAtIndex:i] withFrame:cellFrame inView:controlView];
+                    } else {
+                        [self drawPropertyRow:i property:[props objectAtIndex:i] withFrame:cellFrame inView:controlView];
+                    }
                 }
             }
+            // collapsed props are all animatable exept the first one!
+            NSArray *collapsedProps = [props subarrayWithRange:NSMakeRange(1, [props count]-1)];
+            [self drawCollapsedProps:collapsedProps withFrame:cellFrame inView:controlView];
         }
-        // collapsed props are all animatable exept the first one!
-        NSArray *collapsedProps = [props subarrayWithRange:NSMakeRange(1, [props count]-1)];
-        [self drawCollapsedProps:collapsedProps withFrame:cellFrame inView:controlView];
     }
     else if (channel)
     {

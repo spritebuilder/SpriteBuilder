@@ -112,8 +112,37 @@
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
+		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
+		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
+		92154ACB18A5531800BD215C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC518A5531800BD215C /* Icon@2x.png */; };
+		92154AD318A5560B00BD215C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
+		92154ADD18A5563300BD215C /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
+		92154ADE18A5565C00BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
+		92154ADF18A5565C00BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
+		92154AE018A5565C00BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
+		92154AE318A55A4200BD215C /* CCPhysicsPivotJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */; };
+		921EEAD618A5760700D864C2 /* joint-anchor-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEACE18A5760700D864C2 /* joint-anchor-sel.png */; };
+		921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */; };
+		921EEAD818A5760700D864C2 /* joint-anchor.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD018A5760700D864C2 /* joint-anchor.png */; };
+		921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD118A5760700D864C2 /* joint-anchor@2x.png */; };
+		921EEADA18A5760700D864C2 /* joint-pivot-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD218A5760700D864C2 /* joint-pivot-sel.png */; };
+		921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD318A5760700D864C2 /* joint-pivot-sel@2x.png */; };
+		921EEADC18A5760700D864C2 /* joint-pivot.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD418A5760700D864C2 /* joint-pivot.png */; };
+		921EEADD18A5760700D864C2 /* joint-pivot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD518A5760700D864C2 /* joint-pivot@2x.png */; };
+		921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEADF18A5884300D864C2 /* SequencerJoints.m */; };
+		921EEB0518AAE84C00D864C2 /* joint-outlet-set.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0118AAE84C00D864C2 /* joint-outlet-set.png */; };
+		921EEB0618AAE84C00D864C2 /* joint-outlet-set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */; };
+		921EEB0718AAE84C00D864C2 /* joint-outlet-unset.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */; };
+		921EEB0818AAE84C00D864C2 /* joint-outlet-unset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */; };
+		921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */; };
+		921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */; };
+		921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */; };
+		926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D139418B2DC2E00582959 /* NSDictionary+Query.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
+		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
+		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
@@ -644,6 +673,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		92154AE118A5567400BD215C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92154ACF18A5560B00BD215C;
+			remoteInfo = CCPhysicsPivotJoint;
+		};
+		9297AC2C18A418D0003C3705 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D37EE9FC187D4E7700CB5EF2;
+			remoteInfo = ObjectiveChipmunk;
+		};
 		B729AC6B181F0D1400BA0D9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -839,6 +882,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				92154AE318A55A4200BD215C /* CCPhysicsPivotJoint.ccbPlugNode in Copy PlugIns */,
 				DC680339189157B90060BE39 /* SKColorSpriteNode.ccbPlugNode in Copy PlugIns */,
 				DC680317189146FE0060BE39 /* SKSpriteNode.ccbPlugNode in Copy PlugIns */,
 				DC680318189146FE0060BE39 /* SKLabelNode.ccbPlugNode in Copy PlugIns */,
@@ -1047,9 +1091,43 @@
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
+		92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPivotJoint.h; sourceTree = "<group>"; };
+		92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPivotJoint.m; sourceTree = "<group>"; };
+		92154ABF18A5531800BD215C /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		92154AC018A5531800BD215C /* CCPhysicsPivotJoint-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CCPhysicsPivotJoint-Info.plist"; sourceTree = "<group>"; };
+		92154AC118A5531800BD215C /* CCPhysicsPivotJoint-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsPivotJoint-Prefix.pch"; sourceTree = "<group>"; };
+		92154AC318A5531800BD215C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		92154AC418A5531800BD215C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		92154AC518A5531800BD215C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsPivotJoint.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		921EEACE18A5760700D864C2 /* joint-anchor-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor-sel.png"; sourceTree = "<group>"; };
+		921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor-sel@2x.png"; sourceTree = "<group>"; };
+		921EEAD018A5760700D864C2 /* joint-anchor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor.png"; sourceTree = "<group>"; };
+		921EEAD118A5760700D864C2 /* joint-anchor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor@2x.png"; sourceTree = "<group>"; };
+		921EEAD218A5760700D864C2 /* joint-pivot-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-sel.png"; sourceTree = "<group>"; };
+		921EEAD318A5760700D864C2 /* joint-pivot-sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-sel@2x.png"; sourceTree = "<group>"; };
+		921EEAD418A5760700D864C2 /* joint-pivot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot.png"; sourceTree = "<group>"; };
+		921EEAD518A5760700D864C2 /* joint-pivot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot@2x.png"; sourceTree = "<group>"; };
+		921EEADE18A5884300D864C2 /* SequencerJoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerJoints.h; sourceTree = "<group>"; };
+		921EEADF18A5884300D864C2 /* SequencerJoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerJoints.m; sourceTree = "<group>"; };
+		921EEB0118AAE84C00D864C2 /* joint-outlet-set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-set.png"; sourceTree = "<group>"; };
+		921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-set@2x.png"; sourceTree = "<group>"; };
+		921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-unset.png"; sourceTree = "<group>"; };
+		921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-unset@2x.png"; sourceTree = "<group>"; };
+		921EEB2218ADB7EA00D864C2 /* GeometryUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeometryUtil.h; sourceTree = "<group>"; };
+		921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeometryUtil.m; sourceTree = "<group>"; };
+		921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorNodeReference.xib; sourceTree = "<group>"; };
+		921EEB2A18ADE5C600D864C2 /* InspectorNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorNodeReference.h; sourceTree = "<group>"; };
+		921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorNodeReference.m; sourceTree = "<group>"; };
+		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
+		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
 		92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreivewAudio.h; sourceTree = "<group>"; };
 		92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewAudio.m; sourceTree = "<group>"; };
 		92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewAudio.xib; sourceTree = "<group>"; };
+		9297AC0518A1BE94003C3705 /* PolyDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyDecomposition.h; sourceTree = "<group>"; };
+		9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PolyDecomposition.mm; sourceTree = "<group>"; };
+		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
+		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
@@ -1817,6 +1895,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		92154AD218A5560B00BD215C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92154AD318A5560B00BD215C /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B729AC4F181F091800BA0D9C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2036,6 +2122,8 @@
 		776041E21498F5A70078095D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				921EEB2218ADB7EA00D864C2 /* GeometryUtil.h */,
+				921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */,
 				E3E05576159B2322001066C5 /* NSString+AppendToFile.h */,
 				E3E05577159B2322001066C5 /* NSString+AppendToFile.m */,
 				772BE563133C06320009B5B9 /* NSFlippedView.h */,
@@ -2062,6 +2150,10 @@
 				B7083E0917B567E5006628C7 /* StringPropertySetter.m */,
 				B75CB489184D31270036259F /* UsageManager.h */,
 				B75CB48A184D31270036259F /* UsageManager.m */,
+				9297AC2E18A43BCA003C3705 /* NSArray+Query.h */,
+				9297AC2F18A43BCA003C3705 /* NSArray+Query.m */,
+				926D139318B2DC2E00582959 /* NSDictionary+Query.h */,
+				926D139418B2DC2E00582959 /* NSDictionary+Query.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -2212,6 +2304,18 @@
 		776041EF1498FCE50078095D /* Stage Assets */ = {
 			isa = PBXGroup;
 			children = (
+				921EEB0118AAE84C00D864C2 /* joint-outlet-set.png */,
+				921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */,
+				921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */,
+				921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */,
+				921EEACE18A5760700D864C2 /* joint-anchor-sel.png */,
+				921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */,
+				921EEAD018A5760700D864C2 /* joint-anchor.png */,
+				921EEAD118A5760700D864C2 /* joint-anchor@2x.png */,
+				921EEAD218A5760700D864C2 /* joint-pivot-sel.png */,
+				921EEAD318A5760700D864C2 /* joint-pivot-sel@2x.png */,
+				921EEAD418A5760700D864C2 /* joint-pivot.png */,
+				921EEAD518A5760700D864C2 /* joint-pivot@2x.png */,
 				B7E775E118563F8C004221AA /* frame-fixed.png */,
 				B71706C7184ECD660081720A /* select-crosshair@2x.png */,
 				B71706C8184ECD660081720A /* select-move.png */,
@@ -2433,6 +2537,7 @@
 				DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */,
 				DC6803081891466C0060BE39 /* SKLabelNode.ccbPlugNode */,
 				DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */,
+				92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2642,6 +2747,29 @@
 			path = Include;
 			sourceTree = "<group>";
 		};
+		92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */ = {
+			isa = PBXGroup;
+			children = (
+				92154ACE18A5540400BD215C /* Supporting Files */,
+				92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */,
+				92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */,
+			);
+			path = CCPhysicsPivotJoint;
+			sourceTree = "<group>";
+		};
+		92154ACE18A5540400BD215C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				92154ABF18A5531800BD215C /* CCBPProperties.plist */,
+				92154AC018A5531800BD215C /* CCPhysicsPivotJoint-Info.plist */,
+				92154AC118A5531800BD215C /* CCPhysicsPivotJoint-Prefix.pch */,
+				92154AC218A5531800BD215C /* InfoPlist.strings */,
+				92154AC418A5531800BD215C /* Icon.png */,
+				92154AC518A5531800BD215C /* Icon@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -2742,6 +2870,7 @@
 		B79F90E717FF335000908504 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
+				92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */,
 				B79F90DA17FF30DC00908504 /* CCPhysicsNode */,
 			);
 			name = Physics;
@@ -2842,6 +2971,8 @@
 		B7C3533B17FA306C005697C1 /* Physics Editor */ = {
 			isa = PBXGroup;
 			children = (
+				9297AC0518A1BE94003C3705 /* PolyDecomposition.h */,
+				9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */,
 				B7C3533F17FA3DF1005697C1 /* PhysicsHandler.h */,
 				B7C3534017FA3DF1005697C1 /* PhysicsHandler.m */,
 				B7C3533C17FA30BB005697C1 /* NodePhysicsBody.h */,
@@ -3125,6 +3256,8 @@
 				E312973716CC67CA00A09155 /* SequencerPopoverSound.m */,
 				8045F13A183AF1DC0082BD94 /* SequencerButtonCell.h */,
 				8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */,
+				921EEADE18A5884300D864C2 /* SequencerJoints.h */,
+				921EEADF18A5884300D864C2 /* SequencerJoints.m */,
 			);
 			name = Sequencer;
 			sourceTree = "<group>";
@@ -3572,10 +3705,10 @@
 				E35DBC2414F4FEF80070A6E4 /* InspectorTexture.xib */,
 				E35DBC2614F4FF3E0070A6E4 /* InspectorTexture.h */,
 				E35DBC2714F4FF3F0070A6E4 /* InspectorTexture.m */,
-				E3B4221C14E58C35004547D6 /* InspectorByte.xib */,
 				E3DA6FFB16CB2BEB00B12FFB /* InspectorPopoverByte.xib */,
 				E3B4221E14E58C75004547D6 /* InspectorByte.h */,
 				E3B4221F14E58C75004547D6 /* InspectorByte.m */,
+				E3B4221C14E58C35004547D6 /* InspectorByte.xib */,
 				E3B4222114E58FEE004547D6 /* InspectorColor3.xib */,
 				E3DA6FFD16CB2C3C00B12FFB /* InspectorPopoverColor3.xib */,
 				E3B4222314E59034004547D6 /* InspectorColor3.h */,
@@ -3622,6 +3755,9 @@
 				E3C65127151C7B8F00D639C0 /* InspectorBlockCCControl.xib */,
 				E3C65129151C7E3600D639C0 /* InspectorBlockCCControl.h */,
 				E3C6512A151C7E3600D639C0 /* InspectorBlockCCControl.m */,
+				921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */,
+				921EEB2A18ADE5C600D864C2 /* InspectorNodeReference.h */,
+				921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */,
 			);
 			name = "Inspector Properties";
 			sourceTree = "<group>";
@@ -3812,6 +3948,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				92154AE218A5567400BD215C /* PBXTargetDependency */,
 				DC680338189157B00060BE39 /* PBXTargetDependency */,
 				DC680314189146C80060BE39 /* PBXTargetDependency */,
 				DC680316189146C80060BE39 /* PBXTargetDependency */,
@@ -3839,6 +3976,23 @@
 			productName = ccBuilder;
 			productReference = 7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */;
 			productType = "com.apple.product-type.application";
+		};
+		92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92154AD818A5560B00BD215C /* Build configuration list for PBXNativeTarget "CCPhysicsPivotJoint" */;
+			buildPhases = (
+				92154AD018A5560B00BD215C /* Sources */,
+				92154AD218A5560B00BD215C /* Frameworks */,
+				92154AD418A5560B00BD215C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCPhysicsPivotJoint;
+			productName = CCPhysicsNode;
+			productReference = 92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
 		};
 		B729AC51181F091800BA0D9C /* CCSlider */ = {
 			isa = PBXNativeTarget;
@@ -4267,12 +4421,13 @@
 				B73788D81804AC5D0076A88C /* CCScrollView */,
 				B729AC51181F091800BA0D9C /* CCSlider */,
 				B79F90D717FF30DB00908504 /* CCPhysicsNode */,
-				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
-				FA98CFC0154E7D1C006E58C5 /* ccbpublish */,
+				92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */,
 				DCB9F14C1890600D00128D78 /* SKNode */,
 				DC5129BD1891450D0091873D /* SKSpriteNode */,
 				DC6802FC1891466C0060BE39 /* SKLabelNode */,
 				DC68031D189156310060BE39 /* SKColorSpriteNode */,
+				7789ABBD133AA82000CEFCC7 /* SpriteBuilder */,
+				FA98CFC0154E7D1C006E58C5 /* ccbpublish */,
 			);
 		};
 /* End PBXProject section */
@@ -4306,6 +4461,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				921EEADD18A5760700D864C2 /* joint-pivot@2x.png in Resources */,
 				92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */,
 				92F12E4F18847BC800AB8F32 /* seq-keyframe-x4.png in Resources */,
 				92DC215F188073C500C8DCCD /* select-scale.png in Resources */,
@@ -4315,7 +4471,9 @@
 				929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 				92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */,
 				92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */,
+				92154ACB18A5531800BD215C /* Icon@2x.png in Resources */,
 				80F90905183C188400A714FC /* seq-visible-faint.png in Resources */,
+				921EEB0618AAE84C00D864C2 /* joint-outlet-set@2x.png in Resources */,
 				8045F136183ADA900082BD94 /* seq-visible.png in Resources */,
 				B71706D0184ECD660081720A /* select-rotation@2x.png in Resources */,
 				8045F137183ADA900082BD94 /* seq-notset.png in Resources */,
@@ -4350,6 +4508,7 @@
 				77E1995213858DE0006C361B /* overflowImage.png in Resources */,
 				77E1995313858DE0006C361B /* overflowImagePressed.png in Resources */,
 				77E1995413858DE0006C361B /* pi.png in Resources */,
+				92154ACA18A5531800BD215C /* Icon.png in Resources */,
 				77E1995513858DE0006C361B /* TabClose_Dirty_Pressed.png in Resources */,
 				77E1995613858DE0006C361B /* TabClose_Dirty_Rollover.png in Resources */,
 				77E1995713858DE0006C361B /* TabClose_Dirty.png in Resources */,
@@ -4359,6 +4518,7 @@
 				77E1995A13858DE0006C361B /* TabClose_Front.png in Resources */,
 				77E1995B13858DE0006C361B /* TabNewMetal.png in Resources */,
 				77E1995C13858DE0006C361B /* TabNewMetalPressed.png in Resources */,
+				921EEAD818A5760700D864C2 /* joint-anchor.png in Resources */,
 				77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */,
 				B75CB46618468FA70036259F /* seq-btn-loop@2x.png in Resources */,
 				776C68911388107400153214 /* missing-font.fnt in Resources */,
@@ -4380,8 +4540,11 @@
 				77055FB613D0E5CA009DD63A /* logo.png in Resources */,
 				E3B7AEE914E33F4C00DFD402 /* InspectorPosition.xib in Resources */,
 				E3FEA8A714E45EEF00119FBE /* InspectorSize.xib in Resources */,
+				921EEB0518AAE84C00D864C2 /* joint-outlet-set.png in Resources */,
 				E3FEA8AC14E47C5700119FBE /* InspectorPoint.xib in Resources */,
+				92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */,
 				E3FEA8B114E4872D00119FBE /* InspectorPointLock.xib in Resources */,
+				921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */,
 				E3FEA8B614E4929300119FBE /* InspectorScaleLock.xib in Resources */,
 				E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */,
 				E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */,
@@ -4421,17 +4584,20 @@
 				E34E5D6E1535AA78000201FB /* ruler-mark-major.png in Resources */,
 				E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */,
 				E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */,
+				921EEB0818AAE84C00D864C2 /* joint-outlet-unset@2x.png in Resources */,
 				E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */,
 				E3A16AF01536C885004B528A /* ruler-guide.png in Resources */,
 				E3B9AF431538612200489438 /* ruler-xy.png in Resources */,
 				E3F3F845153C7772005443EE /* notes-bg.png in Resources */,
 				E3F3F847153D9126005443EE /* StickyNoteEditView.xib in Resources */,
 				E3F3F849153DB893005443EE /* notes-close.png in Resources */,
+				921EEAD618A5760700D864C2 /* joint-anchor-sel.png in Resources */,
 				E3F3F84B153DBA43005443EE /* notes-close-down.png in Resources */,
 				E35A2D8D1540111A00F78B72 /* position-0.png in Resources */,
 				E35A2D8E1540111A00F78B72 /* position-1.png in Resources */,
 				E35A2D8F1540111A00F78B72 /* position-2.png in Resources */,
 				E35A2D901540111A00F78B72 /* position-3.png in Resources */,
+				921EEADC18A5760700D864C2 /* joint-pivot.png in Resources */,
 				E3EDBC1615483EE000EEF1F3 /* ResolutionSettingsWindow.xib in Resources */,
 				E370BA0C1549B2460048ED73 /* scale-0.png in Resources */,
 				E370BA0D1549B2460048ED73 /* scale-1.png in Resources */,
@@ -4487,6 +4653,7 @@
 				E3E2704915B18CF500287470 /* TB_stop.png in Resources */,
 				E3E2704B15B1904400287470 /* toolbar-bottom.png in Resources */,
 				E326EFB615C84123006D6CE6 /* seq-endmarker.png in Resources */,
+				921EEADA18A5760700D864C2 /* joint-pivot-sel.png in Resources */,
 				E33C2AB515CAE2590043EF9B /* SequencerStretchWindow.xib in Resources */,
 				E33C2ABA15CBF2580043EF9B /* seq-keyframe-hint.png in Resources */,
 				E3214C4115D3BF4D002413A7 /* CustomPropSettingsWindow.xib in Resources */,
@@ -4508,6 +4675,7 @@
 				58FA2034162D73F3006B8856 /* TB_bottomPanel.png in Resources */,
 				58FA2035162D73F3006B8856 /* TB_leftPanel.png in Resources */,
 				58FA2036162D73F3006B8856 /* TB_rightPanel.png in Resources */,
+				921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */,
 				E367E32016384F0C00247F12 /* orientation-landscapeleft.png in Resources */,
 				E367E32116384F0C00247F12 /* orientation-landscaperight.png in Resources */,
 				E367E32316384F0C00247F12 /* orientation-upsidedown.png in Resources */,
@@ -4542,6 +4710,7 @@
 				B7096E2A180CD98E00164A8A /* doc-particlesystem.png in Resources */,
 				E334A4DE170CF475001604F7 /* seq-btn-end.png in Resources */,
 				E334A4DF170CF475001604F7 /* toolbar-bottom-noborder.png in Resources */,
+				921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */,
 				E334A4E6170D0020001604F7 /* debugger-bug.png in Resources */,
 				E3D839DC171356EC004F6127 /* pngquant in Resources */,
 				E3D839DD171356EC004F6127 /* pngquant-COPYING in Resources */,
@@ -4552,6 +4721,7 @@
 				E39C917B174C134C00092BD1 /* toolbar-btn-add.png in Resources */,
 				E3583FB01756C228002DF0B0 /* ResourceManagerPreviewView.xib in Resources */,
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
+				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
 				B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
 				B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */,
@@ -4569,6 +4739,7 @@
 				B7AC69C917A70A4B0041B8BD /* inspector-codeconnections.png in Resources */,
 				B7AC69CA17A70A4B0041B8BD /* inspector-codeconnections@2x.png in Resources */,
 				B7AC69CB17A70A4B0041B8BD /* inspector-props.png in Resources */,
+				92154AC918A5531800BD215C /* InfoPlist.strings in Resources */,
 				B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */,
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
 				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
@@ -4579,8 +4750,19 @@
 				B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */,
 				B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */,
 				B78AE45217E3B1600028BE0B /* scale-2.png in Resources */,
+				921EEB0718AAE84C00D864C2 /* joint-outlet-unset.png in Resources */,
 				B78AE45317E3B1600028BE0B /* scale-3.png in Resources */,
 				B78AE45417E3B1600028BE0B /* scale-4.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92154AD418A5560B00BD215C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92154ADE18A5565C00BD215C /* CCBPProperties.plist in Resources */,
+				92154ADF18A5565C00BD215C /* InfoPlist.strings in Resources */,
+				92154AE018A5565C00BD215C /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4821,6 +5003,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */,
 				9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */,
 				80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */,
 				80B149C9183D73930085935B /* SoundFileImageController.m in Sources */,
@@ -4828,6 +5011,7 @@
 				80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */,
 				80FBACC31833FAE000C4BB69 /* WarningTableView.m in Sources */,
 				80FBACC41833FAE000C4BB69 /* WarningTableViewHandler.m in Sources */,
+				921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */,
 				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
 				7789ABD0133AA82000CEFCC7 /* main.m in Sources */,
 				7789ABD6133AA82000CEFCC7 /* AppDelegate.m in Sources */,
@@ -4889,8 +5073,10 @@
 				E35DBBE414F3DD0B0070A6E4 /* InspectorFontTTF.m in Sources */,
 				E35DBBFE14F3EE410070A6E4 /* InspectorFloat.m in Sources */,
 				E35DBC1E14F4DF050070A6E4 /* InspectorStartStop.m in Sources */,
+				921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */,
 				E35DBC2314F4ED980070A6E4 /* InspectorIntegerLabeled.m in Sources */,
 				E35DBC2814F4FF410070A6E4 /* InspectorTexture.m in Sources */,
+				9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */,
 				E325F64814F5336E00D29BCF /* InspectorFloatVar.m in Sources */,
 				E325F64D14F53FF100D29BCF /* InspectorColor4FVar.m in Sources */,
 				E325F65214F5669600D29BCF /* InspectorSeparatorSub.m in Sources */,
@@ -4952,6 +5138,7 @@
 				E35A136215B038D700C9AA15 /* ThoMoTCPConnection.m in Sources */,
 				E33C2AAC15C987EB0043EF9B /* ResourceManagerOutlineView.m in Sources */,
 				E33C2AAF15C9A0D40043EF9B /* SequencerUtil.m in Sources */,
+				926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */,
 				E33C2AB815CAE3980043EF9B /* SequencerStretchWindow.m in Sources */,
 				E3214C4415D3C29D002413A7 /* CustomPropSettingsWindow.m in Sources */,
 				E3214C4715D3C3AF002413A7 /* CustomPropSetting.m in Sources */,
@@ -4977,6 +5164,7 @@
 				E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
 				E3D6BA2316C46E41006AFE0A /* SequencerCallbackChannel.m in Sources */,
+				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
 				E3D6BA2616C46E91006AFE0A /* SequencerChannel.m in Sources */,
 				E3DA6FEE16CAEC7800B12FFB /* SequencerPopoverHandler.m in Sources */,
 				E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */,
@@ -5023,6 +5211,14 @@
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92154AD018A5560B00BD215C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92154ADD18A5563300BD215C /* CCBPhysicsPivotJoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5209,6 +5405,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		92154AE218A5567400BD215C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */;
+			targetProxy = 92154AE118A5567400BD215C /* PBXContainerItemProxy */;
+		};
 		B729AC6C181F0D1400BA0D9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B729AC51181F091800BA0D9C /* CCSlider */;
@@ -5344,6 +5545,14 @@
 				7789ABD8133AA82000CEFCC7 /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		92154AC218A5531800BD215C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92154AC318A5531800BD215C /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		B729AC57181F091800BA0D9C /* InfoPlist.strings */ = {
@@ -5624,6 +5833,97 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		92154AD918A5560B00BD215C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsPivotJoint/CCPhysicsPivotJoint-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCPhysicsPivotJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		92154ADA18A5560B00BD215C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsPivotJoint/CCPhysicsPivotJoint-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCPhysicsPivotJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;
 		};
@@ -7194,6 +7494,15 @@
 			buildConfigurations = (
 				7789ABDD133AA82000CEFCC7 /* Debug */,
 				7789ABDE133AA82000CEFCC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92154AD818A5560B00BD215C /* Build configuration list for PBXNativeTarget "CCPhysicsPivotJoint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92154AD918A5560B00BD215C /* Debug */,
+				92154ADA18A5560B00BD215C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
