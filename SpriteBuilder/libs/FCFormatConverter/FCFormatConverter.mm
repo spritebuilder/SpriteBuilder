@@ -246,17 +246,14 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
         return YES;
         
     }
-    else
-    {
-        // Conversion failed
-        if(error != nil)
-        {
-            *error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:@{NSLocalizedDescriptionKey:@"Unhandled format"}];
-        }
-        
-        return NO;
-    }
     
+	// Conversion failed
+	if(error != nil)
+	{
+		*error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:@{NSLocalizedDescriptionKey:@"Unhandled format"}];
+	}
+	
+	return NO;
 }
 
 - (NSString*) proposedNameForConvertedSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality

@@ -83,4 +83,7 @@ NSString * kClipboardChannelKeyframes;
 - (BOOL) valueIsEqualTo:(SequencerKeyframe*)keyframe;
 - (BOOL) supportsFiniteTimeInterpolations;
 
+// selectors exposed to prevent 'undeclared selector' warning
+- (NSComparisonResult) compareTime:(id)cmp;
+
 @end

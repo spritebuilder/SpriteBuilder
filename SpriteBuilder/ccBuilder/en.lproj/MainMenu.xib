@@ -680,6 +680,43 @@ CA
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Stage Color" id="KQF-gw-sgJ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Stage Color" id="St1-Vy-LLk">
+                                    <items>
+                                        <menuItem title="Black" id="VMJ-eJ-6ph">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetCanvasColor:" target="494" id="FMO-4u-501"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="White" tag="1" id="mwm-Im-7dI">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetCanvasColor:" target="494" id="nVe-a6-mVS"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Gray" tag="2" id="026-jr-XUD">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetCanvasColor:" target="494" id="vgo-bl-Otp"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Orange" tag="3" id="5sv-ZE-aRT">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetCanvasColor:" target="494" id="qDe-sU-6Lx"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Green" tag="4" id="4PJ-LW-0Ln">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetCanvasColor:" target="494" id="5Nm-GT-9qi"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="1451"/>
                             <menuItem title="Show Guides" alternate="YES" keyEquivalent="H" id="1452">
                                 <connections>
@@ -2138,6 +2175,7 @@ CA
                 <outlet property="menuContextKeyframeInterpol" destination="1604" id="1613"/>
                 <outlet property="menuContextKeyframeNoselection" destination="o0p-0U-Ks5" id="H9k-Jz-Iau"/>
                 <outlet property="menuContextResManager" destination="1696" id="1703"/>
+                <outlet property="menuItemStageColor" destination="KQF-gw-sgJ" id="cG7-Q4-aYh"/>
                 <outlet property="menuResolution" destination="1264" id="1474"/>
                 <outlet property="menuTimeline" destination="1581" id="1585"/>
                 <outlet property="menuTimelineChained" destination="1670" id="1685"/>

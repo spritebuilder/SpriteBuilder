@@ -584,9 +584,13 @@ static NSInteger potentialMinimumForArray(NSArray *array, NSInteger minimum){
 			}
 
 			// Each item's title is limited to 60 characters. If more than 60 characters, use an ellipsis to indicate that more exists.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
 			menuItem = [_overflowMenu addItemWithTitle:[[[cell attributedStringValue] string] stringWithEllipsisByTruncatingToLength:MAX_OVERFLOW_MENUITEM_TITLE_LENGTH]
 						action:@selector(overflowMenuAction:)
 						keyEquivalent:@""];
+#pragma clang diagnostics pop
+			
 			[menuItem setTarget:_control];
 			[menuItem setRepresentedObject:[cell representedObject]];
 

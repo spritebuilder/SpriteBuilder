@@ -415,8 +415,6 @@ void ApplyCustomNodeVisitSwizzle()
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     
-    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:1];
-    
     NSColor * color2 = [NSColor colorWithDeviceRed:r green:g blue:b alpha:a];
     NSColor * calibratedColor = [color2 colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 
@@ -879,7 +877,9 @@ static BOOL hideAllToNextSeparator;
     }
     
     @try {
-    // Load it's associated view
+        // Load it's associated view
+	// FIXME: fix deprecation warning
+        SUPPRESS_DEPRECATED([NSBundle loadNibNamed:inspectorNibName owner:inspectorValue]);
     [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
     }@catch (NSException * exception) {
         int break_here =1 ;
@@ -1027,16 +1027,16 @@ static BOOL hideAllToNextSeparator;
             
             if(!inspectorDisabled)
             {
-                if (isCodeConnection)
-                {
-                    paneCodeOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneCodeOffset isCodeConnection:YES];
-                }
-                else
-                {
-                    paneOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneOffset isCodeConnection:NO];
-                }
+            if (isCodeConnection)
+            {
+                paneCodeOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneCodeOffset isCodeConnection:YES];
+            }
+            else
+            {
+                paneOffset = [self addInspectorPropertyOfType:type name:name displayName:displayName extra:extra readOnly:readOnly affectsProps:affectsProps atOffset:paneOffset isCodeConnection:NO];
             }
         }
+    }
     }
     else
     {
@@ -1100,16 +1100,14 @@ static BOOL hideAllToNextSeparator;
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorDocumentView performSelector:privateSelector withObject:nil];
+        objc_msgSend(inspectorDocumentView, privateSelector);
     }
     
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorCodeDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorCodeDocumentView performSelector:privateSelector withObject:nil];
+        objc_msgSend(inspectorCodeDocumentView, privateSelector);
     }
-    
-
 }
 
 #pragma mark Populating menus
@@ -1250,6 +1248,7 @@ static BOOL hideAllToNextSeparator;
     [dict setObject:[NSNumber numberWithBool:[[CocosScene cocosScene] centeredOrigin]] forKey:@"centeredOrigin"];
     
     [dict setObject:[NSNumber numberWithInt:[[CocosScene cocosScene] stageBorder]] forKey:@"stageBorder"];
+    [dict setObject:[NSNumber numberWithInt:doc.stageColor] forKey:@"stageColor"];
     
     // Guides & notes
     [dict setObject:[[CocosScene cocosScene].guideLayer serializeGuides] forKey:@"guides"];
@@ -1459,6 +1458,28 @@ static BOOL hideAllToNextSeparator;
     // Stage border
     [[CocosScene cocosScene] setStageBorder:[[doc objectForKey:@"stageBorder"] intValue]];
     
+    // Stage color
+    NSNumber *stageColorObject = [doc objectForKey: @"stageColor"];
+    int stageColor;
+    if (stageColorObject != nil)
+    {
+        stageColor = [stageColorObject intValue];
+    }
+    else
+    {
+        if (currentDocument.docDimensionsType == kCCBDocDimensionsTypeNode)
+        {
+            stageColor = kCCBCanvasColorGray;
+        }
+        else
+        {
+            stageColor = kCCBCanvasColorBlack;
+        }
+    }
+    currentDocument.stageColor = stageColor;
+    [self updateCanvasColor];
+    [menuItemStageColor setEnabled: currentDocument.docDimensionsType != kCCBDocDimensionsTypeFullScreen];
+
     // Setup sequencer timelines
     NSMutableArray* serializedSequences = [doc objectForKey:@"sequences"];
     if (serializedSequences)
@@ -2006,6 +2027,16 @@ static BOOL hideAllToNextSeparator;
     self.currentDocument.resolutions = resolutions;
     self.currentDocument.currentResolution = 0;
     self.currentDocument.docDimensionsType = docDimType;
+    
+    if (type == kCCBNewDocTypeNode)
+    {
+        self.currentDocument.stageColor = kCCBCanvasColorGray;
+    }
+    else
+    {
+        self.currentDocument.stageColor = kCCBCanvasColorBlack;
+    }
+
     [self updateResolutionMenu];
     
     [self saveFile:fileName];
@@ -2973,7 +3004,7 @@ static BOOL hideAllToNextSeparator;
                 
                 // Set icon of created directory
                 NSImage* folderIcon = [NSImage imageNamed:@"Folder.icns"];
-                [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:fileName options:NULL];
+                [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:fileName options:0];
                 
                 // Create project file
                 NSString* projectName = [fileNameRaw lastPathComponent];
@@ -3365,6 +3396,28 @@ static BOOL hideAllToNextSeparator;
     
     int tag = (int)[sender tag];
     [cs setStageBorder:tag];
+}
+
+- (void) updateCanvasColor
+{
+    CocosScene* cs = [CocosScene cocosScene];
+    int color = currentDocument.stageColor;
+
+    [cs setStageColor: color forDocDimensionsType: currentDocument.docDimensionsType];
+    
+    for (NSMenuItem *item in menuItemStageColor.submenu.itemArray)
+    {
+        item.state = NSOffState;
+    }
+    
+    [menuItemStageColor.submenu itemWithTag: color].state = NSOnState;
+}
+
+- (IBAction) menuSetCanvasColor:(id)sender
+{
+    [self saveUndoStateWillChangeProperty:@"*stageColor"];
+    currentDocument.stageColor = [sender tag];
+    [self updateCanvasColor];
 }
 
 - (IBAction) menuZoomIn:(id)sender
@@ -4179,9 +4232,9 @@ static BOOL hideAllToNextSeparator;
 
 
 
-/*
 - (IBAction)menuEditSmartSpriteSheet:(id)sender
 {
+	/*
     int selectedRow = [sender tag];
     
     if (selectedRow >= 0 && projectSettings)
@@ -4228,7 +4281,8 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }
-}*/
+	 */
+}
 
 - (IBAction)menuAlignKeyframeToMarker:(id)sender
 {

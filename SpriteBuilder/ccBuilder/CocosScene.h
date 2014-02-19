@@ -65,6 +65,14 @@ typedef enum {
     kCCBToolMax         =(1 << 7)
 }CCBTool;
 
+enum {
+    kCCBCanvasColorBlack = 0,
+    kCCBCanvasColorWhite,
+    kCCBCanvasColorGray,
+    kCCBCanvasColorOrange,
+    kCCBCanvasColorGreen,
+};
+
 @interface CocosScene : CCNode
 {
     CCNodeColor* bgLayer;
@@ -153,6 +161,7 @@ typedef enum {
 - (BOOL) centeredOrigin;
 - (void) setStageBorder:(int)type;
 - (int) stageBorder;
+- (void) setStageColor: (int) type forDocDimensionsType: (int) docDimensionsType;
 
 - (void) setStageZoom:(float) zoom;
 - (float) stageZoom;

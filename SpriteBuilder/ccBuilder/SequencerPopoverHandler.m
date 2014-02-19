@@ -64,7 +64,8 @@
     InspectorValue* inspectorValue = [InspectorValue inspectorOfType:type withSelection:node andPropertyName:prop andDisplayName:prop andExtra:NULL];
     inspectorValue.inPopoverWindow = YES;
     
-    [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
+	// FIXME: fix deprecation warning
+    SUPPRESS_DEPRECATED([NSBundle loadNibNamed:inspectorNibName owner:inspectorValue]);
     NSView* view = inspectorValue.view;
     [view setBoundsOrigin:NSMakePoint(0, 0)];
     
@@ -96,7 +97,8 @@
         {
             SequencerPopoverBlock* owner = [[SequencerPopoverBlock alloc] init];
             owner.keyframe = kf;
-            [NSBundle loadNibNamed:@"SequencerPopoverBlock" owner:owner];
+			// FIXME: fix deprecation warning
+			SUPPRESS_DEPRECATED([NSBundle loadNibNamed:@"SequencerPopoverBlock" owner:owner]);
             NSView* view = owner.view;
             
             [vc.view setFrameSize:NSMakeSize(view.bounds.size.width, view.bounds.size.height*kfs.count)];
@@ -112,7 +114,8 @@
         {
             SequencerPopoverSound* owner = [[SequencerPopoverSound alloc] init];
             owner.keyframe = kf;
-            [NSBundle loadNibNamed:@"SequencerPopoverSound" owner:owner];
+			// FIXME: fix deprecation warning
+			SUPPRESS_DEPRECATED([NSBundle loadNibNamed:@"SequencerPopoverSound" owner:owner]);
             NSView* view = owner.view;
             
             [vc.view setFrameSize:NSMakeSize(view.bounds.size.width, view.bounds.size.height*kfs.count)];

@@ -310,6 +310,43 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return stageBorderType;
 }
 
+- (void) setStageColor: (int) type forDocDimensionsType: (int) docDimensionsType
+{
+    CCColor *color;
+    switch (type)
+    {
+        case kCCBCanvasColorBlack:
+            color = [CCColor blackColor];
+            break;
+        case kCCBCanvasColorWhite:
+            color = [CCColor whiteColor];
+            break;
+        case kCCBCanvasColorGray:
+            color = [CCColor grayColor];
+            break;
+        case kCCBCanvasColorOrange:
+            color = [CCColor orangeColor];
+            break;
+        case kCCBCanvasColorGreen:
+            color = [CCColor greenColor];
+            break;
+        default:
+            NSAssert (NO, @"Illegal stage color");
+    }
+    NSAssert(color != nil, @"No stage color");
+
+    if (docDimensionsType == kCCBDocDimensionsTypeNode)
+    {
+        bgLayer.color = color;
+        stageBgLayer.color = [CCColor blackColor];
+    }
+    else
+    {
+        bgLayer.color = [CCColor grayColor];
+        stageBgLayer.color = color;
+    }
+}
+
 - (void) setupDefaultNodes
 {
 }

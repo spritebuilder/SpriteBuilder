@@ -159,7 +159,7 @@
 - (void) dealloc
 {
 	SBLogSelf();
-    self.rootObjectType = NULL;
+    self.rootObjectType = 0;
 }
 
 @end

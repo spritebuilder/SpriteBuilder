@@ -47,7 +47,7 @@
 
 - (void)highlightSelectionInClipRect:(NSRect)clipRect
 {
-#warning The clipping rect is a problem since the gradient spans more than one row, the hackish solution is to call setNeedsDisplay after selection has changed
+	// FIXME: The clipping rect is a problem since the gradient spans more than one row, the hackish solution is to call setNeedsDisplay after selection has changed
     NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
     
     NSRect currentRect = NSZeroRect;

@@ -37,6 +37,7 @@
     BOOL isDirty;
     CGPoint stageScrollOffset;
     float stageZoom;
+    int stageColor;
     
     NSMutableArray* resolutions;
     int currentResolution;
@@ -56,6 +57,7 @@
 @property (nonatomic,assign) BOOL isDirty;
 @property (nonatomic,assign) CGPoint stageScrollOffset;
 @property (nonatomic,assign) float stageZoom;
+@property (nonatomic,assign) int stageColor;
 @property (nonatomic,readonly) NSString* rootPath;
 - (NSString*) formattedName;
 @property (nonatomic,strong) NSMutableArray* resolutions;
