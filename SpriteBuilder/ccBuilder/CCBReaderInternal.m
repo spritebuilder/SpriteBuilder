@@ -400,8 +400,8 @@ __strong NSDictionary* renamedProperties = nil;
     CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:baseClass];
     if (!node)
     {
-        NSLog(@"WARNING! Plug-in missing for %@", baseClass);
-        return NULL;
+        NSLog(@"WARNING! Plug-in missing for %@ - all nodes using this plugin will be removed from CCB!", baseClass);
+        return nil;
     }
     
     
@@ -488,7 +488,11 @@ __strong NSDictionary* renamedProperties = nil;
     for (int i = 0; i < [children count]; i++)
     {
         CCNode* child = [CCBReaderInternal nodeGraphFromDictionary:[children objectAtIndex:i] parentSize:contentSize];
-        [node addChild:child z:i];
+		
+		if (child)
+		{
+			[node addChild:child z:i];
+		}
     }
     
     // Physics

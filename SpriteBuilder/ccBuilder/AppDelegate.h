@@ -116,6 +116,12 @@ enum {
 @class PhysicsHandler;
 @class WarningTableViewHandler;
 
+@protocol AppDelegate_UndeclaredSelectors <NSObject>
+@optional
+- (void) customVisit;
+- (void) oldVisit;
+@end
+
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate>
 {
     
@@ -182,6 +188,8 @@ enum {
     IBOutlet NSMenu* __weak menuContextKeyframeInterpol;
     IBOutlet NSMenu* __weak menuContextResManager;
     IBOutlet NSMenu *__weak menuContextKeyframeNoselection;
+    
+    IBOutlet NSMenuItem *__weak menuItemStageColor;
     
     IBOutlet NSPopUpButton* menuTimelinePopup;
     IBOutlet NSMenu* menuTimeline;
@@ -374,11 +382,12 @@ enum {
 - (IBAction) menuSetStateOriginCentered:(id)sender;
 - (void) updateCanvasBorderMenu;
 - (IBAction) menuSetCanvasBorder:(id)sender;
+- (IBAction) menuSetCanvasColor:(id)sender;
 - (IBAction) menuZoomIn:(id)sender;
 - (IBAction) menuZoomOut:(id)sender;
 
 - (IBAction)menuCreateSmartSpriteSheet:(id)sender;
-
+- (IBAction)menuShowInFinder:(id)sender;
 - (IBAction) pressedToolSelection:(id)sender;
 - (IBAction) pressedPanelVisibility:(id)sender;
 
@@ -388,6 +397,14 @@ enum {
 - (IBAction) menuCleanCacheDirectories:(id)sender;
 - (IBAction)menuAbout:(id)sender;
 - (IBAction)menuResetSpriteBuilder:(id)sender;
+
+// selectors exposed to suppress 'undeclared selector' warnings
+- (IBAction)menuPasteKeyframes:(id)sender;
+- (IBAction)menuEditSmartSpriteSheet:(id)sender;
+- (IBAction)menuActionDelete:(id)sender;
+- (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender;
+- (IBAction)menuActionNewFolder:(NSMenuItem*)sender;
+- (IBAction)menuOpenExternal:(id)sender;
 
 // Undo / Redo
 - (void) updateDirtyMark;

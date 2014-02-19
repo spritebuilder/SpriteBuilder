@@ -134,8 +134,6 @@
     copy->expandedImage = nil;
     copy.collapsedImage = [self.collapsedImage copyWithZone:zone];
     copy.expandedImage = [self.expandedImage copyWithZone:zone];
-    copy.collapsedImage;
-    copy.expandedImage;
     
     return copy;
 }

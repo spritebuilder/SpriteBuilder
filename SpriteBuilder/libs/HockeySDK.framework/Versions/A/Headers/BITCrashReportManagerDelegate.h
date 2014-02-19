@@ -28,11 +28,11 @@
 @protocol BITCrashReportManagerDelegate <NSObject>
 
 @required
+@optional
 
 // Invoked once the modal sheets are gone
+// SI: seems unused, no reference to this method anywhere, made @optional
 - (void) showMainApplicationWindow;
-
-@optional
 
 // Invoked before a crash report will be sent
 // 

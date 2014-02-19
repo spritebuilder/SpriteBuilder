@@ -108,6 +108,11 @@
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
+#import "PlugInNodeCollectionView.h"
+
+@interface AppDelegate()
+- (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
+@end
 
 @implementation AppDelegate
 
@@ -408,8 +413,6 @@ void ApplyCustomNodeVisitSwizzle()
 
     CGFloat r, g, b, a;
     [color getRed:&r green:&g blue:&b alpha:&a];
-    
-    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:1];
     
     NSColor * color2 = [NSColor colorWithDeviceRed:r green:g blue:b alpha:a];
     NSColor * calibratedColor = [color2 colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
@@ -873,7 +876,8 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Load it's associated view
-    [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
+	// FIXME: fix deprecation warning
+    SUPPRESS_DEPRECATED([NSBundle loadNibNamed:inspectorNibName owner:inspectorValue]);
     NSView* view = inspectorValue.view;
     
     [inspectorValue willBeAdded];
@@ -1085,16 +1089,14 @@ static BOOL hideAllToNextSeparator;
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorDocumentView performSelector:privateSelector withObject:nil];
+        objc_msgSend(inspectorDocumentView, privateSelector);
     }
     
     //Undocumented function that resets the KeyViewLoop.
     if([inspectorCodeDocumentView respondsToSelector:privateSelector])
     {
-        [inspectorCodeDocumentView performSelector:privateSelector withObject:nil];
+        objc_msgSend(inspectorCodeDocumentView, privateSelector);
     }
-    
-
 }
 
 #pragma mark Populating menus
@@ -1235,6 +1237,7 @@ static BOOL hideAllToNextSeparator;
     [dict setObject:[NSNumber numberWithBool:[[CocosScene cocosScene] centeredOrigin]] forKey:@"centeredOrigin"];
     
     [dict setObject:[NSNumber numberWithInt:[[CocosScene cocosScene] stageBorder]] forKey:@"stageBorder"];
+    [dict setObject:[NSNumber numberWithInt:doc.stageColor] forKey:@"stageColor"];
     
     // Guides & notes
     [dict setObject:[[CocosScene cocosScene].guideLayer serializeGuides] forKey:@"guides"];
@@ -1435,6 +1438,28 @@ static BOOL hideAllToNextSeparator;
     // Stage border
     [[CocosScene cocosScene] setStageBorder:[[doc objectForKey:@"stageBorder"] intValue]];
     
+    // Stage color
+    NSNumber *stageColorObject = [doc objectForKey: @"stageColor"];
+    int stageColor;
+    if (stageColorObject != nil)
+    {
+        stageColor = [stageColorObject intValue];
+    }
+    else
+    {
+        if (currentDocument.docDimensionsType == kCCBDocDimensionsTypeNode)
+        {
+            stageColor = kCCBCanvasColorGray;
+        }
+        else
+        {
+            stageColor = kCCBCanvasColorBlack;
+        }
+    }
+    currentDocument.stageColor = stageColor;
+    [self updateCanvasColor];
+    [menuItemStageColor setEnabled: currentDocument.docDimensionsType != kCCBDocDimensionsTypeFullScreen];
+
     // Setup sequencer timelines
     NSMutableArray* serializedSequences = [doc objectForKey:@"sequences"];
     if (serializedSequences)
@@ -1634,10 +1659,10 @@ static BOOL hideAllToNextSeparator;
     return YES;
 }
 
-- (BOOL) createProject:(NSString*) fileName
+- (BOOL) createProject:(NSString*)fileName engine:(CCBTargetEngine)engine
 {
     CCBProjCreator* creator = [[CCBProjCreator alloc] init];
-    return [creator createDefaultProjectAtPath:fileName];
+    return [creator createDefaultProjectAtPath:fileName engine:engine];
 }
 
 - (void) updateResourcePathsFromProjectSettings
@@ -1715,7 +1740,10 @@ static BOOL hideAllToNextSeparator;
     
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
-    
+
+    // Update Node Plugins list
+	[plugInNodeViewHandler showNodePluginsForEngine:project.engine];
+	
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success) return NO;
     
@@ -1932,6 +1960,16 @@ static BOOL hideAllToNextSeparator;
     self.currentDocument.resolutions = resolutions;
     self.currentDocument.currentResolution = 0;
     self.currentDocument.docDimensionsType = docDimType;
+    
+    if (type == kCCBNewDocTypeNode)
+    {
+        self.currentDocument.stageColor = kCCBCanvasColorGray;
+    }
+    else
+    {
+        self.currentDocument.stageColor = kCCBCanvasColorBlack;
+    }
+
     [self updateResolutionMenu];
     
     [self saveFile:fileName];
@@ -2592,7 +2630,7 @@ static BOOL hideAllToNextSeparator;
     
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
     [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"ccb"]];
-    SavePanelLimiter* limter = [[SavePanelLimiter alloc] initWithPanel:saveDlg];
+	__block SavePanelLimiter* limiter = [[SavePanelLimiter alloc] initWithPanel:saveDlg];
     
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
@@ -2614,6 +2652,9 @@ static BOOL hideAllToNextSeparator;
                 [[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
+		
+		// ensures the limiter remains in memory until the block finishes
+		limiter = nil;
     }];
 }
 
@@ -2841,7 +2882,7 @@ static BOOL hideAllToNextSeparator;
     [self closeProject];
 }
 
-- (IBAction) menuNewProject:(id)sender
+-(void) createNewProjectTargetting:(CCBTargetEngine)engine
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
@@ -2863,7 +2904,7 @@ static BOOL hideAllToNextSeparator;
                 
                 // Set icon of created directory
                 NSImage* folderIcon = [NSImage imageNamed:@"Folder.icns"];
-                [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:fileName options:NULL];
+                [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:fileName options:0];
                 
                 // Create project file
                 NSString* projectName = [fileNameRaw lastPathComponent];
@@ -2871,7 +2912,7 @@ static BOOL hideAllToNextSeparator;
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_current_queue(), ^{
-                                   if ([self createProject: fileName])
+                                   if ([self createProject:fileName engine:engine])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }
@@ -2887,6 +2928,16 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }];
+}
+
+- (IBAction) menuNewProject:(id)sender
+{
+	[self createNewProjectTargetting:CCBTargetEngineCocos2d];
+}
+
+-(IBAction) menuNewSpriteKitProject:(id)sender
+{
+	[self createNewProjectTargetting:CCBTargetEngineSpriteKit];
 }
 
 - (IBAction) newFolder:(id)sender
@@ -3245,6 +3296,28 @@ static BOOL hideAllToNextSeparator;
     
     int tag = (int)[sender tag];
     [cs setStageBorder:tag];
+}
+
+- (void) updateCanvasColor
+{
+    CocosScene* cs = [CocosScene cocosScene];
+    int color = currentDocument.stageColor;
+
+    [cs setStageColor: color forDocDimensionsType: currentDocument.docDimensionsType];
+    
+    for (NSMenuItem *item in menuItemStageColor.submenu.itemArray)
+    {
+        item.state = NSOffState;
+    }
+    
+    [menuItemStageColor.submenu itemWithTag: color].state = NSOnState;
+}
+
+- (IBAction) menuSetCanvasColor:(id)sender
+{
+    [self saveUndoStateWillChangeProperty:@"*stageColor"];
+    currentDocument.stageColor = [sender tag];
+    [self updateCanvasColor];
 }
 
 - (IBAction) menuZoomIn:(id)sender
@@ -3983,21 +4056,16 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuOpenExternal:(id)sender
 {
-    NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
-    
-    NSUInteger idx = [sender tag];
-    
-    NSString* filename = [[outlineView itemAtRow:idx] filePath];
-    if (![[NSWorkspace sharedWorkspace] openFile:filename])
-    {
-        NSRange slash = [filename rangeOfString:@"/" options:NSBackwardsSearch];
-        
-        if (slash.location != NSNotFound)
-        {
-            filename = [filename stringByReplacingCharactersInRange:slash withString: @"/resources-auto/"];
-            // Try again
-            [[NSWorkspace sharedWorkspace] openFile:filename];
-        }
+    NSString* path = [self getPathOfMenuItem:sender];
+    if (path) {
+        [[NSWorkspace sharedWorkspace] openFile:path];
+    }
+}
+- (IBAction)menuShowInFinder:(id)sender {
+    NSString* path = [self getPathOfMenuItem:sender];
+    if (path) {
+        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
+
     }
 }
 
@@ -4064,9 +4132,9 @@ static BOOL hideAllToNextSeparator;
 
 
 
-/*
 - (IBAction)menuEditSmartSpriteSheet:(id)sender
 {
+	/*
     int selectedRow = [sender tag];
     
     if (selectedRow >= 0 && projectSettings)
@@ -4113,7 +4181,8 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }
-}*/
+	 */
+}
 
 - (IBAction)menuAlignKeyframeToMarker:(id)sender
 {
@@ -4458,6 +4527,29 @@ static BOOL hideAllToNextSeparator;
     NSLog(@"DEBUG");
     
     [[ResourceManager sharedManager] debugPrintDirectories];
+}
+
+- (NSString*)getPathOfMenuItem:(NSMenuItem*)item
+{
+    NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
+    NSUInteger idx = [item tag];
+    NSString* fullpath = [[outlineView itemAtRow:idx] filePath];
+    
+    // if it doesn't exist, peek inside "resources-auto" (only needed in the case of resources, which has a different visual
+    // layout than what is actually on the disk).
+    // Should probably be removed and pulled into [RMResource filePath]
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fullpath] == NO)
+    {
+        NSString* filename = [fullpath lastPathComponent];
+        NSString* directory = [fullpath stringByDeletingLastPathComponent];
+        fullpath = [NSString pathWithComponents:[NSArray arrayWithObjects:directory, @"resources-auto", filename, nil]];
+    }
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fullpath] == NO) {
+        return nil;
+    }
+    
+    return fullpath;
 }
 
 

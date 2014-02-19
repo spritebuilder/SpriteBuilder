@@ -27,6 +27,11 @@
 #import "ResourceManagerUtil.h"
 #import "ResourceManager.h"
 
+@protocol ResourceManagerUtil_UndeclaredSelectors <NSObject>
+@optional
+- (void) selectedResource:(id)sender;
+@end
+
 @implementation ResourceManagerUtil
 
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup forceMarker:(BOOL) forceMarker
@@ -294,7 +299,7 @@
 {
     NSImage* icon = NULL;
     
-#warning Do all images by type
+	// FIXME: Do all images by type
     if (res.type == kCCBResTypeImage)
     {
         icon = [ResourceManagerUtil smallIconForFileType:@"png"];

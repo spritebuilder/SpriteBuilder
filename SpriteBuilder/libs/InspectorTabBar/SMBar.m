@@ -113,7 +113,7 @@ static CGImageRef SMNoiseImageCreate(NSUInteger width, NSUInteger height, CGFloa
     }
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-    CGContextRef bitmapContext = CGBitmapContextCreate(rgba, width, height, 8, width, colorSpace, kCGImageAlphaNone);
+    CGContextRef bitmapContext = CGBitmapContextCreate(rgba, width, height, 8, width, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
     CFRelease(colorSpace);
     free(rgba);
     

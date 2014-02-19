@@ -39,6 +39,12 @@ enum
     kCCBOrientationPortrait,
 };
 
+typedef NS_ENUM(int8_t, CCBTargetEngine)
+{
+	CCBTargetEngineCocos2d = 0,
+	CCBTargetEngineSpriteKit,
+};
+
 @class RMResource;
 @class CCBWarnings;
 
@@ -155,6 +161,8 @@ enum
 @property (nonatomic, assign) float tabletPositionScaleFactor;
 
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
+
+@property (nonatomic, readonly) CCBTargetEngine engine;
 
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;
