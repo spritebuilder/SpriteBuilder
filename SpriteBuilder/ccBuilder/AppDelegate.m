@@ -199,6 +199,9 @@ void ApplyCustomNodeVisitSwizzle()
     //[cocosView openGLContext];
     
 	NSAssert(cocosView, @"cocosView is nil");
+    
+    // TODO: Add support for retina display
+    // [cocosView setWantsBestResolutionOpenGLSurface:YES];
 	[director setView:cocosView];
     
 	// EXPERIMENTAL stuff.
