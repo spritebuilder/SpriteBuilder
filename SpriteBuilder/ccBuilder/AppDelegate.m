@@ -883,9 +883,8 @@ static BOOL hideAllToNextSeparator;
         // Load it's associated view
 	// FIXME: fix deprecation warning
         SUPPRESS_DEPRECATED([NSBundle loadNibNamed:inspectorNibName owner:inspectorValue]);
-    [NSBundle loadNibNamed:inspectorNibName owner:inspectorValue];
     }@catch (NSException * exception) {
-        int break_here =1 ;
+
         
     }
     NSView* view = inspectorValue.view;

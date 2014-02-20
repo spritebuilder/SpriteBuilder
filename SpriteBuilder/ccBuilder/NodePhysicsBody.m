@@ -182,7 +182,7 @@
     self.points = [NSArray arrayWithObject:[NSValue valueWithPoint:ccp(w/2, h/2)]];
 }
 
-- (void) setBodyShape:(int)bodyShape
+- (void) setBodyShape:(CCBPhysicsBodyShape)bodyShape
 {
     if (bodyShape == _bodyShape) return;
     
