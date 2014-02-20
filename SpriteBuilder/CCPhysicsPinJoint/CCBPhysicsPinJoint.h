@@ -10,4 +10,7 @@
 
 @interface CCBPhysicsPinJoint : CCBPhysicsJoint
 
+
+@property CGPoint anchorA;
+@property CGPoint anchorB;
 @end

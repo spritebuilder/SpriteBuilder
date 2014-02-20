@@ -12,9 +12,6 @@
 NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
 
-
-
-
 @implementation CCBPhysicsPivotJoint
 
 - (id) init
@@ -43,14 +40,14 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     [super visit];
 }
 
--(CGPoint)anchorPos
+-(CGPoint)anchorA
 {
-    return anchorPos;
+    return anchorA;
 }
 
--(void)setAnchorPos:(CGPoint)aAnchorPos
+-(void)setAnchorA:(CGPoint)aAnchorA
 {
-    anchorPos = aAnchorPos;
+    anchorA = aAnchorA;
     
 }
 
@@ -68,15 +65,15 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     
     if(!bodyA)
     {
-        self.anchorPos = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
+        self.anchorA = CGPointZero;
+        [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
         return;
     }
 
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorPos = [bodyA convertToNodeSpace:worldPos];
-    self.anchorPos = lAnchorPos;
-    [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
+    CGPoint lAnchorA = [bodyA convertToNodeSpace:worldPos];
+    self.anchorA = lAnchorA;
+    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
     
     for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
     {
@@ -98,7 +95,7 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
     CGPoint lAnchorPos = [bodyA convertToNodeSpace:worldPos];
-    self.anchorPos = lAnchorPos;
+    self.anchorA = lAnchorPos;
     
     [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
 }
@@ -106,7 +103,7 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    CGPoint worldPos = [bodyA convertToWorldSpace:self.anchorPos];
+    CGPoint worldPos = [bodyA convertToWorldSpace:self.anchorA];
     CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
     self.position = localPos;
 }

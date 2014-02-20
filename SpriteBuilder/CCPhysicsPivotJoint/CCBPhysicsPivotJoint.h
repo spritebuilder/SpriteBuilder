@@ -10,9 +10,9 @@
 
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
 {
-    CGPoint anchorPos;
+    CGPoint anchorA;
 }
 
-@property CGPoint anchorPos;
+@property CGPoint anchorA;
 
 @end

@@ -157,10 +157,8 @@
 		926D13DB18B57B9500582959 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		926D13F418B57E1600582959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
-		926D13F518B57E1600582959 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* icon.png */; };
-		926D13F618B57E1600582959 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13F018B57E1600582959 /* icon@2x.png */; };
+		926D13F518B57E1600582959 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
 		926D13FA18B57E7F00582959 /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
-		926D140218B5806B00582959 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC518A5531800BD215C /* Icon@2x.png */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
@@ -1164,7 +1162,7 @@
 		926D13E418B57B9500582959 /* CCPhysicsPivotJoint copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CCPhysicsPivotJoint copy-Info.plist"; path = "/development/SpriteBuilder/SpriteBuilder/CCPhysicsPivotJoint copy-Info.plist"; sourceTree = "<absolute>"; };
 		926D13EA18B57E1500582959 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		926D13EE18B57E1600582959 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		926D13EF18B57E1600582959 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		926D13EF18B57E1600582959 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		926D13F018B57E1600582959 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		926D13F818B57E7F00582959 /* CCBPhysicsPinJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPinJoint.h; sourceTree = "<group>"; };
 		926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJoint.m; sourceTree = "<group>"; };
@@ -2858,7 +2856,7 @@
 				926D13FE18B57FEA00582959 /* CCPhysicsPinJoint-Prefix.pch */,
 				926D13EA18B57E1500582959 /* CCBPProperties.plist */,
 				926D13ED18B57E1600582959 /* InfoPlist.strings */,
-				926D13EF18B57E1600582959 /* icon.png */,
+				926D13EF18B57E1600582959 /* Icon.png */,
 				926D13F018B57E1600582959 /* icon@2x.png */,
 			);
 			name = "Supporting Files";
@@ -4890,7 +4888,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				926D140218B5806B00582959 /* Icon@2x.png in Resources */,
 				92154ADE18A5565C00BD215C /* CCBPProperties.plist in Resources */,
 				92154ADF18A5565C00BD215C /* InfoPlist.strings in Resources */,
 				92154AE018A5565C00BD215C /* Icon.png in Resources */,
@@ -4901,8 +4898,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				926D13F618B57E1600582959 /* icon@2x.png in Resources */,
-				926D13F518B57E1600582959 /* icon.png in Resources */,
+				926D13F518B57E1600582959 /* Icon.png in Resources */,
 				926D13F418B57E1600582959 /* InfoPlist.strings in Resources */,
 				926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */,
 			);
