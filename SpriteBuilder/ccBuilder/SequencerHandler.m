@@ -309,6 +309,7 @@ static SequencerHandler* sharedSequencerHandler;
     
     if ([arr count] == 0) return NO;
     if (!plugIn.canHaveChildren) return NO;
+    if(plugIn.isJoint) return NO;
     
     return YES;
 }
@@ -763,7 +764,6 @@ static SequencerHandler* sharedSequencerHandler;
     CCNode* node = item;
     BOOL isRootNode = (node == [CocosScene cocosScene].rootNode);
     
-    
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
         SequencerButtonCell * buttonCell = cell;
@@ -792,7 +792,7 @@ static SequencerHandler* sharedSequencerHandler;
     {
         SequencerExpandBtnCell* expCell = cell;
         expCell.isExpanded = node.seqExpanded;
-        expCell.canExpand = (!isRootNode);
+        expCell.canExpand = (!isRootNode && !node.plugIn.isJoint);
         expCell.node = node;
     }
     else if ([tableColumn.identifier isEqualToString:@"structure"])
@@ -842,6 +842,9 @@ static SequencerHandler* sharedSequencerHandler;
         CCNode* node = item;
         
         if (node == [CocosScene cocosScene].rootNode && !node.seqExpanded)
+            return;
+        
+        if(node.plugIn.isJoint)
             return;
         
         //if ([NSStringFromClass(node.class) isEqualToString:@"CCBPCCBFile"] && !node.seqExpanded) return;
