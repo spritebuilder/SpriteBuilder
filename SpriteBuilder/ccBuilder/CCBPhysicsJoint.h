@@ -26,6 +26,6 @@
 -(int)hitTestOutlet:(CGPoint)point;
 -(void)setOutletStatus:(int)idx value:(BOOL)value;
 -(void)resetOutletStatus;
--(CGPoint)outletPos:(int)idx;
+-(CGPoint)outletWorldPos:(int)idx;
 
 @end

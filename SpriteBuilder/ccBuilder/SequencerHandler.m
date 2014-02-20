@@ -425,8 +425,11 @@ static SequencerHandler* sharedSequencerHandler;
     
     if (![item isKindOfClass:[CCNode class]]) return NO;
     
+    
     CCNode* draggedNode = item;
     if (draggedNode == g.rootNode) return NO;
+    
+    if(draggedNode.plugIn.isJoint) return NO;
     
     NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:draggedNode];
     
@@ -742,7 +745,7 @@ static SequencerHandler* sharedSequencerHandler;
             }
         }
         else if([tableColumn.identifier isEqualToString:@"locked"] ||
-             [tableColumn.identifier isEqualToString:@"hidden"])
+                [tableColumn.identifier isEqualToString:@"hidden"])
         {
             SequencerButtonCell * buttonCell = cell;
             buttonCell.node = nil;

@@ -39,14 +39,17 @@ static const float kOutletOffset = 20.0f;
 
 -(int)hitTestOutlet:(CGPoint)point
 {
-    point = [self convertToNodeSpace:point];
+
+    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:point];
     
-    if(ccpDistance(point, bodyAOutlet.position) < 3.0f * 3.0f)
+    if(ccpLength(pointA) < 5.0f)
     {
         return 0;
     }
     
-    if(ccpDistanceSQ(point, bodyBOutlet.position) < 3.0f * 3.0f)
+    
+    CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:point];
+    if(ccpLength(pointB) < 5.0f)
     {
         return 1;
     }
@@ -87,9 +90,16 @@ static const float kOutletOffset = 20.0f;
     
 }
 
--(CGPoint)outletPos:(int)idx
+-(CGPoint)outletWorldPos:(int)idx
 {
-    return idx ==0 ? bodyAOutlet.position : bodyBOutlet.position;
+    if(idx == 0)
+    {
+        return [bodyAOutlet convertToWorldSpaceAR:CGPointZero];
+    }
+    else
+    {
+        return [bodyAOutlet convertToWorldSpaceAR:CGPointZero];
+    }
 }
 
 

@@ -711,7 +711,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         if(_mouseDownOutletHandle != -1)
         {
             CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-            CGPoint fromPt = [joint convertToWorldSpace:[joint outletPos:_mouseDownOutletHandle]];
+            CGPoint fromPt = [joint outletWorldPos:_mouseDownOutletHandle];
             
             CCDrawNode* drawing = [CCDrawNode node];
             [drawing drawSegmentFrom:fromPt to:_mouseDragPos radius:.5 color:[CCColor blackColor]];

@@ -920,7 +920,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     PlugInNode* parentPlugIn = parentInfo.plugIn;
     if (parentPlugIn && !parentPlugIn.canHaveChildren) return;
     
-    if (node.contentSize.width == 0 || node.contentSize.height == 0)
+    if ((node.contentSize.width == 0 || node.contentSize.height == 0) && !node.plugIn.isJoint)
     {
         CGPoint worldPos = [node.parent convertToWorldSpace:node.position];
         if (ccpDistance(worldPos, pt) < kCCBSinglePointSelectionRadius)

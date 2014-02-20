@@ -36,7 +36,20 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
+   // self.contentSize = joint.contentSize;
+   // self.anchorPoint = ccp(0.5f,0.5f);
     
+}
+
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos
+{
+    pos = [scaleFreeNode convertToNodeSpace:pos];
+    if(ccpLength(pos) < 17.0f)
+    {
+        return YES;
+    }
+    
+    return NO;    
 }
 
 -(CGPoint)anchorA
