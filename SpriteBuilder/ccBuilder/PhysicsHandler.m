@@ -401,20 +401,6 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 #pragma mark Joints
 #pragma mark -
 
-- (void) updateJointEditor
-{
-    CCNode* node = [AppDelegate appDelegate].selectedNode;
-    
-}
-
-
--(int) handleInsideJointOutlet:(CCNode*)node pos:(CGPoint)pos
-{
-    if(!node.plugIn.isJoint)
-        return -1;
-    
-    CCBPhysicsJoint * joint = node;
-}
 
 -(void)findPhysicsNodes:(CCNode*)node nodes:(NSMutableArray*)nodes
 {

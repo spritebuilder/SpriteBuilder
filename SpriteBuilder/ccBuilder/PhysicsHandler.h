@@ -51,7 +51,6 @@
 - (void) didChangeSelection;
 
 - (void) updatePhysicsEditor:(CCNode*) editorView;
-- (void) updateJointEditor;
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;
