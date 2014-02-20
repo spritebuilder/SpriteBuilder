@@ -8,6 +8,10 @@
 
 #import "CCBPhysicsJoint.h"
 
+
+static const int kNumProperties = 6;
+extern NSString *  dependantProperties[kNumProperties];
+
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
 {
     CGPoint anchorA;

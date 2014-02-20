@@ -9,7 +9,7 @@
 #import "CCBPhysicsPivotJoint.h"
 #import "AppDelegate.h"
 
-NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
+NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
 
 @implementation CCBPhysicsPivotJoint
@@ -50,14 +50,12 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     
 }
 
+
 -(void)setBodyA:(CCNode *)aBodyA
 {
     if(bodyA)
     {
-        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
-        {
-            [bodyA removeObserver:self forKeyPath:dependantProperties[i]];
-        }
+        [self removeObserverBody:bodyA];
     }
     
     [super setBodyA:aBodyA];
@@ -69,18 +67,34 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
         return;
     }
 
+    [self setAnchorFromBodyA];
+    [self addObserverBody:bodyA];
+    
+}
+
+-(void)addObserverBody:(CCNode*)body
+{
+    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+    {
+        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
+    }
+}
+
+-(void)removeObserverBody:(CCNode*)body
+{
+    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
+        [body removeObserver:self forKeyPath:dependantProperties[i]];
+    }
+}
+
+-(void)setAnchorFromBodyA
+{
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
     CGPoint lAnchorA = [bodyA convertToNodeSpace:worldPos];
     self.anchorA = lAnchorA;
+    
     [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
-    
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
-    {
-        [bodyA addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
-        
-    }
-    
-
+   
 }
 
 -(void)setPosition:(CGPoint)position
@@ -92,29 +106,25 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
         return;
     }
     
-    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorA = [bodyA convertToNodeSpace:worldPos];
-    self.anchorA = lAnchorA;
-    
-    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
+    [self setAnchorFromBodyA];
 }
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    CGPoint worldPos = [bodyA convertToWorldSpace:self.anchorA];
-    CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
-    self.position = localPos;
+    if(object == bodyA)
+    {
+        CGPoint worldPos = [bodyA convertToWorldSpace:self.anchorA];
+        CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
+        self.position = localPos;
+    }
 }
 
 -(void)dealloc
 {
     if(bodyA)
     {
-        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
-            [bodyA removeObserver:self forKeyPath:dependantProperties[i]];
-        }
-        
+        [self removeObserverBody:bodyA];
     }
 
 }

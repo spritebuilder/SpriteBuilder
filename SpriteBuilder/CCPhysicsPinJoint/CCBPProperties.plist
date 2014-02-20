@@ -21,6 +21,22 @@
 	<key>properties</key>
 	<array>
 		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>animatable</key>
+			<false/>
+			<key>displayName</key>
+			<string>AnchorA</string>
+			<key>type</key>
+			<string>Point</string>
+			<key>name</key>
+			<string>anchorA</string>
+		</dict>
+		<dict>
 			<key>type</key>
 			<string>Separator</string>
 			<key>dontSetInEditor</key>
@@ -86,11 +102,11 @@
 			<key>animatable</key>
 			<false/>
 			<key>displayName</key>
-			<string>AnchorA</string>
+			<string>AnchorB</string>
 			<key>type</key>
 			<string>Point</string>
 			<key>name</key>
-			<string>anchorA</string>
+			<string>anchorB</string>
 		</dict>
 	</array>
 	<key>editorClassName</key>
