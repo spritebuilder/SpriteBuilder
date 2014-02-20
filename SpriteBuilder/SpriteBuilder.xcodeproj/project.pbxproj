@@ -117,7 +117,6 @@
 		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
 		92154ACB18A5531800BD215C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC518A5531800BD215C /* Icon@2x.png */; };
 		92154AD318A5560B00BD215C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
-		92154ADD18A5563300BD215C /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
 		92154ADE18A5565C00BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154ADF18A5565C00BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154AE018A5565C00BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
@@ -158,7 +157,6 @@
 		926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		926D13F418B57E1600582959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
 		926D13F518B57E1600582959 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
-		926D13FA18B57E7F00582959 /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
@@ -173,6 +171,8 @@
 		92DC2162188073C500C8DCCD /* select-rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158941843DEDC007242F6 /* select-rotation.png */; };
 		92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		92F12E4F18847BC800AB8F32 /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
+		92FD167218B59022003EF0D5 /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
+		92FD167318B59022003EF0D5 /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -700,6 +700,13 @@
 			remoteGlobalIDString = 92154ACF18A5560B00BD215C;
 			remoteInfo = CCPhysicsPivotJoint;
 		};
+		9266089C18B58E5B007A0A05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92154ACF18A5560B00BD215C;
+			remoteInfo = CCPhysicsPivotJoint;
+		};
 		926D13E518B57C4200582959 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -1159,7 +1166,6 @@
 		926D13D418B57A8100582959 /* CCBPhysicsJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPhysicsJoint.h; path = ccBuilder/CCBPhysicsJoint.h; sourceTree = "<group>"; };
 		926D13D518B57A8100582959 /* CCBPhysicsJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPhysicsJoint.m; path = ccBuilder/CCBPhysicsJoint.m; sourceTree = "<group>"; };
 		926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsPinJoint.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		926D13E418B57B9500582959 /* CCPhysicsPivotJoint copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CCPhysicsPivotJoint copy-Info.plist"; path = "/development/SpriteBuilder/SpriteBuilder/CCPhysicsPivotJoint copy-Info.plist"; sourceTree = "<absolute>"; };
 		926D13EA18B57E1500582959 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		926D13EE18B57E1600582959 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		926D13EF18B57E1600582959 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -2575,7 +2581,6 @@
 				FA98CFC5154E7D1C006E58C5 /* ccbpublish */,
 				7789ABC1133AA82000CEFCC7 /* Frameworks */,
 				7789ABBF133AA82000CEFCC7 /* Products */,
-				926D13E418B57B9500582959 /* CCPhysicsPivotJoint copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -4103,6 +4108,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9266089D18B58E5B007A0A05 /* PBXTargetDependency */,
 			);
 			name = CCPhysicsPinJoint;
 			productName = CCPhysicsNode;
@@ -5141,6 +5147,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92FD167218B59022003EF0D5 /* CCBPhysicsPinJoint.m in Sources */,
+				92FD167318B59022003EF0D5 /* CCBPhysicsPivotJoint.m in Sources */,
 				9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */,
 				9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */,
 				80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */,
@@ -5358,7 +5366,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92154ADD18A5563300BD215C /* CCBPhysicsPivotJoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5366,7 +5373,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				926D13FA18B57E7F00582959 /* CCBPhysicsPinJoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5557,6 +5563,11 @@
 			isa = PBXTargetDependency;
 			target = 92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */;
 			targetProxy = 92154AE118A5567400BD215C /* PBXContainerItemProxy */;
+		};
+		9266089D18B58E5B007A0A05 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */;
+			targetProxy = 9266089C18B58E5B007A0A05 /* PBXContainerItemProxy */;
 		};
 		926D13E618B57C4200582959 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

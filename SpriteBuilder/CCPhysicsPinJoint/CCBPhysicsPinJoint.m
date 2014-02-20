@@ -8,6 +8,14 @@
 
 #import "CCBPhysicsPinJoint.h"
 
+@interface CCBPhysicsPinJoint()
+{
+    CCSprite9Slice * jointBody;
+}
+
+
+@end
+
 @implementation CCBPhysicsPinJoint
 
 
@@ -19,14 +27,23 @@
         return NULL;
     }
     
-    scaleFreeNode.scale = 1.0f;
-    
-    CCSprite* joint = [CCSprite spriteWithImageNamed:@"joint-distance.png"];
-    
-    [scaleFreeNode addChild:joint];
-    
-    
     return self;
+}
+
+-(void)setupBody
+{
+    jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png"];
+    jointBody.marginLeft = 0.25;
+    jointBody.marginRight = 0.25;
+    
+    [scaleFreeNode addChild:jointBody];
+}
+
+-(void)setBodyA:(CCNode *)aBodyA
+{
+    [super setBodyA:aBodyA];
+    
+    
 }
 
 

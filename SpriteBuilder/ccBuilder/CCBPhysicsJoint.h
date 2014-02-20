@@ -14,10 +14,9 @@
     
     CCSprite * bodyAOutlet;
     CCSprite * bodyBOutlet;
-    
+ 
     CCNode * bodyA;
     CCNode * bodyB;
-    
 }
 
 @property CCNode * bodyA;

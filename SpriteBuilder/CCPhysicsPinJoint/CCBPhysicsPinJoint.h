@@ -6,11 +6,9 @@
 //
 //
 
-#import "CCBPhysicsJoint.h"
+#import "CCBPhysicsPivotJoint.h"
 
-@interface CCBPhysicsPinJoint : CCBPhysicsJoint
+@interface CCBPhysicsPinJoint : CCBPhysicsPivotJoint
 
-
-@property CGPoint anchorA;
 @property CGPoint anchorB;
 @end

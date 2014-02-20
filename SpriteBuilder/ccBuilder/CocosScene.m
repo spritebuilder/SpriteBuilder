@@ -280,10 +280,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     else if (type == kCCBBorderTransparent)
     {
-        [borderBottom setOpacity:0.5f];
-        [borderTop setOpacity:0.5f];
-        [borderLeft setOpacity:0.5f];
-        [borderRight setOpacity:0.5f];
+        [borderBottom   setOpacity:0.5f];
+        [borderTop      setOpacity:0.5f];
+        [borderLeft     setOpacity:0.5f];
+        [borderRight    setOpacity:0.5f];
         
         borderLayer.visible = YES;
     }

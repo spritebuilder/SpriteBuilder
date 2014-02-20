@@ -12,6 +12,8 @@
 static const float kOutletOffset = 20.0f;
 
 @implementation CCBPhysicsJoint
+@synthesize bodyA;
+@synthesize bodyB;
 
 - (id) init
 {

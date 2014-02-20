@@ -23,6 +23,13 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     }
     
     scaleFreeNode.scale = 1.0f;
+    [self setupBody];
+    
+    return self;
+}
+
+-(void)setupBody
+{
     
     CCSprite* joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
     CCSprite* jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
@@ -30,14 +37,6 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
     
-    
-    return self;
-}
-
-
--(void)visit
-{
-    [super visit];
 }
 
 -(CGPoint)anchorA
@@ -94,10 +93,10 @@ NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX",
     }
     
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorPos = [bodyA convertToNodeSpace:worldPos];
-    self.anchorA = lAnchorPos;
+    CGPoint lAnchorA = [bodyA convertToNodeSpace:worldPos];
+    self.anchorA = lAnchorA;
     
-    [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
+    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
 }
 
 
