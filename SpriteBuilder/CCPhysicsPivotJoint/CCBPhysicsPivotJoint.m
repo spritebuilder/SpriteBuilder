@@ -11,8 +11,15 @@
 
 NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
+@interface CCBPhysicsJoint()
+-(void)updateSelectionUI;
+@end
 
 @implementation CCBPhysicsPivotJoint
+{
+    CCSprite * joint;
+    CCSprite* jointAnchor;
+}
 
 - (id) init
 {
@@ -31,8 +38,8 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 -(void)setupBody
 {
     
-    CCSprite* joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
-    CCSprite* jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
+    joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
+    jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
@@ -40,6 +47,25 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
    // self.anchorPoint = ccp(0.5f,0.5f);
     
 }
+
+
+-(void)updateSelectionUI
+{
+    //If selected, display selected sprites.
+    if(self.isSelected)
+    {
+        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-sel.png"];
+        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor-sel.png"];
+    }
+    else
+    {
+        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot.png"];
+        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor.png"];
+    }
+    
+    [super updateSelectionUI];
+}
+
 
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {

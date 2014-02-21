@@ -702,15 +702,10 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     if(node.plugIn.isJoint)
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        
-        if(!joint.bodyA)
-        {
-            
-        }
+        joint.isSelected = YES;
         
         if(_mouseDownOutletHandle != -1)
         {
-            CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
             CGPoint fromPt = [joint outletWorldPos:_mouseDownOutletHandle];
             
             CCDrawNode* drawing = [CCDrawNode node];

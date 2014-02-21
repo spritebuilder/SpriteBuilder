@@ -12,9 +12,12 @@
 static const float kOutletOffset = 20.0f;
 
 @implementation CCBPhysicsJoint
+{
+
+}
 @synthesize bodyA;
 @synthesize bodyB;
-
+@synthesize isSelected;
 - (id) init
 {
     self = [super init];
@@ -35,6 +38,30 @@ static const float kOutletOffset = 20.0f;
     [scaleFreeNode addChild:bodyBOutlet];
     
     return self;
+}
+
+-(void)visit
+{
+    [self updateSelectionUI];
+    [super visit];
+}
+
+-(void)updateSelectionUI
+{
+    
+    if(self.isSelected)
+    {
+        bodyAOutlet.visible = self.bodyA ? NO : YES;
+        bodyBOutlet.visible = self.bodyB ? NO : YES;
+
+    }
+    else
+    {
+        bodyAOutlet.visible = NO;
+        bodyBOutlet.visible = NO;
+    }
+    
+    isSelected = NO;
 }
 
 -(int)hitTestOutlet:(CGPoint)point
@@ -82,9 +109,6 @@ static const float kOutletOffset = 20.0f;
 
 -(void)resetOutletStatus
 {
-    bodyAOutlet.visible = self.bodyA ? NO : YES;
-    bodyBOutlet.visible = self.bodyB ? NO : YES;
-    
     bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
     bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
     
@@ -98,7 +122,7 @@ static const float kOutletOffset = 20.0f;
     }
     else
     {
-        return [bodyAOutlet convertToWorldSpaceAR:CGPointZero];
+        return [bodyBOutlet convertToWorldSpaceAR:CGPointZero];
     }
 }
 

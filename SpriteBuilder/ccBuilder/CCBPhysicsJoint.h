@@ -21,6 +21,7 @@
 
 @property CCNode * bodyA;
 @property CCNode * bodyB;
+@property BOOL isSelected;//Is clears on Visit
 
 
 -(int)hitTestOutlet:(CGPoint)point;
