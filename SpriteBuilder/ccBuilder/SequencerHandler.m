@@ -661,8 +661,6 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if ([item isKindOfClass:[CCNode class]]) return YES;
     
-    if([item isKindOfClass:[SequencerJoints class]]) return YES;
-    
     return NO;
 }
 
@@ -705,6 +703,21 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if([item isKindOfClass:[SequencerJoints class]])
     {
+        if ([tableColumn.identifier isEqualToString:@"expander"])
+        {
+            SequencerExpandBtnCell* expCell = cell;
+            expCell.node = [SceneGraph instance].joints.node;
+            expCell.canExpand = NO;
+        }
+        if([tableColumn.identifier isEqualToString:@"locked"] ||
+           [tableColumn.identifier isEqualToString:@"hidden"])
+        {
+            SequencerButtonCell * buttonCell = cell;
+            buttonCell.node = [SceneGraph instance].joints.node;
+            [buttonCell setTransparent:YES];
+            
+        }
+        
         return;
     }
     
@@ -842,6 +855,10 @@ static SequencerHandler* sharedSequencerHandler;
     {
         SequencerSoundChannel * soundChannel = item;
         soundChannel.isEpanded = !soundChannel.isEpanded;
+    }
+    else if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return;
     }
     else
     {
