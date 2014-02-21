@@ -112,9 +112,12 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     {
         [AppDelegate appDelegate].selectedNode.nodePhysicsBody = NULL;
     }
+
+    [[SceneGraph instance].joints fixupReferences];//Fixup references of Joints due to changing Physics Nodes.
     
     // Update physics body
     self.selectedNodePhysicsBody = [AppDelegate appDelegate].selectedNode.nodePhysicsBody;
+
 }
 
 - (BOOL) selectedNodePhysicsEnabled

@@ -77,6 +77,16 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 {
     self.bodyA = self.bodyA;
     self.bodyB = self.bodyB;
+    
+    if(self.bodyA.physicsBody == nil)
+    {
+        self.bodyA = nil;
+    }
+    
+    if(self.bodyB.physicsBody == nil)
+    {
+        self.bodyB = nil;
+    }
 }
 
 
@@ -88,6 +98,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     {
         [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
     }
+    
 }
 
 -(void)removeObserverBody:(CCNode*)body
