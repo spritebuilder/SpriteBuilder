@@ -23,6 +23,7 @@
  */
 
 #import "SequencerHandler.h"
+#import "SceneGraph.h"
 #import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "NodeInfo.h"
@@ -236,7 +237,7 @@ static SequencerHandler* sharedSequencerHandler;
         [outlineHierarchy selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
         return;
     }
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     
     // Expand parents of the selected node
     CCNode* node = [appDelegate.selectedNodes objectAtIndex:0];
@@ -270,7 +271,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     
-    if ([[CCBGlobals globals] rootNode] == NULL) return 0;
+    if ([[SceneGraph instance] rootNode] == NULL) return 0;
     if (item == nil) return 4;
     
     if([item isKindOfClass:[SequencerJoints class]])
@@ -317,7 +318,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-    CCBGlobals* g= [CCBGlobals globals];
+    SceneGraph * g = [SceneGraph instance];
     
     if (item == NULL)
     {
@@ -419,7 +420,7 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if (!dragAndDropEnabled) return NO;
     
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     
     id item = [items objectAtIndex:0];
     
@@ -447,7 +448,7 @@ static SequencerHandler* sharedSequencerHandler;
         return NSDragOperationNone;
     
     
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     NSPasteboard* pb = [info draggingPasteboard];
     
     if ([item isKindOfClass:[CCNode class]])

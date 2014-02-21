@@ -8,6 +8,10 @@
 
 #import "cocos2d.h"
 
+static const int kNumProperties = 6;
+extern NSString *  dependantProperties[kNumProperties];
+
+
 @interface CCBPhysicsJoint : CCNode
 {
     CCNode * scaleFreeNode;
@@ -15,12 +19,16 @@
     CCSprite * bodyAOutlet;
     CCSprite * bodyBOutlet;
  
-    CCNode * bodyA;
-    CCNode * bodyB;
+    NSUInteger bodyA_UUID;
+    CCNode    *bodyA;
+    
+    NSUInteger bodyB_UUID;
+    CCNode    *bodyB;
 }
 
 @property CCNode * bodyA;
 @property CCNode * bodyB;
+
 @property BOOL isSelected;//Is clears on Visit
 
 
@@ -28,5 +36,8 @@
 -(void)setOutletStatus:(int)idx value:(BOOL)value;
 -(void)resetOutletStatus;
 -(CGPoint)outletWorldPos:(int)idx;
+
+-(void)removeObserverBody:(CCNode*)body;
+-(void)addObserverBody:(CCNode*)body;
 
 @end

@@ -23,6 +23,7 @@
  */
 
 #import "PhysicsHandler.h"
+#import "SceneGraph.h"
 #import "PolyDecomposition.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
@@ -417,7 +418,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 -(void)mouseDraggedJointOutlets
 {
-    CCBGlobals * g = [CCBGlobals globals];
+    SceneGraph * g = [SceneGraph instance];
     
     NSMutableArray * physicsNodes = [NSMutableArray array];
     [self findPhysicsNodes:g.rootNode nodes:physicsNodes];

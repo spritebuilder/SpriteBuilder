@@ -30,7 +30,7 @@
 
 @implementation CCBGlobals
 
-@synthesize rootNode;
+
 @synthesize numRuns;
 @synthesize hasDonated;
 
@@ -51,7 +51,7 @@
     
     numRuns = [[[NSUserDefaults standardUserDefaults] valueForKey:@"numRuns"] intValue];
     hasDonated = [[[NSUserDefaults standardUserDefaults] valueForKey:@"hasDonated"] boolValue];
-    _joints = [[SequencerJoints alloc] init];
+
     numRuns++;
     [self writeSettings];
     

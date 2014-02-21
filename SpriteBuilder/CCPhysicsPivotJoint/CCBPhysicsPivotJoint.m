@@ -9,7 +9,7 @@
 #import "CCBPhysicsPivotJoint.h"
 #import "AppDelegate.h"
 
-NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
+
 
 @interface CCBPhysicsJoint()
 -(void)updateSelectionUI;
@@ -92,14 +92,10 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
-    if(bodyA)
-    {
-        [self removeObserverBody:bodyA];
-    }
     
     [super setBodyA:aBodyA];
     
-    if(!bodyA)
+    if(!aBodyA)
     {
         self.anchorA = CGPointZero;
         [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
@@ -107,29 +103,13 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     }
 
     [self setAnchorFromBodyA];
-    [self addObserverBody:bodyA];
     
-}
-
--(void)addObserverBody:(CCNode*)body
-{
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
-    {
-        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
-    }
-}
-
--(void)removeObserverBody:(CCNode*)body
-{
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
-        [body removeObserver:self forKeyPath:dependantProperties[i]];
-    }
 }
 
 -(void)setAnchorFromBodyA
 {
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorA = [bodyA convertToNodeSpace:worldPos];
+    CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
     self.anchorA = lAnchorA;
     
     [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
@@ -140,7 +120,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 {
     [super setPosition:position];
     
-    if(!bodyA)
+    if(!self.bodyA)
     {
         return;
     }
@@ -151,20 +131,22 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if(object == bodyA)
+    if(object == self.bodyA)
     {
-        CGPoint worldPos = [bodyA convertToWorldSpace:self.anchorA];
+        CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
         CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
         self.position = localPos;
     }
 }
 
+-(void)onExit
+{
+ 
+}
+
 -(void)dealloc
 {
-    if(bodyA)
-    {
-        [self removeObserverBody:bodyA];
-    }
+    self.bodyA = nil;
 
 }
 

@@ -12,6 +12,8 @@
 static const float kMargin = 0.25f;
 static const float kDefaultLength = 32.0f;
 
+
+
 @interface CCBPhysicsPinJoint()
 {
     CCSprite9Slice  * jointBody;
@@ -19,8 +21,6 @@ static const float kDefaultLength = 32.0f;
     CCSprite        * anchorHandleB;
 }
 
--(void)removeObserverBody:(CCNode*)body;
--(void)addObserverBody:(CCNode*)body;
 
 @end
 
@@ -62,7 +62,7 @@ static const float kDefaultLength = 32.0f;
 
 -(float)length
 {
-    if(bodyB == nil)
+    if(self.bodyB == nil)
     {
         return kDefaultLength;
     }
@@ -88,7 +88,6 @@ const float kEdgeRadius = 4.0f;
     
     [self updateRenderBody];
     
-    
 }
 
 
@@ -96,29 +95,17 @@ const float kEdgeRadius = 4.0f;
 {
     [super setBodyA:aBodyA];
     [self updateRenderBody];
-    
 }
-
-
 
 -(void)setBodyB:(CCNode *)aBodyB
 {
-    if(bodyB)
-    {
-        [self removeObserverBody:aBodyB];
-    }
-    
     [super setBodyB:aBodyB];
-    
-    
     [self setAnchorFromBodyB];
-    [self addObserverBody:bodyB];
-    
 }
 
 -(void)setAnchorFromBodyB
 {
-    if(!bodyB)
+    if(!self.bodyB)
     {
         self.anchorB = CGPointZero;
         [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
@@ -128,20 +115,17 @@ const float kEdgeRadius = 4.0f;
     CGPoint anchorBPositionNodePos = ccpAdd(self.position, ccp(kDefaultLength,0));
     
     CGPoint worldPos = [self.parent convertToWorldSpace:anchorBPositionNodePos];
-    CGPoint lAnchorb = [bodyB convertToNodeSpace:worldPos];
-                               
+    CGPoint lAnchorb = [self.bodyB convertToNodeSpace:worldPos];
                                
     self.anchorB = lAnchorb;
-    
     [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
-
 }
 
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if(object == bodyB)
+    if(object == self.bodyB)
     {
         return;
     }

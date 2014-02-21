@@ -25,6 +25,7 @@
 
 #import "CocosScene.h"
 #import "CCBGlobals.h"
+#import "SceneGraph.h"
 #import "AppDelegate.h"
 #import "CCBReaderInternalV1.h"
 #import "NodeInfo.h"
@@ -438,23 +439,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 #pragma mark Replacing content
 
-- (void) replaceSceneNodes:(CCNode*)aRootNode joints:(CCNode*)aJointsNode;
+- (void) replaceSceneNodes:(SceneGraph*)sceneGraph
 {
-    CCBGlobals* g = [CCBGlobals globals];
-    
     [contentLayer removeChild:rootNode cleanup:YES];
     [jointsLayer removeAllChildrenWithCleanup:YES];
     
-    self.rootNode = aRootNode;
-    g.rootNode = aRootNode;
-    g.joints.node = aJointsNode;
+    self.rootNode = sceneGraph.rootNode;
     
+    if (sceneGraph.rootNode)
+        [contentLayer addChild:sceneGraph.rootNode];
     
-    if (aRootNode)
-        [contentLayer addChild:aRootNode];
-    
-    if(aJointsNode)
-        [jointsLayer addChild:aJointsNode];
+    if(sceneGraph.joints.node)
+        [jointsLayer addChild:sceneGraph.joints.node];
 }
 
 #pragma mark Handle selections

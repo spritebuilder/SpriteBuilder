@@ -32,8 +32,6 @@
 
 @interface CCBGlobals : NSObject
 {
-    CCNode* rootNode;
-    
     // Settings
     int numRuns;
     BOOL hasDonated;
@@ -41,9 +39,6 @@
 @private
     
 }
-
-@property (nonatomic,strong) CCNode* rootNode;
-@property (nonatomic,strong) SequencerJoints * joints;
 
 // Settings
 @property (nonatomic,assign) int numRuns;

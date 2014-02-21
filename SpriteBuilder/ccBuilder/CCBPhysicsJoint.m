@@ -8,15 +8,21 @@
 
 #import "CCBPhysicsJoint.h"
 #import "CCScaleFreeNode.h"
+#import "CCNode+NodeInfo.h"
+#import "CCBGlobals.h"
+#import "SceneGraph.h"
 
 static const float kOutletOffset = 20.0f;
+
+NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
 @implementation CCBPhysicsJoint
 {
 
 }
-@synthesize bodyA;
-@synthesize bodyB;
+@dynamic bodyA;
+@dynamic bodyB;
+
 @synthesize isSelected;
 - (id) init
 {
@@ -38,6 +44,95 @@ static const float kOutletOffset = 20.0f;
     [scaleFreeNode addChild:bodyBOutlet];
     
     return self;
+}
+
+-(void)setBodyA:(CCNode *)aBodyA
+{
+    if(bodyA && bodyA != aBodyA)
+    {
+        [self removeObserverBody:bodyA];
+    }
+    
+    bodyA = aBodyA;
+    bodyA_UUID = bodyA.UUID;
+    
+    [self addObserverBody:bodyA];
+    [self resetOutletStatus];
+}
+
+-(void)setBodyB:(CCNode *)aBodyB
+{
+    if(bodyB && bodyB != aBodyB)
+        
+    bodyB = aBodyB;
+    bodyB_UUID = bodyB.UUID;
+    [self addObserverBody:bodyB];
+    [self resetOutletStatus];
+}
+
+
+-(void)addObserverBody:(CCNode*)body
+{
+    NSLog(@"Add Observer: self: 0x%x  Body:0x%x", (unsigned int)self, (unsigned int)body);
+    
+    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+    {
+        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
+    }
+}
+
+-(void)removeObserverBody:(CCNode*)body
+{
+    NSLog(@"Remove Observer self: 0x%x  Body:0x%x", (unsigned int)self, (unsigned int)body);
+    
+    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
+        [body removeObserver:self forKeyPath:dependantProperties[i]];
+    }
+}
+
+-(CCNode*)bodyA
+{
+    CCNode * foundNode = [self findUUID:bodyA_UUID];
+    //NSAssert(foundNode != nil, @"Did not find nod UUID:%i", (int)bodyA_UUID);
+    return foundNode;
+}
+
+-(CCNode*)bodyB
+{
+    CCNode * foundNode = [self findUUID:bodyB_UUID];
+    //NSAssert(foundNode != nil, @"Did not find nod UUID:%i", (int)bodyA_UUID);
+    return foundNode;
+}
+
+typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
+
+-(CCNode*)findUUID:(NSUInteger)uuid
+{
+    if(uuid == 0)
+        return nil;
+        
+    SceneGraph* g = [SceneGraph instance];
+    
+    __block FindUUIDBlock findUUIDT;
+    //Recursive.
+    findUUIDT = ^CCNode*(CCNode * node, NSUInteger uuid)
+    {
+        if(node.UUID == uuid)
+            return node;
+        
+        for (CCNode * child in node.children) {
+            CCNode * foundNode = findUUIDT(child,uuid);
+            
+            if(foundNode)
+                return foundNode;
+            
+        }
+        return nil;
+    };
+    
+    CCNode * foundNode = findUUIDT(g.rootNode,uuid);
+    
+    return foundNode;
 }
 
 -(void)visit
@@ -84,29 +179,6 @@ static const float kOutletOffset = 20.0f;
     return -1;
 }
 
--(void)setBodyA:(CCNode *)aBodyA
-{
-    bodyA = aBodyA;
-    [self resetOutletStatus];
-}
-
-
--(void)setBodyB:(CCNode *)aBodyB
-{
-    bodyB = aBodyB;
-    [self resetOutletStatus];
-}
-
--(CCNode*)bodyA
-{
-    return bodyA;
-}
-
--(CCNode*)bodyB
-{
-    return bodyB;
-}
-
 -(void)resetOutletStatus
 {
     bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
@@ -140,6 +212,13 @@ static const float kOutletOffset = 20.0f;
     {
         bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
     }
+}
+
+
+-(void)dealloc
+{
+    self.bodyA = nil;
+    self.bodyB = nil;
 }
 
 @end

@@ -25,6 +25,7 @@
 
 #import "AppDelegate.h"
 #import "CocosScene.h"
+#import "SceneGraph.h"
 #import "CCBGLView.h"
 #import "NSFlippedView.h"
 #import "CCBGlobals.h"
@@ -1233,7 +1234,9 @@ static BOOL hideAllToNextSeparator;
 
 - (NSMutableDictionary*) docDataFromCurrentNodeGraph
 {
-    CCBGlobals* g= [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
+    
+    
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
     CCBDocument* doc = [self currentDocument];
     
@@ -1390,7 +1393,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) replaceDocumentData:(NSMutableDictionary*)doc
 {
-    CCBGlobals* g = [CCBGlobals globals];
+//    SceneGraph* g = [SceneGraph instance];
     
     [loadedSelectedNodes removeAllObjects];
     
@@ -1539,7 +1542,12 @@ static BOOL hideAllToNextSeparator;
     
     // Replace open document
     self.selectedNodes = NULL;
-    [[CocosScene cocosScene] replaceSceneNodes:loadedRoot joints:loadedJoints];
+    
+    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    g.rootNode = loadedRoot;
+    g.joints.node = loadedJoints;
+    
+    [[CocosScene cocosScene] replaceSceneNodes:g];
     [outlineHierarchy reloadData];
     [sequenceHandler updateOutlineViewSelection];
     [self updateInspectorFromSelection];
@@ -1643,7 +1651,9 @@ static BOOL hideAllToNextSeparator;
 - (void) closeLastDocument
 {
     self.selectedNodes = NULL;
-    [[CocosScene cocosScene] replaceSceneNodes:NULL joints:nil];
+    
+    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    [[CocosScene cocosScene] replaceSceneNodes: g];
     [[CocosScene cocosScene] setStageSize:CGSizeMake(0, 0) centeredOrigin:YES];
     [[CocosScene cocosScene].guideLayer removeAllGuides];
     [[CocosScene cocosScene].notesLayer removeAllNotes];
@@ -2008,7 +2018,10 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Create new node
-    [[CocosScene cocosScene] replaceSceneNodes:[[PlugInManager sharedManager] createDefaultNodeOfType:class] joints:[CCNode node]];
+    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    g.rootNode = [[PlugInManager sharedManager] createDefaultNodeOfType:class];
+    g.joints.node = [CCNode node];
+    [[CocosScene cocosScene] replaceSceneNodes:g];
     
     if (type == kCCBNewDocTypeScene)
     {
@@ -2254,7 +2267,7 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) addCCObject:(CCNode*)obj asChild:(BOOL)asChild
 {
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     
     CCNode* parent;
     if (!self.selectedNode)
@@ -2365,7 +2378,7 @@ static BOOL hideAllToNextSeparator;
 
 -(void)addJoint:(NSString*)jointName at:(CGPoint)pt
 {
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     
     CCNode* addedNode = [[PlugInManager sharedManager] createDefaultNodeOfType:jointName];
     [g.joints addJoint:(CCBPhysicsJoint*)addedNode];
@@ -2616,7 +2629,8 @@ static BOOL hideAllToNextSeparator;
 
 - (void) deleteNode:(CCNode*)node
 {
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
+    
     
     if (node == g.rootNode) return;
     if (!node) return;
@@ -2656,7 +2670,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) cut:(id) sender
 {
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     if (self.selectedNode == g.rootNode)
     {
         [self modalDialogTitle:@"Failed to cut object" message:@"The root node cannot be removed"];
