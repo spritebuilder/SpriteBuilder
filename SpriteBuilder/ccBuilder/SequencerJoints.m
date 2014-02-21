@@ -34,4 +34,13 @@
     [self.node addChild:joint];
 }
 
+-(void)fixupReferences
+{
+    for (CCBPhysicsJoint * joint in self.all)
+    {
+        [joint fixupReferences];
+        
+    }
+}
+
 @end

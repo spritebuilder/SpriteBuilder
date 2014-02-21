@@ -63,11 +63,20 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 -(void)setBodyB:(CCNode *)aBodyB
 {
     if(bodyB && bodyB != aBodyB)
+    {
+        [self removeObserverBody:bodyB];
+    }
         
     bodyB = aBodyB;
     bodyB_UUID = bodyB.UUID;
     [self addObserverBody:bodyB];
     [self resetOutletStatus];
+}
+
+-(void)fixupReferences
+{
+    self.bodyA = self.bodyA;
+    self.bodyB = self.bodyB;
 }
 
 
@@ -77,7 +86,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     
     for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
     {
-        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
+        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
     }
 }
 
@@ -111,7 +120,7 @@ typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
     if(uuid == 0)
         return nil;
         
-    SceneGraph* g = [SceneGraph instance];
+    
     
     __block FindUUIDBlock findUUIDT;
     //Recursive.
@@ -130,7 +139,7 @@ typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
         return nil;
     };
     
-    CCNode * foundNode = findUUIDT(g.rootNode,uuid);
+    CCNode * foundNode = findUUIDT(sceneGraph.rootNode,uuid);
     
     return foundNode;
 }
@@ -212,6 +221,12 @@ typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
     {
         bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
     }
+}
+
+-(void)onEnter
+{
+    [super onEnter];
+    sceneGraph = [SceneGraph instance];
 }
 
 

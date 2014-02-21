@@ -11,7 +11,7 @@
 static const int kNumProperties = 6;
 extern NSString *  dependantProperties[kNumProperties];
 
-
+@class SceneGraph;
 @interface CCBPhysicsJoint : CCNode
 {
     CCNode * scaleFreeNode;
@@ -24,6 +24,8 @@ extern NSString *  dependantProperties[kNumProperties];
     
     NSUInteger bodyB_UUID;
     CCNode    *bodyB;
+    
+    SceneGraph * sceneGraph;
 }
 
 @property CCNode * bodyA;
@@ -36,6 +38,9 @@ extern NSString *  dependantProperties[kNumProperties];
 -(void)setOutletStatus:(int)idx value:(BOOL)value;
 -(void)resetOutletStatus;
 -(CGPoint)outletWorldPos:(int)idx;
+
+
+-(void)fixupReferences;
 
 -(void)removeObserverBody:(CCNode*)body;
 -(void)addObserverBody:(CCNode*)body;

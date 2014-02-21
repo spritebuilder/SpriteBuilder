@@ -101,8 +101,10 @@
         [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
         return;
     }
-
-    [self setAnchorFromBodyA];
+    else
+    {
+        [self setAnchorFromBodyA];
+    }
     
 }
 

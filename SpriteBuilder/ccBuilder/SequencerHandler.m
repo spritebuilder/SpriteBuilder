@@ -524,6 +524,8 @@ static SequencerHandler* sharedSequencerHandler;
         [appDelegate deleteNode:draggedNode];
         
         [appDelegate setSelectedNodes:[NSArray arrayWithObject: clipNode]];
+        SceneGraph * g = [SceneGraph instance];
+        [g.joints fixupReferences];
         
         //[PositionPropertySetter refreshAllPositions];
         

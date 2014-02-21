@@ -20,4 +20,7 @@
 @property (readonly) NSArray * all;
 
 -(void)addJoint:(CCBPhysicsJoint*)joint;
+
+//When nodes from the scene graph are moved around, the joints need updating.
+-(void)fixupReferences;
 @end

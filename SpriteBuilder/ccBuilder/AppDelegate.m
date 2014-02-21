@@ -2250,8 +2250,12 @@ static BOOL hideAllToNextSeparator;
     }
     
     
-    obj.UUID = [AppDelegate appDelegate].currentDocument.UUID;
-    [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    //Set an unset UUID
+    if(obj.UUID == 0x0)
+    {
+        obj.UUID = [AppDelegate appDelegate].currentDocument.UUID;
+        [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    }
     
     [outlineHierarchy reloadData];
     [self setSelectedNodes: [NSArray arrayWithObject: obj]];
