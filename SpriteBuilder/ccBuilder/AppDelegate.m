@@ -764,6 +764,7 @@ void ApplyCustomNodeVisitSwizzle()
     
     physicsHandler.selectedNodePhysicsBody = self.selectedNode.nodePhysicsBody;
     [physicsHandler didChangeSelection];
+    
 }
 
 - (CCNode*) selectedNode
@@ -989,7 +990,16 @@ static BOOL hideAllToNextSeparator;
     BOOL isCCBSubFile = [plugIn.nodeClassName isEqualToString:@"CCBFile"];
     
     // Always add the code connections pane
-    paneCodeOffset = [self addInspectorPropertyOfType:@"CodeConnections" name:@"customClass" displayName:@"" extra:NULL readOnly:isCCBSubFile affectsProps:NULL atOffset:paneOffset isCodeConnection:YES];
+    if(!plugIn.isJoint)
+    {
+        paneCodeOffset = [self addInspectorPropertyOfType:@"CodeConnections" name:@"customClass" displayName:@"" extra:NULL readOnly:isCCBSubFile affectsProps:NULL atOffset:paneOffset isCodeConnection:YES];
+        
+        [_inspectorPhysics setHidden:NO];   
+    }
+    else
+    {
+        [_inspectorPhysics setHidden:YES];
+    }
     
     // Add panes for each property
     

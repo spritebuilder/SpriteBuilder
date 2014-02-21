@@ -135,6 +135,7 @@ enum {
     IBOutlet NSView* mainView;
     IBOutlet CCBSplitHorizontalView* splitHorizontalView;
     
+    __weak NSView *_inspectorPhysics;
     // Inspector views
     IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
     
@@ -436,4 +437,5 @@ enum {
 
 @property (weak) IBOutlet NSTableView *warningTableView;
 
+@property (weak) IBOutlet NSView *inspectorPhysics;
 @end
