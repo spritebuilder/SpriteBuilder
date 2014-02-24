@@ -516,7 +516,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
         //Cleanup
         _mouseDownOutletHandle = -1;
-        [joint resetOutletStatus];
+        [joint refreshOutletStatus];
         _currentBodyTargeted = nil;
         
         return YES;

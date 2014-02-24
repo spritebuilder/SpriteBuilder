@@ -57,7 +57,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     bodyA_UUID = bodyA.UUID;
     
     [self addObserverBody:bodyA];
-    [self resetOutletStatus];
+    [self refreshOutletStatus];
 }
 
 -(void)setBodyB:(CCNode *)aBodyB
@@ -70,20 +70,20 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     bodyB = aBodyB;
     bodyB_UUID = bodyB.UUID;
     [self addObserverBody:bodyB];
-    [self resetOutletStatus];
+    [self refreshOutletStatus];
 }
 
 -(void)fixupReferences
 {
     self.bodyA = self.bodyA;
     self.bodyB = self.bodyB;
-    
-    if(self.bodyA.physicsBody == nil)
+        
+    if(self.bodyA.nodePhysicsBody == nil)
     {
         self.bodyA = nil;
     }
     
-    if(self.bodyB.physicsBody == nil)
+    if(self.bodyB.nodePhysicsBody == nil)
     {
         self.bodyB = nil;
     }
@@ -199,10 +199,13 @@ typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
     return -1;
 }
 
--(void)resetOutletStatus
+-(void)refreshOutletStatus
 {
-    bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    CCSpriteFrame * spriteFrameUnset = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    CCSpriteFrame * spriteFrameSet = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    
+    bodyAOutlet.spriteFrame = bodyA ? spriteFrameSet : spriteFrameUnset;
+    bodyBOutlet.spriteFrame = bodyB ? spriteFrameSet : spriteFrameUnset;
     
 }
 

@@ -36,7 +36,7 @@ extern NSString *  dependantProperties[kNumProperties];
 
 -(int)hitTestOutlet:(CGPoint)point;
 -(void)setOutletStatus:(int)idx value:(BOOL)value;
--(void)resetOutletStatus;
+-(void)refreshOutletStatus;
 -(CGPoint)outletWorldPos:(int)idx;
 
 
