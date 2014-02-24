@@ -25,6 +25,7 @@
 
 #import "CocosScene.h"
 #import "CCBGlobals.h"
+#import "SceneGraph.h"
 #import "AppDelegate.h"
 #import "CCBReaderInternalV1.h"
 #import "NodeInfo.h"
@@ -280,10 +281,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     else if (type == kCCBBorderTransparent)
     {
-        [borderBottom setOpacity:0.5f];
-        [borderTop setOpacity:0.5f];
-        [borderLeft setOpacity:0.5f];
-        [borderRight setOpacity:0.5f];
+        [borderBottom   setOpacity:0.5f];
+        [borderTop      setOpacity:0.5f];
+        [borderLeft     setOpacity:0.5f];
+        [borderRight    setOpacity:0.5f];
         
         borderLayer.visible = YES;
     }
@@ -438,23 +439,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 #pragma mark Replacing content
 
-- (void) replaceSceneNodes:(CCNode*)aRootNode joints:(CCNode*)aJointsNode;
+- (void) replaceSceneNodes:(SceneGraph*)sceneGraph
 {
-    CCBGlobals* g = [CCBGlobals globals];
-    
     [contentLayer removeChild:rootNode cleanup:YES];
     [jointsLayer removeAllChildrenWithCleanup:YES];
     
-    self.rootNode = aRootNode;
-    g.rootNode = aRootNode;
-    g.joints.node = aJointsNode;
+    self.rootNode = sceneGraph.rootNode;
     
+    if (sceneGraph.rootNode)
+        [contentLayer addChild:sceneGraph.rootNode];
     
-    if (aRootNode)
-        [contentLayer addChild:aRootNode];
-    
-    if(aJointsNode)
-        [jointsLayer addChild:aJointsNode];
+    if(sceneGraph.joints.node)
+        [jointsLayer addChild:sceneGraph.joints.node];
 }
 
 #pragma mark Handle selections
@@ -920,7 +916,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     PlugInNode* parentPlugIn = parentInfo.plugIn;
     if (parentPlugIn && !parentPlugIn.canHaveChildren) return;
     
-    if (node.contentSize.width == 0 || node.contentSize.height == 0)
+    if ((node.contentSize.width == 0 || node.contentSize.height == 0) && !node.plugIn.isJoint)
     {
         CGPoint worldPos = [node.parent convertToWorldSpace:node.position];
         if (ccpDistance(worldPos, pt) < kCCBSinglePointSelectionRadius)

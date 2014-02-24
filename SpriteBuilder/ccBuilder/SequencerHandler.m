@@ -23,6 +23,7 @@
  */
 
 #import "SequencerHandler.h"
+#import "SceneGraph.h"
 #import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "NodeInfo.h"
@@ -236,7 +237,7 @@ static SequencerHandler* sharedSequencerHandler;
         [outlineHierarchy selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
         return;
     }
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     
     // Expand parents of the selected node
     CCNode* node = [appDelegate.selectedNodes objectAtIndex:0];
@@ -270,7 +271,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     
-    if ([[CCBGlobals globals] rootNode] == NULL) return 0;
+    if ([[SceneGraph instance] rootNode] == NULL) return 0;
     if (item == nil) return 4;
     
     if([item isKindOfClass:[SequencerJoints class]])
@@ -309,6 +310,7 @@ static SequencerHandler* sharedSequencerHandler;
     
     if ([arr count] == 0) return NO;
     if (!plugIn.canHaveChildren) return NO;
+    if(plugIn.isJoint) return NO;
     
     return YES;
 }
@@ -316,7 +318,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-    CCBGlobals* g= [CCBGlobals globals];
+    SceneGraph * g = [SceneGraph instance];
     
     if (item == NULL)
     {
@@ -418,14 +420,17 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if (!dragAndDropEnabled) return NO;
     
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     
     id item = [items objectAtIndex:0];
     
     if (![item isKindOfClass:[CCNode class]]) return NO;
     
+    
     CCNode* draggedNode = item;
     if (draggedNode == g.rootNode) return NO;
+    
+    if(draggedNode.plugIn.isJoint) return NO;
     
     NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:draggedNode];
     
@@ -443,7 +448,7 @@ static SequencerHandler* sharedSequencerHandler;
         return NSDragOperationNone;
     
     
-    CCBGlobals* g = [CCBGlobals globals];
+    SceneGraph* g = [SceneGraph instance];
     NSPasteboard* pb = [info draggingPasteboard];
     
     if ([item isKindOfClass:[CCNode class]])
@@ -519,6 +524,8 @@ static SequencerHandler* sharedSequencerHandler;
         [appDelegate deleteNode:draggedNode];
         
         [appDelegate setSelectedNodes:[NSArray arrayWithObject: clipNode]];
+        SceneGraph * g = [SceneGraph instance];
+        [g.joints fixupReferences];
         
         //[PositionPropertySetter refreshAllPositions];
         
@@ -654,8 +661,6 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if ([item isKindOfClass:[CCNode class]]) return YES;
     
-    if([item isKindOfClass:[SequencerJoints class]]) return YES;
-    
     return NO;
 }
 
@@ -698,6 +703,21 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if([item isKindOfClass:[SequencerJoints class]])
     {
+        if ([tableColumn.identifier isEqualToString:@"expander"])
+        {
+            SequencerExpandBtnCell* expCell = cell;
+            expCell.node = [SceneGraph instance].joints.node;
+            expCell.canExpand = NO;
+        }
+        if([tableColumn.identifier isEqualToString:@"locked"] ||
+           [tableColumn.identifier isEqualToString:@"hidden"])
+        {
+            SequencerButtonCell * buttonCell = cell;
+            buttonCell.node = [SceneGraph instance].joints.node;
+            [buttonCell setTransparent:YES];
+            
+        }
+        
         return;
     }
     
@@ -741,7 +761,7 @@ static SequencerHandler* sharedSequencerHandler;
             }
         }
         else if([tableColumn.identifier isEqualToString:@"locked"] ||
-             [tableColumn.identifier isEqualToString:@"hidden"])
+                [tableColumn.identifier isEqualToString:@"hidden"])
         {
             SequencerButtonCell * buttonCell = cell;
             buttonCell.node = nil;
@@ -762,7 +782,6 @@ static SequencerHandler* sharedSequencerHandler;
     
     CCNode* node = item;
     BOOL isRootNode = (node == [CocosScene cocosScene].rootNode);
-    
     
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
@@ -792,7 +811,7 @@ static SequencerHandler* sharedSequencerHandler;
     {
         SequencerExpandBtnCell* expCell = cell;
         expCell.isExpanded = node.seqExpanded;
-        expCell.canExpand = (!isRootNode);
+        expCell.canExpand = (!isRootNode && !node.plugIn.isJoint);
         expCell.node = node;
     }
     else if ([tableColumn.identifier isEqualToString:@"structure"])
@@ -837,11 +856,18 @@ static SequencerHandler* sharedSequencerHandler;
         SequencerSoundChannel * soundChannel = item;
         soundChannel.isEpanded = !soundChannel.isEpanded;
     }
+    else if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return;
+    }
     else
     {
         CCNode* node = item;
         
         if (node == [CocosScene cocosScene].rootNode && !node.seqExpanded)
+            return;
+        
+        if(node.plugIn.isJoint)
             return;
         
         //if ([NSStringFromClass(node.class) isEqualToString:@"CCBPCCBFile"] && !node.seqExpanded) return;

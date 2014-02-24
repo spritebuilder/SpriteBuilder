@@ -125,6 +125,10 @@
             [expandedImage drawAtPoint:cellFrame.origin fromRect:NSMakeRect(0, 0 + smallOffset, 16, 16) operation:NSCompositeSourceOver fraction:1];
         }
     }
+    else
+    {
+        int break_here = 1;
+    }
 }
 
 - (id)copyWithZone:(NSZone *)zone

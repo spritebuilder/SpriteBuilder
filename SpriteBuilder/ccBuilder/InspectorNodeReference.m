@@ -11,6 +11,26 @@
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
 
+@implementation OutletButton
+
+-(void)mouseDown:(NSEvent *)theEvent
+{
+    [super mouseDown:theEvent];
+    [self.inspector onOutletDown];
+}
+
+-(void)mouseUp:(NSEvent *)theEvent
+{
+    [super mouseUp:theEvent];
+}
+
+- (void)otherMouseUp:(NSEvent *)theEvent
+{
+    [super otherMouseUp:theEvent];
+    
+}
+@end
+
 @implementation InspectorNodeReference
 @dynamic reference;
 
@@ -28,6 +48,27 @@
     return [selection valueForKey:propertyName];
 }
 
+-(void)willBeAdded
+{
+    self.outletButton.inspector = self;
+}
+
+
+-(void)onOutletDown
+{
+    
+}
+
+-(void)onOutletUp
+{
+    
+}
+
+-(IBAction)handleClickOutlet:(id)sender
+{
+    
+    
+}
 
 -(NSString*)nodeName
 {
@@ -54,4 +95,6 @@
 {
     
 }
+
+
 @end

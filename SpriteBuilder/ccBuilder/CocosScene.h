@@ -24,6 +24,7 @@
  */
 
 #import "cocos2d.h"
+@class SceneGraph;
 @class AppDelegate;
 @class CCBTemplateNode;
 @class RulersLayer;
@@ -166,7 +167,7 @@ enum {
 - (void) setStageZoom:(float) zoom;
 - (float) stageZoom;
 
-- (void) replaceSceneNodes:(CCNode*)aRootNode joints:(CCNode*)aJointsNode;
+- (void) replaceSceneNodes:(SceneGraph*)sceneGraph;
 
 - (void) updateSelection;
 - (void) selectBehind;

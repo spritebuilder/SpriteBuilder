@@ -9,147 +9,17 @@
 #import "CCBPhysicsPivotJoint.h"
 #import "AppDelegate.h"
 
-NSString *  dependantProperties[] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
-
-@interface  ScaleFreeNode : CCNode
-{
-    float hiddenScale;
-}
-
-@end
-
-@implementation ScaleFreeNode
-
--(void)visit
-{
-    CCNode * parent = self.parent;
-    float scale = 1.0f;
-    while (parent) {
-        scale *= parent.scale;
-        parent = parent.parent;
-    }
-    
-    
-    [self setScaleX:(hiddenScale * 1.0f/scale)];
-    [self setScaleY:(hiddenScale * 1.0f/scale)];
-    
-    [super visit];
- 
-}
-
--(void)setScale:(float)scale
-{
-    [super setScale:scale];
-    hiddenScale = scale;
-}
 
 
-
-
-@end
-
-
-static const float kOutletOffset = 20.0f;
-
-
-@implementation CCBPhysicsJoint
-
-- (id) init
-{
-    self = [super init];
-    if (!self)
-    {
-        return nil;
-    }
-    
-    scaleFreeNode = [ScaleFreeNode node];
-    [self addChild:scaleFreeNode];
-
-    bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyAOutlet.position = ccp(-kOutletOffset,-kOutletOffset);
-    [scaleFreeNode addChild:bodyAOutlet];
-    
-    bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.position = ccp(kOutletOffset,-kOutletOffset);
-    [scaleFreeNode addChild:bodyBOutlet];
-    
-    return self;
-}
-
--(int)hitTestOutlet:(CGPoint)point
-{
-    point = [self convertToNodeSpace:point];
-    
-    if(ccpDistance(point, bodyAOutlet.position) < 3.0f * 3.0f)
-    {
-        return 0;
-    }
-    
-    if(ccpDistanceSQ(point, bodyBOutlet.position) < 3.0f * 3.0f)
-    {
-        return 1;
-    }
-    
-    return -1;
-}
-
--(void)setBodyA:(CCNode *)aBodyA
-{
-    bodyA = aBodyA;
-    [self resetOutletStatus];
-}
-
-
--(void)setBodyB:(CCNode *)aBodyB
-{
-    bodyB = aBodyB;
-    [self resetOutletStatus];
-}
-
--(CCNode*)bodyA
-{
-    return bodyA;
-}
-
--(CCNode*)bodyB
-{
-    return bodyB;
-}
-
--(void)resetOutletStatus
-{
-    bodyAOutlet.visible = self.bodyA ? NO : YES;
-    bodyBOutlet.visible = self.bodyB ? NO : YES;
-    
-    bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-
-}
-
--(CGPoint)outletPos:(int)idx
-{
-    return idx ==0 ? bodyAOutlet.position : bodyBOutlet.position;    
-}
-
-
-
-
--(void)setOutletStatus:(int)idx value:(BOOL)value
-{
-    CCSprite * bodyOutlet = idx == 0 ? bodyAOutlet : bodyBOutlet;
-    if(value)
-    {
-        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
-    }
-    else
-    {
-        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    }
-}
-
+@interface CCBPhysicsJoint()
+-(void)updateSelectionUI;
 @end
 
 @implementation CCBPhysicsPivotJoint
+{
+    CCSprite * joint;
+    CCSprite* jointAnchor;
+}
 
 - (id) init
 {
@@ -160,100 +30,125 @@ static const float kOutletOffset = 20.0f;
     }
     
     scaleFreeNode.scale = 1.0f;
-    
-    CCSprite* joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
-    CCSprite* jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
-    
-    [scaleFreeNode addChild:joint];
-    [scaleFreeNode addChild:jointAnchor];
-    
+    [self setupBody];
     
     return self;
 }
 
-
--(void)visit
+-(void)setupBody
 {
-    [super visit];
-}
-
--(CGPoint)anchorPos
-{
-    return anchorPos;
-}
-
--(void)setAnchorPos:(CGPoint)aAnchorPos
-{
-    anchorPos = aAnchorPos;
+    
+    joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
+    jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
+    
+    [scaleFreeNode addChild:joint];
+    [scaleFreeNode addChild:jointAnchor];
+   // self.contentSize = joint.contentSize;
+   // self.anchorPoint = ccp(0.5f,0.5f);
     
 }
+
+
+-(void)updateSelectionUI
+{
+    //If selected, display selected sprites.
+    if(self.isSelected)
+    {
+        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-sel.png"];
+        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor-sel.png"];
+    }
+    else
+    {
+        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot.png"];
+        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor.png"];
+    }
+    
+    [super updateSelectionUI];
+}
+
+
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos
+{
+    pos = [scaleFreeNode convertToNodeSpace:pos];
+    if(ccpLength(pos) < 17.0f)
+    {
+        return YES;
+    }
+    
+    return NO;    
+}
+
+-(CGPoint)anchorA
+{
+    return anchorA;
+}
+
+-(void)setAnchorA:(CGPoint)aAnchorA
+{
+    anchorA = aAnchorA;
+    
+}
+
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
-    if(bodyA)
-    {
-        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
-        {
-            [bodyA removeObserver:self forKeyPath:dependantProperties[i]];
-        }
-    }
     
     [super setBodyA:aBodyA];
     
-    if(!bodyA)
+    if(!aBodyA)
     {
-        self.anchorPos = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
+        self.anchorA = CGPointZero;
+        [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
         return;
     }
-
-    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorPos = [bodyA convertToNodeSpace:worldPos];
-    self.anchorPos = lAnchorPos;
-    [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
-    
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+    else
     {
-        [bodyA addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:nil];
-        
+        [self setAnchorFromBodyA];
     }
     
+}
 
+-(void)setAnchorFromBodyA
+{
+    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
+    CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
+    self.anchorA = lAnchorA;
+    
+    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
+   
 }
 
 -(void)setPosition:(CGPoint)position
 {
     [super setPosition:position];
     
-    if(!bodyA)
+    if(!self.bodyA)
     {
         return;
     }
     
-    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorPos = [bodyA convertToNodeSpace:worldPos];
-    self.anchorPos = lAnchorPos;
-    
-    [[AppDelegate appDelegate] refreshProperty:@"anchorPos"];
+    [self setAnchorFromBodyA];
 }
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    CGPoint worldPos = [bodyA convertToWorldSpace:self.anchorPos];
-    CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
-    self.position = localPos;
+    if(object == self.bodyA)
+    {
+        CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
+        CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
+        self.position = localPos;
+    }
+}
+
+-(void)onExit
+{
+ 
 }
 
 -(void)dealloc
 {
-    if(bodyA)
-    {
-        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
-            [bodyA removeObserver:self forKeyPath:dependantProperties[i]];
-        }
-        
-    }
+    self.bodyA = nil;
 
 }
 

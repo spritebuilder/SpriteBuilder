@@ -23,6 +23,7 @@
  */
 
 #import "PhysicsHandler.h"
+#import "SceneGraph.h"
 #import "PolyDecomposition.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
@@ -111,9 +112,12 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     {
         [AppDelegate appDelegate].selectedNode.nodePhysicsBody = NULL;
     }
+
+    [[SceneGraph instance].joints fixupReferences];//Fixup references of Joints due to changing Physics Nodes.
     
     // Update physics body
     self.selectedNodePhysicsBody = [AppDelegate appDelegate].selectedNode.nodePhysicsBody;
+
 }
 
 - (BOOL) selectedNodePhysicsEnabled
@@ -417,7 +421,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 -(void)mouseDraggedJointOutlets
 {
-    CCBGlobals * g = [CCBGlobals globals];
+    SceneGraph * g = [SceneGraph instance];
     
     NSMutableArray * physicsNodes = [NSMutableArray array];
     [self findPhysicsNodes:g.rootNode nodes:physicsNodes];
@@ -512,7 +516,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
         //Cleanup
         _mouseDownOutletHandle = -1;
-        [joint resetOutletStatus];
+        [joint refreshOutletStatus];
         _currentBodyTargeted = nil;
         
         return YES;
@@ -702,16 +706,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     if(node.plugIn.isJoint)
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        
-        if(!joint.bodyA)
-        {
-            
-        }
+        joint.isSelected = YES;
         
         if(_mouseDownOutletHandle != -1)
         {
-            CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-            CGPoint fromPt = [joint convertToWorldSpace:[joint outletPos:_mouseDownOutletHandle]];
+            CGPoint fromPt = [joint outletWorldPos:_mouseDownOutletHandle];
             
             CCDrawNode* drawing = [CCDrawNode node];
             [drawing drawSegmentFrom:fromPt to:_mouseDragPos radius:.5 color:[CCColor blackColor]];

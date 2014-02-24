@@ -6,36 +6,15 @@
 //
 //
 
-#import "cocos2d.h"
-
-@interface CCBPhysicsJoint : CCNode
-{
-    CCNode * scaleFreeNode;
-
-    CCSprite * bodyAOutlet;
-    CCSprite * bodyBOutlet;
-   
-    CCNode * bodyA;
-    CCNode * bodyB;
-    
-}
-
-@property CCNode * bodyA;
-@property CCNode * bodyB;
+#import "CCBPhysicsJoint.h"
 
 
--(int)hitTestOutlet:(CGPoint)point;
--(void)setOutletStatus:(int)idx value:(BOOL)value;
--(void)resetOutletStatus;
--(CGPoint)outletPos:(int)idx;
-
-@end
 
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
 {
-    CGPoint anchorPos;
+    CGPoint anchorA;
 }
 
-@property CGPoint anchorPos;
+@property CGPoint anchorA;
 
 @end
