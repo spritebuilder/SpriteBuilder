@@ -994,7 +994,7 @@ static BOOL hideAllToNextSeparator;
     {
         paneCodeOffset = [self addInspectorPropertyOfType:@"CodeConnections" name:@"customClass" displayName:@"" extra:NULL readOnly:isCCBSubFile affectsProps:NULL atOffset:paneOffset isCodeConnection:YES];
         
-        [_inspectorPhysics setHidden:NO];   
+        [_inspectorPhysics setHidden:NO];
     }
     else
     {
