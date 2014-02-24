@@ -10,6 +10,6 @@
 
 @interface CCBPluginSKLabelNode : CCLabelTTF
 
-@property NSString* text;
+@property (nonatomic) NSString* text;
 
 @end
