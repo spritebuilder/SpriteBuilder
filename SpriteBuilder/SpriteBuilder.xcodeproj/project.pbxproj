@@ -3930,13 +3930,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7789ABDC133AA82000CEFCC7 /* Build configuration list for PBXNativeTarget "SpriteBuilder" */;
 			buildPhases = (
+				DC3DD33018A948560004D2AC /* ShellScript */,
 				7789ABBA133AA82000CEFCC7 /* Sources */,
 				7789ABBB133AA82000CEFCC7 /* Frameworks */,
 				7789ABBC133AA82000CEFCC7 /* Resources */,
 				776C6897138878FB00153214 /* Copy Files (Sparkle framework) */,
 				E3B7AED414E31E5D00DFD402 /* Copy PlugIns */,
 				E3E086E315663928008F1FDB /* Copy Player */,
-				DC3DD33018A948560004D2AC /* ShellScript */,
 			);
 			buildRules = (
 			);
