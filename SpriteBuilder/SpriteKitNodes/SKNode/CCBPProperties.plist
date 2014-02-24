@@ -7,7 +7,7 @@
 	<key>ordering</key>
 	<integer>1</integer>
 	<key>displayName</key>
-	<string>Node (Sprite Kit)</string>
+	<string>Node</string>
 	<key>description</key>
 	<string>Non-visual node. Mainly used to group other nodes.</string>
 	<key>className</key>
@@ -24,7 +24,7 @@
 		<string>texture</string>
 	</dict>
 	<key>editorClassName</key>
-	<string>SKNode</string>
+	<string>CCBPluginSKNode</string>
 	<key>properties</key>
 	<array>
 		<dict>

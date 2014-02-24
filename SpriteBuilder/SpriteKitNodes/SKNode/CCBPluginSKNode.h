@@ -6,8 +6,8 @@
 //
 //
 
-#import "SKNode.h"
+#import "CCNode.h"
 
-@interface CCBPluginSKNode : SKNode
+@interface CCBPluginSKNode : CCNode
 
 @end

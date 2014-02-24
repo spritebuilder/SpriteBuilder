@@ -6,8 +6,8 @@
 //
 //
 
-#import "SKNode.h"
+#import "CCNodeColor.h"
 
-@interface CCBPluginSKColorSpriteNode : SKNode
+@interface CCBPluginSKColorSpriteNode : CCNodeColor
 
 @end

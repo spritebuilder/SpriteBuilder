@@ -10,5 +10,13 @@
 
 @implementation CCBPluginSKLabelNode
 
+-(void) setText:(NSString *)text
+{
+	self.string = text;
+}
+-(NSString*) text
+{
+	return self.string;
+}
 
 @end

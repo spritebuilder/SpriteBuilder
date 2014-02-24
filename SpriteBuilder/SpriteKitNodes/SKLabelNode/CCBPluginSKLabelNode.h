@@ -6,8 +6,10 @@
 //
 //
 
-#import "SKNode.h"
+#import "CCLabelTTF.h"
 
-@interface CCBPluginSKLabelNode : SKNode
+@interface CCBPluginSKLabelNode : CCLabelTTF
+
+@property NSString* text;
 
 @end

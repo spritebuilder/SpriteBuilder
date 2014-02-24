@@ -7,7 +7,7 @@
 	<key>ordering</key>
 	<integer>12</integer>
 	<key>displayName</key>
-	<string>Colored Sprite (Sprite Kit)</string>
+	<string>Sprite with Color</string>
 	<key>description</key>
 	<string>Displays a colored rectangle.</string>
 	<key>className</key>
@@ -26,7 +26,7 @@
 		<string>texture</string>
 	</dict>
 	<key>editorClassName</key>
-	<string>SKColorSpriteNode</string>
+	<string>CCBPluginSKColorSpriteNode</string>
 	<key>properties</key>
 	<array>
 		<dict>
