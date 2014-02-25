@@ -92,8 +92,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)addObserverBody:(CCNode*)body
 {
-    NSLog(@"Add Observer: self: 0x%x  Body:0x%x", (unsigned int)self, (unsigned int)body);
-    
     for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
     {
         [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
@@ -103,8 +101,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)removeObserverBody:(CCNode*)body
 {
-    NSLog(@"Remove Observer self: 0x%x  Body:0x%x", (unsigned int)self, (unsigned int)body);
-    
     for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
         [body removeObserver:self forKeyPath:dependantProperties[i]];
     }

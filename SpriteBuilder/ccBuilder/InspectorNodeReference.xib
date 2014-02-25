@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InspectorNodeReference">
             <connections>
-                <outlet property="outletButton" destination="7Nv-FR-1eK" id="Fpy-tt-7ZE"/>
+                <outlet property="outletButton" destination="vur-Go-ycq" id="0sP-l1-Skd"/>
                 <outlet property="view" destination="1" id="VmM-Yk-W8d"/>
             </connections>
         </customObject>
@@ -63,23 +63,12 @@
                         <binding destination="-2" name="value" keyPath="self.displayName" id="NoB-sF-JKV"/>
                     </connections>
                 </textField>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Nv-FR-1eK" customClass="OutletButton">
-                    <rect key="frame" x="229" y="5" width="20" height="20"/>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vur-Go-ycq" customClass="OutletButton">
+                    <rect key="frame" x="236" y="10" width="10" height="10"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="joint-outlet-unset" imagePosition="overlaps" alignment="center" alternateImage="joint-outlet-set" imageScaling="proportionallyDown" inset="2" id="oLo-Zi-0L9">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <connections>
-                            <action selector="handleClickOutlet:" target="-2" id="QnB-1X-fGD"/>
-                        </connections>
-                    </buttonCell>
-                </button>
+                </customView>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="lde-EW-a7P"/>
     </objects>
-    <resources>
-        <image name="joint-outlet-set" width="10" height="10"/>
-        <image name="joint-outlet-unset" width="10" height="10"/>
-    </resources>
 </document>

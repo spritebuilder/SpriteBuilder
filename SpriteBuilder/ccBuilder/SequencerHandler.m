@@ -82,7 +82,7 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy setDelegate:self];
     [outlineHierarchy reloadData];
     
-    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode",@"com.cocosbuilder.wav", NULL]];
+    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", @"com.cocosbuilder.wav", @"com.cocosbuilder.jointBody", NULL]];
     
     [[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
