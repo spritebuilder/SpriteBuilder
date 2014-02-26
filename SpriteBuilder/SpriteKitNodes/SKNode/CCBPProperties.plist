@@ -21,7 +21,7 @@
 		<key>className</key>
 		<string>SKSpriteNode</string>
 		<key>property</key>
-		<string>texture</string>
+		<string>spriteFrame</string>
 	</dict>
 	<key>editorClassName</key>
 	<string>CCBPluginSKNode</string>

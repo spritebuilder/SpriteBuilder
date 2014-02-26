@@ -23,7 +23,7 @@
 		<key>className</key>
 		<string>SKSpriteNode</string>
 		<key>property</key>
-		<string>texture</string>
+		<string>spriteFrame</string>
 	</dict>
 	<key>editorClassName</key>
 	<string>CCBPluginSKColorSpriteNode</string>
@@ -40,25 +40,24 @@
 			<string>SKColorSpriteNode</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
 			<key>default</key>
 			<array>
-				<string>64</string>
-				<integer>64</integer>
+				<integer>160</integer>
+				<integer>90</integer>
 			</array>
 			<key>type</key>
 			<string>Size</string>
 			<key>name</key>
 			<string>size</string>
 			<key>displayName</key>
-			<string>Content Size</string>
+			<string>Size</string>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<real>0.5</real>
+				<real>0.5</real>
+			</array>
 			<key>type</key>
 			<string>Point</string>
 			<key>name</key>
@@ -109,6 +108,27 @@
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>
-	<array/>
+	<array>
+		<dict>
+			<key>readOnly</key>
+			<true/>
+			<key>type</key>
+			<string>ScaleLock</string>
+			<key>name</key>
+			<string>scale</string>
+			<key>displayName</key>
+			<string>Scale</string>
+		</dict>
+		<dict>
+			<key>readOnly</key>
+			<true/>
+			<key>type</key>
+			<string>Size</string>
+			<key>name</key>
+			<string>contentSize</string>
+			<key>displayName</key>
+			<string>Content size</string>
+		</dict>
+	</array>
 </dict>
 </plist>
