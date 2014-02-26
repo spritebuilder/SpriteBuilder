@@ -115,7 +115,6 @@
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
-    
     [self.inspector onOutletDown:self event:theEvent];
     mouseIsDown = YES;
     [self setNeedsDisplay:YES];
@@ -126,7 +125,6 @@
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
-
     mouseIsDown = NO;
     [self setNeedsDisplay:YES];
     [super mouseUp:theEvent];
@@ -137,7 +135,6 @@
 -(void)mouseMoved:(NSEvent *)theEvent
 {
     [super mouseMoved:theEvent];
- 
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent
