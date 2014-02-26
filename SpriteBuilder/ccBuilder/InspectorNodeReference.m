@@ -208,6 +208,7 @@
             // Create the full-screen window.
            
             outletWindow = [[CCBTransparentWindow alloc] initWithContentRect:windowRect];
+            [outletWindow setIgnoresMouseEvents:YES];
             outletWindow.delegate = self;
             
             outletView = [[OutletDrawView alloc] initWithFrame:CGRectMake(0,0,windowRect.size.width,windowRect.size.height)];
