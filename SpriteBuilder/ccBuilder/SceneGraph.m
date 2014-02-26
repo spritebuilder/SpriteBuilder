@@ -7,6 +7,7 @@
 //
 
 #import "SceneGraph.h"
+#import "CCNode+NodeInfo.h"
 
 SceneGraph * gSceneGraph;
 
@@ -32,6 +33,36 @@ SceneGraph * gSceneGraph;
         _joints = [[SequencerJoints alloc] init];
     }
     return self;
+}
+
+
+typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
+
++(CCNode*)findUUID:(NSUInteger)uuid rootNode:(CCNode*)rootNode
+{
+    if(uuid == 0)
+        return nil;
+    
+    __block FindUUIDBlock findUUIDT;
+    //Recursive.
+    findUUIDT = ^CCNode*(CCNode * node, NSUInteger uuid)
+    {
+        if(node.UUID == uuid)
+            return node;
+        
+        for (CCNode * child in node.children) {
+            CCNode * foundNode = findUUIDT(child,uuid);
+            
+            if(foundNode)
+                return foundNode;
+            
+        }
+        return nil;
+    };
+    
+    CCNode * foundNode = findUUIDT(rootNode,uuid);
+    
+    return foundNode;
 }
 
 

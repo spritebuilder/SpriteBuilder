@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 
 typedef id (^ConvertBlock) (id obj, int idx);
+typedef BOOL (^PredicateBlock) (id obj, int idx);
+
 
 @interface NSArray (Query)
 
 
 //Converts all objects in an to a a different type.
 -(NSArray*)convertAll:(ConvertBlock)aBlock;
-
+-(id)findFirst:(PredicateBlock)aBlock;
 @end

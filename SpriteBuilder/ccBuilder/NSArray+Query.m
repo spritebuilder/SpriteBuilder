@@ -12,7 +12,6 @@
 
 -(NSArray*)convertAll:(ConvertBlock)aBlock
 {
-
     NSMutableArray * returnArray = [NSMutableArray array];
     
     for (int i = 0; i < self.count; i++) {
@@ -21,6 +20,17 @@
     }
     
     return returnArray;
+}
+
+-(id)findFirst:(PredicateBlock)aBlock
+{
+    for (int i = 0; i < self.count; i++) {
+        if(aBlock(self[i], i))
+        {
+            return self[i];
+        }
+    }
+    return nil;
 }
 
 @end

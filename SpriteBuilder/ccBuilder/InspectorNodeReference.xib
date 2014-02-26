@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3028" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3028" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InspectorNodeReference">
             <connections>
-                <outlet property="outletButton" destination="7Nv-FR-1eK" id="Fpy-tt-7ZE"/>
+                <outlet property="outletButton" destination="vur-Go-ycq" id="0sP-l1-Skd"/>
                 <outlet property="view" destination="1" id="VmM-Yk-W8d"/>
             </connections>
         </customObject>
@@ -17,9 +17,9 @@
             <rect key="frame" x="0.0" y="0.0" width="263" height="30"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QwU-fd-SMO">
-                    <rect key="frame" x="53" y="5" width="109" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField verticalHuggingPriority="750" id="QwU-fd-SMO">
+                    <rect key="frame" x="72" y="5" width="109" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="v59-ra-o1N">
                         <font key="font" size="11" name="LucidaGrande"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -29,9 +29,9 @@
                         <binding destination="-2" name="value" keyPath="self.nodeName" id="LXw-i2-eoJ"/>
                     </connections>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pgo-Ix-tLE">
-                    <rect key="frame" x="164" y="5" width="22" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <button verticalHuggingPriority="750" id="Pgo-Ix-tLE">
+                    <rect key="frame" x="183" y="5" width="22" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="X" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Xha-Il-s5u">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -40,20 +40,9 @@
                         <action selector="handleDeleteNode:" target="-2" id="BV9-t8-uir"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XFv-BJ-rSH">
-                    <rect key="frame" x="189" y="5" width="31" height="19"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundRect" title="->" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fmX-Co-PfA">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="handleGotoNode:" target="-2" id="j5V-NI-IKr"/>
-                    </connections>
-                </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sem-7o-xbd">
-                    <rect key="frame" x="3" y="7" width="50" height="13"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Sem-7o-xbd">
+                    <rect key="frame" x="-4" y="10" width="70" height="13"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Node" id="rr9-g4-yeD">
                         <font key="font" size="10" name="LucidaGrande"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -63,23 +52,12 @@
                         <binding destination="-2" name="value" keyPath="self.displayName" id="NoB-sF-JKV"/>
                     </connections>
                 </textField>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Nv-FR-1eK" customClass="OutletButton">
-                    <rect key="frame" x="229" y="5" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="joint-outlet-unset" imagePosition="overlaps" alignment="center" alternateImage="joint-outlet-set" imageScaling="proportionallyDown" inset="2" id="oLo-Zi-0L9">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <connections>
-                            <action selector="handleClickOutlet:" target="-2" id="QnB-1X-fGD"/>
-                        </connections>
-                    </buttonCell>
-                </button>
+                <customView id="vur-Go-ycq" customClass="OutletButton">
+                    <rect key="frame" x="168" y="10" width="10" height="10"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                </customView>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="lde-EW-a7P"/>
     </objects>
-    <resources>
-        <image name="joint-outlet-set" width="10" height="10"/>
-        <image name="joint-outlet-unset" width="10" height="10"/>
-    </resources>
 </document>

@@ -50,6 +50,8 @@
 #import "NSPasteboard+CCB.h"
 #import "MainWindow.h"
 #import "SequencerJoints.h"
+#import "NSArray+Query.h"
+#import "CCBPhysicsJoint.h"
 
 static SequencerHandler* sharedSequencerHandler;
 
@@ -82,7 +84,7 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy setDelegate:self];
     [outlineHierarchy reloadData];
     
-    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode",@"com.cocosbuilder.wav", NULL]];
+    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", @"com.cocosbuilder.wav", @"com.cocosbuilder.jointBody", NULL]];
     
     [[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
@@ -451,26 +453,54 @@ static SequencerHandler* sharedSequencerHandler;
     SceneGraph* g = [SceneGraph instance];
     NSPasteboard* pb = [info draggingPasteboard];
     
-    if ([item isKindOfClass:[CCNode class]])
+    NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
+    if (nodeData)
     {
-        NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
-        if (nodeData)
+        if ([item isKindOfClass:[CCNode class]])
         {
+        
             NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
 			void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
             CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
             
             CCNode* node = item;
+            
+            if(node.plugIn.isJoint)
+                return NSDragOperationNone;
+            
             CCNode* parent = [node parent];
             while (parent && parent != g.rootNode)
             {
                 if (parent == draggedNode) return NSDragOperationNone;
                 parent = [parent parent];
             }
-            
             return NSDragOperationGeneric;
         }
+        else
+        {
+            return NSDragOperationNone;
+        }
+  
+    }
+    
+    NSArray * jointsData = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+    if(jointsData.count > 0)
+    {
+        if(index != -1)
+        {
+            return NSDragOperationNone;
+        }
         
+        if(![item isKindOfClass:[CCNode class]])
+        {
+            return NSDragOperationNone;
+        }
+        
+        CCNode* node = item;
+        if(!node.nodePhysicsBody)
+            return NSDragOperationNone;
+
+        return NSDragOperationGeneric;
     }
     
     // Dropped WavFile;
@@ -573,6 +603,22 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
         addedObject = YES;
+    }
+    
+    // Dropped ccb-files
+    NSArray* pbJointBodys = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+    for (NSDictionary* dict in pbJointBodys)
+    {
+        NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
+        NSString * propertyName = dict[@"propertyName"];
+        
+        CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
+            return lJoint.UUID == uuid;
+        }];
+        
+        [joint setValue:item forKey:propertyName];
+        [[AppDelegate appDelegate] refreshProperty:propertyName];
+        
     }
     
     return addedObject;
