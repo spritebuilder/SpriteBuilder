@@ -27,7 +27,7 @@
 		<key>UUID</key>
 		<integer>1</integer>
 		<key>baseClass</key>
-		<string>CCNode</string>
+		<string>SKNode</string>
 		<key>children</key>
 		<array>
 			<dict>
@@ -436,7 +436,7 @@
 		<key>customClass</key>
 		<string>MainScene</string>
 		<key>displayName</key>
-		<string>CCNode</string>
+		<string>SKNode</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
