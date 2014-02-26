@@ -97,6 +97,12 @@
 
 -(void)drawRect:(NSRect)dirtyRect
 {
+    if(self.inspector.reference)
+    {
+        [imgOutletSet drawInRect:dirtyRect];
+        return;
+    }
+    
     if(mouseIsDown || mouseIsOver)
     {
         [imgOutletSet drawInRect:dirtyRect];
@@ -109,10 +115,12 @@
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
+    
     [self.inspector onOutletDown:self event:theEvent];
     mouseIsDown = YES;
     [self setNeedsDisplay:YES];
-    [super mouseDown:theEvent];
+    
+    NSLog(@"mouseDown finished");
 
 }
 
@@ -143,12 +151,14 @@
 {
     mouseIsOver = YES;
     [self setNeedsDisplay:YES];
+    [[NSCursor arrowCursor] push];
 }
 
 - (void)mouseExited:(NSEvent *)event
 {
     mouseIsOver = NO;
     [self setNeedsDisplay:YES];
+    [NSCursor pop];
 }
 
 @end
@@ -187,11 +197,14 @@
 
 -(void)onOutletDown:(id)sender event:(NSEvent*)event
 {
+    if(self.reference)
+        return;
+    
     
     // Get the screen information.
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     // Capture the screen.
-{
+    {
         // Create the full-screen window if it doesn’t already  exist.
         if (!outletWindow)
         {
@@ -252,6 +265,8 @@
 {
     mouseCurrent = [aEvent locationInWindow];
     [outletView updatePoint:mouseDown target:mouseCurrent];
+    
+    
 }
 
 
@@ -273,12 +288,14 @@
     mouseCurrent = windowPoint;
     [outletView updatePoint:mouseDown target:mouseCurrent];
     
-
+    
 }
 
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
     [self onOutletUp:self];
+    
+    NSLog(@"Node Dragging Sessioned End");
 }
 
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
@@ -316,6 +333,11 @@
     
     [self willChangeValueForKey:@"nodeName"];
     [self didChangeValueForKey:@"nodeName"];
+    
+    if(self.reference != 0)
+    {
+        
+    }
     
 }
 

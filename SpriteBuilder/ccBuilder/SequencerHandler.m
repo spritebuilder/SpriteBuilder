@@ -453,16 +453,21 @@ static SequencerHandler* sharedSequencerHandler;
     SceneGraph* g = [SceneGraph instance];
     NSPasteboard* pb = [info draggingPasteboard];
     
-    if ([item isKindOfClass:[CCNode class]])
+    NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
+    if (nodeData)
     {
-        NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
-        if (nodeData)
+        if ([item isKindOfClass:[CCNode class]])
         {
+        
             NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
 			void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
             CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
             
             CCNode* node = item;
+            
+            if(node.plugIn.isJoint)
+                return NSDragOperationNone;
+            
             CCNode* parent = [node parent];
             while (parent && parent != g.rootNode)
             {
@@ -471,19 +476,31 @@ static SequencerHandler* sharedSequencerHandler;
             }
             return NSDragOperationGeneric;
         }
-        
-        NSArray * jointsData = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
-        if(jointsData)
+        else
         {
-            if(index != -1)
-            {
-                return NSDragOperationNone;
-            }
-            
-            
-            return NSDragOperationGeneric;
+            return NSDragOperationNone;
+        }
+  
+    }
+    
+    NSArray * jointsData = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+    if(jointsData.count > 0)
+    {
+        if(index != -1)
+        {
+            return NSDragOperationNone;
         }
         
+        if(![item isKindOfClass:[CCNode class]])
+        {
+            return NSDragOperationNone;
+        }
+        
+        CCNode* node = item;
+        if(!node.nodePhysicsBody)
+            return NSDragOperationNone;
+
+        return NSDragOperationGeneric;
     }
     
     // Dropped WavFile;
