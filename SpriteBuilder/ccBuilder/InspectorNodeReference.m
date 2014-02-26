@@ -129,28 +129,24 @@
 -(void)mouseMoved:(NSEvent *)theEvent
 {
     [super mouseMoved:theEvent];
-
-    
+ 
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
     [super mouseDragged:theEvent];
     [self.inspector onOutletDrag:self event:theEvent];
-
 }
 
 
 - (void)mouseEntered:(NSEvent *)event
 {
-    NSLog(@"Outlet mouseEntered");
     mouseIsOver = YES;
     [self setNeedsDisplay:YES];
 }
 
 - (void)mouseExited:(NSEvent *)event
 {
-    NSLog(@"Outlet mouseExited");
     mouseIsOver = NO;
     [self setNeedsDisplay:YES];
 }
@@ -192,12 +188,10 @@
 -(void)onOutletDown:(id)sender event:(NSEvent*)event
 {
     
-    NSLog(@"Outlet Down");
-    
     // Get the screen information.
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     // Capture the screen.
-    {
+{
         // Create the full-screen window if it doesn’t already  exist.
         if (!outletWindow)
         {
@@ -214,6 +208,7 @@
               // Make the screen window the current document window.
         // Be sure to retain the previous window if you want to  use it again.
         
+        [outletWindow setFrame:windowRect display:YES];
         [outletWindow setContentView:outletView];
         [[AppDelegate appDelegate].window addChildWindow:outletWindow ordered:NSWindowAbove];
         
@@ -245,8 +240,6 @@
 
 -(void)onOutletUp:(id)sender
 {
-    NSLog(@"Outlet Up");
-    
     [outletView clear];
     [self.outletButton clear];
     [self.outletButton setNeedsDisplay:YES];
@@ -264,7 +257,7 @@
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context;
 {
-    return NSDragOperationCopy;
+    return NSDragOperationGeneric;
 }
 
 - (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
@@ -274,10 +267,8 @@
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
 {
-    
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     CGPoint windowPoint = ccpSub(screenPoint, windowRect.origin);
-    NSLog(@"windowPoint: %0.2f %0.2f",windowPoint.x, windowPoint.y);
     
     mouseCurrent = windowPoint;
     [outletView updatePoint:mouseDown target:mouseCurrent];
@@ -292,7 +283,17 @@
 
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
+    [pasteboard clearContents];
+        
+    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"propertyName":propertyName};
     
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
+                                                              format:NSPropertyListBinaryFormat_v1_0
+                                                             options:0
+                                                               error:NULL];
+    
+    [pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
+
 }
 
 
@@ -310,10 +311,6 @@
 
 - (void) refresh
 {
-    
-   
-    
-    
     [self willChangeValueForKey:@"reference"];
     [self didChangeValueForKey:@"reference"];
     

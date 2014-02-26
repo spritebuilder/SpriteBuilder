@@ -12,7 +12,7 @@ static const int kNumProperties = 6;
 extern NSString *  dependantProperties[kNumProperties];
 
 @class SceneGraph;
-@interface CCBPhysicsJoint : CCNode
+@interface CCBPhysicsJoint : CCNode <NSPasteboardWriting>
 {
     CCNode * scaleFreeNode;
     

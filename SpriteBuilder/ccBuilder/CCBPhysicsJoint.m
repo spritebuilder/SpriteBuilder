@@ -108,48 +108,18 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(CCNode*)bodyA
 {
-    CCNode * foundNode = [self findUUID:bodyA_UUID];
+    CCNode * foundNode = [SceneGraph findUUID:bodyA_UUID rootNode:sceneGraph.rootNode];
     //NSAssert(foundNode != nil, @"Did not find nod UUID:%i", (int)bodyA_UUID);
     return foundNode;
 }
 
 -(CCNode*)bodyB
 {
-    CCNode * foundNode = [self findUUID:bodyB_UUID];
+    CCNode * foundNode = [SceneGraph findUUID:bodyB_UUID rootNode:sceneGraph.rootNode];
     //NSAssert(foundNode != nil, @"Did not find nod UUID:%i", (int)bodyA_UUID);
     return foundNode;
 }
 
-typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
-
--(CCNode*)findUUID:(NSUInteger)uuid
-{
-    if(uuid == 0)
-        return nil;
-        
-    
-    
-    __block FindUUIDBlock findUUIDT;
-    //Recursive.
-    findUUIDT = ^CCNode*(CCNode * node, NSUInteger uuid)
-    {
-        if(node.UUID == uuid)
-            return node;
-        
-        for (CCNode * child in node.children) {
-            CCNode * foundNode = findUUIDT(child,uuid);
-            
-            if(foundNode)
-                return foundNode;
-            
-        }
-        return nil;
-    };
-    
-    CCNode * foundNode = findUUIDT(sceneGraph.rootNode,uuid);
-    
-    return foundNode;
-}
 
 -(void)visit
 {
@@ -244,6 +214,28 @@ typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
 {
     self.bodyA = nil;
     self.bodyB = nil;
+}
+
+
+#pragma PasteBoard
+
+
+- (id) pasteboardPropertyListForType:(NSString *)pbType
+{
+    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+    
+    if ([pbType isEqualToString:@"com.cocosbuilder.jointBody"])
+    {
+        [dict setObject:@(self.UUID) forKey:@"jointUUID"];
+        return dict;
+    }
+    return NULL;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.jointBody"];
+    return pbTypes;
 }
 
 @end

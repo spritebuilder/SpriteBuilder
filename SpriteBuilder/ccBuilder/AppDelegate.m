@@ -2395,6 +2395,9 @@ static BOOL hideAllToNextSeparator;
     SceneGraph* g = [SceneGraph instance];
     
     CCNode* addedNode = [[PlugInManager sharedManager] createDefaultNodeOfType:jointName];
+    addedNode.UUID = [AppDelegate appDelegate].currentDocument.UUID;
+    [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    
     [g.joints addJoint:(CCBPhysicsJoint*)addedNode];
     
 

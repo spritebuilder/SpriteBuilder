@@ -50,6 +50,8 @@
 #import "NSPasteboard+CCB.h"
 #import "MainWindow.h"
 #import "SequencerJoints.h"
+#import "NSArray+Query.h"
+#import "CCBPhysicsJoint.h"
 
 static SequencerHandler* sharedSequencerHandler;
 
@@ -467,6 +469,17 @@ static SequencerHandler* sharedSequencerHandler;
                 if (parent == draggedNode) return NSDragOperationNone;
                 parent = [parent parent];
             }
+            return NSDragOperationGeneric;
+        }
+        
+        NSArray * jointsData = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+        if(jointsData)
+        {
+            if(index != -1)
+            {
+                return NSDragOperationNone;
+            }
+            
             
             return NSDragOperationGeneric;
         }
@@ -573,6 +586,22 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
         addedObject = YES;
+    }
+    
+    // Dropped ccb-files
+    NSArray* pbJointBodys = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+    for (NSDictionary* dict in pbJointBodys)
+    {
+        NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
+        NSString * propertyName = dict[@"propertyName"];
+        
+        CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
+            return lJoint.UUID == uuid;
+        }];
+        
+        [joint setValue:item forKey:propertyName];
+        [[AppDelegate appDelegate] refreshProperty:propertyName];
+        
     }
     
     return addedObject;
