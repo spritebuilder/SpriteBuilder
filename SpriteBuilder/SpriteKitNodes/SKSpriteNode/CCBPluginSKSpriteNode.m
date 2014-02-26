@@ -9,5 +9,6 @@
 #import "CCBPluginSKSpriteNode.h"
 
 @implementation CCBPluginSKSpriteNode
+SKNODE_COMPATIBILITY_CODE
 
 @end

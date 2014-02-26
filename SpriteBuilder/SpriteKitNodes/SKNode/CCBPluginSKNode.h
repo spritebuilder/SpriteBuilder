@@ -7,7 +7,9 @@
 //
 
 #import "CCNode.h"
+#import "CCNode+SKNode.h"
 
 @interface CCBPluginSKNode : CCNode
+SKNODE_COMPATIBILITY_HEADER
 
 @end

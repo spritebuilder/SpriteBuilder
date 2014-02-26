@@ -19,7 +19,7 @@
 -(float) scale
 {
 	// color nodes can't be scaled, only resized
-	return _contentSize.width;
+	return 1.0;
 }
 
 -(void) setScaleX:(float)scaleX

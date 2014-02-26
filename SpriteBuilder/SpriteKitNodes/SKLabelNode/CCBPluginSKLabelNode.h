@@ -7,8 +7,10 @@
 //
 
 #import "CCLabelTTF.h"
+#import "CCNode+SKNode.h"
 
 @interface CCBPluginSKLabelNode : CCLabelTTF
+SKNODE_COMPATIBILITY_HEADER
 
 @property (nonatomic) NSString* text;
 

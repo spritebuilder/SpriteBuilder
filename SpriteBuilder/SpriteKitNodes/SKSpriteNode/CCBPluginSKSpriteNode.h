@@ -7,7 +7,9 @@
 //
 
 #import "CCSprite.h"
+#import "CCNode+SKNode.h"
 
 @interface CCBPluginSKSpriteNode : CCSprite
+SKNODE_COMPATIBILITY_HEADER
 
 @end
