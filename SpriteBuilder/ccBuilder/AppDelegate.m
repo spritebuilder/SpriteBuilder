@@ -3286,7 +3286,12 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updatePositionScaleFactor
 {
-    ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
+	if (currentDocument == nil)
+	{
+		return;
+	}
+
+	ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
 	
 	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
     {
