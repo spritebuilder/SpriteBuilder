@@ -41,7 +41,7 @@
         imagesLoaded = YES;
     }
     
-    if (!node)
+    if (!node && self.drawHardLine)
     {
         NSRect rowRect = NSMakeRect(0, /*cellFrame.origin.x,*/ cellFrame.origin.y + cellFrame.size.height - kCCBSeqDefaultRowHeight, cellFrame.size.width+16, kCCBSeqDefaultRowHeight);
         [imgRowBgChannel drawInRect:rowRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];

@@ -34,5 +34,6 @@
 }
 
 @property (nonatomic,weak) CCNode* node;
+@property (nonatomic) BOOL drawHardLine;
 
 @end

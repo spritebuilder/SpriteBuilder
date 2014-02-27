@@ -794,7 +794,12 @@ static SequencerHandler* sharedSequencerHandler;
             [buttonCell setTransparent:YES];
             
         }
-        
+        if([tableColumn.identifier isEqualToString:@"structure"])
+        {
+            SequencerStructureCell* strCell = cell;
+            strCell.drawHardLine = NO;
+            strCell.node = NULL;
+        }
         return;
     }
     
@@ -822,6 +827,7 @@ static SequencerHandler* sharedSequencerHandler;
         {
             SequencerStructureCell* strCell = cell;
             strCell.node = NULL;
+            strCell.drawHardLine = YES;
         }
         else if ([tableColumn.identifier isEqualToString:@"sequencer"])
         {

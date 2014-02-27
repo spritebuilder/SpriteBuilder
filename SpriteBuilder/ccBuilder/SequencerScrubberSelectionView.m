@@ -25,6 +25,7 @@
 #import "SequencerScrubberSelectionView.h"
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
+#import "SequencerJoints.h"
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
 #import "SequencerNodeProperty.h"
@@ -99,7 +100,8 @@
     // Check bounds
     id item = [outlineView itemAtRow:row];
     
-    if ([item isKindOfClass:[SequencerChannel class]])
+    if ([item isKindOfClass:[SequencerChannel class]] ||
+         [item isKindOfClass:[SequencerJoints class]])
     {
         return 0;
     }
@@ -529,6 +531,8 @@
 
 - (void) mouseDown:(NSEvent *)theEvent
 {
+   
+    
     NSPoint mouseLocationInWindow = [theEvent locationInWindow];
     NSPoint mouseLocation = [self convertPoint: mouseLocationInWindow fromView: NULL];
     
@@ -565,7 +569,17 @@
         {
             node = item;
         }
+        
+        
+        if([item isKindOfClass:[SequencerJoints class]])
+        {
+            return;
+        }
     }
+    
+    //Bail on joints.
+    if(node.plugIn.isJoint)
+        return;
     
     didAutoScroll = NO;
     mouseDownPosition = mouseLocation;
