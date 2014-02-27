@@ -549,6 +549,21 @@ static SequencerHandler* sharedSequencerHandler;
         return NSDragOperationGeneric;
     
     }
+    
+    //Default behavior for Joints is don't accept drag and drops.
+    if([item isKindOfClass:[CCNode class]])
+    {
+        CCNode * node = item;
+        if(node.plugIn.isJoint)
+            return NSDragOperationNone;
+    }
+    
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return NSDragOperationNone;
+    }
+    
+    
     return NSDragOperationGeneric;
 }
 

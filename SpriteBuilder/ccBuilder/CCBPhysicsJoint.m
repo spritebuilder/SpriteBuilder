@@ -114,21 +114,28 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     }
 }
 
--(BOOL)breakingForceEnabled
+-(BOOL)maxForceEnabled
 {
-    return breakingForceEnabled;
+    return maxForceEnabled;
 }
+
+
 
 -(void)setMaxForceEnabled:(BOOL)lMaxForceEnabled
 {
     maxForceEnabled = lMaxForceEnabled;
-    if(maxForceEnabled)
+    if(!maxForceEnabled)
     {
-        [self willChangeValueForKey:@"maxForceEnabled"];
+        [self willChangeValueForKey:@"maxForce"];
         _maxForce = INFINITY;
-        [self didChangeValueForKey:@"maxForceEnabled"];
+        [self didChangeValueForKey:@"maxForce"];
     }
     
+}
+
+-(BOOL)breakingForceEnabled
+{
+    return breakingForceEnabled;
 }
 
 -(void)setBreakingForceEnabled:(BOOL)lBreakingForceEnabled
