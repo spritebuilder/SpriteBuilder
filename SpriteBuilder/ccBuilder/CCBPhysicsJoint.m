@@ -22,6 +22,8 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 }
 @dynamic bodyA;
 @dynamic bodyB;
+@synthesize breakingForceEnabled;
+@synthesize maxForceEnabled;
 
 @synthesize isSelected;
 - (id) init
@@ -42,6 +44,12 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
     bodyBOutlet.position = ccp(kOutletOffset,-kOutletOffset);
     [scaleFreeNode addChild:bodyBOutlet];
+    
+    self.breakingForceEnabled = YES;
+    self.maxForceEnabled = YES;
+    self.breakingForce = INFINITY;
+    self.collideBodies = YES;
+    self.maxForce = INFINITY;
     
     return self;
 }
@@ -103,6 +111,34 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 {
     for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
         [body removeObserver:self forKeyPath:dependantProperties[i]];
+    }
+}
+
+-(BOOL)breakingForceEnabled
+{
+    return breakingForceEnabled;
+}
+
+-(void)setMaxForceEnabled:(BOOL)lMaxForceEnabled
+{
+    maxForceEnabled = lMaxForceEnabled;
+    if(maxForceEnabled)
+    {
+        [self willChangeValueForKey:@"maxForceEnabled"];
+        _maxForce = INFINITY;
+        [self didChangeValueForKey:@"maxForceEnabled"];
+    }
+    
+}
+
+-(void)setBreakingForceEnabled:(BOOL)lBreakingForceEnabled
+{
+    breakingForceEnabled = lBreakingForceEnabled;
+    if(!breakingForceEnabled)
+    {
+        [self willChangeValueForKey:@"breakingForce"];
+        _breakingForce = INFINITY;
+        [self didChangeValueForKey:@"breakingForce"];
     }
 }
 

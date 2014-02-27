@@ -92,6 +92,34 @@
 			<key>name</key>
 			<string>anchorA</string>
 		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Collide Bodies</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>collideBodies</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>FloatCheck</string>
+			<key>name</key>
+			<string>breakingForce</string>
+			<key>displayName</key>
+			<string>Breaking Force</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>FloatCheck</string>
+			<key>name</key>
+			<string>maxForce</string>
+			<key>displayName</key>
+			<string>Max Force</string>
+		</dict>
 	</array>
 	<key>editorClassName</key>
 	<string>CCBPhysicsPivotJoint</string>
