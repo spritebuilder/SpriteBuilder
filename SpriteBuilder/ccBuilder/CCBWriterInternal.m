@@ -255,6 +255,16 @@
         float f = [[node valueForKey:name] floatValue];
         serializedValue = [CCBWriterInternal serializeFloat:f];
     }
+    else if([type isEqualToString:@"FloatCheck"])
+    {
+        float f = [[node valueForKey:name] floatValue];
+        BOOL  enabled = [[node valueForKey:[NSString stringWithFormat:@"%@Enabled",name]] boolValue];
+        
+        serializedValue = [NSArray arrayWithObjects:
+                           [CCBWriterInternal serializeFloat:f],
+                           [CCBWriterInternal serializeBool:enabled],
+                           nil];
+    }
     else if ([type isEqualToString:@"FloatScale"])
     {
         float f = [PositionPropertySetter floatScaleForNode:node prop:name];

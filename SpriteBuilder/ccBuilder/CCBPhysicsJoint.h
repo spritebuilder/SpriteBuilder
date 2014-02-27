@@ -38,6 +38,11 @@ typedef enum
 
 @property CCNode * bodyA;
 @property CCNode * bodyB;
+@property(nonatomic) BOOL maxForceEnabled;
+@property(nonatomic) CGFloat maxForce;
+@property(nonatomic) BOOL collideBodies;
+@property(nonatomic) BOOL breakingForceEnabled;
+@property(nonatomic) CGFloat breakingForce;
 
 @property BOOL isSelected;//Is clears on Visit
 

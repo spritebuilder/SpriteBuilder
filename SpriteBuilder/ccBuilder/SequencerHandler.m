@@ -533,6 +533,37 @@ static SequencerHandler* sharedSequencerHandler;
         return NSDragOperationNone;//Restrict drag and drop
     }
     
+    
+    NSArray* pbNodePlugIn = [pb propertyListsForType:@"com.cocosbuilder.PlugInNode"];
+    for (NSDictionary* dict in pbNodePlugIn)
+    {
+        if(![item isKindOfClass:[CCNode class]])
+        {
+            return NSDragOperationNone;
+        }
+        
+        CCNode * node = item;
+        if(node.plugIn.isJoint)
+            return NSDragOperationNone;
+        
+        return NSDragOperationGeneric;
+    
+    }
+    
+    //Default behavior for Joints is don't accept drag and drops.
+    if([item isKindOfClass:[CCNode class]])
+    {
+        CCNode * node = item;
+        if(node.plugIn.isJoint)
+            return NSDragOperationNone;
+    }
+    
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        return NSDragOperationNone;
+    }
+    
+    
     return NSDragOperationGeneric;
 }
 
