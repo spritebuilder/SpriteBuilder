@@ -145,7 +145,7 @@
 @synthesize localizationEditorHandler;
 @synthesize physicsHandler;
 @synthesize itemTabView;
-
+@dynamic selectedNodeCanHavePhysics;
 static AppDelegate* sharedAppDelegate;
 
 #pragma mark Setup functions
@@ -777,6 +777,18 @@ void ApplyCustomNodeVisitSwizzle()
     {
         return NULL;
     }
+}
+
+
+-(BOOL)selectedNodeCanHavePhysics
+{
+    if(!self.selectedNode)
+        return NO;
+    
+    if(self.selectedNode.plugIn.isJoint)
+        return NO;
+    
+    return YES;
 }
 
 #pragma mark Window Delegate

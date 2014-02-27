@@ -338,7 +338,7 @@ enum {
 // Physics
 @property (weak, nonatomic,readonly) PhysicsHandler* physicsHandler;
 @property (weak, nonatomic,readonly) NSTabView* itemTabView;
-
+@property (readonly) BOOL selectedNodeCanHavePhysics;//Results in physics properties being displayed.
 
 // Methods
 + (AppDelegate*) appDelegate;
