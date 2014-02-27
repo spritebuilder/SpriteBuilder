@@ -155,6 +155,27 @@
     return YES;
 }
 
+-(NSString*) pathWithCocoaImageResolutionSuffix:(NSString*)path resolution:(NSString*)resolution
+{
+	NSString* extension = [path pathExtension];
+	
+	if ([resolution isEqualToString:@"phonehd"])
+	{
+		path = [NSString stringWithFormat:@"%@@2x.%@", [path stringByDeletingPathExtension], extension];
+	}
+	else if ([resolution isEqualToString:@"tablet"])
+	{
+		path = [NSString stringWithFormat:@"%@~ipad.%@", [path stringByDeletingPathExtension], extension];
+	}
+	else if ([resolution isEqualToString:@"tablethd"])
+	{
+		path = [NSString stringWithFormat:@"%@@2x~ipad.%@", [path stringByDeletingPathExtension], extension];
+	}
+	
+	//NSLog(@"path with cocoa suffix: %@", path);
+	return path;
+}
+
 - (BOOL) publishImageFile:(NSString*)srcFile to:(NSString*)dstFile isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString*) outDir
 {
     for (NSString* resolution in publishForResolutions)
@@ -219,6 +240,12 @@
     srcPath = [srcDir stringByAppendingPathComponent:srcFileName];
     dstPath = [dstDir stringByAppendingPathComponent:dstFileName];
     
+	// Sprite Kit requires specific extensions for specific image resolutions (ie @2x, ~ipad, ..)
+	if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
+	{
+		dstPath = [self pathWithCocoaImageResolutionSuffix:dstPath resolution:resolution];
+	}
+
     // Create destination directory if it doesn't exist
     [fm createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
     
@@ -248,6 +275,7 @@
     
     // Add renaming rule
     NSString* relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath format:format compress:compress isSpriteSheet:isSpriteSheet];
+	
     [self addRenamingRuleFrom:relPath to:relPathRenamed];
     
     // Copy and convert the image
