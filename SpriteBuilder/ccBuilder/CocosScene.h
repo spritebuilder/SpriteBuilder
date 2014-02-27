@@ -178,6 +178,12 @@ enum {
 - (void)mouseExited:(NSEvent *)event;
 - (void)cursorUpdate:(NSEvent *)event;
 
+//Draggin
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
+- (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
+- (void)draggingEnded:(id <NSDraggingInfo>)sender;
+
 - (void) savePreviewToFile:(NSString*)path;
 
 // Converts to document coordinates from view coordinates

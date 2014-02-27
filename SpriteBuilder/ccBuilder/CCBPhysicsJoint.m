@@ -175,9 +175,9 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     
 }
 
--(CGPoint)outletWorldPos:(int)idx
+-(CGPoint)outletWorldPos:(BodyIndex)idx
 {
-    if(idx == 0)
+    if(idx == BodyIndexA)
     {
         return [bodyAOutlet convertToWorldSpaceAR:CGPointZero];
     }
@@ -190,9 +190,9 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 
 
--(void)setOutletStatus:(int)idx value:(BOOL)value
+-(void)setOutletStatus:(BodyIndex)idx value:(BOOL)value
 {
-    CCSprite * bodyOutlet = idx == 0 ? bodyAOutlet : bodyBOutlet;
+    CCSprite * bodyOutlet = idx == BodyIndexA ? bodyAOutlet : bodyBOutlet;
     if(value)
     {
         bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];

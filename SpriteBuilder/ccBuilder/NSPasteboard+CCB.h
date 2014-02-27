@@ -11,5 +11,6 @@
 @interface NSPasteboard (CCB)
 
 - (NSArray*) propertyListsForType:(NSString*) type;
+-(NSArray*) propertyTypes;
 
 @end

@@ -24,6 +24,14 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "CCBPhysicsJoint.h"
+
+
+typedef enum
+{
+    OutletDragTypeStage,
+    OutletDragTypeInspector
+} OutletDragType;
 
 @class NodePhysicsBody;
 @class CCBPhysicsJoint;
@@ -36,27 +44,34 @@
     int _mouseDownInHandle;
     CGPoint _handleStartPos;
     
-    int     _mouseDownOutletHandle;
+    BodyIndex     _mouseDownOutletHandle;
 
     CCBPhysicsJoint *_currentJoint;
     CCNode          *_currentBodyTargeted;
+    OutletDragType   _dragType;
     
 }
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;
 @property (nonatomic,assign) BOOL selectedNodePhysicsEnabled;
 @property (nonatomic,strong) NodePhysicsBody* selectedNodePhysicsBody;
+@property (readonly)         CCNode *currentBodyTarget;
 
 - (void) willChangeSelection;
 - (void) didChangeSelection;
 
 - (void) updatePhysicsEditor:(CCNode*) editorView;
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(BodyIndex)idx;
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event;
 
 - (BOOL)rightMouseDown:(CGPoint)pos event:(NSEvent*)event;
-- (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event;
+- (BOOL)rightMouseUp:(CGPoint)pos event:(NSEvent*)event;
 
+- (BOOL)draggingEntered:(id <NSDraggingInfo>)sender pos:(CGPoint)pos result:(NSDragOperation*)result;
+- (BOOL)draggingUpdated:(id <NSDraggingInfo>)sender pos:(CGPoint)pos result:(NSDragOperation*)result;
+- (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
+- (void)draggingEnded:(id <NSDraggingInfo>)sender;
 @end

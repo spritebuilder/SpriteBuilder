@@ -826,6 +826,41 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return NO;
 }
 
+#pragma mark Handle Drag Input
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender pos:(CGPoint)pos
+{
+    NSDragOperation operation;
+    if([appDelegate.physicsHandler draggingEntered:sender pos:pos result:&operation])
+    {
+        return operation;
+    }
+
+    return NSDragOperationGeneric;
+
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender pos:(CGPoint)pos
+{
+    NSDragOperation operation;
+    if([appDelegate.physicsHandler draggingUpdated:sender pos:pos result:&operation])
+    {
+        return operation;
+    }
+    
+    return NSDragOperationGeneric;
+}
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos
+{
+    [appDelegate.physicsHandler draggingExited:sender pos:pos];
+}
+
+- (void)draggingEnded:(id <NSDraggingInfo>)sender
+{
+    [appDelegate.physicsHandler draggingEnded:sender];
+}
+
 #pragma mark Handle mouse input
 
 - (CGPoint) convertToDocSpace:(CGPoint)viewPt

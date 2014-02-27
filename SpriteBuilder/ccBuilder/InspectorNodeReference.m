@@ -118,8 +118,6 @@
     [self.inspector onOutletDown:self event:theEvent];
     mouseIsDown = YES;
     [self setNeedsDisplay:YES];
-    
-    NSLog(@"mouseDown finished");
 
 }
 
@@ -170,8 +168,6 @@
 @dynamic reference;
 
 
-
-
 -(void)setReference:(CCNode *)reference
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
@@ -208,6 +204,7 @@
             // Create the full-screen window.
            
             outletWindow = [[CCBTransparentWindow alloc] initWithContentRect:windowRect];
+            [outletWindow setIgnoresMouseEvents:YES];
             outletWindow.delegate = self;
             
             outletView = [[OutletDrawView alloc] initWithFrame:CGRectMake(0,0,windowRect.size.width,windowRect.size.height)];
@@ -292,12 +289,11 @@
 {
     [self onOutletUp:self];
     
-    NSLog(@"Node Dragging Sessioned End");
 }
 
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
-    [pasteboard clearContents];
+
         
     NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"propertyName":propertyName};
     

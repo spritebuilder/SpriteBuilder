@@ -28,6 +28,10 @@
 #import "CCBGlobals.h"
 #import "CocosScene.h"
 #import "NSPasteboard+CCB.h"
+#import "PhysicsHandler.h"
+#import "SceneGraph.h"
+#import "NSArray+Query.h"
+#import "CCNode+NodeInfo.h"
 
 @implementation CCBGLView
 
@@ -51,7 +55,7 @@
     
     trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
     
-    [self registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", NULL]];
+    [self registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", @"com.cocosbuilder.jointBody", NULL]];
 }
 
 
@@ -60,10 +64,48 @@
 	return NO;
 }
 
+#pragma mark Dragging
+
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
-    return NSDragOperationGeneric;
+    NSPoint pt = [self convertPoint:[sender draggingLocation] fromView:NULL];
+    pt = NSMakePoint(roundf(pt.x),roundf(pt.y));
+    pt = [[CCDirectorMac sharedDirector] convertToGL:pt];
+
+    
+    return [[CocosScene cocosScene] draggingEntered:sender pos:pt];
 }
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+{
+    NSPoint pt = [self convertPoint:[sender draggingLocation] fromView:NULL];
+    pt = NSMakePoint(roundf(pt.x),roundf(pt.y));
+    pt = [[CCDirectorMac sharedDirector] convertToGL:pt];
+    
+    return [[CocosScene cocosScene] draggingUpdated:sender pos:pt];
+    
+}
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender
+{
+    NSPoint pt = [self convertPoint:[sender draggingLocation] fromView:NULL];
+    pt = NSMakePoint(roundf(pt.x),roundf(pt.y));
+    pt = [[CCDirectorMac sharedDirector] convertToGL:pt];
+    
+    [[CocosScene cocosScene] draggingExited:sender pos:pt];
+    
+}
+- (void)concludeDragOperation:(id <NSDraggingInfo>)sender
+{
+    
+}
+/* draggingEnded: is implemented as of Mac OS 10.5 */
+- (void)draggingEnded:(id <NSDraggingInfo>)sender
+{
+    [[CocosScene cocosScene] draggingEnded:sender];
+}
+
+
 
 - (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
@@ -98,9 +140,31 @@
     {
         [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] at:ccp(pt.x, pt.y)];
     }
+    
+    NSArray* pbJoints = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+    for (NSDictionary* dict in pbJoints)
+    {
+        if(!appDelegate.physicsHandler.currentBodyTarget)
+            return NO;
+        
+        NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
+        NSString * propertyName = dict[@"propertyName"];
+        
+        CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
+            return lJoint.UUID == uuid;
+        }];
+        
+        BodyIndex type = [propertyName isEqualToString:@"bodyA"] ? BodyIndexA :BodyIndexB;
+        
+        [appDelegate.physicsHandler assignBodyToJoint:appDelegate.physicsHandler.currentBodyTarget toJoint:joint withIdx:type];
+        
+    }
+
 
     return YES;
 }
+
+#pragma mark -
 
 - (void) scrollWheel:(NSEvent *)theEvent
 {
