@@ -11,6 +11,14 @@
 static const int kNumProperties = 6;
 extern NSString *  dependantProperties[kNumProperties];
 
+typedef enum
+{
+    BodyIndexA,
+    BodyIndexB,
+    
+    BodyIndexUnknown = -1,
+}BodyIndex;
+
 @class SceneGraph;
 @interface CCBPhysicsJoint : CCNode <NSPasteboardWriting>
 {
@@ -35,9 +43,9 @@ extern NSString *  dependantProperties[kNumProperties];
 
 
 -(int)hitTestOutlet:(CGPoint)point;
--(void)setOutletStatus:(int)idx value:(BOOL)value;
+-(void)setOutletStatus:(BodyIndex)idx value:(BOOL)value;
 -(void)refreshOutletStatus;
--(CGPoint)outletWorldPos:(int)idx;
+-(CGPoint)outletWorldPos:(BodyIndex)idx;
 
 
 -(void)fixupReferences;

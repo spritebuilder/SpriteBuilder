@@ -33,4 +33,12 @@
     return nil;
 }
 
+-(void)forEach:(VoidBlock)aBlock
+{
+    for (int i = 0; i < self.count; i++) {
+        aBlock(self[i], i);
+    }
+    
+}
+
 @end

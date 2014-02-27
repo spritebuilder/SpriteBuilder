@@ -36,10 +36,14 @@
 #import "CCBPhysicsPivotJoint.h"
 #import "CCBGlobals.h"
 #import "GeometryUtil.h"
+#import "NSPasteboard+CCB.h"
+#import "NSArray+Query.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
 #define kCCBPhysicsSnapDist 10
+
+
 
 float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 {
@@ -82,6 +86,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 }
 
 @implementation PhysicsHandler
+
 
 - (void) awakeFromNib
 {
@@ -261,6 +266,121 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     
     return snapped;
 }
+#pragma mark -
+#pragma mark Dragging
+#pragma mark -
+
+- (BOOL)draggingEntered:(id <NSDraggingInfo>)sender pos:(CGPoint)pos result:(NSDragOperation*)result
+{
+    NSPasteboard* pb = [sender draggingPasteboard];
+
+    if([[pb propertyTypes] containsObject:@"com.cocosbuilder.jointBody"])
+    {
+        _mouseDownOutletHandle = 0;//lie
+        _mouseDragPos = pos;
+        _dragType = OutletDragTypeInspector;
+        *result = NSDragOperationGeneric;
+    }
+
+    return NO;
+    
+}
+
+- (BOOL)draggingUpdated:(id <NSDraggingInfo>)sender pos:(CGPoint)pos result:(NSDragOperation*)result
+{
+    _mouseDragPos = pos;
+    [self mouseDraggedJointOutlets];
+    return NO;
+    
+}
+
+- (void)draggingEnded:(id <NSDraggingInfo>)sender
+{
+    if(_mouseDownOutletHandle != -1)
+    {
+        //Cleanup
+        _mouseDownOutletHandle = -1;
+        _currentBodyTargeted = nil;
+    }
+}
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos
+{
+    if(_mouseDownOutletHandle != -1)
+    {
+        //Cleanup
+        _mouseDownOutletHandle = -1;
+        _currentBodyTargeted = nil;
+    }
+
+    
+}
+
+
+
+#pragma mark -
+#pragma mark Joints
+#pragma mark -
+
+-(CCNode*)currentBodyTarget
+{
+    return _currentBodyTargeted;
+}
+
+-(void)findPhysicsNodes:(CCNode*)node nodes:(NSMutableArray*)nodes
+{
+    if(node.nodePhysicsBody)
+    {
+        [nodes addObject:node];
+    }
+    
+    for (CCNode * child in node.children) {
+        [self findPhysicsNodes:child nodes:nodes];
+    }
+}
+
+
+-(void)mouseDraggedJointOutlets
+{
+    SceneGraph * g = [SceneGraph instance];
+    
+    NSMutableArray * physicsNodes = [NSMutableArray array];
+    [self findPhysicsNodes:g.rootNode nodes:physicsNodes];
+    
+    _currentBodyTargeted = nil;
+    
+    //Find bodies we're inside the physics poly of.
+    NSMutableArray * possibleBodies = [NSMutableArray array];
+    for (CCNode * physicsNode in physicsNodes)
+    {
+        CGPoint testPoint = [physicsNode convertToNodeSpace:_mouseDragPos];
+        if([GeometryUtil pointInRegion:testPoint poly:physicsNode.nodePhysicsBody.points])
+        {
+            [possibleBodies addObject:physicsNode];
+        }
+    }
+    
+    //Select the one we're closest too.
+
+    for (CCNode * body in possibleBodies) {
+        if(_currentBodyTargeted == nil)
+            _currentBodyTargeted = body;
+        else
+        {
+            CGPoint loc1 = [body convertToNodeSpaceAR:_mouseDragPos];
+            CGPoint loc2 = [_currentBodyTargeted convertToNodeSpaceAR:_mouseDragPos];
+            
+            if(ccpDistance(CGPointZero, loc1) < ccpDistance(CGPointZero, loc2))
+            {
+                _currentBodyTargeted = body;
+            }
+        }
+    }
+}
+
+
+#pragma mark - Mouse
+
 
 - (BOOL)rightMouseDown:(CGPoint)pos event:(NSEvent*)event
 {
@@ -327,6 +447,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         _mouseDownOutletHandle = outletIdx;
         [_currentJoint setOutletStatus:outletIdx value:YES];
         _mouseDragPos = pos;
+        _dragType = OutletDragTypeStage;
         return YES;
     }
     else
@@ -401,64 +522,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
 }
 
-#pragma mark -
-#pragma mark Joints
-#pragma mark -
 
-
--(void)findPhysicsNodes:(CCNode*)node nodes:(NSMutableArray*)nodes
-{
-    if(node.nodePhysicsBody)
-    {
-        [nodes addObject:node];
-    }
-    
-    for (CCNode * child in node.children) {
-        [self findPhysicsNodes:child nodes:nodes];
-    }
-}
-
-
--(void)mouseDraggedJointOutlets
-{
-    SceneGraph * g = [SceneGraph instance];
-    
-    NSMutableArray * physicsNodes = [NSMutableArray array];
-    [self findPhysicsNodes:g.rootNode nodes:physicsNodes];
-    
-    _currentBodyTargeted = nil;
-    
-    //Find bodies we're inside the physics poly of.
-    NSMutableArray * possibleBodies = [NSMutableArray array];
-    for (CCNode * physicsNode in physicsNodes)
-    {
-        CGPoint testPoint = [physicsNode convertToNodeSpace:_mouseDragPos];
-        if([GeometryUtil pointInRegion:testPoint poly:physicsNode.nodePhysicsBody.points])
-        {
-            [possibleBodies addObject:physicsNode];
-        }
-    }
-    
-    //Select the one we're closest too.
-
-    for (CCNode * body in possibleBodies) {
-        if(_currentBodyTargeted == nil)
-            _currentBodyTargeted = body;
-        else
-        {
-            CGPoint loc1 = [body convertToNodeSpaceAR:_mouseDragPos];
-            CGPoint loc2 = [_currentBodyTargeted convertToNodeSpaceAR:_mouseDragPos];
-            
-            if(ccpDistance(CGPointZero, loc1) < ccpDistance(CGPointZero, loc2))
-            {
-                _currentBodyTargeted = body;
-            }
-        }
-    }
-}
-
-
-#pragma mark -
 
 - (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event
 {   
@@ -495,23 +559,14 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         return YES;
     }
     
-    if(_mouseDownOutletHandle != -1)
+    if(_mouseDownOutletHandle != BodyIndexUnknown)
     {
         CCNode* node = [AppDelegate appDelegate].selectedNode;
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         
         if(_currentBodyTargeted)
         {
-            if(_mouseDownOutletHandle == 0)
-            {
-                joint.bodyA = _currentBodyTargeted;
-                [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
-            }
-            else
-            {
-                joint.bodyB = _currentBodyTargeted;
-                [[AppDelegate appDelegate] refreshProperty:@"bodyB"];
-            }
+            [self assignBodyToJoint:_currentBodyTargeted toJoint:joint withIdx:_mouseDownOutletHandle];
         }
 
         //Cleanup
@@ -523,6 +578,21 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
     
     return NO;
+}
+
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(BodyIndex)idx
+{
+    if(idx == BodyIndexA)
+    {
+        joint.bodyA = _currentBodyTargeted;
+        [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
+    }
+    else
+    {
+        joint.bodyB = _currentBodyTargeted;
+        [[AppDelegate appDelegate] refreshProperty:@"bodyB"];
+    }
+    [joint refreshOutletStatus];
 }
 
 - (void)renderPhysicsBody:(CCNode *)node editorView:(CCNode *)editorView
@@ -708,7 +778,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         joint.isSelected = YES;
         
-        if(_mouseDownOutletHandle != -1)
+        if(_mouseDownOutletHandle != -1 && _dragType == OutletDragTypeStage)
         {
             CGPoint fromPt = [joint outletWorldPos:_mouseDownOutletHandle];
             

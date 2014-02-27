@@ -118,8 +118,6 @@
     [self.inspector onOutletDown:self event:theEvent];
     mouseIsDown = YES;
     [self setNeedsDisplay:YES];
-    
-    NSLog(@"mouseDown finished");
 
 }
 
@@ -168,8 +166,6 @@
 }
 
 @dynamic reference;
-
-
 
 
 -(void)setReference:(CCNode *)reference
@@ -293,12 +289,11 @@
 {
     [self onOutletUp:self];
     
-    NSLog(@"Node Dragging Sessioned End");
 }
 
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
-    [pasteboard clearContents];
+
         
     NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"propertyName":propertyName};
     

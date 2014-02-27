@@ -7,6 +7,7 @@
 //
 
 #import "NSPasteboard+CCB.h"
+#import "NSArray+Query.h"
 
 @implementation NSPasteboard (CCB)
 
@@ -27,4 +28,18 @@
     return plists;
 }
 
+-(NSArray*) propertyTypes
+{
+    NSMutableSet * types = [NSMutableSet set];
+    
+    for (NSPasteboardItem * pasteboardItem in [self pasteboardItems])
+    {
+        [[pasteboardItem types] forEach:^(id obj, int idx) {
+            [types addObject:obj];
+        }];
+    }
+    
+    return types.allObjects;
+    
+}
 @end
