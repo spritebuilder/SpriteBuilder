@@ -13,12 +13,6 @@
 		B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896C180762440076A88C /* Default-Landscape~ipad.png */; };
 		B7378977180762440076A88C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896D180762440076A88C /* Default.png */; };
 		B7378978180762440076A88C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896E180762440076A88C /* Default@2x.png */; };
-		B7378979180762440076A88C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896F180762440076A88C /* Icon-72.png */; };
-		B737897A180762440076A88C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = B7378970180762440076A88C /* Icon-Small-50.png */; };
-		B737897B180762440076A88C /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = B7378971180762440076A88C /* Icon-Small.png */; };
-		B737897C180762440076A88C /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7378972180762440076A88C /* Icon-Small@2x.png */; };
-		B737897D180762440076A88C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7378973180762440076A88C /* Icon.png */; };
-		B737897E180762440076A88C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7378974180762440076A88C /* Icon@2x.png */; };
 		B73789871807631A0076A88C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B73789851807631A0076A88C /* main.m */; };
 		B737898A1807642B0076A88C /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B737894B180761A90076A88C /* libcocos2d.a */; };
 		B7378994180767190076A88C /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
@@ -59,12 +53,6 @@
 		B737896C180762440076A88C /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "Source/Resources/Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		B737896D180762440076A88C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Source/Resources/Default.png; sourceTree = SOURCE_ROOT; };
 		B737896E180762440076A88C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Source/Resources/Default@2x.png"; sourceTree = SOURCE_ROOT; };
-		B737896F180762440076A88C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Source/Resources/Icon-72.png"; sourceTree = SOURCE_ROOT; };
-		B7378970180762440076A88C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Source/Resources/Icon-Small-50.png"; sourceTree = SOURCE_ROOT; };
-		B7378971180762440076A88C /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Source/Resources/Icon-Small.png"; sourceTree = SOURCE_ROOT; };
-		B7378972180762440076A88C /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "Source/Resources/Icon-Small@2x.png"; sourceTree = SOURCE_ROOT; };
-		B7378973180762440076A88C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Source/Resources/Icon.png; sourceTree = SOURCE_ROOT; };
-		B7378974180762440076A88C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Source/Resources/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		B73789851807631A0076A88C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/main.m; sourceTree = SOURCE_ROOT; };
 		B73789861807631A0076A88C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = Source/Prefix.pch; sourceTree = SOURCE_ROOT; };
 		B7378992180767190076A88C /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainScene.h; path = Source/MainScene.h; sourceTree = "<group>"; };
@@ -222,12 +210,6 @@
 				B737896C180762440076A88C /* Default-Landscape~ipad.png */,
 				B737896D180762440076A88C /* Default.png */,
 				B737896E180762440076A88C /* Default@2x.png */,
-				B737896F180762440076A88C /* Icon-72.png */,
-				B7378970180762440076A88C /* Icon-Small-50.png */,
-				B7378971180762440076A88C /* Icon-Small.png */,
-				B7378972180762440076A88C /* Icon-Small@2x.png */,
-				B7378973180762440076A88C /* Icon.png */,
-				B7378974180762440076A88C /* Icon@2x.png */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -446,6 +428,7 @@
 				B77F1B2A17B978D7009739AE /* Sources */,
 				B77F1B2B17B978D7009739AE /* Frameworks */,
 				B77F1B2C17B978D7009739AE /* Resources */,
+				D250F26A18C0175700970734 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -515,20 +498,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7378978180762440076A88C /* Default@2x.png in Resources */,
-				B737897E180762440076A88C /* Icon@2x.png in Resources */,
 				B737893B180761570076A88C /* Published-iOS in Resources */,
-				B737897C180762440076A88C /* Icon-Small@2x.png in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
 				B7378975180762440076A88C /* Default-568h@2x.png in Resources */,
-				B737897A180762440076A88C /* Icon-Small-50.png in Resources */,
-				B7378979180762440076A88C /* Icon-72.png in Resources */,
-				B737897D180762440076A88C /* Icon.png in Resources */,
 				B7378977180762440076A88C /* Default.png in Resources */,
-				B737897B180762440076A88C /* Icon-Small.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D250F26A18C0175700970734 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "osascript -e 'tell application \"SpriteBuilder\" to publishProject end'";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B77F1B2A17B978D7009739AE /* Sources */ = {

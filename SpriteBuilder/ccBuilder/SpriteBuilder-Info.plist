@@ -81,6 +81,10 @@
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
 	<string>http://update.spritebuilder.com</string>
+	<key>OSAScriptingDefinition</key>
+	<string>SpriteBuilder.sdef</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 </dict>

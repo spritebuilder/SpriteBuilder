@@ -340,6 +340,9 @@ enum {
 - (void) closeLastDocument;
 - (void) openFile:(NSString*) fileName;
 
+// Publish commands
+- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser;
+
 // Menu options
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent;
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt;
