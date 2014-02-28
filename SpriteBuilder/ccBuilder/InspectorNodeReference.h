@@ -10,7 +10,7 @@
 #import "CCNode+NodeInfo.h"
 #import "CCBTransparentWindow.h"
 #import "CCBTransparentView.h"
-
+#import "OutletDrawWindow.h"
 
 
 @class InspectorNodeReference;
@@ -19,19 +19,15 @@
 @property InspectorNodeReference * inspector;
 @end
 
-@interface OutletDrawView : CCBTransparentView
-
--(void)updatePoint:(CGPoint)startPoint target:(CGPoint)endPoint;
-
-@end
 
 
-@interface InspectorNodeReference : InspectorValue <NSWindowDelegate,NSDraggingSource,NSPasteboardItemDataProvider>
+
+
+@interface InspectorNodeReference : InspectorValue <NSDraggingSource,NSPasteboardItemDataProvider>
 {
     // Transparent window for components on top of cocos scene
-    CCBTransparentWindow* outletWindow;
-    OutletDrawView  * outletView;
-    
+    OutletDrawWindow* outletWindow;
+
     NSTrackingRectTag trackingTag;
     NSTrackingArea * trackingArea;
 
