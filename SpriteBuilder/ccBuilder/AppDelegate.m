@@ -2767,7 +2767,7 @@ static BOOL hideAllToNextSeparator;
 }
 
 
-- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser
+- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser async:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
         && !projectSettings.publishEnablediPhone
@@ -2797,9 +2797,16 @@ static BOOL hideAllToNextSeparator;
                 // Falling through to publish
             case NSAlertOtherReturn:
                 // Open progress window and publish
-                [publisher publish];
-                [self modalStatusWindowStartWithTitle:@"Publishing"];
-                [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+                if(async)
+                {
+                    [publisher publishAsync];
+                    [self modalStatusWindowStartWithTitle:@"Publishing"];
+                    [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+                }
+                else
+                {
+                    [publisher publish];
+                }
                 break;
             default:
                 break;
@@ -2808,9 +2815,16 @@ static BOOL hideAllToNextSeparator;
     else
     {
         // Open progress window and publish
-        [publisher publish];
-        [self modalStatusWindowStartWithTitle:@"Publishing"];
-        [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+        if(async)
+        {
+            [publisher publishAsync];
+            [self modalStatusWindowStartWithTitle:@"Publishing"];
+            [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+        }
+        else
+        {
+            [publisher publish];
+        }
     }
 }
 
@@ -2836,18 +2850,18 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuPublishProject:(id)sender
 {
-    [self publishAndRun:NO runInBrowser:NULL];
+    [self publishAndRun:NO runInBrowser:NULL async:YES];
 }
 
 - (IBAction) menuPublishProjectAndRun:(id)sender
 {
-    [self publishAndRun:YES runInBrowser:NULL];
+    [self publishAndRun:YES runInBrowser:NULL async:YES];
 }
 
 - (IBAction)menuPublishProjectAndRunInBrowser:(id)sender
 {
     NSMenuItem* item = (NSMenuItem *)sender;
-    [self publishAndRun:YES runInBrowser:item.title];
+    [self publishAndRun:YES runInBrowser:item.title async:YES];
 }
 
 - (IBAction) menuCleanCacheDirectories:(id)sender

@@ -1337,6 +1337,7 @@
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
 		D250F26218C012F600970734 /* SpriteBuilderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBuilderCommand.h; sourceTree = "<group>"; };
 		D250F26318C012F600970734 /* SpriteBuilderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteBuilderCommand.m; sourceTree = "<group>"; };
+		D250F26E18C01DE800970734 /* SpriteBuilder.sdef */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpriteBuilder.sdef; sourceTree = SOURCE_ROOT; };
 		DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6802F3189145830060BE39 /* CCBPluginSKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNode.h; sourceTree = "<group>"; };
 		DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNode.m; sourceTree = "<group>"; };
@@ -2616,6 +2617,7 @@
 		7789ABC9133AA82000CEFCC7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D250F26E18C01DE800970734 /* SpriteBuilder.sdef */,
 				7789ABCB133AA82000CEFCC7 /* InfoPlist.strings */,
 				7789ABCE133AA82000CEFCC7 /* SpriteBuilder-Prefix.pch */,
 				7789ABCF133AA82000CEFCC7 /* main.m */,

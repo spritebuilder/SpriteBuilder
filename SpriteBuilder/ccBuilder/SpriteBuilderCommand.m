@@ -12,12 +12,10 @@
 @implementation SpriteBuilderCommand
 
 
-- (id)performDefaultImplementation {
-    
-    // publish
-
-    [[AppDelegate appDelegate] publishAndRun:NO runInBrowser:NULL];
-	return [NSNumber numberWithInt:1];
+- (id)performDefaultImplementation
+{
+    [[AppDelegate appDelegate] publishAndRun:NO runInBrowser:NULL async:NO];
+    return [NSNumber numberWithBool:YES];
 }
 
 @end

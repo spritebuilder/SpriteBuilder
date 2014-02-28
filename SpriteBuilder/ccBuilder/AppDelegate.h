@@ -341,7 +341,7 @@ enum {
 - (void) openFile:(NSString*) fileName;
 
 // Publish commands
-- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser;
+- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser async:(BOOL)async;
 
 // Menu options
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent;
