@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC3DD45C18A95B600004D2AC /* libSB+KoboldKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3DD45718A95B470004D2AC /* libSB+KoboldKit-iOS.a */; };
 		DC6CA1491892D44B0082202B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6CA1481892D44B0082202B /* Foundation.framework */; };
 		DC6CA14B1892D44B0082202B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6CA14A1892D44B0082202B /* CoreGraphics.framework */; };
 		DC6CA14D1892D44B0082202B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6CA14C1892D44B0082202B /* UIKit.framework */; };
 		DC6CA14F1892D44B0082202B /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6CA14E1892D44B0082202B /* SpriteKit.framework */; };
+		DCA604B618BB8470000039F3 /* libSB+SpriteKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCA604AE18BB844C000039F3 /* libSB+SpriteKit-iOS.a */; };
 		DCCA2BBD18931163001C0732 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCA2B3318931163001C0732 /* AppDelegate.m */; };
 		DCCA2BBE18931163001C0732 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCCA2B3418931163001C0732 /* Main_iPad.storyboard */; };
 		DCCA2BBF18931163001C0732 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCCA2B3618931163001C0732 /* Main_iPhone.storyboard */; };
@@ -25,37 +25,37 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		DC3DD45618A95B470004D2AC /* PBXContainerItemProxy */ = {
+		DCA604AD18BB844C000039F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = DC3DD43118A95B440004D2AC /* SB+KoboldKit.xcodeproj */;
+			containerPortal = DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DCD9CF2E18A14908008B3444;
-			remoteInfo = "SB+KoboldKit-iOS";
+			remoteInfo = "SB+SpriteKit-iOS";
 		};
-		DC3DD45818A95B470004D2AC /* PBXContainerItemProxy */ = {
+		DCA604AF18BB844C000039F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = DC3DD43118A95B440004D2AC /* SB+KoboldKit.xcodeproj */;
+			containerPortal = DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DCD9CF0018A148AA008B3444;
-			remoteInfo = "SB+KoboldKit-OSX";
+			remoteInfo = "SB+SpriteKit-OSX";
 		};
-		DC3DD45A18A95B5C0004D2AC /* PBXContainerItemProxy */ = {
+		DCA604B218BB8466000039F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = DC3DD43118A95B440004D2AC /* SB+KoboldKit.xcodeproj */;
+			containerPortal = DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = DCD9CF2D18A14908008B3444;
-			remoteInfo = "SB+KoboldKit-iOS";
+			remoteInfo = "SB+SpriteKit-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DC3DD43118A95B440004D2AC /* SB+KoboldKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "SB+KoboldKit.xcodeproj"; sourceTree = "<group>"; };
 		DC6CA1451892D44B0082202B /* SPRITEKITPROJECTNAME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPRITEKITPROJECTNAME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6CA1481892D44B0082202B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DC6CA14A1892D44B0082202B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DC6CA14C1892D44B0082202B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DC6CA14E1892D44B0082202B /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		DC6CA1711892D44C0082202B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "SB+SpriteKit.xcodeproj"; path = "SB+SpriteKit.xcodeproj"; sourceTree = "<group>"; };
 		DCCA2B3218931163001C0732 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DCCA2B3318931163001C0732 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DCCA2B3518931163001C0732 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC3DD45C18A95B600004D2AC /* libSB+KoboldKit-iOS.a in Frameworks */,
+				DCA604B618BB8470000039F3 /* libSB+SpriteKit-iOS.a in Frameworks */,
 				DCCA2C36189312C4001C0732 /* OpenAL.framework in Frameworks */,
 				DC6CA14B1892D44B0082202B /* CoreGraphics.framework in Frameworks */,
 				DC6CA14D1892D44B0082202B /* UIKit.framework in Frameworks */,
@@ -93,18 +93,9 @@
 		DC3DD3DA18A95B430004D2AC /* SpriteKit */ = {
 			isa = PBXGroup;
 			children = (
-				DC3DD43118A95B440004D2AC /* SB+KoboldKit.xcodeproj */,
+				DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */,
 			);
 			path = SpriteKit;
-			sourceTree = "<group>";
-		};
-		DC3DD43218A95B440004D2AC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DC3DD45718A95B470004D2AC /* libSB+KoboldKit-iOS.a */,
-				DC3DD45918A95B470004D2AC /* libSB+KoboldKit-OSX.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		DC6CA13C1892D44B0082202B = {
@@ -135,6 +126,15 @@
 				DC6CA1711892D44C0082202B /* XCTest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCA604A918BB844C000039F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCA604AE18BB844C000039F3 /* libSB+SpriteKit-iOS.a */,
+				DCA604B018BB844C000039F3 /* libSB+SpriteKit-OSX.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		DCCA2B3118931163001C0732 /* Source */ = {
@@ -197,7 +197,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				DC3DD45B18A95B5C0004D2AC /* PBXTargetDependency */,
+				DCA604B318BB8466000039F3 /* PBXTargetDependency */,
 			);
 			name = SPRITEKITPROJECTNAME;
 			productName = SPRITEKITPROJECTNAME;
@@ -226,8 +226,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = DC3DD43218A95B440004D2AC /* Products */;
-					ProjectRef = DC3DD43118A95B440004D2AC /* SB+KoboldKit.xcodeproj */;
+					ProductGroup = DCA604A918BB844C000039F3 /* Products */;
+					ProjectRef = DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -238,18 +238,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		DC3DD45718A95B470004D2AC /* libSB+KoboldKit-iOS.a */ = {
+		DCA604AE18BB844C000039F3 /* libSB+SpriteKit-iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libSB+KoboldKit-iOS.a";
-			remoteRef = DC3DD45618A95B470004D2AC /* PBXContainerItemProxy */;
+			path = "libSB+SpriteKit-iOS.a";
+			remoteRef = DCA604AD18BB844C000039F3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		DC3DD45918A95B470004D2AC /* libSB+KoboldKit-OSX.a */ = {
+		DCA604B018BB844C000039F3 /* libSB+SpriteKit-OSX.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libSB+KoboldKit-OSX.a";
-			remoteRef = DC3DD45818A95B470004D2AC /* PBXContainerItemProxy */;
+			path = "libSB+SpriteKit-OSX.a";
+			remoteRef = DCA604AF18BB844C000039F3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -284,10 +284,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		DC3DD45B18A95B5C0004D2AC /* PBXTargetDependency */ = {
+		DCA604B318BB8466000039F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "SB+KoboldKit-iOS";
-			targetProxy = DC3DD45A18A95B5C0004D2AC /* PBXContainerItemProxy */;
+			name = "SB+SpriteKit-iOS";
+			targetProxy = DCA604B218BB8466000039F3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

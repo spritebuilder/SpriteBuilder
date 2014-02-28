@@ -108,4 +108,13 @@
 	return self.contentSizeType;
 }
 
+#pragma mark Relative Position
+
+-(CGPoint) positionRelativeToParent:(CGPoint)position
+{
+	CGPoint parentAP = _parent.anchorPoint;
+	CGSize parentCS = _parent.contentSize;
+	return CGPointMake(parentCS.width * parentAP.x + position.x, parentCS.height * parentAP.y + position.y);
+}
+
 @end

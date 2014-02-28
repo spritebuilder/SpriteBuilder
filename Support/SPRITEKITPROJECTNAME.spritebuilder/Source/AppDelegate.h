@@ -6,8 +6,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SB+KoboldKit.h"
 
-@interface AppDelegate : KKAppDelegate
+@interface AppDelegate : NSObject <UIApplicationDelegate>
+
+@property (nonatomic) IBOutlet UIWindow* window;
 
 @end
