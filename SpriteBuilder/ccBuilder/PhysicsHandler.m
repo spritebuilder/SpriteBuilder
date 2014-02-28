@@ -522,12 +522,10 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     }
 }
 
-
-
-- (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event
-{   
+-(BOOL)handleRemovePhysicsBodyAtPoint:(CGPoint)pos
+{
     if (!self.editingPhysicsBody) return NO;
- 
+    
     int handleIdx = [self handleIndexForPos:pos];
     
     if(handleIdx != -1 && self.selectedNodePhysicsBody.points.count > 3)
@@ -539,9 +537,15 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         
         return YES;
     }
-
+    
     
     return NO;
+
+}
+
+- (BOOL) rightMouseUp:(CGPoint)pos event:(NSEvent*)event
+{
+    return [self handleRemovePhysicsBodyAtPoint:pos];
     
 }
 
@@ -550,6 +554,9 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     CCNode* node = [AppDelegate appDelegate].selectedNode;
     
     if (!self.editingPhysicsBody && !node.plugIn.isJoint) return NO;
+    
+    if(event.modifierFlags & NSControlKeyMask && [self handleRemovePhysicsBodyAtPoint:pos])
+        return YES;
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
