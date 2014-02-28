@@ -2384,7 +2384,8 @@ static BOOL hideAllToNextSeparator;
     // Sprite dropped in working canvas
     
     CCNode* node = self.selectedNode;
-    if (!node) node = [CocosScene cocosScene].rootNode;
+    if (!node || node.plugIn.isJoint)
+        node = [CocosScene cocosScene].rootNode;
     
     CCNode* parent = node.parent;
     NodeInfo* info = parent.userObject;
@@ -2414,7 +2415,10 @@ static BOOL hideAllToNextSeparator;
     
 
     [PositionPropertySetter setPosition:[addedNode.parent convertToNodeSpace:pt] forNode:addedNode prop:@"position"];
-
+    
+    [outlineHierarchy reloadData];
+    [self setSelectedNodes: [NSArray arrayWithObject: addedNode]];
+    [self updateInspectorFromSelection];
 }
 
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt

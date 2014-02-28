@@ -243,16 +243,25 @@ static SequencerHandler* sharedSequencerHandler;
     
     // Expand parents of the selected node
     CCNode* node = [appDelegate.selectedNodes objectAtIndex:0];
-    NSMutableArray* nodesToExpand = [NSMutableArray array];
-    while (node != g.rootNode && node != NULL)
+    
+    
+    if(node.plugIn.isJoint)
     {
-        [nodesToExpand insertObject:node atIndex:0];
-        node = node.parent;
+         [outlineHierarchy expandItem:g.joints];
     }
-    for (int i = 0; i < [nodesToExpand count]; i++)
+    else
     {
-        node = [nodesToExpand objectAtIndex:i];
-        [outlineHierarchy expandItem:node.parent];
+        NSMutableArray* nodesToExpand = [NSMutableArray array];
+        while ((node != g.rootNode || node != g.joints.node) && node != NULL)
+        {
+            [nodesToExpand insertObject:node atIndex:0];
+            node = node.parent;
+        }
+        for (int i = 0; i < [nodesToExpand count]; i++)
+        {
+            node = [nodesToExpand objectAtIndex:i];
+            [outlineHierarchy expandItem:node.parent];
+        }
     }
     
     // Update the selection
@@ -794,7 +803,12 @@ static SequencerHandler* sharedSequencerHandler;
             [buttonCell setTransparent:YES];
             
         }
-        
+        if([tableColumn.identifier isEqualToString:@"structure"])
+        {
+            SequencerStructureCell* strCell = cell;
+            strCell.drawHardLine = NO;
+            strCell.node = NULL;
+        }
         return;
     }
     
@@ -822,6 +836,7 @@ static SequencerHandler* sharedSequencerHandler;
         {
             SequencerStructureCell* strCell = cell;
             strCell.node = NULL;
+            strCell.drawHardLine = YES;
         }
         else if ([tableColumn.identifier isEqualToString:@"sequencer"])
         {
