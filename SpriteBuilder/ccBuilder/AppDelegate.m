@@ -206,6 +206,10 @@ void ApplyCustomNodeVisitSwizzle()
     // [cocosView setWantsBestResolutionOpenGLSurface:YES];
 	[director setView:cocosView];
     
+    [self updatePositionScaleFactor];
+    
+    [director reshapeProjection:cocosView.frame.size];
+    
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
 	// Use kCCDirectorResize_NoScale if you don't want auto-scaling.
@@ -3306,6 +3310,12 @@ static BOOL hideAllToNextSeparator;
 - (void) updatePositionScaleFactor
 {
     ResolutionSetting* res = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
+    
+    if (!res)
+    {
+        res = [[ResolutionSetting alloc] init];
+        res.scale = 1;
+    }
 	
 	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
     {
