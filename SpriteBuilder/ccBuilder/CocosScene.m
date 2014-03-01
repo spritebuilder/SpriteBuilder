@@ -107,10 +107,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Selection layer
     selectionLayer = [CCNode node];
+    selectionLayer.name = @"selectionLayer";
     [self addChild:selectionLayer z:4];
     
     // Physics layer
     physicsLayer = [CCNode node];
+    physicsLayer.name = @"physicsLayer";
     [self addChild:physicsLayer z:5];
     
     // Border layer
@@ -153,6 +155,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [self addChild:stageBgLayer z:0];
     
     contentLayer = [CCNode node];
+    contentLayer.name = @"contentLayer";
     contentLayer.contentSizeType = CCSizeTypeNormalized;
     contentLayer.contentSize = CGSizeMake(1, 1);
     [stageBgLayer addChild:contentLayer];
@@ -166,6 +169,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Joints Layer
     jointsLayer = [CCNode node];
+    jointsLayer.name = @"jointsLayer";
     jointsLayer.contentSizeType = CCSizeTypeNormalized;
     jointsLayer.contentSize = CGSizeMake(1, 1);
     [stageJointsLayer addChild:jointsLayer];

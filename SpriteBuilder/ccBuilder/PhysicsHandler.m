@@ -167,7 +167,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
         CGPoint center = [[body.points objectAtIndex:0] pointValue];
         center = [node convertToWorldSpace:center];
         
-        CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * [self radiusScaleFactor], 0));
+        CGPoint edge = ccpAdd(center, ccp(body.cornerRadius * [self radiusScaleFactor:node], 0));
         
         
         if (ccpDistance(center, pos) < kCCBPhysicsHandleRadius) return 0;
@@ -419,10 +419,31 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
     NSMutableArray * possibleBodies = [NSMutableArray array];
     for (CCNode * physicsNode in physicsNodes)
     {
-        CGPoint testPoint = [physicsNode convertToNodeSpace:point];
-        if([GeometryUtil pointInRegion:testPoint poly:physicsNode.nodePhysicsBody.points])
+        
+        
+        if(physicsNode.nodePhysicsBody.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
-            [possibleBodies addObject:physicsNode];
+            CGPoint testPoint = [physicsNode convertToNodeSpace:point];
+            if([GeometryUtil pointInRegion:testPoint poly:physicsNode.nodePhysicsBody.points])
+            {
+                [possibleBodies addObject:physicsNode];
+            }
+        }
+        else if(physicsNode.nodePhysicsBody.bodyShape == kCCBPhysicsBodyShapeCircle)
+        {
+
+            CGPoint testPoint = [physicsNode convertToNodeSpace:point];
+            testPoint = ccpSub(testPoint, [physicsNode.nodePhysicsBody.points[0] pointValue]);
+            
+            float radius  = physicsNode.nodePhysicsBody.cornerRadius;
+            float distanceFromCentre = ccpLength(testPoint);
+            
+            NSLog(@"%0.2f %0.2f", testPoint.x,testPoint.y);
+            
+            if(distanceFromCentre < radius)
+            {
+                [possibleBodies addObject:physicsNode];
+            }
         }
     }
     
@@ -567,15 +588,11 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             else if (_mouseDownInHandle == 1)
             {
                 // Radius handle
-                body.cornerRadius = _handleStartPos.x + delta.x / [self radiusScaleFactor];
+                body.cornerRadius = _handleStartPos.x + delta.x / [self radiusScaleFactor:node];
                 if (body.cornerRadius < 0) body.cornerRadius = 0;
             }
         }
         
-        return YES;
-    }
-    else if(outletDragged != -1)
-    {
         return YES;
     }
     else
@@ -650,7 +667,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 - (void)renderPhysicsBody:(CCNode *)node editorView:(CCNode *)editorView
 {
-    float scale = [self radiusScaleFactor];
+    float scale = [self radiusScaleFactor:node];
     float selectionBorderWidth = 1.0 / [CCDirector sharedDirector].contentScaleFactor;
     
     
@@ -836,7 +853,7 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
             CCNode * body = [self findPhysicsBodyAtPoint:jointOutletDraggingLocation];
             if(body)
             {
-                [self renderPhysicsBody:body editorView:[CocosScene cocosScene].physicsLayer];
+                [self renderPhysicsBody:body editorView:editorView];
             }
         }
 
@@ -849,10 +866,8 @@ float distanceFromLineSegment(CGPoint a, CGPoint b, CGPoint c)
 
 
 
-- (float) radiusScaleFactor
+- (float) radiusScaleFactor:(CCNode*)node
 {
-    CCNode* node = [AppDelegate appDelegate].selectedNode;
-    
     float scale = 1;
     
     while (node != NULL)
