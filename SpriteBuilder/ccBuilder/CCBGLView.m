@@ -144,19 +144,21 @@
     NSArray* pbJoints = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
     for (NSDictionary* dict in pbJoints)
     {
-        if(!appDelegate.physicsHandler.currentBodyTarget)
+        
+        CGPoint point = ccp(pt.x, pt.y);
+        
+        CCNode * body = [appDelegate.physicsHandler findPhysicsBodyAtPoint:point];
+        if(!body)
             return NO;
         
         NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
-        NSString * propertyName = dict[@"propertyName"];
+        BodyIndex type = [dict[@"bodyIndex"] integerValue];
         
         CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
             return lJoint.UUID == uuid;
         }];
         
-        BodyIndex type = [propertyName isEqualToString:@"bodyA"] ? BodyIndexA :BodyIndexB;
-        
-        [appDelegate.physicsHandler assignBodyToJoint:appDelegate.physicsHandler.currentBodyTarget toJoint:joint withIdx:type];
+        [appDelegate.physicsHandler assignBodyToJoint:body toJoint:joint withIdx:type];
         
     }
 

@@ -12,51 +12,6 @@
 #import "AppDelegate.h"
 #import "MainWindow.h"
 
-@implementation OutletDrawView
-{
-    CGPoint mouseStart;
-    CGPoint mouseEnd;
-    bool    drawingEnabled;
-}
-
--(void)updatePoint:(CGPoint)startPoint target:(CGPoint)endPoint
-{
-    mouseStart = startPoint;
-    mouseEnd = endPoint;
-    drawingEnabled = YES;
-    
-    [self setNeedsDisplay:YES];
-    
-}
-
--(void)clear
-{
-    drawingEnabled = NO;
-    [self setNeedsDisplay:YES];
-    
-}
-
--(void)drawRect:(NSRect)dirtyRect
-{
-    [super drawRect:dirtyRect];
-    if(drawingEnabled)
-    {
-        CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-        CGContextSetStrokeColorWithColor(context, [NSColor blackColor].CGColor);
-        
-        CGContextSetLineWidth(context, 1.0);
-        
-        CGContextMoveToPoint(context, mouseStart.x,mouseStart.y); //start at this point
-        
-        CGContextAddLineToPoint(context, mouseEnd.x, mouseEnd.y); //draw to this point
-        
-        // and now draw the Path!
-        CGContextStrokePath(context);
-    }
-}
-
-
-@end
 
 @implementation OutletButton
 {
@@ -160,8 +115,7 @@
 
 @implementation InspectorNodeReference
 {
-    CGPoint mouseDown;
-    CGPoint mouseCurrent;
+ 
 
 }
 
@@ -198,39 +152,23 @@
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     // Capture the screen.
     {
-        // Create the full-screen window if it doesn’t already  exist.
-        if (!outletWindow)
-        {
-            // Create the full-screen window.
-           
-            outletWindow = [[CCBTransparentWindow alloc] initWithContentRect:windowRect];
-            [outletWindow setIgnoresMouseEvents:YES];
-            outletWindow.delegate = self;
-            
-            outletView = [[OutletDrawView alloc] initWithFrame:CGRectMake(0,0,windowRect.size.width,windowRect.size.height)];
-            [outletView.layer setBackgroundColor: CGColorCreateGenericRGB(1.0, 0.0, 0.0, 1.0)];
+       
+        // Make the screen window the current document window.
+        outletWindow = [[OutletDrawWindow alloc] initWithContentRect:windowRect];
 
-        }
-
-              // Make the screen window the current document window.
-        // Be sure to retain the previous window if you want to  use it again.
-        
-        [outletWindow setFrame:windowRect display:YES];
-        [outletWindow setContentView:outletView];
         [[AppDelegate appDelegate].window addChildWindow:outletWindow ordered:NSWindowAbove];
         
         CGPoint centre = CGPointMake(self.outletButton.frame.size.width/2,
                                      self.outletButton.frame.size.height/2 );
         
-        CGPoint worldPos = [self.outletButton convertPoint:centre toView:outletView];
-        mouseDown = worldPos;
-        [outletView updatePoint:mouseDown target:mouseDown];
-
+      
+        CGPoint viewPos = [self.outletButton convertPoint:centre toView:outletWindow.view];
+        [outletWindow onOutletDown:viewPos];
+        
         
         NSPasteboardItem *pbItem = [NSPasteboardItem new];
         [pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.jointBody", nil]];
 
-        
         //create a new NSDraggingItem with our pasteboard item.
         NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
         
@@ -247,18 +185,18 @@
 
 -(void)onOutletUp:(id)sender
 {
-    [outletView clear];
+    [outletWindow onOutletUp:sender];
+    [[AppDelegate appDelegate].window removeChildWindow:outletWindow];
+    outletWindow = nil;
     [self.outletButton clear];
     [self.outletButton setNeedsDisplay:YES];
-    [[AppDelegate appDelegate].window removeChildWindow:outletWindow];
+
     
     
 }
 
 -(void)onOutletDrag:(id)sender event:(NSEvent*)aEvent
 {
-    mouseCurrent = [aEvent locationInWindow];
-    [outletView updatePoint:mouseDown target:mouseCurrent];
     
     
 }
@@ -269,18 +207,13 @@
     return NSDragOperationGeneric;
 }
 
-- (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
-{
-    
-}
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
 {
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     CGPoint windowPoint = ccpSub(screenPoint, windowRect.origin);
     
-    mouseCurrent = windowPoint;
-    [outletView updatePoint:mouseDown target:mouseCurrent];
+    [outletWindow onOutletDrag:windowPoint];
     
     
 }
@@ -295,7 +228,7 @@
 {
 
         
-    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"propertyName":propertyName};
+    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyIndexA) : @(BodyIndexB)};
     
     NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
                                                               format:NSPropertyListBinaryFormat_v1_0
@@ -306,12 +239,6 @@
 
 }
 
-
--(IBAction)handleClickOutlet:(id)sender
-{
-    
-    
-}
 
 -(NSString*)nodeName
 {

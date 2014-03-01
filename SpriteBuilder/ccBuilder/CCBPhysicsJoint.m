@@ -16,6 +16,12 @@ static const float kOutletOffset = 20.0f;
 
 NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
+
+NSString * ConvertBodyTypeToString(BodyIndex index)
+{
+    return index == BodyIndexA ? @"bodyA" : @"bodyB";
+}
+
 @implementation CCBPhysicsJoint
 {
 
@@ -177,7 +183,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     {
         bodyAOutlet.visible = self.bodyA ? NO : YES;
         bodyBOutlet.visible = self.bodyB ? NO : YES;
-
     }
     else
     {
@@ -193,14 +198,16 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
     CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:point];
     
-    if(ccpLength(pointA) < 5.0f)
+    pointA = ccpAdd(pointA, ccp(0,5.0f));
+    if(ccpLength(pointA) < 10.0f)
     {
         return 0;
     }
     
     
     CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:point];
-    if(ccpLength(pointB) < 5.0f)
+    pointB = ccpAdd(pointB, ccp(0,5.0f));
+    if(ccpLength(pointB) < 10.0f)
     {
         return 1;
     }
