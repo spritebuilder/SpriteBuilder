@@ -6,28 +6,29 @@
 //
 
 #import "ViewController.h"
+#import "SB+SpriteKit.h"
 #import "MainScene.h"
-#import "SB+KoboldKit.h"
 
 @implementation ViewController
 
--(void) presentFirstScene
+-(void) viewWillLayoutSubviews
 {
-	KKView* kkView = self.kkView;
-	kkView.showsFPS = YES;
-	kkView.showsNodeCount = YES;
-	kkView.showsDrawCount = YES;
-	kkView.showsCPUStats = YES;
-	kkView.showsGPUStats = YES;
-
-	[CCBReader setSceneSize:kkView.bounds.size];
-	SKScene* scene = [CCBReader loadAsScene:@"MainScene.ccbi"];
-	scene.scaleMode = SKSceneScaleModeAspectFit;
+	SKView* skView = (SKView*)self.view;
+	NSAssert1([skView isKindOfClass:[SKView class]], @"ViewController's view is not a SKView instance, its class is: %@", NSStringFromClass([skView class]));
 	
-	scene.anchorPoint = CGPointMake(0.5, 0.5);
-	[scene.children.firstObject setPosition:CGPointMake(200, 200)];
-	
-	[kkView presentScene:scene];
+	if (skView.scene == nil)
+	{
+		skView.showsFPS = YES;
+		skView.showsNodeCount = YES;
+		skView.showsDrawCount = YES;
+		
+		// Before loading a CCBi file you must tell CCBReader the desired scene size
+		[CCBReader setSceneSize:skView.bounds.size];
+		
+		SKScene* scene = [CCBReader loadAsScene:@"MainScene.ccbi"];
+		//scene.anchorPoint = CGPointMake(0.5, 0.5);
+		[skView presentScene:scene];
+	}
 }
 
 -(BOOL) shouldAutorotate

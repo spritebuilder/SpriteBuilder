@@ -7,7 +7,7 @@
 	<key>ordering</key>
 	<integer>30</integer>
 	<key>displayName</key>
-	<string>Label (Sprite Kit)</string>
+	<string>Label</string>
 	<key>description</key>
 	<string>Displays text using a Truetype Font.</string>
 	<key>className</key>
@@ -23,10 +23,10 @@
 		<key>className</key>
 		<string>SKSpriteNode</string>
 		<key>property</key>
-		<string>texture</string>
+		<string>spriteFrame</string>
 	</dict>
 	<key>editorClassName</key>
-	<string>SKLabelNode</string>
+	<string>CCBPluginSKLabelNode</string>
 	<key>properties</key>
 	<array>
 		<dict>
@@ -90,6 +90,32 @@
 				<integer>1</integer>
 				<integer>1</integer>
 			</array>
+		</dict>
+		<dict>
+			<key>extra</key>
+			<string>Center|0|Left|1|Right|2</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>displayName</key>
+			<string>Horizontal Alignment</string>
+			<key>type</key>
+			<string>IntegerLabeled</string>
+			<key>name</key>
+			<string>horizontalAlignmentMode</string>
+		</dict>
+		<dict>
+			<key>extra</key>
+			<string>Baseline|0</string>
+			<key>extra - (all values)</key>
+			<string>Baseline|0|Center|1|Top|2|Bottom|3</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>displayName</key>
+			<string>Vertical Alignment</string>
+			<key>type</key>
+			<string>IntegerLabeled</string>
+			<key>name</key>
+			<string>verticalAlignmentMode</string>
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>

@@ -347,13 +347,8 @@
 		DC680336189156A60060BE39 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680332189156A60060BE39 /* Icon@2x.png */; };
 		DC680339189157B90060BE39 /* SKColorSpriteNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */; };
 		DC68033C189169510060BE39 /* CCNode+SKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68031A18914E650060BE39 /* CCNode+SKNode.m */; };
-		DC68033D189169510060BE39 /* SKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1451890500E00128D78 /* SKNode.m */; };
-		DC68033E189169510060BE39 /* SKLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1431890500E00128D78 /* SKLabelNode.m */; };
-		DC68033F189169510060BE39 /* SKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F1471890500E00128D78 /* SKSpriteNode.m */; };
-		DC680340189169510060BE39 /* SKColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032B189156910060BE39 /* SKColorSpriteNode.m */; };
 		DC680341189169D50060BE39 /* CCBPluginSKNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB9F15C1890607D00128D78 /* CCBPluginSKNode.m */; };
 		DC680343189169E10060BE39 /* CCBPluginSKSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */; };
-		DCB6755618919E9400E187E5 /* CCLabelTTF+SKLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB6755418919E8E00E187E5 /* CCLabelTTF+SKLabelNode.m */; };
 		DCB9F1501890600D00128D78 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DCB9F1651890607D00128D78 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCB9F15D1890607D00128D78 /* CCBPProperties.plist */; };
 		DCB9F1671890607D00128D78 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB9F1601890607D00128D78 /* Icon.png */; };
@@ -1419,22 +1414,12 @@
 		DC68031918914E650060BE39 /* CCNode+SKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+SKNode.h"; sourceTree = "<group>"; };
 		DC68031A18914E650060BE39 /* CCNode+SKNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+SKNode.m"; sourceTree = "<group>"; };
 		DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKColorSpriteNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC68032A189156910060BE39 /* SKColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorSpriteNode.h; sourceTree = "<group>"; };
-		DC68032B189156910060BE39 /* SKColorSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorSpriteNode.m; sourceTree = "<group>"; };
 		DC68032E189156A60060BE39 /* CCBPluginSKColorSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKColorSpriteNode.h; sourceTree = "<group>"; };
 		DC68032F189156A60060BE39 /* CCBPluginSKColorSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKColorSpriteNode.m; sourceTree = "<group>"; };
 		DC680330189156A60060BE39 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		DC680331189156A60060BE39 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		DC680332189156A60060BE39 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		DC68033A189168390060BE39 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
-		DCB6755318919E8E00E187E5 /* CCLabelTTF+SKLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCLabelTTF+SKLabelNode.h"; sourceTree = "<group>"; };
-		DCB6755418919E8E00E187E5 /* CCLabelTTF+SKLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCLabelTTF+SKLabelNode.m"; sourceTree = "<group>"; };
-		DCB9F1421890500E00128D78 /* SKLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKLabelNode.h; sourceTree = "<group>"; };
-		DCB9F1431890500E00128D78 /* SKLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKLabelNode.m; sourceTree = "<group>"; };
-		DCB9F1441890500E00128D78 /* SKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKNode.h; sourceTree = "<group>"; };
-		DCB9F1451890500E00128D78 /* SKNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKNode.m; sourceTree = "<group>"; };
-		DCB9F1461890500E00128D78 /* SKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSpriteNode.h; sourceTree = "<group>"; };
-		DCB9F1471890500E00128D78 /* SKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSpriteNode.m; sourceTree = "<group>"; };
 		DCB9F1581890600D00128D78 /* SKNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCB9F15B1890607D00128D78 /* CCBPluginSKNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKNode.h; sourceTree = "<group>"; };
 		DCB9F15C1890607D00128D78 /* CCBPluginSKNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKNode.m; sourceTree = "<group>"; };
@@ -3257,28 +3242,18 @@
 				DC680309189146900060BE39 /* SKLabelNode */,
 				DC6802F2189145830060BE39 /* SKSpriteNode */,
 				DC68032D189156A60060BE39 /* SKSpriteNodeWithColor */,
-				DCB9F14B1890506E00128D78 /* stand-in nodes */,
+				DCB9F14B1890506E00128D78 /* compatibility categories */,
 			);
 			path = SpriteKitNodes;
 			sourceTree = "<group>";
 		};
-		DCB9F14B1890506E00128D78 /* stand-in nodes */ = {
+		DCB9F14B1890506E00128D78 /* compatibility categories */ = {
 			isa = PBXGroup;
 			children = (
 				DC68031918914E650060BE39 /* CCNode+SKNode.h */,
 				DC68031A18914E650060BE39 /* CCNode+SKNode.m */,
-				DCB6755318919E8E00E187E5 /* CCLabelTTF+SKLabelNode.h */,
-				DCB6755418919E8E00E187E5 /* CCLabelTTF+SKLabelNode.m */,
-				DCB9F1441890500E00128D78 /* SKNode.h */,
-				DCB9F1451890500E00128D78 /* SKNode.m */,
-				DCB9F1421890500E00128D78 /* SKLabelNode.h */,
-				DCB9F1431890500E00128D78 /* SKLabelNode.m */,
-				DCB9F1461890500E00128D78 /* SKSpriteNode.h */,
-				DCB9F1471890500E00128D78 /* SKSpriteNode.m */,
-				DC68032A189156910060BE39 /* SKColorSpriteNode.h */,
-				DC68032B189156910060BE39 /* SKColorSpriteNode.m */,
 			);
-			name = "stand-in nodes";
+			name = "compatibility categories";
 			sourceTree = "<group>";
 		};
 		DCB9F15A1890607D00128D78 /* SKNode */ = {
@@ -4057,13 +4032,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7789ABDC133AA82000CEFCC7 /* Build configuration list for PBXNativeTarget "SpriteBuilder" */;
 			buildPhases = (
+				DC3DD33018A948560004D2AC /* ShellScript */,
 				7789ABBA133AA82000CEFCC7 /* Sources */,
 				7789ABBB133AA82000CEFCC7 /* Frameworks */,
 				7789ABBC133AA82000CEFCC7 /* Resources */,
 				776C6897138878FB00153214 /* Copy Files (Sparkle framework) */,
 				E3B7AED414E31E5D00DFD402 /* Copy PlugIns */,
 				E3E086E315663928008F1FDB /* Copy Player */,
-				DC3DD33018A948560004D2AC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -5187,7 +5162,6 @@
 				772BE58E134BB6C00009B5B9 /* CCBDocument.m in Sources */,
 				772BE594134BC2BF0009B5B9 /* CCBReaderInternalV1.m in Sources */,
 				771B2B321353818200B260BA /* NewDocWindowController.m in Sources */,
-				DC68033E189169510060BE39 /* SKLabelNode.m in Sources */,
 				77156DB1137F0351005EF746 /* CCBSpriteSheetParser.m in Sources */,
 				DC68033C189169510060BE39 /* CCNode+SKNode.m in Sources */,
 				77E1992013858D78006C361B /* NSBezierPath_AMShading.m in Sources */,
@@ -5222,7 +5196,6 @@
 				B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */,
 				E3FEA8B914E492DA00119FBE /* InspectorScaleLock.m in Sources */,
 				E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */,
-				DCB6755618919E9400E187E5 /* CCLabelTTF+SKLabelNode.m in Sources */,
 				E3B4221114E49DEB004547D6 /* InspectorInteger.m in Sources */,
 				E3B4221614E4A381004547D6 /* InspectorCheck.m in Sources */,
 				E3B4221B14E4BE87004547D6 /* InspectorSpriteFrame.m in Sources */,
@@ -5313,7 +5286,6 @@
 				E3214C4415D3C29D002413A7 /* CustomPropSettingsWindow.m in Sources */,
 				E3214C4715D3C3AF002413A7 /* CustomPropSetting.m in Sources */,
 				E3214C4B15D40F01002413A7 /* InspectorCustom.m in Sources */,
-				DC68033D189169510060BE39 /* SKNode.m in Sources */,
 				E3214C5D15D54356002413A7 /* InspectorCustomEdit.m in Sources */,
 				E3B7BCA015E3BCFE00CF95EF /* MainToolbarDelegate.m in Sources */,
 				E3AF6CDB15F0A9BC0048DB2A /* HelpWindow.m in Sources */,
@@ -5349,7 +5321,6 @@
 				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
 				B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */,
 				B794AB99177CE09D004FF493 /* FCFormatConverter.mm in Sources */,
-				DC680340189169510060BE39 /* SKColorSpriteNode.m in Sources */,
 				B7AC6980179F50850041B8BD /* BFColorPickerPopover.m in Sources */,
 				B7AC6982179F50850041B8BD /* BFPopoverColorWell.m in Sources */,
 				B7AC6983179F50850041B8BD /* NSColor+BFColorPickerPopover.m in Sources */,
@@ -5361,7 +5332,6 @@
 				B7AC699C17A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m in Sources */,
 				B7AC699D17A079C80041B8BD /* SMBar.m in Sources */,
 				B7AC699E17A079C80041B8BD /* SMTabBar.m in Sources */,
-				DC68033F189169510060BE39 /* SKSpriteNode.m in Sources */,
 				B7AC699F17A079C80041B8BD /* SMTabBarButtonCell.m in Sources */,
 				B7AC69A017A079C80041B8BD /* SMTabBarItem.m in Sources */,
 				B7AC69B017A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m in Sources */,
