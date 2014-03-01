@@ -2583,6 +2583,9 @@ static BOOL hideAllToNextSeparator;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
         [self addCCObject:clipNode asChild:asChild];
+        
+        //We might have copy/cut/pasted and body. Fix it up.
+        [[SceneGraph instance].joints fixupReferences];//
     }
 }
 
