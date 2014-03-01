@@ -19,6 +19,8 @@ typedef enum
     BodyIndexUnknown = -1,
 }BodyIndex;
 
+NSString * ConvertBodyTypeToString(BodyIndex index);
+
 @class SceneGraph;
 @interface CCBPhysicsJoint : CCNode <NSPasteboardWriting>
 {

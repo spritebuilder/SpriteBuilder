@@ -152,19 +152,10 @@
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     // Capture the screen.
     {
-        // Create the full-screen window if it doesn’t already  exist.
-        if (!outletWindow)
-        {
-            // Create the full-screen window.
-           
-            outletWindow = [[OutletDrawWindow alloc] initWithContentRect:windowRect];
+       
+        // Make the screen window the current document window.
+        outletWindow = [[OutletDrawWindow alloc] initWithContentRect:windowRect];
 
-        }
-
-              // Make the screen window the current document window.
-        // Be sure to retain the previous window if you want to  use it again.
-        
-        
         [[AppDelegate appDelegate].window addChildWindow:outletWindow ordered:NSWindowAbove];
         
         CGPoint centre = CGPointMake(self.outletButton.frame.size.width/2,
@@ -196,6 +187,7 @@
 {
     [outletWindow onOutletUp:sender];
     [[AppDelegate appDelegate].window removeChildWindow:outletWindow];
+    outletWindow = nil;
     [self.outletButton clear];
     [self.outletButton setNeedsDisplay:YES];
 
@@ -215,10 +207,6 @@
     return NSDragOperationGeneric;
 }
 
-- (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
-{
-    
-}
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
 {
@@ -240,7 +228,7 @@
 {
 
         
-    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"propertyName":propertyName};
+    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyIndexA) : @(BodyIndexB)};
     
     NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
                                                               format:NSPropertyListBinaryFormat_v1_0

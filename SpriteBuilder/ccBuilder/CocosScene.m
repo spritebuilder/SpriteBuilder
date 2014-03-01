@@ -66,6 +66,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 @synthesize guideLayer;
 @synthesize rulerLayer;
 @synthesize notesLayer;
+@synthesize physicsLayer;
 
 +(id) sceneWithAppDelegate:(AppDelegate*)app
 {
