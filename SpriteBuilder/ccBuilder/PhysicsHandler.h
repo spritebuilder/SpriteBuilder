@@ -25,42 +25,39 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "CCBPhysicsJoint.h"
+#import "OutletDrawWindow.h"
 
-
-typedef enum
-{
-    OutletDragTypeStage,
-    OutletDragTypeInspector
-} OutletDragType;
 
 @class NodePhysicsBody;
 @class CCBPhysicsJoint;
 
-@interface PhysicsHandler : NSObject
+@interface PhysicsHandler : NSObject <NSDraggingSource,NSPasteboardItemDataProvider>
 {
     CGPoint _mouseDownPos;
-    CGPoint _mouseDragPos;
-    
-    int _mouseDownInHandle;
+    int     _mouseDownInHandle;
     CGPoint _handleStartPos;
     
-    BodyIndex     _mouseDownOutletHandle;
+    //Joint Manipulation
+    OutletDrawWindow * outletWindow;
+    BodyIndex          outletDragged;
+    CCBPhysicsJoint *  _currentJoint;
+    BOOL               jointOutletDragging;
+    CGPoint            jointOutletDraggingLocation;
 
-    CCBPhysicsJoint *_currentJoint;
-    CCNode          *_currentBodyTargeted;
-    OutletDragType   _dragType;
     
 }
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;
 @property (nonatomic,assign) BOOL selectedNodePhysicsEnabled;
 @property (nonatomic,strong) NodePhysicsBody* selectedNodePhysicsBody;
-@property (readonly)         CCNode *currentBodyTarget;
+
 
 - (void) willChangeSelection;
 - (void) didChangeSelection;
 
 - (void) updatePhysicsEditor:(CCNode*) editorView;
+
+- (CCNode*)findPhysicsBodyAtPoint:(CGPoint)point;
 - (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(BodyIndex)idx;
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
@@ -74,4 +71,7 @@ typedef enum
 - (BOOL)draggingUpdated:(id <NSDraggingInfo>)sender pos:(CGPoint)pos result:(NSDragOperation*)result;
 - (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
 - (void)draggingEnded:(id <NSDraggingInfo>)sender;
+
+
+
 @end

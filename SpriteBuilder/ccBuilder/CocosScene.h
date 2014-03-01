@@ -144,6 +144,7 @@ enum {
 @property (nonatomic,readonly) GuidesLayer* guideLayer;
 @property (nonatomic,readonly) RulersLayer* rulerLayer;
 @property (nonatomic,readonly) NotesLayer* notesLayer;
+@property (nonatomic,readonly) CCNode * physicsLayer;
 
 // Used to creat the scene
 +(id) sceneWithAppDelegate:(AppDelegate*)app;
