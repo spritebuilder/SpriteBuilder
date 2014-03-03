@@ -109,7 +109,7 @@
 			<key>type</key>
 			<string>Degrees</string>
 			<key>name</key>
-			<string>zRotation</string>
+			<string>rotation</string>
 			<key>displayName</key>
 			<string>Rotation</string>
 		</dict>
