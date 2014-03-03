@@ -1165,7 +1165,7 @@
     return YES;
 }
 
-- (void) publish
+- (void) publishAsync
 {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
@@ -1187,7 +1187,24 @@
             [ad publisher:self finishedWithWarnings:warnings];
         });
     });
+}
+
+- (void) publish
+{
+    // Do actual publish
+    [self publish_];
     
+    // Flag files with warnings as dirty
+    for (CCBWarning* warning in warnings.warnings)
+    {
+        if (warning.relatedFile)
+        {
+            [projectSettings markAsDirtyRelPath:warning.relatedFile];
+        }
+    }
+
+    AppDelegate* ad = [AppDelegate appDelegate];
+    [ad publisher:self finishedWithWarnings:warnings];
 }
 
 + (void) cleanAllCacheDirectories

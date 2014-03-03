@@ -329,6 +329,8 @@
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
+		D250F26418C012F600970734 /* SpriteBuilderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D250F26318C012F600970734 /* SpriteBuilderCommand.m */; };
+		D250F26518C012F600970734 /* SpriteBuilderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D250F26318C012F600970734 /* SpriteBuilderCommand.m */; };
 		DC5129C11891450D0091873D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC6802F9189145840060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F5189145840060BE39 /* CCBPProperties.plist */; };
 		DC6802FA189145840060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F6189145840060BE39 /* Icon.png */; };
@@ -1399,6 +1401,9 @@
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
+		D250F26218C012F600970734 /* SpriteBuilderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBuilderCommand.h; sourceTree = "<group>"; };
+		D250F26318C012F600970734 /* SpriteBuilderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteBuilderCommand.m; sourceTree = "<group>"; };
+		D250F26E18C01DE800970734 /* SpriteBuilder.sdef */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpriteBuilder.sdef; sourceTree = SOURCE_ROOT; };
 		DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6802F3189145830060BE39 /* CCBPluginSKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNode.h; sourceTree = "<group>"; };
 		DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNode.m; sourceTree = "<group>"; };
@@ -2658,6 +2663,7 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				D250F25F18C012DF00970734 /* AppleScript */,
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
@@ -2690,6 +2696,7 @@
 		7789ABC9133AA82000CEFCC7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D250F26E18C01DE800970734 /* SpriteBuilder.sdef */,
 				7789ABCB133AA82000CEFCC7 /* InfoPlist.strings */,
 				7789ABCE133AA82000CEFCC7 /* SpriteBuilder-Prefix.pch */,
 				7789ABCF133AA82000CEFCC7 /* main.m */,
@@ -3197,6 +3204,15 @@
 				B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */,
 			);
 			name = "About Box";
+			sourceTree = "<group>";
+		};
+		D250F25F18C012DF00970734 /* AppleScript */ = {
+			isa = PBXGroup;
+			children = (
+				D250F26218C012F600970734 /* SpriteBuilderCommand.h */,
+				D250F26318C012F600970734 /* SpriteBuilderCommand.m */,
+			);
+			name = AppleScript;
 			sourceTree = "<group>";
 		};
 		DC6802F2189145830060BE39 /* SKSpriteNode */ = {
@@ -5231,6 +5247,7 @@
 				E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */,
 				E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */,
 				E3850809150AA9AE007E162A /* ImageAndTextCell.m in Sources */,
+				D250F26518C012F600970734 /* SpriteBuilderCommand.m in Sources */,
 				E3D59136150F861E004180CA /* InspectorCCBFile.m in Sources */,
 				E33BC1B81510E4B6009AE29A /* NodeGraphPropertySetter.m in Sources */,
 				E3C6510A151A65ED00D639C0 /* InspectorString.m in Sources */,
@@ -5509,6 +5526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
+				D250F26418C012F600970734 /* SpriteBuilderCommand.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

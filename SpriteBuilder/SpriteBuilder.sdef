@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+
+<!-- declare the namespace for using XInclude so we can include the standard suite -->
+<dictionary xmlns:xi="http://www.w3.org/2003/XInclude">
+    
+    <!-- use XInclude to include the standard suite -->
+	<xi:include href="file:///System/Library/ScriptingDefinitions/CocoaStandard.sdef" xpointer="xpointer(/dictionary/suite)"/>
+    
+    <!-- specific suite(s) for the application follow... -->
+	<suite name="Sprite Builder Commands" code="SBC" description="Terminology for the SimpleScriptingVerbs Sample.">
+        
+		<command name="publishProject" code="SBCpub" description="publish currently open project">
+			<cocoa class="SpriteBuilderCommand"/>
+			<result type="boolean" description="returns YES if publish was successful"/>
+		</command>
+		
+	</suite>
+    
+</dictionary>
