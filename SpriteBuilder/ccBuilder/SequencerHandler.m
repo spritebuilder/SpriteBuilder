@@ -426,40 +426,85 @@ static SequencerHandler* sharedSequencerHandler;
     }
 }
 
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
+- (BOOL)canItemBeDragged:(id)item
 {
-    if (!dragAndDropEnabled) return NO;
-    
-    SceneGraph* g = [SceneGraph instance];
-    
-    id item = [items objectAtIndex:0];
-    
-    if (![item isKindOfClass:[CCNode class]]) return NO;
-    
-    
-    CCNode* draggedNode = item;
-    if (draggedNode == g.rootNode) return NO;
-    
-    if(draggedNode.plugIn.isJoint) return NO;
-    
-    NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:draggedNode];
-    
-    [clipDict setObject:[NSNumber numberWithLongLong:(long long)draggedNode] forKey:@"srcNode"];
-    NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
-    
-    [pboard setData:clipData forType:@"com.cocosbuilder.node"];
+	SceneGraph *sceneGraph = [SceneGraph instance];
+
+	if (![item isKindOfClass:[CCNode class]])
+	{
+		return NO;
+	}
+
+	CCNode* draggedNode = item;
+	if (draggedNode == sceneGraph.rootNode)
+	{
+		return NO;
+	}
+
+	if (draggedNode.plugIn.isJoint)
+	{
+		return NO;
+	}
+
+	return YES;
+}
+
+- (BOOL)canItemsBeDragged:(NSArray *)items
+{
+	if (!dragAndDropEnabled)
+	{
+		return NO;
+	}
+
+	for (id item in items)
+	{
+		if ( ! [self canItemBeDragged:item])
+		{
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
+{
+//	NSLog(@"writeItems: %@", items);
+
+	if ( ! [self canItemsBeDragged:items])
+	{
+		return NO;
+	}
+
+	NSData *clipboardData = [self serializeDraggedItemsForClipboard:items];
+    [pasteboard setData:clipboardData forType:@"com.cocosbuilder.node"];
     
     return YES;
 }
 
+- (NSData *)serializeDraggedItemsForClipboard:(NSArray *)items
+{
+	id item = [items objectAtIndex:0];
+
+	CCNode *draggedNode = item;
+
+	NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:draggedNode];
+
+    [clipDict setObject:[NSNumber numberWithLongLong:(long long)draggedNode] forKey:@"srcNode"];
+
+    return [NSKeyedArchiver archivedDataWithRootObject:clipDict];
+}
+
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (item == NULL)
-        return NSDragOperationNone;
-    
-    
-    SceneGraph* g = [SceneGraph instance];
+	NSLog(@"validateDrop: %@", info);
+
+	if (item == NULL)
+	{
+		return NSDragOperationNone;
+	}
+
+	SceneGraph* g = [SceneGraph instance];
     NSPasteboard* pb = [info draggingPasteboard];
     
     NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
@@ -467,7 +512,6 @@ static SequencerHandler* sharedSequencerHandler;
     {
         if ([item isKindOfClass:[CCNode class]])
         {
-        
             NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
 			void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
             CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
@@ -578,6 +622,8 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
+	NSLog(@"acceptDrop: %@", info);
+
     NSPasteboard* pb = [info draggingPasteboard];
     
     NSData* clipData = [pb dataForType:@"com.cocosbuilder.node"];
@@ -586,9 +632,13 @@ static SequencerHandler* sharedSequencerHandler;
         NSMutableDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:clipData];
         
         CCNode* clipNode= [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:CGSizeZero];
-        if (![appDelegate addCCObject:clipNode toParent:item atIndex:index]) return NO;
-        
-        // Remove old node
+
+		if (![appDelegate addCCObject:clipNode toParent:item atIndex:index])
+		{
+			return NO;
+		}
+
+		// Remove old node
 		void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
 		CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
         [appDelegate deleteNode:draggedNode];
