@@ -19,7 +19,7 @@ typedef enum
     BodyIndexUnknown = -1,
 }BodyIndex;
 
-NSString * ConvertBodyTypeToString(BodyIndex index);
+
 
 @class SceneGraph;
 @interface CCBPhysicsJoint : CCNode <NSPasteboardWriting>
@@ -48,16 +48,22 @@ NSString * ConvertBodyTypeToString(BodyIndex index);
 
 @property BOOL isSelected;//Is clears on Visit
 
+//Hit tests.
+-(BodyIndex)hitTestOutlet:(CGPoint)worlPos; //Did you hit the outlet?
+-(BodyIndex)hitTestBodyAnchor:(CGPoint)worlPos; //Did you hit the body anchor drag point?
 
--(int)hitTestOutlet:(CGPoint)point;
 -(void)setOutletStatus:(BodyIndex)idx value:(BOOL)value;
 -(void)refreshOutletStatus;
 -(CGPoint)outletWorldPos:(BodyIndex)idx;
+-(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType;
 
 
 -(void)fixupReferences;
 
 -(void)removeObserverBody:(CCNode*)body;
 -(void)addObserverBody:(CCNode*)body;
+
++(NSString *)convertBodyTypeToString:(BodyIndex) index;
+
 
 @end

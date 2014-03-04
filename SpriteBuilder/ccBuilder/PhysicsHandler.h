@@ -38,11 +38,14 @@
     CGPoint _handleStartPos;
     
     //Joint Manipulation
+    CCBPhysicsJoint *  _currentJoint;
     OutletDrawWindow * outletWindow;
     BodyIndex          outletDragged;
-    CCBPhysicsJoint *  _currentJoint;
     BOOL               jointOutletDragging;
     CGPoint            jointOutletDraggingLocation;
+    
+    //Joint BodyB Dragging.
+    BodyIndex           bodyDragging;
 
     
 }

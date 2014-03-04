@@ -17,10 +17,6 @@ static const float kOutletOffset = 20.0f;
 NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
 
-NSString * ConvertBodyTypeToString(BodyIndex index)
-{
-    return index == BodyIndexA ? @"bodyA" : @"bodyB";
-}
 
 @implementation CCBPhysicsJoint
 {
@@ -44,11 +40,11 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
     [self addChild:scaleFreeNode];
     
     bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyAOutlet.position = ccp(-kOutletOffset,-kOutletOffset);
+    bodyAOutlet.position = ccpMult(ccp(-kOutletOffset,-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
     [scaleFreeNode addChild:bodyAOutlet];
     
     bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.position = ccp(kOutletOffset,-kOutletOffset);
+    bodyBOutlet.position = ccpMult(ccp(kOutletOffset,-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
     [scaleFreeNode addChild:bodyBOutlet];
     
     self.breakingForceEnabled = YES;
@@ -193,26 +189,53 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
     isSelected = NO;
 }
 
--(int)hitTestOutlet:(CGPoint)point
-{
 
-    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:point];
+#pragma mark -
+
+-(BodyIndex)hitTestOutlet:(CGPoint)worlPos
+{
+    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worlPos];
     
     pointA = ccpAdd(pointA, ccp(0,5.0f));
     if(ccpLength(pointA) < 10.0f)
     {
-        return 0;
+        return BodyIndexA;
     }
     
     
-    CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:point];
+    CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:worlPos];
     pointB = ccpAdd(pointB, ccp(0,5.0f));
     if(ccpLength(pointB) < 10.0f)
     {
-        return 1;
+        return BodyIndexB;
     }
     
-    return -1;
+    return BodyIndexUnknown;
+}
+
+-(BodyIndex)hitTestBodyAnchor:(CGPoint)worlPos
+{
+    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worlPos];
+    
+    if(ccpLength(pointA) < 5.0f)
+    {
+        return BodyIndexA;
+    }
+    return BodyIndexUnknown;
+}
+
+-(BodyIndex)hitTestJoint:(CGPoint)worldPos
+{
+
+    return BodyIndexUnknown;
+}
+
+#pragma mark -
+
+
+-(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType
+{
+    //Do nothing.
 }
 
 -(void)refreshOutletStatus
@@ -287,5 +310,12 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
     NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.jointBody"];
     return pbTypes;
 }
+
+
++(NSString *)convertBodyTypeToString:(BodyIndex)index
+{
+    return index == BodyIndexA ? @"bodyA" : @"bodyB";
+}
+
 
 @end

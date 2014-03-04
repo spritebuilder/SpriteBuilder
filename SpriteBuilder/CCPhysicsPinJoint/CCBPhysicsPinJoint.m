@@ -8,9 +8,10 @@
 
 #import "CCBPhysicsPinJoint.h"
 #import "AppDelegate.h"
+#import "GeometryUtil.h"
 
-static const float kMargin = 0.25f;
-static const float kDefaultLength = 32.0f;
+static const float kMargin = 8.0f/64.0f;
+static const float kDefaultLength = 58.0f;
 
 
 
@@ -46,7 +47,7 @@ static const float kDefaultLength = 32.0f;
     jointBody.marginRight = kMargin;
     jointBody.marginBottom = 0.0;
     jointBody.marginTop = 0.0;
-    jointBody.scale = 1.5;
+    jointBody.scale = 1.0;
     
     
     [scaleFreeNode addChild:jointBody];
@@ -62,40 +63,54 @@ static const float kDefaultLength = 32.0f;
 
 -(float)length
 {
-    if(self.bodyB == nil)
+    if(self.bodyA && self.bodyB)
     {
-        return kDefaultLength;
+        CGPoint worldPosA = [self.bodyA convertToWorldSpace:self.anchorA];
+        CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
+        
+        float distance = ccpDistance(worldPosA, worldPosB);
+        return distance;
     }
     
     return kDefaultLength;
 }
 
-const float kEdgeRadius = 4.0f;
+-(float)rotation
+{
+    if(self.bodyA && self.bodyB)
+    {
+        CGPoint worldPosA = [self.bodyA convertToWorldSpace:self.anchorA];
+        CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
+        
+        CGPoint segment = ccpSub(worldPosB,worldPosA);
+        float angleRad = atan2f(segment.y, segment.x);
+        float angle = -kmRadiansToDegrees( angleRad);
+        return  angle;
+    }
+
+    return 0.0f;
+}
+
+const float kEdgeRadius = 8.0f;
 -(void)updateRenderBody
 {
     float length = [self length];
     
-    self.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
-    jointBody.anchorPoint = ccp(kEdgeRadius/length, 0.5f);
-    
+    jointBody.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
+    jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
+    self.rotation = [self rotation];
     
     //Anchor B
-}
-
--(void)setPosition:(CGPoint)position
-{
-    [super setPosition:position];
-    
-    [self updateRenderBody];
+    anchorHandleB.position = ccpMult(ccp(length,0),1/[CCDirector sharedDirector].contentScaleFactor);
     
 }
 
-
--(void)setBodyA:(CCNode *)aBodyA
+-(void)visit
 {
-    [super setBodyA:aBodyA];
     [self updateRenderBody];
+    [super visit];
 }
+
 
 -(void)setBodyB:(CCNode *)aBodyB
 {
@@ -123,15 +138,59 @@ const float kEdgeRadius = 4.0f;
 
 
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+-(BodyIndex)hitTestBodyAnchor:(CGPoint)worlPos
 {
-    if(object == self.bodyB)
+    
     {
-        return;
+        CGPoint pointA = [anchorHandleA convertToNodeSpaceAR:worlPos];
+        pointA = ccpAdd(pointA, ccp(0,5.0f));
+        if(ccpLength(pointA) < 8.0f)
+        {
+            return BodyIndexA;
+        }
     }
     
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    {
+        CGPoint pointB = [anchorHandleB convertToNodeSpaceAR:worlPos];
+        pointB = ccpAdd(pointB, ccp(0,5.0f));
+        if(ccpLength(pointB) < 8.0f)
+        {
+            return BodyIndexB;
+        }
+    }
+ 
+    return BodyIndexUnknown;
 }
+
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos
+{
+    CGPoint anchorAWorldpos = [anchorHandleA convertToWorldSpace:CGPointZero];
+    CGPoint anchorBWorldpos = [anchorHandleB convertToWorldSpace:CGPointZero];
+    
+
+    float distance = [GeometryUtil distanceFromLineSegment:anchorAWorldpos b:anchorBWorldpos c:pos];
+
+    if(distance < 7.0f)
+    {
+        return YES;
+    }
+    
+    return NO;
+    
+}
+
+-(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType
+{
+    if(bodyType == BodyIndexB)
+    {
+        CGPoint newPosition = [self.bodyB convertToNodeSpace:worldPos];
+        self.anchorB = newPosition;
+        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
+
+    }
+    [super setBodyAnchor:worldPos bodyType:bodyType];
+}
+
 
 
 @end

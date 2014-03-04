@@ -78,6 +78,13 @@
     return NO;    
 }
 
+-(BodyIndex)hitTestJoint:(CGPoint)worldPos
+{
+    
+    return BodyIndexUnknown;
+}
+
+
 -(CGPoint)anchorA
 {
     return anchorA;
@@ -92,7 +99,6 @@
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
-    
     [super setBodyA:aBodyA];
     
     if(!aBodyA)
@@ -128,6 +134,16 @@
     }
     
     [self setAnchorFromBodyA];
+}
+
+
+-(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType
+{
+    if(bodyType == BodyIndexA)
+    {
+        CGPoint newPosition = [self.parent convertToNodeSpaceAR:worldPos];
+        [self setPosition:newPosition];
+    }
 }
 
 

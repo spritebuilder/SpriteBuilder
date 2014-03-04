@@ -656,7 +656,7 @@ static SequencerHandler* sharedSequencerHandler;
             return lJoint.UUID == uuid;
         }];
         
-        NSString * propertyName = ConvertBodyTypeToString(type);
+        NSString * propertyName = [CCBPhysicsJoint convertBodyTypeToString:type];
         [joint setValue:item forKey:propertyName];
         [[AppDelegate appDelegate] refreshProperty:propertyName];
         
