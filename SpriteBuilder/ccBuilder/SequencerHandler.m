@@ -62,6 +62,8 @@ static NSString *const PASTEBOARD_TYPE_PLUGINNODE = @"com.cocosbuilder.PlugInNod
 static NSString *const PASTEBOARD_TYPE_WAVE = @"com.cocosbuilder.wav";
 static NSString *const PASTEBOARD_TYPE_JOINTBODY = @"com.cocosbuilder.jointBody";
 
+static NSString *const ORIGINAL_NODE_KEY = @"node_original";
+static NSString *const NODE_COPY_KEY = @"node_copy";
 static SequencerHandler* sharedSequencerHandler;
 
 @implementation SequencerHandler
@@ -92,13 +94,13 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy setDataSource:self];
     [outlineHierarchy setDelegate:self];
     [outlineHierarchy reloadData];
-    
-    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects:PASTEBOARD_TYPE_NODE,
-																		PASTEBOARD_TYPE_TEXTURE,
-																		PASTEBOARD_TYPE_TEMPLATE,
-																		PASTEBOARD_TYPE_CCB,
-																		PASTEBOARD_TYPE_PLUGINNODE,
-																		PASTEBOARD_TYPE_WAVE, PASTEBOARD_TYPE_JOINTBODY, NULL]];
+
+	[outlineHierarchy registerForDraggedTypes:@[PASTEBOARD_TYPE_NODE,
+			PASTEBOARD_TYPE_TEXTURE,
+			PASTEBOARD_TYPE_TEMPLATE,
+			PASTEBOARD_TYPE_CCB,
+			PASTEBOARD_TYPE_PLUGINNODE,
+			PASTEBOARD_TYPE_WAVE, PASTEBOARD_TYPE_JOINTBODY]];
 
 	[[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
@@ -248,45 +250,58 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (void) updateOutlineViewSelection
 {
-    if (!appDelegate.selectedNodes.count)
-    {
-        [outlineHierarchy selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
-        return;
-    }
-    SceneGraph* g = [SceneGraph instance];
-    
-    // Expand parents of the selected node
-    CCNode* node = [appDelegate.selectedNodes objectAtIndex:0];
-    
-    
-    if(node.plugIn.isJoint)
-    {
-         [outlineHierarchy expandItem:g.joints];
-    }
-    else
-    {
-        NSMutableArray* nodesToExpand = [NSMutableArray array];
-        while ((node != g.rootNode || node != g.joints.node) && node != NULL)
-        {
-            [nodesToExpand insertObject:node atIndex:0];
-            node = node.parent;
-        }
-        for (int i = 0; i < [nodesToExpand count]; i++)
-        {
-            node = [nodesToExpand objectAtIndex:i];
-            [outlineHierarchy expandItem:node.parent];
-        }
-    }
-    
-    // Update the selection
-    NSMutableIndexSet* indexes = [NSMutableIndexSet indexSet];
-    
-    for (CCNode* selectedNode in appDelegate.selectedNodes)
+	[self expandSelectedNodes];
+
+ 	[outlineHierarchy selectRowIndexes:[self createSelectionIndexes] byExtendingSelection:NO];
+}
+
+- (NSIndexSet *)createSelectionIndexes
+{
+	NSMutableIndexSet* indexes = [NSMutableIndexSet indexSet];
+
+	for (CCNode* selectedNode in appDelegate.selectedNodes)
     {
 		NSUInteger row = (NSUInteger)[outlineHierarchy rowForItem:selectedNode];
 		[indexes addIndex:row];
     }
-    [outlineHierarchy selectRowIndexes:indexes byExtendingSelection:NO];
+	return indexes;
+}
+
+- (void)expandSelectedNodes
+{
+	if (appDelegate.selectedNodes.count == 0)
+	{
+		return;
+	}
+
+	SceneGraph *sceneGraph = [SceneGraph instance];
+	CCNode* node = [appDelegate.selectedNodes objectAtIndex:0];
+
+	if(node.plugIn.isJoint)
+    {
+         [outlineHierarchy expandItem:sceneGraph.joints];
+    }
+    else
+    {
+		[self expandParentsOfSelectedNodes:sceneGraph node:node];
+	}
+}
+
+- (void)expandParentsOfSelectedNodes:(SceneGraph *)sceneGraph node:(CCNode *)node
+{
+	NSMutableArray *nodesToExpand = [NSMutableArray array];
+	while ((node != sceneGraph.rootNode
+			|| node != sceneGraph.joints.node)
+		   && node != NULL)
+	{
+		[nodesToExpand insertObject:node atIndex:0];
+		node = node.parent;
+	}
+	for (NSUInteger i = 0; i < [nodesToExpand count]; i++)
+	{
+		node = [nodesToExpand objectAtIndex:i];
+		[outlineHierarchy expandItem:node.parent];
+	}
 }
 
 #pragma mark -
@@ -316,7 +331,6 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if (item == nil) return YES;
     
-    // Channels are not expandable
     if ([item isKindOfClass:[SequencerChannel class]])
     {
         return NO;
@@ -329,60 +343,57 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     CCNode* node = (CCNode*)item;
-    NSArray* arr = [node children];
     NodeInfo* info = node.userObject;
-    PlugInNode* plugIn = info.plugIn;
-    
-    if ([arr count] == 0) return NO;
-    if (!plugIn.canHaveChildren) return NO;
-    if(plugIn.isJoint) return NO;
-    
-    return YES;
+    PlugInNode*plugInInfo = info.plugIn;
+
+	if (([[node children] count] == 0)
+		|| !plugInInfo.canHaveChildren
+		|| plugInInfo.isJoint)
+	{
+		return NO;
+	}
+
+	return YES;
 }
 
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
-    SceneGraph * g = [SceneGraph instance];
+    SceneGraph *sceneGraph = [SceneGraph instance];
     
     if (item == NULL)
     {
         if (index == 0)
         {
-            // Callback channel
             return currentSequence.callbackChannel;
         }
         else if (index == 1)
         {
-            // Sound channel
             return currentSequence.soundChannel;
         }
         else if(index == 2)
         {
-            // Nodes
-            return g.rootNode;
+            return sceneGraph.rootNode;
         }
         else if(index == 3)
         {
-            return g.joints;
+            return sceneGraph.joints;
         }
     }
     
     if([item isKindOfClass:[SequencerJoints class]])
     {
-        return g.joints.all[(NSUInteger) index];
+        return sceneGraph.joints.all[(NSUInteger) index];
     }
     
     CCNode* node = (CCNode*)item;
-    NSArray* arr = [node children];
-    return [arr objectAtIndex:(NSUInteger) index];
+    return [[node children] objectAtIndex:(NSUInteger) index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
     if (item == nil) return @"Root";
-    
-    
+
     CCNode* node = item;
     
     if ([item isKindOfClass:[SequencerChannel class]])
@@ -483,8 +494,6 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
 {
-	NSLog(@"1. writeItems: %@", items);
-
 	if ( ! [self canItemsBeDragged:items])
 	{
 		return NO;
@@ -521,8 +530,8 @@ static SequencerHandler* sharedSequencerHandler;
         CCNode *originalNode = (__bridge CCNode*)nodePtr;
 
 		NSDictionary *node = @{
-			@"node_copy" : [CCBReaderInternal nodeGraphFromDictionary:dictionary parentSize:CGSizeZero],
-			@"node_original" : originalNode
+			NODE_COPY_KEY : [CCBReaderInternal nodeGraphFromDictionary:dictionary parentSize:CGSizeZero],
+			ORIGINAL_NODE_KEY : originalNode
 		};
 
 		[array addObject:node];
@@ -541,7 +550,7 @@ static SequencerHandler* sharedSequencerHandler;
 	{
 		for (NSDictionary *droppedNodeDict in droppedNodes)
 		{
-			if (parent == droppedNodeDict[@"node_original"])
+			if (parent == droppedNodeDict[ORIGINAL_NODE_KEY])
 			{
 				return YES;
 			}
@@ -600,38 +609,37 @@ static SequencerHandler* sharedSequencerHandler;
 
         return NSDragOperationGeneric;
     }
-    
-    // Dropped WavFile;
-    NSArray* pbWavs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
-    
-    if(pbWavs.count != 0)
+
+    NSArray *waveFiles = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
+    if(waveFiles.count == 0)
     {
+		return NSDragOperationNone;
+	}
+	else
+	{
         if([item isKindOfClass:[SequencerSoundChannel class]])
         {
-            // Dropped WavFile;
-            for (NSDictionary* dict in pbWavs)
+            for (NSDictionary* dict in waveFiles)
             {
                 NSPoint mouseLocationInWindow = info.draggingLocation;
                 NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
-                
+
                 currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:(float) mouseLocation.x];
-                
                 currentSequence.soundChannel.needDragAndDropRedraw = YES;
+
                 [scrubberSelectionView setNeedsDisplay:YES];
-                
+
                 return NSDragOperationGeneric;
             }
         }
-        else
-            return NSDragOperationNone;
-    }
+	}
     
-    if([item isKindOfClass:[SequencerSoundChannel class]] || [item isKindOfClass:[SequencerCallbackChannel class]] )
+    if([item isKindOfClass:[SequencerSoundChannel class]]
+	   || [item isKindOfClass:[SequencerCallbackChannel class]] )
     {
-        return NSDragOperationNone;//Restrict drag and drop
+        return NSDragOperationNone;
     }
-    
-    
+
     NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
     for (NSDictionary* dict in pbNodePlugIn)
     {
@@ -675,8 +683,8 @@ static SequencerHandler* sharedSequencerHandler;
 		NSArray *nodes = [self deserializeDraggedObjects:clipData];
 		for (NSDictionary *node in nodes)
 		{
-			CCNode *originalNode = node[@"node_original"];
-			CCNode *nodeCopy = node[@"node_copy"];
+			CCNode *originalNode = node[ORIGINAL_NODE_KEY];
+			CCNode *nodeCopy = node[NODE_COPY_KEY];
 
 			if (![appDelegate addCCObject:nodeCopy toParent:item atIndex:index])
 			{
@@ -689,7 +697,7 @@ static SequencerHandler* sharedSequencerHandler;
 		NSMutableArray *selectNodes = [NSMutableArray array];
 		for (NSDictionary *node in nodes)
 		{
-			[selectNodes addObject:node[@"node_copy"]];
+			[selectNodes addObject:node[NODE_COPY_KEY]];
 		}
 
 		[appDelegate setSelectedNodes:selectNodes];

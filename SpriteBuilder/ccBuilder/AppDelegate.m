@@ -578,8 +578,6 @@ void ApplyCustomNodeVisitSwizzle()
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
-
-	[self openProject:@"/Users/nickyweber/dev/Apportable/SpriteKitProjects/feature162.spritebuilder"];
 }
 
 #pragma mark Notifications to user
