@@ -367,7 +367,7 @@ enum {
 - (void) removedDocumentWithPath:(NSString*)path;
 - (void) renamedDocumentPathFrom:(NSString*)oldPath to:(NSString*)newPath;
 
-- (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode*)parent atIndex:(int)index;
+- (BOOL) addCCObject:(CCNode *)child toParent:(CCNode*)parent atIndex:(int)index;
 - (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode*)parent;
 - (BOOL) addCCObject:(CCNode*)obj asChild:(BOOL)asChild;
 - (CCNode*) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild;
