@@ -626,12 +626,22 @@
     
     if (isGeneratedSpriteSheet)
     {
-		// Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
-		[self publishSpriteSheetDir:[outDir stringByDeletingLastPathComponent]
-						  sheetName:[outDir lastPathComponent]
-						  sourceDir:dir
-							subPath:subPath
-				 srcSpriteSheetDate:srcSpriteSheetDate];
+		BOOL publishForSpriteKit = [AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit;
+		if (publishForSpriteKit)
+		{
+			[self publishSpriteKitAtlasDir:[outDir stringByDeletingLastPathComponent]
+								 sourceDir:dir
+								   subPath:subPath];
+		}
+		else
+		{
+			// Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
+			[self publishSpriteSheetDir:[outDir stringByDeletingLastPathComponent]
+							  sheetName:[outDir lastPathComponent]
+							  sourceDir:dir
+								subPath:subPath
+					 srcSpriteSheetDate:srcSpriteSheetDate];
+		}
     }
     
     return YES;
@@ -728,6 +738,32 @@
 	
 	[publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 	[publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
+}
+
+-(void) publishSpriteKitAtlasDir:(NSString*)spriteSheetDir sourceDir:(NSString*)sourceDir subPath:(NSString*)subPath
+{
+	// FIXME: Sandbox -> if the file does not exist require the user to browse for it?
+	
+	// run task using Xcode TextureAtlas tool (using symlink or bash script?)
+	NSString* taScript = [[NSBundle mainBundle] pathForResource:@"GenerateSpriteKitTextureAtlas" ofType:@"sh"];
+	
+	NSTask* atlasTask = [[NSTask alloc] init];
+	atlasTask.launchPath = taScript;
+	atlasTask.arguments = @[sourceDir, spriteSheetDir];
+	[atlasTask launch];
+	
+	// Update progress
+	[[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+	
+	[atlasTask waitUntilExit];
+	
+	// TODO: ??
+	// SK TextureAtlas tool itself checks if the spritesheet needs to be updated
+	/*
+	 [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
+	 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
+	 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
+	 */
 }
 
 - (BOOL) containsCCBFile:(NSString*) dir
