@@ -630,7 +630,7 @@
 		if (publishForSpriteKit)
 		{
 			[self publishSpriteKitAtlasDir:[outDir stringByDeletingLastPathComponent]
-								 sourceDir:dir
+								 sheetName:[outDir lastPathComponent]
 								   subPath:subPath];
 		}
 		else
@@ -668,7 +668,7 @@
 							projectSettings.tempSpriteSheetCacheDirectory,
 							nil];
 		
-		NSString* spriteSheetFile = spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]] stringByAppendingPathComponent:spriteSheetName];
+		NSString* spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]] stringByAppendingPathComponent:spriteSheetName];
 		
 		// Skip publish if sprite sheet exists and is up to date
 		NSDate* dstDate = [CCBFileUtil modificationDateForFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
@@ -740,30 +740,44 @@
 	[publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
 }
 
--(void) publishSpriteKitAtlasDir:(NSString*)spriteSheetDir sourceDir:(NSString*)sourceDir subPath:(NSString*)subPath
+-(void) publishSpriteKitAtlasDir:(NSString*)spriteSheetDir sheetName:(NSString*)spriteSheetName subPath:(NSString*)subPath
 {
 	// FIXME: Sandbox -> if the file does not exist require the user to browse for it?
 	
-	// run task using Xcode TextureAtlas tool (using symlink or bash script?)
-	NSString* taScript = [[NSBundle mainBundle] pathForResource:@"GenerateSpriteKitTextureAtlas" ofType:@"sh"];
+	NSFileManager* fileManager = [NSFileManager defaultManager];
 	
-	NSTask* atlasTask = [[NSTask alloc] init];
-	atlasTask.launchPath = taScript;
-	atlasTask.arguments = @[sourceDir, spriteSheetDir];
-	[atlasTask launch];
-	
-	// Update progress
-	[[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
-	
-	[atlasTask waitUntilExit];
-	
-	// TODO: ??
-	// SK TextureAtlas tool itself checks if the spritesheet needs to be updated
-	/*
-	 [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
-	 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
-	 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
-	 */
+	for (NSString* res in publishForResolutions)
+	{
+		// rename the resources-xxx folder for the atlas tool
+		NSString* sourceDir = [projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]];
+		NSString* sheetNameDir = [projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:spriteSheetName];
+		[fileManager moveItemAtPath:sourceDir toPath:sheetNameDir error:nil];
+		
+		NSString* spriteSheetFile = [spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]];
+		[fileManager createDirectoryAtPath:spriteSheetFile withIntermediateDirectories:YES attributes:nil error:nil];
+
+		// run task using Xcode TextureAtlas tool
+		NSString* taScript = [[NSBundle mainBundle] pathForResource:@"GenerateSpriteKitTextureAtlas" ofType:@"sh"];
+		NSTask* atlasTask = [[NSTask alloc] init];
+		atlasTask.launchPath = taScript;
+		atlasTask.arguments = @[sheetNameDir, spriteSheetFile];
+		[atlasTask launch];
+		
+		// Update progress
+		[[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+		
+		[atlasTask waitUntilExit];
+
+		// rename back just in case
+		[fileManager moveItemAtPath:sheetNameDir toPath:sourceDir error:nil];
+
+		// TODO: ?? because SK TextureAtlas tool itself checks if the spritesheet needs to be updated
+		/*
+		 [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
+		 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
+		 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
+		 */
+	}
 }
 
 - (BOOL) containsCCBFile:(NSString*) dir
