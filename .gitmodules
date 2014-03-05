@@ -7,4 +7,4 @@
 
 [submodule "SpriteBuilder/libs/SpriteKit"]
 	path = SpriteBuilder/libs/SpriteKit
-	url = git@github.com:apportable/SpriteBuilder-SK.git
+url=https://github.com/apportable/SpriteBuilder-SK.git
