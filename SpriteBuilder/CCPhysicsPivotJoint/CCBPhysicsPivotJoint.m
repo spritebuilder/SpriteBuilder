@@ -21,6 +21,8 @@
     CCSprite* jointAnchor;
 }
 
+@synthesize anchorA;
+
 - (id) init
 {
     self = [super init];
@@ -78,6 +80,13 @@
     return NO;    
 }
 
+-(JointHandleType)hitTestJoint:(CGPoint)worldPos
+{
+    
+    return JointHandleUnknown;
+}
+
+
 -(CGPoint)anchorA
 {
     return anchorA;
@@ -92,7 +101,6 @@
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
-    
     [super setBodyA:aBodyA];
     
     if(!aBodyA)
@@ -128,6 +136,16 @@
     }
     
     [self setAnchorFromBodyA];
+}
+
+
+-(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
+{
+    if(bodyType == BodyIndexA)
+    {
+        CGPoint newPosition = [self.parent convertToNodeSpaceAR:worldPos];
+        [self setPosition:newPosition];
+    }
 }
 
 

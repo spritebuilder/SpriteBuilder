@@ -11,8 +11,6 @@
 
 @interface OutletDrawView : CCBTransparentView
 
--(void)updatePoint:(CGPoint)startPoint target:(CGPoint)endPoint;
-
 @end
 
 @implementation OutletDrawView
