@@ -756,11 +756,13 @@
 		NSString* spriteSheetFile = [spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]];
 		[fileManager createDirectoryAtPath:spriteSheetFile withIntermediateDirectories:YES attributes:nil error:nil];
 
+		NSString* publishedSheetRelativePath = [NSString stringWithFormat:@"resources-%@/%@", res, spriteSheetName];
+		
 		// run task using Xcode TextureAtlas tool
 		NSString* taScript = [[NSBundle mainBundle] pathForResource:@"GenerateSpriteKitTextureAtlas" ofType:@"sh"];
 		NSTask* atlasTask = [[NSTask alloc] init];
 		atlasTask.launchPath = taScript;
-		atlasTask.arguments = @[sheetNameDir, spriteSheetFile];
+		atlasTask.arguments = @[sheetNameDir, spriteSheetFile, publishedSheetRelativePath];
 		[atlasTask launch];
 		
 		// Update progress
@@ -771,6 +773,13 @@
 		// rename back just in case
 		[fileManager moveItemAtPath:sheetNameDir toPath:sourceDir error:nil];
 
+		NSString* sheetPlist = [NSString stringWithFormat:@"resources-%@/%@.atlasc/%@.plist", res, spriteSheetName, spriteSheetName];
+		NSString* sheetPlistPath = [spriteSheetDir stringByAppendingPathComponent:sheetPlist];
+		if ([fileManager fileExistsAtPath:sheetPlistPath] == NO)
+		{
+			[warnings addWarningWithDescription:@"SK TextureAtlas failed to generate (possible cause: one or more source images larger than 2048x2048 for specified resolution)" isFatal:YES relatedFile:spriteSheetName resolution:res];
+		}
+		
 		// TODO: ?? because SK TextureAtlas tool itself checks if the spritesheet needs to be updated
 		/*
 		 [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
