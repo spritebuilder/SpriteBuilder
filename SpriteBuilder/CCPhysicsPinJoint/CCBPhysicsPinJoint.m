@@ -329,12 +329,12 @@ const float kEdgeRadius = 8.0f;
 {
     minDistance = lMinDistance;
     
-    if(minDistance > [self localLength])
+    if(self.isRunningInActiveScene && minDistance > [self localLength])
     {
         minDistance = [self localLength];
     }
     
-    if(!minDistanceEnabled)
+    if(self.isRunningInActiveScene && !minDistanceEnabled )
     {
         [self willChangeValueForKey:@"minDistance"];
         minDistance = -INFINITY;
@@ -349,12 +349,12 @@ const float kEdgeRadius = 8.0f;
 {
     maxDistance = lMaxDistance;
     
-    if(maxDistance < [self localLength])
+    if(self.isRunningInActiveScene && maxDistance < [self localLength])
     {
         maxDistance = [self localLength];
     }
     
-    if(!maxDistanceEnabled)
+    if(self.isRunningInActiveScene && !maxDistanceEnabled)
     {
         [self willChangeValueForKey:@"maxDistance"];
         maxDistance = INFINITY;
@@ -408,5 +408,18 @@ const float kEdgeRadius = 8.0f;
         }
     }
 }
+
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if(object == self.bodyB)
+    {
+        self.minDistance = self.minDistance;
+        self.maxDistance = self.maxDistance;
+    }
+    
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
 
 @end

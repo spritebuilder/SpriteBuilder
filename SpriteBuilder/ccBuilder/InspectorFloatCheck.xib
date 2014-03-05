@@ -43,6 +43,11 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="readOnly" id="kNA-cW-QHA">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="enabled2" keyPath="self.enable" previousBinding="kNA-cW-QHA" id="RB3-pE-NeV">
                             <dictionary key="options">
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
@@ -51,12 +56,7 @@
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="f" id="30"/>
-                        <binding destination="-2" name="enabled" keyPath="readOnly" id="kNA-cW-QHA">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
+                        <binding destination="-2" name="value" keyPath="f" id="Zva-uZ-WWm"/>
                     </connections>
                 </textField>
                 <button id="BLq-Ry-VDW">
