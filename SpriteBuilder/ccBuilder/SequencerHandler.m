@@ -62,8 +62,8 @@ static NSString *const PASTEBOARD_TYPE_PLUGINNODE = @"com.cocosbuilder.PlugInNod
 static NSString *const PASTEBOARD_TYPE_WAVE = @"com.cocosbuilder.wav";
 static NSString *const PASTEBOARD_TYPE_JOINTBODY = @"com.cocosbuilder.jointBody";
 
-static NSString *const ORIGINAL_NODE_KEY = @"node_original";
-static NSString *const NODE_COPY_KEY = @"node_copy";
+static NSString *const ORIGINAL_NODE_KEY = @"originalNode";
+static NSString *const COPY_NODE_KEY = @"copyNode";
 static SequencerHandler* sharedSequencerHandler;
 
 @implementation SequencerHandler
@@ -530,7 +530,7 @@ static SequencerHandler* sharedSequencerHandler;
         CCNode *originalNode = (__bridge CCNode*)nodePtr;
 
 		NSDictionary *node = @{
-			NODE_COPY_KEY : [CCBReaderInternal nodeGraphFromDictionary:dictionary parentSize:CGSizeZero],
+				COPY_NODE_KEY : [CCBReaderInternal nodeGraphFromDictionary:dictionary parentSize:CGSizeZero],
 			ORIGINAL_NODE_KEY : originalNode
 		};
 
@@ -540,24 +540,30 @@ static SequencerHandler* sharedSequencerHandler;
 	return array;
 }
 
-
-- (BOOL)isTargetsParentsADroppedNode:(CCNode *)targetNode droppedNodes:(NSArray *)droppedNodes
+- (BOOL)isMoveValidToTargetNode:(CCNode *)targetNode droppedNodes:(NSArray *)droppedNodes
 {
-	SceneGraph*sceneGraph = [SceneGraph instance];
+	// Cannot move nodes into themselves
+	if ([droppedNodes containsObject:targetNode])
+	{
+		return NO;
+	}
 
 	CCNode *parent = [targetNode parent];
+	SceneGraph *sceneGraph = [SceneGraph instance];
+
 	while (parent && parent != sceneGraph.rootNode)
 	{
-		for (NSDictionary *droppedNodeDict in droppedNodes)
+		for (CCNode *droppedNode in droppedNodes)
 		{
-			if (parent == droppedNodeDict[ORIGINAL_NODE_KEY])
+			if (parent == droppedNode)
 			{
-				return YES;
+				return NO;
 			}
 		}
 		parent = [parent parent];
 	}
-	return NO;
+
+	return YES;
 }
 
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
@@ -579,9 +585,9 @@ static SequencerHandler* sharedSequencerHandler;
 		else
 		{
 			CCNode *dropTarget = item;
-
+			NSArray *droppedOriginalNodes = [self extractDroppedNodes:[self deserializeDraggedObjects:nodeData] withKey:ORIGINAL_NODE_KEY];
 			if (dropTarget.plugIn.isJoint ||
-				[self isTargetsParentsADroppedNode:dropTarget droppedNodes:[self deserializeDraggedObjects:nodeData]])
+				![self isMoveValidToTargetNode:dropTarget droppedNodes:droppedOriginalNodes])
 			{
 				return NSDragOperationNone;
 			}
@@ -673,6 +679,17 @@ static SequencerHandler* sharedSequencerHandler;
     return NSDragOperationGeneric;
 }
 
+- (NSArray *)extractDroppedNodes:(NSArray *)droppedNodes withKey:(NSString *)key
+{
+	NSMutableArray *result = [NSMutableArray array];
+	for (NSDictionary *dict in droppedNodes)
+	{
+		CCNode *node = dict[ORIGINAL_NODE_KEY];
+		[result addObject:node];
+	}
+	return result;
+}
+
 - (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
     NSPasteboard *pasteboard = [info draggingPasteboard];
@@ -684,7 +701,7 @@ static SequencerHandler* sharedSequencerHandler;
 		for (NSDictionary *node in nodes)
 		{
 			CCNode *originalNode = node[ORIGINAL_NODE_KEY];
-			CCNode *nodeCopy = node[NODE_COPY_KEY];
+			CCNode *nodeCopy = node[COPY_NODE_KEY];
 
 			if (![appDelegate addCCObject:nodeCopy toParent:item atIndex:index])
 			{
@@ -694,13 +711,7 @@ static SequencerHandler* sharedSequencerHandler;
 			[appDelegate deleteNode:originalNode];
 		}
 
-		NSMutableArray *selectNodes = [NSMutableArray array];
-		for (NSDictionary *node in nodes)
-		{
-			[selectNodes addObject:node[NODE_COPY_KEY]];
-		}
-
-		[appDelegate setSelectedNodes:selectNodes];
+		[appDelegate setSelectedNodes:[self extractDroppedNodes:nodes withKey:COPY_NODE_KEY]];
 		SceneGraph *g = [SceneGraph instance];
 		[g.joints fixupReferences];
 
