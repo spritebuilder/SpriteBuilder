@@ -14,26 +14,41 @@ static const float kMargin = 8.0f/64.0f;
 static const float kDefaultLength = 58.0f;
 
 
+@interface CCBPhysicsJoint()
+-(void)updateSelectionUI;
+@end
 
 @interface CCBPhysicsPinJoint()
 {
     CCSprite9Slice  * jointBody;
     CCSprite        * anchorHandleA;
     CCSprite        * anchorHandleB;
+    
+    CCSprite        * minHandle;
+    CCSprite9Slice  * minHandleBody;
+    CCSprite        * maxHandle;
+    CCSprite9Slice  * maxHandleBody;
+    
 }
 
 
 @end
 
 @implementation CCBPhysicsPinJoint
-
+@synthesize minDistance;
+@synthesize maxDistance;
+@synthesize maxDistanceEnabled;
+@synthesize minDistanceEnabled;
+@synthesize anchorB;
 
 - (id) init
 {
     self = [super init];
-    if (!self)
+    if (self)
     {
-        return NULL;
+        self.minDistance = -INFINITY;
+        self.maxDistance = INFINITY;
+
     }
     
     return self;
@@ -58,10 +73,32 @@ static const float kDefaultLength = 58.0f;
     [scaleFreeNode addChild:anchorHandleA];
     [scaleFreeNode addChild:anchorHandleB];
     
+    maxHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-long.png"];
+    minHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png"];
+    [scaleFreeNode addChild:maxHandle];
+    [scaleFreeNode addChild:minHandle];
     
+    minHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
+    minHandleBody.marginLeft = 0.0f;
+    minHandleBody.marginRight = kMargin;
+    minHandleBody.marginBottom = 0.0;
+    minHandleBody.marginTop = 0.0;
+    minHandleBody.scale = 1.0;
+    minHandleBody.anchorPoint = ccp(0.0f,0.5f);
+    
+    [scaleFreeNode addChild:minHandleBody];
+    
+    maxHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
+    maxHandleBody.marginLeft = 0.0f;
+    maxHandleBody.marginRight = kMargin;
+    maxHandleBody.marginBottom = 0.0;
+    maxHandleBody.marginTop = 0.0;
+    maxHandleBody.scale = 1.0;
+    maxHandleBody.anchorPoint = ccp(0.0f,0.5f);
+    [scaleFreeNode addChild:maxHandleBody];
 }
 
--(float)length
+-(float)worldLength
 {
     if(self.bodyA && self.bodyB)
     {
@@ -69,6 +106,24 @@ static const float kDefaultLength = 58.0f;
         CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
         
         float distance = ccpDistance(worldPosA, worldPosB);
+        return distance;
+    }
+    
+    return kDefaultLength;
+}
+
+-(float)localLength
+{
+ 
+    if(self.bodyA && self.bodyB)
+    {
+        CGPoint worldPosA = [self.bodyA convertToWorldSpace:self.anchorA];
+        CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
+
+        CGPoint localPosA = [self convertToNodeSpace:worldPosA];
+        CGPoint localPosB = [self convertToNodeSpace:worldPosB];
+        
+        float distance = ccpDistance(localPosA, localPosB);
         return distance;
     }
     
@@ -94,7 +149,7 @@ static const float kDefaultLength = 58.0f;
 const float kEdgeRadius = 8.0f;
 -(void)updateRenderBody
 {
-    float length = [self length];
+    float length = [self worldLength];
     
     jointBody.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
     jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
@@ -103,37 +158,19 @@ const float kEdgeRadius = 8.0f;
     //Anchor B
     anchorHandleB.position = ccpMult(ccp(length,0),1/[CCDirector sharedDirector].contentScaleFactor);
     
+    
+    minHandle.position = ccpMult(ccp(length *  self.minDistance / [self localLength], kEdgeRadius * 2.0f + 2.0f),1/[CCDirector sharedDirector].contentScaleFactor);
+    maxHandle.position = ccpMult(ccp(length *  self.maxDistance /[self localLength], kEdgeRadius * 2.0f + 2.0f),1/[CCDirector sharedDirector].contentScaleFactor);
+    
+    minHandleBody.contentSize = CGSizeMake(length *  self.minDistance / [self localLength] + kEdgeRadius, kEdgeRadius * 2.0f);
+    maxHandleBody.contentSize = CGSizeMake(length *  self.maxDistance / [self localLength] + kEdgeRadius, kEdgeRadius * 2.0f);
+ 
 }
 
 -(void)visit
 {
     [self updateRenderBody];
     [super visit];
-}
-
-
--(void)setBodyB:(CCNode *)aBodyB
-{
-    [super setBodyB:aBodyB];
-    [self setAnchorFromBodyB];
-}
-
--(void)setAnchorFromBodyB
-{
-    if(!self.bodyB)
-    {
-        self.anchorB = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
-        return;
-    }
-    
-    CGPoint anchorBPositionNodePos = ccpAdd(self.position, ccp(kDefaultLength,0));
-    
-    CGPoint worldPos = [self.parent convertToWorldSpace:anchorBPositionNodePos];
-    CGPoint lAnchorb = [self.bodyB convertToNodeSpace:worldPos];
-                               
-    self.anchorB = lAnchorb;
-    [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
 }
 
 
@@ -179,6 +216,92 @@ const float kEdgeRadius = 8.0f;
     
 }
 
+
+-(void)updateSelectionUI
+{
+    //If selected, display selected sprites.
+    if(self.isSelected)
+    {
+        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
+        
+        
+        if(maxHandle.parent == nil && self.maxDistanceEnabled)
+            [scaleFreeNode addChild:maxHandle];
+
+        
+        if(minHandle.parent == nil && self.minDistanceEnabled)
+            [scaleFreeNode addChild:minHandle];
+
+    }
+    else
+    {
+        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
+        
+        
+        
+        if(maxHandle.parent != nil)
+        {
+        
+            [maxHandle removeFromParentAndCleanup:NO];
+        }
+
+        if(minHandle.parent != nil)
+            [minHandle removeFromParentAndCleanup:NO];
+
+    }
+    
+    [super updateSelectionUI];
+}
+
+
+
+#pragma mark - Properties -
+
+
+-(void)setAnchorFromBodyB
+{
+    if(!self.bodyB)
+    {
+        self.anchorB = CGPointZero;
+        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
+        return;
+    }
+    
+    CGPoint anchorBPositionNodePos = ccpAdd(self.position, ccp(kDefaultLength,0));
+    
+    CGPoint worldPos = [self.parent convertToWorldSpace:anchorBPositionNodePos];
+    CGPoint lAnchorb = [self.bodyB convertToNodeSpace:worldPos];
+    
+    self.anchorB = lAnchorb;
+    [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
+}
+
+
+-(void)setBodyB:(CCNode *)aBodyB
+{
+    [super setBodyB:aBodyB];
+    [self setAnchorFromBodyB];
+}
+
+
+-(void)setAnchorB:(CGPoint)lAnchorB
+{
+    anchorB = lAnchorB;
+    //refresh max mins
+    self.minDistance = self.minDistance;
+    self.maxDistance = self.maxDistance;
+}
+
+-(void)setAnchorA:(CGPoint)lAnchorA
+{
+    [super setAnchorA:lAnchorA];
+    //refresh max mins
+    self.minDistance = self.minDistance;
+    self.maxDistance = self.maxDistance;
+    
+}
+
+
 -(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType
 {
     if(bodyType == BodyIndexB)
@@ -186,11 +309,104 @@ const float kEdgeRadius = 8.0f;
         CGPoint newPosition = [self.bodyB convertToNodeSpace:worldPos];
         self.anchorB = newPosition;
         [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
-
+        
     }
     [super setBodyAnchor:worldPos bodyType:bodyType];
 }
 
 
+-(float)minDistance
+{
+    return minDistance;
+}
+
+-(float)maxDistance
+{
+    return maxDistance;
+}
+
+-(void)setMinDistance:(float)lMinDistance
+{
+    minDistance = lMinDistance;
+    
+    if(minDistance > [self localLength])
+    {
+        minDistance = [self localLength];
+    }
+    
+    if(!minDistanceEnabled)
+    {
+        [self willChangeValueForKey:@"minDistance"];
+        minDistance = -INFINITY;
+        [self didChangeValueForKey:@"minDistance"];
+    }
+    [[AppDelegate appDelegate] refreshProperty:@"minDistance"];
+    
+}
+
+
+-(void)setMaxDistance:(float)lMaxDistance
+{
+    maxDistance = lMaxDistance;
+    
+    if(maxDistance < [self localLength])
+    {
+        maxDistance = [self localLength];
+    }
+    
+    if(!maxDistanceEnabled)
+    {
+        [self willChangeValueForKey:@"maxDistance"];
+        maxDistance = INFINITY;
+        [self didChangeValueForKey:@"maxDistance"];
+    }
+    
+    [[AppDelegate appDelegate] refreshProperty:@"maxDistance"];
+}
+
+-(BOOL)maxDistanceEnabled
+{
+    return maxDistanceEnabled;
+}
+
+-(void)setMaxDistanceEnabled:(BOOL)lMaxDistanceEnabled
+{
+    if(maxDistanceEnabled != lMaxDistanceEnabled)
+    {
+        maxDistanceEnabled = lMaxDistanceEnabled;
+        
+        if(maxDistanceEnabled)
+        {
+            maxDistance = [self localLength];
+        }
+        else
+        {
+            maxDistance = INFINITY;
+        }
+    }
+}
+
+
+-(BOOL)minDistanceEnabled
+{
+    return minDistanceEnabled;
+}
+
+-(void)setMinDistanceEnabled:(BOOL)lMinDistanceEnabled
+{
+    if(minDistanceEnabled != lMinDistanceEnabled)
+    {
+        minDistanceEnabled = lMinDistanceEnabled;
+        
+        if(minDistanceEnabled)
+        {
+            minDistance = [self localLength];
+        }
+        else
+        {
+            minDistance = -INFINITY;
+        }
+    }
+}
 
 @end

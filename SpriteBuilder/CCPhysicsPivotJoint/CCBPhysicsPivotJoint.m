@@ -21,6 +21,8 @@
     CCSprite* jointAnchor;
 }
 
+@synthesize anchorA;
+
 - (id) init
 {
     self = [super init];

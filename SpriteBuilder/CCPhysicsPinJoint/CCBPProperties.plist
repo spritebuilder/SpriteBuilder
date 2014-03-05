@@ -46,6 +46,26 @@
 			<key>name</key>
 			<string>anchorB</string>
 		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>1</integer>
+			<key>type</key>
+			<string>FloatCheck</string>
+			<key>name</key>
+			<string>minDistance</string>
+			<key>displayName</key>
+			<string>Minimum Distance</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>1</integer>
+			<key>type</key>
+			<string>FloatCheck</string>
+			<key>name</key>
+			<string>maxDistance</string>
+			<key>displayName</key>
+			<string>Maximum Distance</string>
+		</dict>
 	</array>
 	<key>editorClassName</key>
 	<string>CCBPhysicsPinJoint</string>

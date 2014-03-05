@@ -12,9 +12,8 @@
 
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
 {
-    CGPoint anchorA;
 }
 
-@property CGPoint anchorA;
+@property (nonatomic) CGPoint anchorA;
 
 @end
