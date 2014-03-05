@@ -53,6 +53,15 @@
 #import "NSArray+Query.h"
 #import "CCBPhysicsJoint.h"
 
+static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
+static NSString *const PASTEBOARD_TYPE_NODE = @"com.cocosbuilder.node";
+static NSString *const PASTEBOARD_TYPE_TEXTURE = @"com.cocosbuilder.texture";
+static NSString *const PASTEBOARD_TYPE_TEMPLATE = @"com.cocosbuilder.template";
+static NSString *const PASTEBOARD_TYPE_CCB = @"com.cocosbuilder.ccb";
+static NSString *const PASTEBOARD_TYPE_PLUGINNODE = @"com.cocosbuilder.PlugInNode";
+static NSString *const PASTEBOARD_TYPE_WAVE = @"com.cocosbuilder.wav";
+static NSString *const PASTEBOARD_TYPE_JOINTBODY = @"com.cocosbuilder.jointBody";
+
 static SequencerHandler* sharedSequencerHandler;
 
 @implementation SequencerHandler
@@ -74,7 +83,7 @@ static SequencerHandler* sharedSequencerHandler;
 {
     self = [super init];
     if (!self) return NULL;
-    
+
     sharedSequencerHandler = self;
     
     appDelegate = [AppDelegate appDelegate];
@@ -84,9 +93,14 @@ static SequencerHandler* sharedSequencerHandler;
     [outlineHierarchy setDelegate:self];
     [outlineHierarchy reloadData];
     
-    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.node", @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", @"com.cocosbuilder.wav", @"com.cocosbuilder.jointBody", NULL]];
-    
-    [[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
+    [outlineHierarchy registerForDraggedTypes:[NSArray arrayWithObjects:PASTEBOARD_TYPE_NODE,
+																		PASTEBOARD_TYPE_TEXTURE,
+																		PASTEBOARD_TYPE_TEMPLATE,
+																		PASTEBOARD_TYPE_CCB,
+																		PASTEBOARD_TYPE_PLUGINNODE,
+																		PASTEBOARD_TYPE_WAVE, PASTEBOARD_TYPE_JOINTBODY, NULL]];
+
+	[[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
     return self;
 }
@@ -134,7 +148,7 @@ static SequencerHandler* sharedSequencerHandler;
 - (float) visibleTimeArea
 {
     NSTableColumn* column = [outlineHierarchy tableColumnWithIdentifier:@"sequencer"];
-    return (column.width-2*TIMELINE_PAD_PIXELS)/currentSequence.timelineScale;
+    return (float) ((column.width-2*TIMELINE_PAD_PIXELS)/currentSequence.timelineScale);
 }
 
 - (float) maxTimelineOffset
@@ -170,15 +184,15 @@ static SequencerHandler* sharedSequencerHandler;
     float timelinePosition = currentSequence.timelinePosition;
     if (maxTimeScroll > 0)
     {
-        float minVisibleTime = scroller.doubleValue*(currentSequence.timelineLength-visibleTime);
-        float maxVisibleTime = scroller.doubleValue*(currentSequence.timelineLength-visibleTime) + visibleTime;
+        float minVisibleTime = (float) (scroller.doubleValue*(currentSequence.timelineLength-visibleTime));
+        float maxVisibleTime = (float) (scroller.doubleValue*(currentSequence.timelineLength-visibleTime) + visibleTime);
         
         if (timelinePosition < minVisibleTime) {
             scroller.doubleValue = timelinePosition/(currentSequence.timelineLength-visibleTime);
-            currentSequence.timelineOffset = scroller.doubleValue * (currentSequence.timelineLength - visibleTime);
+            currentSequence.timelineOffset = (float) (scroller.doubleValue * (currentSequence.timelineLength - visibleTime));
         } else if (timelinePosition > maxVisibleTime) {
             scroller.doubleValue = (timelinePosition-visibleTime)/(currentSequence.timelineLength-visibleTime);
-            currentSequence.timelineOffset = scroller.doubleValue * (currentSequence.timelineLength - visibleTime);
+            currentSequence.timelineOffset = (float) (scroller.doubleValue * (currentSequence.timelineLength - visibleTime));
         }
     }
 }
@@ -208,7 +222,7 @@ static SequencerHandler* sharedSequencerHandler;
             newOffset -= 300 / currentSequence.timelineScale;
             break;
         case NSScrollerKnob:
-            newOffset = scroller.doubleValue * (currentSequence.timelineLength - visibleTime);
+            newOffset = (float) (scroller.doubleValue * (currentSequence.timelineLength - visibleTime));
             break;
         case NSScrollerIncrementPage:
             newOffset += 300 / currentSequence.timelineScale;
@@ -220,7 +234,7 @@ static SequencerHandler* sharedSequencerHandler;
             newOffset += 20 / currentSequence.timelineScale;
             break;
         case NSScrollerKnobSlot:
-            newOffset = scroller.doubleValue * (currentSequence.timelineLength - visibleTime);
+            newOffset = (float) (scroller.doubleValue * (currentSequence.timelineLength - visibleTime));
             break;
         default:
             break;
@@ -269,8 +283,8 @@ static SequencerHandler* sharedSequencerHandler;
     
     for (CCNode* selectedNode in appDelegate.selectedNodes)
     {
-        int row = (int)[outlineHierarchy rowForItem:selectedNode];
-        [indexes addIndex:row];
+		NSUInteger row = (NSUInteger)[outlineHierarchy rowForItem:selectedNode];
+		[indexes addIndex:row];
     }
     [outlineHierarchy selectRowIndexes:indexes byExtendingSelection:NO];
 }
@@ -356,12 +370,12 @@ static SequencerHandler* sharedSequencerHandler;
     
     if([item isKindOfClass:[SequencerJoints class]])
     {
-        return g.joints.all[index];
+        return g.joints.all[(NSUInteger) index];
     }
     
     CCNode* node = (CCNode*)item;
     NSArray* arr = [node children];
-    return [arr objectAtIndex:index];
+    return [arr objectAtIndex:(NSUInteger) index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
@@ -469,7 +483,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
 {
-//	NSLog(@"writeItems: %@", items);
+	NSLog(@"1. writeItems: %@", items);
 
 	if ( ! [self canItemsBeDragged:items])
 	{
@@ -477,66 +491,97 @@ static SequencerHandler* sharedSequencerHandler;
 	}
 
 	NSData *clipboardData = [self serializeDraggedItemsForClipboard:items];
-    [pasteboard setData:clipboardData forType:@"com.cocosbuilder.node"];
+	[pasteboard setData:clipboardData forType:PASTEBOARD_TYPE_NODE];
     
     return YES;
 }
 
 - (NSData *)serializeDraggedItemsForClipboard:(NSArray *)items
 {
-	id item = [items objectAtIndex:0];
+	NSMutableArray *array = [NSMutableArray array];
+	for (CCNode *node in items)
+	{
+		NSMutableDictionary *clipDict = [CCBWriterInternal dictionaryFromCCObject:node];
+		[clipDict setObject:[NSNumber numberWithLongLong:(long long) node] forKey:ORIGINAL_NODE_POINTER_KEY];
 
-	CCNode *draggedNode = item;
+		[array addObject:clipDict];
+	}
 
-	NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:draggedNode];
+    return [NSKeyedArchiver archivedDataWithRootObject:array];
+}
 
-    [clipDict setObject:[NSNumber numberWithLongLong:(long long)draggedNode] forKey:@"srcNode"];
+- (NSArray *)deserializeDraggedObjects:(NSData *)data
+{
+	NSMutableArray *array = [NSMutableArray array];
+	NSArray *clipboardArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
-    return [NSKeyedArchiver archivedDataWithRootObject:clipDict];
+	for (NSDictionary *dictionary in clipboardArray)
+	{
+		void *nodePtr = (void*)[[dictionary objectForKey:ORIGINAL_NODE_POINTER_KEY] longLongValue];
+        CCNode *originalNode = (__bridge CCNode*)nodePtr;
+
+		NSDictionary *node = @{
+			@"node_copy" : [CCBReaderInternal nodeGraphFromDictionary:dictionary parentSize:CGSizeZero],
+			@"node_original" : originalNode
+		};
+
+		[array addObject:node];
+	}
+
+	return array;
+}
+
+
+- (BOOL)isTargetsParentsADroppedNode:(CCNode *)targetNode droppedNodes:(NSArray *)droppedNodes
+{
+	SceneGraph*sceneGraph = [SceneGraph instance];
+
+	CCNode *parent = [targetNode parent];
+	while (parent && parent != sceneGraph.rootNode)
+	{
+		for (NSDictionary *droppedNodeDict in droppedNodes)
+		{
+			if (parent == droppedNodeDict[@"node_original"])
+			{
+				return YES;
+			}
+		}
+		parent = [parent parent];
+	}
+	return NO;
 }
 
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-	NSLog(@"validateDrop: %@", info);
-
 	if (item == NULL)
 	{
 		return NSDragOperationNone;
 	}
 
-	SceneGraph* g = [SceneGraph instance];
-    NSPasteboard* pb = [info draggingPasteboard];
+    NSPasteboard *pasteboard = [info draggingPasteboard];
     
-    NSData* nodeData = [pb dataForType:@"com.cocosbuilder.node"];
+    NSData* nodeData = [pasteboard dataForType:PASTEBOARD_TYPE_NODE];
     if (nodeData)
     {
-        if ([item isKindOfClass:[CCNode class]])
+        if (![item isKindOfClass:[CCNode class]])
         {
-            NSDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:nodeData];
-			void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
-            CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
-            
-            CCNode* node = item;
-            
-            if(node.plugIn.isJoint)
-                return NSDragOperationNone;
-            
-            CCNode* parent = [node parent];
-            while (parent && parent != g.rootNode)
-            {
-                if (parent == draggedNode) return NSDragOperationNone;
-                parent = [parent parent];
-            }
+			return NSDragOperationNone;
+		}
+		else
+		{
+			CCNode *dropTarget = item;
+
+			if (dropTarget.plugIn.isJoint ||
+				[self isTargetsParentsADroppedNode:dropTarget droppedNodes:[self deserializeDraggedObjects:nodeData]])
+			{
+				return NSDragOperationNone;
+			}
+
             return NSDragOperationGeneric;
         }
-        else
-        {
-            return NSDragOperationNone;
-        }
-  
     }
     
-    NSArray * jointsData = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+    NSArray * jointsData = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
     if(jointsData.count > 0)
     {
         if(index != -1)
@@ -557,7 +602,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     // Dropped WavFile;
-    NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
+    NSArray* pbWavs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
     
     if(pbWavs.count != 0)
     {
@@ -569,7 +614,7 @@ static SequencerHandler* sharedSequencerHandler;
                 NSPoint mouseLocationInWindow = info.draggingLocation;
                 NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
                 
-                currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:mouseLocation.x];
+                currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:(float) mouseLocation.x];
                 
                 currentSequence.soundChannel.needDragAndDropRedraw = YES;
                 [scrubberSelectionView setNeedsDisplay:YES];
@@ -587,7 +632,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     
-    NSArray* pbNodePlugIn = [pb propertyListsForType:@"com.cocosbuilder.PlugInNode"];
+    NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
     for (NSDictionary* dict in pbNodePlugIn)
     {
         if(![item isKindOfClass:[CCNode class]])
@@ -622,40 +667,42 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id < NSDraggingInfo >)info item:(id)item childIndex:(NSInteger)index
 {
-	NSLog(@"acceptDrop: %@", info);
-
-    NSPasteboard* pb = [info draggingPasteboard];
+    NSPasteboard *pasteboard = [info draggingPasteboard];
     
-    NSData* clipData = [pb dataForType:@"com.cocosbuilder.node"];
+    NSData *clipData = [pasteboard dataForType:PASTEBOARD_TYPE_NODE];
     if (clipData)
     {
-        NSMutableDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:clipData];
-        
-        CCNode* clipNode= [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:CGSizeZero];
-
-		if (![appDelegate addCCObject:clipNode toParent:item atIndex:index])
+		NSArray *nodes = [self deserializeDraggedObjects:clipData];
+		for (NSDictionary *node in nodes)
 		{
-			return NO;
+			CCNode *originalNode = node[@"node_original"];
+			CCNode *nodeCopy = node[@"node_copy"];
+
+			if (![appDelegate addCCObject:nodeCopy toParent:item atIndex:index])
+			{
+				return NO;
+			}
+
+			[appDelegate deleteNode:originalNode];
 		}
 
-		// Remove old node
-		void* draggedNodePtr = (void*)[[clipDict objectForKey:@"srcNode"] longLongValue];
-		CCNode* draggedNode = (__bridge CCNode*)draggedNodePtr;
-        [appDelegate deleteNode:draggedNode];
-        
-        [appDelegate setSelectedNodes:[NSArray arrayWithObject: clipNode]];
-        SceneGraph * g = [SceneGraph instance];
-        [g.joints fixupReferences];
-        
-        //[PositionPropertySetter refreshAllPositions];
-        
+		NSMutableArray *selectNodes = [NSMutableArray array];
+		for (NSDictionary *node in nodes)
+		{
+			[selectNodes addObject:node[@"node_copy"]];
+		}
+
+		[appDelegate setSelectedNodes:selectNodes];
+		SceneGraph *g = [SceneGraph instance];
+		[g.joints fixupReferences];
+
         return YES;
     }
     
     BOOL addedObject = NO;
     
     // Dropped textures
-    NSArray* pbTextures = [pb propertyListsForType:@"com.cocosbuilder.texture"];
+    NSArray* pbTextures = [pasteboard propertyListsForType:PASTEBOARD_TYPE_TEXTURE];
     for (NSDictionary* dict in pbTextures)
     {
         [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
@@ -664,14 +711,14 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     // Dropped WavFile;
-    NSArray* pbWavs = [pb propertyListsForType:@"com.cocosbuilder.wav"];
+    NSArray* pbWavs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
     for (NSDictionary* dict in pbWavs)
     {
         NSPoint mouseLocationInWindow = info.draggingLocation;
         NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
         
         //Create Keyframe
-        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:mouseLocation.x]];
+        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:(float) mouseLocation.x]];
         NSMutableArray* newArr = [NSMutableArray arrayWithArray:keyFrame.value];
         [newArr replaceObjectAtIndex:kSoundChannelKeyFrameName withObject:dict[@"wavFile"]];
         keyFrame.value = newArr;
@@ -680,7 +727,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     // Dropped ccb-files
-    NSArray* pbCCBs = [pb propertyListsForType:@"com.cocosbuilder.ccb"];
+    NSArray* pbCCBs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_CCB];
     for (NSDictionary* dict in pbCCBs)
     {
         [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(0, 0) parent:item];
@@ -688,7 +735,7 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     // Dropped node plug-ins
-    NSArray* pbNodePlugIn = [pb propertyListsForType:@"com.cocosbuilder.PlugInNode"];
+    NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
     for (NSDictionary* dict in pbNodePlugIn)
     {
         [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
@@ -696,11 +743,11 @@ static SequencerHandler* sharedSequencerHandler;
     }
     
     // Dropped ccb-files
-    NSArray* pbJointBodys = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
+    NSArray* pbJointBodys = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
     for (NSDictionary* dict in pbJointBodys)
     {
         NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
-        BodyIndex type = [dict[@"bodyIndex"]integerValue];
+        BodyIndex type = (BodyIndex) [dict[@"bodyIndex"] integerValue];
         
         CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
             return lJoint.UUID == uuid;
@@ -1013,8 +1060,6 @@ static SequencerHandler* sharedSequencerHandler;
         if(node.plugIn.isJoint)
             return;
         
-        //if ([NSStringFromClass(node.class) isEqualToString:@"CCBPCCBFile"] && !node.seqExpanded) return;
-        
         node.seqExpanded = !node.seqExpanded;
     }
     
@@ -1279,8 +1324,6 @@ static SequencerHandler* sharedSequencerHandler;
 - (void) dealloc
 {
     self.currentSequence = NULL;
-    //self.sequences = NULL;
-    
 }
 
 @end
