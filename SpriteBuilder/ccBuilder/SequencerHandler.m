@@ -650,7 +650,7 @@ static SequencerHandler* sharedSequencerHandler;
     for (NSDictionary* dict in pbJointBodys)
     {
         NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
-        BodyIndex type = [dict[@"bodyIndex"]integerValue];
+        JointHandleType type = [dict[@"bodyIndex"]integerValue];
         
         CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
             return lJoint.UUID == uuid;

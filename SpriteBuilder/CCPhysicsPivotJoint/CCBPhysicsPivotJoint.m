@@ -80,10 +80,10 @@
     return NO;    
 }
 
--(BodyIndex)hitTestJoint:(CGPoint)worldPos
+-(JointHandleType)hitTestJoint:(CGPoint)worldPos
 {
     
-    return BodyIndexUnknown;
+    return JointHandleUnknown;
 }
 
 
@@ -139,7 +139,7 @@
 }
 
 
--(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType
+-(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
     if(bodyType == BodyIndexA)
     {

@@ -16,8 +16,12 @@ typedef enum
     BodyIndexA,
     BodyIndexB,
     
-    BodyIndexUnknown = -1,
-}BodyIndex;
+    //-------
+    MinHandleType,
+    MaxHandleType,
+    
+    JointHandleUnknown = -1,
+}JointHandleType;
 
 
 
@@ -49,13 +53,13 @@ typedef enum
 @property BOOL isSelected;//Is clears on Visit
 
 //Hit tests.
--(BodyIndex)hitTestOutlet:(CGPoint)worlPos; //Did you hit the outlet?
--(BodyIndex)hitTestBodyAnchor:(CGPoint)worlPos; //Did you hit the body anchor drag point?
+-(JointHandleType)hitTestOutlet:(CGPoint)worlPos; //Did you hit the outlet?
+-(JointHandleType)hitTestJointHandle:(CGPoint)worlPos; //Did you hit the body anchor drag point?
 
--(void)setOutletStatus:(BodyIndex)idx value:(BOOL)value;
+-(void)setOutletStatus:(JointHandleType)idx value:(BOOL)value;
 -(void)refreshOutletStatus;
--(CGPoint)outletWorldPos:(BodyIndex)idx;
--(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType;
+-(CGPoint)outletWorldPos:(JointHandleType)idx;
+-(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType;
 
 
 -(void)fixupReferences;
@@ -63,7 +67,7 @@ typedef enum
 -(void)removeObserverBody:(CCNode*)body;
 -(void)addObserverBody:(CCNode*)body;
 
-+(NSString *)convertBodyTypeToString:(BodyIndex) index;
++(NSString *)convertBodyTypeToString:(JointHandleType) index;
 
 
 @end

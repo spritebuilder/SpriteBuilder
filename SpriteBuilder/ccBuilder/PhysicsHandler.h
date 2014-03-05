@@ -40,12 +40,12 @@
     //Joint Manipulation
     CCBPhysicsJoint *  _currentJoint;
     OutletDrawWindow * outletWindow;
-    BodyIndex          outletDragged;
+    JointHandleType          outletDragged;
     BOOL               jointOutletDragging;
     CGPoint            jointOutletDraggingLocation;
     
     //Joint BodyB Dragging.
-    BodyIndex           bodyDragging;
+    JointHandleType           bodyDragging;
 
     
 }
@@ -61,7 +61,7 @@
 - (void) updatePhysicsEditor:(CCNode*) editorView;
 
 - (CCNode*)findPhysicsBodyAtPoint:(CGPoint)point;
-- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(BodyIndex)idx;
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx;
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;

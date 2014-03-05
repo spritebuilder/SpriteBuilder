@@ -272,7 +272,7 @@
 #pragma mark -
 
 
--(void)onOutletDown:(NSEvent*)event joint:(CCBPhysicsJoint*)joint outletIdx:(BodyIndex)outletIdx
+-(void)onOutletDown:(NSEvent*)event joint:(CCBPhysicsJoint*)joint outletIdx:(JointHandleType)outletIdx
 {
     _currentJoint = (CCBPhysicsJoint*)joint;
     [_currentJoint setOutletStatus:outletIdx value:YES];
@@ -448,7 +448,7 @@
     int outletIdx   = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestOutlet:pos] : -1;
     int handleIdx   = [self handleIndexForPos:pos];
     int lineIdx     = [self lineSegmIndexForPos:pos];
-    int bodyIndex  = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestBodyAnchor:pos] : -1;
+    int bodyIndex  = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestJointHandle:pos] : -1;
     _mouseDownPos   = pos;
     _mouseDownInHandle = handleIdx;
     
@@ -489,7 +489,7 @@
         
         return YES;
     }
-    if(bodyIndex != BodyIndexUnknown)
+    if(bodyIndex != JointHandleUnknown)
     {
         bodyDragging = bodyIndex;
         return YES;
@@ -560,10 +560,10 @@
         
         return YES;
     }
-    else if(bodyDragging != BodyIndexUnknown)
+    else if(bodyDragging != JointHandleUnknown)
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        [joint setBodyAnchor:pos bodyType:bodyDragging];
+        [joint setBodyHandle:pos bodyType:bodyDragging];
         return YES;
     }
     else
@@ -616,9 +616,9 @@
         _mouseDownInHandle = -1;
         return YES;
     }
-    if(bodyDragging != BodyIndexUnknown)
+    if(bodyDragging != JointHandleUnknown)
     {
-        bodyDragging = BodyIndexUnknown;
+        bodyDragging = JointHandleUnknown;
         return YES;
     }
     
@@ -626,7 +626,7 @@
     return NO;
 }
 
-- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(BodyIndex)idx
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx
 {
     if(idx == BodyIndexA)
     {

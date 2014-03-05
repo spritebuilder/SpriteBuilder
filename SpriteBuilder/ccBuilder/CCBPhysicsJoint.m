@@ -192,7 +192,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 #pragma mark -
 
--(BodyIndex)hitTestOutlet:(CGPoint)worlPos
+-(JointHandleType)hitTestOutlet:(CGPoint)worlPos
 {
     CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worlPos];
     
@@ -210,10 +210,10 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         return BodyIndexB;
     }
     
-    return BodyIndexUnknown;
+    return JointHandleUnknown;
 }
 
--(BodyIndex)hitTestBodyAnchor:(CGPoint)worlPos
+-(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
 {
     CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worlPos];
     
@@ -221,19 +221,19 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     {
         return BodyIndexA;
     }
-    return BodyIndexUnknown;
+    return JointHandleUnknown;
 }
 
--(BodyIndex)hitTestJoint:(CGPoint)worldPos
+-(JointHandleType)hitTestJoint:(CGPoint)worldPos
 {
 
-    return BodyIndexUnknown;
+    return JointHandleUnknown;
 }
 
 #pragma mark -
 
 
--(void)setBodyAnchor:(CGPoint)worldPos bodyType:(BodyIndex)bodyType
+-(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
     //Do nothing.
 }
@@ -248,7 +248,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     
 }
 
--(CGPoint)outletWorldPos:(BodyIndex)idx
+-(CGPoint)outletWorldPos:(JointHandleType)idx
 {
     if(idx == BodyIndexA)
     {
@@ -263,7 +263,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 
 
--(void)setOutletStatus:(BodyIndex)idx value:(BOOL)value
+-(void)setOutletStatus:(JointHandleType)idx value:(BOOL)value
 {
     CCSprite * bodyOutlet = idx == BodyIndexA ? bodyAOutlet : bodyBOutlet;
     if(value)
@@ -312,7 +312,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 }
 
 
-+(NSString *)convertBodyTypeToString:(BodyIndex)index
++(NSString *)convertBodyTypeToString:(JointHandleType)index
 {
     return index == BodyIndexA ? @"bodyA" : @"bodyB";
 }
