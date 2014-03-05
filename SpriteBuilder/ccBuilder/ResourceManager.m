@@ -418,12 +418,15 @@
     return NO;
 }
 
-+ (ResourceManager*) sharedManager
++ (ResourceManager *)sharedManager
 {
-    
-    static ResourceManager* rm = NULL;
-    if (!rm) rm = [[ResourceManager alloc] init];
-    return rm;
+
+	static ResourceManager *rm = NULL;
+	if (!rm)
+	{
+		rm = [[ResourceManager alloc] init];
+	}
+	return rm;
 }
 
 - (void) loadFontListTTF
@@ -1344,10 +1347,25 @@
     return YES;
 }
 
++ (BOOL)fileRename:(NSString *)srcPath dstPath:(NSString *)dstPath error:(NSError **)error
+{
+	NSFileManager* fm = [NSFileManager defaultManager];
+
+	if ([[srcPath stringByDeletingLastPathComponent] isEqualToString:[dstPath stringByDeletingLastPathComponent]]
+		&& ([[srcPath lastPathComponent] compare:[dstPath lastPathComponent] options:NSCaseInsensitiveSearch] == NSOrderedSame))
+	{
+		NSString *tmpFilename = [[NSProcessInfo processInfo] globallyUniqueString];
+		NSString *tmpPath = [[srcPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:tmpFilename];
+
+		BOOL resultTmp = [fm moveItemAtPath:srcPath toPath:tmpPath error:error];
+		return resultTmp && [fm moveItemAtPath:tmpPath toPath:dstPath error:error];
+	}
+
+	return [fm moveItemAtPath:srcPath toPath:dstPath error:error];
+}
+
 + (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName
 {
-    NSFileManager* fm = [NSFileManager defaultManager];
-    
     NSString* dstPath = [[srcPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:newName];
     int type = [ResourceManager getResourceTypeForFile:srcPath];
     
@@ -1363,18 +1381,19 @@
             NSString* dstResPath = [[srcDir stringByAppendingPathComponent:resDir] stringByAppendingPathComponent:newName];
             
             // Move the file
-            [fm moveItemAtPath:srcResPath toPath:dstResPath error:NULL];
+			[ResourceManager fileRename:srcResPath dstPath:dstResPath error:NULL];
         }
     }
     else
     {
         // Move file
-        [fm moveItemAtPath:srcPath toPath:dstPath error:NULL];
-        
+		[ResourceManager fileRename:srcPath  dstPath:dstPath error:NULL];
+
         // Also attempt to move preview image (if any)
         NSString* srcPathPre = [srcPath stringByAppendingPathExtension:@"ppng"];
         NSString* dstPathPre = [dstPath stringByAppendingPathExtension:@"ppng"];
-        [fm moveItemAtPath:srcPathPre toPath:dstPathPre error:NULL];
+
+		[ResourceManager fileRename:srcPathPre dstPath:dstPathPre error:NULL];
     }
     
     // Make sure the project is updated
