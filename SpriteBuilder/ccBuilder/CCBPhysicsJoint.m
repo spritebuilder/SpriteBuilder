@@ -21,13 +21,14 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 @implementation CCBPhysicsJoint
 {
 
+
 }
 @dynamic bodyA;
 @dynamic bodyB;
 @synthesize breakingForceEnabled;
 @synthesize maxForceEnabled;
 
-@synthesize isSelected;
+
 - (id) init
 {
     self = [super init];
@@ -175,7 +176,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 -(void)updateSelectionUI
 {
     
-    if(self.isSelected)
+    if(selectedBodyHandle & (1<<EntireJoint))
     {
         bodyAOutlet.visible = self.bodyA ? NO : YES;
         bodyBOutlet.visible = self.bodyB ? NO : YES;
@@ -186,52 +187,42 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         bodyBOutlet.visible = NO;
     }
     
-    isSelected = NO;
+    selectedBodyHandle = 0x0;
 }
 
 
 #pragma mark -
 
--(JointHandleType)hitTestOutlet:(CGPoint)worlPos
+
+-(JointHandleType)hitTestJointHandle:(CGPoint)worldPos
 {
-    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worlPos];
+
+    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worldPos];
     
     pointA = ccpAdd(pointA, ccp(0,5.0f));
     if(ccpLength(pointA) < 10.0f)
     {
-        return BodyIndexA;
+        return BodyOutletA;
     }
     
     
-    CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:worlPos];
+    CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:worldPos];
     pointB = ccpAdd(pointB, ccp(0,5.0f));
     if(ccpLength(pointB) < 10.0f)
     {
-        return BodyIndexB;
+        return BodyOutletB;
     }
+
     
-    return JointHandleUnknown;
-}
-
--(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
-{
-    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worlPos];
-    
-    if(ccpLength(pointA) < 5.0f)
-    {
-        return BodyIndexA;
-    }
-    return JointHandleUnknown;
-}
-
--(JointHandleType)hitTestJoint:(CGPoint)worldPos
-{
-
     return JointHandleUnknown;
 }
 
 #pragma mark -
 
+-(void)setJointHandleSelected:(JointHandleType)handleType;
+{
+    selectedBodyHandle = (1<<handleType);
+}
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
@@ -250,7 +241,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(CGPoint)outletWorldPos:(JointHandleType)idx
 {
-    if(idx == BodyIndexA)
+    if(idx == BodyOutletA)
     {
         return [bodyAOutlet convertToWorldSpaceAR:CGPointZero];
     }
@@ -265,7 +256,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)setOutletStatus:(JointHandleType)idx value:(BOOL)value
 {
-    CCSprite * bodyOutlet = idx == BodyIndexA ? bodyAOutlet : bodyBOutlet;
+    CCSprite * bodyOutlet = idx == BodyOutletA ? bodyAOutlet : bodyBOutlet;
     if(value)
     {
         bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
@@ -314,7 +305,15 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 +(NSString *)convertBodyTypeToString:(JointHandleType)index
 {
-    return index == BodyIndexA ? @"bodyA" : @"bodyB";
+    switch (index) {
+        case BodyOutletA:
+        case BodyAnchorA:
+            return @"bodyA";
+        case BodyAnchorB:
+        case BodyOutletB:
+        default:
+            return @"bodyB";
+    }
 }
 
 

@@ -54,7 +54,7 @@
 -(void)updateSelectionUI
 {
     //If selected, display selected sprites.
-    if(self.isSelected)
+    if(selectedBodyHandle & (1 << EntireJoint))
     {
         joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-sel.png"];
         jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor-sel.png"];
@@ -141,7 +141,7 @@
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
-    if(bodyType == BodyIndexA)
+    if(bodyType == BodyAnchorA)
     {
         CGPoint newPosition = [self.parent convertToNodeSpaceAR:worldPos];
         [self setPosition:newPosition];

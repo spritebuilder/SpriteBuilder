@@ -13,12 +13,17 @@ extern NSString *  dependantProperties[kNumProperties];
 
 typedef enum
 {
-    BodyIndexA,
-    BodyIndexB,
+    BodyAnchorA,
+    BodyAnchorB,
+    
+    BodyOutletA,
+    BodyOutletB,
     
     //-------
     MinHandleType,
     MaxHandleType,
+    
+    EntireJoint, //The entire joint has been touched at some point.
     
     JointHandleUnknown = -1,
 }JointHandleType;
@@ -28,6 +33,8 @@ typedef enum
 @class SceneGraph;
 @interface CCBPhysicsJoint : CCNode <NSPasteboardWriting>
 {
+    UInt32 selectedBodyHandle;//bitfield
+    
     CCNode * scaleFreeNode;
     
     CCSprite * bodyAOutlet;
@@ -50,11 +57,10 @@ typedef enum
 @property(nonatomic) BOOL breakingForceEnabled;
 @property(nonatomic) CGFloat breakingForce;
 
-@property BOOL isSelected;//Is clears on Visit
 
-//Hit tests.
--(JointHandleType)hitTestOutlet:(CGPoint)worlPos; //Did you hit the outlet?
--(JointHandleType)hitTestJointHandle:(CGPoint)worlPos; //Did you hit the body anchor drag point?
+-(JointHandleType)hitTestJointHandle:(CGPoint)worlPos; //Which part of the joint did you hit? AnchorA/B Handle Min/Max?
+-(void)setJointHandleSelected:(JointHandleType)handleType; //Tell the renderer that a particular component is selected. Clears every frame.
+
 
 -(void)setOutletStatus:(JointHandleType)idx value:(BOOL)value;
 -(void)refreshOutletStatus;

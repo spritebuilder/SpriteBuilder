@@ -445,10 +445,9 @@
     
     NodePhysicsBody* body = self.selectedNodePhysicsBody;
     
-    int outletIdx   = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestOutlet:pos] : -1;
     int handleIdx   = [self handleIndexForPos:pos];
     int lineIdx     = [self lineSegmIndexForPos:pos];
-    int bodyIndex  = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestJointHandle:pos] : -1;
+    JointHandleType jointHandleIndex  = node.plugIn.isJoint ? [(CCBPhysicsJoint*)node hitTestJointHandle:pos] : JointHandleUnknown;
     _mouseDownPos   = pos;
     _mouseDownInHandle = handleIdx;
     
@@ -489,17 +488,19 @@
         
         return YES;
     }
-    if(bodyIndex != JointHandleUnknown)
+    if(jointHandleIndex != JointHandleUnknown)
     {
-        bodyDragging = bodyIndex;
+        if(jointHandleIndex == BodyOutletA || jointHandleIndex == BodyOutletB)
+        {
+            [self onOutletDown:event joint:(CCBPhysicsJoint*)node outletIdx:jointHandleIndex];
+            return YES;
+        }
+        
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        bodyDragging = jointHandleIndex;
+        [joint setJointHandleSelected:bodyDragging];
         return YES;
         
-    }
-    else if(outletIdx != -1)
-    {
-        
-        [self onOutletDown:event joint:(CCBPhysicsJoint*)node outletIdx:outletIdx];
-        return YES;
     }
     else
     {
@@ -563,7 +564,9 @@
     else if(bodyDragging != JointHandleUnknown)
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        [joint setJointHandleSelected:bodyDragging];
         [joint setBodyHandle:pos bodyType:bodyDragging];
+        
         return YES;
     }
     else
@@ -628,7 +631,7 @@
 
 - (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx
 {
-    if(idx == BodyIndexA)
+    if(idx == BodyOutletA)
     {
         joint.bodyA = body;
         [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
@@ -822,7 +825,7 @@
     if(node.plugIn.isJoint)
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        joint.isSelected = YES;
+        [joint setJointHandleSelected:EntireJoint];
 
         if(jointOutletDragging)
         {

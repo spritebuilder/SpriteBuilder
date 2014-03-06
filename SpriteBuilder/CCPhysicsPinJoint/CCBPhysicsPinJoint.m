@@ -186,7 +186,7 @@ const float kEdgeRadius = 8.0f;
         pointA = ccpAdd(pointA, ccp(0,5.0f));
         if(ccpLength(pointA) < 8.0f)
         {
-            return BodyIndexA;
+            return BodyAnchorA;
         }
     }
     
@@ -195,7 +195,7 @@ const float kEdgeRadius = 8.0f;
         pointB = ccpAdd(pointB, ccp(0,5.0f));
         if(ccpLength(pointB) < 8.0f)
         {
-            return BodyIndexB;
+            return BodyAnchorB;
         }
     }
     
@@ -217,7 +217,7 @@ const float kEdgeRadius = 8.0f;
         }
     }
     
-    return JointHandleUnknown;
+    return [super hitTestJointHandle:worlPos];;
 }
 
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
@@ -241,7 +241,7 @@ const float kEdgeRadius = 8.0f;
 -(void)updateSelectionUI
 {
     //If selected, display selected sprites.
-    if(self.isSelected)
+    if(selectedBodyHandle & (1 << EntireJoint))
     {
         jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
         
@@ -322,7 +322,7 @@ const float kEdgeRadius = 8.0f;
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
-    if(bodyType == BodyIndexB)
+    if(bodyType == BodyAnchorB)
     {
         CGPoint newPosition = [self.bodyB convertToNodeSpace:worldPos];
         self.anchorB = newPosition;
