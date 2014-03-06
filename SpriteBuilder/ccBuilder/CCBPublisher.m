@@ -742,11 +742,10 @@
 
 -(void) publishSpriteKitAtlasDir:(NSString*)spriteSheetDir sheetName:(NSString*)spriteSheetName subPath:(NSString*)subPath
 {
-	// FIXME: Sandbox -> if the file does not exist require the user to browse for it?
-	
 	NSFileManager* fileManager = [NSFileManager defaultManager];
 
 	NSString* textureAtlasPath = [[NSBundle mainBundle] pathForResource:@"SpriteKitTextureAtlasToolPath" ofType:@"txt"];
+	NSAssert(textureAtlasPath, @"Missing bundle file: SpriteKitTextureAtlasToolPath.txt");
 	NSString* textureAtlasToolLocation = [NSString stringWithContentsOfFile:textureAtlasPath encoding:NSUTF8StringEncoding error:nil];
 	NSLog(@"Using Sprite Kit Texture Atlas tool: %@", textureAtlasToolLocation);
 	
