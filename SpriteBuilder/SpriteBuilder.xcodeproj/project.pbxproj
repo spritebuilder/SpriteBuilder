@@ -329,7 +329,7 @@
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
-		DC0A8D3618C8A93A009A619D /* GenerateSpriteKitTextureAtlas.sh in Resources */ = {isa = PBXBuildFile; fileRef = DC0A8D3518C8A93A009A619D /* GenerateSpriteKitTextureAtlas.sh */; };
+		DC0A8D3F18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */; };
 		DC5129C11891450D0091873D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC6802F9189145840060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F5189145840060BE39 /* CCBPProperties.plist */; };
 		DC6802FA189145840060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F6189145840060BE39 /* Icon.png */; };
@@ -1400,7 +1400,7 @@
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
-		DC0A8D3518C8A93A009A619D /* GenerateSpriteKitTextureAtlas.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = GenerateSpriteKitTextureAtlas.sh; sourceTree = "<group>"; };
+		DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SpriteKitTextureAtlasToolPath.txt; sourceTree = "<group>"; };
 		DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6802F3189145830060BE39 /* CCBPluginSKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNode.h; sourceTree = "<group>"; };
 		DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNode.m; sourceTree = "<group>"; };
@@ -2728,7 +2728,7 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DC0A8D3518C8A93A009A619D /* GenerateSpriteKitTextureAtlas.sh */,
+				DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */,
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
 				E3AF6CE015F0CFAE0048DB2A /* Documentation */,
@@ -4709,7 +4709,6 @@
 				E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */,
 				E3A16AF01536C885004B528A /* ruler-guide.png in Resources */,
 				E3B9AF431538612200489438 /* ruler-xy.png in Resources */,
-				DC0A8D3618C8A93A009A619D /* GenerateSpriteKitTextureAtlas.sh in Resources */,
 				E3F3F845153C7772005443EE /* notes-bg.png in Resources */,
 				E3F3F847153D9126005443EE /* StickyNoteEditView.xib in Resources */,
 				E3F3F849153DB893005443EE /* notes-close.png in Resources */,
@@ -5088,6 +5087,7 @@
 				8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */,
 				9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */,
 				929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */,
+				DC0A8D3F18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
