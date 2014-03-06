@@ -745,6 +745,16 @@
 	// FIXME: Sandbox -> if the file does not exist require the user to browse for it?
 	
 	NSFileManager* fileManager = [NSFileManager defaultManager];
+
+	NSString* textureAtlasPath = [[NSBundle mainBundle] pathForResource:@"SpriteKitTextureAtlasToolPath" ofType:@"txt"];
+	NSString* textureAtlasToolLocation = [NSString stringWithContentsOfFile:textureAtlasPath encoding:NSUTF8StringEncoding error:nil];
+	NSLog(@"Using Sprite Kit Texture Atlas tool: %@", textureAtlasToolLocation);
+	
+	if ([fileManager fileExistsAtPath:textureAtlasToolLocation] == NO)
+	{
+		[warnings addWarningWithDescription:@"<-- file not found! Install a public (non-beta) Xcode version to generate sprite sheets. Xcode beta users may edit 'SpriteKitTextureAtlasToolPath.txt' inside SpriteBuilder.app bundle." isFatal:YES relatedFile:textureAtlasToolLocation];
+		return;
+	}
 	
 	for (NSString* res in publishForResolutions)
 	{
@@ -756,13 +766,17 @@
 		NSString* spriteSheetFile = [spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]];
 		[fileManager createDirectoryAtPath:spriteSheetFile withIntermediateDirectories:YES attributes:nil error:nil];
 
-		NSString* publishedSheetRelativePath = [NSString stringWithFormat:@"resources-%@/%@", res, spriteSheetName];
+		NSLog(@"Generating Sprite Kit Texture Atlas: %@", [NSString stringWithFormat:@"resources-%@/%@", res, spriteSheetName]);
+		
+		NSPipe* stdErrorPipe = [NSPipe pipe];
+		[stdErrorPipe.fileHandleForReading readToEndOfFileInBackgroundAndNotify];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(spriteKitTextureAtlasTaskCompleted:) name:NSFileHandleReadToEndOfFileCompletionNotification object:stdErrorPipe.fileHandleForReading];
 		
 		// run task using Xcode TextureAtlas tool
-		NSString* taScript = [[NSBundle mainBundle] pathForResource:@"GenerateSpriteKitTextureAtlas" ofType:@"sh"];
 		NSTask* atlasTask = [[NSTask alloc] init];
-		atlasTask.launchPath = taScript;
-		atlasTask.arguments = @[sheetNameDir, spriteSheetFile, publishedSheetRelativePath];
+		atlasTask.launchPath = textureAtlasToolLocation;
+		atlasTask.arguments = @[sheetNameDir, spriteSheetFile];
+		atlasTask.standardOutput = stdErrorPipe;
 		[atlasTask launch];
 		
 		// Update progress
@@ -777,8 +791,7 @@
 		NSString* sheetPlistPath = [spriteSheetDir stringByAppendingPathComponent:sheetPlist];
 		if ([fileManager fileExistsAtPath:sheetPlistPath] == NO)
 		{
-			[warnings addWarningWithDescription:@"SK TextureAtlas failed to generate (possible causes: 1) one or more source images larger than 2048x2048 for specified resolution 2) Xcode's TextureAtlas command line tool not found)"
-										isFatal:YES relatedFile:spriteSheetName resolution:res];
+			[warnings addWarningWithDescription:@"TextureAtlas failed to generate! See preceding error message(s)." isFatal:YES relatedFile:spriteSheetName resolution:res];
 		}
 		
 		// TODO: ?? because SK TextureAtlas tool itself checks if the spritesheet needs to be updated
@@ -787,6 +800,20 @@
 		 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 		 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
 		 */
+	}
+}
+
+-(void) spriteKitTextureAtlasTaskCompleted:(NSNotification *)notification
+{
+	// log additional warnings/errors from TextureAtlas tool
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:notification.object];
+
+	NSData* data = [notification.userInfo objectForKey:NSFileHandleNotificationDataItem];
+	NSString* errorMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	if (errorMessage.length)
+	{
+		NSLog(@"%@", errorMessage);
+		[warnings addWarningWithDescription:errorMessage isFatal:YES];
 	}
 }
 
