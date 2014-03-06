@@ -777,7 +777,8 @@
 		NSString* sheetPlistPath = [spriteSheetDir stringByAppendingPathComponent:sheetPlist];
 		if ([fileManager fileExistsAtPath:sheetPlistPath] == NO)
 		{
-			[warnings addWarningWithDescription:@"SK TextureAtlas failed to generate (possible cause: one or more source images larger than 2048x2048 for specified resolution)" isFatal:YES relatedFile:spriteSheetName resolution:res];
+			[warnings addWarningWithDescription:@"SK TextureAtlas failed to generate (possible causes: 1) one or more source images larger than 2048x2048 for specified resolution 2) Xcode's TextureAtlas command line tool not found)"
+										isFatal:YES relatedFile:spriteSheetName resolution:res];
 		}
 		
 		// TODO: ?? because SK TextureAtlas tool itself checks if the spritesheet needs to be updated
