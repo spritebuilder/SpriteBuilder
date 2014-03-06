@@ -10,8 +10,7 @@
 #import "AppDelegate.h"
 #import "GeometryUtil.h"
 
-static const float kMargin = 8.0f/64.0f;
-static const float kDefaultLength = 58.0f;
+
 
 
 @interface CCBPhysicsJoint()
@@ -21,8 +20,7 @@ static const float kDefaultLength = 58.0f;
 @interface CCBPhysicsPinJoint()
 {
     CCSprite9Slice  * jointBody;
-    CCSprite        * anchorHandleA;
-    CCSprite        * anchorHandleB;
+
     
     CCSprite        * minHandle;
     CCSprite9Slice  * minHandleBody;
@@ -39,7 +37,7 @@ static const float kDefaultLength = 58.0f;
 @synthesize maxDistance;
 @synthesize maxDistanceEnabled;
 @synthesize minDistanceEnabled;
-@synthesize anchorB;
+
 
 - (id) init
 {
@@ -57,6 +55,8 @@ static const float kDefaultLength = 58.0f;
 
 -(void)setupBody
 {
+    [super setupBody];
+    
     jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png"];
     jointBody.marginLeft = kMargin;
     jointBody.marginRight = kMargin;
@@ -66,12 +66,6 @@ static const float kDefaultLength = 58.0f;
     
     
     [scaleFreeNode addChild:jointBody];
-    
-    anchorHandleA = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
-    anchorHandleB = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
-    
-    [scaleFreeNode addChild:anchorHandleA];
-    [scaleFreeNode addChild:anchorHandleB];
     
     maxHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-long.png"];
     maxHandle.anchorPoint = ccp(0.5f, 0.0f);
@@ -102,65 +96,15 @@ static const float kDefaultLength = 58.0f;
 
 }
 
--(float)worldLength
-{
-    if(self.bodyA && self.bodyB)
-    {
-        CGPoint worldPosA = [self.bodyA convertToWorldSpace:self.anchorA];
-        CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
-        
-        float distance = ccpDistance(worldPosA, worldPosB);
-        return distance;
-    }
-    
-    return kDefaultLength;
-}
-
--(float)localLength
-{
- 
-    if(self.bodyA && self.bodyB)
-    {
-        CGPoint worldPosA = [self.bodyA convertToWorldSpace:self.anchorA];
-        CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
-
-        CGPoint localPosA = [self convertToNodeSpace:worldPosA];
-        CGPoint localPosB = [self convertToNodeSpace:worldPosB];
-        
-        float distance = ccpDistance(localPosA, localPosB);
-        return distance;
-    }
-    
-    return kDefaultLength;
-}
-
--(float)rotation
-{
-    if(self.bodyA && self.bodyB)
-    {
-        CGPoint worldPosA = [self.bodyA convertToWorldSpace:self.anchorA];
-        CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
-        
-        CGPoint segment = ccpSub(worldPosB,worldPosA);
-        float angleRad = atan2f(segment.y, segment.x);
-        float angle = -kmRadiansToDegrees( angleRad);
-        return  angle;
-    }
-
-    return 0.0f;
-}
-
 const float kEdgeRadius = 8.0f;
 -(void)updateRenderBody
 {
+    [super updateRenderBody];
     float length = [self worldLength];
     
     jointBody.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
     jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
     self.rotation = [self rotation];
-    
-    //Anchor B
-    anchorHandleB.position = ccpMult(ccp(length,0),1/[CCDirector sharedDirector].contentScaleFactor);
     
     
     minHandle.position = ccpMult(ccp(length *  self.minDistance / [self localLength], kEdgeRadius - 1.0f),1/[CCDirector sharedDirector].contentScaleFactor);
@@ -181,23 +125,6 @@ const float kEdgeRadius = 8.0f;
 
 -(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
 {
-    {
-        CGPoint pointA = [anchorHandleA convertToNodeSpaceAR:worlPos];
-        pointA = ccpAdd(pointA, ccp(0,5.0f));
-        if(ccpLength(pointA) < 8.0f)
-        {
-            return BodyAnchorA;
-        }
-    }
-    
-    {
-        CGPoint pointB = [anchorHandleB convertToNodeSpaceAR:worlPos];
-        pointB = ccpAdd(pointB, ccp(0,5.0f));
-        if(ccpLength(pointB) < 8.0f)
-        {
-            return BodyAnchorB;
-        }
-    }
     
     {
         CGPoint pointMin = [maxHandle convertToNodeSpaceAR:worlPos];
@@ -219,24 +146,6 @@ const float kEdgeRadius = 8.0f;
     
     return [super hitTestJointHandle:worlPos];;
 }
-
-- (BOOL)hitTestWithWorldPos:(CGPoint)pos
-{
-    CGPoint anchorAWorldpos = [anchorHandleA convertToWorldSpace:CGPointZero];
-    CGPoint anchorBWorldpos = [anchorHandleB convertToWorldSpace:CGPointZero];
-    
-
-    float distance = [GeometryUtil distanceFromLineSegment:anchorAWorldpos b:anchorBWorldpos c:pos];
-
-    if(distance < 7.0f)
-    {
-        return YES;
-    }
-    
-    return NO;
-    
-}
-
 
 -(void)updateSelectionUI
 {
@@ -281,8 +190,6 @@ const float kEdgeRadius = 8.0f;
     {
         minHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide.png"];
     }
-
-    
     
     [super updateSelectionUI];
 }
@@ -292,39 +199,6 @@ const float kEdgeRadius = 8.0f;
 #pragma mark - Properties -
 
 
--(void)setAnchorFromBodyB
-{
-    if(!self.bodyB)
-    {
-        self.anchorB = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
-        return;
-    }
-    
-    CGPoint anchorBPositionNodePos = ccpAdd(self.position, ccp(kDefaultLength,0));
-    
-    CGPoint worldPos = [self.parent convertToWorldSpace:anchorBPositionNodePos];
-    CGPoint lAnchorb = [self.bodyB convertToNodeSpace:worldPos];
-    
-    self.anchorB = lAnchorb;
-    [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
-}
-
-
--(void)setBodyB:(CCNode *)aBodyB
-{
-    [super setBodyB:aBodyB];
-    [self setAnchorFromBodyB];
-}
-
-
--(void)setAnchorB:(CGPoint)lAnchorB
-{
-    anchorB = lAnchorB;
-    //refresh max mins
-    self.minDistance = self.minDistance;
-    self.maxDistance = self.maxDistance;
-}
 
 -(void)setAnchorA:(CGPoint)lAnchorA
 {
@@ -334,6 +208,16 @@ const float kEdgeRadius = 8.0f;
     self.maxDistance = self.maxDistance;
     
 }
+
+
+-(void)setAnchorB:(CGPoint)lAnchorB
+{
+    [super setAnchorB:lAnchorB];
+    //refresh max mins
+    self.minDistance = self.minDistance;
+    self.maxDistance = self.maxDistance;
+}
+
 
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
