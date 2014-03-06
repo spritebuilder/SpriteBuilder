@@ -25,13 +25,11 @@
 #import "SequencerHandler.h"
 #import "SceneGraph.h"
 #import "AppDelegate.h"
-#import "CCBGlobals.h"
 #import "NodeInfo.h"
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
 #import "CCBWriterInternal.h"
 #import "CCBReaderInternal.h"
-#import "PositionPropertySetter.h"
 #import "SequencerExpandBtnCell.h"
 #import "SequencerStructureCell.h"
 #import "SequencerCell.h"
@@ -41,19 +39,15 @@
 #import "SequencerKeyframeEasing.h"
 #import "SequencerNodeProperty.h"
 #import "SequencerButtonCell.h"
-#import "CCNode+NodeInfo.h"
 #import "CCBDocument.h"
-#import "CCBPCCBFile.h"
 #import "SequencerCallbackChannel.h"
 #import "SequencerSoundChannel.h"
-#import <objc/runtime.h>
 #import "NSPasteboard+CCB.h"
 #import "MainWindow.h"
-#import "SequencerJoints.h"
 #import "NSArray+Query.h"
 #import "CCBPhysicsJoint.h"
 
-static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
+// TODO: move these to a constants file and replace hard coded strings in project with constants.
 static NSString *const PASTEBOARD_TYPE_NODE = @"com.cocosbuilder.node";
 static NSString *const PASTEBOARD_TYPE_TEXTURE = @"com.cocosbuilder.texture";
 static NSString *const PASTEBOARD_TYPE_TEMPLATE = @"com.cocosbuilder.template";
@@ -62,8 +56,10 @@ static NSString *const PASTEBOARD_TYPE_PLUGINNODE = @"com.cocosbuilder.PlugInNod
 static NSString *const PASTEBOARD_TYPE_WAVE = @"com.cocosbuilder.wav";
 static NSString *const PASTEBOARD_TYPE_JOINTBODY = @"com.cocosbuilder.jointBody";
 
+static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
 static NSString *const ORIGINAL_NODE_KEY = @"originalNode";
 static NSString *const COPY_NODE_KEY = @"copyNode";
+
 static SequencerHandler* sharedSequencerHandler;
 
 @implementation SequencerHandler
@@ -100,7 +96,8 @@ static SequencerHandler* sharedSequencerHandler;
 			PASTEBOARD_TYPE_TEMPLATE,
 			PASTEBOARD_TYPE_CCB,
 			PASTEBOARD_TYPE_PLUGINNODE,
-			PASTEBOARD_TYPE_WAVE, PASTEBOARD_TYPE_JOINTBODY]];
+			PASTEBOARD_TYPE_WAVE,
+			PASTEBOARD_TYPE_JOINTBODY]];
 
 	[[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
@@ -138,10 +135,8 @@ static SequencerHandler* sharedSequencerHandler;
         [timeScaleSlider setEnabled:NO];
         return;
     }
-    
+
     [timeScaleSlider setEnabled:YES];
-    
-    
     timeScaleSlider.floatValue = currentSequence.timelineScale;
 }
 
@@ -150,7 +145,7 @@ static SequencerHandler* sharedSequencerHandler;
 - (float) visibleTimeArea
 {
     NSTableColumn* column = [outlineHierarchy tableColumnWithIdentifier:@"sequencer"];
-    return (float) ((column.width-2*TIMELINE_PAD_PIXELS)/currentSequence.timelineScale);
+    return (float) ((column.width - 2*TIMELINE_PAD_PIXELS)/currentSequence.timelineScale);
 }
 
 - (float) maxTimelineOffset
@@ -165,18 +160,10 @@ static SequencerHandler* sharedSequencerHandler;
     float maxTimeScroll = currentSequence.timelineLength - visibleTime;
     
     float proportion = visibleTime/currentSequence.timelineLength;
-    
+
     scroller.knobProportion = proportion;
     scroller.doubleValue = currentSequence.timelineOffset / maxTimeScroll;
-    
-    if (proportion < 1)
-    {
-        [scroller setEnabled:YES];
-    }
-    else
-    {
-        [scroller setEnabled:NO];
-    }
+	[scroller setEnabled:(proportion < 1)];
 }
 
 - (void) updateScrollerToShowCurrentTime
@@ -241,8 +228,7 @@ static SequencerHandler* sharedSequencerHandler;
         default:
             break;
     }
-    
-    
+
     currentSequence.timelineOffset = newOffset;
 }
 
@@ -308,7 +294,6 @@ static SequencerHandler* sharedSequencerHandler;
 #pragma mark Data Source Delegate
 #pragma mark -
 
-
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     
     if ([[SceneGraph instance] rootNode] == NULL) return 0;
@@ -319,11 +304,9 @@ static SequencerHandler* sharedSequencerHandler;
         SequencerJoints * joints = item;
         return [joints.all count];
     }
-    
-    CCNode* node = (CCNode*)item;
-    NSArray* arr = [node children];
-    
-    return [arr count];
+
+	CCNode *node = (CCNode *)item;
+    return [[node children] count];
 }
 
 
@@ -356,45 +339,40 @@ static SequencerHandler* sharedSequencerHandler;
 	return YES;
 }
 
-
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
     SceneGraph *sceneGraph = [SceneGraph instance];
-    
+
     if (item == NULL)
     {
-        if (index == 0)
-        {
-            return currentSequence.callbackChannel;
-        }
-        else if (index == 1)
-        {
-            return currentSequence.soundChannel;
-        }
-        else if(index == 2)
-        {
-            return sceneGraph.rootNode;
-        }
-        else if(index == 3)
-        {
-            return sceneGraph.joints;
-        }
-    }
+		switch (index)
+		{
+			case 0 : return currentSequence.callbackChannel;
+			case 1 : return currentSequence.soundChannel;
+			case 2 : return sceneGraph.rootNode;
+			case 3 : return sceneGraph.joints;
+			default:
+				NSAssert(NO, @"Index %li not supported", index);
+		}
+	}
     
     if([item isKindOfClass:[SequencerJoints class]])
     {
         return sceneGraph.joints.all[(NSUInteger) index];
     }
-    
+
     CCNode* node = (CCNode*)item;
     return [[node children] objectAtIndex:(NSUInteger) index];
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-    if (item == nil) return @"Root";
+	if (item == nil)
+	{
+		return @"Root";
+	}
 
-    CCNode* node = item;
+	CCNode* node = item;
     
     if ([item isKindOfClass:[SequencerChannel class]])
     {
@@ -470,7 +448,6 @@ static SequencerHandler* sharedSequencerHandler;
 	{
 		return NO;
 	}
-
 	return YES;
 }
 
@@ -488,7 +465,6 @@ static SequencerHandler* sharedSequencerHandler;
 			return NO;
 		}
 	}
-
 	return YES;
 }
 
@@ -566,9 +542,9 @@ static SequencerHandler* sharedSequencerHandler;
 	return YES;
 }
 
-- (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
+- (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id < NSDraggingInfo >)info proposedItem:(id)dropTarget proposedChildIndex:(NSInteger)index
 {
-	if (item == NULL)
+	if (dropTarget == NULL)
 	{
 		return NSDragOperationNone;
 	}
@@ -578,105 +554,124 @@ static SequencerHandler* sharedSequencerHandler;
     NSData* nodeData = [pasteboard dataForType:PASTEBOARD_TYPE_NODE];
     if (nodeData)
     {
-        if (![item isKindOfClass:[CCNode class]])
-        {
-			return NSDragOperationNone;
-		}
-		else
-		{
-			CCNode *dropTarget = item;
-			NSArray *droppedOriginalNodes = [self extractDroppedNodes:[self deserializeDraggedObjects:nodeData] withKey:ORIGINAL_NODE_KEY];
-			if (dropTarget.plugIn.isJoint ||
-				![self isMoveValidToTargetNode:dropTarget droppedNodes:droppedOriginalNodes])
-			{
-				return NSDragOperationNone;
-			}
-
-            return NSDragOperationGeneric;
-        }
-    }
+		return [self validateDropForNodeData:dropTarget nodeData:nodeData];
+	}
     
     NSArray * jointsData = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
     if(jointsData.count > 0)
     {
-        if(index != -1)
-        {
-            return NSDragOperationNone;
-        }
-        
-        if(![item isKindOfClass:[CCNode class]])
-        {
-            return NSDragOperationNone;
-        }
-        
-        CCNode* node = item;
-        if(!node.nodePhysicsBody)
-            return NSDragOperationNone;
-
-        return NSDragOperationGeneric;
-    }
-
-    NSArray *waveFiles = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
-    if(waveFiles.count == 0)
-    {
-		return NSDragOperationNone;
+		return [self validateDropForJointsData:dropTarget index:index];
 	}
-	else
+
+	if([dropTarget isKindOfClass:[SequencerSoundChannel class]])
 	{
-        if([item isKindOfClass:[SequencerSoundChannel class]])
-        {
-            for (NSDictionary* dict in waveFiles)
-            {
-                NSPoint mouseLocationInWindow = info.draggingLocation;
-                NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
-
-                currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:(float) mouseLocation.x];
-                currentSequence.soundChannel.needDragAndDropRedraw = YES;
-
-                [scrubberSelectionView setNeedsDisplay:YES];
-
-                return NSDragOperationGeneric;
-            }
-        }
+		return [self validateDropForWaveFiles:info pasteboard:pasteboard];
 	}
-    
-    if([item isKindOfClass:[SequencerSoundChannel class]]
-	   || [item isKindOfClass:[SequencerCallbackChannel class]] )
+
+    if([dropTarget isKindOfClass:[SequencerSoundChannel class]]
+	   || [dropTarget isKindOfClass:[SequencerCallbackChannel class]] )
     {
         return NSDragOperationNone;
     }
 
     NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
-    for (NSDictionary* dict in pbNodePlugIn)
+	if (pbNodePlugIn.count > 0)
     {
-        if(![item isKindOfClass:[CCNode class]])
-        {
-            return NSDragOperationNone;
-        }
-        
-        CCNode * node = item;
-        if(node.plugIn.isJoint)
-            return NSDragOperationNone;
-        
-        return NSDragOperationGeneric;
-    
-    }
+		return [self validateDropForPluginNodes:dropTarget];
+	}
     
     //Default behavior for Joints is don't accept drag and drops.
-    if([item isKindOfClass:[CCNode class]])
+    if([dropTarget isKindOfClass:[CCNode class]])
     {
-        CCNode * node = item;
-        if(node.plugIn.isJoint)
-            return NSDragOperationNone;
-    }
+        CCNode * node = dropTarget;
+		if (node.plugIn.isJoint)
+		{
+			return NSDragOperationNone;
+		}
+	}
     
-    if([item isKindOfClass:[SequencerJoints class]])
+    if([dropTarget isKindOfClass:[SequencerJoints class]])
     {
         return NSDragOperationNone;
     }
-    
-    
+
     return NSDragOperationGeneric;
+}
+
+- (NSDragOperation)validateDropForPluginNodes:(id)dropTarget
+{
+	if (![dropTarget isKindOfClass:[CCNode class]])
+	{
+		return NSDragOperationNone;
+	}
+
+	CCNode *node = dropTarget;
+	if (node.plugIn.isJoint)
+	{
+		return NSDragOperationNone;
+	}
+
+	return NSDragOperationGeneric;
+}
+
+- (NSDragOperation)validateDropForWaveFiles:(id <NSDraggingInfo>)info pasteboard:(NSPasteboard *)pasteboard
+{
+	NSArray *waveFiles = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
+	if(waveFiles.count == 0)
+	{
+		return NSDragOperationNone;
+	}
+
+	NSPoint mouseLocationInWindow = info.draggingLocation;
+	NSPoint mouseLocation = [scrubberSelectionView convertPoint:mouseLocationInWindow fromView:[appDelegate.window contentView]];
+
+	currentSequence.soundChannel.dragAndDropTimeStamp = [currentSequence positionToTime:(float) mouseLocation.x];
+	currentSequence.soundChannel.needDragAndDropRedraw = YES;
+
+	[scrubberSelectionView setNeedsDisplay:YES];
+
+	return NSDragOperationGeneric;
+}
+
+- (NSDragOperation)validateDropForJointsData:(id)item index:(NSInteger)index
+{
+	if (index != -1)
+	{
+		return NSDragOperationNone;
+	}
+
+	if (![item isKindOfClass:[CCNode class]])
+	{
+		return NSDragOperationNone;
+	}
+
+	CCNode* node = item;
+	if (!node.nodePhysicsBody)
+	{
+		return NSDragOperationNone;
+	}
+
+	return NSDragOperationGeneric;
+}
+
+- (NSDragOperation)validateDropForNodeData:(id)item nodeData:(NSData *)nodeData
+{
+	if (![item isKindOfClass:[CCNode class]])
+	{
+		return NSDragOperationNone;
+	}
+	else
+	{
+		CCNode *dropTarget = item;
+		NSArray *droppedOriginalNodes = [self extractDroppedNodes:[self deserializeDraggedObjects:nodeData] withKey:ORIGINAL_NODE_KEY];
+		if (dropTarget.plugIn.isJoint ||
+			![self isMoveValidToTargetNode:dropTarget droppedNodes:droppedOriginalNodes])
+		{
+			return NSDragOperationNone;
+		}
+
+		return NSDragOperationGeneric;
+	}
 }
 
 - (NSArray *)extractDroppedNodes:(NSArray *)droppedNodes withKey:(NSString *)key
@@ -712,8 +707,8 @@ static SequencerHandler* sharedSequencerHandler;
 		}
 
 		[appDelegate setSelectedNodes:[self extractDroppedNodes:nodes withKey:COPY_NODE_KEY]];
-		SceneGraph *g = [SceneGraph instance];
-		[g.joints fixupReferences];
+		SceneGraph *sceneGraph = [SceneGraph instance];
+		[sceneGraph.joints fixupReferences];
 
         return YES;
     }
@@ -725,16 +720,15 @@ static SequencerHandler* sharedSequencerHandler;
     for (NSDictionary* dict in pbTextures)
     {
         [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
-        //[PositionPropertySetter refreshAllPositions];
         addedObject = YES;
     }
-    
+
     // Dropped WavFile;
     NSArray* pbWavs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
     for (NSDictionary* dict in pbWavs)
     {
         NSPoint mouseLocationInWindow = info.draggingLocation;
-        NSPoint mouseLocation = [scrubberSelectionView  convertPoint: mouseLocationInWindow fromView: [appDelegate.window contentView]];
+        NSPoint mouseLocation = [scrubberSelectionView convertPoint:mouseLocationInWindow fromView:[appDelegate.window contentView]];
         
         //Create Keyframe
         SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:(float) mouseLocation.x]];
@@ -775,7 +769,6 @@ static SequencerHandler* sharedSequencerHandler;
         NSString * propertyName = ConvertBodyTypeToString(type);
         [joint setValue:item forKey:propertyName];
         [[AppDelegate appDelegate] refreshProperty:propertyName];
-        
     }
     
     return addedObject;
@@ -790,14 +783,11 @@ static SequencerHandler* sharedSequencerHandler;
     NSIndexSet* indexes = [outlineHierarchy selectedRowIndexes];
     NSMutableArray* selectedNodes = [NSMutableArray array];
     
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop){
-        id item = [outlineHierarchy itemAtRow:idx];
-        
-        if ([item isKindOfClass:[SequencerChannel class]] || [item isKindOfClass:[SequencerJoints class]])
-        {
-            //
-        }
-        else
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop)
+	{
+        id item = [outlineHierarchy itemAtRow:index];
+
+        if (![item isKindOfClass:[SequencerChannel class]] && ![item isKindOfClass:[SequencerJoints class]])
         {
             CCNode* node = item;
             [selectedNodes addObject:node];
@@ -906,133 +896,169 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if([item isKindOfClass:[SequencerJoints class]])
     {
-        if ([tableColumn.identifier isEqualToString:@"expander"])
-        {
-            SequencerExpandBtnCell* expCell = cell;
-            expCell.node = [SceneGraph instance].joints.node;
-            expCell.canExpand = NO;
-        }
-        if([tableColumn.identifier isEqualToString:@"locked"] ||
-           [tableColumn.identifier isEqualToString:@"hidden"])
-        {
-            SequencerButtonCell * buttonCell = cell;
-            buttonCell.node = [SceneGraph instance].joints.node;
-            [buttonCell setTransparent:YES];
-            
-        }
-        if([tableColumn.identifier isEqualToString:@"structure"])
-        {
-            SequencerStructureCell* strCell = cell;
-            strCell.drawHardLine = NO;
-            strCell.node = NULL;
-        }
-        return;
+		[self willDisplayJointCells:cell tableColumn:tableColumn];
+		return;
     }
     
     if ([item isKindOfClass:[SequencerChannel class]])
     {
-        if ([tableColumn.identifier isEqualToString:@"expander"])
-        {
-            SequencerExpandBtnCell* expCell = cell;
-            expCell.node = NULL;
-            
-            if ([item isKindOfClass:[SequencerCallbackChannel class]])
-            {
-                expCell.isExpanded = NO;
-                expCell.canExpand = NO;
-            }
-            else if ([item isKindOfClass:[SequencerSoundChannel class]])
-            {
-                SequencerSoundChannel * soundChannel = item;
-                
-                expCell.isExpanded = soundChannel.isEpanded;
-                expCell.canExpand = YES;
-            }
-        }
-        else if ([tableColumn.identifier isEqualToString:@"structure"])
-        {
-            SequencerStructureCell* strCell = cell;
-            strCell.node = NULL;
-            strCell.drawHardLine = YES;
-        }
-        else if ([tableColumn.identifier isEqualToString:@"sequencer"])
-        {
-            SequencerCell* seqCell = cell;
-            seqCell.node = NULL;
-            
-            if ([item isKindOfClass:[SequencerCallbackChannel class]])
-            {
-                seqCell.channel = (SequencerCallbackChannel*) item;
-            }
-            else if ([item isKindOfClass:[SequencerSoundChannel class]])
-            {
-                seqCell.channel = (SequencerSoundChannel*) item;
-            }
-        }
-        else if([tableColumn.identifier isEqualToString:@"locked"] ||
-                [tableColumn.identifier isEqualToString:@"hidden"])
-        {
-            SequencerButtonCell * buttonCell = cell;
-            buttonCell.node = nil;
-            
-            if ([item isKindOfClass:[SequencerCallbackChannel class]] ||
-                [item isKindOfClass:[SequencerSoundChannel class]])
-            {
-                [buttonCell setTransparent:YES];
-            }
-            else
-            {
-                [buttonCell setTransparent:NO];
-            }
-            
-        }
-        return;
-    }
+		[self willDisplayChannelCell:cell tableColumn:tableColumn item:item];
+		return;
+	}
     
     CCNode* node = item;
-    BOOL isRootNode = (node == [CocosScene cocosScene].rootNode);
+    BOOL isRootNode = node == [CocosScene cocosScene].rootNode;
     
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
-        SequencerButtonCell * buttonCell = cell;
-        buttonCell.node = node;
-        [buttonCell setTransparent:NO];
-        
-        if(node.parentHidden)
-        {
-            [buttonCell setEnabled:NO];
-        }
-        else
-        {
-            [buttonCell setEnabled:YES];
-        }
-    }
-    
-    
+		[self willDisplayHiddenCell:cell node:node];
+	}
+
     if([tableColumn.identifier isEqualToString:@"locked"])
     {
-        SequencerButtonCell * buttonCell = cell;
-        [buttonCell setTransparent:NO];
-        buttonCell.node = node;
-    }
+		[self willDisplayLockedCell:cell node:node];
+	}
 
     if ([tableColumn.identifier isEqualToString:@"expander"])
     {
-        SequencerExpandBtnCell* expCell = cell;
-        expCell.isExpanded = node.seqExpanded;
-        expCell.canExpand = (!isRootNode && !node.plugIn.isJoint);
-        expCell.node = node;
-    }
+		[self willDisplayExpanderCell:cell node:node isRootNode:isRootNode];
+	}
     else if ([tableColumn.identifier isEqualToString:@"structure"])
     {
-        SequencerStructureCell* strCell = cell;
-        strCell.node = node;
-    }
+		[self willDisplayStructurerCell:cell node:node];
+	}
     else if ([tableColumn.identifier isEqualToString:@"sequencer"])
     {
-        SequencerCell* seqCell = cell;
-        seqCell.node = node;
-    }
+		[self willDisplaySequencerCell:cell node:node];
+	}
+}
+
+- (void)willDisplaySequencerCell:(id)cell node:(CCNode *)node
+{
+	SequencerCell* seqCell = cell;
+	seqCell.node = node;
+}
+
+- (void)willDisplayStructurerCell:(id)cell node:(CCNode *)node
+{
+	SequencerStructureCell* strCell = cell;
+	strCell.node = node;
+}
+
+- (void)willDisplayExpanderCell:(id)cell node:(CCNode *)node isRootNode:(BOOL)isRootNode
+{
+	SequencerExpandBtnCell* expCell = cell;
+	expCell.isExpanded = node.seqExpanded;
+	expCell.canExpand = (!isRootNode && !node.plugIn.isJoint);
+	expCell.node = node;
+}
+
+- (void)willDisplayLockedCell:(id)cell node:(CCNode *)node
+{
+	SequencerButtonCell * buttonCell = cell;
+	[buttonCell setTransparent:NO];
+	buttonCell.node = node;
+}
+
+- (void)willDisplayHiddenCell:(id)cell node:(CCNode *)node
+{
+	SequencerButtonCell * buttonCell = cell;
+	buttonCell.node = node;
+	[buttonCell setTransparent:NO];
+
+	if (node.parentHidden)
+	{
+		[buttonCell setEnabled:NO];
+	}
+	else
+	{
+		[buttonCell setEnabled:YES];
+	}
+}
+
+- (void)willDisplayChannelCell:(id)cell tableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+	if ([tableColumn.identifier isEqualToString:@"expander"])
+	{
+		SequencerExpandBtnCell *expCell = cell;
+		expCell.node = NULL;
+
+		if ([item isKindOfClass:[SequencerCallbackChannel class]])
+		{
+			expCell.isExpanded = NO;
+			expCell.canExpand = NO;
+		}
+		else if ([item isKindOfClass:[SequencerSoundChannel class]])
+		{
+			SequencerSoundChannel *soundChannel = item;
+
+			expCell.isExpanded = soundChannel.isEpanded;
+			expCell.canExpand = YES;
+		}
+	}
+	else if ([tableColumn.identifier isEqualToString:@"structure"])
+	{
+		SequencerStructureCell *strCell = cell;
+		strCell.node = NULL;
+		strCell.drawHardLine = YES;
+	}
+	else if ([tableColumn.identifier isEqualToString:@"sequencer"])
+	{
+		SequencerCell *seqCell = cell;
+		seqCell.node = NULL;
+
+		if ([item isKindOfClass:[SequencerCallbackChannel class]])
+		{
+			seqCell.channel = (SequencerCallbackChannel *) item;
+		}
+		else if ([item isKindOfClass:[SequencerSoundChannel class]])
+		{
+			seqCell.channel = (SequencerSoundChannel *) item;
+		}
+	}
+	else if ([tableColumn.identifier isEqualToString:@"locked"] ||
+			 [tableColumn.identifier isEqualToString:@"hidden"])
+	{
+		SequencerButtonCell *buttonCell = cell;
+		buttonCell.node = nil;
+
+		if ([item isKindOfClass:[SequencerCallbackChannel class]] ||
+			[item isKindOfClass:[SequencerSoundChannel class]])
+		{
+			[buttonCell setTransparent:YES];
+		}
+		else
+		{
+			[buttonCell setTransparent:NO];
+		}
+
+	}
+	return;
+}
+
+- (void)willDisplayJointCells:(id)cell tableColumn:(NSTableColumn *)tableColumn
+{
+	if ([tableColumn.identifier isEqualToString:@"expander"])
+	{
+		SequencerExpandBtnCell *expCell = cell;
+		expCell.node = [SceneGraph instance].joints.node;
+		expCell.canExpand = NO;
+	}
+
+	if ([tableColumn.identifier isEqualToString:@"locked"]
+		|| [tableColumn.identifier isEqualToString:@"hidden"])
+	{
+		SequencerButtonCell *buttonCell = cell;
+		buttonCell.node = [SceneGraph instance].joints.node;
+		[buttonCell setTransparent:YES];
+	}
+
+	if ([tableColumn.identifier isEqualToString:@"structure"])
+	{
+		SequencerStructureCell *strCell = cell;
+		strCell.drawHardLine = NO;
+		strCell.node = NULL;
+	}
 }
 
 - (void) updateExpandedForNode:(CCNode*)node
@@ -1044,7 +1070,7 @@ static SequencerHandler* sharedSequencerHandler;
         else [outlineHierarchy collapseItem:node];
         
         NSArray* childs = [node children];
-        for (int i = 0; i < [childs count]; i++)
+        for (NSUInteger i = 0; i < [childs count]; i++)
         {
             CCNode* child = [childs objectAtIndex:i];
             [self updateExpandedForNode:child];
@@ -1072,38 +1098,43 @@ static SequencerHandler* sharedSequencerHandler;
     else
     {
         CCNode* node = item;
-        
-        if (node == [CocosScene cocosScene].rootNode && !node.seqExpanded)
-            return;
-        
-        if(node.plugIn.isJoint)
-            return;
-        
-        node.seqExpanded = !node.seqExpanded;
+
+		if ((node == [CocosScene cocosScene].rootNode && !node.seqExpanded)
+			|| node.plugIn.isJoint)
+		{
+			return;
+		}
+
+		node.seqExpanded = !node.seqExpanded;
     }
     
     // Need to reload all data when changing heights of rows
     [outlineHierarchy reloadData];
 }
 
-
 #pragma mark Timeline
 
 - (void) redrawTimeline:(BOOL) reload
 {
     [scrubberSelectionView setNeedsDisplay:YES];
+
     NSString* displayTime = [currentSequence currentDisplayTime];
-    if (!displayTime) displayTime = @"00:00:00";
-    [timeDisplay setStringValue:displayTime];
+	if (!displayTime)
+	{
+		displayTime = @"00:00:00";
+	}
+
+	[timeDisplay setStringValue:displayTime];
     [self updateScroller];
-    if (reload) {
-        [outlineHierarchy reloadData];
-    }
+
+	if (reload)
+	{
+		[outlineHierarchy reloadData];
+	}
 }
 
 - (void) redrawTimeline
 {
-    
     [self redrawTimeline:YES];
 }
 
@@ -1329,11 +1360,11 @@ static SequencerHandler* sharedSequencerHandler;
 - (BOOL) canInsertKeyframeNamed:(NSString*)prop
 {
     CCNode* node = [AppDelegate appDelegate].selectedNode;
-    if (!node) return NO;
-    if (!prop) return NO;
-    
-    if ([node shouldDisableProperty:prop]) return NO;
-    
+
+	if (!node || !prop || [node shouldDisableProperty:prop])
+	{
+		return NO;
+	}
 
     return [[node.plugIn animatablePropertiesForNode:node] containsObject:prop];
 }
