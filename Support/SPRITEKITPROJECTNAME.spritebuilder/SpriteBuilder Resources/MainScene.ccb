@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>UUID</key>
-	<integer>9</integer>
+	<integer>10</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -66,19 +66,6 @@
 							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>scale</string>
-						<key>type</key>
-						<string>ScaleLock</string>
-						<key>value</key>
-						<array>
-							<real>1</real>
-							<real>1</real>
-							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -169,23 +156,10 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>96</real>
-							<real>133</real>
+							<real>91</real>
+							<real>144</real>
 							<integer>0</integer>
 							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>scale</string>
-						<key>type</key>
-						<string>ScaleLock</string>
-						<key>value</key>
-						<array>
-							<real>5.4665212631225586</real>
-							<real>0.2796514630317688</real>
-							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -196,8 +170,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>64</real>
-							<real>32</real>
+							<real>360</real>
+							<real>16</real>
 							<integer>0</integer>
 							<integer>0</integer>
 						</array>
@@ -336,11 +310,27 @@
 							<real>1</real>
 						</array>
 					</dict>
+					<dict>
+						<key>name</key>
+						<string>horizontalAlignmentMode</string>
+						<key>type</key>
+						<string>IntegerLabeled</string>
+						<key>value</key>
+						<integer>0</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>verticalAlignmentMode</string>
+						<key>type</key>
+						<string>IntegerLabeled</string>
+						<key>value</key>
+						<integer>0</integer>
+					</dict>
 				</array>
 			</dict>
 			<dict>
 				<key>UUID</key>
-				<integer>7</integer>
+				<integer>9</integer>
 				<key>baseClass</key>
 				<string>SKLabelNode</string>
 				<key>children</key>
@@ -370,8 +360,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>402</real>
-							<real>123</real>
+							<real>255</real>
+							<real>202</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -392,11 +382,19 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>rotation</string>
+						<key>type</key>
+						<string>Degrees</string>
+						<key>value</key>
+						<real>311</real>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>text</string>
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string>for Sprite Kit</string>
+						<string>Kit</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -404,7 +402,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>MarkerFelt-Wide</string>
+						<string>Chalkduster</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -413,7 +411,7 @@
 						<string>FloatScale</string>
 						<key>value</key>
 						<array>
-							<real>16</real>
+							<real>26</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -424,13 +422,31 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
-							<real>0.50196081399917603</real>
-							<real>0.50196081399917603</real>
+							<real>0.80000001192092896</real>
+							<real>0.40000000596046448</real>
+							<real>1</real>
 							<real>1</real>
 						</array>
 					</dict>
+					<dict>
+						<key>name</key>
+						<string>horizontalAlignmentMode</string>
+						<key>type</key>
+						<string>IntegerLabeled</string>
+						<key>value</key>
+						<integer>0</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>verticalAlignmentMode</string>
+						<key>type</key>
+						<string>IntegerLabeled</string>
+						<key>value</key>
+						<integer>0</integer>
+					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -463,30 +479,6 @@
 					<integer>0</integer>
 					<integer>0</integer>
 					<integer>0</integer>
-				</array>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>contentSize</string>
-				<key>type</key>
-				<string>Size</string>
-				<key>value</key>
-				<array>
-					<real>1</real>
-					<real>1</real>
-					<integer>2</integer>
-					<integer>2</integer>
-				</array>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>anchorPoint</string>
-				<key>type</key>
-				<string>Point</string>
-				<key>value</key>
-				<array>
-					<real>0.0</real>
-					<real>0.0</real>
 				</array>
 			</dict>
 			<dict>

@@ -22,6 +22,21 @@
 		DCCA2C3318931163001C0732 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCA2BBC18931163001C0732 /* ViewController.m */; };
 		DCCA2C36189312C4001C0732 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCA2C35189312C4001C0732 /* OpenAL.framework */; };
 		DCCA2C38189312DF001C0732 /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = DCCA2C37189312DF001C0732 /* Published-iOS */; };
+		DCD391F018C4D02B0091240C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E018C4D02B0091240C /* Default-568h@2x.png */; };
+		DCD391F118C4D02B0091240C /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E118C4D02B0091240C /* Default-Landscape@2x~ipad.png */; };
+		DCD391F218C4D02B0091240C /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E218C4D02B0091240C /* Default-Landscape~ipad.png */; };
+		DCD391F318C4D02B0091240C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E318C4D02B0091240C /* Default.png */; };
+		DCD391F418C4D02B0091240C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E418C4D02B0091240C /* Default@2x.png */; };
+		DCD391F518C4D02B0091240C /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E618C4D02B0091240C /* iPad-old.png */; };
+		DCD391F618C4D02B0091240C /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E718C4D02B0091240C /* iPad-old@2x.png */; };
+		DCD391F718C4D02B0091240C /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E818C4D02B0091240C /* iPad.png */; };
+		DCD391F818C4D02B0091240C /* iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391E918C4D02B0091240C /* iPad@2x.png */; };
+		DCD391F918C4D02B0091240C /* iPhone-old.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391EA18C4D02B0091240C /* iPhone-old.png */; };
+		DCD391FA18C4D02B0091240C /* iPhone-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391EB18C4D02B0091240C /* iPhone-old@2x.png */; };
+		DCD391FB18C4D02B0091240C /* iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391EC18C4D02B0091240C /* iPhone.png */; };
+		DCD391FC18C4D02B0091240C /* iPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391ED18C4D02B0091240C /* iPhone@2x.png */; };
+		DCD391FD18C4D02B0091240C /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391EE18C4D02B0091240C /* Settings.png */; };
+		DCD391FE18C4D02B0091240C /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCD391EF18C4D02B0091240C /* Settings@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +70,7 @@
 		DC6CA14C1892D44B0082202B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		DC6CA14E1892D44B0082202B /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		DC6CA1711892D44C0082202B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "SB+SpriteKit.xcodeproj"; path = "SB+SpriteKit.xcodeproj"; sourceTree = "<group>"; };
+		DCA604A818BB844C000039F3 /* SB+SpriteKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "SB+SpriteKit.xcodeproj"; sourceTree = "<group>"; };
 		DCCA2B3218931163001C0732 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DCCA2B3318931163001C0732 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DCCA2B3518931163001C0732 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
@@ -71,6 +86,21 @@
 		DCCA2BBC18931163001C0732 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DCCA2C35189312C4001C0732 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		DCCA2C37189312DF001C0732 /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Published-iOS"; sourceTree = "<group>"; };
+		DCD391E018C4D02B0091240C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		DCD391E118C4D02B0091240C /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		DCD391E218C4D02B0091240C /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		DCD391E318C4D02B0091240C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		DCD391E418C4D02B0091240C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		DCD391E618C4D02B0091240C /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-old.png"; sourceTree = "<group>"; };
+		DCD391E718C4D02B0091240C /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-old@2x.png"; sourceTree = "<group>"; };
+		DCD391E818C4D02B0091240C /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPad.png; sourceTree = "<group>"; };
+		DCD391E918C4D02B0091240C /* iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad@2x.png"; sourceTree = "<group>"; };
+		DCD391EA18C4D02B0091240C /* iPhone-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone-old.png"; sourceTree = "<group>"; };
+		DCD391EB18C4D02B0091240C /* iPhone-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone-old@2x.png"; sourceTree = "<group>"; };
+		DCD391EC18C4D02B0091240C /* iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone.png; sourceTree = "<group>"; };
+		DCD391ED18C4D02B0091240C /* iPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone@2x.png"; sourceTree = "<group>"; };
+		DCD391EE18C4D02B0091240C /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
+		DCD391EF18C4D02B0091240C /* Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +189,12 @@
 		DCCA2B3E18931163001C0732 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DCD391E018C4D02B0091240C /* Default-568h@2x.png */,
+				DCD391E118C4D02B0091240C /* Default-Landscape@2x~ipad.png */,
+				DCD391E218C4D02B0091240C /* Default-Landscape~ipad.png */,
+				DCD391E318C4D02B0091240C /* Default.png */,
+				DCD391E418C4D02B0091240C /* Default@2x.png */,
+				DCD391E518C4D02B0091240C /* Icons */,
 				DCCA2C37189312DF001C0732 /* Published-iOS */,
 			);
 			path = Resources;
@@ -173,6 +209,23 @@
 				DCCA2BBA18931163001C0732 /* Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DCD391E518C4D02B0091240C /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				DCD391E618C4D02B0091240C /* iPad-old.png */,
+				DCD391E718C4D02B0091240C /* iPad-old@2x.png */,
+				DCD391E818C4D02B0091240C /* iPad.png */,
+				DCD391E918C4D02B0091240C /* iPad@2x.png */,
+				DCD391EA18C4D02B0091240C /* iPhone-old.png */,
+				DCD391EB18C4D02B0091240C /* iPhone-old@2x.png */,
+				DCD391EC18C4D02B0091240C /* iPhone.png */,
+				DCD391ED18C4D02B0091240C /* iPhone@2x.png */,
+				DCD391EE18C4D02B0091240C /* Settings.png */,
+				DCD391EF18C4D02B0091240C /* Settings@2x.png */,
+			);
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		DCD9CFDC18A15281008B3444 /* libs */ = {
@@ -260,10 +313,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCCA2BBE18931163001C0732 /* Main_iPad.storyboard in Resources */,
+				DCD391F318C4D02B0091240C /* Default.png in Resources */,
+				DCD391F418C4D02B0091240C /* Default@2x.png in Resources */,
+				DCD391F518C4D02B0091240C /* iPad-old.png in Resources */,
 				DCCA2BC118931163001C0732 /* Images.xcassets in Resources */,
+				DCD391FC18C4D02B0091240C /* iPhone@2x.png in Resources */,
 				DCCA2BC018931163001C0732 /* InfoPlist.strings in Resources */,
+				DCD391F618C4D02B0091240C /* iPad-old@2x.png in Resources */,
+				DCD391FD18C4D02B0091240C /* Settings.png in Resources */,
+				DCD391FB18C4D02B0091240C /* iPhone.png in Resources */,
+				DCD391F718C4D02B0091240C /* iPad.png in Resources */,
+				DCD391F818C4D02B0091240C /* iPad@2x.png in Resources */,
+				DCD391F118C4D02B0091240C /* Default-Landscape@2x~ipad.png in Resources */,
 				DCCA2C38189312DF001C0732 /* Published-iOS in Resources */,
+				DCD391F918C4D02B0091240C /* iPhone-old.png in Resources */,
 				DCCA2BBF18931163001C0732 /* Main_iPhone.storyboard in Resources */,
+				DCD391FA18C4D02B0091240C /* iPhone-old@2x.png in Resources */,
+				DCD391FE18C4D02B0091240C /* Settings@2x.png in Resources */,
+				DCD391F218C4D02B0091240C /* Default-Landscape~ipad.png in Resources */,
+				DCD391F018C4D02B0091240C /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,8 +478,6 @@
 		DC6CA1821892D44C0082202B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -423,8 +489,6 @@
 		DC6CA1831892D44C0082202B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
