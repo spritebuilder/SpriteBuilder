@@ -692,8 +692,109 @@ static SequencerHandler* sharedSequencerHandler;
     NSData *clipData = [pasteboard dataForType:PASTEBOARD_TYPE_NODE];
     if (clipData)
     {
-		NSArray *nodes = [self deserializeDraggedObjects:clipData];
-		for (NSDictionary *node in nodes)
+		return [self acceptDropForNodeType:item index:index clipData:clipData];
+	}
+    
+    BOOL addedObject = NO;
+
+	// accept methods may return NO so boolean OR applied, we don't want to override a YES
+	// TODO: aren't these cases exclusive so a return would be feasible?
+	addedObject = [self acceptDropForTexture:item pasteboard:pasteboard] || addedObject;
+
+	addedObject = [self acceptDropForWaveFiles:info pasteboard:pasteboard] || addedObject;
+
+	addedObject = [self acceptDropForCCBFiles:item pasteboard:pasteboard] || addedObject;
+
+	addedObject = [self acceptDropForPluginNodes:item index:index pasteboard:pasteboard] || addedObject;
+
+	addedObject = [self acceptDropForJointBodies:item pasteboard:pasteboard] || addedObject;
+
+	return addedObject;
+}
+
+- (BOOL)acceptDropForJointBodies:(id)item pasteboard:(NSPasteboard *)pasteboard
+{
+	BOOL addedObject = NO;
+	NSArray* pbJointBodys = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
+	for (NSDictionary* dict in pbJointBodys)
+    {
+        NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
+        BodyIndex type = (BodyIndex) [dict[@"bodyIndex"] integerValue];
+
+        CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx)
+		{
+            return lJoint.UUID == uuid;
+        }];
+
+        NSString * propertyName = ConvertBodyTypeToString(type);
+        [joint setValue:item forKey:propertyName];
+        [[AppDelegate appDelegate] refreshProperty:propertyName];
+
+		addedObject = YES;
+    }
+	return addedObject;
+}
+
+- (BOOL)acceptDropForPluginNodes:(id)item index:(NSInteger)index pasteboard:(NSPasteboard *)pasteboard
+{
+	BOOL addedObject = NO;;
+	NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
+	for (NSDictionary* dict in pbNodePlugIn)
+    {
+        [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
+        addedObject = YES;
+    }
+	return addedObject;
+}
+
+- (BOOL)acceptDropForCCBFiles:(id)item pasteboard:(NSPasteboard *)pasteboard
+{
+	BOOL addedObject = NO;;
+	NSArray* pbCCBs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_CCB];
+	for (NSDictionary* dict in pbCCBs)
+    {
+        [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(0, 0) parent:item];
+        addedObject = YES;
+    }
+	return addedObject;
+}
+
+- (BOOL)acceptDropForWaveFiles:(id <NSDraggingInfo>)info pasteboard:(NSPasteboard *)pasteboard
+{
+	BOOL addedObject = NO;
+	NSArray* pbWavs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
+	for (NSDictionary* dict in pbWavs)
+    {
+        NSPoint mouseLocationInWindow = info.draggingLocation;
+        NSPoint mouseLocation = [scrubberSelectionView convertPoint:mouseLocationInWindow fromView:[appDelegate.window contentView]];
+
+        //Create Keyframe
+        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:(float) mouseLocation.x]];
+        NSMutableArray* newArr = [NSMutableArray arrayWithArray:keyFrame.value];
+        [newArr replaceObjectAtIndex:kSoundChannelKeyFrameName withObject:dict[@"wavFile"]];
+        keyFrame.value = newArr;
+
+        addedObject = YES;
+    }
+	return addedObject;
+}
+
+- (BOOL)acceptDropForTexture:(id)parent pasteboard:(NSPasteboard *)pasteboard
+{
+	BOOL addedObject = NO;
+	NSArray* pbTextures = [pasteboard propertyListsForType:PASTEBOARD_TYPE_TEXTURE];
+	for (NSDictionary* dict in pbTextures)
+    {
+		[appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0, 0) parent:parent];
+        addedObject = YES;
+    }
+	return addedObject;
+}
+
+- (BOOL)acceptDropForNodeType:(id)item index:(NSInteger)index clipData:(NSData *)clipData
+{
+	NSArray *nodes = [self deserializeDraggedObjects:clipData];
+	for (NSDictionary *node in nodes)
 		{
 			CCNode *originalNode = node[ORIGINAL_NODE_KEY];
 			CCNode *nodeCopy = node[COPY_NODE_KEY];
@@ -706,72 +807,11 @@ static SequencerHandler* sharedSequencerHandler;
 			[appDelegate deleteNode:originalNode];
 		}
 
-		[appDelegate setSelectedNodes:[self extractDroppedNodes:nodes withKey:COPY_NODE_KEY]];
-		SceneGraph *sceneGraph = [SceneGraph instance];
-		[sceneGraph.joints fixupReferences];
+	[appDelegate setSelectedNodes:[self extractDroppedNodes:nodes withKey:COPY_NODE_KEY]];
+	SceneGraph *sceneGraph = [SceneGraph instance];
+	[sceneGraph.joints fixupReferences];
 
-        return YES;
-    }
-    
-    BOOL addedObject = NO;
-    
-    // Dropped textures
-    NSArray* pbTextures = [pasteboard propertyListsForType:PASTEBOARD_TYPE_TEXTURE];
-    for (NSDictionary* dict in pbTextures)
-    {
-        [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(0,0) parent:item];
-        addedObject = YES;
-    }
-
-    // Dropped WavFile;
-    NSArray* pbWavs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_WAVE];
-    for (NSDictionary* dict in pbWavs)
-    {
-        NSPoint mouseLocationInWindow = info.draggingLocation;
-        NSPoint mouseLocation = [scrubberSelectionView convertPoint:mouseLocationInWindow fromView:[appDelegate.window contentView]];
-        
-        //Create Keyframe
-        SequencerKeyframe * keyFrame = [currentSequence.soundChannel addDefaultKeyframeAtTime:[currentSequence positionToTime:(float) mouseLocation.x]];
-        NSMutableArray* newArr = [NSMutableArray arrayWithArray:keyFrame.value];
-        [newArr replaceObjectAtIndex:kSoundChannelKeyFrameName withObject:dict[@"wavFile"]];
-        keyFrame.value = newArr;
-        
-        addedObject = YES;
-    }
-    
-    // Dropped ccb-files
-    NSArray* pbCCBs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_CCB];
-    for (NSDictionary* dict in pbCCBs)
-    {
-        [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(0, 0) parent:item];
-        addedObject = YES;
-    }
-    
-    // Dropped node plug-ins
-    NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
-    for (NSDictionary* dict in pbNodePlugIn)
-    {
-        [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
-        addedObject = YES;
-    }
-    
-    // Dropped ccb-files
-    NSArray* pbJointBodys = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
-    for (NSDictionary* dict in pbJointBodys)
-    {
-        NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
-        BodyIndex type = (BodyIndex) [dict[@"bodyIndex"] integerValue];
-        
-        CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
-            return lJoint.UUID == uuid;
-        }];
-        
-        NSString * propertyName = ConvertBodyTypeToString(type);
-        [joint setValue:item forKey:propertyName];
-        [[AppDelegate appDelegate] refreshProperty:propertyName];
-    }
-    
-    return addedObject;
+	return YES;
 }
 
 #pragma mark -
@@ -832,7 +872,6 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL) outlineView:(NSOutlineView *)outline shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-    NSLog(@"should edit?");
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
         return NO;
@@ -847,8 +886,6 @@ static SequencerHandler* sharedSequencerHandler;
     }
     return YES;
 }
-
-
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
