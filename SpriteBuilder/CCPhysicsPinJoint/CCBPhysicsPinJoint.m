@@ -245,16 +245,13 @@ const float kEdgeRadius = 8.0f;
     {
         jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
         
-        
         if(maxHandle.parent == nil && self.maxDistanceEnabled)
             [scaleFreeNode addChild:maxHandle];
-
         
         if(minHandle.parent == nil && self.minDistanceEnabled)
             [scaleFreeNode addChild:minHandle];
-
     }
-    else
+    else //Unseleted
     {
         jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
         
@@ -265,8 +262,27 @@ const float kEdgeRadius = 8.0f;
 
         if(minHandle.parent != nil)
             [minHandle removeFromParentAndCleanup:NO];
-
     }
+    
+    if(selectedBodyHandle & (1 << MaxHandleType))
+    {
+        maxHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide-sel.png"];
+    }
+    else
+    {
+        maxHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide.png"];
+    }
+
+    if(selectedBodyHandle & (1 << MinHandleType))
+    {
+        minHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide-sel.png"];
+    }
+    else
+    {
+        minHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide.png"];
+    }
+
+    
     
     [super updateSelectionUI];
 }

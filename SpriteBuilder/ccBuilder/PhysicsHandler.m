@@ -621,6 +621,9 @@
     }
     if(bodyDragging != JointHandleUnknown)
     {
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        [joint  removeJointHandleSelected:bodyDragging];
+        
         bodyDragging = JointHandleUnknown;
         return YES;
     }

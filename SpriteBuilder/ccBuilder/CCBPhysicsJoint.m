@@ -187,7 +187,8 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         bodyBOutlet.visible = NO;
     }
     
-    selectedBodyHandle = 0x0;
+
+    [self removeJointHandleSelected:EntireJoint];
 }
 
 
@@ -221,7 +222,12 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)setJointHandleSelected:(JointHandleType)handleType;
 {
-    selectedBodyHandle = (1<<handleType);
+    selectedBodyHandle |= (1<<handleType);
+}
+
+-(void)removeJointHandleSelected:(JointHandleType)handleType
+{
+    selectedBodyHandle = ~(1<<handleType) & selectedBodyHandle;
 }
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType

@@ -60,7 +60,7 @@ typedef enum
 
 -(JointHandleType)hitTestJointHandle:(CGPoint)worlPos; //Which part of the joint did you hit? AnchorA/B Handle Min/Max?
 -(void)setJointHandleSelected:(JointHandleType)handleType; //Tell the renderer that a particular component is selected. Clears every frame.
-
+-(void)removeJointHandleSelected:(JointHandleType)handleType;
 
 -(void)setOutletStatus:(JointHandleType)idx value:(BOOL)value;
 -(void)refreshOutletStatus;
