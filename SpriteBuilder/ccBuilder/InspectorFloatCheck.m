@@ -13,6 +13,7 @@
 - (void) setF:(float)f
 {
     [self setPropertyForSelection:[NSNumber numberWithFloat:f]];
+    [self performSelector:@selector(refresh) withObject:Nil afterDelay:0];
 }
 
 - (float) f

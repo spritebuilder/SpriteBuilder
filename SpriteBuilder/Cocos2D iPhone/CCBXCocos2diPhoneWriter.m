@@ -67,6 +67,7 @@
     [propTypes addObject:@"FloatXY"];
     [propTypes addObject:@"Color4"];
     [propTypes addObject:@"NodeReference"];
+    [propTypes addObject:@"FloatCheck"];
 }
 
 - (id) init
@@ -468,6 +469,13 @@
     else if([type isEqualToString:@"NodeReference"])
     {
         [self writeInt:(int)[prop unsignedIntegerValue] withSign:NO];
+    }
+    else if([type isEqualToString:@"FloatCheck"])
+    {
+        NSArray * propArray = (NSArray*)prop;
+        [self writeFloat:[propArray[0] floatValue]];
+        [self writeBool:[propArray[1] boolValue]];
+
     }
     else
     {

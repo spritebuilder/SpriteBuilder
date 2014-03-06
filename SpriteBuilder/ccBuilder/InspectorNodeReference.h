@@ -20,9 +20,6 @@
 @end
 
 
-
-
-
 @interface InspectorNodeReference : InspectorValue <NSDraggingSource,NSPasteboardItemDataProvider>
 {
     // Transparent window for components on top of cocos scene
@@ -34,8 +31,7 @@
 }
 
 - (IBAction)handleDeleteNode:(id)sender;
-- (IBAction)handleGotoNode:(id)sender;
-- (IBAction)handleClickOutlet:(id)sender;
+
 
 -(void)onOutletDown:(id)sender event:(NSEvent*)event;
 -(void)onOutletUp:(id)sender;
