@@ -78,7 +78,8 @@
 @property (nonatomic,readonly) NSArray* requireChildClass;
 @property (nonatomic,readonly) NSString* positionProperty;
 @property (nonatomic,strong) NSImage* icon;
-@property (nonatomic, readonly) CCBTargetEngine targetEngine;
+@property (nonatomic, readonly) NSSet* targetEngines;
+@property (nonatomic, readonly) BOOL hidden;
 
 - (BOOL) dontSetInEditorProperty: (NSString*) prop;
 

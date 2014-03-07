@@ -4,6 +4,11 @@
 <dict>
 	<key>ordering</key>
 	<integer>7000</integer>
+	<key>targetEngines</key>
+	<array>
+		<string>Cocos2D</string>
+		<string>Cocos2D-X</string>
+	</array>
 	<key>displayName</key>
 	<string>Sprite 9 Slice</string>
 	<key>description</key>

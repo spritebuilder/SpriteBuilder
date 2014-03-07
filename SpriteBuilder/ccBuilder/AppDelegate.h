@@ -48,6 +48,7 @@ enum {
     kCCBCanvasSizeAndroidSmallPortrait,
     kCCBCanvasSizeAndroidMediumLandscape,
     kCCBCanvasSizeAndroidMediumPortrait,
+    kCCBCanvasSizeScaleFlag = 0x8000
 };
 
 enum {
@@ -303,6 +304,7 @@ enum {
 @property (nonatomic,assign) BOOL defaultCanvasSize;
 @property (nonatomic,assign) BOOL canEditCustomClass;
 @property (nonatomic,assign) BOOL canEditStageSize;
+@property (nonatomic,assign) BOOL canEditResolutions;
 
 @property (weak, nonatomic,readonly) CCNode* selectedNode;
 

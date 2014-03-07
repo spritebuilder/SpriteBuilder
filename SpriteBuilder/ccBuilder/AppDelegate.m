@@ -509,8 +509,8 @@ void ApplyCustomNodeVisitSwizzle()
     defaultCanvasSizes[kCCBCanvasSizeIPhonePortrait] = CGSizeMake(320, 480);
     defaultCanvasSizes[kCCBCanvasSizeIPhone5Landscape] = CGSizeMake(568, 320);
     defaultCanvasSizes[kCCBCanvasSizeIPhone5Portrait] = CGSizeMake(320, 568);
-    defaultCanvasSizes[kCCBCanvasSizeIPadLandscape] = CGSizeMake(512, 384);
-    defaultCanvasSizes[kCCBCanvasSizeIPadPortrait] = CGSizeMake(384, 512);
+    defaultCanvasSizes[kCCBCanvasSizeIPadLandscape] = CGSizeMake(1024, 768);
+    defaultCanvasSizes[kCCBCanvasSizeIPadPortrait] = CGSizeMake(768, 1024);
     
     // Fixed
     defaultCanvasSizes[kCCBCanvasSizeFixedLandscape] = CGSizeMake(568, 384);
@@ -1353,71 +1353,117 @@ static BOOL hideAllToNextSeparator;
 {
     NSMutableArray* updatedResolutions = [NSMutableArray array];
     
-    if (type == kCCBDocDimensionsTypeNode)
+    if(projectSettings.engine == CCBTargetEngineCocos2dx)
     {
-        if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+        if (type == kCCBDocDimensionsTypeNode)
         {
-            [updatedResolutions addObject:[ResolutionSetting settingIPhone]];
-            [updatedResolutions addObject:[ResolutionSetting settingIPad]];
+            [updatedResolutions addObject:[ResolutionSetting settingPhoneShort]];
+            [updatedResolutions addObject:[ResolutionSetting settingTablet]];
         }
-        else
+        else if (type == kCCBDocDimensionsTypeLayer)
         {
-            [updatedResolutions addObject:[ResolutionSetting settingFixed]];
-        }
-    }
-    else if (type == kCCBDocDimensionsTypeLayer)
-    {
-        ResolutionSetting* settingDefault = [resolutions objectAtIndex:0];
-        
-        if (projectSettings.designTarget == kCCBDesignTargetFixed)
-        {
-            settingDefault.name = @"Fixed";
-            settingDefault.scale = 2;
-            settingDefault.ext = @"tablet phonehd";
-            [updatedResolutions addObject:settingDefault];
-        }
-        else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
-        {
+            ResolutionSetting* settingDefault = [resolutions objectAtIndex:0];
             settingDefault.name = @"Phone";
-            settingDefault.scale = 1;
+            settingDefault.resourceScale = 1;
             settingDefault.ext = @"phone";
             [updatedResolutions addObject:settingDefault];
             
             ResolutionSetting* settingTablet = [settingDefault copy];
             settingTablet.name = @"Tablet";
-            settingTablet.scale = projectSettings.tabletPositionScaleFactor;
+            settingTablet.resourceScale = projectSettings.tabletPositionScaleFactor;
             settingTablet.ext = @"tablet phonehd";
             [updatedResolutions addObject:settingTablet];
         }
-    }
-    else if (type == kCCBDocDimensionsTypeFullScreen)
-    {
-        if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+        else if (type == kCCBDocDimensionsTypeFullScreen)
         {
-            // Full screen landscape
-            if (projectSettings.designTarget == kCCBDesignTargetFixed)
+            if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
             {
-                [updatedResolutions addObject:[ResolutionSetting settingFixedLandscape]];
-            }
-            else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
-            {
+                // Full screen landscape
+                [updatedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPhoneRetinaLandscape]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
-                [updatedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPadRetinaLandscape]];
+            }
+            else
+            {
+                // Full screen portrait
+                [updatedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPhoneRetinaPortrait]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
+                [updatedResolutions addObject:[ResolutionSetting settingIPadRetinaPortrait]];
             }
         }
-        else
+    }
+    else
+    {
+        if (type == kCCBDocDimensionsTypeNode)
         {
-            // Full screen portrait
+            if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingPhoneShort]];
+                [updatedResolutions addObject:[ResolutionSetting settingTablet]];
+            }
+            else
+            {
+                [updatedResolutions addObject:[ResolutionSetting settingFixed]];
+            }
+        }
+        else if (type == kCCBDocDimensionsTypeLayer)
+        {
+            ResolutionSetting* settingDefault = [resolutions objectAtIndex:0];
+            
             if (projectSettings.designTarget == kCCBDesignTargetFixed)
             {
-                [updatedResolutions addObject:[ResolutionSetting settingFixedPortrait]];
+                settingDefault.name = @"Fixed";
+                settingDefault.resourceScale = 2;
+                settingDefault.ext = @"tablet phonehd";
+                [updatedResolutions addObject:settingDefault];
             }
             else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
             {
-                [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
-                [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
-                [updatedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
+                settingDefault.name = @"Phone";
+                settingDefault.resourceScale = 1;
+                settingDefault.ext = @"phone";
+                [updatedResolutions addObject:settingDefault];
+                
+                ResolutionSetting* settingTablet = [settingDefault copy];
+                settingTablet.name = @"Tablet";
+                settingTablet.resourceScale = projectSettings.tabletPositionScaleFactor;
+                settingTablet.ext = @"tablet phonehd";
+                [updatedResolutions addObject:settingTablet];
+            }
+        }
+        else if (type == kCCBDocDimensionsTypeFullScreen)
+        {
+            if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+            {
+                // Full screen landscape
+                if (projectSettings.designTarget == kCCBDesignTargetFixed)
+                {
+                    [updatedResolutions addObject:[ResolutionSetting settingFixedLandscape]];
+                }
+                else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+                {
+                    [updatedResolutions addObject:[ResolutionSetting settingPhoneLandscape]];
+                    [updatedResolutions addObject:[ResolutionSetting settingTabletLandscape]];
+                    [updatedResolutions addObject:[ResolutionSetting settingPhoneShortLandscape]];
+                }
+            }
+            else
+            {
+                // Full screen portrait
+                if (projectSettings.designTarget == kCCBDesignTargetFixed)
+                {
+                    [updatedResolutions addObject:[ResolutionSetting settingFixedPortrait]];
+                }
+                else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+                {
+                    [updatedResolutions addObject:[ResolutionSetting settingPhonePortrait]];
+                    [updatedResolutions addObject:[ResolutionSetting settingTabletPortrait]];
+                    [updatedResolutions addObject:[ResolutionSetting settingPhoneShortPortrait]];
+                }
             }
         }
     }
@@ -1443,6 +1489,11 @@ static BOOL hideAllToNextSeparator;
     if (docDimType == kCCBDocDimensionsTypeLayer) self.canEditStageSize = YES;
     else self.canEditStageSize = NO;
     
+    if (docDimType == kCCBDocDimensionsTypeFullScreen & projectSettings.engine == CCBTargetEngineCocos2dx)
+        self.canEditResolutions = YES;
+    else
+        self.canEditResolutions = NO;
+    
     // Setup stage & resolutions
     NSMutableArray* serializedResolutions = [doc objectForKey:@"resolutions"];
     if (serializedResolutions)
@@ -1455,7 +1506,7 @@ static BOOL hideAllToNextSeparator;
             [resolutions addObject:resolution];
         }
         
-        resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
+        //resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
         
         currentDocument.docDimensionsType = docDimType;
         int currentResolution = [[doc objectForKey:@"currentResolution"] intValue];
@@ -3109,6 +3160,11 @@ static BOOL hideAllToNextSeparator;
 	[self createNewProjectTargetting:CCBTargetEngineSpriteKit];
 }
 
+-(IBAction) menuNewCocos2dxProject:(id)sender
+{
+	[self createNewProjectTargetting:CCBTargetEngineCocos2dx];
+}
+
 - (IBAction) newFolder:(id)sender
 {
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -3318,7 +3374,13 @@ static BOOL hideAllToNextSeparator;
 {
     for (int i = 1; i <= kCCBNumCanvasDevices; i++)
     {
-        if (size.width == defaultCanvasSizes[i].width && size.height == defaultCanvasSizes[i].height) return i;
+        if (size.width == defaultCanvasSizes[i].width && size.height == defaultCanvasSizes[i].height)
+            return i;
+    }
+    for (int i = 1; i <= kCCBNumCanvasDevices; i++)
+    {
+        if (size.width/2 == defaultCanvasSizes[i].width && size.height/2 == defaultCanvasSizes[i].height)
+            return i | kCCBCanvasSizeScaleFlag;
     }
     return 0;
 }
@@ -3330,10 +3392,10 @@ static BOOL hideAllToNextSeparator;
     if (!res)
     {
         res = [[ResolutionSetting alloc] init];
-        res.scale = 1;
+        res.resourceScale = 1;
     }
 	
-	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
+	if([CCDirector sharedDirector].contentScaleFactor != res.resourceScale)
     {
         [[CCTextureCache sharedTextureCache] removeAllTextures];
         [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
@@ -3341,9 +3403,9 @@ static BOOL hideAllToNextSeparator;
     }
     
     
-    [CCDirector sharedDirector].contentScaleFactor = res.scale;
-    [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
-    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
+    [CCDirector sharedDirector].contentScaleFactor = res.resourceScale;
+    [CCDirector sharedDirector].UIScaleFactor = res.resourceScale;
+    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.resourceScale];
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
@@ -3369,7 +3431,7 @@ static BOOL hideAllToNextSeparator;
     //[PositionPropertySetter refreshAllPositions];
 }
 
-- (IBAction) menuEditResolutionSettings:(id)sender
+- (IBAction) menuEditStageSize:(id)sender
 {
     if (!currentDocument) return;
     
@@ -3388,6 +3450,22 @@ static BOOL hideAllToNextSeparator;
         setting.height = wc.hStage;
         
         currentDocument.resolutions = [self updateResolutions:currentDocument.resolutions forDocDimensionType:kCCBDocDimensionsTypeLayer];
+        [self updateResolutionMenu];
+        [self setResolution:0];
+    }
+}
+
+- (IBAction) menuEditResolutionSettings:(id)sender
+{
+    if (!currentDocument) return;
+    
+    ResolutionSettingsWindow* wc = [[ResolutionSettingsWindow alloc] initWithWindowNibName:@"ResolutionSettingsWindow"];
+    [wc copyResolutions: currentDocument.resolutions];
+    
+    int success = [wc runModalSheetForWindow:window];
+    if (success)
+    {
+        currentDocument.resolutions = wc.resolutions;
         [self updateResolutionMenu];
         [self setResolution:0];
     }
@@ -3511,7 +3589,7 @@ static BOOL hideAllToNextSeparator;
     
     float zoom = [cs stageZoom];
     zoom *= 1/1.2f;
-    if (zoom < 0.125) zoom = 0.125f;
+    if (zoom < 0.05) zoom = 0.05f;
     [cs setStageZoom:zoom];
 }
 

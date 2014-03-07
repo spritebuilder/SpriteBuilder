@@ -30,6 +30,9 @@ bash scripts/GenerateTemplateProject.sh PROJECTNAME
 echo "=== GENERATING SPRITE KIT SB-PROJECT ==="
 bash scripts/GenerateTemplateProject.sh SPRITEKITPROJECTNAME
 
+echo "=== GENERATING COCOS2DX SB-PROJECT ==="
+bash scripts/GenerateTemplateProject.sh COCOS2DXPROJECTNAME
+
 # Clean and build CocosBuilder
 echo "=== CLEANING PROJECT ==="
 

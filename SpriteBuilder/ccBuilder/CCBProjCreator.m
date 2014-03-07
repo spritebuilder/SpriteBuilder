@@ -15,11 +15,16 @@
 {
     NSFileManager* fm = [NSFileManager defaultManager];
     
-	NSString* substitutableProjectName = @"PROJECTNAME";
-	if (engine == CCBTargetEngineSpriteKit)
-	{
-		substitutableProjectName = [NSString stringWithFormat:@"SPRITEKIT%@", substitutableProjectName];
-	}
+    NSString* substitutableProjectName = @"PROJECTNAME";
+    if (engine == CCBTargetEngineSpriteKit)
+    {
+        substitutableProjectName = [NSString stringWithFormat:@"SPRITEKIT%@", substitutableProjectName];
+    }
+    
+    if (engine == CCBTargetEngineCocos2dx)
+    {
+        substitutableProjectName = [NSString stringWithFormat:@"COCOS2DX%@", substitutableProjectName];
+    }
 	
     NSString* zipFile = [[NSBundle mainBundle] pathForResource:substitutableProjectName ofType:@"zip" inDirectory:@"Generated"];
     
@@ -45,45 +50,48 @@
     [fm moveItemAtPath:[[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:ccbproj] toPath:fileName error:NULL];
     
     // Update the Xcode project
-	NSString* xcodeproj = [NSString stringWithFormat:@"%@.xcodeproj", substitutableProjectName];
+    NSString* xcodeproj = [NSString stringWithFormat:@"%@.xcodeproj", substitutableProjectName];
     NSString* xcodeFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:xcodeproj];
     NSString* projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-    
-    // Update the project
-    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"] projectName:substitutableProjectName];
-    
-    // Update workspace data
-    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace/contents.xcworkspacedata"] projectName:substitutableProjectName];
-    
-    // Update scheme
-	NSString* xcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@.xcscheme", substitutableProjectName];
-    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:xcscheme] projectName:substitutableProjectName];
-    
-    // Rename scheme file
-    NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
-    NSString* newSchemeFile = [[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcscheme"];
-    [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
-    
-    // Rename Xcode project file
-    NSString* newXcodeFileName = [[[xcodeFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcodeproj"];
-    
-    [fm moveItemAtPath:xcodeFileName toPath:newXcodeFileName error:NULL];
-    
-    // Rename Approj project file (apportable)
-    NSString* approjFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"PROJECTNAME.approj"];
-    projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-
-    NSString* newApprojFileName = [[[approjFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"approj"];
-    [fm moveItemAtPath:approjFileName toPath:newApprojFileName error:NULL];
-
-    // configure default configuration.json and include opengles2 as a feature
-    NSError *error = nil;
-    NSString *apportableConfigFile = [NSString stringWithFormat:@"%@%@", newApprojFileName, @"/configuration.json"];
-    NSString *apportableConfigurationContents = [NSString stringWithContentsOfFile:apportableConfigFile encoding:NSUTF8StringEncoding error:&error];
-    
-    NSString *replacement = [NSString stringWithFormat:@"\"default_target\": {\"project\": \"%@\", \"project_config\": \"Release\", \"target\": \"%@\"},", projName, projName];
-    apportableConfigurationContents = [apportableConfigurationContents stringByReplacingOccurrencesOfString:@"default_target" withString:replacement];
-    [apportableConfigurationContents writeToFile:apportableConfigFile atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        
+    if([[NSFileManager defaultManager] fileExistsAtPath:xcodeFileName])
+    {
+        // Update the project
+        [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"] projectName:substitutableProjectName];
+        
+        // Update workspace data
+        [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace/contents.xcworkspacedata"] projectName:substitutableProjectName];
+        
+        // Update scheme
+        NSString* xcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@.xcscheme", substitutableProjectName];
+        [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:xcscheme] projectName:substitutableProjectName];
+        
+        // Rename scheme file
+        NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
+        NSString* newSchemeFile = [[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcscheme"];
+        [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
+        
+        // Rename Xcode project file
+        NSString* newXcodeFileName = [[[xcodeFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcodeproj"];
+        
+        [fm moveItemAtPath:xcodeFileName toPath:newXcodeFileName error:NULL];
+        
+        // Rename Approj project file (apportable)
+        NSString* approjFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"PROJECTNAME.approj"];
+        projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
+        
+        NSString* newApprojFileName = [[[approjFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"approj"];
+        [fm moveItemAtPath:approjFileName toPath:newApprojFileName error:NULL];
+        
+        // configure default configuration.json and include opengles2 as a feature
+        NSError *error = nil;
+        NSString *apportableConfigFile = [NSString stringWithFormat:@"%@%@", newApprojFileName, @"/configuration.json"];
+        NSString *apportableConfigurationContents = [NSString stringWithContentsOfFile:apportableConfigFile encoding:NSUTF8StringEncoding error:&error];
+        
+        NSString *replacement = [NSString stringWithFormat:@"\"default_target\": {\"project\": \"%@\", \"project_config\": \"Release\", \"target\": \"%@\"},", projName, projName];
+        apportableConfigurationContents = [apportableConfigurationContents stringByReplacingOccurrencesOfString:@"default_target" withString:replacement];
+        [apportableConfigurationContents writeToFile:apportableConfigFile atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    }
     
     return [fm fileExistsAtPath:fileName];
 }

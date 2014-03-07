@@ -40,7 +40,10 @@
 @property (nonatomic,assign) int width;
 @property (nonatomic,assign) int height;
 @property (nonatomic,copy) NSString* ext;
-@property (nonatomic,assign) float scale;
+@property (nonatomic,assign) float resourceScale;
+@property (nonatomic,assign) float mainScale;
+@property (nonatomic,assign) float scaleX;
+@property (nonatomic,assign) float scaleY;
 @property (nonatomic,assign) BOOL centeredOrigin;
 @property (nonatomic,readonly) NSArray* exts;
 
@@ -49,15 +52,31 @@
 + (ResolutionSetting*) settingFixedLandscape;
 + (ResolutionSetting*) settingFixedPortrait;
 
+// app portable resolutions
++ (ResolutionSetting*) settingPhoneShort;
++ (ResolutionSetting*) settingPhoneShortLandscape;
++ (ResolutionSetting*) settingPhoneShortPortrait;
++ (ResolutionSetting*) settingPhoneLandscape;
++ (ResolutionSetting*) settingPhonePortrait;
++ (ResolutionSetting*) settingTablet;
++ (ResolutionSetting*) settingTabletLandscape;
++ (ResolutionSetting*) settingTabletPortrait;
+
 // iOS resolutions
 + (ResolutionSetting*) settingIPhone;
 + (ResolutionSetting*) settingIPhoneLandscape;
 + (ResolutionSetting*) settingIPhonePortrait;
++ (ResolutionSetting*) settingIPhoneRetina;
++ (ResolutionSetting*) settingIPhoneRetinaLandscape;
++ (ResolutionSetting*) settingIPhoneRetinaPortrait;
 + (ResolutionSetting*) settingIPhone5Landscape;
 + (ResolutionSetting*) settingIPhone5Portrait;
 + (ResolutionSetting*) settingIPad;
 + (ResolutionSetting*) settingIPadLandscape;
 + (ResolutionSetting*) settingIPadPortrait;
++ (ResolutionSetting*) settingIPadRetina;
++ (ResolutionSetting*) settingIPadRetinaLandscape;
++ (ResolutionSetting*) settingIPadRetinaPortrait;
 
 // Android resolutions
 + (ResolutionSetting*) settingAndroidXSmall;

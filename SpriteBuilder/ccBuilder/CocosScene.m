@@ -48,6 +48,8 @@
 #import "PhysicsHandler.h"
 #import "CCBUtil.h"
 #import "CCTextureCache.h"
+#import "ResolutionSetting.h"
+#import "CCBDocument.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -137,6 +139,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [borderLayer addChild:borderRight];
     
     borderDevice = [CCSprite node];
+    borderDeviceScale = 1.0f;
     [borderLayer addChild:borderDevice z:1];
     
     // Gray background
@@ -201,6 +204,16 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         BOOL rotateDevice = NO;
         
         int devType = [appDelegate orientedDeviceTypeForSize:stageBgLayer.contentSize];
+        
+        ResolutionSetting* res = [appDelegate.currentDocument.resolutions objectAtIndex:appDelegate.currentDocument.currentResolution];
+        
+        borderDeviceScale = res.resourceScale;
+        
+        if(devType & kCCBCanvasSizeScaleFlag)
+        {
+            borderDeviceScale *= 2.0f;
+            devType ^= kCCBCanvasSizeScaleFlag;
+        }
         if (devType == kCCBCanvasSizeIPhonePortrait)
         {
             deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone.png"];
@@ -417,7 +430,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     scrollOffset = ccpMult(scrollOffset, zoomFactor);
     
     stageBgLayer.scale = zoom;
-    borderDevice.scale = zoom;
+    borderDevice.scale = zoom * borderDeviceScale;
     stageJointsLayer.scale = zoom;
     
     stageZoom = zoom;

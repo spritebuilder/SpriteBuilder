@@ -31,4 +31,6 @@
 @property (nonatomic, assign) BOOL locked;
 @property (nonatomic, assign) int type;
 
+@property (weak) IBOutlet NSSegmentedControl *scaleType;
+
 @end

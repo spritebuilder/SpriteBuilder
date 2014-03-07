@@ -27,8 +27,10 @@
 
 enum
 {
-    kCCBScaleTypeAbsolute,
-    kCCBScaleTypeMultiplyResolution
+    kCCBScaleFlagRealScale = 0,
+    kCCBScaleFlagMultiplyByResourceScale = 1,
+    kCCBScaleFlagMultiplyByMainScale = 2,
+    kCCBScaleFlagMultiplyByAdditionalScale = 4,
 };
 
 @interface PositionPropertySetter : NSObject

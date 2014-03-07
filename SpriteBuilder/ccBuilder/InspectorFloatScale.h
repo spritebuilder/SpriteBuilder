@@ -29,4 +29,6 @@
 @property (nonatomic,assign) float f;
 @property (nonatomic,assign) int type;
 
+@property (weak) IBOutlet NSSegmentedCell *scaleType;
+
 @end

@@ -43,6 +43,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 {
 	CCBTargetEngineCocos2d = 0,
 	CCBTargetEngineSpriteKit,
+    CCBTargetEngineCocos2dx,
 };
 
 @class RMResource;
