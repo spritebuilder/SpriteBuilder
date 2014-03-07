@@ -20,7 +20,7 @@
     CCNode          * springNode;
     
     int               springPointsCount;
-    int               bodyLength;
+    float               bodyLength;
 
     CCSprite        * restLengthHandle;
     CCSprite9Slice  * restLengthHandleBody;
@@ -101,7 +101,7 @@ const int kSpringHeightTwoThirds = kSpringHeight + kSpringHeightHalf;
 
 -(void)updateSprintBody
 {
-    int currentBodyLength = [self worldLength];
+    float currentBodyLength = [self worldLength];
     if(bodyLength != currentBodyLength)
     {
         [springNode removeAllChildrenWithCleanup:YES];
@@ -112,41 +112,66 @@ const int kSpringHeightTwoThirds = kSpringHeight + kSpringHeightHalf;
         int wholeCounts = (bodyLength - kSpringHeight) / kSpringHeightHalf;
         if(wholeCounts % 2 == 0)
             wholeCounts--;
-        int remainder   = bodyLength - wholeCounts * kSpringHeightHalf - kSpringHeight;
+
+
+        float remainder = -1.0f;
+        float padding = kSpringHeightHalf;
+        float scale = 1.0f;
+        if(wholeCounts > 1)
+            remainder   = bodyLength - wholeCounts * kSpringHeightHalf - kSpringHeight;
+        else
+        {
+            
+            float remainingSpace = bodyLength - kSpringHeightHalf * 3;
+            
+            if(remainingSpace > 0)
+            {
+                wholeCounts = 3;
+                padding = remainingSpace/2;
+                remainder = 0;
+            }
+            else
+            {
+                wholeCounts = 3;
+                padding = 0;
+                remainder = 0;
+                scale = bodyLength/(kSpringHeightHalf * 3);
+            }
+        }
+        
         
         
         CGPoint * pt = malloc(sizeof(CGPoint) * (wholeCounts + 7));
-       
-        int padding = kSpringHeightHalf;
-
-
-        
         float sign = ((wholeCounts + 1)/2) %2 == 0 ? 1.0f : -1.0f;
         
         //Lead in Line
         pt[0] = ccp(0,0); //start
         pt[1] = ccp(padding,0); //padding.
-        pt[2] = ccp(remainder/4 + padding, -sign * remainder/2);
-        pt[3] = ccp(remainder/2 + padding, 0);
+        pt[2] = ccp(remainder/4.0f + padding, -sign * remainder/2);
+        pt[3] = ccp(remainder/2.0f + padding, 0);
         pt[4] = ccp(pt[3].x + kSpringHeightHalf/2,sign * kSpringHeightHalf);
+        
 
-        int offset = pt[4].x + kSpringHeightHalf/2;
 
-        for(int i = 0; i < wholeCounts; i++)
+        float offset = pt[4].x + kSpringHeightHalf;
+        
+        NSLog(@"padding:%0.2f remainder:%0.2f wholecount:%i offset:%0.2f", padding, remainder, wholeCounts,offset);
+
+        for(int i = 0; i < wholeCounts -1; i++)
         {
-            pt[i+ 5] = ccp(offset + (i+1) * kSpringHeightHalf, -sign * kSpringHeightHalf);
+            pt[i+ 5] = ccp(offset + i * kSpringHeightHalf, -sign * kSpringHeightHalf);
             sign *= -1.0f;
         }
         
-        pt[wholeCounts +4] = ccp(bodyLength - pt[2].x, pt[2].x);
-        pt[wholeCounts +5] = ccp(bodyLength -  pt[1].x, 0);
-        pt[wholeCounts +6] = ccp(bodyLength, 0);
+        pt[wholeCounts +4] = ccp(bodyLength/scale - pt[2].x, pt[2].y);
+        pt[wholeCounts +5] = ccp(bodyLength/scale -  pt[1].x, 0);
+        pt[wholeCounts +6] = ccp(bodyLength/scale, 0);
         
         CCColor * whiteColor = [CCColor colorWithWhite:1.0f alpha:0.3f];
         for(int i = 1; i < wholeCounts + 7; i++)
         {
             CCDrawNode * draw = [CCDrawNode node];
-            [draw drawSegmentFrom:pt[i-1] to:pt[i] radius:1.0f color:whiteColor];
+            [draw drawSegmentFrom:ccpMult(pt[i-1],scale) to:ccpMult(pt[i],scale) radius:1.0f color:whiteColor];
             [springNode addChild:draw];
         }
         
