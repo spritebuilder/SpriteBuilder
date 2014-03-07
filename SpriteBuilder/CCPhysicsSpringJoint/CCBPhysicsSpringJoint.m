@@ -15,8 +15,6 @@
 
 @implementation CCBPhysicsSpringJoint
 {
-    CCSprite9Slice  * jointBody;
-
     CCNode          * springNode;
     
     int               springPointsCount;
@@ -47,18 +45,7 @@
     springNode = [CCNode node];
     [scaleFreeNode addChild:springNode];
     
-    jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png"];
-    jointBody.marginLeft = kMargin;
-    jointBody.marginRight = kMargin;
-    jointBody.marginBottom = 0.0;
-    jointBody.marginTop = 0.0;
-    jointBody.scale = 1.0;
-    [scaleFreeNode addChild:jointBody];
-
-    
     [super setupBody];
-    
-
     
     restLengthHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png"];
     restLengthHandle.anchorPoint = ccp(0.5f, 0.0f);
@@ -79,10 +66,6 @@
 {
     [super updateRenderBody];
     float length = [self worldLength];
-    
-    jointBody.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
-    jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
-    self.rotation = [self rotation];
     
     
     restLengthHandle.position = ccpMult(ccp(length *  self.restLength / [self localLength], kEdgeRadius - 1.0f),1/[CCDirector sharedDirector].contentScaleFactor);
@@ -211,15 +194,13 @@ const int kSpringHeightHalf = kSpringHeight/2;
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
-        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
         
         if(restLengthHandle.parent == nil)
             [scaleFreeNode addChild:restLengthHandle];
     }
     else //Unseleted
     {
-        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
-        
+       
         if(restLengthHandle.parent != nil)
             [restLengthHandle removeFromParentAndCleanup:NO];
     }

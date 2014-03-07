@@ -19,7 +19,7 @@
 
 @interface CCBPhysicsPinJoint()
 {
-    CCSprite9Slice  * jointBody;
+
 
     
     CCSprite        * minHandle;
@@ -57,12 +57,7 @@
 {
     [super setupBody];
     
-    jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png"];
-    jointBody.marginLeft = kMargin;
-    jointBody.marginRight = kMargin;
-    jointBody.marginBottom = 0.0;
-    jointBody.marginTop = 0.0;
-    jointBody.scale = 1.0;
+ 
     
     
     [scaleFreeNode addChild:jointBody];
@@ -74,6 +69,9 @@
     [scaleFreeNode addChild:maxHandle];
     [scaleFreeNode addChild:minHandle];
     
+    CCSizeType sizeType;
+    sizeType.heightUnit = CCSizeUnitUIPoints;
+    sizeType.widthUnit = CCSizeUnitUIPoints;
     
     maxHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
     maxHandleBody.marginLeft = 0.0f;
@@ -82,6 +80,9 @@
     maxHandleBody.marginTop = 0.0;
     maxHandleBody.scale = 1.0;
     maxHandleBody.anchorPoint = ccp(0.0f,0.5f);
+    maxHandleBody.contentSizeType = sizeType;
+
+    
     [scaleFreeNode addChild:maxHandleBody];
     
     
@@ -92,6 +93,7 @@
     minHandleBody.marginTop = 0.0;
     minHandleBody.scale = 1.0;
     minHandleBody.anchorPoint = ccp(0.0f,0.5f);
+    minHandleBody.contentSizeType = sizeType;
     [scaleFreeNode addChild:minHandleBody];
 
 }
@@ -102,10 +104,7 @@
     [super updateRenderBody];
     float length = [self worldLength];
     
-    jointBody.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
-    jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
-    self.rotation = [self rotation];
-    
+       
     
     minHandle.position = ccpMult(ccp(length *  self.minDistance / [self localLength], kEdgeRadius - 1.0f),1/[CCDirector sharedDirector].contentScaleFactor);
     maxHandle.position = ccpMult(ccp(length *  self.maxDistance /[self localLength], kEdgeRadius - 1.0f),1/[CCDirector sharedDirector].contentScaleFactor);
@@ -125,7 +124,6 @@
 
 -(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
 {
-    
     {
         CGPoint pointMin = [maxHandle convertToNodeSpaceAR:worlPos];
         pointMin = ccpSub(pointMin, ccp(0,15.0f));
@@ -152,8 +150,6 @@
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
-        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
-        
         if(maxHandle.parent == nil && self.maxDistanceEnabled)
             [scaleFreeNode addChild:maxHandle];
         
@@ -162,7 +158,6 @@
     }
     else //Unseleted
     {
-        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
         
         if(maxHandle.parent != nil)
         {

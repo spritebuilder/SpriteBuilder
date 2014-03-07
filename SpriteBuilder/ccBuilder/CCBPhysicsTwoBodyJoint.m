@@ -10,6 +10,11 @@
 #import "GeometryUtil.h"
 #import "AppDelegate.h"
 
+@interface CCBPhysicsJoint()
+-(void)updateSelectionUI;
+@end
+
+
 const float kMargin = 8.0f/64.0f;
 const float kEdgeRadius = 8.0f;
 
@@ -29,7 +34,12 @@ static const float kDefaultLength = 58.0f;
 
 -(void)setupBody
 {
-     
+    jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png"];
+    CCSizeType sizeType;
+    sizeType.heightUnit = CCSizeUnitUIPoints;
+    sizeType.widthUnit = CCSizeUnitUIPoints;
+    jointBody.contentSizeType = sizeType;
+    
     anchorHandleA = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     anchorHandleB = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     
@@ -47,7 +57,7 @@ static const float kDefaultLength = 58.0f;
         CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
         
         float distance = ccpDistance(worldPosA, worldPosB);
-        return distance;
+        return distance * [CCDirector sharedDirector].contentScaleFactor;
     }
     
     return kDefaultLength;
@@ -71,13 +81,40 @@ static const float kDefaultLength = 58.0f;
     return kDefaultLength;
 }
 
+
+-(void)updateSelectionUI
+{
+    //If selected, display selected sprites.
+    if(selectedBodyHandle & (1 << EntireJoint))
+    {
+        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
+    }
+    else //Unseleted
+    {
+        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
+    }
+
+    [super updateSelectionUI];
+}
+
 -(void)updateRenderBody
 {
-    
+
     float length = [self worldLength];
+    jointBody.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
+    jointBody.marginLeft = kMargin ;
+    jointBody.marginRight = kMargin ;
+    jointBody.marginBottom = 0.0;
+    jointBody.marginTop = 0.0;
+    jointBody.scale = 1.0f;
+    
+    jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
+    self.rotation = [self rotation];
+
+    
     
     //Anchor B
-    anchorHandleB.position = ccpMult(ccp(length,0),1/[CCDirector sharedDirector].contentScaleFactor);
+    anchorHandleB.position = ccpMult(ccp(length,0),[CCDirector sharedDirector].UIScaleFactor);
     
     
 }

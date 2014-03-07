@@ -14,7 +14,7 @@ extern const float kEdgeRadius;
 
 @interface CCBPhysicsTwoBodyJoint : CCBPhysicsPivotJoint
 {
-    
+    CCSprite9Slice  * jointBody;
 }
 
 @property (nonatomic) CGPoint anchorB;
