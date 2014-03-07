@@ -23,6 +23,9 @@ typedef enum
     MinHandleType,
     MaxHandleType,
     
+    //------------
+    RestLengthHandle,
+    
     EntireJoint, //The entire joint has been touched at some point.
     
     JointHandleUnknown = -1,

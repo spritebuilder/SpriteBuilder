@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 
 const float kMargin = 8.0f/64.0f;
+const float kEdgeRadius = 8.0f;
+
 static const float kDefaultLength = 58.0f;
 
 
@@ -173,6 +175,22 @@ static const float kDefaultLength = 58.0f;
 {
     anchorB = lAnchorB;
 }
+
+
+
+-(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
+{
+    if(bodyType == BodyAnchorB)
+    {
+        CGPoint newPosition = [self.bodyB convertToNodeSpace:worldPos];
+        self.anchorB = newPosition;
+        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
+        
+    }
+    
+    [super setBodyHandle:worldPos bodyType:bodyType];
+}
+
 
 
 @end

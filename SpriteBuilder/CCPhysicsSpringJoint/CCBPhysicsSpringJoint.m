@@ -17,157 +17,187 @@
 
 @implementation CCBPhysicsSpringJoint
 {
-    CCSprite * joint;
-    CCSprite* jointAnchor;
+    CCSprite9Slice  * jointBody;
+
+    CCSprite        * restLengthHandle;
+    CCSprite9Slice  * restLengthHandleBody;
+
 }
 
-@synthesize anchorA;
 
 - (id) init
 {
     self = [super init];
-    if (!self)
+    if (self)
     {
-        return NULL;
+        self.stiffness = 4.0f;
+        self.damping = 1.0f;
     }
-    
-    scaleFreeNode.scale = 1.0f;
-    [self setupBody];
     
     return self;
 }
 
+
 -(void)setupBody
 {
+    [super setupBody];
     
-    joint = [CCSprite spriteWithImageNamed:@"joint-Spring.png"];
-    jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
+    jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png"];
+    jointBody.marginLeft = kMargin;
+    jointBody.marginRight = kMargin;
+    jointBody.marginBottom = 0.0;
+    jointBody.marginTop = 0.0;
+    jointBody.scale = 1.0;
     
-    [scaleFreeNode addChild:joint];
-    [scaleFreeNode addChild:jointAnchor];
-   // self.contentSize = joint.contentSize;
-   // self.anchorPoint = ccp(0.5f,0.5f);
+    
+    [scaleFreeNode addChild:jointBody];
+    
+    
+    restLengthHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png"];
+    restLengthHandle.anchorPoint = ccp(0.5f, 0.0f);
+    [scaleFreeNode addChild:restLengthHandle];
+    
+    
+    
+    restLengthHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
+    restLengthHandleBody.marginLeft = 0.0f;
+    restLengthHandleBody.marginRight = kMargin;
+    restLengthHandleBody.marginBottom = 0.0;
+    restLengthHandleBody.marginTop = 0.0;
+    restLengthHandleBody.scale = 1.0;
+    restLengthHandleBody.anchorPoint = ccp(0.0f,0.5f);
+    [scaleFreeNode addChild:restLengthHandleBody];
     
 }
 
+-(void)updateRenderBody
+{
+    [super updateRenderBody];
+    float length = [self worldLength];
+    
+    jointBody.contentSize = CGSizeMake(length + 2.0f * kEdgeRadius, kEdgeRadius * 2.0f);
+    jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
+    self.rotation = [self rotation];
+    
+    
+    restLengthHandle.position = ccpMult(ccp(length *  self.restLength / [self localLength], kEdgeRadius - 1.0f),1/[CCDirector sharedDirector].contentScaleFactor);
+    
+    restLengthHandleBody.contentSize = CGSizeMake(length *  self.restLength / [self localLength] + kEdgeRadius, kEdgeRadius * 2.0f);
+    
+}
+
+-(void)visit
+{
+    [self updateRenderBody];
+    [super visit];
+}
+
+
+
+-(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
+{
+    
+    
+    {
+        CGPoint pointMin = [restLengthHandle convertToNodeSpaceAR:worlPos];
+        pointMin = ccpSub(pointMin, ccp(0,2.0f));
+        if(ccpLength(pointMin) < 7.0f)
+        {
+            return RestLengthHandle;
+        }
+    }
+    
+    return [super hitTestJointHandle:worlPos];;
+}
 
 -(void)updateSelectionUI
 {
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
-        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-Spring-sel.png"];
-        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor-sel.png"];
+        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
+        
+        if(restLengthHandle.parent == nil)
+            [scaleFreeNode addChild:restLengthHandle];
+    }
+    else //Unseleted
+    {
+        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
+        
+        if(restLengthHandle.parent != nil)
+            [restLengthHandle removeFromParentAndCleanup:NO];
+    }
+    
+    
+    if(selectedBodyHandle & (1 << RestLengthHandle))
+    {
+        restLengthHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide-sel.png"];
     }
     else
     {
-        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-Spring.png"];
-        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor.png"];
+        restLengthHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide.png"];
     }
     
     [super updateSelectionUI];
 }
 
 
-- (BOOL)hitTestWithWorldPos:(CGPoint)pos
-{
-    pos = [scaleFreeNode convertToNodeSpace:pos];
-    if(ccpLength(pos) < 17.0f)
-    {
-        return YES;
-    }
-    
-    return NO;    
-}
 
--(JointHandleType)hitTestJoint:(CGPoint)worldPos
-{
-    
-    return JointHandleUnknown;
-}
+#pragma mark - Properties -
 
 
--(CGPoint)anchorA
+-(void)setAnchorA:(CGPoint)lAnchorA
 {
-    return anchorA;
-}
-
--(void)setAnchorA:(CGPoint)aAnchorA
-{
-    anchorA = aAnchorA;
+    [super setAnchorA:lAnchorA];
+    //refresh max mins
+    self.restLength = self.restLength;
     
 }
 
 
--(void)setBodyA:(CCNode *)aBodyA
+-(void)setAnchorB:(CGPoint)lAnchorB
 {
-    [super setBodyA:aBodyA];
-    
-    if(!aBodyA)
-    {
-        self.anchorA = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
-        return;
-    }
-    else
-    {
-        [self setAnchorFromBodyA];
-    }
-    
+    [super setAnchorB:lAnchorB];
+    //refresh max mins
+    self.restLength = self.restLength;
 }
 
--(void)setAnchorFromBodyA
-{
-    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
-    self.anchorA = lAnchorA;
-    
-    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
-   
-}
-
--(void)setPosition:(CGPoint)position
-{
-    [super setPosition:position];
-    
-    if(!self.bodyA)
-    {
-        return;
-    }
-    
-    [self setAnchorFromBodyA];
-}
 
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
-    if(bodyType == BodyAnchorA)
+    if(bodyType == RestLengthHandle)
     {
-        CGPoint newPosition = [self.parent convertToNodeSpaceAR:worldPos];
-        [self setPosition:newPosition];
+        CGPoint localPoint = [self convertToNodeSpace:worldPos];
+        self.restLength =  localPoint.x;
+        [[AppDelegate appDelegate] refreshProperty:@"restLength"];
     }
+    
+    [super setBodyHandle:worldPos bodyType:bodyType];
+}
+
+-(void)setBodyA:(CCNode *)lBodyA
+{
+    [super setBodyA:lBodyA];
+    self.restLength = [self worldLength];
+}
+
+-(void)setBodyB:(CCNode *)lBodyB
+{
+    [super setBodyB:lBodyB];
+    self.restLength = [self worldLength];
 }
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if(object == self.bodyA)
+    if(object == self.bodyB)
     {
-        CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
-        CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
-        self.position = localPos;
+
+    
     }
-}
-
--(void)onExit
-{
- 
-}
-
--(void)dealloc
-{
-    self.bodyA = nil;
-
+    
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 

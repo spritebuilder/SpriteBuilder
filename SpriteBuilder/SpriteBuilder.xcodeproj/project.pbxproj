@@ -172,9 +172,6 @@
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		92B7900518C808B7007DF895 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
-		92B7900718C808B7007DF895 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
-		92B7900818C808B7007DF895 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
-		92B7900918C808B7007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
 		92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */; };
 		92B792CB18C92C60007DF895 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
@@ -183,6 +180,10 @@
 		92B792CE18C92CA1007DF895 /* CCBPhyicsSpringJointPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792BD18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.m */; };
 		92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792BF18C92C60007DF895 /* CCBPhysicsSpringJoint.m */; };
 		92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */; };
+		92B792D518C9333E007DF895 /* CCPhysicsSpringJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */; };
+		92B792D618C93390007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */; };
+		92B792D718C9339E007DF895 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C518C92C60007DF895 /* Icon.png */; };
+		92B792D918C933B7007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		92DC215F188073C500C8DCCD /* select-scale.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C005E1846A40D00544BD2 /* select-scale.png */; };
@@ -915,6 +916,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				92B792D518C9333E007DF895 /* CCPhysicsSpringJoint.ccbPlugNode in Copy PlugIns */,
 				9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */,
 				92154AE318A55A4200BD215C /* CCPhysicsPivotJoint.ccbPlugNode in Copy PlugIns */,
 				DC680339189157B90060BE39 /* SKColorSpriteNode.ccbPlugNode in Copy PlugIns */,
@@ -4164,9 +4166,9 @@
 			productReference = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
-		92B7900118C808B7007DF895 /* CCPhysicsSprintJoint */ = {
+		92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 92B7900A18C808B7007DF895 /* Build configuration list for PBXNativeTarget "CCPhysicsSprintJoint" */;
+			buildConfigurationList = 92B7900A18C808B7007DF895 /* Build configuration list for PBXNativeTarget "CCPhysicsSpringJoint" */;
 			buildPhases = (
 				92B7900218C808B7007DF895 /* Sources */,
 				92B7900418C808B7007DF895 /* Frameworks */,
@@ -4176,7 +4178,7 @@
 			);
 			dependencies = (
 			);
-			name = CCPhysicsSprintJoint;
+			name = CCPhysicsSpringJoint;
 			productName = CCPhysicsNode;
 			productReference = 92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
@@ -4610,7 +4612,7 @@
 				B79F90D717FF30DB00908504 /* CCPhysicsNode */,
 				92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */,
 				926D13D718B57B9500582959 /* CCPhysicsPinJoint */,
-				92B7900118C808B7007DF895 /* CCPhysicsSprintJoint */,
+				92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */,
 				DCB9F14C1890600D00128D78 /* SKNode */,
 				DC5129BD1891450D0091873D /* SKSpriteNode */,
 				DC6802FC1891466C0060BE39 /* SKLabelNode */,
@@ -4982,9 +4984,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92B7900718C808B7007DF895 /* Icon.png in Resources */,
-				92B7900818C808B7007DF895 /* InfoPlist.strings in Resources */,
-				92B7900918C808B7007DF895 /* CCBPProperties.plist in Resources */,
+				92B792D918C933B7007DF895 /* CCBPProperties.plist in Resources */,
+				92B792D718C9339E007DF895 /* Icon.png in Resources */,
+				92B792D618C93390007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7922,7 +7924,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		92B7900A18C808B7007DF895 /* Build configuration list for PBXNativeTarget "CCPhysicsSprintJoint" */ = {
+		92B7900A18C808B7007DF895 /* Build configuration list for PBXNativeTarget "CCPhysicsSpringJoint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				92B7900B18C808B7007DF895 /* Debug */,

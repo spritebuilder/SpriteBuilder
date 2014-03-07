@@ -6,14 +6,18 @@
 //
 //
 
-#import "CCBPhysicsPivotJoint.h"
+#import "CCBPhysicsTwoBodyJoint.h"
 
 
 
-@interface CCBPhysicsSpringJoint : CCBPhysicsPivotJoint
+@interface CCBPhysicsSpringJoint : CCBPhysicsTwoBodyJoint
 {
 }
 
-@property (nonatomic) CGPoint anchorB;
+@property (nonatomic) float restLength;
+@property (nonatomic) float damping;
+@property (nonatomic) float stiffness;
+
+
 
 @end

@@ -9,6 +9,8 @@
 #import "CCBPhysicsPivotJoint.h"
 
 extern const float kMargin;
+extern const float kEdgeRadius;
+
 
 @interface CCBPhysicsTwoBodyJoint : CCBPhysicsPivotJoint
 {
@@ -17,10 +19,12 @@ extern const float kMargin;
 
 @property (nonatomic) CGPoint anchorB;
 
+
 -(void)setupBody;
+-(void)updateRenderBody;
 -(float)localLength;
 -(float)worldLength;
 -(float)rotation;
--(void)updateRenderBody;
+
 
 @end

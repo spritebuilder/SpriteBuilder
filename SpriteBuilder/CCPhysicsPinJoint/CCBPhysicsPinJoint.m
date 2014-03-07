@@ -96,7 +96,7 @@
 
 }
 
-const float kEdgeRadius = 8.0f;
+
 -(void)updateRenderBody
 {
     [super updateRenderBody];
@@ -222,13 +222,6 @@ const float kEdgeRadius = 8.0f;
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
-    if(bodyType == BodyAnchorB)
-    {
-        CGPoint newPosition = [self.bodyB convertToNodeSpace:worldPos];
-        self.anchorB = newPosition;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
-        
-    }
     
     if(bodyType == MaxHandleType)
     {
