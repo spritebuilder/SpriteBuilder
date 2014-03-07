@@ -110,28 +110,35 @@ const int kSpringHeightTwoThirds = kSpringHeight + kSpringHeightHalf;
         
 
         int wholeCounts = (bodyLength - kSpringHeight) / kSpringHeightHalf;
-        int remainder   = (bodyLength - kSpringHeight) % kSpringHeightHalf;
+        if(wholeCounts % 2 == 0)
+            wholeCounts--;
+        int remainder   = bodyLength - wholeCounts * kSpringHeightHalf - kSpringHeight;
+        
         
         CGPoint * pt = malloc(sizeof(CGPoint) * (wholeCounts + 7));
        
         int padding = kSpringHeightHalf;
+
+
+        
+        float sign = ((wholeCounts + 1)/2) %2 == 0 ? 1.0f : -1.0f;
         
         //Lead in Line
         pt[0] = ccp(0,0); //start
         pt[1] = ccp(padding,0); //padding.
-        pt[2] = ccp(remainder/4 + padding, -remainder/2);
+        pt[2] = ccp(remainder/4 + padding, -sign * remainder/2);
         pt[3] = ccp(remainder/2 + padding, 0);
-        pt[4] = ccp(pt[3].x + kSpringHeightHalf/2, kSpringHeightHalf);
+        pt[4] = ccp(pt[3].x + kSpringHeightHalf/2,sign * kSpringHeightHalf);
 
         int offset = pt[4].x + kSpringHeightHalf/2;
-        int sign = -1.0f;
+
         for(int i = 0; i < wholeCounts; i++)
         {
-            pt[i+ 5] = ccp(offset + (i+1) * kSpringHeightHalf, sign * kSpringHeightHalf);
+            pt[i+ 5] = ccp(offset + (i+1) * kSpringHeightHalf, -sign * kSpringHeightHalf);
             sign *= -1.0f;
         }
         
-        pt[wholeCounts +4] = ccp(bodyLength -  pt[2].x, pt[2].y);
+        pt[wholeCounts +4] = ccp(bodyLength - pt[2].x, pt[2].x);
         pt[wholeCounts +5] = ccp(bodyLength -  pt[1].x, 0);
         pt[wholeCounts +6] = ccp(bodyLength, 0);
         
