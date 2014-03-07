@@ -95,6 +95,7 @@
 -(void)setAnchorA:(CGPoint)aAnchorA
 {
     anchorA = aAnchorA;
+    [self setPositionFromAnchor];
     
 }
 
@@ -116,11 +117,18 @@
     
 }
 
+-(void)setPositionFromAnchor
+{
+    CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
+    CGPoint nodePos = [self.parent convertToNodeSpace:worldPos];
+    _position = nodePos;
+}
+
 -(void)setAnchorFromBodyA
 {
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
     CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
-    self.anchorA = lAnchorA;
+    anchorA = lAnchorA;
     
     [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
    
