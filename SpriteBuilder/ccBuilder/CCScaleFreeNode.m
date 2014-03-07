@@ -7,6 +7,7 @@
 //
 
 #import "CCScaleFreeNode.h"
+#import "CCDirector.h"
 
 @implementation CCScaleFreeNode
 
@@ -20,8 +21,8 @@
     }
     
     
-    [self setScaleX:(hiddenScale * 1.0f/scale)];
-    [self setScaleY:(hiddenScale * 1.0f/scale)];
+    [self setScaleX:(hiddenScale * 1.0f/scale) ];
+    [self setScaleY:(hiddenScale * 1.0f/scale) ];
     
     [super visit];
 }

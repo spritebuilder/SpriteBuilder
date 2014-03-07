@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ordering</key>
+	<integer>3000</integer>
+	<key>displayName</key>
+	<string>Physics Spring Joint</string>
+	<key>description</key>
+	<string>Creates a Spring joint that with a fixed elastic length that connects two bodies.</string>
+	<key>inheritsFrom</key>
+	<string>CCPhysicsPivotJoint</string>
+	<key>canHaveChildren</key>
+	<false/>
+	<key>canBeRootNode</key>
+	<false/>
+	<key>isJoint</key>
+	<true/>
+	<key>className</key>
+	<string>CCPhysicsSpringJoint</string>
+	<key>properties</key>
+	<array>
+		<dict>
+			<key>type</key>
+			<string>Separator</string>
+			<key>dontSetInEditor</key>
+			<true/>
+			<key>displayName</key>
+			<string>CCPhysicsSpringJoint</string>
+			<key>name</key>
+			<string>CCPhysicsSpringJoint</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>animatable</key>
+			<false/>
+			<key>displayName</key>
+			<string>AnchorB</string>
+			<key>type</key>
+			<string>Point</string>
+			<key>name</key>
+			<string>anchorB</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>restLength</string>
+			<key>displayName</key>
+			<string>Rest Length</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Damping</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>damping</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Stiffness</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>stiffness</string>
+		</dict>
+	</array>
+	<key>editorClassName</key>
+	<string>CCBPhysicsSpringJoint</string>
+	<key>propertiesOverridden</key>
+	<array/>
+</dict>
+</plist>

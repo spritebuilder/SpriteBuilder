@@ -1,13 +1,13 @@
 //
-//  CCBPhysicsPinJointPlacefolder.h
+//  CCBPhysicsTwoBodyJoint.h
 //  SpriteBuilder
 //
 //  Created by John Twigg on 3/4/14.
 //
 //
 
-#import "CCNode.h"
+#import "CCBPhysicsTwoBodyJoint.h"
 
-@interface CCBPhysicsPinJointPlacefolder : CCNode
+@interface CCBPhysicsPinJointPlacefolder : CCBPhysicsTwoBodyJoint
 
 @end
