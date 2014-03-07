@@ -114,11 +114,13 @@
     {
         [self setAnchorFromBodyA];
     }
-    
 }
 
 -(void)setPositionFromAnchor
 {
+    if(self.bodyA == nil || self.parent == nil)
+        return;
+    
     CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
     CGPoint nodePos = [self.parent convertToNodeSpace:worldPos];
     _position = nodePos;
@@ -126,6 +128,9 @@
 
 -(void)setAnchorFromBodyA
 {
+    if(self.bodyA == nil || self.parent == nil)
+        return;
+    
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
     CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
     anchorA = lAnchorA;

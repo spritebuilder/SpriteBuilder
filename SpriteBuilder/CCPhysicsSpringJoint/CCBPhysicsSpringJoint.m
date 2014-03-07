@@ -35,6 +35,7 @@
     {
         self.stiffness = 4.0f;
         self.damping = 1.0f;
+        self.restLength = [self worldLength];
     }
     
     return self;
