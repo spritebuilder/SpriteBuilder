@@ -9,8 +9,6 @@
 #import "CCBPhysicsSpringJoint.h"
 #import "AppDelegate.h"
 
-
-
 @interface CCBPhysicsJoint()
 -(void)updateSelectionUI;
 @end
@@ -18,6 +16,11 @@
 @implementation CCBPhysicsSpringJoint
 {
     CCSprite9Slice  * jointBody;
+
+    CCNode          * springNode;
+    
+    int               springPointsCount;
+    int               bodyLength;
 
     CCSprite        * restLengthHandle;
     CCSprite9Slice  * restLengthHandleBody;
@@ -53,12 +56,13 @@
     [scaleFreeNode addChild:jointBody];
     
     
+    springNode = [CCNode node];
+    [scaleFreeNode addChild:springNode];
+    
     restLengthHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png"];
     restLengthHandle.anchorPoint = ccp(0.5f, 0.0f);
     [scaleFreeNode addChild:restLengthHandle];
-    
-    
-    
+ 
     restLengthHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
     restLengthHandleBody.marginLeft = 0.0f;
     restLengthHandleBody.marginRight = kMargin;
@@ -84,6 +88,62 @@
     
     restLengthHandleBody.contentSize = CGSizeMake(length *  self.restLength / [self localLength] + kEdgeRadius, kEdgeRadius * 2.0f);
     
+    [self updateSprintBody];
+   
+}
+
+const int kFlatPortion = 4.0f;
+
+const int kSpringHeight = 64;
+const int kSpringHeightHalf = kSpringHeight/2;
+const int kSpringHeightTwoThirds = kSpringHeight + kSpringHeightHalf;
+
+
+-(void)updateSprintBody
+{
+    int currentBodyLength = [self worldLength];
+    if(bodyLength != currentBodyLength)
+    {
+        [springNode removeAllChildrenWithCleanup:YES];
+        bodyLength = currentBodyLength;
+        
+        
+
+        int wholeCounts = (bodyLength - kSpringHeight) / kSpringHeightHalf;
+        int remainder   = (bodyLength - kSpringHeight) % kSpringHeightHalf;
+        
+        CGPoint * pt = malloc(sizeof(CGPoint) * (wholeCounts + 7));
+       
+        int padding = kSpringHeightHalf;
+        
+        //Lead in Line
+        pt[0] = ccp(0,0); //start
+        pt[1] = ccp(padding,0); //padding.
+        pt[2] = ccp(remainder/4 + padding, -remainder/2);
+        pt[3] = ccp(remainder/2 + padding, 0);
+        pt[4] = ccp(pt[3].x + kSpringHeightHalf/2, kSpringHeightHalf);
+
+        int offset = pt[4].x + kSpringHeightHalf/2;
+        int sign = -1.0f;
+        for(int i = 0; i < wholeCounts; i++)
+        {
+            pt[i+ 5] = ccp(offset + (i+1) * kSpringHeightHalf, sign * kSpringHeightHalf);
+            sign *= -1.0f;
+        }
+        
+        pt[wholeCounts +4] = ccp(bodyLength -  pt[2].x, pt[2].y);
+        pt[wholeCounts +5] = ccp(bodyLength -  pt[1].x, 0);
+        pt[wholeCounts +6] = ccp(bodyLength, 0);
+        
+        CCColor * whiteColor = [CCColor colorWithWhite:1.0f alpha:0.3f];
+        for(int i = 1; i < wholeCounts + 7; i++)
+        {
+            CCDrawNode * draw = [CCDrawNode node];
+            [draw drawSegmentFrom:pt[i-1] to:pt[i] radius:1.0f color:whiteColor];
+            [springNode addChild:draw];
+        }
+        
+    }
 }
 
 -(void)visit
@@ -96,8 +156,6 @@
 
 -(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
 {
-    
-    
     {
         CGPoint pointMin = [restLengthHandle convertToNodeSpaceAR:worlPos];
         pointMin = ccpSub(pointMin, ccp(0,2.0f));
@@ -180,12 +238,14 @@
 {
     [super setBodyA:lBodyA];
     self.restLength = [self worldLength];
+    [[AppDelegate appDelegate] refreshProperty:@"restLength"];    
 }
 
 -(void)setBodyB:(CCNode *)lBodyB
 {
     [super setBodyB:lBodyB];
     self.restLength = [self worldLength];
+    [[AppDelegate appDelegate] refreshProperty:@"restLength"];
 }
 
 
