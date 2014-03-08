@@ -41,20 +41,25 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     [self addChild:scaleFreeNode];
     
     bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyAOutlet.position = ccpMult(ccp(-kOutletOffset,-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
+    bodyAOutlet.position = ccpMult(ccp(-kOutletOffset + [self outletLateralOffset],-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
     [scaleFreeNode addChild:bodyAOutlet];
     
     bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.position = ccpMult(ccp(kOutletOffset,-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
+    bodyBOutlet.position = ccpMult(ccp(kOutletOffset + [self outletLateralOffset],-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
     [scaleFreeNode addChild:bodyBOutlet];
     
-    self.breakingForceEnabled = YES;
-    self.maxForceEnabled = YES;
+    self.breakingForceEnabled = NO;
+    self.maxForceEnabled = NO;
     self.breakingForce = INFINITY;
     self.collideBodies = YES;
     self.maxForce = INFINITY;
     
     return self;
+}
+
+-(float)outletLateralOffset
+{
+    return 0.0f;
 }
 
 -(void)setBodyA:(CCNode *)aBodyA

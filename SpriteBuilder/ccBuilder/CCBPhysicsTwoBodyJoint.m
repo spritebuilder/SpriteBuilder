@@ -207,13 +207,10 @@ static const float kDefaultLength = 58.0f;
     [self setAnchorFromBodyB];
 }
 
-
 -(void)setAnchorB:(CGPoint)lAnchorB
 {
     anchorB = lAnchorB;
 }
-
-
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
@@ -228,6 +225,10 @@ static const float kDefaultLength = 58.0f;
     [super setBodyHandle:worldPos bodyType:bodyType];
 }
 
+-(float)outletLateralOffset
+{
+    return 58.0/2.0f;
+}
 
 
 @end

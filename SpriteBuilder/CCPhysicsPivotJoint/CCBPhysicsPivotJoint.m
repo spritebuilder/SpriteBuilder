@@ -45,8 +45,7 @@
     
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
-   // self.contentSize = joint.contentSize;
-   // self.anchorPoint = ccp(0.5f,0.5f);
+
     
 }
 
