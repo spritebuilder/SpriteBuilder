@@ -268,16 +268,5 @@ const int kSpringHeightHalf = kSpringHeight/2;
 }
 
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if(object == self.bodyB)
-    {
-
-    
-    }
-    
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-}
-
 
 @end

@@ -16,4 +16,6 @@
 
 @property (nonatomic) CGPoint anchorA;
 
++(BOOL)nodeHasParent:(CCNode*)node parent:(CCNode*)parent;
+
 @end

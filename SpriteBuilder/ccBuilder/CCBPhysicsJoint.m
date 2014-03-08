@@ -103,17 +103,32 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)addObserverBody:(CCNode*)body
 {
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+    CCNode * node = body;
+    
+    while (node && node != [SceneGraph instance].rootNode)
     {
-        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+        {
+            [node addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
+        }
+        node = node.parent;
     }
+    
     
 }
 
 -(void)removeObserverBody:(CCNode*)body
 {
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
-        [body removeObserver:self forKeyPath:dependantProperties[i]];
+    CCNode * node = body;
+    
+    while (node && node != [SceneGraph instance].rootNode)
+    {
+        
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
+            [node removeObserver:self forKeyPath:dependantProperties[i]];
+        }
+        
+        node = node.parent;
     }
 }
 

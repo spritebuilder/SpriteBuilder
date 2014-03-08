@@ -1188,8 +1188,11 @@
     }
 }
 
+
+
 -(void)writeJoints:(NSArray*)joints
 {
+    
     [self writeInt:(int)joints.count withSign:NO];
     for (NSDictionary * joint in joints)
     {

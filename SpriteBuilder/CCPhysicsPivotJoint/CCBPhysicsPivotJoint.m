@@ -161,10 +161,23 @@
     }
 }
 
++(BOOL)nodeHasParent:(CCNode*)node parent:(CCNode*)parent
+{
+
+    while(node)
+    {
+        if(node == parent)
+            return YES;
+        
+        node = node.parent;
+    }
+    
+    return NO;
+}
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if(object == self.bodyA)
+    if([CCBPhysicsPivotJoint nodeHasParent:self.bodyA parent:object])
     {
         CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
         CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
