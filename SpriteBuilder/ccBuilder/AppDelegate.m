@@ -2279,8 +2279,8 @@ static BOOL hideAllToNextSeparator;
     //Set an unset UUID
     if(obj.UUID == 0x0)
     {
-        obj.UUID = [AppDelegate appDelegate].currentDocument.UUID;
-        [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+        obj.UUID = currentDocument.UUID;
+        currentDocument.UUID = currentDocument.UUID + 1;
     }
     
     [outlineHierarchy reloadData];
@@ -2560,7 +2560,11 @@ static BOOL hideAllToNextSeparator;
     
     
     // Copy node
-    if (!self.selectedNode) return;
+    if (!self.selectedNode)
+        return;
+    
+    if(self.selectedNode.plugIn.isJoint)
+        return;
     
     // Serialize selected node
     NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:self.selectedNode];
@@ -2586,6 +2590,7 @@ static BOOL hideAllToNextSeparator;
         else parentSize = self.selectedNode.parent.contentSize;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
+        clipNode.UUID = 0x0;
         [self addCCObject:clipNode asChild:asChild];
         
         //We might have copy/cut/pasted and body. Fix it up.
