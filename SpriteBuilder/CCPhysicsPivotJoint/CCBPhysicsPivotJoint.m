@@ -54,7 +54,7 @@
 -(void)updateSelectionUI
 {
     //If selected, display selected sprites.
-    if(self.isSelected)
+    if(selectedBodyHandle & (1 << EntireJoint))
     {
         joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-sel.png"];
         jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor-sel.png"];
@@ -95,6 +95,7 @@
 -(void)setAnchorA:(CGPoint)aAnchorA
 {
     anchorA = aAnchorA;
+    [self setPositionFromAnchor];
     
 }
 
@@ -113,14 +114,26 @@
     {
         [self setAnchorFromBodyA];
     }
+}
+
+-(void)setPositionFromAnchor
+{
+    if(self.bodyA == nil || self.parent == nil)
+        return;
     
+    CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
+    CGPoint nodePos = [self.parent convertToNodeSpace:worldPos];
+    _position = nodePos;
 }
 
 -(void)setAnchorFromBodyA
 {
+    if(self.bodyA == nil || self.parent == nil)
+        return;
+    
     CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
     CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
-    self.anchorA = lAnchorA;
+    anchorA = lAnchorA;
     
     [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
    
@@ -141,7 +154,7 @@
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
-    if(bodyType == BodyIndexA)
+    if(bodyType == BodyAnchorA)
     {
         CGPoint newPosition = [self.parent convertToNodeSpaceAR:worldPos];
         [self setPosition:newPosition];

@@ -6,13 +6,13 @@
 //
 //
 
-#import "CCBPhysicsPivotJoint.h"
+#import "CCBPhysicsTwoBodyJoint.h"
 
-@interface CCBPhysicsPinJoint : CCBPhysicsPivotJoint
+@interface CCBPhysicsPinJoint : CCBPhysicsTwoBodyJoint
 {
     
 }
-@property (nonatomic) CGPoint anchorB;
+
 
 @property (nonatomic) float minDistance;
 @property (nonatomic) BOOL  minDistanceEnabled;
