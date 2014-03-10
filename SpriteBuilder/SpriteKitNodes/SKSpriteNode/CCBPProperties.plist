@@ -40,25 +40,6 @@
 			<string>SKSpriteNode</string>
 		</dict>
 		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<key>default</key>
-			<array>
-				<string>0</string>
-				<integer>0</integer>
-			</array>
-			<key>type</key>
-			<string>Size</string>
-			<key>name</key>
-			<string>size</string>
-			<key>displayName</key>
-			<string>Content Size</string>
-		</dict>
-		<dict>
 			<key>type</key>
 			<string>Point</string>
 			<key>name</key>

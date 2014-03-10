@@ -1099,6 +1099,11 @@
     [warnings addWarningWithDescription:description isFatal:fatal relatedFile:(relatedFile == nil? currentWorkingFile : relatedFile) resolution:resolution];
 }
 
+-(BOOL) exportingToSpriteKit
+{
+	return (projectSettings.engine == CCBTargetEngineSpriteKit);
+}
+
 - (BOOL) publish_
 {
     // Remove all old publish directories if user has cleaned the cache
