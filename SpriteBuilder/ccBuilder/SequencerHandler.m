@@ -556,7 +556,12 @@ static SequencerHandler* sharedSequencerHandler;
     {
 		return [self validateDropForNodeData:dropTarget nodeData:nodeData];
 	}
-    
+
+	if ([self dropContainsMultipleTypes:pasteboard])
+	{
+		return NSDragOperationNone;
+	}
+
     NSArray * jointsData = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
     if(jointsData.count > 0)
     {
@@ -598,6 +603,12 @@ static SequencerHandler* sharedSequencerHandler;
     return NSDragOperationGeneric;
 }
 
+- (BOOL)dropContainsMultipleTypes:(NSPasteboard *)pasteboard
+{
+	// There is always one extra type added: com.cocosbuilder.RMResource
+	return [[pasteboard types] count] > 2;
+}
+
 - (NSDragOperation)validateDropForPluginNodes:(id)dropTarget
 {
 	if (![dropTarget isKindOfClass:[CCNode class]])
@@ -633,19 +644,19 @@ static SequencerHandler* sharedSequencerHandler;
 	return NSDragOperationGeneric;
 }
 
-- (NSDragOperation)validateDropForJointsData:(id)item index:(NSInteger)index
+- (NSDragOperation)validateDropForJointsData:(id)dropTarget index:(NSInteger)index
 {
 	if (index != -1)
 	{
 		return NSDragOperationNone;
 	}
 
-	if (![item isKindOfClass:[CCNode class]])
+	if (![dropTarget isKindOfClass:[CCNode class]])
 	{
 		return NSDragOperationNone;
 	}
 
-	CCNode* node = item;
+	CCNode* node = dropTarget;
 	if (!node.nodePhysicsBody)
 	{
 		return NSDragOperationNone;
