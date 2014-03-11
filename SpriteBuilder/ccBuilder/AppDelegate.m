@@ -146,6 +146,7 @@
 @synthesize physicsHandler;
 @synthesize itemTabView;
 @dynamic selectedNodeCanHavePhysics;
+@synthesize playingBack;
 static AppDelegate* sharedAppDelegate;
 
 #pragma mark Setup functions
@@ -996,9 +997,10 @@ static BOOL hideAllToNextSeparator;
     [inspectorCodeDocumentView setFrameSize:NSMakeSize(233, 1)];
     int paneOffset = 0;
     int paneCodeOffset = 0;
-    
+    bool displayPluginProperties = YES;
     // Add show panes according to selections
-    if (!self.selectedNode) return;
+    if (!self.selectedNode)
+        return;
     
     NodeInfo* info = self.selectedNode.userObject;
     PlugInNode* plugIn = info.plugIn;
@@ -1015,11 +1017,17 @@ static BOOL hideAllToNextSeparator;
     else
     {
         [_inspectorPhysics setHidden:YES];
+        
+        if([sequenceHandler currentSequence].timelinePosition != 0.0f || ![sequenceHandler currentSequence].autoPlay)
+        {
+            paneOffset = [self addInspectorPropertyOfType:@"SeparatorSub" name:@"name" displayName:@"Must select frame Zero of the autoPlay timeline" extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
+            displayPluginProperties = NO;
+        }
     }
     
     // Add panes for each property
     
-    if (plugIn)
+    if (plugIn && displayPluginProperties)
     {
         NSArray* propInfos = plugIn.nodeProperties;
         for (int i = 0; i < [propInfos count]; i++)

@@ -11,6 +11,9 @@
 #import "CCNode+NodeInfo.h"
 #import "CCBGlobals.h"
 #import "SceneGraph.h"
+#import "SequencerHandler.h"
+#import "SequencerSequence.h"
+#import "AppDelegate.h"
 
 static const float kOutletOffset = 20.0f;
 
@@ -342,6 +345,21 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         default:
             return @"bodyB";
     }
+}
+
+- (BOOL) hidden
+{
+    if([SequencerHandler sharedHandler].currentSequence.timelinePosition != 0.0f || ![SequencerHandler sharedHandler].currentSequence.autoPlay)
+    {
+        return YES;
+    }
+    
+    if([AppDelegate appDelegate].playingBack)
+    {
+        return YES;
+    }
+    
+    return [super hidden];
 }
 
 
