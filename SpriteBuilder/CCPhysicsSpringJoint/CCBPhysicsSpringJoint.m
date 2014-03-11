@@ -42,7 +42,13 @@
 
 -(void)setupBody
 {
+    CCSizeType sizeType;
+    sizeType.heightUnit = CCSizeUnitUIPoints;
+    sizeType.widthUnit = CCSizeUnitUIPoints;
+    
+    
     springNode = [CCNode node];
+    springNode.scaleType = CCScaleTypeScaled;
     [scaleFreeNode addChild:springNode];
     
     [super setupBody];
@@ -58,6 +64,8 @@
     restLengthHandleBody.marginTop = 0.0;
     restLengthHandleBody.scale = 1.0;
     restLengthHandleBody.anchorPoint = ccp(0.0f,0.5f);
+
+    restLengthHandleBody.contentSizeType = sizeType;
     [scaleFreeNode addChild:restLengthHandleBody];
     
 }
@@ -159,6 +167,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
         {
             CCDrawNode * draw = [CCDrawNode node];
             [draw drawSegmentFrom:ccpMult(pt[i-1],scale) to:ccpMult(pt[i],scale) radius:1.0f color:whiteColor];
+
             [springNode addChild:draw];
         }
         

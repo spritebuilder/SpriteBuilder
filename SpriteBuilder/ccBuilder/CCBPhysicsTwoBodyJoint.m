@@ -146,8 +146,8 @@ static const float kDefaultLength = 58.0f;
 {
     {
         CGPoint pointA = [anchorHandleA convertToNodeSpaceAR:worlPos];
-        pointA = ccpAdd(pointA, ccp(0,5.0f));
-        if(ccpLength(pointA) < 8.0f)
+        pointA = ccpAdd(pointA, ccp(0,3.0f * [CCDirector sharedDirector].UIScaleFactor));
+        if(ccpLength(pointA) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
         {
             return BodyAnchorA;
         }
@@ -155,8 +155,8 @@ static const float kDefaultLength = 58.0f;
     
     {
         CGPoint pointB = [anchorHandleB convertToNodeSpaceAR:worlPos];
-        pointB = ccpAdd(pointB, ccp(0,5.0f));
-        if(ccpLength(pointB) < 8.0f)
+        pointB = ccpAdd(pointB, ccp(0,3.0f * [CCDirector sharedDirector].UIScaleFactor));
+        if(ccpLength(pointB) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
         {
             return BodyAnchorB;
         }

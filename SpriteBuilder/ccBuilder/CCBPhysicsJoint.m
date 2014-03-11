@@ -225,16 +225,16 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
     CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worldPos];
     
-    pointA = ccpAdd(pointA, ccp(0,5.0f));
-    if(ccpLength(pointA) < 10.0f)
+    pointA = ccpAdd(pointA, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
+    if(ccpLength(pointA) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
         return BodyOutletA;
     }
     
     
     CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:worldPos];
-    pointB = ccpAdd(pointB, ccp(0,5.0f));
-    if(ccpLength(pointB) < 10.0f)
+    pointB = ccpAdd(pointB, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
+    if(ccpLength(pointB) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
         return BodyOutletB;
     }
