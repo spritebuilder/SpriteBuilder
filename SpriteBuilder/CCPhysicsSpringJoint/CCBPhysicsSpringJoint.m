@@ -179,7 +179,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
 {
     {
         CGPoint pointMin = [restLengthHandle convertToNodeSpaceAR:worlPos];
-        pointMin = ccpSub(pointMin, ccp(0,2.0f));
+        pointMin = ccpSub(pointMin, ccp(0,7.0f));
         if(ccpLength(pointMin) < 7.0f)
         {
             return RestLengthHandle;
@@ -255,16 +255,43 @@ const int kSpringHeightHalf = kSpringHeight/2;
 
 -(void)setBodyA:(CCNode *)lBodyA
 {
+
+    bool change = NO;
+    if(bodyA && bodyA != lBodyA)
+    {
+        change = YES;
+    }
+    
     [super setBodyA:lBodyA];
-    self.restLength = [self worldLength];
-    [[AppDelegate appDelegate] refreshProperty:@"restLength"];    
+    
+    if(change)
+    {
+        self.restLength = [self worldLength];
+        [[AppDelegate appDelegate] refreshProperty:@"restLength"];
+    }
 }
 
 -(void)setBodyB:(CCNode *)lBodyB
 {
+    bool change = NO;
+    if(bodyB && bodyB != lBodyB)
+    {
+        change = YES;
+    }
+    
     [super setBodyB:lBodyB];
-    self.restLength = [self worldLength];
-    [[AppDelegate appDelegate] refreshProperty:@"restLength"];
+
+    
+    if(change)
+    {
+        self.restLength = [self worldLength];
+        [[AppDelegate appDelegate] refreshProperty:@"restLength"];
+    }
+}
+
+-(void)setRestLength:(float)restLength
+{
+    _restLength = restLength;
 }
 
 

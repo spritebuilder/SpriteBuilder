@@ -9,6 +9,8 @@
 #import "CCBPhysicsTwoBodyJoint.h"
 #import "GeometryUtil.h"
 #import "AppDelegate.h"
+#import "CCNode+NodeInfo.h"
+
 
 @interface CCBPhysicsJoint()
 -(void)updateSelectionUI;
@@ -39,12 +41,14 @@ static const float kDefaultLength = 58.0f;
     sizeType.heightUnit = CCSizeUnitUIPoints;
     sizeType.widthUnit = CCSizeUnitUIPoints;
     jointBody.contentSizeType = sizeType;
+    [scaleFreeNode addChild:jointBody];
     
     anchorHandleA = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     anchorHandleB = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     
     [scaleFreeNode addChild:anchorHandleA];
     [scaleFreeNode addChild:anchorHandleB];
+
     
 }
 
@@ -203,7 +207,7 @@ static const float kDefaultLength = 58.0f;
 
 -(void)setBodyB:(CCNode *)aBodyB
 {
-    bool different = bodyB && bodyB != aBodyB;
+    bool different = bodyB && bodyB.UUID != aBodyB.UUID;
    
     [super setBodyB:aBodyB];
     
