@@ -39,6 +39,7 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "FCFormatConverter.h"
+#import "NSArray+Query.h"
 
 @implementation CCBPublisher
 
@@ -100,6 +101,51 @@
     return latestDate;
 }
 
+-(void)validateDocument:(NSMutableDictionary*)doc
+{
+    if(doc[@"joints"])
+    {
+        NSMutableArray * joints = doc[@"joints"];
+        
+        joints = [[joints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary * joint, NSDictionary *bindings) {
+            
+            
+            __block NSString * bodyType = @"bodyA";
+            
+            //Oh god. Nested blocks!
+            PredicateBlock find = ^BOOL(NSDictionary * dict, int idx) {
+                return [dict.allValues containsObject:bodyType];
+            };
+            
+            //Find bodyA property
+            if(![joint[@"properties"] findFirst:find])
+            {
+                NSString * description = [NSString stringWithFormat:@"Joint %@ must have bodyA attached. Not exporting it.",joint[@"displayName"]];
+                [warnings addWarningWithDescription:description isFatal:NO relatedFile:currentWorkingFile];
+                return NO;
+            }
+            
+            ///////
+            //Find bodyB property
+            bodyType = @"bodyB";
+            if(![joint[@"properties"] findFirst:find])
+            {
+                NSString * description = [NSString stringWithFormat:@"Joint %@ must have a bodyB attached. Not exporting it.",joint[@"displayName"]];
+
+                
+                [warnings addWarningWithDescription:description isFatal:NO relatedFile:currentWorkingFile];
+                return NO;
+            }
+
+            return YES;
+        }]] mutableCopy];
+        
+        
+        doc[@"joints"] = joints;
+    }
+    
+}
+
 - (void) addRenamingRuleFrom:(NSString*)src to: (NSString*)dst
 {
     if (projectSettings.flattenPaths)
@@ -132,6 +178,8 @@
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish ccb-file. File is in invalid format: %@",srcFile] isFatal:NO];
         return YES;
     }
+    
+    [self validateDocument:doc];
     
     // Export file
     plugIn.flattenPaths = projectSettings.flattenPaths;

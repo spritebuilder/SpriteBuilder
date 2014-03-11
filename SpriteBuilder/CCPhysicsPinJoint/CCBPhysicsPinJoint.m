@@ -335,7 +335,7 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if(object == self.bodyB)
+    if([CCBPhysicsPivotJoint nodeHasParent:self.bodyB parent:object])
     {
         self.minDistance = self.minDistance;
         self.maxDistance = self.maxDistance;

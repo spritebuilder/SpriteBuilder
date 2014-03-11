@@ -24,10 +24,13 @@
 
 #import "SequencerSettingsWindow.h"
 #import "SequencerSequence.h"
+#import "NSArray+Query.h"
+
 
 @implementation SequencerSettingsWindow
 
 @synthesize sequences;
+
 
 - (void) copySequences:(NSMutableArray *)seqs
 {
@@ -43,18 +46,29 @@
 
 - (BOOL) sheetIsValid
 {
-    if ([self.sequences count] > 0)
+    if ([self.sequences count] == 0)
     {
-        return YES;
-    }
-    else
-    {
-        // Display warning!
+         // Display warning!
         NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Timeline" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one timeline in your document."];
         [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
         
         return NO;
     }
+
+    
+    if(![self.sequences findFirst:^BOOL(SequencerSequence * sequence, int idx) {
+        return sequence.autoPlay;
+    }])
+    {
+        // Display warning!
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Autoplay" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one timeline in your document marked as AutoPlay."];
+        [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
+        
+        return NO;
+
+    }
+    
+    return YES;
 }
 
 - (void) disableAutoPlayForAllItems
@@ -64,9 +78,15 @@
     for (SequencerSequence* seq in self.sequences)
     {
         NSLog(@" -");
-        seq.autoPlay = NO;
+        [seq willChangeValueForKey:@"autoPlay"];
+        seq->autoPlay = NO;
+        [seq didChangeValueForKey:@"autoPlay"];
     }
 }
 
+- (int) runModalSheetForWindow:(NSWindow*)window;
+{
+    return [super runModalSheetForWindow:window];
+}
 
 @end
