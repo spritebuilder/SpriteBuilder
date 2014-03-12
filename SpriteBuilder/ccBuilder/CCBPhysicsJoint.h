@@ -65,7 +65,6 @@ typedef enum
 -(void)setJointHandleSelected:(JointHandleType)handleType; //Tell the renderer that a particular component is selected. Clears every frame.
 -(void)removeJointHandleSelected:(JointHandleType)handleType;
 
--(void)setOutletStatus:(JointHandleType)idx value:(BOOL)value;
 -(void)refreshOutletStatus;
 -(CGPoint)outletWorldPos:(JointHandleType)idx;
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType;

@@ -1745,6 +1745,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     mousePos = pos;
+    
+    [appDelegate.physicsHandler mouseMove:pos event:event];
+    
 }
 
 - (void)mouseEntered:(NSEvent *)event

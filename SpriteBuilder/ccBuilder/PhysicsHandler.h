@@ -34,6 +34,7 @@
 @interface PhysicsHandler : NSObject <NSDraggingSource,NSPasteboardItemDataProvider>
 {
     CGPoint _mouseDownPos;
+    CGPoint _mouseMovePos;
     int     _mouseDownInHandle;
     CGPoint _handleStartPos;
     
@@ -66,6 +67,8 @@
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event;
+- (BOOL) mouseMove:(CGPoint)pos event:(NSEvent*)event;
+
 
 - (BOOL)rightMouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL)rightMouseUp:(CGPoint)pos event:(NSEvent*)event;

@@ -175,7 +175,7 @@ static const float kDefaultLength = 58.0f;
     
     float distance = [GeometryUtil distanceFromLineSegment:anchorAWorldpos b:anchorBWorldpos c:pos];
     
-    if(distance < 4.0f)
+    if(distance < 8.0f)
     {
         return YES;
     }
