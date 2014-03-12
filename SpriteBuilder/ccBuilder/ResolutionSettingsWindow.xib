@@ -312,6 +312,17 @@ Gw
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
+                    <button id="ob4-7F-JeQ">
+                        <rect key="frame" x="280" y="36" width="19" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSLockUnlockedTemplate" imagePosition="left" alignment="left" alternateImage="NSLockLockedTemplate" state="on" borderStyle="border" inset="2" id="69w-uV-TWC">
+                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="recallcScales:" target="-2" id="yIA-9P-QkC"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
         </window>
@@ -331,6 +342,8 @@ Gw
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>
+        <image name="NSLockLockedTemplate" width="9" height="12"/>
+        <image name="NSLockUnlockedTemplate" width="9" height="12"/>
         <image name="NSRemoveTemplate" width="8" height="8"/>
     </resources>
 </document>

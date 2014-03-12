@@ -4,6 +4,12 @@
 <dict>
 	<key>defaultOrientation</key>
 	<integer>0</integer>
+	<key>designResourceScale</key>
+	<real>2</real>
+	<key>designSizeHeight</key>
+	<integer>768</integer>
+	<key>designSizeWidth</key>
+	<integer>1024</integer>
 	<key>designTarget</key>
 	<integer>0</integer>
 	<key>deviceOrientationLandscapeLeft</key>

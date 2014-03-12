@@ -34,5 +34,6 @@
 }
 
 @property (nonatomic,strong) ProjectSettings* projectSettings;
+@property (nonatomic,readonly) BOOL cocos2dx;
 
 @end

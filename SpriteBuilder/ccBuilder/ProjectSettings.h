@@ -96,6 +96,10 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
     BOOL deviceOrientationLandscapeRight;
     int resourceAutoScaleFactor;
     
+    int designSizeWidth;
+    int designSizeHeight;
+    float designResourceScale;
+    
     NSString* versionStr;
     BOOL needRepublish;
     
@@ -160,6 +164,10 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic, assign) int defaultOrientation;
 @property (nonatomic, assign) int deviceScaling;
 @property (nonatomic, assign) float tabletPositionScaleFactor;
+
+@property (nonatomic,assign) int designSizeWidth;
+@property (nonatomic,assign) int designSizeHeight;
+@property (nonatomic,assign) float designResourceScale;
 
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 

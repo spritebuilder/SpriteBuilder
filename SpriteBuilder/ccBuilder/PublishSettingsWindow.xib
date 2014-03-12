@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3028" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -16,18 +16,18 @@
         <window title="Publish Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="332"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="361"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="332"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="361"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView id="STU-HZ-uSB">
-                        <rect key="frame" x="0.0" y="38" width="480" height="37"/>
+                        <rect key="frame" x="0.0" y="37" width="480" height="67"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="OJq-Lp-qj5">
-                                <rect key="frame" x="18" y="12" width="115" height="14"/>
+                                <rect key="frame" x="18" y="42" width="115" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sceen mode:" id="Sjk-JV-fHS">
                                     <font key="font" metaFont="smallSystem"/>
@@ -36,7 +36,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="aKi-6a-lDu">
-                                <rect key="frame" x="268" y="12" width="68" height="14"/>
+                                <rect key="frame" x="268" y="42" width="68" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Orientation:" id="QyO-4X-ZUI">
                                     <font key="font" metaFont="smallSystem"/>
@@ -45,7 +45,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" id="iFn-gY-d3E">
-                                <rect key="frame" x="91" y="7" width="125" height="22"/>
+                                <rect key="frame" x="91" y="37" width="125" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="qL6-BG-l7F">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -66,7 +66,7 @@
                                 </connections>
                             </popUpButton>
                             <popUpButton verticalHuggingPriority="750" id="jbs-b1-Izc">
-                                <rect key="frame" x="339" y="7" width="125" height="22"/>
+                                <rect key="frame" x="339" y="37" width="125" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Landscape" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="IHu-Vn-mTY" id="QwA-ou-tW7">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -89,10 +89,94 @@
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <font key="titleFont" metaFont="system"/>
                             </box>
+                            <textField verticalHuggingPriority="750" id="BFH-LA-aQ4">
+                                <rect key="frame" x="393" y="12" width="68" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="vxQ-6g-AAs">
+                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00#" negativeFormat="#0.00#" numberStyle="decimal" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="3" nilSymbol="L!nDy" id="bOp-hr-TYF">
+                                        <real key="roundingIncrement" value="0.0"/>
+                                        <metadata>
+                                            <bool key="localizesFormat" value="YES"/>
+                                        </metadata>
+                                    </numberFormatter>
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled" keyPath="cocos2dx" id="I9x-RA-Lgx"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.designResourceScale" id="q5z-aa-xWe"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="s2u-Vv-BjD">
+                                <rect key="frame" x="18" y="14" width="115" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Design resolution:" id="ag7-6z-vaX">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Ehi-gr-w0d">
+                                <rect key="frame" x="313" y="14" width="115" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Design scale:" id="BSB-pD-dbQ">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="9Yo-NE-MqC">
+                                <rect key="frame" x="194" y="14" width="21" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="x" id="OTV-AC-Pbd">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" id="EML-aS-PB5">
+                                <rect key="frame" x="119" y="12" width="68" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="peY-Sz-Ehj">
+                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.#" negativeFormat="#0.#" numberStyle="decimal" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" groupingSeparator="" nilSymbol="L!nDy" id="LIq-gg-7m5">
+                                        <real key="roundingIncrement" value="0.0"/>
+                                        <metadata>
+                                            <bool key="localizesFormat" value="YES"/>
+                                        </metadata>
+                                    </numberFormatter>
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled" keyPath="cocos2dx" id="eam-xq-a9q"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.designSizeWidth" id="djK-01-Pd5"/>
+                                </connections>
+                            </textField>
+                            <textField verticalHuggingPriority="750" id="j6Z-nD-2dW">
+                                <rect key="frame" x="206" y="12" width="68" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="74f-YE-9Ge">
+                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" negativeFormat="#0" numberStyle="decimal" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="0" maximumFractionDigits="0" groupingSeparator="" nilSymbol="L!nDy" id="I7h-Go-1dw">
+                                        <real key="roundingIncrement" value="0.0"/>
+                                        <metadata>
+                                            <bool key="localizesFormat" value="YES"/>
+                                        </metadata>
+                                    </numberFormatter>
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled" keyPath="cocos2dx" id="nNZ-AH-EHP"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.designSizeHeight" id="gyU-jr-wpA"/>
+                                </connections>
+                            </textField>
                         </subviews>
                     </customView>
                     <customView id="Vcd-9o-njP">
-                        <rect key="frame" x="0.0" y="75" width="480" height="53"/>
+                        <rect key="frame" x="0.0" y="104" width="480" height="53"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <popUpButton verticalHuggingPriority="750" id="52">
@@ -180,7 +264,7 @@
                         </subviews>
                     </customView>
                     <customView appearanceType="aqua" id="hkC-ij-R4Z">
-                        <rect key="frame" x="0.0" y="127" width="480" height="77"/>
+                        <rect key="frame" x="0.0" y="156" width="480" height="77"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" id="20" customClass="CCBTextFieldLabel">
@@ -197,8 +281,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="294"/>
@@ -218,8 +302,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="value" keyPath="projectSettings.publishDirectory" id="35"/>
@@ -240,8 +324,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="235"/>
@@ -276,8 +360,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="238"/>
@@ -297,8 +381,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="241"/>
@@ -318,8 +402,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="244"/>
@@ -339,8 +423,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="314"/>
@@ -386,8 +470,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="selectedTag" keyPath="projectSettings.publishAudioQuality_ios" id="456"/>
@@ -408,8 +492,8 @@
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="387"/>
@@ -425,7 +509,7 @@
                         </subviews>
                     </customView>
                     <customView id="qKt-3g-PhI">
-                        <rect key="frame" x="0.0" y="203" width="480" height="129"/>
+                        <rect key="frame" x="0.0" y="232" width="480" height="129"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="459">
@@ -582,8 +666,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="297"/>
@@ -603,8 +687,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="projectSettings.publishDirectoryAndroid" id="229"/>
@@ -625,8 +709,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="256"/>
@@ -645,8 +729,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="259"/>
@@ -666,8 +750,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="262"/>
@@ -687,8 +771,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="265"/>
@@ -708,8 +792,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="268"/>
@@ -757,8 +841,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="selectedTag" keyPath="projectSettings.publishAudioQuality_android" id="458"/>
@@ -779,8 +863,8 @@ DQ
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="390"/>

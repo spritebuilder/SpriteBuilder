@@ -457,21 +457,33 @@
     
     float absScaleX = scaleX;
     float absScaleY = scaleY;
+    float scaleXCoef = 1.0;
+    float scaleYCoef = 1.0;
+    
     if (type & kCCBScaleFlagMultiplyByResourceScale)
     {
-        absScaleX *= resolution.resourceScale;
-        absScaleY *= resolution.resourceScale;
+        scaleXCoef *= resolution.resourceScale;
+        scaleYCoef *= resolution.resourceScale;
     }
     if (type & kCCBScaleFlagMultiplyByMainScale)
     {
-        absScaleX *= resolution.mainScale;
-        absScaleY *= resolution.mainScale;
+        scaleXCoef *= resolution.mainScale;
+        scaleYCoef *= resolution.mainScale;
     }
     if (type & kCCBScaleFlagMultiplyByAdditionalScale)
     {
-        absScaleX *= resolution.scaleX;
-        absScaleY *= resolution.scaleY;
+        scaleXCoef *= resolution.scaleX;
+        scaleYCoef *= resolution.scaleY;
     }
+    
+    if (type & kCCBScaleFlagInvertScale)
+    {
+        scaleXCoef = 1.0f / scaleXCoef;
+        scaleYCoef = 1.0f / scaleYCoef;
+    }
+    
+    absScaleX *= scaleXCoef;
+    absScaleY *= scaleYCoef;
     
     [node willChangeValueForKey:[prop stringByAppendingString:@"X"]];
     [node setValue:[NSNumber numberWithFloat:absScaleX] forKey:[prop stringByAppendingString:@"X"]];

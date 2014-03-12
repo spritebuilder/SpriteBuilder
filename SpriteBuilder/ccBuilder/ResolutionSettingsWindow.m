@@ -24,6 +24,8 @@
 
 #import "ResolutionSettingsWindow.h"
 #import "ResolutionSetting.h"
+#import "AppDelegate.h"
+#import "ProjectSettings.h"
 
 @implementation ResolutionSettingsWindow
 
@@ -83,6 +85,27 @@
     }
 }
 
+
+- (void)recallcScale:(ResolutionSetting*)resolution designResolution:(CGSize)designResolution designResolutionScale:(float)designResolutionScale {
+    if(designResolution.width>designResolution.height)
+    {
+        resolution.mainScale = (resolution.height / resolution.resourceScale) / (designResolution.height / designResolutionScale);
+        resolution.scaleX =   (resolution.width / resolution.resourceScale / resolution.mainScale) / (designResolution.width / designResolutionScale );
+    }
+    else
+    {
+        resolution.mainScale = (resolution.width / resolution.resourceScale) / (designResolution.width / designResolutionScale);
+        resolution.scaleX =   (resolution.height / resolution.resourceScale / resolution.mainScale) / (designResolution.height / designResolutionScale);
+    }
+}
+
+- (IBAction)recallcScales:(id)sender {
+    for (ResolutionSetting* resolution in resolutions)
+    {
+        [self recallcScale:resolution designResolution:CGSizeMake([AppDelegate appDelegate].projectSettings.designSizeWidth, [AppDelegate appDelegate].projectSettings.designSizeHeight) designResolutionScale:[AppDelegate appDelegate].projectSettings.designResourceScale];
+    }
+}
+
 - (void) copyResolutions:(NSMutableArray *)res
 {
     resolutions = [NSMutableArray arrayWithCapacity:[res count]];
@@ -112,6 +135,7 @@
 - (void) addPredefined:(id)sender
 {
     ResolutionSetting* setting = [predefinedResolutions objectAtIndex:[sender tag]];
+    [self recallcScale:setting designResolution:CGSizeMake([AppDelegate appDelegate].projectSettings.designSizeWidth, [AppDelegate appDelegate].projectSettings.designSizeHeight) designResolutionScale:[AppDelegate appDelegate].projectSettings.designResourceScale];
     [arrayController addObject:setting];
 }
 

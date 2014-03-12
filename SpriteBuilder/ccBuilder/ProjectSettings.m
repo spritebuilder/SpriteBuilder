@@ -75,6 +75,9 @@
 @synthesize versionStr;
 @synthesize needRepublish;
 @synthesize lastWarnings;
+@synthesize designSizeWidth;
+@synthesize designSizeHeight;
+@synthesize designResourceScale;
 
 - (id) init
 {
@@ -160,6 +163,10 @@
     self.publishEnablediPhone = [[dict objectForKey:@"publishEnablediPhone"] boolValue];
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
     self.publishEnabledHTML5 = [[dict objectForKey:@"publishEnabledHTML5"] boolValue];
+    
+    self.designSizeWidth = [[dict objectForKey:@"designSizeWidth"] integerValue];
+    self.designSizeHeight = [[dict objectForKey:@"designSizeHeight"] integerValue];
+    self.designResourceScale = [[dict objectForKey:@"designResourceScale"] floatValue];
     
     self.publishResolution_ios_phone = [[dict objectForKey:@"publishResolution_ios_phone"] boolValue];
     self.publishResolution_ios_phonehd = [[dict objectForKey:@"publishResolution_ios_phonehd"] boolValue];
@@ -251,6 +258,9 @@
     [dict setObject:[NSNumber numberWithBool:publishEnabledAndroid] forKey:@"publishEnabledAndroid"];
     [dict setObject:[NSNumber numberWithBool:publishEnabledHTML5] forKey:@"publishEnabledHTML5"];
     
+    [dict setObject:[NSNumber numberWithInt:designSizeWidth] forKey:@"designSizeWidth"];
+    [dict setObject:[NSNumber numberWithInt:designSizeHeight] forKey:@"designSizeHeight"];
+    [dict setObject:[NSNumber numberWithFloat:designResourceScale] forKey:@"designResourceScale"];
     
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phone] forKey:@"publishResolution_ios_phone"];
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phonehd] forKey:@"publishResolution_ios_phonehd"];

@@ -42,9 +42,9 @@
 
 - (void) willBeAdded
 {
-    [_scaleType setEnabled:[AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineCocos2dx forSegment:1];
-    [_scaleType setEnabled:[AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineCocos2dx forSegment:2];
-    for(int i=0;i<3;++i)
+    for(int i=1;i<4;++i)
+        [_scaleType setEnabled:[AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineCocos2dx forSegment:i];
+    for(int i=0;i<4;++i)
         [_scaleType setSelected:(self.type&(1<<i)) forSegment:i];
 }
 
@@ -79,7 +79,7 @@
 - (IBAction)touch:(id)sender {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
     int type = 0;
-    for(int i=0;i<3;++i)
+    for(int i=0;i<4;++i)
         if([_scaleType isSelectedForSegment:i])
             type|=1<<i;
     [self setType:type];

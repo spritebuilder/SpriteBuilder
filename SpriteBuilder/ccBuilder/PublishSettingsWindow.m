@@ -30,6 +30,11 @@
 
 @synthesize projectSettings;
 
+- (BOOL)cocos2dx
+{
+    return projectSettings.engine == CCBTargetEngineCocos2dx;
+}
+
 - (IBAction)selectPublishDirectory:(id)sender
 {
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];

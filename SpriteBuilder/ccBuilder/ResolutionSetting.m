@@ -108,7 +108,7 @@
     [dict setObject:[NSNumber numberWithFloat:resourceScale] forKey:@"resourceScale"];
     [dict setObject:[NSNumber numberWithFloat:mainScale] forKey:@"mainScale"];
     [dict setObject:[NSNumber numberWithFloat:scaleX] forKey:@"scaleX"];
-    [dict setObject:[NSNumber numberWithFloat:scaleX] forKey:@"scaleY"];
+    [dict setObject:[NSNumber numberWithFloat:scaleY] forKey:@"scaleY"];
     [dict setObject:[NSNumber numberWithBool:centeredOrigin] forKey:@"centeredOrigin"];
     
     return dict;
@@ -324,9 +324,9 @@
 {
     ResolutionSetting* setting = [self settingIPhoneRetina];
     
-    setting.name = @"iPhone Retina Landscape";
-    setting.width = 960;
-    setting.height = 640;
+    setting.name = @"iPhone Retina Portrait";
+    setting.width = 640;
+    setting.height = 960;
     
     return setting;
 }
