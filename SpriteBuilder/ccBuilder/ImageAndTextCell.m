@@ -1,6 +1,6 @@
 /*
 	ImageAndTextCell.m
-	Copyright © 2006, Apple Computer, Inc., all rights reserved.
+	Copyright ï¿½ 2006, Apple Computer, Inc., all rights reserved.
 
 	Subclass of NSTextFieldCell which can display text and an image simultaneously.
 */
@@ -13,7 +13,7 @@
  redistribute this Apple software.
  
  In consideration of your agreement to abide by the following terms, and subject to these 
- terms, Apple grants you a personal, non-exclusive license, under AppleÕs copyrights in 
+ terms, Apple grants you a personal, non-exclusive license, under Appleï¿½s copyrights in 
  this original Apple software (the "Apple Software"), to use, reproduce, modify and 
  redistribute the Apple Software, with or without modifications, in source and/or binary 
  forms; provided that if you redistribute the Apple Software in its entirety and without 
@@ -46,7 +46,7 @@
 {
     self = [super init];
     if (!self) return NULL;
-    
+
     [self setFont:[NSFont systemFontOfSize:[NSFont smallSystemFontSize]]];
     
     return self;
@@ -108,33 +108,36 @@
 
 - (NSRect)imageAltFrameForCellFrame:(NSRect)cellFrame
 {
-    if (imageAlt != nil)
+	if (imageAlt != nil)
 	{
-        NSRect imageFrame;
-        imageFrame.size = [imageAlt size];
-        imageFrame.origin = cellFrame.origin;
-        imageFrame.origin.x += cellFrame.size.width - imageAlt.size.width + 3;
-        //imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
-        
-        if ([self.controlView isFlipped])
-        {
-            imageFrame.origin.y += ceil((cellFrame.size.height + imageFrame.size.height) / 2);
-        }
-        else
-        {
-            imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
-        }
-        
-        return imageFrame;
-    }
-    else
-        return NSZeroRect;
+		NSRect imageFrame;
+		imageFrame.size = [imageAlt size];
+		imageFrame.origin = cellFrame.origin;
+		imageFrame.origin.x += cellFrame.size.width - imageAlt.size.width + 3;
+
+		if ([self.controlView isFlipped])
+		{
+			imageFrame.origin.y += ceil((cellFrame.size.height + imageFrame.size.height) / 2);
+		}
+		else
+		{
+			imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
+		}
+
+		return imageFrame;
+	}
+	else
+	{
+		return NSZeroRect;
+	}
 }
 
 - (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
 {
     NSRect textFrame, imageFrame;
     NSDivideRect (aRect, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
+	textFrame = NSInsetRect(textFrame, 0.0, 4.0);
+
     [super editWithFrame: textFrame inView: controlView editor:textObj delegate:anObject event: theEvent];
 }
 
@@ -142,7 +145,15 @@
 {
     NSRect textFrame, imageFrame;
     NSDivideRect (aRect, &imageFrame, &textFrame, 3 + [image size].width, NSMinXEdge);
+	textFrame = NSInsetRect(textFrame, 0.0, 4.0);
+
     [super selectWithFrame: textFrame inView: controlView editor:textObj delegate:anObject start:selStart length:selLength];
+}
+
+- (NSRect)drawingRectForBounds:(NSRect)theRect
+{
+	NSRect rectInset = NSInsetRect(theRect, 0.0, 4.0);
+	return [super drawingRectForBounds:rectInset];
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
@@ -156,8 +167,8 @@
         NSDivideRect(cellFrame, &imageFrame, &cellFrame, 3 + imageSize.width, NSMinXEdge);
         if ([self drawsBackground])
 		{
-            [[self backgroundColor] set];
-            NSRectFill(imageFrame);
+			[[self backgroundColor] set];
+			NSRectFill(cellFrame);
         }
         imageFrame.origin.x += 3;
         imageFrame.size = imageSize;
@@ -180,7 +191,7 @@
 - (NSSize)cellSize
 {
     NSSize cellSize = [super cellSize];
-    cellSize.width += (image ? [image size].width : 0) + 3;
+	cellSize.width += (image ? [image size].width : 0) + 3;
     return cellSize;
 }
 

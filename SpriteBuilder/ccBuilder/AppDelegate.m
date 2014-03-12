@@ -2711,9 +2711,12 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) delete:(id) sender
 {
     // First attempt to delete selected keyframes
-    if ([sequenceHandler deleteSelectedKeyframesForCurrentSequence]) return;
-    
-    // Then delete the selected node
+	if ([sequenceHandler deleteSelectedKeyframesForCurrentSequence])
+	{
+		return;
+	}
+
+	// Then delete the selected node
     NSArray* nodesToDelete = [NSArray arrayWithArray:self.selectedNodes];
     for (CCNode* node in nodesToDelete)
     {
@@ -4274,11 +4277,10 @@ static BOOL hideAllToNextSeparator;
 {
     int selectedRow = [sender tag];
     
-    if (selectedRow >= 0 && projectSettings)
+    if (projectSettings)
     {
         ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
-        
-        [resManagerOutlineView deleteSelectedResource];
+		[resManagerOutlineView deleteSelectedResourcesWithRightClickedRow:selectedRow];
     }
 }
 
