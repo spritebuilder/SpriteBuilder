@@ -118,11 +118,19 @@
     NSURL* propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
     NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
     
-	_targetEngine = CCBTargetEngineCocos2d;
-	if ([[[props objectForKey:@"targetEngine"] lowercaseString] isEqualToString:@"spritekit"])
-	{
-		_targetEngine = CCBTargetEngineSpriteKit;
-	}
+	//_targetEngine = CCBTargetEngineCocos2d;
+    
+    NSMutableSet *engines = [NSMutableSet set];
+    NSArray *targetEngines = [props objectForKey:@"targetEngines"];
+    
+    if(targetEngines && [targetEngines containsObject:@"Cocos2D"])
+        [engines addObject:[NSNumber numberWithUnsignedChar:CCBTargetEngineCocos2d]];
+    if(targetEngines && [targetEngines containsObject:@"Cocos2D-X"])
+        [engines addObject:[NSNumber numberWithUnsignedChar:CCBTargetEngineCocos2dx]];
+    if(targetEngines && [targetEngines containsObject:@"SpriteKit"])
+        [engines addObject:[NSNumber numberWithUnsignedChar:CCBTargetEngineSpriteKit]];
+    
+    _targetEngines = engines;
 	
     nodeClassName = [props objectForKey:@"className"];
     nodeEditorClassName = [props objectForKey:@"editorClassName"];
@@ -131,6 +139,8 @@
     descr = [props objectForKey:@"description"];
     ordering = [[props objectForKey:@"ordering"] intValue];
     supportsTemplates = [[props objectForKey:@"supportsTemplates"] boolValue];
+    
+    _hidden = [[props objectForKey:@"hidden"] boolValue];
     
     if (!displayName) displayName = [nodeClassName copy];
     if (!ordering) ordering = 100000;

@@ -826,6 +826,12 @@
         else if ([prop isEqualToString:@"tag"]) return YES;
         else if ([prop isEqualToString:@"visible"]) return YES;
         else if ([prop isEqualToString:@"skew"]) return YES;
+        else if([AppDelegate appDelegate].currentDocument.docDimensionsType == kCCBDocDimensionsTypeFullScreen)
+        {
+            if ([prop isEqualToString:@"contentSize"]) return YES;
+            else if ([prop isEqualToString:@"anchorPoint"]) return YES;
+        }
+
     }
     
     // Disable position property for nodes handled by layouts

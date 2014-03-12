@@ -4,6 +4,11 @@
 <dict>
 	<key>displayName</key>
 	<string>Label BM-Font</string>
+	<key>targetEngines</key>
+	<array>
+		<string>Cocos2D</string>
+		<string>Cocos2D-X</string>
+	</array>
 	<key>ordering</key>
 	<integer>10000</integer>
 	<key>description</key>

@@ -4,6 +4,11 @@
 <dict>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
+	<key>targetEngines</key>
+	<array>
+		<string>Cocos2D</string>
+		<string>Cocos2D-X</string>
+	</array>
 	<key>className</key>
 	<string>CCControl</string>
 	<key>editorClassName</key>

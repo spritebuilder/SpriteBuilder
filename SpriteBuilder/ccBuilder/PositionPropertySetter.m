@@ -455,18 +455,35 @@
     int currentResolution = ad.currentDocument.currentResolution;
     ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
     
-    float absScaleX = 0;
-    float absScaleY = 0;
-    if (type == kCCBScaleTypeAbsolute)
+    float absScaleX = scaleX;
+    float absScaleY = scaleY;
+    float scaleXCoef = 1.0;
+    float scaleYCoef = 1.0;
+    
+    if (type & kCCBScaleFlagMultiplyByResourceScale)
     {
-        absScaleX = scaleX;
-        absScaleY = scaleY;
+        scaleXCoef *= resolution.resourceScale;
+        scaleYCoef *= resolution.resourceScale;
     }
-    else if (type == kCCBScaleTypeMultiplyResolution)
+    if (type & kCCBScaleFlagMultiplyByMainScale)
     {
-        absScaleX = scaleX / resolution.scale;
-        absScaleY = scaleY / resolution.scale;
+        scaleXCoef *= resolution.mainScale;
+        scaleYCoef *= resolution.mainScale;
     }
+    if (type & kCCBScaleFlagMultiplyByAdditionalScale)
+    {
+        scaleXCoef *= resolution.scaleX;
+        scaleYCoef *= resolution.scaleY;
+    }
+    
+    if (type & kCCBScaleFlagInvertScale)
+    {
+        scaleXCoef = 1.0f / scaleXCoef;
+        scaleYCoef = 1.0f / scaleYCoef;
+    }
+    
+    absScaleX *= scaleXCoef;
+    absScaleY *= scaleYCoef;
     
     [node willChangeValueForKey:[prop stringByAppendingString:@"X"]];
     [node setValue:[NSNumber numberWithFloat:absScaleX] forKey:[prop stringByAppendingString:@"X"]];
@@ -517,9 +534,14 @@
     ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
     
     float absF = f;
-    if (type == kCCBScaleTypeMultiplyResolution)
+    if (type & kCCBScaleFlagMultiplyByResourceScale)
     {
-        absF = f / resolution.scale;
+        absF *= resolution.resourceScale;
+    }
+    
+    if (type & kCCBScaleFlagMultiplyByMainScale)
+    {
+        absF *= resolution.mainScale;
     }
     
     [node setValue:[NSNumber numberWithFloat:absF ] forKey:prop];

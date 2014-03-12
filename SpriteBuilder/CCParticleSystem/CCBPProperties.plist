@@ -4,6 +4,11 @@
 <dict>
 	<key>supportsTemplates</key>
 	<true/>
+	<key>targetEngines</key>
+	<array>
+		<string>Cocos2D</string>
+		<string>Cocos2D-X</string>
+	</array>
 	<key>displayName</key>
 	<string>Particle System</string>
 	<key>ordering</key>

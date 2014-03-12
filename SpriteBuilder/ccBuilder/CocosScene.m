@@ -48,6 +48,8 @@
 #import "PhysicsHandler.h"
 #import "CCBUtil.h"
 #import "CCTextureCache.h"
+#import "ResolutionSetting.h"
+#import "CCBDocument.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -137,6 +139,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [borderLayer addChild:borderRight];
     
     borderDevice = [CCSprite node];
+    borderDeviceScale = 1.0f;
     [borderLayer addChild:borderDevice z:1];
     
     // Gray background
@@ -198,90 +201,25 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         [borderRight setOpacity:1.0f];
         
         CCTexture* deviceTexture = NULL;
-        BOOL rotateDevice = NO;
         
-        int devType = [appDelegate orientedDeviceTypeForSize:stageBgLayer.contentSize];
-        if (devType == kCCBCanvasSizeIPhonePortrait)
+        DeviceBorder *deviceBorder = [appDelegate orientedDeviceTypeForSize:stageBgLayer.contentSize];
+        
+        if(deviceBorder)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone.png"];
-            rotateDevice = NO;
-        }
-        else if (devType == kCCBCanvasSizeIPhoneLandscape)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone.png"];
-            rotateDevice = YES;
-        }
-        if (devType == kCCBCanvasSizeIPhone5Portrait)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone5.png"];
-            rotateDevice = NO;
-        }
-        else if (devType == kCCBCanvasSizeIPhone5Landscape)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone5.png"];
-            rotateDevice = YES;
-        }
-        else if (devType == kCCBCanvasSizeIPadPortrait)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-ipad.png"];
-            rotateDevice = NO;
-        }
-        else if (devType == kCCBCanvasSizeIPadLandscape)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-ipad.png"];
-            rotateDevice = YES;
-        }
-        else if (devType == kCCBCanvasSizeFixedLandscape)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-fixed.png"];
-            rotateDevice = NO;
-        }
-        else if (devType == kCCBCanvasSizeFixedPortrait)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-fixed.png"];
-            rotateDevice = YES;
-        }
-        else if (devType == kCCBCanvasSizeAndroidXSmallPortrait)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-android-xsmall.png"];
-            rotateDevice = NO;
-        }
-        else if (devType == kCCBCanvasSizeAndroidXSmallLandscape)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-android-xsmall.png"];
-            rotateDevice = YES;
-        }
-        else if (devType == kCCBCanvasSizeAndroidSmallPortrait)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-android-small.png"];
-            rotateDevice = NO;
-        }
-        else if (devType == kCCBCanvasSizeAndroidSmallLandscape)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-android-small.png"];
-            rotateDevice = YES;
-        }
-        else if (devType == kCCBCanvasSizeAndroidMediumPortrait)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-android-medium.png"];
-            rotateDevice = NO;
-        }
-        else if (devType == kCCBCanvasSizeAndroidMediumLandscape)
-        {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-android-medium.png"];
-            rotateDevice = YES;
+            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:deviceBorder.frameName];
+            borderDeviceScale = deviceBorder.scale;
+            if (deviceTexture)
+            {
+                if (deviceBorder.rotated) borderDevice.rotation = 90;
+                else borderDevice.rotation = 0;
+                
+                borderDevice.texture = deviceTexture;
+                borderDevice.textureRect = CGRectMake(0, 0, deviceTexture.contentSize.width, deviceTexture.contentSize.height);
+                
+                borderDevice.visible = YES;
+            }
         }
         
-        if (deviceTexture)
-        {
-            if (rotateDevice) borderDevice.rotation = 90;
-            else borderDevice.rotation = 0;
-            
-            borderDevice.texture = deviceTexture;
-            borderDevice.textureRect = CGRectMake(0, 0, deviceTexture.contentSize.width, deviceTexture.contentSize.height);
-            
-            borderDevice.visible = YES;
-        }
         borderLayer.visible = YES;
     }
     else if (type == kCCBBorderTransparent)
@@ -417,7 +355,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     scrollOffset = ccpMult(scrollOffset, zoomFactor);
     
     stageBgLayer.scale = zoom;
-    borderDevice.scale = zoom;
+    borderDevice.scale = zoom * borderDeviceScale;
     stageJointsLayer.scale = zoom;
     
     stageZoom = zoom;

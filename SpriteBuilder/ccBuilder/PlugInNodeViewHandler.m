@@ -33,7 +33,7 @@
     for (NSString* nodeName in nodeNames)
     {
 		PlugInNode* pluginNode = [pim plugInNodeNamed:nodeName];
-		if (pluginNode.targetEngine == engine)
+		if ([pluginNode.targetEngines containsObject:[NSNumber numberWithUnsignedInteger:engine]] && !pluginNode.hidden)
 		{
 			[plugIns addObject:pluginNode];
 		}

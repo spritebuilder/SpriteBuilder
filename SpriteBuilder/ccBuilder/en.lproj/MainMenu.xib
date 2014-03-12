@@ -83,6 +83,11 @@
                                                 <action selector="menuNewProject:" target="494" id="1485"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Cocos2D-X Project..." keyEquivalent="N" id="3DL-XI-ilM">
+                                            <connections>
+                                                <action selector="menuNewCocos2dxProject:" target="494" id="cNx-Lz-RRK"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Sprite Kit Project (experimental)..." keyEquivalent="N" id="9mK-yK-jy5">
                                             <connections>
                                                 <action selector="menuNewSpriteKitProject:" target="-1" id="2FM-eR-10L"/>
@@ -633,8 +638,15 @@ CA
                             <menuItem title="Edit Stage Size..." id="1471">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="menuEditResolutionSettings:" target="494" id="1473"/>
+                                    <action selector="menuEditStageSize:" target="494" id="yuo-sC-Qg5"/>
                                     <binding destination="494" name="enabled" keyPath="canEditStageSize" id="3Yc-17-um7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Edit Resolutions..." id="9Dn-db-DGJ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="menuEditResolutionSettings:" target="494" id="2xw-mO-22h"/>
+                                    <binding destination="494" name="enabled" keyPath="canEditResolutions" id="MIL-Oj-p6N"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="2100"/>

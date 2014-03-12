@@ -27,6 +27,7 @@
 #import "AppDelegate.h"
 #import "PositionPropertySetter.h"
 #import "CCNode+NodeInfo.h"
+#import "ProjectSettings.h"
 
 @implementation InspectorScaleLock
 
@@ -37,6 +38,14 @@
       [NSNumber numberWithFloat:x],
       [NSNumber numberWithFloat:y],
       nil]];
+}
+
+- (void) willBeAdded
+{
+    for(int i=1;i<4;++i)
+        [_scaleType setEnabled:[AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineCocos2dx forSegment:i];
+    for(int i=0;i<4;++i)
+        [_scaleType setSelected:(self.type&(1<<i)) forSegment:i];
 }
 
 - (void) setScaleX:(float)scaleX
@@ -65,6 +74,15 @@
 - (float) scaleX
 {
     return [PositionPropertySetter scaleXForNode:selection prop:propertyName];
+}
+
+- (IBAction)touch:(id)sender {
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
+    int type = 0;
+    for(int i=0;i<4;++i)
+        if([_scaleType isSelectedForSegment:i])
+            type|=1<<i;
+    [self setType:type];
 }
 
 - (void) setScaleY:(float)scaleY

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ordering</key>
+	<integer>15000</integer>
+	<key>targetEngines</key>
+	<array>
+		<string>Cocos2D</string>
+		<string>Cocos2D-X</string>
+	</array>
+	<key>displayName</key>
+	<string>Scroll List View</string>
+	<key>description</key>
+	<string>References a containing node, which becomes a scrollable layer.</string>
+	<key>inheritsFrom</key>
+	<string>CCNode</string>
+	<key>className</key>
+	<string>CCScrollListView</string>
+	<key>editorClassName</key>
+	<string>CCBPScrollListView</string>
+	<key>canHaveChildren</key>
+	<false/>
+	<key>properties</key>
+	<array>
+		<dict>
+			<key>displayName</key>
+			<string>CCScrollListView</string>
+			<key>name</key>
+			<string>CCScrollListView</string>
+			<key>type</key>
+			<string>Separator</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>CCB File</string>
+			<key>type</key>
+			<string>CCBFile</string>
+			<key>name</key>
+			<string>ccbFile</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Vertical Alignment</string>
+			<key>type</key>
+			<string>IntegerLabeled</string>
+			<key>name</key>
+			<string>verticalTextAlignment</string>
+			<key>extra</key>
+			<string>Top|0|Center|1|Bottom|2</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Horizontal Alignment</string>
+			<key>type</key>
+			<string>IntegerLabeled</string>
+			<key>name</key>
+			<string>textAlignment</string>
+			<key>extra</key>
+			<string>Left|0|Center|1|Right|2</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<false/>
+			<key>displayName</key>
+			<string>horizontal</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>horizontal</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<string>0</string>
+			<key>type</key>
+			<string>Integer</string>
+			<key>name</key>
+			<string>_count</string>
+			<key>displayName</key>
+			<string>count</string>
+		</dict>
+	</array>
+</dict>
+</plist>

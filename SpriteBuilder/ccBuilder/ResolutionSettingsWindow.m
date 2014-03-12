@@ -24,6 +24,8 @@
 
 #import "ResolutionSettingsWindow.h"
 #import "ResolutionSetting.h"
+#import "AppDelegate.h"
+#import "ProjectSettings.h"
 
 @implementation ResolutionSettingsWindow
 
@@ -36,36 +38,40 @@
     predefinedResolutions = [[NSMutableArray alloc] init];
     
     // iOS
-    [predefinedResolutions addObject:[ResolutionSetting settingIPhone]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingIPhone]];
     [predefinedResolutions addObject:[ResolutionSetting settingIPhoneLandscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingIPhonePortrait]];
+    [predefinedResolutions addObject:[ResolutionSetting settingIPhoneRetinaLandscape]];
+    [predefinedResolutions addObject:[ResolutionSetting settingIPhoneRetinaPortrait]];
     [predefinedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
-    [predefinedResolutions addObject:[ResolutionSetting settingIPad]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingIPad]];
     [predefinedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
+    [predefinedResolutions addObject:[ResolutionSetting settingIPadRetinaLandscape]];
+    [predefinedResolutions addObject:[ResolutionSetting settingIPadRetinaPortrait]];
     
     // Android
-    [predefinedResolutions addObject:[ResolutionSetting settingAndroidXSmall]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingAndroidXSmall]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidXSmallLandscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidXSmallPortrait]];
-    [predefinedResolutions addObject:[ResolutionSetting settingAndroidSmall]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingAndroidSmall]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidSmallLandscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidSmallPortrait]];
-    [predefinedResolutions addObject:[ResolutionSetting settingAndroidMedium]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingAndroidMedium]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidMediumLandscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidMediumPortrait]];
-    [predefinedResolutions addObject:[ResolutionSetting settingAndroidLarge]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingAndroidLarge]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidLargeLandscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidLargePortrait]];
-    [predefinedResolutions addObject:[ResolutionSetting settingAndroidXLarge]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingAndroidXLarge]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidXLargeLandscape]];
     [predefinedResolutions addObject:[ResolutionSetting settingAndroidXLargePortrait]];
     
     // HTML 5
-    [predefinedResolutions addObject:[ResolutionSetting settingHTML5]];
-    [predefinedResolutions addObject:[ResolutionSetting settingHTML5Landscape]];
-    [predefinedResolutions addObject:[ResolutionSetting settingHTML5Portrait]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingHTML5]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingHTML5Landscape]];
+    //[predefinedResolutions addObject:[ResolutionSetting settingHTML5Portrait]];
     
     int i = 0;
     for (ResolutionSetting* setting in predefinedResolutions)
@@ -76,6 +82,27 @@
         [addPredefinedPopup.menu addItem:item];
         
         i++;
+    }
+}
+
+
+- (void)recallcScale:(ResolutionSetting*)resolution designResolution:(CGSize)designResolution designResolutionScale:(float)designResolutionScale {
+    if(designResolution.width>designResolution.height)
+    {
+        resolution.mainScale = (resolution.height / resolution.resourceScale) / (designResolution.height / designResolutionScale);
+        resolution.scaleX =   (resolution.width / resolution.resourceScale / resolution.mainScale) / (designResolution.width / designResolutionScale );
+    }
+    else
+    {
+        resolution.mainScale = (resolution.width / resolution.resourceScale) / (designResolution.width / designResolutionScale);
+        resolution.scaleX =   (resolution.height / resolution.resourceScale / resolution.mainScale) / (designResolution.height / designResolutionScale);
+    }
+}
+
+- (IBAction)recallcScales:(id)sender {
+    for (ResolutionSetting* resolution in resolutions)
+    {
+        [self recallcScale:resolution designResolution:CGSizeMake([AppDelegate appDelegate].projectSettings.designSizeWidth, [AppDelegate appDelegate].projectSettings.designSizeHeight) designResolutionScale:[AppDelegate appDelegate].projectSettings.designResourceScale];
     }
 }
 
@@ -108,6 +135,7 @@
 - (void) addPredefined:(id)sender
 {
     ResolutionSetting* setting = [predefinedResolutions objectAtIndex:[sender tag]];
+    [self recallcScale:setting designResolution:CGSizeMake([AppDelegate appDelegate].projectSettings.designSizeWidth, [AppDelegate appDelegate].projectSettings.designSizeHeight) designResolutionScale:[AppDelegate appDelegate].projectSettings.designResourceScale];
     [arrayController addObject:setting];
 }
 

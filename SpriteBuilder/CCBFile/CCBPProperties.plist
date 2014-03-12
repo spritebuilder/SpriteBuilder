@@ -4,6 +4,11 @@
 <dict>
 	<key>description</key>
 	<string>Incorporates another SpriteBuilder interface file.</string>
+	<key>targetEngines</key>
+	<array>
+		<string>Cocos2D</string>
+		<string>Cocos2D-X</string>
+	</array>
 	<key>ordering</key>
 	<integer>2000</integer>
 	<key>displayName</key>

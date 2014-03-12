@@ -255,6 +255,11 @@
         NSString* ssDstPath = [[[[outDir stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
         
         NSDate* ssDstDate = [CCBFileUtil modificationDateForFile:ssDstPath];
+        if(!ssDstDate)
+        {
+            ssDstPath = [[[outDir stringByDeletingLastPathComponent] stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
+            ssDstDate = [CCBFileUtil modificationDateForFile:ssDstPath];
+        }
         
         if (ssDstDate && [ssDstDate isEqualToDate:srcDate] && !isDirty)
         {
@@ -272,6 +277,8 @@
     NSFileManager* fm = [NSFileManager defaultManager];
     
     NSString* srcAutoPath = NULL;
+    NSString* srcDefaultPath = NULL;
+    NSString* dstDefaultPath = NULL;
     
     NSString* srcFileName = [srcPath lastPathComponent];
     NSString* dstFileName = [dstPath lastPathComponent];
@@ -279,6 +286,10 @@
     NSString* dstDir = [dstPath stringByDeletingLastPathComponent];
     NSString* autoDir = [srcDir stringByAppendingPathComponent:@"resources-auto"];
     srcAutoPath = [autoDir stringByAppendingPathComponent:srcFileName];
+    
+    NSString* dstDefaultDir = dstDir;
+    srcDefaultPath = [srcDir stringByAppendingPathComponent:srcFileName];
+    dstDefaultPath = [dstDir stringByAppendingPathComponent:dstFileName];
     
     // Update path to reflect resolution
     srcDir = [srcDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:resolution]];
@@ -292,9 +303,6 @@
 	{
 		dstPath = [self pathWithCocoaImageResolutionSuffix:dstPath resolution:resolution];
 	}
-
-    // Create destination directory if it doesn't exist
-    [fm createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
     
     // Get the format of the published image
     int format = kFCImageFormatPNG;
@@ -320,6 +328,8 @@
     // Fetch new name
     NSString* dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:dstPath format:format compress:compress isSpriteSheet:isSpriteSheet];
     
+    NSString* dstDefaultPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:dstDefaultPath format:format compress:compress isSpriteSheet:isSpriteSheet];
+    
     // Add renaming rule
     NSString* relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath format:format compress:compress isSpriteSheet:isSpriteSheet];
 	
@@ -341,6 +351,9 @@
             return YES;
         }
         
+        // Create destination directory if it doesn't exist
+        [fm createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+        
         // Copy file
         [fm copyItemAtPath:srcPath toPath:dstPath error:NULL];
         
@@ -348,6 +361,40 @@
         NSString* dstPathConverted = nil;
         NSError  * error;
         if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
+        {
+            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
+            
+            return NO;
+        }
+        
+        // Update modification date
+        [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
+        
+        return YES;
+    }
+    else if ([fm fileExistsAtPath:srcDefaultPath])
+    {
+        // Has customized file for resolution
+        
+        // Check if file already exists
+        NSDate* srcDate = [CCBFileUtil modificationDateForFile:srcDefaultPath];
+        NSDate* dstDate = [CCBFileUtil modificationDateForFile:dstDefaultPathProposal];
+        
+        if (dstDate && [srcDate isEqualToDate:dstDate] && !isDirty)
+        {
+            return YES;
+        }
+        
+        // Create destination directory if it doesn't exist
+        [fm createDirectoryAtPath:dstDefaultDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+        
+        // Copy file
+        [fm copyItemAtPath:srcDefaultPath toPath:dstDefaultPath error:NULL];
+        
+        // Convert it
+        NSString* dstPathConverted = nil;
+        NSError  * error;
+        if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstDefaultPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
         {
             [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
             
@@ -372,6 +419,9 @@
             return YES;
         }
         
+        // Create destination directory if it doesn't exist
+        [fm createDirectoryAtPath:dstPath withIntermediateDirectories:YES attributes:NULL error:NULL];
+        
         // Copy file and resize
         [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:dstPath forResolution:resolution];
         
@@ -395,7 +445,7 @@
         // File is missing
         
         // Log a warning and continue publishing
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish file %@, make sure it is in the resources-auto folder.",srcFileName] isFatal:NO];
+        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish file %@, make sure it is in the resources-auto folder.",srcPath] isFatal:NO];
         return YES;
     }
 }
@@ -531,7 +581,7 @@
     // Add files from resolution depentant directories
     for (NSString* publishExt in publishForResolutions)
     {
-        NSString* resolutionDir = [dir stringByAppendingPathComponent:publishExt];
+        NSString* resolutionDir = [dir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", publishExt]];
         BOOL isDirectory;
         if ([fm fileExistsAtPath:resolutionDir isDirectory:&isDirectory] && isDirectory)
         {
@@ -1029,6 +1079,13 @@
     else if (projectSettings.defaultOrientation == kCCBOrientationPortrait)
 		screenOrientation = @"CCScreenOrientationPortrait";
     [configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
+    
+    if((projectSettings.designSizeHeight !=0) && (projectSettings.designSizeWidth !=0) && (projectSettings.designResourceScale !=0.0f))
+    {
+        [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.designSizeHeight] forKey:@"CCSetupDesignSizeHeight"];
+        [configCocos2d setObject:[NSNumber numberWithInt:projectSettings.designSizeWidth] forKey:@"CCSetupDesignSizeWidth"];
+        [configCocos2d setObject:[NSNumber numberWithFloat:projectSettings.designResourceScale] forKey:@"CCSetupDesignResourceScale"];
+    }
     
     [configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
     
