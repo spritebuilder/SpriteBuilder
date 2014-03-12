@@ -1004,9 +1004,13 @@
     NSArray* customProps = [node objectForKey:@"customProperties"];
     
     // Only write customProps if there is a custom class
-    if (!hasCustomClass) customProps = [NSArray array];
-    
-    NSUInteger uuid = [node[@"UUID"] unsignedIntegerValue];
+	// or if the base class is a CCBFile to allow overwriting of custom properties
+	if (!hasCustomClass && ![node[@"baseClass"] isEqualToString:@"CCBFile"])
+	{
+		customProps = [NSArray array];
+	}
+
+	NSUInteger uuid = [node[@"UUID"] unsignedIntegerValue];
     [self writeInt:(int)uuid withSign:NO];
     [self writeInt:(int)[props count] withSign:NO];
     [self writeInt:(int)[customProps count] withSign:NO];
