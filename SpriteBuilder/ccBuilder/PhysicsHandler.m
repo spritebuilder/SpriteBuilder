@@ -296,7 +296,7 @@
         
         [[AppDelegate appDelegate].window addChildWindow:outletWindow ordered:NSWindowAbove];
         
-        CGPoint centre = [joint outletWorldPos:outletIdx];
+        CGPoint centre = ccpMult([joint outletWorldPos:outletIdx],[CCDirector sharedDirector].contentScaleFactor);
         
         
         CGPoint viewPos = [[AppDelegate appDelegate].cocosView convertPoint:centre toView:outletWindow.view];

@@ -208,10 +208,15 @@
 
 - (void) setAutoPlay:(BOOL)ap
 {
+    if(autoPlay && !ap)
+        return;
+    
     if (ap)
     {
         [settingsWindow disableAutoPlayForAllItems];
     }
+    
+
     
     NSLog(@"setAutoPlay: %d", ap);
     autoPlay = ap;
@@ -269,6 +274,7 @@
 {
     SequencerSequence* copy = [self copy];
     copy.name = [copy.name stringByAppendingString:@" copy"];
+    copy.autoPlay = NO;
     copy.sequenceId = seqId;
     
     [[CocosScene cocosScene].rootNode duplicateKeyframesFromSequenceId:sequenceId toSequenceId:seqId];

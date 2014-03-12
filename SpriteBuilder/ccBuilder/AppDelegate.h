@@ -340,6 +340,9 @@ enum {
 @property (weak, nonatomic,readonly) NSTabView* itemTabView;
 @property (readonly) BOOL selectedNodeCanHavePhysics;//Results in physics properties being displayed.
 
+// Sequencer
+@property (nonatomic, readonly) BOOL playingBack;
+
 // Methods
 + (AppDelegate*) appDelegate;
 

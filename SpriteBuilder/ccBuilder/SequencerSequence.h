@@ -45,9 +45,12 @@
     SequencerCallbackChannel* callbackChannel;
     SequencerSoundChannel* soundChannel;
     
-    BOOL autoPlay;
+    
     
     SequencerSettingsWindow* __weak settingsWindow;
+
+@public
+    BOOL autoPlay;
 }
 
 @property (nonatomic,assign) float timelineScale;

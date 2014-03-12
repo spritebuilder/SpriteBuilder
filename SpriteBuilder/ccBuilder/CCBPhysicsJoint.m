@@ -11,6 +11,9 @@
 #import "CCNode+NodeInfo.h"
 #import "CCBGlobals.h"
 #import "SceneGraph.h"
+#import "SequencerHandler.h"
+#import "SequencerSequence.h"
+#import "AppDelegate.h"
 
 static const float kOutletOffset = 20.0f;
 
@@ -41,20 +44,27 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     [self addChild:scaleFreeNode];
     
     bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyAOutlet.position = ccpMult(ccp(-kOutletOffset,-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
+    bodyAOutlet.positionType = CCPositionTypeUIPoints;
+    bodyAOutlet.position = ccp(-kOutletOffset + [self outletLateralOffset], -kOutletOffset);
     [scaleFreeNode addChild:bodyAOutlet];
     
     bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.position = ccpMult(ccp(kOutletOffset,-kOutletOffset),1/[CCDirector sharedDirector].contentScaleFactor);
+    bodyBOutlet.position = ccp(kOutletOffset + [self outletLateralOffset], -kOutletOffset);
+    bodyBOutlet.positionType = CCPositionTypeUIPoints;
     [scaleFreeNode addChild:bodyBOutlet];
     
-    self.breakingForceEnabled = YES;
-    self.maxForceEnabled = YES;
+    self.breakingForceEnabled = NO;
+    self.maxForceEnabled = NO;
     self.breakingForce = INFINITY;
     self.collideBodies = YES;
     self.maxForce = INFINITY;
     
     return self;
+}
+
+-(float)outletLateralOffset
+{
+    return 0.0f;
 }
 
 -(void)setBodyA:(CCNode *)aBodyA
@@ -103,17 +113,32 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)addObserverBody:(CCNode*)body
 {
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+    CCNode * node = body;
+    
+    while (node && node != [SceneGraph instance].rootNode)
     {
-        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+        {
+            [node addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
+        }
+        node = node.parent;
     }
+    
     
 }
 
 -(void)removeObserverBody:(CCNode*)body
 {
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
-        [body removeObserver:self forKeyPath:dependantProperties[i]];
+    CCNode * node = body;
+    
+    while (node && node != [SceneGraph instance].rootNode)
+    {
+        
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
+            [node removeObserver:self forKeyPath:dependantProperties[i]];
+        }
+        
+        node = node.parent;
     }
 }
 
@@ -320,6 +345,21 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         default:
             return @"bodyB";
     }
+}
+
+- (BOOL) hidden
+{
+    if([SequencerHandler sharedHandler].currentSequence.timelinePosition != 0.0f || ![SequencerHandler sharedHandler].currentSequence.autoPlay)
+    {
+        return YES;
+    }
+    
+    if([AppDelegate appDelegate].playingBack)
+    {
+        return YES;
+    }
+    
+    return [super hidden];
 }
 
 
