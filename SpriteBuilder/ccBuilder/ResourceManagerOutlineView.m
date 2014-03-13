@@ -33,8 +33,12 @@
 
 - (NSMenu*) menuForEvent:(NSEvent *)evt
 {
-	NSPoint pt = [self convertPoint:[evt locationInWindow] fromView:nil];
-	int row = [self rowAtPoint:pt];
+	// It's called to draw a highlight on the right clicked item, the menu outlet of the outline view has to be just
+	// set as well
+	[super menuForEvent:evt];
+
+	NSPoint clickedPoint = [self convertPoint:[evt locationInWindow] fromView:nil];
+	int row = [self rowAtPoint:clickedPoint];
 
 	id clickedItem = [self itemAtRow:row];
 
@@ -86,20 +90,16 @@
         else if (item.action == @selector(menuActionDelete:))
         {
             item.title = @"Delete";
-            
-            [item setEnabled:NO];
-            if([clickedItem isKindOfClass:[RMResource class]])
-            {
-                RMResource* clickedResource = clickedItem;
-                if(clickedResource.type == kCCBResTypeCCBFile || clickedResource.type == kCCBResTypeDirectory)
-                {
-                    [item setEnabled:YES];
-                }
-            }
+
+			[item setEnabled:NO];
+			if ([clickedItem isKindOfClass:[RMResource class]]
+				|| [self isSomethingSelected])
+			{
+            	[item setEnabled:YES];
+			}
         }
         else if (item.action == @selector(menuActionInterfaceFile:))
         {
-            //default behavior.
             item.title = @"New File...";
         }
         else if (item.action == @selector(menuActionNewFolder:))
@@ -115,10 +115,13 @@
 			}
 		}
     }
-    
-    // TODO: Update menu
-    
+
     return menu;
+}
+
+- (BOOL)isSomethingSelected
+{
+	return [[self selectedRowIndexes] count] > 0;
 }
 
 - (BOOL)isCCBFileOrResourceDirectory:(RMResource *)clickedResource
@@ -126,62 +129,86 @@
 	return clickedResource.type == kCCBResTypeCCBFile || clickedResource.type == kCCBResTypeDirectory;
 }
 
-- (void) deleteSelectedResource
+- (void)deleteResources:(NSIndexSet *)resources
 {
-    if([self selectedRow] == -1)
+	NSUInteger row = [resources firstIndex];
+
+	NSMutableArray *resourcesToDelete = [[NSMutableArray alloc] init];
+	NSMutableArray *foldersToDelete = [[NSMutableArray alloc] init];
+
+	while (row != NSNotFound)
+	{
+		id selectedItem = [self itemAtRow:row];
+		if ([selectedItem isKindOfClass:[RMResource class]])
+		{
+			RMResource *resource = (RMResource *) selectedItem;
+			if (resource.type == kCCBResTypeDirectory)
+			{
+				[foldersToDelete addObject:resource];
+			}
+			else
+			{
+				[resourcesToDelete addObject:resource];
+			}
+		}
+
+		row = [resources indexGreaterThanIndex:row];
+	}
+
+	for (RMResource *res in resourcesToDelete)
+	{
+		[ResourceManager removeResource:res];
+	}
+
+	for (RMResource *res in foldersToDelete)
+	{
+		[ResourceManager removeResource:res];
+	}
+
+	[self deselectAll:NULL];
+
+	[[ResourceManager sharedManager] reloadAllResources];
+}
+
+- (void)deleteSelectedResourcesWithRightClickedRow:(NSInteger)rightClickedRowIndex
+{
+    if([self selectedRow] == -1 && rightClickedRowIndex == -1)
     {
         NSBeep();
         return;
     }
     
     // Confirm remove of items
-    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?" defaultButton:@"Cancel" alternateButton:@"Delete" otherButton:NULL informativeTextWithFormat:@"You cannot undo this operation."];
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?"
+									 defaultButton:@"Cancel"
+								   alternateButton:@"Delete"
+									   otherButton:NULL
+						 informativeTextWithFormat:@"You cannot undo this operation."];
+
     NSInteger result = [alert runModal];
     
     if (result == NSAlertDefaultReturn)
     {
         return;
     }
-    
-    // Iterate through rows
-    NSIndexSet* selectedRows = [self selectedRowIndexes];
-    NSUInteger row = [selectedRows firstIndex];
-    
-    NSMutableArray * resourcesToDelete = [[NSMutableArray alloc] init];
-    NSMutableArray * foldersToDelete = [[NSMutableArray alloc] init];
-    
-    while (row != NSNotFound)
-    {
-        id selectedItem = [self itemAtRow:row];
-        if ([selectedItem isKindOfClass:[RMResource class]])
-        {
-            RMResource * resouce = (RMResource *)selectedItem;
-            if(resouce.type == kCCBResTypeDirectory)
-            {
-                [foldersToDelete addObject:resouce];
-            }
-            else
-            {
-                [resourcesToDelete addObject:resouce];
-            }
-        }
-        
-        row = [selectedRows indexGreaterThanIndex: row];
-    }
 
-    for (RMResource * res in resourcesToDelete)
-    {
-        [ResourceManager removeResource:res];
-    }
-    
-    for (RMResource * res in foldersToDelete)
-    {
-        [ResourceManager removeResource:res];
-    }
-    
-    [self deselectAll:NULL];
-    
-    [[ResourceManager sharedManager] reloadAllResources];
+	NSIndexSet *selectedRows;
+	if ([self isRightClickInSelectionOrEmpty:rightClickedRowIndex])
+	{
+		selectedRows = [self selectedRowIndexes];
+	}
+	else
+	{
+		selectedRows = [NSIndexSet indexSetWithIndex:(NSUInteger)rightClickedRowIndex];
+	}
+
+	[self deleteResources:selectedRows];
+}
+
+- (BOOL)isRightClickInSelectionOrEmpty:(NSInteger)rightClickedRowIndex
+{
+	return ([self isSomethingSelected] && [[self selectedRowIndexes] containsIndex:(NSUInteger)rightClickedRowIndex])
+		   || rightClickedRowIndex < 0;
 }
 
 - (void) keyDown:(NSEvent *)theEvent
@@ -189,8 +216,7 @@
     unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
     if(key == NSDeleteCharacter)
     {
-        
-        [self deleteSelectedResource];
+		[self deleteSelectedResourcesWithRightClickedRow:0];
         return;
     }
     
