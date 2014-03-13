@@ -149,6 +149,7 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize physicsHandler;
 @synthesize itemTabView;
 @dynamic selectedNodeCanHavePhysics;
+@synthesize playingBack;
 static AppDelegate* sharedAppDelegate;
 
 #pragma mark Setup functions
@@ -999,9 +1000,10 @@ static BOOL hideAllToNextSeparator;
     [inspectorCodeDocumentView setFrameSize:NSMakeSize(233, 1)];
     int paneOffset = 0;
     int paneCodeOffset = 0;
-    
+    bool displayPluginProperties = YES;
     // Add show panes according to selections
-    if (!self.selectedNode) return;
+    if (!self.selectedNode)
+        return;
     
     NodeInfo* info = self.selectedNode.userObject;
     PlugInNode* plugIn = info.plugIn;
@@ -1018,11 +1020,17 @@ static BOOL hideAllToNextSeparator;
     else
     {
         [_inspectorPhysics setHidden:YES];
+        
+        if([sequenceHandler currentSequence].timelinePosition != 0.0f || ![sequenceHandler currentSequence].autoPlay)
+        {
+            paneOffset = [self addInspectorPropertyOfType:@"SeparatorSub" name:@"name" displayName:@"Must select frame Zero of the autoPlay timeline" extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
+            displayPluginProperties = NO;
+        }
     }
     
     // Add panes for each property
     
-    if (plugIn)
+    if (plugIn && displayPluginProperties)
     {
         NSArray* propInfos = plugIn.nodeProperties;
         for (int i = 0; i < [propInfos count]; i++)
@@ -1720,15 +1728,21 @@ static BOOL hideAllToNextSeparator;
     return NULL;
 }
 
-- (NSTabViewItem*) tabViewItemFromPath:(NSString*)path
+// A path can be a folder not only a file. Set includeViewWithinFolderPath to YES to return
+// the first view that is within a given folder path
+- (NSTabViewItem *)tabViewItemFromPath:(NSString *)path includeViewWithinFolderPath:(BOOL)includeViewWithinFolderPath
 {
-    NSArray* items = [tabView tabViewItems];
-    for (int i = 0; i < [items count]; i++)
-    {
-        CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if ([doc.fileName isEqualToString:path]) return [items objectAtIndex:i];
-    }
-    return NULL;
+	NSArray *items = [tabView tabViewItems];
+	for (NSUInteger i = 0; i < [items count]; i++)
+	{
+		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
+		if ([doc.fileName isEqualToString:path]
+			|| (includeViewWithinFolderPath && [doc isWithinPath:path]))
+		{
+			return [items objectAtIndex:i];
+		}
+	}
+	return NULL;
 }
 
 - (void) checkForTooManyDirectoriesInCurrentDoc
@@ -2262,8 +2276,9 @@ static BOOL hideAllToNextSeparator;
     //Set an unset UUID
     if(child.UUID == 0x0)
     {
-        child.UUID = [AppDelegate appDelegate].currentDocument.UUID;
-        [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+
+		child.UUID = currentDocument.UUID;
+        currentDocument.UUID = currentDocument.UUID + 1;
     }
     
     [outlineHierarchy reloadData];
@@ -2591,7 +2606,11 @@ static BOOL hideAllToNextSeparator;
     
     
     // Copy node
-    if (!self.selectedNode) return;
+    if (!self.selectedNode)
+        return;
+    
+    if(self.selectedNode.plugIn.isJoint)
+        return;
     
     // Serialize selected node
     NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:self.selectedNode];
@@ -2617,7 +2636,11 @@ static BOOL hideAllToNextSeparator;
         else parentSize = self.selectedNode.parent.contentSize;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
+        clipNode.UUID = 0x0;
         [self addCCObject:clipNode asChild:asChild];
+        
+        //We might have copy/cut/pasted and body. Fix it up.
+        [[SceneGraph instance].joints fixupReferences];//
     }
 }
 
@@ -3290,7 +3313,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) removedDocumentWithPath:(NSString*)path
 {
-    NSTabViewItem* item = [self tabViewItemFromPath:path];
+    NSTabViewItem* item = [self tabViewItemFromPath:path includeViewWithinFolderPath:YES];
     if (item)
     {
         [tabView removeTabViewItem:item];
@@ -3299,7 +3322,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) renamedDocumentPathFrom:(NSString*)oldPath to:(NSString*)newPath
 {
-    NSTabViewItem* item = [self tabViewItemFromPath:oldPath];
+    NSTabViewItem* item = [self tabViewItemFromPath:oldPath includeViewWithinFolderPath:NO];
     CCBDocument* doc = [item identifier];
     doc.fileName = newPath;
     [item setLabel:doc.formattedName];

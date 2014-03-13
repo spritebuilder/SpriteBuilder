@@ -12,9 +12,10 @@
 
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
 {
-    CGPoint anchorA;
 }
 
-@property CGPoint anchorA;
+@property (nonatomic) CGPoint anchorA;
+
++(BOOL)nodeHasParent:(CCNode*)node parent:(CCNode*)parent;
 
 @end

@@ -112,6 +112,7 @@
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
@@ -156,17 +157,34 @@
 		926D13CA18B5778300582959 /* joint-distance.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13BE18B5778300582959 /* joint-distance.png */; };
 		926D13CB18B5778300582959 /* joint-distance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13BF18B5778300582959 /* joint-distance@2x.png */; };
 		926D13D318B57A4900582959 /* CCScaleFreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13D218B57A4900582959 /* CCScaleFreeNode.m */; };
-		926D13D618B57A8100582959 /* CCBPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13D518B57A8100582959 /* CCBPhysicsJoint.m */; };
 		926D13DB18B57B9500582959 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		926D13F418B57E1600582959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
 		926D13F518B57E1600582959 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
+		9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
+		9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
+		9294EC9018C65EC10059014C /* CCBPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13D518B57A8100582959 /* CCBPhysicsJoint.m */; };
+		9294EC9318C660480059014C /* CCBPhyicsPivotJointPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */; };
+		9294EC9618C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9294EC9518C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m */; };
 		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
 		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
 		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
+		92B7900518C808B7007DF895 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
+		92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
+		92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */; };
+		92B792CB18C92C60007DF895 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
+		92B792CC18C92C60007DF895 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C518C92C60007DF895 /* Icon.png */; };
+		92B792CD18C92C60007DF895 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C618C92C60007DF895 /* Icon@2x.png */; };
+		92B792CE18C92CA1007DF895 /* CCBPhyicsSpringJointPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792BD18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.m */; };
+		92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792BF18C92C60007DF895 /* CCBPhysicsSpringJoint.m */; };
+		92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */; };
+		92B792D518C9333E007DF895 /* CCPhysicsSpringJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */; };
+		92B792D618C93390007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */; };
+		92B792D718C9339E007DF895 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C518C92C60007DF895 /* Icon.png */; };
+		92B792D918C933B7007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		92DC215F188073C500C8DCCD /* select-scale.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C005E1846A40D00544BD2 /* select-scale.png */; };
@@ -175,8 +193,6 @@
 		92DC2162188073C500C8DCCD /* select-rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158941843DEDC007242F6 /* select-rotation.png */; };
 		92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		92F12E4F18847BC800AB8F32 /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
-		92FD167218B59022003EF0D5 /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
-		92FD167318B59022003EF0D5 /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -329,6 +345,7 @@
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
+		DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */; };
 		DC5129C11891450D0091873D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC6802F9189145840060BE39 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F5189145840060BE39 /* CCBPProperties.plist */; };
 		DC6802FA189145840060BE39 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC6802F6189145840060BE39 /* Icon.png */; };
@@ -683,7 +700,6 @@
 		E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BA14E4989900119FBE /* InspectorDegrees.xib */; };
 		E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */; };
 		E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */; };
-		E525FC4FE09DC32582944B10 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDDB022C0FAB7EC2D89D /* SBErrors.m */; };
 		FA98CFC4154E7D1C006E58C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA98CFC3154E7D1C006E58C5 /* Foundation.framework */; };
 		FA98CFC7154E7D1C006E58C5 /* ccbpublish.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */; };
 		FA98CFD1154E7F7D006E58C5 /* CCBX.m in Sources */ = {isa = PBXBuildFile; fileRef = E398C03614FB8A430078E771 /* CCBX.m */; };
@@ -694,13 +710,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		92154AE118A5567400BD215C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 92154ACF18A5560B00BD215C;
-			remoteInfo = CCPhysicsPivotJoint;
-		};
-		9266089C18B58E5B007A0A05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
 			proxyType = 1;
@@ -909,6 +918,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				92B792D518C9333E007DF895 /* CCPhysicsSpringJoint.ccbPlugNode in Copy PlugIns */,
 				9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */,
 				92154AE318A55A4200BD215C /* CCPhysicsPivotJoint.ccbPlugNode in Copy PlugIns */,
 				DC680339189157B90060BE39 /* SKColorSpriteNode.ccbPlugNode in Copy PlugIns */,
@@ -1118,6 +1128,8 @@
 		80FBACCA183422BD00C4BB69 /* inspector-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning.png"; sourceTree = "<group>"; };
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
+		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
 		92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPivotJoint.h; sourceTree = "<group>"; };
 		92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPivotJoint.m; sourceTree = "<group>"; };
@@ -1181,6 +1193,10 @@
 		926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJoint.m; sourceTree = "<group>"; };
 		926D13FD18B57FEA00582959 /* CCPhysicsPinJoint-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CCPhysicsPinJoint-Info.plist"; sourceTree = "<group>"; };
 		926D13FE18B57FEA00582959 /* CCPhysicsPinJoint-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsPinJoint-Prefix.pch"; sourceTree = "<group>"; };
+		9294EC9118C660480059014C /* CCBPhyicsPivotJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsPivotJointPlaceholder.h; sourceTree = "<group>"; };
+		9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsPivotJointPlaceholder.m; sourceTree = "<group>"; };
+		9294EC9418C6606F0059014C /* CCBPhysicsPinJointPlacefolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPinJointPlacefolder.h; sourceTree = "<group>"; };
+		9294EC9518C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJointPlacefolder.m; sourceTree = "<group>"; };
 		92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreivewAudio.h; sourceTree = "<group>"; };
 		92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewAudio.m; sourceTree = "<group>"; };
 		92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewAudio.xib; sourceTree = "<group>"; };
@@ -1189,6 +1205,20 @@
 		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
 		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
+		92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsSpringJoint.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		92B792BC18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsSpringJointPlaceholder.h; sourceTree = "<group>"; };
+		92B792BD18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsSpringJointPlaceholder.m; sourceTree = "<group>"; };
+		92B792BE18C92C60007DF895 /* CCBPhysicsSpringJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsSpringJoint.h; sourceTree = "<group>"; };
+		92B792BF18C92C60007DF895 /* CCBPhysicsSpringJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsSpringJoint.m; sourceTree = "<group>"; };
+		92B792C018C92C60007DF895 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CCPhysicsSpringJoint-Info.plist"; sourceTree = "<group>"; };
+		92B792C218C92C60007DF895 /* CCPhysicsSpringJoint-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsSpringJoint-Prefix.pch"; sourceTree = "<group>"; };
+		92B792C418C92C60007DF895 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		92B792C518C92C60007DF895 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		92B792C618C92C60007DF895 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPhysicsTwoBodyJoint.h; path = ccBuilder/CCBPhysicsTwoBodyJoint.h; sourceTree = "<group>"; };
+		92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPhysicsTwoBodyJoint.m; path = ccBuilder/CCBPhysicsTwoBodyJoint.m; sourceTree = "<group>"; };
+		92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -1400,6 +1430,7 @@
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
+		DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SpriteKitTextureAtlasToolPath.txt; sourceTree = "<group>"; };
 		DC5129C91891450D0091873D /* SKSpriteNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKSpriteNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC6802F3189145830060BE39 /* CCBPluginSKSpriteNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSKSpriteNode.h; sourceTree = "<group>"; };
 		DC6802F4189145830060BE39 /* CCBPluginSKSpriteNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSKSpriteNode.m; sourceTree = "<group>"; };
@@ -1910,8 +1941,6 @@
 		E3FEA8BC14E498B600119FBE /* InspectorDegrees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorDegrees.h; sourceTree = "<group>"; };
 		E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorDegrees.m; sourceTree = "<group>"; };
 		E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorInteger.xib; sourceTree = "<group>"; };
-		E525F7FAE195C58CAE196422 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
-		E525FDDB022C0FAB7EC2D89D /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		FA98CFC1154E7D1C006E58C5 /* ccbpublish */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ccbpublish; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA98CFC3154E7D1C006E58C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ccbpublish.m; sourceTree = "<group>"; };
@@ -1960,6 +1989,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				926D13DB18B57B9500582959 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92B7900418C808B7007DF895 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92B7900518C808B7007DF895 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2613,6 +2650,7 @@
 				DC680329189156310060BE39 /* SKColorSpriteNode.ccbPlugNode */,
 				92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */,
 				926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */,
+				92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2663,6 +2701,7 @@
 			children = (
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
+				83F8672F18D1DCBD007441E4 /* Constants */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
 				B7AC69CE17A756950041B8BD /* Property Inspector */,
@@ -2685,7 +2724,6 @@
 				776041E21498F5A70078095D /* Util */,
 				776041EE1498FC320078095D /* GUI Util */,
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
-				E525F79A6F36AC07878C0861 /* Constants */,
 			);
 			name = SpriteBuilder;
 			path = ccBuilder;
@@ -2730,6 +2768,7 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */,
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
 				E3AF6CE015F0CFAE0048DB2A /* Documentation */,
@@ -2823,12 +2862,23 @@
 			path = Include;
 			sourceTree = "<group>";
 		};
+		83F8672F18D1DCBD007441E4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				83F8673218D1DCEA007441E4 /* SBErrors.h */,
+				83F8673318D1DCEA007441E4 /* SBErrors.m */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */ = {
 			isa = PBXGroup;
 			children = (
 				92154ACE18A5540400BD215C /* Supporting Files */,
 				92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */,
 				92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */,
+				9294EC9118C660480059014C /* CCBPhyicsPivotJointPlaceholder.h */,
+				9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */,
 			);
 			path = CCPhysicsPivotJoint;
 			sourceTree = "<group>";
@@ -2852,6 +2902,8 @@
 				926D13F718B57E2A00582959 /* Supporting Files */,
 				926D13F818B57E7F00582959 /* CCBPhysicsPinJoint.h */,
 				926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */,
+				9294EC9418C6606F0059014C /* CCBPhysicsPinJointPlacefolder.h */,
+				9294EC9518C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m */,
 			);
 			path = CCPhysicsPinJoint;
 			sourceTree = "<group>";
@@ -2867,6 +2919,23 @@
 				926D13F018B57E1600582959 /* icon@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		92B792BB18C92C60007DF895 /* CCPhysicsSpringJoint */ = {
+			isa = PBXGroup;
+			children = (
+				92B792BC18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.h */,
+				92B792BD18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.m */,
+				92B792BE18C92C60007DF895 /* CCBPhysicsSpringJoint.h */,
+				92B792BF18C92C60007DF895 /* CCBPhysicsSpringJoint.m */,
+				92B792C018C92C60007DF895 /* CCBPProperties.plist */,
+				92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */,
+				92B792C218C92C60007DF895 /* CCPhysicsSpringJoint-Prefix.pch */,
+				92B792C318C92C60007DF895 /* InfoPlist.strings */,
+				92B792C518C92C60007DF895 /* Icon.png */,
+				92B792C618C92C60007DF895 /* Icon@2x.png */,
+			);
+			path = CCPhysicsSpringJoint;
 			sourceTree = "<group>";
 		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
@@ -2969,6 +3038,7 @@
 		B79F90E717FF335000908504 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
+				92B792BB18C92C60007DF895 /* CCPhysicsSpringJoint */,
 				926D13E718B57E1500582959 /* CCPhysicsPinJoint */,
 				92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */,
 				B79F90DA17FF30DC00908504 /* CCPhysicsNode */,
@@ -2978,6 +3048,9 @@
 				926D13D218B57A4900582959 /* CCScaleFreeNode.m */,
 				922E8EFC18C13666008E1764 /* OutletDrawWindow.h */,
 				922E8EFD18C13666008E1764 /* OutletDrawWindow.m */,
+				92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */,
+				92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */,
+				92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */,
 			);
 			name = Physics;
 			sourceTree = "<group>";
@@ -4012,15 +4085,6 @@
 			name = "CCZ compression";
 			sourceTree = "<group>";
 		};
-		E525F79A6F36AC07878C0861 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				E525FDDB022C0FAB7EC2D89D /* SBErrors.m */,
-				E525F7FAE195C58CAE196422 /* SBErrors.h */,
-			);
-			name = Constants;
-			sourceTree = "<group>";
-		};
 		FA98CFC5154E7D1C006E58C5 /* ccbpublish */ = {
 			isa = PBXGroup;
 			children = (
@@ -4114,11 +4178,27 @@
 			buildRules = (
 			);
 			dependencies = (
-				9266089D18B58E5B007A0A05 /* PBXTargetDependency */,
 			);
 			name = CCPhysicsPinJoint;
 			productName = CCPhysicsNode;
 			productReference = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92B7900A18C808B7007DF895 /* Build configuration list for PBXNativeTarget "CCPhysicsSpringJoint" */;
+			buildPhases = (
+				92B7900218C808B7007DF895 /* Sources */,
+				92B7900418C808B7007DF895 /* Frameworks */,
+				92B7900618C808B7007DF895 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCPhysicsSpringJoint;
+			productName = CCPhysicsNode;
+			productReference = 92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		B729AC51181F091800BA0D9C /* CCSlider */ = {
@@ -4550,6 +4630,7 @@
 				B79F90D717FF30DB00908504 /* CCPhysicsNode */,
 				92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */,
 				926D13D718B57B9500582959 /* CCPhysicsPinJoint */,
+				92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */,
 				DCB9F14C1890600D00128D78 /* SKNode */,
 				DC5129BD1891450D0091873D /* SKSpriteNode */,
 				DC6802FC1891466C0060BE39 /* SKLabelNode */,
@@ -4686,6 +4767,7 @@
 				E3B4222214E58FEE004547D6 /* InspectorColor3.xib in Resources */,
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
+				DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */,
 				E3B4223414E5E68B004547D6 /* InspectorSeparator.xib in Resources */,
 				A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */,
 				B71706CE184ECD660081720A /* select-move.png in Resources */,
@@ -4917,6 +4999,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		92B7900618C808B7007DF895 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92B792D918C933B7007DF895 /* CCBPProperties.plist in Resources */,
+				92B792D718C9339E007DF895 /* Icon.png in Resources */,
+				92B792D618C93390007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B729AC50181F091800BA0D9C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -5094,8 +5186,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E398C02914FB81A30078E771 /* InfoPlist.strings in Resources */,
+				92B792CD18C92C60007DF895 /* Icon@2x.png in Resources */,
+				92B792CB18C92C60007DF895 /* InfoPlist.strings in Resources */,
 				8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */,
 				9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */,
+				92B792CC18C92C60007DF895 /* Icon.png in Resources */,
+				92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */,
+				92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
 				929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5154,8 +5251,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92FD167218B59022003EF0D5 /* CCBPhysicsPinJoint.m in Sources */,
-				92FD167318B59022003EF0D5 /* CCBPhysicsPivotJoint.m in Sources */,
+				92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */,
+				92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */,
+				9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */,
+				9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */,
+				9294EC9018C65EC10059014C /* CCBPhysicsJoint.m in Sources */,
 				9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */,
 				9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */,
 				80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */,
@@ -5192,7 +5292,6 @@
 				77E1992C13858D78006C361B /* PSMTabDragWindowController.m in Sources */,
 				776C683E1385C02000153214 /* CCBOutlineView.m in Sources */,
 				776C68421385C4F100153214 /* CCBTextFieldCell.m in Sources */,
-				926D13D618B57A8100582959 /* CCBPhysicsJoint.m in Sources */,
 				922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */,
 				776C68451385D37E00153214 /* CCBTableView.m in Sources */,
 				77D33EAB138EA4F900012A88 /* CCBUtil.m in Sources */,
@@ -5362,9 +5461,9 @@
 				B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */,
 				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,
+				83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
-				E525FC4FE09DC32582944B10 /* SBErrors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5372,6 +5471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9294EC9318C660480059014C /* CCBPhyicsPivotJointPlaceholder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5379,6 +5479,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9294EC9618C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92B7900218C808B7007DF895 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92B792CE18C92CA1007DF895 /* CCBPhyicsSpringJointPlaceholder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5570,11 +5679,6 @@
 			target = 92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */;
 			targetProxy = 92154AE118A5567400BD215C /* PBXContainerItemProxy */;
 		};
-		9266089D18B58E5B007A0A05 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */;
-			targetProxy = 9266089C18B58E5B007A0A05 /* PBXContainerItemProxy */;
-		};
 		926D13E618B57C4200582959 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 926D13D718B57B9500582959 /* CCPhysicsPinJoint */;
@@ -5729,6 +5833,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				926D13EE18B57E1600582959 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		92B792C318C92C60007DF895 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92B792C418C92C60007DF895 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -6190,6 +6302,97 @@
 					dynamic_lookup,
 				);
 				PRODUCT_NAME = CCPhysicsPinJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
+		92B7900B18C808B7007DF895 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsSpringJoint/CCPhysicsSpringJoint-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCPhysicsSpringJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		92B7900C18C808B7007DF895 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsSpringJoint/CCPhysicsSpringJoint-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCPhysicsSpringJoint;
 				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;
@@ -7737,6 +7940,15 @@
 			buildConfigurations = (
 				926D13E118B57B9500582959 /* Debug */,
 				926D13E218B57B9500582959 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92B7900A18C808B7007DF895 /* Build configuration list for PBXNativeTarget "CCPhysicsSpringJoint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92B7900B18C808B7007DF895 /* Debug */,
+				92B7900C18C808B7007DF895 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -33,10 +33,10 @@
 
 - (NSMenu*) menuForEvent:(NSEvent *)evt
 {
-    NSPoint pt = [self convertPoint:[evt locationInWindow] fromView:nil];
-    int row=[self rowAtPoint:pt];
-    
-    id clickedItem = [self itemAtRow:row];
+	NSPoint pt = [self convertPoint:[evt locationInWindow] fromView:nil];
+	int row = [self rowAtPoint:pt];
+
+	id clickedItem = [self itemAtRow:row];
 
     NSMenu* menu = [AppDelegate appDelegate].menuContextResManager;
     menu.autoenablesItems = NO;
@@ -50,6 +50,7 @@
         {
             if ([clickedItem isKindOfClass:[RMResource class]]) {
                 RMResource* clickedResource = clickedItem;
+				[item setEnabled:NO];
                 if (clickedResource.type == kCCBResTypeDirectory)
                 {
                     RMDirectory* dir = clickedResource.data;
@@ -64,10 +65,6 @@
                     }
 
                     [item setEnabled:YES];
-                }
-                else
-                {
-                    [item setEnabled:NO];
                 }
             }
         }
@@ -99,7 +96,6 @@
                     [item setEnabled:YES];
                 }
             }
-            
         }
         else if (item.action == @selector(menuActionInterfaceFile:))
         {
@@ -112,23 +108,22 @@
         }
         else if (item.action == @selector(menuOpenExternal:))
         {
-            if ([clickedItem isKindOfClass:[RMResource class]]) {
-                RMResource* clickedResource = clickedItem;
-                if (clickedResource.type == kCCBResTypeCCBFile || clickedResource.type == kCCBResTypeDirectory)
-                {
-                    [item setEnabled:NO];
-                }
-                else
-                {
-                    [item setEnabled:YES];
-                }
-            }
-        }
+			if ([clickedItem isKindOfClass:[RMResource class]])
+			{
+				RMResource *clickedResource = clickedItem;
+				[item setEnabled:[self isCCBFileOrResourceDirectory:clickedResource]];
+			}
+		}
     }
     
     // TODO: Update menu
     
     return menu;
+}
+
+- (BOOL)isCCBFileOrResourceDirectory:(RMResource *)clickedResource
+{
+	return clickedResource.type == kCCBResTypeCCBFile || clickedResource.type == kCCBResTypeDirectory;
 }
 
 - (void) deleteSelectedResource

@@ -228,7 +228,7 @@
 {
 
         
-    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyIndexA) : @(BodyIndexB)};
+    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
     
     NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
                                                               format:NSPropertyListBinaryFormat_v1_0

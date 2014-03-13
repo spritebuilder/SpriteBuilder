@@ -34,15 +34,19 @@
 @interface PhysicsHandler : NSObject <NSDraggingSource,NSPasteboardItemDataProvider>
 {
     CGPoint _mouseDownPos;
+    CGPoint _mouseMovePos;
     int     _mouseDownInHandle;
     CGPoint _handleStartPos;
     
     //Joint Manipulation
-    OutletDrawWindow * outletWindow;
-    BodyIndex          outletDragged;
     CCBPhysicsJoint *  _currentJoint;
+    OutletDrawWindow * outletWindow;
+    JointHandleType          outletDragged;
     BOOL               jointOutletDragging;
     CGPoint            jointOutletDraggingLocation;
+    
+    //Joint BodyB Dragging.
+    JointHandleType           bodyDragging;
 
     
 }
@@ -58,11 +62,13 @@
 - (void) updatePhysicsEditor:(CCNode*) editorView;
 
 - (CCNode*)findPhysicsBodyAtPoint:(CGPoint)point;
-- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(BodyIndex)idx;
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx;
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pos event:(NSEvent*)event;
+- (BOOL) mouseMove:(CGPoint)pos event:(NSEvent*)event;
+
 
 - (BOOL)rightMouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL)rightMouseUp:(CGPoint)pos event:(NSEvent*)event;

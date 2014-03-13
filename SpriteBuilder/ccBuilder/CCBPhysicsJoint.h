@@ -13,17 +13,31 @@ extern NSString *  dependantProperties[kNumProperties];
 
 typedef enum
 {
-    BodyIndexA,
-    BodyIndexB,
+    BodyAnchorA,
+    BodyAnchorB,
     
-    BodyIndexUnknown = -1,
-}BodyIndex;
+    BodyOutletA,
+    BodyOutletB,
+    
+    //-------
+    MinHandleType,
+    MaxHandleType,
+    
+    //------------
+    RestLengthHandle,
+    
+    EntireJoint, //The entire joint has been touched at some point.
+    
+    JointHandleUnknown = -1,
+}JointHandleType;
 
-NSString * ConvertBodyTypeToString(BodyIndex index);
+
 
 @class SceneGraph;
 @interface CCBPhysicsJoint : CCNode <NSPasteboardWriting>
 {
+    UInt32 selectedBodyHandle;//bitfield
+    
     CCNode * scaleFreeNode;
     
     CCSprite * bodyAOutlet;
@@ -46,18 +60,22 @@ NSString * ConvertBodyTypeToString(BodyIndex index);
 @property(nonatomic) BOOL breakingForceEnabled;
 @property(nonatomic) CGFloat breakingForce;
 
-@property BOOL isSelected;//Is clears on Visit
 
+-(JointHandleType)hitTestJointHandle:(CGPoint)worlPos; //Which part of the joint did you hit? AnchorA/B Handle Min/Max?
+-(void)setJointHandleSelected:(JointHandleType)handleType; //Tell the renderer that a particular component is selected. Clears every frame.
+-(void)removeJointHandleSelected:(JointHandleType)handleType;
 
--(int)hitTestOutlet:(CGPoint)point;
--(void)setOutletStatus:(BodyIndex)idx value:(BOOL)value;
 -(void)refreshOutletStatus;
--(CGPoint)outletWorldPos:(BodyIndex)idx;
+-(CGPoint)outletWorldPos:(JointHandleType)idx;
+-(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType;
 
 
 -(void)fixupReferences;
 
 -(void)removeObserverBody:(CCNode*)body;
 -(void)addObserverBody:(CCNode*)body;
+
++(NSString *)convertBodyTypeToString:(JointHandleType) index;
+
 
 @end

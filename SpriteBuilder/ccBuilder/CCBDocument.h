@@ -59,11 +59,15 @@
 @property (nonatomic,assign) float stageZoom;
 @property (nonatomic,assign) int stageColor;
 @property (nonatomic,readonly) NSString* rootPath;
-- (NSString*) formattedName;
 @property (nonatomic,strong) NSMutableArray* resolutions;
 @property (nonatomic,assign) int currentResolution;
 @property (nonatomic,strong) NSMutableArray* sequences;
 @property (nonatomic,assign) int currentSequenceId;
 @property (nonatomic,assign) int docDimensionsType;
 @property (nonatomic,assign) NSUInteger UUID;
+
+- (NSString*) formattedName;
+
+- (BOOL)isWithinPath:(NSString *)path;
+
 @end

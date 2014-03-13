@@ -46,6 +46,10 @@
     _friction = 0.3f;
     _elasticity = 0.3f;
     
+    _collisionType = @"";
+    _collisionMask = @"";
+    _collisionCategories = @"";
+    
     return self;
 }
 
@@ -79,6 +83,25 @@
     _density = [[ser objectForKey:@"density"] floatValue];
     _friction = [[ser objectForKey:@"friction"] floatValue];
     _elasticity = [[ser objectForKey:@"elasticity"] floatValue];
+    
+    _collisionType = [ser objectForKey:@"collisionType"];
+    _collisionCategories = [ser objectForKey:@"collisionCategories"];
+    _collisionMask = [ser objectForKey:@"collisionMask"];
+    
+    if(_collisionType == nil)
+    {
+        _collisionType = @"";
+    }
+    
+    if(_collisionCategories == nil)
+    {
+        _collisionCategories = @"";
+    }
+    
+    if(_collisionMask == nil)
+    {
+        _collisionMask = @"";
+    }
     
     return self;
 }
@@ -130,6 +153,11 @@
     [ser setObject:[NSNumber numberWithFloat:_density] forKey:@"density"];
     [ser setObject:[NSNumber numberWithFloat:_friction] forKey:@"friction"];
     [ser setObject:[NSNumber numberWithFloat:_elasticity] forKey:@"elasticity"];
+    
+    [ser setObject:_collisionType forKey:@"collisionType"];
+    [ser setObject:_collisionCategories forKey:@"collisionCategories"];
+    [ser setObject:_collisionMask forKey:@"collisionMask"];
+
     
     return ser;
 }

@@ -11,19 +11,19 @@
 #import "CCNode+NodeInfo.h"
 #import "CCBGlobals.h"
 #import "SceneGraph.h"
+#import "SequencerHandler.h"
+#import "SequencerSequence.h"
+#import "AppDelegate.h"
 
 static const float kOutletOffset = 20.0f;
 
 NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
 
-NSString * ConvertBodyTypeToString(BodyIndex index)
-{
-    return index == BodyIndexA ? @"bodyA" : @"bodyB";
-}
 
 @implementation CCBPhysicsJoint
 {
+
 
 }
 @dynamic bodyA;
@@ -31,7 +31,7 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
 @synthesize breakingForceEnabled;
 @synthesize maxForceEnabled;
 
-@synthesize isSelected;
+
 - (id) init
 {
     self = [super init];
@@ -44,20 +44,27 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
     [self addChild:scaleFreeNode];
     
     bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyAOutlet.position = ccp(-kOutletOffset,-kOutletOffset);
+    bodyAOutlet.positionType = CCPositionTypeUIPoints;
+    bodyAOutlet.position = ccp(-kOutletOffset + [self outletLateralOffset], -kOutletOffset);
     [scaleFreeNode addChild:bodyAOutlet];
     
     bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.position = ccp(kOutletOffset,-kOutletOffset);
+    bodyBOutlet.position = ccp(kOutletOffset + [self outletLateralOffset], -kOutletOffset);
+    bodyBOutlet.positionType = CCPositionTypeUIPoints;
     [scaleFreeNode addChild:bodyBOutlet];
     
-    self.breakingForceEnabled = YES;
-    self.maxForceEnabled = YES;
+    self.breakingForceEnabled = NO;
+    self.maxForceEnabled = NO;
     self.breakingForce = INFINITY;
     self.collideBodies = YES;
     self.maxForce = INFINITY;
     
     return self;
+}
+
+-(float)outletLateralOffset
+{
+    return 0.0f;
 }
 
 -(void)setBodyA:(CCNode *)aBodyA
@@ -106,17 +113,32 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
 
 -(void)addObserverBody:(CCNode*)body
 {
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+    CCNode * node = body;
+    
+    while (node && node != [SceneGraph instance].rootNode)
     {
-        [body addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++)
+        {
+            [node addObserver:self forKeyPath:dependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
+        }
+        node = node.parent;
     }
+    
     
 }
 
 -(void)removeObserverBody:(CCNode*)body
 {
-    for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
-        [body removeObserver:self forKeyPath:dependantProperties[i]];
+    CCNode * node = body;
+    
+    while (node && node != [SceneGraph instance].rootNode)
+    {
+        
+        for (int i = 0; i < sizeof(dependantProperties)/sizeof(dependantProperties[0]); i++) {
+            [node removeObserver:self forKeyPath:dependantProperties[i]];
+        }
+        
+        node = node.parent;
     }
 }
 
@@ -179,7 +201,7 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
 -(void)updateSelectionUI
 {
     
-    if(self.isSelected)
+    if(selectedBodyHandle & (1<<EntireJoint))
     {
         bodyAOutlet.visible = self.bodyA ? NO : YES;
         bodyBOutlet.visible = self.bodyB ? NO : YES;
@@ -190,44 +212,91 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
         bodyBOutlet.visible = NO;
     }
     
-    isSelected = NO;
+    
+    //Outlet A
+    if(selectedBodyHandle & (1<<BodyOutletA))
+    {
+        bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    }
+    else
+    {
+        bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    }
+    [self removeJointHandleSelected:BodyOutletA];
+    
+    //Outlet B
+    if(selectedBodyHandle & (1<<BodyOutletB))
+    {
+        bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    }
+    else
+    {
+        bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    }
+    [self removeJointHandleSelected:BodyOutletB];
+
+    [self removeJointHandleSelected:EntireJoint];
 }
 
--(int)hitTestOutlet:(CGPoint)point
+
+#pragma mark -
+
+
+-(JointHandleType)hitTestJointHandle:(CGPoint)worldPos
 {
 
-    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:point];
+    CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worldPos];
     
-    pointA = ccpAdd(pointA, ccp(0,5.0f));
-    if(ccpLength(pointA) < 10.0f)
+    pointA = ccpAdd(pointA, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
+    if(ccpLength(pointA) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
-        return 0;
+        return BodyOutletA;
     }
     
     
-    CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:point];
-    pointB = ccpAdd(pointB, ccp(0,5.0f));
-    if(ccpLength(pointB) < 10.0f)
+    CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:worldPos];
+    pointB = ccpAdd(pointB, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
+    if(ccpLength(pointB) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
-        return 1;
+        return BodyOutletB;
     }
+
     
-    return -1;
+    return JointHandleUnknown;
+}
+
+#pragma mark -
+
+-(void)setJointHandleSelected:(JointHandleType)handleType;
+{
+    selectedBodyHandle |= (1<<handleType);
+}
+
+-(void)removeJointHandleSelected:(JointHandleType)handleType
+{
+    selectedBodyHandle = ~(1<<handleType) & selectedBodyHandle;
+}
+
+-(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
+{
+    //Do nothing.
 }
 
 -(void)refreshOutletStatus
 {
     CCSpriteFrame * spriteFrameUnset = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    CCSpriteFrame * spriteFrameSet = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    CCSpriteFrame * spriteFrameSet   = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
     
     bodyAOutlet.spriteFrame = bodyA ? spriteFrameSet : spriteFrameUnset;
     bodyBOutlet.spriteFrame = bodyB ? spriteFrameSet : spriteFrameUnset;
     
+    [self removeJointHandleSelected:BodyOutletA];
+    [self removeJointHandleSelected:BodyOutletB];
 }
 
--(CGPoint)outletWorldPos:(BodyIndex)idx
+-(CGPoint)outletWorldPos:(JointHandleType)idx
 {
-    if(idx == BodyIndexA)
+    if(idx == BodyOutletA)
     {
         return [bodyAOutlet convertToWorldSpaceAR:CGPointZero];
     }
@@ -238,20 +307,6 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
 }
 
 
-
-
--(void)setOutletStatus:(BodyIndex)idx value:(BOOL)value
-{
-    CCSprite * bodyOutlet = idx == BodyIndexA ? bodyAOutlet : bodyBOutlet;
-    if(value)
-    {
-        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
-    }
-    else
-    {
-        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    }
-}
 
 -(void)onEnter
 {
@@ -287,5 +342,35 @@ NSString * ConvertBodyTypeToString(BodyIndex index)
     NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.jointBody"];
     return pbTypes;
 }
+
+
++(NSString *)convertBodyTypeToString:(JointHandleType)index
+{
+    switch (index) {
+        case BodyOutletA:
+        case BodyAnchorA:
+            return @"bodyA";
+        case BodyAnchorB:
+        case BodyOutletB:
+        default:
+            return @"bodyB";
+    }
+}
+
+- (BOOL) hidden
+{
+    if([SequencerHandler sharedHandler].currentSequence.timelinePosition != 0.0f || ![SequencerHandler sharedHandler].currentSequence.autoPlay)
+    {
+        return YES;
+    }
+    
+    if([AppDelegate appDelegate].playingBack)
+    {
+        return YES;
+    }
+    
+    return [super hidden];
+}
+
 
 @end

@@ -6,6 +6,7 @@
 	
 }
 
++(float)distanceFromLineSegment:(CGPoint) a b:(CGPoint)b c:(CGPoint)c;
 + (BOOL) pointInRegion:(CGPoint)pt poly: (NSArray *)polygon;
 
 @end

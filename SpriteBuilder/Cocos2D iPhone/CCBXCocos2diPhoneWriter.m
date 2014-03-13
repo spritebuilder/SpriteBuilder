@@ -67,6 +67,7 @@
     [propTypes addObject:@"FloatXY"];
     [propTypes addObject:@"Color4"];
     [propTypes addObject:@"NodeReference"];
+    [propTypes addObject:@"FloatCheck"];
 }
 
 - (id) init
@@ -469,6 +470,13 @@
     {
         [self writeInt:(int)[prop unsignedIntegerValue] withSign:NO];
     }
+    else if([type isEqualToString:@"FloatCheck"])
+    {
+        NSArray * propArray = (NSArray*)prop;
+        [self writeFloat:[propArray[0] floatValue]];
+        [self writeBool:[propArray[1] boolValue]];
+
+    }
     else
     {
         NSLog(@"WARNING: Unknown property Type:%@" , type);
@@ -646,6 +654,36 @@
             [self addToStringCache:[customProp objectForKey:@"value"] isPath:NO];
         }
     }
+    
+    
+    
+    // Custom properties
+    NSDictionary* physicsBodyProperties = [node objectForKey:@"physicsBody"];
+   if(physicsBodyProperties)
+   {
+       NSString * collisionType = [physicsBodyProperties objectForKey:@"collisionType"];
+       if(collisionType == nil)
+       {
+           collisionType = @"";
+       }
+       
+       NSString * collisionCategories = [physicsBodyProperties objectForKey:@"collisionCategories"];
+       if(collisionCategories == nil)
+       {
+           collisionCategories = @"";
+       }
+       
+       NSString * collisionMask = [physicsBodyProperties objectForKey:@"collisionMask"];
+       if(collisionMask == nil)
+       {
+           collisionMask = @"";
+       }
+       
+       
+       [self addToStringCache:collisionType isPath:NO];
+       [self addToStringCache:collisionCategories isPath:NO];
+       [self addToStringCache:collisionMask isPath:NO];
+   }
     
     // Children
     NSArray* children = [node objectForKey:@"children"];
@@ -996,7 +1034,30 @@
     NSArray* customProps = [node objectForKey:@"customProperties"];
     
     // Only write customProps if there is a custom class
-    if (!hasCustomClass) customProps = [NSArray array];
+    // or if the base class is a CCBFile to allow overwriting of custom properties
+    if (!hasCustomClass && ![node[@"baseClass"] isEqualToString:@"CCBFile"])
+    {
+        customProps = [NSArray array];
+    }
+
+	// Sprite Kit requires certain properties to be exported in a specific order
+	if ([_delegate exportingToSpriteKit])
+	{
+		NSMutableArray* sortedProps = [NSMutableArray arrayWithCapacity:props.count];
+		for (NSDictionary* property in props)
+		{
+			// Sprite Frame should always be read first as it modifies (overrides) size & scale in Sprite Kit
+			if ([[property objectForKey:@"name"] isEqualToString:@"spriteFrame"])
+			{
+				[sortedProps insertObject:property atIndex:0];
+			}
+			else
+			{
+				[sortedProps addObject:property];
+			}
+		}
+		props = sortedProps;
+	}
     
     NSUInteger uuid = [node[@"UUID"] unsignedIntegerValue];
     [self writeInt:(int)uuid withSign:NO];
@@ -1114,6 +1175,11 @@
         float friction = [[physicsBody objectForKey:@"friction"] floatValue];
         float elasticity = [[physicsBody objectForKey:@"elasticity"] floatValue];
         
+        NSString * collisionType = [physicsBody objectForKey:@"collisionType"];
+        NSString * collisionCategories = [physicsBody objectForKey:@"collisionCategories"];
+        NSString * collisionMask = [physicsBody objectForKey:@"collisionMask"];
+        
+        
         // Write physics body
         [self writeInt:bodyShape withSign:NO];
         [self writeFloat:cornerRadius];
@@ -1151,6 +1217,26 @@
         [self writeFloat:density];
         [self writeFloat:friction];
         [self writeFloat:elasticity];
+        
+        if(collisionType == nil)
+        {
+            collisionType = @"";
+        }
+        
+        if(collisionCategories == nil)
+        {
+            collisionCategories = @"";
+        }
+        
+        if(collisionMask == nil)
+        {
+            collisionMask = @"";
+        }
+        
+        [self writeCachedString:collisionType isPath:NO];
+        [self writeCachedString:collisionCategories isPath:NO];
+        [self writeCachedString:collisionMask isPath:NO];
+        
     }
     else
     {
@@ -1180,8 +1266,11 @@
     }
 }
 
+
+
 -(void)writeJoints:(NSArray*)joints
 {
+    
     [self writeInt:(int)joints.count withSign:NO];
     for (NSDictionary * joint in joints)
     {

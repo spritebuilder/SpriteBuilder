@@ -48,6 +48,7 @@
 #import "PhysicsHandler.h"
 #import "CCBUtil.h"
 #import "CCTextureCache.h"
+#import "NSArray+Query.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -1096,7 +1097,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Clicks inside objects
     [nodesAtSelectionPt removeAllObjects];
     
-    [self nodesUnderPt:pos rootNode:jointsLayer.children[0] nodes:nodesAtSelectionPt];
+    [[jointsLayer.children[0] children] forEach:^(CCNode * jointNode, int idx) {
+        [self nodesUnderPt:pos rootNode:jointNode nodes:nodesAtSelectionPt];
+    }];
+    
     if(nodesAtSelectionPt.count == 0)
     {
         [self nodesUnderPt:pos rootNode:rootNode nodes:nodesAtSelectionPt];
@@ -1741,6 +1745,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     mousePos = pos;
+    
+    [appDelegate.physicsHandler mouseMove:pos event:event];
+    
 }
 
 - (void)mouseEntered:(NSEvent *)event

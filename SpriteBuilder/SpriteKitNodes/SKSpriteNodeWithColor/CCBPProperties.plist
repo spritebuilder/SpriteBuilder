@@ -42,19 +42,6 @@
 		<dict>
 			<key>default</key>
 			<array>
-				<integer>160</integer>
-				<integer>90</integer>
-			</array>
-			<key>type</key>
-			<string>Size</string>
-			<key>name</key>
-			<string>size</string>
-			<key>displayName</key>
-			<string>Size</string>
-		</dict>
-		<dict>
-			<key>default</key>
-			<array>
 				<real>0.5</real>
 				<real>0.5</real>
 			</array>
@@ -108,27 +95,6 @@
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>
-	<array>
-		<dict>
-			<key>readOnly</key>
-			<true/>
-			<key>type</key>
-			<string>ScaleLock</string>
-			<key>name</key>
-			<string>scale</string>
-			<key>displayName</key>
-			<string>Scale</string>
-		</dict>
-		<dict>
-			<key>readOnly</key>
-			<true/>
-			<key>type</key>
-			<string>Size</string>
-			<key>name</key>
-			<string>contentSize</string>
-			<key>displayName</key>
-			<string>Content size</string>
-		</dict>
-	</array>
+	<array/>
 </dict>
 </plist>
