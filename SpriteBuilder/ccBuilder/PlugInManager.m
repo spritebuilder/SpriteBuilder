@@ -53,6 +53,7 @@
     
 #if !CCB_BUILDING_COMMANDLINE
     plugInsNode = [[NSMutableDictionary alloc] init];
+	plugInsAbstractNode = [[NSMutableDictionary alloc] init];
     plugInsNodeNames = [[NSMutableArray alloc] init];
     plugInsNodeNamesCanBeRoot = [[NSMutableArray alloc] init];
 #endif
@@ -108,20 +109,28 @@
             [bundle load];
             
             PlugInNode* plugIn = [[PlugInNode alloc] initWithBundle:bundle];
-            if (plugIn && !plugIn.isAbstract)
+            if (plugIn)
             {
-                [plugInsNode setObject:plugIn forKey:plugIn.nodeClassName];
-                [plugInsNodeNames addObject:plugIn.nodeClassName];
-                
-                if (plugIn.canBeRoot)
-                {
-                    [plugInsNodeNamesCanBeRoot addObject:plugIn.nodeClassName];
-                }
+				if (plugIn.isAbstract)
+				{
+					// keep abstract plugins in memory too
+					[plugInsAbstractNode setObject:plugIn forKey:plugIn.nodeClassName];
+				}
+				else
+				{
+					[plugInsNode setObject:plugIn forKey:plugIn.nodeClassName];
+					[plugInsNodeNames addObject:plugIn.nodeClassName];
+					
+					if (plugIn.canBeRoot)
+					{
+						[plugInsNodeNamesCanBeRoot addObject:plugIn.nodeClassName];
+					}
+				}
             }
             
             // Load icon
             plugIn.icon = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"Icon.png"]];
-			if (plugIn.icon == nil)
+			if (plugIn.icon == nil && plugIn.isAbstract == NO)
 			{
 				NSLog(@"WARNING: missing icon for plugin %@", [plugInPath lastPathComponent]);
 			}
