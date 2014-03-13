@@ -83,4 +83,9 @@
     }
 }
 
+- (BOOL)isWithinPath:(NSString *)path
+{
+	return [self.fileName hasPrefix:path];
+}
+
 @end

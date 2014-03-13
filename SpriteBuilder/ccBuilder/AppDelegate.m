@@ -1725,15 +1725,21 @@ static BOOL hideAllToNextSeparator;
     return NULL;
 }
 
-- (NSTabViewItem*) tabViewItemFromPath:(NSString*)path
+// A path can be a folder not only a file. Set includeViewWithinFolderPath to YES to return
+// the first view that is within a given folder path
+- (NSTabViewItem *)tabViewItemFromPath:(NSString *)path includeViewWithinFolderPath:(BOOL)includeViewWithinFolderPath
 {
-    NSArray* items = [tabView tabViewItems];
-    for (int i = 0; i < [items count]; i++)
-    {
-        CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if ([doc.fileName isEqualToString:path]) return [items objectAtIndex:i];
-    }
-    return NULL;
+	NSArray *items = [tabView tabViewItems];
+	for (NSUInteger i = 0; i < [items count]; i++)
+	{
+		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
+		if ([doc.fileName isEqualToString:path]
+			|| (includeViewWithinFolderPath && [doc isWithinPath:path]))
+		{
+			return [items objectAtIndex:i];
+		}
+	}
+	return NULL;
 }
 
 - (void) checkForTooManyDirectoriesInCurrentDoc
@@ -3275,7 +3281,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) removedDocumentWithPath:(NSString*)path
 {
-    NSTabViewItem* item = [self tabViewItemFromPath:path];
+    NSTabViewItem* item = [self tabViewItemFromPath:path includeViewWithinFolderPath:YES];
     if (item)
     {
         [tabView removeTabViewItem:item];
@@ -3284,7 +3290,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) renamedDocumentPathFrom:(NSString*)oldPath to:(NSString*)newPath
 {
-    NSTabViewItem* item = [self tabViewItemFromPath:oldPath];
+    NSTabViewItem* item = [self tabViewItemFromPath:oldPath includeViewWithinFolderPath:NO];
     CCBDocument* doc = [item identifier];
     doc.fileName = newPath;
     [item setLabel:doc.formattedName];
