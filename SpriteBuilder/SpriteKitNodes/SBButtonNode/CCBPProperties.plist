@@ -487,7 +487,7 @@
 		<dict>
 			<key>default</key>
 			<array>
-				<integer>10</integer>
+				<integer>5</integer>
 				<integer>0</integer>
 			</array>
 			<key>affectsProperties</key>
@@ -502,6 +502,11 @@
 			<string>horizontalPadding</string>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<integer>5</integer>
+				<integer>0</integer>
+			</array>
 			<key>affectsProperties</key>
 			<array>
 				<string>contentSize</string>
