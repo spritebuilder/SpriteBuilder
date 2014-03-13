@@ -345,11 +345,7 @@
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
 		DC05E77B18D0ACCB00592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
-		DC05E78618D0ACE000592A1E /* CCBPluginSKColorSpriteNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC68032F189156A60060BE39 /* CCBPluginSKColorSpriteNode.m */; };
 		DC05E78818D0ACE000592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
-		DC05E78A18D0ACE000592A1E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680331189156A60060BE39 /* Icon.png */; };
-		DC05E78B18D0ACE000592A1E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC680332189156A60060BE39 /* Icon@2x.png */; };
-		DC05E78C18D0ACE000592A1E /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC680330189156A60060BE39 /* CCBPProperties.plist */; };
 		DC05E79118D0AD7800592A1E /* CCBPluginSBButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05E76918D0A9BD00592A1E /* CCBPluginSBButtonNode.m */; };
 		DC05E79218D0AD7800592A1E /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = DC05E76A18D0A9BD00592A1E /* CCBPProperties.plist */; };
 		DC05E79318D0AD7800592A1E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC05E76B18D0A9BD00592A1E /* Icon.png */; };
@@ -5210,11 +5206,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC05E78A18D0ACE000592A1E /* Icon.png in Resources */,
 				DC05E79418D0AD7800592A1E /* Icon@2x.png in Resources */,
-				DC05E78B18D0ACE000592A1E /* Icon@2x.png in Resources */,
 				DC05E79318D0AD7800592A1E /* Icon.png in Resources */,
-				DC05E78C18D0ACE000592A1E /* CCBPProperties.plist in Resources */,
 				DC05E79218D0AD7800592A1E /* CCBPProperties.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5695,7 +5688,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC05E79118D0AD7800592A1E /* CCBPluginSBButtonNode.m in Sources */,
-				DC05E78618D0ACE000592A1E /* CCBPluginSKColorSpriteNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
