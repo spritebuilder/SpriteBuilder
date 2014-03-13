@@ -1004,7 +1004,11 @@
     NSArray* customProps = [node objectForKey:@"customProperties"];
     
     // Only write customProps if there is a custom class
-    if (!hasCustomClass) customProps = [NSArray array];
+    // or if the base class is a CCBFile to allow overwriting of custom properties
+    if (!hasCustomClass && ![node[@"baseClass"] isEqualToString:@"CCBFile"])
+    {
+        customProps = [NSArray array];
+    }
 
 	// Sprite Kit requires certain properties to be exported in a specific order
 	if ([_delegate exportingToSpriteKit])
