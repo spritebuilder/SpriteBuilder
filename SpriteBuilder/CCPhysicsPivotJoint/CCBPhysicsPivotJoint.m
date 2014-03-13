@@ -8,7 +8,7 @@
 
 #import "CCBPhysicsPivotJoint.h"
 #import "AppDelegate.h"
-
+#import "CCNode+NodeInfo.h"
 
 
 @interface CCBPhysicsJoint()
@@ -101,6 +101,13 @@
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
+    bool change = NO;
+    if(bodyA && bodyA.UUID != aBodyA.UUID)
+    {
+        change = YES;
+    }
+
+    
     [super setBodyA:aBodyA];
     
     if(!aBodyA)
@@ -109,10 +116,12 @@
         [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
         return;
     }
-    else
+    else if(change)
     {
         [self setAnchorFromBodyA];
     }
+    
+    [self setPositionFromAnchor];
 }
 
 -(void)setPositionFromAnchor

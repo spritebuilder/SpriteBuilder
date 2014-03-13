@@ -42,17 +42,35 @@
 #import "NSArray+Query.h"
 
 @implementation CCBPublisher
+{
+	NSMutableDictionary *_modifiedDatesCache;
+}
 
 @synthesize publishFormat;
 @synthesize runAfterPublishing;
 @synthesize browser;
 
+- (NSDate *)cachedModifyDateForKey:(NSString *)key
+{
+	return [_modifiedDatesCache objectForKey:key];
+}
+
+- (void)setModifyCachedDate:(NSDate *)date forKey:(NSString *)key
+{
+	[_modifiedDatesCache setObject:date forKey:key];
+}
+
 - (id) initWithProjectSettings:(ProjectSettings*)settings warnings:(CCBWarnings*)w
 {
     self = [super init];
-    if (!self) return NULL;
-    
-    // Save settings and warning log
+	if (!self)
+	{
+		return NULL;
+	}
+
+	_modifiedDatesCache = [NSMutableDictionary dictionary];
+
+	// Save settings and warning log
     projectSettings = settings;
     warnings = w;
     
@@ -64,19 +82,26 @@
     
     // Set format to use for exports
     self.publishFormat = projectSettings.exporter;
-    
+
+
+
     return self;
 }
 
-- (NSDate*) latestModifiedDateForDirectory:(NSString*) dir
+- (NSDate *)latestModifiedDateForDirectory:(NSString *)dir
 {
-    NSDate* latestDate = [CCBFileUtil modificationDateForFile:dir];
-    
+	NSDate* latestDate = [self cachedModifyDateForKey:dir];
+	if (!latestDate)
+	{
+    	latestDate = [CCBFileUtil modificationDateForFile:dir];
+		[self setModifyCachedDate:latestDate forKey:dir];
+	}
+
     NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
     for (NSString* file in files)
     {
         NSString* absFile = [dir stringByAppendingPathComponent:file];
-        
+
         BOOL isDir = NO;
         if ([[NSFileManager defaultManager] fileExistsAtPath:absFile isDirectory:&isDir])
         {
@@ -84,11 +109,16 @@
             
             if (isDir)
             {
-                fileDate = [self latestModifiedDateForDirectory:absFile];
-            }
+				fileDate = [self latestModifiedDateForDirectory:absFile];
+			}
             else
             {
-                fileDate = [CCBFileUtil modificationDateForFile:absFile];
+				fileDate = [self cachedModifyDateForKey:absFile];
+				if (!fileDate)
+				{
+                	fileDate = [CCBFileUtil modificationDateForFile:absFile];
+					[self setModifyCachedDate:fileDate forKey:absFile];
+				}
             }
             
             if ([fileDate compare:latestDate] == NSOrderedDescending)
@@ -97,7 +127,7 @@
             }
         }
     }
-    
+
     return latestDate;
 }
 
@@ -107,9 +137,8 @@
     {
         NSMutableArray * joints = doc[@"joints"];
         
-        joints = [[joints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary * joint, NSDictionary *bindings) {
-            
-            
+        joints = [[joints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary * joint, NSDictionary *bindings)
+		{
             __block NSString * bodyType = @"bodyA";
             
             //Oh god. Nested blocks!
@@ -125,7 +154,6 @@
                 return NO;
             }
             
-            ///////
             //Find bodyB property
             bodyType = @"bodyB";
             if(![joint[@"properties"] findFirst:find])
@@ -139,11 +167,9 @@
 
             return YES;
         }]] mutableCopy];
-        
-        
+
         doc[@"joints"] = joints;
     }
-    
 }
 
 - (void) addRenamingRuleFrom:(NSString*)src to: (NSString*)dst
@@ -220,21 +246,23 @@
 		path = [NSString stringWithFormat:@"%@@2x~ipad.%@", [path stringByDeletingPathExtension], extension];
 	}
 	
-	//NSLog(@"path with cocoa suffix: %@", path);
 	return path;
 }
 
-- (BOOL) publishImageFile:(NSString*)srcFile to:(NSString*)dstFile isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString*) outDir
+- (BOOL)publishImageFile:(NSString *)srcFile to:(NSString *)dstFile isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir
 {
     for (NSString* resolution in publishForResolutions)
     {
-        if (![self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outDir:outDir resolution:resolution]) return NO;
-    }
+		if (![self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outDir:outDir resolution:resolution])
+		{
+			return NO;
+		}
+	}
     
     return YES;
 }
 
-- (BOOL) publishImageFile:(NSString*)srcPath to:(NSString*)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString*) outDir resolution:(NSString*) resolution
+- (BOOL)publishImageFile:(NSString *)srcPath to:(NSString *)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir resolution:(NSString *)resolution
 {
     AppDelegate* ad = [AppDelegate appDelegate];
     
@@ -483,7 +511,7 @@
     return YES;
 }
 
-- (BOOL) publishDirectory:(NSString*) dir subPath:(NSString*) subPath
+- (BOOL)publishDirectory:(NSString *)dir subPath:(NSString *)subPath
 {
     AppDelegate* ad = [AppDelegate appDelegate];
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
@@ -546,7 +574,7 @@
     {
         [files addObjectsFromArray:[fm contentsOfDirectoryAtPath:autoDir error:NULL]];
     }
-    
+
     // Iterate through all files
     for (NSString* fileName in files)
     {
@@ -566,12 +594,17 @@
             }
             
             // This is a directory
-            
             NSString* childPath = NULL;
-            if (subPath) childPath = [NSString stringWithFormat:@"%@/%@", subPath, fileName];
-            else childPath = fileName;
-            
-            // Skip resource independent directories
+			if (subPath)
+			{
+				childPath = [NSString stringWithFormat:@"%@/%@", subPath, fileName];
+			}
+			else
+			{
+				childPath = fileName;
+			}
+
+			// Skip resource independent directories
             if ([resIndependentDirs containsObject:fileName]) continue;
             
             // Skip directories in generated sprite sheets
@@ -582,12 +615,18 @@
             }
             
             // Skip the empty folder
-            if ([[fm contentsOfDirectoryAtPath:filePath error:NULL] count] == 0)  continue;
-            
-            // Skip the fold no .ccb files when onlyPublishCCBs is true
-            if(projectSettings.onlyPublishCCBs && ![self containsCCBFile:filePath]) continue;
-            
-            [self publishDirectory:filePath subPath:childPath];
+			if ([[fm contentsOfDirectoryAtPath:filePath error:NULL] count] == 0)
+			{
+				continue;
+			}
+
+			// Skip the fold no .ccb files when onlyPublishCCBs is true
+			if (projectSettings.onlyPublishCCBs && ![self containsCCBFile:filePath])
+			{
+				continue;
+			}
+
+			[self publishDirectory:filePath subPath:childPath];
         }
         else
         {
@@ -632,8 +671,6 @@
                     [self publishRegularFile:filePath to:dstFile];
                 }
             }
-            
-            
             else if ([[fileName lowercaseString] hasSuffix:@"ccb"] && !isGeneratedSpriteSheet)
             {
                 // This is a ccb-file and should be published
@@ -1049,18 +1086,23 @@
     else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
 		screenMode = @"CCScreenModeFlexible";
     [configCocos2d setObject:screenMode forKey:@"CCSetupScreenMode"];
-    
-    NSString* screenOrientation = @"";
-    if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+
+	NSString *screenOrientation = @"";
+	if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+	{
 		screenOrientation = @"CCScreenOrientationLandscape";
-    else if (projectSettings.defaultOrientation == kCCBOrientationPortrait)
+	}
+	else if (projectSettings.defaultOrientation == kCCBOrientationPortrait)
+	{
 		screenOrientation = @"CCScreenOrientationPortrait";
-    [configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
-    
-    [configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
-    
-    NSString* configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
-    [configCocos2d writeToFile:configCocos2dFile atomically:YES];
+	}
+
+	[configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
+
+	[configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
+
+	NSString *configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
+	[configCocos2d writeToFile:configCocos2dFile atomically:YES];
 }
 
 - (BOOL) publishAllToDirectory:(NSString*)dir
@@ -1071,13 +1113,17 @@
     renamedFiles = [NSMutableDictionary dictionary];
     
     // Setup paths for automatically generated sprite sheets
+	// TODO: this is never used?
     generatedSpriteSheetDirs = [projectSettings smartSpriteSheetDirectories];
     
     // Publish resources and ccb-files
-    for (NSString* dir in projectSettings.absoluteResourcePaths)
+    for (NSString* aDir in projectSettings.absoluteResourcePaths)
     {
-        if (![self publishDirectory:dir subPath:NULL]) return NO;
-    }
+		if (![self publishDirectory:aDir subPath:NULL])
+		{
+			return NO;
+		}
+	}
     
     // Publish generated files
     if(!projectSettings.onlyPublishCCBs)

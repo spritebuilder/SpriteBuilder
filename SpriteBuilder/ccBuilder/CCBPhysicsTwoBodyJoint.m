@@ -9,6 +9,8 @@
 #import "CCBPhysicsTwoBodyJoint.h"
 #import "GeometryUtil.h"
 #import "AppDelegate.h"
+#import "CCNode+NodeInfo.h"
+
 
 @interface CCBPhysicsJoint()
 -(void)updateSelectionUI;
@@ -39,12 +41,14 @@ static const float kDefaultLength = 58.0f;
     sizeType.heightUnit = CCSizeUnitUIPoints;
     sizeType.widthUnit = CCSizeUnitUIPoints;
     jointBody.contentSizeType = sizeType;
+    [scaleFreeNode addChild:jointBody];
     
     anchorHandleA = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     anchorHandleB = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     
     [scaleFreeNode addChild:anchorHandleA];
     [scaleFreeNode addChild:anchorHandleB];
+
     
 }
 
@@ -142,8 +146,8 @@ static const float kDefaultLength = 58.0f;
 {
     {
         CGPoint pointA = [anchorHandleA convertToNodeSpaceAR:worlPos];
-        pointA = ccpAdd(pointA, ccp(0,5.0f));
-        if(ccpLength(pointA) < 8.0f)
+        pointA = ccpAdd(pointA, ccp(0,3.0f * [CCDirector sharedDirector].UIScaleFactor));
+        if(ccpLength(pointA) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
         {
             return BodyAnchorA;
         }
@@ -151,8 +155,8 @@ static const float kDefaultLength = 58.0f;
     
     {
         CGPoint pointB = [anchorHandleB convertToNodeSpaceAR:worlPos];
-        pointB = ccpAdd(pointB, ccp(0,5.0f));
-        if(ccpLength(pointB) < 8.0f)
+        pointB = ccpAdd(pointB, ccp(0,3.0f * [CCDirector sharedDirector].UIScaleFactor));
+        if(ccpLength(pointB) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
         {
             return BodyAnchorB;
         }
@@ -171,7 +175,7 @@ static const float kDefaultLength = 58.0f;
     
     float distance = [GeometryUtil distanceFromLineSegment:anchorAWorldpos b:anchorBWorldpos c:pos];
     
-    if(distance < 7.0f)
+    if(distance < 8.0f)
     {
         return YES;
     }
@@ -203,7 +207,7 @@ static const float kDefaultLength = 58.0f;
 
 -(void)setBodyB:(CCNode *)aBodyB
 {
-    bool different = bodyB && bodyB != aBodyB;
+    bool different = bodyB && bodyB.UUID != aBodyB.UUID;
    
     [super setBodyB:aBodyB];
     

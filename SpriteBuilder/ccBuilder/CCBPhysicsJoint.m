@@ -212,6 +212,28 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         bodyBOutlet.visible = NO;
     }
     
+    
+    //Outlet A
+    if(selectedBodyHandle & (1<<BodyOutletA))
+    {
+        bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    }
+    else
+    {
+        bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    }
+    [self removeJointHandleSelected:BodyOutletA];
+    
+    //Outlet B
+    if(selectedBodyHandle & (1<<BodyOutletB))
+    {
+        bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    }
+    else
+    {
+        bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+    }
+    [self removeJointHandleSelected:BodyOutletB];
 
     [self removeJointHandleSelected:EntireJoint];
 }
@@ -225,16 +247,16 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
     CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worldPos];
     
-    pointA = ccpAdd(pointA, ccp(0,5.0f));
-    if(ccpLength(pointA) < 10.0f)
+    pointA = ccpAdd(pointA, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
+    if(ccpLength(pointA) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
         return BodyOutletA;
     }
     
     
     CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:worldPos];
-    pointB = ccpAdd(pointB, ccp(0,5.0f));
-    if(ccpLength(pointB) < 10.0f)
+    pointB = ccpAdd(pointB, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
+    if(ccpLength(pointB) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
         return BodyOutletB;
     }
@@ -263,11 +285,13 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 -(void)refreshOutletStatus
 {
     CCSpriteFrame * spriteFrameUnset = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    CCSpriteFrame * spriteFrameSet = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    CCSpriteFrame * spriteFrameSet   = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
     
     bodyAOutlet.spriteFrame = bodyA ? spriteFrameSet : spriteFrameUnset;
     bodyBOutlet.spriteFrame = bodyB ? spriteFrameSet : spriteFrameUnset;
     
+    [self removeJointHandleSelected:BodyOutletA];
+    [self removeJointHandleSelected:BodyOutletB];
 }
 
 -(CGPoint)outletWorldPos:(JointHandleType)idx
@@ -283,20 +307,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 }
 
 
-
-
--(void)setOutletStatus:(JointHandleType)idx value:(BOOL)value
-{
-    CCSprite * bodyOutlet = idx == BodyOutletA ? bodyAOutlet : bodyBOutlet;
-    if(value)
-    {
-        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
-    }
-    else
-    {
-        bodyOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    }
-}
 
 -(void)onEnter
 {
