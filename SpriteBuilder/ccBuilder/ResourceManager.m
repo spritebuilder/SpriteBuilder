@@ -1029,8 +1029,10 @@
     // Save the image
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:dstFile];
 		
-		CFStringRef out_type = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)([dstFile pathExtension]), NULL);
-    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, out_type, 1, NULL);
+    // NOTE! Rescaled image is always saved as a PNG even if the output filename is .psd.
+    // ImageIO discovers format types from the file header and not the extension.
+    // However, later processing stages in the SB export process need the original filename to be preserved.
+    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
     CGImageDestinationAddImage(destination, imageDst, nil);
     
     if (!CGImageDestinationFinalize(destination)) {
