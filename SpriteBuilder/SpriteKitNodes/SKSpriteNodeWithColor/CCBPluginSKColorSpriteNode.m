@@ -10,6 +10,7 @@
 
 @implementation CCBPluginSKColorSpriteNode
 
+/*
 -(void) setScale:(float)scale
 {
 	// changing scale actually changes content size
@@ -39,5 +40,6 @@
 {
 	return _contentSize.height;
 }
+*/
 
 @end
