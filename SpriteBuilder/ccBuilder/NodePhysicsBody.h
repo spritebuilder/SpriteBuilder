@@ -48,6 +48,10 @@ typedef enum
 @property (nonatomic,assign) float friction;
 @property (nonatomic,assign) float elasticity;
 
+@property (nonatomic) NSString * collisionType;
+@property (nonatomic) NSString * collisionCategories;
+@property (nonatomic) NSString * collisionMask;
+
 // Init and serialization
 - (id) initWithNode:(CCNode*) node;
 - (id) initWithSerialization:(id)ser;

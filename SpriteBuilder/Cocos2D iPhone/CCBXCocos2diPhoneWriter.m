@@ -655,6 +655,36 @@
         }
     }
     
+    
+    
+    // Custom properties
+    NSDictionary* physicsBodyProperties = [node objectForKey:@"physicsBody"];
+   if(physicsBodyProperties)
+   {
+       NSString * collisionType = [physicsBodyProperties objectForKey:@"collisionType"];
+       if(collisionType == nil)
+       {
+           collisionType = @"";
+       }
+       
+       NSString * collisionCategories = [physicsBodyProperties objectForKey:@"collisionCategories"];
+       if(collisionCategories == nil)
+       {
+           collisionCategories = @"";
+       }
+       
+       NSString * collisionMask = [physicsBodyProperties objectForKey:@"collisionMask"];
+       if(collisionMask == nil)
+       {
+           collisionMask = @"";
+       }
+       
+       
+       [self addToStringCache:collisionType isPath:NO];
+       [self addToStringCache:collisionCategories isPath:NO];
+       [self addToStringCache:collisionMask isPath:NO];
+   }
+    
     // Children
     NSArray* children = [node objectForKey:@"children"];
     for (int i = 0; i < [children count]; i++)
@@ -1122,6 +1152,11 @@
         float friction = [[physicsBody objectForKey:@"friction"] floatValue];
         float elasticity = [[physicsBody objectForKey:@"elasticity"] floatValue];
         
+        NSString * collisionType = [physicsBody objectForKey:@"collisionType"];
+        NSString * collisionCategories = [physicsBody objectForKey:@"collisionCategories"];
+        NSString * collisionMask = [physicsBody objectForKey:@"collisionMask"];
+        
+        
         // Write physics body
         [self writeInt:bodyShape withSign:NO];
         [self writeFloat:cornerRadius];
@@ -1159,6 +1194,26 @@
         [self writeFloat:density];
         [self writeFloat:friction];
         [self writeFloat:elasticity];
+        
+        if(collisionType == nil)
+        {
+            collisionType = @"";
+        }
+        
+        if(collisionCategories == nil)
+        {
+            collisionCategories = @"";
+        }
+        
+        if(collisionMask == nil)
+        {
+            collisionMask = @"";
+        }
+        
+        [self writeCachedString:collisionType isPath:NO];
+        [self writeCachedString:collisionCategories isPath:NO];
+        [self writeCachedString:collisionMask isPath:NO];
+        
     }
     else
     {
