@@ -57,11 +57,6 @@
 {
     [super setupBody];
     
- 
-    
-    
-    [scaleFreeNode addChild:jointBody];
-    
     maxHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-long.png"];
     maxHandle.anchorPoint = ccp(0.5f, 0.0f);
     minHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png"];

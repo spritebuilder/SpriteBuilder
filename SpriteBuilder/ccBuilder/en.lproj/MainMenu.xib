@@ -1818,6 +1818,13 @@ CA
                                                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <font key="titleFont" metaFont="system"/>
                                                                     </box>
+                                                                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="03a-2k-gEk">
+                                                                        <rect key="frame" x="0.0" y="438" width="283" height="5"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                                                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                        <font key="titleFont" metaFont="system"/>
+                                                                    </box>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="PQS-eD-oNf" customClass="CCBTextFieldLabel">
                                                                         <rect key="frame" x="7" y="587" width="77" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -2005,6 +2012,72 @@ CA
                                                                             <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="9hf-40-9Yz"/>
                                                                         </connections>
                                                                     </button>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Owy-hj-QDL">
+                                                                        <rect key="frame" x="7" y="412" width="99" height="14"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision Type" id="98R-vX-sVo">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="zE7-N8-hbv">
+                                                                        <rect key="frame" x="8" y="390" width="110" height="14"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision Categories" id="QAP-qK-gTM">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="TnL-rD-5wN">
+                                                                        <rect key="frame" x="8" y="367" width="110" height="14"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision Masks" id="ieq-gx-zOs">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                    <textField verticalHuggingPriority="750" id="RUv-bT-CiV">
+                                                                        <rect key="frame" x="121" y="410" width="153" height="19"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="GTD-VF-88E">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="Yl5-Ed-Dj3"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.collisionType" id="Jyy-TA-raT"/>
+                                                                        </connections>
+                                                                    </textField>
+                                                                    <textField verticalHuggingPriority="750" id="xbX-kJ-93U">
+                                                                        <rect key="frame" x="121" y="388" width="153" height="19"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="g9Y-yx-pgV">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="fuX-VB-iI1"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.collisionCategories" id="mtL-QN-k44"/>
+                                                                        </connections>
+                                                                    </textField>
+                                                                    <textField verticalHuggingPriority="750" id="ump-WE-pX7">
+                                                                        <rect key="frame" x="121" y="365" width="153" height="19"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="DNW-yr-drs">
+                                                                            <font key="font" metaFont="smallSystem"/>
+                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                        <connections>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="3cz-of-l7k"/>
+                                                                            <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.collisionMask" id="lTy-me-zB3"/>
+                                                                        </connections>
+                                                                    </textField>
                                                                 </subviews>
                                                                 <connections>
                                                                     <binding destination="494" name="hidden" keyPath="selectedNode" id="SbN-x8-4tb">

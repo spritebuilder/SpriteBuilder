@@ -53,6 +53,7 @@
 - (void) awakeFromNib
 {
     _mouseDownInHandle = -1;
+    bodyDragging = JointHandleUnknown;
 }
 
 - (void) willChangeSelection
@@ -258,11 +259,15 @@
 - (void)draggingEnded:(id <NSDraggingInfo>)sender
 {
     jointOutletDragging = NO;
+    _mouseMovePos = jointOutletDraggingLocation;
+    [_currentJoint refreshOutletStatus];
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos
 {
     jointOutletDragging = NO;
+    _mouseMovePos = jointOutletDraggingLocation;    
+    [_currentJoint refreshOutletStatus];
 }
 
 
@@ -275,7 +280,7 @@
 -(void)onOutletDown:(NSEvent*)event joint:(CCBPhysicsJoint*)joint outletIdx:(JointHandleType)outletIdx
 {
     _currentJoint = (CCBPhysicsJoint*)joint;
-    [_currentJoint setOutletStatus:outletIdx value:YES];
+
     outletDragged = outletIdx;
     
     
@@ -378,8 +383,6 @@
     NSMutableArray * possibleBodies = [NSMutableArray array];
     for (CCNode * physicsNode in physicsNodes)
     {
-        
-        
         if(physicsNode.nodePhysicsBody.bodyShape == kCCBPhysicsBodyShapePolygon)
         {
             CGPoint testPoint = [physicsNode convertToNodeSpace:point];
@@ -496,9 +499,8 @@
             return YES;
         }
         
-        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         bodyDragging = jointHandleIndex;
-        [joint setJointHandleSelected:bodyDragging];
+
         return YES;
         
     }
@@ -507,6 +509,13 @@
         // Clicked outside handle, pass event down to selections
         return NO;
     }
+}
+
+- (BOOL) mouseMove:(CGPoint)pos event:(NSEvent*)event
+{
+    _mouseMovePos = pos;
+    NSLog(@"Physics Mouse Move");
+    return NO;
 }
 
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event
@@ -564,7 +573,6 @@
     else if(bodyDragging != JointHandleUnknown)
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        [joint setJointHandleSelected:bodyDragging];
         [joint setBodyHandle:pos bodyType:bodyDragging];
         
         return YES;
@@ -630,6 +638,19 @@
     
     
     return NO;
+}
+
+
+-(void)findJointsNodes:(CCNode*)node nodes:(NSMutableArray*)nodes
+{
+    if(node.plugIn.isJoint)
+    {
+        [nodes addObject:node];
+    }
+    
+    for (CCNode * child in node.children) {
+        [self findJointsNodes:child nodes:nodes];
+    }
 }
 
 - (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx
@@ -829,6 +850,12 @@
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         [joint setJointHandleSelected:EntireJoint];
+        
+        JointHandleType type = [joint hitTestJointHandle:_mouseMovePos];
+        if(type != JointHandleUnknown)
+        {
+            [joint setJointHandleSelected:type];
+        }
 
         if(jointOutletDragging)
         {
