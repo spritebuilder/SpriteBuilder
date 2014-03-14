@@ -112,6 +112,7 @@
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
@@ -1153,6 +1154,8 @@
 		80FBACCA183422BD00C4BB69 /* inspector-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning.png"; sourceTree = "<group>"; };
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
+		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
 		92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPivotJoint.h; sourceTree = "<group>"; };
 		92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPivotJoint.m; sourceTree = "<group>"; };
@@ -2752,6 +2755,7 @@
 			children = (
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
+				83F8672F18D1DCBD007441E4 /* Constants */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
 				B7AC69CE17A756950041B8BD /* Property Inspector */,
@@ -2910,6 +2914,15 @@
 				80AD799F1863871200B653B7 /* PVRTTexture.h */,
 			);
 			path = Include;
+			sourceTree = "<group>";
+		};
+		83F8672F18D1DCBD007441E4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				83F8673218D1DCEA007441E4 /* SBErrors.h */,
+				83F8673318D1DCEA007441E4 /* SBErrors.m */,
+			);
+			name = Constants;
 			sourceTree = "<group>";
 		};
 		92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */ = {
@@ -5582,6 +5595,7 @@
 				B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */,
 				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,
+				83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
 			);

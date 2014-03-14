@@ -55,7 +55,7 @@
 	return [_modifiedDatesCache objectForKey:key];
 }
 
-- (void)setModifyCachedDate:(NSDate *)date forKey:(NSString *)key
+- (void)setModifyCachedDate:(id)date forKey:(NSString *)key
 {
 	[_modifiedDatesCache setObject:date forKey:key];
 }
@@ -83,19 +83,12 @@
     // Set format to use for exports
     self.publishFormat = projectSettings.exporter;
 
-
-
     return self;
 }
 
 - (NSDate *)latestModifiedDateForDirectory:(NSString *)dir
 {
-	NSDate* latestDate = [self cachedModifyDateForKey:dir];
-	if (!latestDate)
-	{
-    	latestDate = [CCBFileUtil modificationDateForFile:dir];
-		[self setModifyCachedDate:latestDate forKey:dir];
-	}
+	NSDate* latestDate = [CCBFileUtil modificationDateForFile:dir];
 
     NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
     for (NSString* file in files)
@@ -113,12 +106,7 @@
 			}
             else
             {
-				fileDate = [self cachedModifyDateForKey:absFile];
-				if (!fileDate)
-				{
-                	fileDate = [CCBFileUtil modificationDateForFile:absFile];
-					[self setModifyCachedDate:fileDate forKey:absFile];
-				}
+				fileDate = [CCBFileUtil modificationDateForFile:absFile];
             }
             
             if ([fileDate compare:latestDate] == NSOrderedDescending)
@@ -249,7 +237,7 @@
 	return path;
 }
 
-- (BOOL)publishImageFile:(NSString *)srcFile to:(NSString *)dstFile isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir
+- (BOOL)publishImageForResolutionsWithFile:(NSString *)srcFile to:(NSString *)dstFile isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir
 {
     for (NSString* resolution in publishForResolutions)
     {
@@ -275,16 +263,16 @@
         NSString* ssDirRel = [ResourceManagerUtil relativePathFromAbsolutePath:ssDir];
         NSString* ssName = [ssDir lastPathComponent];
         
-        // Get modified date of sprite sheet src
-        NSDate* srcDate = [self latestModifiedDateForDirectory:ssDir];
-        BOOL isDirty = [projectSettings isDirtyRelPath:ssDirRel];
+		NSDate *srcDate= [self modifiedDateOfSpriteSheetDirectory:ssDir];
+
+		BOOL isDirty = [projectSettings isDirtyRelPath:ssDirRel];
         
         // Make the name for the final sprite sheet
         NSString* ssDstPath = [[[[outDir stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
-        
-        NSDate* ssDstDate = [CCBFileUtil modificationDateForFile:ssDstPath];
-        
-        if (ssDstDate && [ssDstDate isEqualToDate:srcDate] && !isDirty)
+
+		NSDate *ssDstDate= [self modifiedDataOfSpriteSheetFile:ssDstPath];
+
+		if (ssDstDate && [ssDstDate isEqualToDate:srcDate] && !isDirty)
         {
             return YES;
         }
@@ -426,6 +414,45 @@
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish file %@, make sure it is in the resources-auto folder.",srcFileName] isFatal:NO];
         return YES;
     }
+}
+
+- (NSDate *)modifiedDataOfSpriteSheetFile:(NSString *)spriteSheetFile
+{
+	id ssDstDate = [self cachedModifyDateForKey:spriteSheetFile];
+
+	if ([ssDstDate isMemberOfClass:[NSNull class]])
+	{
+		return nil;
+	}
+
+	if (!ssDstDate)
+	{
+		ssDstDate = [CCBFileUtil modificationDateForFile:spriteSheetFile];
+		// Storing NSNull since CCBFileUtil can return nil due to a non existing file
+		// So we don't run into the whole fille IO process again, rather hit the cache and
+		// bend the result here
+		if (ssDstDate == nil)
+		{
+			[self setModifyCachedDate:[NSNull null] forKey:spriteSheetFile];
+		}
+		else
+		{
+			[self setModifyCachedDate:ssDstDate forKey:spriteSheetFile];
+		}
+	}
+
+	return ssDstDate;
+}
+
+- (NSDate *)modifiedDateOfSpriteSheetDirectory:(NSString *)directory
+{
+	NSDate *srcDate = [self cachedModifyDateForKey:directory];
+	if (!srcDate)
+		{
+			srcDate = [self latestModifiedDateForDirectory:directory];
+			[self setModifyCachedDate:srcDate forKey:directory];
+		}
+	return srcDate;
 }
 
 - (BOOL) publishSoundFile:(NSString*) srcPath to:(NSString*) dstPath
@@ -658,7 +685,7 @@
                 if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
                 {
                     // Publish images
-                    [self publishImageFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
+					[self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
                 }
                 else if ([ext isEqualToString:@"wav"])
                 {
@@ -1359,7 +1386,9 @@
 {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-        
+		NSLog(@"[PUBLISH] Start...");
+        NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+
         // Do actual publish
         [self publish_];
         
@@ -1371,7 +1400,9 @@
                 [projectSettings markAsDirtyRelPath:warning.relatedFile];
             }
         }
-        
+
+		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
+
         dispatch_sync(dispatch_get_main_queue(), ^{
             AppDelegate* ad = [AppDelegate appDelegate];
             [ad publisher:self finishedWithWarnings:warnings];
