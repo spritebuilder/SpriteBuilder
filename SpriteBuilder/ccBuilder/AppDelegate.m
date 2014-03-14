@@ -4699,6 +4699,7 @@ static BOOL hideAllToNextSeparator;
 {
     if ([self windowShouldClose:self])
     {
+		[self.projectSettings store];
         [[NSApplication sharedApplication] terminate:self];
     }
 }
