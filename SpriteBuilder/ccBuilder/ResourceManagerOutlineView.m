@@ -216,7 +216,7 @@
     unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
     if(key == NSDeleteCharacter)
     {
-		[self deleteSelectedResourcesWithRightClickedRow:0];
+		[self deleteSelectedResourcesWithRightClickedRow:-1];
         return;
     }
     
