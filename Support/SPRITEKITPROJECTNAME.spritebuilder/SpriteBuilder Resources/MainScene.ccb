@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>UUID</key>
-	<integer>10</integer>
+	<integer>11</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>currentSequenceId</key>
 	<integer>0</integer>
 	<key>docDimensionsType</key>
@@ -71,14 +71,27 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>size</string>
+						<string>contentSize</string>
 						<key>type</key>
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>568</real>
-							<real>320</real>
+							<real>512</real>
+							<real>384</real>
 							<integer>0</integer>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -165,7 +178,7 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>size</string>
+						<string>contentSize</string>
 						<key>type</key>
 						<string>Size</string>
 						<key>value</key>
@@ -173,6 +186,19 @@
 							<real>360</real>
 							<real>16</real>
 							<integer>0</integer>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -194,9 +220,9 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
-							<real>0.40000000596046448</real>
+							<real>0.027450982481241226</real>
+							<real>0.5058823823928833</real>
+							<real>0.95686280727386475</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -259,6 +285,19 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>contentSize</string>
+						<key>type</key>
+						<string>Size</string>
+						<key>value</key>
+						<array>
+							<real>350</real>
+							<real>61</real>
+							<integer>0</integer>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
 						<string>ScaleLock</string>
@@ -269,6 +308,14 @@
 							<false/>
 							<integer>0</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>opacity</string>
+						<key>type</key>
+						<string>Float</string>
+						<key>value</key>
+						<real>0.85000002384185791</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -304,9 +351,9 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>0.0</real>
-							<real>0.50196081399917603</real>
+							<real>0.84705889225006104</real>
+							<real>0.066666670143604279</real>
+							<real>0.26666668057441711</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -369,6 +416,19 @@
 					</dict>
 					<dict>
 						<key>name</key>
+						<string>contentSize</string>
+						<key>type</key>
+						<string>Size</string>
+						<key>value</key>
+						<array>
+							<real>40</real>
+							<real>34</real>
+							<integer>0</integer>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
 						<string>ScaleLock</string>
@@ -387,6 +447,14 @@
 						<string>Degrees</string>
 						<key>value</key>
 						<real>311</real>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>opacity</string>
+						<key>type</key>
+						<string>Float</string>
+						<key>value</key>
+						<real>0.69999998807907104</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -422,9 +490,9 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>0.80000001192092896</real>
-							<real>0.40000000596046448</real>
 							<real>1</real>
+							<real>0.0</real>
+							<real>0.0</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -445,8 +513,6 @@
 						<integer>0</integer>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -477,6 +543,19 @@
 					<real>0.0</real>
 					<real>0.0</real>
 					<integer>0</integer>
+					<integer>0</integer>
+					<integer>0</integer>
+				</array>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>contentSize</string>
+				<key>type</key>
+				<string>Size</string>
+				<key>value</key>
+				<array>
+					<real>0.0</real>
+					<real>0.0</real>
 					<integer>0</integer>
 					<integer>0</integer>
 				</array>
