@@ -514,7 +514,6 @@
 - (BOOL) mouseMove:(CGPoint)pos event:(NSEvent*)event
 {
     _mouseMovePos = pos;
-    NSLog(@"Physics Mouse Move");
     return NO;
 }
 
