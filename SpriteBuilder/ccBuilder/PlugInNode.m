@@ -283,4 +283,9 @@
 	SBLogSelf();
 }
 
+-(NSString*) description
+{
+	return [NSString stringWithFormat:@"%@ name=%@ class=%@ editorClass=%@", [super description], displayName, nodeClassName, nodeEditorClassName];
+}
+
 @end

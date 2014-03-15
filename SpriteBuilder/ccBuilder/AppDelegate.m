@@ -111,6 +111,9 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import "PlugInNodeCollectionView.h"
+#import "SBErrors.h"
+
+static const int CCNODE_INDEX_LAST = -1;
 
 @interface AppDelegate()
 - (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
@@ -403,6 +406,17 @@ void ApplyCustomNodeVisitSwizzle()
         [itemViewTabs setSelectedItem:[itemViewTabs.items objectAtIndex:0]];
         [itemTabView selectTabViewItemAtIndex:0];
     }
+	
+	// physics tab forcibly disabled for Sprite Kit projects as there is no pyhsics editing support (yet)
+	if (projectSettings.engine == CCBTargetEngineSpriteKit)
+	{
+		if (itemViewTabs.items.count > 2)
+		{
+			SMTabBarItem* item = [itemViewTabs.items objectAtIndex:2];
+			item.enabled = NO;
+			//NSLog(@"Sprite Kit disabled tab item: %@", item);
+		}
+	}
 }
 
 - (void) setupProjectTilelessEditor
@@ -1725,15 +1739,21 @@ static BOOL hideAllToNextSeparator;
     return NULL;
 }
 
-- (NSTabViewItem*) tabViewItemFromPath:(NSString*)path
+// A path can be a folder not only a file. Set includeViewWithinFolderPath to YES to return
+// the first view that is within a given folder path
+- (NSTabViewItem *)tabViewItemFromPath:(NSString *)path includeViewWithinFolderPath:(BOOL)includeViewWithinFolderPath
 {
-    NSArray* items = [tabView tabViewItems];
-    for (int i = 0; i < [items count]; i++)
-    {
-        CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if ([doc.fileName isEqualToString:path]) return [items objectAtIndex:i];
-    }
-    return NULL;
+	NSArray *items = [tabView tabViewItems];
+	for (NSUInteger i = 0; i < [items count]; i++)
+	{
+		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
+		if ([doc.fileName isEqualToString:path]
+			|| (includeViewWithinFolderPath && [doc isWithinPath:path]))
+		{
+			return [items objectAtIndex:i];
+		}
+	}
+	return NULL;
 }
 
 - (void) checkForTooManyDirectoriesInCurrentDoc
@@ -2223,84 +2243,113 @@ static BOOL hideAllToNextSeparator;
 
 #pragma mark Menu options
 
-- (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode*)parent atIndex:(int)index
+- (BOOL) addCCObject:(CCNode *)child toParent:(CCNode*)parent atIndex:(int)index
 {
-    if (!obj || !parent) return NO;
-    
-    NodeInfo* nodeInfoParent = parent.userObject;
-    NodeInfo* nodeInfo = obj.userObject;
-    
-    // Check that the parent supports children
-    if (!nodeInfoParent.plugIn.canHaveChildren)
-    {
-        //[self modalDialogTitle:@"Failed to add item" message:[NSString stringWithFormat: @"You cannot add children to a %@",nodeInfoParent.plugIn.nodeClassName]];
-        self.errorDescription = [NSString stringWithFormat: @"You cannot add children to a %@",nodeInfoParent.plugIn.nodeClassName];
-        return NO;
-    }
-    
-    // Check if the added node requires a specific type of parent
-    NSString* requireParent = nodeInfo.plugIn.requireParentClass;
-    if (requireParent && ![requireParent isEqualToString: nodeInfoParent.plugIn.nodeClassName])
-    {
-        //[self modalDialogTitle:@"Failed to add item" message:[NSString stringWithFormat: @"A %@ must be added to a %@",nodeInfo.plugIn.nodeClassName, requireParent]];
-        self.errorDescription = [NSString stringWithFormat: @"A %@ must be added to a %@",nodeInfo.plugIn.nodeClassName, requireParent];
-        return NO;
-    }
-    
-    // Check if the parent require a specific type of children
-    NSArray* requireChild = nodeInfoParent.plugIn.requireChildClass;
-    if (requireChild && [requireChild indexOfObject:nodeInfo.plugIn.nodeClassName] == NSNotFound)
-    {
-        //[self modalDialogTitle:@"Failed to add item" message:[NSString stringWithFormat: @"You cannot add a %@ to a %@",nodeInfo.plugIn.nodeClassName, nodeInfoParent.plugIn.nodeClassName]];
-        self.errorDescription = [NSString stringWithFormat: @"You cannot add a %@ to a %@",nodeInfo.plugIn.nodeClassName, nodeInfoParent.plugIn.nodeClassName];
-        return NO;
-    }
+	if (!child || !parent)
+	{
+		return NO;
+	}
+
+	NSError *error;
+	if (![self canChildBeAddedToParent:child parent:parent error:&error])
+	{
+		self.errorDescription = error.localizedDescription;
+		return NO;
+	}
     
     [self saveUndoState];
     
     // Add object and change zOrder of objects after this child
-    if (index == -1)
+    if (index == CCNODE_INDEX_LAST)
     {
         // Add at end of array
-        [parent addChild:obj z:[parent.children count]];
-        
+		[parent addChild:child z:[parent.children count]];
     }
     else
     {
         // Update zValues of children after this node
         NSArray* children = parent.children;
-        for (int i = index; i < [children count]; i++)
+        for (NSUInteger i = (NSUInteger)index; i < [children count]; i++)
         {
-            CCNode* child = [children objectAtIndex:i];
-            child.zOrder += 1;
+            CCNode *aChild = [children objectAtIndex:i];
+            aChild.zOrder += 1;
         }
-        [parent addChild:obj z:index];
+		[parent addChild:child z:index];
         [parent sortAllChildren];
     }
     
     if(parent.hidden)
     {
-        obj.hidden = YES;
+        child.hidden = YES;
     }
     
     
     //Set an unset UUID
-    if(obj.UUID == 0x0)
+    if(child.UUID == 0x0)
     {
-        obj.UUID = currentDocument.UUID;
+
+		child.UUID = currentDocument.UUID;
         currentDocument.UUID = currentDocument.UUID + 1;
     }
     
     [outlineHierarchy reloadData];
-    [self setSelectedNodes: [NSArray arrayWithObject: obj]];
+    [self setSelectedNodes:[NSArray arrayWithObject:child]];
     [self updateInspectorFromSelection];
     
     return YES;
 }
 
+- (BOOL)canChildBeAddedToParent:(CCNode *)child parent:(CCNode *)parent error:(NSError **)error
+{
+	NodeInfo *parentInfo = parent.userObject;
+    NodeInfo *childInfo = child.userObject;
+
+	if (!parentInfo.plugIn.canHaveChildren)
+	{
+		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add children to a %@", parentInfo.plugIn.nodeClassName] };
+		*error = [NSError errorWithDomain:SBErrorDomain code:SBNodeDoesNotSupportChildrenError userInfo:errorDictionary];
+		return NO;
+	}
+
+	if ([self doesToBeAddedChildRequireSpecificParent:child parent:parent])
+	{
+		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A %@ must be added to a %@", childInfo.plugIn.nodeClassName, childInfo.plugIn.requireParentClass] };
+		*error = [NSError errorWithDomain:SBErrorDomain code:SBChildRequiresSpecificParentError userInfo:errorDictionary];
+		return NO;
+	}
+
+	if ([self doesParentPermitChildToBeAdded:parent child:child])
+	{
+		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add a %@ to a %@", childInfo.plugIn.nodeClassName, parentInfo.plugIn.nodeClassName] };
+		*error = [NSError errorWithDomain:SBErrorDomain code:SBParentDoesNotPermitSpecificChildrenError userInfo:errorDictionary];
+		return NO;
+	}
+	return YES;
+}
+
+- (BOOL)doesParentPermitChildToBeAdded:(CCNode *)parent child:(CCNode *)child
+{
+	NodeInfo *parentInfo = parent.userObject;
+    NodeInfo *childInfo = child.userObject;
+
+	NSArray*requiredChildren = parentInfo.plugIn.requireChildClass;
+	return (requiredChildren
+			&& [requiredChildren indexOfObject:childInfo.plugIn.nodeClassName] == NSNotFound);
+}
+
+- (BOOL)doesToBeAddedChildRequireSpecificParent:(CCNode *)toBeAddedChild parent:(CCNode *)parent
+{
+	NodeInfo* nodeInfoParent = parent.userObject;
+    NodeInfo* nodeInfo = toBeAddedChild.userObject;
+
+	NSString* requireParentClass = nodeInfo.plugIn.requireParentClass;
+	return (requireParentClass
+			&& ![requireParentClass isEqualToString: nodeInfoParent.plugIn.nodeClassName]);
+}
+
 - (BOOL) addCCObject:(CCNode *)obj toParent:(CCNode *)parent
 {
-    return [self addCCObject:obj toParent:parent atIndex:-1];
+    return [self addCCObject:obj toParent:parent atIndex:CCNODE_INDEX_LAST];
 }
 
 - (BOOL) addCCObject:(CCNode*)obj asChild:(BOOL)asChild
@@ -2711,9 +2760,12 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) delete:(id) sender
 {
     // First attempt to delete selected keyframes
-    if ([sequenceHandler deleteSelectedKeyframesForCurrentSequence]) return;
-    
-    // Then delete the selected node
+	if ([sequenceHandler deleteSelectedKeyframesForCurrentSequence])
+	{
+		return;
+	}
+
+	// Then delete the selected node
     NSArray* nodesToDelete = [NSArray arrayWithArray:self.selectedNodes];
     for (CCNode* node in nodesToDelete)
     {
@@ -3275,7 +3327,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) removedDocumentWithPath:(NSString*)path
 {
-    NSTabViewItem* item = [self tabViewItemFromPath:path];
+    NSTabViewItem* item = [self tabViewItemFromPath:path includeViewWithinFolderPath:YES];
     if (item)
     {
         [tabView removeTabViewItem:item];
@@ -3284,7 +3336,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) renamedDocumentPathFrom:(NSString*)oldPath to:(NSString*)newPath
 {
-    NSTabViewItem* item = [self tabViewItemFromPath:oldPath];
+    NSTabViewItem* item = [self tabViewItemFromPath:oldPath includeViewWithinFolderPath:NO];
     CCBDocument* doc = [item identifier];
     doc.fileName = newPath;
     [item setLabel:doc.formattedName];
@@ -4274,11 +4326,10 @@ static BOOL hideAllToNextSeparator;
 {
     int selectedRow = [sender tag];
     
-    if (selectedRow >= 0 && projectSettings)
+    if (projectSettings)
     {
         ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
-        
-        [resManagerOutlineView deleteSelectedResource];
+		[resManagerOutlineView deleteSelectedResourcesWithRightClickedRow:selectedRow];
     }
 }
 

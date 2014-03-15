@@ -32,6 +32,7 @@
 {
 #if !CCB_BUILDING_COMMANDLINE
     NSMutableDictionary* plugInsNode;
+    NSMutableDictionary* plugInsAbstractNode;
     NSMutableArray* plugInsNodeNames;
     NSMutableArray* plugInsNodeNamesCanBeRoot;
 #endif
