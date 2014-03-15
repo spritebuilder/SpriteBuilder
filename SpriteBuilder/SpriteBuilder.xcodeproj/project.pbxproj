@@ -722,6 +722,13 @@
 			remoteGlobalIDString = 926D13D718B57B9500582959;
 			remoteInfo = CCPhysicsPinJoint;
 		};
+		92A805C418D3CFAC004508E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92B7900118C808B7007DF895;
+			remoteInfo = CCPhysicsSpringJoint;
+		};
 		B729AC6B181F0D1400BA0D9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -4107,6 +4114,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				92A805C518D3CFAC004508E3 /* PBXTargetDependency */,
 				926D13E618B57C4200582959 /* PBXTargetDependency */,
 				92154AE218A5567400BD215C /* PBXTargetDependency */,
 				DC680338189157B00060BE39 /* PBXTargetDependency */,
@@ -5669,6 +5677,11 @@
 			isa = PBXTargetDependency;
 			target = 926D13D718B57B9500582959 /* CCPhysicsPinJoint */;
 			targetProxy = 926D13E518B57C4200582959 /* PBXContainerItemProxy */;
+		};
+		92A805C518D3CFAC004508E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */;
+			targetProxy = 92A805C418D3CFAC004508E3 /* PBXContainerItemProxy */;
 		};
 		B729AC6C181F0D1400BA0D9C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

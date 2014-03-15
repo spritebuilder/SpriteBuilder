@@ -154,6 +154,22 @@
     [ser setObject:[NSNumber numberWithFloat:_friction] forKey:@"friction"];
     [ser setObject:[NSNumber numberWithFloat:_elasticity] forKey:@"elasticity"];
     
+    if(_collisionType == nil)
+    {
+        _collisionType = @"";
+    }
+    
+    if(_collisionCategories == nil)
+    {
+        _collisionCategories = @"";
+    }
+    
+    if(_collisionMask == nil)
+    {
+        _collisionMask = @"";
+    }
+
+    
     [ser setObject:_collisionType forKey:@"collisionType"];
     [ser setObject:_collisionCategories forKey:@"collisionCategories"];
     [ser setObject:_collisionMask forKey:@"collisionMask"];
