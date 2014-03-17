@@ -9,6 +9,7 @@
 #import "CCBPluginSKColorSpriteNode.h"
 
 @implementation CCBPluginSKColorSpriteNode
+SKNODE_COMPATIBILITY_CODE
 
 /*
 -(void) setScale:(float)scale
