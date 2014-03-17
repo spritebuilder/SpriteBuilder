@@ -297,7 +297,18 @@ static SequencerHandler* sharedSequencerHandler;
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     
     if ([[SceneGraph instance] rootNode] == NULL) return 0;
-    if (item == nil) return 4;
+	
+	if (item == nil)
+	{
+		const NSUInteger itemCount = 4;
+		
+		// hide "Joints" item in Sprite Kit projects (assumes "Joints" is the last item in the outline view)
+		if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
+		{
+			return (itemCount - 1);
+		}
+		return itemCount;
+	}
     
     if([item isKindOfClass:[SequencerJoints class]])
     {
