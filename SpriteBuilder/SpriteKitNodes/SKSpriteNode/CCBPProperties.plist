@@ -97,6 +97,17 @@
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>
-	<array/>
+	<array>
+		<dict>
+			<key>readOnly</key>
+			<true/>
+			<key>type</key>
+			<string>Size</string>
+			<key>name</key>
+			<string>contentSize</string>
+			<key>displayName</key>
+			<string>Content size</string>
+		</dict>
+	</array>
 </dict>
 </plist>
