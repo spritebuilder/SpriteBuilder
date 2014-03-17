@@ -2632,6 +2632,16 @@ static BOOL hideAllToNextSeparator;
     [cb setData:clipData forType:@"com.cocosbuilder.node"];
 }
 
+-(void)updateUUIDs:(CCNode*)node
+{
+    node.UUID = currentDocument.UUID;
+    currentDocument.UUID = currentDocument.UUID + 1;
+    
+    for (CCNode * child in node.children) {
+        [self updateUUIDs:child];
+    }
+}
+
 - (void) doPasteAsChild:(BOOL)asChild
 {
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
@@ -2647,7 +2657,9 @@ static BOOL hideAllToNextSeparator;
         else parentSize = self.selectedNode.parent.contentSize;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
-        clipNode.UUID = 0x0;
+        [self updateUUIDs:clipNode];
+        
+        
         [self addCCObject:clipNode asChild:asChild];
         
         //We might have copy/cut/pasted and body. Fix it up.
