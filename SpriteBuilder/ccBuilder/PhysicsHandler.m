@@ -652,18 +652,22 @@
     }
 }
 
-- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx pos:(CGPoint)worldPos
 {
     if(idx == BodyOutletA)
     {
         joint.bodyA = body;
+    
+        [joint setBodyHandle:worldPos bodyType:BodyAnchorA];
         [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
     }
     else
     {
         joint.bodyB = body;
+        [joint setBodyHandle:worldPos bodyType:BodyAnchorB];
         [[AppDelegate appDelegate] refreshProperty:@"bodyB"];
     }
+    
     [joint refreshOutletStatus];
 }
 

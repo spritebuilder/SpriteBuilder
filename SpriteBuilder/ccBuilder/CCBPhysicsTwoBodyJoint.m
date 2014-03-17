@@ -205,16 +205,6 @@ static const float kDefaultLength = 58.0f;
 
 
 
--(void)setBodyB:(CCNode *)aBodyB
-{
-    bool different = bodyB && bodyB.UUID != aBodyB.UUID;
-   
-    [super setBodyB:aBodyB];
-    
-    if(different)
-        [self setAnchorFromBodyB];
-}
-
 -(void)setAnchorB:(CGPoint)lAnchorB
 {
     anchorB = lAnchorB;

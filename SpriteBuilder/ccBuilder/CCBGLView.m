@@ -158,7 +158,7 @@
             return lJoint.UUID == uuid;
         }];
         
-        [appDelegate.physicsHandler assignBodyToJoint:body toJoint:joint withIdx:type];
+        [appDelegate.physicsHandler assignBodyToJoint:body toJoint:joint withIdx:type pos:point];
         
     }
 

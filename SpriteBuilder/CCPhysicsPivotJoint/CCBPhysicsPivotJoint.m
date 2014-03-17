@@ -101,12 +101,6 @@
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
-    bool change = NO;
-    if(bodyA && bodyA.UUID != aBodyA.UUID)
-    {
-        change = YES;
-    }
-
     
     [super setBodyA:aBodyA];
     
@@ -115,10 +109,6 @@
         self.anchorA = CGPointZero;
         [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
         return;
-    }
-    else if(change)
-    {
-        [self setAnchorFromBodyA];
     }
     
     [self setPositionFromAnchor];

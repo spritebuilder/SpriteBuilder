@@ -62,7 +62,7 @@
 - (void) updatePhysicsEditor:(CCNode*) editorView;
 
 - (CCNode*)findPhysicsBodyAtPoint:(CGPoint)point;
-- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx;
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx pos:(CGPoint)worldPos;
 
 - (BOOL) mouseDown:(CGPoint)pos event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pos event:(NSEvent*)event;
