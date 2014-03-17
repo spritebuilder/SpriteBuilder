@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+
+<!-- declare the namespace for using XInclude so we can include the standard suite -->
+<dictionary xmlns:xi="http://www.w3.org/2003/XInclude">
+    
+    <!-- use XInclude to include the standard suite -->
+	<xi:include href="file:///System/Library/ScriptingDefinitions/CocoaStandard.sdef" xpointer="xpointer(/dictionary/suite)"/>
+    
+    <!-- specific suite(s) for the application follow... -->
+    <suite name="SpriteBuilder Commads" code="SBcm" description="SpriteBuilder commands">
+        
+		<command name="publish" code="SVrbSimp" description="publish currently open project">
+			<cocoa class="SpriteBuilderCommand"/>
+			<result type="boolean" description="always returns YES"/>
+		</command>
+		
+	</suite>
+    
+</dictionary>

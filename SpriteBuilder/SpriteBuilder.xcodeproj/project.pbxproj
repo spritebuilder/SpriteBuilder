@@ -345,6 +345,10 @@
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
+		D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */; };
+		D2E0168518D783C900927430 /* AppleScriptKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E0168418D783C900927430 /* AppleScriptKit.framework */; };
+		D2E0168A18D789E700927430 /* SpriteBuilder.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D2E0168618D783F800927430 /* SpriteBuilder.sdef */; };
+		D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D2E0168618D783F800927430 /* SpriteBuilder.sdef */; };
 		DC05E77B18D0ACCB00592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC05E78818D0ACE000592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC05E79118D0AD7800592A1E /* CCBPluginSBButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05E76918D0A9BD00592A1E /* CCBPluginSBButtonNode.m */; };
@@ -1463,6 +1467,10 @@
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
+		D2E0167518D782CC00927430 /* SpriteBuilderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBuilderCommand.h; sourceTree = "<group>"; };
+		D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteBuilderCommand.m; sourceTree = "<group>"; };
+		D2E0168418D783C900927430 /* AppleScriptKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptKit.framework; path = System/Library/Frameworks/AppleScriptKit.framework; sourceTree = SDKROOT; };
+		D2E0168618D783F800927430 /* SpriteBuilder.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SpriteBuilder.sdef; sourceTree = SOURCE_ROOT; };
 		DC05E76818D0A9BD00592A1E /* CCBPluginSBButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSBButtonNode.h; sourceTree = "<group>"; };
 		DC05E76918D0A9BD00592A1E /* CCBPluginSBButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSBButtonNode.m; sourceTree = "<group>"; };
 		DC05E76A18D0A9BD00592A1E /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
@@ -2199,6 +2207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2E0168518D783C900927430 /* AppleScriptKit.framework in Frameworks */,
 				E398C02314FB81A30078E771 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2719,6 +2728,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D2E0168418D783C900927430 /* AppleScriptKit.framework */,
 				DC68033A189168390060BE39 /* SpriteKit.framework */,
 				B72D1DEA186393AE0091252F /* HockeySDK.framework */,
 				B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */,
@@ -2762,6 +2772,7 @@
 			children = (
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
+				D2E0167218D782B500927430 /* SpriteBuilderCommands */,
 				83F8672F18D1DCBD007441E4 /* Constants */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
@@ -2793,6 +2804,7 @@
 		7789ABC9133AA82000CEFCC7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D2E0168618D783F800927430 /* SpriteBuilder.sdef */,
 				7789ABCB133AA82000CEFCC7 /* InfoPlist.strings */,
 				7789ABCE133AA82000CEFCC7 /* SpriteBuilder-Prefix.pch */,
 				7789ABCF133AA82000CEFCC7 /* main.m */,
@@ -3335,6 +3347,15 @@
 				B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */,
 			);
 			name = "About Box";
+			sourceTree = "<group>";
+		};
+		D2E0167218D782B500927430 /* SpriteBuilderCommands */ = {
+			isa = PBXGroup;
+			children = (
+				D2E0167518D782CC00927430 /* SpriteBuilderCommand.h */,
+				D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */,
+			);
+			name = SpriteBuilderCommands;
 			sourceTree = "<group>";
 		};
 		DC05E76718D0A9BD00592A1E /* SBButtonNode */ = {
@@ -4857,6 +4878,7 @@
 				77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */,
 				B75CB46618468FA70036259F /* seq-btn-loop@2x.png in Resources */,
 				776C68911388107400153214 /* missing-font.fnt in Resources */,
+				D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */,
 				B71706D1184ECD660081720A /* select-scale@2x.png in Resources */,
 				776C68921388107400153214 /* missing-font.png in Resources */,
 				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
@@ -5335,6 +5357,7 @@
 				92B792CC18C92C60007DF895 /* Icon.png in Resources */,
 				92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */,
 				92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
+				D2E0168A18D789E700927430 /* SpriteBuilder.sdef in Resources */,
 				929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5559,6 +5582,7 @@
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
+				D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */,
 				E3D6BA2316C46E41006AFE0A /* SequencerCallbackChannel.m in Sources */,
 				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
 				E3D6BA2616C46E91006AFE0A /* SequencerChannel.m in Sources */,
