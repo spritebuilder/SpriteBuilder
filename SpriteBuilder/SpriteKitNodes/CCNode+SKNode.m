@@ -9,6 +9,7 @@
 #import "CCNode+SKNode.h"
 #import "CCNodeColor.h"
 #import "CCDirector.h"
+#import "CCNode_Private.h"
 
 @implementation CCNode (SKNode)
 
@@ -114,14 +115,16 @@
 -(CGPoint) positionRelativeToParent:(CGPoint)position
 {
 	CGPoint newPosition = position;
+	CGSize parentSizeInPoints = [_parent convertContentSizeToPoints:_parent.contentSize type:_parent.contentSizeType];
+	CGPoint parentAnchorInPoints = CGPointMake(parentSizeInPoints.width * _parent.anchorPoint.x, parentSizeInPoints.height * _parent.anchorPoint.y);
 	
 	switch (self.positionType.xUnit)
 	{
 		case CCPositionUnitPoints:
-			newPosition.x += _parent.anchorPointInPoints.x;
+			newPosition.x += parentAnchorInPoints.x;
 			break;
 		case CCPositionUnitUIPoints:
-			newPosition.x += _parent.anchorPointInPoints.x * [CCDirector sharedDirector].UIScaleFactor;
+			newPosition.x += parentAnchorInPoints.x * [CCDirector sharedDirector].UIScaleFactor;
 			break;
 		case CCPositionUnitNormalized:
 			// defined as "% of parent container" so no adjustment needed
@@ -134,10 +137,10 @@
 	switch (self.positionType.yUnit)
 	{
 		case CCPositionUnitPoints:
-			newPosition.y += _parent.anchorPointInPoints.y;
+			newPosition.y += parentAnchorInPoints.y;
 			break;
 		case CCPositionUnitUIPoints:
-			newPosition.y += _parent.anchorPointInPoints.y * [CCDirector sharedDirector].UIScaleFactor;
+			newPosition.y += parentAnchorInPoints.y * [CCDirector sharedDirector].UIScaleFactor;
 			break;
 		case CCPositionUnitNormalized:
 			// defined as "% of parent container" so no adjustment needed
@@ -147,7 +150,7 @@
 			break;
 	}
 
-	//NSLog(@"pos: %@  converted: %@", NSStringFromPoint(position), NSStringFromPoint(newPosition));
+	//NSLog(@"'%@' pos: %@ new: %@ anch: %@", self.name, NSStringFromPoint(position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
 	return newPosition;
 }
 
