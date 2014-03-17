@@ -114,6 +114,11 @@
 
 -(CGPoint) positionRelativeToParent:(CGPoint)position
 {
+	if (_parent == nil)
+	{
+		return position;
+	}
+	
 	CGPoint newPosition = position;
 	CGSize parentSizeInPoints = [_parent convertContentSizeToPoints:_parent.contentSize type:_parent.contentSizeType];
 	CGPoint parentAnchorInPoints = CGPointMake(parentSizeInPoints.width * _parent.anchorPoint.x, parentSizeInPoints.height * _parent.anchorPoint.y);
@@ -150,7 +155,8 @@
 			break;
 	}
 
-	//NSLog(@"'%@' pos: %@ new: %@ anch: %@", self.name, NSStringFromPoint(position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
+	if ([self.name isEqualToString:@"underline"])
+		NSLog(@"'%@' pos: %@ (was: %@) new: %@ p-anch: %@", self.name, NSStringFromPoint(position), NSStringFromPoint(self.position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
 	return newPosition;
 }
 
