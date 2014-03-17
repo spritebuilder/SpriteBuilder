@@ -8,6 +8,7 @@
 
 #import "CCNode+SKNode.h"
 #import "CCNodeColor.h"
+#import "CCDirector.h"
 
 @implementation CCNode (SKNode)
 
@@ -112,9 +113,43 @@
 
 -(CGPoint) positionRelativeToParent:(CGPoint)position
 {
-	CGPoint parentAP = _parent.anchorPoint;
-	CGSize parentCS = _parent.contentSize;
-	return CGPointMake(parentCS.width * parentAP.x + position.x, parentCS.height * parentAP.y + position.y);
+	CGPoint newPosition = position;
+	CGSize parentSize = _parent.contentSize;
+	
+	switch (self.positionType.xUnit)
+	{
+		case CCPositionUnitPoints:
+			newPosition.x += _parent.anchorPointInPoints.x;
+			break;
+		case CCPositionUnitUIPoints:
+			newPosition.x += _parent.anchorPointInPoints.x * [CCDirector sharedDirector].UIScaleFactor;
+			break;
+		case CCPositionUnitNormalized:
+			// defined as "% of parent container" so no adjustment needed
+			break;
+			
+		default:
+			break;
+	}
+
+	switch (self.positionType.yUnit)
+	{
+		case CCPositionUnitPoints:
+			newPosition.y += _parent.anchorPointInPoints.y;
+			break;
+		case CCPositionUnitUIPoints:
+			newPosition.y += _parent.anchorPointInPoints.y * [CCDirector sharedDirector].UIScaleFactor;
+			break;
+		case CCPositionUnitNormalized:
+			// defined as "% of parent container" so no adjustment needed
+			break;
+			
+		default:
+			break;
+	}
+
+	//NSLog(@"pos: %@  converted: %@", NSStringFromPoint(position), NSStringFromPoint(newPosition));
+	return newPosition;
 }
 
 @end

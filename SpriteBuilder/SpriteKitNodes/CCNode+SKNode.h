@@ -50,6 +50,7 @@
 -(void) setPosition:(CGPoint)position { \
 	_positionAccordingToCocos = position; \
 	[super setPosition:[self positionRelativeToParent:_positionAccordingToCocos]]; \
+	_isTransformDirty = _isInverseDirty = YES; \
 } \
 -(CGPoint) position { \
 	return _positionAccordingToCocos; \

@@ -122,7 +122,7 @@
         [selection setBaseValue:baseValue forProperty:propertyName];
     }
     
-    [PositionPropertySetter setPositionType:positionType forNode:selection prop:propertyName];
+    [PositionPropertySetter setPositionType:positionType oldPositionType:oldPositionType forNode:selection prop:propertyName];
     [self refresh];
     
     [self updateAffectedProperties];
