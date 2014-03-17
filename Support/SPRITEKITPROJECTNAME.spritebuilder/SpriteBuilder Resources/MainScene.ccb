@@ -408,8 +408,6 @@
 								<integer>0</integer>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -428,7 +426,7 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string>SB label</string>
+						<string>SB labels</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -530,6 +528,8 @@
 						<integer>0</integer>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
