@@ -114,7 +114,6 @@
 -(CGPoint) positionRelativeToParent:(CGPoint)position
 {
 	CGPoint newPosition = position;
-	CGSize parentSize = _parent.contentSize;
 	
 	switch (self.positionType.xUnit)
 	{
@@ -150,6 +149,22 @@
 
 	//NSLog(@"pos: %@  converted: %@", NSStringFromPoint(position), NSStringFromPoint(newPosition));
 	return newPosition;
+}
+
+#pragma mark z Position
+
+@dynamic zPosition;
+-(void) setZPosition:(CGFloat)z
+{
+	// assign to vertexZ so we can keep the floating point aspect (SK zPosition is a CGFloat)
+	self.vertexZ = z;
+	// apply z to zOrder so that draw order inside SB is updated
+	self.zOrder = (NSInteger)z;
+}
+
+-(CGFloat) zPosition
+{
+	return (CGFloat)self.vertexZ;
 }
 
 @end

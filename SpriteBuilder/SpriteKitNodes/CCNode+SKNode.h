@@ -16,6 +16,7 @@
 @property CGFloat xScale;
 @property CGFloat yScale;
 @property CGFloat zRotation;
+@property CGFloat zPosition;
 @property BOOL hidden;
 
 // SKSpriteNode
