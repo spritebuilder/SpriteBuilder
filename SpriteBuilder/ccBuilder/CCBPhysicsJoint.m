@@ -262,7 +262,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     }
 
     
-    return JointHandleUnknown;
+    return [self hitTestWithWorldPos:worldPos] ? EntireJoint : JointHandleUnknown;
 }
 
 #pragma mark -

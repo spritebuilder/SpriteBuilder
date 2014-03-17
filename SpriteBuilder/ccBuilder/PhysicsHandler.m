@@ -491,7 +491,19 @@
         
         return YES;
     }
-    if(jointHandleIndex != JointHandleUnknown)
+    else if(jointHandleIndex == EntireJoint)
+    {
+        //We've touched down in the centre of the joint. Do we allow it to translate?
+        
+        //If either of the outlets aren't filled out
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        if(joint.bodyA == nil || joint.bodyB == nil)
+            return NO;
+        
+        return YES;
+    
+    }
+    else if(jointHandleIndex != JointHandleUnknown)
     {
         if(jointHandleIndex == BodyOutletA || jointHandleIndex == BodyOutletB)
         {
@@ -506,7 +518,7 @@
     }
     else
     {
-        // Clicked outside handle, pass event down to selections
+               // Clicked outside handle, pass event down to selections
         return NO;
     }
 }
@@ -573,6 +585,9 @@
     {
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         [joint setBodyHandle:pos bodyType:bodyDragging];
+        
+        if([CocosScene cocosScene].currentTool != kCCBToolTranslate)
+            [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
         
         return YES;
     }
@@ -844,6 +859,7 @@
     }
 }
 
+
 - (void) updatePhysicsEditor:(CCNode*) editorView
 {
    
@@ -855,11 +871,19 @@
         [joint setJointHandleSelected:EntireJoint];
         
         JointHandleType type = [joint hitTestJointHandle:_mouseMovePos];
-        if(type != JointHandleUnknown)
+        if(type != JointHandleUnknown && type != EntireJoint)
         {
             [joint setJointHandleSelected:type];
-        }
 
+            if([CocosScene cocosScene].currentTool != kCCBToolTranslate)
+                [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
+        }
+        else
+        {
+            if([CocosScene cocosScene].currentTool != kCCBToolSelection)
+                [[CocosScene cocosScene] setCurrentTool: kCCBToolSelection];
+        }
+        
         if(jointOutletDragging)
         {
             CCNode * body = [self findPhysicsBodyAtPoint:jointOutletDraggingLocation];
