@@ -27,7 +27,11 @@
                             <menuItem isSeparatorItem="YES" id="236">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Preferences…" keyEquivalent="," id="129"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="129">
+                                <connections>
+                                    <action selector="openPreferences:" target="494" id="lLW-VZ-Rp3"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="2091"/>
                             <menuItem title="Reset SpriteBuilder..." id="2092">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -2051,8 +2055,8 @@ CA
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                         <connections>
-                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="Yl5-Ed-Dj3"/>
                                                                             <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.collisionType" id="Jyy-TA-raT"/>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="Yl5-Ed-Dj3"/>
                                                                         </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="xbX-kJ-93U">
@@ -2064,8 +2068,8 @@ CA
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                         <connections>
-                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="fuX-VB-iI1"/>
                                                                             <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.collisionCategories" id="mtL-QN-k44"/>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="fuX-VB-iI1"/>
                                                                         </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="ump-WE-pX7">
@@ -2077,8 +2081,8 @@ CA
                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                         <connections>
-                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="3cz-of-l7k"/>
                                                                             <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.collisionMask" id="lTy-me-zB3"/>
+                                                                            <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="3cz-of-l7k"/>
                                                                         </connections>
                                                                     </textField>
                                                                 </subviews>
@@ -2090,10 +2094,10 @@ CA
                                                                     </binding>
                                                                     <binding destination="494" name="hidden2" keyPath="self.selectedNodeCanHavePhysics" previousBinding="SbN-x8-4tb" id="DrW-pi-MAh">
                                                                         <dictionary key="options">
-                                                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                                            <integer key="NSNullPlaceholder" value="-1"/>
                                                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                         </dictionary>
                                                                     </binding>

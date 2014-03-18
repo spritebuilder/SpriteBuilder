@@ -112,11 +112,16 @@
 #import <objc/message.h>
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
+#import "PreferencesController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
 @interface AppDelegate()
+
 - (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
+
+@property (nonatomic) PreferencesController *preferencesController;
+
 @end
 
 @implementation AppDelegate
@@ -2530,6 +2535,15 @@ static BOOL hideAllToNextSeparator;
 }
 
 
+- (IBAction)openPreferences:(id)sender
+{
+	if ( ! [_preferencesController.window isVisible])
+	{
+		self.preferencesController = [[PreferencesController alloc] init];
+	}
+	[_preferencesController.window makeKeyAndOrderFront:self];
+}
+
 - (IBAction) copy:(id) sender
 {
     //Copy warnings.
@@ -2544,7 +2558,6 @@ static BOOL hideAllToNextSeparator;
         return;
     }
 
-    
     // Copy keyframes
     NSArray* keyframes = [sequenceHandler selectedKeyframesForCurrentSequence];
     if ([keyframes count] > 0)

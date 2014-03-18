@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PreferencesController">
+            <connections>
+                <outlet property="toolbar" destination="bCE-et-5FH" id="FQc-Sb-wrB"/>
+                <outlet property="window" destination="1" id="L6t-OW-NVV"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" wantsToBeColor="NO" frameAutosaveName="" animationBehavior="default" id="1">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="699" y="457" width="530" height="1"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <view key="contentView" wantsLayer="YES" id="2">
+                <rect key="frame" x="0.0" y="0.0" width="530" height="1"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="3D3E5E9C-BEF2-4E01-9377-DFDF10C3933E" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="bCE-et-5FH">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="2064C34B-F195-45DB-A102-B32E5A7B4960" explicitItemIdentifier="PreferenceOptiPNG" label="OptiPNG" paletteLabel="OptiPNG" tag="-1" image="NSAdvanced" selectable="YES" id="LuQ-AI-r2v">
+                        <connections>
+                            <action selector="changeTab:" target="-2" id="usa-9t-tO3"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="LuQ-AI-r2v"/>
+                </defaultToolbarItems>
+                <connections>
+                    <outlet property="delegate" destination="-2" id="UFJ-ay-zji"/>
+                </connections>
+            </toolbar>
+            <connections>
+                <outlet property="delegate" destination="-2" id="bcx-fI-ec4"/>
+            </connections>
+        </window>
+        <userDefaultsController representsSharedInstance="YES" id="7DS-iD-JrI" userLabel="Shared Defaults"/>
+    </objects>
+    <resources>
+        <image name="NSAdvanced" width="32" height="32"/>
+    </resources>
+</document>
