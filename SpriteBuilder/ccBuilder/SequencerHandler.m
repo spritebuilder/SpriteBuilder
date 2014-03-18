@@ -382,6 +382,19 @@ static SequencerHandler* sharedSequencerHandler;
     
     if([item isKindOfClass:[SequencerJoints class]])
     {
+        if ([tableColumn.identifier isEqualToString:@"hidden"])
+        {
+            SequencerJoints * joints = (SequencerJoints*)item;
+            return  @(joints.node.hidden);            
+        }
+        
+        if ([tableColumn.identifier isEqualToString:@"locked"])
+        {
+            SequencerJoints * joints = (SequencerJoints*)item;
+            return  @(joints.node.locked);
+        }
+        
+        
         return  @"Joints";
     }
     
@@ -403,8 +416,40 @@ static SequencerHandler* sharedSequencerHandler;
     return node.displayName;
 }
 
+-(void)willSetObjectValueJoint:(NSOutlineView *)outlineView objectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+{
+    if([tableColumn.identifier isEqualToString:@"hidden"])
+    {
+        bool hidden = [(NSNumber*)object boolValue];
+        SequencerJoints * joints = (SequencerJoints*)item;
+        joints.node.hidden = hidden;
+        [outlineView reloadItem:joints reloadChildren:YES];
+        return;
+    }
+    
+    if([tableColumn.identifier isEqualToString:@"locked"])
+    {
+        bool locked = [(NSNumber*)object boolValue];
+        SequencerJoints * joints = (SequencerJoints*)item;
+        joints.node.locked = locked;
+        [outlineView reloadItem:joints reloadChildren:YES];
+        return;
+
+    }
+}
+
+
 - (void) outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
+  
+    if([item isKindOfClass:[SequencerJoints class]])
+    {
+        [self willSetObjectValueJoint:outlineView objectValue:object forTableColumn:tableColumn byItem:item];
+        return;
+    }
+    
+    //Normal node editing.
+    
     CCNode* node = item;
     
     if([tableColumn.identifier isEqualToString:@"hidden"])
@@ -460,7 +505,7 @@ static SequencerHandler* sharedSequencerHandler;
 
 	for (id item in items)
 	{
-		if ( ! [self canItemBeDragged:item])
+		if ( ![self canItemBeDragged:item])
 		{
 			return NO;
 		}
@@ -842,6 +887,11 @@ static SequencerHandler* sharedSequencerHandler;
             CCNode* node = item;
             [selectedNodes addObject:node];
         }
+        if([item isKindOfClass:[SequencerJoints class]])
+        {
+            SequencerJoints * joints = (SequencerJoints *)item;
+            [selectedNodes addObject:joints.node];
+        }
     }];
     
     appDelegate.selectedNodes = selectedNodes;
@@ -899,7 +949,8 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
-    if ([item isKindOfClass:[CCNode class]]) return YES;
+    if ([item isKindOfClass:[CCNode class]] ||[item isKindOfClass:[SequencerJoints class]])
+        return YES;
     
     return NO;
 }
@@ -1092,12 +1143,19 @@ static SequencerHandler* sharedSequencerHandler;
 		expCell.canExpand = NO;
 	}
 
-	if ([tableColumn.identifier isEqualToString:@"locked"]
-		|| [tableColumn.identifier isEqualToString:@"hidden"])
-	{
+	if ([tableColumn.identifier isEqualToString:@"locked"])
+    {
 		SequencerButtonCell *buttonCell = cell;
 		buttonCell.node = [SceneGraph instance].joints.node;
-		[buttonCell setTransparent:YES];
+		[buttonCell setTransparent:NO];
+    }
+    
+    if([tableColumn.identifier isEqualToString:@"hidden"])
+	{
+        SequencerButtonCell *buttonCell = cell;
+		buttonCell.node = [SceneGraph instance].joints.node;
+		[buttonCell setTransparent:NO];
+        [buttonCell setEnabled:YES];
 	}
 
 	if ([tableColumn.identifier isEqualToString:@"structure"])

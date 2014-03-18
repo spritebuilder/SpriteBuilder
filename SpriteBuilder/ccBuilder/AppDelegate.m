@@ -112,6 +112,7 @@
 #import <objc/message.h>
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
+#import "NSArray+Query.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1574,7 +1575,7 @@ static BOOL hideAllToNextSeparator;
     // Process contents
     CCNode* loadedRoot = [CCBReaderInternal nodeGraphFromDocumentDictionary:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
     
-    CCNode* loadedJoints = [CCNode node];
+    NSMutableArray* loadedJoints = [NSMutableArray array];
     if(doc[@"joints"] != nil)
     {
         for (NSDictionary * jointDict in doc[@"joints"])
@@ -1583,7 +1584,7 @@ static BOOL hideAllToNextSeparator;
             
             if(joint)
             {
-                [loadedJoints addChild:joint];
+                [loadedJoints addObject:joint];
             }
         }
     }
@@ -1593,7 +1594,11 @@ static BOOL hideAllToNextSeparator;
     
     SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
     g.rootNode = loadedRoot;
-    g.joints.node = loadedJoints;
+    
+    [loadedJoints forEach:^(CCNode * child, int idx) {
+        [g.joints.node addChild:child];
+    }];
+
     
     [[CocosScene cocosScene] replaceSceneNodes:g];
     [outlineHierarchy reloadData];

@@ -583,6 +583,9 @@
     }
     else if(bodyDragging != JointHandleUnknown)
     {
+        if(node.locked)
+            return YES;
+        
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         [joint setBodyHandle:pos bodyType:bodyDragging];
         
