@@ -2927,13 +2927,15 @@ static BOOL hideAllToNextSeparator;
 }
 
 
-- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser
+- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser async:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
         && !projectSettings.publishEnablediPhone
         && !projectSettings.publishEnabledHTML5)
     {
-        [self modalDialogTitle:@"Published Failed" message:@"There are no configured publish target platforms. Please check your Publish Settings."];
+        if(async)
+            [self modalDialogTitle:@"Published Failed" message:@"There are no configured publish target platforms. Please check your Publish Settings."];
+        
         return;
     }
     
@@ -2948,18 +2950,30 @@ static BOOL hideAllToNextSeparator;
     // Check if there are unsaved documents
     if ([self hasDirtyDocument])
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Publish Project" defaultButton:@"Save All" alternateButton:@"Cancel" otherButton:@"Don't Save" informativeTextWithFormat:@"There are unsaved documents. Do you want to save before publishing?"];
-        [alert setAlertStyle:NSWarningAlertStyle];
-        NSInteger result = [alert runModal];
+        NSInteger result = NSAlertDefaultReturn;
+        if(async)
+        {
+            NSAlert* alert = [NSAlert alertWithMessageText:@"Publish Project" defaultButton:@"Save All" alternateButton:@"Cancel" otherButton:@"Don't Save" informativeTextWithFormat:@"There are unsaved documents. Do you want to save before publishing?"];
+            [alert setAlertStyle:NSWarningAlertStyle];
+            result = [alert runModal];
+        }
+        
         switch (result) {
             case NSAlertDefaultReturn:
                 [self saveAllDocuments:nil];
                 // Falling through to publish
             case NSAlertOtherReturn:
                 // Open progress window and publish
-                [publisher publish];
-                [self modalStatusWindowStartWithTitle:@"Publishing"];
-                [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+                if(async)
+                {
+                    [publisher publishAsync];
+                    [self modalStatusWindowStartWithTitle:@"Publishing"];
+                    [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+                }
+                else
+                {
+                    [publisher publish];
+                }
                 break;
             default:
                 break;
@@ -2968,9 +2982,16 @@ static BOOL hideAllToNextSeparator;
     else
     {
         // Open progress window and publish
-        [publisher publish];
-        [self modalStatusWindowStartWithTitle:@"Publishing"];
-        [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+        if(async)
+        {
+            [publisher publishAsync];
+            [self modalStatusWindowStartWithTitle:@"Publishing"];
+            [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+        }
+        else
+        {
+            [publisher publish];
+        }
     }
 }
 
@@ -2996,18 +3017,18 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuPublishProject:(id)sender
 {
-    [self publishAndRun:NO runInBrowser:NULL];
+    [self publishAndRun:NO runInBrowser:NULL async:YES];
 }
 
 - (IBAction) menuPublishProjectAndRun:(id)sender
 {
-    [self publishAndRun:YES runInBrowser:NULL];
+    [self publishAndRun:YES runInBrowser:NULL async:YES];
 }
 
 - (IBAction)menuPublishProjectAndRunInBrowser:(id)sender
 {
     NSMenuItem* item = (NSMenuItem *)sender;
-    [self publishAndRun:YES runInBrowser:item.title];
+    [self publishAndRun:YES runInBrowser:item.title async:YES];
 }
 
 - (IBAction) menuCleanCacheDirectories:(id)sender
