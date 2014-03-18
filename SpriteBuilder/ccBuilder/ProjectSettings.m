@@ -113,6 +113,7 @@
     self.publishResolutionHTML5_width = 480;
     self.publishResolutionHTML5_height = 320;
     self.publishResolutionHTML5_scale = 1;
+	self.optiPNGParameters = @"";
     
     self.publishAudioQuality_ios = 4;
     self.publishAudioQuality_android = 4;
@@ -199,7 +200,10 @@
     self.designTarget = [[dict objectForKey:@"designTarget"] intValue];
     
     self.tabletPositionScaleFactor = 2.0f;
-    
+
+	self.runOptiPNGEnabledpublishEnablediPhone = [[dict objectForKey:@"runOptiPNGEnabledpublishEnablediPhone"] boolValue];
+	self.optiPNGParameters = [dict objectForKey:@"optiPNGParameters"];
+
     NSString* mainCCB = [dict objectForKey:@"javascriptMainCCB"];
     if (!mainCCB) mainCCB = @"";
     self.javascriptMainCCB = mainCCB;
@@ -250,8 +254,7 @@
     [dict setObject:[NSNumber numberWithBool:publishEnablediPhone] forKey:@"publishEnablediPhone"];
     [dict setObject:[NSNumber numberWithBool:publishEnabledAndroid] forKey:@"publishEnabledAndroid"];
     [dict setObject:[NSNumber numberWithBool:publishEnabledHTML5] forKey:@"publishEnabledHTML5"];
-    
-    
+
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phone] forKey:@"publishResolution_ios_phone"];
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phonehd] forKey:@"publishResolution_ios_phonehd"];
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_tablet] forKey:@"publishResolution_ios_tablet"];
@@ -283,7 +286,18 @@
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
-    
+
+	[dict setObject:[NSNumber numberWithBool:self.runOptiPNGEnabledpublishEnablediPhone] forKey:@"runOptiPNGEnabledpublishEnablediPhone"];
+
+	if (!self.optiPNGParameters)
+	{
+		[dict setObject:@"" forKey:@"optiPNGParameters"];
+	}
+	else
+	{
+		[dict setObject:self.optiPNGParameters forKey:@"optiPNGParameters"];
+	}
+
     if (!javascriptMainCCB) self.javascriptMainCCB = @"";
     if (!javascriptBased) self.javascriptMainCCB = @"";
     [dict setObject:javascriptMainCCB forKey:@"javascriptMainCCB"];
