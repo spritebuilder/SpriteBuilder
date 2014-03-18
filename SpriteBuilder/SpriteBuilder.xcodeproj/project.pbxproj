@@ -112,10 +112,11 @@
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
-		83DC65DE18D888160028EF72 /* PreferenceOptiPNG.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65D818D888150028EF72 /* PreferenceOptiPNG.xib */; };
-		83DC65DF18D888160028EF72 /* PreferenceOptiPNGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65DA18D888160028EF72 /* PreferenceOptiPNGViewController.m */; };
-		83DC65E018D888160028EF72 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65DB18D888160028EF72 /* Preferences.xib */; };
-		83DC65E118D888160028EF72 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65DD18D888160028EF72 /* PreferencesController.m */; };
+		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
+		83DC65F418D898F80028EF72 /* PreferenceOptiPNG.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65EE18D898F80028EF72 /* PreferenceOptiPNG.xib */; };
+		83DC65F518D898F80028EF72 /* PreferenceOptiPNGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65F018D898F80028EF72 /* PreferenceOptiPNGViewController.m */; };
+		83DC65F618D898F80028EF72 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65F118D898F80028EF72 /* Preferences.xib */; };
+		83DC65F718D898F80028EF72 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65F318D898F80028EF72 /* PreferencesController.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
@@ -349,6 +350,10 @@
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
+		D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */; };
+		D2E0168518D783C900927430 /* AppleScriptKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E0168418D783C900927430 /* AppleScriptKit.framework */; };
+		D2E0168A18D789E700927430 /* SpriteBuilder.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D2E0168618D783F800927430 /* SpriteBuilder.sdef */; };
+		D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D2E0168618D783F800927430 /* SpriteBuilder.sdef */; };
 		DC05E77B18D0ACCB00592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC05E78818D0ACE000592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC05E79118D0AD7800592A1E /* CCBPluginSBButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DC05E76918D0A9BD00592A1E /* CCBPluginSBButtonNode.m */; };
@@ -714,7 +719,6 @@
 		E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BA14E4989900119FBE /* InspectorDegrees.xib */; };
 		E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */; };
 		E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */; };
-		E525F1795505006D7ED29CB8 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6ED0137F504D3C42180 /* SBUserDefaultsKeys.m */; };
 		FA98CFC4154E7D1C006E58C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA98CFC3154E7D1C006E58C5 /* Foundation.framework */; };
 		FA98CFC7154E7D1C006E58C5 /* ccbpublish.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */; };
 		FA98CFD1154E7F7D006E58C5 /* CCBX.m in Sources */ = {isa = PBXBuildFile; fileRef = E398C03614FB8A430078E771 /* CCBX.m */; };
@@ -1166,12 +1170,14 @@
 		80FBACCA183422BD00C4BB69 /* inspector-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning.png"; sourceTree = "<group>"; };
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		83DC65D818D888150028EF72 /* PreferenceOptiPNG.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceOptiPNG.xib; sourceTree = "<group>"; };
-		83DC65D918D888160028EF72 /* PreferenceOptiPNGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceOptiPNGViewController.h; sourceTree = "<group>"; };
-		83DC65DA18D888160028EF72 /* PreferenceOptiPNGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceOptiPNGViewController.m; sourceTree = "<group>"; };
-		83DC65DB18D888160028EF72 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
-		83DC65DC18D888160028EF72 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
-		83DC65DD18D888160028EF72 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
+		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
+		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
+		83DC65EE18D898F80028EF72 /* PreferenceOptiPNG.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceOptiPNG.xib; sourceTree = "<group>"; };
+		83DC65EF18D898F80028EF72 /* PreferenceOptiPNGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceOptiPNGViewController.h; sourceTree = "<group>"; };
+		83DC65F018D898F80028EF72 /* PreferenceOptiPNGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceOptiPNGViewController.m; sourceTree = "<group>"; };
+		83DC65F118D898F80028EF72 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
+		83DC65F218D898F80028EF72 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
+		83DC65F318D898F80028EF72 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
 		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
@@ -1474,6 +1480,10 @@
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
+		D2E0167518D782CC00927430 /* SpriteBuilderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBuilderCommand.h; sourceTree = "<group>"; };
+		D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteBuilderCommand.m; sourceTree = "<group>"; };
+		D2E0168418D783C900927430 /* AppleScriptKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptKit.framework; path = System/Library/Frameworks/AppleScriptKit.framework; sourceTree = SDKROOT; };
+		D2E0168618D783F800927430 /* SpriteBuilder.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SpriteBuilder.sdef; sourceTree = SOURCE_ROOT; };
 		DC05E76818D0A9BD00592A1E /* CCBPluginSBButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSBButtonNode.h; sourceTree = "<group>"; };
 		DC05E76918D0A9BD00592A1E /* CCBPluginSBButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSBButtonNode.m; sourceTree = "<group>"; };
 		DC05E76A18D0A9BD00592A1E /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
@@ -1995,8 +2005,6 @@
 		E3FEA8BC14E498B600119FBE /* InspectorDegrees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorDegrees.h; sourceTree = "<group>"; };
 		E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorDegrees.m; sourceTree = "<group>"; };
 		E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorInteger.xib; sourceTree = "<group>"; };
-		E525F6ED0137F504D3C42180 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
-		E525FA4E7DABB93BDF775A81 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		FA98CFC1154E7D1C006E58C5 /* ccbpublish */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ccbpublish; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA98CFC3154E7D1C006E58C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ccbpublish.m; sourceTree = "<group>"; };
@@ -2212,6 +2220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2E0168518D783C900927430 /* AppleScriptKit.framework in Frameworks */,
 				E398C02314FB81A30078E771 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2732,6 +2741,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D2E0168418D783C900927430 /* AppleScriptKit.framework */,
 				DC68033A189168390060BE39 /* SpriteKit.framework */,
 				B72D1DEA186393AE0091252F /* HockeySDK.framework */,
 				B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */,
@@ -2775,7 +2785,8 @@
 			children = (
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
-				83A7638218D74DCA0025A9EB /* Preferences */,
+				83DC65ED18D898E00028EF72 /* Preferences */,
+				D2E0167218D782B500927430 /* SpriteBuilderCommands */,
 				83F8672F18D1DCBD007441E4 /* Constants */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
@@ -2807,6 +2818,7 @@
 		7789ABC9133AA82000CEFCC7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D2E0168618D783F800927430 /* SpriteBuilder.sdef */,
 				7789ABCB133AA82000CEFCC7 /* InfoPlist.strings */,
 				7789ABCE133AA82000CEFCC7 /* SpriteBuilder-Prefix.pch */,
 				7789ABCF133AA82000CEFCC7 /* main.m */,
@@ -2937,15 +2949,15 @@
 			path = Include;
 			sourceTree = "<group>";
 		};
-		83A7638218D74DCA0025A9EB /* Preferences */ = {
+		83DC65ED18D898E00028EF72 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				83DC65D818D888150028EF72 /* PreferenceOptiPNG.xib */,
-				83DC65D918D888160028EF72 /* PreferenceOptiPNGViewController.h */,
-				83DC65DA18D888160028EF72 /* PreferenceOptiPNGViewController.m */,
-				83DC65DB18D888160028EF72 /* Preferences.xib */,
-				83DC65DC18D888160028EF72 /* PreferencesController.h */,
-				83DC65DD18D888160028EF72 /* PreferencesController.m */,
+				83DC65EE18D898F80028EF72 /* PreferenceOptiPNG.xib */,
+				83DC65EF18D898F80028EF72 /* PreferenceOptiPNGViewController.h */,
+				83DC65F018D898F80028EF72 /* PreferenceOptiPNGViewController.m */,
+				83DC65F118D898F80028EF72 /* Preferences.xib */,
+				83DC65F218D898F80028EF72 /* PreferencesController.h */,
+				83DC65F318D898F80028EF72 /* PreferencesController.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -2953,10 +2965,10 @@
 		83F8672F18D1DCBD007441E4 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */,
+				83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */,
 				83F8673218D1DCEA007441E4 /* SBErrors.h */,
 				83F8673318D1DCEA007441E4 /* SBErrors.m */,
-				E525F6ED0137F504D3C42180 /* SBUserDefaultsKeys.m */,
-				E525FA4E7DABB93BDF775A81 /* SBUserDefaultsKeys.h */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -3364,6 +3376,15 @@
 				B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */,
 			);
 			name = "About Box";
+			sourceTree = "<group>";
+		};
+		D2E0167218D782B500927430 /* SpriteBuilderCommands */ = {
+			isa = PBXGroup;
+			children = (
+				D2E0167518D782CC00927430 /* SpriteBuilderCommand.h */,
+				D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */,
+			);
+			name = SpriteBuilderCommands;
 			sourceTree = "<group>";
 		};
 		DC05E76718D0A9BD00592A1E /* SBButtonNode */ = {
@@ -4830,6 +4851,7 @@
 				92DC2160188073C500C8DCCD /* select-crosshair.png in Resources */,
 				92DC2161188073C500C8DCCD /* select-skew.png in Resources */,
 				92DC2162188073C500C8DCCD /* select-rotation.png in Resources */,
+				83DC65F618D898F80028EF72 /* Preferences.xib in Resources */,
 				929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 				92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */,
 				92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */,
@@ -4886,6 +4908,7 @@
 				77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */,
 				B75CB46618468FA70036259F /* seq-btn-loop@2x.png in Resources */,
 				776C68911388107400153214 /* missing-font.fnt in Resources */,
+				D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */,
 				B71706D1184ECD660081720A /* select-scale@2x.png in Resources */,
 				776C68921388107400153214 /* missing-font.png in Resources */,
 				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
@@ -4993,7 +5016,6 @@
 				926D13C518B5778300582959 /* joint-distance-sel@2x.png in Resources */,
 				E3E8B4A5157CD5DB00373983 /* seq-scrub-line.png in Resources */,
 				B7C3533817FA0FEF005697C1 /* inspector-physics@2x.png in Resources */,
-				83DC65DE18D888160028EF72 /* PreferenceOptiPNG.xib in Resources */,
 				E3E8B4AA157D127300373983 /* seq-scaleslide-bg.png in Resources */,
 				E36ECD6415869779003C177E /* seq-btn-back.png in Resources */,
 				E36ECD6515869779003C177E /* seq-keyframe-sel.png in Resources */,
@@ -5061,7 +5083,6 @@
 				E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */,
 				E3DEF5B7169B359C00B9DCF4 /* lame in Resources */,
 				E3DEF5B9169B35DF00B9DCF4 /* lame-COPYING in Resources */,
-				83DC65E018D888160028EF72 /* Preferences.xib in Resources */,
 				E334741D169DC5A7000737CC /* APIDocsWindow.xib in Resources */,
 				E3F4087416A9EEC5009A0253 /* ccz in Resources */,
 				E312EDC616AF71FE000778C8 /* CCBReaderInternalRenamedProps.plist in Resources */,
@@ -5118,6 +5139,7 @@
 				B7AC69CB17A70A4B0041B8BD /* inspector-props.png in Resources */,
 				92154AC918A5531800BD215C /* InfoPlist.strings in Resources */,
 				B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */,
+				83DC65F418D898F80028EF72 /* PreferenceOptiPNG.xib in Resources */,
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
 				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
 				926D13C318B5778300582959 /* joint-distance-handle-short@2x.png in Resources */,
@@ -5366,6 +5388,7 @@
 				92B792CC18C92C60007DF895 /* Icon.png in Resources */,
 				92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */,
 				92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
+				D2E0168A18D789E700927430 /* SpriteBuilder.sdef in Resources */,
 				929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5424,7 +5447,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83DC65E118D888160028EF72 /* PreferencesController.m in Sources */,
 				92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */,
 				92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */,
 				9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */,
@@ -5491,6 +5513,7 @@
 				E3B4222F14E5A849004547D6 /* InspectorBlendmode.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
 				E3B4223714E5E6AD004547D6 /* InspectorSeparator.m in Sources */,
+				83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */,
 				E3C3660114EA0507007CD5FF /* TexturePropertySetter.m in Sources */,
 				E3C3660414EB2C1B007CD5FF /* CCBReaderInternal.m in Sources */,
 				E32D8CC814EC25D800F4BD5E /* InspectorCodeConnections.m in Sources */,
@@ -5499,6 +5522,7 @@
 				E35DBBE414F3DD0B0070A6E4 /* InspectorFontTTF.m in Sources */,
 				E35DBBFE14F3EE410070A6E4 /* InspectorFloat.m in Sources */,
 				E35DBC1E14F4DF050070A6E4 /* InspectorStartStop.m in Sources */,
+				83DC65F718D898F80028EF72 /* PreferencesController.m in Sources */,
 				921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */,
 				E35DBC2314F4ED980070A6E4 /* InspectorIntegerLabeled.m in Sources */,
 				E35DBC2814F4FF410070A6E4 /* InspectorTexture.m in Sources */,
@@ -5553,6 +5577,7 @@
 				E3E8B4A1157CC57E00373983 /* SequencerScrubberSelectionView.m in Sources */,
 				E3E8B4A8157CD67000373983 /* SequencerSequence.m in Sources */,
 				926D13D318B57A4900582959 /* CCScaleFreeNode.m in Sources */,
+				83DC65F518D898F80028EF72 /* PreferenceOptiPNGViewController.m in Sources */,
 				E36ECCE5158648EE003C177E /* SequencerNodeProperty.m in Sources */,
 				E36ECD0D15868F57003C177E /* SequencerKeyframe.m in Sources */,
 				E3A0ED5A159119E7000BDF4B /* SequencerSettingsWindow.m in Sources */,
@@ -5585,13 +5610,13 @@
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
 				B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */,
 				E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */,
-				83DC65DF18D888160028EF72 /* PreferenceOptiPNGViewController.m in Sources */,
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
 				E35D78D516826C0100A53BEF /* SpriteSheetSettingsWindow.m in Sources */,
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
+				D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */,
 				E3D6BA2316C46E41006AFE0A /* SequencerCallbackChannel.m in Sources */,
 				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
 				E3D6BA2616C46E91006AFE0A /* SequencerChannel.m in Sources */,
@@ -5639,7 +5664,6 @@
 				83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
-				E525F1795505006D7ED29CB8 /* SBUserDefaultsKeys.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
