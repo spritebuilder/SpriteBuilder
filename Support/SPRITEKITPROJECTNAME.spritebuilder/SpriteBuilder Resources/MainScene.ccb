@@ -63,7 +63,7 @@
 						<key>value</key>
 						<array>
 							<real>0.0</real>
-							<real>2.5787036418914795</real>
+							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -76,10 +76,10 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>1024</real>
-							<real>768</real>
-							<integer>0</integer>
-							<integer>0</integer>
+							<real>1</real>
+							<real>1</real>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -144,6 +144,8 @@
 						<real>1</real>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -528,8 +530,6 @@
 						<integer>0</integer>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
