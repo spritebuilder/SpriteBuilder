@@ -164,7 +164,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
 
-@property (nonatomic,assign) BOOL runOptiPNGEnabledpublishEnablediPhone;
+@property (nonatomic,assign) BOOL runOptiPNGonPublish;
 @property (nonatomic,copy) NSString *optiPNGParameters;
 
 - (id) initWithSerialization:(id)dict;

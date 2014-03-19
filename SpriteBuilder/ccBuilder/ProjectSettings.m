@@ -201,7 +201,7 @@
     
     self.tabletPositionScaleFactor = 2.0f;
 
-	self.runOptiPNGEnabledpublishEnablediPhone = [[dict objectForKey:@"runOptiPNGEnabledpublishEnablediPhone"] boolValue];
+	self.runOptiPNGonPublish = [[dict objectForKey:@"runOptiPNGonPublish"] boolValue];
 	self.optiPNGParameters = [dict objectForKey:@"optiPNGParameters"];
 
     NSString* mainCCB = [dict objectForKey:@"javascriptMainCCB"];
@@ -287,7 +287,7 @@
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
 
-	[dict setObject:[NSNumber numberWithBool:self.runOptiPNGEnabledpublishEnablediPhone] forKey:@"runOptiPNGEnabledpublishEnablediPhone"];
+	[dict setObject:[NSNumber numberWithBool:self.runOptiPNGonPublish] forKey:@"runOptiPNGonPublish"];
 
 	if (!self.optiPNGParameters)
 	{

@@ -573,7 +573,7 @@ DQ
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
                                 <connections>
-                                    <binding destination="-2" name="value" keyPath="projectSettings.runOptiPNGEnabledpublishEnablediPhone" id="NNS-Ks-PnK"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.runOptiPNGonPublish" id="NNS-Ks-PnK"/>
                                 </connections>
                             </button>
                         </subviews>
