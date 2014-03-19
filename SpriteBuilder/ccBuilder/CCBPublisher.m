@@ -556,70 +556,50 @@
     return YES;
 }
 
-- (BOOL)publishDirectory:(NSString *)dir subPath:(NSString *)subPath
+- (BOOL)publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath
 {
-    AppDelegate* ad = [AppDelegate appDelegate];
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
-    
-    NSFileManager* fm = [NSFileManager defaultManager];
-
-    NSString *outDir = [self outputDirectory:subPath];
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	NSString *outDir = [self outputDirectory:subPath];
 
 	// Check for generated sprite sheets
-    BOOL isGeneratedSpriteSheet = NO;
-    NSDate* srcSpriteSheetDate = NULL;
-    
-    if ([[projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue])
+    BOOL isGeneratedSpriteSheet = [[projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
+	NSDate *srcSpriteSheetDate;
+
+	if (isGeneratedSpriteSheet)
     {
-        isGeneratedSpriteSheet = YES;
-        srcSpriteSheetDate = [self latestModifiedDateForDirectory:dir];
+        srcSpriteSheetDate = [self latestModifiedDateForDirectory:publishDirectory];
         
         // Clear temporary sprite sheet directory
-        [fm removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
+        [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
     }
-    
-    // Create the directory if it doesn't exist
-    if (!isGeneratedSpriteSheet)
-    {
-        BOOL createdDirs = [fm createDirectoryAtPath:outDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+	else
+	{
+        BOOL createdDirs = [fileManager createDirectoryAtPath:outDir withIntermediateDirectories:YES attributes:NULL error:NULL];
         if (!createdDirs)
         {
             [warnings addWarningWithDescription:@"Failed to create output directory %@" isFatal:YES];
             return NO;
         }
-    }
-    
-    // Add files from main directory
-    NSMutableSet* files = [NSMutableSet setWithArray:[fm contentsOfDirectoryAtPath:dir error:NULL]];
-    
-    // Add files from resolution depentant directories
-    for (NSString* publishExt in publishForResolutions)
-    {
-        NSString* resolutionDir = [dir stringByAppendingPathComponent:publishExt];
-        BOOL isDirectory;
-        if ([fm fileExistsAtPath:resolutionDir isDirectory:&isDirectory] && isDirectory)
-        {
-            [files addObjectsFromArray:[fm contentsOfDirectoryAtPath:resolutionDir error:NULL]];
-        }
-    }
-    
-    // Add files from the -auto directory
-    NSString* autoDir = [dir stringByAppendingPathComponent:@"resources-auto"];
-    BOOL isDirAuto;
-    if ([fm fileExistsAtPath:autoDir isDirectory:&isDirAuto] && isDirAuto)
-    {
-        [files addObjectsFromArray:[fm contentsOfDirectoryAtPath:autoDir error:NULL]];
-    }
+	}
 
-    // Iterate through all files
+    // Add files from main directory
+    NSMutableSet* files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
+
+	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory fileManager:fileManager]];
+
+	[files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory fileManager:fileManager]];
+
+
+	// Iterate through all files
     for (NSString* fileName in files)
     {
         if ([fileName hasPrefix:@"."]) continue;
         
-        NSString* filePath = [dir stringByAppendingPathComponent:fileName];
+        NSString* filePath = [publishDirectory stringByAppendingPathComponent:fileName];
         
         BOOL isDirectory;
-        BOOL fileExists = [fm fileExistsAtPath:filePath isDirectory:&isDirectory];
+        BOOL fileExists = [fileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
         if (fileExists && isDirectory)
         {
             if ([[filePath pathExtension] isEqualToString:@"bmfont"])
@@ -651,7 +631,7 @@
             }
             
             // Skip the empty folder
-			if ([[fm contentsOfDirectoryAtPath:filePath error:NULL] count] == 0)
+			if ([[fileManager contentsOfDirectoryAtPath:filePath error:NULL] count] == 0)
 			{
 				continue;
 			}
@@ -730,10 +710,10 @@
                 
                 if (![srcDate isEqualToDate:dstDate])
                 {
-                    [ad modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", fileName]];
+                    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", fileName]];
                     
                     // Remove old file
-                    [fm removeItemAtPath:dstFile error:NULL];
+                    [fileManager removeItemAtPath:dstFile error:NULL];
                     
                     // Copy the file
                     BOOL sucess = [self publishCCBFile:filePath to:dstFile];
@@ -759,13 +739,42 @@
 			// Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
 			[self publishSpriteSheetDir:[outDir stringByDeletingLastPathComponent]
 							  sheetName:[outDir lastPathComponent]
-							  sourceDir:dir
+							  sourceDir:publishDirectory
 								subPath:subPath
 					 srcSpriteSheetDate:srcSpriteSheetDate];
 		}
     }
     
     return YES;
+}
+
+- (NSArray *)filesOfAutoDirectory:(NSString *)publishDirectory fileManager:(NSFileManager *)fileManager
+{
+	NSMutableArray *result = [NSMutableArray array];
+	NSString* autoDir = [publishDirectory stringByAppendingPathComponent:@"resources-auto"];
+	BOOL isDirAuto;
+	if ([fileManager fileExistsAtPath:autoDir isDirectory:&isDirAuto] && isDirAuto)
+    {
+        [result addObjectsFromArray:[fileManager contentsOfDirectoryAtPath:autoDir error:NULL]];
+    }
+	return result;
+}
+
+- (NSArray *)filesForResolutionDependantDirs:(NSString *)dir fileManager:(NSFileManager *)fileManager
+{
+	NSMutableArray *result = [NSMutableArray array];
+
+	for (NSString *publishExt in publishForResolutions)
+	{
+		NSString *resolutionDir = [dir stringByAppendingPathComponent:publishExt];
+		BOOL isDirectory;
+		if ([fileManager fileExistsAtPath:resolutionDir isDirectory:&isDirectory] && isDirectory)
+		{
+			[result addObjectsFromArray:[fileManager contentsOfDirectoryAtPath:resolutionDir error:NULL]];
+		}
+	}
+
+	return result;
 }
 
 - (NSString *)outputDirectory:(NSString *)subPath
