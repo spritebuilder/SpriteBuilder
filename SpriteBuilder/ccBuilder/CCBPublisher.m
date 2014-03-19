@@ -252,31 +252,22 @@
 
 - (BOOL)publishImageFile:(NSString *)srcPath to:(NSString *)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir resolution:(NSString *)resolution
 {
+/*
+	NSLog(@"isSheet: %d, res %@ ", isSpriteSheet, resolution);
+	NSLog(@"outDir: %@", outDir);
+	NSLog(@"srcPath: %@", srcPath);
+	NSLog(@"dstPath: %@", srcPath);
+	NSLog(@"--------------------------------------------------------------");
+*/
+
     AppDelegate* ad = [AppDelegate appDelegate];
-    
     NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
-    
-    // Skip already published sprite sheet
-    if (isSpriteSheet)
+
+    if (isSpriteSheet
+		&& [self isSpriteSheetAlreadyPublished:srcPath outDir:outDir resolution:resolution])
     {
-        NSString* ssDir = [srcPath stringByDeletingLastPathComponent];
-        NSString* ssDirRel = [ResourceManagerUtil relativePathFromAbsolutePath:ssDir];
-        NSString* ssName = [ssDir lastPathComponent];
-        
-		NSDate *srcDate= [self modifiedDateOfSpriteSheetDirectory:ssDir];
-
-		BOOL isDirty = [projectSettings isDirtyRelPath:ssDirRel];
-        
-        // Make the name for the final sprite sheet
-        NSString* ssDstPath = [[[[outDir stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
-
-		NSDate *ssDstDate= [self modifiedDataOfSpriteSheetFile:ssDstPath];
-
-		if (ssDstDate && [ssDstDate isEqualToDate:srcDate] && !isDirty)
-        {
-            return YES;
-        }
-    }
+		return NO;
+	}
 
 	// Add the file name to published resource list
 	[publishedResources addObject:relPath];
@@ -311,7 +302,7 @@
 
     // Create destination directory if it doesn't exist
     [fm createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
-    
+
     // Get the format of the published image
     int format = kFCImageFormatPNG;
     BOOL dither = NO;
@@ -359,19 +350,21 @@
         
         // Copy file
         [fm copyItemAtPath:srcPath toPath:dstPath error:NULL];
+		// NSLog(@"COPYTO: %@", dstPath);
         
         // Convert it
         NSString* dstPathConverted = nil;
         NSError  * error;
+
         if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
         {
             [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
-            
             return NO;
         }
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
+		// NSLog(@"** WRITING: %@", dstPathConverted);
         
         return YES;
     }
@@ -403,7 +396,8 @@
         
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
-        
+		// NSLog(@"* WRITING: %@", dstPathConverted);
+
         return YES;
     }
     else
@@ -414,6 +408,30 @@
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish file %@, make sure it is in the resources-auto folder.",srcFileName] isFatal:NO];
         return YES;
     }
+}
+
+- (BOOL)isSpriteSheetAlreadyPublished:(NSString *)srcPath outDir:(NSString *)outDir resolution:(NSString *)resolution
+{
+	NSString* ssDir = [srcPath stringByDeletingLastPathComponent];
+	NSString* ssDirRel = [ResourceManagerUtil relativePathFromAbsolutePath:ssDir];
+	NSString* ssName = [ssDir lastPathComponent];
+
+	NSDate *srcDate = [self modifiedDateOfSpriteSheetDirectory:ssDir];
+
+	BOOL isDirty = [projectSettings isDirtyRelPath:ssDirRel];
+
+	// Make the name for the final sprite sheet
+	NSString* ssDstPath = [[[[outDir stringByDeletingLastPathComponent]
+									 stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
+									 stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
+
+	NSDate *ssDstDate = [self modifiedDataOfSpriteSheetFile:ssDstPath];
+
+	if (ssDstDate && [ssDstDate isEqualToDate:srcDate] && !isDirty)
+	{
+		return YES;
+	}
+	return NO;
 }
 
 - (NSDate *)modifiedDataOfSpriteSheetFile:(NSString *)spriteSheetFile
@@ -544,19 +562,10 @@
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
     
     NSFileManager* fm = [NSFileManager defaultManager];
-    
-    // Path to output directory for the currently exported path
-    NSString* outDir = NULL;
-    if (projectSettings.flattenPaths && projectSettings.publishToZipFile)
-    {
-        outDir = outputDir;
-    }
-    else
-    {
-        outDir = [outputDir stringByAppendingPathComponent:subPath];
-    }
-    
-    // Check for generated sprite sheets
+
+    NSString *outDir = [self outputDirectory:subPath];
+
+	// Check for generated sprite sheets
     BOOL isGeneratedSpriteSheet = NO;
     NSDate* srcSpriteSheetDate = NULL;
     
@@ -757,6 +766,20 @@
     }
     
     return YES;
+}
+
+- (NSString *)outputDirectory:(NSString *)subPath
+{
+	NSString *outDir;
+	if (projectSettings.flattenPaths && projectSettings.publishToZipFile)
+    {
+        outDir = outputDir;
+    }
+    else
+    {
+        outDir = [outputDir stringByAppendingPathComponent:subPath];
+    }
+	return outDir;
 }
 
 -(void) publishSpriteSheetDir:(NSString*)spriteSheetDir sheetName:(NSString*)spriteSheetName sourceDir:(NSString*)dir subPath:(NSString*)subPath srcSpriteSheetDate:(NSDate*)srcSpriteSheetDate
@@ -1391,15 +1414,8 @@
 
         // Do actual publish
         [self publish_];
-        
-        // Flag files with warnings as dirty
-        for (CCBWarning* warning in warnings.warnings)
-        {
-            if (warning.relatedFile)
-            {
-                [projectSettings markAsDirtyRelPath:warning.relatedFile];
-            }
-        }
+
+		[self flagFilesWithWarningsAsDirty];
 
 		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
 
@@ -1410,19 +1426,23 @@
     });
 }
 
+- (void)flagFilesWithWarningsAsDirty
+{
+	for (CCBWarning *warning in warnings.warnings)
+	{
+		if (warning.relatedFile)
+		{
+			[projectSettings markAsDirtyRelPath:warning.relatedFile];
+		}
+	}
+}
+
 - (void) publish
 {
     // Do actual publish
     [self publish_];
-    
-    // Flag files with warnings as dirty
-    for (CCBWarning* warning in warnings.warnings)
-    {
-        if (warning.relatedFile)
-        {
-            [projectSettings markAsDirtyRelPath:warning.relatedFile];
-        }
-    }
+
+	[self flagFilesWithWarningsAsDirty];
 
     AppDelegate* ad = [AppDelegate appDelegate];
     [ad publisher:self finishedWithWarnings:warnings];
