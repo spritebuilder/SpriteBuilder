@@ -40,6 +40,7 @@
 #import "ResourceManagerUtil.h"
 #import "FCFormatConverter.h"
 #import "NSArray+Query.h"
+#import "SBUserDefaultsKeys.h"
 
 @implementation CCBPublisher
 {
@@ -1491,6 +1492,8 @@
         // Do actual publish
         [self publish_];
 
+        [self postProcessPublishedPNGFiles];
+
 		[self flagFilesWithWarningsAsDirty];
 
 		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
@@ -1500,6 +1503,48 @@
             [ad publisher:self finishedWithWarnings:warnings];
         });
     });
+}
+
+- (void)postProcessPublishedPNGFiles
+{
+    // TODO: test sandbox
+    // TODO: don't reprocess skipped png files when they are uptodate
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
+    NSString *pathToOptiPNG = [userDefaults objectForKey:PREFERENCES_OPTIPNG_INSTALLATION_PATH];
+
+    if (!projectSettings.runOptiPNGonPublish)
+    {
+        return;
+    }
+
+    if (![fileManager isExecutableFileAtPath:pathToOptiPNG])
+    {
+        // TODO: add warning
+        return;
+    }
+
+    for (NSString *pngFile in _publishedPNGFiles)
+    {
+        // TODO: update for progress window
+        NSTask *task = [[NSTask alloc] init];
+       	[task setLaunchPath:pathToOptiPNG];
+       	[task setArguments:@[projectSettings.optiPNGParameters, pngFile]];
+
+       	NSPipe *pipe = [NSPipe pipe];
+       	[task setStandardOutput:pipe];
+
+       	NSFileHandle *file = [pipe fileHandleForReading];
+
+       	[task launch];
+
+       	NSData *data = [file readDataToEndOfFile];
+       	NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+        NSLog(@"%@", string);
+    }
 }
 
 - (void)flagFilesWithWarningsAsDirty
