@@ -576,10 +576,10 @@
         }
 	}
 
-    if (![self processAllFilesWithPublishDir:publishDirectory
-                                     subPath:subPath
-                                      outDir:outDir
-                      isGeneratedSpriteSheet:isGeneratedSpriteSheet])
+    if (![self processAllFilesWithinPublishDir:publishDirectory
+                                       subPath:subPath
+                                        outDir:outDir
+                        isGeneratedSpriteSheet:isGeneratedSpriteSheet])
     {
         return NO;
     }
@@ -596,25 +596,25 @@
 {
     BOOL publishForSpriteKit = [AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit;
     if (publishForSpriteKit)
-		{
-			[self publishSpriteKitAtlasDir:[outDir stringByDeletingLastPathComponent]
-								 sheetName:[outDir lastPathComponent]
-								   subPath:subPath];
-		}
-		else
-		{
-			// Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
-            [self publishSpriteSheetDir:[outDir stringByDeletingLastPathComponent]
-                              sheetName:[outDir lastPathComponent]
-                       publishDirectory:publishDirectory
-                                subPath:subPath];
-		}
+    {
+        [self publishSpriteKitAtlasDir:[outDir stringByDeletingLastPathComponent]
+                             sheetName:[outDir lastPathComponent]
+                               subPath:subPath];
+    }
+    else
+    {
+        // Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
+        [self publishSpriteSheetDir:[outDir stringByDeletingLastPathComponent]
+                          sheetName:[outDir lastPathComponent]
+                   publishDirectory:publishDirectory
+                            subPath:subPath];
+    }
 }
 
-- (BOOL)processAllFilesWithPublishDir:(NSString *)publishDirectory
-                subPath:(NSString *)subPath
-                 outDir:(NSString *)outDir
- isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
+- (BOOL)processAllFilesWithinPublishDir:(NSString *)publishDirectory
+                                subPath:(NSString *)subPath
+                                 outDir:(NSString *)outDir
+                 isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
@@ -667,84 +667,85 @@
         isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString* ext = [[fileName pathExtension] lowercaseString];
+    NSString *ext = [[fileName pathExtension] lowercaseString];
 
     // Skip non png files for generated sprite sheets
     if (isGeneratedSpriteSheet && !([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"]))
-            {
-                [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
-                return YES;
-            }
+    {
+        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
+        return YES;
+    }
 
     if ([copyExtensions containsObject:ext] && !projectSettings.onlyPublishCCBs)
+    {
+        // This file and should be copied
+
+        // Get destination file name
+        NSString *dstFile = [outDir stringByAppendingPathComponent:fileName];
+
+        // Use temp cache directory for generated sprite sheets
+        if (isGeneratedSpriteSheet)
+        {
+            dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
+        }
+
+        // Copy file (and possibly convert)
+        if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
+        {
+            // Publish images
+            [self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
+        }
+        else if ([ext isEqualToString:@"wav"])
+        {
+            // Publish sounds
+            [self publishSoundFile:filePath to:dstFile];
+        }
+        else
+        {
+            // Publish any other type of file
+            [self publishRegularFile:filePath to:dstFile];
+        }
+    }
+    else if ([[fileName lowercaseString] hasSuffix:@"ccb"] && !isGeneratedSpriteSheet)
+    {
+        // This is a ccb-file and should be published
+
+        NSString *strippedFileName = [fileName stringByDeletingPathExtension];
+
+        NSString *dstFile = [[outDir stringByAppendingPathComponent:strippedFileName]
+                                     stringByAppendingPathExtension:publishFormat];
+
+        // Add file to list of published files
+        NSString *localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
+        [publishedResources addObject:localFileName];
+
+        if ([dstFile isEqualToString:filePath])
+        {
+            [warnings addWarningWithDescription:@"Publish will overwrite files in resource directory." isFatal:YES];
+            return NO;
+        }
+
+        NSDate *srcDate = [CCBFileUtil modificationDateForFile:filePath];
+        NSDate *dstDate = [CCBFileUtil modificationDateForFile:dstFile];
+
+        if (![srcDate isEqualToDate:dstDate])
+        {
+            [[AppDelegate appDelegate]
+                          modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", fileName]];
+
+            // Remove old file
+            [fileManager removeItemAtPath:dstFile error:NULL];
+
+            // Copy the file
+            BOOL sucess = [self publishCCBFile:filePath to:dstFile];
+            if (!sucess)
             {
-                // This file and should be copied
-
-                // Get destination file name
-                NSString* dstFile = [outDir stringByAppendingPathComponent:fileName];
-
-                // Use temp cache directory for generated sprite sheets
-                if (isGeneratedSpriteSheet)
-                {
-                    dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
-                }
-
-                // Copy file (and possibly convert)
-                if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
-                {
-                    // Publish images
-					[self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
-                }
-                else if ([ext isEqualToString:@"wav"])
-                {
-                    // Publish sounds
-                    [self publishSoundFile:filePath to:dstFile];
-                }
-                else
-                {
-                    // Publish any other type of file
-                    [self publishRegularFile:filePath to:dstFile];
-                }
+                return NO;
             }
-            else if ([[fileName lowercaseString] hasSuffix:@"ccb"] && !isGeneratedSpriteSheet)
-            {
-                // This is a ccb-file and should be published
 
-                NSString* strippedFileName = [fileName stringByDeletingPathExtension];
-
-                NSString* dstFile = [[outDir stringByAppendingPathComponent:strippedFileName]
-                                             stringByAppendingPathExtension:publishFormat];
-
-                // Add file to list of published files
-                NSString* localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
-                [publishedResources addObject:localFileName];
-
-                if ([dstFile isEqualToString:filePath])
-                {
-                    [warnings addWarningWithDescription:@"Publish will overwrite files in resource directory." isFatal:YES];
-                    return NO;
-                }
-
-                NSDate* srcDate = [CCBFileUtil modificationDateForFile:filePath];
-                NSDate* dstDate = [CCBFileUtil modificationDateForFile:dstFile];
-
-                if (![srcDate isEqualToDate:dstDate])
-                {
-                    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", fileName]];
-
-                    // Remove old file
-                    [fileManager removeItemAtPath:dstFile error:NULL];
-
-                    // Copy the file
-                    BOOL sucess = [self publishCCBFile:filePath to:dstFile];
-                    if (!sucess)
-                    {
-                        return NO;
-                    }
-
-                    [CCBFileUtil setModificationDate:srcDate forFile:dstFile];
-                }
-            }
+            [CCBFileUtil setModificationDate:srcDate forFile:dstFile];
+        }
+    }
     return YES;
 }
 
