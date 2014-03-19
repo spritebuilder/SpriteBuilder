@@ -25,7 +25,8 @@
 @property CCSizeType sizeType;
 
 -(CGPoint) positionRelativeToParent:(CGPoint)position;
-
+-(void) didMoveToParent;
+-(void) updatePositionRecursive;
 @end
 
 
@@ -42,6 +43,7 @@
 
 #define SKNODE_COMPATIBILITY_HEADER \
 @property (nonatomic, readonly)	CGPoint positionAccordingToCocos; \
+-(void) updatePositionRecursive; \
 
 
 // Sprite Kit does the right thing here: child nodes are centered on the position of their parent.
@@ -55,3 +57,14 @@
 -(CGPoint) position { \
 	return _positionAccordingToCocos; \
 } \
+-(void) updatePositionRecursive { \
+	self.position = _positionAccordingToCocos; \
+	for (CCNode* node in _children) { \
+		[node updatePositionRecursive]; \
+	} \
+} \
+-(void) setParent:(CCNode*)parent { \
+    [super setParent:parent]; \
+	[self updatePositionRecursive]; \
+} \
+

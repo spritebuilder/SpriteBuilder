@@ -116,7 +116,8 @@
 {
 	if (_parent == nil)
 	{
-		return position;
+		NSLog(@"'%@' %p has no parent", self.name, self);
+		return self.position;
 	}
 	
 	CGPoint newPosition = position;
@@ -155,9 +156,20 @@
 			break;
 	}
 
-	if ([self.name isEqualToString:@"underline"])
-		NSLog(@"'%@' pos: %@ (was: %@) new: %@ p-anch: %@", self.name, NSStringFromPoint(position), NSStringFromPoint(self.position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
+	NSLog(@"'%@' %p pos: %@ new: %@ p-anch: %@", self.name, self, NSStringFromPoint(position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
 	return newPosition;
+}
+
+-(void) didMoveToParent
+{
+	// update position based on parent values
+	[self positionRelativeToParent:_position];
+	
+	// do so recursively for all child nodes
+	for (CCNode* node in _children)
+	{
+		[node positionRelativeToParent:node.position];
+	}
 }
 
 #pragma mark z Position
