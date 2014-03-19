@@ -47,8 +47,8 @@
 
 + (NSRect) trimmedRectForImage:(CGImageRef)image;
 
-- (void) createTextureAtlasFromDirectoryPaths:(NSArray *)dirs;
-- (void)createTextureAtlas;
+- (NSArray *)createTextureAtlasFromDirectoryPaths:(NSArray *)dirs;
+- (NSArray *)createTextureAtlas;
 
 @end
 
