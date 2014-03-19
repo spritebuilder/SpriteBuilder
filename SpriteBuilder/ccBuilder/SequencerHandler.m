@@ -701,7 +701,7 @@ static SequencerHandler* sharedSequencerHandler;
 	NSMutableArray *result = [NSMutableArray array];
 	for (NSDictionary *dict in droppedNodes)
 	{
-		CCNode *node = dict[ORIGINAL_NODE_KEY];
+		CCNode *node = dict[key];
 		[result addObject:node];
 	}
 	return result;
