@@ -114,7 +114,8 @@
     self.publishResolutionHTML5_height = 320;
     self.publishResolutionHTML5_scale = 1;
 	self.optiPNGParameters = @"";
-    
+    self.publishEnvironment = PublishEnvironmentDevelop;
+
     self.publishAudioQuality_ios = 4;
     self.publishAudioQuality_android = 4;
     
@@ -201,8 +202,8 @@
     
     self.tabletPositionScaleFactor = 2.0f;
 
-	self.runOptiPNGonPublish = [[dict objectForKey:@"runOptiPNGonPublish"] boolValue];
 	self.optiPNGParameters = [dict objectForKey:@"optiPNGParameters"];
+    self.publishEnvironment = [[dict objectForKey:@"publishEnvironment"] integerValue];
 
     NSString* mainCCB = [dict objectForKey:@"javascriptMainCCB"];
     if (!mainCCB) mainCCB = @"";
@@ -286,17 +287,9 @@
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
+	[dict setObject:self.optiPNGParameters forKey:@"optiPNGParameters"];
 
-	[dict setObject:[NSNumber numberWithBool:self.runOptiPNGonPublish] forKey:@"runOptiPNGonPublish"];
-
-	if (!self.optiPNGParameters)
-	{
-		[dict setObject:@"" forKey:@"optiPNGParameters"];
-	}
-	else
-	{
-		[dict setObject:self.optiPNGParameters forKey:@"optiPNGParameters"];
-	}
+    [dict setObject:[NSNumber numberWithInt:self.publishEnvironment] forKey:@"publishEnvironment"];
 
     if (!javascriptMainCCB) self.javascriptMainCCB = @"";
     if (!javascriptBased) self.javascriptMainCCB = @"";

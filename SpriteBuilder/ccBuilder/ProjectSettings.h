@@ -45,6 +45,12 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 	CCBTargetEngineSpriteKit,
 };
 
+typedef enum
+{
+    PublishEnvironmentDevelop = 0,
+    PublishEnvironmentRelease,
+} PublishEnvironment;
+
 @class RMResource;
 @class CCBWarnings;
 
@@ -151,6 +157,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
+@property (nonatomic, assign) NSInteger publishEnvironment;
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
@@ -164,7 +171,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
 
-@property (nonatomic,assign) BOOL runOptiPNGonPublish;
 @property (nonatomic,copy) NSString *optiPNGParameters;
 
 - (id) initWithSerialization:(id)dict;
