@@ -16,7 +16,7 @@
 @property CGFloat xScale;
 @property CGFloat yScale;
 @property CGFloat zRotation;
-@property CGFloat zPosition;
+//@property CGFloat zPosition;
 @property BOOL hidden;
 
 // SKSpriteNode
@@ -26,8 +26,8 @@
 
 -(CGPoint) positionRelativeToParent:(CGPoint)position;
 -(void) didMoveToParent;
--(void) updatePositionRecursive;
 @end
+
 
 
 /** 
@@ -40,6 +40,10 @@
  should rather call a CCNode (class/instance) method implemented in above category, passing in self as the node the code should
  act upon for class methods.
  */
+
+@interface CCNode (Compatibility)
+-(void) updatePositionRecursive;
+@end
 
 #define SKNODE_COMPATIBILITY_HEADER \
 @property (nonatomic, readonly)	CGPoint positionAccordingToCocos; \

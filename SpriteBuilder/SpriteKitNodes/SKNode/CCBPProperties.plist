@@ -145,18 +145,6 @@
 			<string>Alpha</string>
 		</dict>
 		<dict>
-			<key>animatable</key>
-			<true/>
-			<key>defaultSerialization</key>
-			<integer>1</integer>
-			<key>type</key>
-			<string>Float</string>
-			<key>name</key>
-			<string>zPosition</string>
-			<key>displayName</key>
-			<string>z Position</string>
-		</dict>
-		<dict>
 			<key>defaultSerialization</key>
 			<integer>1</integer>
 			<key>animatable</key>

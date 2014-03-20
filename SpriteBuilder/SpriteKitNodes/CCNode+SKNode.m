@@ -174,6 +174,7 @@
 
 #pragma mark z Position
 
+/*
 @dynamic zPosition;
 -(void) setZPosition:(CGFloat)z
 {
@@ -187,5 +188,6 @@
 {
 	return (CGFloat)self.vertexZ;
 }
+*/
 
 @end
