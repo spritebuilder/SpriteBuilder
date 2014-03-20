@@ -113,8 +113,6 @@
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
 		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
-		83DC65F418D898F80028EF72 /* PreferenceOptiPNG.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65EE18D898F80028EF72 /* PreferenceOptiPNG.xib */; };
-		83DC65F518D898F80028EF72 /* PreferenceOptiPNGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65F018D898F80028EF72 /* PreferenceOptiPNGViewController.m */; };
 		83DC65F618D898F80028EF72 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65F118D898F80028EF72 /* Preferences.xib */; };
 		83DC65F718D898F80028EF72 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65F318D898F80028EF72 /* PreferencesController.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
@@ -1172,9 +1170,6 @@
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
-		83DC65EE18D898F80028EF72 /* PreferenceOptiPNG.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceOptiPNG.xib; sourceTree = "<group>"; };
-		83DC65EF18D898F80028EF72 /* PreferenceOptiPNGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceOptiPNGViewController.h; sourceTree = "<group>"; };
-		83DC65F018D898F80028EF72 /* PreferenceOptiPNGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceOptiPNGViewController.m; sourceTree = "<group>"; };
 		83DC65F118D898F80028EF72 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		83DC65F218D898F80028EF72 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		83DC65F318D898F80028EF72 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
@@ -2952,9 +2947,6 @@
 		83DC65ED18D898E00028EF72 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				83DC65EE18D898F80028EF72 /* PreferenceOptiPNG.xib */,
-				83DC65EF18D898F80028EF72 /* PreferenceOptiPNGViewController.h */,
-				83DC65F018D898F80028EF72 /* PreferenceOptiPNGViewController.m */,
 				83DC65F118D898F80028EF72 /* Preferences.xib */,
 				83DC65F218D898F80028EF72 /* PreferencesController.h */,
 				83DC65F318D898F80028EF72 /* PreferencesController.m */,
@@ -5139,7 +5131,6 @@
 				B7AC69CB17A70A4B0041B8BD /* inspector-props.png in Resources */,
 				92154AC918A5531800BD215C /* InfoPlist.strings in Resources */,
 				B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */,
-				83DC65F418D898F80028EF72 /* PreferenceOptiPNG.xib in Resources */,
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
 				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
 				926D13C318B5778300582959 /* joint-distance-handle-short@2x.png in Resources */,
@@ -5577,7 +5568,6 @@
 				E3E8B4A1157CC57E00373983 /* SequencerScrubberSelectionView.m in Sources */,
 				E3E8B4A8157CD67000373983 /* SequencerSequence.m in Sources */,
 				926D13D318B57A4900582959 /* CCScaleFreeNode.m in Sources */,
-				83DC65F518D898F80028EF72 /* PreferenceOptiPNGViewController.m in Sources */,
 				E36ECCE5158648EE003C177E /* SequencerNodeProperty.m in Sources */,
 				E36ECD0D15868F57003C177E /* SequencerKeyframe.m in Sources */,
 				E3A0ED5A159119E7000BDF4B /* SequencerSettingsWindow.m in Sources */,
