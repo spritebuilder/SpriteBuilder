@@ -10,8 +10,8 @@
 #import "BFColorPickerPopover.h"
 #import "BFColorPickerViewController.h"
 
-static inline float pow2(float x) {return x*x;}
-static inline NSString * NSStringFromNSEdgeInsets(NSEdgeInsets i) {return [NSString stringWithFormat:@"top: %f, left: %f, bottom: %f, right: %f", i.top, i.left, i.bottom, i.right];}
+//static inline float pow2(float x) {return x*x;}
+//static inline NSString * NSStringFromNSEdgeInsets(NSEdgeInsets i) {return [NSString stringWithFormat:@"top: %f, left: %f, bottom: %f, right: %f", i.top, i.left, i.bottom, i.right];}
 
 @interface BFColorPickerViewController ()
 @property (nonatomic, weak) NSView *colorPanelView;
