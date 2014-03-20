@@ -3033,9 +3033,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuCleanCacheDirectories:(id)sender
 {
-    projectSettings.needRepublish = YES;
-    [projectSettings store];
-    [CCBPublisher cleanAllCacheDirectories];
+    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
 }
 
 // Temporary utility function until new publish system is in place

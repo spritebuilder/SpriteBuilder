@@ -553,7 +553,7 @@
     {
         return YES;
     }
-    
+
     // Copy file and make sure modification date is the same as for src file
     [[NSFileManager defaultManager] removeItemAtPath:dstPath error:NULL];
     [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:dstPath error:NULL];
@@ -762,7 +762,12 @@
     if ([[filePath pathExtension] isEqualToString:@"bmfont"])
     {
         // This is a bitmap font, just copy it
-        [self publishRegularFile:filePath to:[outDir stringByAppendingPathComponent:directory]];
+        NSString *bmFontOutDir = [outDir stringByAppendingPathComponent:directory];
+        [self publishRegularFile:filePath to:bmFontOutDir];
+
+        NSArray *pngFiles = [self searchForPNGFilesInDirectory:bmFontOutDir];
+        [_publishedPNGFiles addObjectsFromArray:pngFiles];
+
         return;
     }
 
@@ -803,6 +808,36 @@
     }
 
     [self publishDirectory:filePath subPath:childPath];
+}
+
+- (NSArray *)searchForPNGFilesInDirectory:(NSString *)dir
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[NSURL URLWithString:dir]
+                                          includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
+                                                             options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                        errorHandler:^BOOL(NSURL *url, NSError *error)
+    {
+        NSLog(@"[Error] %@ (%@)", error, url);
+        return YES;
+    }];
+
+    NSMutableArray *mutableFileURLs = [NSMutableArray array];
+    for (NSURL *fileURL in enumerator)
+    {
+        NSString *filename;
+        [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
+
+        NSNumber *isDirectory;
+        [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
+
+        if (![isDirectory boolValue] && [[fileURL relativeString] hasSuffix:@"png"])
+        {
+            [mutableFileURLs addObject:fileURL];
+        }
+    }
+
+    return mutableFileURLs;
 }
 
 - (NSArray *)filesOfAutoDirectory:(NSString *)publishDirectory fileManager:(NSFileManager *)fileManager
@@ -1489,7 +1524,11 @@
 		NSLog(@"[PUBLISH] Start...");
         NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
 
-        // Do actual publish
+        if (projectSettings.publishEnvironment == PublishEnvironmentRelease)
+        {
+            [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+        }
+
         [self publish_];
 
         [self postProcessPublishedPNGFiles];
@@ -1507,8 +1546,12 @@
 
 - (void)postProcessPublishedPNGFiles
 {
-    // TODO: don't reprocess skipped png files when they are uptodate
     // TODO: font files
+
+    if (projectSettings.publishEnvironment == PublishEnvironmentDevelop)
+    {
+        return;
+    }
 
     NSString *pathToOptiPNG = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"optipng"];
 
@@ -1518,39 +1561,40 @@
         return;
     }
 
-    if (!projectSettings.runOptiPNGonPublish)
-    {
-        return;
-    }
-
     for (NSString *pngFile in _publishedPNGFiles)
     {
-        // TODO: update for progress window
-        NSTask *task = [[NSTask alloc] init];
-       	[task setLaunchPath:pathToOptiPNG];
-       	[task setArguments:@[projectSettings.optiPNGParameters, pngFile]];
-
-       	NSPipe *pipe = [NSPipe pipe];
-       	[task setStandardOutput:pipe];
-
-       	NSFileHandle *file = [pipe fileHandleForReading];
-
-        @try
-        {
-       	    [task launch];
-            [task waitUntilExit];
-        }
-        @catch (NSException *ex)
-        {
-            NSLog(@"%@", ex);
-            continue;
-        }
-
-       	NSData *data = [file readDataToEndOfFile];
-       	NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-        NSLog(@"%@", string);
+        [self optimizeImageFile:pngFile pathToOptiPNG:pathToOptiPNG];
     }
+}
+
+- (void)optimizeImageFile:(NSString *)pngFile pathToOptiPNG:(NSString *)pathToOptiPNG
+{
+    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Optimizing %@...", [pngFile lastPathComponent]]];
+
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:pathToOptiPNG];
+    [task setArguments:@[projectSettings.optiPNGParameters, pngFile]];
+
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput:pipe];
+    [task setStandardError:pipe];
+
+    NSFileHandle *file = [pipe fileHandleForReading];
+
+    @try
+    {
+        [task launch];
+        [task waitUntilExit];
+    }
+    @catch (NSException *ex)
+    {
+        NSLog(@"%@", ex);
+    }
+
+    NSData *data = [file readDataToEndOfFile];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+    // NSLog(@"%@", string);
 }
 
 - (void)flagFilesWithWarningsAsDirty
@@ -1575,8 +1619,13 @@
     [ad publisher:self finishedWithWarnings:warnings];
 }
 
-+ (void) cleanAllCacheDirectories
++ (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings
 {
+    NSAssert(projectSettings != nil, @"Project settings should not be nil.");
+
+    projectSettings.needRepublish = YES;
+    [projectSettings store];
+
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* ccbChacheDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"];
     [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
