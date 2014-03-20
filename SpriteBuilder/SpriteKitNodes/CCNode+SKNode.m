@@ -116,7 +116,7 @@
 {
 	if (_parent == nil)
 	{
-		NSLog(@"'%@' %p has no parent", self.name, self);
+		//NSLog(@"'%@' %p has no parent", self.name, self);
 		return self.position;
 	}
 	
@@ -156,7 +156,7 @@
 			break;
 	}
 
-	NSLog(@"'%@' %p pos: %@ new: %@ p-anch: %@", self.name, self, NSStringFromPoint(position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
+	//NSLog(@"'%@' %p pos: %@ new: %@ p-anch: %@", self.name, self, NSStringFromPoint(position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
 	return newPosition;
 }
 
