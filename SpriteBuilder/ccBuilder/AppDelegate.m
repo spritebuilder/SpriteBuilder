@@ -112,15 +112,12 @@
 #import <objc/message.h>
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
-#import "PreferencesController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
 @interface AppDelegate()
 
 - (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
-
-@property (nonatomic) PreferencesController *preferencesController;
 
 @end
 
@@ -2532,16 +2529,6 @@ static BOOL hideAllToNextSeparator;
     [NodeGraphPropertySetter setNodeGraphForNode:node andProperty:@"ccbFile" withFile:ccbFile parentSize:parent.contentSize];
     [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) type:CCPositionTypePoints forNode:node prop:@"position"];
     [self addCCObject:node toParent:parent];
-}
-
-
-- (IBAction)openPreferences:(id)sender
-{
-	if ( ! [_preferencesController.window isVisible])
-	{
-		self.preferencesController = [[PreferencesController alloc] init];
-	}
-	[_preferencesController.window makeKeyAndOrderFront:self];
 }
 
 - (IBAction) copy:(id) sender

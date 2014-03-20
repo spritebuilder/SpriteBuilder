@@ -113,8 +113,6 @@
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
 		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
-		83DC65F618D898F80028EF72 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83DC65F118D898F80028EF72 /* Preferences.xib */; };
-		83DC65F718D898F80028EF72 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65F318D898F80028EF72 /* PreferencesController.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
@@ -1170,9 +1168,6 @@
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
-		83DC65F118D898F80028EF72 /* Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
-		83DC65F218D898F80028EF72 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
-		83DC65F318D898F80028EF72 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
 		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
@@ -2780,7 +2775,6 @@
 			children = (
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
-				83DC65ED18D898E00028EF72 /* Preferences */,
 				D2E0167218D782B500927430 /* SpriteBuilderCommands */,
 				83F8672F18D1DCBD007441E4 /* Constants */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
@@ -2942,16 +2936,6 @@
 				80AD799F1863871200B653B7 /* PVRTTexture.h */,
 			);
 			path = Include;
-			sourceTree = "<group>";
-		};
-		83DC65ED18D898E00028EF72 /* Preferences */ = {
-			isa = PBXGroup;
-			children = (
-				83DC65F118D898F80028EF72 /* Preferences.xib */,
-				83DC65F218D898F80028EF72 /* PreferencesController.h */,
-				83DC65F318D898F80028EF72 /* PreferencesController.m */,
-			);
-			name = Preferences;
 			sourceTree = "<group>";
 		};
 		83F8672F18D1DCBD007441E4 /* Constants */ = {
@@ -4843,7 +4827,6 @@
 				92DC2160188073C500C8DCCD /* select-crosshair.png in Resources */,
 				92DC2161188073C500C8DCCD /* select-skew.png in Resources */,
 				92DC2162188073C500C8DCCD /* select-rotation.png in Resources */,
-				83DC65F618D898F80028EF72 /* Preferences.xib in Resources */,
 				929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 				92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */,
 				92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */,
@@ -5513,7 +5496,6 @@
 				E35DBBE414F3DD0B0070A6E4 /* InspectorFontTTF.m in Sources */,
 				E35DBBFE14F3EE410070A6E4 /* InspectorFloat.m in Sources */,
 				E35DBC1E14F4DF050070A6E4 /* InspectorStartStop.m in Sources */,
-				83DC65F718D898F80028EF72 /* PreferencesController.m in Sources */,
 				921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */,
 				E35DBC2314F4ED980070A6E4 /* InspectorIntegerLabeled.m in Sources */,
 				E35DBC2814F4FF410070A6E4 /* InspectorTexture.m in Sources */,
