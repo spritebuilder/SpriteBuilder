@@ -1507,22 +1507,19 @@
 
 - (void)postProcessPublishedPNGFiles
 {
-    // TODO: test sandbox
     // TODO: don't reprocess skipped png files when they are uptodate
+    // TODO: font files
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *pathToOptiPNG = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"optipng"];
 
-    NSString *pathToOptiPNG = [userDefaults objectForKey:PREFERENCES_OPTIPNG_INSTALLATION_PATH];
-
-    if (!projectSettings.runOptiPNGonPublish)
+    if (!pathToOptiPNG)
     {
+        NSLog(@"ERROR: optipng was not found.");
         return;
     }
 
-    if (![fileManager isExecutableFileAtPath:pathToOptiPNG])
+    if (!projectSettings.runOptiPNGonPublish)
     {
-        // TODO: add warning
         return;
     }
 
@@ -1538,7 +1535,16 @@
 
        	NSFileHandle *file = [pipe fileHandleForReading];
 
-       	[task launch];
+        @try
+        {
+       	    [task launch];
+            [task waitUntilExit];
+        }
+        @catch (NSException *ex)
+        {
+            NSLog(@"%@", ex);
+            continue;
+        }
 
        	NSData *data = [file readDataToEndOfFile];
        	NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
