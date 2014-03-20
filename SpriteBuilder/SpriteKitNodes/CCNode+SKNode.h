@@ -17,7 +17,7 @@
 @property CGFloat yScale;
 @property CGFloat zRotation;
 //@property CGFloat zPosition;
-@property BOOL hidden;
+@property BOOL nodeHidden;
 
 // SKSpriteNode
 @property CGFloat colorBlendFactor;

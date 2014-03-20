@@ -72,11 +72,11 @@
 	return self.rotation;
 }
 
--(void) setHidden:(BOOL)hidden
+-(void) setNodeHidden:(BOOL)hidden
 {
 	self.visible = !hidden;
 }
--(BOOL) hidden
+-(BOOL) nodeHidden
 {
 	return !self.visible;
 }
