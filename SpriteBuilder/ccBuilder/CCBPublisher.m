@@ -255,13 +255,6 @@
 
 - (BOOL)publishImageFile:(NSString *)srcPath to:(NSString *)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir resolution:(NSString *)resolution
 {
-/*
-	NSLog(@"--------------------------------------------------------------");
-	NSLog(@"isSheet: %d, res %@ ", isSpriteSheet, resolution);
-	NSLog(@"outDir: %@", outDir);
-	NSLog(@"srcPath: %@", srcPath);
-	NSLog(@"dstPath: %@", srcPath);
-*/
     NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
 
     if (isSpriteSheet
@@ -818,7 +811,6 @@
                                                              options:NSDirectoryEnumerationSkipsHiddenFiles
                                                         errorHandler:^BOOL(NSURL *url, NSError *error)
     {
-        NSLog(@"[Error] %@ (%@)", error, url);
         return YES;
     }];
 
@@ -1531,7 +1523,7 @@
 
         [self publish_];
 
-        [self postProcessPublishedPNGFiles];
+        [self postProcessPublishedPNGFilesWithOptiPNG];
 
 		[self flagFilesWithWarningsAsDirty];
 
@@ -1544,10 +1536,8 @@
     });
 }
 
-- (void)postProcessPublishedPNGFiles
+- (void)postProcessPublishedPNGFilesWithOptiPNG
 {
-    // TODO: font files
-
     if (projectSettings.publishEnvironment == PublishEnvironmentDevelop)
     {
         return;
@@ -1576,25 +1566,35 @@
     [task setArguments:@[projectSettings.optiPNGParameters, pngFile]];
 
     NSPipe *pipe = [NSPipe pipe];
+    NSPipe *pipeErr = [NSPipe pipe];
     [task setStandardOutput:pipe];
-    [task setStandardError:pipe];
+    [task setStandardError:pipeErr];
 
     NSFileHandle *file = [pipe fileHandleForReading];
+    NSFileHandle *fileErr = [pipeErr fileHandleForReading];
+
+    int status = 0;
 
     @try
     {
         [task launch];
         [task waitUntilExit];
+        status = [task terminationStatus];
     }
     @catch (NSException *ex)
     {
         NSLog(@"%@", ex);
+        return;
     }
 
-    NSData *data = [file readDataToEndOfFile];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (status)
+    {
+        NSData *data = [fileErr readDataToEndOfFile];
+        NSString *stdErrOutput = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *warningDescription = [NSString stringWithFormat:@"optipng error: %@", stdErrOutput];
 
-    // NSLog(@"%@", string);
+        [warnings addWarningWithDescription:warningDescription];
+    }
 }
 
 - (void)flagFilesWithWarningsAsDirty
