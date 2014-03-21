@@ -987,8 +987,10 @@
     float scaleFactor = dstScale/srcScale;
     
     // Load src image
-		CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:autoFile], NULL);
-		CGImageRef imageSrc = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+	CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:autoFile], NULL);
+	CGImageRef imageSrc = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+	CFRelease(image_source);
+	image_source = nil;
 		    
     int wSrc = CGImageGetWidth(imageSrc);
     int hSrc = CGImageGetHeight(imageSrc);
