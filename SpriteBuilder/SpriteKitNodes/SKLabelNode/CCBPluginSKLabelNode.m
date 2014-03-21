@@ -13,6 +13,7 @@
 	NSInteger _verticalAlignmentMode;
 	NSInteger _horizontalAlignmentMode;
 }
+SKNODE_COMPATIBILITY_CODE
 
 -(id) init
 {

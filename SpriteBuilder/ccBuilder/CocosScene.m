@@ -1097,7 +1097,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Clicks inside objects
     [nodesAtSelectionPt removeAllObjects];
     
-    [[jointsLayer.children[0] children] forEach:^(CCNode * jointNode, int idx) {
+    [[jointsLayer.children.firstObject children] forEach:^(CCNode * jointNode, int idx) {
         [self nodesUnderPt:pos rootNode:jointNode nodes:nodesAtSelectionPt];
     }];
     
