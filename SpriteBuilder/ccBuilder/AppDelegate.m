@@ -2304,24 +2304,33 @@ static BOOL hideAllToNextSeparator;
 	NodeInfo *parentInfo = parent.userObject;
     NodeInfo *childInfo = child.userObject;
 
-	if (!parentInfo.plugIn.canHaveChildren && error)
+	if (!parentInfo.plugIn.canHaveChildren)
 	{
-		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add children to a %@", parentInfo.plugIn.nodeClassName] };
-		*error = [NSError errorWithDomain:SBErrorDomain code:SBNodeDoesNotSupportChildrenError userInfo:errorDictionary];
+		if (error)
+		{
+			NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add children to a %@", parentInfo.plugIn.nodeClassName] };
+			*error = [NSError errorWithDomain:SBErrorDomain code:SBNodeDoesNotSupportChildrenError userInfo:errorDictionary];
+		}
 		return NO;
 	}
 
-	if ([self doesToBeAddedChildRequireSpecificParent:child parent:parent] && error)
+	if ([self doesToBeAddedChildRequireSpecificParent:child parent:parent])
 	{
-		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A %@ must be added to a %@", childInfo.plugIn.nodeClassName, childInfo.plugIn.requireParentClass] };
-		*error = [NSError errorWithDomain:SBErrorDomain code:SBChildRequiresSpecificParentError userInfo:errorDictionary];
+		if (error)
+		{
+			NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A %@ must be added to a %@", childInfo.plugIn.nodeClassName, childInfo.plugIn.requireParentClass] };
+			*error = [NSError errorWithDomain:SBErrorDomain code:SBChildRequiresSpecificParentError userInfo:errorDictionary];
+		}
 		return NO;
 	}
 
-	if ([self doesParentPermitChildToBeAdded:parent child:child] && error)
+	if ([self doesParentPermitChildToBeAdded:parent child:child])
 	{
-		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add a %@ to a %@", childInfo.plugIn.nodeClassName, parentInfo.plugIn.nodeClassName] };
-		*error = [NSError errorWithDomain:SBErrorDomain code:SBParentDoesNotPermitSpecificChildrenError userInfo:errorDictionary];
+		if (error)
+		{
+			NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add a %@ to a %@", childInfo.plugIn.nodeClassName, parentInfo.plugIn.nodeClassName] };
+			*error = [NSError errorWithDomain:SBErrorDomain code:SBParentDoesNotPermitSpecificChildrenError userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	return YES;
