@@ -19,6 +19,8 @@
 {
     CCSprite * joint;
     CCSprite * jointAnchor;
+    
+
 }
 
 @synthesize anchorA;
@@ -55,13 +57,15 @@
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
-        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-sel.png"];
-        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor-sel.png"];
+
+        joint.spriteFrame =       [self frameWithImageNamed:@"joint-pivot-sel.png"];
+        jointAnchor.spriteFrame = [self frameWithImageNamed:@"joint-anchor-sel.png"];
     }
+    //If its not selected na
     else
     {
-        joint.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot.png"];
-        jointAnchor.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-anchor.png"];
+        joint.spriteFrame = [self frameWithImageNamed:@"joint-pivot.png"];
+        jointAnchor.spriteFrame = [self frameWithImageNamed:@"joint-anchor.png"];
     }
     
     [super updateSelectionUI];

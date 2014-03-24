@@ -50,6 +50,8 @@ typedef enum
     CCNode    *bodyB;
     
     SceneGraph * sceneGraph;
+    
+    NSMutableDictionary * spriteFrameCache;
 }
 
 @property CCNode * bodyA;
@@ -68,7 +70,7 @@ typedef enum
 -(void)refreshOutletStatus;
 -(CGPoint)outletWorldPos:(JointHandleType)idx;
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType;
-
+-(CCSpriteFrame*)frameWithImageNamed:(NSString*)name;
 
 -(void)fixupReferences;
 

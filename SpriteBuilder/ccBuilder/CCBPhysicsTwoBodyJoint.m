@@ -27,6 +27,10 @@ static const float kDefaultLength = 58.0f;
 {
     CCSprite        * anchorHandleA;
     CCSprite        * anchorHandleB;
+    
+    CCSpriteFrame   * distanceJointFrame;
+    CCSpriteFrame   * distanceJointFrameSel;
+    
 }
 @end
 
@@ -50,6 +54,8 @@ static const float kDefaultLength = 58.0f;
     [scaleFreeNode addChild:anchorHandleB];
 
     
+    distanceJointFrameSel = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
+    distanceJointFrame    = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
 }
 
 
@@ -91,11 +97,11 @@ static const float kDefaultLength = 58.0f;
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
-        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
+        jointBody.spriteFrame = distanceJointFrameSel;
     }
     else //Unseleted
     {
-        jointBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
+        jointBody.spriteFrame = distanceJointFrame;
     }
 
     [super updateSelectionUI];
