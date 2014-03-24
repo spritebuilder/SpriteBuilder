@@ -70,7 +70,7 @@
         NSRect imageFrame;
         imageFrame.size = [_imageAlt size];
         imageFrame.origin = cellFrame.origin;
-        imageFrame.origin.x += cellFrame.size.width - _imageAlt.size.width + 3;
+        imageFrame.origin.x += cellFrame.size.width - 3.0;
         imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
         return imageFrame;
     }
@@ -84,6 +84,8 @@
 {
     NSRect textFrame, imageFrame;
     NSDivideRect (aRect, &imageFrame, &textFrame, 3 + [_image size].width, NSMinXEdge);
+    textFrame.origin.y += 4.0;
+    textFrame.origin.x += 1.0;
     [super editWithFrame: textFrame inView: controlView editor:textObj delegate:anObject event: theEvent];
 }
 
@@ -91,6 +93,8 @@
 {
     NSRect textFrame, imageFrame;
     NSDivideRect (aRect, &imageFrame, &textFrame, 3 + [_image size].width, NSMinXEdge);
+    textFrame.origin.y += 4.0;
+    textFrame.origin.x += 1.0;
     [super selectWithFrame: textFrame inView: controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
@@ -131,9 +135,24 @@
     }
 
     imageFrame.origin.x += 3;
+    imageFrame.origin.y += 2;
 
     [_image setFlipped:[controlView isFlipped]];
     [_image drawAtPoint:imageFrame.origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+}
+
+- (NSRect)titleRectForBounds:(NSRect)theRect
+{
+    NSRect titleFrame = [super titleRectForBounds:theRect];
+    titleFrame.origin.y += 4.0;
+    titleFrame.origin.x += 3.0;
+    return titleFrame;
+}
+
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+    NSRect titleRect = [self titleRectForBounds:cellFrame];
+    [[self attributedStringValue] drawInRect:titleRect];
 }
 
 - (NSSize)cellSize
