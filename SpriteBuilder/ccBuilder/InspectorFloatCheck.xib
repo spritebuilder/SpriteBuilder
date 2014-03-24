@@ -67,7 +67,11 @@
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="zes-En-FBg"/>
+                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="qqt-zg-8b1">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="value" keyPath="self.enable" id="n5E-oq-iQz"/>
                     </connections>
                 </button>
