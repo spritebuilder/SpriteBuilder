@@ -19,5 +19,12 @@
 }
 
 @property (nonatomic,weak) CCNode* node;
-
 @end
+
+
+@interface SequencerLockedCell : SequencerButtonCell
+@end
+
+@interface SequencerHiddenCell : SequencerButtonCell
+@end
+

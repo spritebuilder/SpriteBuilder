@@ -410,6 +410,15 @@ static SequencerHandler* sharedSequencerHandler;
     
     if ([tableColumn.identifier isEqualToString:@"locked"])
     {
+        //only joints inherit their locked state from the root joint object.
+        if(node.plugIn.isJoint)
+        {
+            if(node.parent.locked)
+            {
+                return @(YES);
+            }
+        }
+        
         return @(node.locked);
     }
     
@@ -434,7 +443,6 @@ static SequencerHandler* sharedSequencerHandler;
         joints.node.locked = locked;
         [outlineView reloadItem:joints reloadChildren:YES];
         return;
-
     }
 }
 
@@ -1056,6 +1064,15 @@ static SequencerHandler* sharedSequencerHandler;
 	SequencerButtonCell * buttonCell = cell;
 	[buttonCell setTransparent:NO];
 	buttonCell.node = node;
+    
+    [buttonCell setEnabled:YES];
+    if(node.plugIn.isJoint)
+    {
+        if(node.parent.locked)
+        {
+            [buttonCell setEnabled:NO];
+        }
+    }
 }
 
 - (void)willDisplayHiddenCell:(id)cell node:(CCNode *)node

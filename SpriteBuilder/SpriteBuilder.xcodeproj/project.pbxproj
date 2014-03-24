@@ -143,6 +143,7 @@
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
+		9254805A18D913C500236DED /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */; };
 		926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D139418B2DC2E00582959 /* NSDictionary+Query.m */; };
 		926D13C018B5778300582959 /* joint-distance-handle-long.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B418B5778300582959 /* joint-distance-handle-long.png */; };
@@ -1199,6 +1200,7 @@
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
+		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
 		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
 		926D13B418B5778300582959 /* joint-distance-handle-long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-distance-handle-long.png"; sourceTree = "<group>"; };
@@ -2587,6 +2589,7 @@
 				80F908FF183C186200A714FC /* seq-visible-faint.png */,
 				8045F12D183AD6D30082BD94 /* seq-notset.png */,
 				8045F134183AD9B90082BD94 /* seq-locked.png */,
+				9254805918D913C500236DED /* seq-locked-faint.png */,
 				E334A4DD170CF475001604F7 /* toolbar-bottom-noborder.png */,
 				E38DAB21165AC18800EA24E4 /* reshandler-spritesheet-folder.png */,
 				5811305F1639C52000A86D70 /* seq-startmarker.png */,
@@ -5335,6 +5338,7 @@
 				92B792CC18C92C60007DF895 /* Icon.png in Resources */,
 				92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */,
 				92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
+				9254805A18D913C500236DED /* seq-locked-faint.png in Resources */,
 				929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

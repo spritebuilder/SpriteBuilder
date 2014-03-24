@@ -9,6 +9,7 @@
 #import "SequencerButtonCell.h"
 #import "SequencerHandler.h"
 
+
 @implementation SequencerButtonCell
 @synthesize node;
 
@@ -31,6 +32,10 @@
     [super drawWithFrame:cellFrame inView:controlView];
 }
 
+@end
+
+@implementation SequencerHiddenCell
+
 -(void)setEnabled:(BOOL)flag
 {
     [super setEnabled:flag];
@@ -43,6 +48,25 @@
     {
         self.image = [NSImage imageNamed:@"seq-visible.png"];
     }
+}
+
+@end
+
+@implementation SequencerLockedCell
+
+-(void)setEnabled:(BOOL)flag
+{
+    [super setEnabled:flag];
+    
+    if(![self isEnabled])
+    {
+        self.image = [NSImage imageNamed:@"seq-locked-faint.png"];
+    }
+    else
+    {
+        self.image = [NSImage imageNamed:@"seq-locked.png"];
+    }
     
 }
 @end
+
