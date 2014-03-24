@@ -88,7 +88,10 @@
         [self setIgnoresMouseEvents:YES];
         
         outletView = [[OutletDrawView alloc] initWithFrame:CGRectMake(0,0,contentRect.size.width,contentRect.size.height)];
-        [outletView.layer setBackgroundColor: CGColorCreateGenericRGB(1.0, 0.0, 0.0, 1.0)];
+		CGColorRef color = CGColorCreateGenericRGB(1.0, 0.0, 0.0, 1.0);
+        [outletView.layer setBackgroundColor:color];
+		CGColorRelease(color);
+		color = nil;
 
         [self setFrame:contentRect display:YES];
         [self setContentView:outletView];

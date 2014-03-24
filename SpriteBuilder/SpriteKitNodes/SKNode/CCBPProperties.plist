@@ -45,7 +45,7 @@
 			<key>type</key>
 			<string>Check</string>
 			<key>name</key>
-			<string>hidden</string>
+			<string>nodeHidden</string>
 			<key>displayName</key>
 			<string>Hidden</string>
 		</dict>
@@ -140,7 +140,7 @@
 			<key>type</key>
 			<string>Float</string>
 			<key>name</key>
-			<string>opacity</string>
+			<string>alpha</string>
 			<key>displayName</key>
 			<string>Alpha</string>
 		</dict>

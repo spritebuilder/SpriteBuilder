@@ -98,8 +98,10 @@
 - (void) dealloc
 {
 	[self stop];
-	self.offeredNetServices		= nil;
-	self.connectedNetServices	= nil;
+	[offeredNetServices release];
+	offeredNetServices		= nil;
+	[connectedNetServices release];
+	connectedNetServices	= nil;
 	[super dealloc];
 }
 

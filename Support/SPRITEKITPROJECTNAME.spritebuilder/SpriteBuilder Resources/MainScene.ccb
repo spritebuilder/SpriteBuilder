@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>UUID</key>
-	<integer>11</integer>
+	<integer>19</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>currentSequenceId</key>
 	<integer>0</integer>
 	<key>docDimensionsType</key>
@@ -40,7 +40,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>SKColorSpriteNode</string>
+				<string>background color</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -53,7 +53,7 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string></string>
+						<string>bg</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -76,10 +76,10 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>512</real>
-							<real>384</real>
-							<integer>0</integer>
-							<integer>0</integer>
+							<real>1</real>
+							<real>1</real>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -94,6 +94,14 @@
 							<false/>
 							<integer>0</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>zPosition</string>
+						<key>type</key>
+						<string>Float</string>
+						<key>value</key>
+						<real>-10</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -113,116 +121,9 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>0.40000000596046448</real>
-							<real>0.80000001192092896</real>
+							<real>0.35761809349060059</real>
+							<real>0.69833409786224365</real>
 							<real>1</real>
-							<real>1</real>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>colorBlendFactor</string>
-						<key>type</key>
-						<string>Float</string>
-						<key>value</key>
-						<real>1</real>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>opacity</string>
-						<key>type</key>
-						<string>Float</string>
-						<key>value</key>
-						<real>1</real>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>UUID</key>
-				<integer>8</integer>
-				<key>baseClass</key>
-				<string>SKColorSpriteNode</string>
-				<key>children</key>
-				<array/>
-				<key>customClass</key>
-				<string></string>
-				<key>displayName</key>
-				<string>SKColorSpriteNode</string>
-				<key>memberVarAssignmentName</key>
-				<string></string>
-				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
-				<key>properties</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>name</string>
-						<key>type</key>
-						<string>StringSimple</string>
-						<key>value</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>position</string>
-						<key>type</key>
-						<string>Position</string>
-						<key>value</key>
-						<array>
-							<real>91</real>
-							<real>144</real>
-							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>360</real>
-							<real>16</real>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>scale</string>
-						<key>type</key>
-						<string>ScaleLock</string>
-						<key>value</key>
-						<array>
-							<real>1</real>
-							<real>1</real>
-							<false/>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>anchorPoint</string>
-						<key>type</key>
-						<string>Point</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>color</string>
-						<key>type</key>
-						<string>Color4</string>
-						<key>value</key>
-						<array>
-							<real>0.027450982481241226</real>
-							<real>0.5058823823928833</real>
-							<real>0.95686280727386475</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -250,11 +151,269 @@
 				<key>baseClass</key>
 				<string>SKLabelNode</string>
 				<key>children</key>
-				<array/>
+				<array>
+					<dict>
+						<key>UUID</key>
+						<integer>8</integer>
+						<key>baseClass</key>
+						<string>SKColorSpriteNode</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string></string>
+						<key>displayName</key>
+						<string>underline color</string>
+						<key>memberVarAssignmentName</key>
+						<string></string>
+						<key>memberVarAssignmentType</key>
+						<integer>0</integer>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>name</string>
+								<key>type</key>
+								<string>StringSimple</string>
+								<key>value</key>
+								<string>underline</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>0.0</real>
+									<real>-6</real>
+									<integer>0</integer>
+									<integer>0</integer>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>contentSize</string>
+								<key>type</key>
+								<string>Size</string>
+								<key>value</key>
+								<array>
+									<real>350</real>
+									<real>10</real>
+									<integer>0</integer>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>scale</string>
+								<key>type</key>
+								<string>ScaleLock</string>
+								<key>value</key>
+								<array>
+									<real>1</real>
+									<real>1</real>
+									<false/>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>opacity</string>
+								<key>type</key>
+								<string>Float</string>
+								<key>value</key>
+								<real>0.20000000298023224</real>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>zPosition</string>
+								<key>type</key>
+								<string>Float</string>
+								<key>value</key>
+								<real>-1</real>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>anchorPoint</string>
+								<key>type</key>
+								<string>Point</string>
+								<key>value</key>
+								<array>
+									<real>0.5</real>
+									<real>0.5</real>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>color</string>
+								<key>type</key>
+								<string>Color4</string>
+								<key>value</key>
+								<array>
+									<real>0.20000000298023224</real>
+									<real>0.20000000298023224</real>
+									<real>0.20000000298023224</real>
+									<real>0.20000000298023224</real>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>colorBlendFactor</string>
+								<key>type</key>
+								<string>Float</string>
+								<key>value</key>
+								<real>1</real>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>opacity</string>
+								<key>type</key>
+								<string>Float</string>
+								<key>value</key>
+								<real>0.20000000298023224</real>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>UUID</key>
+						<integer>9</integer>
+						<key>baseClass</key>
+						<string>SKLabelNode</string>
+						<key>children</key>
+						<array/>
+						<key>customClass</key>
+						<string></string>
+						<key>displayName</key>
+						<string>"Kit" label</string>
+						<key>memberVarAssignmentName</key>
+						<string></string>
+						<key>memberVarAssignmentType</key>
+						<integer>0</integer>
+						<key>properties</key>
+						<array>
+							<dict>
+								<key>name</key>
+								<string>name</string>
+								<key>type</key>
+								<string>StringSimple</string>
+								<key>value</key>
+								<string>"kit"</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>position</string>
+								<key>type</key>
+								<string>Position</string>
+								<key>value</key>
+								<array>
+									<real>-15</real>
+									<real>40</real>
+									<integer>0</integer>
+									<integer>0</integer>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>scale</string>
+								<key>type</key>
+								<string>ScaleLock</string>
+								<key>value</key>
+								<array>
+									<real>1</real>
+									<real>1</real>
+									<false/>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>rotation</string>
+								<key>type</key>
+								<string>Degrees</string>
+								<key>value</key>
+								<real>311</real>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>opacity</string>
+								<key>type</key>
+								<string>Float</string>
+								<key>value</key>
+								<real>0.69999998807907104</real>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>zPosition</string>
+								<key>type</key>
+								<string>Float</string>
+								<key>value</key>
+								<real>0.0</real>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>text</string>
+								<key>type</key>
+								<string>StringSimple</string>
+								<key>value</key>
+								<string>Kit</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>fontName</string>
+								<key>type</key>
+								<string>FontTTF</string>
+								<key>value</key>
+								<string>Chalkduster</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>fontSize</string>
+								<key>type</key>
+								<string>FloatScale</string>
+								<key>value</key>
+								<array>
+									<real>26</real>
+									<integer>0</integer>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>fontColor</string>
+								<key>type</key>
+								<string>Color4</string>
+								<key>value</key>
+								<array>
+									<real>0.40000000596046448</real>
+									<real>1</real>
+									<real>0.80000001192092896</real>
+									<real>1</real>
+								</array>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>horizontalAlignmentMode</string>
+								<key>type</key>
+								<string>IntegerLabeled</string>
+								<key>value</key>
+								<integer>0</integer>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>verticalAlignmentMode</string>
+								<key>type</key>
+								<string>IntegerLabeled</string>
+								<key>value</key>
+								<integer>0</integer>
+							</dict>
+						</array>
+					</dict>
+				</array>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>SKLabelNode</string>
+				<string>SpriteBuilder label</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -267,7 +426,7 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string></string>
+						<string>SB labels</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -276,24 +435,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>271</real>
-							<real>164</real>
+							<real>0.5</real>
+							<real>0.46000000834465027</real>
 							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>350</real>
-							<real>61</real>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -316,6 +462,14 @@
 						<string>Float</string>
 						<key>value</key>
 						<real>0.85000002384185791</real>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>zPosition</string>
+						<key>type</key>
+						<string>Float</string>
+						<key>value</key>
+						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -351,9 +505,9 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>0.84705889225006104</real>
-							<real>0.066666670143604279</real>
-							<real>0.26666668057441711</real>
+							<real>1</real>
+							<real>0.0</real>
+							<real>0.0</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -377,15 +531,15 @@
 			</dict>
 			<dict>
 				<key>UUID</key>
-				<integer>9</integer>
+				<integer>16</integer>
 				<key>baseClass</key>
-				<string>SKLabelNode</string>
+				<string>SKSpriteNode</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>SKLabelNode</string>
+				<string>smoke</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -398,7 +552,7 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string></string>
+						<string>smoke</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -407,22 +561,9 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>255</real>
-							<real>202</real>
+							<real>0.0</real>
+							<real>1</real>
 							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>40</real>
-							<real>34</real>
 							<integer>0</integer>
 							<integer>0</integer>
 						</array>
@@ -434,19 +575,11 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>1</real>
+							<real>16</real>
+							<real>12</real>
 							<false/>
 							<integer>0</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>311</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -454,63 +587,58 @@
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
-						<real>0.69999998807907104</real>
+						<real>0.20000000298023224</real>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>text</string>
+						<string>zPosition</string>
 						<key>type</key>
-						<string>StringSimple</string>
+						<string>Float</string>
 						<key>value</key>
-						<string>Kit</string>
+						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontName</string>
+						<string>anchorPoint</string>
 						<key>type</key>
-						<string>FontTTF</string>
-						<key>value</key>
-						<string>Chalkduster</string>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>fontSize</string>
-						<key>type</key>
-						<string>FloatScale</string>
+						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>26</real>
-							<integer>0</integer>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>fontColor</string>
+						<string>spriteFrame</string>
 						<key>type</key>
-						<string>Color4</string>
+						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<real>1</real>
-							<real>0.0</real>
-							<real>0.0</real>
-							<real>1</real>
+							<string></string>
+							<string>ccbResources/ccbParticleSmoke.png</string>
 						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>horizontalAlignmentMode</string>
+						<string>color</string>
 						<key>type</key>
-						<string>IntegerLabeled</string>
+						<string>Color3</string>
 						<key>value</key>
-						<integer>0</integer>
+						<array>
+							<real>0.37742692232131958</real>
+							<real>0.37930452823638916</real>
+							<real>0.7633557915687561</real>
+							<real>0.20000000298023224</real>
+						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>verticalAlignmentMode</string>
+						<string>colorBlendFactor</string>
 						<key>type</key>
-						<string>IntegerLabeled</string>
+						<string>Float</string>
 						<key>value</key>
-						<integer>0</integer>
+						<real>1</real>
 					</dict>
 				</array>
 			</dict>
@@ -554,10 +682,10 @@
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>0.0</real>
-					<real>0.0</real>
-					<integer>0</integer>
-					<integer>0</integer>
+					<real>1</real>
+					<real>1</real>
+					<integer>2</integer>
+					<integer>2</integer>
 				</array>
 			</dict>
 			<dict>
@@ -572,6 +700,14 @@
 					<false/>
 					<integer>0</integer>
 				</array>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>zPosition</string>
+				<key>type</key>
+				<string>Float</string>
+				<key>value</key>
+				<real>0.0</real>
 			</dict>
 		</array>
 	</dict>
