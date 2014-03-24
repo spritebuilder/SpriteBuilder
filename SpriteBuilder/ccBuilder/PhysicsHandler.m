@@ -395,7 +395,7 @@
         {
 
             CGPoint testPoint = [physicsNode convertToNodeSpace:point];
-            testPoint = ccpSub(testPoint, [physicsNode.nodePhysicsBody.points[0] pointValue]);
+            testPoint = ccpSub(testPoint, [physicsNode.nodePhysicsBody.points.firstObject pointValue]);
             
             float radius  = physicsNode.nodePhysicsBody.cornerRadius;
             float distanceFromCentre = ccpLength(testPoint);

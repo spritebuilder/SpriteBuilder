@@ -1,7 +1,7 @@
 // SpriteBuilder error domain
-extern NSString *const SBErrorDomain = @"SBErrorDomain";
+NSString *const SBErrorDomain = @"SBErrorDomain";
 
 // Error codes
-extern NSInteger const SBNodeDoesNotSupportChildrenError = 1000;
-extern NSInteger const SBChildRequiresSpecificParentError = 1001;
-extern NSInteger const SBParentDoesNotPermitSpecificChildrenError = 1002;
+NSInteger const SBNodeDoesNotSupportChildrenError = 1000;
+NSInteger const SBChildRequiresSpecificParentError = 1001;
+NSInteger const SBParentDoesNotPermitSpecificChildrenError = 1002;

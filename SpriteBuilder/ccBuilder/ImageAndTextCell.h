@@ -1,7 +1,7 @@
 //
 //  ImageAndTextCell.h
 //
-//  Copyright © 2006, Apple. All rights reserved.
+//  Copyright Â© 2006, Apple. All rights reserved.
 //
 
 /*
@@ -12,7 +12,7 @@
  redistribute this Apple software.
  
  In consideration of your agreement to abide by the following terms, and subject to these 
- terms, Apple grants you a personal, non-exclusive license, under AppleÕs copyrights in 
+ terms, Apple grants you a personal, non-exclusive license, under Apple's copyrights in
  this original Apple software (the "Apple Software"), to use, reproduce, modify and 
  redistribute the Apple Software, with or without modifications, in source and/or binary 
  forms; provided that if you redistribute the Apple Software in its entirety and without 
@@ -40,17 +40,9 @@
 #import <Cocoa/Cocoa.h>
 
 @interface ImageAndTextCell : NSTextFieldCell
-{
-@private
-    NSImage* image;
-    NSImage* imageAlt;
-}
 
-- (void)setImage:(NSImage *)anImage;
-- (NSImage *)image;
-
-- (void)setImageAlt:(NSImage*) anImage;
-- (NSImage *)imageAlt;
+@property (nonatomic) NSImage *image;
+@property (nonatomic) NSImage *imageAlt;
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 - (NSSize)cellSize;

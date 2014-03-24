@@ -161,9 +161,12 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
         
         if(!Transcode(*pvrTexture, pixelType, variableType, ePVRTCSpacelRGB, pvrtexture::ePVRTCBest, dither))
         {
-            NSString * errorMessage = [NSString stringWithFormat:@"Failure to transcode image: %@", srcPath];
-            NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
-            *error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+			if (error)
+			{
+				NSString * errorMessage = [NSString stringWithFormat:@"Failure to transcode image: %@", srcPath];
+				NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
+				*error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+			}
             hasError = YES;
         }
         
@@ -173,9 +176,12 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
             
             if(!pvrTexture->saveFileLegacyPVR(filePath,  pvrtexture::eOGLES2))
             {
-                NSString * errorMessage = [NSString stringWithFormat:@"Failure to save image: %@", dstPath];
-                NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
-                *error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+				if (error)
+				{
+					NSString * errorMessage = [NSString stringWithFormat:@"Failure to save image: %@", dstPath];
+					NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
+					*error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+				}
                 hasError = YES;
             }
         }

@@ -291,7 +291,7 @@
     [node setValue:[NSValue valueWithPoint:pos] forKey:prop];
 }
 
-+ (void) setPositionType:(CCPositionType)type forNode:(CCNode*)node prop:(NSString*)prop
++ (void) setPositionType:(CCPositionType)type oldPositionType:(CCPositionType)oldPositionType forNode:(CCNode*)node prop:(NSString*)prop
 {
     // Get position in points
     CGPoint absPos = NSPointToCGPoint([[node valueForKey:[prop stringByAppendingString:@"InPoints"]] pointValue]);
@@ -303,6 +303,40 @@
     // Calculate new position (from old value)
     CGPoint relPos = [node convertPositionFromPoints:absPos type:type];
     
+	if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
+	{
+		// Sprite Kit tweaks points as centered on parent, so conversion from/to normalized (%) needs to be adjusted accordingly
+		CGPoint absPos = NSPointToCGPoint([[node valueForKey:prop] pointValue]);
+		CGSize parentSize = node.parent.contentSizeInPoints;
+		
+		if (type.xUnit != oldPositionType.xUnit)
+		{
+			if (type.xUnit == CCPositionUnitNormalized && parentSize.width > 0.0)
+			{
+				// convert to normalized
+				relPos.x = (absPos.x + node.parent.anchorPointInPoints.x) / parentSize.width;
+			}
+			else if (oldPositionType.xUnit == CCPositionUnitNormalized)
+			{
+				// convert from normalized
+				relPos.x = (absPos.x * parentSize.width) - node.parent.anchorPointInPoints.x;
+			}
+		}
+		if (type.yUnit != oldPositionType.yUnit)
+		{
+			if (type.yUnit == CCPositionUnitNormalized && parentSize.height > 0.0)
+			{
+				// convert to normalized
+				relPos.y = (absPos.y + node.parent.anchorPointInPoints.y) / parentSize.height;
+			}
+			else if (oldPositionType.yUnit == CCPositionUnitNormalized)
+			{
+				// convert from normalized
+				relPos.y = (absPos.y * parentSize.height) - node.parent.anchorPointInPoints.y;
+			}
+		}
+	}
+	
     // Update the position
     NSValue* pointValue = [NSValue valueWithPoint: NSPointFromCGPoint(relPos)];
     [node setValue:pointValue forKey:prop];

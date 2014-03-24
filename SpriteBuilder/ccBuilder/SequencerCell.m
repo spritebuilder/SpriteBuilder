@@ -174,7 +174,7 @@
 
 -(void)drawSoundFileKeyframe:(SequencerSequence*)seq forKeyframe:(SequencerKeyframe*)keyframe withFrame:(NSRect)cellFrame inView:(NSView*)controlView
 {
-    NSString * fileName = (NSString*)(NSArray*)keyframe.value[0];
+    NSString * fileName = (NSString*)((NSArray*)keyframe.value).firstObject;
     
     if([fileName isEqualToString:@""])
         return;
