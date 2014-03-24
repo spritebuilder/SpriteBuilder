@@ -105,7 +105,7 @@ enum {
     float transformStartSkewX;
     float transformStartSkewY;
     
-    int currentMouseTransform;
+    CCBTransformHandle currentMouseTransform;
     BOOL isMouseTransforming;
     BOOL isPanning;
     CGPoint scrollOffset;

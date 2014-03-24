@@ -142,6 +142,7 @@
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
+		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
 		9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */; };
 		926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D139418B2DC2E00582959 /* NSDictionary+Query.m */; };
 		926D13C018B5778300582959 /* joint-distance-handle-long.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B418B5778300582959 /* joint-distance-handle-long.png */; };
@@ -182,7 +183,6 @@
 		92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792BF18C92C60007DF895 /* CCBPhysicsSpringJoint.m */; };
 		92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */; };
 		92B792D518C9333E007DF895 /* CCPhysicsSpringJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */; };
-		92B792D618C93390007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */; };
 		92B792D718C9339E007DF895 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C518C92C60007DF895 /* Icon.png */; };
 		92B792D918C933B7007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
@@ -5149,9 +5149,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9254805618D7706F00236DED /* InfoPlist.strings in Resources */,
 				92B792D918C933B7007DF895 /* CCBPProperties.plist in Resources */,
 				92B792D718C9339E007DF895 /* Icon.png in Resources */,
-				92B792D618C93390007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
