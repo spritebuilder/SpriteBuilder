@@ -23,6 +23,7 @@
         self.node = [CCNode node];
         self.node.name = @"SequencerJointsRoot";
         self.node.userObject = [[NodeInfo alloc] init];
+        [self.node setExtraProp:@(YES) forKey:@"disableStageRendering"];
     }
     
     return self;
