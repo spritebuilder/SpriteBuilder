@@ -111,6 +111,14 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     [self refreshOutletStatus];
 }
 
+- (BOOL) locked
+{
+    if([super locked])
+        return YES;
+    
+    return self.parent.locked;
+}
+
 -(void)fixupReferences
 {
     self.bodyA = self.bodyA;
