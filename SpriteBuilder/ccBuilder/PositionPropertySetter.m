@@ -432,7 +432,7 @@
     {
         // Get absolute size
         CGSize oldSize = [PositionPropertySetter sizeForNode:node prop:prop];
-        CGSize absSize = [node convertContentSizeToPoints:oldSize type:node.contentSizeType];
+        CGSize absSize = [node convertContentSizeToPoints:oldSize type:[self sizeTypeForNode:node prop:prop]];
         
         [absSizes addObject:[NSValue valueWithSize:absSize]];
     }
@@ -446,7 +446,7 @@
     {
         // Calculate relative size for new type
         CGSize absSize = [[absSizes objectAtIndex:i] sizeValue];
-        CGSize newSize = [node convertContentSizeFromPoints:absSize type:node.contentSizeType];
+        CGSize newSize = [node convertContentSizeFromPoints:absSize type:[self sizeTypeForNode:node prop:prop]];
         
         [node setValue:[NSValue valueWithSize:newSize] forKey:prop];
         i++;
