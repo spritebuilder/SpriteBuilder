@@ -9,7 +9,7 @@
 #import "SequencerJoints.h"
 #import "CCBPhysicsPivotJoint.h"
 #import "NodeInfo.h"
-
+#import "CCNode+NodeInfo.h"
 
 @implementation SequencerJoints
 
@@ -26,6 +26,20 @@
     }
     
     return self;
+}
+
+-(void)deserialize:(NSDictionary*)data;
+{
+    self.node.locked = [data[@"locked"] boolValue];
+    self.node.hidden = [data[@"hidden"] boolValue];
+ 
+}
+
+-(id)serialize
+{
+    return @{@"locked": @(self.node.locked),
+             @"hidden": @(self.node.hidden)};
+    
 }
 
 -(NSArray*)all

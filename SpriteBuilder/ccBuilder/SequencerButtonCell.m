@@ -8,7 +8,8 @@
 
 #import "SequencerButtonCell.h"
 #import "SequencerHandler.h"
-
+#import "CCNode+NodeInfo.h"
+#import "PlugInNode.h"
 
 @implementation SequencerButtonCell
 @synthesize node;
@@ -54,19 +55,32 @@
 
 @implementation SequencerLockedCell
 
--(void)setEnabled:(BOOL)flag
+-(void)setStatus:(LockedButtonStatus)status
 {
-    [super setEnabled:flag];
+    _status = status;
     
-    if(![self isEnabled])
-    {
-        self.image = [NSImage imageNamed:@"seq-locked-faint.png"];
+    switch (_status) {
+        case LockedButtonStatus_Set:
+        {
+            self.image = [NSImage imageNamed:@"seq-locked.png"];
+        }
+        break;
+        case LockedButtonStatus_NoSet:
+        {
+            self.image =  [NSImage imageNamed:@"seq-notset.png"];
+        }
+            break;
+        case LockedButtonStatus_SetNotEnabled:
+        {
+            self.image =  [NSImage imageNamed:@"seq-locked-faint.png"];
+        }
+            break;
+        default:
+            break;
     }
-    else
-    {
-        self.image = [NSImage imageNamed:@"seq-locked.png"];
-    }
-    
+  
+
 }
+
 @end
 
