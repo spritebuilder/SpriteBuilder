@@ -187,8 +187,8 @@
 - (float) positionToTime:(float)pos
 {
     float rawTime = ((pos-TIMELINE_PAD_PIXELS)/timelineScale)+timelineOffset;
-    float capped = max(roundf(rawTime * timelineResolution)/timelineResolution, 0);
-    return min(capped, timelineLength);
+    float capped = MAX(roundf(rawTime * timelineResolution)/timelineResolution, 0);
+    return MIN(capped, timelineLength);
 }
 
 - (NSString*) formatTime:(float)time

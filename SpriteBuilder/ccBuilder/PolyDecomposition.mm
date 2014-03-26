@@ -64,7 +64,7 @@ void internalDecomposePoly(const Verticies &inputPoly, VerticiesList & outputPol
         CGPoint segA = ccpNormalize(ccpSub(ptA ,ptB));
         CGPoint segB = ccpNormalize(ccpSub(ptC, ptB));
         
-        if(ccpDot(segA, segB) > cosf(kmDegreesToRadians(kMinimumAcuteAngle)))
+        if(ccpDot(segA, segB) > cosf(CC_DEGREES_TO_RADIANS(kMinimumAcuteAngle)))
         {
             [acuteSegments addObject:[NSValue valueWithPoint:ptA]];
             [acuteSegments addObject:[NSValue valueWithPoint:ptB]];

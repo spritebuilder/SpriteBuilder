@@ -215,7 +215,7 @@
 {
     _bodyShape = kCCBPhysicsBodyShapeCircle;
     
-    float radius = max(node.contentSize.width/2, node.contentSize.height/2);
+    float radius = MAX(node.contentSize.width/2, node.contentSize.height/2);
     if (radius < kCCBPhysicsMinimumDefaultCircleRadius) radius = kCCBPhysicsMinimumDefaultCircleRadius;
     
     self.cornerRadius = radius;
