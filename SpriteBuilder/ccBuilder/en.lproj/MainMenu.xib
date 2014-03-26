@@ -78,13 +78,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="New" id="1477">
                                     <items>
-                                        <menuItem title="Cocos2D Project..." keyEquivalent="N" id="1479">
+                                        <menuItem title="Cocos2D Project..." id="1479">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNewProject:" target="494" id="1485"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Sprite Kit Project..." keyEquivalent="N" id="9mK-yK-jy5">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                        <menuItem title="Sprite Kit Project..." id="9mK-yK-jy5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNewSpriteKitProject:" target="-1" id="2FM-eR-10L"/>
                                             </connections>
@@ -100,8 +101,7 @@
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Folder" id="1935">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Folder" keyEquivalent="N" id="1935">
                                             <connections>
                                                 <action selector="menuNewFolder:" target="494" id="O4b-MY-vZy"/>
                                                 <binding destination="494" name="enabled" keyPath="projectSettings" id="1940">
