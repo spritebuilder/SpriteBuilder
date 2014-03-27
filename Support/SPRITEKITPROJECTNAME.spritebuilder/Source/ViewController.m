@@ -14,19 +14,17 @@
 -(void) viewWillLayoutSubviews
 {
 	SKView* skView = (SKView*)self.view;
-	NSAssert1([skView isKindOfClass:[SKView class]], @"ViewController's view is not a SKView instance, its class is: %@", NSStringFromClass([skView class]));
+	NSAssert1([skView isKindOfClass:[SKView class]], @"ViewController's view is not a SKView instance, its class is: %@ (a common issue is improper use of an iAd banner view replacing this view controller's view)", NSStringFromClass([skView class]));
 	
+	// viewWillLayoutSubviews runs again, for example when the view rotates
+	// this safety check ensures the scene is only presented the very first time viewWillLayoutSubviews runs
 	if (skView.scene == nil)
 	{
 		skView.showsFPS = YES;
 		skView.showsNodeCount = YES;
 		skView.showsDrawCount = YES;
 		
-		// Before loading a CCBi file you must tell CCBReader the desired scene size
-		[CCBReader setSceneSize:skView.bounds.size];
-		
-		SKScene* scene = [CCBReader loadAsScene:@"MainScene.ccbi"];
-		//scene.anchorPoint = CGPointMake(0.5, 0.5);
+		SKScene* scene = [CCBReader loadAsScene:@"MainScene.ccbi" size:skView.bounds.size];
 		[skView presentScene:scene];
 	}
 }

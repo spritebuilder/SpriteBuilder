@@ -29,6 +29,7 @@
 #import "PSMTabBarControl.h"
 #import "SMTabBar.h"
 #import <HockeySDK/HockeySDK.h>
+#import "ProjectSettings.h"
 
 #define kCCBNumCanvasDevices 14
 
