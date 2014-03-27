@@ -70,7 +70,7 @@
         NSRect imageFrame;
         imageFrame.size = [_imageAlt size];
         imageFrame.origin = cellFrame.origin;
-        imageFrame.origin.x += cellFrame.size.width - 3.0;
+        imageFrame.origin.x += cellFrame.size.width - 14.0;
         imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
         return imageFrame;
     }
