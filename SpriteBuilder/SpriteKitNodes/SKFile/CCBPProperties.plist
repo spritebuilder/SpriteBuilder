@@ -5,7 +5,7 @@
 	<key>targetEngine</key>
 	<string>SpriteKit</string>
 	<key>description</key>
-	<string>Incorporates another SpriteBuilder interface file.</string>
+	<string>Embeds another SpriteBuilder CCB file by reference.</string>
 	<key>ordering</key>
 	<integer>2000</integer>
 	<key>canHaveChildren</key>
@@ -35,7 +35,7 @@
 	<array>
 		<dict>
 			<key>displayName</key>
-			<string>CCBFile</string>
+			<string>CCB File</string>
 			<key>name</key>
 			<string>CCBFile</string>
 			<key>type</key>

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>description</key>
-	<string>Incorporates another SpriteBuilder interface file.</string>
+	<string>Embeds another SpriteBuilder CCB file by reference.</string>
 	<key>ordering</key>
-	<integer>2000</integer>
+	<real>2000</real>
 	<key>displayName</key>
 	<string>Sub File</string>
 	<key>inheritsFrom</key>
@@ -48,7 +48,7 @@
 	<array>
 		<dict>
 			<key>displayName</key>
-			<string>CCBFile</string>
+			<string>CCB File</string>
 			<key>name</key>
 			<string>CCBFile</string>
 			<key>type</key>
