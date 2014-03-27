@@ -1179,21 +1179,21 @@ CA
                                             <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="XRE-yL-GbY">
+                                                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="XRE-yL-GbY">
                                                     <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <clipView key="contentView" id="c9e-44-Yg2">
-                                                        <rect key="frame" x="1" y="1" width="247" height="638"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="8cF-q7-mD1" customClass="CCBTableView">
-                                                                <rect key="frame" x="0.0" y="0.0" width="247" height="638"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
                                                                 <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                 <tableColumns>
-                                                                    <tableColumn editable="NO" width="244" minWidth="40" maxWidth="1000" id="9wJ-gA-SBO">
+                                                                    <tableColumn editable="NO" width="246" minWidth="40" maxWidth="1000" id="9wJ-gA-SBO">
                                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
