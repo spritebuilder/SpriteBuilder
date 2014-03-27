@@ -113,7 +113,6 @@
     self.publishResolutionHTML5_width = 480;
     self.publishResolutionHTML5_height = 320;
     self.publishResolutionHTML5_scale = 1;
-	self.optiPNGParameters = @"";
     self.publishEnvironment = PublishEnvironmentDevelop;
 
     self.publishAudioQuality_ios = 4;
@@ -202,7 +201,6 @@
     
     self.tabletPositionScaleFactor = 2.0f;
 
-	self.optiPNGParameters = [dict objectForKey:@"optiPNGParameters"];
     self.publishEnvironment = [[dict objectForKey:@"publishEnvironment"] integerValue];
 
     NSString* mainCCB = [dict objectForKey:@"javascriptMainCCB"];
@@ -287,7 +285,6 @@
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
-	[dict setObject:self.optiPNGParameters forKey:@"optiPNGParameters"];
 
     [dict setObject:[NSNumber numberWithInt:self.publishEnvironment] forKey:@"publishEnvironment"];
 

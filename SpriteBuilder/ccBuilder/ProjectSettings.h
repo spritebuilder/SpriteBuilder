@@ -49,7 +49,7 @@ typedef enum
 {
     PublishEnvironmentDevelop = 0,
     PublishEnvironmentRelease,
-} PublishEnvironment;
+} SBPublishEnvironment;
 
 @class RMResource;
 @class CCBWarnings;
@@ -170,8 +170,6 @@ typedef enum
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
-
-@property (nonatomic,copy) NSString *optiPNGParameters;
 
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;

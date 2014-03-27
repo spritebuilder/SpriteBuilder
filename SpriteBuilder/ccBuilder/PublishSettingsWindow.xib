@@ -16,14 +16,14 @@
         <window title="Publish Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="386"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="331"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="386"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="331"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView id="qKt-3g-PhI" userLabel="Resource Paths">
-                        <rect key="frame" x="0.0" y="257" width="480" height="129"/>
+                        <rect key="frame" x="0.0" y="202" width="480" height="129"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="459">
@@ -115,7 +115,7 @@
                         </subviews>
                     </customView>
                     <customView appearanceType="aqua" id="hkC-ij-R4Z" userLabel="Publish Directory">
-                        <rect key="frame" x="0.0" y="181" width="480" height="77"/>
+                        <rect key="frame" x="0.0" y="126" width="480" height="77"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" id="20" customClass="CCBTextFieldLabel">
@@ -360,7 +360,7 @@
                         </subviews>
                     </customView>
                     <customView id="Vcd-9o-njP" userLabel="CCB files">
-                        <rect key="frame" x="0.0" y="129" width="480" height="53"/>
+                        <rect key="frame" x="0.0" y="74" width="480" height="53"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <popUpButton verticalHuggingPriority="750" id="52">
@@ -534,37 +534,6 @@ DQ
                                     <action selector="acceptSheet:" target="-2" id="31"/>
                                 </connections>
                             </button>
-                        </subviews>
-                    </customView>
-                    <customView id="1v3-9A-x3x" userLabel="Ok Button view">
-                        <rect key="frame" x="0.0" y="74" width="480" height="56"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <subviews>
-                            <textField verticalHuggingPriority="750" id="5j4-wV-xAm">
-                                <rect key="frame" x="20" y="7" width="440" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="i7l-dH-3gE">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <connections>
-                                    <binding destination="-2" name="value" keyPath="projectSettings.optiPNGParameters" id="yZx-y3-FTo">
-                                        <dictionary key="options">
-                                            <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                        </dictionary>
-                                    </binding>
-                                </connections>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="zjX-Sk-Q3H">
-                                <rect key="frame" x="18" y="29" width="132" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="OptiPNG parameters" id="Aax-L5-de4">
-                                    <font key="font" size="11" name="LucidaGrande"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                         </subviews>
                     </customView>
                 </subviews>

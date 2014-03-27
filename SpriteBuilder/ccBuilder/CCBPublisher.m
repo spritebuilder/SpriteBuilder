@@ -1563,7 +1563,7 @@
 
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:pathToOptiPNG];
-    [task setArguments:@[projectSettings.optiPNGParameters, pngFile]];
+    [task setArguments:@[pngFile]];
 
     NSPipe *pipe = [NSPipe pipe];
     NSPipe *pipeErr = [NSPipe pipe];
