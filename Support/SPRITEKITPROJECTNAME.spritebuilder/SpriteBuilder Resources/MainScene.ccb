@@ -97,14 +97,6 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>zPosition</string>
-						<key>type</key>
-						<string>Float</string>
-						<key>value</key>
-						<real>-10</real>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>anchorPoint</string>
 						<key>type</key>
 						<string>Point</string>
@@ -121,8 +113,8 @@
 						<string>Color4</string>
 						<key>value</key>
 						<array>
-							<real>0.35761809349060059</real>
-							<real>0.69833409786224365</real>
+							<real>0.017927311360836029</real>
+							<real>0.55722314119338989</real>
 							<real>1</real>
 							<real>1</real>
 						</array>
@@ -219,19 +211,11 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>opacity</string>
+								<string>alpha</string>
 								<key>type</key>
 								<string>Float</string>
 								<key>value</key>
-								<real>0.20000000298023224</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>zPosition</string>
-								<key>type</key>
-								<string>Float</string>
-								<key>value</key>
-								<real>-1</real>
+								<real>0.69999998807907104</real>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -251,10 +235,10 @@
 								<string>Color4</string>
 								<key>value</key>
 								<array>
-									<real>0.20000000298023224</real>
-									<real>0.20000000298023224</real>
-									<real>0.20000000298023224</real>
-									<real>0.20000000298023224</real>
+									<real>0.77315902709960938</real>
+									<real>0.0</real>
+									<real>1</real>
+									<real>0.69999998807907104</real>
 								</array>
 							</dict>
 							<dict>
@@ -271,9 +255,11 @@
 								<key>type</key>
 								<string>Float</string>
 								<key>value</key>
-								<real>0.20000000298023224</real>
+								<real>0.69999998807907104</real>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>UUID</key>
@@ -337,19 +323,11 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>opacity</string>
+								<string>alpha</string>
 								<key>type</key>
 								<string>Float</string>
 								<key>value</key>
 								<real>0.69999998807907104</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>zPosition</string>
-								<key>type</key>
-								<string>Float</string>
-								<key>value</key>
-								<real>0.0</real>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -457,19 +435,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>opacity</string>
+						<string>alpha</string>
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
 						<real>0.85000002384185791</real>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>zPosition</string>
-						<key>type</key>
-						<string>Float</string>
-						<key>value</key>
-						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -583,19 +553,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>opacity</string>
+						<string>alpha</string>
 						<key>type</key>
 						<string>Float</string>
 						<key>value</key>
 						<real>0.20000000298023224</real>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>zPosition</string>
-						<key>type</key>
-						<string>Float</string>
-						<key>value</key>
-						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -700,14 +662,6 @@
 					<false/>
 					<integer>0</integer>
 				</array>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>zPosition</string>
-				<key>type</key>
-				<string>Float</string>
-				<key>value</key>
-				<real>0.0</real>
 			</dict>
 		</array>
 	</dict>
