@@ -287,7 +287,7 @@
     dstPath = [dstDir stringByAppendingPathComponent:dstFileName];
     
 	// Sprite Kit requires specific extensions for specific image resolutions (ie @2x, ~ipad, ..)
-	if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
+	if (projectSettings.engine == CCBTargetEngineSpriteKit)
 	{
 		dstPath = [self pathWithCocoaImageResolutionSuffix:dstPath resolution:resolution];
 	}
@@ -593,7 +593,7 @@
 
 - (void)processSpriteSheetDir:(NSString *)publishDirectory subPath:(NSString *)subPath outDir:(NSString *)outDir
 {
-    BOOL publishForSpriteKit = [AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit;
+    BOOL publishForSpriteKit = projectSettings.engine == CCBTargetEngineSpriteKit;
     if (publishForSpriteKit)
     {
         [self publishSpriteKitAtlasDir:[outDir stringByDeletingLastPathComponent]
@@ -1529,9 +1529,9 @@
 
 		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
 
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            AppDelegate* ad = [AppDelegate appDelegate];
-            [ad publisher:self finishedWithWarnings:warnings];
+        dispatch_sync(dispatch_get_main_queue(), ^
+        {
+            [[AppDelegate appDelegate] publisher:self finishedWithWarnings:warnings];
         });
     });
 }
