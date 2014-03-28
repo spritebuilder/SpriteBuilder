@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "CCBTableView.h"
 
 
-@interface WarningTableView : NSTableView
+@interface WarningTableView : CCBTableView
 
 @end
