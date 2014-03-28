@@ -27,35 +27,20 @@
     return warning.description;
 }
 
-float heightForStringDrawing(NSString *myString, NSFont *myFont, float myWidth)
-{
-    NSTextStorage *textStorage = [[NSTextStorage alloc]
-                                   initWithString:myString];
-    NSTextContainer *textContainer = [[NSTextContainer alloc]
-                                       initWithContainerSize: NSMakeSize(myWidth, FLT_MAX)] ;
-    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-
-    [layoutManager addTextContainer:textContainer];
-    [textStorage addLayoutManager:layoutManager];
-    
-    [textStorage addAttribute:NSFontAttributeName value:myFont
-                        range:NSMakeRange(0, [textStorage length])];
-    [textContainer setLineFragmentPadding:4.0];
-    
-    (void) [layoutManager glyphRangeForTextContainer:textContainer];
-    return (float) [layoutManager usedRectForTextContainer:textContainer].size.height;
-}
-
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-    CCBWarning * warning = warnings.warnings[(NSUInteger) row];
+    NSTableColumn *column = [tableView tableColumns][0];
+    NSCell *cellPrototype = [column dataCell];
+    NSFont *font = [cellPrototype font];
 
-    NSFont * font = [NSFont systemFontOfSize:13.0f];
-    
-    float height  = heightForStringDrawing(warning.description, font,
-                                 249.0f);
-    
-    return height + 8;
+    CCBWarning *warning = warnings.warnings[(NSUInteger) row];
+
+    NSDictionary *attributes = @{NSFontAttributeName:font};
+
+    CGRect frame = [warning.description boundingRectWithSize:CGSizeMake(column.width, CGFLOAT_MAX)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                  attributes:attributes];
+    return frame.size.height + 8.0;
 }
 
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
