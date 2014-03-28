@@ -8,78 +8,33 @@
 
 #import "WarningTableViewHandler.h"
 #import "CCBWarnings.h"
-#import "WarningCell.h"
 
 @implementation WarningTableViewHandler
 
--(void)updateWithWarnings:(CCBWarnings *)_ccbWarnings
+-(void)updateWithWarnings:(CCBWarnings *)someWarnings
 {
-    ccbWarnings = nil;
-    
-    ccbWarnings = _ccbWarnings;
-    
+    warnings = someWarnings;
 }
-
--(void)dealloc
-{
-    
-    ccbWarnings = nil;
-}
-
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return ccbWarnings.warnings.count;
-    
+    return warnings.warnings.count;
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    CCBWarning * warning = ccbWarnings.warnings[row];
+    CCBWarning * warning = warnings.warnings[(NSUInteger) row];
     return warning.description;
-    
 }
 
-
-/*
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+float heightForStringDrawing(NSString *myString, NSFont *myFont, float myWidth)
 {
-    return ccbWarnings.warnings[index];
-}
-
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
-{
-    return NO;
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-    return [(CCBWarning*)item description];
-}
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldShowCellExpansionForTableColumn:(NSTableColumn *)tableColumn item:(id)item
-{
-    return YES;
-}
-
-
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(WarningCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
-{
-    cell.title = [NSString stringWithFormat:@"  %@",((CCBWarning*)item).description];
-}*/
-
-float heightForStringDrawing(NSString *myString, NSFont *myFont,
-                             float myWidth)
-{
-    
     NSTextStorage *textStorage = [[NSTextStorage alloc]
                                    initWithString:myString];
     NSTextContainer *textContainer = [[NSTextContainer alloc]
                                        initWithContainerSize: NSMakeSize(myWidth, FLT_MAX)] ;
-    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init]
-                                      ;
-    
-    
+    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+
     [layoutManager addTextContainer:textContainer];
     [textStorage addLayoutManager:layoutManager];
     
@@ -88,14 +43,12 @@ float heightForStringDrawing(NSString *myString, NSFont *myFont,
     [textContainer setLineFragmentPadding:4.0];
     
     (void) [layoutManager glyphRangeForTextContainer:textContainer];
-    return [layoutManager
-            usedRectForTextContainer:textContainer].size.height;
+    return (float) [layoutManager usedRectForTextContainer:textContainer].size.height;
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-    CCBWarning * warning = ccbWarnings.warnings[row];
-    
+    CCBWarning * warning = warnings.warnings[(NSUInteger) row];
 
     NSFont * font = [NSFont systemFontOfSize:13.0f];
     
@@ -105,16 +58,12 @@ float heightForStringDrawing(NSString *myString, NSFont *myFont,
     return height + 8;
 }
 
-
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    CCBWarning * warning = ccbWarnings.warnings[row];
+    CCBWarning *warning = warnings.warnings[(NSUInteger) row];
 
-    NSTextField * textField = cell;
+    NSTextField *textField = cell;
     textField.stringValue = warning.description;
-    
-    
 }
-
 
 @end
