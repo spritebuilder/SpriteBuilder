@@ -133,7 +133,7 @@ static const float kDefaultLength = 58.0f;
         
         CGPoint segment = ccpSub(worldPosB,worldPosA);
         float angleRad = atan2f(segment.y, segment.x);
-        float angle = -kmRadiansToDegrees( angleRad);
+        float angle = -CC_RADIANS_TO_DEGREES(angleRad);
         return  angle;
     }
     
