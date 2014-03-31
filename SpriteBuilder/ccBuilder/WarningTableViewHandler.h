@@ -12,9 +12,9 @@
 
 @interface WarningTableViewHandler : NSObject <NSTableViewDelegate, NSTableViewDataSource>
 {
-    CCBWarnings * ccbWarnings;
+    CCBWarnings *warnings;
 }
 
--(void)updateWithWarnings:(CCBWarnings*)_ccbWarnings;
+-(void)updateWithWarnings:(CCBWarnings*)someWarnings;
 
 @end

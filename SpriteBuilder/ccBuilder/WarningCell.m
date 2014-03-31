@@ -28,18 +28,4 @@
     [gc restoreGraphicsState];
 }
 
-- (CGRect)expansionFrameWithFrame:(NSRect)cellFrame inView:(NSView *)view
-{
-    NSString *warningText = self.objectValue;
-    CGSize size = [warningText sizeWithAttributes:nil];
-    cellFrame.size.width = size.width;
-    return cellFrame;
-}
-
--(void)drawWithExpansionFrame:(NSRect)cellFrame inView:(NSView *)view
-{
-    NSString * warningText = self.objectValue;
-    [warningText drawAtPoint:NSMakePoint(cellFrame.origin.x,cellFrame.origin.y) withAttributes:nil];
-}
-
 @end
