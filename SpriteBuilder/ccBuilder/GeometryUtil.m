@@ -58,10 +58,10 @@
 		if ( p1.y == p2.y )
 			continue; 
 		
-		if ( pt.y < min(p1.y, p2.y))
+		if ( pt.y < MIN(p1.y, p2.y))
 			continue; 
 		
-		if ( pt.y >= max(p1.y, p2.y)) 
+		if ( pt.y >= MAX(p1.y, p2.y))
 			continue; 
 		
 		double x = (double)(pt.y - p1.y) * (double)(p2.x - p1.x) / (double)(p2.y - p1.y) + p1.x; 
