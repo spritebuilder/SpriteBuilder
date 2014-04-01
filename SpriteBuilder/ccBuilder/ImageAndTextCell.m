@@ -40,6 +40,8 @@
 
 #import "ImageAndTextCell.h"
 
+static CGFloat IMAGE_PADDING_RIGHT = 3.0;
+
 @implementation ImageAndTextCell
 
 - (id) init
@@ -82,20 +84,16 @@
 
 - (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
 {
-    NSRect textFrame, imageFrame;
-    NSDivideRect (aRect, &imageFrame, &textFrame, 3 + [_image size].width, NSMinXEdge);
-    textFrame.origin.y += 4.0;
-    textFrame.origin.x += 1.0;
-    [super editWithFrame: textFrame inView: controlView editor:textObj delegate:anObject event: theEvent];
+    NSRect titleRect = [self titleRectForBounds:aRect];
+    titleRect.origin.x += [_image size].width;
+    [super editWithFrame:titleRect inView:controlView editor:textObj delegate:anObject event:theEvent];
 }
 
 - (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
-    NSRect textFrame, imageFrame;
-    NSDivideRect (aRect, &imageFrame, &textFrame, 3 + [_image size].width, NSMinXEdge);
-    textFrame.origin.y += 4.0;
-    textFrame.origin.x += 1.0;
-    [super selectWithFrame: textFrame inView: controlView editor:textObj delegate:anObject start:selStart length:selLength];
+    NSRect titleRect = [self titleRectForBounds:aRect];
+    titleRect.origin.x += [_image size].width;
+    [super selectWithFrame:titleRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
@@ -126,7 +124,7 @@
 
     NSSize imageSize = [_image size];
     NSRect imageFrame;
-    NSDivideRect((*cellFrame), &imageFrame, cellFrame, 3 + imageSize.width, NSMinXEdge);
+    NSDivideRect((*cellFrame), &imageFrame, cellFrame, IMAGE_PADDING_RIGHT + imageSize.width, NSMinXEdge);
 
     if ([self drawsBackground])
     {
@@ -134,7 +132,7 @@
         NSRectFill(imageFrame);
     }
 
-    imageFrame.origin.x += 3;
+    imageFrame.origin.x += IMAGE_PADDING_RIGHT;
     imageFrame.origin.y += 2;
 
     [_image setFlipped:[controlView isFlipped]];
@@ -144,11 +142,20 @@
 - (NSRect)titleRectForBounds:(NSRect)theRect
 {
     NSRect titleFrame = [super titleRectForBounds:theRect];
-    titleFrame.origin.y += 4.0;
-    titleFrame.origin.x += 3.0;
+    NSAttributedString *attrString = self.attributedStringValue;
+
+    NSRect textRect = [attrString boundingRectWithSize:titleFrame.size
+                                               options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin];
+
+    if (textRect.size.height < titleFrame.size.height)
+    {
+        titleFrame.origin.y = theRect.origin.y + (theRect.size.height - textRect.size.height) / 2.0;
+        titleFrame.size.height = textRect.size.height;
+    }
+    titleFrame.origin.x += IMAGE_PADDING_RIGHT;
+
     return titleFrame;
 }
-
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
     NSRect titleRect = [self titleRectForBounds:cellFrame];
@@ -157,20 +164,21 @@
 
 - (NSAttributedString *)attributedStringValue
 {
-    NSDictionary *attrs;
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    attributes[NSFontAttributeName] = self.font;
 
     if ([self isHighlighted])
     {
-        attrs = @{NSForegroundColorAttributeName:[NSColor whiteColor]};
+        attributes[NSForegroundColorAttributeName] = [NSColor whiteColor];
     }
 
-    return [[NSAttributedString alloc] initWithString:[self stringValue] attributes:attrs];
+    return [[NSAttributedString alloc] initWithString:[self stringValue] attributes:attributes];
 }
 
 - (NSSize)cellSize
 {
     NSSize cellSize = [super cellSize];
-    cellSize.width += (_image ? [_image size].width : 0) + 3;
+    cellSize.width += (_image ? [_image size].width : 0) + IMAGE_PADDING_RIGHT;
     return cellSize;
 }
 
