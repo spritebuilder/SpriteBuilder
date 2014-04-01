@@ -113,6 +113,7 @@
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
 #import "NSArray+Query.h"
+#import "Cocos2dUpater.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1920,7 +1921,11 @@ static BOOL hideAllToNextSeparator;
     
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
-    
+
+    Cocos2dUpater *cocos2dUpater = [[Cocos2dUpater alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpater update];
+
+
     return YES;
 }
 
