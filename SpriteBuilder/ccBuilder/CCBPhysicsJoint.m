@@ -148,8 +148,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         }
         node = node.parent;
     }
-    
-    
 }
 
 -(void)removeObserverBody:(CCNode*)body
