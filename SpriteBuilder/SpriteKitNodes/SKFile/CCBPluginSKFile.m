@@ -22,35 +22,63 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#import "CCBPluginSKFile.h"
+#import "ResourceManager.h"
+#import "CCBReaderInternal.h"
+#import "CCBGlobals.h"
+#import "CCBDocument.h"
+#import "AppDelegate.h"
+#import "CCNode+NodeInfo.h"
 
-@interface Tupac : NSObject
+@implementation CCBPluginSKFile
+
+@synthesize ccbFile;
+
+- (id) init
 {
-    NSString* errorMessage;
+    self = [super init];
+    if (!self) return NULL;
+    
+    return self;
 }
 
-@property(nonatomic) BOOL border;
-@property(nonatomic) CGFloat scale;
-@property(nonatomic, copy) NSArray *filenames;
-@property(nonatomic, copy) NSString *outputName;
-@property(nonatomic, copy) NSString* previewFile;
-@property(nonatomic, copy) NSString *outputFormat;
-@property(nonatomic,assign) int imageFormat;
-@property(nonatomic,copy) NSString* directoryPrefix;
-@property(nonatomic,assign) int maxTextureSize;
-@property(nonatomic,assign) int padding;
-@property(nonatomic,assign) BOOL dither;
-@property(nonatomic,assign) BOOL compress;
-@property(nonatomic,readonly) NSString* errorMessage;
+- (void) setCcbFile:(CCNode *)cf
+{
+    ccbFile = cf;
+    
+    [self removeAllChildrenWithCleanup:YES];
+    if (cf)
+    {
+        [self addChild:cf];
+        self.contentSizeType = ccbFile.contentSizeType;
+        self.contentSize = ccbFile.contentSize;
+        self.anchorPoint = ccbFile.anchorPoint;
+        cf.anchorPoint = ccp(0,0);
+    }
+    else
+    {
+        self.contentSize = CGSizeZero;
+        self.anchorPoint = ccp(0,0);
+    }
+}
 
-+ (Tupac*) tupac;
+- (id) extraPropForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"customClass"] && ccbFile)
+    {
+        return [ccbFile extraPropForKey:@"customClass"];
+    }
+    else
+    {
+        return [super extraPropForKey:key];
+    }
+}
 
-+ (NSRect) trimmedRectForImage:(CGImageRef)image;
-
-- (NSArray *)createTextureAtlasFromDirectoryPaths:(NSArray *)dirs;
-- (NSArray *)createTextureAtlas;
+- (NSMutableArray*) customProperties
+{
+    if (!ccbFile) return [NSMutableArray array];
+    
+    return [ccbFile customProperties];
+}
 
 @end
-
-extern NSString *TupacOutputFormatCocos2D;
-extern NSString *TupacOutputFormatAndEngine;

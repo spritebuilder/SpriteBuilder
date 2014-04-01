@@ -286,9 +286,9 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<real>0.5</real>
+			<integer>1</integer>
 			<key>default</key>
-			<real>0.5</real>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Background opacity</string>
 			<key>type</key>
@@ -379,9 +379,9 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<real>0.5</real>
+			<integer>1</integer>
 			<key>default</key>
-			<real>0.5</real>
+			<integer>1</integer>
 			<key>displayName</key>
 			<string>Background opacity</string>
 			<key>type</key>

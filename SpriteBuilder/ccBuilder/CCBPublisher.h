@@ -65,6 +65,6 @@ enum {
 - (id) initWithProjectSettings:(ProjectSettings*)settings warnings:(CCBWarnings*)w;
 - (void) publish;
 - (void) publishAsync;
-+ (void) cleanAllCacheDirectories;
++ (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
 
 @end

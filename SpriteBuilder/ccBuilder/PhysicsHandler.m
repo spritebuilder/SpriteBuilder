@@ -154,7 +154,7 @@
     }
     
     if (pt.x + kCCBPhysicsLineSegmFuzz < left.x || right.x < pt.x - kCCBPhysicsLineSegmFuzz) return NO;
-    if (pt.y + kCCBPhysicsLineSegmFuzz < min(left.y, right.y) || max(left.y, right.y) < pt.y - kCCBPhysicsLineSegmFuzz) return NO;
+    if (pt.y + kCCBPhysicsLineSegmFuzz < MIN(left.y, right.y) || MAX(left.y, right.y) < pt.y - kCCBPhysicsLineSegmFuzz) return NO;
     
     float dX = right.x - left.x;
     float dY = right.y - left.y;
@@ -210,7 +210,7 @@
     float xDist0 = fabsf(src.x - pt0.x);
     float xDist1 = fabsf(src.x - pt1.x);
     
-    if (min(xDist0, xDist1) < kCCBPhysicsSnapDist)
+    if (MIN(xDist0, xDist1) < kCCBPhysicsSnapDist)
     {
         if (xDist0 < xDist1) snapped.x = pt0.x;
         else snapped.x = pt1.x;
@@ -220,7 +220,7 @@
     float yDist0 = fabsf(src.y - pt0.y);
     float yDist1 = fabsf(src.y - pt1.y);
     
-    if (min(yDist0, yDist1) < kCCBPhysicsSnapDist)
+    if (MIN(yDist0, yDist1) < kCCBPhysicsSnapDist)
     {
         if (yDist0 < yDist1) snapped.y = pt0.y;
         else snapped.y = pt1.y;

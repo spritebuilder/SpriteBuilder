@@ -22,35 +22,15 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#import "CCNode.h"
+#import "CCNode+SKNode.h"
 
-@interface Tupac : NSObject
+@interface CCBPluginSKFile : CCNode
 {
-    NSString* errorMessage;
+    CCNode* ccbFile;
 }
+SKNODE_COMPATIBILITY_HEADER
 
-@property(nonatomic) BOOL border;
-@property(nonatomic) CGFloat scale;
-@property(nonatomic, copy) NSArray *filenames;
-@property(nonatomic, copy) NSString *outputName;
-@property(nonatomic, copy) NSString* previewFile;
-@property(nonatomic, copy) NSString *outputFormat;
-@property(nonatomic,assign) int imageFormat;
-@property(nonatomic,copy) NSString* directoryPrefix;
-@property(nonatomic,assign) int maxTextureSize;
-@property(nonatomic,assign) int padding;
-@property(nonatomic,assign) BOOL dither;
-@property(nonatomic,assign) BOOL compress;
-@property(nonatomic,readonly) NSString* errorMessage;
-
-+ (Tupac*) tupac;
-
-+ (NSRect) trimmedRectForImage:(CGImageRef)image;
-
-- (NSArray *)createTextureAtlasFromDirectoryPaths:(NSArray *)dirs;
-- (NSArray *)createTextureAtlas;
+@property (nonatomic,strong) CCNode* ccbFile;
 
 @end
-
-extern NSString *TupacOutputFormatCocos2D;
-extern NSString *TupacOutputFormatAndEngine;

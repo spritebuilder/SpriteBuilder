@@ -18,6 +18,7 @@ codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/lame"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/ccz"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/oggenc"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/pngquant"
+codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/optipng"
 # codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/PVRTexToolCL"
 
 # Sign plug-ins
