@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "NSString+RelativePath.h"
+#import "SBErrors.h"
 
 typedef enum
 {
@@ -34,6 +35,8 @@ typedef enum
         _projectSettings = projectSettings;
         _projectsCocos2dVersion = nil;
         _sbCocos2dVersion = [self readSBCocos2dVersionFile];
+
+        // TODO: revmove me
         _sbCocos2dVersion = @"3.0.1";
     }
 
@@ -84,21 +87,23 @@ typedef enum
 
 - (BOOL)unzipCocos2dFolder:(NSError **)error
 {
-    // TODO: return error code
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString* zipFile = [[NSBundle mainBundle] pathForResource:@"PROJECTNAME" ofType:@"zip" inDirectory:@"Generated"];
 
     if (![fileManager fileExistsAtPath:zipFile])
     {
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBCocos2dUpdateTemplateZipFileDoesNotExistError
+                                 userInfo:@{@"zipFile":zipFile}];
         return NO;
     }
 
-    NSString *tmpDir = [NSTemporaryDirectory() stringByAppendingPathComponent:@"sb.updatecocos2d"];
+    NSString *tmpDir = [NSTemporaryDirectory() stringByAppendingPathComponent:@"com.spritebuilder.updatecocos2d"];
     [fileManager removeItemAtPath:tmpDir error:error];
 
     if (![fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
     {
-        NSLog(@"%@", *error);
+        NSLog(@"ERROR: %@", *error);
         return NO;
     }
 
@@ -110,8 +115,10 @@ typedef enum
 
     NSPipe *pipe = [NSPipe pipe];
     NSPipe *pipeErr = [NSPipe pipe];
-/*    [task setStandardOutput:pipe];
-    [task setStandardError:pipeErr];*/
+/*
+    [task setStandardOutput:pipe];
+    [task setStandardError:pipeErr];
+*/
 
     int status = 0;
 

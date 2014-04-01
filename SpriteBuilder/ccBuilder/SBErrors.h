@@ -1,7 +1,12 @@
 // SpriteBuilder error domain
 extern NSString *const SBErrorDomain;
 
-// Error codes
+// === Error codes ===
+
+// GUI / DragnDrop
 extern NSInteger const SBNodeDoesNotSupportChildrenError;
 extern NSInteger const SBChildRequiresSpecificParentError;
 extern NSInteger const SBParentDoesNotPermitSpecificChildrenError;
+
+// Update Cocos2d
+extern NSInteger const SBCocos2dUpdateTemplateZipFileDoesNotExistError;
