@@ -70,7 +70,7 @@
         NSRect imageFrame;
         imageFrame.size = [_imageAlt size];
         imageFrame.origin = cellFrame.origin;
-        imageFrame.origin.x += cellFrame.size.width - 3.0;
+        imageFrame.origin.x += cellFrame.size.width - 14.0;
         imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
         return imageFrame;
     }
@@ -155,6 +155,18 @@
     [[self attributedStringValue] drawInRect:titleRect];
 }
 
+- (NSAttributedString *)attributedStringValue
+{
+    NSDictionary *attrs;
+
+    if ([self isHighlighted])
+    {
+        attrs = @{NSForegroundColorAttributeName:[NSColor whiteColor]};
+    }
+
+    return [[NSAttributedString alloc] initWithString:[self stringValue] attributes:attrs];
+}
+
 - (NSSize)cellSize
 {
     NSSize cellSize = [super cellSize];
@@ -165,22 +177,6 @@
 - (NSColor*) highlightColorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
     return NULL;
-}
-
-- (NSColor *)textColor
-{
-    if (self.controlView == self.controlView.window.firstResponder)
-    {
-        return [NSColor blackColor];
-    }
-    else if ([self isHighlighted])
-    {
-        return [NSColor whiteColor];
-    }
-    else
-    {
-        return [NSColor blackColor];
-    }
 }
 
 @end
