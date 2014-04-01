@@ -9,5 +9,6 @@
 #import "CCBPluginSKNode.h"
 
 @implementation CCBPluginSKNode
+SKNODE_COMPATIBILITY_CODE
 
 @end

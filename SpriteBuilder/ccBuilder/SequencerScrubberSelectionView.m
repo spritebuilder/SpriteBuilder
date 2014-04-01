@@ -555,7 +555,7 @@
     
     float timeMin = [seq positionToTime:mouseLocation.x - 3];
     float timeMax = [seq positionToTime:mouseLocation.x + 3];
-    timeMax = max(timeMax, timeMax +  1.0/(double)[SequencerHandler sharedHandler].currentSequence.timelineResolution);//Ensure at least one delta time step.
+    timeMax = MAX(timeMax, timeMax +  1.0/(double)[SequencerHandler sharedHandler].currentSequence.timelineResolution);//Ensure at least one delta time step.
     
     int row = [self yMousePosToRow:mouseLocation.y];
     int subRow = [self yMousePosToSubRow:mouseLocation.y];
@@ -923,12 +923,19 @@
         
         // Highlight selected option in context menu
         NSMenu* menu = [AppDelegate appDelegate].menuContextKeyframeInterpol;
-        
+
+		BOOL isSpriteKitProject = [AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit;
         for (NSMenuItem* item in menu.itemArray)
         {
+			// Strip all easing modes not supported by Sprite Kit
+			if (isSpriteKitProject)
+			{
+				item.hidden = (item.tag < 1 || item.tag > 4);
+			}
+
             [item setState:NSOffState];
         }
-        
+		
         NSMenuItem* item = [menu itemWithTag:keyframe.easing.type];
         [item setState:NSOnState];
         

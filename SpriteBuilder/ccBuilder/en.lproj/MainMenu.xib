@@ -78,12 +78,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="New" id="1477">
                                     <items>
-                                        <menuItem title="Cocos2D Project..." keyEquivalent="N" id="1479">
+                                        <menuItem title="Cocos2D Project..." id="1479">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNewProject:" target="494" id="1485"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Sprite Kit Project (experimental)..." keyEquivalent="N" id="9mK-yK-jy5">
+                                        <menuItem title="Sprite Kit Project..." id="9mK-yK-jy5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNewSpriteKitProject:" target="-1" id="2FM-eR-10L"/>
                                             </connections>
@@ -99,8 +101,7 @@
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Folder" id="1935">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Folder" keyEquivalent="N" id="1935">
                                             <connections>
                                                 <action selector="menuNewFolder:" target="494" id="O4b-MY-vZy"/>
                                                 <binding destination="494" name="enabled" keyPath="projectSettings" id="1940">
@@ -974,7 +975,7 @@ CA
                                                                                 <rect key="frame" x="0.0" y="0.0" width="250" height="401"/>
                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                 <size key="intercellSpacing" width="3" height="0.0"/>
-                                                                                <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="gridColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                                                                 <tableColumns>
                                                                                     <tableColumn width="240" minWidth="16" maxWidth="240" id="1502">
@@ -1051,7 +1052,7 @@ CA
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1991">
-                                                                        <rect key="frame" x="236" y="0.0" width="15" height="452"/>
+                                                                        <rect key="frame" x="235" y="0.0" width="16" height="452"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                 </scrollView>
@@ -1178,28 +1179,28 @@ CA
                                             <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="XRE-yL-GbY">
+                                                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="XRE-yL-GbY">
                                                     <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <clipView key="contentView" id="c9e-44-Yg2">
-                                                        <rect key="frame" x="1" y="1" width="247" height="638"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="8cF-q7-mD1" customClass="WarningTableView">
-                                                                <rect key="frame" x="0.0" y="0.0" width="247" height="638"/>
+                                                            <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="8cF-q7-mD1" customClass="WarningTableView">
+                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
                                                                 <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                 <tableColumns>
-                                                                    <tableColumn width="244" minWidth="40" maxWidth="1000" id="9wJ-gA-SBO">
+                                                                    <tableColumn editable="NO" width="246" minWidth="40" maxWidth="1000" id="9wJ-gA-SBO">
                                                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                                                         </tableHeaderCell>
                                                                         <textFieldCell key="dataCell" selectable="YES" alignment="left" title="Text Cell" id="pPM-bz-kYC" customClass="WarningCell">
-                                                                            <font key="font" metaFont="system"/>
+                                                                            <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
@@ -2000,35 +2001,35 @@ CA
                                                                         </connections>
                                                                     </button>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Owy-hj-QDL">
-                                                                        <rect key="frame" x="7" y="412" width="99" height="14"/>
+                                                                        <rect key="frame" x="7" y="417" width="99" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision Type" id="98R-vX-sVo">
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision type" id="98R-vX-sVo">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                     </textField>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="zE7-N8-hbv">
-                                                                        <rect key="frame" x="8" y="390" width="110" height="14"/>
+                                                                        <rect key="frame" x="8" y="395" width="108" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision Categories" id="QAP-qK-gTM">
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision categories" id="QAP-qK-gTM">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                     </textField>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="TnL-rD-5wN">
-                                                                        <rect key="frame" x="8" y="367" width="110" height="14"/>
+                                                                        <rect key="frame" x="8" y="372" width="110" height="14"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision Masks" id="ieq-gx-zOs">
+                                                                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Collision masks" id="ieq-gx-zOs">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                         </textFieldCell>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="RUv-bT-CiV">
-                                                                        <rect key="frame" x="121" y="410" width="153" height="19"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <rect key="frame" x="122" y="415" width="152" height="19"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="GTD-VF-88E">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -2040,8 +2041,8 @@ CA
                                                                         </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="xbX-kJ-93U">
-                                                                        <rect key="frame" x="121" y="388" width="153" height="19"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <rect key="frame" x="122" y="393" width="152" height="19"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="g9Y-yx-pgV">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -2053,8 +2054,8 @@ CA
                                                                         </connections>
                                                                     </textField>
                                                                     <textField verticalHuggingPriority="750" id="ump-WE-pX7">
-                                                                        <rect key="frame" x="121" y="365" width="153" height="19"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <rect key="frame" x="122" y="370" width="152" height="19"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="DNW-yr-drs">
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -2086,11 +2087,11 @@ CA
                                                         </subviews>
                                                     </clipView>
                                                     <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="H4Q-Vu-Ysx">
-                                                        <rect key="frame" x="0.0" y="641" width="283" height="15"/>
+                                                        <rect key="frame" x="0.0" y="640" width="298" height="16"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="cW2-Jx-hii">
-                                                        <rect key="frame" x="283" y="0.0" width="15" height="641"/>
+                                                        <rect key="frame" x="282" y="0.0" width="16" height="656"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
                                                 </scrollView>

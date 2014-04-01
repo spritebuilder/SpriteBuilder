@@ -112,6 +112,7 @@
 #import <objc/message.h>
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
+#import "NSArray+Query.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1576,7 +1577,7 @@ static BOOL hideAllToNextSeparator;
     // Process contents
     CCNode* loadedRoot = [CCBReaderInternal nodeGraphFromDocumentDictionary:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
     
-    CCNode* loadedJoints = [CCNode node];
+    NSMutableArray* loadedJoints = [NSMutableArray array];
     if(doc[@"joints"] != nil)
     {
         for (NSDictionary * jointDict in doc[@"joints"])
@@ -1585,7 +1586,7 @@ static BOOL hideAllToNextSeparator;
             
             if(joint)
             {
-                [loadedJoints addChild:joint];
+                [loadedJoints addObject:joint];
             }
         }
     }
@@ -1595,7 +1596,11 @@ static BOOL hideAllToNextSeparator;
     
     SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
     g.rootNode = loadedRoot;
-    g.joints.node = loadedJoints;
+    
+    [loadedJoints forEach:^(CCNode * child, int idx) {
+        [g.joints.node addChild:child];
+    }];
+
     
     [[CocosScene cocosScene] replaceSceneNodes:g];
     [outlineHierarchy reloadData];
@@ -2308,22 +2313,31 @@ static BOOL hideAllToNextSeparator;
 
 	if (!parentInfo.plugIn.canHaveChildren)
 	{
-		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add children to a %@", parentInfo.plugIn.nodeClassName] };
-		*error = [NSError errorWithDomain:SBErrorDomain code:SBNodeDoesNotSupportChildrenError userInfo:errorDictionary];
+		if (error)
+		{
+			NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add children to a %@", parentInfo.plugIn.nodeClassName] };
+			*error = [NSError errorWithDomain:SBErrorDomain code:SBNodeDoesNotSupportChildrenError userInfo:errorDictionary];
+		}
 		return NO;
 	}
 
 	if ([self doesToBeAddedChildRequireSpecificParent:child parent:parent])
 	{
-		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A %@ must be added to a %@", childInfo.plugIn.nodeClassName, childInfo.plugIn.requireParentClass] };
-		*error = [NSError errorWithDomain:SBErrorDomain code:SBChildRequiresSpecificParentError userInfo:errorDictionary];
+		if (error)
+		{
+			NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"A %@ must be added to a %@", childInfo.plugIn.nodeClassName, childInfo.plugIn.requireParentClass] };
+			*error = [NSError errorWithDomain:SBErrorDomain code:SBChildRequiresSpecificParentError userInfo:errorDictionary];
+		}
 		return NO;
 	}
 
 	if ([self doesParentPermitChildToBeAdded:parent child:child])
 	{
-		NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add a %@ to a %@", childInfo.plugIn.nodeClassName, parentInfo.plugIn.nodeClassName] };
-		*error = [NSError errorWithDomain:SBErrorDomain code:SBParentDoesNotPermitSpecificChildrenError userInfo:errorDictionary];
+		if (error)
+		{
+			NSDictionary *errorDictionary = @{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"You cannot add a %@ to a %@", childInfo.plugIn.nodeClassName, parentInfo.plugIn.nodeClassName] };
+			*error = [NSError errorWithDomain:SBErrorDomain code:SBParentDoesNotPermitSpecificChildrenError userInfo:errorDictionary];
+		}
 		return NO;
 	}
 	return YES;
@@ -2632,6 +2646,16 @@ static BOOL hideAllToNextSeparator;
     [cb setData:clipData forType:@"com.cocosbuilder.node"];
 }
 
+-(void)updateUUIDs:(CCNode*)node
+{
+    node.UUID = currentDocument.UUID;
+    currentDocument.UUID = currentDocument.UUID + 1;
+    
+    for (CCNode * child in node.children) {
+        [self updateUUIDs:child];
+    }
+}
+
 - (void) doPasteAsChild:(BOOL)asChild
 {
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
@@ -2647,7 +2671,9 @@ static BOOL hideAllToNextSeparator;
         else parentSize = self.selectedNode.parent.contentSize;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
-        clipNode.UUID = 0x0;
+        [self updateUUIDs:clipNode];
+        
+        
         [self addCCObject:clipNode asChild:asChild];
         
         //We might have copy/cut/pasted and body. Fix it up.

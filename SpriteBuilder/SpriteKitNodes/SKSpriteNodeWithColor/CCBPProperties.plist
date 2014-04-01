@@ -95,6 +95,26 @@
 		</dict>
 	</array>
 	<key>propertiesOverridden</key>
-	<array/>
+	<array>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>default</key>
+			<array>
+				<string>114</string>
+				<integer>64</integer>
+			</array>
+			<key>type</key>
+			<string>Size</string>
+			<key>name</key>
+			<string>contentSize</string>
+			<key>displayName</key>
+			<string>Content Size</string>
+		</dict>
+	</array>
 </dict>
 </plist>

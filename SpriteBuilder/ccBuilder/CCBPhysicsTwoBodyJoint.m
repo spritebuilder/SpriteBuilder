@@ -133,7 +133,7 @@ static const float kDefaultLength = 58.0f;
         
         CGPoint segment = ccpSub(worldPosB,worldPosA);
         float angleRad = atan2f(segment.y, segment.x);
-        float angle = -kmRadiansToDegrees( angleRad);
+        float angle = -CC_RADIANS_TO_DEGREES(angleRad);
         return  angle;
     }
     
@@ -204,16 +204,6 @@ static const float kDefaultLength = 58.0f;
 }
 
 
-
--(void)setBodyB:(CCNode *)aBodyB
-{
-    bool different = bodyB && bodyB.UUID != aBodyB.UUID;
-   
-    [super setBodyB:aBodyB];
-    
-    if(different)
-        [self setAnchorFromBodyB];
-}
 
 -(void)setAnchorB:(CGPoint)lAnchorB
 {

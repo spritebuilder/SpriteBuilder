@@ -8,6 +8,8 @@
 
 #import "SequencerJoints.h"
 #import "CCBPhysicsPivotJoint.h"
+#import "NodeInfo.h"
+
 
 @implementation SequencerJoints
 
@@ -19,6 +21,8 @@
     if(self)
     {
         self.node = [CCNode node];
+        self.node.name = @"SequencerJointsRoot";
+        self.node.userObject = [[NodeInfo alloc] init];
     }
     
     return self;

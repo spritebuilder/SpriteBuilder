@@ -154,7 +154,7 @@
     }
     
     if (pt.x + kCCBPhysicsLineSegmFuzz < left.x || right.x < pt.x - kCCBPhysicsLineSegmFuzz) return NO;
-    if (pt.y + kCCBPhysicsLineSegmFuzz < min(left.y, right.y) || max(left.y, right.y) < pt.y - kCCBPhysicsLineSegmFuzz) return NO;
+    if (pt.y + kCCBPhysicsLineSegmFuzz < MIN(left.y, right.y) || MAX(left.y, right.y) < pt.y - kCCBPhysicsLineSegmFuzz) return NO;
     
     float dX = right.x - left.x;
     float dY = right.y - left.y;
@@ -210,7 +210,7 @@
     float xDist0 = fabsf(src.x - pt0.x);
     float xDist1 = fabsf(src.x - pt1.x);
     
-    if (min(xDist0, xDist1) < kCCBPhysicsSnapDist)
+    if (MIN(xDist0, xDist1) < kCCBPhysicsSnapDist)
     {
         if (xDist0 < xDist1) snapped.x = pt0.x;
         else snapped.x = pt1.x;
@@ -220,7 +220,7 @@
     float yDist0 = fabsf(src.y - pt0.y);
     float yDist1 = fabsf(src.y - pt1.y);
     
-    if (min(yDist0, yDist1) < kCCBPhysicsSnapDist)
+    if (MIN(yDist0, yDist1) < kCCBPhysicsSnapDist)
     {
         if (yDist0 < yDist1) snapped.y = pt0.y;
         else snapped.y = pt1.y;
@@ -395,7 +395,7 @@
         {
 
             CGPoint testPoint = [physicsNode convertToNodeSpace:point];
-            testPoint = ccpSub(testPoint, [physicsNode.nodePhysicsBody.points[0] pointValue]);
+            testPoint = ccpSub(testPoint, [physicsNode.nodePhysicsBody.points.firstObject pointValue]);
             
             float radius  = physicsNode.nodePhysicsBody.cornerRadius;
             float distanceFromCentre = ccpLength(testPoint);
@@ -491,7 +491,19 @@
         
         return YES;
     }
-    if(jointHandleIndex != JointHandleUnknown)
+    else if(jointHandleIndex == EntireJoint)
+    {
+        //We've touched down in the centre of the joint. Do we allow it to translate?
+        
+        //If either of the outlets aren't filled out
+        CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
+        if(joint.bodyA == nil || joint.bodyB == nil)
+            return NO;
+        
+        return YES;
+    
+    }
+    else if(jointHandleIndex != JointHandleUnknown)
     {
         if(jointHandleIndex == BodyOutletA || jointHandleIndex == BodyOutletB)
         {
@@ -506,7 +518,7 @@
     }
     else
     {
-        // Clicked outside handle, pass event down to selections
+               // Clicked outside handle, pass event down to selections
         return NO;
     }
 }
@@ -571,8 +583,14 @@
     }
     else if(bodyDragging != JointHandleUnknown)
     {
+        if(node.locked)
+            return YES;
+        
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         [joint setBodyHandle:pos bodyType:bodyDragging];
+        
+        if([CocosScene cocosScene].currentTool != kCCBToolTranslate)
+            [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
         
         return YES;
     }
@@ -652,18 +670,22 @@
     }
 }
 
-- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx
+- (void) assignBodyToJoint:(CCNode*)body toJoint:(CCBPhysicsJoint*)joint withIdx:(JointHandleType)idx pos:(CGPoint)worldPos
 {
     if(idx == BodyOutletA)
     {
         joint.bodyA = body;
+    
+        [joint setBodyHandle:worldPos bodyType:BodyAnchorA];
         [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
     }
     else
     {
         joint.bodyB = body;
+        [joint setBodyHandle:worldPos bodyType:BodyAnchorB];
         [[AppDelegate appDelegate] refreshProperty:@"bodyB"];
     }
+    
     [joint refreshOutletStatus];
 }
 
@@ -840,6 +862,7 @@
     }
 }
 
+
 - (void) updatePhysicsEditor:(CCNode*) editorView
 {
    
@@ -851,11 +874,19 @@
         [joint setJointHandleSelected:EntireJoint];
         
         JointHandleType type = [joint hitTestJointHandle:_mouseMovePos];
-        if(type != JointHandleUnknown)
+        if(type != JointHandleUnknown && type != EntireJoint)
         {
             [joint setJointHandleSelected:type];
-        }
 
+            if([CocosScene cocosScene].currentTool != kCCBToolTranslate)
+                [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
+        }
+        else
+        {
+            if([CocosScene cocosScene].currentTool != kCCBToolSelection)
+                [[CocosScene cocosScene] setCurrentTool: kCCBToolSelection];
+        }
+        
         if(jointOutletDragging)
         {
             CCNode * body = [self findPhysicsBodyAtPoint:jointOutletDraggingLocation];

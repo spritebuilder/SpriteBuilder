@@ -18,7 +18,7 @@
 @implementation CCBPhysicsPivotJoint
 {
     CCSprite * joint;
-    CCSprite* jointAnchor;
+    CCSprite * jointAnchor;
 }
 
 @synthesize anchorA;
@@ -101,12 +101,6 @@
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
-    bool change = NO;
-    if(bodyA && bodyA.UUID != aBodyA.UUID)
-    {
-        change = YES;
-    }
-
     
     [super setBodyA:aBodyA];
     
@@ -115,10 +109,6 @@
         self.anchorA = CGPointZero;
         [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
         return;
-    }
-    else if(change)
-    {
-        [self setAnchorFromBodyA];
     }
     
     [self setPositionFromAnchor];
@@ -159,6 +149,23 @@
     [self setAnchorFromBodyA];
 }
 
+
+-(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
+{
+    if(jointAnchor)
+    {
+        CGPoint pointA = [jointAnchor convertToNodeSpaceAR:worlPos];
+        pointA = ccpAdd(pointA, ccp(0,3.0f * [CCDirector sharedDirector].UIScaleFactor));
+        if(ccpLength(pointA) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+        {
+            return BodyAnchorA;
+        }
+    }
+    
+       
+    
+    return [super hitTestJointHandle:worlPos];;
+}
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {

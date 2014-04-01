@@ -8,6 +8,8 @@
 
 #import "CCNode+SKNode.h"
 #import "CCNodeColor.h"
+#import "CCDirector.h"
+#import "CCNode_Private.h"
 
 @implementation CCNode (SKNode)
 
@@ -70,11 +72,11 @@
 	return self.rotation;
 }
 
--(void) setHidden:(BOOL)hidden
+-(void) setNodeHidden:(BOOL)hidden
 {
 	self.visible = !hidden;
 }
--(BOOL) hidden
+-(BOOL) nodeHidden
 {
 	return !self.visible;
 }
@@ -112,9 +114,80 @@
 
 -(CGPoint) positionRelativeToParent:(CGPoint)position
 {
-	CGPoint parentAP = _parent.anchorPoint;
-	CGSize parentCS = _parent.contentSize;
-	return CGPointMake(parentCS.width * parentAP.x + position.x, parentCS.height * parentAP.y + position.y);
+	if (_parent == nil)
+	{
+		//NSLog(@"'%@' %p has no parent", self.name, self);
+		return self.position;
+	}
+	
+	CGPoint newPosition = position;
+	CGSize parentSizeInPoints = [_parent convertContentSizeToPoints:_parent.contentSize type:_parent.contentSizeType];
+	CGPoint parentAnchorInPoints = CGPointMake(parentSizeInPoints.width * _parent.anchorPoint.x, parentSizeInPoints.height * _parent.anchorPoint.y);
+	
+	switch (self.positionType.xUnit)
+	{
+		case CCPositionUnitPoints:
+			newPosition.x += parentAnchorInPoints.x;
+			break;
+		case CCPositionUnitUIPoints:
+			newPosition.x += parentAnchorInPoints.x * [CCDirector sharedDirector].UIScaleFactor;
+			break;
+		case CCPositionUnitNormalized:
+			// defined as "% of parent container" so no adjustment needed
+			break;
+			
+		default:
+			break;
+	}
+
+	switch (self.positionType.yUnit)
+	{
+		case CCPositionUnitPoints:
+			newPosition.y += parentAnchorInPoints.y;
+			break;
+		case CCPositionUnitUIPoints:
+			newPosition.y += parentAnchorInPoints.y * [CCDirector sharedDirector].UIScaleFactor;
+			break;
+		case CCPositionUnitNormalized:
+			// defined as "% of parent container" so no adjustment needed
+			break;
+			
+		default:
+			break;
+	}
+
+	//NSLog(@"'%@' %p pos: %@ new: %@ p-anch: %@", self.name, self, NSStringFromPoint(position), NSStringFromPoint(newPosition), NSStringFromPoint(parentAnchorInPoints));
+	return newPosition;
 }
+
+-(void) didMoveToParent
+{
+	// update position based on parent values
+	[self positionRelativeToParent:_position];
+	
+	// do so recursively for all child nodes
+	for (CCNode* node in _children)
+	{
+		[node positionRelativeToParent:node.position];
+	}
+}
+
+#pragma mark z Position
+
+/*
+@dynamic zPosition;
+-(void) setZPosition:(CGFloat)z
+{
+	// assign to vertexZ so we can keep the floating point aspect (SK zPosition is a CGFloat)
+	self.vertexZ = z;
+	// apply z to zOrder so that draw order inside SB is updated
+	self.zOrder = (NSInteger)z;
+}
+
+-(CGFloat) zPosition
+{
+	return (CGFloat)self.vertexZ;
+}
+*/
 
 @end
