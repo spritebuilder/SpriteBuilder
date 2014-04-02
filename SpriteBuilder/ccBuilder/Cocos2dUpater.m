@@ -10,8 +10,7 @@
 
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
-#import "NSString+RelativePath.h"
-#import "SBErrors.h"
+#import "Cocos2dUpater+Errors.h"
 
 typedef enum
 {
@@ -41,11 +40,8 @@ typedef enum {
         _projectsCocos2dVersion = nil;
         _sbCocos2dVersion = [self readSBCocos2dVersionFile];
 
-        // TODO: revmove me
+        // TODO: remove me
         _sbCocos2dVersion = @"3.0.1";
-
-        NSError *error;
-        [self unzipCocos2dFolder:&error];
     }
 
     return self;
@@ -79,23 +75,75 @@ typedef enum {
         return;
     }
 
-    [self doUpdate:&error];
+    [self doUpdate];
 }
 
-- (void)doUpdate:(NSError **)error
+- (void)showErrorMessage:(NSError *)error
+{
+    NSAssert(error != nil, @"An error object is needed to show the error message.");
+
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"Ok"];
+    alert.messageText = @"Error updating Cocos2D";
+    alert.informativeText = error.localizedDescription;
+    [alert runModal];
+}
+
+- (void)rollBack
+{
+    // TODO: remove cocos2d folder if existent
+    // TODO: rename backup folder to original name
+}
+
+- (void)doUpdate
 {
     NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
 
-    // TODO: show progress window - appdelegate
-    // TODO: show errors
+    __block NSError *error;
 
-    [self unzipCocos2dFolder:error];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^
+    {
+        [self updateModalDialogStatusText:@"Unzipping sources"];
+        [self unzipCocos2dFolder:&error];
 
-    [self renameCocos2dFolderToBackupPostfix];
-    [self copySBsCocos2dFolderToProjectDir];
+        [self updateModalDialogStatusText:@"Copying files"];
+        [self renameCocos2dFolderToBackupPostfix];
+        [self copySBsCocos2dFolderToProjectDir];
 
-    [self tidyUpTempFolder:error];
-    [self showUpdateInfoDialog];
+        [self tidyUpTempFolder:&error];
+
+        [self finishWithUpdateStatus:NO error:error];
+    });
+
+    [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..."];
+}
+
+- (void)finishWithUpdateStatus:(BOOL)status error:(NSError *)error
+{
+    dispatch_sync(dispatch_get_main_queue(), ^
+    {
+        [_appDelegate modalStatusWindowFinish];
+
+        if (status)
+        {
+            [self showUpdateInfoDialog];
+        }
+        else
+        {
+            [self showErrorMessage:error];
+            [self rollBack];
+        }
+    });
+}
+
+- (void)updateModalDialogStatusText:(NSString *)text
+{
+    // NSAssert(![NSThread isMainThread], @"Should only be called from non main queue.");
+    dispatch_sync(dispatch_get_main_queue(), ^
+    {
+        [_appDelegate modalStatusWindowUpdateStatusText:text];
+    });
 }
 
 - (UpdateActions)determineUpdateAction:(NSError **)error
@@ -106,8 +154,7 @@ typedef enum {
     }
     else if ([self standardCocos2dFolderExists])
     {
-        // TODO: text needed
-        return [self showDialogToUpdateWithText:@"No Version file found..."];
+        return [self showDialogToUpdateWithText:@"Cocos2D folder exists but no Version file could be found. This could mean your version is outdated."];
     }
     else
     {
@@ -140,10 +187,7 @@ typedef enum {
 
     if (![fileManager fileExistsAtPath:zipFile])
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBCocos2dUpdateTemplateZipFileDoesNotExistError
-                                 userInfo:@{@"zipFile" : zipFile,
-                                         NSLocalizedDescriptionKey : @"Project template zip file does not exist, unable to extract newer cocos2d version."}];
+        *error = [self errorForNonExistentTemplateFile:zipFile];
         return NO;
     }
 
@@ -182,6 +226,7 @@ typedef enum {
     @try
     {
         [task launch];
+
         // Not using waitUntilExit, see https://www.mikeash.com/pyblog/friday-qa-2009-11-13-dangerous-cocoa-calls.html
         while([task isRunning])
         {
@@ -209,27 +254,6 @@ typedef enum {
     return YES;
 }
 
-- (NSError *)errorForUnzipTaskWithException:(NSException *)exception zipFile:(NSString *)zipFile
-{
-    return [NSError errorWithDomain:SBErrorDomain
-                                     code:SBCocos2dUpdateUnzipTaskError
-                                 userInfo:@{@"zipFile" : zipFile,
-                                         @"exception" : exception,
-                                         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Exception %@ thrown while running unzip task.", exception.name]}];
-}
-
-- (NSError *)errorForFailedUnzipTask:(NSString *)zipFile dataStdOut:(NSData *)dataStdOut dataStdErr:(NSData *)dataStdErr status:(int)status
-{
-    NSString *stdOut = [[NSString alloc] initWithData: dataStdOut encoding: NSUTF8StringEncoding];
-    NSString *stdErr = [[NSString alloc] initWithData: dataStdErr encoding: NSUTF8StringEncoding];
-    return [NSError errorWithDomain:SBErrorDomain
-                               code:SBCocos2dUpdateUnzipTemplateFailedError
-                           userInfo:@{@"zipFile" : zipFile,
-                                   @"stdOut" : stdOut,
-                                   @"stdErr" : stdErr,
-                                   NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unzip task exited with status code %d. See stdErr key in userInfo.", status]}];
-}
-
 - (NSString *)tempFolderPathForUnzipping
 {
     return [NSTemporaryDirectory() stringByAppendingPathComponent:@"com.spritebuilder.updatecocos2d"];
@@ -238,9 +262,10 @@ typedef enum {
 - (BOOL)tidyUpTempFolder:(NSError **)error
 {
     NSString *tmpDir = [self tempFolderPathForUnzipping];
-
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ( ! [fileManager removeItemAtPath:tmpDir error:error])
+
+    if ([fileManager fileExistsAtPath:tmpDir]
+        && ![fileManager removeItemAtPath:tmpDir error:error])
     {
         NSLog(@"[COCO2D-UPDATER] Error tidying up unzip folder: %@", *error);
         return NO;
