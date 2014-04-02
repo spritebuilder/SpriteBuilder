@@ -19,6 +19,12 @@ typedef enum
     Cocos2dVersionIncompatible,
 } Cocos2dVersionComparisonResult;
 
+typedef enum {
+   UpdateDialogYes = 0,
+    UpdateDialogNO,
+    UpdateDialogIgnoreVersion,
+} UpdateDialogAlternatives;
+
 @implementation Cocos2dUpater
 {
     NSString *_projectsCocos2dVersion;
@@ -185,12 +191,11 @@ typedef enum
 
 - (void)showUpdateInfoDialog
 {
-    // TODO: text needed
     NSAlert *alert = [NSAlert alertWithMessageText:@"Cocos2D update"
                                       defaultButton:@"Ok"
                                     alternateButton:nil
                                         otherButton:nil
-                          informativeTextWithFormat:@"%@", @"TODO: Backup files created..."];
+                          informativeTextWithFormat:@"Update finished."];
     [alert runModal];
 }
 
@@ -218,17 +223,29 @@ typedef enum
     // TODO: implement me
 }
 
-- (BOOL)showDialogToUpdateWithText:(NSString *)text
+- (UpdateDialogAlternatives)showDialogToUpdateWithText:(NSString *)text
 {
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Cocos2D update"
-                                     defaultButton:@"No"
-                                   alternateButton:@"Yes"
-                                       otherButton:nil
-                         informativeTextWithFormat:@"%@", text];
+    // TODO: text param?
+    NSMutableString *informativeText = [NSMutableString stringWithFormat:@"Update from version %@ to %@?", _projectsCocos2dVersion, _sbCocos2dVersion];
+    [informativeText appendFormat:@"\nYour cocos2d source folder will be renamed with a \".backup\" postfix."];
 
-    NSInteger retunrValue = [alert runModal];
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.informativeText = informativeText;
+    alert.messageText = @"Cocos2D update";
 
-    return retunrValue == NSAlertAlternateReturn;
+    // beware: return value is depending on the position of the button
+    [alert addButtonWithTitle:@"Yes"];
+    [alert addButtonWithTitle:@"No"];
+    [alert addButtonWithTitle:@"Ignore this version"];
+
+    NSInteger returnValue = [alert runModal];
+    switch (returnValue)
+    {
+        case NSAlertFirstButtonReturn: return UpdateDialogYes;
+        case NSAlertSecondButtonReturn: return UpdateDialogNO;
+        case NSAlertThirdButtonReturn: return UpdateDialogIgnoreVersion;
+        default: return UpdateDialogNO;
+    }
 }
 
 - (Cocos2dVersionComparisonResult)compareProjectsCocos2dVersionWithSBVersion
