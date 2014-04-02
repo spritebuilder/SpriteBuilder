@@ -43,10 +43,9 @@ typedef enum {
 
         // TODO: revmove me
         _sbCocos2dVersion = @"3.0.1";
-/*
+
         NSError *error;
         [self unzipCocos2dFolder:&error];
-*/
     }
 
     return self;
@@ -142,13 +141,14 @@ typedef enum {
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *zipFile = [[NSBundle mainBundle] pathForResource:@"PROJECTNAME" ofType:@"zip" inDirectory:@"Generated"];
+    NSString *tmpDir = [self tempFolderPathForUnzipping];
 
     if (![fileManager fileExistsAtPath:zipFile])
     {
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBCocos2dUpdateTemplateZipFileDoesNotExistError
-                                 userInfo:@{@"zipFile":zipFile,
-                                         NSLocalizedDescriptionKey:@"Project template zip file does not exist, unable to extract newer cocos2d version."}];
+                                 userInfo:@{@"zipFile" : zipFile,
+                                         NSLocalizedDescriptionKey : @"Project template zip file does not exist, unable to extract newer cocos2d version."}];
         return NO;
     }
 
@@ -157,60 +157,82 @@ typedef enum {
         return NO;
     }
 
-    NSString *tmpDir = [self tempFolderPathForUnzipping];
     if (![fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
     {
         return NO;
     }
 
-    NSTask*task = [[NSTask alloc] init];
+    return [self unzipZipFile:zipFile inTmpDir:tmpDir error:error];
+}
+
+- (BOOL)unzipZipFile:(NSString *)zipFile inTmpDir:(NSString *)tmpDir error:(NSError **)error
+{
+    NSTask *task = [[NSTask alloc] init];
     [task setCurrentDirectoryPath:tmpDir];
     [task setLaunchPath:@"/usr/bin/unzip"];
-    NSArray* args = @[@"-d", tmpDir, @"-o", zipFile];
+    NSArray *args = @[@"-d", tmpDir, @"-o", zipFile];
     [task setArguments:args];
 
-    NSPipe *pipe = [NSPipe pipe];
-    [task setStandardOutput: pipe];
+    NSPipe *pipeStdOut = [NSPipe pipe];
+    [task setStandardOutput:pipeStdOut];
+    NSFileHandle *file = [pipeStdOut fileHandleForReading];
+    NSData *dataStdOut;
 
-    NSFileHandle *file = [pipe fileHandleForReading];
-    [task setStandardInput:[NSPipe pipe]];
-/*
-    [task setStandardError:pipeErr];
-*/
+    NSPipe *pipeStdErr = [NSPipe pipe];
+    [task setStandardError:pipeStdErr];
+    NSFileHandle *fileErr = [pipeStdErr fileHandleForReading];
+    NSData *dataStdErr;
 
     int status = 0;
-
     @try
     {
         [task launch];
-        [task waitUntilExit];
+        // Not using waitUntilExit, see https://www.mikeash.com/pyblog/friday-qa-2009-11-13-dangerous-cocoa-calls.html
+        while([task isRunning])
+        {
+            // Do this or the whole task may get locked, at least on my computer, without pipe for stdOut everything was
+            // fine, some undrained buffer?
+            dataStdOut = [file readDataToEndOfFile];
+            dataStdErr = [fileErr readDataToEndOfFile];
+        };
         status = [task terminationStatus];
     }
     @catch (NSException *exception)
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBCocos2dUpdateUnzipTaskError
-                                 userInfo:@{@"zipFile":zipFile,
-                                         @"exception" : exception,
-                                         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Exception %@ thrown while running unzip task.", exception.name]}];
-
-        NSLog(@"[COCO2D-UPDATER] unzipping failed: %@", *error);
+        *error = [self errorForUnzipTaskWithException:exception zipFile:zipFile];
+        NSLog(@"[COCO2D-UPDATER] ERROR unzipping failed: %@", *error);
         return NO;
     }
 
     if (status)
     {
-        // TODO: add stdErr output
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBCocos2dUpdateUnzipTemplateFailedError
-                                 userInfo:@{@"zipFile" : zipFile,
-                                         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unzip task exited with status code %d.", status]}];
-
-        NSLog(@"[COCO2D-UPDATER] unzipping failed: %@", *error);
+        *error = [self errorForFailedUnzipTask:zipFile dataStdOut:dataStdOut dataStdErr:dataStdErr status:status];
+        NSLog(@"[COCO2D-UPDATER] ERROR unzipping failed: %@", *error);
         return NO;
     }
 
     return YES;
+}
+
+- (NSError *)errorForUnzipTaskWithException:(NSException *)exception zipFile:(NSString *)zipFile
+{
+    return [NSError errorWithDomain:SBErrorDomain
+                                     code:SBCocos2dUpdateUnzipTaskError
+                                 userInfo:@{@"zipFile" : zipFile,
+                                         @"exception" : exception,
+                                         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Exception %@ thrown while running unzip task.", exception.name]}];
+}
+
+- (NSError *)errorForFailedUnzipTask:(NSString *)zipFile dataStdOut:(NSData *)dataStdOut dataStdErr:(NSData *)dataStdErr status:(int)status
+{
+    NSString *stdOut = [[NSString alloc] initWithData: dataStdOut encoding: NSUTF8StringEncoding];
+    NSString *stdErr = [[NSString alloc] initWithData: dataStdErr encoding: NSUTF8StringEncoding];
+    return [NSError errorWithDomain:SBErrorDomain
+                               code:SBCocos2dUpdateUnzipTemplateFailedError
+                           userInfo:@{@"zipFile" : zipFile,
+                                   @"stdOut" : stdOut,
+                                   @"stdErr" : stdErr,
+                                   NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unzip task exited with status code %d. See stdErr key in userInfo.", status]}];
 }
 
 - (NSString *)tempFolderPathForUnzipping
@@ -249,7 +271,7 @@ typedef enum {
     NSString *result = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:&error];
     if (!result)
     {
-        NSLog(@"[COCO2D-UPDATER] ERROR reading SB's cocos2d version: %@", error);
+        NSLog(@"[COCO2D-UPDATER] ERROR reading SB's cocos2d version file: %@", error);
     }
 
     return result;
