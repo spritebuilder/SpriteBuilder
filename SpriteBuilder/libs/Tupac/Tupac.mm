@@ -178,14 +178,16 @@ typedef struct _PVRTexHeader
     return NSMakeRect(x, y, wTrimmed, hTrimmed);
 }
 
-- (void)createTextureAtlas
+- (NSArray *)createTextureAtlas
 {
     // Reset the error message
     if (errorMessage)
     {
         errorMessage = NULL;
     }
-    
+
+    NSMutableArray *result = [NSMutableArray array];
+
     // Create output directory if it doesn't exist
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* outputDir = [outputName_ stringByDeletingLastPathComponent];
@@ -426,7 +428,9 @@ typedef struct _PVRTexHeader
         [self setErrorMessage:error.localizedDescription];
         
     }
-    
+
+    [result addObject:textureFileName];
+
     // Metadata File Export
     textureFileName = [textureFileName lastPathComponent];
     
@@ -487,16 +491,19 @@ typedef struct _PVRTexHeader
         [metadata setObject:textureFileName                                     forKey:@"textureFileName"];
         [metadata setObject:[NSNumber numberWithInt:2]                      forKey:@"format"];
         [metadata setObject:NSStringFromSize(NSMakeSize(outW, outH))        forKey:@"size"];
-        
-        [outDict writeToFile:[self.outputName stringByAppendingPathExtension:@"plist"] atomically:YES];
+
+        NSString *plistFilename = [self.outputName stringByAppendingPathExtension:@"plist"];
+        [outDict writeToFile:plistFilename atomically:YES];
+        [result addObject:plistFilename];
     }
     else if ([self.outputFormat isEqualToString:TupacOutputFormatAndEngine]) {
         fprintf(stderr, "[MO] output format %s not yet supported\n", [self.outputFormat UTF8String]);
         exit(EXIT_FAILURE);
     }
+    return result;
 }
 
-- (void) createTextureAtlasFromDirectoryPaths:(NSArray *)dirs
+- (NSArray *) createTextureAtlasFromDirectoryPaths:(NSArray *)dirs
 {
     NSFileManager* fm = [NSFileManager defaultManager];
     
@@ -536,8 +543,9 @@ typedef struct _PVRTexHeader
     
     // Generate the sprite sheet
     self.filenames = absoluteFilepaths;
-    [self createTextureAtlas];
+    return [self createTextureAtlas];
 }
+
 @end
 
 NSString *TupacOutputFormatCocos2D = @"cocos2d";

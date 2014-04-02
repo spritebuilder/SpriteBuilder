@@ -2218,9 +2218,37 @@ CA
                             </binding>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="0ED4D287-F74F-44EF-9AE8-E629E80A81DD" label="Custom View" paletteLabel="Custom View" id="9vz-Yr-LRc" userLabel="Toolbar Item - Publish Environment">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="100" height="25"/>
+                        <size key="maxSize" width="100" height="25"/>
+                        <popUpButton key="view" verticalHuggingPriority="750" id="wKB-I9-SMK">
+                            <rect key="frame" x="0.0" y="14" width="100" height="25"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" altersStateOfSelectedItem="NO" id="zR9-Ke-yNX">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <menu key="menu" title="OtherViews" id="DhV-ki-Vxj">
+                                    <items>
+                                        <menuItem title="Develop" id="8uA-4D-gxr"/>
+                                        <menuItem title="Release" id="dyW-FX-44Z"/>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                            <connections>
+                                <binding destination="494" name="enabled" keyPath="projectSettings" id="aeY-zP-yko">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="494" name="selectedIndex" keyPath="projectSettings.publishEnvironment" id="ro3-ye-C2p"/>
+                            </connections>
+                        </popUpButton>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="Nkp-mV-yYQ"/>
+                    <toolbarItem reference="9vz-Yr-LRc"/>
                     <toolbarItem reference="1358"/>
                     <toolbarItem reference="1788"/>
                 </defaultToolbarItems>
