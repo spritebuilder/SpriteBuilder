@@ -97,10 +97,10 @@ typedef enum
 
     if (![fileManager fileExistsAtPath:zipFile])
     {
-        // TODO: add NSLocalizedDescriptionKey
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBCocos2dUpdateTemplateZipFileDoesNotExistError
-                                 userInfo:@{@"zipFile":zipFile}];
+                                 userInfo:@{@"zipFile":zipFile,
+                                         NSLocalizedDescriptionKey:@"Project template zip file does not exist, unable to extract newer cocos2d version."}];
         return NO;
     }
 
@@ -140,10 +140,11 @@ typedef enum
     }
     @catch (NSException *exception)
     {
-        // TODO: add NSLocalizedDescriptionKey
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBCocos2dUpdateUnzipTaskError
-                                 userInfo:@{@"zipFile":zipFile, @"exception" : exception}];
+                                 userInfo:@{@"zipFile":zipFile,
+                                         @"exception" : exception,
+                                         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Exception %@ thrown while running unzip task.", exception.name]}];
 
         NSLog(@"[COCO2D-UPDATER] unzipping failed: %@", *error);
         return NO;
@@ -151,10 +152,11 @@ typedef enum
 
     if (status)
     {
-        // TODO: add NSLocalizedDescriptionKey
+        // TODO: add stdErr output
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBCocos2dUpdateUnzipTemplateFailedError
-                                 userInfo:@{@"zipFile":zipFile}];
+                                 userInfo:@{@"zipFile" : zipFile,
+                                         NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unzip task exited with status code %d.", status]}];
 
         NSLog(@"[COCO2D-UPDATER] unzipping failed: %@", *error);
         return NO;
