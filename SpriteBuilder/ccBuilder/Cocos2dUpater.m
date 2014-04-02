@@ -24,10 +24,14 @@ typedef enum {
    UpdateActionIgnoreVersion,
 } UpdateActions;
 
+static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-iphone/";
+
+
 @implementation Cocos2dUpater
 {
     NSString *_projectsCocos2dVersion;
     NSString *_sbCocos2dVersion;
+    NSFileManager *_fileManager;
 }
 
 - (instancetype)initWithAppDelegate:(AppDelegate *)appDelegate projectSettings:(ProjectSettings *)projectSettings
@@ -39,6 +43,7 @@ typedef enum {
         _projectSettings = projectSettings;
         _projectsCocos2dVersion = nil;
         _sbCocos2dVersion = [self readSBCocos2dVersionFile];
+        _fileManager = [NSFileManager defaultManager];
 
         // TODO: remove me
         _sbCocos2dVersion = @"3.0.1";
@@ -105,15 +110,13 @@ typedef enum {
     dispatch_async(queue, ^
     {
         [self updateModalDialogStatusText:@"Unzipping sources"];
-        [self unzipCocos2dFolder:&error];
 
-        [self updateModalDialogStatusText:@"Copying files"];
-        [self renameCocos2dFolderToBackupPostfix];
-        [self copySBsCocos2dFolderToProjectDir];
+        BOOL updateResult = [self unzipCocos2dFolder:&error]
+            && [self renameCocos2dFolderToBackupPostfix:&error]
+            && [self copySBsCocos2dFolderToProjectDir:&error]
+            && [self tidyUpTempFolder:&error];
 
-        [self tidyUpTempFolder:&error];
-
-        [self finishWithUpdateStatus:NO error:error];
+        [self finishWithUpdateStatus:updateResult error:error];
     });
 
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..."];
@@ -139,7 +142,7 @@ typedef enum {
 
 - (void)updateModalDialogStatusText:(NSString *)text
 {
-    // NSAssert(![NSThread isMainThread], @"Should only be called from non main queue.");
+    NSAssert(![NSThread isMainThread], @"Should only be called from non main queue.");
     dispatch_sync(dispatch_get_main_queue(), ^
     {
         [_appDelegate modalStatusWindowUpdateStatusText:text];
@@ -181,11 +184,10 @@ typedef enum {
 
 - (BOOL)unzipCocos2dFolder:(NSError **)error
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *zipFile = [[NSBundle mainBundle] pathForResource:@"PROJECTNAME" ofType:@"zip" inDirectory:@"Generated"];
     NSString *tmpDir = [self tempFolderPathForUnzipping];
 
-    if (![fileManager fileExistsAtPath:zipFile])
+    if (![_fileManager fileExistsAtPath:zipFile])
     {
         *error = [self errorForNonExistentTemplateFile:zipFile];
         return NO;
@@ -196,7 +198,7 @@ typedef enum {
         return NO;
     }
 
-    if (![fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
+    if (![_fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
     {
         return NO;
     }
@@ -262,10 +264,9 @@ typedef enum {
 - (BOOL)tidyUpTempFolder:(NSError **)error
 {
     NSString *tmpDir = [self tempFolderPathForUnzipping];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    if ([fileManager fileExistsAtPath:tmpDir]
-        && ![fileManager removeItemAtPath:tmpDir error:error])
+    if ([_fileManager fileExistsAtPath:tmpDir]
+        && ![_fileManager removeItemAtPath:tmpDir error:error])
     {
         NSLog(@"[COCO2D-UPDATER] Error tidying up unzip folder: %@", *error);
         return NO;
@@ -297,14 +298,20 @@ typedef enum {
     return result;
 }
 
-- (void)copySBsCocos2dFolderToProjectDir
+- (BOOL)copySBsCocos2dFolderToProjectDir:(NSError **)error
 {
-    // TODO: implement me
+    NSString *unzippedCocos2dFolder = [[self tempFolderPathForUnzipping] stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
+    NSString *defaultCocos2DFolderPath = [self defaultCocos2DFolderPath];
+
+    return [_fileManager copyItemAtPath:unzippedCocos2dFolder toPath:defaultCocos2DFolderPath error:error];
 }
 
-- (void)renameCocos2dFolderToBackupPostfix
+- (BOOL)renameCocos2dFolderToBackupPostfix:(NSError **)error
 {
-    // TODO: implement me
+    NSString *defaultCocos2DFolderPath = [self defaultCocos2DFolderPath];
+    NSString *cocos2dBackupName = [[defaultCocos2DFolderPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"cocos2d-iphone.backup"];
+
+    return [_fileManager moveItemAtPath:defaultCocos2DFolderPath toPath:cocos2dBackupName error:error];
 }
 
 - (UpdateActions)showDialogToUpdateWithText:(NSString *)text
@@ -352,9 +359,8 @@ typedef enum {
 {
     NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
     NSString *gitmodulesPath = [rootDir stringByAppendingPathComponent:@".gitmodules"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    if (![fileManager fileExistsAtPath:gitmodulesPath])
+    if (![_fileManager fileExistsAtPath:gitmodulesPath])
     {
         return NO;
     }
@@ -371,8 +377,9 @@ typedef enum {
 
 - (BOOL)readProjectsCocos2dVersionFile:(NSError **)error
 {
-    NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
-    NSString *versionFilePath = [rootDir stringByAppendingPathComponent:@"Source/libs/cocos2d-iphone/VERSION"];
+    NSString *versionFilePath= [self defaultCocos2DFolderPath];
+    versionFilePath = [versionFilePath stringByAppendingPathComponent:@"VERSION"];
+
     NSString *version = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:error];
 
     if (version)
@@ -384,6 +391,12 @@ typedef enum {
     {
         return NO;
     }
+}
+
+- (NSString *)defaultCocos2DFolderPath
+{
+    NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
+    return [rootDir stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
 }
 
 @end
