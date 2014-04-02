@@ -50,7 +50,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
         _appDelegate = appDelegate;
         _projectSettings = projectSettings;
         _projectsCocos2dVersion = nil;
-        _sbCocos2dVersion = [self readSBCocos2dVersionFile];
+        _sbCocos2dVersion = [self readSpriteBuildersCocos2dVersionFile];
         _fileManager = [NSFileManager defaultManager];
 
         // TODO: remove me
@@ -63,13 +63,13 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 {
     if ([self shouldIgnoreThisVersion])
     {
-        NSLog(@"[COCO2D-UPDATER] Ignoring this version %@.", _sbCocos2dVersion);
+        NSLog(@"[COCO2D-UPDATER] [INFO] Ignoring this version %@.", _sbCocos2dVersion);
         return;
     }
 
     if ([self isCoco2dAGitSubmodule])
     {
-        NSLog(@"[COCO2D-UPDATER] cocos2d-iphone git submodule found, skipping.");
+        NSLog(@"[COCO2D-UPDATER] [INFO] cocos2d-iphone git submodule found, skipping.");
         return;
     }
 
@@ -83,6 +83,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
     if (updateAction == UpdateActionIgnoreVersion)
     {
+        NSLog(@"[COCO2D-UPDATER] [INFO] Now ignoring this version %@.", _sbCocos2dVersion);
         [self setIgnoreThisVersion];
         return;
     }
@@ -90,39 +91,25 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     [self doUpdate];
 }
 
-- (void)showErrorMessage:(NSError *)error
+- (UpdateActions)determineUpdateAction:(NSError **)error
 {
-    NSAssert(error != nil, @"An error object is needed to show the error message.");
-
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"Ok"];
-    alert.messageText = @"Error updating Cocos2D";
-    alert.informativeText = error.localizedDescription;
-    [alert runModal];
-}
-
-- (void)rollBack
-{
-    NSString *defaultCocos2DFolderPath = [self defaultCocos2DFolderPath];
-    NSString *cocos2dBackupFolder = [self backupPathForCocos2dFolder:defaultCocos2DFolderPath];
-
-    if (![_fileManager fileExistsAtPath:cocos2dBackupFolder])
+    if ([self findAndCompareCocos2dVersionFile:error])
     {
-        return;
+        return [self showUpdateDialogWithText:@"Project's Cocos2D version is outdated."];
     }
-
-    NSError *error;
-    if ([_fileManager fileExistsAtPath:defaultCocos2DFolderPath])
+    else if ([self defaultProjectsCocos2dFolderExists])
     {
-        [_fileManager removeItemAtPath:defaultCocos2DFolderPath error:&error];
+        return [self showUpdateDialogWithText:@"Cocos2D folder exists but no Version file could be found. This could mean your version is outdated."];
     }
-
-    [_fileManager moveItemAtPath:cocos2dBackupFolder toPath:defaultCocos2DFolderPath error:&error];
+    else
+    {
+        return UpdateActionNothingToDo;
+    }
 }
 
 - (void)doUpdate
 {
-    NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
+    NSLog(@"[COCO2D-UPDATER] [INFO] updating...");
 
     __block NSError *error;
 
@@ -132,17 +119,17 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
         [self updateModalDialogStatusText:@"Unzipping sources"];
 
         BOOL updateResult = [self unzipCocos2dFolder:&error]
-            && [self renameCocos2dFolderToBackupPostfix:&error]
-            && [self copySBsCocos2dFolderToProjectDir:&error]
+            && [self renameCocos2dFolderToBackupFolder:&error]
+            && [self copySpriteBuildersCocos2dFolderToProjectFolder:&error]
             && [self tidyUpTempFolder:&error];
 
-        [self finishWithUpdateStatus:updateResult error:error];
+        [self finishWithUpdateResult:updateResult error:error];
     });
 
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..."];
 }
 
-- (void)finishWithUpdateStatus:(BOOL)status error:(NSError *)error
+- (void)finishWithUpdateResult:(BOOL)status error:(NSError *)error
 {
     dispatch_sync(dispatch_get_main_queue(), ^
     {
@@ -150,14 +137,47 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
         if (status)
         {
-            [self showUpdateInfoDialog];
+            [self showUpdateSuccessDialog];
         }
         else
         {
-            [self showErrorMessage:error];
+            [self showUpdateErrorDialog:error];
             [self rollBack];
         }
     });
+}
+
+- (void)showUpdateErrorDialog:(NSError *)error
+{
+    NSAssert(error != nil, @"An error object is needed to show the error message.");
+
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert addButtonWithTitle:@"Ok"];
+    alert.messageText = @"Error updating Cocos2D";
+    alert.informativeText = [NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@", error.localizedDescription];
+    [alert runModal];
+}
+
+- (void)rollBack
+{
+    NSLog(@"[COCO2D-UPDATER] [INFO] Rolling back.");
+
+    NSString *defaultCocos2DFolderPath = [self defaultProjectsCocos2DFolderPath];
+    NSString *cocos2dBackupFolder = [self backupCocos2dFolderPath:defaultCocos2DFolderPath];
+
+    // Without the .backup folder we can't say what went wrong but
+    // it is safe to not do anything
+    if (![_fileManager fileExistsAtPath:cocos2dBackupFolder])
+    {
+        return;
+    }
+
+    if ([_fileManager fileExistsAtPath:defaultCocos2DFolderPath])
+    {
+        [_fileManager removeItemAtPath:defaultCocos2DFolderPath error:nil];
+    }
+
+    [_fileManager moveItemAtPath:cocos2dBackupFolder toPath:defaultCocos2DFolderPath error:nil];
 }
 
 - (void)updateModalDialogStatusText:(NSString *)text
@@ -169,26 +189,10 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     });
 }
 
-- (UpdateActions)determineUpdateAction:(NSError **)error
-{
-    if ([self findAndCompareCocos2dVersionFile:error])
-    {
-        return [self showDialogToUpdateWithText:@"Project's Cocos2D version is outdated."];
-    }
-    else if ([self standardCocos2dFolderExists])
-    {
-        return [self showDialogToUpdateWithText:@"Cocos2D folder exists but no Version file could be found. This could mean your version is outdated."];
-    }
-    else
-    {
-        return UpdateActionNothingToDo;
-    }
-}
-
 - (BOOL)findAndCompareCocos2dVersionFile:(NSError **)error
 {
     return [self readProjectsCocos2dVersionFile:error]
-        && ([self compareProjectsCocos2dVersionWithSBVersion] == Cocos2dVersionIncompatible);
+        && ([self compareProjectsCocos2dVersionWithSpriteBuildersVersion] == Cocos2dVersionIncompatible);
 }
 
 - (void)setIgnoreThisVersion
@@ -262,14 +266,14 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     @catch (NSException *exception)
     {
         *error = [self errorForUnzipTaskWithException:exception zipFile:zipFile];
-        NSLog(@"[COCO2D-UPDATER] ERROR unzipping failed: %@", *error);
+        NSLog(@"[COCO2D-UPDATER] [ERROR] unzipping failed: %@", *error);
         return NO;
     }
 
     if (status)
     {
         *error = [self errorForFailedUnzipTask:zipFile dataStdOut:dataStdOut dataStdErr:dataStdErr status:status];
-        NSLog(@"[COCO2D-UPDATER] ERROR unzipping failed: %@", *error);
+        NSLog(@"[COCO2D-UPDATER] [ERROR] unzipping failed: %@", *error);
         return NO;
     }
 
@@ -288,23 +292,22 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     if ([_fileManager fileExistsAtPath:tmpDir]
         && ![_fileManager removeItemAtPath:tmpDir error:error])
     {
-        NSLog(@"[COCO2D-UPDATER] Error tidying up unzip folder: %@", *error);
+        NSLog(@"[COCO2D-UPDATER] [ERROR] tidying up unzip folder: %@", *error);
         return NO;
     }
     return YES;
 }
 
-- (void)showUpdateInfoDialog
+- (void)showUpdateSuccessDialog
 {
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Cocos2D update"
-                                      defaultButton:@"Ok"
-                                    alternateButton:nil
-                                        otherButton:nil
-                          informativeTextWithFormat:@"Update finished."];
+    NSAlert *alert = [[NSAlert alloc] init];
+    alert.informativeText = @"Update finished.\nPlease test your project.";
+    [alert addButtonWithTitle:@"Ok"];
+    alert.messageText = @"Cocos2D update";
     [alert runModal];
 }
 
-- (NSString *)readSBCocos2dVersionFile
+- (NSString *)readSpriteBuildersCocos2dVersionFile
 {
     NSString *versionFilePath = [[NSBundle mainBundle] pathForResource:@"cocos2d_version" ofType:@"txt" inDirectory:@"Generated"];
 
@@ -312,35 +315,35 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     NSString *result = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:&error];
     if (!result)
     {
-        NSLog(@"[COCO2D-UPDATER] ERROR reading SB's cocos2d version file: %@", error);
+        NSLog(@"[COCO2D-UPDATER] [ERROR] reading SB's cocos2d version file: %@", error);
     }
 
     return result;
 }
 
-- (BOOL)copySBsCocos2dFolderToProjectDir:(NSError **)error
+- (BOOL)copySpriteBuildersCocos2dFolderToProjectFolder:(NSError **)error
 {
     NSString *unzippedCocos2dFolder = [[self tempFolderPathForUnzipping] stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
-    NSString *defaultCocos2DFolderPath = [self defaultCocos2DFolderPath];
+    NSString *defaultCocos2DFolderPath = [self defaultProjectsCocos2DFolderPath];
 
     return [_fileManager copyItemAtPath:unzippedCocos2dFolder toPath:defaultCocos2DFolderPath error:error];
 }
 
-- (BOOL)renameCocos2dFolderToBackupPostfix:(NSError **)error
+- (BOOL)renameCocos2dFolderToBackupFolder:(NSError **)error
 {
-    NSString *defaultCocos2DFolderPath = [self defaultCocos2DFolderPath];
-    NSString *cocos2dBackupName = [self backupPathForCocos2dFolder:defaultCocos2DFolderPath];
+    NSString *defaultCocos2DFolderPath = [self defaultProjectsCocos2DFolderPath];
+    NSString *cocos2dBackupName = [self backupCocos2dFolderPath:defaultCocos2DFolderPath];
 
     return [_fileManager moveItemAtPath:defaultCocos2DFolderPath toPath:cocos2dBackupName error:error];
 }
 
-- (NSString *)backupPathForCocos2dFolder:(NSString *)defaultCocos2DFolderPath
+- (NSString *)backupCocos2dFolderPath:(NSString *)defaultCocos2DFolderPath
 {
     NSString *cocos2dBackupName = [[defaultCocos2DFolderPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"cocos2d-iphone.backup"];
     return cocos2dBackupName;
 }
 
-- (UpdateActions)showDialogToUpdateWithText:(NSString *)text
+- (UpdateActions)showUpdateDialogWithText:(NSString *)text
 {
     NSMutableString *informativeText = [NSMutableString string];
     [informativeText appendString:text];
@@ -366,22 +369,24 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     }
 }
 
-- (Cocos2dVersionComparisonResult)compareProjectsCocos2dVersionWithSBVersion
+- (Cocos2dVersionComparisonResult)compareProjectsCocos2dVersionWithSpriteBuildersVersion
 {
-    NSLog(@"[COCO2D-UPDATER] Comparing version - SB: %@ with project: %@ ...", _sbCocos2dVersion, _projectsCocos2dVersion);
+    NSLog(@"[COCO2D-UPDATER] [INFO] Comparing version - SB: %@ with project: %@ ...", _sbCocos2dVersion, _projectsCocos2dVersion);
 
     return [_sbCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch] == NSOrderedDescending
         ? Cocos2dVersionIncompatible
         : Cocos2dVersionUpToDate;
 }
 
-- (BOOL)standardCocos2dFolderExists
+- (BOOL)defaultProjectsCocos2dFolderExists
 {
-    return [_fileManager fileExistsAtPath:[self defaultCocos2DFolderPath]];
+    return [_fileManager fileExistsAtPath:[self defaultProjectsCocos2DFolderPath]];
 }
 
 - (BOOL)isCoco2dAGitSubmodule
 {
+    NSLog(@"[COCO2D-UPDATER] [INFO] Testing if there's a .gitmodules file ...");
+
     NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
     NSString *gitmodulesPath = [rootDir stringByAppendingPathComponent:@".gitmodules"];
 
@@ -396,19 +401,23 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
                                                               error:&error];
 
     NSRange cocos2dTextPosition = [submodulesContent rangeOfString:@"cocos2d-iphone.git" options:NSCaseInsensitiveSearch];
+    BOOL result = cocos2dTextPosition.location != NSNotFound;
 
-    return cocos2dTextPosition.location != NSNotFound;
+    NSLog(@"[COCO2D-UPDATER] [INFO] .gitmodules file found, contains cocos2d-iphone.git? %d", result);
+
+    return result;
 }
 
 - (BOOL)readProjectsCocos2dVersionFile:(NSError **)error
 {
-    NSString *versionFilePath= [self defaultCocos2DFolderPath];
+    NSString *versionFilePath= [self defaultProjectsCocos2DFolderPath];
     versionFilePath = [versionFilePath stringByAppendingPathComponent:@"VERSION"];
 
     NSString *version = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:error];
 
     if (version)
     {
+        NSLog(@"[COCO2D-UPDATER] [INFO] Version file found: %@", version);
         _projectsCocos2dVersion = version;
         return YES;
     }
@@ -418,7 +427,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     }
 }
 
-- (NSString *)defaultCocos2DFolderPath
+- (NSString *)defaultProjectsCocos2DFolderPath
 {
     NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
     return [rootDir stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
