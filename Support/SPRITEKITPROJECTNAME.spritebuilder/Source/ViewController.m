@@ -14,17 +14,23 @@
 -(void) viewWillLayoutSubviews
 {
 	SKView* skView = (SKView*)self.view;
-	NSAssert1([skView isKindOfClass:[SKView class]], @"ViewController's view is not a SKView instance, its class is: %@ (a common issue is improper use of an iAd banner view replacing this view controller's view)", NSStringFromClass([skView class]));
+	NSAssert1([skView isKindOfClass:[SKView class]], @"ViewController's view is not a SKView instance, its class is: %@", NSStringFromClass([skView class]));
 	
-	// viewWillLayoutSubviews runs again, for example when the view rotates
-	// this safety check ensures the scene is only presented the very first time viewWillLayoutSubviews runs
+	// only present the scene if there's no scene currently presented
+	// Note: viewWillLayoutSubviews will run every time the device is rotated or the view resizes, therefore this check is essential
 	if (skView.scene == nil)
 	{
 		skView.showsFPS = YES;
 		skView.showsNodeCount = YES;
 		skView.showsDrawCount = YES;
 		
-		SKScene* scene = [CCBReader loadAsScene:@"MainScene.ccbi" size:skView.bounds.size];
+		// additional undocumented debug flags
+		[skView setValue:@(YES) forKey:@"_showsCulledNodesInNodeCount"]; // shows total node count next to visible node count
+		//[skView setValue:@(YES) forKey:@"_showsGPUStats"];
+		//[skView setValue:@(YES) forKey:@"_showsCPUStats"];
+		
+		// load the 'MainScene' from CCB
+		SKScene* scene = [CCBReader loadAsScene:@"MainScene" size:skView.bounds.size];
 		[skView presentScene:scene];
 	}
 }
