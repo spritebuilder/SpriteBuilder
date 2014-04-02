@@ -19,7 +19,6 @@ typedef enum
     Cocos2dVersionIncompatible,
 } Cocos2dVersionComparisonResult;
 
-
 @implementation Cocos2dUpater
 {
     NSString *_projectsCocos2dVersion;
@@ -64,11 +63,10 @@ typedef enum
     {
         NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
 
-
         [self unzipCocos2dFolder:&error];
 
-        [self renameCocos2dFolderToBackupPostfix];
-        [self copySBsCocos2dFolderToProjectDir];
+            [self renameCocos2dFolderToBackupPostfix];
+            [self copySBsCocos2dFolderToProjectDir];
         [self tidyUpTempFolder:&error];
         [self showUpdateInfoDialog];
         return;
@@ -99,18 +97,21 @@ typedef enum
 
     if (![fileManager fileExistsAtPath:zipFile])
     {
+        // TODO: add NSLocalizedDescriptionKey
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBCocos2dUpdateTemplateZipFileDoesNotExistError
                                  userInfo:@{@"zipFile":zipFile}];
         return NO;
     }
 
-    NSString *tmpDir = [NSTemporaryDirectory() stringByAppendingPathComponent:@"com.spritebuilder.updatecocos2d"];
-    [fileManager removeItemAtPath:tmpDir error:error];
+    if (![self tidyUpTempFolder:error])
+    {
+        return NO;
+    }
 
+    NSString *tmpDir = [self tempFolderPathForUnzipping];
     if (![fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
     {
-        NSLog(@"[COCO2D-UPDATER] ERROR: %@", *error);
         return NO;
     }
 
@@ -139,6 +140,7 @@ typedef enum
     }
     @catch (NSException *exception)
     {
+        // TODO: add NSLocalizedDescriptionKey
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBCocos2dUpdateUnzipTaskError
                                  userInfo:@{@"zipFile":zipFile, @"exception" : exception}];
@@ -149,6 +151,7 @@ typedef enum
 
     if (status)
     {
+        // TODO: add NSLocalizedDescriptionKey
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBCocos2dUpdateUnzipTemplateFailedError
                                  userInfo:@{@"zipFile":zipFile}];
@@ -160,13 +163,19 @@ typedef enum
     return YES;
 }
 
+- (NSString *)tempFolderPathForUnzipping
+{
+    return [NSTemporaryDirectory() stringByAppendingPathComponent:@"com.spritebuilder.updatecocos2d"];
+}
+
 - (BOOL)tidyUpTempFolder:(NSError **)error
 {
+    NSString *tmpDir = [self tempFolderPathForUnzipping];
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *tmpDir = [NSTemporaryDirectory() stringByAppendingPathComponent:@"sb.updatecocos2d"];
     if ( ! [fileManager removeItemAtPath:tmpDir error:error])
     {
-        NSLog(@"ERROR %@", *error);
+        NSLog(@"[COCO2D-UPDATER] Error tidying up unzip folder: %@", *error);
         return NO;
     }
     return YES;
@@ -174,6 +183,7 @@ typedef enum
 
 - (void)showUpdateInfoDialog
 {
+    // TODO: text needed
     NSAlert *alert = [NSAlert alertWithMessageText:@"Cocos2D update"
                                       defaultButton:@"Ok"
                                     alternateButton:nil
@@ -187,17 +197,23 @@ typedef enum
     NSString *versionFilePath = [[NSBundle mainBundle] pathForResource:@"cocos2d_version" ofType:@"txt" inDirectory:@"Generated"];
 
     NSError *error;
-    return [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:&error];
+    NSString *result = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:&error];
+    if (!result)
+    {
+        NSLog(@"[COCO2D-UPDATER] ERROR reading SB's cocos2d version: %@", error);
+    }
+
+    return result;
 }
 
 - (void)copySBsCocos2dFolderToProjectDir
 {
-
+    // TODO: implement me
 }
 
 - (void)renameCocos2dFolderToBackupPostfix
 {
-
+    // TODO: implement me
 }
 
 - (BOOL)showDialogToUpdateWithText:(NSString *)text
