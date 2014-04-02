@@ -55,13 +55,15 @@ typedef enum
         return;
     }
 
+    NSError *error;
+
     // Version file found
-    if ([self readVersionFileInStandardCocos2dFolder]
+    if ([self readProjectsCocos2dVersionFile:&error]
         && ([self compareProjectsCocos2dVersionWithSBVersion] == Cocos2dVersionIncompatible)
         && [self showDialogToUpdateWithText:[self updateNeededDialogText]])
     {
         NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
-        NSError *error;
+
 
         [self unzipCocos2dFolder:&error];
 
@@ -214,18 +216,15 @@ typedef enum
 - (Cocos2dVersionComparisonResult)compareProjectsCocos2dVersionWithSBVersion
 {
     NSLog(@"[COCO2D-UPDATER] Comparing version - SB: %@ with project: %@ ...", _sbCocos2dVersion, _projectsCocos2dVersion);
-    if ([_sbCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch] == NSOrderedDescending)
-    {
-        return Cocos2dVersionIncompatible;
-    }
-    else
-    {
-        return Cocos2dVersionUpToDate;
-    }
+
+    return [_sbCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch] == NSOrderedDescending
+        ? Cocos2dVersionIncompatible
+        : Cocos2dVersionUpToDate;
 }
 
 - (BOOL)standardCocos2dFolderExists
 {
+    // TODO: implement me
     return NO;
 }
 
@@ -250,13 +249,11 @@ typedef enum
     return cocos2dTextPosition.location != NSNotFound;
 }
 
-- (BOOL)readVersionFileInStandardCocos2dFolder
+- (BOOL)readProjectsCocos2dVersionFile:(NSError **)error
 {
     NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
-    NSString *versionFile = [rootDir stringByAppendingPathComponent:@"Source/libs/cocos2d-iphone/VERSION"];
-
-    NSError *error;
-    NSString *version = [NSString stringWithContentsOfFile:versionFile encoding:NSUTF8StringEncoding error:&error];
+    NSString *versionFilePath = [rootDir stringByAppendingPathComponent:@"Source/libs/cocos2d-iphone/VERSION"];
+    NSString *version = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:error];
 
     if (version)
     {
@@ -265,7 +262,6 @@ typedef enum
     }
     else
     {
-        NSLog(@"ERROR opening: %@ - %@", versionFile, error);
         return NO;
     }
 }
