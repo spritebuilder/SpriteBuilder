@@ -20,10 +20,10 @@ typedef enum
 } Cocos2dVersionComparisonResult;
 
 typedef enum {
-   UpdateDialogYes = 0,
-    UpdateDialogNO,
-    UpdateDialogIgnoreVersion,
-} UpdateDialogAlternatives;
+   UpdateActionUpdate = 0,
+   UpdateActionNothingToDo,
+   UpdateActionIgnoreVersion,
+} UpdateActions;
 
 @implementation Cocos2dUpater
 {
@@ -55,75 +55,70 @@ typedef enum {
 {
     if ([self shouldIgnoreThisVersion])
     {
+        NSLog(@"[COCO2D-UPDATER] Ignoring this version %@.", _sbCocos2dVersion);
         return;
     }
 
     if ([self isCoco2dAGitSubmodule])
     {
-        NSLog(@"[COCO2D-UPDATER] cocos2d-iphone submodule found, skipping.");
+        NSLog(@"[COCO2D-UPDATER] cocos2d-iphone git submodule found, skipping.");
         return;
     }
 
     NSError *error;
+    UpdateActions updateAction = [self determineUpdateAction:&error];
 
-    // Version file found
-    if ([self readProjectsCocos2dVersionFile:&error]
-        && ([self compareProjectsCocos2dVersionWithSBVersion] == Cocos2dVersionIncompatible))
+    if (updateAction == UpdateActionNothingToDo)
     {
-        UpdateDialogAlternatives alternative = [self showDialogToUpdateWithText:@"Project's Cocos2D version is outdated."];
-
-        if (alternative == UpdateDialogNO)
-        {
-            return;
-        }
-
-        if (alternative == UpdateDialogIgnoreVersion)
-        {
-            [self setIgnoreThisVersion];
-            return;
-        }
-
-        NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
-
-        // TODO: show progress window - appdelegate
-        // TODO: show errors
-
-        [self unzipCocos2dFolder:&error];
-
-        [self renameCocos2dFolderToBackupPostfix];
-        [self copySBsCocos2dFolderToProjectDir];
-
-        [self tidyUpTempFolder:&error];
-        [self showUpdateInfoDialog];
         return;
     }
 
-    // no VERSION file found but folder exists
-    // TODO: refactor this block and combine with previous
-    if ([self standardCocos2dFolderExists])
+    if (updateAction == UpdateActionIgnoreVersion)
     {
-        UpdateDialogAlternatives alternative = [self showDialogToUpdateWithText:@"no Version file found..."];
-        if (alternative == UpdateDialogNO)
-        {
-            return;
-        }
-
-        if (alternative == UpdateDialogIgnoreVersion)
-        {
-            [self setIgnoreThisVersion];
-            return;
-        }
-
-        NSLog(@"[COCO2D-UPDATER] NO cocos2d-iphone VERSION file found, user opted for updating.");
-        [self unzipCocos2dFolder:&error];
-
-        [self renameCocos2dFolderToBackupPostfix];
-        [self copySBsCocos2dFolderToProjectDir];
-
-        [self tidyUpTempFolder:&error];
-        [self showUpdateInfoDialog];
+        [self setIgnoreThisVersion];
         return;
     }
+
+    [self doUpdate:&error];
+}
+
+- (void)doUpdate:(NSError **)error
+{
+    NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
+
+    // TODO: show progress window - appdelegate
+    // TODO: show errors
+
+    [self unzipCocos2dFolder:error];
+
+    [self renameCocos2dFolderToBackupPostfix];
+    [self copySBsCocos2dFolderToProjectDir];
+
+    [self tidyUpTempFolder:error];
+    [self showUpdateInfoDialog];
+}
+
+- (UpdateActions)determineUpdateAction:(NSError **)error
+{
+    if ([self findAndCompareCocos2dVersionFile:error])
+    {
+        return [self showDialogToUpdateWithText:@"Project's Cocos2D version is outdated."];
+    }
+    else if ([self standardCocos2dFolderExists])
+    {
+        // TODO: text needed
+        return [self showDialogToUpdateWithText:@"No Version file found..."];
+    }
+    else
+    {
+        return UpdateActionNothingToDo;
+    }
+}
+
+- (BOOL)findAndCompareCocos2dVersionFile:(NSError **)error
+{
+    return [self readProjectsCocos2dVersionFile:error]
+        && ([self compareProjectsCocos2dVersionWithSBVersion] == Cocos2dVersionIncompatible);
 }
 
 - (void)setIgnoreThisVersion
@@ -287,7 +282,7 @@ typedef enum {
     // TODO: implement me
 }
 
-- (UpdateDialogAlternatives)showDialogToUpdateWithText:(NSString *)text
+- (UpdateActions)showDialogToUpdateWithText:(NSString *)text
 {
     NSMutableString *informativeText = [NSMutableString string];
     [informativeText appendString:text];
@@ -306,10 +301,10 @@ typedef enum {
     NSInteger returnValue = [alert runModal];
     switch (returnValue)
     {
-        case NSAlertFirstButtonReturn: return UpdateDialogYes;
-        case NSAlertSecondButtonReturn: return UpdateDialogNO;
-        case NSAlertThirdButtonReturn: return UpdateDialogIgnoreVersion;
-        default: return UpdateDialogNO;
+        case NSAlertFirstButtonReturn: return UpdateActionUpdate;
+        case NSAlertSecondButtonReturn: return UpdateActionNothingToDo;
+        case NSAlertThirdButtonReturn: return UpdateActionIgnoreVersion;
+        default: return UpdateActionNothingToDo;
     }
 }
 
