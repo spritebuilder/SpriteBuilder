@@ -38,6 +38,10 @@ typedef enum
 
         // TODO: revmove me
         _sbCocos2dVersion = @"3.0.1";
+/*
+        NSError *error;
+        [self unzipCocos2dFolder:&error];
+*/
     }
 
     return self;
@@ -59,7 +63,8 @@ typedef enum
         NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
         NSError *error;
 
-        [self unzipCocos2dFolder:NULL ];
+        [self unzipCocos2dFolder:&error];
+
         [self renameCocos2dFolderToBackupPostfix];
         [self copySBsCocos2dFolderToProjectDir];
         [self tidyUpTempFolder:&error];
@@ -88,7 +93,7 @@ typedef enum
 - (BOOL)unzipCocos2dFolder:(NSError **)error
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString* zipFile = [[NSBundle mainBundle] pathForResource:@"PROJECTNAME" ofType:@"zip" inDirectory:@"Generated"];
+    NSString *zipFile = [[NSBundle mainBundle] pathForResource:@"PROJECTNAME" ofType:@"zip" inDirectory:@"Generated"];
 
     if (![fileManager fileExistsAtPath:zipFile])
     {
@@ -103,7 +108,7 @@ typedef enum
 
     if (![fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
     {
-        NSLog(@"ERROR: %@", *error);
+        NSLog(@"[COCO2D-UPDATER] ERROR: %@", *error);
         return NO;
     }
 
@@ -114,9 +119,11 @@ typedef enum
     [task setArguments:args];
 
     NSPipe *pipe = [NSPipe pipe];
-    NSPipe *pipeErr = [NSPipe pipe];
+    [task setStandardOutput: pipe];
+
+    NSFileHandle *file = [pipe fileHandleForReading];
+    [task setStandardInput:[NSPipe pipe]];
 /*
-    [task setStandardOutput:pipe];
     [task setStandardError:pipeErr];
 */
 
@@ -128,30 +135,25 @@ typedef enum
         [task waitUntilExit];
         status = [task terminationStatus];
     }
-    @catch (NSException *ex)
+    @catch (NSException *exception)
     {
-        NSLog(@"%@", ex);
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBCocos2dUpdateUnzipTaskError
+                                 userInfo:@{@"zipFile":zipFile, @"exception" : exception}];
+
+        NSLog(@"[COCO2D-UPDATER] unzipping failed: %@", *error);
         return NO;
     }
 
     if (status)
     {
-        NSLog(@"something went wrong");
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBCocos2dUpdateUnzipTemplateFailedError
+                                 userInfo:@{@"zipFile":zipFile}];
+
+        NSLog(@"[COCO2D-UPDATER] unzipping failed: %@", *error);
+        return NO;
     }
-
-/*    NSFileHandle *file = [pipe fileHandleForReading];
-    NSFileHandle *fileErr = [pipeErr fileHandleForReading];
-
-    NSData *data = [fileErr readDataToEndOfFile];
-    NSString *stdErrOutput = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-    NSData *data2 = [file readDataToEndOfFile];
-    NSString *stdOut = [[NSString alloc] initWithData:data2 encoding:NSUTF8StringEncoding];
-
-    NSLog(@"out: %@", stdOut);
-    NSLog(@"err: %@", stdErrOutput);*/
-
-    // TODO: more error handling
 
     return YES;
 }
@@ -162,7 +164,7 @@ typedef enum
     NSString *tmpDir = [NSTemporaryDirectory() stringByAppendingPathComponent:@"sb.updatecocos2d"];
     if ( ! [fileManager removeItemAtPath:tmpDir error:error])
     {
-        NSLog(@"%@", *error);
+        NSLog(@"ERROR %@", *error);
         return NO;
     }
     return YES;
@@ -230,48 +232,22 @@ typedef enum
 - (BOOL)isCoco2dAGitSubmodule
 {
     NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
-
+    NSString *gitmodulesPath = [rootDir stringByAppendingPathComponent:@".gitmodules"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[NSURL URLWithString:rootDir]
-                                          includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
-                                                             options:NSDirectoryEnumerationSkipsPackageDescendants
-                                                        errorHandler:^BOOL(NSURL *url, NSError *error)
+
+    if (![fileManager fileExistsAtPath:gitmodulesPath])
     {
-        NSLog(@"[Error] %@ (%@)", error, url);
-        return YES;
-    }];
-
-    NSMutableArray *mutableFileURLs = [NSMutableArray array];
-    for (NSURL *fileURL in enumerator)
-    {
-        NSString *filename;
-        [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
-
-        NSNumber *isDirectory;
-        [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
-
-        NSLog(@"%@", fileURL);
-
-        if (![isDirectory boolValue] && [filename isEqualToString:@".gitmodules"])
-        {
-            [mutableFileURLs addObject:fileURL];
-            break;
-        }
+        return NO;
     }
 
-    for (NSURL *mutableFileURL in mutableFileURLs)
-    {
-        NSError *error;
-        NSString *submodulesContent = [NSString stringWithContentsOfURL:mutableFileURL
-                                                               encoding:NSUTF8StringEncoding
-                                                                  error:&error];
+    NSError *error;
+    NSString *submodulesContent = [NSString stringWithContentsOfURL:[NSURL fileURLWithPath:gitmodulesPath]
+                                                           encoding:NSUTF8StringEncoding
+                                                              error:&error];
 
-        NSRange cocos2dTextPosition = [submodulesContent rangeOfString:@"cocos2d-iphone.git" options:NSCaseInsensitiveSearch];
+    NSRange cocos2dTextPosition = [submodulesContent rangeOfString:@"cocos2d-iphone.git" options:NSCaseInsensitiveSearch];
 
-        NSLog(@"MODULE FILE FOUND: %@", submodulesContent);
-        return cocos2dTextPosition.location != NSNotFound;
-    }
-    return NO;
+    return cocos2dTextPosition.location != NSNotFound;
 }
 
 - (BOOL)readVersionFileInStandardCocos2dFolder
