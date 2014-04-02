@@ -54,6 +54,11 @@ typedef enum {
 
 - (void)update
 {
+    if ([self shouldIgnoreThisVersion])
+    {
+        return;
+    }
+
     if ([self isCoco2dAGitSubmodule])
     {
         NSLog(@"[COCO2D-UPDATER] cocos2d-iphone submodule found, skipping.");
@@ -64,36 +69,73 @@ typedef enum {
 
     // Version file found
     if ([self readProjectsCocos2dVersionFile:&error]
-        && ([self compareProjectsCocos2dVersionWithSBVersion] == Cocos2dVersionIncompatible)
-        && [self showDialogToUpdateWithText:[self updateNeededDialogText]])
+        && ([self compareProjectsCocos2dVersionWithSBVersion] == Cocos2dVersionIncompatible))
     {
+        UpdateDialogAlternatives alternative = [self showDialogToUpdateWithText:@"Project's Cocos2D version is outdated."];
+
+        if (alternative == UpdateDialogNO)
+        {
+            return;
+        }
+
+        if (alternative == UpdateDialogIgnoreVersion)
+        {
+            [self setIgnoreThisVersion];
+            return;
+        }
+
         NSLog(@"[COCO2D-UPDATER] cocos2d-iphone VERSION file found, needs update, user opted for updating.");
+
+        // TODO: show progress window - appdelegate
+        // TODO: show errors
 
         [self unzipCocos2dFolder:&error];
 
-            [self renameCocos2dFolderToBackupPostfix];
-            [self copySBsCocos2dFolderToProjectDir];
+        [self renameCocos2dFolderToBackupPostfix];
+        [self copySBsCocos2dFolderToProjectDir];
+
         [self tidyUpTempFolder:&error];
         [self showUpdateInfoDialog];
         return;
     }
 
     // no VERSION file found but folder exists
-    if ([self standardCocos2dFolderExists]
-        && [self showDialogToUpdateWithText:@"no Version file found..."])
+    // TODO: refactor this block and combine with previous
+    if ([self standardCocos2dFolderExists])
     {
-        // TODO: ignore action
+        UpdateDialogAlternatives alternative = [self showDialogToUpdateWithText:@"no Version file found..."];
+        if (alternative == UpdateDialogNO)
+        {
+            return;
+        }
+
+        if (alternative == UpdateDialogIgnoreVersion)
+        {
+            [self setIgnoreThisVersion];
+            return;
+        }
+
         NSLog(@"[COCO2D-UPDATER] NO cocos2d-iphone VERSION file found, user opted for updating.");
+        [self unzipCocos2dFolder:&error];
+
         [self renameCocos2dFolderToBackupPostfix];
         [self copySBsCocos2dFolderToProjectDir];
+
+        [self tidyUpTempFolder:&error];
         [self showUpdateInfoDialog];
         return;
     }
 }
 
-- (NSString *)updateNeededDialogText
+- (void)setIgnoreThisVersion
 {
-    return [NSString stringWithFormat:@"Project's Cocos2D version(%@) is outdated, an update is needed. Update to version %@?", _projectsCocos2dVersion, _sbCocos2dVersion];
+    // TODO: add something to project file
+}
+
+- (BOOL)shouldIgnoreThisVersion
+{
+    // TODO: read project file
+    return NO;
 }
 
 - (BOOL)unzipCocos2dFolder:(NSError **)error
@@ -225,8 +267,9 @@ typedef enum {
 
 - (UpdateDialogAlternatives)showDialogToUpdateWithText:(NSString *)text
 {
-    // TODO: text param?
-    NSMutableString *informativeText = [NSMutableString stringWithFormat:@"Update from version %@ to %@?", _projectsCocos2dVersion, _sbCocos2dVersion];
+    NSMutableString *informativeText = [NSMutableString string];
+    [informativeText appendString:text];
+    [informativeText appendFormat:@"\nUpdate from version %@ to %@?", _projectsCocos2dVersion, _sbCocos2dVersion];
     [informativeText appendFormat:@"\nYour cocos2d source folder will be renamed with a \".backup\" postfix."];
 
     NSAlert *alert = [[NSAlert alloc] init];
