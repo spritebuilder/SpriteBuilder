@@ -13,7 +13,8 @@
 #import "Cocos2dUpater+Errors.h"
 
 
-#define Cocos2UpdateLogging 1
+// Debug option: Some verbosity on the console, 1 to enable 0 to turn off
+#define Cocos2UpdateLogging 0
 
 #ifdef DEBUG
 	#define LocalLog( s, ... ) NSLog( @"<%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
@@ -22,6 +23,7 @@
 #endif
 
 #if !Cocos2UpdateLogging
+    #undef LocalLog
     #define LocalLog( s, ... )
 #endif
 
@@ -45,7 +47,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 @implementation Cocos2dUpater
 {
     NSString *_projectsCocos2dVersion;
-    NSString *_sbCocos2dVersion;
+    NSString *_spritebuildersCocos2dVersion;
     NSFileManager *_fileManager;
 }
 
@@ -65,7 +67,9 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     {
         _appDelegate = appDelegate;
         _projectSettings = projectSettings;
-        _sbCocos2dVersion = [self readSpriteBuildersCocos2dVersionFile];
+
+        _spritebuildersCocos2dVersion = [self readSpriteBuildersCocos2dVersionFile];
+        _projectsCocos2dVersion = [self readProjectsCocos2dVersionFile];
         _fileManager = [NSFileManager defaultManager];
     }
     return self;
@@ -73,12 +77,11 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
 - (void)updateAndBypassIgnore:(BOOL)bypassIgnore
 {
-    [self readProjectsCocos2dVersionFile];
     [self updateProjectSettingsIfUserCanUpdate];
 
     if ([self shouldIgnoreThisVersion] && !bypassIgnore)
     {
-        LocalLog(@"[COCO2D-UPDATER] [INFO] Ignoring this version %@.", _sbCocos2dVersion);
+        LocalLog(@"[COCO2D-UPDATER] [INFO] Ignoring this version %@.", _spritebuildersCocos2dVersion);
         return;
     }
 
@@ -97,7 +100,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
     if (updateAction == UpdateActionIgnoreVersion)
     {
-        LocalLog(@"[COCO2D-UPDATER] [INFO] Now ignoring this version %@.", _sbCocos2dVersion);
+        LocalLog(@"[COCO2D-UPDATER] [INFO] Now ignoring this version %@.", _spritebuildersCocos2dVersion);
         [self setIgnoreThisVersion];
         return;
     }
@@ -109,10 +112,9 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 {
     Cocos2dVersionComparisonResult compareResult = [self compareProjectsCocos2dVersionWithSpriteBuildersVersion];
 
-    BOOL foo = ![self isCoco2dAGitSubmodule]
-            && ((compareResult == Cocos2dVersionIncompatible)
-            || [self doesProjectsCocos2dFolderExistAndHasNoVesionfile]);
-   _projectSettings.canUpdateCocos2D = foo;
+   _projectSettings.canUpdateCocos2D = ![self isCoco2dAGitSubmodule]
+               && ((compareResult == Cocos2dVersionIncompatible)
+               || [self doesProjectsCocos2dFolderExistAndHasNoVesionfile]);;
 }
 
 - (BOOL)doesProjectsCocos2dFolderExistAndHasNoVesionfile
@@ -175,12 +177,14 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
         if (status)
         {
+            LocalLog(@"[COCO2D-UPDATER] [INFO] Success!");
             _projectSettings.canUpdateCocos2D = NO;
-            [_projectSettings.cocos2dUpdateIgnoredVersions removeObject:_sbCocos2dVersion];
+            [_projectSettings.cocos2dUpdateIgnoredVersions removeObject:_spritebuildersCocos2dVersion];
             [self showUpdateSuccessDialog];
         }
         else
         {
+            LocalLog(@"[COCO2D-UPDATER] [INFO] Updating failed! Rolling back...");
             [self showUpdateErrorDialog:error];
             [self rollBack];
         }
@@ -231,15 +235,15 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
 - (void)setIgnoreThisVersion
 {
-    if (![_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_sbCocos2dVersion])
+    if (![_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_spritebuildersCocos2dVersion])
     {
-        [_projectSettings.cocos2dUpdateIgnoredVersions addObject:_sbCocos2dVersion];
+        [_projectSettings.cocos2dUpdateIgnoredVersions addObject:_spritebuildersCocos2dVersion];
     }
 }
 
 - (BOOL)shouldIgnoreThisVersion
 {
-    return [_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_sbCocos2dVersion];
+    return [_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_spritebuildersCocos2dVersion];
 }
 
 - (BOOL)unzipProjectTemplateZip:(NSError **)error
@@ -390,11 +394,11 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
     if (_projectsCocos2dVersion)
     {
-        [informativeText appendFormat:@"\n\nUpdate from version %@ to %@?", _projectsCocos2dVersion, _sbCocos2dVersion];
+        [informativeText appendFormat:@"\n\nUpdate from version %@ to %@?", _projectsCocos2dVersion, _spritebuildersCocos2dVersion];
     }
     else
     {
-        [informativeText appendFormat:@"\n\nUpdate to %@?", _sbCocos2dVersion];
+        [informativeText appendFormat:@"\n\nUpdate to %@?", _spritebuildersCocos2dVersion];
     }
 
     NSAlert *alert = [[NSAlert alloc] init];
@@ -418,14 +422,14 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
 - (Cocos2dVersionComparisonResult)compareProjectsCocos2dVersionWithSpriteBuildersVersion
 {
-    LocalLog(@"[COCO2D-UPDATER] [INFO] Comparing version - SB: %@ with project: %@ ...", _sbCocos2dVersion, _projectsCocos2dVersion);
+    LocalLog(@"[COCO2D-UPDATER] [INFO] Comparing version - SB: %@ with project: %@ ...", _spritebuildersCocos2dVersion, _projectsCocos2dVersion);
 
     if (!_projectsCocos2dVersion)
     {
         return Cocos2dVersionProjectVersionUnknown;
     }
 
-    NSComparisonResult result = [_sbCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch];
+    NSComparisonResult result = [_spritebuildersCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch];
 
     return result == NSOrderedAscending || result == NSOrderedSame
         ? Cocos2dVersionUpToDate
@@ -462,7 +466,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     return result;
 }
 
-- (BOOL)readProjectsCocos2dVersionFile
+- (NSString *)readProjectsCocos2dVersionFile
 {
     NSString *versionFilePath= [self defaultProjectsCocos2DFolderPath];
     versionFilePath = [versionFilePath stringByAppendingPathComponent:@"VERSION"];
@@ -478,13 +482,9 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     if (version)
     {
         LocalLog(@"[COCO2D-UPDATER] [INFO] Version file found in Project: %@", fileContent);
-        _projectsCocos2dVersion = version;
-        return YES;
+        return version;
     }
-    else
-    {
-        return NO;
-    }
+    return nil;
 }
 
 - (NSString *)defaultProjectsCocos2DFolderPath
