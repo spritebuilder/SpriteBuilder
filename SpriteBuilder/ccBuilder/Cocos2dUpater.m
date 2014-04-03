@@ -132,7 +132,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     {
         [self updateModalDialogStatusText:@"Unzipping sources"];
 
-        BOOL updateResult = [self unzipCocos2dFolder:&error]
+        BOOL updateResult = [self unzipProjectTemplateZip:&error]
             && [self renameCocos2dFolderToBackupFolder:&error]
             && [self copySpriteBuildersCocos2dFolderToProjectFolder:&error]
             && [self tidyUpTempFolder:&error];
@@ -168,7 +168,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"Ok"];
     alert.messageText = @"Error updating Cocos2D";
-    alert.informativeText = [NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@", error.localizedDescription];
+    alert.informativeText = [NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@\n\nBackup folder restored.", error.localizedDescription];
     [alert runModal];
 }
 
@@ -181,7 +181,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
     // Without the .backup folder we can't say what went wrong but
     // it is safe to not do anything
-    if ([_fileManager fileExistsAtPath:cocos2dBackupFolder])
+    if (![_fileManager fileExistsAtPath:cocos2dBackupFolder])
     {
         return;
     }
@@ -222,7 +222,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     return [_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_sbCocos2dVersion];
 }
 
-- (BOOL)unzipCocos2dFolder:(NSError **)error
+- (BOOL)unzipProjectTemplateZip:(NSError **)error
 {
     NSString *zipFile = [[NSBundle mainBundle] pathForResource:@"PROJECTNAME" ofType:@"zip" inDirectory:@"Generated"];
     NSString *tmpDir = [self tempFolderPathForUnzipping];
@@ -251,6 +251,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     NSTask *task = [[NSTask alloc] init];
     [task setCurrentDirectoryPath:tmpDir];
     [task setLaunchPath:@"/usr/bin/unzip"];
+
     NSArray *args = @[@"-d", tmpDir, @"-o", zipFile];
     [task setArguments:args];
 
@@ -431,11 +432,17 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     NSString *versionFilePath= [self defaultProjectsCocos2DFolderPath];
     versionFilePath = [versionFilePath stringByAppendingPathComponent:@"VERSION"];
 
-    NSString *version = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:error];
+    __block NSString *version;
+    NSString *fileContent = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:error];
+    [fileContent enumerateLinesUsingBlock:^(NSString *line, BOOL *stop)
+    {
+        version = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        *stop = YES;
+    }];
 
     if (version)
     {
-        LocalLog(@"[COCO2D-UPDATER] [INFO] Version file found in Project: %@", version);
+        LocalLog(@"[COCO2D-UPDATER] [INFO] Version file found in Project: %@", fileContent);
         _projectsCocos2dVersion = version;
         return YES;
     }
