@@ -211,13 +211,15 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
 - (void)setIgnoreThisVersion
 {
-    // TODO: add something to project file
+    if (![_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_sbCocos2dVersion])
+    {
+        [_projectSettings.cocos2dUpdateIgnoredVersions addObject:_sbCocos2dVersion];
+    }
 }
 
 - (BOOL)shouldIgnoreThisVersion
 {
-    // TODO: read project file
-    return NO;
+    return [_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_sbCocos2dVersion];
 }
 
 - (BOOL)unzipCocos2dFolder:(NSError **)error

@@ -118,6 +118,8 @@
     self.publishAudioQuality_android = 4;
     
     self.tabletPositionScaleFactor = 2.0f;
+
+    self.cocos2dUpdateIgnoredVersions = [NSMutableArray array];
     
     resourceProperties = [NSMutableDictionary dictionary];
     
@@ -193,7 +195,9 @@
     self.deviceOrientationLandscapeRight = [[dict objectForKey:@"deviceOrientationLandscapeRight"] boolValue];
     self.resourceAutoScaleFactor = [[dict objectForKey:@"resourceAutoScaleFactor"]intValue];
     if (resourceAutoScaleFactor == 0) self.resourceAutoScaleFactor = 4;
-    
+
+    self.cocos2dUpdateIgnoredVersions = [[dict objectForKey:@"cocos2dUpdateIgnoredVersions"] mutableCopy];
+
     self.deviceScaling = [[dict objectForKey:@"deviceScaling"] intValue];
     self.defaultOrientation = [[dict objectForKey:@"defaultOrientation"] intValue];
     self.designTarget = [[dict objectForKey:@"designTarget"] intValue];
@@ -279,7 +283,9 @@
     [dict setObject:[NSNumber numberWithBool:deviceOrientationLandscapeLeft] forKey:@"deviceOrientationLandscapeLeft"];
     [dict setObject:[NSNumber numberWithBool:deviceOrientationLandscapeRight] forKey:@"deviceOrientationLandscapeRight"];
     [dict setObject:[NSNumber numberWithInt:resourceAutoScaleFactor] forKey:@"resourceAutoScaleFactor"];
-    
+
+    [dict setObject:_cocos2dUpdateIgnoredVersions forKey:@"cocos2dUpdateIgnoredVersions"];
+
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
@@ -553,6 +559,18 @@
     
     NSString* version = [NSString stringWithContentsOfFile:versionPath encoding:NSUTF8StringEncoding error:NULL];
     return version;
+}
+
+- (void)setCocos2dUpdateIgnoredVersions:(NSMutableArray *)anArray
+{
+    if (!anArray)
+    {
+        _cocos2dUpdateIgnoredVersions = [NSMutableArray array];
+    }
+    else
+    {
+        _cocos2dUpdateIgnoredVersions = anArray;
+    }
 }
 
 @end
