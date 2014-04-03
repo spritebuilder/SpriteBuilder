@@ -190,6 +190,16 @@
                             <menuItem isSeparatorItem="YES" id="74">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
+                            <menuItem title="Update Cocos2D" id="v5Q-tK-hcr">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="updateCocos2d:" target="494" id="RCt-Xf-JGc"/>
+                                    <binding destination="494" name="enabled" keyPath="projectSettings.canUpdateCocos2D" id="V9K-RT-WdH"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="mar-Cw-LBm">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
                             <menuItem title="Project Settings..." keyEquivalent=";" id="1797">
                                 <connections>
                                     <action selector="menuPublishSettings:" target="494" id="1800"/>

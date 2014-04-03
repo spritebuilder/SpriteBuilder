@@ -1925,8 +1925,7 @@ static BOOL hideAllToNextSeparator;
     [self updateSmallTabBarsEnabled];
 
     Cocos2dUpater *cocos2dUpater = [[Cocos2dUpater alloc] initWithAppDelegate:self projectSettings:projectSettings];
-    [cocos2dUpater update];
-
+    [cocos2dUpater updateAndBypassIgnore:NO];
 
     return YES;
 }
@@ -2550,7 +2549,6 @@ static BOOL hideAllToNextSeparator;
     [self addCCObject:node toParent:parent];
 }
 
-
 - (IBAction) copy:(id) sender
 {
     //Copy warnings.
@@ -3155,6 +3153,12 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) menuCloseProject:(id)sender
 {
     [self closeProject];
+}
+
+- (IBAction)updateCocos2d:(id)sender
+{
+    Cocos2dUpater *cocos2dUpater = [[Cocos2dUpater alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpater updateAndBypassIgnore:YES];
 }
 
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine
