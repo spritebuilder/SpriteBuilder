@@ -30,6 +30,7 @@ typedef enum
 {
     Cocos2dVersionUpToDate = 0,
     Cocos2dVersionIncompatible,
+    Cocos2dVersionProjectVersionUnknown,
 } Cocos2dVersionComparisonResult;
 
 typedef enum {
@@ -50,6 +51,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
 - (instancetype)init
 {
+    NSLog(@"Use initWithAppDelegate:projectSettings: to create instances");
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
@@ -63,19 +65,18 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     {
         _appDelegate = appDelegate;
         _projectSettings = projectSettings;
-        _projectsCocos2dVersion = nil;
         _sbCocos2dVersion = [self readSpriteBuildersCocos2dVersionFile];
         _fileManager = [NSFileManager defaultManager];
-
-        // TODO: remove me
-        _sbCocos2dVersion = @"3.0.1";
     }
     return self;
 }
 
-- (void)update
+- (void)updateAndBypassIgnore:(BOOL)bypassIgnore
 {
-    if ([self shouldIgnoreThisVersion])
+    [self readProjectsCocos2dVersionFile];
+    [self updateProjectSettingsIfUserCanUpdate];
+
+    if ([self shouldIgnoreThisVersion] && !bypassIgnore)
     {
         LocalLog(@"[COCO2D-UPDATER] [INFO] Ignoring this version %@.", _sbCocos2dVersion);
         return;
@@ -87,8 +88,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
         return;
     }
 
-    NSError *error;
-    UpdateActions updateAction = [self determineUpdateAction:&error];
+    UpdateActions updateAction = [self determineUpdateAction];
 
     if (updateAction == UpdateActionNothingToDo)
     {
@@ -105,13 +105,37 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     [self doUpdate];
 }
 
-- (UpdateActions)determineUpdateAction:(NSError **)error
+- (void)updateProjectSettingsIfUserCanUpdate
 {
-    if ([self findAndCompareCocos2dVersionFile:error])
+    Cocos2dVersionComparisonResult compareResult = [self compareProjectsCocos2dVersionWithSpriteBuildersVersion];
+
+    BOOL foo = ![self isCoco2dAGitSubmodule]
+            && ((compareResult == Cocos2dVersionIncompatible)
+            || [self doesProjectsCocos2dFolderExistAndHasNoVesionfile]);
+   _projectSettings.canUpdateCocos2D = foo;
+}
+
+- (BOOL)doesProjectsCocos2dFolderExistAndHasNoVesionfile
+{
+    Cocos2dVersionComparisonResult compareResult = [self compareProjectsCocos2dVersionWithSpriteBuildersVersion];
+
+    return compareResult == Cocos2dVersionProjectVersionUnknown
+                 && [self defaultProjectsCocos2dFolderExists];
+}
+
+- (UpdateActions)determineUpdateAction
+{
+    Cocos2dVersionComparisonResult compareResult = [self compareProjectsCocos2dVersionWithSpriteBuildersVersion];
+
+    if (compareResult == Cocos2dVersionUpToDate)
+    {
+        return UpdateActionNothingToDo;
+    }
+    else if (compareResult == Cocos2dVersionIncompatible)
     {
         return [self showUpdateDialogWithText:@"Project's Cocos2D version is outdated."];
     }
-    else if ([self defaultProjectsCocos2dFolderExists])
+    else if ([self doesProjectsCocos2dFolderExistAndHasNoVesionfile])
     {
         return [self showUpdateDialogWithText:@"Cocos2D folder exists but no Version file could be found. This could mean your version is outdated."];
     }
@@ -151,6 +175,8 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
         if (status)
         {
+            _projectSettings.canUpdateCocos2D = NO;
+            [_projectSettings.cocos2dUpdateIgnoredVersions removeObject:_sbCocos2dVersion];
             [self showUpdateSuccessDialog];
         }
         else
@@ -201,12 +227,6 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     {
         [_appDelegate modalStatusWindowUpdateStatusText:text];
     });
-}
-
-- (BOOL)findAndCompareCocos2dVersionFile:(NSError **)error
-{
-    return [self readProjectsCocos2dVersionFile:error]
-        && ([self compareProjectsCocos2dVersionWithSpriteBuildersVersion] == Cocos2dVersionIncompatible);
 }
 
 - (void)setIgnoreThisVersion
@@ -366,8 +386,16 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 {
     NSMutableString *informativeText = [NSMutableString string];
     [informativeText appendString:text];
-    [informativeText appendFormat:@"\nUpdate from version %@ to %@?", _projectsCocos2dVersion, _sbCocos2dVersion];
     [informativeText appendFormat:@"\nYour cocos2d source folder will be renamed with a \".backup\" postfix."];
+
+    if (_projectsCocos2dVersion)
+    {
+        [informativeText appendFormat:@"\n\nUpdate from version %@ to %@?", _projectsCocos2dVersion, _sbCocos2dVersion];
+    }
+    else
+    {
+        [informativeText appendFormat:@"\n\nUpdate to %@?", _sbCocos2dVersion];
+    }
 
     NSAlert *alert = [[NSAlert alloc] init];
     alert.informativeText = informativeText;
@@ -392,9 +420,16 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 {
     LocalLog(@"[COCO2D-UPDATER] [INFO] Comparing version - SB: %@ with project: %@ ...", _sbCocos2dVersion, _projectsCocos2dVersion);
 
-    return [_sbCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch] == NSOrderedDescending
-        ? Cocos2dVersionIncompatible
-        : Cocos2dVersionUpToDate;
+    if (!_projectsCocos2dVersion)
+    {
+        return Cocos2dVersionProjectVersionUnknown;
+    }
+
+    NSComparisonResult result = [_sbCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch];
+
+    return result == NSOrderedAscending || result == NSOrderedSame
+        ? Cocos2dVersionUpToDate
+        : Cocos2dVersionIncompatible;
 }
 
 - (BOOL)defaultProjectsCocos2dFolderExists
@@ -427,13 +462,13 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     return result;
 }
 
-- (BOOL)readProjectsCocos2dVersionFile:(NSError **)error
+- (BOOL)readProjectsCocos2dVersionFile
 {
     NSString *versionFilePath= [self defaultProjectsCocos2DFolderPath];
     versionFilePath = [versionFilePath stringByAppendingPathComponent:@"VERSION"];
 
     __block NSString *version;
-    NSString *fileContent = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:error];
+    NSString *fileContent = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:nil];
     [fileContent enumerateLinesUsingBlock:^(NSString *line, BOOL *stop)
     {
         version = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

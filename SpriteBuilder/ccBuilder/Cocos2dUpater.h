@@ -16,6 +16,6 @@
 
 - (instancetype)initWithAppDelegate:(AppDelegate *)appDelegate projectSettings:(ProjectSettings *)projectSettings;
 
-- (void)update;
+- (void)updateAndBypassIgnore:(BOOL)bypassIgnore;
 
 @end
