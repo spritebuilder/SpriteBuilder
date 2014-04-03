@@ -43,6 +43,7 @@
 
 @interface CCNode (Compatibility)
 -(void) updatePositionRecursive;
+-(void) initNode;
 @end
 
 #define SKNODE_COMPATIBILITY_HEADER \
@@ -73,4 +74,9 @@
     [super setParent:parent]; \
 	[self updatePositionRecursive]; \
 } \
-
+-(id) init { \
+    if ((self = [super init]) == nil) return NULL; \
+	self.cascadeOpacityEnabled = YES; \
+	if ([self respondsToSelector:@selector(initNode)]) [(id)self initNode]; \
+    return self; \
+} \

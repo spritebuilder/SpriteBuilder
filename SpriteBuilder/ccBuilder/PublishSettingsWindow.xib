@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PublishSettingsWindow">
             <connections>
+                <outlet property="publishiPhoneCheckbox" destination="141" id="Aio-2c-y4I"/>
                 <outlet property="resDirArrayController" destination="42" id="51"/>
                 <outlet property="window" destination="1" id="30"/>
             </connections>
