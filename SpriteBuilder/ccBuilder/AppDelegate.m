@@ -1833,7 +1833,9 @@ static BOOL hideAllToNextSeparator;
     }
     
     [window setTitle:@"SpriteBuilder"];
-    
+
+    [self.projectSettings store];
+
     // Remove resource paths
     self.projectSettings = NULL;
     [[ResourceManager sharedManager] removeAllDirectories];
