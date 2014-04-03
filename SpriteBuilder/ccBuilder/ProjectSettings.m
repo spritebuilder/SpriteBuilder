@@ -119,6 +119,7 @@
     
     self.tabletPositionScaleFactor = 2.0f;
 
+    self.canUpdateCocos2D = NO;
     self.cocos2dUpdateIgnoredVersions = [NSMutableArray array];
     
     resourceProperties = [NSMutableDictionary dictionary];

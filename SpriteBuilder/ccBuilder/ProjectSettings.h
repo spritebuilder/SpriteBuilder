@@ -152,6 +152,8 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
 
+// Temporary property, do not persist
+@property (nonatomic) BOOL canUpdateCocos2D;
 @property (nonatomic) NSMutableArray *cocos2dUpdateIgnoredVersions;
 
 @property (nonatomic, copy) NSString* versionStr;
