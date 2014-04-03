@@ -118,7 +118,9 @@
 static const int CCNODE_INDEX_LAST = -1;
 
 @interface AppDelegate()
+
 - (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
+
 @end
 
 @implementation AppDelegate
@@ -2563,7 +2565,6 @@ static BOOL hideAllToNextSeparator;
         return;
     }
 
-    
     // Copy keyframes
     NSArray* keyframes = [sequenceHandler selectedKeyframesForCurrentSequence];
     if ([keyframes count] > 0)
@@ -3064,9 +3065,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuCleanCacheDirectories:(id)sender
 {
-    projectSettings.needRepublish = YES;
-    [projectSettings store];
-    [CCBPublisher cleanAllCacheDirectories];
+    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
 }
 
 // Temporary utility function until new publish system is in place

@@ -15,18 +15,13 @@
 }
 SKNODE_COMPATIBILITY_CODE
 
--(id) init
+-(void) initNode
 {
-	self = [super init];
-	if (self)
-	{
-		_horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-		_verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-		
-		self.horizontalAlignment = CCTextAlignmentCenter;
-		self.verticalAlignment = CCVerticalTextAlignmentCenter;
-	}
-	return self;
+	_horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+	_verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+	
+	self.horizontalAlignment = CCTextAlignmentCenter;
+	self.verticalAlignment = CCVerticalTextAlignmentCenter;
 }
 
 -(void) setText:(NSString *)text

@@ -111,9 +111,11 @@
 		80FBACCD183423F800C4BB69 /* inspector-warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACC9183422BD00C4BB69 /* inspector-warning@2x.png */; };
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
-		8340035718E9902C00DE9D49 /* Cocos2dUpater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340035518E974B800DE9D49 /* Cocos2dUpater.m */; };
+		8341326B18DADF9E0088FFAB /* optipng in Resources */ = {isa = PBXBuildFile; fileRef = 8341326A18DADF9E0088FFAB /* optipng */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
-		83DDB70F18EC3BED0053BE24 /* Cocos2dUpater+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DDB70E18EC3BED0053BE24 /* Cocos2dUpater+Errors.m */; };
+		8392006F18ED91BC00B6C429 /* Cocos2dUpater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpater.m */; };
+		8392007018ED91BC00B6C429 /* Cocos2dUpater+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006E18ED91BC00B6C429 /* Cocos2dUpater+Errors.m */; };
+		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
@@ -1174,11 +1176,14 @@
 		80FBACC9183422BD00C4BB69 /* inspector-warning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning@2x.png"; sourceTree = "<group>"; };
 		80FBACCA183422BD00C4BB69 /* inspector-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning.png"; sourceTree = "<group>"; };
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
-		8340035418E974B800DE9D49 /* Cocos2dUpater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpater.h; sourceTree = "<group>"; };
-		8340035518E974B800DE9D49 /* Cocos2dUpater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocos2dUpater.m; sourceTree = "<group>"; };
+		8341326A18DADF9E0088FFAB /* optipng */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = optipng; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		83DDB70D18EC3BED0053BE24 /* Cocos2dUpater+Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cocos2dUpater+Errors.h"; sourceTree = "<group>"; };
-		83DDB70E18EC3BED0053BE24 /* Cocos2dUpater+Errors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Cocos2dUpater+Errors.m"; sourceTree = "<group>"; };
+		8392006B18ED91BC00B6C429 /* Cocos2dUpater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpater.h; sourceTree = "<group>"; };
+		8392006C18ED91BC00B6C429 /* Cocos2dUpater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocos2dUpater.m; sourceTree = "<group>"; };
+		8392006D18ED91BC00B6C429 /* Cocos2dUpater+Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cocos2dUpater+Errors.h"; sourceTree = "<group>"; };
+		8392006E18ED91BC00B6C429 /* Cocos2dUpater+Errors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Cocos2dUpater+Errors.m"; sourceTree = "<group>"; };
+		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
+		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
 		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
@@ -2805,6 +2810,7 @@
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
 				D2E0167218D782B500927430 /* SpriteBuilderCommands */,
+				8392006918ED91AD00B6C429 /* Cocos2dUpdater */,
 				83F8672F18D1DCBD007441E4 /* Constants */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
@@ -2826,7 +2832,6 @@
 				E3214C3F15D3B9D0002413A7 /* Custom Properties */,
 				E335CB071577C55F00A612EE /* Node info */,
 				776041E21498F5A70078095D /* Util */,
-				8340035218E9748C00DE9D49 /* Cocos2D Updater */,
 				776041EE1498FC320078095D /* GUI Util */,
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
 			);
@@ -2850,6 +2855,7 @@
 		7789ABEF133AB17100CEFCC7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				8341326918DADF8C0088FFAB /* optipng */,
 				80AD79911863871200B653B7 /* PVRTexTool */,
 				B7D0918717C2C1310007FE7F /* Cocos2d */,
 				B7AC699117A079C80041B8BD /* InspectorTabBar */,
@@ -2968,20 +2974,30 @@
 			path = Include;
 			sourceTree = "<group>";
 		};
-		8340035218E9748C00DE9D49 /* Cocos2D Updater */ = {
+		8341326918DADF8C0088FFAB /* optipng */ = {
 			isa = PBXGroup;
 			children = (
-				83DDB70D18EC3BED0053BE24 /* Cocos2dUpater+Errors.h */,
-				83DDB70E18EC3BED0053BE24 /* Cocos2dUpater+Errors.m */,
-				8340035418E974B800DE9D49 /* Cocos2dUpater.h */,
-				8340035518E974B800DE9D49 /* Cocos2dUpater.m */,
+				8341326A18DADF9E0088FFAB /* optipng */,
 			);
-			name = "Cocos2D Updater";
+			name = optipng;
+			sourceTree = "<group>";
+		};
+		8392006918ED91AD00B6C429 /* Cocos2dUpdater */ = {
+			isa = PBXGroup;
+			children = (
+				8392006B18ED91BC00B6C429 /* Cocos2dUpater.h */,
+				8392006C18ED91BC00B6C429 /* Cocos2dUpater.m */,
+				8392006D18ED91BC00B6C429 /* Cocos2dUpater+Errors.h */,
+				8392006E18ED91BC00B6C429 /* Cocos2dUpater+Errors.m */,
+			);
+			name = Cocos2dUpdater;
 			sourceTree = "<group>";
 		};
 		83F8672F18D1DCBD007441E4 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */,
+				83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */,
 				83F8673218D1DCEA007441E4 /* SBErrors.h */,
 				83F8673318D1DCEA007441E4 /* SBErrors.m */,
 			);
@@ -5071,6 +5087,7 @@
 				E3E0557F159B8466001066C5 /* seq-keyframe-interpol.png in Resources */,
 				E392618F159CAAA10034FF1D /* seq-keyframe-interpol-vis.png in Resources */,
 				E3926190159CAAA10034FF1D /* seq-keyframe-l-sel.png in Resources */,
+				8341326B18DADF9E0088FFAB /* optipng in Resources */,
 				926D13C018B5778300582959 /* joint-distance-handle-long.png in Resources */,
 				E3926191159CAAA10034FF1D /* seq-keyframe-l.png in Resources */,
 				E3926192159CAAA10034FF1D /* seq-keyframe-r-sel.png in Resources */,
@@ -5560,6 +5577,7 @@
 				E3B4222F14E5A849004547D6 /* InspectorBlendmode.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
 				E3B4223714E5E6AD004547D6 /* InspectorSeparator.m in Sources */,
+				83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */,
 				E3C3660114EA0507007CD5FF /* TexturePropertySetter.m in Sources */,
 				E3C3660414EB2C1B007CD5FF /* CCBReaderInternal.m in Sources */,
 				E32D8CC814EC25D800F4BD5E /* InspectorCodeConnections.m in Sources */,
@@ -5573,7 +5591,6 @@
 				E35DBC2814F4FF410070A6E4 /* InspectorTexture.m in Sources */,
 				9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */,
 				E325F64814F5336E00D29BCF /* InspectorFloatVar.m in Sources */,
-				83DDB70F18EC3BED0053BE24 /* Cocos2dUpater+Errors.m in Sources */,
 				E325F64D14F53FF100D29BCF /* InspectorColor4FVar.m in Sources */,
 				E325F65214F5669600D29BCF /* InspectorSeparatorSub.m in Sources */,
 				E385A42314F6A01900DFB12D /* InspectorBlock.m in Sources */,
@@ -5605,8 +5622,8 @@
 				E334069B1551725F000FBD0B /* InspectorFloatScale.m in Sources */,
 				E3799EAD155979BF00196B4A /* ProjectSettings.m in Sources */,
 				E3462867155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m in Sources */,
-				8340035718E9902C00DE9D49 /* Cocos2dUpater.m in Sources */,
 				E346286B155C18D80043EAB1 /* SavePanelLimiter.m in Sources */,
+				8392006F18ED91BC00B6C429 /* Cocos2dUpater.m in Sources */,
 				E3462870155D22290043EAB1 /* CCBPublisher.m in Sources */,
 				E3462873155D22FC0043EAB1 /* CCBWarnings.m in Sources */,
 				E32BBCB11561361200C58395 /* HashValue.m in Sources */,
@@ -5658,6 +5675,7 @@
 				E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */,
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
+				8392007018ED91BC00B6C429 /* Cocos2dUpater+Errors.m in Sources */,
 				E35D78D516826C0100A53BEF /* SpriteSheetSettingsWindow.m in Sources */,
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */,
