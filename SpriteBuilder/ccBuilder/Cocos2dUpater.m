@@ -135,11 +135,11 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     }
     else if (compareResult == Cocos2dVersionIncompatible)
     {
-        return [self showUpdateDialogWithText:@"Project's Cocos2D version is outdated."];
+        return [self showUpdateDialogWithText:@"Your project is not using the latest version of Cocos2D. It's recommended that you update."];
     }
     else if ([self doesProjectsCocos2dFolderExistAndHasNoVesionfile])
     {
-        return [self showUpdateDialogWithText:@"Cocos2D folder exists but no Version file could be found. This could mean your version is outdated."];
+        return [self showUpdateDialogWithText:@"Your project is probably not using the latest version of Cocos2D (the version file is missing, which indicates that you are using an old version). It's recommended that you update."];
     }
     else
     {
@@ -342,9 +342,9 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 - (void)showUpdateSuccessDialog
 {
     NSAlert *alert = [[NSAlert alloc] init];
-    alert.informativeText = @"Update finished.\nPlease test your project.";
-    [alert addButtonWithTitle:@"Ok"];
-    alert.messageText = @"Cocos2D update";
+    alert.informativeText = @"Your project has been updated to use the latest version of Cocos2D.\n\nPlease test your Xcode project. If you encounter any issues check spritebuilder.com for more information.";
+    [alert addButtonWithTitle:@"OK"];
+    alert.messageText = @"Cocos2D Update Complete";
     [alert runModal];
 }
 
@@ -390,7 +390,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 {
     NSMutableString *informativeText = [NSMutableString string];
     [informativeText appendString:text];
-    [informativeText appendFormat:@"\nYour cocos2d source folder will be renamed with a \".backup\" postfix."];
+    [informativeText appendFormat:@"\n\nBefore updating we will make a backup of your old Cocos2D folder and rename it to \"cocos2d-iphone.backup\"."];
 
     if (_projectsCocos2dVersion)
     {
@@ -398,16 +398,16 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     }
     else
     {
-        [informativeText appendFormat:@"\n\nUpdate to %@?", _spritebuildersCocos2dVersion];
+        [informativeText appendFormat:@"\n\nUpdate to version %@?", _spritebuildersCocos2dVersion];
     }
 
     NSAlert *alert = [[NSAlert alloc] init];
     alert.informativeText = informativeText;
-    alert.messageText = @"Cocos2D update";
+    alert.messageText = @"Cocos2D Automatic Updater";
 
     // beware: return value is depending on the position of the button
-    [alert addButtonWithTitle:@"Yes"];
-    [alert addButtonWithTitle:@"No"];
+    [alert addButtonWithTitle:@"Update"];
+    [alert addButtonWithTitle:@"Cancel"];
     [alert addButtonWithTitle:@"Ignore this version"];
 
     NSInteger returnValue = [alert runModal];
