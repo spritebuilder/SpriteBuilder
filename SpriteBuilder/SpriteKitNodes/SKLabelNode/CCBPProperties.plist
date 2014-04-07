@@ -47,7 +47,7 @@
 			<key>displayName</key>
 			<string>Text</string>
 			<key>type</key>
-			<string>StringSimple</string>
+			<string>Text</string>
 		</dict>
 		<dict>
 			<key>default</key>
