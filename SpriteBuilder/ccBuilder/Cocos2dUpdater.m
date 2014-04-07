@@ -6,11 +6,11 @@
 //
 //
 
-#import "Cocos2dUpater.h"
+#import "Cocos2dUpdater.h"
 
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
-#import "Cocos2dUpater+Errors.h"
+#import "Cocos2dUpdater+Errors.h"
 
 
 // Debug option: Some verbosity on the console, 1 to enable 0 to turn off
@@ -44,7 +44,7 @@ typedef enum {
 static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-iphone/";
 
 
-@implementation Cocos2dUpater
+@implementation Cocos2dUpdater
 {
     NSString *_projectsCocos2dVersion;
     NSString *_spritebuildersCocos2dVersion;

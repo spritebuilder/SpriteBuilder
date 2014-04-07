@@ -9,7 +9,7 @@
 @class AppDelegate;
 @class ProjectSettings;
 
-@interface Cocos2dUpater : NSObject
+@interface Cocos2dUpdater : NSObject
 
 @property (nonatomic, readonly) AppDelegate *appDelegate;
 @property (nonatomic, readonly) ProjectSettings *projectSettings;

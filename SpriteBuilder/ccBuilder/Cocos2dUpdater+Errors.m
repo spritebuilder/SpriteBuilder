@@ -1,7 +1,7 @@
-#import "Cocos2dUpater+Errors.h"
+#import "Cocos2dUpdater+Errors.h"
 #import "SBErrors.h"
 
-@implementation Cocos2dUpater (Errors)
+@implementation Cocos2dUpdater (Errors)
 
 - (NSError *)errorForFailedUnzipTask:(NSString *)zipFile dataStdOut:(NSData *)dataStdOut dataStdErr:(NSData *)dataStdErr status:(int)status
 {
