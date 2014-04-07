@@ -1,5 +1,5 @@
 //
-//  Cocos2dUpater.m
+//  Cocos2dUpdater.m
 //  SpriteBuilder
 //
 //  Created by Nicky Weber on 31.03.14.
@@ -42,12 +42,13 @@ typedef enum {
 } UpdateActions;
 
 static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-iphone/";
-
+static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 @implementation Cocos2dUpdater
 {
     NSString *_projectsCocos2dVersion;
     NSString *_spritebuildersCocos2dVersion;
+    NSString *_backupFolderPath;
     NSFileManager *_fileManager;
 }
 
@@ -91,7 +92,8 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
         return;
     }
 
-    UpdateActions updateAction = [self determineUpdateAction];
+    [self setBackupFolderPath];
+    UpdateActions updateAction = [self updateAction];
 
     if (updateAction == UpdateActionNothingToDo)
     {
@@ -125,7 +127,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
                  && [self defaultProjectsCocos2dFolderExists];
 }
 
-- (UpdateActions)determineUpdateAction
+- (UpdateActions)updateAction
 {
     Cocos2dVersionComparisonResult compareResult = [self compareProjectsCocos2dVersionWithSpriteBuildersVersion];
 
@@ -169,6 +171,11 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..."];
 }
 
+- (void)setBackupFolderPath
+{
+    _backupFolderPath = [self cocos2dBackupFolderPath:[self defaultProjectsCocos2DFolderPath]];
+}
+
 - (void)finishWithUpdateResult:(BOOL)status error:(NSError *)error
 {
     dispatch_sync(dispatch_get_main_queue(), ^
@@ -207,11 +214,10 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
     LocalLog(@"[COCO2D-UPDATER] [INFO] Rolling back.");
 
     NSString *defaultCocos2DFolderPath = [self defaultProjectsCocos2DFolderPath];
-    NSString *cocos2dBackupFolder = [self backupCocos2dFolderPath:defaultCocos2DFolderPath];
 
-    // Without the .backup folder we can't say what went wrong but
+    // Without the backup folder we can't say what went wrong but
     // it is safe to not do anything
-    if (![_fileManager fileExistsAtPath:cocos2dBackupFolder])
+    if (![_fileManager fileExistsAtPath:_backupFolderPath])
     {
         return;
     }
@@ -221,7 +227,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
         [_fileManager removeItemAtPath:defaultCocos2DFolderPath error:nil];
     }
 
-    [_fileManager moveItemAtPath:cocos2dBackupFolder toPath:defaultCocos2DFolderPath error:nil];
+    [_fileManager moveItemAtPath:_backupFolderPath toPath:defaultCocos2DFolderPath error:nil];
 }
 
 - (void)updateModalDialogStatusText:(NSString *)text
@@ -367,30 +373,71 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 - (BOOL)copySpriteBuildersCocos2dFolderToProjectFolder:(NSError **)error
 {
     NSString *unzippedCocos2dFolder = [[self tempFolderPathForUnzipping] stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
-    NSString *defaultCocos2DFolderPath = [self defaultProjectsCocos2DFolderPath];
 
-    return [_fileManager copyItemAtPath:unzippedCocos2dFolder toPath:defaultCocos2DFolderPath error:error];
+    return [_fileManager copyItemAtPath:unzippedCocos2dFolder
+                                 toPath:[self defaultProjectsCocos2DFolderPath] error:error];
 }
 
 - (BOOL)renameCocos2dFolderToBackupFolder:(NSError **)error
 {
-    NSString *defaultCocos2DFolderPath = [self defaultProjectsCocos2DFolderPath];
-    NSString *cocos2dBackupName = [self backupCocos2dFolderPath:defaultCocos2DFolderPath];
-
-    return [_fileManager moveItemAtPath:defaultCocos2DFolderPath toPath:cocos2dBackupName error:error];
+    return [_fileManager moveItemAtPath:[self defaultProjectsCocos2DFolderPath]
+                                 toPath:_backupFolderPath error:error];
 }
 
-- (NSString *)backupCocos2dFolderPath:(NSString *)defaultCocos2DFolderPath
+- (NSString *)cocos2dBackupFolderPath:(NSString *)defaultCocos2DFolderPath
 {
-    NSString *cocos2dBackupName = [[defaultCocos2DFolderPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"cocos2d-iphone.backup"];
-    return cocos2dBackupName;
+    NSString *result = [[defaultCocos2DFolderPath stringByDeletingLastPathComponent]
+                                                  stringByAppendingPathComponent:BASE_COCOS2D_BACKUP_NAME];
+
+    if ([_fileManager fileExistsAtPath:result])
+    {
+        return [self cocos2dBackupFolderNameWithCounterPostfix:defaultCocos2DFolderPath cocos2dBackupFolderPath:result];
+    }
+    return result;
+}
+
+- (NSString *)cocos2dBackupFolderNameWithCounterPostfix:(NSString *)defaultCocos2DFolderPath cocos2dBackupFolderPath:(NSString *)cocos2dBackupName
+{
+    NSUInteger maxCounter = 0;
+
+    NSString *libsFolder = [defaultCocos2DFolderPath stringByAppendingPathComponent:@".."];
+    NSArray *dirContents = [_fileManager contentsOfDirectoryAtPath:libsFolder error:nil];
+
+    for (NSString *directoryName in dirContents)
+    {
+        maxCounter = [self highestBackupDirCounterPostfix:cocos2dBackupName currentCount:maxCounter directoryName:directoryName];
+    }
+    return [cocos2dBackupName stringByAppendingString:[NSString stringWithFormat:@".%lu", maxCounter]];
+}
+
+- (NSUInteger)highestBackupDirCounterPostfix:(NSString *)cocos2dBackupName currentCount:(NSUInteger)currentCounter directoryName:(NSString *)directoryName
+{
+    NSNumber *number = [self parseNumberPostfixInBackupDir:directoryName];
+
+    if (number
+        && ([number unsignedIntegerValue] > currentCounter))
+    {
+        currentCounter = [number unsignedIntegerValue] + 1;
+    }
+
+    return currentCounter;
+}
+
+- (NSNumber *)parseNumberPostfixInBackupDir:(NSString *)directoryName
+{
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+
+    NSString *pattern = [NSString stringWithFormat:@"%@.", BASE_COCOS2D_BACKUP_NAME];
+    NSString *counterOnlyString = [directoryName stringByReplacingOccurrencesOfString:pattern withString:@""];
+    return [numberFormatter numberFromString:counterOnlyString];
 }
 
 - (UpdateActions)showUpdateDialogWithText:(NSString *)text
 {
     NSMutableString *informativeText = [NSMutableString string];
     [informativeText appendString:text];
-    [informativeText appendFormat:@"\n\nBefore updating we will make a backup of your old Cocos2D folder and rename it to \"cocos2d-iphone.backup\"."];
+    [informativeText appendFormat:@"\n\nBefore updating we will make a backup of your old Cocos2D folder and rename it to \"%@\".", [_backupFolderPath lastPathComponent]];
 
     if (_projectsCocos2dVersion)
     {
@@ -468,7 +515,7 @@ static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-i
 
 - (NSString *)readProjectsCocos2dVersionFile
 {
-    NSString *versionFilePath= [self defaultProjectsCocos2DFolderPath];
+    NSString *versionFilePath = [self defaultProjectsCocos2DFolderPath];
     versionFilePath = [versionFilePath stringByAppendingPathComponent:@"VERSION"];
 
     __block NSString *version;
