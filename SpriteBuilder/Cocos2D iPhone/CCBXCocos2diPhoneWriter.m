@@ -745,7 +745,10 @@
     [self writeInt:(int)[seqs count] withSign:NO];
 
     //Write out if the docuement contains physics bodies.
-    [self writeBool:[self containsPhysicsBodies:doc[@"nodeGraph"]]];
+    [self writeBool:[self hasPhysicsBodies:doc[@"nodeGraph"]]];
+    
+    //Write out if the document contains a physics node.
+    [self writeBool:[self hasPhysicsNode:doc[@"nodeGraph"]]];
     
 
     
@@ -1311,7 +1314,7 @@
 }
 
 
--(BOOL) containsPhysicsBodies:(NSDictionary*)doc
+-(BOOL) hasPhysicsBodies:(NSDictionary*)doc
 {
     NSMutableArray * nodes = [NSMutableArray array];
     
@@ -1326,6 +1329,25 @@
     
     return NO;
 }
+
+-(BOOL) hasPhysicsNode:(NSDictionary*)doc
+{
+    NSMutableArray * nodes = [NSMutableArray array];
+    
+    [self getAllNodes:doc nodes:nodes];
+    
+    for (NSDictionary * node in nodes) {
+        if([node[@"baseClass"] isEqualToString:@"CCPhysicsNode"])
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+
+
 
 -(void)getAllNodes:(NSDictionary*)currentNode nodes:(NSMutableArray*)nodes
 {
