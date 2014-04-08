@@ -113,6 +113,7 @@
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
 #import "NSArray+Query.h"
+#import "Cocos2dUpdater.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1844,7 +1845,9 @@ static BOOL hideAllToNextSeparator;
     }
     
     [window setTitle:@"SpriteBuilder"];
-    
+
+    [self.projectSettings store];
+
     // Remove resource paths
     self.projectSettings = NULL;
     [[ResourceManager sharedManager] removeAllDirectories];
@@ -1932,7 +1935,10 @@ static BOOL hideAllToNextSeparator;
     
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
-    
+
+    Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpdater updateAndBypassIgnore:NO];
+
     return YES;
 }
 
@@ -3156,6 +3162,12 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) menuCloseProject:(id)sender
 {
     [self closeProject];
+}
+
+- (IBAction)updateCocos2d:(id)sender
+{
+    Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpdater updateAndBypassIgnore:YES];
 }
 
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine

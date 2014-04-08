@@ -34,14 +34,6 @@
 
 @synthesize ccbFile;
 
-- (id) init
-{
-    self = [super init];
-    if (!self) return NULL;
-    
-    return self;
-}
-
 - (void) setCcbFile:(CCNode *)cf
 {
     ccbFile = cf;

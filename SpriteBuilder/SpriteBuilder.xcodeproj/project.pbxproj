@@ -113,6 +113,8 @@
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		8341326B18DADF9E0088FFAB /* optipng in Resources */ = {isa = PBXBuildFile; fileRef = 8341326A18DADF9E0088FFAB /* optipng */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
+		8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */; };
 		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
@@ -1178,6 +1180,10 @@
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
 		8341326A18DADF9E0088FFAB /* optipng */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = optipng; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdater.h; sourceTree = "<group>"; };
+		8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocos2dUpdater.m; sourceTree = "<group>"; };
+		8392006D18ED91BC00B6C429 /* Cocos2dUpdater+Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cocos2dUpdater+Errors.h"; sourceTree = "<group>"; };
+		8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Cocos2dUpdater+Errors.m"; sourceTree = "<group>"; };
 		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
@@ -2808,6 +2814,7 @@
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
 				D2E0167218D782B500927430 /* SpriteBuilderCommands */,
+				8392006918ED91AD00B6C429 /* Cocos2dUpdater */,
 				83F8672F18D1DCBD007441E4 /* Constants */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
@@ -2977,6 +2984,17 @@
 				8341326A18DADF9E0088FFAB /* optipng */,
 			);
 			name = optipng;
+			sourceTree = "<group>";
+		};
+		8392006918ED91AD00B6C429 /* Cocos2dUpdater */ = {
+			isa = PBXGroup;
+			children = (
+				8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */,
+				8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */,
+				8392006D18ED91BC00B6C429 /* Cocos2dUpdater+Errors.h */,
+				8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */,
+			);
+			name = Cocos2dUpdater;
 			sourceTree = "<group>";
 		};
 		83F8672F18D1DCBD007441E4 /* Constants */ = {
@@ -5611,6 +5629,7 @@
 				E3799EAD155979BF00196B4A /* ProjectSettings.m in Sources */,
 				E3462867155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m in Sources */,
 				E346286B155C18D80043EAB1 /* SavePanelLimiter.m in Sources */,
+				8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */,
 				E3462870155D22290043EAB1 /* CCBPublisher.m in Sources */,
 				E3462873155D22FC0043EAB1 /* CCBWarnings.m in Sources */,
 				E32BBCB11561361200C58395 /* HashValue.m in Sources */,
@@ -5662,6 +5681,7 @@
 				E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */,
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
+				8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */,
 				E35D78D516826C0100A53BEF /* SpriteSheetSettingsWindow.m in Sources */,
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3127AA516C1D8E600D09AA4 /* CCBDirectoryComparer.m in Sources */,
