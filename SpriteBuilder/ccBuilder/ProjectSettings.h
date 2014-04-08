@@ -45,6 +45,12 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 	CCBTargetEngineSpriteKit,
 };
 
+typedef enum
+{
+    PublishEnvironmentDevelop = 0,
+    PublishEnvironmentRelease,
+} SBPublishEnvironment;
+
 @class RMResource;
 @class CCBWarnings;
 
@@ -94,7 +100,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
     BOOL deviceOrientationLandscapeLeft;
     BOOL deviceOrientationLandscapeRight;
     int resourceAutoScaleFactor;
-    
+
     NSString* versionStr;
     BOOL needRepublish;
     
@@ -151,6 +157,11 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
+@property (nonatomic, assign) NSInteger publishEnvironment;
+
+// Temporary property, do not persist
+@property (nonatomic) BOOL canUpdateCocos2D;
+@property (nonatomic) NSMutableArray *cocos2dUpdateIgnoredVersions;
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;

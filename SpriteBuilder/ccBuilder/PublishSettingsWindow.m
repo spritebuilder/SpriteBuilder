@@ -23,12 +23,24 @@
  */
 
 #import "PublishSettingsWindow.h"
+#import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "NSString+RelativePath.h"
 
 @implementation PublishSettingsWindow
 
 @synthesize projectSettings;
+
+-(void) windowDidLoad
+{
+	[super windowDidLoad];
+	
+	if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
+	{
+		// in Sprite Kit projects exporting to non-Retina iPhones makes no sense
+		_publishiPhoneCheckbox.enabled = NO;
+	}
+}
 
 - (IBAction)selectPublishDirectory:(id)sender
 {

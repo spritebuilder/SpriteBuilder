@@ -113,11 +113,15 @@
     self.publishResolutionHTML5_width = 480;
     self.publishResolutionHTML5_height = 320;
     self.publishResolutionHTML5_scale = 1;
-    
+    self.publishEnvironment = PublishEnvironmentDevelop;
+
     self.publishAudioQuality_ios = 4;
     self.publishAudioQuality_android = 4;
     
     self.tabletPositionScaleFactor = 2.0f;
+
+    self.canUpdateCocos2D = NO;
+    self.cocos2dUpdateIgnoredVersions = [NSMutableArray array];
     
     resourceProperties = [NSMutableDictionary dictionary];
     
@@ -193,13 +197,17 @@
     self.deviceOrientationLandscapeRight = [[dict objectForKey:@"deviceOrientationLandscapeRight"] boolValue];
     self.resourceAutoScaleFactor = [[dict objectForKey:@"resourceAutoScaleFactor"]intValue];
     if (resourceAutoScaleFactor == 0) self.resourceAutoScaleFactor = 4;
-    
+
+    self.cocos2dUpdateIgnoredVersions = [[dict objectForKey:@"cocos2dUpdateIgnoredVersions"] mutableCopy];
+
     self.deviceScaling = [[dict objectForKey:@"deviceScaling"] intValue];
     self.defaultOrientation = [[dict objectForKey:@"defaultOrientation"] intValue];
     self.designTarget = [[dict objectForKey:@"designTarget"] intValue];
     
     self.tabletPositionScaleFactor = 2.0f;
-    
+
+    self.publishEnvironment = [[dict objectForKey:@"publishEnvironment"] integerValue];
+
     NSString* mainCCB = [dict objectForKey:@"javascriptMainCCB"];
     if (!mainCCB) mainCCB = @"";
     self.javascriptMainCCB = mainCCB;
@@ -250,8 +258,7 @@
     [dict setObject:[NSNumber numberWithBool:publishEnablediPhone] forKey:@"publishEnablediPhone"];
     [dict setObject:[NSNumber numberWithBool:publishEnabledAndroid] forKey:@"publishEnabledAndroid"];
     [dict setObject:[NSNumber numberWithBool:publishEnabledHTML5] forKey:@"publishEnabledHTML5"];
-    
-    
+
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phone] forKey:@"publishResolution_ios_phone"];
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phonehd] forKey:@"publishResolution_ios_phonehd"];
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_tablet] forKey:@"publishResolution_ios_tablet"];
@@ -279,11 +286,15 @@
     [dict setObject:[NSNumber numberWithBool:deviceOrientationLandscapeLeft] forKey:@"deviceOrientationLandscapeLeft"];
     [dict setObject:[NSNumber numberWithBool:deviceOrientationLandscapeRight] forKey:@"deviceOrientationLandscapeRight"];
     [dict setObject:[NSNumber numberWithInt:resourceAutoScaleFactor] forKey:@"resourceAutoScaleFactor"];
-    
+
+    [dict setObject:_cocos2dUpdateIgnoredVersions forKey:@"cocos2dUpdateIgnoredVersions"];
+
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
-    
+
+    [dict setObject:[NSNumber numberWithInt:self.publishEnvironment] forKey:@"publishEnvironment"];
+
     if (!javascriptMainCCB) self.javascriptMainCCB = @"";
     if (!javascriptBased) self.javascriptMainCCB = @"";
     [dict setObject:javascriptMainCCB forKey:@"javascriptMainCCB"];
@@ -553,6 +564,31 @@
     
     NSString* version = [NSString stringWithContentsOfFile:versionPath encoding:NSUTF8StringEncoding error:NULL];
     return version;
+}
+
+- (void)setCocos2dUpdateIgnoredVersions:(NSMutableArray *)anArray
+{
+    if (!anArray)
+    {
+        _cocos2dUpdateIgnoredVersions = [NSMutableArray array];
+    }
+    else
+    {
+        _cocos2dUpdateIgnoredVersions = anArray;
+    }
+}
+
+-(void) setPublishResolution_ios_phone:(BOOL)publishResolution
+{
+	if (_engine != CCBTargetEngineSpriteKit)
+	{
+		publishResolution_ios_phone = publishResolution;
+	}
+	else
+	{
+		// Sprite Kit doesn't run on non-Retina phones to begin with...
+		publishResolution_ios_phone = NO;
+	}
 }
 
 @end

@@ -34,5 +34,6 @@
 }
 
 @property (nonatomic,strong) ProjectSettings* projectSettings;
+@property (weak) IBOutlet NSButton *publishiPhoneCheckbox;
 
 @end
