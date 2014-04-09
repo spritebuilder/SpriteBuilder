@@ -15,9 +15,9 @@
 	<key>inheritsFrom</key>
 	<string>SKNode</string>
 	<key>canHaveChildren</key>
-	<true/>
+	<false/>
 	<key>canBeRootNode</key>
-	<true/>
+	<false/>
 	<key>spriteFrameDrop</key>
 	<dict>
 		<key>className</key>
@@ -47,7 +47,7 @@
 			<key>displayName</key>
 			<string>Text</string>
 			<key>type</key>
-			<string>StringSimple</string>
+			<string>Text</string>
 		</dict>
 		<dict>
 			<key>default</key>
