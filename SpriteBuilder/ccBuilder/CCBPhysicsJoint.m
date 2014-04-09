@@ -58,7 +58,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     self.breakingForceEnabled = NO;
     self.maxForceEnabled = NO;
     self.breakingForce = INFINITY;
-    self.collideBodies = YES;
+    self.collideBodies = NO;
     self.maxForce = INFINITY;
     
     return self;

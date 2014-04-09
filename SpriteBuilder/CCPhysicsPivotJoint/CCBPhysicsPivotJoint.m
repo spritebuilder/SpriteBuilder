@@ -204,10 +204,6 @@
     }
 }
 
--(void)onExit
-{
- 
-}
 
 -(void)dealloc
 {
