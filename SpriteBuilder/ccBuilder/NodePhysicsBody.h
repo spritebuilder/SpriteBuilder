@@ -49,8 +49,8 @@ typedef enum
 @property (nonatomic,assign) float elasticity;
 
 @property (nonatomic) NSString * collisionType;
-@property (nonatomic) NSString * collisionCategories;
-@property (nonatomic) NSString * collisionMask;
+@property (nonatomic) NSArray * collisionCategories;
+@property (nonatomic) NSArray * collisionMask;
 
 // Init and serialization
 - (id) initWithNode:(CCNode*) node;

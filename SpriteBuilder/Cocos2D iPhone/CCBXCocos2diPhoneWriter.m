@@ -26,7 +26,7 @@
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "CustomPropSetting.h"
-
+#import "NSArray+Query.h"
 @implementation CCBXCocos2diPhoneWriter
 
 @synthesize data;
@@ -128,6 +128,21 @@
 - (void) writeByte:(unsigned char)b
 {
     [data appendBytes:&b length:1];
+}
+
+-(NSString*)concatenateWithSeperator:(NSArray*)array seperator:(NSString*)seperator
+{
+	if(array == nil)
+		return @"";
+	
+	NSString * returnString = @"";
+	for (NSString * item in array) {
+		returnString = [returnString stringByAppendingString:item];
+		returnString = [returnString stringByAppendingString:seperator];
+	}
+	//Remove tailing seperator.
+	returnString = [returnString substringWithRange:NSMakeRange(0,returnString.length - seperator.length)];
+	return returnString;
 }
 
 - (void) clearTempBuffer
@@ -654,23 +669,14 @@
        {
            collisionType = @"";
        }
-       
-       NSString * collisionCategories = [physicsBodyProperties objectForKey:@"collisionCategories"];
-       if(collisionCategories == nil)
-       {
-           collisionCategories = @"";
-       }
-       
-       NSString * collisionMask = [physicsBodyProperties objectForKey:@"collisionMask"];
-       if(collisionMask == nil)
-       {
-           collisionMask = @"";
-       }
-       
-       
+  	   
+	   NSString *	collisionCategoriesText = [self concatenateWithSeperator:[physicsBodyProperties objectForKey:@"collisionCategories"] seperator:@";"];
+	   
+	   NSString * collisionMaskText = [self concatenateWithSeperator:[physicsBodyProperties objectForKey:@"collisionMask"] seperator:@";"];
+     
        [self addToStringCache:collisionType isPath:NO];
-       [self addToStringCache:collisionCategories isPath:NO];
-       [self addToStringCache:collisionMask isPath:NO];
+       [self addToStringCache:collisionCategoriesText isPath:NO];
+       [self addToStringCache:collisionMaskText isPath:NO];
    }
     
     // Children
@@ -1171,9 +1177,6 @@
         float friction = [[physicsBody objectForKey:@"friction"] floatValue];
         float elasticity = [[physicsBody objectForKey:@"elasticity"] floatValue];
         
-        NSString * collisionType = [physicsBody objectForKey:@"collisionType"];
-        NSString * collisionCategories = [physicsBody objectForKey:@"collisionCategories"];
-        NSString * collisionMask = [physicsBody objectForKey:@"collisionMask"];
         
         
         // Write physics body
@@ -1214,25 +1217,23 @@
         [self writeFloat:friction];
         [self writeFloat:elasticity];
         
+		NSString * collisionType = [physicsBody objectForKey:@"collisionType"];
+        NSArray * collisionCategories = [physicsBody objectForKey:@"collisionCategories"];
+        NSArray * collisionMasks = [physicsBody objectForKey:@"collisionMask"];
+		
+		
         if(collisionType == nil)
         {
             collisionType = @"";
         }
-        
-        if(collisionCategories == nil)
-        {
-            collisionCategories = @"";
-        }
-        
-        if(collisionMask == nil)
-        {
-            collisionMask = @"";
-        }
-        
-        [self writeCachedString:collisionType isPath:NO];
-        [self writeCachedString:collisionCategories isPath:NO];
-        [self writeCachedString:collisionMask isPath:NO];
-        
+
+		NSString *	collisionCategoriesText = [self concatenateWithSeperator:collisionCategories seperator:@";"];
+		NSString * collisionMaskText = [self concatenateWithSeperator:collisionMasks seperator:@";"];
+		
+		[self writeCachedString:collisionType isPath:NO];
+		[self writeCachedString:collisionCategoriesText isPath:NO];
+		[self writeCachedString:collisionMaskText isPath:NO];
+		 
     }
     else
     {
