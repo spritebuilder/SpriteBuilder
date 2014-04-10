@@ -217,11 +217,11 @@ const int kSpringHeightHalf = kSpringHeight/2;
     
     if(selectedBodyHandle & (1 << RestLengthHandle))
     {
-        restLengthHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide-sel.png"];
+        restLengthHandleBody.spriteFrame = [self frameWithImageNamed:@"joint-distance-slide-sel.png"];
     }
     else
     {
-        restLengthHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide.png"];
+        restLengthHandleBody.spriteFrame = [self frameWithImageNamed:@"joint-distance-slide.png"];
     }
     
     [super updateSelectionUI];

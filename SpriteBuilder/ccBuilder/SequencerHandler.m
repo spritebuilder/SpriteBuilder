@@ -421,6 +421,15 @@ static SequencerHandler* sharedSequencerHandler;
     
     if ([tableColumn.identifier isEqualToString:@"locked"])
     {
+        //only joints inherit their locked state from the root joint object.
+        if(node.plugIn.isJoint)
+        {
+            if(node.parent.locked)
+            {
+                return @(YES);
+            }
+        }
+        
         return @(node.locked);
     }
     
@@ -445,7 +454,6 @@ static SequencerHandler* sharedSequencerHandler;
         joints.node.locked = locked;
         [outlineView reloadItem:joints reloadChildren:YES];
         return;
-
     }
 }
 
@@ -1064,9 +1072,26 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (void)willDisplayLockedCell:(id)cell node:(CCNode *)node
 {
-	SequencerButtonCell * buttonCell = cell;
+	SequencerLockedCell * buttonCell = cell;
 	[buttonCell setTransparent:NO];
 	buttonCell.node = node;
+    
+    if(node.plugIn.isJoint)
+    {   
+        if(node.parent.locked)
+        {
+            buttonCell.status = LockedButtonStatus_SetNotEnabled;
+        }
+        else
+        {
+
+            buttonCell.status = node.locked ? LockedButtonStatus_Set : LockedButtonStatus_NoSet;
+        }
+    }
+    else
+    {
+        buttonCell.status = node.locked ? LockedButtonStatus_Set : LockedButtonStatus_NoSet;
+    }
 }
 
 - (void)willDisplayHiddenCell:(id)cell node:(CCNode *)node
@@ -1156,9 +1181,12 @@ static SequencerHandler* sharedSequencerHandler;
 
 	if ([tableColumn.identifier isEqualToString:@"locked"])
     {
-		SequencerButtonCell *buttonCell = cell;
+		SequencerLockedCell *buttonCell = cell;
 		buttonCell.node = [SceneGraph instance].joints.node;
 		[buttonCell setTransparent:NO];
+        [buttonCell setEnabled:YES];
+        buttonCell.status = [SceneGraph instance].joints.node.locked ? LockedButtonStatus_Set : LockedButtonStatus_NoSet;
+
     }
     
     if([tableColumn.identifier isEqualToString:@"hidden"])

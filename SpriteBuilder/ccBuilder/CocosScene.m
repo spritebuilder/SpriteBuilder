@@ -483,13 +483,19 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         for (CCNode* node in nodes)
         {
+            //Don't display if special case rendering flag is present.
+            if([[node extraPropForKey:@"disableStageRendering"] boolValue])
+            {
+                continue;
+            }
+            
             if(node.locked)
             {
                 //Locked nodes shouldn't render
                 continue;
-  
             }
-            else
+            
+            
             {
                 CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
                                           node.anchorPoint.y * node.contentSizeInPoints.height);

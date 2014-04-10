@@ -38,6 +38,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="handleDeleteNode:" target="-2" id="BV9-t8-uir"/>
+                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="z6u-qM-Qlj">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Sem-7o-xbd">
@@ -55,6 +60,9 @@
                 <customView id="vur-Go-ycq" customClass="OutletButton">
                     <rect key="frame" x="168" y="10" width="10" height="10"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <connections>
+                        <binding destination="-2" name="hidden" keyPath="self.readOnly" id="swC-Db-rwc"/>
+                    </connections>
                 </customView>
             </subviews>
         </customView>

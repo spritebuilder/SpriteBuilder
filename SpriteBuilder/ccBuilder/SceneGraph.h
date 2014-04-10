@@ -18,7 +18,7 @@
 
 +(instancetype) instance;
 +(instancetype)setInstance:(SceneGraph*)instance;
-+(CCNode*)findUUID:(NSUInteger)uuid rootNode:(CCNode*)rootNode;
++(CCNode*)findUUID:(NSUInteger)uuid node:(CCNode*)node;
 
 @property (nonatomic,strong) CCNode* rootNode;
 @property (nonatomic,strong) SequencerJoints * joints;
