@@ -323,6 +323,15 @@ void ApplyCustomNodeVisitSwizzle()
     projectViewTabs.delegate = self;
 }
 
+typedef enum
+{
+	eItemViewTabType_Properties,
+	eItemViewTabType_CodeConnections,
+	eItemViewTabType_Physics,
+	eItemViewTabType_Template
+	
+} eItemViewTabType;
+
 - (void) setupItemViewTabBar
 {
     NSMutableArray* items = [NSMutableArray array];
@@ -332,6 +341,7 @@ void ApplyCustomNodeVisitSwizzle()
     SMTabBarItem* itemProps = [[SMTabBarItem alloc] initWithImage:imgProps tag:0];
     itemProps.toolTip = @"Item Properties";
     itemProps.keyEquivalent = @"";
+	itemProps.tag = eItemViewTabType_Properties;
     [items addObject:itemProps];
     
     NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections.png"];
@@ -339,6 +349,7 @@ void ApplyCustomNodeVisitSwizzle()
     SMTabBarItem* itemCode = [[SMTabBarItem alloc] initWithImage:imgCode tag:0];
     itemCode.toolTip = @"Item Code Connections";
     itemCode.keyEquivalent = @"";
+	itemCode.tag = eItemViewTabType_CodeConnections;
     [items addObject:itemCode];
     
     NSImage* imgPhysics = [NSImage imageNamed:@"inspector-physics"];
@@ -346,6 +357,7 @@ void ApplyCustomNodeVisitSwizzle()
     SMTabBarItem* itemPhysics = [[SMTabBarItem alloc] initWithImage:imgPhysics tag:0];
     itemPhysics.toolTip = @"Item Physics";
     itemPhysics.keyEquivalent = @"";
+	itemPhysics.tag = eItemViewTabType_Physics;
     [items addObject:itemPhysics];
     
     NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template.png"];
@@ -353,6 +365,7 @@ void ApplyCustomNodeVisitSwizzle()
     SMTabBarItem* itemTemplate = [[SMTabBarItem alloc] initWithImage:imgTemplate tag:0];
     itemTemplate.toolTip = @"Item Templates";
     itemTemplate.keyEquivalent = @"";
+	itemTemplate.tag = eItemViewTabType_Template;
     [items addObject:itemTemplate];
     
     itemViewTabs.items = items;
@@ -394,9 +407,16 @@ void ApplyCustomNodeVisitSwizzle()
     
     // Update enable depending on if object is selected
     BOOL itemEnable = (self.selectedNode != NULL);
+	BOOL physicsEnabled = (!self.selectedNode.plugIn.isJoint);
     
     for (SMTabBarItem* item in itemViewTabs.items)
     {
+		if(item.tag == eItemViewTabType_Physics && !physicsEnabled)
+		{
+			item.enabled = NO;
+			continue;
+		}
+		
         item.enabled = allEnable && itemEnable;
     }
     
