@@ -187,6 +187,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
             LocalLog(@"[COCO2D-UPDATER] [INFO] Success!");
             _projectSettings.canUpdateCocos2D = NO;
             [_projectSettings.cocos2dUpdateIgnoredVersions removeObject:_spritebuildersCocos2dVersion];
+            [self openBrowserWithCocos2dUpdateInformation];
             [self showUpdateSuccessDialog];
         }
         else
@@ -196,6 +197,12 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
             [self rollBack];
         }
     });
+}
+
+- (void)openBrowserWithCocos2dUpdateInformation
+{
+    NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
+    [workspace openURL:[NSURL URLWithString:@"http://www.spritebuilder.com/update/"]];
 }
 
 - (void)showUpdateErrorDialog:(NSError *)error
