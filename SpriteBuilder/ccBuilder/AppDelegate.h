@@ -119,8 +119,8 @@ enum {
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
-- (void) customVisit;
-- (void) oldVisit;
+- (void) customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
+- (void) oldVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 @end
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate>

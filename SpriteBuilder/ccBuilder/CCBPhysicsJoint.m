@@ -215,10 +215,10 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 }
 
 
--(void)visit
+-(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     [self updateSelectionUI];
-    [super visit];
+    [super visit:renderer parentTransform:parentTransform];
 }
 
 -(void)updateSelectionUI

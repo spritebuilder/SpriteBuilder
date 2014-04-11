@@ -212,12 +212,13 @@
     [self updateProperty:name time:[SequencerHandler sharedHandler].currentSequence.timelinePosition sequenceId:seqId];
 }
 
--(void)customVisit
+
+-(void)customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     if(self.hidden)
         return;
     
-    [self performSelector:@selector(oldVisit) withObject:nil];
+    [self performSelector:@selector(oldVisit:parentTransform:) withObject:renderer withObject:(__bridge id)(parentTransform)];
 }
 
 - (SequencerKeyframe*) addDefaultKeyframeForProperty:(NSString*)name atTime:(float)time sequenceId:(int)seqId

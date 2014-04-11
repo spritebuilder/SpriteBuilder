@@ -187,14 +187,15 @@ static AppDelegate* sharedAppDelegate;
 //However it then proceeds to call the real '[CCNode visit]' (now renamed oldVisit).
 void ApplyCustomNodeVisitSwizzle()
 {
-    Method origMethod = class_getInstanceMethod([CCNode class], @selector(visit));
-    Method newMethod = class_getInstanceMethod([CCNode class], @selector(customVisit));
+	
+    Method origMethod = class_getInstanceMethod([CCNode class], @selector(visit:parentTransform:));
+    Method newMethod = class_getInstanceMethod([CCNode class], @selector(customVisit:parentTransform:));
     
     IMP origImp = method_getImplementation(origMethod);
     IMP newImp = method_getImplementation(newMethod);
     
-    class_replaceMethod([CCNode class], @selector(visit), newImp, method_getTypeEncoding(newMethod));
-    class_addMethod([CCNode class], @selector(oldVisit), origImp, method_getTypeEncoding(origMethod));
+    class_replaceMethod([CCNode class], @selector(visit:parentTransform:), newImp, method_getTypeEncoding(newMethod));
+    class_addMethod([CCNode class], @selector(oldVisit:parentTransform:), origImp, method_getTypeEncoding(origMethod));
     
 }
 

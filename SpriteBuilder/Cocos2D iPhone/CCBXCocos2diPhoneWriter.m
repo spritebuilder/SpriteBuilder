@@ -132,7 +132,7 @@
 
 -(NSString*)concatenateWithSeperator:(NSArray*)array seperator:(NSString*)seperator
 {
-	if(array == nil)
+	if(array == nil || array.count == 0)
 		return @"";
 	
 	NSString * returnString = @"";
