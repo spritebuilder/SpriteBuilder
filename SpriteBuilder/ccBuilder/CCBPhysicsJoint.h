@@ -39,7 +39,8 @@ typedef enum
     UInt32 selectedBodyHandle;//bitfield
     
     CCNode * scaleFreeNode;
-    
+ 
+	CCNode   * bodyOutletRoot;
     CCSprite * bodyAOutlet;
     CCSprite * bodyBOutlet;
  

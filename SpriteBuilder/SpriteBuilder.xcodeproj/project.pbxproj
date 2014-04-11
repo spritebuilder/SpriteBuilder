@@ -135,10 +135,6 @@
 		921EEADC18A5760700D864C2 /* joint-pivot.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD418A5760700D864C2 /* joint-pivot.png */; };
 		921EEADD18A5760700D864C2 /* joint-pivot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD518A5760700D864C2 /* joint-pivot@2x.png */; };
 		921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEADF18A5884300D864C2 /* SequencerJoints.m */; };
-		921EEB0518AAE84C00D864C2 /* joint-outlet-set.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0118AAE84C00D864C2 /* joint-outlet-set.png */; };
-		921EEB0618AAE84C00D864C2 /* joint-outlet-set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */; };
-		921EEB0718AAE84C00D864C2 /* joint-outlet-unset.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */; };
-		921EEB0818AAE84C00D864C2 /* joint-outlet-unset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */; };
 		921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */; };
 		921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */; };
 		921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */; };
@@ -193,6 +189,12 @@
 		92B8A32818E1063600EE52FC /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
+		92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */; };
+		92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */; };
+		92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */; };
+		92D9D48318F8AB3800F167C1 /* joint-connection-disconnected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47D18F8AB3800F167C1 /* joint-connection-disconnected@2x.png */; };
+		92D9D48418F8AB3800F167C1 /* joint-connection-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47E18F8AB3800F167C1 /* joint-connection-bg.png */; };
+		92D9D48518F8AB3800F167C1 /* joint-connection-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47F18F8AB3800F167C1 /* joint-connection-bg@2x.png */; };
 		92DC215F188073C500C8DCCD /* select-scale.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C005E1846A40D00544BD2 /* select-scale.png */; };
 		92DC2160188073C500C8DCCD /* select-crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 800C006F1848178D00544BD2 /* select-crosshair.png */; };
 		92DC2161188073C500C8DCCD /* select-skew.png in Resources */ = {isa = PBXBuildFile; fileRef = 80E158A018441FF1007242F6 /* select-skew.png */; };
@@ -1226,10 +1228,6 @@
 		921EEAD518A5760700D864C2 /* joint-pivot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot@2x.png"; sourceTree = "<group>"; };
 		921EEADE18A5884300D864C2 /* SequencerJoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerJoints.h; sourceTree = "<group>"; };
 		921EEADF18A5884300D864C2 /* SequencerJoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerJoints.m; sourceTree = "<group>"; };
-		921EEB0118AAE84C00D864C2 /* joint-outlet-set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-set.png"; sourceTree = "<group>"; };
-		921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-set@2x.png"; sourceTree = "<group>"; };
-		921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-unset.png"; sourceTree = "<group>"; };
-		921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-outlet-unset@2x.png"; sourceTree = "<group>"; };
 		921EEB2218ADB7EA00D864C2 /* GeometryUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeometryUtil.h; sourceTree = "<group>"; };
 		921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeometryUtil.m; sourceTree = "<group>"; };
 		921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorNodeReference.xib; sourceTree = "<group>"; };
@@ -1296,6 +1294,12 @@
 		92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPhysicsTwoBodyJoint.h; path = ccBuilder/CCBPhysicsTwoBodyJoint.h; sourceTree = "<group>"; };
 		92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPhysicsTwoBodyJoint.m; path = ccBuilder/CCBPhysicsTwoBodyJoint.m; sourceTree = "<group>"; };
 		92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
+		92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected.png"; sourceTree = "<group>"; };
+		92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected@2x.png"; sourceTree = "<group>"; };
+		92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-disconnected.png"; sourceTree = "<group>"; };
+		92D9D47D18F8AB3800F167C1 /* joint-connection-disconnected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-disconnected@2x.png"; sourceTree = "<group>"; };
+		92D9D47E18F8AB3800F167C1 /* joint-connection-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-bg.png"; sourceTree = "<group>"; };
+		92D9D47F18F8AB3800F167C1 /* joint-connection-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-bg@2x.png"; sourceTree = "<group>"; };
 		92F095F918F8851200D47A94 /* inspector-body-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-connected.png"; sourceTree = "<group>"; };
 		92F095FA18F8851200D47A94 /* inspector-body-disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-disconnected.png"; sourceTree = "<group>"; };
 		92F095FB18F8851200D47A94 /* inspector-body-remove-dis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-remove-dis.png"; sourceTree = "<group>"; };
@@ -2558,10 +2562,12 @@
 				926D13BD18B5778300582959 /* joint-distance-slide@2x.png */,
 				926D13BE18B5778300582959 /* joint-distance.png */,
 				926D13BF18B5778300582959 /* joint-distance@2x.png */,
-				921EEB0118AAE84C00D864C2 /* joint-outlet-set.png */,
-				921EEB0218AAE84C00D864C2 /* joint-outlet-set@2x.png */,
-				921EEB0318AAE84C00D864C2 /* joint-outlet-unset.png */,
-				921EEB0418AAE84C00D864C2 /* joint-outlet-unset@2x.png */,
+				92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */,
+				92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */,
+				92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */,
+				92D9D47D18F8AB3800F167C1 /* joint-connection-disconnected@2x.png */,
+				92D9D47E18F8AB3800F167C1 /* joint-connection-bg.png */,
+				92D9D47F18F8AB3800F167C1 /* joint-connection-bg@2x.png */,
 				921EEACE18A5760700D864C2 /* joint-anchor-sel.png */,
 				921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */,
 				921EEAD018A5760700D864C2 /* joint-anchor.png */,
@@ -4968,13 +4974,13 @@
 				92DC2161188073C500C8DCCD /* select-skew.png in Resources */,
 				92DC2162188073C500C8DCCD /* select-rotation.png in Resources */,
 				929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */,
+				92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */,
 				92F0960A18F8851300D47A94 /* inspector-body-remove.png in Resources */,
 				92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */,
 				92F0960918F8851300D47A94 /* inspector-body-bg.png in Resources */,
 				92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */,
 				92154ACB18A5531800BD215C /* Icon@2x.png in Resources */,
 				80F90905183C188400A714FC /* seq-visible-faint.png in Resources */,
-				921EEB0618AAE84C00D864C2 /* joint-outlet-set@2x.png in Resources */,
 				8045F136183ADA900082BD94 /* seq-visible.png in Resources */,
 				B71706D0184ECD660081720A /* select-rotation@2x.png in Resources */,
 				8045F137183ADA900082BD94 /* seq-notset.png in Resources */,
@@ -5047,7 +5053,6 @@
 				92F0960F18F8851300D47A94 /* inspector-body-disconnected@2x.png in Resources */,
 				E3B7AEE914E33F4C00DFD402 /* InspectorPosition.xib in Resources */,
 				E3FEA8A714E45EEF00119FBE /* InspectorSize.xib in Resources */,
-				921EEB0518AAE84C00D864C2 /* joint-outlet-set.png in Resources */,
 				E3FEA8AC14E47C5700119FBE /* InspectorPoint.xib in Resources */,
 				92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */,
 				E3FEA8B114E4872D00119FBE /* InspectorPointLock.xib in Resources */,
@@ -5096,7 +5101,6 @@
 				E34E5D6E1535AA78000201FB /* ruler-mark-major.png in Resources */,
 				E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */,
 				E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */,
-				921EEB0818AAE84C00D864C2 /* joint-outlet-unset@2x.png in Resources */,
 				92F0960618F8851300D47A94 /* inspector-body-disconnected.png in Resources */,
 				E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */,
 				E3A16AF01536C885004B528A /* ruler-guide.png in Resources */,
@@ -5200,6 +5204,7 @@
 				921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */,
 				E367E32016384F0C00247F12 /* orientation-landscapeleft.png in Resources */,
 				E367E32116384F0C00247F12 /* orientation-landscaperight.png in Resources */,
+				92D9D48418F8AB3800F167C1 /* joint-connection-bg.png in Resources */,
 				E367E32316384F0C00247F12 /* orientation-upsidedown.png in Resources */,
 				E367E32516384F3600247F12 /* orientation-portrait.png in Resources */,
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
@@ -5219,6 +5224,7 @@
 				E3E8D64616B3129E00742107 /* oggenc in Resources */,
 				E3DA6FF216CAF7D400B12FFB /* SequencerPopoverView.xib in Resources */,
 				E3DA6FF416CB293100B12FFB /* InspectorPopoverPosition.xib in Resources */,
+				92D9D48518F8AB3800F167C1 /* joint-connection-bg@2x.png in Resources */,
 				E3DA6FF616CB2AC000B12FFB /* InspectorPopoverScaleLock.xib in Resources */,
 				E3DA6FF816CB2B2900B12FFB /* InspectorPopoverDegrees.xib in Resources */,
 				E3DA6FFA16CB2B8700B12FFB /* InspectorPopoverSpriteFrame.xib in Resources */,
@@ -5249,6 +5255,7 @@
 				E3583FB01756C228002DF0B0 /* ResourceManagerPreviewView.xib in Resources */,
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
 				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
+				92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */,
 				B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
 				B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */,
@@ -5265,6 +5272,7 @@
 				B7AC69B417A1A2040041B8BD /* header-bg2-crop.png in Resources */,
 				B72D1DC0186125E80091252F /* Requirements.plist in Resources */,
 				B7AC69C917A70A4B0041B8BD /* inspector-codeconnections.png in Resources */,
+				92D9D48318F8AB3800F167C1 /* joint-connection-disconnected@2x.png in Resources */,
 				926D13C918B5778300582959 /* joint-distance-slide@2x.png in Resources */,
 				926D13CB18B5778300582959 /* joint-distance@2x.png in Resources */,
 				B7AC69CA17A70A4B0041B8BD /* inspector-codeconnections@2x.png in Resources */,
@@ -5282,7 +5290,7 @@
 				B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */,
 				B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */,
 				B78AE45217E3B1600028BE0B /* scale-2.png in Resources */,
-				921EEB0718AAE84C00D864C2 /* joint-outlet-unset.png in Resources */,
+				92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */,
 				B78AE45317E3B1600028BE0B /* scale-3.png in Resources */,
 				B78AE45417E3B1600028BE0B /* scale-4.png in Resources */,
 			);

@@ -15,7 +15,8 @@
 #import "SequencerSequence.h"
 #import "AppDelegate.h"
 
-static const float kOutletOffset = 20.0f;
+static const float kOutletVerticalOffset = 20.0f;
+static const float kOutletHorizontalOffset = 8.0f;
 
 NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation"};
 
@@ -45,16 +46,25 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     scaleFreeNode = [CCScaleFreeNode node];
     [self addChild:scaleFreeNode];
     
+	bodyOutletRoot = [CCNode node];
+	bodyOutletRoot.position = ccp([self outletLateralOffset],-kOutletVerticalOffset);
+	
+	CCSprite * outletBG = [CCSprite spriteWithImageNamed:@"joint-connection-bg.png"];
+	outletBG.positionType = CCPositionTypeUIPoints;
+	[bodyOutletRoot addChild:outletBG];
+	
     bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
     bodyAOutlet.positionType = CCPositionTypeUIPoints;
-    bodyAOutlet.position = ccp(-kOutletOffset + [self outletLateralOffset], -kOutletOffset);
-    [scaleFreeNode addChild:bodyAOutlet];
+    bodyAOutlet.position = ccp(-kOutletHorizontalOffset, 0);
+    [bodyOutletRoot addChild:bodyAOutlet];
     
     bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
-    bodyBOutlet.position = ccp(kOutletOffset + [self outletLateralOffset], -kOutletOffset);
+    bodyBOutlet.position = ccp(kOutletHorizontalOffset, 0);
     bodyBOutlet.positionType = CCPositionTypeUIPoints;
-    [scaleFreeNode addChild:bodyBOutlet];
-    
+	[bodyOutletRoot addChild:bodyBOutlet];
+   
+	[scaleFreeNode addChild:bodyOutletRoot];
+	
     self.breakingForceEnabled = NO;
     self.maxForceEnabled = NO;
     self.breakingForce = INFINITY;
@@ -188,41 +198,37 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)updateSelectionUI
 {
-    
     if(selectedBodyHandle & (1<<EntireJoint))
     {
-        bodyAOutlet.visible = self.bodyA ? NO : YES;
-        bodyBOutlet.visible = self.bodyB ? NO : YES;
+		bodyOutletRoot.visible = (self.bodyA && self.bodyB) ? NO : YES;
     }
     else
     {
-        bodyAOutlet.visible = NO;
-        bodyBOutlet.visible = NO;
+		bodyOutletRoot.visible = NO;
     }
     
-
     //Outlet A
-    if(selectedBodyHandle & (1<<BodyOutletA))
+    if(selectedBodyHandle & (1<<BodyOutletA) || self.bodyA)
     {
-        bodyAOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-set.png"];
+        bodyAOutlet.spriteFrame = [self frameWithImageNamed:@"joint-connection-connected.png"];
     }
     else
     {
-        bodyAOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-unset.png"];
+        bodyAOutlet.spriteFrame = [self frameWithImageNamed:@"joint-connection-disconnected.png"];
     }
     [self removeJointHandleSelected:BodyOutletA];
     
     //Outlet B
-    if(selectedBodyHandle & (1<<BodyOutletB))
+    if(selectedBodyHandle & (1<<BodyOutletB) || self.bodyB)
     {
-        bodyBOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-set.png"];
+        bodyBOutlet.spriteFrame = [self frameWithImageNamed:@"joint-connection-connected.png"];
     }
     else
     {
-        bodyBOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-unset.png"];
+        bodyBOutlet.spriteFrame = [self frameWithImageNamed:@"joint-connection-disconnected.png"];
     }
+	
     [self removeJointHandleSelected:BodyOutletB];
-
     [self removeJointHandleSelected:EntireJoint];
 }
 
