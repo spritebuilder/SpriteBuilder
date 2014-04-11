@@ -90,7 +90,9 @@
     {
         if([prop isEqualToString:@"StringSimple"])
             return [self propTypeIdForName:@"String"];
-    
+		
+		if([prop isEqualToString:@"EnabledFloat"])
+			return [self propTypeIdForName:@"FloatCheck"];
     }
     return (int)propType;
 }
@@ -473,7 +475,7 @@
     {
         [self writeInt:(int)[prop unsignedIntegerValue] withSign:NO];
     }
-    else if([type isEqualToString:@"FloatCheck"])
+    else if([type isEqualToString:@"FloatCheck"] || [type isEqualToString:@"EnabledFloat"])
     {
         NSArray * propArray = (NSArray*)prop;
         [self writeFloat:[propArray[0] floatValue]];

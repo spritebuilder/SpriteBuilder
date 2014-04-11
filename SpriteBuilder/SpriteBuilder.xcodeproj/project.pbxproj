@@ -213,6 +213,8 @@
 		92F0961718F8855A00D47A94 /* inspector-body-goto.png in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961318F8855A00D47A94 /* inspector-body-goto.png */; };
 		92F0961818F8855A00D47A94 /* inspector-body-goto-hi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961418F8855A00D47A94 /* inspector-body-goto-hi@2x.png */; };
 		92F0961918F8855A00D47A94 /* inspector-body-goto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961518F8855A00D47A94 /* inspector-body-goto@2x.png */; };
+		92F0961D18F891A900D47A94 /* InspectorEnabledFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = 92F0961B18F891A900D47A94 /* InspectorEnabledFloat.m */; };
+		92F0961E18F891A900D47A94 /* InspectorEnabledFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961C18F891A900D47A94 /* InspectorEnabledFloat.xib */; };
 		92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		92F12E4F18847BC800AB8F32 /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
@@ -1310,6 +1312,9 @@
 		92F0961318F8855A00D47A94 /* inspector-body-goto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-goto.png"; sourceTree = "<group>"; };
 		92F0961418F8855A00D47A94 /* inspector-body-goto-hi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-goto-hi@2x.png"; sourceTree = "<group>"; };
 		92F0961518F8855A00D47A94 /* inspector-body-goto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-goto@2x.png"; sourceTree = "<group>"; };
+		92F0961A18F891A900D47A94 /* InspectorEnabledFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEnabledFloat.h; sourceTree = "<group>"; };
+		92F0961B18F891A900D47A94 /* InspectorEnabledFloat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEnabledFloat.m; sourceTree = "<group>"; };
+		92F0961C18F891A900D47A94 /* InspectorEnabledFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorEnabledFloat.xib; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -4097,6 +4102,9 @@
 				922E8EF418BFE47A008E1764 /* InspectorFloatCheck.h */,
 				922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */,
 				922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */,
+				92F0961A18F891A900D47A94 /* InspectorEnabledFloat.h */,
+				92F0961B18F891A900D47A94 /* InspectorEnabledFloat.m */,
+				92F0961C18F891A900D47A94 /* InspectorEnabledFloat.xib */,
 				E3B4221214E4A350004547D6 /* InspectorCheck.xib */,
 				E3B4221414E4A380004547D6 /* InspectorCheck.h */,
 				E3B4221514E4A381004547D6 /* InspectorCheck.m */,
@@ -5203,6 +5211,7 @@
 				E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */,
 				E3DEF5B7169B359C00B9DCF4 /* lame in Resources */,
 				E3DEF5B9169B35DF00B9DCF4 /* lame-COPYING in Resources */,
+				92F0961E18F891A900D47A94 /* InspectorEnabledFloat.xib in Resources */,
 				E334741D169DC5A7000737CC /* APIDocsWindow.xib in Resources */,
 				92F0961818F8855A00D47A94 /* inspector-body-goto-hi@2x.png in Resources */,
 				E3F4087416A9EEC5009A0253 /* ccz in Resources */,
@@ -5639,6 +5648,7 @@
 				E3FEA8B914E492DA00119FBE /* InspectorScaleLock.m in Sources */,
 				E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */,
 				E3B4221114E49DEB004547D6 /* InspectorInteger.m in Sources */,
+				92F0961D18F891A900D47A94 /* InspectorEnabledFloat.m in Sources */,
 				E3B4221614E4A381004547D6 /* InspectorCheck.m in Sources */,
 				E3B4221B14E4BE87004547D6 /* InspectorSpriteFrame.m in Sources */,
 				E3B4222014E58C75004547D6 /* InspectorByte.m in Sources */,

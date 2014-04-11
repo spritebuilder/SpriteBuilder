@@ -235,7 +235,7 @@ __strong NSDictionary* renamedProperties = nil;
         float f = [CCBReaderInternal deserializeFloat: serializedValue];
         [node setValue:[NSNumber numberWithFloat:f] forKey:name];
     }
-    else if ([type isEqualToString:@"FloatCheck"])
+    else if ([type isEqualToString:@"FloatCheck"] || [type isEqualToString:@"EnabledFloat"] )
     {
         float f = [[serializedValue objectAtIndex:0] floatValue];
         float enabled = [[serializedValue objectAtIndex:1] boolValue];

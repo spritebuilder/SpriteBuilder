@@ -122,7 +122,7 @@
 			<key>defaultSerialization</key>
 			<integer>1</integer>
 			<key>type</key>
-			<string>FloatCheck</string>
+			<string>EnabledFloat</string>
 			<key>name</key>
 			<string>minDistance</string>
 			<key>displayName</key>
@@ -132,7 +132,7 @@
 			<key>defaultSerialization</key>
 			<integer>1</integer>
 			<key>type</key>
-			<string>FloatCheck</string>
+			<string>EnabledFloat</string>
 			<key>name</key>
 			<string>maxDistance</string>
 			<key>displayName</key>
