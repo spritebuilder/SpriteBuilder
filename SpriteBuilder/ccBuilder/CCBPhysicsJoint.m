@@ -165,41 +165,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     }
 }
 
--(BOOL)maxForceEnabled
-{
-    return maxForceEnabled;
-}
-
-
-
--(void)setMaxForceEnabled:(BOOL)lMaxForceEnabled
-{
-    maxForceEnabled = lMaxForceEnabled;
-    if(!maxForceEnabled)
-    {
-        [self willChangeValueForKey:@"maxForce"];
-        _maxForce = INFINITY;
-        [self didChangeValueForKey:@"maxForce"];
-    }
-    
-}
-
--(BOOL)breakingForceEnabled
-{
-    return breakingForceEnabled;
-}
-
--(void)setBreakingForceEnabled:(BOOL)lBreakingForceEnabled
-{
-    breakingForceEnabled = lBreakingForceEnabled;
-    if(!breakingForceEnabled)
-    {
-        [self willChangeValueForKey:@"breakingForce"];
-        _breakingForce = INFINITY;
-        [self didChangeValueForKey:@"breakingForce"];
-    }
-}
-
 -(CCNode*)bodyA
 {
     CCNode * foundNode = [SceneGraph findUUID:bodyA_UUID node:sceneGraph.rootNode];
