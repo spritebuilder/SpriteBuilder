@@ -159,7 +159,6 @@
     if(jointAnchor)
     {
         CGPoint pointA = [jointAnchor convertToNodeSpaceAR:worlPos];
-        pointA = ccpAdd(pointA, ccp(0,3.0f * [CCDirector sharedDirector].UIScaleFactor));
         if(ccpLength(pointA) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
         {
             return BodyAnchorA;
@@ -202,6 +201,12 @@
         CGPoint localPos = [self.parent convertToNodeSpace:worldPos];
         self.position = localPos;
     }
+}
+
+-(void)onEnter
+{
+	[super onEnter];
+	[self setPositionFromAnchor];
 }
 
 

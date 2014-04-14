@@ -1281,14 +1281,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         if ([event modifierFlags] & NSShiftKeyMask)
         {
-            // Add to selection
-            NSMutableArray* modifiedSelection = [NSMutableArray arrayWithArray: appDelegate.selectedNodes];
-            
-            if (![modifiedSelection containsObject:clickedNode])
-            {
-                [modifiedSelection addObject:clickedNode];
-            }
-            appDelegate.selectedNodes = modifiedSelection;
+			[self addNodeToSelection:clickedNode];
         }
         else if (![appDelegate.selectedNodes containsObject:clickedNode]
                  && ! selectedNodeUnderClickPt)
@@ -1307,7 +1300,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         }
     
         if (appDelegate.selectedNode != rootNode &&
-            ![[[appDelegate.selectedNodes objectAtIndex:0] parent] isKindOfClass:[CCLayout class]])
+            ![[[appDelegate.selectedNodes objectAtIndex:0] parent] isKindOfClass:[CCLayout class]]
+			//And if its not a joint, or if it is, its draggable.
+			&& (!appDelegate.selectedNode.plugIn.isJoint || [(CCBPhysicsJoint*)appDelegate.selectedNode isDraggable]))
         {
             currentMouseTransform = kCCBTransformHandleMove;
         }
@@ -1636,6 +1631,37 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
 }
 
+-(void)addNodeToSelection:(CCNode*)clickedNode
+{
+	// Add to/subtract from selection
+	NSMutableArray* modifiedSelection = [NSMutableArray arrayWithArray: appDelegate.selectedNodes];
+	
+	if ([modifiedSelection containsObject:clickedNode])
+	{
+		[modifiedSelection removeObject:clickedNode];
+	}
+	else
+	{
+		[modifiedSelection addObject:clickedNode];
+	}
+	
+	
+	//If we selected a joint. Only select one joint.
+	CCBPhysicsJoint * anyJoint = [modifiedSelection findLast:^BOOL(CCNode * node, int idx) {
+		return node.plugIn.isJoint;
+	}];
+	
+	if(anyJoint)
+	{
+		appDelegate.selectedNodes = @[anyJoint];
+	}
+	else
+	{
+		appDelegate.selectedNodes = modifiedSelection;
+	}
+
+}
+
 - (void) mouseUp:(NSEvent *)event
 {
     if (!appDelegate.hasOpenedDocument) return;
@@ -1652,25 +1678,13 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         if ([event modifierFlags] & NSShiftKeyMask)
         {
-            // Add to/subtract from selection
-            NSMutableArray* modifiedSelection = [NSMutableArray arrayWithArray: appDelegate.selectedNodes];
+            [self addNodeToSelection:clickedNode];
             
-            if ([modifiedSelection containsObject:clickedNode])
-            {
-                [modifiedSelection removeObject:clickedNode];
-            }
-            else
-            {
-                [modifiedSelection addObject:clickedNode];
-                //currentMouseTransform = kCCBTransformHandleMove;
-            }
-            appDelegate.selectedNodes = modifiedSelection;
         }
         else
         {
             // Replace selection
             [appDelegate setSelectedNodes:[NSArray arrayWithObject:clickedNode]];
-            //currentMouseTransform = kCCBTransformHandleMove;
         }
         
         currentMouseTransform = kCCBTransformHandleNone;

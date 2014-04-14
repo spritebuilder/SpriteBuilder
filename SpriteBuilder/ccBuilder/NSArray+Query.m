@@ -33,12 +33,37 @@
     return nil;
 }
 
--(void)forEach:(VoidBlock)aBlock
+-(id)findLast:(PredicateBlock)aBlock
+{
+	for (int i = self.count -1; i >= 0; i--) {
+        if(aBlock(self[i], i))
+        {
+            return self[i];
+        }
+    }
+    return nil;
+}
+
+-(void)forEach:(ActionBlock)aBlock
 {
     for (int i = 0; i < self.count; i++) {
         aBlock(self[i], i);
     }
     
+}
+
+-(NSArray*)where:(PredicateBlock)aBlock
+{
+	NSMutableArray * validItems = [NSMutableArray array];
+	for (int i = 0; i < self.count; i++) {
+        if(aBlock(self[i], i))
+		{
+			[validItems addObject:self[i]];
+		}
+    }
+	
+	return validItems;
+	
 }
 
 @end

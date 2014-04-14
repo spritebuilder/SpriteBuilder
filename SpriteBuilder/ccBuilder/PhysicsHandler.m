@@ -591,7 +591,8 @@
         
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
         [joint setBodyHandle:pos bodyType:bodyDragging];
-        
+        [joint setJointHandleSelected:bodyDragging];
+		
         if([CocosScene cocosScene].currentTool != kCCBToolTranslate)
             [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
         
@@ -881,11 +882,14 @@
         {
             [joint setJointHandleSelected:type];
 
-            if([CocosScene cocosScene].currentTool != kCCBToolTranslate)
+            if(type != BodyOutletA && type != BodyOutletB &&  [CocosScene cocosScene].currentTool != kCCBToolTranslate)
                 [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
         }
-        else
+        else if(bodyDragging == JointHandleUnknown )
         {
+			[joint clearJointHandleSelected];
+			[joint setJointHandleSelected:EntireJoint];
+			
             if([CocosScene cocosScene].currentTool != kCCBToolSelection)
                 [[CocosScene cocosScene] setCurrentTool: kCCBToolSelection];
         }
