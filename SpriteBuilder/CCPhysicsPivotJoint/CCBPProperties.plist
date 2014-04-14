@@ -31,6 +31,24 @@
 			<string>CCPhysicsPivotJoint</string>
 		</dict>
 		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>animatable</key>
+			<false/>
+			<key>displayName</key>
+			<string>Position</string>
+			<key>type</key>
+			<string>Position</string>
+			<key>name</key>
+			<string>position</string>
+			<key>inspectorDisabled</key>
+			<true/>
+		</dict>		
+		<dict>
 			<key>default</key>
 			<integer>0</integer>
 			<key>affectsProperties</key>
@@ -57,24 +75,6 @@
 			<string>NodeReference</string>
 			<key>name</key>
 			<string>bodyB</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<key>animatable</key>
-			<false/>
-			<key>displayName</key>
-			<string>Position</string>
-			<key>type</key>
-			<string>Position</string>
-			<key>name</key>
-			<string>position</string>
-			<key>inspectorDisabled</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>

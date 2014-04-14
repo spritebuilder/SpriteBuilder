@@ -48,6 +48,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     
 	bodyOutletRoot = [CCNode node];
 	bodyOutletRoot.position = ccp([self outletHorizontalOffset],-[self outletVerticalOffset]);
+	bodyOutletRoot.positionType = CCPositionTypeUIPoints;
 	
 	CCSprite * outletBG = [CCSprite spriteWithImageNamed:@"joint-connection-bg.png"];
 	outletBG.positionType = CCPositionTypeUIPoints;
@@ -250,17 +251,14 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 {
 
     CGPoint pointA = [bodyAOutlet convertToNodeSpaceAR:worldPos];
-    
-    pointA = ccpAdd(pointA, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
-    if(ccpLength(pointA) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
+    if(bodyA == nil &&  ccpLength(pointA) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
         return BodyOutletA;
     }
     
     
     CGPoint pointB = [bodyBOutlet convertToNodeSpaceAR:worldPos];
-    pointB = ccpAdd(pointB, ccp(0, 3.0f * [CCDirector sharedDirector].UIScaleFactor));
-    if(ccpLength(pointB) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
+    if(bodyB == nil && ccpLength(pointB) < 8.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
         return BodyOutletB;
     }
