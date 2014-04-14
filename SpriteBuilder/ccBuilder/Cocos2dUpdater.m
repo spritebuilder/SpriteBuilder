@@ -248,7 +248,8 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)setIgnoreThisVersion
 {
-    if (![_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_spritebuildersCocos2dVersion])
+	// SI: added check for _spritebuildersCocos2dVersion being nil - happens if you click "Ignore this version" (at least in dev builds)
+    if (_spritebuildersCocos2dVersion && ![_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_spritebuildersCocos2dVersion])
     {
         [_projectSettings.cocos2dUpdateIgnoredVersions addObject:_spritebuildersCocos2dVersion];
     }

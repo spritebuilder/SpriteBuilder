@@ -65,7 +65,7 @@
 			<key>displayName</key>
 			<string>Font Size</string>
 			<key>type</key>
-			<string>FloatScale</string>
+			<string>Float</string>
 			<key>name</key>
 			<string>fontSize</string>
 		</dict>
