@@ -204,6 +204,12 @@
     }
 }
 
+-(void)onEnter
+{
+	[super onEnter];
+	[self setPositionFromAnchor];
+}
+
 
 -(void)dealloc
 {
