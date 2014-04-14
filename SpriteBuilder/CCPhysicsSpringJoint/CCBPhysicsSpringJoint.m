@@ -301,6 +301,9 @@ const int kSpringHeightHalf = kSpringHeight/2;
 -(void)setRestLength:(float)restLength
 {
     _restLength = restLength;
+	
+	if(_restLength < 0)
+		_restLength = 0;
 }
 
 

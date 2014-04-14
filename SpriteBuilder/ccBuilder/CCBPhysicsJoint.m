@@ -271,6 +271,11 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     selectedBodyHandle = ~(1<<handleType) & selectedBodyHandle;
 }
 
+-(void)clearJointHandleSelected
+{
+	selectedBodyHandle = 0x0;
+}
+
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
 {
     //Do nothing.
