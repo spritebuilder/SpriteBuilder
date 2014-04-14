@@ -745,6 +745,22 @@ typedef enum
 
 - (void) setSelectedNodes:(NSArray*) selection
 {
+	
+	//Ensure that the selected joint is on top.
+	CCBPhysicsJoint* selectedJoint = [selection findFirst:^BOOL(CCNode * node, int idx) {
+		return node.plugIn.isJoint;
+	}];
+	
+	if(selectedJoint)
+	{
+		[[SceneGraph instance].joints.all forEach:^(CCNode * joint, int idx) {
+			joint.zOrder = (joint == selectedJoint) ? 1 : 0;
+		}];
+	}
+	
+	
+
+	
     [self willChangeValueForKey:@"selectedNode"];
     [self willChangeValueForKey:@"selectedNodes"];
     [physicsHandler willChangeSelection];
