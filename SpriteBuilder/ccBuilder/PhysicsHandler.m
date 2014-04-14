@@ -882,7 +882,7 @@
         {
             [joint setJointHandleSelected:type];
 
-            if([CocosScene cocosScene].currentTool != kCCBToolTranslate)
+            if(type != BodyOutletA && type != BodyOutletB &&  [CocosScene cocosScene].currentTool != kCCBToolTranslate)
                 [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
         }
         else if(bodyDragging == JointHandleUnknown )

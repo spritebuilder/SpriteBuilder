@@ -47,7 +47,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     [self addChild:scaleFreeNode];
     
 	bodyOutletRoot = [CCNode node];
-	bodyOutletRoot.position = ccp([self outletLateralOffset],-kOutletVerticalOffset);
+	bodyOutletRoot.position = ccp([self outletHorizontalOffset],-[self outletVerticalOffset]);
 	
 	CCSprite * outletBG = [CCSprite spriteWithImageNamed:@"joint-connection-bg.png"];
 	outletBG.positionType = CCPositionTypeUIPoints;
@@ -89,9 +89,14 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 }
 
 
--(float)outletLateralOffset
+-(float)outletHorizontalOffset
 {
     return 0.0f;
+}
+
+-(float)outletVerticalOffset
+{
+    return 30.0f;
 }
 
 -(void)setBodyA:(CCNode *)aBodyA
@@ -189,6 +194,11 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     return foundNode;
 }
 
+
+-(BOOL)isDraggable
+{
+	return !self.bodyA || !self.bodyB;
+}
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {

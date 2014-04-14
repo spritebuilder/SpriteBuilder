@@ -229,9 +229,14 @@ static const float kDefaultLength = 58.0f;
     [super setBodyHandle:worldPos bodyType:bodyType];
 }
 
--(float)outletLateralOffset
+-(float)outletHorizontalOffset
 {
     return 58.0/2.0f;
+}
+
+-(float)outletVerticalOffset
+{
+    return 20.0f;
 }
 
 

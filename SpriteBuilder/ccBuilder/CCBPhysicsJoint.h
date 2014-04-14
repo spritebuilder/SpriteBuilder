@@ -63,6 +63,7 @@ typedef enum
 @property(nonatomic) BOOL breakingForceEnabled;
 @property(nonatomic) CGFloat breakingForce;
 
+@property(nonatomic,readonly) BOOL isDraggable;//The joint can be dragged by selecting only the body. Normally when not all body's are assigned.
 
 -(JointHandleType)hitTestJointHandle:(CGPoint)worlPos; //Which part of the joint did you hit? AnchorA/B Handle Min/Max?
 -(void)setJointHandleSelected:(JointHandleType)handleType; //Tell the renderer that a particular component is selected. Clears every frame.
