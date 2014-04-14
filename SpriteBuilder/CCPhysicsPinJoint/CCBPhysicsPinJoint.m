@@ -109,10 +109,10 @@
  
 }
 
--(void)visit
+-(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     [self updateRenderBody];
-    [super visit];
+    [super visit:renderer parentTransform:parentTransform];
 }
 
 
@@ -145,15 +145,30 @@
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
-        if(maxHandle.parent == nil && self.maxDistanceEnabled)
-            [scaleFreeNode addChild:maxHandle];
-        
-        if(minHandle.parent == nil && self.minDistanceEnabled)
-            [scaleFreeNode addChild:minHandle];
+		if(self.maxDistanceEnabled)
+		{
+			if(maxHandle.parent == nil)
+				[scaleFreeNode addChild:maxHandle];
+		}
+		else
+		{
+			if(maxHandle.parent != nil)
+				[maxHandle removeFromParentAndCleanup:NO];
+		}
+		
+		if(self.minDistanceEnabled)
+		{
+			if(minHandle.parent == nil)
+				[scaleFreeNode addChild:minHandle];
+		}
+		else
+		{
+			if(minHandle.parent != nil)
+				[minHandle removeFromParentAndCleanup:NO];
+		}
     }
     else //Unseleted
     {
-        
         if(maxHandle.parent != nil)
         {
             [maxHandle removeFromParentAndCleanup:NO];
@@ -245,20 +260,23 @@
     
     if(self.isRunningInActiveScene)
     {
-        if(minDistance > [self localLength])
-            minDistance = [self localLength];
-        
-        if(minDistance < 0)
-            minDistance = 0;
+		if(self.isRunningInActiveScene && !minDistanceEnabled )
+		{
+			[self willChangeValueForKey:@"minDistance"];
+			minDistance = [self localLength];
+			[self didChangeValueForKey:@"minDistance"];
+		}
+		else
+		{
+			if(minDistance > [self localLength])
+				minDistance = [self localLength];
+			
+			if(minDistance < 0)
+				minDistance = 0;
+		}
     }
     
-    if(self.isRunningInActiveScene && !minDistanceEnabled )
-    {
-        [self willChangeValueForKey:@"minDistance"];
-        minDistance = -INFINITY;
-        [self didChangeValueForKey:@"minDistance"];
-    }
-    [[AppDelegate appDelegate] refreshProperty:@"minDistance"];
+	[[AppDelegate appDelegate] refreshProperty:@"minDistance"];
     
 }
 
@@ -267,17 +285,21 @@
 {
     maxDistance = lMaxDistance;
     
-    if(self.isRunningInActiveScene && maxDistance < [self localLength])
+    if(self.isRunningInActiveScene )
     {
-        maxDistance = [self localLength];
+		if(!maxDistanceEnabled)
+		{
+			[self willChangeValueForKey:@"maxDistance"];
+			maxDistance = [self localLength];
+			[self didChangeValueForKey:@"maxDistance"];
+		}
+		else
+		{
+			if(maxDistance < [self localLength])
+				maxDistance = [self localLength];
+		}
     }
-    
-    if(self.isRunningInActiveScene && !maxDistanceEnabled)
-    {
-        [self willChangeValueForKey:@"maxDistance"];
-        maxDistance = INFINITY;
-        [self didChangeValueForKey:@"maxDistance"];
-    }
+   
     
     [[AppDelegate appDelegate] refreshProperty:@"maxDistance"];
 }
@@ -293,14 +315,7 @@
     {
         maxDistanceEnabled = lMaxDistanceEnabled;
         
-        if(maxDistanceEnabled)
-        {
-            maxDistance = [self localLength];
-        }
-        else
-        {
-            maxDistance = INFINITY;
-        }
+        maxDistance = [self localLength];
     }
 }
 
@@ -316,21 +331,15 @@
     {
         minDistanceEnabled = lMinDistanceEnabled;
         
-        if(minDistanceEnabled)
-        {
-            minDistance = [self localLength];
-        }
-        else
-        {
-            minDistance = -INFINITY;
-        }
+        minDistance = [self localLength];
     }
 }
 
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if([CCBPhysicsPivotJoint nodeHasParent:self.bodyB parent:object])
+    if([CCBPhysicsPivotJoint nodeHasParent:self.bodyB parent:object] ||
+	   [CCBPhysicsPivotJoint nodeHasParent:self.bodyA parent:object])
     {
         self.minDistance = self.minDistance;
         self.maxDistance = self.maxDistance;

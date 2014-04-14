@@ -17,8 +17,8 @@
 @end
 
 
-const float kMargin = 8.0f/64.0f;
-const float kEdgeRadius = 8.0f;
+const float kMargin = 9.0f/36.0f;
+const float kEdgeRadius = 9.0f;
 
 static const float kDefaultLength = 58.0f;
 

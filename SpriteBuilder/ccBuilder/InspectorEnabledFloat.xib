@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="InspectorFloatCheck">
+        <customObject id="-2" userLabel="File's Owner" customClass="InspectorEnabledFloat">
             <connections>
                 <outlet property="view" destination="1" id="27"/>
             </connections>
@@ -28,41 +28,8 @@
                         <binding destination="-2" name="value" keyPath="displayName" id="20"/>
                     </connections>
                 </textField>
-                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" id="LO3-BE-71e">
-                    <rect key="frame" x="88" y="8" width="70" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    <size key="cellSize" width="33" height="18"/>
-                    <size key="intercellSpacing" width="4" height="2"/>
-                    <buttonCell key="prototype" type="radio" title="Title" imagePosition="left" alignment="left" controlSize="small" inset="2" id="Uma-WQ-Lk1">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                    </buttonCell>
-                    <cells>
-                        <column>
-                            <buttonCell type="radio" title="∞" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="bTH-TU-meH">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                        </column>
-                        <column>
-                            <buttonCell type="radio" imagePosition="left" alignment="left" controlSize="small" inset="2" id="nMY-e8-bTZ">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                        </column>
-                    </cells>
-                    <connections>
-                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="xxI-nb-t2V">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="selectedIndex" keyPath="self.enable" id="3hd-aB-zmN"/>
-                    </connections>
-                </matrix>
                 <textField verticalHuggingPriority="750" id="4">
-                    <rect key="frame" x="148" y="8" width="68" height="19"/>
+                    <rect key="frame" x="102" y="8" width="68" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="5">
                         <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="L!nDy" id="6">
@@ -92,6 +59,22 @@
                         </binding>
                     </connections>
                 </textField>
+                <button id="5oE-jg-gMf">
+                    <rect key="frame" x="82" y="7" width="22" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="KWV-jw-uEx">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="2LG-Ez-hnt">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="self.enable" id="LZv-Rv-q1R"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="17"/>

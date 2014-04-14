@@ -255,7 +255,7 @@
         float f = [[node valueForKey:name] floatValue];
         serializedValue = [CCBWriterInternal serializeFloat:f];
     }
-    else if([type isEqualToString:@"FloatCheck"])
+    else if([type isEqualToString:@"FloatCheck"] || [type isEqualToString:@"EnabledFloat"])
     {
         float f = [[node valueForKey:name] floatValue];
         BOOL  enabled = [[node valueForKey:[NSString stringWithFormat:@"%@Enabled",name]] boolValue];

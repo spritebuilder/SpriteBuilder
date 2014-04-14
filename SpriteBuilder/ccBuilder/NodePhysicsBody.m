@@ -47,8 +47,8 @@
     _elasticity = 0.3f;
     
     _collisionType = @"";
-    _collisionMask = @"";
-    _collisionCategories = @"";
+    _collisionMask = [NSMutableArray array];
+    _collisionCategories = [NSMutableArray array];
     
     return self;
 }
@@ -85,23 +85,38 @@
     _elasticity = [[ser objectForKey:@"elasticity"] floatValue];
     
     _collisionType = [ser objectForKey:@"collisionType"];
-    _collisionCategories = [ser objectForKey:@"collisionCategories"];
-    _collisionMask = [ser objectForKey:@"collisionMask"];
+    _collisionCategories = nil;
+    _collisionMask = nil;
+	
+
     
     if(_collisionType == nil)
     {
         _collisionType = @"";
     }
     
-    if(_collisionCategories == nil)
+	id collisionCategoriesObject = [ser objectForKey:@"collisionCategories"];
+    if(collisionCategoriesObject == nil)
     {
-        _collisionCategories = @"";
+        _collisionCategories = [NSArray array];
     }
+	//Fixup old data.
+	else if([collisionCategoriesObject isKindOfClass:[NSString class]])
+	{
+		_collisionCategories = [collisionCategoriesObject componentsSeparatedByString:@";"];
+	}
     
-    if(_collisionMask == nil)
+	
+	id collisionMaskObject = [ser objectForKey:@"collisionMask"];
+    if(collisionMaskObject == nil)
     {
-        _collisionMask = @"";
+        _collisionMask = [NSArray array];
     }
+	//Fixup old data.
+	else if([collisionMaskObject isKindOfClass:[NSString class]])
+	{
+		_collisionMask = [collisionMaskObject componentsSeparatedByString:@";"];
+	}
     
     return self;
 }
@@ -161,12 +176,12 @@
     
     if(_collisionCategories == nil)
     {
-        _collisionCategories = @"";
+        _collisionCategories = [NSArray array];
     }
     
     if(_collisionMask == nil)
     {
-        _collisionMask = @"";
+        _collisionMask = [NSArray array];
     }
 
     

@@ -45,8 +45,8 @@
     }
     trackingTag = [self addTrackingRect:myFrame owner:self userData:nil assumeInside:NO];
     
-    imgOutletSet = [NSImage imageNamed:@"joint-outlet-set.png"];
-    imgOutletUnSet = [NSImage imageNamed:@"joint-outlet-unset.png"];
+    imgOutletSet = [NSImage imageNamed:@"inspector-body-connected.png"];
+    imgOutletUnSet = [NSImage imageNamed:@"inspector-body-disconnected.png"];
 
 }
 
@@ -254,11 +254,7 @@
     [self willChangeValueForKey:@"nodeName"];
     [self didChangeValueForKey:@"nodeName"];
     
-    if(self.reference != 0)
-    {
-        
-    }
-    
+	[self.outletButton setNeedsDisplay:YES];
 }
 
 - (IBAction)handleDeleteNode:(id)sender
@@ -268,7 +264,8 @@
 
 - (IBAction)handleGotoNode:(id)sender
 {
-    
+	if(self.reference)
+		[[AppDelegate appDelegate] setSelectedNodes:@[self.reference]];
 }
 
 

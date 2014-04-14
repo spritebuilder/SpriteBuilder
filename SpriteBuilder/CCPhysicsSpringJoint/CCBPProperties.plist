@@ -9,7 +9,7 @@
 	<key>description</key>
 	<string>Creates a Spring joint that with a fixed elastic length that connects two bodies.</string>
 	<key>inheritsFrom</key>
-	<string>CCPhysicsPivotJoint</string>
+	<string>NSObject</string>
 	<key>canHaveChildren</key>
 	<false/>
 	<key>canBeRootNode</key>
@@ -31,6 +31,50 @@
 			<string>CCPhysicsSpringJoint</string>
 		</dict>
 		<dict>
+			<key>default</key>
+			<integer>0</integer>
+			<key>affectsProperties</key>
+			<array>
+				<string>bodyA</string>
+			</array>
+			<key>displayName</key>
+			<string>BodyA</string>
+			<key>type</key>
+			<string>NodeReference</string>
+			<key>name</key>
+			<string>bodyA</string>
+		</dict>
+		<dict>
+			<key>default</key>
+			<integer>0</integer>
+			<key>affectsProperties</key>
+			<array>
+				<string>bodyB</string>
+			</array>
+			<key>displayName</key>
+			<string>BodyB</string>
+			<key>type</key>
+			<string>NodeReference</string>
+			<key>name</key>
+			<string>bodyB</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<key>animatable</key>
+			<false/>
+			<key>displayName</key>
+			<string>AnchorA</string>
+			<key>type</key>
+			<string>Point</string>
+			<key>name</key>
+			<string>anchorA</string>
+		</dict>
+		<dict>
 			<key>defaultSerialization</key>
 			<array>
 				<integer>0</integer>
@@ -45,6 +89,34 @@
 			<string>Point</string>
 			<key>name</key>
 			<string>anchorB</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Collide Bodies</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>collideBodies</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>FloatCheck</string>
+			<key>name</key>
+			<string>breakingForce</string>
+			<key>displayName</key>
+			<string>Breaking Force</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>FloatCheck</string>
+			<key>name</key>
+			<string>maxForce</string>
+			<key>displayName</key>
+			<string>Max Force</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
