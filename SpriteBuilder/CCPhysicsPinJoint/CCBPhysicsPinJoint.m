@@ -165,20 +165,20 @@
     
     if(selectedBodyHandle & (1 << MaxHandleType))
     {
-        maxHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide-sel.png"];
+        maxHandleBody.spriteFrame = [self frameWithImageNamed:@"joint-distance-slide-sel.png"];
     }
     else
     {
-        maxHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide.png"];
+        maxHandleBody.spriteFrame = [self frameWithImageNamed:@"joint-distance-slide.png"];
     }
 
     if(selectedBodyHandle & (1 << MinHandleType))
     {
-        minHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide-sel.png"];
+        minHandleBody.spriteFrame = [self frameWithImageNamed:@"joint-distance-slide-sel.png"];
     }
     else
     {
-        minHandleBody.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-distance-slide.png"];
+        minHandleBody.spriteFrame = [self frameWithImageNamed:@"joint-distance-slide.png"];
     }
     
     [super updateSelectionUI];

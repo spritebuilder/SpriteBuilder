@@ -40,6 +40,8 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         return nil;
     }
     
+    spriteFrameCache = [NSMutableDictionary dictionary];
+    
     scaleFreeNode = [CCScaleFreeNode node];
     [self addChild:scaleFreeNode];
     
@@ -56,11 +58,26 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     self.breakingForceEnabled = NO;
     self.maxForceEnabled = NO;
     self.breakingForce = INFINITY;
-    self.collideBodies = YES;
+    self.collideBodies = NO;
     self.maxForce = INFINITY;
     
     return self;
 }
+
+-(CCSpriteFrame*)frameWithImageNamed:(NSString*)name;
+{
+    CCSpriteFrame * spriteFrame = spriteFrameCache[name];
+  
+    if(!spriteFrame)
+    {
+        [spriteFrameCache setObject:[CCSpriteFrame frameWithImageNamed:name] forKey:name];
+        spriteFrame = spriteFrameCache[name];
+    }
+   
+    return spriteFrame;
+    
+}
+
 
 -(float)outletLateralOffset
 {
@@ -94,6 +111,14 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     [self refreshOutletStatus];
 }
 
+- (BOOL) locked
+{
+    if([super locked])
+        return YES;
+    
+    return self.parent.locked;
+}
+
 -(void)fixupReferences
 {
     self.bodyA = self.bodyA;
@@ -123,8 +148,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         }
         node = node.parent;
     }
-    
-    
 }
 
 -(void)removeObserverBody:(CCNode*)body
@@ -179,14 +202,14 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(CCNode*)bodyA
 {
-    CCNode * foundNode = [SceneGraph findUUID:bodyA_UUID rootNode:sceneGraph.rootNode];
+    CCNode * foundNode = [SceneGraph findUUID:bodyA_UUID node:sceneGraph.rootNode];
     //NSAssert(foundNode != nil, @"Did not find nod UUID:%i", (int)bodyA_UUID);
     return foundNode;
 }
 
 -(CCNode*)bodyB
 {
-    CCNode * foundNode = [SceneGraph findUUID:bodyB_UUID rootNode:sceneGraph.rootNode];
+    CCNode * foundNode = [SceneGraph findUUID:bodyB_UUID node:sceneGraph.rootNode];
     //NSAssert(foundNode != nil, @"Did not find nod UUID:%i", (int)bodyA_UUID);
     return foundNode;
 }
@@ -212,26 +235,26 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         bodyBOutlet.visible = NO;
     }
     
-    
+
     //Outlet A
     if(selectedBodyHandle & (1<<BodyOutletA))
     {
-        bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+        bodyAOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-set.png"];
     }
     else
     {
-        bodyAOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+        bodyAOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-unset.png"];
     }
     [self removeJointHandleSelected:BodyOutletA];
     
     //Outlet B
     if(selectedBodyHandle & (1<<BodyOutletB))
     {
-        bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+        bodyBOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-set.png"];
     }
     else
     {
-        bodyBOutlet.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
+        bodyBOutlet.spriteFrame = [self frameWithImageNamed:@"joint-outlet-unset.png"];
     }
     [self removeJointHandleSelected:BodyOutletB];
 
@@ -284,8 +307,8 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)refreshOutletStatus
 {
-    CCSpriteFrame * spriteFrameUnset = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-unset.png"];
-    CCSpriteFrame * spriteFrameSet   = [CCSpriteFrame frameWithImageNamed:@"joint-outlet-set.png"];
+    CCSpriteFrame * spriteFrameUnset = [self frameWithImageNamed:@"joint-outlet-unset.png"];
+    CCSpriteFrame * spriteFrameSet   = [self frameWithImageNamed:@"joint-outlet-set.png"];
     
     bodyAOutlet.spriteFrame = bodyA ? spriteFrameSet : spriteFrameUnset;
     bodyBOutlet.spriteFrame = bodyB ? spriteFrameSet : spriteFrameUnset;

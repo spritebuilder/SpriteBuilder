@@ -505,6 +505,9 @@
     }
     else if(jointHandleIndex != JointHandleUnknown)
     {
+        if(node.locked)
+            return NO;
+        
         if(jointHandleIndex == BodyOutletA || jointHandleIndex == BodyOutletB)
         {
             [self onOutletDown:event joint:(CCBPhysicsJoint*)node outletIdx:jointHandleIndex];

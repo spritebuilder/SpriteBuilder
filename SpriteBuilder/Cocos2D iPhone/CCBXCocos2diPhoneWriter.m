@@ -254,18 +254,6 @@
     [self writeInt:[num intValue] withSign:NO];
 }
 
-- (BOOL) isSprite:(NSString*) sprite inGeneratedSpriteSheet: (NSString*) sheet
-{
-    if (!sheet || [sheet isEqualToString:@""])
-    {
-        NSString* proposedSheetName = [sprite stringByDeletingLastPathComponent];
-        if ([[serializedProjectSettings objectForKey:@"generatedSpriteSheets"] objectForKey:proposedSheetName])
-        {
-            return YES;
-        }
-    }
-    return NO;
-}
 
 - (void) writeProperty:(id) prop type:(NSString*)type name:(NSString*)name platform:(NSString*)platform
 {
@@ -755,6 +743,14 @@
     
     // Write number of sequences
     [self writeInt:(int)[seqs count] withSign:NO];
+
+    //Write out if the docuement contains physics bodies.
+    [self writeBool:[self hasPhysicsBodies:doc[@"nodeGraph"]]];
+    
+    //Write out if the document contains a physics node.
+    [self writeBool:[self hasPhysicsNode:doc[@"nodeGraph"]]];
+    
+
     
     int autoPlaySeqId = -1;
     
@@ -1300,5 +1296,70 @@
     [self writeBool:NO];
     [self writeBool:NO];
 }
+
+#pragma mark - Document Properties
+
+
+- (BOOL) isSprite:(NSString*) sprite inGeneratedSpriteSheet: (NSString*) sheet
+{
+    if (!sheet || [sheet isEqualToString:@""])
+    {
+        NSString* proposedSheetName = [sprite stringByDeletingLastPathComponent];
+        if ([[serializedProjectSettings objectForKey:@"generatedSpriteSheets"] objectForKey:proposedSheetName])
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
+-(BOOL) hasPhysicsBodies:(NSDictionary*)doc
+{
+    NSMutableArray * nodes = [NSMutableArray array];
+    
+    [self getAllNodes:doc nodes:nodes];
+    
+    for (NSDictionary * node in nodes) {
+        if(node[@"physicsBody"] != nil)
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+-(BOOL) hasPhysicsNode:(NSDictionary*)doc
+{
+    NSMutableArray * nodes = [NSMutableArray array];
+    
+    [self getAllNodes:doc nodes:nodes];
+    
+    for (NSDictionary * node in nodes) {
+        if([node[@"baseClass"] isEqualToString:@"CCPhysicsNode"])
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+
+
+
+-(void)getAllNodes:(NSDictionary*)currentNode nodes:(NSMutableArray*)nodes
+{
+    [nodes addObject:currentNode];
+
+    NSArray * children = currentNode[@"children"];
+    
+    for (NSDictionary * child in children) {
+        [self getAllNodes:child nodes:nodes];
+    }
+}
+
+#pragma mark -
 
 @end

@@ -1070,7 +1070,9 @@ static BOOL hideAllToNextSeparator;
             if (!usesFlashSkew && [name isEqualToString:@"rotationalSkewY"]) continue;
             
             // Handle read only for animated properties
-            if ([self isDisabledProperty:name animatable:animated] || self.selectedNode.locked)
+            if ([self isDisabledProperty:name animatable:animated] ||
+                self.selectedNode.locked ||
+                (self.selectedNode.plugIn.isJoint && self.selectedNode.parent.locked))
             {
                 readOnly = YES;
             }
@@ -1313,6 +1315,9 @@ static BOOL hideAllToNextSeparator;
     
     [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
     
+    
+    //////////////    //////////////    //////////////    //////////////    //////////////
+    //Joints
     NSMutableArray * joints = [NSMutableArray array];
     for (CCNode * joint in g.joints.all)
     {
@@ -1320,6 +1325,10 @@ static BOOL hideAllToNextSeparator;
     }
     
     [dict setObject:joints forKey:@"joints"];
+    [dict setObject:[g.joints serialize] forKey:@"SequencerJoints"];
+    
+    
+    //////////////    //////////////    //////////////    //////////////    //////////////
     [dict setObject:@(doc.UUID) forKey:@"UUID"];
     
     // Resolutions
@@ -1596,6 +1605,7 @@ static BOOL hideAllToNextSeparator;
     self.selectedNodes = NULL;
     
     SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    [g.joints deserialize:doc[@"SequencerJoints"]];
     g.rootNode = loadedRoot;
     
     [loadedJoints forEach:^(CCNode * child, int idx) {

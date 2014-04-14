@@ -19,8 +19,14 @@
 @property CCNode * node;
 @property (readonly) NSArray * all;
 
+-(id)serialize;
+-(void)deserialize:(NSDictionary*)data;
+
 -(void)addJoint:(CCBPhysicsJoint*)joint;
 
 //When nodes from the scene graph are moved around, the joints need updating.
 -(void)fixupReferences;
+
+
+
 @end

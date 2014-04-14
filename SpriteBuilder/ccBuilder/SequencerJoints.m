@@ -9,7 +9,7 @@
 #import "SequencerJoints.h"
 #import "CCBPhysicsPivotJoint.h"
 #import "NodeInfo.h"
-
+#import "CCNode+NodeInfo.h"
 
 @implementation SequencerJoints
 
@@ -23,9 +23,24 @@
         self.node = [CCNode node];
         self.node.name = @"SequencerJointsRoot";
         self.node.userObject = [[NodeInfo alloc] init];
+        [self.node setExtraProp:@(YES) forKey:@"disableStageRendering"];
     }
     
     return self;
+}
+
+-(void)deserialize:(NSDictionary*)data;
+{
+    self.node.locked = [data[@"locked"] boolValue];
+    self.node.hidden = [data[@"hidden"] boolValue];
+ 
+}
+
+-(id)serialize
+{
+    return @{@"locked": @(self.node.locked),
+             @"hidden": @(self.node.hidden)};
+    
 }
 
 -(NSArray*)all

@@ -44,31 +44,23 @@ SceneGraph * gSceneGraph;
 
 typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
 
-+(CCNode*)findUUID:(NSUInteger)uuid rootNode:(CCNode*)rootNode
++(CCNode*)findUUID:(NSUInteger)uuid node:(CCNode*)node;
 {
     if(uuid == 0)
         return nil;
     
-    __block FindUUIDBlock findUUIDT;
-    //Recursive.
-    findUUIDT = ^CCNode*(CCNode * node, NSUInteger uuid)
-    {
-        if(node.UUID == uuid)
-            return node;
+    if(node.UUID == uuid)
+        return node;
+    
+    for (CCNode * child in node.children) {
+        CCNode * foundNode = [self findUUID:uuid node:child];
         
-        for (CCNode * child in node.children) {
-            CCNode * foundNode = findUUIDT(child,uuid);
-            
-            if(foundNode)
-                return foundNode;
-            
-        }
-        return nil;
-    };
-    
-    CCNode * foundNode = findUUIDT(rootNode,uuid);
-    
-    return foundNode;
+        if(foundNode)
+            return foundNode;
+        
+    }
+    return nil;
+
 }
 
 
