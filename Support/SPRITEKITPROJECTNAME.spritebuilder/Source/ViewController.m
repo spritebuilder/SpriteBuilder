@@ -32,7 +32,7 @@
 		// load the 'MainScene' from CCB
 		NSString* sceneName = @"MainScene";
 		SKScene* scene = [CCBReader loadAsScene:sceneName size:skView.bounds.size];
-		NSAssert1(scene, @"unable to load scene '%@' - CCBReader returned 'nil', check for error messages in the log", sceneName);
+		NSAssert1(scene, @"unable to load scene '%@' - CCBReader returned 'nil', check for error messages earlier in the log", sceneName);
 		[skView presentScene:scene];
 	}
 }

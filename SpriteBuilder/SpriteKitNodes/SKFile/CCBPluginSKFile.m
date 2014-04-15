@@ -31,6 +31,7 @@
 #import "CCNode+NodeInfo.h"
 
 @implementation CCBPluginSKFile
+SKNODE_COMPATIBILITY_CODE
 
 @synthesize ccbFile;
 
