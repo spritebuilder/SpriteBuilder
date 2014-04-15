@@ -47,14 +47,12 @@
     
     //Joint BodyB Dragging.
     JointHandleType           bodyDragging;
-
-    
 }
 
 @property (nonatomic,assign) BOOL editingPhysicsBody;
 @property (nonatomic,assign) BOOL selectedNodePhysicsEnabled;
 @property (nonatomic,strong) NodePhysicsBody* selectedNodePhysicsBody;
-
+@property (nonatomic,readonly) BOOL selectedNodeHasKeyframes;
 
 - (void) willChangeSelection;
 - (void) didChangeSelection;

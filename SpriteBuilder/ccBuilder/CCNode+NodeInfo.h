@@ -24,6 +24,8 @@
 
 #import "cocos2d.h"
 
+NSString * kAnimationOfPhysicsWarning;
+
 @class PlugInNode;
 @class SequencerNodeProperty;
 @class SequencerKeyframe;
@@ -42,6 +44,7 @@
 @property (nonatomic,assign) CGPoint transformStartPosition;
 @property (nonatomic,retain) NodePhysicsBody* nodePhysicsBody;
 @property (nonatomic,assign) NSUInteger UUID;
+@property (nonatomic, readonly) BOOL hasKeyframes;
 
 - (id) extraPropForKey:(NSString*)key;
 - (void) setExtraProp:(id)prop forKey:(NSString*)key;

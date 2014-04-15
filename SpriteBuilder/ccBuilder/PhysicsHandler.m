@@ -93,6 +93,15 @@
     else return NO;
 }
 
+-(BOOL)selectedNodeHasKeyframes
+{
+	if (![AppDelegate appDelegate].selectedNode)
+		return NO;
+	
+	return [AppDelegate appDelegate].selectedNode.hasKeyframes;
+	
+}
+
 - (BOOL) editingPhysicsBody
 {
     CCNode* node = [AppDelegate appDelegate].selectedNode;

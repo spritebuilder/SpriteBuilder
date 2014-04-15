@@ -30,6 +30,7 @@
 #import "SMTabBar.h"
 #import <HockeySDK/HockeySDK.h>
 #import "ProjectSettings.h"
+#import "CCNode+NodeInfo.h"
 
 #define kCCBNumCanvasDevices 14
 
@@ -429,8 +430,9 @@ enum {
 - (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings;
 - (IBAction) menuPublishProjectAndRun:(id)sender;
 
-// For warning messages
+// For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;
+- (void) modalDialogTitle: (NSString*)title message:(NSString*)msg disableKey:(NSString*)key; //Allow show once behavior.
 
 // Modal status messages (progress)
 - (void) modalStatusWindowStartWithTitle:(NSString*)title;
@@ -441,6 +443,10 @@ enum {
 - (IBAction)reportBug:(id)sender;
 - (IBAction)visitCommunity:(id)sender;
 - (IBAction)showHelp:(id)sender;
+
+//Help dialogs.
+-(BOOL)showHelpDialog:(NSString*)type;
+-(void)disableHelpDialog:(NSString*)type;
 
 @property (weak) IBOutlet NSTableView *warningTableView;
 
