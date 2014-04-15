@@ -1362,7 +1362,9 @@ static BOOL hideAllToNextSeparator;
     }
     
     [dict setObject:joints forKey:@"joints"];
-    [dict setObject:[g.joints serialize] forKey:@"SequencerJoints"];
+
+	if ([AppDelegate appDelegate].projectSettings.engine != CCBTargetEngineSpriteKit)
+		[dict setObject:[g.joints serialize] forKey:@"SequencerJoints"];
     
     
     //////////////    //////////////    //////////////    //////////////    //////////////
