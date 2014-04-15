@@ -622,7 +622,26 @@ typedef enum
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg
 {
     NSAlert* alert = [NSAlert alertWithMessageText:title defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",msg];
-    [alert runModal];
+	[alert runModal];
+
+}
+
+- (void) modalDialogTitle: (NSString*)title message:(NSString*)msg disableKey:(NSString*)key
+{
+	if(![self showHelpDialog:key])
+	{
+		return;
+	}
+	
+	NSAlert* alert = [NSAlert alertWithMessageText:title defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",msg];
+	
+	[alert setShowsSuppressionButton:YES];
+	[alert runModal];
+	
+	if ([[alert suppressionButton] state] == NSOnState) {
+        // Suppress this alert from now on.
+		[self disableHelpDialog:key];
+    }
 }
 
 - (void) modalStatusWindowStartWithTitle:(NSString*)title
@@ -4819,6 +4838,30 @@ static BOOL hideAllToNextSeparator;
 		[self.projectSettings store];
         [[NSApplication sharedApplication] terminate:self];
     }
+}
+
+-(BOOL)showHelpDialog:(NSString*)type
+{
+	NSDictionary * helpDialogs = [[NSUserDefaults standardUserDefaults] objectForKey:@"HelpDialogs"];
+	if(helpDialogs == nil || !helpDialogs[type])
+		return YES;
+	
+	//Its presence indicates we don't show the dialog.
+	return NO;
+			
+}
+-(void)disableHelpDialog:(NSString*)type
+{
+	NSMutableDictionary * helpDialogs = [NSMutableDictionary dictionary];
+	
+	if([[NSUserDefaults standardUserDefaults] objectForKey:@"HelpDialogs"])
+	{
+		NSDictionary * temp = [[NSUserDefaults standardUserDefaults] objectForKey:@"HelpDialogs"];
+		helpDialogs = [NSMutableDictionary dictionaryWithDictionary:temp];
+	}
+	
+	helpDialogs[type] = @(NO);
+	[[NSUserDefaults standardUserDefaults] setObject:helpDialogs forKey:@"HelpDialogs"];
 }
 
 - (IBAction)showHelp:(id)sender
