@@ -54,12 +54,12 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 	outletBG.positionType = CCPositionTypeUIPoints;
 	[bodyOutletRoot addChild:outletBG];
 	
-    bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
+    bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png"];
     bodyAOutlet.positionType = CCPositionTypeUIPoints;
     bodyAOutlet.position = ccp(-kOutletHorizontalOffset, 0);
     [bodyOutletRoot addChild:bodyAOutlet];
     
-    bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-outlet-unset.png"];
+    bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png"];
     bodyBOutlet.position = ccp(kOutletHorizontalOffset, 0);
     bodyBOutlet.positionType = CCPositionTypeUIPoints;
 	[bodyOutletRoot addChild:bodyBOutlet];
@@ -291,8 +291,8 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 -(void)refreshOutletStatus
 {
-    CCSpriteFrame * spriteFrameUnset = [self frameWithImageNamed:@"joint-outlet-unset.png"];
-    CCSpriteFrame * spriteFrameSet   = [self frameWithImageNamed:@"joint-outlet-set.png"];
+    CCSpriteFrame * spriteFrameUnset = [self frameWithImageNamed:@"joint-connection-disconnected.png"];
+    CCSpriteFrame * spriteFrameSet   = [self frameWithImageNamed:@"joint-connection-connected.png"];
     
     bodyAOutlet.spriteFrame = bodyA ? spriteFrameSet : spriteFrameUnset;
     bodyBOutlet.spriteFrame = bodyB ? spriteFrameSet : spriteFrameUnset;
