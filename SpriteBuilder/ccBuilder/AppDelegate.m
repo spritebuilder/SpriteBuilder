@@ -1961,7 +1961,7 @@ static BOOL hideAllToNextSeparator;
     localizationEditorHandler.managedFile = langFile;
     
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"SpriteBuilder - %@", [fileName lastPathComponent]]];
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [fileName lastPathComponent]]];
     
     // Open ccb file for project if there is only one
     NSArray* resPaths = project.absoluteResourcePaths;
