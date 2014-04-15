@@ -1997,6 +1997,8 @@ static BOOL hideAllToNextSeparator;
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
 
+    self.window.representedFilename = fileName;
+
     return YES;
 }
 
