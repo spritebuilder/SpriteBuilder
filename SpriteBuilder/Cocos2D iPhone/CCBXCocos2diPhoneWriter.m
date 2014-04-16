@@ -27,6 +27,8 @@
 #import "SequencerKeyframeEasing.h"
 #import "CustomPropSetting.h"
 #import "NSArray+Query.h"
+#import "AppDelegate.h"
+
 @implementation CCBXCocos2diPhoneWriter
 
 @synthesize data;
@@ -490,9 +492,9 @@
 
 -(void)cacheStringsForJoints:(NSArray*)joints
 {
-    for (NSDictionary * joint in joints) {
-        [self cacheStringsForNode:joint];
-    }
+	for (NSDictionary * joint in joints) {
+		[self cacheStringsForNode:joint];
+	}
 }
 
 - (void) cacheStringsForNode:(NSDictionary*) node
@@ -663,23 +665,26 @@
     
     
     // Custom properties
-    NSDictionary* physicsBodyProperties = [node objectForKey:@"physicsBody"];
-   if(physicsBodyProperties)
-   {
-       NSString * collisionType = [physicsBodyProperties objectForKey:@"collisionType"];
-       if(collisionType == nil)
-       {
-           collisionType = @"";
-       }
-  	   
-	   NSString *	collisionCategoriesText = [self concatenateWithSeperator:[physicsBodyProperties objectForKey:@"collisionCategories"] seperator:@";"];
-	   
-	   NSString * collisionMaskText = [self concatenateWithSeperator:[physicsBodyProperties objectForKey:@"collisionMask"] seperator:@";"];
-     
-       [self addToStringCache:collisionType isPath:NO];
-       [self addToStringCache:collisionCategoriesText isPath:NO];
-       [self addToStringCache:collisionMaskText isPath:NO];
-   }
+	if (_exportingToSpriteKit == NO)
+	{
+		NSDictionary* physicsBodyProperties = [node objectForKey:@"physicsBody"];
+		if(physicsBodyProperties)
+		{
+			NSString * collisionType = [physicsBodyProperties objectForKey:@"collisionType"];
+			if(collisionType == nil)
+			{
+				collisionType = @"";
+			}
+			
+			NSString *	collisionCategoriesText = [self concatenateWithSeperator:[physicsBodyProperties objectForKey:@"collisionCategories"] seperator:@";"];
+			
+			NSString * collisionMaskText = [self concatenateWithSeperator:[physicsBodyProperties objectForKey:@"collisionMask"] seperator:@";"];
+			
+			[self addToStringCache:collisionType isPath:NO];
+			[self addToStringCache:collisionCategoriesText isPath:NO];
+			[self addToStringCache:collisionMaskText isPath:NO];
+		}
+	}
     
     // Children
     NSArray* children = [node objectForKey:@"children"];
@@ -752,12 +757,14 @@
     // Write number of sequences
     [self writeInt:(int)[seqs count] withSign:NO];
 
-    //Write out if the docuement contains physics bodies.
-    [self writeBool:[self hasPhysicsBodies:doc[@"nodeGraph"]]];
-    
-    //Write out if the document contains a physics node.
-    [self writeBool:[self hasPhysicsNode:doc[@"nodeGraph"]]];
-    
+	if (_exportingToSpriteKit == NO)
+	{
+		//Write out if the docuement contains physics bodies.
+		[self writeBool:[self hasPhysicsBodies:doc[@"nodeGraph"]]];
+		
+		//Write out if the document contains a physics node.
+		[self writeBool:[self hasPhysicsNode:doc[@"nodeGraph"]]];
+	}
 
     
     int autoPlaySeqId = -1;
@@ -1045,7 +1052,7 @@
     }
 
 	// Sprite Kit requires certain properties to be exported in a specific order
-	if ([_delegate exportingToSpriteKit])
+	if (_exportingToSpriteKit)
 	{
 		NSMutableArray* sortedProps = [NSMutableArray arrayWithCapacity:props.count];
 		for (NSDictionary* property in props)
@@ -1160,7 +1167,7 @@
     
     // Write physics
     NSDictionary* physicsBody = [node objectForKey:@"physicsBody"];
-    if (physicsBody)
+    if (physicsBody && _exportingToSpriteKit == NO)
     {
         [self writeBool:YES];
         
@@ -1279,19 +1286,22 @@
 
 - (void) writeDocument:(NSDictionary*)doc
 {
+	NSAssert(_delegate, @"CCB writer delegate must not be nil");
+	_exportingToSpriteKit = [_delegate exportingToSpriteKit];
+	
     NSDictionary* nodeGraph = [doc objectForKey:@"nodeGraph"];
     NSArray* joints = doc[@"joints"];
     
     [self cacheStringsForNode:nodeGraph];
     [self cacheStringsForSequences:doc];
-    [self cacheStringsForJoints:joints];
+	if (_exportingToSpriteKit == NO) [self cacheStringsForJoints:joints];
     [self transformStringCache];
     
     [self writeHeader];
     [self writeStringCache];
     [self writeSequences:doc];
     [self writeNodeGraph:nodeGraph];
-    [self writeJoints:joints];
+	if (_exportingToSpriteKit == NO) [self writeJoints:joints];
 
 
     //Elias Gamma reader reads a full int off the end, reading outside the bounds by 3 bytes and setting off Guard Malloc detections. Pad file with 3 bytes.
