@@ -125,7 +125,7 @@
     
     CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
     CGPoint nodePos = [self.parent convertToNodeSpace:worldPos];
-    _position = nodePos;
+    self.position = nodePos;
 }
 
 -(void)setAnchorFromBodyA

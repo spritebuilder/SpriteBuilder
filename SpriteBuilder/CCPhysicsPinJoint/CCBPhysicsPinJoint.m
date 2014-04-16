@@ -149,33 +149,50 @@
 		{
 			if(maxHandle.parent == nil)
 				[scaleFreeNode addChild:maxHandle];
+			
+			if(maxHandleBody.parent == nil)
+				[scaleFreeNode addChild:maxHandleBody];
+
 		}
 		else
 		{
 			if(maxHandle.parent != nil)
 				[maxHandle removeFromParentAndCleanup:NO];
+			
+			if(maxHandleBody.parent != nil)
+				[maxHandleBody removeFromParentAndCleanup:NO];
 		}
 		
 		if(self.minDistanceEnabled)
 		{
 			if(minHandle.parent == nil)
 				[scaleFreeNode addChild:minHandle];
+			
+			if(minHandleBody.parent == nil)
+				[scaleFreeNode addChild:minHandleBody];
 		}
 		else
 		{
 			if(minHandle.parent != nil)
 				[minHandle removeFromParentAndCleanup:NO];
+			
+			if(minHandleBody.parent != nil)
+				[minHandleBody removeFromParentAndCleanup:NO];
 		}
     }
     else //Unseleted
     {
-        if(maxHandle.parent != nil)
-        {
-            [maxHandle removeFromParentAndCleanup:NO];
-        }
-
-        if(minHandle.parent != nil)
-            [minHandle removeFromParentAndCleanup:NO];
+		if(minHandle.parent != nil)
+			[minHandle removeFromParentAndCleanup:NO];
+		
+		if(minHandleBody.parent != nil)
+			[minHandleBody removeFromParentAndCleanup:NO];
+		
+		if(maxHandle.parent != nil)
+			[maxHandle removeFromParentAndCleanup:NO];
+		
+		if(maxHandleBody.parent != nil)
+			[maxHandleBody removeFromParentAndCleanup:NO];
     }
     
     if(selectedBodyHandle & (1 << MaxHandleType))
