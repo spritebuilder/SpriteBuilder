@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>cocos2dUpdateIgnoredVersions</key>
+	<array/>
 	<key>defaultOrientation</key>
 	<integer>0</integer>
 	<key>designTarget</key>
@@ -31,7 +33,7 @@
 	<key>javascriptMainCCB</key>
 	<string>MainScene</string>
 	<key>needRepublish</key>
-	<true/>
+	<false/>
 	<key>onlyPublishCCBs</key>
 	<false/>
 	<key>publishAudioQuality_android</key>
@@ -50,6 +52,8 @@
 	<false/>
 	<key>publishEnablediPhone</key>
 	<true/>
+	<key>publishEnvironment</key>
+	<integer>0</integer>
 	<key>publishResolutionHTML5_height</key>
 	<integer>320</integer>
 	<key>publishResolutionHTML5_scale</key>
@@ -176,8 +180,8 @@
 		</dict>
 	</dict>
 	<key>versionStr</key>
-	<string>Version: 1.x
-GitHub: 31485920b1
+	<string>Version: 1.1.0.beta.0
+GitHub: 0b75c8e7d0
 </string>
 </dict>
 </plist>

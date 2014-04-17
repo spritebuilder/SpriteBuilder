@@ -1916,6 +1916,8 @@ static BOOL hideAllToNextSeparator;
     
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
+    
+    self.window.representedFilename = @"";
 }
 
 - (BOOL) openProject:(NSString*) fileName
@@ -1962,7 +1964,7 @@ static BOOL hideAllToNextSeparator;
     localizationEditorHandler.managedFile = langFile;
     
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"SpriteBuilder - %@", [fileName lastPathComponent]]];
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[fileName stringByDeletingLastPathComponent] lastPathComponent]]];
     
     // Open ccb file for project if there is only one
     NSArray* resPaths = project.absoluteResourcePaths;
@@ -1997,6 +1999,8 @@ static BOOL hideAllToNextSeparator;
 
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
+
+    self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
 
     return YES;
 }
