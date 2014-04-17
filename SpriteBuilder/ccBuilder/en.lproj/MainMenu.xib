@@ -753,6 +753,13 @@ CA
                                     <action selector="menuAddStickyNote:" target="494" id="1465"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="wXO-wf-tbz"/>
+                            <menuItem title="Show Joints" id="r9m-fF-w2F">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <binding destination="494" name="value" keyPath="self.showJoints" id="BOO-L5-xIi"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                     <connections>
@@ -1690,7 +1697,7 @@ CA
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="605">
-                                                    <rect key="frame" x="0.0" y="-1" width="298" height="657"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="298" height="657"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                                     <clipView key="contentView" copiesOnScroll="NO" id="fL8-Eb-zeE">
                                                         <rect key="frame" x="0.0" y="0.0" width="298" height="657"/>

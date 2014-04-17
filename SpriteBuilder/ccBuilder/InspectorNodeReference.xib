@@ -32,17 +32,12 @@
                 <textField verticalHuggingPriority="750" id="ed9-sh-rD6">
                     <rect key="frame" x="80" y="6" width="114" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="TjJ-Wn-bmT">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="TjJ-Wn-bmT">
                         <font key="font" size="10" name="LucidaGrande"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="eaz-Dj-mwn">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                         <binding destination="-2" name="value" keyPath="self.nodeName" id="Aep-CP-OcD"/>
                     </connections>
                 </textField>
@@ -54,9 +49,6 @@
                 <customView id="vur-Go-ycq" customClass="OutletButton">
                     <rect key="frame" x="196" y="10" width="12" height="12"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.readOnly" id="swC-Db-rwc"/>
-                    </connections>
                 </customView>
                 <button focusRingType="none" id="Myr-IK-7EL">
                     <rect key="frame" x="212" y="8" width="12" height="14"/>
@@ -67,6 +59,15 @@
                     </buttonCell>
                     <connections>
                         <action selector="handleDeleteNode:" target="-2" id="e5c-na-Qfr"/>
+                        <binding destination="-2" name="enabled2" keyPath="self.reference" previousBinding="KuO-af-SeF" id="lJq-Tv-Zwn">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="enabled" keyPath="self.readOnly" id="KuO-af-SeF">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
@@ -83,6 +84,20 @@
                     </buttonCell>
                     <connections>
                         <action selector="handleGotoNode:" target="-2" id="8NJ-LE-KUo"/>
+                        <binding destination="-2" name="enabled2" keyPath="self.reference" previousBinding="LUE-7x-WK5" id="zif-UR-buW">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="LUE-7x-WK5">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
             </subviews>

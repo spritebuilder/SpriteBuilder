@@ -314,6 +314,7 @@ enum {
 @property (nonatomic,assign) BOOL showGuides;
 @property (nonatomic,assign) BOOL snapToGuides;
 @property (nonatomic,assign) BOOL showStickyNotes;
+@property (nonatomic,assign) BOOL showJoints;
 
 @property (nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;

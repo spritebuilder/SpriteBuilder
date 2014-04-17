@@ -41,14 +41,11 @@
 
 -(void)setupBody
 {
-    
-    joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
+	joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
     jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
     
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
-
-    
 }
 
 
@@ -83,9 +80,9 @@
     return NO;    
 }
 
+
 -(JointHandleType)hitTestJoint:(CGPoint)worldPos
 {
-    
     return JointHandleUnknown;
 }
 
@@ -115,7 +112,8 @@
         return;
     }
     
-    [self setPositionFromAnchor];
+	[self setAnchorFromBodyA];
+
 }
 
 -(void)setPositionFromAnchor
@@ -125,7 +123,7 @@
     
     CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
     CGPoint nodePos = [self.parent convertToNodeSpace:worldPos];
-    _position = nodePos;
+    self.position = nodePos;
 }
 
 -(void)setAnchorFromBodyA
