@@ -195,11 +195,11 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     return foundNode;
 }
 
-
 -(BOOL)isDraggable
 {
-	return !self.bodyA || !self.bodyB;
+	return YES;
 }
+
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {

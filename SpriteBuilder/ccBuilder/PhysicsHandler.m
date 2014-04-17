@@ -502,14 +502,11 @@
     }
     else if(jointHandleIndex == EntireJoint)
     {
+		
         //We've touched down in the centre of the joint. Do we allow it to translate?
-        
-        //If either of the outlets aren't filled out
+		//Return NO if its draggable so the parent can handle it.
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        if(joint.bodyA == nil || joint.bodyB == nil)
-            return NO;
-        
-        return YES;
+		return !joint.isDraggable;
     
     }
     else if(jointHandleIndex != JointHandleUnknown)
