@@ -112,7 +112,8 @@
         return;
     }
     
-    [self setPositionFromAnchor];
+	[self setAnchorFromBodyA];
+
 }
 
 -(void)setPositionFromAnchor

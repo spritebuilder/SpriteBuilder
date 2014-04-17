@@ -703,8 +703,10 @@
 		}
 
         joint.bodyA = body;
-    
-        [joint setBodyHandle:worldPos bodyType:BodyAnchorA];
+		
+		if(![joint isMemberOfClass:[CCBPhysicsPivotJoint class]])
+			[joint setBodyHandle:worldPos bodyType:BodyAnchorA];
+		
         [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
     }
     else
