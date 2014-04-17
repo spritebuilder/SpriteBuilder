@@ -29,9 +29,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 }
 @dynamic bodyA;
 @dynamic bodyB;
-@synthesize breakingForceEnabled;
-@synthesize maxForceEnabled;
-
 
 - (id) init
 {
@@ -328,6 +325,28 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     self.bodyB = nil;
 }
 
+-(void)setBreakingForceEnabled:(BOOL)breakingForceEnabled
+{
+	if(_breakingForceEnabled != breakingForceEnabled)
+	{
+		if(breakingForceEnabled && isinf(self.breakingForce))
+			self.breakingForce = 100.0f;
+	}
+	
+	_breakingForceEnabled = breakingForceEnabled;
+}
+
+-(void)setMaxForceEnabled:(BOOL)maxForceEnabled
+{
+	if(_maxForceEnabled != maxForceEnabled)
+	{
+		if(maxForceEnabled && isinf(self.maxForce))
+			self.maxForce = 100.0f;
+		
+	}
+	
+	_maxForceEnabled = maxForceEnabled;
+}
 
 #pragma PasteBoard
 
