@@ -41,11 +41,14 @@
 #import "FCFormatConverter.h"
 #import "NSArray+Query.h"
 #import "SBUserDefaultsKeys.h"
+#import "OptimizeImageWithOptiPNGOperation.h"
 
 @implementation CCBPublisher
 {
 	NSMutableDictionary *_modifiedDatesCache;
     NSMutableSet *_publishedPNGFiles;
+
+    NSOperationQueue *_publishingQueue;
 }
 
 @synthesize publishFormat;
@@ -72,6 +75,8 @@
 
 	_modifiedDatesCache = [NSMutableDictionary dictionary];
     _publishedPNGFiles = [NSMutableSet set];
+    _publishingQueue = [[NSOperationQueue alloc] init];
+    _publishingQueue.maxConcurrentOperationCount = 1;
 
 	// Save settings and warning log
     projectSettings = settings;
@@ -1527,6 +1532,8 @@
 
 		[self flagFilesWithWarningsAsDirty];
 
+        [_publishingQueue waitUntilAllOperationsAreFinished];
+
 		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
 
         dispatch_sync(dispatch_get_main_queue(), ^
@@ -1553,47 +1560,13 @@
 
     for (NSString *pngFile in _publishedPNGFiles)
     {
-        [self optimizeImageFile:pngFile pathToOptiPNG:pathToOptiPNG];
-    }
-}
+        OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc]
+                initWithFilePath:pngFile
+                     optiPngPath:pathToOptiPNG
+                        warnings:warnings
+                     appDelegate:[AppDelegate appDelegate]];
 
-- (void)optimizeImageFile:(NSString *)pngFile pathToOptiPNG:(NSString *)pathToOptiPNG
-{
-    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Optimizing %@...", [pngFile lastPathComponent]]];
-
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:pathToOptiPNG];
-    [task setArguments:@[pngFile]];
-
-    NSPipe *pipe = [NSPipe pipe];
-    NSPipe *pipeErr = [NSPipe pipe];
-    [task setStandardOutput:pipe];
-    [task setStandardError:pipeErr];
-
-    NSFileHandle *file = [pipe fileHandleForReading];
-    NSFileHandle *fileErr = [pipeErr fileHandleForReading];
-
-    int status = 0;
-
-    @try
-    {
-        [task launch];
-        [task waitUntilExit];
-        status = [task terminationStatus];
-    }
-    @catch (NSException *ex)
-    {
-        NSLog(@"%@", ex);
-        return;
-    }
-
-    if (status)
-    {
-        NSData *data = [fileErr readDataToEndOfFile];
-        NSString *stdErrOutput = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSString *warningDescription = [NSString stringWithFormat:@"optipng error: %@", stdErrOutput];
-
-        [warnings addWarningWithDescription:warningDescription];
+        [_publishingQueue addOperation:operation];
     }
 }
 

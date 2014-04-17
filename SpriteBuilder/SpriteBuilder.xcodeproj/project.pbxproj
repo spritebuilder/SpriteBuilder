@@ -747,6 +747,7 @@
 		E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BA14E4989900119FBE /* InspectorDegrees.xib */; };
 		E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */; };
 		E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */; };
+		E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */; };
 		FA98CFC4154E7D1C006E58C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA98CFC3154E7D1C006E58C5 /* Foundation.framework */; };
 		FA98CFC7154E7D1C006E58C5 /* ccbpublish.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */; };
 		FA98CFD1154E7F7D006E58C5 /* CCBX.m in Sources */ = {isa = PBXBuildFile; fileRef = E398C03614FB8A430078E771 /* CCBX.m */; };
@@ -2062,6 +2063,8 @@
 		E3FEA8BC14E498B600119FBE /* InspectorDegrees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorDegrees.h; sourceTree = "<group>"; };
 		E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorDegrees.m; sourceTree = "<group>"; };
 		E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorInteger.xib; sourceTree = "<group>"; };
+		E525F7FDEB6E06727F3674DC /* OptimizeImageWithOptiPNGOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptimizeImageWithOptiPNGOperation.h; sourceTree = "<group>"; };
+		E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptimizeImageWithOptiPNGOperation.m; sourceTree = "<group>"; };
 		FA98CFC1154E7D1C006E58C5 /* ccbpublish */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ccbpublish; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA98CFC3154E7D1C006E58C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ccbpublish.m; sourceTree = "<group>"; };
@@ -3037,6 +3040,15 @@
 			path = Include;
 			sourceTree = "<group>";
 		};
+		8319539318FECDF800ED4BA0 /* PublishingOperations */ = {
+			isa = PBXGroup;
+			children = (
+				E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */,
+				E525F7FDEB6E06727F3674DC /* OptimizeImageWithOptiPNGOperation.h */,
+			);
+			name = PublishingOperations;
+			sourceTree = "<group>";
+		};
 		8341326918DADF8C0088FFAB /* optipng */ = {
 			isa = PBXGroup;
 			children = (
@@ -3702,6 +3714,7 @@
 		E346286D155D21F10043EAB1 /* Publishing */ = {
 			isa = PBXGroup;
 			children = (
+				8319539318FECDF800ED4BA0 /* PublishingOperations */,
 				E346286E155D22290043EAB1 /* CCBPublisher.h */,
 				E346286F155D22290043EAB1 /* CCBPublisher.m */,
 				E3618D5416655041009F5805 /* CCBPublisherTemplate.h */,
@@ -5816,6 +5829,7 @@
 				83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
+				E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
