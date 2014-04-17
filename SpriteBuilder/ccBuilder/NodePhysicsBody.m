@@ -38,7 +38,7 @@
     
     [self setupDefaultPolygonForNode:node];
     
-    _dynamic = YES;
+    _dynamic = (node.hasKeyframes) ? NO : YES;
     _affectedByGravity = YES;
     _allowsRotation = YES;
     
