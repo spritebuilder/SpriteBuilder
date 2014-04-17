@@ -417,6 +417,18 @@
             }
         }
     }
+	
+	//Filder bodies that are children of CCBPCCBFiles
+	[possibleBodies removeObjectsInArray:[possibleBodies where:^BOOL(CCNode* node, int idx) {
+		CCNode * parent = node.parent;
+		while (parent) {
+			if([[[parent class] description] isEqualToString:@"CCBPCCBFile"])
+				return YES;
+			parent=parent.parent;
+		}
+		return NO;
+	}]];
+	
     
     //Select the one we're closest too.
     

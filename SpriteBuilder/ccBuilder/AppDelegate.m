@@ -408,8 +408,8 @@ typedef enum
     
     // Update enable depending on if object is selected
     BOOL itemEnable = (self.selectedNode != NULL);
-	BOOL physicsEnabled = (!self.selectedNode.plugIn.isJoint);
-    
+	BOOL physicsEnabled = (!self.selectedNode.plugIn.isJoint)  && (![self.selectedNode.plugIn.nodeClassName isEqualToString:@"CCBFile"]);
+	
     for (SMTabBarItem* item in itemViewTabs.items)
     {
 		if(item.tag == eItemViewTabType_Physics && !physicsEnabled)
