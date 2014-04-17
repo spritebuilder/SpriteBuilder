@@ -596,7 +596,8 @@ typedef enum
     self.showGuides = YES;
     self.snapToGuides = YES;
     self.showStickyNotes = YES;
-    
+    self.showJoints = YES;
+	
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     

@@ -1968,7 +1968,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Update selection & physics editor
     [selectionLayer removeAllChildrenWithCleanup:YES];
     [physicsLayer removeAllChildrenWithCleanup:YES];
-    
+	jointsLayer.visible = [AppDelegate appDelegate].showJoints;
+	
     if (appDelegate.physicsHandler.editingPhysicsBody || appDelegate.selectedNode.plugIn.isJoint)
     {
         [appDelegate.physicsHandler updatePhysicsEditor:physicsLayer];
