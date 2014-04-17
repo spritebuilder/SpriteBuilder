@@ -383,20 +383,5 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     }
 }
 
-- (BOOL) hidden
-{
-    if([SequencerHandler sharedHandler].currentSequence.timelinePosition != 0.0f || ![SequencerHandler sharedHandler].currentSequence.autoPlay)
-    {
-        return YES;
-    }
-    
-    if([AppDelegate appDelegate].playingBack)
-    {
-        return YES;
-    }
-    
-    return [super hidden];
-}
-
 
 @end

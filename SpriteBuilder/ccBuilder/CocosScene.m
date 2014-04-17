@@ -1932,6 +1932,27 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [self update:0];
 }
 
+-(BOOL)hideJoints
+{
+	if([SequencerHandler sharedHandler].currentSequence.timelinePosition != 0.0f || ![SequencerHandler sharedHandler].currentSequence.autoPlay)
+    {
+        return YES;
+    }
+    
+    if([AppDelegate appDelegate].playingBack)
+    {
+        return YES;
+    }
+	
+	if(![AppDelegate appDelegate].showJoints)
+	{
+		return YES;
+	}
+	
+	return NO;
+}
+
+
 - (void) update:(CCTime)delta
 {
     // Recenter the content layer
@@ -1968,7 +1989,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Update selection & physics editor
     [selectionLayer removeAllChildrenWithCleanup:YES];
     [physicsLayer removeAllChildrenWithCleanup:YES];
-	jointsLayer.visible = [AppDelegate appDelegate].showJoints;
+	jointsLayer.visible = ![self hideJoints];
 	
     if (appDelegate.physicsHandler.editingPhysicsBody || appDelegate.selectedNode.plugIn.isJoint)
     {
