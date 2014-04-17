@@ -42,6 +42,7 @@
 #import "NSArray+Query.h"
 #import "SBUserDefaultsKeys.h"
 #import "OptimizeImageWithOptiPNGOperation.h"
+#import "PublishSpriteSheetOperation.h"
 
 @implementation CCBPublisher
 {
@@ -886,25 +887,17 @@
 
 	[publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 
-
-	// Load settings
 	BOOL isDirty = [projectSettings isDirtyRelPath:subPath];
-	int format_ios = [[projectSettings valueForRelPath:subPath andKey:@"format_ios"] intValue];
-	BOOL format_ios_dither = [[projectSettings valueForRelPath:subPath andKey:@"format_ios_dither"] boolValue];
-	BOOL format_ios_compress= [[projectSettings valueForRelPath:subPath andKey:@"format_ios_compress"] boolValue];
-	int format_android = [[projectSettings valueForRelPath:subPath andKey:@"format_android"] intValue];
-	BOOL format_android_dither = [[projectSettings valueForRelPath:subPath andKey:@"format_android_dither"] boolValue];
-	BOOL format_android_compress= [[projectSettings valueForRelPath:subPath andKey:@"format_android_compress"] boolValue];
 
 	// Check if sprite sheet needs to be re-published
-	for (NSString* res in publishForResolutions)
+	for (NSString*resolution in publishForResolutions)
 	{
 		NSArray* srcDirs = [NSArray arrayWithObjects:
-							[projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]],
+							[projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
 							projectSettings.tempSpriteSheetCacheDirectory,
 							nil];
 
-		NSString* spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]] stringByAppendingPathComponent:spriteSheetName];
+		NSString* spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
 
 		// Skip publish if sprite sheet exists and is up to date
 		NSDate* dstDate = [CCBFileUtil modificationDateForFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
@@ -913,71 +906,23 @@
 			continue;
 		}
 
-		// Check if preview should be generated
-		NSString* previewFilePath = NULL;
-		if (![publishedSpriteSheetNames containsObject:subPath])
-		{
-			previewFilePath = [publishDirectory stringByAppendingPathExtension:@"ppng"];
-			[publishedSpriteSheetNames addObject:subPath];
-		}
+        PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc]
+                initWithAppDelegate:[AppDelegate appDelegate]
+                           warnings:warnings
+                    projectSettings:projectSettings];
 
-		// Generate sprite sheet
-		Tupac* packer = [Tupac tupac];
-		packer.outputName = spriteSheetFile;
-		packer.outputFormat = TupacOutputFormatCocos2D;
-		packer.previewFile = previewFilePath;
+        operation.publishDirectory = publishDirectory;
+        operation.publishedPNGFiles = _publishedPNGFiles;
+        operation.publishedSpriteSheetNames = publishedSpriteSheetNames;
+        operation.srcSpriteSheetDate = srcSpriteSheetDate;
+        operation.resolution = resolution;
+        operation.srcDirs = srcDirs;
+        operation.spriteSheetFile = spriteSheetFile;
+        operation.subPath = subPath;
+        operation.targetType = targetType;
 
-		// Set image format
-		if (targetType == kCCBPublisherTargetTypeIPhone)
-		{
-			packer.imageFormat = format_ios;
-			packer.compress = format_ios_compress;
-			packer.dither = format_ios_dither;
-		}
-		else if (targetType == kCCBPublisherTargetTypeAndroid)
-		{
-			packer.imageFormat = format_android;
-			packer.compress = format_android_compress;
-			packer.dither = format_android_dither;
-		}
-		/*
-		 else if (targetType == kCCBPublisherTargetTypeHTML5)
-		 {
-		 packer.imageFormat = ssSettings.textureFileFormatHTML5;
-		 packer.compress = NO;
-		 packer.dither = ssSettings.ditherHTML5;
-		 }
-		 */
-		
-		// Set texture maximum size
-		if ([res isEqualToString:@"phone"]) packer.maxTextureSize = 1024;
-		else if ([res isEqualToString:@"phonehd"]) packer.maxTextureSize = 2048;
-		else if ([res isEqualToString:@"tablet"]) packer.maxTextureSize = 2048;
-		else if ([res isEqualToString:@"tablethd"]) packer.maxTextureSize = 4096;
-		
-		// Update progress
-		[[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
-		
-		// Pack texture
-		packer.directoryPrefix = subPath;
-		packer.border = YES;
-		NSArray *createdFiles = [packer createTextureAtlasFromDirectoryPaths:srcDirs];
-
-        for (NSString *aFile in createdFiles)
-        {
-            if ([[aFile pathExtension] isEqualToString:@"png"])
-            {
-                [_publishedPNGFiles addObject:aFile];
-            }
-        }
-
-		if (packer.errorMessage)
-		{
-			[warnings addWarningWithDescription:packer.errorMessage isFatal:NO relatedFile:subPath resolution:res];
-		}
-		
-		// Set correct modification date
-		[CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
+        [operation start];
+        // [_publishingQueue addOperation:operation];
 	}
 	
 	[publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];

@@ -54,6 +54,7 @@ enum {
     NSMutableDictionary* renamedFiles;
     NSMutableArray* publishedSpriteSheetNames;
     NSMutableSet* publishedSpriteSheetFiles;
+    // TODO: refactor to typdef instead of int
     int targetType;
     NSString * currentWorkingFile;//Used to help with warnings description.
 }
