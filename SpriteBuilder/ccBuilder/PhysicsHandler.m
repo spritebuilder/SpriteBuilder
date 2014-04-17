@@ -696,6 +696,12 @@
 {
     if(idx == BodyOutletA)
     {
+		if(joint.bodyB == body)
+		{
+			[[AppDelegate appDelegate] modalDialogTitle:@"Duplicate body connected." message:[NSString stringWithFormat:@"You've already connected BodyB to this physics body:%@",body.displayName]];
+			return;
+		}
+
         joint.bodyA = body;
     
         [joint setBodyHandle:worldPos bodyType:BodyAnchorA];
@@ -703,6 +709,13 @@
     }
     else
     {
+		if(joint.bodyA == body)
+		{
+			[[AppDelegate appDelegate] modalDialogTitle:@"Duplicate body connected." message:[NSString stringWithFormat:@"You've already connected BodyA to this physics body:%@",body.displayName]];
+			return;
+		}
+
+		
         joint.bodyB = body;
         [joint setBodyHandle:worldPos bodyType:BodyAnchorB];
         [[AppDelegate appDelegate] refreshProperty:@"bodyB"];
