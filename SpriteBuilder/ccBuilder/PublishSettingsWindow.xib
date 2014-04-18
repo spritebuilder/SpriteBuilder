@@ -351,12 +351,12 @@
                             <popUpButton verticalHuggingPriority="750" id="349">
                                 <rect key="frame" x="368" y="6" width="96" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="8 - Best" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="8" imageScaling="proportionallyDown" inset="2" selectedItem="354" id="350">
+                                <popUpButtonCell key="cell" type="push" title="1 - Smallest" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="363" id="350">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                     <menu key="menu" title="OtherViews" id="351">
                                         <items>
-                                            <menuItem title="8 - Best" state="on" tag="8" id="354"/>
+                                            <menuItem title="8 - Best" tag="8" id="354"/>
                                             <menuItem title="7" tag="7" id="357">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
@@ -375,7 +375,7 @@
                                             <menuItem title="2" tag="2" id="362">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
-                                            <menuItem title="1 - Smallest" tag="1" id="363">
+                                            <menuItem title="1 - Smallest" state="on" tag="1" id="363">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
                                         </items>
@@ -720,7 +720,7 @@ DQ
                 <popUpButton verticalHuggingPriority="750" id="364">
                     <rect key="frame" x="358" y="6" width="96" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="367">
+                    <popUpButtonCell key="cell" type="push" title="1 - Smallest" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="369" id="367">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="368">
@@ -746,7 +746,7 @@ DQ
                                 <menuItem title="2" tag="2" id="370">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
-                                <menuItem title="1 - Smallest" tag="1" id="369">
+                                <menuItem title="1 - Smallest" state="on" tag="1" id="369">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>
