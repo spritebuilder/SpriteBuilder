@@ -121,12 +121,8 @@ static const float kDefaultLength = 58.0f;
     jointBody.anchorPoint = ccp(kEdgeRadius/jointBody.contentSize.width, 0.5f);
     self.rotation = [self rotation];
 
-    
-    
     //Anchor B
     anchorHandleB.position = ccpMult(ccp(length,0),[CCDirector sharedDirector].UIScaleFactor);
-    
-    
 }
 
 
