@@ -201,18 +201,25 @@ const int kSpringHeightHalf = kSpringHeight/2;
 -(void)updateSelectionUI
 {
     //If selected, display selected sprites.
-    if(selectedBodyHandle & (1 << EntireJoint))
+    if(selectedBodyHandle & (1 << EntireJoint) && _restLengthEnabled)
     {
-        
+		
         if(restLengthHandle.parent == nil)
             [scaleFreeNode addChild:restLengthHandle];
+		
+		if(restLengthHandleBody.parent == nil)
+			[scaleFreeNode addChild:restLengthHandleBody];
     }
     else //Unseleted
     {
-       
         if(restLengthHandle.parent != nil)
             [restLengthHandle removeFromParentAndCleanup:NO];
+		
+		if(restLengthHandleBody.parent != nil)
+			[restLengthHandleBody removeFromParentAndCleanup:NO];
     }
+	
+	
     
     
     if(selectedBodyHandle & (1 << RestLengthHandle))
@@ -275,7 +282,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     
     if(change)
     {
-        self.restLength = [self worldLength];
+        self.restLength = self.restLength;
         [[AppDelegate appDelegate] refreshProperty:@"restLength"];
     }
 }
@@ -293,7 +300,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     
     if(change)
     {
-        self.restLength = [self worldLength];
+        self.restLength = self.restLength;
         [[AppDelegate appDelegate] refreshProperty:@"restLength"];
     }
 }
@@ -302,9 +309,33 @@ const int kSpringHeightHalf = kSpringHeight/2;
 {
     _restLength = restLength;
 	
-	if(_restLength < 0)
+	if(!_restLengthEnabled)
+	{
+		_restLength = [self worldLength];
+	}
+	else if(_restLength < 0)
+	{
 		_restLength = 0;
+	}
+		
+	[[AppDelegate appDelegate] refreshProperty:@"restLength"];
 }
+
+-(void)setRestLengthEnabled:(BOOL)restLengthEnabled
+{
+	_restLengthEnabled = restLengthEnabled;
+	self.restLength = self.restLength;
+	
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	
+	self.restLength = self.restLength;
+	
+	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
 
 
 

@@ -47,7 +47,7 @@
 			<string>position</string>
 			<key>inspectorDisabled</key>
 			<true/>
-		</dict>		
+		</dict>
 		<dict>
 			<key>default</key>
 			<integer>0</integer>
@@ -140,7 +140,7 @@
 			<key>defaultSerialization</key>
 			<integer>0</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>EnabledFloat</string>
 			<key>name</key>
 			<string>restLength</string>
 			<key>displayName</key>
