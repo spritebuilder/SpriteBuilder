@@ -163,12 +163,17 @@ const int kSpringHeightHalf = kSpringHeight/2;
         //////        //////        //////        //////
         //The big draw call.
         CCColor * whiteColor = [CCColor colorWithWhite:1.0f alpha:0.25f];
+        CCColor * blackColor = [CCColor colorWithWhite:0.0f alpha:0.75f];
         for(int i = 1; i < wholeCounts + 7; i++)
         {
             CCDrawNode * draw = [CCDrawNode node];
-            [draw drawSegmentFrom:ccpMult(pt[i-1],scale) to:ccpMult(pt[i],scale) radius:1.0f color:whiteColor];
+			[draw drawSegmentFrom:ccpMult(ccpAdd(pt[i-1],ccp(1.0f,0.0f)),scale) to:ccpMult(ccpAdd(pt[i],ccp(1.0f,0.0f)),scale) radius:1.0f color:blackColor];
+			[springNode addChild:draw];
 
-            [springNode addChild:draw];
+			draw = [CCDrawNode node];
+            [draw drawSegmentFrom:ccpMult(pt[i-1],scale) to:ccpMult(pt[i],scale) radius:1.0f color:whiteColor];
+			[springNode addChild:draw];
+			
         }
         
         free(pt);
