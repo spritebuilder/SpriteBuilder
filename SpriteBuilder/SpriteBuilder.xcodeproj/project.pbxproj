@@ -64,6 +64,9 @@
 		7789ACEA133AB47A00CEFCC7 /* CocosScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7789ACE9133AB47A00CEFCC7 /* CocosScene.m */; };
 		7789ACEF133AB6A700CEFCC7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7789ACED133AB6A700CEFCC7 /* icon.icns */; };
 		7789ACF1133BD5E800CEFCC7 /* header-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7789ACF0133BD5E800CEFCC7 /* header-bg.png */; };
+		77C64F8B1901C257003591DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
+		77C64F8C1901C2A3003591DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
+		77C64F8D1901C363003591DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		77D33E95138E714700012A88 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D33E94138E714700012A88 /* ExceptionHandling.framework */; };
 		77D33EAB138EA4F900012A88 /* CCBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D33EAA138EA4F800012A88 /* CCBUtil.m */; };
 		77D33EAD138EFBD800012A88 /* StageSizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D33EAC138EFBD800012A88 /* StageSizeWindow.xib */; };
@@ -163,7 +166,6 @@
 		B71706D0184ECD660081720A /* select-rotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706CA184ECD660081720A /* select-rotation@2x.png */; };
 		B71706D1184ECD660081720A /* select-scale@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706CB184ECD660081720A /* select-scale@2x.png */; };
 		B71706D2184ECD660081720A /* select-skew@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71706CC184ECD660081720A /* select-skew@2x.png */; };
-		B729AC53181F091800BA0D9C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B729AC59181F091800BA0D9C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B729AC57181F091800BA0D9C /* InfoPlist.strings */; };
 		B729AC65181F0B5000BA0D9C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B729AC62181F0B5000BA0D9C /* CCBPProperties.plist */; };
 		B729AC66181F0B5000BA0D9C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B729AC63181F0B5000BA0D9C /* Icon.png */; };
@@ -274,14 +276,12 @@
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
 		B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */; };
 		B7E775E218563F8C004221AA /* frame-fixed.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E775E118563F8C004221AA /* frame-fixed.png */; };
-		B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7EE699C18188E0900B983FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7EE699A18188E0900B983FE /* InfoPlist.strings */; };
 		B7EE69A718188ECC00B983FE /* CCTextField.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */; };
 		B7EE69AA18188EF900B983FE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EE69A818188EF900B983FE /* Icon.png */; };
 		B7EE69AB18188EF900B983FE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7EE69A918188EF900B983FE /* Icon@2x.png */; };
 		B7EE69AD18188F2800B983FE /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7EE69AC18188F2800B983FE /* CCBPProperties.plist */; };
 		B7EE69B01819822500B983FE /* CCBPTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69AF1819822500B983FE /* CCBPTextField.m */; };
-		B7EE69F91819EE0D00B983FE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7EE69FF1819EE0D00B983FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7EE69FD1819EE0D00B983FE /* InfoPlist.strings */; };
 		B7EE6A0A1819EE6E00B983FE /* CCLayoutBox.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7EE69F81819EE0D00B983FE /* CCLayoutBox.ccbPlugNode */; };
 		B7EE6A0E1819EF1500B983FE /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7EE6A0B1819EF1500B983FE /* CCBPProperties.plist */; };
@@ -1736,7 +1736,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B729AC53181F091800BA0D9C /* CoreFoundation.framework in Frameworks */,
+				77C64F8C1901C2A3003591DC /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1784,7 +1784,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */,
+				77C64F8D1901C363003591DC /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1792,7 +1792,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7EE69F91819EE0D00B983FE /* CoreFoundation.framework in Frameworks */,
+				77C64F8B1901C257003591DC /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3944,7 +3944,7 @@
 		7789ABB5133AA82000CEFCC7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					7789ABBD133AA82000CEFCC7 = {
 						DevelopmentTeam = U2K5E32W7G;
@@ -5189,6 +5189,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5235,6 +5236,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -5244,8 +5246,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -5276,7 +5278,7 @@
 				);
 				INFOPLIST_FILE = "CCSlider/CCSlider-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -5291,8 +5293,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -5320,7 +5322,7 @@
 				);
 				INFOPLIST_FILE = "CCSlider/CCSlider-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -5790,8 +5792,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -5822,7 +5824,7 @@
 				);
 				INFOPLIST_FILE = "CCTextField/CCTextField-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -5837,8 +5839,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -5866,7 +5868,7 @@
 				);
 				INFOPLIST_FILE = "CCTextField/CCTextField-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
@@ -5881,8 +5883,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -5913,12 +5915,13 @@
 				);
 				INFOPLIST_FILE = "CCLayoutBox/CCLayoutBox-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Debug;
@@ -5928,8 +5931,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -5957,12 +5960,13 @@
 				);
 				INFOPLIST_FILE = "CCLayoutBox/CCLayoutBox-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;

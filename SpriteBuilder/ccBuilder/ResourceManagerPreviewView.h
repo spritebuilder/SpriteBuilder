@@ -24,7 +24,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QTKit/QTKit.h>
-#import <AVKit/AVKit.h>
+//#import <AVKit/AVKit.h>
 
 @class CCBImageView;
 @class AppDelegate;

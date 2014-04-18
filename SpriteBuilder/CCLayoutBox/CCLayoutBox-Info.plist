@@ -40,5 +40,7 @@
 	</dict>
 	<key>CFPlugInUnloadFunction</key>
 	<string></string>
+	<key>NSPrincipalClass</key>
+	<string></string>
 </dict>
 </plist>
