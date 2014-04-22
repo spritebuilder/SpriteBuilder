@@ -131,11 +131,11 @@
     return latestDate;
 }
 
--(void)validateDocument:(NSMutableDictionary*)doc
+-(void)validateJointsInDocument:(NSMutableDictionary*)document
 {
-    if(doc[@"joints"])
+    if(document[@"joints"])
     {
-        NSMutableArray * joints = doc[@"joints"];
+        NSMutableArray * joints = document[@"joints"];
         
         joints = [[joints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary * joint, NSDictionary *bindings)
 		{
@@ -159,8 +159,6 @@
             if(![joint[@"properties"] findFirst:find])
             {
                 NSString * description = [NSString stringWithFormat:@"Joint %@ must have a bodyB attached. Not exporting it.",joint[@"displayName"]];
-
-                
                 [warnings addWarningWithDescription:description isFatal:NO relatedFile:currentWorkingFile];
                 return NO;
             }
@@ -168,7 +166,7 @@
             return YES;
         }]] mutableCopy];
 
-        doc[@"joints"] = joints;
+        document[@"joints"] = joints;
     }
 }
 
@@ -204,8 +202,8 @@
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish ccb-file. File is in invalid format: %@",srcFile] isFatal:NO];
         return YES;
     }
-    
-    [self validateDocument:doc];
+
+    [self validateJointsInDocument:doc];
     
     // Export file
     plugIn.flattenPaths = projectSettings.flattenPaths;
@@ -757,7 +755,12 @@
     return YES;
 }
 
-- (void)processDirectory:(NSString *)directory subPath:(NSString *)subPath filePath:(NSString *)filePath resIndependentDirs:(NSArray *)resIndependentDirs outDir:(NSString *)outDir isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
+- (void)processDirectory:(NSString *)directory
+                 subPath:(NSString *)subPath
+                filePath:(NSString *)filePath
+      resIndependentDirs:(NSArray *)resIndependentDirs
+                  outDir:(NSString *)outDir
+  isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
@@ -1339,7 +1342,7 @@
     targetType = kCCBPublisherTargetTypeAndroid;
     warnings.currentTargetType = targetType;
 
-    [self ascertainResolutionsForAndroid];
+    [self configureResolutionsForAndroid];
 
     NSString* publishDir = [projectSettings.publishDirectoryAndroid absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
 
@@ -1380,7 +1383,7 @@
     targetType = kCCBPublisherTargetTypeIPhone;
     warnings.currentTargetType = targetType;
 
-    [self ascertainResolutionsForIOS];
+    [self connfigureResolutionsForIOS];
 
     NSString *publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
 
@@ -1405,50 +1408,50 @@
     return YES;
 }
 
-- (void)ascertainResolutionsForAndroid
+- (void)configureResolutionsForAndroid
 {
     NSMutableArray* resolutions = [NSMutableArray array];
 
     if (projectSettings.publishResolution_android_phone)
-            {
-                [resolutions addObject:@"phone"];
-            }
+    {
+        [resolutions addObject:@"phone"];
+    }
     if (projectSettings.publishResolution_android_phonehd)
-            {
-                [resolutions addObject:@"phonehd"];
-            }
+    {
+        [resolutions addObject:@"phonehd"];
+    }
     if (projectSettings.publishResolution_android_tablet)
-            {
-                [resolutions addObject:@"tablet"];
-            }
+    {
+        [resolutions addObject:@"tablet"];
+    }
     if (projectSettings.publishResolution_android_tablethd)
-            {
-                [resolutions addObject:@"tablethd"];
-            }
+    {
+        [resolutions addObject:@"tablethd"];
+    }
     publishForResolutions = resolutions;
 }
 
-- (void)ascertainResolutionsForIOS
+- (void)connfigureResolutionsForIOS
 {
     NSMutableArray* resolutions = [NSMutableArray array];
 
     // Add iPhone resolutions from publishing settings
     if (projectSettings.publishResolution_ios_phone)
-            {
-                [resolutions addObject:@"phone"];
-            }
+    {
+        [resolutions addObject:@"phone"];
+    }
     if (projectSettings.publishResolution_ios_phonehd)
-            {
-                [resolutions addObject:@"phonehd"];
-            }
+    {
+        [resolutions addObject:@"phonehd"];
+    }
     if (projectSettings.publishResolution_ios_tablet)
-            {
-                [resolutions addObject:@"tablet"];
-            }
+    {
+        [resolutions addObject:@"tablet"];
+    }
     if (projectSettings.publishResolution_ios_tablethd)
-            {
-                [resolutions addObject:@"tablethd"];
-            }
+    {
+        [resolutions addObject:@"tablethd"];
+    }
     publishForResolutions = resolutions;
 }
 
