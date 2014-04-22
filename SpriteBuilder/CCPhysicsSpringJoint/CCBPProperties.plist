@@ -56,7 +56,7 @@
 				<string>bodyA</string>
 			</array>
 			<key>displayName</key>
-			<string>BodyA</string>
+			<string>Body A</string>
 			<key>type</key>
 			<string>NodeReference</string>
 			<key>name</key>
@@ -70,7 +70,7 @@
 				<string>bodyB</string>
 			</array>
 			<key>displayName</key>
-			<string>BodyB</string>
+			<string>Body B</string>
 			<key>type</key>
 			<string>NodeReference</string>
 			<key>name</key>
@@ -86,7 +86,7 @@
 			<key>animatable</key>
 			<false/>
 			<key>displayName</key>
-			<string>AnchorA</string>
+			<string>Anchor A</string>
 			<key>type</key>
 			<string>Point</string>
 			<key>name</key>
@@ -102,7 +102,7 @@
 			<key>animatable</key>
 			<false/>
 			<key>displayName</key>
-			<string>AnchorB</string>
+			<string>Anchor B</string>
 			<key>type</key>
 			<string>Point</string>
 			<key>name</key>
@@ -110,7 +110,7 @@
 		</dict>
 		<dict>
 			<key>displayName</key>
-			<string>Collide Bodies</string>
+			<string>Collide bodies</string>
 			<key>type</key>
 			<string>Check</string>
 			<key>name</key>
@@ -124,7 +124,7 @@
 			<key>name</key>
 			<string>breakingForce</string>
 			<key>displayName</key>
-			<string>Breaking Force</string>
+			<string>Breaking force</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
@@ -134,7 +134,7 @@
 			<key>name</key>
 			<string>maxForce</string>
 			<key>displayName</key>
-			<string>Max Force</string>
+			<string>Max force</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
@@ -144,7 +144,7 @@
 			<key>name</key>
 			<string>restLength</string>
 			<key>displayName</key>
-			<string>Rest Length</string>
+			<string>Rest length</string>
 		</dict>
 		<dict>
 			<key>displayName</key>

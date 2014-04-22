@@ -66,26 +66,26 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.3</string>
+	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.3</string>
+	<string>1.1.0</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>OSAScriptingDefinition</key>
+	<string>SpriteBuilder.sdef</string>
 	<key>SUFeedURL</key>
 	<string>http://update.spritebuilder.com</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
-	<key>OSAScriptingDefinition</key>
-	<string>SpriteBuilder.sdef</string>
-	<key>NSAppleScriptEnabled</key>
-	<true/>
 </dict>
 </plist>
