@@ -24,7 +24,7 @@
 -(void)setEnable:(BOOL)enable
 {
     [selection setValue:@(enable) forKey:[NSString stringWithFormat:@"%@Enabled",propertyName]];
-    [self refresh];
+   [self performSelector:@selector(refresh) withObject:Nil afterDelay:0];
 }
 
 -(BOOL)enable
@@ -36,6 +36,9 @@
 {
     [self willChangeValueForKey:@"f"];
     [self didChangeValueForKey:@"f"];
+	
+	[self willChangeValueForKey:@"enable"];
+    [self didChangeValueForKey:@"enable"];
 
 }
 

@@ -14,6 +14,7 @@
 {
 }
 
+@property (nonatomic) BOOL  restLengthEnabled;
 @property (nonatomic) float restLength;
 @property (nonatomic) float damping;
 @property (nonatomic) float stiffness;

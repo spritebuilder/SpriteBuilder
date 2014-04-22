@@ -163,12 +163,17 @@ const int kSpringHeightHalf = kSpringHeight/2;
         //////        //////        //////        //////
         //The big draw call.
         CCColor * whiteColor = [CCColor colorWithWhite:1.0f alpha:0.25f];
+        CCColor * blackColor = [CCColor colorWithWhite:0.0f alpha:0.75f];
         for(int i = 1; i < wholeCounts + 7; i++)
         {
             CCDrawNode * draw = [CCDrawNode node];
-            [draw drawSegmentFrom:ccpMult(pt[i-1],scale) to:ccpMult(pt[i],scale) radius:1.0f color:whiteColor];
+			[draw drawSegmentFrom:ccpMult(ccpAdd(pt[i-1],ccp(1.0f,0.0f)),scale) to:ccpMult(ccpAdd(pt[i],ccp(1.0f,0.0f)),scale) radius:1.0f color:blackColor];
+			[springNode addChild:draw];
 
-            [springNode addChild:draw];
+			draw = [CCDrawNode node];
+            [draw drawSegmentFrom:ccpMult(pt[i-1],scale) to:ccpMult(pt[i],scale) radius:1.0f color:whiteColor];
+			[springNode addChild:draw];
+			
         }
         
         free(pt);
@@ -201,18 +206,25 @@ const int kSpringHeightHalf = kSpringHeight/2;
 -(void)updateSelectionUI
 {
     //If selected, display selected sprites.
-    if(selectedBodyHandle & (1 << EntireJoint))
+    if(selectedBodyHandle & (1 << EntireJoint) && _restLengthEnabled && (self.bodyA && self.bodyB))
     {
-        
+		
         if(restLengthHandle.parent == nil)
             [scaleFreeNode addChild:restLengthHandle];
+		
+		if(restLengthHandleBody.parent == nil)
+			[scaleFreeNode addChild:restLengthHandleBody];
     }
     else //Unseleted
     {
-       
         if(restLengthHandle.parent != nil)
             [restLengthHandle removeFromParentAndCleanup:NO];
+		
+		if(restLengthHandleBody.parent != nil)
+			[restLengthHandleBody removeFromParentAndCleanup:NO];
     }
+	
+	
     
     
     if(selectedBodyHandle & (1 << RestLengthHandle))
@@ -275,7 +287,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     
     if(change)
     {
-        self.restLength = [self worldLength];
+        self.restLength = self.restLength;
         [[AppDelegate appDelegate] refreshProperty:@"restLength"];
     }
 }
@@ -293,7 +305,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     
     if(change)
     {
-        self.restLength = [self worldLength];
+        self.restLength = self.restLength;
         [[AppDelegate appDelegate] refreshProperty:@"restLength"];
     }
 }
@@ -302,9 +314,39 @@ const int kSpringHeightHalf = kSpringHeight/2;
 {
     _restLength = restLength;
 	
-	if(_restLength < 0)
+	if(!_restLengthEnabled)
+	{
+		_restLength = [self worldLength];
+	}
+	else if(_restLength < 0)
+	{
 		_restLength = 0;
+	}
+		
+	[[AppDelegate appDelegate] refreshProperty:@"restLength"];
 }
+
+-(void)setRestLengthEnabled:(BOOL)restLengthEnabled
+{
+	if((!self.bodyA || !self.bodyB) && self.isRunningInActiveScene)
+	{
+		[[AppDelegate appDelegate] modalDialogTitle:@"Assign Bodies" message:@"You must assign this joint to both BodyA and BodyB before editing the rest length"];
+		return;
+	}
+	
+	_restLengthEnabled = restLengthEnabled;
+	self.restLength = self.restLength;
+	
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	
+	self.restLength = self.restLength;
+	
+	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
 
 
 

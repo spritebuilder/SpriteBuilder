@@ -154,6 +154,8 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize itemTabView;
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
+@dynamic	showJoints;
+
 static AppDelegate* sharedAppDelegate;
 
 #pragma mark Setup functions
@@ -596,7 +598,6 @@ typedef enum
     self.showGuides = YES;
     self.snapToGuides = YES;
     self.showStickyNotes = YES;
-    self.showJoints = YES;
 	
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
@@ -776,6 +777,8 @@ typedef enum
 		[[SceneGraph instance].joints.all forEach:^(CCNode * joint, int idx) {
 			joint.zOrder = (joint == selectedJoint) ? 1 : 0;
 		}];
+		
+		selection = [NSArray arrayWithObject:selectedJoint];
 	}
 	
 	
@@ -795,7 +798,6 @@ typedef enum
         {
             return;
         }
-
     }
     
     
@@ -1095,7 +1097,7 @@ static BOOL hideAllToNextSeparator;
         
         if([sequenceHandler currentSequence].timelinePosition != 0.0f || ![sequenceHandler currentSequence].autoPlay)
         {
-            paneOffset = [self addInspectorPropertyOfType:@"SeparatorSub" name:@"name" displayName:@"Must select frame Zero of the autoPlay timeline" extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
+            paneOffset = [self addInspectorPropertyOfType:@"SeparatorSub" name:@"name" displayName:@"Must select frame Zero of the autoplay timeline" extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
             displayPluginProperties = NO;
         }
     }
@@ -2559,6 +2561,17 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
+-(BOOL)showJoints
+{
+	return ![SceneGraph instance].joints.node.hidden;
+}
+
+-(void)setShowJoints:(BOOL)showJoints
+{
+	[SceneGraph instance].joints.node.hidden = !showJoints;
+	[sequenceHandler.outlineHierarchy reloadItem:[SceneGraph instance].joints reloadChildren:YES];
+}
+
 -(void)addJoint:(NSString*)jointName at:(CGPoint)pt
 {
     SceneGraph* g = [SceneGraph instance];
@@ -2582,6 +2595,22 @@ static BOOL hideAllToNextSeparator;
     PlugInNode* pluginDescription = [[PlugInManager sharedManager] plugInNodeNamed:nodeName];
     if(pluginDescription.isJoint)
     {
+		if(!sequenceHandler.currentSequence.autoPlay || sequenceHandler.currentSequence.timelinePosition != 0.0f)
+		{
+			[self modalDialogTitle:@"Changing Timeline" message:@"In order to add a new joint, you must be viewing the first frame of the 'autoplay' timeline." disableKey:@"AddJointSetSequencer"];
+			
+			SequencerSequence * autoPlaySequence = [currentDocument.sequences findFirst:^BOOL(SequencerSequence * sequence, int idx) {
+				return sequence.autoPlay;
+			}];
+
+			if(autoPlaySequence)
+			{
+				sequenceHandler.currentSequence = autoPlaySequence;
+				sequenceHandler.currentSequence.timelinePosition = 0.0f;
+			}
+		}
+
+		
         [self addJoint:nodeName at:pt];
         return;
     }

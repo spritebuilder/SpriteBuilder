@@ -44,8 +44,8 @@
     self = [super init];
     if (self)
     {
-        self.minDistance = -INFINITY;
-        self.maxDistance = INFINITY;
+        self.minDistance = [self localLength];
+        self.maxDistance = [self localLength];
 
     }
     
@@ -145,7 +145,7 @@
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
-		if(self.maxDistanceEnabled)
+		if(self.maxDistanceEnabled && (self.bodyA && self.bodyB))
 		{
 			if(maxHandle.parent == nil)
 				[scaleFreeNode addChild:maxHandle];
@@ -163,7 +163,7 @@
 				[maxHandleBody removeFromParentAndCleanup:NO];
 		}
 		
-		if(self.minDistanceEnabled)
+		if(self.minDistanceEnabled  && (self.bodyA && self.bodyB))
 		{
 			if(minHandle.parent == nil)
 				[scaleFreeNode addChild:minHandle];
@@ -328,6 +328,12 @@
 
 -(void)setMaxDistanceEnabled:(BOOL)lMaxDistanceEnabled
 {
+	if((!self.bodyA || !self.bodyB) && self.isRunningInActiveScene)
+	{
+		[[AppDelegate appDelegate] modalDialogTitle:@"Assign Bodies" message:@"You must assign this joint to both BodyA and BodyB before editing the max distance"];
+		return;
+	}
+	
     if(maxDistanceEnabled != lMaxDistanceEnabled)
     {
         maxDistanceEnabled = lMaxDistanceEnabled;
@@ -344,6 +350,13 @@
 
 -(void)setMinDistanceEnabled:(BOOL)lMinDistanceEnabled
 {
+	if((!self.bodyA || !self.bodyB) && self.isRunningInActiveScene)
+	{
+		[[AppDelegate appDelegate] modalDialogTitle:@"Assign Bodies" message:@"You must assign this joint to both BodyA and BodyB before editing the min distance"];
+		return;
+	}
+
+	
     if(minDistanceEnabled != lMinDistanceEnabled)
     {
         minDistanceEnabled = lMinDistanceEnabled;
