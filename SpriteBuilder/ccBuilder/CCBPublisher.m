@@ -1304,159 +1304,180 @@
 
 - (BOOL) publish_
 {
-    // Remove all old publish directories if user has cleaned the cache
-    if (projectSettings.needRepublish && !projectSettings.onlyPublishCCBs)
-    {
-        NSFileManager *fm = [NSFileManager defaultManager];
-        NSString* publishDir;
-        
-        publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-        [fm removeItemAtPath:publishDir error:NULL];
-        
-        publishDir = [projectSettings.publishDirectoryAndroid absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-        [fm removeItemAtPath:publishDir error:NULL];
-        
-        publishDir = [projectSettings.publishDirectoryHTML5 absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-        [fm removeItemAtPath:publishDir error:NULL];
-    }
-    
+    [self removeOldPublishDirIfCacheCleaned];
+
     if (!runAfterPublishing)
     {
-        bool publishEnablediPhone  = projectSettings.publishEnablediPhone;
-        bool publishEnabledAndroid  = projectSettings.publishEnabledAndroid;
-        
-        //iOS is forced on. Android is disabled.
-        publishEnablediPhone = YES;
-        publishEnabledAndroid = NO;
-        
-        // Normal publishing
-        
-        // iOS
-        if (publishEnablediPhone)
+        if (![self publishIOS])
         {
-            targetType = kCCBPublisherTargetTypeIPhone;
-            warnings.currentTargetType = targetType;
-            
-            NSMutableArray* resolutions = [NSMutableArray array];
-            
-            // Add iPhone resolutions from publishing settings
-            if (projectSettings.publishResolution_ios_phone)
-            {
-                [resolutions addObject:@"phone"];
-            }
-            if (projectSettings.publishResolution_ios_phonehd)
-            {
-                [resolutions addObject:@"phonehd"];
-            }
-            if (projectSettings.publishResolution_ios_tablet)
-            {
-                [resolutions addObject:@"tablet"];
-            }
-            if (projectSettings.publishResolution_ios_tablethd)
-            {
-                [resolutions addObject:@"tablethd"];
-            }
-            publishForResolutions = resolutions;
-            
-            NSString* publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-            
-            if (projectSettings.publishToZipFile)
-            {
-                // Publish archive
-                NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
-                
-                if (![self archiveToFile:zipFile]) return NO;
-            } else
-            {
-                // Publish files
-                if (![self publishAllToDirectory:publishDir]) return NO;
-            }
+            return NO;
         }
-        
-        // Android
-        if (publishEnabledAndroid)
-        {
-            targetType = kCCBPublisherTargetTypeAndroid;
-            warnings.currentTargetType = targetType;
-            
-            NSMutableArray* resolutions = [NSMutableArray array];
-            
-            if (projectSettings.publishResolution_android_phone)
-            {
-                [resolutions addObject:@"phone"];
-            }
-            if (projectSettings.publishResolution_android_phonehd)
-            {
-                [resolutions addObject:@"phonehd"];
-            }
-            if (projectSettings.publishResolution_android_tablet)
-            {
-                [resolutions addObject:@"tablet"];
-            }
-            if (projectSettings.publishResolution_android_tablethd)
-            {
-                [resolutions addObject:@"tablethd"];
-            }
-            publishForResolutions = resolutions;
-            
-            NSString* publishDir = [projectSettings.publishDirectoryAndroid absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-            
-            if (projectSettings.publishToZipFile)
-            {
-                // Publish archive
-                NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
-                
-                if (![self archiveToFile:zipFile]) return NO;
-            } else
-            {
-                // Publish files
-                if (![self publishAllToDirectory:publishDir]) return NO;
-            }
-        }
-        
+
+        // Android publishing disabled at the moment
         /*
-        // HTML 5
-        if (projectSettings.publishEnabledHTML5)
+        if (![self publishAndroid])
         {
-            targetType = kCCBPublisherTargetTypeHTML5;
-            
-            NSMutableArray* resolutions = [NSMutableArray array];
-            [resolutions addObject: @"html5"];
-            publishForResolutions = resolutions;
-            
-            publishToSingleResolution = YES;
-            
-            NSString* publishDir = [projectSettings.publishDirectoryHTML5 absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-            
-            if (projectSettings.publishToZipFile)
-            {
-                // Publish archive
-                NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
-                
-                if (![self publishAllToDirectory:projectSettings.publishCacheDirectory] || ![self archiveToFile:zipFile]) return NO;
-            } else
-            {
-                // Publish files
-                if (![self publishAllToDirectory:publishDir]) return NO;
-            }
+            return NO;
         }
-         */
-        
+        */
+    }
+
+    [projectSettings clearAllDirtyMarkers];
+
+    [self resetNeedRepublish];
+
+    return YES;
+}
+
+- (BOOL)publishAndroid
+{
+    bool publishEnabledAndroid  = projectSettings.publishEnabledAndroid;
+    if (!publishEnabledAndroid)
+    {
+        return YES;
+    }
+
+    targetType = kCCBPublisherTargetTypeAndroid;
+    warnings.currentTargetType = targetType;
+
+    [self ascertainResolutionsForAndroid];
+
+    NSString* publishDir = [projectSettings.publishDirectoryAndroid absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
+
+    if (projectSettings.publishToZipFile)
+    {
+        // Publish archive
+        NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
+
+        if (![self archiveToFile:zipFile])
+        {
+            return NO;
+        }
     }
     else
     {
-        // Publishing to device no longer supported
+        // Publish files
+        if (![self publishAllToDirectory:publishDir])
+        {
+            return NO;
+        }
     }
-    
-    // Once published, set needRepublish back to NO
-    [projectSettings clearAllDirtyMarkers];
+
+    return YES;
+}
+
+- (BOOL)publishIOS
+{
+    // iOS publishing is the only os target at the moment
+    bool publishEnablediPhone;
+    // publishEnablediPhone = projectSettings.publishEnablediPhone;
+    publishEnablediPhone = YES;
+
+    if (!publishEnablediPhone)
+    {
+        return YES;
+    }
+
+    targetType = kCCBPublisherTargetTypeIPhone;
+    warnings.currentTargetType = targetType;
+
+    [self ascertainResolutionsForIOS];
+
+    NSString *publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
+
+    if (projectSettings.publishToZipFile)
+    {
+        // Publish archive
+        NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
+
+        if (![self archiveToFile:zipFile])
+        {
+            return NO;
+        }
+    }
+    else
+    {
+        // Publish files
+        if (![self publishAllToDirectory:publishDir])
+        {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)ascertainResolutionsForAndroid
+{
+    NSMutableArray* resolutions = [NSMutableArray array];
+
+    if (projectSettings.publishResolution_android_phone)
+            {
+                [resolutions addObject:@"phone"];
+            }
+    if (projectSettings.publishResolution_android_phonehd)
+            {
+                [resolutions addObject:@"phonehd"];
+            }
+    if (projectSettings.publishResolution_android_tablet)
+            {
+                [resolutions addObject:@"tablet"];
+            }
+    if (projectSettings.publishResolution_android_tablethd)
+            {
+                [resolutions addObject:@"tablethd"];
+            }
+    publishForResolutions = resolutions;
+}
+
+- (void)ascertainResolutionsForIOS
+{
+    NSMutableArray* resolutions = [NSMutableArray array];
+
+    // Add iPhone resolutions from publishing settings
+    if (projectSettings.publishResolution_ios_phone)
+            {
+                [resolutions addObject:@"phone"];
+            }
+    if (projectSettings.publishResolution_ios_phonehd)
+            {
+                [resolutions addObject:@"phonehd"];
+            }
+    if (projectSettings.publishResolution_ios_tablet)
+            {
+                [resolutions addObject:@"tablet"];
+            }
+    if (projectSettings.publishResolution_ios_tablethd)
+            {
+                [resolutions addObject:@"tablethd"];
+            }
+    publishForResolutions = resolutions;
+}
+
+- (void)resetNeedRepublish
+{
     if (projectSettings.needRepublish)
     {
         projectSettings.needRepublish = NO;
         [projectSettings store];
     }
-    
-    return YES;
+}
+
+- (void)removeOldPublishDirIfCacheCleaned
+{
+    if (projectSettings.needRepublish && !projectSettings.onlyPublishCCBs)
+    {
+        NSFileManager *fm = [NSFileManager defaultManager];
+        NSString* publishDir;
+
+        publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
+        [fm removeItemAtPath:publishDir error:NULL];
+
+        publishDir = [projectSettings.publishDirectoryAndroid absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
+        [fm removeItemAtPath:publishDir error:NULL];
+
+        publishDir = [projectSettings.publishDirectoryHTML5 absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
+        [fm removeItemAtPath:publishDir error:NULL];
+    }
 }
 
 - (void) publishAsync
