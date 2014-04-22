@@ -274,7 +274,7 @@
 {
     SequencerSequence* copy = [self copy];
     copy.name = [copy.name stringByAppendingString:@" copy"];
-    copy.autoPlay = NO;
+    copy->autoPlay = NO;
     copy.sequenceId = seqId;
     
     [[CocosScene cocosScene].rootNode duplicateKeyframesFromSequenceId:sequenceId toSequenceId:seqId];

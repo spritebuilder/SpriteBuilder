@@ -29,9 +29,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 }
 @dynamic bodyA;
 @dynamic bodyB;
-@synthesize breakingForceEnabled;
-@synthesize maxForceEnabled;
-
 
 - (id) init
 {
@@ -195,11 +192,11 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     return foundNode;
 }
 
-
 -(BOOL)isDraggable
 {
-	return !self.bodyA || !self.bodyB;
+	return YES;
 }
+
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
@@ -328,6 +325,28 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
     self.bodyB = nil;
 }
 
+-(void)setBreakingForceEnabled:(BOOL)breakingForceEnabled
+{
+	if(_breakingForceEnabled != breakingForceEnabled)
+	{
+		if(breakingForceEnabled && isinf(self.breakingForce))
+			self.breakingForce = 100.0f;
+	}
+	
+	_breakingForceEnabled = breakingForceEnabled;
+}
+
+-(void)setMaxForceEnabled:(BOOL)maxForceEnabled
+{
+	if(_maxForceEnabled != maxForceEnabled)
+	{
+		if(maxForceEnabled && isinf(self.maxForce))
+			self.maxForce = 100.0f;
+		
+	}
+	
+	_maxForceEnabled = maxForceEnabled;
+}
 
 #pragma PasteBoard
 
@@ -362,21 +381,6 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
         default:
             return @"bodyB";
     }
-}
-
-- (BOOL) hidden
-{
-    if([SequencerHandler sharedHandler].currentSequence.timelinePosition != 0.0f || ![SequencerHandler sharedHandler].currentSequence.autoPlay)
-    {
-        return YES;
-    }
-    
-    if([AppDelegate appDelegate].playingBack)
-    {
-        return YES;
-    }
-    
-    return [super hidden];
 }
 
 

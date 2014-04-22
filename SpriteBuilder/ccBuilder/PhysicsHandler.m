@@ -417,6 +417,18 @@
             }
         }
     }
+	
+	//Filder bodies that are children of CCBPCCBFiles
+	[possibleBodies removeObjectsInArray:[possibleBodies where:^BOOL(CCNode* node, int idx) {
+		CCNode * parent = node.parent;
+		while (parent) {
+			if([[[parent class] description] isEqualToString:@"CCBPCCBFile"])
+				return YES;
+			parent=parent.parent;
+		}
+		return NO;
+	}]];
+	
     
     //Select the one we're closest too.
     
@@ -502,14 +514,11 @@
     }
     else if(jointHandleIndex == EntireJoint)
     {
+		
         //We've touched down in the centre of the joint. Do we allow it to translate?
-        
-        //If either of the outlets aren't filled out
+		//Return NO if its draggable so the parent can handle it.
         CCBPhysicsJoint * joint = (CCBPhysicsJoint*)node;
-        if(joint.bodyA == nil || joint.bodyB == nil)
-            return NO;
-        
-        return YES;
+		return !joint.isDraggable;
     
     }
     else if(jointHandleIndex != JointHandleUnknown)
@@ -687,13 +696,28 @@
 {
     if(idx == BodyOutletA)
     {
+		if(joint.bodyB == body)
+		{
+			[[AppDelegate appDelegate] modalDialogTitle:@"Duplicate body connected." message:[NSString stringWithFormat:@"You've already connected BodyB to this physics body:%@",body.displayName]];
+			return;
+		}
+
         joint.bodyA = body;
-    
-        [joint setBodyHandle:worldPos bodyType:BodyAnchorA];
+		
+		if(![joint isMemberOfClass:[CCBPhysicsPivotJoint class]])
+			[joint setBodyHandle:worldPos bodyType:BodyAnchorA];
+		
         [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
     }
     else
     {
+		if(joint.bodyA == body)
+		{
+			[[AppDelegate appDelegate] modalDialogTitle:@"Duplicate body connected." message:[NSString stringWithFormat:@"You've already connected BodyA to this physics body:%@",body.displayName]];
+			return;
+		}
+
+		
         joint.bodyB = body;
         [joint setBodyHandle:worldPos bodyType:BodyAnchorB];
         [[AppDelegate appDelegate] refreshProperty:@"bodyB"];

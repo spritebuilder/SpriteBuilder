@@ -188,6 +188,11 @@ static const float kDefaultLength = 58.0f;
     
 }
 
+-(BOOL)isDraggable
+{
+	return !self.bodyA || !self.bodyB;
+}
+
 
 -(void)setAnchorFromBodyB
 {
