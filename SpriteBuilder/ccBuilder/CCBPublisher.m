@@ -1464,6 +1464,9 @@
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
 		NSLog(@"[PUBLISH] Start...");
+
+        [_publishingQueue setSuspended:YES];
+
         NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
 
         if (projectSettings.publishEnvironment == PublishEnvironmentRelease)
@@ -1473,11 +1476,13 @@
 
         [self publish_];
 
+        [_publishingQueue setSuspended:NO];
+
         [self postProcessPublishedPNGFilesWithOptiPNG];
 
-		[self flagFilesWithWarningsAsDirty];
-
         [_publishingQueue waitUntilAllOperationsAreFinished];
+
+		[self flagFilesWithWarningsAsDirty];
 
 		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
 
