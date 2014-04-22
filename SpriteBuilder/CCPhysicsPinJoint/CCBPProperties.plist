@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<integer>3000</integer>
+	<real>3200</real>
 	<key>displayName</key>
 	<string>Physics Distance Joint</string>
 	<key>description</key>
-	<string>Creates a Distance joint that joins two bodies together at a fixed distance.</string>
+	<string>Keeps two physics bodies at a fixed distance.</string>
 	<key>inheritsFrom</key>
 	<string>NSObject</string>
 	<key>canHaveChildren</key>
@@ -77,6 +77,14 @@
 			<string>bodyB</string>
 		</dict>
 		<dict>
+			<key>displayName</key>
+			<string>Collide bodies</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>collideBodies</string>
+		</dict>
+		<dict>
 			<key>defaultSerialization</key>
 			<array>
 				<integer>0</integer>
@@ -107,14 +115,6 @@
 			<string>Point</string>
 			<key>name</key>
 			<string>anchorB</string>
-		</dict>
-		<dict>
-			<key>displayName</key>
-			<string>Collide bodies</string>
-			<key>type</key>
-			<string>Check</string>
-			<key>name</key>
-			<string>collideBodies</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>

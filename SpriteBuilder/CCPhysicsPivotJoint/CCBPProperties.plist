@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<integer>3000</integer>
+	<real>3100</real>
 	<key>displayName</key>
 	<string>Physics Pivot Joint</string>
 	<key>description</key>
-	<string>Creates a pivot joint that joins two bodies together by a circular pivoting hinge.</string>
+	<string>Connects two physics bodies with a pivot joint.</string>
 	<key>inheritsFrom</key>
 	<string>NSObject</string>
 	<key>canHaveChildren</key>
@@ -77,6 +77,14 @@
 			<string>bodyB</string>
 		</dict>
 		<dict>
+			<key>displayName</key>
+			<string>Collide bodies</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>collideBodies</string>
+		</dict>
+		<dict>
 			<key>defaultSerialization</key>
 			<array>
 				<integer>0</integer>
@@ -91,14 +99,6 @@
 			<string>Point</string>
 			<key>name</key>
 			<string>anchorA</string>
-		</dict>
-		<dict>
-			<key>displayName</key>
-			<string>Collide bodies</string>
-			<key>type</key>
-			<string>Check</string>
-			<key>name</key>
-			<string>collideBodies</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
