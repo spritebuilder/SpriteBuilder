@@ -46,10 +46,12 @@
 #import "PublishRegularFileOperation.h"
 #import "PublishSoundFileOperation.h"
 #import "ProjectSettings+SoundSettings.h"
+#import "PublishCCBOperation.h"
 
 
 @interface CCBPublisher()
 
+// TODO not needed anymore after refactoring -> PublishCCBOperation
 @property (nonatomic, copy) NSString *publishFormat;
 
 @end
@@ -134,45 +136,6 @@
     return latestDate;
 }
 
--(void)validateJointsInDocument:(NSMutableDictionary*)document
-{
-    if(document[@"joints"])
-    {
-        NSMutableArray * joints = document[@"joints"];
-        
-        joints = [[joints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSDictionary * joint, NSDictionary *bindings)
-		{
-            __block NSString * bodyType = @"bodyA";
-            
-            //Oh god. Nested blocks!
-            PredicateBlock find = ^BOOL(NSDictionary * dict, int idx) {
-                return [dict.allValues containsObject:bodyType];
-            };
-            
-            //Find bodyA property
-            if(![joint[@"properties"] findFirst:find])
-            {
-                NSString * description = [NSString stringWithFormat:@"Joint %@ must have bodyA attached. Not exporting it.",joint[@"displayName"]];
-                [warnings addWarningWithDescription:description isFatal:NO relatedFile:currentWorkingFile];
-                return NO;
-            }
-            
-            //Find bodyB property
-            bodyType = @"bodyB";
-            if(![joint[@"properties"] findFirst:find])
-            {
-                NSString * description = [NSString stringWithFormat:@"Joint %@ must have a bodyB attached. Not exporting it.",joint[@"displayName"]];
-                [warnings addWarningWithDescription:description isFatal:NO relatedFile:currentWorkingFile];
-                return NO;
-            }
-
-            return YES;
-        }]] mutableCopy];
-
-        document[@"joints"] = joints;
-    }
-}
-
 - (void) addRenamingRuleFrom:(NSString*)src to: (NSString*)dst
 {
     if (projectSettings.flattenPaths)
@@ -185,49 +148,6 @@
     
     // Add the file to the dictionary
     [renamedFiles setObject:dst forKey:src];
-}
-
-- (BOOL) publishCCBFile:(NSString*)srcFile to:(NSString*)dstFile
-{
-    currentWorkingFile = [dstFile lastPathComponent];
-    
-    PlugInExport* plugIn = [[PlugInManager sharedManager] plugInExportForExtension:_publishFormat];
-    if (!plugIn)
-    {
-        [warnings addWarningWithDescription:[NSString stringWithFormat: @"Plug-in is missing for publishing files to %@-format. You can select plug-in in Project Settings.",_publishFormat] isFatal:YES];
-        return NO;
-    }
-    
-    // Load src file
-    NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithContentsOfFile:srcFile];
-    if (!doc)
-    {
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish ccb-file. File is in invalid format: %@",srcFile] isFatal:NO];
-        return YES;
-    }
-
-    [self validateJointsInDocument:doc];
-    
-    // Export file
-    plugIn.flattenPaths = projectSettings.flattenPaths;
-    plugIn.projectSettings = projectSettings;
-    plugIn.delegate = self;
-    NSData* data = [plugIn exportDocument:doc];
-    if (!data)
-    {
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish ccb-file: %@",srcFile] isFatal:NO];
-        return YES;
-    }
-    
-    // Save file
-    BOOL success = [data writeToFile:dstFile atomically:YES];
-    if (!success)
-    {
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish ccb-file. Failed to write file: %@",dstFile] isFatal:NO];
-        return YES;
-    }
-    
-    return YES;
 }
 
 -(NSString*) pathWithCocoaImageResolutionSuffix:(NSString*)path resolution:(NSString*)resolution
@@ -494,10 +414,9 @@
         return;
     }
 
-    [self addRenamingRuleFrom:relPath
-                           to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath
-                                                                                                 format:format
-                                                                                                quality:quality]];
+    [self addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath
+                                                                                                            format:format
+                                                                                                           quality:quality]];
 
     PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:projectSettings
                                                                                              warnings:warnings];
@@ -513,9 +432,8 @@
 
 - (void)publishRegularFile:(NSString *)srcPath to:(NSString*) dstPath
 {
-    PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc]
-            initWithSrcFilePath:srcPath
-                    dstFilePath:dstPath];
+    PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithSrcFilePath:srcPath
+                                                                                          dstFilePath:dstPath];
 
     [operation start];
     // [_publishingQueue addOperation:operation];
@@ -631,7 +549,6 @@
              outDir:(NSString *)outDir
         isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *ext = [[fileName pathExtension] lowercaseString];
 
     // Skip non png files for generated sprite sheets
@@ -643,20 +560,18 @@
 
     if ([copyExtensions containsObject:ext] && !projectSettings.onlyPublishCCBs)
     {
-        // This file and should be copied
-
         // Get destination file name
         NSString *dstFile = [outDir stringByAppendingPathComponent:fileName];
-
-        // Use temp cache directory for generated sprite sheets
-        if (isGeneratedSpriteSheet)
-        {
-            dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
-        }
 
         // Copy file (and possibly convert)
         if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
         {
+            // Use temp cache directory for generated sprite sheets
+            if (isGeneratedSpriteSheet)
+            {
+                dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
+            }
+
             // Publish images
             [self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
         }
@@ -673,45 +588,29 @@
     }
     else if ([[fileName lowercaseString] hasSuffix:@"ccb"] && !isGeneratedSpriteSheet)
     {
-        // This is a ccb-file and should be published
-
-        NSString *strippedFileName = [fileName stringByDeletingPathExtension];
-
-        NSString *dstFile = [[outDir stringByAppendingPathComponent:strippedFileName]
-                                     stringByAppendingPathExtension:_publishFormat];
-
-        // Add file to list of published files
-        NSString *localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
-        [publishedResources addObject:localFileName];
-
-        if ([dstFile isEqualToString:filePath])
-        {
-            [warnings addWarningWithDescription:@"Publish will overwrite files in resource directory." isFatal:YES];
-            return NO;
-        }
-
-        NSDate *srcDate = [CCBFileUtil modificationDateForFile:filePath];
-        NSDate *dstDate = [CCBFileUtil modificationDateForFile:dstFile];
-
-        if (![srcDate isEqualToDate:dstDate])
-        {
-            [[AppDelegate appDelegate]
-                          modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", fileName]];
-
-            // Remove old file
-            [fileManager removeItemAtPath:dstFile error:NULL];
-
-            // Copy the file
-            BOOL sucess = [self publishCCBFile:filePath to:dstFile];
-            if (!sucess)
-            {
-                return NO;
-            }
-
-            [CCBFileUtil setModificationDate:srcDate forFile:dstFile];
-        }
+        [self publishCCB:fileName filePath:filePath outDir:outDir];
     }
     return YES;
+}
+
+- (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outDir:(NSString *)outDir
+{
+    NSString *dstFile = [[outDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
+                                 stringByAppendingPathExtension:_publishFormat];
+
+    // Add file to list of published files
+    NSString *localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
+    // TODO: move to base class or to a delegate
+    [publishedResources addObject:localFileName];
+
+    PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:projectSettings warnings:warnings];
+    operation.fileName = fileName;
+    operation.filePath = filePath;
+    operation.dstFile = dstFile;
+    operation.outDir = outDir;
+
+    [operation start];
+    // [_publishingQueue addOperation:operation];
 }
 
 - (void)processDirectory:(NSString *)directory
@@ -730,20 +629,10 @@
         [self publishRegularFile:filePath to:bmFontOutDir];
 
         NSArray *pngFiles = [self searchForPNGFilesInDirectory:bmFontOutDir];
+        // TODO: this can be generalized
         [_publishedPNGFiles addObjectsFromArray:pngFiles];
 
         return;
-    }
-
-    // This is a directory
-    NSString *childPath = NULL;
-    if (subPath)
-    {
-        childPath = [NSString stringWithFormat:@"%@/%@", subPath, directory];
-    }
-    else
-    {
-        childPath = directory;
     }
 
     // Skip resource independent directories
@@ -770,6 +659,11 @@
     {
         return;
     }
+
+    // This is a directory
+    NSString *childPath = subPath
+        ? [NSString stringWithFormat:@"%@/%@", subPath, directory]
+        : directory;
 
     [self publishDirectory:filePath subPath:childPath];
 }
@@ -1258,11 +1152,6 @@
     [warnings addWarningWithDescription:description isFatal:fatal relatedFile:(relatedFile == nil? currentWorkingFile : relatedFile) resolution:resolution];
 }
 
--(BOOL) exportingToSpriteKit
-{
-	return (projectSettings.engine == CCBTargetEngineSpriteKit);
-}
-
 - (BOOL)doPublish
 {
     [self removeOldPublishDirIfCacheCleaned];
@@ -1533,6 +1422,5 @@
     NSString* ccbChacheDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"];
     [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
 }
-
 
 @end

@@ -750,6 +750,7 @@
 		E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */; };
 		E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */; };
 		E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */; };
+		E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A438244586206C9177 /* PublishCCBOperation.m */; };
 		E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */; };
 		E525FD69EB009F65B4F7DFE6 /* ProjectSettings+SoundSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F822782532C69F3AB292 /* ProjectSettings+SoundSettings.m */; };
 		E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */; };
@@ -2070,12 +2071,14 @@
 		E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorInteger.xib; sourceTree = "<group>"; };
 		E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteSheetOperation.m; sourceTree = "<group>"; };
 		E525F0ED6F868B09686F38DF /* PublishRegularFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishRegularFileOperation.h; sourceTree = "<group>"; };
+		E525F31D5A311C0DBE9C1CD6 /* PublishCCBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishCCBOperation.h; sourceTree = "<group>"; };
 		E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSoundFileOperation.m; sourceTree = "<group>"; };
 		E525F7F40FE585776FA9D95B /* ProjectSettings+SoundSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProjectSettings+SoundSettings.h"; sourceTree = "<group>"; };
 		E525F7FDEB6E06727F3674DC /* OptimizeImageWithOptiPNGOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptimizeImageWithOptiPNGOperation.h; sourceTree = "<group>"; };
 		E525F822782532C69F3AB292 /* ProjectSettings+SoundSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ProjectSettings+SoundSettings.m"; sourceTree = "<group>"; };
 		E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishBaseOperation.m; sourceTree = "<group>"; };
 		E525F8924029BDE31AAE8FA2 /* PublishSoundFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSoundFileOperation.h; sourceTree = "<group>"; };
+		E525F8A438244586206C9177 /* PublishCCBOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishCCBOperation.m; sourceTree = "<group>"; };
 		E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptimizeImageWithOptiPNGOperation.m; sourceTree = "<group>"; };
 		E525FB10982384F8E0C0E079 /* PublishSpriteSheetOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSpriteSheetOperation.h; sourceTree = "<group>"; };
 		E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseOperation.h; sourceTree = "<group>"; };
@@ -3068,6 +3071,8 @@
 				E525F8924029BDE31AAE8FA2 /* PublishSoundFileOperation.h */,
 				E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */,
 				E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */,
+				E525F8A438244586206C9177 /* PublishCCBOperation.m */,
+				E525F31D5A311C0DBE9C1CD6 /* PublishCCBOperation.h */,
 			);
 			name = PublishingOperations;
 			sourceTree = "<group>";
@@ -5860,6 +5865,7 @@
 				E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */,
 				E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */,
 				E525FD69EB009F65B4F7DFE6 /* ProjectSettings+SoundSettings.m in Sources */,
+				E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

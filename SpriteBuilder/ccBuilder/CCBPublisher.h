@@ -39,7 +39,7 @@ enum {
 };
 
 
-@interface CCBPublisher : NSObject <CCBPublishDelegate>
+@interface CCBPublisher : NSObject
 {
     ProjectSettings* projectSettings;
     CCBWarnings* warnings;
