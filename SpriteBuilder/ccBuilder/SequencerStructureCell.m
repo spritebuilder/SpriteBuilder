@@ -138,7 +138,7 @@
 
 - (BOOL) isEditable
 {
-    NSLog(@"isEditable");
+    //NSLog(@"isEditable");
     return YES;
 }
 
