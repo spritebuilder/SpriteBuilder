@@ -77,6 +77,14 @@
 			<string>bodyB</string>
 		</dict>
 		<dict>
+			<key>displayName</key>
+			<string>Collide bodies</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>collideBodies</string>
+		</dict>
+		<dict>
 			<key>defaultSerialization</key>
 			<array>
 				<integer>0</integer>
@@ -107,14 +115,6 @@
 			<string>Point</string>
 			<key>name</key>
 			<string>anchorB</string>
-		</dict>
-		<dict>
-			<key>displayName</key>
-			<string>Collide bodies</string>
-			<key>type</key>
-			<string>Check</string>
-			<key>name</key>
-			<string>collideBodies</string>
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
