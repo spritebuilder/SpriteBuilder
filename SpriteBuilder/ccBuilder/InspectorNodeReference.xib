@@ -76,11 +76,7 @@
                     </connections>
                 </button>
                 <button id="ZuD-Gf-OKM">
-<<<<<<< HEAD
                     <rect key="frame" x="171" y="13" width="12" height="14"/>
-=======
-                    <rect key="frame" x="170" y="13" width="12" height="14"/>
->>>>>>> 00673aa121c660bce50fdc7fdee83ee9cce13156
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="inspector-body-goto-hi" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="2ih-Rq-14p">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
