@@ -43,6 +43,7 @@
 #import "SBUserDefaultsKeys.h"
 #import "OptimizeImageWithOptiPNGOperation.h"
 #import "PublishSpriteSheetOperation.h"
+#import "PublishRegularFileOperation.h"
 
 
 @interface CCBPublisher()
@@ -545,21 +546,14 @@
     return YES;
 }
 
-- (BOOL) publishRegularFile:(NSString*) srcPath to:(NSString*) dstPath
+- (void)publishRegularFile:(NSString *)srcPath to:(NSString*) dstPath
 {
-    // Check if file already exists
-    if ([[NSFileManager defaultManager] fileExistsAtPath:dstPath] &&
-        [[CCBFileUtil modificationDateForFile:srcPath] isEqualToDate:[CCBFileUtil modificationDateForFile:dstPath]])
-    {
-        return YES;
-    }
+    PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc]
+            initWithSrcFilePath:srcPath
+                    dstFilePath:dstPath];
 
-    // Copy file and make sure modification date is the same as for src file
-    [[NSFileManager defaultManager] removeItemAtPath:dstPath error:NULL];
-    [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:dstPath error:NULL];
-    [CCBFileUtil setModificationDate:[CCBFileUtil modificationDateForFile:srcPath] forFile:dstPath];
-    
-    return YES;
+    [operation start];
+    // [_publishingQueue addOperation:operation];
 }
 
 - (BOOL)publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath
