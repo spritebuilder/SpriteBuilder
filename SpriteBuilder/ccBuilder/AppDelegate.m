@@ -154,6 +154,8 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize itemTabView;
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
+@dynamic	showJoints;
+
 static AppDelegate* sharedAppDelegate;
 
 #pragma mark Setup functions
@@ -596,7 +598,6 @@ typedef enum
     self.showGuides = YES;
     self.snapToGuides = YES;
     self.showStickyNotes = YES;
-    self.showJoints = YES;
 	
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
@@ -2559,6 +2560,17 @@ static BOOL hideAllToNextSeparator;
     {
         [self dropAddSpriteNamed:spriteFile inSpriteSheet:spriteSheetFile at:[node convertToNodeSpace:pt] parent:node];
     }
+}
+
+-(BOOL)showJoints
+{
+	return ![SceneGraph instance].joints.node.hidden;
+}
+
+-(void)setShowJoints:(BOOL)showJoints
+{
+	[SceneGraph instance].joints.node.hidden = !showJoints;
+	[sequenceHandler.outlineHierarchy reloadItem:[SceneGraph instance].joints reloadChildren:YES];
 }
 
 -(void)addJoint:(NSString*)jointName at:(CGPoint)pt
