@@ -44,6 +44,8 @@
 #import "OptimizeImageWithOptiPNGOperation.h"
 #import "PublishSpriteSheetOperation.h"
 #import "PublishRegularFileOperation.h"
+#import "PublishSoundFileOperation.h"
+#import "ProjectSettings+SoundSettings.h"
 
 
 @interface CCBPublisher()
@@ -480,70 +482,45 @@
 	return srcDate;
 }
 
-- (BOOL) publishSoundFile:(NSString*) srcPath to:(NSString*) dstPath
+- (void) publishSoundFile:(NSString*) srcPath to:(NSString*) dstPath
 {
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
-    
-    int format = 0;
-    int quality = 0;
-    
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
+
+    int format = [projectSettings soundFormatForRelPath:relPath targetType:targetType];
+    int quality = [projectSettings soundQualityForRelPath:relPath targetType:targetType];
+
+    if (format == -1)
     {
-        int formatRaw = [[projectSettings valueForRelPath:relPath andKey:@"format_ios_sound"] intValue];
-        quality = [[projectSettings valueForRelPath:relPath andKey:@"format_ios_sound_quality"] intValue];
-        if (!quality) quality = projectSettings.publishAudioQuality_ios;
-        
-        if (formatRaw == 0) format = kFCSoundFormatCAF;
-        else if (formatRaw == 1) format = kFCSoundFormatMP4;
-        else
-        {
-            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
-            return NO;
-        }
+        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
+        return;
     }
-    else if (targetType == kCCBPublisherTargetTypeAndroid)
-    {
-        int formatRaw = [[projectSettings valueForRelPath:relPath andKey:@"format_android_sound"] intValue];
-        quality = [[projectSettings valueForRelPath:relPath andKey:@"format_android_sound_quality"] intValue];
-        if (!quality) quality = projectSettings.publishAudioQuality_android;
-        
-        if (formatRaw == 0) format = kFCSoundFormatOGG;
-        else
-        {
-            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
-            return NO;
-        }
-    }
-    
+
+    [self addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath format:format quality:quality]];
+
     NSFileManager* fm = [NSFileManager defaultManager];
-    
     NSString* dstPathConverted = [[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:dstPath format:format quality:quality];
     BOOL isDirty = [projectSettings isDirtyRelPath:relPath];
-    
-    [self addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath format:format quality:quality]];
-    
-    if ([fm fileExistsAtPath:dstPathConverted] && [[CCBFileUtil modificationDateForFile:srcPath] isEqualToDate:[CCBFileUtil modificationDateForFile:dstPathConverted]] && !isDirty)
+
+    // Skip files that are already converted
+    if ([fm fileExistsAtPath:dstPathConverted]
+        && [[CCBFileUtil modificationDateForFile:srcPath] isEqualToDate:[CCBFileUtil modificationDateForFile:dstPathConverted]]
+        && !isDirty)
     {
-        // Skip files that are already converted
-        return YES;
+        return;
     }
-    
-    // Copy file
-    [fm copyItemAtPath:srcPath toPath:dstPath error:NULL];
-    
-    // Convert file
-    dstPathConverted = [[FCFormatConverter defaultConverter] convertSoundAtPath:dstPath format:format quality:quality];
-    
-    if (!dstPathConverted)
-    {
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert audio file %@", relPath] isFatal:NO];
-        return YES;
-    }
-    
-    // Update modification date
-    [CCBFileUtil setModificationDate:[CCBFileUtil modificationDateForFile:srcPath] forFile:dstPathConverted];
-    
-    return YES;
+
+    PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc]
+            initWithProjectSettings:projectSettings
+                           warnings:warnings];
+
+    operation.srcFilePath = srcPath;
+    operation.dstFilePath = dstPathConverted;
+    operation.format = format;
+    operation.quality = quality;
+    operation.relativePath = relPath;
+
+    [operation start];
+    // [_publishingQueue addOperation:operation];
 }
 
 - (void)publishRegularFile:(NSString *)srcPath to:(NSString*) dstPath
