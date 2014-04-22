@@ -3032,7 +3032,7 @@ static BOOL hideAllToNextSeparator;
 }
 
 
-- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser async:(BOOL)async
+- (void)publishAndRun:(BOOL)run async:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
         && !projectSettings.publishEnablediPhone
@@ -3050,7 +3050,6 @@ static BOOL hideAllToNextSeparator;
     // Setup publisher, publisher is released in publisher:finishedWithWarnings:
     CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
     publisher.runAfterPublishing = run;
-    publisher.browser = browser;
     
     // Check if there are unsaved documents
     if ([self hasDirtyDocument])
@@ -3115,25 +3114,11 @@ static BOOL hideAllToNextSeparator;
     {
         [projectViewTabs selectBarButtonIndex:3];
     }
-    
-    
-    
 }
 
 - (IBAction) menuPublishProject:(id)sender
 {
-    [self publishAndRun:NO runInBrowser:NULL async:YES];
-}
-
-- (IBAction) menuPublishProjectAndRun:(id)sender
-{
-    [self publishAndRun:YES runInBrowser:NULL async:YES];
-}
-
-- (IBAction)menuPublishProjectAndRunInBrowser:(id)sender
-{
-    NSMenuItem* item = (NSMenuItem *)sender;
-    [self publishAndRun:YES runInBrowser:item.title async:YES];
+    [self publishAndRun:NO async:YES];
 }
 
 - (IBAction) menuCleanCacheDirectories:(id)sender

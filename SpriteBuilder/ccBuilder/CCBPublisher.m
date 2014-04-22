@@ -52,10 +52,6 @@
     NSOperationQueue *_publishingQueue;
 }
 
-@synthesize publishFormat;
-@synthesize runAfterPublishing;
-@synthesize browser;
-
 - (NSDate *)cachedModifyDateForKey:(NSString *)key
 {
 	return [_modifiedDatesCache objectForKey:key];
@@ -187,10 +183,10 @@
 {
     currentWorkingFile = [dstFile lastPathComponent];
     
-    PlugInExport* plugIn = [[PlugInManager sharedManager] plugInExportForExtension:publishFormat];
+    PlugInExport* plugIn = [[PlugInManager sharedManager] plugInExportForExtension:_publishFormat];
     if (!plugIn)
     {
-        [warnings addWarningWithDescription:[NSString stringWithFormat: @"Plug-in is missing for publishing files to %@-format. You can select plug-in in Project Settings.",publishFormat] isFatal:YES];
+        [warnings addWarningWithDescription:[NSString stringWithFormat: @"Plug-in is missing for publishing files to %@-format. You can select plug-in in Project Settings.",_publishFormat] isFatal:YES];
         return NO;
     }
     
@@ -718,7 +714,7 @@
         NSString *strippedFileName = [fileName stringByDeletingPathExtension];
 
         NSString *dstFile = [[outDir stringByAppendingPathComponent:strippedFileName]
-                                     stringByAppendingPathExtension:publishFormat];
+                                     stringByAppendingPathExtension:_publishFormat];
 
         // Add file to list of published files
         NSString *localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
@@ -1302,11 +1298,11 @@
 	return (projectSettings.engine == CCBTargetEngineSpriteKit);
 }
 
-- (BOOL) publish_
+- (BOOL)doPublish
 {
     [self removeOldPublishDirIfCacheCleaned];
 
-    if (!runAfterPublishing)
+    if (!_runAfterPublishing)
     {
         if (![self publishIOS])
         {
@@ -1495,7 +1491,7 @@
             [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
         }
 
-        [self publish_];
+        [self doPublish];
 
         [_publishingQueue setSuspended:NO];
 
@@ -1554,13 +1550,11 @@
 
 - (void) publish
 {
-    // Do actual publish
-    [self publish_];
+    [self doPublish];
 
 	[self flagFilesWithWarningsAsDirty];
 
-    AppDelegate* ad = [AppDelegate appDelegate];
-    [ad publisher:self finishedWithWarnings:warnings];
+    [[AppDelegate appDelegate] publisher:self finishedWithWarnings:warnings];
 }
 
 + (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings
