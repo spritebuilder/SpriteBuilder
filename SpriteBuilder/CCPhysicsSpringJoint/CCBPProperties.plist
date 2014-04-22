@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<integer>3000</integer>
+	<real>3300</real>
 	<key>displayName</key>
 	<string>Physics Spring Joint</string>
 	<key>description</key>
-	<string>Creates a Spring joint that with a fixed elastic length that connects two bodies.</string>
+	<string>Connects two physics bodies with an elastic spring.</string>
 	<key>inheritsFrom</key>
 	<string>NSObject</string>
 	<key>canHaveChildren</key>

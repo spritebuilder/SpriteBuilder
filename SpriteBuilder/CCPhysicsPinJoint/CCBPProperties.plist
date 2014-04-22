@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<integer>3000</integer>
+	<real>3200</real>
 	<key>displayName</key>
 	<string>Physics Distance Joint</string>
 	<key>description</key>
-	<string>Creates a Distance joint that joins two bodies together at a fixed distance.</string>
+	<string>Keeps two physics bodies at a fixed distance.</string>
 	<key>inheritsFrom</key>
 	<string>NSObject</string>
 	<key>canHaveChildren</key>
