@@ -776,6 +776,8 @@ typedef enum
 		[[SceneGraph instance].joints.all forEach:^(CCNode * joint, int idx) {
 			joint.zOrder = (joint == selectedJoint) ? 1 : 0;
 		}];
+		
+		selection = [NSArray arrayWithObject:selectedJoint];
 	}
 	
 	
