@@ -46,17 +46,15 @@ enum {
     NSString* outputDir;
     NSArray* copyExtensions;
     NSArray* publishForResolutions;
-    NSArray* generatedSpriteSheetDirs;
     NSMutableSet* publishedResources;
     NSMutableDictionary* renamedFiles;
     NSMutableArray* publishedSpriteSheetNames;
     NSMutableSet* publishedSpriteSheetFiles;
     // TODO: refactor to typdef instead of int
     int targetType;
-    NSString * currentWorkingFile; //Used to help with warnings description.
+    NSString *currentWorkingFile; //Used to help with warnings description.
 }
 
-@property (nonatomic,copy) NSString* publishFormat;
 @property (nonatomic,assign) BOOL runAfterPublishing;
 
 - (id) initWithProjectSettings:(ProjectSettings*)settings warnings:(CCBWarnings*)w;

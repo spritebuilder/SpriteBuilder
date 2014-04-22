@@ -44,6 +44,13 @@
 #import "OptimizeImageWithOptiPNGOperation.h"
 #import "PublishSpriteSheetOperation.h"
 
+
+@interface CCBPublisher()
+
+@property (nonatomic, copy) NSString *publishFormat;
+
+@end
+
 @implementation CCBPublisher
 {
 	NSMutableDictionary *_modifiedDatesCache;
@@ -80,7 +87,7 @@
     warnings = w;
     
     // Setup extensions to copy
-    copyExtensions = [[NSArray alloc] initWithObjects:@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", nil];
+    copyExtensions = @[@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang"];
     
     publishedSpriteSheetNames = [[NSMutableArray alloc] init];
     publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
@@ -1211,11 +1218,7 @@
     
     publishedResources = [NSMutableSet set];
     renamedFiles = [NSMutableDictionary dictionary];
-    
-    // Setup paths for automatically generated sprite sheets
-	// TODO: this is never used?
-    generatedSpriteSheetDirs = [projectSettings smartSpriteSheetDirectories];
-    
+
     // Publish resources and ccb-files
     for (NSString* aDir in projectSettings.absoluteResourcePaths)
     {
