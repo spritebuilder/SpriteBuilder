@@ -206,7 +206,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
 -(void)updateSelectionUI
 {
     //If selected, display selected sprites.
-    if(selectedBodyHandle & (1 << EntireJoint) && _restLengthEnabled)
+    if(selectedBodyHandle & (1 << EntireJoint) && _restLengthEnabled && (self.bodyA && self.bodyB))
     {
 		
         if(restLengthHandle.parent == nil)
@@ -328,6 +328,12 @@ const int kSpringHeightHalf = kSpringHeight/2;
 
 -(void)setRestLengthEnabled:(BOOL)restLengthEnabled
 {
+	if((!self.bodyA || !self.bodyB) && self.isRunningInActiveScene)
+	{
+		[[AppDelegate appDelegate] modalDialogTitle:@"Assign Bodies" message:@"You must assign this joint to both BodyA and BodyB before editing the rest length"];
+		return;
+	}
+	
 	_restLengthEnabled = restLengthEnabled;
 	self.restLength = self.restLength;
 	
