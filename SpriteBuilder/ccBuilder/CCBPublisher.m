@@ -482,42 +482,30 @@
 	return srcDate;
 }
 
-- (void) publishSoundFile:(NSString*) srcPath to:(NSString*) dstPath
+- (void)publishSoundFile:(NSString *)srcPath to:(NSString *)dstPath
 {
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
 
     int format = [projectSettings soundFormatForRelPath:relPath targetType:targetType];
     int quality = [projectSettings soundQualityForRelPath:relPath targetType:targetType];
-
     if (format == -1)
     {
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
         return;
     }
 
-    [self addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath format:format quality:quality]];
+    [self addRenamingRuleFrom:relPath
+                           to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath
+                                                                                                 format:format
+                                                                                                quality:quality]];
 
-    NSFileManager* fm = [NSFileManager defaultManager];
-    NSString* dstPathConverted = [[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:dstPath format:format quality:quality];
-    BOOL isDirty = [projectSettings isDirtyRelPath:relPath];
-
-    // Skip files that are already converted
-    if ([fm fileExistsAtPath:dstPathConverted]
-        && [[CCBFileUtil modificationDateForFile:srcPath] isEqualToDate:[CCBFileUtil modificationDateForFile:dstPathConverted]]
-        && !isDirty)
-    {
-        return;
-    }
-
-    PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc]
-            initWithProjectSettings:projectSettings
-                           warnings:warnings];
+    PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:projectSettings
+                                                                                             warnings:warnings];
 
     operation.srcFilePath = srcPath;
-    operation.dstFilePath = dstPathConverted;
+    operation.dstFilePath = dstPath;
     operation.format = format;
     operation.quality = quality;
-    operation.relativePath = relPath;
 
     [operation start];
     // [_publishingQueue addOperation:operation];

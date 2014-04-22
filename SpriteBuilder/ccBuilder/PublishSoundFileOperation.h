@@ -9,6 +9,5 @@
 @property (nonatomic, copy) NSString *dstFilePath;
 @property (nonatomic) int format;
 @property (nonatomic) int quality;
-@property (nonatomic, copy) NSString *relativePath;
 
 @end

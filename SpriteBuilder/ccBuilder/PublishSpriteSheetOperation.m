@@ -161,6 +161,7 @@
 - (void)cancel
 {
     // TODO
+    [super cancel];
 }
 
 - (NSString *)description
