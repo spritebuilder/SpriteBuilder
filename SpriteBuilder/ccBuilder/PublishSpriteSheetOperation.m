@@ -41,6 +41,7 @@
 
 - (void)main
 {
+    // dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
     [self loadSettings];
 
     [self configurePacker];

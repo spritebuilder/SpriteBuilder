@@ -47,31 +47,15 @@
 #import "PublishSoundFileOperation.h"
 #import "ProjectSettings+SoundSettings.h"
 #import "PublishCCBOperation.h"
-
-
-@interface CCBPublisher()
-
-// TODO not needed anymore after refactoring -> PublishCCBOperation
-@property (nonatomic, copy) NSString *publishFormat;
-
-@end
+#import "PublishImageOperation.h"
+#import "DateCache.h"
 
 @implementation CCBPublisher
 {
-	NSMutableDictionary *_modifiedDatesCache;
+    DateCache *_modifiedDatesCache;
     NSMutableSet *_publishedPNGFiles;
 
     NSOperationQueue *_publishingQueue;
-}
-
-- (NSDate *)cachedModifyDateForKey:(NSString *)key
-{
-	return [_modifiedDatesCache objectForKey:key];
-}
-
-- (void)setModifyCachedDate:(id)date forKey:(NSString *)key
-{
-	[_modifiedDatesCache setObject:date forKey:key];
 }
 
 - (id) initWithProjectSettings:(ProjectSettings*)settings warnings:(CCBWarnings*)w
@@ -82,8 +66,10 @@
 		return NULL;
 	}
 
-	_modifiedDatesCache = [NSMutableDictionary dictionary];
+    _modifiedDatesCache = [[DateCache alloc] init];
+
     _publishedPNGFiles = [NSMutableSet set];
+
     _publishingQueue = [[NSOperationQueue alloc] init];
     _publishingQueue.maxConcurrentOperationCount = 1;
 
@@ -96,9 +82,6 @@
     
     publishedSpriteSheetNames = [[NSMutableArray alloc] init];
     publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
-    
-    // Set format to use for exports
-    self.publishFormat = projectSettings.exporter;
 
     return self;
 }
@@ -150,256 +133,27 @@
     [renamedFiles setObject:dst forKey:src];
 }
 
--(NSString*) pathWithCocoaImageResolutionSuffix:(NSString*)path resolution:(NSString*)resolution
-{
-	NSString* extension = [path pathExtension];
-	
-	if ([resolution isEqualToString:@"phonehd"])
-	{
-		path = [NSString stringWithFormat:@"%@@2x.%@", [path stringByDeletingPathExtension], extension];
-	}
-	else if ([resolution isEqualToString:@"tablet"])
-	{
-		path = [NSString stringWithFormat:@"%@~ipad.%@", [path stringByDeletingPathExtension], extension];
-	}
-	else if ([resolution isEqualToString:@"tablethd"])
-	{
-		path = [NSString stringWithFormat:@"%@@2x~ipad.%@", [path stringByDeletingPathExtension], extension];
-	}
-	
-	return path;
-}
-
 - (BOOL)publishImageForResolutionsWithFile:(NSString *)srcFile to:(NSString *)dstFile isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir
 {
     for (NSString* resolution in publishForResolutions)
     {
-		if (![self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outDir:outDir resolution:resolution])
-		{
-			return NO;
-		}
+        PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:projectSettings
+                                                                                         warnings:warnings];
+        operation.srcPath = srcFile;
+        operation.dstPath = dstFile;
+        operation.isSpriteSheet = isSpriteSheet;
+        operation.outDir = outDir;
+        operation.resolution = resolution;
+        operation.targetType = targetType;
+        operation.publishedResources = publishedResources;
+        operation.modifiedFileDateCache = _modifiedDatesCache;
+        operation.publisher = self;
+        operation.publishedPNGFiles = _publishedPNGFiles;
+
+        [operation start];
 	}
     
     return YES;
-}
-
-- (BOOL)publishImageFile:(NSString *)srcPath to:(NSString *)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir resolution:(NSString *)resolution
-{
-    NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
-
-    if (isSpriteSheet
-		&& [self isSpriteSheetAlreadyPublished:srcPath outDir:outDir resolution:resolution])
-    {
-		return NO;
-	}
-
-	[publishedResources addObject:relPath];
-
-    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", [dstPath lastPathComponent]]];
-    
-    // Find out which file to copy for the current resolution
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSString* srcAutoPath = NULL;
-    
-    NSString* srcFileName = [srcPath lastPathComponent];
-    NSString* dstFileName = [dstPath lastPathComponent];
-    NSString* srcDir = [srcPath stringByDeletingLastPathComponent];
-    NSString* dstDir = [dstPath stringByDeletingLastPathComponent];
-    NSString* autoDir = [srcDir stringByAppendingPathComponent:@"resources-auto"];
-    srcAutoPath = [autoDir stringByAppendingPathComponent:srcFileName];
-    
-    // Update path to reflect resolution
-    srcDir = [srcDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:resolution]];
-    dstDir = [dstDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:resolution]];
-    
-    srcPath = [srcDir stringByAppendingPathComponent:srcFileName];
-    dstPath = [dstDir stringByAppendingPathComponent:dstFileName];
-    
-	// Sprite Kit requires specific extensions for specific image resolutions (ie @2x, ~ipad, ..)
-	if (projectSettings.engine == CCBTargetEngineSpriteKit)
-	{
-		dstPath = [self pathWithCocoaImageResolutionSuffix:dstPath resolution:resolution];
-	}
-
-    // Create destination directory if it doesn't exist
-    [fileManager createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
-
-    // Get the format of the published image
-    int format = kFCImageFormatPNG;
-    BOOL dither = NO;
-    BOOL compress = NO;
-    
-    if (!isSpriteSheet)
-    {
-        if (targetType == kCCBPublisherTargetTypeIPhone)
-        {
-            format = [[projectSettings valueForRelPath:relPath andKey:@"format_ios"] intValue];
-            dither = [[projectSettings valueForRelPath:relPath andKey:@"format_ios_dither"] boolValue];
-            compress = [[projectSettings valueForRelPath:relPath andKey:@"format_ios_compress"] boolValue];
-        }
-        else if (targetType == kCCBPublisherTargetTypeAndroid)
-        {
-            format = [[projectSettings valueForRelPath:relPath andKey:@"format_android"] intValue];
-            dither = [[projectSettings valueForRelPath:relPath andKey:@"format_android_dither"] boolValue];
-            compress = [[projectSettings valueForRelPath:relPath andKey:@"format_android_compress"] boolValue];
-        }
-    }
-    
-    // Fetch new name
-    NSString* dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:dstPath format:format compress:compress isSpriteSheet:isSpriteSheet];
-    
-    // Add renaming rule
-    NSString* relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath format:format compress:compress isSpriteSheet:isSpriteSheet];
-	
-    [self addRenamingRuleFrom:relPath to:relPathRenamed];
-    
-    // Copy and convert the image
-    BOOL isDirty = [projectSettings isDirtyRelPath:relPath];
-    
-    if ([fileManager fileExistsAtPath:srcPath])
-    {
-        // Has customized file for resolution
-        
-        // Check if file already exists
-        NSDate* srcDate = [CCBFileUtil modificationDateForFile:srcPath];
-        NSDate* dstDate = [CCBFileUtil modificationDateForFile:dstPathProposal];
-        
-        if (dstDate && [srcDate isEqualToDate:dstDate] && !isDirty)
-        {
-            return YES;
-        }
-        
-        // Copy file
-        [fileManager copyItemAtPath:srcPath toPath:dstPath error:NULL];
-
-        // Convert it
-        NSString* dstPathConverted = nil;
-        NSError  * error;
-
-        if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
-        {
-            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
-            return NO;
-        }
-        
-        // Update modification date
-        [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
-
-        if (!isSpriteSheet && format == kFCImageFormatPNG)
-        {
-            [_publishedPNGFiles addObject:dstPathConverted];
-        }
-
-        return YES;
-    }
-    else if ([fileManager fileExistsAtPath:srcAutoPath])
-    {
-        // Use resources-auto file for conversion
-        
-        // Check if file already exist
-        NSDate* srcDate = [CCBFileUtil modificationDateForFile:srcAutoPath];
-        NSDate* dstDate = [CCBFileUtil modificationDateForFile:dstPathProposal];
-        
-        if (dstDate && [srcDate isEqualToDate:dstDate] && !isDirty)
-        {
-            return YES;
-        }
-        
-        // Copy file and resize
-        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:dstPath forResolution:resolution];
-        
-        // Convert it
-        NSString* dstPathConverted = nil;
-        NSError  * error;
-        
-        if(![[FCFormatConverter defaultConverter] convertImageAtPath:dstPath format:format dither:dither compress:compress isSpriteSheet:isSpriteSheet outputFilename:&dstPathConverted error:&error])
-        {
-            [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription] isFatal:NO];
-            return NO;
-        }
-        
-        // Update modification date
-        [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
-
-        if (!isSpriteSheet && format == kFCImageFormatPNG)
-        {
-            [_publishedPNGFiles addObject:dstPathConverted];
-        }
-
-        return YES;
-    }
-    else
-    {
-        // File is missing
-        
-        // Log a warning and continue publishing
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish file %@, make sure it is in the resources-auto folder.",srcFileName] isFatal:NO];
-        return YES;
-    }
-}
-
-- (BOOL)isSpriteSheetAlreadyPublished:(NSString *)srcPath outDir:(NSString *)outDir resolution:(NSString *)resolution
-{
-	NSString* ssDir = [srcPath stringByDeletingLastPathComponent];
-	NSString* ssDirRel = [ResourceManagerUtil relativePathFromAbsolutePath:ssDir];
-	NSString* ssName = [ssDir lastPathComponent];
-
-	NSDate *srcDate = [self modifiedDateOfSpriteSheetDirectory:ssDir];
-
-	BOOL isDirty = [projectSettings isDirtyRelPath:ssDirRel];
-
-	// Make the name for the final sprite sheet
-	NSString* ssDstPath = [[[[outDir stringByDeletingLastPathComponent]
-									 stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
-									 stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
-
-	NSDate *ssDstDate = [self modifiedDataOfSpriteSheetFile:ssDstPath];
-
-	if (ssDstDate && [ssDstDate isEqualToDate:srcDate] && !isDirty)
-	{
-		return YES;
-	}
-	return NO;
-}
-
-- (NSDate *)modifiedDataOfSpriteSheetFile:(NSString *)spriteSheetFile
-{
-	id ssDstDate = [self cachedModifyDateForKey:spriteSheetFile];
-
-	if ([ssDstDate isMemberOfClass:[NSNull class]])
-	{
-		return nil;
-	}
-
-	if (!ssDstDate)
-	{
-		ssDstDate = [CCBFileUtil modificationDateForFile:spriteSheetFile];
-		// Storing NSNull since CCBFileUtil can return nil due to a non existing file
-		// So we don't run into the whole fille IO process again, rather hit the cache and
-		// bend the result here
-		if (ssDstDate == nil)
-		{
-			[self setModifyCachedDate:[NSNull null] forKey:spriteSheetFile];
-		}
-		else
-		{
-			[self setModifyCachedDate:ssDstDate forKey:spriteSheetFile];
-		}
-	}
-
-	return ssDstDate;
-}
-
-- (NSDate *)modifiedDateOfSpriteSheetDirectory:(NSString *)directory
-{
-	NSDate *srcDate = [self cachedModifyDateForKey:directory];
-	if (!srcDate)
-		{
-			srcDate = [self latestModifiedDateForDirectory:directory];
-			[self setModifyCachedDate:srcDate forKey:directory];
-		}
-	return srcDate;
 }
 
 - (void)publishSoundFile:(NSString *)srcPath to:(NSString *)dstPath
@@ -596,7 +350,7 @@
 - (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outDir:(NSString *)outDir
 {
     NSString *dstFile = [[outDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
-                                 stringByAppendingPathExtension:_publishFormat];
+                                 stringByAppendingPathExtension:projectSettings.exporter];
 
     // Add file to list of published files
     NSString *localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
@@ -765,10 +519,12 @@
 			continue;
 		}
 
-        PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc]
-                initWithAppDelegate:[AppDelegate appDelegate]
-                           warnings:warnings
-                    projectSettings:projectSettings];
+        // [self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
+
+        // TODO: use base class
+        PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithAppDelegate:[AppDelegate appDelegate]
+                                                                                                 warnings:warnings
+                                                                                          projectSettings:projectSettings];
 
         operation.publishDirectory = publishDirectory;
         operation.publishedPNGFiles = _publishedPNGFiles;
@@ -1145,11 +901,6 @@
     [zipTask waitUntilExit];
     
     return [manager fileExistsAtPath:file];
-}
-
-- (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution
-{
-    [warnings addWarningWithDescription:description isFatal:fatal relatedFile:(relatedFile == nil? currentWorkingFile : relatedFile) resolution:resolution];
 }
 
 - (BOOL)doPublish
