@@ -164,8 +164,8 @@
             for (int i = 0; i < strLen; i++)
             {
                 NSString* ch = [str substringWithRange:NSMakeRange(i, 1)];
-                
-                CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:ch charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+
+                CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentCenter];
                 lbl.anchorPoint = ccp(0,0);
                 lbl.position = ccp(2, y + 1 + 8*(strLen - i - 1)/scale);
             
@@ -207,10 +207,10 @@
         {
             int displayDist = xDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
-            
-            CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:str charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+
+            CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentCenter];
             lbl.anchorPoint = ccp(0,0);
-            lbl.position = ccp((x+1), 1);
+            lbl.position = ccp((x+1), -1);
             [marksHorizontal addChild:lbl z:1];
         }
         x+=10;
