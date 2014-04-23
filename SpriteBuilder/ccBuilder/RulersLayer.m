@@ -24,10 +24,10 @@
 
 #import "RulersLayer.h"
 #import "CCBGlobals.h"
-#import "CCLabelAtlas.h"
 #import "CCTextureCache.h"
 
-#define kCCBRulerWidth 15
+static CGFloat const kCCBRulerWidth = 15.0;
+static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
 @implementation RulersLayer
 
@@ -75,20 +75,21 @@
 	xyBg.anchorPoint = ccp(0,0);
 	xyBg.position = ccp(0,0);
 	
-	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-	lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
-	lblX.anchorPoint = ccp(1,0);
-	lblX.position = ccp(47/scale,3/scale);
-	lblX.visible = NO;
-	[self addChild:lblX z:6];
-	
-	lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+	//CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    lblX = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
+    lblX.anchorPoint = ccp(1,0);
+    lblX.positionType = CCPositionTypeUIPoints;
+   	lblX.position = ccp(47,0);
+   	lblX.visible = NO;
+    [self addChild:lblX z:6];
+
+    lblY = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
 	lblY.anchorPoint = ccp(1,0);
-	lblY.position = ccp(97/scale,3/scale);
+    lblY.positionType = CCPositionTypeUIPoints;
+	lblY.position = ccp(97,0);
 	lblY.visible = NO;
 	[self addChild:lblY z:6];
-	//lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'0'];
-	
+
 	// Need to force it to update the rulers.
 	winSize = CGSizeZero;
 	[[CocosScene cocosScene] forceRedraw];
@@ -165,10 +166,10 @@
             for (int i = 0; i < strLen; i++)
             {
                 NSString* ch = [str substringWithRange:NSMakeRange(i, 1)];
-                
-                CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:ch charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+
+                CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
                 lbl.anchorPoint = ccp(0,0);
-                lbl.position = ccp(2, y + 1 + 8*(strLen - i - 1)/scale);
+                lbl.position = ccp(2/scale, y + (8*(strLen - i - 1) - 1)/scale);
             
                 [marksVertical addChild:lbl z:1];
             }
@@ -208,10 +209,10 @@
         {
             int displayDist = xDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
-            
-            CCLabelAtlas* lbl = [CCLabelAtlas labelWithString:str charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+
+            CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
             lbl.anchorPoint = ccp(0,0);
-            lbl.position = ccp((x+1), 1);
+            lbl.position = ccp(x+1/scale, -2/scale);
             [marksHorizontal addChild:lbl z:1];
         }
         x+=10;
