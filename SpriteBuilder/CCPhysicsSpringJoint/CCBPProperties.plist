@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<integer>3000</integer>
+	<real>3300</real>
 	<key>displayName</key>
 	<string>Physics Spring Joint</string>
 	<key>description</key>
-	<string>Creates a Spring joint that with a fixed elastic length that connects two bodies.</string>
+	<string>Connects two physics bodies with an elastic spring.</string>
 	<key>inheritsFrom</key>
 	<string>NSObject</string>
 	<key>canHaveChildren</key>
@@ -77,6 +77,14 @@
 			<string>bodyB</string>
 		</dict>
 		<dict>
+			<key>displayName</key>
+			<string>Collide bodies</string>
+			<key>type</key>
+			<string>Check</string>
+			<key>name</key>
+			<string>collideBodies</string>
+		</dict>
+		<dict>
 			<key>defaultSerialization</key>
 			<array>
 				<integer>0</integer>
@@ -109,14 +117,6 @@
 			<string>anchorB</string>
 		</dict>
 		<dict>
-			<key>displayName</key>
-			<string>Collide bodies</string>
-			<key>type</key>
-			<string>Check</string>
-			<key>name</key>
-			<string>collideBodies</string>
-		</dict>
-		<dict>
 			<key>defaultSerialization</key>
 			<integer>0</integer>
 			<key>type</key>
@@ -140,7 +140,7 @@
 			<key>defaultSerialization</key>
 			<integer>0</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>EnabledFloat</string>
 			<key>name</key>
 			<string>restLength</string>
 			<key>displayName</key>

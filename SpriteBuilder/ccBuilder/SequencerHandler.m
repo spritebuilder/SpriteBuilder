@@ -440,10 +440,13 @@ static SequencerHandler* sharedSequencerHandler;
 {
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
+		
+		[appDelegate willChangeValueForKey:@"showJoints"];
         bool hidden = [(NSNumber*)object boolValue];
         SequencerJoints * joints = (SequencerJoints*)item;
         joints.node.hidden = hidden;
         [outlineView reloadItem:joints reloadChildren:YES];
+		[appDelegate didChangeValueForKey:@"showJoints"];
         return;
     }
     
