@@ -173,9 +173,13 @@ static const float kDefaultLength = 58.0f;
     CGPoint anchorBWorldpos = [anchorHandleB convertToWorldSpace:CGPointZero];
     
     
-    float distance = [GeometryUtil distanceFromLineSegment:anchorAWorldpos b:anchorBWorldpos c:pos];
-    
-    if(distance < 8.0f)
+    float distance1 = [GeometryUtil distanceFromLineSegment:anchorAWorldpos b:anchorBWorldpos c:pos];
+	float distance2 = ccpLength([anchorHandleA convertToNodeSpaceAR:pos]);
+	float distance3 = ccpLength([anchorHandleB convertToNodeSpaceAR:pos]);
+	
+	float minDistance =  fminf(fminf(distance1, distance2),distance3);
+	
+    if(minDistance < 8.0f)
     {
         return YES;
     }

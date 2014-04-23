@@ -8,7 +8,7 @@
 
 #import "cocos2d.h"
 
-static const int kNumProperties = 6;
+static const int kNumProperties = 7;
 extern NSString *  dependantProperties[kNumProperties];
 
 typedef enum

@@ -102,7 +102,12 @@
 
 -(void)setBodyA:(CCNode *)aBodyA
 {
-    
+	bool bodyAChanges = false;
+    if(!bodyA || !aBodyA || bodyA.UUID != aBodyA.UUID)
+    {
+        bodyAChanges = true;
+    }
+
     [super setBodyA:aBodyA];
     
     if(!aBodyA)
@@ -112,8 +117,11 @@
         return;
     }
     
-	[self setAnchorFromBodyA];
-
+	if(bodyAChanges)
+	{
+		[self setAnchorFromBodyA];
+	}
+	[self setPositionFromAnchor];
 }
 
 -(void)setPositionFromAnchor
