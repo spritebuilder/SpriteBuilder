@@ -167,7 +167,7 @@
 
                 CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentCenter];
                 lbl.anchorPoint = ccp(0,0);
-                lbl.position = ccp(2, y + 1 + 8*(strLen - i - 1)/scale);
+                lbl.position = ccp(1, y -1 + 8*(strLen - i - 1)/scale);
             
                 [marksVertical addChild:lbl z:1];
             }
@@ -210,7 +210,7 @@
 
             CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentCenter];
             lbl.anchorPoint = ccp(0,0);
-            lbl.position = ccp((x+1), -1);
+            lbl.position = ccp(x, -1);
             [marksHorizontal addChild:lbl z:1];
         }
         x+=10;
