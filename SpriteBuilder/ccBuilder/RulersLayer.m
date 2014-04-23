@@ -76,19 +76,18 @@
 	xyBg.position = ccp(0,0);
 	
 	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-	lblX = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
-	lblX.anchorPoint = ccp(1,0);
-	lblX.position = ccp(47/scale,3/scale);
-	lblX.visible = NO;
-	[self addChild:lblX z:6];
-	
-	lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6/scale itemHeight:8/scale startCharMap:'-'];
+    lblX = [CCLabelBMFont labelWithString:@"-" fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentRight];
+    lblX.anchorPoint = ccp(1,0);
+   	lblX.position = ccp(47/scale,1/scale);
+   	lblX.visible = NO;
+    [self addChild:lblX z:6];
+
+    lblY = [CCLabelBMFont labelWithString:@"-" fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentRight];
 	lblY.anchorPoint = ccp(1,0);
-	lblY.position = ccp(97/scale,3/scale);
+	lblY.position = ccp(97/scale,1/scale);
 	lblY.visible = NO;
 	[self addChild:lblY z:6];
-	//lblY = [CCLabelAtlas labelWithString:@"0" charMapFile:@"ruler-numbers.png" itemWidth:6 itemHeight:8 startCharMap:'0'];
-	
+
 	// Need to force it to update the rulers.
 	winSize = CGSizeZero;
 	[[CocosScene cocosScene] forceRedraw];

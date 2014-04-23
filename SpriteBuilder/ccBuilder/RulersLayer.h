@@ -38,9 +38,9 @@
     CGSize winSize;
     CGPoint stageOrigin;
     float zoom;
-    
-    CCLabelAtlas* lblX;
-    CCLabelAtlas* lblY;
+
+    CCLabelBMFont *lblX;
+    CCLabelBMFont *lblY;
 }
 
 - (void) setup;
