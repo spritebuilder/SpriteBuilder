@@ -24,10 +24,10 @@
 
 #import "RulersLayer.h"
 #import "CCBGlobals.h"
-#import "CCLabelAtlas.h"
 #import "CCTextureCache.h"
 
-#define kCCBRulerWidth 15
+static CGFloat const kCCBRulerWidth = 15.0;
+static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
 @implementation RulersLayer
 
@@ -76,13 +76,13 @@
 	xyBg.position = ccp(0,0);
 	
 	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-    lblX = [CCLabelBMFont labelWithString:@"-" fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentRight];
+    lblX = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
     lblX.anchorPoint = ccp(1,0);
    	lblX.position = ccp(47/scale,1/scale);
    	lblX.visible = NO;
     [self addChild:lblX z:6];
 
-    lblY = [CCLabelBMFont labelWithString:@"-" fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentRight];
+    lblY = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
 	lblY.anchorPoint = ccp(1,0);
 	lblY.position = ccp(97/scale,1/scale);
 	lblY.visible = NO;
@@ -165,7 +165,7 @@
             {
                 NSString* ch = [str substringWithRange:NSMakeRange(i, 1)];
 
-                CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentCenter];
+                CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
                 lbl.anchorPoint = ccp(0,0);
                 lbl.position = ccp(1, y -1 + 8*(strLen - i - 1)/scale);
             
@@ -208,7 +208,7 @@
             int displayDist = xDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
 
-            CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:@"ruler-numbers.fnt" width:200.0 alignment:CCTextAlignmentCenter];
+            CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
             lbl.anchorPoint = ccp(0,0);
             lbl.position = ccp(x, -1);
             [marksHorizontal addChild:lbl z:1];
