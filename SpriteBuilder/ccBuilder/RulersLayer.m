@@ -75,16 +75,18 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 	xyBg.anchorPoint = ccp(0,0);
 	xyBg.position = ccp(0,0);
 	
-	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	//CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
     lblX = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
     lblX.anchorPoint = ccp(1,0);
-   	lblX.position = ccp(47/scale,1/scale);
+    lblX.positionType = CCPositionTypeUIPoints;
+   	lblX.position = ccp(47,0);
    	lblX.visible = NO;
     [self addChild:lblX z:6];
 
     lblY = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
 	lblY.anchorPoint = ccp(1,0);
-	lblY.position = ccp(97/scale,1/scale);
+    lblY.positionType = CCPositionTypeUIPoints;
+	lblY.position = ccp(97,0);
 	lblY.visible = NO;
 	[self addChild:lblY z:6];
 
@@ -167,7 +169,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
                 CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
                 lbl.anchorPoint = ccp(0,0);
-                lbl.position = ccp(1, y -1 + 8*(strLen - i - 1)/scale);
+                lbl.position = ccp(2/scale, y + (8*(strLen - i - 1) - 1)/scale);
             
                 [marksVertical addChild:lbl z:1];
             }
@@ -210,7 +212,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
             CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
             lbl.anchorPoint = ccp(0,0);
-            lbl.position = ccp(x, -1);
+            lbl.position = ccp(x+1/scale, -2/scale);
             [marksHorizontal addChild:lbl z:1];
         }
         x+=10;
