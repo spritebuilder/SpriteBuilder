@@ -49,6 +49,7 @@
 #import "PublishCCBOperation.h"
 #import "PublishImageOperation.h"
 #import "DateCache.h"
+#import "NSString+CCBResourcePaths.h"
 
 @implementation CCBPublisher
 {
@@ -137,23 +138,28 @@
 {
     for (NSString* resolution in publishForResolutions)
     {
-        PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:projectSettings
-                                                                                         warnings:warnings];
-        operation.srcPath = srcFile;
-        operation.dstPath = dstFile;
-        operation.isSpriteSheet = isSpriteSheet;
-        operation.outDir = outDir;
-        operation.resolution = resolution;
-        operation.targetType = targetType;
-        operation.publishedResources = publishedResources;
-        operation.modifiedFileDateCache = _modifiedDatesCache;
-        operation.publisher = self;
-        operation.publishedPNGFiles = _publishedPNGFiles;
-
-        [operation start];
+        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outDir:outDir resolution:resolution];
 	}
-    
+
     return YES;
+}
+
+- (BOOL)publishImageFile:(NSString *)srcPath to:(NSString *)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir resolution:(NSString *)resolution
+{
+    PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:projectSettings
+                                                                                     warnings:warnings];
+    operation.srcPath = srcPath;
+    operation.dstPath = dstPath;
+    operation.isSpriteSheet = isSpriteSheet;
+    operation.outDir = outDir;
+    operation.resolution = resolution;
+    operation.targetType = targetType;
+    operation.publishedResources = publishedResources;
+    operation.modifiedFileDateCache = _modifiedDatesCache;
+    operation.publisher = self;
+    operation.publishedPNGFiles = _publishedPNGFiles;
+
+    [operation start];
 }
 
 - (void)publishSoundFile:(NSString *)srcPath to:(NSString *)dstPath
@@ -199,11 +205,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     BOOL isGeneratedSpriteSheet = [[projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
-    if (isGeneratedSpriteSheet)
-    {
-        [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
-    }
-	else
+    if (!isGeneratedSpriteSheet)
 	{
         BOOL createdDirs = [fileManager createDirectoryAtPath:outDir withIntermediateDirectories:YES attributes:NULL error:NULL];
         if (!createdDirs)
@@ -223,13 +225,13 @@
 
     if (isGeneratedSpriteSheet)
     {
-        [self processSpriteSheetDir:publishDirectory subPath:subPath outDir:outDir];
+        [self publishSpriteSheetDir:publishDirectory subPath:subPath outDir:outDir];
     }
     
     return YES;
 }
 
-- (void)processSpriteSheetDir:(NSString *)publishDirectory subPath:(NSString *)subPath outDir:(NSString *)outDir
+- (void)publishSpriteSheetDir:(NSString *)publishDirectory subPath:(NSString *)subPath outDir:(NSString *)outDir
 {
     BOOL publishForSpriteKit = projectSettings.engine == CCBTargetEngineSpriteKit;
     if (publishForSpriteKit)
@@ -244,7 +246,8 @@
         [self publishSpriteSheetDir:[outDir stringByDeletingLastPathComponent]
                           sheetName:[outDir lastPathComponent]
                    publishDirectory:publishDirectory
-                            subPath:subPath];
+                            subPath:subPath
+                             outDir:outDir];
     }
 }
 
@@ -257,8 +260,8 @@
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
 
     NSMutableSet* files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
-	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory fileManager:fileManager]];
-	[files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory fileManager:fileManager]];
+	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory]];
+	[files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory]];
 
     for (NSString* fileName in files)
     {
@@ -321,13 +324,11 @@
         if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
         {
             // Use temp cache directory for generated sprite sheets
-            if (isGeneratedSpriteSheet)
+            if (!isGeneratedSpriteSheet)
             {
-                dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
+                // Publish images
+                [self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
             }
-
-            // Publish images
-            [self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
         }
         else if ([ext isEqualToString:@"wav"])
         {
@@ -451,8 +452,9 @@
     return mutableFileURLs;
 }
 
-- (NSArray *)filesOfAutoDirectory:(NSString *)publishDirectory fileManager:(NSFileManager *)fileManager
+- (NSArray *)filesOfAutoDirectory:(NSString *)publishDirectory
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
 	NSMutableArray *result = [NSMutableArray array];
 	NSString* autoDir = [publishDirectory stringByAppendingPathComponent:@"resources-auto"];
 	BOOL isDirAuto;
@@ -463,8 +465,9 @@
 	return result;
 }
 
-- (NSArray *)filesForResolutionDependantDirs:(NSString *)dir fileManager:(NSFileManager *)fileManager
+- (NSArray *)filesForResolutionDependantDirs:(NSString *)dir
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
 	NSMutableArray *result = [NSMutableArray array];
 
 	for (NSString *publishExt in publishForResolutions)
@@ -494,18 +497,20 @@
 	return outDir;
 }
 
-- (void)publishSpriteSheetDir:(NSString *)spriteSheetDir sheetName:(NSString *)spriteSheetName publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath
+- (void)publishSpriteSheetDir:(NSString *)spriteSheetDir sheetName:(NSString *)spriteSheetName publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath outDir:(NSString *)outDir
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+    [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
+
     NSDate *srcSpriteSheetDate = [self latestModifiedDateForDirectory:publishDirectory];
 
 	[publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 
 	BOOL isDirty = [projectSettings isDirtyRelPath:subPath];
 
-	// Check if sprite sheet needs to be re-published
-	for (NSString*resolution in publishForResolutions)
+	for (NSString *resolution in publishForResolutions)
 	{
-		NSArray* srcDirs = [NSArray arrayWithObjects:
+        NSArray* srcDirs = [NSArray arrayWithObjects:
 							[projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
 							projectSettings.tempSpriteSheetCacheDirectory,
 							nil];
@@ -519,7 +524,28 @@
 			continue;
 		}
 
-        // [self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
+        NSMutableSet *files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
+    	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory]];
+        [files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory]];
+
+        for (NSString *fileName in files)
+        {
+            NSString *filePath = [publishDirectory stringByAppendingPathComponent:fileName];
+            BOOL isResourceAutoFile = [filePath isResourceAutoFile];
+            NSString *ext = [[fileName pathExtension] lowercaseString];
+
+            if (isResourceAutoFile
+                && ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"]))
+            {
+                NSString *dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
+                [self publishImageFile:filePath
+                                    to:dstFile
+                         isSpriteSheet:NO
+                                outDir:outDir
+                            resolution:resolution];
+            }
+        }
+
 
         // TODO: use base class
         PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithAppDelegate:[AppDelegate appDelegate]

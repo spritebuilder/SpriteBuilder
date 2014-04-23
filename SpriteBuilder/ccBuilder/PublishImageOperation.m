@@ -7,6 +7,7 @@
 #import "CCBWarnings.h"
 #import "DateCache.h"
 #import "CCBPublisher.h"
+#import "NSString+CCBResourcePaths.h"
 
 
 @implementation PublishImageOperation
@@ -28,14 +29,12 @@
     // Find out which file to copy for the current resolution
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    NSString *srcAutoPath = NULL;
 
     NSString *srcFileName = [_srcPath lastPathComponent];
     NSString *dstFileName = [_dstPath lastPathComponent];
     NSString *srcDir = [_srcPath stringByDeletingLastPathComponent];
     NSString *dstDir = [_dstPath stringByDeletingLastPathComponent];
-    NSString *autoDir = [srcDir stringByAppendingPathComponent:@"resources-auto"];
-    srcAutoPath = [autoDir stringByAppendingPathComponent:srcFileName];
+    NSString *srcAutoPath = [_srcPath resourceAutoFilePath];
 
     // Update path to reflect resolution
     srcDir = [srcDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:_resolution]];
