@@ -36,8 +36,6 @@
         NSFileManager *fileManager = [NSFileManager defaultManager];;
         [fileManager removeItemAtPath:self.dstFile error:NULL];
 
-        // Copy the file
-        // TODO rename publishCCBFile
         BOOL sucess = [self publishCCBFile:self.filePath to:self.dstFile];
         if (!sucess)
         {
@@ -47,13 +45,7 @@
         [CCBFileUtil setModificationDate:srcDate forFile:self.dstFile];
     }
 
-    //return YES;
     return;
-}
-
-- (void)cancel
-{
-    [super cancel];
 }
 
 - (BOOL)publishCCBFile:(NSString *)srcFile to:(NSString *)dstFile
