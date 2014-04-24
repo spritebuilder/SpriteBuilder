@@ -10,6 +10,12 @@
 #import "NSString+Publishing.h"
 
 
+@interface PublishImageOperation ()
+
+@property (nonatomic, strong) FCFormatConverter *formatConverter;
+
+@end
+
 @implementation PublishImageOperation
 
 - (void)main
@@ -113,18 +119,21 @@
         NSString *dstPathConverted = nil;
         NSError *error;
 
-        if (![[FCFormatConverter defaultConverter] convertImageAtPath:_dstPath
-                                                               format:format
-                                                               dither:dither
-                                                             compress:compress
-                                                        isSpriteSheet:_isSpriteSheet
-                                                       outputFilename:&dstPathConverted
-                                                                error:&error])
+        self.formatConverter = [FCFormatConverter defaultConverter];
+        if (![_formatConverter convertImageAtPath:_dstPath
+                                           format:format
+                                           dither:dither
+                                         compress:compress
+                                    isSpriteSheet:_isSpriteSheet
+                                   outputFilename:&dstPathConverted
+                                            error:&error])
         {
             [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription]
                                          isFatal:NO];
+            self.formatConverter = nil;
             return;
         }
+        self.formatConverter = nil;
 
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
@@ -157,17 +166,19 @@
         NSString *dstPathConverted = nil;
         NSError *error;
 
-        if (![[FCFormatConverter defaultConverter] convertImageAtPath:_dstPath
-                                                               format:format
-                                                               dither:dither
-                                                             compress:compress
-                                                        isSpriteSheet:_isSpriteSheet
-                                                       outputFilename:&dstPathConverted
-                                                                error:&error])
+        self.formatConverter = [FCFormatConverter defaultConverter];
+        if (![_formatConverter convertImageAtPath:_dstPath
+                                           format:format
+                                           dither:dither
+                                         compress:compress
+                                    isSpriteSheet:_isSpriteSheet
+                                   outputFilename:&dstPathConverted
+                                            error:&error])
         {
             [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to convert image: %@. Error Message:%@", srcFileName, error.localizedDescription]
                                          isFatal:NO];
         }
+        self.formatConverter = nil;
 
         // Update modification date
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
@@ -186,8 +197,9 @@
 
 - (void)cancel
 {
-    // TODO
+    NSLog(@"[%@] %@@%@ cancelled", [self class], [_srcPath lastPathComponent], _resolution);
     [super cancel];
+    [_formatConverter cancel];
 }
 
 - (BOOL)isSpriteSheetAlreadyPublished:(NSString *)srcPath outDir:(NSString *)outDir resolution:(NSString *)resolution

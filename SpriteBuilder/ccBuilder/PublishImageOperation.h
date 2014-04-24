@@ -3,6 +3,7 @@
 
 @class DateCache;
 @class CCBPublisher;
+@class FCFormatConverter;
 
 @interface PublishImageOperation : PublishBaseOperation
 
