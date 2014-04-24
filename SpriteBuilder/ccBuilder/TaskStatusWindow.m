@@ -28,21 +28,53 @@
 
 @synthesize status;
 
-- (id)initWithWindow:(NSWindow *)window
+- (id)initWithWindowNibName:(NSString *)windowNibName
 {
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
+    self = [super initWithWindowNibName:windowNibName];
+
+    if (self)
+    {
+
     }
-    
+
     return self;
+}
+
+- (IBAction)onCancel:(id)sender
+{
+    if (_onCancelBlock)
+    {
+        _onCancelBlock();
+    }
 }
 
 - (void) windowDidLoad
 {
     [super windowDidLoad];
-    [progress startAnimation:self];
-    [progress setUsesThreadedAnimation:YES];
+    [progressIndicator startAnimation:self];
+    [progressIndicator setUsesThreadedAnimation:YES];
+
+    self.showCancellButton = YES;
+    if (_showCancellButton)
+    {
+        NSRect frame = [self.window frame];
+        frame.size = CGSizeMake(frame.size.width, frame.size.height + 28.0);
+        [self.window setFrame:frame display:YES animate:NO];
+    }
+
+    [progressIndicator setIndeterminate:self.indeterminate];
+}
+
+- (void)setIndeterminate:(BOOL)indeterminate
+{
+    _indeterminate = indeterminate;
+    [progressIndicator setIndeterminate:indeterminate];
+}
+
+- (void)setProgress:(double)newProgress
+{
+    NSLog(@"%f", newProgress);
+    [progressIndicator setDoubleValue:newProgress];
 }
 
 @end
