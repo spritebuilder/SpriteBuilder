@@ -1669,8 +1669,8 @@ static BOOL hideAllToNextSeparator;
     [g.joints deserialize:doc[@"SequencerJoints"]];
     g.rootNode = loadedRoot;
     
-    [loadedJoints forEach:^(CCNode * child, int idx) {
-        [g.joints.node addChild:child];
+    [loadedJoints forEach:^(CCBPhysicsJoint * child, int idx) {
+        [g.joints addJoint:child];
     }];
 
     

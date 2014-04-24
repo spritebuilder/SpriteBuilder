@@ -59,17 +59,17 @@
                     </buttonCell>
                     <connections>
                         <action selector="handleDeleteNode:" target="-2" id="e5c-na-Qfr"/>
-                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="KuO-af-SeF">
+                        <binding destination="-2" name="enabled2" keyPath="self.readOnly" previousBinding="bqE-rB-hsz" id="LBq-nH-emn">
                             <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="enabled2" keyPath="self.reference" previousBinding="KuO-af-SeF" id="lJq-Tv-Zwn">
-                            <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="enabled" keyPath="self.reference" id="bqE-rB-hsz">
+                            <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
@@ -91,10 +91,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="self.reference" previousBinding="LUE-7x-WK5" id="zif-UR-buW">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>

@@ -17,6 +17,7 @@
 
 @interface OutletButton : NSView
 @property InspectorNodeReference * inspector;
+@property BOOL enabled;
 @end
 
 
