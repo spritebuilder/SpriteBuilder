@@ -41,7 +41,6 @@
 
 - (void)main
 {
-    // dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
     [self loadSettings];
 
     [self configurePacker];
@@ -51,14 +50,14 @@
     // heavy task
     NSArray *createdFiles = [_packer createTextureAtlasFromDirectoryPaths:_srcDirs];
 
-    [self processPNGFilesInCreatedFiles:createdFiles];
+    [self addCreatedPNGFilesToCreatedFilesSet:createdFiles];
 
     [self processWarnings];
 
     [CCBFileUtil setModificationDate:_srcSpriteSheetDate forFile:[_spriteSheetFile stringByAppendingPathExtension:@"plist"]];
 }
 
-- (void)processPNGFilesInCreatedFiles:(NSArray *)createdFiles
+- (void)addCreatedPNGFilesToCreatedFilesSet:(NSArray *)createdFiles
 {
     for (NSString *aFile in createdFiles)
     {
@@ -161,8 +160,10 @@
 
 - (void)cancel
 {
+    NSLog(@"[%@] %@@%@ cancelled", [self class], [_spriteSheetFile lastPathComponent], _resolution);
     // TODO
     [super cancel];
+    [_packer cancel];
 }
 
 - (NSString *)description
