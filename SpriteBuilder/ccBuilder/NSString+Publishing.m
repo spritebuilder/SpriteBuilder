@@ -1,7 +1,7 @@
-#import "NSString+CCBResourcePaths.h"
+#import "NSString+Publishing.h"
 
 
-@implementation NSString (CCBResourcePaths)
+@implementation NSString (Publishing)
 
 - (NSString *)resourceAutoFilePath
 {
@@ -17,6 +17,18 @@
     NSString *filepath = [self resourceAutoFilePath];
 
     return [fileManager fileExistsAtPath:filepath];
+}
+
+- (BOOL)isSoundFile
+{
+    NSString *extension = [[self pathExtension] lowercaseString];
+    return [extension isEqualToString:@"wav"];
+}
+
+- (BOOL)isSmartSpriteSheetCompatibleFile
+{
+    NSString *extension = [[self pathExtension] lowercaseString];
+    return [extension isEqualToString:@"png"] || [extension isEqualToString:@"psd"];
 }
 
 @end

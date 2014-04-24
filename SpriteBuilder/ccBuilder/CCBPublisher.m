@@ -49,7 +49,7 @@
 #import "PublishCCBOperation.h"
 #import "PublishImageOperation.h"
 #import "DateCache.h"
-#import "NSString+CCBResourcePaths.h"
+#import "NSString+Publishing.h"
 
 @implementation CCBPublisher
 {
@@ -311,7 +311,7 @@
 
     // Skip non png files for generated sprite sheets
     if (isGeneratedSpriteSheet
-        && ![self isSmartSpriteSheetCompatibleFile:fileName])
+        && ![fileName isSmartSpriteSheetCompatibleFile])
     {
         [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png|psd file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
         return YES;
@@ -323,11 +323,11 @@
         NSString *dstFilePath = [outDir stringByAppendingPathComponent:fileName];
 
         if (!isGeneratedSpriteSheet
-            && ([self isSmartSpriteSheetCompatibleFile:fileName]))
+            && ([fileName isSmartSpriteSheetCompatibleFile]))
         {
             [self publishImageForResolutionsWithFile:filePath to:dstFilePath isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
         }
-        else if ([self isSoundFile:fileName])
+        else if ([fileName isSoundFile])
         {
             [self publishSoundFile:filePath to:dstFilePath];
         }
@@ -342,18 +342,6 @@
         [self publishCCB:fileName filePath:filePath outDir:outDir];
     }
     return YES;
-}
-
-- (BOOL)isSoundFile:(NSString *)filename
-{
-    NSString *extension = [[filename pathExtension] lowercaseString];
-    return [extension isEqualToString:@"wav"];
-}
-
-- (BOOL)isSmartSpriteSheetCompatibleFile:(NSString *)filename
-{
-    NSString *extension = [[filename pathExtension] lowercaseString];
-    return [extension isEqualToString:@"png"] || [extension isEqualToString:@"psd"];
 }
 
 - (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outDir:(NSString *)outDir
@@ -542,7 +530,7 @@
             BOOL isResourceAutoFile = [filePath isResourceAutoFile];
 
             if (isResourceAutoFile
-                && ([self isSmartSpriteSheetCompatibleFile:fileName]))
+                && ([fileName isSmartSpriteSheetCompatibleFile]))
             {
                 NSString *dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
                 [self publishImageFile:filePath

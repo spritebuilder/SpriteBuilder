@@ -7,7 +7,7 @@
 #import "CCBWarnings.h"
 #import "DateCache.h"
 #import "CCBPublisher.h"
-#import "NSString+CCBResourcePaths.h"
+#import "NSString+Publishing.h"
 
 
 @implementation PublishImageOperation

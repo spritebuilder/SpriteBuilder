@@ -1,8 +1,11 @@
 #import <Foundation/Foundation.h>
 
-@interface NSString (CCBResourcePaths)
+@interface NSString (Publishing)
 
 - (NSString *)resourceAutoFilePath;
 - (BOOL)isResourceAutoFile;
+
+- (BOOL)isSoundFile;
+- (BOOL)isSmartSpriteSheetCompatibleFile;
 
 @end
