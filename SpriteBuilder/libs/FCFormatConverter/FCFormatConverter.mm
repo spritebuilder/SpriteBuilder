@@ -65,6 +65,7 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     }
     return NULL;
 }
+
 -(BOOL)convertImageAtPath:(NSString*)srcPath
                    format:(int)format
                    dither:(BOOL)dither
@@ -73,8 +74,6 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
            outputFilename:(NSString**)outputFilename
                     error:(NSError**)error;
 {
-    
-    
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* dstDir = [srcPath stringByDeletingLastPathComponent];
     
@@ -82,21 +81,21 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     // Unless the .psd is part of a spritesheet, then the original name has to be preserved.
     if ( [[srcPath pathExtension] isEqualToString:@"psd"] && !isSpriteSheet)
     {
-            CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
-            CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
-            
-            NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
-            CFURLRef out_url = (__bridge CFURLRef)[NSURL fileURLWithPath:out_path];
-            CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
-            CGImageDestinationAddImage(image_destination, image, NULL);
-            CGImageDestinationFinalize(image_destination);
-            
-            CFRelease(image_source);
-            CGImageRelease(image);
-            CFRelease(image_destination);
-            
-            [fm removeItemAtPath:srcPath error:nil];
-            srcPath = out_path;
+        CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
+        CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+
+        NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
+        CFURLRef out_url = (__bridge CFURLRef)[NSURL fileURLWithPath:out_path];
+        CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
+        CGImageDestinationAddImage(image_destination, image, NULL);
+        CGImageDestinationFinalize(image_destination);
+
+        CFRelease(image_source);
+        CGImageRelease(image);
+        CFRelease(image_destination);
+
+        [fm removeItemAtPath:srcPath error:nil];
+        srcPath = out_path;
     }
 		
     if (format == kFCImageFormatPNG)
@@ -130,7 +129,6 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
              format == kFCImageFormatPVRTC_4BPP ||
              format == kFCImageFormatPVRTC_2BPP)
     {
-        
         // PVR(TC) image
         NSString *dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"pvr"];
         
@@ -194,7 +192,6 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
                 hasError = YES;
             }
         }
-        
         
         // Remove PNG file
         [[NSFileManager defaultManager] removeItemAtPath:srcPath error:NULL];
