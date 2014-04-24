@@ -1,13 +1,15 @@
 #import <Foundation/Foundation.h>
+#import "PublishBaseOperation.h"
 
 @class CCBWarnings;
 @class AppDelegate;
 
-@interface OptimizeImageWithOptiPNGOperation : NSOperation
+@interface OptimizeImageWithOptiPNGOperation : PublishBaseOperation
 
-- (instancetype)initWithFilePath:(NSString *)filePath
-                     optiPngPath:(NSString *)optiPngPath
-                        warnings:(CCBWarnings *)warnings
-                     appDelegate:(AppDelegate *)appDelegate;
+@property (nonatomic, copy) NSString *filePath;
+@property (nonatomic, copy) NSString *optiPngPath;
+@property (nonatomic, weak) CCBWarnings *warnings;
+@property (nonatomic, weak) AppDelegate *appDelegate;
+@property (nonatomic, strong) NSTask *task;
 
 @end

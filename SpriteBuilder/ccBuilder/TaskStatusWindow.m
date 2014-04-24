@@ -73,7 +73,6 @@
 
 - (void)setProgress:(double)newProgress
 {
-    NSLog(@"%f", newProgress);
     [progressIndicator setDoubleValue:newProgress];
 }
 

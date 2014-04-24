@@ -4,6 +4,7 @@
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerUtil.h"
+#import "CCBPublisher.h"
 
 
 @interface PublishSoundFileOperation ()
@@ -15,6 +16,15 @@
 @implementation PublishSoundFileOperation
 
 - (void)main
+{
+    NSLog(@"[%@] %@ -> %@", [self class], [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent]);
+
+    [self publishSoundFileOperation];
+
+    [_publisher operationFinishedTick];
+}
+
+- (void)publishSoundFileOperation
 {
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
 
@@ -47,7 +57,7 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] %@ cancelled", [self class], [_srcFilePath lastPathComponent]);
+    NSLog(@"[%@] CANCELLED %@ ", [self class], [_srcFilePath lastPathComponent]);
 
     [super cancel];
     [_formatConverter cancel];

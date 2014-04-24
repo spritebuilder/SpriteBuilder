@@ -51,6 +51,11 @@
 #import "DateCache.h"
 #import "NSString+Publishing.h"
 
+@interface CCBPublisher ()
+@property (nonatomic) NSUInteger operationsFinished;
+@property (nonatomic) NSUInteger totalProgressUnits;
+@end
+
 @implementation CCBPublisher
 {
     DateCache *_modifiedDatesCache;
@@ -147,7 +152,8 @@
 - (BOOL)publishImageFile:(NSString *)srcPath to:(NSString *)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir resolution:(NSString *)resolution
 {
     PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:projectSettings
-                                                                                     warnings:warnings];
+                                                                                     warnings:warnings
+                                                                                    publisher:self];
     operation.srcPath = srcPath;
     operation.dstPath = dstPath;
     operation.isSpriteSheet = isSpriteSheet;
@@ -181,7 +187,8 @@
                                                                                                            quality:quality]];
 
     PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:projectSettings
-                                                                                             warnings:warnings];
+                                                                                             warnings:warnings
+                                                                                            publisher:self];
 
     operation.srcFilePath = srcPath;
     operation.dstFilePath = dstPath;
@@ -194,10 +201,13 @@
 
 - (void)publishRegularFile:(NSString *)srcPath to:(NSString*) dstPath
 {
-    PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithSrcFilePath:srcPath
-                                                                                          dstFilePath:dstPath];
+    PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithProjectSettings:projectSettings
+                                                                                                 warnings:warnings
+                                                                                                publisher:self];
 
-    // [operation start];
+    operation.srcFilePath = srcPath;
+    operation.dstFilePath = dstPath;
+
     [_publishingQueue addOperation:operation];
 }
 
@@ -355,7 +365,9 @@
     // TODO: move to base class or to a delegate
     [publishedResources addObject:localFileName];
 
-    PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:projectSettings warnings:warnings];
+    PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:projectSettings
+                                                                                 warnings:warnings
+                                                                                publisher:self];
     operation.fileName = fileName;
     operation.filePath = filePath;
     operation.dstFile = dstFile;
@@ -542,11 +554,11 @@
             }
         }
 
-        // TODO: use base class
-        PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithAppDelegate:[AppDelegate appDelegate]
-                                                                                                 warnings:warnings
-                                                                                          projectSettings:projectSettings];
+        PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:projectSettings
+                                                                                                     warnings:warnings
+                                                                                                    publisher:self];
 
+        operation.appDelegate = [AppDelegate appDelegate];
         operation.publishDirectory = publishDirectory;
         operation.publishedPNGFiles = _publishedPNGFiles;
         operation.publishedSpriteSheetNames = publishedSpriteSheetNames;
@@ -1176,11 +1188,12 @@
 
     for (NSString *pngFile in _publishedPNGFiles)
     {
-        OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc]
-                initWithFilePath:pngFile
-                     optiPngPath:pathToOptiPNG
-                        warnings:warnings
-                     appDelegate:[AppDelegate appDelegate]];
+        OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc]  initWithProjectSettings:projectSettings
+                                                                                                                  warnings:warnings
+                                                                                                                 publisher:self];
+        operation.appDelegate = [AppDelegate appDelegate];
+        operation.filePath = pngFile;
+        operation.optiPngPath = pathToOptiPNG;
 
         [_publishingQueue addOperation:operation];
     }
@@ -1228,6 +1241,8 @@
 
         [self postProcessPublishedPNGFilesWithOptiPNG];
 
+        _totalProgressUnits = [_publishingQueue operationCount];
+
         [_publishingQueue setSuspended:NO];
         [_publishingQueue waitUntilAllOperationsAreFinished];
 
@@ -1252,6 +1267,23 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* ccbChacheDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"];
     [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
+}
+
+- (void)cancel
+{
+    NSLog(@"Publishin cancelled by user");
+    [_publishingQueue cancelAllOperations];
+}
+
+- (void)operationFinishedTick
+{
+    self.operationsFinished += 1;
+    [self updateProgress];
+}
+
+- (void)updateProgress
+{
+    [[AppDelegate appDelegate] setProgress:(1.0 / _totalProgressUnits * _operationsFinished) * 100.0];
 }
 
 @end

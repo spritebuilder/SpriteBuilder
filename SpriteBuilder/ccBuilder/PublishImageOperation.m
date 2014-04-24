@@ -20,6 +20,15 @@
 
 - (void)main
 {
+    NSLog(@"[%@] %@", [self class], [_srcPath lastPathComponent]);
+
+    [self publishImage];
+
+    [_publisher operationFinishedTick];
+}
+
+- (void)publishImage
+{
     // TODO: this is a long method -> split up!
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcPath];
 
@@ -197,7 +206,8 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] %@@%@ cancelled", [self class], [_srcPath lastPathComponent], _resolution);
+    NSLog(@"[%@] CANCELLED %@@%@", [self class], [_srcPath lastPathComponent], _resolution);
+
     [super cancel];
     [_formatConverter cancel];
 }

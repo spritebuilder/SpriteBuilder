@@ -7,13 +7,15 @@
 
 @interface PublishBaseOperation : NSOperation
 {
-    ProjectSettings *_projectSettings;
-    CCBWarnings *_warnings;
+    __weak ProjectSettings *_projectSettings;
+    __weak CCBWarnings *_warnings;
+    __weak CCBPublisher *_publisher;
 }
 
-@property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) CCBWarnings *warnings;
+@property (nonatomic, weak) ProjectSettings *projectSettings;
+@property (nonatomic, weak) CCBWarnings *warnings;
+@property (nonatomic, weak) CCBPublisher *publisher;
 
-- (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings warnings:(CCBWarnings *)warnings;
+- (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings warnings:(CCBWarnings *)warnings publisher:(CCBPublisher *)publisher;
 
 @end

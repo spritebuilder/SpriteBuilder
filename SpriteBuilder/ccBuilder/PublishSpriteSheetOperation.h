@@ -1,13 +1,12 @@
 #import <Foundation/Foundation.h>
+#import "PublishBaseOperation.h"
 
 
 @class CCBWarnings;
 @class AppDelegate;
 @class ProjectSettings;
 
-@interface PublishSpriteSheetOperation : NSOperation
-
-- (instancetype)initWithAppDelegate:(AppDelegate *)appDelegate warnings:(CCBWarnings *)warnings projectSettings:(ProjectSettings *)projectSettings;
+@interface PublishSpriteSheetOperation : PublishBaseOperation
 
 @property (nonatomic, copy) NSString *spriteSheetFile;
 @property (nonatomic) int targetType;
@@ -19,5 +18,7 @@
 @property (nonatomic, copy) NSString *publishDirectory;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) NSMutableArray *publishedSpriteSheetNames;
+
+@property (nonatomic, weak) AppDelegate *appDelegate;
 
 @end

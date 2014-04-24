@@ -646,22 +646,30 @@ typedef enum
     }
 }
 
-- (void) modalStatusWindowStartWithTitle:(NSString*)title
+- (void)modalStatusWindowStartWithTitle:(NSString *)title isIndeterminate:(BOOL)isIndeterminate onCancelBlock:(OnCancelBlock)onCancelBlock
 {
     if (!modalTaskStatusWindow)
     {
         modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     }
-    
+    modalTaskStatusWindow.indeterminate = isIndeterminate;
+    modalTaskStatusWindow.onCancelBlock = onCancelBlock;
     modalTaskStatusWindow.window.title = title;
     [modalTaskStatusWindow.window center];
     [modalTaskStatusWindow.window makeKeyAndOrderFront:self];
-    
+
     [[NSApplication sharedApplication] runModalForWindow:modalTaskStatusWindow.window];
+}
+
+- (void) modalStatusWindowStartWithTitle:(NSString*)title
+{
+    [self modalStatusWindowStartWithTitle:title isIndeterminate:NO onCancelBlock:nil];
 }
 
 - (void) modalStatusWindowFinish
 {
+    modalTaskStatusWindow.indeterminate = YES;
+    modalTaskStatusWindow.onCancelBlock = nil;
     [[NSApplication sharedApplication] stopModal];
     [modalTaskStatusWindow.window orderOut:self];
 }
@@ -670,6 +678,12 @@ typedef enum
 {
     modalTaskStatusWindow.status = text;
 }
+
+- (void)setProgress:(double)newProgress
+{
+    [modalTaskStatusWindow setProgress:newProgress];
+}
+
 
 #pragma mark Handling the gui layer
 
@@ -3100,7 +3114,10 @@ static BOOL hideAllToNextSeparator;
                 if(async)
                 {
                     [publisher publishAsync];
-                    [self modalStatusWindowStartWithTitle:@"Publishing"];
+                    [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
+                    {
+                        [publisher cancel];
+                    }];
                     [self modalStatusWindowUpdateStatusText:@"Starting up..."];
                 }
                 else
@@ -3118,7 +3135,10 @@ static BOOL hideAllToNextSeparator;
         if(async)
         {
             [publisher publishAsync];
-            [self modalStatusWindowStartWithTitle:@"Publishing"];
+            [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
+            {
+                [publisher cancel];
+            }];
             [self modalStatusWindowUpdateStatusText:@"Starting up..."];
         }
         else

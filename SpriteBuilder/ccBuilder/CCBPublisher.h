@@ -52,7 +52,6 @@ enum {
     NSMutableSet* publishedSpriteSheetFiles;
     // TODO: refactor to typdef instead of int
     int targetType;
-    NSString *currentWorkingFile; //Used to help with warnings description.
 }
 
 @property (nonatomic,assign) BOOL runAfterPublishing;
@@ -64,5 +63,9 @@ enum {
 - (void) publish;
 - (void) publishAsync;
 + (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
+
+- (void)cancel;
+
+- (void)operationFinishedTick;
 
 @end

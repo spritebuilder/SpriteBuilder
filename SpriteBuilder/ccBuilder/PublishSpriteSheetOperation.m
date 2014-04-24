@@ -4,12 +4,10 @@
 #import "CCBWarnings.h"
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
+#import "CCBPublisher.h"
 
 @interface PublishSpriteSheetOperation()
 
-@property (nonatomic, weak) AppDelegate *appDelegate;
-@property (nonatomic, weak) CCBWarnings *warnings;
-@property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, strong) Tupac *packer;
 @property (nonatomic, copy) NSString *previewFilePath;
 
@@ -24,22 +22,16 @@
 
 @implementation PublishSpriteSheetOperation
 
-- (instancetype)initWithAppDelegate:(AppDelegate *)appDelegate warnings:(CCBWarnings *)warnings projectSettings:(ProjectSettings *)projectSettings
+- (void)main
 {
-    self = [super init];
-    if (self)
-    {
-        self.appDelegate = appDelegate;
-        self.warnings = warnings;
-        self.projectSettings = projectSettings;
+    NSLog(@"[%@] %@@%@", [self class], [_spriteSheetFile lastPathComponent], _resolution);
 
-        self.packer = [[Tupac alloc] init];
-    }
+    [self publishSpriteSheet];
 
-    return self;
+    [_publisher operationFinishedTick];
 }
 
-- (void)main
+- (void)publishSpriteSheet
 {
     [self loadSettings];
 
@@ -47,8 +39,10 @@
 
     [_appDelegate modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"]
                                                                                                                            lastPathComponent]]];
+    NSLog(@"[%@] start: %@", [self class], _spriteSheetFile);
     // heavy task
     NSArray *createdFiles = [_packer createTextureAtlasFromDirectoryPaths:_srcDirs];
+    NSLog(@"[%@] end: %@", [self class], _spriteSheetFile);
 
     [self addCreatedPNGFilesToCreatedFilesSet:createdFiles];
 
@@ -160,8 +154,8 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] %@@%@ cancelled", [self class], [_spriteSheetFile lastPathComponent], _resolution);
-    // TODO
+    NSLog(@"[%@] CANCELLED %@@%@", [self class], [_spriteSheetFile lastPathComponent], _resolution);
+
     [super cancel];
     [_packer cancel];
 }

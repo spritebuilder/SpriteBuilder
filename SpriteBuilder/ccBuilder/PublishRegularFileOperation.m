@@ -1,23 +1,20 @@
 #import "PublishRegularFileOperation.h"
 #import "CCBFileUtil.h"
+#import "CCBPublisher.h"
 
 
 @implementation PublishRegularFileOperation
 
-- (instancetype)initWithSrcFilePath:(NSString *)srcFilePath dstFilePath:(NSString *)dstFilePath
+- (void)main
 {
-    self = [super init];
+    NSLog(@"[%@] %@ -> %@", [self class], [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent]);
 
-    if (self)
-    {
-        self.srcFilePath = srcFilePath;
-        self.dstFilePath = dstFilePath;
-    }
+    [self publishRegularFile];
 
-    return self;
+    [_publisher operationFinishedTick];
 }
 
-- (void)main
+- (void)publishRegularFile
 {
     // Check if file already exists
     if ([[NSFileManager defaultManager] fileExistsAtPath:_dstFilePath] &&
@@ -30,6 +27,12 @@
     [[NSFileManager defaultManager] removeItemAtPath:_dstFilePath error:NULL];
     [[NSFileManager defaultManager] copyItemAtPath:_srcFilePath toPath:_dstFilePath error:NULL];
     [CCBFileUtil setModificationDate:[CCBFileUtil modificationDateForFile:_srcFilePath] forFile:_dstFilePath];
+}
+
+- (void)cancel
+{
+    [super cancel];
+    NSLog(@"[%@] CANCELLED %@", [self class], [_srcFilePath lastPathComponent]);
 }
 
 @end

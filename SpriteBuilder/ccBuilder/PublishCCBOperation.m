@@ -6,6 +6,7 @@
 #import "ProjectSettings.h"
 #import "CCBFileUtil.h"
 #import "AppDelegate.h"
+#import "CCBPublisher.h"
 
 
 @interface PublishCCBOperation ()
@@ -17,6 +18,15 @@
 @implementation PublishCCBOperation
 
 - (void)main
+{
+    NSLog(@"[%@] %@", [self class], _fileName);
+
+    [self publishCCB];
+
+    [_publisher operationFinishedTick];
+}
+
+- (void)publishCCB
 {
     if ([self.dstFile isEqualToString:self.filePath])
     {
@@ -39,13 +49,12 @@
         BOOL sucess = [self publishCCBFile:self.filePath to:self.dstFile];
         if (!sucess)
         {
+            [_publisher operationFinishedTick];
             return;
         }
 
         [CCBFileUtil setModificationDate:srcDate forFile:self.dstFile];
     }
-
-    return;
 }
 
 - (BOOL)publishCCBFile:(NSString *)srcFile to:(NSString *)dstFile

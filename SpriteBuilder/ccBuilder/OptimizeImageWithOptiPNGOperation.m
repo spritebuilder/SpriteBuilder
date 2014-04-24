@@ -1,39 +1,21 @@
 #import "OptimizeImageWithOptiPNGOperation.h"
 #import "AppDelegate.h"
 #import "CCBWarnings.h"
-
-
-@interface OptimizeImageWithOptiPNGOperation()
-
-@property (nonatomic, copy) NSString *filePath;
-@property (nonatomic, copy) NSString *optiPngPath;
-@property (nonatomic, weak) CCBWarnings *warnings;
-@property (nonatomic, weak) AppDelegate *appDelegate;
-@property (nonatomic, strong) NSTask *task;
-
-@end
+#import "CCBPublisher.h"
 
 
 @implementation OptimizeImageWithOptiPNGOperation
 
-- (instancetype)initWithFilePath:(NSString *)filePath
-                     optiPngPath:(NSString *)optiPngPath
-                        warnings:(CCBWarnings *)warnings
-                     appDelegate:(AppDelegate *)appDelegate
+- (void)main
 {
-    self = [super init];
-    if (self)
-    {
-        self.filePath = filePath;
-        self.optiPngPath = optiPngPath;
-        self.warnings = warnings;
-        self.appDelegate = appDelegate;
-    }
+    NSLog(@"[%@] %@", [self class], [_filePath lastPathComponent]);
 
-    return self;
+    [self optimizeImageWithOptiPNG];
+
+    [_publisher operationFinishedTick];
 }
 
-- (void)main
+- (void)optimizeImageWithOptiPNG
 {
     [_appDelegate modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Optimizing %@...", [_filePath lastPathComponent]]];
 
@@ -76,6 +58,7 @@
 
 - (void)cancel
 {
+    NSLog(@"[%@] CANCELLED %@", [self class], [_filePath lastPathComponent]);
     @try
     {
         [super cancel];

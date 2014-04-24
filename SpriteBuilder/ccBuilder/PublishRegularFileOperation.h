@@ -1,11 +1,10 @@
 #import <Foundation/Foundation.h>
+#import "PublishBaseOperation.h"
 
 
-@interface PublishRegularFileOperation : NSOperation
+@interface PublishRegularFileOperation : PublishBaseOperation
 
 @property (nonatomic, copy) NSString *srcFilePath;
 @property (nonatomic, copy) NSString *dstFilePath;
-
-- (instancetype)initWithSrcFilePath:(NSString *)srcFilePath dstFilePath:(NSString *)dstFilePath;
 
 @end
