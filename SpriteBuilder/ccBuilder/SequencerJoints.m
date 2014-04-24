@@ -45,7 +45,12 @@
 
 -(NSArray*)all
 {
-    return [self.node children];
+	
+	NSArray * sortedChildren = [self.node.children sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(CCNode* obj1, CCNode * obj2) {
+		return obj1.UUID > obj2.UUID;
+	}];
+	
+    return sortedChildren;
 }
 
 -(void)addJoint:(CCBPhysicsJoint *)joint

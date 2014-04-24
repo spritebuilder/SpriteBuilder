@@ -750,6 +750,7 @@
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD2D849749BB67455943 /* DateCache.m */; };
 		E525F4E581031BFDE7E6DC9A /* NSString+CCBResourcePaths.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F74ADF149FB8398AE965 /* NSString+CCBResourcePaths.m */; };
+		E525F50C89C6296C9FE062F9 /* ruler-numbers.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */; };
 		E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */; };
 		E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */; };
 		E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */; };
@@ -2091,6 +2092,7 @@
 		E525FD2D849749BB67455943 /* DateCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCache.m; sourceTree = "<group>"; };
 		E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseOperation.h; sourceTree = "<group>"; };
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
+		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
 		FA98CFC1154E7D1C006E58C5 /* ccbpublish */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ccbpublish; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA98CFC3154E7D1C006E58C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -2656,6 +2658,7 @@
 				80E95C541836E41C00D864CA /* select-locked.png */,
 				774F95C513638D74005D43EB /* missing-particle-texture.png */,
 				772BE566133E40D60009B5B9 /* missing-texture.png */,
+				E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */,
 			);
 			name = "Stage Assets";
 			sourceTree = "<group>";
@@ -5351,6 +5354,7 @@
 				92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */,
 				B78AE45317E3B1600028BE0B /* scale-3.png in Resources */,
 				B78AE45417E3B1600028BE0B /* scale-4.png in Resources */,
+				E525F50C89C6296C9FE062F9 /* ruler-numbers.fnt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
