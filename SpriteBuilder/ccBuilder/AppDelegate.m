@@ -4900,22 +4900,12 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)showHelp:(id)sender
 {
-    if(!helpWindow)
-    {
-        helpWindow = [[HelpWindow alloc] initWithWindowNibName:@"HelpWindow"];
-    }
-    
-    [[helpWindow window] makeKeyAndOrderFront:self];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://makegameswith.us/docs/"]];
 }
 
 - (IBAction)showAPIDocs:(id)sender
 {
-    if(!apiDocsWindow)
-    {
-        apiDocsWindow = [[APIDocsWindow alloc] initWithWindowNibName:@"APIDocsWindow"];
-    }
-    
-    [[apiDocsWindow window] makeKeyAndOrderFront:self];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.cocos2d-iphone.org/docs/api/index.html"]];
 }
 
 - (IBAction)reportBug:(id)sender
