@@ -32,10 +32,4 @@
     [CCBFileUtil setModificationDate:[CCBFileUtil modificationDateForFile:_srcFilePath] forFile:_dstFilePath];
 }
 
-- (void)cancel
-{
-    [super cancel];
-}
-
-
 @end

@@ -2,6 +2,7 @@
 #import "PublishBaseOperation.h"
 
 @class CCBWarnings;
+@class FCFormatConverter;
 
 @interface PublishSoundFileOperation : PublishBaseOperation
 
