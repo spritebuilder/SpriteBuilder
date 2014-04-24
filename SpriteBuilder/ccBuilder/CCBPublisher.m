@@ -160,6 +160,7 @@
     operation.publishedPNGFiles = _publishedPNGFiles;
 
     [operation start];
+    return YES;
 }
 
 - (void)publishSoundFile:(NSString *)srcPath to:(NSString *)dstPath
@@ -309,43 +310,50 @@
     NSString *ext = [[fileName pathExtension] lowercaseString];
 
     // Skip non png files for generated sprite sheets
-    if (isGeneratedSpriteSheet && !([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"]))
+    if (isGeneratedSpriteSheet
+        && ![self isSmartSpriteSheetCompatibleFile:fileName])
     {
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
+        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png|psd file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
         return YES;
     }
 
-    if ([copyExtensions containsObject:ext] && !projectSettings.onlyPublishCCBs)
+    if ([copyExtensions containsObject:ext]
+        && !projectSettings.onlyPublishCCBs)
     {
-        // Get destination file name
-        NSString *dstFile = [outDir stringByAppendingPathComponent:fileName];
+        NSString *dstFilePath = [outDir stringByAppendingPathComponent:fileName];
 
-        // Copy file (and possibly convert)
-        if ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"])
+        if (!isGeneratedSpriteSheet
+            && ([self isSmartSpriteSheetCompatibleFile:fileName]))
         {
-            // Use temp cache directory for generated sprite sheets
-            if (!isGeneratedSpriteSheet)
-            {
-                // Publish images
-                [self publishImageForResolutionsWithFile:filePath to:dstFile isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
-            }
+            [self publishImageForResolutionsWithFile:filePath to:dstFilePath isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
         }
-        else if ([ext isEqualToString:@"wav"])
+        else if ([self isSoundFile:fileName])
         {
-            // Publish sounds
-            [self publishSoundFile:filePath to:dstFile];
+            [self publishSoundFile:filePath to:dstFilePath];
         }
         else
         {
-            // Publish any other type of file
-            [self publishRegularFile:filePath to:dstFile];
+            [self publishRegularFile:filePath to:dstFilePath];
         }
     }
-    else if ([[fileName lowercaseString] hasSuffix:@"ccb"] && !isGeneratedSpriteSheet)
+    else if (!isGeneratedSpriteSheet
+             && [[fileName lowercaseString] hasSuffix:@"ccb"])
     {
         [self publishCCB:fileName filePath:filePath outDir:outDir];
     }
     return YES;
+}
+
+- (BOOL)isSoundFile:(NSString *)filename
+{
+    NSString *extension = [[filename pathExtension] lowercaseString];
+    return [extension isEqualToString:@"wav"];
+}
+
+- (BOOL)isSmartSpriteSheetCompatibleFile:(NSString *)filename
+{
+    NSString *extension = [[filename pathExtension] lowercaseString];
+    return [extension isEqualToString:@"png"] || [extension isEqualToString:@"psd"];
 }
 
 - (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outDir:(NSString *)outDir
@@ -532,10 +540,9 @@
         {
             NSString *filePath = [publishDirectory stringByAppendingPathComponent:fileName];
             BOOL isResourceAutoFile = [filePath isResourceAutoFile];
-            NSString *ext = [[fileName pathExtension] lowercaseString];
 
             if (isResourceAutoFile
-                && ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"]))
+                && ([self isSmartSpriteSheetCompatibleFile:fileName]))
             {
                 NSString *dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
                 [self publishImageFile:filePath
