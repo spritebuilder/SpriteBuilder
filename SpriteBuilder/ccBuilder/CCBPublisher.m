@@ -159,7 +159,8 @@
     operation.publisher = self;
     operation.publishedPNGFiles = _publishedPNGFiles;
 
-    [operation start];
+    // [operation start];
+    [_publishingQueue addOperation:operation];
     return YES;
 }
 
@@ -187,8 +188,8 @@
     operation.format = format;
     operation.quality = quality;
 
-    [operation start];
-    // [_publishingQueue addOperation:operation];
+    // [operation start];
+    [_publishingQueue addOperation:operation];
 }
 
 - (void)publishRegularFile:(NSString *)srcPath to:(NSString*) dstPath
@@ -196,8 +197,8 @@
     PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithSrcFilePath:srcPath
                                                                                           dstFilePath:dstPath];
 
-    [operation start];
-    // [_publishingQueue addOperation:operation];
+    // [operation start];
+    [_publishingQueue addOperation:operation];
 }
 
 - (BOOL)publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath
@@ -360,8 +361,8 @@
     operation.dstFile = dstFile;
     operation.outDir = outDir;
 
-    [operation start];
-    // [_publishingQueue addOperation:operation];
+    // [operation start];
+    [_publishingQueue addOperation:operation];
 }
 
 - (void)processDirectory:(NSString *)directory
@@ -556,8 +557,8 @@
         operation.subPath = subPath;
         operation.targetType = targetType;
 
-        [operation start];
-        // [_publishingQueue addOperation:operation];
+        // [operation start];
+        [_publishingQueue addOperation:operation];
 	}
 	
 	[publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
