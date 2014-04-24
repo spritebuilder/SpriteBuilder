@@ -13,11 +13,13 @@
 
 @property (nonatomic, weak) NSMutableSet *publishedResources;
 @property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
+
 // TODO: not ideal, rename rules
 @property (nonatomic, weak) CCBPublisher *publisher;
 
 @property (nonatomic) BOOL isSpriteSheet;
 @property (nonatomic) int targetType;
+
 
 @property (nonatomic, strong) DateCache *modifiedFileDateCache;
 

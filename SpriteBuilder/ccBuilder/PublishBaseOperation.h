@@ -9,7 +9,6 @@
 {
     ProjectSettings *_projectSettings;
     CCBWarnings *_warnings;
-    __weak CCBPublisher *_publisher;
 }
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;

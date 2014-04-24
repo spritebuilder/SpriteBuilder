@@ -14,6 +14,7 @@
 
 - (void)main
 {
+    // TODO: this is a long method -> split up!
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcPath];
 
     if (_isSpriteSheet
@@ -28,7 +29,6 @@
 
     // Find out which file to copy for the current resolution
     NSFileManager *fileManager = [NSFileManager defaultManager];
-
 
     NSString *srcFileName = [_srcPath lastPathComponent];
     NSString *dstFileName = [_dstPath lastPathComponent];
