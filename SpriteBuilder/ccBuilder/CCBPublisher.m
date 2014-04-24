@@ -45,7 +45,7 @@
 #import "PublishSpriteSheetOperation.h"
 #import "PublishRegularFileOperation.h"
 #import "PublishSoundFileOperation.h"
-#import "ProjectSettings+SoundSettings.h"
+#import "ProjectSettings+Convenience.h"
 #import "PublishCCBOperation.h"
 #import "PublishImageOperation.h"
 #import "DateCache.h"
@@ -541,7 +541,6 @@
             }
         }
 
-
         // TODO: use base class
         PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithAppDelegate:[AppDelegate appDelegate]
                                                                                                  warnings:warnings
@@ -682,7 +681,7 @@
     return NO;
 }
 
-- (void) publishGeneratedFiles
+- (void)publishGeneratedFiles
 {
     // Create the directory if it doesn't exist
     BOOL createdDirs = [[NSFileManager defaultManager] createDirectoryAtPath:outputDir withIntermediateDirectories:YES attributes:NULL error:NULL];
@@ -694,141 +693,170 @@
     
     if (targetType == kCCBPublisherTargetTypeIPhone || targetType == kCCBPublisherTargetTypeAndroid)
     {
-        // Generate main.js file
-        
-        if (projectSettings.javascriptBased
+        [self generateMainJSFile];
+    }
+    else if (targetType == kCCBPublisherTargetTypeHTML5)
+    {
+        [self generateHTML5Files];
+    }
+    
+    [self generateFileLookup];
+
+    [self generateSpriteSheetLookup];
+
+    [self generateCocos2dSetupFile];
+}
+
+- (void)generateHTML5Files
+{
+    [self generateIndexHTML5File];
+
+    [self generateBootHTML5Files];
+
+    [self generateMainHTML5File];
+
+    [self generateResourceHTML5File];
+
+    // Copy cocos2d.min.js file
+    NSString *cocos2dlibFile = [outputDir stringByAppendingPathComponent:@"cocos2d-html5.min.js"];
+    NSString *cocos2dlibFileSrc = [[NSBundle mainBundle] pathForResource:@"cocos2d.min.txt" ofType:@"" inDirectory:@"publishTemplates"];
+
+    [[NSFileManager defaultManager] copyItemAtPath:cocos2dlibFileSrc toPath:cocos2dlibFile error:NULL];
+}
+
+- (void)generateMainHTML5File
+{
+    NSString* mainFile = [outputDir stringByAppendingPathComponent:@"main.js"];
+
+    CCBPublisherTemplate *tmpl= [CCBPublisherTemplate templateWithFile:@"main-html5.txt"];
+    [tmpl writeToFile:mainFile];
+}
+
+- (void)generateResourceHTML5File
+{
+    NSString* resourceListFile = [outputDir stringByAppendingPathComponent:@"resources-html5.js"];
+
+    NSString* resourceListStr = @"var ccb_resources = [\n";
+    int resCount = 0;
+    for (NSString* res in publishedResources)
+    {
+        NSString *comma = @",";
+        if (resCount == [publishedResources count] - 1)
+        {
+            comma = @"";
+        }
+
+        NSString *type = NULL;
+        NSString *ext = [[res pathExtension] lowercaseString];
+        if ([ext isEqualToString:@"plist"])
+        {
+            type = @"plist";
+        }
+        else if ([ext isEqualToString:@"png"])
+        {
+            type = @"image";
+        }
+        else if ([ext isEqualToString:@"jpg"])
+        {
+            type = @"image";
+        }
+        else if ([ext isEqualToString:@"jpeg"])
+        {
+            type = @"image";
+        }
+        else if ([ext isEqualToString:@"mp3"])
+        {
+            type = @"sound";
+        }
+        else if ([ext isEqualToString:@"ccbi"])
+        {
+            type = @"ccbi";
+        }
+        else if ([ext isEqualToString:@"fnt"])
+        {
+            type = @"fnt";
+        }
+
+        if (type)
+        {
+            resourceListStr = [resourceListStr stringByAppendingFormat:@"    {type:'%@', src:\"%@\"}%@\n", type, res, comma];
+        }
+    }
+
+    resourceListStr = [resourceListStr stringByAppendingString:@"];\n"];
+
+    [resourceListStr writeToFile:resourceListFile atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+}
+
+- (void)generateBootHTML5Files
+{
+    NSString* bootFile = [outputDir stringByAppendingPathComponent:@"boot-html5.js"];
+    NSArray* jsFiles = [CCBFileUtil filesInResourcePathsWithExtension:@"js"];
+
+    CCBPublisherTemplate *tmpl = [CCBPublisherTemplate templateWithFile:@"boot-html5.txt"];
+    [tmpl setStrings:jsFiles forMarker:@"REQUIRED_FILES" prefix:@"    '" suffix:@"',\n"];
+
+    [tmpl writeToFile:bootFile];
+
+    // Generate boot2-html5.js file
+
+    NSString* boot2File = [outputDir stringByAppendingPathComponent:@"boot2-html5.js"];
+
+    tmpl = [CCBPublisherTemplate templateWithFile:@"boot2-html5.txt"];
+    [tmpl setString:projectSettings.javascriptMainCCB forMarker:@"MAIN_SCENE"];
+    [tmpl setString:[NSString stringWithFormat:@"%d", projectSettings.publishResolutionHTML5_scale] forMarker:@"RESOLUTION_SCALE"];
+
+    [tmpl writeToFile:boot2File];
+}
+
+- (void)generateIndexHTML5File
+{
+    NSString* indexFile = [outputDir stringByAppendingPathComponent:@"index.html"];
+
+    CCBPublisherTemplate* tmpl = [CCBPublisherTemplate templateWithFile:@"index-html5.txt"];
+    [tmpl setString:[NSString stringWithFormat:@"%d", projectSettings.publishResolutionHTML5_width] forMarker:@"WIDTH"];
+    [tmpl setString:[NSString stringWithFormat:@"%d", projectSettings.publishResolutionHTML5_height] forMarker:@"HEIGHT"];
+
+    [tmpl writeToFile:indexFile];
+}
+
+- (void)generateMainJSFile
+{
+    if (projectSettings.javascriptBased
             && projectSettings.javascriptMainCCB && ![projectSettings.javascriptMainCCB isEqualToString:@""]
             && ![self fileExistInResourcePaths:@"main.js"])
         {
             // Find all jsFiles
             NSArray* jsFiles = [CCBFileUtil filesInResourcePathsWithExtension:@"js"];
             NSString* mainFile = [outputDir stringByAppendingPathComponent:@"main.js"];
-            
+
             // Generate file from template
             CCBPublisherTemplate* tmpl = [CCBPublisherTemplate templateWithFile:@"main-jsb.txt"];
             [tmpl setStrings:jsFiles forMarker:@"REQUIRED_FILES" prefix:@"require(\"" suffix:@"\");\n"];
             [tmpl setString:projectSettings.javascriptMainCCB forMarker:@"MAIN_SCENE"];
-            
+
             [tmpl writeToFile:mainFile];
         }
-    }
-    else if (targetType == kCCBPublisherTargetTypeHTML5)
-    {
-        // Generate index.html file
-        
-        NSString* indexFile = [outputDir stringByAppendingPathComponent:@"index.html"];
-        
-        CCBPublisherTemplate* tmpl = [CCBPublisherTemplate templateWithFile:@"index-html5.txt"];
-        [tmpl setString:[NSString stringWithFormat:@"%d",projectSettings.publishResolutionHTML5_width] forMarker:@"WIDTH"];
-        [tmpl setString:[NSString stringWithFormat:@"%d",projectSettings.publishResolutionHTML5_height] forMarker:@"HEIGHT"];
-        
-        [tmpl writeToFile:indexFile];
-        
-        // Generate boot-html5.js file
-        
-        NSString* bootFile = [outputDir stringByAppendingPathComponent:@"boot-html5.js"];
-        NSArray* jsFiles = [CCBFileUtil filesInResourcePathsWithExtension:@"js"];
-        
-        tmpl = [CCBPublisherTemplate templateWithFile:@"boot-html5.txt"];
-        [tmpl setStrings:jsFiles forMarker:@"REQUIRED_FILES" prefix:@"    '" suffix:@"',\n"];
-        
-        [tmpl writeToFile:bootFile];
-        
-        // Generate boot2-html5.js file
-        
-        NSString* boot2File = [outputDir stringByAppendingPathComponent:@"boot2-html5.js"];
-        
-        tmpl = [CCBPublisherTemplate templateWithFile:@"boot2-html5.txt"];
-        [tmpl setString:projectSettings.javascriptMainCCB forMarker:@"MAIN_SCENE"];
-        [tmpl setString:[NSString stringWithFormat:@"%d", projectSettings.publishResolutionHTML5_scale] forMarker:@"RESOLUTION_SCALE"];
-        
-        [tmpl writeToFile:boot2File];
-        
-        // Generate main.js file
-        
-        NSString* mainFile = [outputDir stringByAppendingPathComponent:@"main.js"];
-        
-        tmpl = [CCBPublisherTemplate templateWithFile:@"main-html5.txt"];
-        [tmpl writeToFile:mainFile];
-        
-        // Generate resources-html5.js file
-        
-        NSString* resourceListFile = [outputDir stringByAppendingPathComponent:@"resources-html5.js"];
-        
-        NSString* resourceListStr = @"var ccb_resources = [\n";
-        int resCount = 0;
-        for (NSString* res in publishedResources)
-        {
-            NSString* comma = @",";
-            if (resCount == [publishedResources count] -1) comma = @"";
-            
-            NSString* ext = [[res pathExtension] lowercaseString];
-            
-            NSString* type = NULL;
-            
-            if ([ext isEqualToString:@"plist"]) type = @"plist";
-            else if ([ext isEqualToString:@"png"]) type = @"image";
-            else if ([ext isEqualToString:@"jpg"]) type = @"image";
-            else if ([ext isEqualToString:@"jpeg"]) type = @"image";
-            else if ([ext isEqualToString:@"mp3"]) type = @"sound";
-            else if ([ext isEqualToString:@"ccbi"]) type = @"ccbi";
-            else if ([ext isEqualToString:@"fnt"]) type = @"fnt";
-            
-            if (type)
-            {
-                resourceListStr = [resourceListStr stringByAppendingFormat:@"    {type:'%@', src:\"%@\"}%@\n", type, res, comma];
-            }
-        }
-        
-        resourceListStr = [resourceListStr stringByAppendingString:@"];\n"];
-        
-        [resourceListStr writeToFile:resourceListFile atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-        
-        // Copy cocos2d.min.js file
-        NSString* cocos2dlibFile = [outputDir stringByAppendingPathComponent:@"cocos2d-html5.min.js"];
-        NSString* cocos2dlibFileSrc = [[NSBundle mainBundle] pathForResource:@"cocos2d.min.txt" ofType:@"" inDirectory:@"publishTemplates"];
-        [[NSFileManager defaultManager] copyItemAtPath: cocos2dlibFileSrc toPath:cocos2dlibFile error:NULL];
-    }
-    
-    // Generate file lookup
-    NSMutableDictionary* fileLookup = [NSMutableDictionary dictionary];
-    
-    NSMutableDictionary* metadata = [NSMutableDictionary dictionary];
-    [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
-    
-    [fileLookup setObject:metadata forKey:@"metadata"];
-    [fileLookup setObject:renamedFiles forKey:@"filenames"];
-    
-    NSString* lookupFile = [outputDir stringByAppendingPathComponent:@"fileLookup.plist"];
-    
-    [fileLookup writeToFile:lookupFile atomically:YES];
-    
-    // Generate sprite sheet lookup
-    NSMutableDictionary* spriteSheetLookup = [NSMutableDictionary dictionary];
-    
-    metadata = [NSMutableDictionary dictionary];
-    [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
-    
-    [spriteSheetLookup setObject:metadata forKey:@"metadata"];
-    
-    [spriteSheetLookup setObject:[publishedSpriteSheetFiles allObjects] forKey:@"spriteFrameFiles"];
-    
-    NSString* spriteSheetLookupFile = [outputDir stringByAppendingPathComponent:@"spriteFrameFileList.plist"];
-    
-    [spriteSheetLookup writeToFile:spriteSheetLookupFile atomically:YES];
-    
-    // Generate Cocos2d setup file
+}
+
+- (void)generateCocos2dSetupFile
+{
     NSMutableDictionary* configCocos2d = [NSMutableDictionary dictionary];
-    
+
     NSString* screenMode = @"";
     if (projectSettings.designTarget == kCCBDesignTargetFixed)
-		screenMode = @"CCScreenModeFixed";
+    {
+        screenMode = @"CCScreenModeFixed";
+    }
     else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
-		screenMode = @"CCScreenModeFlexible";
+    {
+        screenMode = @"CCScreenModeFlexible";
+    }
+
     [configCocos2d setObject:screenMode forKey:@"CCSetupScreenMode"];
 
-	NSString *screenOrientation = @"";
-	if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+    NSString *screenOrientation = @"";
+    if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
 	{
 		screenOrientation = @"CCScreenOrientationLandscape";
 	}
@@ -837,15 +865,46 @@
 		screenOrientation = @"CCScreenOrientationPortrait";
 	}
 
-	[configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
+    [configCocos2d setObject:screenOrientation forKey:@"CCSetupScreenOrientation"];
 
-	[configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
+    [configCocos2d setObject:[NSNumber numberWithBool:YES] forKey:@"CCSetupTabletScale2X"];
 
-	NSString *configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
-	[configCocos2d writeToFile:configCocos2dFile atomically:YES];
+    NSString *configCocos2dFile = [outputDir stringByAppendingPathComponent:@"configCocos2d.plist"];
+    [configCocos2d writeToFile:configCocos2dFile atomically:YES];
 }
 
-- (BOOL) publishAllToDirectory:(NSString*)dir
+- (void)generateSpriteSheetLookup
+{
+    NSMutableDictionary* spriteSheetLookup = [NSMutableDictionary dictionary];
+
+    NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+    [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
+
+    [spriteSheetLookup setObject:metadata forKey:@"metadata"];
+
+    [spriteSheetLookup setObject:[publishedSpriteSheetFiles allObjects] forKey:@"spriteFrameFiles"];
+
+    NSString* spriteSheetLookupFile = [outputDir stringByAppendingPathComponent:@"spriteFrameFileList.plist"];
+
+    [spriteSheetLookup writeToFile:spriteSheetLookupFile atomically:YES];
+}
+
+- (void)generateFileLookup
+{
+    NSMutableDictionary* fileLookup = [NSMutableDictionary dictionary];
+
+    NSMutableDictionary* metadata = [NSMutableDictionary dictionary];
+    [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
+
+    [fileLookup setObject:metadata forKey:@"metadata"];
+    [fileLookup setObject:renamedFiles forKey:@"filenames"];
+
+    NSString* lookupFile = [outputDir stringByAppendingPathComponent:@"fileLookup.plist"];
+
+    [fileLookup writeToFile:lookupFile atomically:YES];
+}
+
+- (BOOL)publishAllToDirectory:(NSString*)dir
 {
     outputDir = dir;
     
@@ -871,7 +930,7 @@
     return YES;
 }
 
-- (BOOL) archiveToFile:(NSString*)file
+- (BOOL)publishArchive:(NSString*)file
 {
     NSFileManager *manager = [NSFileManager defaultManager];
     
@@ -971,7 +1030,7 @@
         // Publish archive
         NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
 
-        if (![self archiveToFile:zipFile])
+        if (![self publishArchive:zipFile])
         {
             return NO;
         }
@@ -1003,23 +1062,21 @@
     targetType = kCCBPublisherTargetTypeIPhone;
     warnings.currentTargetType = targetType;
 
+    // NOTE: If android publishing is back this has to be changed accordingly
     [self connfigureResolutionsForIOS];
 
     NSString *publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
 
     if (projectSettings.publishToZipFile)
     {
-        // Publish archive
         NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
-
-        if (![self archiveToFile:zipFile])
+        if (![self publishArchive:zipFile])
         {
             return NO;
         }
     }
     else
     {
-        // Publish files
         if (![self publishAllToDirectory:publishDir])
         {
             return NO;
@@ -1055,7 +1112,6 @@
 {
     NSMutableArray* resolutions = [NSMutableArray array];
 
-    // Add iPhone resolutions from publishing settings
     if (projectSettings.publishResolution_ios_phone)
     {
         [resolutions addObject:@"phone"];
@@ -1102,51 +1158,17 @@
     }
 }
 
-- (void) publishAsync
-{
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-		NSLog(@"[PUBLISH] Start...");
-
-        [_publishingQueue setSuspended:YES];
-
-        NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-
-        if (projectSettings.publishEnvironment == PublishEnvironmentRelease)
-        {
-            [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
-        }
-
-        [self doPublish];
-
-        [_publishingQueue setSuspended:NO];
-
-        [self postProcessPublishedPNGFilesWithOptiPNG];
-
-        [_publishingQueue waitUntilAllOperationsAreFinished];
-
-		[self flagFilesWithWarningsAsDirty];
-
-		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
-
-        dispatch_sync(dispatch_get_main_queue(), ^
-        {
-            [[AppDelegate appDelegate] publisher:self finishedWithWarnings:warnings];
-        });
-    });
-}
-
 - (void)postProcessPublishedPNGFilesWithOptiPNG
 {
-    if (projectSettings.publishEnvironment == PublishEnvironmentDevelop)
+    if ([projectSettings isPublishEnvironmentDebug])
     {
         return;
     }
 
     NSString *pathToOptiPNG = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"optipng"];
-
     if (!pathToOptiPNG)
     {
+        // TODO: inform user that somethings wrong with the bundle
         NSLog(@"ERROR: optipng was not found.");
         return;
     }
@@ -1174,7 +1196,10 @@
 	}
 }
 
-- (void) publish
+
+#pragma mark - public methods
+
+- (void)publish
 {
     [self doPublish];
 
@@ -1183,7 +1208,40 @@
     [[AppDelegate appDelegate] publisher:self finishedWithWarnings:warnings];
 }
 
-+ (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings
+- (void)publishAsync
+{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+		NSLog(@"[PUBLISH] Start...");
+
+        [_publishingQueue setSuspended:YES];
+
+        NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+
+        if (projectSettings.publishEnvironment == PublishEnvironmentRelease)
+        {
+            [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+        }
+
+        [self doPublish];
+
+        [self postProcessPublishedPNGFilesWithOptiPNG];
+
+        [_publishingQueue setSuspended:NO];
+        [_publishingQueue waitUntilAllOperationsAreFinished];
+
+		[self flagFilesWithWarningsAsDirty];
+
+		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
+
+        dispatch_sync(dispatch_get_main_queue(), ^
+        {
+            [[AppDelegate appDelegate] publisher:self finishedWithWarnings:warnings];
+        });
+    });
+}
+
++ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings
 {
     NSAssert(projectSettings != nil, @"Project settings should not be nil.");
 

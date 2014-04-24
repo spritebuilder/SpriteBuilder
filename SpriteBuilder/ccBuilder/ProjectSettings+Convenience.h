@@ -1,7 +1,10 @@
 #import <Foundation/Foundation.h>
 #import "ProjectSettings.h"
 
-@interface ProjectSettings (SoundSettings)
+@interface ProjectSettings (Convenience)
+
+- (BOOL)isPublishEnvironmentRelease;
+- (BOOL)isPublishEnvironmentDebug;
 
 - (int)soundQualityForRelPath:(NSString *)relPath targetType:(int)targetType;
 - (int)soundFormatForRelPath:(NSString *)relPath targetType:(int)targetType;

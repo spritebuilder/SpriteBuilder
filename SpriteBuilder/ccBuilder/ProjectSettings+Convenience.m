@@ -1,9 +1,19 @@
-#import "ProjectSettings+SoundSettings.h"
+#import "ProjectSettings+Convenience.h"
 #import "FCFormatConverter.h"
 #import "CCBWarnings.h"
 
 
-@implementation ProjectSettings (SoundSettings)
+@implementation ProjectSettings (Convenience)
+
+- (BOOL)isPublishEnvironmentRelease
+{
+    return self.publishEnvironment == PublishEnvironmentRelease;
+}
+
+- (BOOL)isPublishEnvironmentDebug
+{
+    return self.publishEnvironment == PublishEnvironmentDevelop;
+}
 
 - (int)soundQualityForRelPath:(NSString *)relPath targetType:(int)targetType
 {
