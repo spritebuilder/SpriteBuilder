@@ -6,8 +6,6 @@
 
 @implementation PublishBaseOperation
 
-// @synthesize warnings = _warnings;
-
 - (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings warnings:(CCBWarnings *)warnings
 {
     self = [super init];

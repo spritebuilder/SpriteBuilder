@@ -15,9 +15,6 @@
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
 
-// TODO: exchange with publisherDelegate interface
-@property (nonatomic, weak) CCBPublisher *publisher;
-
 - (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings warnings:(CCBWarnings *)warnings;
 
 @end
