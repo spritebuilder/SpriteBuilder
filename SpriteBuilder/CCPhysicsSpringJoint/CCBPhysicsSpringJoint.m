@@ -33,7 +33,7 @@
     {
         self.stiffness = 4.0f;
         self.damping = 1.0f;
-        self.restLength = [self worldLength];
+        self.restLength = [self localLength];
     }
     
     return self;
@@ -316,7 +316,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
 	
 	if(!_restLengthEnabled)
 	{
-		_restLength = [self worldLength];
+		_restLength = [self localLength];
 	}
 	else if(_restLength < 0)
 	{
