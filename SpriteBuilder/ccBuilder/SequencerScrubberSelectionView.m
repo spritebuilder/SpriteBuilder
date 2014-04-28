@@ -372,7 +372,16 @@
         return [channel.seqNodeProp keyframeBetweenMinTime:minTime maxTime:maxTime];
     }
     
+    if([item isKindOfClass:[SequencerJoints class]])
+        return nil;
+    
     CCNode* node = item;
+    
+    if(node.plugIn.isJoint)
+    {
+        return nil;
+    }
+    
     NSString* prop = [self propNameForNode:node subRow:sub];
     
     SequencerNodeProperty* seqNodeProp = [node sequenceNodeProperty:prop sequenceId:[SequencerHandler sharedHandler].currentSequence.sequenceId];
@@ -475,6 +484,11 @@
             id item = [outlineView itemAtRow:row];
             CCNode* node = NULL;
             
+            if([item isKindOfClass:[SequencerJoints class]])
+            {
+                continue;
+            }
+            
             if ([item isKindOfClass:[SequencerChannel class]])
             {
                 SequencerChannel* channel = item;
@@ -484,6 +498,10 @@
             {
                 node = item;
             }
+
+            if(node.plugIn.isJoint)
+                continue;
+            
             
             if (node.seqExpanded)
             {
@@ -914,6 +932,19 @@
     {
         return NULL;
     }
+    
+    if ([item isKindOfClass:[SequencerJoints class]])
+    {
+        return NULL;
+    }
+    
+    if ([item isKindOfClass:[CCNode class]])
+    {
+        CCNode * node = item;
+        if(node.plugIn.isJoint)
+            return nil;
+    }
+
     
     // Check if an interpolation was clicked
     keyframe = [self keyframeForInterpolationInRow:row sub:subRow time:[seq positionToTime:mouseLocation.x]];
