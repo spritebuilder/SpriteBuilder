@@ -114,6 +114,7 @@
 #import "SBErrors.h"
 #import "NSArray+Query.h"
 #import "Cocos2dUpdater.h"
+#import "OALSimpleAudio.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -533,6 +534,9 @@ typedef enum
     
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
+    
+    // Initialize Audio
+    [OALSimpleAudio sharedInstance];
     
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
