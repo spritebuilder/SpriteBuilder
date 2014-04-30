@@ -105,6 +105,10 @@
 	{
 		_collisionCategories = [collisionCategoriesObject componentsSeparatedByString:@";"];
 	}
+    else if([collisionCategoriesObject isKindOfClass:[NSArray class]])
+    {
+        _collisionCategories = collisionCategoriesObject;
+    }
     
 	
 	id collisionMaskObject = [ser objectForKey:@"collisionMask"];
@@ -117,6 +121,10 @@
 	{
 		_collisionMask = [collisionMaskObject componentsSeparatedByString:@";"];
 	}
+    else if([collisionMaskObject isKindOfClass:[NSArray class]])
+    {
+        _collisionMask = collisionMaskObject;
+    }
     
     return self;
 }
