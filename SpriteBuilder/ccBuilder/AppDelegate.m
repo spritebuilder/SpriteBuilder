@@ -616,7 +616,7 @@ typedef enum
     // Check for first run
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"completedFirstRun"] boolValue])
     {
-        [self showHelp:self];
+        //[self showHelp:self];
         
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
