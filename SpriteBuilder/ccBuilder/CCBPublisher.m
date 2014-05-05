@@ -341,9 +341,12 @@
         NSString *bmFontOutDir = [outDir stringByAppendingPathComponent:directory];
         [self publishRegularFile:filePath to:bmFontOutDir];
 
-        NSArray *pngFiles = [self searchForPNGFilesInDirectory:bmFontOutDir];
-        // TODO: this can be generalized
-        [_publishedPNGFiles addObjectsFromArray:pngFiles];
+        // Run after regular file has been copied, else png files cannot be found
+        [_publishingQueue addOperationWithBlock:^
+        {
+            // TODO: this can be generalized
+            [_publishedPNGFiles addObjectsFromArray:[bmFontOutDir allPNGFilesInPath]];
+        }];
 
         return;
     }
@@ -381,35 +384,7 @@
     [self publishDirectory:filePath subPath:childPath];
 }
 
-- (NSArray *)searchForPNGFilesInDirectory:(NSString *)dir
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[NSURL URLWithString:dir]
-                                          includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
-                                                             options:NSDirectoryEnumerationSkipsHiddenFiles
-                                                        errorHandler:^BOOL(NSURL *url, NSError *error)
-    {
-        return YES;
-    }];
-
-    NSMutableArray *mutableFileURLs = [NSMutableArray array];
-    for (NSURL *fileURL in enumerator)
-    {
-        NSString *filename;
-        [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
-
-        NSNumber *isDirectory;
-        [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
-
-        if (![isDirectory boolValue] && [[fileURL relativeString] hasSuffix:@"png"])
-        {
-            [mutableFileURLs addObject:fileURL];
-        }
-    }
-
-    return mutableFileURLs;
-}
-
+// TODO move to NSString category or helper class
 - (NSArray *)filesOfAutoDirectory:(NSString *)publishDirectory
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];;
@@ -469,7 +444,7 @@
         [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
     }];
 
-    NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateForDirectory];
+    NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPath];
 
 	[publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 

@@ -32,7 +32,7 @@
     return [extension isEqualToString:@"png"] || [extension isEqualToString:@"psd"];
 }
 
-- (NSDate *)latestModifiedDateForDirectory
+- (NSDate *)latestModifiedDateOfPath
 {
     return [self latestModifiedDateForDirectory:self];
 }
@@ -69,5 +69,35 @@
 
     return latestDate;
 }
+
+- (NSArray *)allPNGFilesInPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[NSURL URLWithString:self]
+                                          includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
+                                                             options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                        errorHandler:^BOOL(NSURL *url, NSError *error)
+    {
+        return YES;
+    }];
+
+    NSMutableArray *mutableFileURLs = [NSMutableArray array];
+    for (NSURL *fileURL in enumerator)
+    {
+        NSString *filename;
+        [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
+
+        NSNumber *isDirectory;
+        [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
+
+        if (![isDirectory boolValue] && [[fileURL relativeString] hasSuffix:@"png"])
+        {
+            [mutableFileURLs addObject:fileURL];
+        }
+    }
+
+    return mutableFileURLs;
+}
+
 
 @end

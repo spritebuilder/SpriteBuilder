@@ -2,12 +2,14 @@
 
 @interface NSString (Publishing)
 
-- (NSString *)resourceAutoFilePath;
+// File methods
 - (BOOL)isResourceAutoFile;
-
 - (BOOL)isSoundFile;
 - (BOOL)isSmartSpriteSheetCompatibleFile;
 
-- (NSDate *)latestModifiedDateForDirectory;
+// Directoy methods
+- (NSString *)resourceAutoFilePath;
+- (NSDate *)latestModifiedDateOfPath;
+- (NSArray *)allPNGFilesInPath;
 
 @end
