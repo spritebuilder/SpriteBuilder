@@ -666,8 +666,8 @@
     NSString *pathToOptiPNG = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"optipng"];
     if (!pathToOptiPNG)
     {
-        // TODO: inform user that somethings wrong with the bundle
-        NSLog(@"ERROR: optipng was not found.");
+        [warnings addWarningWithDescription:@"Optipng could not be found." isFatal:NO];
+        NSLog(@"ERROR: optipng was not found in bundle.");
         return;
     }
 
