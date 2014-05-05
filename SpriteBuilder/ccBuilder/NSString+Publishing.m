@@ -21,7 +21,7 @@
     return [fileManager fileExistsAtPath:filepath];
 }
 
-- (BOOL)isSoundFile
+- (BOOL)isWaveSoundFile
 {
     NSString *extension = [[self pathExtension] lowercaseString];
     return [extension isEqualToString:@"wav"];

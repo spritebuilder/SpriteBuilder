@@ -280,7 +280,7 @@
         {
             [self publishImageForResolutionsWithFile:filePath to:dstFilePath isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
         }
-        else if ([fileName isSoundFile])
+        else if ([fileName isWaveSoundFile])
         {
             [self publishSoundFile:filePath to:dstFilePath];
         }

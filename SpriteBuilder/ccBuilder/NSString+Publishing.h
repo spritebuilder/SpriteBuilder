@@ -4,7 +4,7 @@
 
 // File methods
 - (BOOL)isResourceAutoFile;
-- (BOOL)isSoundFile;
+- (BOOL)isWaveSoundFile;
 - (BOOL)isSmartSpriteSheetCompatibleFile;
 
 // Directoy methods
