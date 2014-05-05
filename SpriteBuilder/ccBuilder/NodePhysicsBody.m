@@ -105,6 +105,10 @@
 	{
 		_collisionCategories = [collisionCategoriesObject componentsSeparatedByString:@";"];
 	}
+    else
+    {
+        _collisionCategories = collisionCategoriesObject;
+    }
     
 	
 	id collisionMaskObject = [ser objectForKey:@"collisionMask"];
@@ -117,6 +121,10 @@
 	{
 		_collisionMask = [collisionMaskObject componentsSeparatedByString:@";"];
 	}
+    else
+    {
+        _collisionMask = collisionMaskObject;
+    }
     
     return self;
 }
