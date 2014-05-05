@@ -165,7 +165,6 @@
     operation.publisher = self;
     operation.publishedPNGFiles = _publishedPNGFiles;
 
-    // [operation start];
     [_publishingQueue addOperation:operation];
     return YES;
 }
@@ -195,7 +194,6 @@
     operation.format = format;
     operation.quality = quality;
 
-    // [operation start];
     [_publishingQueue addOperation:operation];
 }
 
@@ -373,7 +371,6 @@
     operation.dstFile = dstFile;
     operation.outDir = outDir;
 
-    // [operation start];
     [_publishingQueue addOperation:operation];
 }
 
@@ -579,7 +576,6 @@
         operation.subPath = subPath;
         operation.targetType = targetType;
 
-        // [operation start];
         [_publishingQueue addOperation:operation];
 	}
 	

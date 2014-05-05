@@ -28,18 +28,6 @@
 
 @synthesize status;
 
-- (id)initWithWindowNibName:(NSString *)windowNibName
-{
-    self = [super initWithWindowNibName:windowNibName];
-
-    if (self)
-    {
-
-    }
-
-    return self;
-}
-
 - (IBAction)onCancel:(id)sender
 {
     if (_onCancelBlock)

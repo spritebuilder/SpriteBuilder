@@ -445,7 +445,13 @@ typedef struct _PVRTexHeader
     NSError * error = nil;
 
     self.formatConverter = [FCFormatConverter defaultConverter];
-    if(![_formatConverter convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_ isSpriteSheet:YES outputFilename:&textureFileName error:&error])
+    if(![_formatConverter convertImageAtPath:pngFilename
+                                      format:imageFormat_
+                                      dither:dither_
+                                    compress:compress_
+                               isSpriteSheet:YES
+                              outputFilename:&textureFileName
+                                       error:&error])
     {
         [self setErrorMessage:error.localizedDescription];
     }
