@@ -1001,8 +1001,6 @@
 
 + (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings
 {
-    NSAssert(projectSettings != nil, @"Project settings should not be nil.");
-
     projectSettings.needRepublish = YES;
     [projectSettings store];
 
