@@ -695,7 +695,7 @@
     warnings.currentTargetType = targetType;
 
     // NOTE: If android publishing is back this has to be changed accordingly
-    [self connfigureResolutionsForIOS];
+    publishForResolutions = [projectSettings publishingResolutionsForIOS];
 
     NSString *publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
 
@@ -836,7 +836,7 @@
 {
     [self doPublish];
 
-	[self flagFilesWithWarningsAsDirty];
+	[projectSettings flagFilesDirtyWithWarnings:warnings];
 
     [[AppDelegate appDelegate] publisher:self finishedWithWarnings:warnings];
 }
@@ -865,7 +865,7 @@
         [_publishingQueue setSuspended:NO];
         [_publishingQueue waitUntilAllOperationsAreFinished];
 
-		[self flagFilesWithWarningsAsDirty];
+		[projectSettings flagFilesDirtyWithWarnings:warnings];
 
 		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
 
