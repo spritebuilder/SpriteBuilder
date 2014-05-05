@@ -1,5 +1,6 @@
 #import "NSString+Publishing.h"
 #import "CCBFileUtil.h"
+#import "ResourceManager.h"
 
 
 @implementation NSString (Publishing)
@@ -129,5 +130,39 @@
 
 	return result;
 }
+
+- (BOOL)containsCCBFile
+{
+    return [self containsCCBFile:self];
+}
+
+- (BOOL) containsCCBFile:(NSString*) dir
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSArray* files = [fm contentsOfDirectoryAtPath:self error:NULL];
+    NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
+
+    for (NSString* file in files) {
+        BOOL isDirectory;
+        NSString* filePath = [self stringByAppendingPathComponent:file];
+
+        if([fm fileExistsAtPath:filePath isDirectory:&isDirectory]){
+            if(isDirectory){
+                // Skip resource independent directories
+                if ([resIndependentDirs containsObject:file]) {
+                    continue;
+                }else if([self containsCCBFile:filePath]){
+                    return YES;
+                }
+            }else{
+                if([[file lowercaseString] hasSuffix:@"ccb"]){
+                    return YES;
+                }
+            }
+        }
+    }
+    return NO;
+}
+
 
 @end

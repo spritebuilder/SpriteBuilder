@@ -13,5 +13,6 @@
 - (NSArray *)allPNGFilesInPath;
 - (NSArray *)filesInAutoDirectory;
 - (NSArray *)resolutionDependantFilesInDirWithResolutions:(NSArray *)resolutions;
+- (BOOL)containsCCBFile;
 
 @end

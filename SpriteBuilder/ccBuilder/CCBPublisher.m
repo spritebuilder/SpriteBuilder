@@ -241,7 +241,7 @@
         {
             [self processDirectory:fileName
                            subPath:subPath
-                          filePath:filePath
+                           dirPath:filePath
                 resIndependentDirs:resIndependentDirs
                             outDir:outDir
             isGeneratedSpriteSheet:isGeneratedSpriteSheet];
@@ -326,33 +326,24 @@
     [_publishingQueue addOperation:operation];
 }
 
-- (void)processDirectory:(NSString *)directory
+// TODO separate class?
+- (void)processDirectory:(NSString *)directoryName
                  subPath:(NSString *)subPath
-                filePath:(NSString *)filePath
+                 dirPath:(NSString *)dirPath
       resIndependentDirs:(NSArray *)resIndependentDirs
                   outDir:(NSString *)outDir
   isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    if ([[filePath pathExtension] isEqualToString:@"bmfont"])
+    if ([[dirPath pathExtension] isEqualToString:@"bmfont"])
     {
-        // This is a bitmap font, just copy it
-        NSString *bmFontOutDir = [outDir stringByAppendingPathComponent:directory];
-        [self publishRegularFile:filePath to:bmFontOutDir];
-
-        // Run after regular file has been copied, else png files cannot be found
-        [_publishingQueue addOperationWithBlock:^
-        {
-            // TODO: this can be generalized
-            [_publishedPNGFiles addObjectsFromArray:[bmFontOutDir allPNGFilesInPath]];
-        }];
-
+        [self publishBMFont:directoryName dirPath:dirPath outDir:outDir];
         return;
     }
 
     // Skip resource independent directories
-    if ([resIndependentDirs containsObject:directory])
+    if ([resIndependentDirs containsObject:directoryName])
     {
         return;
     }
@@ -360,28 +351,45 @@
     // Skip directories in generated sprite sheets
     if (isGeneratedSpriteSheet)
     {
-        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Generated sprite sheets do not support directories (%@)", [directory lastPathComponent]] isFatal:NO relatedFile:subPath];
+        [warnings addWarningWithDescription:[NSString stringWithFormat:@"Generated sprite sheets do not support directories (%@)", [directoryName lastPathComponent]] isFatal:NO relatedFile:subPath];
         return;
     }
 
     // Skip the empty folder
-    if ([[fileManager contentsOfDirectoryAtPath:filePath error:NULL] count] == 0)
+    if ([[fileManager contentsOfDirectoryAtPath:dirPath error:NULL] count] == 0)
     {
         return;
     }
 
     // Skip the fold no .ccb files when onlyPublishCCBs is true
-    if (projectSettings.onlyPublishCCBs && ![self containsCCBFile:filePath])
+    if (projectSettings.onlyPublishCCBs
+        && ![dirPath containsCCBFile])
     {
         return;
     }
 
     // This is a directory
     NSString *childPath = subPath
-        ? [NSString stringWithFormat:@"%@/%@", subPath, directory]
-        : directory;
+        ? [NSString stringWithFormat:@"%@/%@", subPath, directoryName]
+        : directoryName;
 
-    [self publishDirectory:filePath subPath:childPath];
+    [self publishDirectory:dirPath subPath:childPath];
+}
+
+- (void)publishBMFont:(NSString *)directoryName dirPath:(NSString *)dirPath outDir:(NSString *)outDir
+{
+// This is a bitmap font, just copy it
+    NSString *bmFontOutDir = [outDir stringByAppendingPathComponent:directoryName];
+    [self publishRegularFile:dirPath to:bmFontOutDir];
+
+    // Run after regular file has been copied, else png files cannot be found
+    [_publishingQueue addOperationWithBlock:^
+    {
+        // TODO: this can be generalized
+        [_publishedPNGFiles addObjectsFromArray:[bmFontOutDir allPNGFilesInPath]];
+    }];
+
+    return;
 }
 
 - (NSString *)outputDirectory:(NSString *)subPath
@@ -558,34 +566,6 @@
 		NSLog(@"%@", errorMessage);
 		[warnings addWarningWithDescription:errorMessage isFatal:YES];
 	}
-}
-
-- (BOOL) containsCCBFile:(NSString*) dir
-{
-    NSFileManager* fm = [NSFileManager defaultManager];
-    NSArray* files = [fm contentsOfDirectoryAtPath:dir error:NULL];
-    NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
-    
-    for (NSString* file in files) {
-        BOOL isDirectory;
-        NSString* filePath = [dir stringByAppendingPathComponent:file];
-        
-        if([fm fileExistsAtPath:filePath isDirectory:&isDirectory]){
-            if(isDirectory){
-                // Skip resource independent directories
-                if ([resIndependentDirs containsObject:file]) {
-                    continue;
-                }else if([self containsCCBFile:filePath]){
-                    return YES;
-                }
-            }else{
-                if([[file lowercaseString] hasSuffix:@"ccb"]){
-                    return YES;
-                }
-            }
-        }
-    }
-    return NO;
 }
 
 - (void)publishGeneratedFiles
