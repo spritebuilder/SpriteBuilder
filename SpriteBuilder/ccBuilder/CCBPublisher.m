@@ -553,26 +553,6 @@
     return YES;
 }
 
-- (BOOL)publishArchive:(NSString*)file
-{
-    NSFileManager *manager = [NSFileManager defaultManager];
-    
-    // Remove the old file
-    [manager removeItemAtPath:file error:NULL];
-    
-    // Zip it up!
-    NSTask* zipTask = [[NSTask alloc] init];
-    [zipTask setCurrentDirectoryPath:outputDir];
-    
-    [zipTask setLaunchPath:@"/usr/bin/zip"];
-    NSArray* args = [NSArray arrayWithObjects:@"-r", @"-q", file, @".", @"-i", @"*", nil];
-    [zipTask setArguments:args];
-    [zipTask launch];
-    [zipTask waitUntilExit];
-    
-    return [manager fileExistsAtPath:file];
-}
-
 - (BOOL)doPublish
 {
     [self removeOldPublishDirIfCacheCleaned];
@@ -611,22 +591,7 @@
 
     NSString *publishDir = [projectSettings.publishDirectory absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
 
-    if (projectSettings.publishToZipFile)
-    {
-        NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
-        if (![self publishArchive:zipFile])
-        {
-            return NO;
-        }
-    }
-    else
-    {
-        if (![self publishAllToDirectory:publishDir])
-        {
-            return NO;
-        }
-    }
-    return YES;
+    return [self publishAllToDirectory:publishDir];
 }
 
 - (void)resetNeedRepublish
