@@ -17,11 +17,7 @@
 
 - (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
 {
-    NSString *key = targetType == kCCBPublisherTargetTypeIPhone
-        ? @"format_ios_sound_quality"
-        : @"format_android_sound_quality";
-
-    int result = [[self valueForRelPath:relPath andKey:key] intValue];
+    int result = [[self valueForRelPath:relPath andKey:@"format_ios_sound_quality"] intValue];
     if (!result)
     {
         return self.publishAudioQuality_ios;
@@ -41,8 +37,8 @@
     }
     else if (targetType == kCCBPublisherTargetTypeAndroid)
     {
-        key = @"format_android_sound";
-        map = @{@(0):@(kFCSoundFormatOGG)};
+        NSLog(@"ERROR: Android target type not supported at the moment, please refer to the git history.");
+        return 0;
     }
     else
     {

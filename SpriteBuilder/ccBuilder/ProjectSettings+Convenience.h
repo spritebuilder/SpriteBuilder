@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
+
 #import "ProjectSettings.h"
+#import "CCBWarnings.h"
 
 @interface ProjectSettings (Convenience)
 

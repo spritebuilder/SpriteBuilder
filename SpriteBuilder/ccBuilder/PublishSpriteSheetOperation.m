@@ -14,9 +14,6 @@
 @property (nonatomic) int format_ios;
 @property (nonatomic) BOOL format_ios_dither;
 @property (nonatomic) BOOL format_ios_compress;
-@property (nonatomic) int format_android;
-@property (nonatomic) BOOL format_android_dither;
-@property (nonatomic) BOOL format_android_compress;
 
 @end
 
@@ -107,20 +104,10 @@
         _packer.compress = self.format_ios_compress;
         _packer.dither = self.format_ios_dither;
     }
-    else if (_targetType == kCCBPublisherTargetTypeAndroid)
+    else
     {
-        _packer.imageFormat = self.format_android;
-        _packer.compress = self.format_android_compress;
-        _packer.dither = self.format_android_dither;
+        NSLog(@"ERROR: Other publishing types not used any at the moment. Please refer to git history.");
     }
-    /*
-     else if (targetType == kCCBPublisherTargetTypeHTML5)
-     {
-     _packer.imageFormat = ssSettings.textureFileFormatHTML5;
-     _packer.compress = NO;
-     _packer.dither = ssSettings.ditherHTML5;
-     }
-     */
 }
 
 - (void)setTextureMaxSize
@@ -148,9 +135,6 @@
     self.format_ios = [[_projectSettings valueForRelPath:_subPath andKey:@"format_ios"] intValue];
     self.format_ios_dither = [[_projectSettings valueForRelPath:_subPath andKey:@"format_ios_dither"] boolValue];
     self.format_ios_compress = [[_projectSettings valueForRelPath:_subPath andKey:@"format_ios_compress"] boolValue];
-    self.format_android = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android"] intValue];
-    self.format_android_dither = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android_dither"] boolValue];
-    self.format_android_compress = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android_compress"] boolValue];
 }
 
 - (void)cancel
