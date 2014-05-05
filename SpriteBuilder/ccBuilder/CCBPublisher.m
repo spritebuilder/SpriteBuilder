@@ -297,27 +297,6 @@
     return YES;
 }
 
-- (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outDir:(NSString *)outDir
-{
-    NSString *dstFile = [[outDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
-                                 stringByAppendingPathExtension:projectSettings.exporter];
-
-    // Add file to list of published files
-    NSString *localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
-    // TODO: move to base class or to a delegate
-    [publishedResources addObject:localFileName];
-
-    PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:projectSettings
-                                                                                 warnings:warnings
-                                                                                publisher:self];
-    operation.fileName = fileName;
-    operation.filePath = filePath;
-    operation.dstFile = dstFile;
-    operation.outDir = outDir;
-
-    [_publishingQueue addOperation:operation];
-}
-
 // TODO separate class?
 - (void)processDirectory:(NSString *)directoryName
                  subPath:(NSString *)subPath
@@ -367,6 +346,28 @@
 
     [self publishDirectory:dirPath subPath:childPath];
 }
+
+- (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outDir:(NSString *)outDir
+{
+    NSString *dstFile = [[outDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
+                                 stringByAppendingPathExtension:projectSettings.exporter];
+
+    // Add file to list of published files
+    NSString *localFileName = [dstFile relativePathFromBaseDirPath:outputDir];
+    // TODO: move to base class or to a delegate
+    [publishedResources addObject:localFileName];
+
+    PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:projectSettings
+                                                                                 warnings:warnings
+                                                                                publisher:self];
+    operation.fileName = fileName;
+    operation.filePath = filePath;
+    operation.dstFile = dstFile;
+    operation.outDir = outDir;
+
+    [_publishingQueue addOperation:operation];
+}
+
 
 - (void)publishBMFont:(NSString *)directoryName dirPath:(NSString *)dirPath outDir:(NSString *)outDir
 {
@@ -542,8 +543,7 @@
 			return NO;
 		}
 	}
-    
-    // Publish generated files
+
     if(!projectSettings.onlyPublishCCBs)
     {
         [self publishGeneratedFiles];
@@ -573,39 +573,6 @@
     return [manager fileExistsAtPath:file];
 }
 
-- (BOOL) archiveToFile:(NSString*)file diffFrom:(NSDictionary*) diffFiles
-{
-    if (!diffFiles) diffFiles = [NSDictionary dictionary];
-    
-    NSFileManager *manager = [NSFileManager defaultManager];
-    
-    // Remove the old file
-    [manager removeItemAtPath:file error:NULL];
-    
-    // Create diff
-    CCBDirectoryComparer* dc = [[CCBDirectoryComparer alloc] init];
-    [dc loadDirectory:outputDir];
-    NSArray* fileList = [dc diffWithFiles:diffFiles];
-    
-    // Zip it up!
-    NSTask* zipTask = [[NSTask alloc] init];
-    [zipTask setCurrentDirectoryPath:outputDir];
-    
-    [zipTask setLaunchPath:@"/usr/bin/zip"];
-    NSMutableArray* args = [NSMutableArray arrayWithObjects:@"-r", @"-q", file, @".", @"-i", nil];
-    
-    for (NSString* f in fileList)
-    {
-        [args addObject:f];
-    }
-    
-    [zipTask setArguments:args];
-    [zipTask launch];
-    [zipTask waitUntilExit];
-    
-    return [manager fileExistsAtPath:file];
-}
-
 - (BOOL)doPublish
 {
     [self removeOldPublishDirIfCacheCleaned];
@@ -616,14 +583,6 @@
         {
             return NO;
         }
-
-        // Android publishing disabled at the moment
-        /*
-        if (![self publishAndroid])
-        {
-            return NO;
-        }
-        */
     }
 
     [projectSettings clearAllDirtyMarkers];
@@ -633,49 +592,11 @@
     return YES;
 }
 
-- (BOOL)publishAndroid
-{
-    bool publishEnabledAndroid  = projectSettings.publishEnabledAndroid;
-    if (!publishEnabledAndroid)
-    {
-        return YES;
-    }
-
-    targetType = kCCBPublisherTargetTypeAndroid;
-    warnings.currentTargetType = targetType;
-
-    [self configureResolutionsForAndroid];
-
-    NSString* publishDir = [projectSettings.publishDirectoryAndroid absolutePathFromBaseDirPath:[projectSettings.projectPath stringByDeletingLastPathComponent]];
-
-    if (projectSettings.publishToZipFile)
-    {
-        // Publish archive
-        NSString *zipFile = [publishDir stringByAppendingPathComponent:@"ccb.zip"];
-
-        if (![self publishArchive:zipFile])
-        {
-            return NO;
-        }
-    }
-    else
-    {
-        // Publish files
-        if (![self publishAllToDirectory:publishDir])
-        {
-            return NO;
-        }
-    }
-
-    return YES;
-}
-
 - (BOOL)publishIOS
 {
     // iOS publishing is the only os target at the moment
-    bool publishEnablediPhone;
     // publishEnablediPhone = projectSettings.publishEnablediPhone;
-    publishEnablediPhone = YES;
+    bool publishEnablediPhone = YES;
 
     if (!publishEnablediPhone)
     {
@@ -706,52 +627,6 @@
         }
     }
     return YES;
-}
-
-- (void)configureResolutionsForAndroid
-{
-    NSMutableArray* resolutions = [NSMutableArray array];
-
-    if (projectSettings.publishResolution_android_phone)
-    {
-        [resolutions addObject:@"phone"];
-    }
-    if (projectSettings.publishResolution_android_phonehd)
-    {
-        [resolutions addObject:@"phonehd"];
-    }
-    if (projectSettings.publishResolution_android_tablet)
-    {
-        [resolutions addObject:@"tablet"];
-    }
-    if (projectSettings.publishResolution_android_tablethd)
-    {
-        [resolutions addObject:@"tablethd"];
-    }
-    publishForResolutions = resolutions;
-}
-
-- (void)connfigureResolutionsForIOS
-{
-    NSMutableArray* resolutions = [NSMutableArray array];
-
-    if (projectSettings.publishResolution_ios_phone)
-    {
-        [resolutions addObject:@"phone"];
-    }
-    if (projectSettings.publishResolution_ios_phonehd)
-    {
-        [resolutions addObject:@"phonehd"];
-    }
-    if (projectSettings.publishResolution_ios_tablet)
-    {
-        [resolutions addObject:@"tablet"];
-    }
-    if (projectSettings.publishResolution_ios_tablethd)
-    {
-        [resolutions addObject:@"tablethd"];
-    }
-    publishForResolutions = resolutions;
 }
 
 - (void)resetNeedRepublish
@@ -808,18 +683,6 @@
         [_publishingQueue addOperation:operation];
     }
 }
-
-- (void)flagFilesWithWarningsAsDirty
-{
-	for (CCBWarning *warning in warnings.warnings)
-	{
-		if (warning.relatedFile)
-		{
-			[projectSettings markAsDirtyRelPath:warning.relatedFile];
-		}
-	}
-}
-
 
 #pragma mark - public methods
 
