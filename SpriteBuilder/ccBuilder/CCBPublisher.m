@@ -663,56 +663,54 @@
     }
 }
 
+
 #pragma mark - public methods
 
-// TODO: implement
-- (void)startAsync:(BOOL)async
-{
-
-}
-
-// TODO: this won't work at the moment
 - (void)start
 {
+    NSLog(@"[PUBLISH] Start...");
+
+    [_publishingQueue setSuspended:YES];
+
+    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+
+    if (_projectSettings.publishEnvironment == PublishEnvironmentRelease)
+    {
+        [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:_projectSettings];
+    }
+
     [self doPublish];
+
+    [self postProcessPublishedPNGFilesWithOptiPNG];
+
+    _totalProgressUnits = [_publishingQueue operationCount];
+
+    [_publishingQueue setSuspended:NO];
+    [_publishingQueue waitUntilAllOperationsAreFinished];
 
     [_projectSettings flagFilesDirtyWithWarnings:_warnings];
 
-    [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
+    NSLog(@"[PUBLISH] Done in %.2f seconds.", [[NSDate date] timeIntervalSince1970] - startTime);
+
+    if ([[NSThread currentThread] isMainThread])
+    {
+        [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^
+        {
+            [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
+        });
+    }
 }
 
 - (void)startAsync
 {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-		NSLog(@"[PUBLISH] Start...");
-
-        [_publishingQueue setSuspended:YES];
-
-        NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-
-        if (_projectSettings.publishEnvironment == PublishEnvironmentRelease)
-        {
-            [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:_projectSettings];
-        }
-
-        [self doPublish];
-
-        [self postProcessPublishedPNGFilesWithOptiPNG];
-
-        _totalProgressUnits = [_publishingQueue operationCount];
-
-        [_publishingQueue setSuspended:NO];
-        [_publishingQueue waitUntilAllOperationsAreFinished];
-
-        [_projectSettings flagFilesDirtyWithWarnings:_warnings];
-
-		NSLog(@"[PUBLISH] Done in %.2f seconds.",  [[NSDate date] timeIntervalSince1970] - startTime);
-
-        dispatch_sync(dispatch_get_main_queue(), ^
-        {
-            [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
-        });
+    dispatch_async(queue, ^
+    {
+        [self start];
     });
 }
 

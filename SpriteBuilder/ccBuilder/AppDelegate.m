@@ -676,6 +676,7 @@ typedef enum
     modalTaskStatusWindow.onCancelBlock = nil;
     [[NSApplication sharedApplication] stopModal];
     [modalTaskStatusWindow.window orderOut:self];
+    modalTaskStatusWindow = nil;
 }
 
 - (void) modalStatusWindowUpdateStatusText:(NSString*) text
