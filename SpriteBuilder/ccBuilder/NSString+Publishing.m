@@ -1,4 +1,5 @@
 #import "NSString+Publishing.h"
+#import "CCBFileUtil.h"
 
 
 @implementation NSString (Publishing)
@@ -29,6 +30,44 @@
 {
     NSString *extension = [[self pathExtension] lowercaseString];
     return [extension isEqualToString:@"png"] || [extension isEqualToString:@"psd"];
+}
+
+- (NSDate *)latestModifiedDateForDirectory
+{
+    return [self latestModifiedDateForDirectory:self];
+}
+
+- (NSDate *)latestModifiedDateForDirectory:(NSString *)dir
+{
+	NSDate* latestDate = [CCBFileUtil modificationDateForFile:dir];
+
+    NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
+    for (NSString* file in files)
+    {
+        NSString* absFile = [dir stringByAppendingPathComponent:file];
+
+        BOOL isDir = NO;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:absFile isDirectory:&isDir])
+        {
+            NSDate* fileDate = NULL;
+
+            if (isDir)
+            {
+				fileDate = [self latestModifiedDateForDirectory:absFile];
+			}
+            else
+            {
+				fileDate = [CCBFileUtil modificationDateForFile:absFile];
+            }
+
+            if ([fileDate compare:latestDate] == NSOrderedDescending)
+            {
+                latestDate = fileDate;
+            }
+        }
+    }
+
+    return latestDate;
 }
 
 @end

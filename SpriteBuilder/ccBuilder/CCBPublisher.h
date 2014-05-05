@@ -58,8 +58,6 @@ enum {
 
 - (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;
 
-- (void)addRenamingRuleFrom:(NSString *)src to:(NSString *)dst;
-
 - (void) publish;
 - (void) publishAsync;
 + (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;

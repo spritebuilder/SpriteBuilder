@@ -8,4 +8,6 @@
 - (BOOL)isSoundFile;
 - (BOOL)isSmartSpriteSheetCompatibleFile;
 
+- (NSDate *)latestModifiedDateForDirectory;
+
 @end

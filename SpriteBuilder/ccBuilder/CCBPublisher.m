@@ -92,38 +92,6 @@
     return self;
 }
 
-- (NSDate *)latestModifiedDateForDirectory:(NSString *)dir
-{
-	NSDate* latestDate = [CCBFileUtil modificationDateForFile:dir];
-
-    NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
-    for (NSString* file in files)
-    {
-        NSString* absFile = [dir stringByAppendingPathComponent:file];
-
-        BOOL isDir = NO;
-        if ([[NSFileManager defaultManager] fileExistsAtPath:absFile isDirectory:&isDir])
-        {
-            NSDate* fileDate = NULL;
-            
-            if (isDir)
-            {
-				fileDate = [self latestModifiedDateForDirectory:absFile];
-			}
-            else
-            {
-				fileDate = [CCBFileUtil modificationDateForFile:absFile];
-            }
-            
-            if ([fileDate compare:latestDate] == NSOrderedDescending)
-            {
-                latestDate = fileDate;
-            }
-        }
-    }
-
-    return latestDate;
-}
 
 - (void) addRenamingRuleFrom:(NSString*)src to: (NSString*)dst
 {
@@ -520,7 +488,7 @@
         [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
     }];
 
-    NSDate *srcSpriteSheetDate = [self latestModifiedDateForDirectory:publishDirectory];
+    NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateForDirectory];
 
 	[publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 
