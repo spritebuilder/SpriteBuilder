@@ -3117,7 +3117,7 @@ static BOOL hideAllToNextSeparator;
                 // Open progress window and publish
                 if(async)
                 {
-                    [publisher publishAsync];
+                    [publisher startAsync];
                     [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
                     {
                         [publisher cancel];
@@ -3126,7 +3126,7 @@ static BOOL hideAllToNextSeparator;
                 }
                 else
                 {
-                    [publisher publish];
+                    [publisher start];
                 }
                 break;
             default:
@@ -3138,7 +3138,7 @@ static BOOL hideAllToNextSeparator;
         // Open progress window and publish
         if(async)
         {
-            [publisher publishAsync];
+            [publisher startAsync];
             [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
             {
                 [publisher cancel];
@@ -3147,7 +3147,7 @@ static BOOL hideAllToNextSeparator;
         }
         else
         {
-            [publisher publish];
+            [publisher start];
         }
     }
 }

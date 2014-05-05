@@ -155,7 +155,7 @@
 - (void)publishRegularFile:(NSString *)srcPath to:(NSString*) dstPath
 {
     PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                 warnings:_.warnings
+                                                                                                 warnings:_warnings
                                                                                                 publisher:self];
 
     operation.srcFilePath = srcPath;
@@ -667,7 +667,14 @@
 
 #pragma mark - public methods
 
-- (void)publish
+// TODO: implement
+- (void)startAsync:(BOOL)async
+{
+
+}
+
+// TODO: this won't work at the moment
+- (void)start
 {
     [self doPublish];
 
@@ -676,7 +683,7 @@
     [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
 }
 
-- (void)publishAsync
+- (void)startAsync
 {
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{

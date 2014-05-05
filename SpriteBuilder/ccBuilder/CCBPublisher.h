@@ -40,29 +40,18 @@ enum {
 
 
 @interface CCBPublisher : NSObject
-{
-    ProjectSettings* projectSettings;
-    CCBWarnings* warnings;
-    NSString* outputDir;
-    NSArray* copyExtensions;
-    NSArray* publishForResolutions;
-    NSMutableSet* publishedResources;
-    NSMutableArray* publishedSpriteSheetNames;
-    NSMutableSet* publishedSpriteSheetFiles;
 
-    // TODO: refactor to typdef instead of int
-    int targetType;
-}
-
-@property (nonatomic,assign) BOOL runAfterPublishing;
+@property (nonatomic, assign) BOOL runAfterPublishing;
 
 - (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;
 
-- (void) publish;
-- (void) publishAsync;
-+ (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
+- (void)start;
+- (void)startAsync;
+- (void)startAsync:(BOOL)async;
 
 - (void)cancel;
+
++ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
 
 - (void)operationFinishedTick;
 
