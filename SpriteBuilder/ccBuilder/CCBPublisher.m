@@ -506,10 +506,20 @@
 	return outDir;
 }
 
-- (void)publishSpriteSheetDir:(NSString *)spriteSheetDir sheetName:(NSString *)spriteSheetName publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath outDir:(NSString *)outDir
+- (void)publishSpriteSheetDir:(NSString *)spriteSheetDir
+                    sheetName:(NSString *)spriteSheetName
+             publishDirectory:(NSString *)publishDirectory
+                      subPath:(NSString *)subPath
+                       outDir:(NSString *)outDir
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];;
-    [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    // NOTE: For every spritesheet one shared dir is used, so have to remove it on the
+    // queue to ensure that later spritesheets don't add more sprites from previous passes
+    [_publishingQueue addOperationWithBlock:^
+    {
+        [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
+    }];
 
     NSDate *srcSpriteSheetDate = [self latestModifiedDateForDirectory:publishDirectory];
 

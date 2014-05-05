@@ -87,6 +87,7 @@
 {
     [self generatePreviewFilePath];
 
+    self.packer = [[Tupac alloc] init];
     _packer.outputName = _spriteSheetFile;
     _packer.outputFormat = TupacOutputFormatCocos2D;
     _packer.previewFile = _previewFilePath;
