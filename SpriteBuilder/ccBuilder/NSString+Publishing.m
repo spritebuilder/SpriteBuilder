@@ -99,5 +99,35 @@
     return mutableFileURLs;
 }
 
+- (NSArray *)filesInAutoDirectory
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+	NSMutableArray *result = [NSMutableArray array];
+	NSString* autoDir = [self stringByAppendingPathComponent:@"resources-auto"];
+	BOOL isDirAuto;
+	if ([fileManager fileExistsAtPath:autoDir isDirectory:&isDirAuto] && isDirAuto)
+    {
+        [result addObjectsFromArray:[fileManager contentsOfDirectoryAtPath:autoDir error:NULL]];
+    }
+	return result;
+}
+
+- (NSArray *)resolutionDependantFilesInDirWithResolutions:(NSArray *)resolutions
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+	NSMutableArray *result = [NSMutableArray array];
+
+	for (NSString *publishExt in resolutions)
+	{
+		NSString *resolutionDir = [self stringByAppendingPathComponent:publishExt];
+		BOOL isDirectory;
+		if ([fileManager fileExistsAtPath:resolutionDir isDirectory:&isDirectory] && isDirectory)
+		{
+			[result addObjectsFromArray:[fileManager contentsOfDirectoryAtPath:resolutionDir error:NULL]];
+		}
+	}
+
+	return result;
+}
 
 @end

@@ -11,5 +11,7 @@
 - (NSString *)resourceAutoFilePath;
 - (NSDate *)latestModifiedDateOfPath;
 - (NSArray *)allPNGFilesInPath;
+- (NSArray *)filesInAutoDirectory;
+- (NSArray *)resolutionDependantFilesInDirWithResolutions:(NSArray *)resolutions;
 
 @end

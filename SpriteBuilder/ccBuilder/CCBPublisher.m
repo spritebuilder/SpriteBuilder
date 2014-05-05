@@ -222,8 +222,8 @@
     NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
 
     NSMutableSet* files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
-	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory]];
-	[files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory]];
+	[files addObjectsFromArray:[publishDirectory resolutionDependantFilesInDirWithResolutions:publishForResolutions]];
+    [files addObjectsFromArray:[publishDirectory filesInAutoDirectory]];
 
     for (NSString* fileName in files)
     {
@@ -384,38 +384,6 @@
     [self publishDirectory:filePath subPath:childPath];
 }
 
-// TODO move to NSString category or helper class
-- (NSArray *)filesOfAutoDirectory:(NSString *)publishDirectory
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];;
-	NSMutableArray *result = [NSMutableArray array];
-	NSString* autoDir = [publishDirectory stringByAppendingPathComponent:@"resources-auto"];
-	BOOL isDirAuto;
-	if ([fileManager fileExistsAtPath:autoDir isDirectory:&isDirAuto] && isDirAuto)
-    {
-        [result addObjectsFromArray:[fileManager contentsOfDirectoryAtPath:autoDir error:NULL]];
-    }
-	return result;
-}
-
-- (NSArray *)filesForResolutionDependantDirs:(NSString *)dir
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];;
-	NSMutableArray *result = [NSMutableArray array];
-
-	for (NSString *publishExt in publishForResolutions)
-	{
-		NSString *resolutionDir = [dir stringByAppendingPathComponent:publishExt];
-		BOOL isDirectory;
-		if ([fileManager fileExistsAtPath:resolutionDir isDirectory:&isDirectory] && isDirectory)
-		{
-			[result addObjectsFromArray:[fileManager contentsOfDirectoryAtPath:resolutionDir error:NULL]];
-		}
-	}
-
-	return result;
-}
-
 - (NSString *)outputDirectory:(NSString *)subPath
 {
 	NSString *outDir;
@@ -495,8 +463,8 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     NSMutableSet *files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
-	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory]];
-    [files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory]];
+	[files addObjectsFromArray:[publishDirectory resolutionDependantFilesInDirWithResolutions:nil]];
+    [files addObjectsFromArray:[publishDirectory filesInAutoDirectory]];
 
     for (NSString *fileName in files)
     {
