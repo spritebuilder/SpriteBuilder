@@ -1,12 +1,33 @@
 #import "PublishSpriteKitSpriteSheetOperation.h"
 #import "AppDelegate.h"
 #import "CCBWarnings.h"
+#import "CCBPublisher.h"
+
+
+@interface PublishSpriteKitSpriteSheetOperation ()
+
+@property (nonatomic, strong) NSTask *atlasTask;
+
+@end
 
 
 @implementation PublishSpriteKitSpriteSheetOperation
 
 - (void)main
 {
+    NSLog(@"[%@] %@", [self class], _spriteSheetName);
+
+    [self publishSpriteKitSpriteSheet];
+
+    [_publisher operationFinishedTick];
+}
+
+- (void)publishSpriteKitSpriteSheet
+{
+    // Update progress
+    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...",
+                                                                           [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+
     NSFileManager* fileManager = [NSFileManager defaultManager];
 
     // rename the resources-xxx folder for the atlas tool
@@ -27,17 +48,20 @@
                                                object:stdErrorPipe.fileHandleForReading];
 
     // run task using Xcode TextureAtlas tool
-    NSTask* atlasTask = [[NSTask alloc] init];
-    atlasTask.launchPath = _textureAtlasToolLocation;
-    atlasTask.arguments = @[sheetNameDir, spriteSheetFile];
-    atlasTask.standardOutput = stdErrorPipe;
-    [atlasTask launch];
+    self.atlasTask = [[NSTask alloc] init];
+    _atlasTask.launchPath = _textureAtlasToolLocation;
+    _atlasTask.arguments = @[sheetNameDir, spriteSheetFile];
+    _atlasTask.standardOutput = stdErrorPipe;
 
-    // Update progress
-    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...",
-                                                                           [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
-
-    [atlasTask waitUntilExit];
+    @try
+    {
+        [_atlasTask launch];
+        [_atlasTask waitUntilExit];
+    }
+    @catch (NSException *ex)
+    {
+        NSLog(@"[%@] %@", [self class], ex);
+    }
 
     // rename back just in case
     [fileManager moveItemAtPath:sheetNameDir toPath:sourceDir error:nil];
@@ -62,8 +86,16 @@
 
 - (void)cancel
 {
-    // TODO
-    [super cancel];
+    NSLog(@"[%@] CANCELLED %@", [self class], _spriteSheetName);
+    @try
+    {
+        [super cancel];
+        [_atlasTask terminate];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Exception: %@", exception);
+    }
 }
 
 -(void) spriteKitTextureAtlasTaskCompleted:(NSNotification *)notification
@@ -79,6 +111,5 @@
 		[_warnings addWarningWithDescription:errorMessage isFatal:YES];
 	}
 }
-
 
 @end

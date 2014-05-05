@@ -52,6 +52,7 @@
 #import "NSString+Publishing.h"
 #import "PublishGeneratedFilesOperation.h"
 #import "PublishFileLookup.h"
+#import "PublishSpriteKitSpriteSheetOperation.h"
 
 @interface CCBPublisher ()
 
@@ -491,81 +492,34 @@
     }
 }
 
-// TODO move to own operation -> Stash
--(void) publishSpriteKitAtlasDir:(NSString*)spriteSheetDir sheetName:(NSString*)spriteSheetName subPath:(NSString*)subPath
+- (void)publishSpriteKitAtlasDir:(NSString *)spriteSheetDir sheetName:(NSString *)spriteSheetName subPath:(NSString *)subPath
 {
-	NSFileManager* fileManager = [NSFileManager defaultManager];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
 
-	NSString* textureAtlasPath = [[NSBundle mainBundle] pathForResource:@"SpriteKitTextureAtlasToolPath" ofType:@"txt"];
-	NSAssert(textureAtlasPath, @"Missing bundle file: SpriteKitTextureAtlasToolPath.txt");
-	NSString* textureAtlasToolLocation = [NSString stringWithContentsOfFile:textureAtlasPath encoding:NSUTF8StringEncoding error:nil];
-	NSLog(@"Using Sprite Kit Texture Atlas tool: %@", textureAtlasToolLocation);
-	
-	if ([fileManager fileExistsAtPath:textureAtlasToolLocation] == NO)
-	{
-		[warnings addWarningWithDescription:@"<-- file not found! Install a public (non-beta) Xcode version to generate sprite sheets. Xcode beta users may edit 'SpriteKitTextureAtlasToolPath.txt' inside SpriteBuilder.app bundle." isFatal:YES relatedFile:textureAtlasToolLocation];
-		return;
-	}
+    NSString *textureAtlasPath = [[NSBundle mainBundle] pathForResource:@"SpriteKitTextureAtlasToolPath" ofType:@"txt"];
+    NSAssert(textureAtlasPath, @"Missing bundle file: SpriteKitTextureAtlasToolPath.txt");
+    NSString *textureAtlasToolLocation = [NSString stringWithContentsOfFile:textureAtlasPath encoding:NSUTF8StringEncoding error:nil];
+    NSLog(@"Using Sprite Kit Texture Atlas tool: %@", textureAtlasToolLocation);
+
+    if ([fileManager fileExistsAtPath:textureAtlasToolLocation] == NO)
+    {
+        [warnings addWarningWithDescription:@"<-- file not found! Install a public (non-beta) Xcode version to generate sprite sheets. Xcode beta users may edit 'SpriteKitTextureAtlasToolPath.txt' inside SpriteBuilder.app bundle." isFatal:YES relatedFile:textureAtlasToolLocation];
+        return;
+    }
 	
 	for (NSString* res in publishForResolutions)
 	{
-		// rename the resources-xxx folder for the atlas tool
-		NSString* sourceDir = [projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]];
-		NSString* sheetNameDir = [projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:spriteSheetName];
-		[fileManager moveItemAtPath:sourceDir toPath:sheetNameDir error:nil];
-		
-		NSString* spriteSheetFile = [spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", res]];
-		[fileManager createDirectoryAtPath:spriteSheetFile withIntermediateDirectories:YES attributes:nil error:nil];
+        PublishSpriteKitSpriteSheetOperation *operation = [[PublishSpriteKitSpriteSheetOperation alloc] initWithProjectSettings:projectSettings
+                                                                                                                       warnings:warnings
+                                                                                                                      publisher:self];
+        operation.resolution = res;
+        operation.spriteSheetDir = spriteSheetDir;
+        operation.spriteSheetName = spriteSheetName;
+        operation.subPath = subPath;
+        operation.textureAtlasToolLocation = textureAtlasPath;
 
-		NSLog(@"Generating Sprite Kit Texture Atlas: %@", [NSString stringWithFormat:@"resources-%@/%@", res, spriteSheetName]);
-		
-		NSPipe* stdErrorPipe = [NSPipe pipe];
-		[stdErrorPipe.fileHandleForReading readToEndOfFileInBackgroundAndNotify];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(spriteKitTextureAtlasTaskCompleted:) name:NSFileHandleReadToEndOfFileCompletionNotification object:stdErrorPipe.fileHandleForReading];
-		
-		// run task using Xcode TextureAtlas tool
-		NSTask* atlasTask = [[NSTask alloc] init];
-		atlasTask.launchPath = textureAtlasToolLocation;
-		atlasTask.arguments = @[sheetNameDir, spriteSheetFile];
-		atlasTask.standardOutput = stdErrorPipe;
-		[atlasTask launch];
-		
-		// Update progress
-		[[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
-		
-		[atlasTask waitUntilExit];
-
-		// rename back just in case
-		[fileManager moveItemAtPath:sheetNameDir toPath:sourceDir error:nil];
-
-		NSString* sheetPlist = [NSString stringWithFormat:@"resources-%@/%@.atlasc/%@.plist", res, spriteSheetName, spriteSheetName];
-		NSString* sheetPlistPath = [spriteSheetDir stringByAppendingPathComponent:sheetPlist];
-		if ([fileManager fileExistsAtPath:sheetPlistPath] == NO)
-		{
-			[warnings addWarningWithDescription:@"TextureAtlas failed to generate! See preceding error message(s)." isFatal:YES relatedFile:spriteSheetName resolution:res];
-		}
-		
-		// TODO: ?? because SK TextureAtlas tool itself checks if the spritesheet needs to be updated
-		/*
-		 [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
-		 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
-		 [publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
-		 */
-	}
-}
-
--(void) spriteKitTextureAtlasTaskCompleted:(NSNotification *)notification
-{
-	// log additional warnings/errors from TextureAtlas tool
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:notification.object];
-
-	NSData* data = [notification.userInfo objectForKey:NSFileHandleNotificationDataItem];
-	NSString* errorMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	if (errorMessage.length)
-	{
-		NSLog(@"%@", errorMessage);
-		[warnings addWarningWithDescription:errorMessage isFatal:YES];
-	}
+        [_publishingQueue addOperation:operation];
+    }
 }
 
 - (void)publishGeneratedFiles
