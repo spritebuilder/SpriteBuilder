@@ -56,7 +56,7 @@ enum {
 
 @property (nonatomic,assign) BOOL runAfterPublishing;
 
-- (id) initWithProjectSettings:(ProjectSettings*)settings warnings:(CCBWarnings*)w;
+- (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;
 
 - (void)addRenamingRuleFrom:(NSString *)src to:(NSString *)dst;
 

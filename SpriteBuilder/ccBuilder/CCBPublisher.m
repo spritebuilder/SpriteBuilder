@@ -53,19 +53,20 @@
 #import "PublishGeneratedFilesOperation.h"
 
 @interface CCBPublisher ()
+
 @property (nonatomic) NSUInteger operationsFinished;
 @property (nonatomic) NSUInteger totalProgressUnits;
+
 @end
 
 @implementation CCBPublisher
 {
     DateCache *_modifiedDatesCache;
     NSMutableSet *_publishedPNGFiles;
-
     NSOperationQueue *_publishingQueue;
 }
 
-- (id) initWithProjectSettings:(ProjectSettings*)settings warnings:(CCBWarnings*)w
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings
 {
     self = [super init];
 	if (!self)
@@ -80,11 +81,9 @@
     _publishingQueue = [[NSOperationQueue alloc] init];
     _publishingQueue.maxConcurrentOperationCount = 1;
 
-	// Save settings and warning log
-    projectSettings = settings;
-    warnings = w;
-    
-    // Setup extensions to copy
+    projectSettings = someProjectSettings;
+    warnings = someWarnings;
+
     copyExtensions = @[@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang"];
     
     publishedSpriteSheetNames = [[NSMutableArray alloc] init];
@@ -133,9 +132,12 @@
         src = [src lastPathComponent];
         dst = [dst lastPathComponent];
     }
-    
-    if ([src isEqualToString:dst]) return;
-    
+
+    if ([src isEqualToString:dst])
+    {
+        return;
+    }
+
     // Add the file to the dictionary
     [renamedFiles setObject:dst forKey:src];
 }
@@ -510,12 +512,11 @@
                       subPath:(NSString *)subPath
                        outDir:(NSString *)outDir
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
     // NOTE: For every spritesheet one shared dir is used, so have to remove it on the
     // queue to ensure that later spritesheets don't add more sprites from previous passes
     [_publishingQueue addOperationWithBlock:^
     {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
         [fileManager removeItemAtPath:[projectSettings tempSpriteSheetCacheDirectory] error:NULL];
     }];
 
@@ -523,56 +524,28 @@
 
 	[publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 
-	BOOL isDirty = [projectSettings isDirtyRelPath:subPath];
-
 	for (NSString *resolution in publishForResolutions)
 	{
-        NSArray* srcDirs = [NSArray arrayWithObjects:
-							[projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
-							projectSettings.tempSpriteSheetCacheDirectory,
-							nil];
+		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
 
-		NSString* spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
-
-		// Skip publish if sprite sheet exists and is up to date
-		NSDate* dstDate = [CCBFileUtil modificationDateForFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
-		if (dstDate && [dstDate isEqualToDate:srcSpriteSheetDate] && !isDirty)
+		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
 		{
 			continue;
 		}
 
-        NSMutableSet *files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
-    	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory]];
-        [files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory]];
-
-        for (NSString *fileName in files)
-        {
-            NSString *filePath = [publishDirectory stringByAppendingPathComponent:fileName];
-            BOOL isResourceAutoFile = [filePath isResourceAutoFile];
-
-            if (isResourceAutoFile
-                && ([fileName isSmartSpriteSheetCompatibleFile]))
-            {
-                NSString *dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
-                [self publishImageFile:filePath
-                                    to:dstFile
-                         isSpriteSheet:NO
-                                outDir:outDir
-                            resolution:resolution];
-            }
-        }
+        [self prepareImagesForSpriteSheetPublishing:publishDirectory outDir:outDir resolution:resolution];
 
         PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:projectSettings
                                                                                                      warnings:warnings
                                                                                                     publisher:self];
-
         operation.appDelegate = [AppDelegate appDelegate];
         operation.publishDirectory = publishDirectory;
         operation.publishedPNGFiles = _publishedPNGFiles;
         operation.publishedSpriteSheetNames = publishedSpriteSheetNames;
         operation.srcSpriteSheetDate = srcSpriteSheetDate;
         operation.resolution = resolution;
-        operation.srcDirs = srcDirs;
+        operation.srcDirs = @[[projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
+                              projectSettings.tempSpriteSheetCacheDirectory];
         operation.spriteSheetFile = spriteSheetFile;
         operation.subPath = subPath;
         operation.targetType = targetType;
@@ -584,6 +557,41 @@
 	[publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
 }
 
+- (BOOL)spriteSheetExistsAndUpToDate:(NSDate *)srcSpriteSheetDate spriteSheetFile:(NSString *)spriteSheetFile subPath:(NSString *)subPath
+{
+    NSDate* dstDate = [CCBFileUtil modificationDateForFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
+    BOOL isDirty = [projectSettings isDirtyRelPath:subPath];
+    return dstDate
+            && [dstDate isEqualToDate:srcSpriteSheetDate]
+            && !isDirty;
+}
+
+- (void)prepareImagesForSpriteSheetPublishing:(NSString *)publishDirectory outDir:(NSString *)outDir resolution:(NSString *)resolution
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSMutableSet *files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
+	[files addObjectsFromArray:[self filesForResolutionDependantDirs:publishDirectory]];
+    [files addObjectsFromArray:[self filesOfAutoDirectory:publishDirectory]];
+
+    for (NSString *fileName in files)
+    {
+        NSString *filePath = [publishDirectory stringByAppendingPathComponent:fileName];
+
+        if ([filePath isResourceAutoFile]
+            && ([fileName isSmartSpriteSheetCompatibleFile]))
+        {
+            NSString *dstFile = [[projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
+            [self publishImageFile:filePath
+                                to:dstFile
+                     isSpriteSheet:NO
+                            outDir:outDir
+                        resolution:resolution];
+        }
+    }
+}
+
+// TODO move to own operation -> Stash
 -(void) publishSpriteKitAtlasDir:(NSString*)spriteSheetDir sheetName:(NSString*)spriteSheetName subPath:(NSString*)subPath
 {
 	NSFileManager* fileManager = [NSFileManager defaultManager];
