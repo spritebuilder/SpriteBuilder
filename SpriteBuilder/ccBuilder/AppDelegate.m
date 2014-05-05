@@ -114,6 +114,7 @@
 #import "SBErrors.h"
 #import "NSArray+Query.h"
 #import "Cocos2dUpdater.h"
+#import "OALSimpleAudio.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -534,6 +535,9 @@ typedef enum
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
     
+    // Initialize Audio
+    [OALSimpleAudio sharedInstance];
+    
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
     [propertyInspectorHandler loadTemplateLibrary];
@@ -612,7 +616,7 @@ typedef enum
     // Check for first run
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"completedFirstRun"] boolValue])
     {
-        [self showHelp:self];
+        //[self showHelp:self];
         
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
@@ -4905,22 +4909,12 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)showHelp:(id)sender
 {
-    if(!helpWindow)
-    {
-        helpWindow = [[HelpWindow alloc] initWithWindowNibName:@"HelpWindow"];
-    }
-    
-    [[helpWindow window] makeKeyAndOrderFront:self];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://makegameswith.us/docs/"]];
 }
 
 - (IBAction)showAPIDocs:(id)sender
 {
-    if(!apiDocsWindow)
-    {
-        apiDocsWindow = [[APIDocsWindow alloc] initWithWindowNibName:@"APIDocsWindow"];
-    }
-    
-    [[apiDocsWindow window] makeKeyAndOrderFront:self];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.cocos2d-iphone.org/docs/api/index.html"]];
 }
 
 - (IBAction)reportBug:(id)sender
