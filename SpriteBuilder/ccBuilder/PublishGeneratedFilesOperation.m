@@ -4,6 +4,7 @@
 #import "CCBPublisherTemplate.h"
 #import "CCBFileUtil.h"
 #import "ProjectSettings+Convenience.h"
+#import "PublishFileLookup.h"
 
 
 @implementation PublishGeneratedFilesOperation
@@ -230,16 +231,7 @@
 
 - (void)generateFileLookup
 {
-    NSMutableDictionary* fileLookup = [NSMutableDictionary dictionary];
-
-    NSMutableDictionary* metadata = [NSMutableDictionary dictionary];
-    [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
-
-    [fileLookup setObject:metadata forKey:@"metadata"];
-    [fileLookup setObject:_renamedFiles forKey:@"filenames"];
-
-    NSString* lookupFile = [_outputDir stringByAppendingPathComponent:@"fileLookup.plist"];
-    [fileLookup writeToFile:lookupFile atomically:YES];
+    [_fileLookup writeToFileAtomically:[_outputDir stringByAppendingPathComponent:@"fileLookup.plist"]];
 }
 
 - (BOOL) fileExistInResourcePaths:(NSString*)fileName

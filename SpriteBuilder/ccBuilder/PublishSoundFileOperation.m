@@ -5,6 +5,7 @@
 #import "ProjectSettings.h"
 #import "ResourceManagerUtil.h"
 #import "CCBPublisher.h"
+#import "PublishFileLookup.h"
 
 
 @interface PublishSoundFileOperation ()
@@ -27,6 +28,10 @@
 - (void)publishSoundFileOperation
 {
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
+
+    [_fileLookup addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath
+                                                                                                                format:_format
+                                                                                                               quality:_quality]];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     self.dstFilePath = [[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:_dstFilePath format:_format quality:_quality];

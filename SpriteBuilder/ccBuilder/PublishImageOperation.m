@@ -1,4 +1,5 @@
 #import "PublishImageOperation.h"
+
 #import "FCFormatConverter.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
@@ -8,6 +9,7 @@
 #import "DateCache.h"
 #import "CCBPublisher.h"
 #import "NSString+Publishing.h"
+#import "PublishFileLookup.h"
 
 
 @interface PublishImageOperation ()
@@ -101,7 +103,7 @@
                                                                                                 compress:compress
                                                                                            isSpriteSheet:_isSpriteSheet];
 
-    [_publisher addRenamingRuleFrom:relPath to:relPathRenamed];
+    [_fileLookup addRenamingRuleFrom:relPath to:relPathRenamed];
 
     // Copy and convert the image
     BOOL isDirty = [_projectSettings isDirtyRelPath:relPath];

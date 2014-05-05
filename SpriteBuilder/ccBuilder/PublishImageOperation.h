@@ -4,6 +4,7 @@
 @class DateCache;
 @class CCBPublisher;
 @class FCFormatConverter;
+@class PublishFileLookup;
 
 @interface PublishImageOperation : PublishBaseOperation
 
@@ -12,11 +13,9 @@
 @property (nonatomic, copy) NSString *outDir;
 @property (nonatomic, copy) NSString *resolution;
 
-@property (nonatomic, weak) NSMutableSet *publishedResources;
-@property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
-
-// TODO: not ideal, rename rules
-@property (nonatomic, weak) CCBPublisher *publisher;
+@property (nonatomic, strong) NSMutableSet *publishedResources;
+@property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
+@property (nonatomic, strong) PublishFileLookup *fileLookup;
 
 @property (nonatomic) BOOL isSpriteSheet;
 @property (nonatomic) int targetType;

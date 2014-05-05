@@ -51,11 +51,13 @@
 #import "DateCache.h"
 #import "NSString+Publishing.h"
 #import "PublishGeneratedFilesOperation.h"
+#import "PublishFileLookup.h"
 
 @interface CCBPublisher ()
 
 @property (nonatomic) NSUInteger operationsFinished;
 @property (nonatomic) NSUInteger totalProgressUnits;
+@property (nonatomic, strong) PublishFileLookup *fileLookup;
 
 @end
 
@@ -92,24 +94,6 @@
     return self;
 }
 
-
-- (void) addRenamingRuleFrom:(NSString*)src to: (NSString*)dst
-{
-    if (projectSettings.flattenPaths)
-    {
-        src = [src lastPathComponent];
-        dst = [dst lastPathComponent];
-    }
-
-    if ([src isEqualToString:dst])
-    {
-        return;
-    }
-
-    // Add the file to the dictionary
-    [renamedFiles setObject:dst forKey:src];
-}
-
 - (BOOL)publishImageForResolutionsWithFile:(NSString *)srcFile to:(NSString *)dstFile isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir
 {
     for (NSString* resolution in publishForResolutions)
@@ -135,6 +119,7 @@
     operation.modifiedFileDateCache = _modifiedDatesCache;
     operation.publisher = self;
     operation.publishedPNGFiles = _publishedPNGFiles;
+    operation.fileLookup = _fileLookup;
 
     [_publishingQueue addOperation:operation];
     return YES;
@@ -152,18 +137,14 @@
         return;
     }
 
-    [self addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath
-                                                                                                            format:format
-                                                                                                           quality:quality]];
-
     PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:projectSettings
                                                                                              warnings:warnings
                                                                                             publisher:self];
-
     operation.srcFilePath = srcPath;
     operation.dstFilePath = dstPath;
     operation.format = format;
     operation.quality = quality;
+    operation.fileLookup = _fileLookup;
 
     [_publishingQueue addOperation:operation];
 }
@@ -673,7 +654,7 @@
     operation.outputDir = outputDir;
     operation.publishedResources = publishedResources;
     operation.publishedSpriteSheetFiles = publishedSpriteSheetFiles;
-    operation.renamedFiles = renamedFiles;
+    operation.fileLookup = _fileLookup;
 
     [_publishingQueue addOperation:operation];
 }
@@ -683,7 +664,7 @@
     outputDir = dir;
     
     publishedResources = [NSMutableSet set];
-    renamedFiles = [NSMutableDictionary dictionary];
+    self.fileLookup = [[PublishFileLookup alloc] initWithFlattenPaths:projectSettings.flattenPaths];
 
     // Publish resources and ccb-files
     for (NSString* aDir in projectSettings.absoluteResourcePaths)

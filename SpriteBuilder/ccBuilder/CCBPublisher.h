@@ -47,9 +47,9 @@ enum {
     NSArray* copyExtensions;
     NSArray* publishForResolutions;
     NSMutableSet* publishedResources;
-    NSMutableDictionary* renamedFiles;
     NSMutableArray* publishedSpriteSheetNames;
     NSMutableSet* publishedSpriteSheetFiles;
+
     // TODO: refactor to typdef instead of int
     int targetType;
 }
