@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "PublishBaseOperation.h"
+#import "CCBWarnings.h"
 
 
 @class CCBWarnings;
@@ -9,8 +10,7 @@
 @interface PublishSpriteSheetOperation : PublishBaseOperation
 
 @property (nonatomic, copy) NSString *spriteSheetFile;
-@property (nonatomic) int targetType;
-
+@property (nonatomic) CCBPublisherTargetType targetType;
 @property (nonatomic, copy) NSString *subPath;
 @property (nonatomic, strong) NSArray *srcDirs;
 @property (nonatomic, copy) NSString *resolution;

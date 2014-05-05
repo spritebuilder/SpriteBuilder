@@ -15,7 +15,7 @@
     return self.publishEnvironment == PublishEnvironmentDevelop;
 }
 
-- (int)soundQualityForRelPath:(NSString *)relPath targetType:(int)targetType
+- (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
 {
     NSString *key = targetType == kCCBPublisherTargetTypeIPhone
         ? @"format_ios_sound_quality"
@@ -29,7 +29,7 @@
     return result;
 }
 
-- (int)soundFormatForRelPath:(NSString *)relPath targetType:(int)targetType
+- (int)soundFormatForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
 {
     NSString *key;
     NSDictionary *map;

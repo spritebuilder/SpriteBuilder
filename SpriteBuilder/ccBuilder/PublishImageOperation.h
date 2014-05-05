@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "PublishBaseOperation.h"
+#import "CCBWarnings.h"
 
 @class DateCache;
 @class CCBPublisher;
@@ -18,8 +19,7 @@
 @property (nonatomic, strong) PublishFileLookup *fileLookup;
 
 @property (nonatomic) BOOL isSpriteSheet;
-@property (nonatomic) int targetType;
-
+@property (nonatomic) CCBPublisherTargetType targetType;
 
 @property (nonatomic, strong) DateCache *modifiedFileDateCache;
 

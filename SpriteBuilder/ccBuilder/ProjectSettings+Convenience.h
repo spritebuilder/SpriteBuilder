@@ -6,7 +6,7 @@
 - (BOOL)isPublishEnvironmentRelease;
 - (BOOL)isPublishEnvironmentDebug;
 
-- (int)soundQualityForRelPath:(NSString *)relPath targetType:(int)targetType;
-- (int)soundFormatForRelPath:(NSString *)relPath targetType:(int)targetType;
+- (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType;
+- (int)soundFormatForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType;
 
 @end

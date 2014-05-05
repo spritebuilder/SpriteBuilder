@@ -61,9 +61,7 @@
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) NSOperationQueue *publishingQueue;
-
-// TODO: replace with enum
-@property (nonatomic) int targetType;
+@property (nonatomic) CCBPublisherTargetType targetType;
 
 @end
 
