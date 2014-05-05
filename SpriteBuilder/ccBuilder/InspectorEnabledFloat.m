@@ -40,6 +40,7 @@
 	[self willChangeValueForKey:@"enable"];
     [self didChangeValueForKey:@"enable"];
 
+    [super refresh];
 }
 
 @end

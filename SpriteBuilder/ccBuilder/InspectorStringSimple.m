@@ -41,5 +41,6 @@
     [self didChangeValueForKey:@"text"];
     
     [StringPropertySetter refreshStringProp:propertyName forNode:selection];
+    [super refresh];    
 }
 @end

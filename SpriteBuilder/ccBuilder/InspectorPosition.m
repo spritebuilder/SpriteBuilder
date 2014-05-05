@@ -183,6 +183,7 @@
     
     [self willChangeValueForKey:@"referenceCorner"];
     [self didChangeValueForKey:@"referenceCorner"];
+    [super refresh];    
 }
 
 @end

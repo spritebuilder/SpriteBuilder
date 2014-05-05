@@ -9,6 +9,7 @@
 #import "CCBPhysicsPivotJoint.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
+#import "CCBPhysicsJoint+Private.h"
 
 
 @interface CCBPhysicsJoint()
@@ -34,6 +35,12 @@
     }
     
     scaleFreeNode.scale = 1.0f;
+    
+    self.dampedSpringEnabled = NO;
+    self.restAngle = 0.0f;
+    self.stiffness = 4.0f;
+    self.damping = 1.0f;
+    
     [self setupBody];
     
     return self;
@@ -174,6 +181,22 @@
        
     
     return [super hitTestJointHandle:worlPos];;
+}
+
+
+- (BOOL) shouldDisableProperty:(NSString*) prop
+{
+    if([super shouldDisableProperty:prop])
+    {
+        return YES;
+    }
+    
+    if([prop isEqualToString:@"restAngle"] || [prop isEqualToString:@"stiffness"] || [prop isEqualToString:@"damping"])
+    {
+        return !self.dampedSpringEnabled;
+    }
+    
+    return NO;
 }
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType

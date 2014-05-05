@@ -133,6 +133,7 @@
     
     [self willChangeValueForKey:@"scaleY"];
     [self didChangeValueForKey:@"scaleY"];
+    [super refresh];    
 }
 
 @end

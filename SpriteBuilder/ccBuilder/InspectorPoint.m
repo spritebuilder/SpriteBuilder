@@ -59,6 +59,7 @@
     
     [self willChangeValueForKey:@"posY"];
     [self didChangeValueForKey:@"posY"];
+    [super refresh];    
 }
 
 @end

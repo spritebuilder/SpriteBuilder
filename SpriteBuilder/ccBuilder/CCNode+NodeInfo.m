@@ -879,6 +879,15 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
         else if ([prop isEqualToString:@"skew"]) return YES;
     }
     
+    //If I'm locked.
+    if(self.locked)
+        return YES;
+    
+    //If this is a joint and its parent is locked. (joints inherit locked behavior from the SequencerJoints object.
+    if(self.plugIn.isJoint && self.parent.locked)
+        return YES;
+    
+    
     // Disable position property for nodes handled by layouts
     if ([self.parent isKindOfClass:[CCLayout class]] && [prop isEqualToString:@"position"])
     {

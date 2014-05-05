@@ -933,6 +933,7 @@ typedef enum
     InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
     if (inspectorValue)
     {
+
         [inspectorValue refresh];
     }
 }
@@ -1117,14 +1118,20 @@ static BOOL hideAllToNextSeparator;
             NSString* type = [propInfo objectForKey:@"type"];
             NSString* name = [propInfo objectForKey:@"name"];
             NSString* displayName = [propInfo objectForKey:@"displayName"];
-            BOOL readOnly = [[propInfo objectForKey:@"readOnly"] boolValue];
+
             NSArray* affectsProps = [propInfo objectForKey:@"affectsProperties"];
             NSString* extra = [propInfo objectForKey:@"extra"];
             BOOL animated = [[propInfo objectForKey:@"animatable"] boolValue];
             BOOL isCodeConnection = [[propInfo objectForKey:@"codeConnection"] boolValue];
             BOOL inspectorDisabled = [[propInfo objectForKey:@"inspectorDisabled"] boolValue];
             if ([name isEqualToString:@"visible"]) animated = YES;
-            if ([self.selectedNode shouldDisableProperty:name]) readOnly = YES;
+
+            BOOL readOnly = [[propInfo objectForKey:@"readOnly"] boolValue];
+            
+            if ([self isDisabledProperty:name animatable:animated])
+            {
+                readOnly = YES;
+            }
             
             // Handle Flash skews
             BOOL usesFlashSkew = [self.selectedNode usesFlashSkew];
@@ -1133,12 +1140,7 @@ static BOOL hideAllToNextSeparator;
             if (!usesFlashSkew && [name isEqualToString:@"rotationalSkewY"]) continue;
             
             // Handle read only for animated properties
-            if ([self isDisabledProperty:name animatable:animated] ||
-                self.selectedNode.locked ||
-                (self.selectedNode.plugIn.isJoint && self.selectedNode.parent.locked))
-            {
-                readOnly = YES;
-            }
+
             
             //For the separators; should make this a part of the definition
             if (name == NULL) {

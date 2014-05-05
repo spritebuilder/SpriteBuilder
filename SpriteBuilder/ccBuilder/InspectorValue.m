@@ -68,6 +68,8 @@
 
 - (void) refresh
 {
+    [self willChangeValueForKey:@"readOnly"];
+    [self didChangeValueForKey:@"readOnly"];
 }
 
 - (void) willBeAdded
@@ -76,6 +78,14 @@
 
 - (void) willBeRemoved
 {
+}
+
+-(BOOL)readOnly
+{
+    if([selection shouldDisableProperty:propertyName])
+        return YES;
+    
+    return readOnly;
 }
 
 - (void) updateAffectedProperties

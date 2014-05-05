@@ -40,6 +40,8 @@
 {
     [self willChangeValueForKey:@"degrees"];
     [self didChangeValueForKey:@"degrees"];
+    
+    [super refresh];
 }
 
 @end
