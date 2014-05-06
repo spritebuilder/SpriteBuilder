@@ -15,10 +15,10 @@
 }
 
 @property (nonatomic) CGPoint anchorA;
-@property (nonatomic) BOOL dampedSpringEnabled;
-@property (nonatomic) float restAngle;
-@property (nonatomic) float stiffness;
-@property (nonatomic) float damping;
+@property (nonatomic) BOOL  dampedSpringEnabled;
+@property (nonatomic) float dampedSpringRestAngle;
+@property (nonatomic) float dampedSpringStiffness;
+@property (nonatomic) float dampedSpringDamping;
 
 
 +(BOOL)nodeHasParent:(CCNode*)node parent:(CCNode*)parent;

@@ -24,6 +24,7 @@ typedef enum
     MaxHandleType,
     
     //------------
+    RestAngleHandle,
     RestLengthHandle,
     
     EntireJoint, //The entire joint has been touched at some point.

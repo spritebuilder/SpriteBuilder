@@ -135,9 +135,9 @@
 			<integer>0</integer>
 			<key>affectsProperties</key>
 			<array>
-				<string>restAngle</string>
-				<string>damping</string>
-				<string>stiffness</string>
+				<string>dampedSpringRestAngle</string>
+				<string>dampedSpringDamping</string>
+				<string>dampedSpringStiffness</string>
 			</array>
 			<key>displayName</key>
 			<string>Damped Spring Enabled</string>
@@ -152,7 +152,7 @@
 			<key>type</key>
 			<string>Float</string>
 			<key>name</key>
-			<string>restAngle</string>
+			<string>dampedSpringRestAngle</string>
 			<key>displayName</key>
 			<string>Rest Angle</string>
 		</dict>
@@ -162,7 +162,7 @@
 			<key>type</key>
 			<string>Float</string>
 			<key>name</key>
-			<string>damping</string>
+			<string>dampedSpringDamping</string>
 			<key>displayName</key>
 			<string>Damping</string>
 		</dict>
@@ -172,7 +172,7 @@
 			<key>type</key>
 			<string>Float</string>
 			<key>name</key>
-			<string>stiffness</string>
+			<string>dampedSpringStiffness</string>
 			<key>displayName</key>
 			<string>Stiffness</string>
 		</dict>
