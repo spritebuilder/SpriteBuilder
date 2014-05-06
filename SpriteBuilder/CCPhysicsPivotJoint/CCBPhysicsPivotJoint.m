@@ -104,6 +104,8 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     CCNode               * ratchetNode;
     CCSegmentHandle      * ratchedPhaseHandle;
     CCSegmentHandle      * ratchedValueHandle;
+    CCNode               * ratchedTicks;
+    float                  cachedRatchedValue;
     
     
 }
@@ -137,7 +139,7 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     self.ratchetEnabled = NO;
     self.ratchetValue = 30.0f;
     self.ratchetPhase = 0.0f;
-
+    cachedRatchedValue = -1.0f;
     
     [self setupBody];
     
@@ -176,16 +178,18 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     
     //Reference Angle
     referenceAngleHandle = [CCSegmentHandle node];
-    referenceAngleHandle.length = kSegmentHandleDefaultRadius * 0.7f;
     [scaleFreeNode addChild:referenceAngleHandle];
+    referenceAngleHandle.length = kSegmentHandleDefaultRadius * 0.7f;
     
     //Spring
     springNode = [CCNode node];
+    [scaleFreeNode addChild:springNode];
     springRestAngleHandle = [CCSegmentHandle node];
     [springNode addChild:springRestAngleHandle];
     
     //Limit
     limitNode = [CCNode node];
+    [scaleFreeNode addChild:limitNode];
     limitMinHandle = [CCSegmentHandle node];
     limitMinHandle.length = kSegmentHandleDefaultRadius * .7f;
     [limitNode addChild:limitMinHandle];
@@ -196,8 +200,14 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     
     //Ratched
     ratchetNode = [CCNode node];
+    [scaleFreeNode addChild:ratchetNode];
     ratchedValueHandle = [CCSegmentHandle node];
+    ratchedValueHandle.length = kSegmentHandleDefaultRadius;
+    [ratchetNode addChild:ratchedValueHandle];
     
+    ratchedPhaseHandle = [CCSegmentHandle node];
+    ratchedPhaseHandle.length = kSegmentHandleDefaultRadius * .7f;
+    [ratchetNode addChild:ratchedPhaseHandle];
 }
 
 
@@ -220,6 +230,29 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     return rotation;
 }
 
+const float kRatchedRenderRadius = 30.0f;
+-(void)updateRenderRatchet
+{
+    if(cachedRatchedValue != self.ratchetValue)
+    {
+        cachedRatchedValue = self.ratchetValue;
+        
+        [ratchedTicks removeFromParentAndCleanup:YES];
+        ratchedTicks = [CCNode node];
+        float currentAngle = cachedRatchedValue;
+        while (currentAngle < (360.0f - cachedRatchedValue) && currentAngle > (-360 + cachedRatchedValue))
+        {
+            CCDrawNode * drawNode = [CCDrawNode node];
+            [drawNode drawSegmentFrom:ccp(.0f,.0f) to:ccp(0.0f, kRatchedRenderRadius) radius:1.0f color:[CCColor grayColor]];
+            [ratchedTicks addChild:drawNode];
+            drawNode.rotation = currentAngle;
+            currentAngle += cachedRatchedValue;
+        }
+        
+        [ratchedValueHandle addChild:ratchedTicks];
+    }
+}
+
 -(void)updateRenderBody
 {
     //Spring
@@ -231,6 +264,14 @@ const float kSegmentHandleDefaultRadius = 50.0f;
         referenceAngleHandle.rotation  = rotation + self.referenceAngle + M_PI_2;
         limitMinHandle.rotation = rotation + self.referenceAngle + self.limitMin + M_PI_2;
         limitMaxHandle.rotation = rotation + self.referenceAngle + self.limitMax + M_PI_2;
+        
+        if(self.layoutType == eLayoutButtonRatchet)
+        {
+            ratchedValueHandle.rotation = rotation + self.referenceAngle + self.ratchetValue + M_PI_2;
+            ratchedPhaseHandle.rotation = rotation + self.referenceAngle + self.ratchetPhase + M_PI_2;
+            [self updateRenderRatchet];
+        }
+        
     }
 }
 
@@ -244,32 +285,17 @@ const float kSegmentHandleDefaultRadius = 50.0f;
         
         
         //Refence angle Handle;
-        if(referenceAngleHandle.parent == nil)
-        {
-            [scaleFreeNode addChild:referenceAngleHandle];
-        }
-        
+        referenceAngleHandle.visible = YES;
         //Spring.
-        if(self.layoutType == eLayoutButtonSpring && self.dampedSpringEnabled && springNode.parent == nil)
-        {
-            [scaleFreeNode addChild:springNode];
-        }
-        else if((self.layoutType != eLayoutButtonSpring || !self.dampedSpringEnabled) && springNode.parent != nil)
-        {
-            [springNode removeFromParentAndCleanup:NO];
-        }
+        springNode.visible = self.layoutType == eLayoutButtonSpring && self.dampedSpringEnabled;
         
         //Limit
-        if(self.layoutType == eLayoutButtonLimit && self.limitEnabled && limitNode.parent == nil)
-        {
-            [scaleFreeNode addChild:limitNode];
-        }
-        else if((self.layoutType != eLayoutButtonLimit || !self.limitEnabled) && limitNode.parent != nil)
-        {
-            [limitNode removeFromParentAndCleanup:YES];
-        }
+        limitNode.visible = self.layoutType == eLayoutButtonLimit && self.limitEnabled;
+        
+        ratchetNode.visible = self.layoutType == eLayoutButtonRatchet && self.ratchetEnabled;
         
         
+        //Layout Control
         layoutControlBox.visible = YES;
     }
     //If its not selected
@@ -277,23 +303,12 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     {
         joint.spriteFrame = [self frameWithImageNamed:@"joint-pivot.png"];
         jointAnchor.spriteFrame = [self frameWithImageNamed:@"joint-anchor.png"];
-        
-        if(springNode.parent != nil)
-        {
-            [springNode removeFromParentAndCleanup:NO];
-        }
-        
-        if(referenceAngleHandle.parent != nil)
-        {
-            [referenceAngleHandle removeFromParentAndCleanup:NO];
-        }
-        
-        if(limitNode.parent != nil)
-        {
-            [limitNode removeFromParentAndCleanup:YES];
-        }
-        
+      
+        springNode.visible = NO;
+        referenceAngleHandle.visible = NO;
+        limitNode.visible = NO;
         layoutControlBox.visible = NO;
+        ratchetNode.visible = NO;
     }
     
     
@@ -302,7 +317,9 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     referenceAngleHandle.highlighted = selectedBodyHandle & (1 << ReferenceAngleHandle);
     limitMinHandle.highlighted = selectedBodyHandle & (1 << LimitMinHandle);
     limitMaxHandle.highlighted = selectedBodyHandle & (1 << LimitMaxHandle);
-
+    ratchedValueHandle.highlighted = selectedBodyHandle& (1 << RatchedHandle);
+    ratchedPhaseHandle.highlighted =selectedBodyHandle & (1 << RatchedPhaseHandle);
+    
     [super updateSelectionUI];
 }
 
@@ -427,7 +444,8 @@ const float kSegmentHandleDefaultRadius = 50.0f;
 -(void)refreshLayoutButtons
 {
     [layoutControlBox removeAllChildrenWithCleanup:NO];
-    for (int i = 0; i < eLayoutButtonMax; i++) {
+    for (int i = 0; i < eLayoutButtonMax; i++)
+    {
         switch (i)
         {
             case eLayoutButtonLimit:
@@ -436,6 +454,7 @@ const float kSegmentHandleDefaultRadius = 50.0f;
                 {
                     [layoutControlBox addChild:layoutButtons[i]];
                 }
+            
                 break;
             }
             case eLayoutButtonRatchet:
@@ -459,6 +478,22 @@ const float kSegmentHandleDefaultRadius = 50.0f;
             default:
                 break;
         }
+    }
+    
+    //If we've currently selected a button that's no longer available, select another.
+    if(![layoutControlBox.children containsObject:layoutButtons[self.layoutType]] && layoutControlBox.children.count >= 1)
+    {
+        self.layoutType = [[layoutControlBox.children[0] userObject] integerValue];
+        
+    }
+
+    
+    //If there's only one item selectable, select it and clear the screen.
+    if(layoutControlBox.children.count == 1)
+    {
+        CCButton * button = layoutControlBox.children[0];
+        self.layoutType = [button.userObject integerValue];
+        [layoutControlBox removeAllChildrenWithCleanup:NO];
     }
     
 }
@@ -579,6 +614,24 @@ const float kSegmentHandleDefaultRadius = 50.0f;
         }
     }
     
+    if(self.ratchetEnabled)
+    {
+        {
+            CGPoint pointHit = [ratchedValueHandle.handle convertToNodeSpaceAR:worlPos];
+            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+            {
+                return RatchedHandle;
+            }
+        }
+        {
+            CGPoint pointHit = [ratchedPhaseHandle.handle convertToNodeSpaceAR:worlPos];
+            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+            {
+                return RatchedPhaseHandle;
+            }
+        }
+    }
+    
     if(self.dampedSpringEnabled || self.limitEnabled  || self.ratchetEnabled)
     {
         CGPoint pointHit = [referenceAngleHandle.handle convertToNodeSpaceAR:worlPos];
@@ -624,6 +677,16 @@ const float kSegmentHandleDefaultRadius = 50.0f;
 
 -(void)setRatchetValue:(float)ratchetValue
 {
+    if(ratchetValue < 2.0f && ratchetValue > -2.0f)
+    {
+        if(ratchetValue > 0.0f)
+            ratchetValue = 2.0f;
+        
+        if(ratchetValue < 0.0f)
+            ratchetValue = -2.0f;
+        
+    }
+    
     _ratchetValue = ratchetValue;
     [[AppDelegate appDelegate]refreshProperty:@"ratchetValue"];
 }
@@ -631,18 +694,35 @@ const float kSegmentHandleDefaultRadius = 50.0f;
 -(void)setDampedSpringEnabled:(BOOL)dampedSpringEnabled
 {
     _dampedSpringEnabled = dampedSpringEnabled;
+    if(_dampedSpringDamping)
+    {
+        self.layoutType = eLayoutButtonSpring;
+    }
+    
     [self refreshLayoutButtons];
 }
 
 -(void)setLimitEnabled:(BOOL)limitEnabled
 {
     _limitEnabled = limitEnabled;
+    
+    if(_limitEnabled)
+    {
+        self.layoutType = eLayoutButtonLimit;
+    }
+    
     [self refreshLayoutButtons];
 }
 
 -(void)setRatchetEnabled:(BOOL)ratchetEnabled
 {
     _ratchetEnabled = ratchetEnabled;
+    
+    if(_ratchetEnabled)
+    {
+        self.layoutType = eLayoutButtonRatchet;
+    }
+    
     [self refreshLayoutButtons];
 }
 

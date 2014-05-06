@@ -124,7 +124,7 @@
 			<key>defaultSerialization</key>
 			<integer>0</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>Degrees</string>
 			<key>name</key>
 			<string>referenceAngle</string>
 			<key>displayName</key>
@@ -160,7 +160,7 @@
 			<key>defaultSerialization</key>
 			<integer>0</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>Degrees</string>
 			<key>name</key>
 			<string>dampedSpringRestAngle</string>
 			<key>displayName</key>
@@ -215,7 +215,7 @@
 			<key>defaultSerialization</key>
 			<integer>0</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>Degrees</string>
 			<key>name</key>
 			<string>limitMin</string>
 			<key>displayName</key>
@@ -225,7 +225,7 @@
 			<key>defaultSerialization</key>
 			<integer>90</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>Degrees</string>
 			<key>name</key>
 			<string>limitMax</string>
 			<key>displayName</key>
@@ -294,7 +294,7 @@
 			<key>defaultSerialization</key>
 			<integer>30</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>Degrees</string>
 			<key>name</key>
 			<string>ratchetValue</string>
 			<key>displayName</key>
@@ -304,7 +304,7 @@
 			<key>defaultSerialization</key>
 			<integer>0</integer>
 			<key>type</key>
-			<string>Float</string>
+			<string>Degrees</string>
 			<key>name</key>
 			<string>ratchetPhase</string>
 			<key>displayName</key>
