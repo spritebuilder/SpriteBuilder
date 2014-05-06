@@ -20,7 +20,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [_srcPath lastPathComponent]);
+    NSLog(@"[%@] %@", [self class], [self description]);
 
     [self publishImage];
 
@@ -323,6 +323,11 @@
     }
 
     return latestDate;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"src: %@, dst: %@, target: %i, resolution: %@, srcfull: %@, dstfull: %@", [_srcPath lastPathComponent], [_dstPath lastPathComponent], _targetType, _resolution,  _srcPath, _dstPath];
 }
 
 @end

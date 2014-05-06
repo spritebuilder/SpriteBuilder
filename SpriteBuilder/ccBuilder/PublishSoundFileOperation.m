@@ -19,6 +19,8 @@
 
 - (void)main
 {
+    [_publishingTaskStatusProgress updateStatusText:@"Converting sound file"];
+
     NSLog(@"[%@] %@ -> %@", [self class], [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent]);
 
     [self publishSoundFileOperation];
@@ -28,14 +30,11 @@
 
 - (void)publishSoundFileOperation
 {
-    [_publishingTaskStatusProgress updateStatusText:@"Converting sound file"];
-
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
 
     [_fileLookup addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath
                                                                                                                 format:_format
                                                                                                                quality:_quality]];
-
     NSFileManager *fileManager = [NSFileManager defaultManager];
     self.dstFilePath = [[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:_dstFilePath format:_format quality:_quality];
     BOOL isDirty = [_projectSettings isDirtyRelPath:relPath];
@@ -69,6 +68,12 @@
 
     [super cancel];
     [_formatConverter cancel];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"format: %i, quality: %i, src: %@, dst: %@, srcfull: %@, dstfull: %@", _format, _quality,
+                     [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent], _srcFilePath, _dstFilePath];
 }
 
 @end

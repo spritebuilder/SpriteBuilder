@@ -18,6 +18,8 @@
 {
     NSLog(@"[%@] %@", [self class], _spriteSheetName);
 
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+
     [self publishSpriteKitSpriteSheet];
 
     [_publishingTaskStatusProgress taskFinished];
@@ -25,8 +27,6 @@
 
 - (void)publishSpriteKitSpriteSheet
 {
-    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
-
     NSFileManager* fileManager = [NSFileManager defaultManager];
 
     // rename the resources-xxx folder for the atlas tool
@@ -109,6 +109,12 @@
 		NSLog(@"%@", errorMessage);
 		[_warnings addWarningWithDescription:errorMessage isFatal:YES];
 	}
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"name: %@, res: %@, subpath %@, dir: %@, tool location; %@", _spriteSheetName, _resolution,
+                     _subPath, _spriteSheetDir, _textureAtlasToolFilePath];
 }
 
 @end

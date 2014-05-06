@@ -18,7 +18,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], _fileName);
+    NSLog(@"[%@] %@", [self class], [self description]);
 
     [self publishCCB];
 
@@ -137,6 +137,11 @@
 
         document[@"joints"] = joints;
     }
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"file: %@, path: %@, dstfile: %@", _fileName, _filePath, _dstFile];
 }
 
 

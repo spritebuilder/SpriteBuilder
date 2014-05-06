@@ -20,7 +20,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@@%@", [self class], [_spriteSheetFile lastPathComponent], _resolution);
+    NSLog(@"[%@] %@", [self class], [self description]);
 
     [self publishSpriteSheet];
 
@@ -146,7 +146,8 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"TODO"];
+    return [NSString stringWithFormat:@"file: %@, res: %@, targetType: %i, filefull: %@, srcdirs: %@, publishDirectory: %@, date: %@",
+                     [_spriteSheetFile lastPathComponent], _resolution, _targetType, _spriteSheetFile, _srcDirs, _publishDirectory, _srcSpriteSheetDate];
 }
 
 

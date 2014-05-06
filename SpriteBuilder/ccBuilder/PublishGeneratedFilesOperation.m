@@ -11,7 +11,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@]", [self class]);
+    NSLog(@"[%@] %@", [self class], [self description]);
 
     [self publishGeneratedFiles];
 
@@ -128,6 +128,11 @@
         }
     }
     return NO;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"target: %i, outputdir: %@, ", _targetType, _outputDir];
 }
 
 @end

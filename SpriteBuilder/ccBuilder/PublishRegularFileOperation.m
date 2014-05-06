@@ -8,7 +8,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@ -> %@", [self class], [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent]);
+    NSLog(@"[%@] %@", [self class], [self description]);
 
     [self publishRegularFile];
 
@@ -34,6 +34,9 @@
 {
     [super cancel];
     NSLog(@"[%@] CANCELLED %@", [self class], [_srcFilePath lastPathComponent]);
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"src: %@, dst: %@, srcfull: %@, dstfull: %@", [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent], _srcFilePath, _dstFilePath];
 }
 
 @end
