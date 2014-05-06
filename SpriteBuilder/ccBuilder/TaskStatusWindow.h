@@ -32,6 +32,7 @@ typedef void (^OnCancelBlock)();
     NSString* status;
     IBOutlet NSProgressIndicator* progressIndicator;
     IBOutlet NSTextField* lblStatus;
+    IBOutlet NSButton *cancelButton;
 }
 
 @property (nonatomic) BOOL showCancelButton;

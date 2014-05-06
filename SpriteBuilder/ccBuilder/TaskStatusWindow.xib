@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TaskStatusWindow">
             <connections>
+                <outlet property="cancelButton" destination="1ka-Dl-tBu" id="has-so-qNu"/>
                 <outlet property="lblStatus" destination="6" id="14"/>
                 <outlet property="progressIndicator" destination="5" id="xwk-Kk-Uyu"/>
                 <outlet property="window" destination="3" id="12"/>
@@ -40,7 +41,7 @@
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" id="1ka-Dl-tBu">
-                        <rect key="frame" x="114" y="-16" width="82" height="32"/>
+                        <rect key="frame" x="102" y="-21" width="107" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ADB-pf-9Cz">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>

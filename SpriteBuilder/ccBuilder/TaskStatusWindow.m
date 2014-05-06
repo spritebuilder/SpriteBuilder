@@ -34,6 +34,9 @@
     {
         _onCancelBlock();
     }
+
+    [cancelButton setTitle:@"Cancelling..."];
+    [cancelButton setEnabled:NO];
 }
 
 - (void) windowDidLoad
