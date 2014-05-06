@@ -3,6 +3,7 @@
 #import "CCBWarnings.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
+#import "PublishLogging.h"
 
 
 @interface PublishSpriteKitSpriteSheetOperation ()
@@ -16,7 +17,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], _spriteSheetName);
+    LocalLog(@"[%@] %@", [self class], _spriteSheetName);
 
     [self assertProperties];
 

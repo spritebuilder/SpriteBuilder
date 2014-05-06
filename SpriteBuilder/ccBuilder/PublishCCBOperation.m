@@ -6,6 +6,7 @@
 #import "ProjectSettings.h"
 #import "CCBFileUtil.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishLogging.h"
 
 
 @interface PublishCCBOperation ()
@@ -18,7 +19,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [self description]);
+    LocalLog(@"[%@] %@", [self class], [self description]);
 
     [self assertProperties];
 

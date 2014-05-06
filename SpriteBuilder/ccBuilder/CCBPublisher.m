@@ -46,6 +46,7 @@
 #import "PublishRenamedFilesLookup.h"
 #import "PublishSpriteKitSpriteSheetOperation.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishLogging.h"
 
 @interface CCBPublisher ()
 
@@ -504,7 +505,7 @@
     NSString *textureAtlasPath = [[NSBundle mainBundle] pathForResource:@"SpriteKitTextureAtlasToolPath" ofType:@"txt"];
     NSAssert(textureAtlasPath, @"Missing bundle file: SpriteKitTextureAtlasToolPath.txt");
     NSString *textureAtlasToolLocation = [NSString stringWithContentsOfFile:textureAtlasPath encoding:NSUTF8StringEncoding error:nil];
-    NSLog(@"Using Sprite Kit Texture Atlas tool: %@", textureAtlasToolLocation);
+    LocalLog(@"Using Sprite Kit Texture Atlas tool: %@", textureAtlasToolLocation);
 
     if ([fileManager fileExistsAtPath:textureAtlasToolLocation] == NO)
     {
@@ -725,7 +726,7 @@
 
 - (void)cancel
 {
-    NSLog(@"Publishin cancelled by user");
+    NSLog(@"[PUBLISH] cancelled by user");
     [_publishingQueue cancelAllOperations];
 }
 

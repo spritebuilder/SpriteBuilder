@@ -7,6 +7,7 @@
 #import "ResourceManagerUtil.h"
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishLogging.h"
 
 
 @interface PublishSoundFileOperation ()
@@ -15,11 +16,12 @@
 
 @end
 
+
 @implementation PublishSoundFileOperation
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [self description]);
+    LocalLog(@"[%@] %@", [self class], [self description]);
 
     [self assertProperties];
 

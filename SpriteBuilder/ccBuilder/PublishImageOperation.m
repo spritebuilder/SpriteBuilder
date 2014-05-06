@@ -9,6 +9,7 @@
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
+#import "PublishLogging.h"
 
 @interface PublishImageOperation ()
 
@@ -20,7 +21,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [self description]);
+    LocalLog(@"[%@] %@", [self class], [self description]);
 
     [self assertProperties];
 
@@ -219,8 +220,6 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@@%@", [self class], [_srcFilePath lastPathComponent], _resolution);
-
     [super cancel];
     [_formatConverter cancel];
 }

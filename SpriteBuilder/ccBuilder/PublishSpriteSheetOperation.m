@@ -4,6 +4,7 @@
 #import "Tupac.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
+#import "PublishLogging.h"
 
 @interface PublishSpriteSheetOperation()
 
@@ -22,7 +23,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [self description]);
+    LocalLog(@"[%@] %@", [self class], [self description]);
 
     [self assertProperties];
 
@@ -51,10 +52,7 @@
 
     [self configurePacker];
 
-    NSLog(@"[%@] start: %@", [self class], _spriteSheetFile);
-    // heavy task
     NSArray *createdFiles = [_packer createTextureAtlasFromDirectoryPaths:_srcDirs];
-    NSLog(@"[%@] end: %@", [self class], _spriteSheetFile);
 
     [self addCreatedPNGFilesToCreatedFilesSet:createdFiles];
 

@@ -5,13 +5,14 @@
 #import "ProjectSettings.h"
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishLogging.h"
 
 
 @implementation PublishGeneratedFilesOperation
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [self description]);
+    LocalLog(@"[%@] %@", [self class], [self description]);
 
     [self assertProperties];
 

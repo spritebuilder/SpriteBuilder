@@ -2,6 +2,7 @@
 
 #import "CCBWarnings.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishLogging.h"
 
 
 @interface OptimizeImageWithOptiPNGOperation()
@@ -15,7 +16,7 @@
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [self description]);
+    LocalLog(@"[%@] %@", [self class], [self description]);
 
     [self assertProperties];
 

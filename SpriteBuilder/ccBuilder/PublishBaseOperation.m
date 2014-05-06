@@ -3,6 +3,7 @@
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishLogging.h"
 
 
 @implementation PublishBaseOperation
@@ -26,7 +27,7 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@", [self class], [self description]);
+    LocalLog(@"[%@] CANCELLED %@", [self class], [self description]);
     [super cancel];
 }
 
