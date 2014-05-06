@@ -42,8 +42,8 @@
     [progressIndicator startAnimation:self];
     [progressIndicator setUsesThreadedAnimation:YES];
 
-    self.showCancellButton = YES;
-    if (_showCancellButton)
+    self.showCancelButton = YES;
+    if (_showCancelButton)
     {
         NSRect frame = [self.window frame];
         frame.size = CGSizeMake(frame.size.width, frame.size.height + 28.0);
@@ -57,6 +57,14 @@
 {
     _indeterminate = indeterminate;
     [progressIndicator setIndeterminate:indeterminate];
+}
+
+
+#pragma mark - TaskStatusProtocol methods
+
+- (void)updateStatusText:(NSString *)text
+{
+    self.status = text;
 }
 
 - (void)setProgress:(double)newProgress

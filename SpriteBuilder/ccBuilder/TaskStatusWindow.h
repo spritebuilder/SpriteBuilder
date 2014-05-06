@@ -23,17 +23,18 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "TaskStatusUpdaterProtocol.h"
 
 typedef void (^OnCancelBlock)();
 
-@interface TaskStatusWindow : NSWindowController
+@interface TaskStatusWindow : NSWindowController <TaskStatusUpdaterProtocol>
 {
     NSString* status;
     IBOutlet NSProgressIndicator* progressIndicator;
     IBOutlet NSTextField* lblStatus;
 }
 
-@property (nonatomic) BOOL showCancellButton;
+@property (nonatomic) BOOL showCancelButton;
 @property (nonatomic, getter=isIndeterminate) BOOL indeterminate;
 
 @property (atomic,copy) NSString* status;
