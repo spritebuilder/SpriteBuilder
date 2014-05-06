@@ -9,7 +9,6 @@
 
 @property (nonatomic, strong) Tupac *packer;
 @property (nonatomic, copy) NSString *previewFilePath;
-
 @property (nonatomic) int format_ios;
 @property (nonatomic) BOOL format_ios_dither;
 @property (nonatomic) BOOL format_ios_compress;
@@ -22,11 +21,23 @@
 {
     NSLog(@"[%@] %@", [self class], [self description]);
 
-    [self assertAllProperties];
+    [self assertProperties];
 
     [self publishSpriteSheet];
 
     [_publishingTaskStatusProgress taskFinished];
+}
+
+- (void)assertProperties
+{
+    NSAssert(_spriteSheetFile != nil, @"spriteSheetFile should not be nil");
+    NSAssert(_subPath != nil, @"subPath should not be nil");
+    NSAssert(_srcDirs != nil, @"srcDirs should not be nil");
+    NSAssert(_resolution != nil, @"resolution should not be nil");
+    NSAssert(_srcSpriteSheetDate != nil, @"srcSpriteSheetDate should not be nil");
+    NSAssert(_publishDirectory != nil, @"publishDirectory should not be nil");
+    NSAssert(_publishedPNGFiles != nil, @"publishedPNGFiles should not be nil");
+    NSAssert(_publishedSpriteSheetNames != nil, @"publishedSpriteSheetNames should not be nil");
 }
 
 - (void)publishSpriteSheet
