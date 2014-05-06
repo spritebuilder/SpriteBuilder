@@ -4,6 +4,13 @@
 #import "PublishingTaskStatusProgress.h"
 
 
+@interface OptimizeImageWithOptiPNGOperation()
+
+@property (nonatomic, strong) NSTask *task;
+
+@end
+
+
 @implementation OptimizeImageWithOptiPNGOperation
 
 - (void)main
