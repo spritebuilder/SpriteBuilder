@@ -375,7 +375,6 @@
     operation.fileName = fileName;
     operation.filePath = filePath;
     operation.dstFile = dstFile;
-    operation.outDir = outDir;
 
     [_publishingQueue addOperation:operation];
 }
@@ -520,7 +519,7 @@
         operation.spriteSheetDir = spriteSheetDir;
         operation.spriteSheetName = spriteSheetName;
         operation.subPath = subPath;
-        operation.textureAtlasToolLocation = textureAtlasPath;
+        operation.textureAtlasToolFilePath = textureAtlasPath;
 
         [_publishingQueue addOperation:operation];
     }
@@ -533,7 +532,6 @@
                                                                                                  statusProgress:_publishingTaskStatusProgress];
     operation.targetType = _targetType;
     operation.outputDir = _outputDir;
-    operation.publishedResources = _publishedResources;
     operation.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
     operation.fileLookup = _fileLookup;
 

@@ -8,6 +8,6 @@
 @property (nonatomic, copy) NSString *spriteSheetName;
 @property (nonatomic, copy) NSString *subPath;
 @property (nonatomic, copy) NSString *resolution;
-@property (nonatomic, copy) NSString *textureAtlasToolLocation;
+@property (nonatomic, copy) NSString *textureAtlasToolFilePath;
 
 @end

@@ -48,7 +48,7 @@
 
     // run task using Xcode TextureAtlas tool
     self.atlasTask = [[NSTask alloc] init];
-    _atlasTask.launchPath = _textureAtlasToolLocation;
+    _atlasTask.launchPath = _textureAtlasToolFilePath;
     _atlasTask.arguments = @[sheetNameDir, spriteSheetFile];
     _atlasTask.standardOutput = stdErrorPipe;
 

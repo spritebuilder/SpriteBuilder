@@ -47,7 +47,6 @@
         BOOL sucess = [self publishCCBFile:self.filePath to:self.dstFile];
         if (!sucess)
         {
-            [_publishingTaskStatusProgress taskFinished];
             return;
         }
 
