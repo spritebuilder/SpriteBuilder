@@ -442,7 +442,6 @@
         PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                      warnings:_warnings
                                                                                                statusProgress:_publishingTaskStatusProgress];
-        operation.appDelegate = [AppDelegate appDelegate];
         operation.publishDirectory = publishDirectory;
         operation.publishedPNGFiles = _publishedPNGFiles;
         operation.publishedSpriteSheetNames = _publishedSpriteSheetNames;

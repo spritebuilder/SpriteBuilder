@@ -4,7 +4,6 @@
 
 
 @class CCBWarnings;
-@class AppDelegate;
 @class ProjectSettings;
 
 @interface PublishSpriteSheetOperation : PublishBaseOperation
@@ -18,7 +17,5 @@
 @property (nonatomic, copy) NSString *publishDirectory;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) NSMutableArray *publishedSpriteSheetNames;
-
-@property (nonatomic, weak) AppDelegate *appDelegate;
 
 @end
