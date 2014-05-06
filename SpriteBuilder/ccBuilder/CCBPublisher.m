@@ -568,10 +568,18 @@
 
     if (!_runAfterPublishing)
     {
-        if (![self publishIOS])
+
+        if (![self publishForTargetType:kCCBPublisherTargetTypeIPhone])
         {
             return NO;
         }
+
+/*
+        if (![self publishForTargetType:kCCBPublisherTargetTypeAndroid])
+        {
+            return NO;
+        }
+*/
     }
 
     [_projectSettings clearAllDirtyMarkers];
@@ -581,24 +589,21 @@
     return YES;
 }
 
-- (BOOL)publishIOS
+- (BOOL)publishForTargetType:(CCBPublisherTargetType)targetType
 {
-    // iOS publishing is the only os target at the moment
-    // publishEnablediPhone = projectSettings.publishEnablediPhone;
-    bool publishEnablediPhone = YES;
-
-    if (!publishEnablediPhone)
+    BOOL publishEnabled = [_projectSettings publishEnabledForTargetType:targetType];
+    if (!publishEnabled)
     {
         return YES;
     }
 
-    self.targetType = kCCBPublisherTargetTypeIPhone;
-    _warnings.currentTargetType = _targetType;
+    _targetType = targetType;
+    _warnings.currentTargetType = targetType;
 
-    // NOTE: If android publishing is back this has to be changed accordingly
-    self.publishForResolutions = [self.projectSettings publishingResolutionsForIOS];
+    self.publishForResolutions = [self.projectSettings publishingResolutionsForTargetType:targetType];
 
-    NSString *publishDir = [_projectSettings.publishDirectory absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
+    NSString *publishDir = [[_projectSettings publishDirForTargetType:targetType]
+                                              absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
 
     return [self publishAllToDirectory:publishDir];
 }

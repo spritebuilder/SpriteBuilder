@@ -603,27 +603,4 @@
 	}
 }
 
-- (NSArray *)publishingResolutionsForIOS
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    if (self.publishResolution_ios_phone)
-    {
-        [result addObject:@"phone"];
-    }
-    if (self.publishResolution_ios_phonehd)
-    {
-        [result addObject:@"phonehd"];
-    }
-    if (self.publishResolution_ios_tablet)
-    {
-        [result addObject:@"tablet"];
-    }
-    if (self.publishResolution_ios_tablethd)
-    {
-        [result addObject:@"tablethd"];
-    }
-    return result;
-}
-
 @end

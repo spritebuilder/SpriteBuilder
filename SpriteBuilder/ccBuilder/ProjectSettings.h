@@ -205,6 +205,4 @@ typedef enum
 
 - (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
 
-- (NSArray *)publishingResolutionsForIOS;
-
 @end

@@ -17,7 +17,11 @@
 
 - (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
 {
-    int result = [[self valueForRelPath:relPath andKey:@"format_ios_sound_quality"] intValue];
+    NSString *key = targetType == kCCBPublisherTargetTypeIPhone
+        ? @"format_ios_sound_quality"
+        : @"format_android_sound_quality";
+
+    int result = [[self valueForRelPath:relPath andKey:key] intValue];
     if (!result)
     {
         return self.publishAudioQuality_ios;
@@ -37,8 +41,8 @@
     }
     else if (targetType == kCCBPublisherTargetTypeAndroid)
     {
-        NSLog(@"ERROR: Android target type not supported at the moment, please refer to the git history.");
-        return 0;
+        key = @"format_android_sound";
+        map = @{@(0):@(kFCSoundFormatOGG)};
     }
     else
     {
@@ -53,5 +57,97 @@
            ? [result intValue]
            : -1;
 }
+
+- (NSArray *)publishingResolutionsForTargetType:(CCBPublisherTargetType)targetType;
+{
+    if (targetType == kCCBPublisherTargetTypeAndroid)
+    {
+        return [self publishingResolutionsForAndroid];
+    }
+
+    if (targetType == kCCBPublisherTargetTypeIPhone)
+    {
+        return [self publishingResolutionsForIOS];
+    }
+
+    return nil;
+}
+
+- (NSArray *)publishingResolutionsForIOS
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    if (self.publishResolution_ios_phone)
+    {
+        [result addObject:@"phone"];
+    }
+    if (self.publishResolution_ios_phonehd)
+    {
+        [result addObject:@"phonehd"];
+    }
+    if (self.publishResolution_ios_tablet)
+    {
+        [result addObject:@"tablet"];
+    }
+    if (self.publishResolution_ios_tablethd)
+    {
+        [result addObject:@"tablethd"];
+    }
+    return result;
+}
+
+- (NSArray *)publishingResolutionsForAndroid
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    if (self.publishResolution_android_phone)
+    {
+        [result addObject:@"phone"];
+    }
+    if (self.publishResolution_android_phonehd)
+    {
+        [result addObject:@"phonehd"];
+    }
+    if (self.publishResolution_android_tablet)
+    {
+        [result addObject:@"tablet"];
+    }
+    if (self.publishResolution_android_tablethd)
+    {
+        [result addObject:@"tablethd"];
+    }
+    return result;
+}
+
+- (NSString *)publishDirForTargetType:(CCBPublisherTargetType)targetType
+{
+    if (targetType == kCCBPublisherTargetTypeAndroid)
+    {
+        return [self publishDirectoryAndroid];
+    }
+
+    if (targetType == kCCBPublisherTargetTypeIPhone)
+    {
+        return [self publishDirectory];
+    }
+
+    return nil;
+}
+
+- (BOOL)publishEnabledForTargetType:(CCBPublisherTargetType)targetType
+{
+    if (targetType == kCCBPublisherTargetTypeAndroid)
+    {
+        return self.publishEnabledAndroid;
+    }
+
+    if (targetType == kCCBPublisherTargetTypeIPhone)
+    {
+        return self.publishEnablediPhone;
+    }
+
+    return NO;
+}
+
 
 @end

@@ -96,8 +96,9 @@
         }
         else if (_targetType == kCCBPublisherTargetTypeAndroid)
         {
-            NSLog(@"ERROR: Android target type not supported at the moment, please refer to the git history.");
-            return;
+            format = [[_projectSettings valueForRelPath:relPath andKey:@"format_android"] intValue];
+            dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_dither"] boolValue];
+            compress = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_compress"] boolValue];
         }
     }
 
