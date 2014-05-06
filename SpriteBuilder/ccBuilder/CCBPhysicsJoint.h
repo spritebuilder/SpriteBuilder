@@ -26,6 +26,7 @@ typedef enum
     //------------
     RestAngleHandle,
     RestLengthHandle,
+    ReferenceAngleHandle,
     
     EntireJoint, //The entire joint has been touched at some point.
     

@@ -10,8 +10,74 @@
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
 #import "CCBPhysicsJoint+Private.h"
+#import "CCButton.h"
+
+const float kSegmentHandleDefaultRadius = 50.0f;
+
+@interface CCSegmentHandle : CCNode
+{
+
+}
+
+@property (nonatomic) CCDrawNode * segment;
+@property (nonatomic) CCSprite * handle;
+@property (nonatomic) float length;
+@property (nonatomic) BOOL highlighted;
+
+@end
 
 
+@implementation CCSegmentHandle
+@synthesize segment;
+@synthesize handle;
+
+-(id)init
+{
+    self = [super init];
+    if(self)
+    {
+        segment = [CCDrawNode node];
+        handle  = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png"];
+        [self addChild:segment];
+        [self addChild:handle];
+        _length = kSegmentHandleDefaultRadius;
+    }
+    return self;
+}
+
+-(void)setLength:(float)length
+{
+    self->_length = length;
+}
+
+-(void)setHighlighted:(BOOL)highlighted
+{
+    if(highlighted)
+    {
+        handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-connection-connected.png"];
+    }
+    else
+    {
+        handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-connection-disconnected.png"];
+    }
+}
+
+-(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+{
+    
+    CGPoint nodeSpace = ccp(0.0f,self.length);
+    CGPoint worldSpace = [self convertToWorldSpace:nodeSpace];
+    worldSpace = ccp( floorf(worldSpace.x),
+                     floorf(worldSpace.y));
+    nodeSpace = [self convertToNodeSpace:worldSpace];
+    
+    handle.position = nodeSpace;
+    [segment drawSegmentFrom:ccp(0.0f,0.0f) to:ccp(0.0f,self.length) radius:1.0f color:[CCColor redColor]];
+    
+    [super visit:renderer parentTransform:parentTransform];
+}
+
+@end
 
 @interface CCBPhysicsJoint()
 -(void)updateSelectionUI;
@@ -22,8 +88,13 @@
     CCSprite * joint;
     CCSprite * jointAnchor;
     
-    CCSprite * restAngleHandle;
     
+    CCLayoutBox * layoutControls;
+    
+    CCSegmentHandle      * referenceAngleHandle;
+    
+    CCNode               * springNode;
+    CCSegmentHandle      * springRestAngleHandle;
     
 
 }
@@ -45,12 +116,35 @@
     self.dampedSpringStiffness = 4.0f;
     self.dampedSpringDamping = 1.0f;
     
+    self.limitEnabled = NO;
+    self.limitMin = 0;
+    self.limitMax = 90;
+
+
+    self.motorEnabled = NO;
+    self.motorRate = 1;
+
+
+    self.ratchetEnabled = NO;
+    self.ratchetValue = 30.0f;
+    self.ratchetPhase = 0.0f;
+
+    
     [self setupBody];
     
     return self;
 }
 
-const float kRestAngleRadius = 50.0f;
+
+
+typedef enum
+{
+    eLayoutButtonSpring,
+    eLayoutButtonLimit,
+    eLayoutButtonRatchet,
+    eLayoutButtonMax
+    
+} eLayoutButtonType;
 
 -(void)setupBody
 {
@@ -60,8 +154,26 @@ const float kRestAngleRadius = 50.0f;
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
     
-    restAngleHandle = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png"];
-
+    //Layout Controls
+    layoutControls = [CCLayoutBox node];
+    for (int i =0; i < eLayoutButtonMax; i++) {
+        NSString * title = i == eLayoutButtonSpring ? @"S" : (i == eLayoutButtonLimit ? @"L" : @"R");
+        CCButton * button = [CCButton buttonWithTitle:title spriteFrame:[CCSpriteFrame frameWithImageNamed:@"joint-layoutbutton-bg.png"]];
+        [layoutControls addChild:button];
+    }
+    layoutControls.position = ccp(0.0f,-40.0f);
+    
+    [scaleFreeNode addChild:layoutControls];
+    
+    referenceAngleHandle = [CCSegmentHandle node];
+    referenceAngleHandle.length = kSegmentHandleDefaultRadius * 0.7f;
+    [scaleFreeNode addChild:referenceAngleHandle];
+    //Spring
+    springNode = [CCNode node];
+    [scaleFreeNode addChild:springNode];
+    
+    springRestAngleHandle = [CCSegmentHandle node];
+    [springNode addChild:springRestAngleHandle];
     
 }
 
@@ -72,28 +184,29 @@ const float kRestAngleRadius = 50.0f;
     [super visit:renderer parentTransform:parentTransform];
 }
 
--(void)updateRenderBody
+-(float)worldRotation:(CCNode*)node
 {
-    if(self.bodyA != nil)
+    float rotation = 0.0f;
+    CCNode * parent = node;
+    while(parent)
     {
-        float rotation = 0.0f;
-        CCNode * parent = self.bodyA;
-        while(parent)
-        {
-            rotation += parent.rotation;
-            parent = parent.parent;
-        }
-        
-        rotation += _dampedSpringRestAngle + M_PI_2;
-        
-
-        CGPoint bodyARelative = ccp(sinf(CC_DEGREES_TO_RADIANS(rotation)),
-                                    cosf(CC_DEGREES_TO_RADIANS(rotation)));
-        
-        CGPoint nodeSapce = ccpMult(bodyARelative,kRestAngleRadius);
-        restAngleHandle.position = nodeSapce;
+        rotation += parent.rotation;
+        parent = parent.parent;
     }
 
+    return rotation;
+}
+
+-(void)updateRenderBody
+{
+    //Spring
+    if(self.bodyA != nil)
+    {
+        float rotation = [self worldRotation:self.bodyA];
+        
+        springRestAngleHandle.rotation = rotation + self.referenceAngle + self.dampedSpringRestAngle + M_PI_2;
+        referenceAngleHandle.rotation  = rotation + self.referenceAngle + M_PI_2;
+    }
 }
 
 -(void)updateSelectionUI
@@ -104,34 +217,45 @@ const float kRestAngleRadius = 50.0f;
         joint.spriteFrame =       [self frameWithImageNamed:@"joint-pivot-sel.png"];
         jointAnchor.spriteFrame = [self frameWithImageNamed:@"joint-anchor-sel.png"];
         
-        if(self.dampedSpringEnabled && restAngleHandle.parent == nil)
+        //Refence angle Handle;
+        if(referenceAngleHandle.parent == nil)
         {
-            [scaleFreeNode addChild:restAngleHandle];
+            [scaleFreeNode addChild:referenceAngleHandle];
         }
-        else if(!self.dampedSpringEnabled && restAngleHandle.parent != nil)
+        
+        //Spring.
+        if(self.dampedSpringEnabled && springNode.parent == nil)
         {
-            [restAngleHandle removeFromParentAndCleanup:NO];
+            [scaleFreeNode addChild:springNode];
         }
-
+        else if(!self.dampedSpringEnabled && springNode.parent != nil)
+        {
+            [springNode removeFromParentAndCleanup:NO];
+        }
+        
     }
-    //If its not selected na
+    //If its not selected
     else
     {
         joint.spriteFrame = [self frameWithImageNamed:@"joint-pivot.png"];
         jointAnchor.spriteFrame = [self frameWithImageNamed:@"joint-anchor.png"];
         
-        if(restAngleHandle.parent != nil)
-            [restAngleHandle removeFromParentAndCleanup:NO];
+        if(springNode.parent != nil)
+        {
+            [springNode removeFromParentAndCleanup:NO];
+        }
+        
+        if(referenceAngleHandle.parent != nil)
+        {
+            [referenceAngleHandle removeFromParentAndCleanup:NO];
+        }
     }
     
-    if(selectedBodyHandle & (1 << RestAngleHandle))
-    {
-        restAngleHandle.spriteFrame = [self frameWithImageNamed:@"joint-connection-connected.png"];
-    }
-    else
-    {
-        restAngleHandle.spriteFrame = [self frameWithImageNamed:@"joint-connection-disconnected.png"];
-    }
+    
+
+    springRestAngleHandle.highlighted = selectedBodyHandle & (1 << RestAngleHandle);
+    referenceAngleHandle.highlighted = selectedBodyHandle & (1 << ReferenceAngleHandle);
+    
 
     
     [super updateSelectionUI];
@@ -242,10 +366,19 @@ const float kRestAngleRadius = 50.0f;
     
     if(self.dampedSpringEnabled)
     {
-        CGPoint pointHit = [restAngleHandle convertToNodeSpaceAR:worlPos];
+        CGPoint pointHit = [springRestAngleHandle.handle convertToNodeSpaceAR:worlPos];
         if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
         {
             return RestAngleHandle;
+        }
+    }
+    
+    if(self.dampedSpringEnabled || self.limitEnabled  || self.ratchetEnabled)
+    {
+        CGPoint pointHit = [referenceAngleHandle.handle convertToNodeSpaceAR:worlPos];
+        if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+        {
+            return ReferenceAngleHandle;
         }
     }
     
@@ -260,12 +393,49 @@ const float kRestAngleRadius = 50.0f;
         return YES;
     }
     
-    if([prop isEqualToString:@"dampedSpringRestAngle"] || [prop isEqualToString:@"dampedSpringStiffness"] || [prop isEqualToString:@"dampedSpringDamping"])
+    if([prop isEqualToString:@"dampedspringRestAngleHandle"] ||
+       [prop isEqualToString:@"dampedSpringStiffness"] ||
+       [prop isEqualToString:@"dampedSpringDamping"])
     {
         return !self.dampedSpringEnabled;
     }
     
+    if([prop isEqualToString:@"limitMin"] ||
+       [prop isEqualToString:@"limitMax"] )
+    {
+        return !self.limitEnabled;
+    }
+
+    if([prop isEqualToString:@"motorRate"])
+    {
+        return !self.motorEnabled;
+    }
+
+    if([prop isEqualToString:@"ratchetValue"] ||
+       [prop isEqualToString:@"ratchetPhase"] )
+    {
+        return !self.ratchetEnabled;
+    }
+    
     return NO;
+}
+
+-(float)rotationFromWorldPos:(CGPoint)worldPos
+{
+    float rotation = 0.0f;
+    CCNode * parent = self.bodyA;
+    while(parent)
+    {
+        rotation += parent.rotation;
+        parent = parent.parent;
+    }
+    
+    CGPoint newPosition = [self convertToNodeSpace:worldPos];
+    CGPoint normalPos = ccpNormalize(newPosition);
+    float degAngle = CC_RADIANS_TO_DEGREES(atan2f(normalPos.x, normalPos.y));
+    
+    degAngle -= rotation;
+    return degAngle;
 }
 
 -(void)setBodyHandle:(CGPoint)worldPos bodyType:(JointHandleType)bodyType
@@ -278,21 +448,14 @@ const float kRestAngleRadius = 50.0f;
     
     if(bodyType == RestAngleHandle)
     {
-        float rotation = 0.0f;
-        CCNode * parent = self.bodyA;
-        while(parent)
-        {
-            rotation += parent.rotation;
-            parent = parent.parent;
-        }
-        
-        CGPoint newPosition = [self convertToNodeSpace:worldPos];
-        CGPoint normalPos = ccpNormalize(newPosition);
-        float degAngle = CC_RADIANS_TO_DEGREES(atan2f(normalPos.x, normalPos.y));
-        
-        degAngle -= rotation;
-        
-        self.dampedSpringRestAngle = degAngle;
+        float degAngle = [self rotationFromWorldPos:worldPos];
+        self.dampedSpringRestAngle = degAngle - self.referenceAngle;
+    }
+    
+    if(bodyType == ReferenceAngleHandle)
+    {
+        float degAngle = [self rotationFromWorldPos:worldPos];
+        self.referenceAngle = degAngle;
     }
 }
 
@@ -300,9 +463,15 @@ const float kRestAngleRadius = 50.0f;
 {
     _dampedSpringRestAngle = dampedSpringRestAngle;
     [[AppDelegate appDelegate]refreshProperty:@"dampedSpringRestAngle"];
-    
-    
 }
+
+
+-(void)setReferenceAngle:(float)referenceAngle
+{
+    _referenceAngle = referenceAngle;
+    [[AppDelegate appDelegate]refreshProperty:@"referenceAngle"];
+}
+
 
 
 +(BOOL)nodeHasParent:(CCNode*)node parent:(CCNode*)parent

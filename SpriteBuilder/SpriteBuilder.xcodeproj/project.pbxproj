@@ -126,6 +126,8 @@
 		92154ADF18A5565C00BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154AE018A5565C00BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
 		92154AE318A55A4200BD215C /* CCPhysicsPivotJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */; };
+		9218DF0C1919727B0033851E /* joint-layoutbutton-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF0A1919727B0033851E /* joint-layoutbutton-bg@2x.png */; };
+		9218DF0D1919727B0033851E /* joint-layoutbutton-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF0B1919727B0033851E /* joint-layoutbutton-bg.png */; };
 		921EEAD618A5760700D864C2 /* joint-anchor-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEACE18A5760700D864C2 /* joint-anchor-sel.png */; };
 		921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */; };
 		921EEAD818A5760700D864C2 /* joint-anchor.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD018A5760700D864C2 /* joint-anchor.png */; };
@@ -1219,6 +1221,8 @@
 		92154AC418A5531800BD215C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		92154AC518A5531800BD215C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsPivotJoint.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
+		9218DF0A1919727B0033851E /* joint-layoutbutton-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-layoutbutton-bg@2x.png"; sourceTree = "<group>"; };
+		9218DF0B1919727B0033851E /* joint-layoutbutton-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-layoutbutton-bg.png"; sourceTree = "<group>"; };
 		921EEACE18A5760700D864C2 /* joint-anchor-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor-sel.png"; sourceTree = "<group>"; };
 		921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor-sel@2x.png"; sourceTree = "<group>"; };
 		921EEAD018A5760700D864C2 /* joint-anchor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor.png"; sourceTree = "<group>"; };
@@ -2552,6 +2556,8 @@
 		776041EF1498FCE50078095D /* Stage Assets */ = {
 			isa = PBXGroup;
 			children = (
+				9218DF0A1919727B0033851E /* joint-layoutbutton-bg@2x.png */,
+				9218DF0B1919727B0033851E /* joint-layoutbutton-bg.png */,
 				926D13B418B5778300582959 /* joint-distance-handle-long.png */,
 				926D13B518B5778300582959 /* joint-distance-handle-long@2x.png */,
 				926D13B618B5778300582959 /* joint-distance-handle-short.png */,
@@ -5071,6 +5077,7 @@
 				B759E4B81880B60B00E8166C /* logo-white.png in Resources */,
 				E3B4221D14E58C35004547D6 /* InspectorByte.xib in Resources */,
 				E3B4222214E58FEE004547D6 /* InspectorColor3.xib in Resources */,
+				9218DF0D1919727B0033851E /* joint-layoutbutton-bg.png in Resources */,
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
 				DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */,
@@ -5146,6 +5153,7 @@
 				E3E8B49D15793AF800373983 /* seq-btn-stepforward.png in Resources */,
 				E3E8B49E15793AF800373983 /* seq-btn-stop.png in Resources */,
 				E3E8B4A4157CD5DB00373983 /* seq-scrub-handle.png in Resources */,
+				9218DF0C1919727B0033851E /* joint-layoutbutton-bg@2x.png in Resources */,
 				926D13C518B5778300582959 /* joint-distance-sel@2x.png in Resources */,
 				E3E8B4A5157CD5DB00373983 /* seq-scrub-line.png in Resources */,
 				B7C3533817FA0FEF005697C1 /* inspector-physics@2x.png in Resources */,
