@@ -919,6 +919,7 @@ static SequencerHandler* sharedSequencerHandler;
     appDelegate.selectedNodes = selectedNodes;
     
     [appDelegate updateInspectorFromSelection];
+    [[CocosScene cocosScene] selectionUpdated];
 }
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
