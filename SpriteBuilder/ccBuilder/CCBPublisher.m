@@ -99,22 +99,26 @@
 {
     for (NSString* resolution in _publishForResolutions)
     {
-        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outDir:outDir resolution:resolution];
+        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution];
 	}
 
     return YES;
 }
 
-- (BOOL)publishImageFile:(NSString *)srcPath to:(NSString *)dstPath isSpriteSheet:(BOOL)isSpriteSheet outDir:(NSString *)outDir resolution:(NSString *)resolution
+- (BOOL)publishImageFile:(NSString *)srcFilePath
+                      to:(NSString *)dstFilePath
+           isSpriteSheet:(BOOL)isSpriteSheet
+               outputDir:(NSString *)outputDir
+              resolution:(NSString *)resolution
 {
     PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:_projectSettings
                                                                                      warnings:_warnings
                                                                                statusProgress:_publishingTaskStatusProgress];
 
-    operation.srcPath = srcPath;
-    operation.dstPath = dstPath;
+    operation.srcFilePath = srcFilePath;
+    operation.dstFilePath = dstFilePath;
     operation.isSpriteSheet = isSpriteSheet;
-    operation.outDir = outDir;
+    operation.outputDir = outputDir;
     operation.resolution = resolution;
     operation.targetType = _targetType;
     operation.publishedResources = _publishedResources;
@@ -126,9 +130,9 @@
     return YES;
 }
 
-- (void)publishSoundFile:(NSString *)srcPath to:(NSString *)dstPath
+- (void)publishSoundFile:(NSString *)srcFilePath to:(NSString *)dstFilePath
 {
-    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
+    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcFilePath];
 
     int format = [_projectSettings soundFormatForRelPath:relPath targetType:_targetType];
     int quality = [_projectSettings soundQualityForRelPath:relPath targetType:_targetType];
@@ -141,8 +145,8 @@
     PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:_projectSettings
                                                                                              warnings:_warnings
                                                                                        statusProgress:_publishingTaskStatusProgress];
-    operation.srcFilePath = srcPath;
-    operation.dstFilePath = dstPath;
+    operation.srcFilePath = srcFilePath;
+    operation.dstFilePath = dstFilePath;
     operation.format = format;
     operation.quality = quality;
     operation.fileLookup = _fileLookup;
@@ -150,13 +154,13 @@
     [_publishingQueue addOperation:operation];
 }
 
-- (void)publishRegularFile:(NSString *)srcPath to:(NSString*) dstPath
+- (void)publishRegularFile:(NSString *)srcFilePath to:(NSString*)dstFilePath
 {
     PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                  warnings:_warnings
                                                                                            statusProgress:_publishingTaskStatusProgress];
-    operation.srcFilePath = srcPath;
-    operation.dstFilePath = dstPath;
+    operation.srcFilePath = srcFilePath;
+    operation.dstFilePath = dstFilePath;
 
     [_publishingQueue addOperation:operation];
 }
@@ -179,7 +183,7 @@
 
     if (![self processAllFilesWithinPublishDir:publishDirectory
                                        subPath:subPath
-                                        outDir:outDir
+                                     outputDir:outDir
                         isGeneratedSpriteSheet:isGeneratedSpriteSheet])
     {
         return NO;
@@ -187,35 +191,35 @@
 
     if (isGeneratedSpriteSheet)
     {
-        [self publishSpriteSheetDir:publishDirectory subPath:subPath outDir:outDir];
+        [self publishSpriteSheetDir:publishDirectory subPath:subPath outputDir:outDir];
     }
     
     return YES;
 }
 
-- (void)publishSpriteSheetDir:(NSString *)publishDirectory subPath:(NSString *)subPath outDir:(NSString *)outDir
+- (void)publishSpriteSheetDir:(NSString *)publishDirectory subPath:(NSString *)subPath outputDir:(NSString *)outputDir
 {
     BOOL publishForSpriteKit = _projectSettings.engine == CCBTargetEngineSpriteKit;
     if (publishForSpriteKit)
     {
-        [self publishSpriteKitAtlasDir:[outDir stringByDeletingLastPathComponent]
-                             sheetName:[outDir lastPathComponent]
+        [self publishSpriteKitAtlasDir:[outputDir stringByDeletingLastPathComponent]
+                             sheetName:[outputDir lastPathComponent]
                                subPath:subPath];
     }
     else
     {
         // Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
-        [self publishSpriteSheetDir:[outDir stringByDeletingLastPathComponent]
-                          sheetName:[outDir lastPathComponent]
+        [self publishSpriteSheetDir:[outputDir stringByDeletingLastPathComponent]
+                          sheetName:[outputDir lastPathComponent]
                    publishDirectory:publishDirectory
                             subPath:subPath
-                             outDir:outDir];
+                          outputDir:outputDir];
     }
 }
 
 - (BOOL)processAllFilesWithinPublishDir:(NSString *)publishDirectory
                                 subPath:(NSString *)subPath
-                                 outDir:(NSString *)outDir
+                              outputDir:(NSString *)outputDir
                  isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -243,7 +247,7 @@
                            subPath:subPath
                            dirPath:filePath
                 resIndependentDirs:resIndependentDirs
-                            outDir:outDir
+                         outputDir:outputDir
             isGeneratedSpriteSheet:isGeneratedSpriteSheet];
         }
         else
@@ -251,7 +255,7 @@
             BOOL success = [self processFile:fileName
                                      subPath:subPath
                                     filePath:filePath
-                                      outDir:outDir
+                                   outputDir:outputDir
                       isGeneratedSpriteSheet:isGeneratedSpriteSheet];
             if (!success)
             {
@@ -265,8 +269,7 @@
 - (BOOL)processFile:(NSString *)fileName
             subPath:(NSString *)subPath
            filePath:(NSString *)filePath
-             outDir:(NSString *)outDir
-        isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
+          outputDir:(NSString *)outputDir isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
     // Skip non png files for generated sprite sheets
     if (isGeneratedSpriteSheet
@@ -279,12 +282,12 @@
     if ([self isFileSupportedByPublishing:fileName]
         && !_projectSettings.onlyPublishCCBs)
     {
-        NSString *dstFilePath = [outDir stringByAppendingPathComponent:fileName];
+        NSString *dstFilePath = [outputDir stringByAppendingPathComponent:fileName];
 
         if (!isGeneratedSpriteSheet
             && ([fileName isSmartSpriteSheetCompatibleFile]))
         {
-            [self publishImageForResolutions:filePath to:dstFilePath isSpriteSheet:isGeneratedSpriteSheet outDir:outDir];
+            [self publishImageForResolutions:filePath to:dstFilePath isSpriteSheet:isGeneratedSpriteSheet outDir:outputDir];
         }
         else if ([fileName isWaveSoundFile])
         {
@@ -298,7 +301,7 @@
     else if (!isGeneratedSpriteSheet
              && [[fileName lowercaseString] hasSuffix:@"ccb"])
     {
-        [self publishCCB:fileName filePath:filePath outDir:outDir];
+        [self publishCCB:fileName filePath:filePath outputDir:outputDir];
     }
     return YES;
 }
@@ -314,14 +317,14 @@
                  subPath:(NSString *)subPath
                  dirPath:(NSString *)dirPath
       resIndependentDirs:(NSArray *)resIndependentDirs
-                  outDir:(NSString *)outDir
+               outputDir:(NSString *)outputDir
   isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     if ([[dirPath pathExtension] isEqualToString:@"bmfont"])
     {
-        [self publishBMFont:directoryName dirPath:dirPath outDir:outDir];
+        [self publishBMFont:directoryName dirPath:dirPath outputDir:outputDir];
         return;
     }
 
@@ -359,9 +362,9 @@
     [self publishDirectory:dirPath subPath:childPath];
 }
 
-- (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outDir:(NSString *)outDir
+- (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outputDir:(NSString *)outputDir
 {
-    NSString *dstFile = [[outDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
+    NSString *dstFile = [[outputDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
                                  stringByAppendingPathExtension:_projectSettings.exporter];
 
     // Add file to list of published files
@@ -374,15 +377,15 @@
                                                                            statusProgress:_publishingTaskStatusProgress];
     operation.fileName = fileName;
     operation.filePath = filePath;
-    operation.dstFile = dstFile;
+    operation.dstFilePath = dstFile;
 
     [_publishingQueue addOperation:operation];
 }
 
 
-- (void)publishBMFont:(NSString *)directoryName dirPath:(NSString *)dirPath outDir:(NSString *)outDir
+- (void)publishBMFont:(NSString *)directoryName dirPath:(NSString *)dirPath outputDir:(NSString *)outputDir
 {
-    NSString *bmFontOutDir = [outDir stringByAppendingPathComponent:directoryName];
+    NSString *bmFontOutDir = [outputDir stringByAppendingPathComponent:directoryName];
     [self publishRegularFile:dirPath to:bmFontOutDir];
 
     // Run after regular file has been copied, else png files cannot be found
@@ -414,7 +417,7 @@
                     sheetName:(NSString *)spriteSheetName
              publishDirectory:(NSString *)publishDirectory
                       subPath:(NSString *)subPath
-                       outDir:(NSString *)outDir
+                    outputDir:(NSString *)outputDir
 {
     // NOTE: For every spritesheet one shared dir is used, so have to remove it on the
     // queue to ensure that later spritesheets don't add more sprites from previous passes
@@ -437,7 +440,7 @@
 			continue;
 		}
 
-        [self prepareImagesForSpriteSheetPublishing:publishDirectory outDir:outDir resolution:resolution];
+        [self prepareImagesForSpriteSheetPublishing:publishDirectory outDir:outputDir resolution:resolution];
 
         PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                      warnings:_warnings
@@ -488,7 +491,7 @@
             [self publishImageFile:filePath
                                 to:dstFile
                      isSpriteSheet:NO
-                            outDir:outDir
+                         outputDir:outDir
                         resolution:resolution];
         }
     }

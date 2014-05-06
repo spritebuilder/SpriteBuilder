@@ -7,6 +7,6 @@
 
 @property (nonatomic, copy) NSString *fileName;
 @property (nonatomic, copy) NSString *filePath;
-@property (nonatomic, copy) NSString *dstFile;
+@property (nonatomic, copy) NSString *dstFilePath;
 
 @end

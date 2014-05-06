@@ -31,19 +31,19 @@
 {
     NSAssert(_fileName != nil, @"fileName should not be nil");
     NSAssert(_filePath != nil, @"filePath should not be nil");
-    NSAssert(_dstFile != nil, @"dstFile should not be nil");
+    NSAssert(_dstFilePath != nil, @"dstFile should not be nil");
 }
 
 - (void)publishCCB
 {
-    if ([self.dstFile isEqualToString:self.filePath])
+    if ([self.dstFilePath isEqualToString:self.filePath])
     {
         [_warnings addWarningWithDescription:@"Publish will overwrite files in resource directory." isFatal:YES];
         return;
     }
 
     NSDate *srcDate = [CCBFileUtil modificationDateForFile:self.filePath];
-    NSDate *dstDate = [CCBFileUtil modificationDateForFile:self.dstFile];
+    NSDate *dstDate = [CCBFileUtil modificationDateForFile:self.dstFilePath];
 
     if (![srcDate isEqualToDate:dstDate])
     {
@@ -51,15 +51,15 @@
 
         // Remove old file
         NSFileManager *fileManager = [NSFileManager defaultManager];;
-        [fileManager removeItemAtPath:self.dstFile error:NULL];
+        [fileManager removeItemAtPath:self.dstFilePath error:NULL];
 
-        BOOL sucess = [self publishCCBFile:self.filePath to:self.dstFile];
+        BOOL sucess = [self publishCCBFile:self.filePath to:self.dstFilePath];
         if (!sucess)
         {
             return;
         }
 
-        [CCBFileUtil setModificationDate:srcDate forFile:self.dstFile];
+        [CCBFileUtil setModificationDate:srcDate forFile:self.dstFilePath];
     }
 }
 
@@ -149,7 +149,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"file: %@, path: %@, dstfile: %@", _fileName, _filePath, _dstFile];
+    return [NSString stringWithFormat:@"file: %@, path: %@, dstfile: %@", _fileName, _filePath, _dstFilePath];
 }
 
 

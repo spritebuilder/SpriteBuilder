@@ -9,9 +9,9 @@
 
 @interface PublishImageOperation : PublishBaseOperation
 
-@property (nonatomic, copy) NSString *srcPath;
-@property (nonatomic, copy) NSString *dstPath;
-@property (nonatomic, copy) NSString *outDir;
+@property (nonatomic, copy) NSString *srcFilePath;
+@property (nonatomic, copy) NSString *dstFilePath;
+@property (nonatomic, copy) NSString *outputDir;
 @property (nonatomic, copy) NSString *resolution;
 
 @property (nonatomic, strong) NSMutableSet *publishedResources;

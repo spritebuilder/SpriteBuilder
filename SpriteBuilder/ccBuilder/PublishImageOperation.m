@@ -31,9 +31,9 @@
 
 - (void)assertProperties
 {
-    NSAssert(_srcPath != nil, @"srcPath should not be nil");
-    NSAssert(_dstPath != nil, @"dstPath should not be nil");
-    NSAssert(_outDir != nil, @"outDir should not be nil");
+    NSAssert(_srcFilePath != nil, @"srcPath should not be nil");
+    NSAssert(_dstFilePath != nil, @"dstPath should not be nil");
+    NSAssert(_outputDir != nil, @"outDir should not be nil");
     NSAssert(_resolution != nil, @"resolution should not be nil");
     NSAssert(_publishedResources != nil, @"publishedResources should not be nil");
     NSAssert(_publishedPNGFiles != nil, @"publishedPNGFiles should not be nil");
@@ -43,38 +43,38 @@
 - (void)publishImage
 {
     // TODO: this is a long method -> split up!
-    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcPath];
+    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
 
     if (_isSpriteSheet
-        && [self isSpriteSheetAlreadyPublished:_srcPath outDir:_outDir resolution:_resolution])
+        && [self isSpriteSheetAlreadyPublished:_srcFilePath outDir:_outputDir resolution:_resolution])
     {
         return;
     }
 
     [_publishedResources addObject:relPath];
 
-    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Publishing %@...", [_dstPath lastPathComponent]]];
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Publishing %@...", [_dstFilePath lastPathComponent]]];
 
     // Find out which file to copy for the current resolution
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    NSString *srcFileName = [_srcPath lastPathComponent];
-    NSString *dstFileName = [_dstPath lastPathComponent];
-    NSString *srcDir = [_srcPath stringByDeletingLastPathComponent];
-    NSString *dstDir = [_dstPath stringByDeletingLastPathComponent];
-    NSString *srcAutoPath = [_srcPath resourceAutoFilePath];
+    NSString *srcFileName = [_srcFilePath lastPathComponent];
+    NSString *dstFileName = [_dstFilePath lastPathComponent];
+    NSString *srcDir = [_srcFilePath stringByDeletingLastPathComponent];
+    NSString *dstDir = [_dstFilePath stringByDeletingLastPathComponent];
+    NSString *srcAutoPath = [_srcFilePath resourceAutoFilePath];
 
     // Update path to reflect resolution
     srcDir = [srcDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:_resolution]];
     dstDir = [dstDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:_resolution]];
 
-    self.srcPath = [srcDir stringByAppendingPathComponent:srcFileName];
-    self.dstPath = [dstDir stringByAppendingPathComponent:dstFileName];
+    self.srcFilePath = [srcDir stringByAppendingPathComponent:srcFileName];
+    self.dstFilePath = [dstDir stringByAppendingPathComponent:dstFileName];
 
     // Sprite Kit requires specific extensions for specific image resolutions (ie @2x, ~ipad, ..)
     if (_projectSettings.engine == CCBTargetEngineSpriteKit)
     {
-        self.dstPath = [self pathWithCocoaImageResolutionSuffix:_dstPath resolution:_resolution];
+        self.dstFilePath = [self pathWithCocoaImageResolutionSuffix:_dstFilePath resolution:_resolution];
     }
 
     // Create destination directory if it doesn't exist
@@ -103,7 +103,7 @@
     }
 
     // Fetch new name
-    NSString *dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:_dstPath
+    NSString *dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:_dstFilePath
                                                                                                    format:format
                                                                                                  compress:compress
                                                                                             isSpriteSheet:_isSpriteSheet];
@@ -119,12 +119,12 @@
     // Copy and convert the image
     BOOL isDirty = [_projectSettings isDirtyRelPath:relPath];
 
-    if ([fileManager fileExistsAtPath:_srcPath])
+    if ([fileManager fileExistsAtPath:_srcFilePath])
     {
         // Has customized file for resolution
 
         // Check if file already exists
-        NSDate *srcDate = [CCBFileUtil modificationDateForFile:_srcPath];
+        NSDate *srcDate = [CCBFileUtil modificationDateForFile:_srcFilePath];
         NSDate *dstDate = [CCBFileUtil modificationDateForFile:dstPathProposal];
 
         if (dstDate
@@ -135,14 +135,14 @@
         }
 
         // Copy file
-        [fileManager copyItemAtPath:_srcPath toPath:_dstPath error:NULL];
+        [fileManager copyItemAtPath:_srcFilePath toPath:_dstFilePath error:NULL];
 
         // Convert it
         NSString *dstPathConverted = nil;
         NSError *error;
 
         self.formatConverter = [FCFormatConverter defaultConverter];
-        if (![_formatConverter convertImageAtPath:_dstPath
+        if (![_formatConverter convertImageAtPath:_dstFilePath
                                            format:format
                                            dither:dither
                                          compress:compress
@@ -182,14 +182,14 @@
         }
 
         // Copy file and resize
-        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:_dstPath forResolution:_resolution];
+        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:_dstFilePath forResolution:_resolution];
 
         // Convert it
         NSString *dstPathConverted = nil;
         NSError *error;
 
         self.formatConverter = [FCFormatConverter defaultConverter];
-        if (![_formatConverter convertImageAtPath:_dstPath
+        if (![_formatConverter convertImageAtPath:_dstFilePath
                                            format:format
                                            dither:dither
                                          compress:compress
@@ -219,7 +219,7 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@@%@", [self class], [_srcPath lastPathComponent], _resolution);
+    NSLog(@"[%@] CANCELLED %@@%@", [self class], [_srcFilePath lastPathComponent], _resolution);
 
     [super cancel];
     [_formatConverter cancel];
@@ -341,7 +341,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"src: %@, dst: %@, target: %i, resolution: %@, srcfull: %@, dstfull: %@", [_srcPath lastPathComponent], [_dstPath lastPathComponent], _targetType, _resolution,  _srcPath, _dstPath];
+    return [NSString stringWithFormat:@"src: %@, dst: %@, target: %i, resolution: %@, srcfull: %@, dstfull: %@", [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent], _targetType, _resolution, _srcFilePath, _dstFilePath];
 }
 
 @end
