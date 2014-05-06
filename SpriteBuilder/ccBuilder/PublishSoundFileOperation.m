@@ -5,7 +5,7 @@
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerUtil.h"
-#import "PublishFileLookup.h"
+#import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
 
 

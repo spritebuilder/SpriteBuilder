@@ -6,7 +6,7 @@
 #import "ResourceManagerUtil.h"
 #import "DateCache.h"
 #import "NSString+Publishing.h"
-#import "PublishFileLookup.h"
+#import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
 

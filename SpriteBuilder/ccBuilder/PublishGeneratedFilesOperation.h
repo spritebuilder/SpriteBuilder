@@ -2,7 +2,7 @@
 #import "PublishBaseOperation.h"
 #import "CCBWarnings.h"
 
-@class PublishFileLookup;
+@class PublishRenamedFilesLookup;
 
 @interface PublishGeneratedFilesOperation : PublishBaseOperation
 
@@ -10,6 +10,6 @@
 @property (nonatomic, copy) NSString *outputDir;
 @property (nonatomic, strong) NSMutableSet *publishedResources;
 @property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
-@property (nonatomic, strong) PublishFileLookup *fileLookup;
+@property (nonatomic, strong) PublishRenamedFilesLookup *fileLookup;
 
 @end

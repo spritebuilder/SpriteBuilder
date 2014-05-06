@@ -3,7 +3,7 @@
 #import "CCBPublisherTemplate.h"
 #import "CCBFileUtil.h"
 #import "ProjectSettings.h"
-#import "PublishFileLookup.h"
+#import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
 
 

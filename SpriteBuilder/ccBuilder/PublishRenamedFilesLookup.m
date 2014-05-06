@@ -1,14 +1,14 @@
-#import "PublishFileLookup.h"
+#import "PublishRenamedFilesLookup.h"
 
 
-@interface PublishFileLookup ()
+@interface PublishRenamedFilesLookup ()
 
 @property (nonatomic, strong) NSMutableDictionary *lookup;
 @property (nonatomic) BOOL flattenPaths;
 
 @end
 
-@implementation PublishFileLookup
+@implementation PublishRenamedFilesLookup
 
 - (id)initWithFlattenPaths:(BOOL)flattenPaths
 {

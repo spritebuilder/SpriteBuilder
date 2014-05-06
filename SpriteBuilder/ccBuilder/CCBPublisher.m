@@ -43,14 +43,14 @@
 #import "DateCache.h"
 #import "NSString+Publishing.h"
 #import "PublishGeneratedFilesOperation.h"
-#import "PublishFileLookup.h"
+#import "PublishRenamedFilesLookup.h"
 #import "PublishSpriteKitSpriteSheetOperation.h"
 #import "PublishingTaskStatusProgress.h"
 
 @interface CCBPublisher ()
 
 @property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
-@property (nonatomic, strong) PublishFileLookup *fileLookup;
+@property (nonatomic, strong) PublishRenamedFilesLookup *fileLookup;
 @property (nonatomic, strong) NSArray *publishForResolutions;
 @property (nonatomic, strong) NSArray *supportedFileExtensions;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
@@ -545,7 +545,7 @@
     self.outputDir = dir;
     
     self.publishedResources = [NSMutableSet set];
-    self.fileLookup = [[PublishFileLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
+    self.fileLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
     // Publish resources and ccb-files
     for (NSString* aDir in _projectSettings.absoluteResourcePaths)

@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface PublishFileLookup : NSObject
+@interface PublishRenamedFilesLookup : NSObject
 
 - (id)initWithFlattenPaths:(BOOL)flattenPaths;
 
