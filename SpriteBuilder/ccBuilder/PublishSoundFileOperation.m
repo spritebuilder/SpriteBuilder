@@ -19,9 +19,8 @@
 
 - (void)main
 {
-    [_publishingTaskStatusProgress updateStatusText:@"Converting sound file"];
+    NSLog(@"[%@] %@", [self class], [self description]);
 
-    NSLog(@"[%@] %@ -> %@", [self class], [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent]);
     [self assertProperties];
 
     [self publishSoundFileOperation];
@@ -35,8 +34,11 @@
     NSAssert(_dstFilePath != nil, @"dstFilePath should not be nil");
     NSAssert(_fileLookup != nil, @"fileLookup should not be nil");
 }
+
 - (void)publishSoundFileOperation
 {
+    [_publishingTaskStatusProgress updateStatusText:@"Converting sound file"];
+
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
 
     [_fileLookup addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath
