@@ -310,6 +310,18 @@
 			<key>displayName</key>
 			<string>Phase</string>
 		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>0</integer>		
+			<key>displayName</key>
+			<string>layoutType</string>
+			<key>type</key>
+			<string>Byte</string>
+			<key>name</key>
+			<string>layoutType</string>
+			<key>inspectorDisabled</key>
+			<true/>			
+		</dict>		
 	</array>
 	<key>editorClassName</key>
 	<string>CCBPhysicsPivotJoint</string>

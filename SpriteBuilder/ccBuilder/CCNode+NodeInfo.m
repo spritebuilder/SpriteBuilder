@@ -241,7 +241,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 
 -(void)customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
-    if(self.hidden)
+    if([self.userObject isKindOfClass:[NodeInfo class]] &&  self.hidden)
         return;
     
     [self performSelector:@selector(oldVisit:parentTransform:) withObject:renderer withObject:(__bridge id)(parentTransform)];

@@ -917,7 +917,7 @@
 
             if(type != BodyOutletA &&
                type != BodyOutletB &&
-               type != RestAngleHandle &&
+               type != RotarySpringRestAngleHandle &&
                [CocosScene cocosScene].currentTool != kCCBToolTranslate)
                 [[CocosScene cocosScene] setCurrentTool: kCCBToolTranslate];
         }

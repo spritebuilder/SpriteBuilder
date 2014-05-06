@@ -9,12 +9,22 @@
 #import "CCBPhysicsJoint.h"
 
 
+typedef enum
+{
+    eLayoutButtonSpring,
+    eLayoutButtonLimit,
+    eLayoutButtonRatchet,
+    eLayoutButtonMax
+    
+} eLayoutButtonType;
 
 @interface CCBPhysicsPivotJoint : CCBPhysicsJoint
 {
 }
 
 @property (nonatomic) CGPoint anchorA;
+
+@property (nonatomic) eLayoutButtonType layoutType;
 @property (nonatomic) float referenceAngle;
 
 //Spring joint properties

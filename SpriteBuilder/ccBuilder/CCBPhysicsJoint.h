@@ -24,9 +24,16 @@ typedef enum
     MaxHandleType,
     
     //------------
-    RestAngleHandle,
+    RotarySpringRestAngleHandle,
     RestLengthHandle,
+    
     ReferenceAngleHandle,
+    LimitMinHandle,
+    LimitMaxHandle,
+    
+    RatchedPhaseHandle,
+    RatchedHandle,
+    
     
     EntireJoint, //The entire joint has been touched at some point.
     

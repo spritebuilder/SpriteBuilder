@@ -89,14 +89,23 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     CCSprite * jointAnchor;
     
     
-    CCLayoutBox * layoutControls;
+    CCLayoutBox * layoutControlBox;
+    NSArray     * layoutButtons;
     
     CCSegmentHandle      * referenceAngleHandle;
     
     CCNode               * springNode;
     CCSegmentHandle      * springRestAngleHandle;
     
-
+    CCNode               * limitNode;
+    CCSegmentHandle      * limitMaxHandle;
+    CCSegmentHandle      * limitMinHandle;
+    
+    CCNode               * ratchetNode;
+    CCSegmentHandle      * ratchedPhaseHandle;
+    CCSegmentHandle      * ratchedValueHandle;
+    
+    
 }
 
 @synthesize anchorA;
@@ -137,14 +146,6 @@ const float kSegmentHandleDefaultRadius = 50.0f;
 
 
 
-typedef enum
-{
-    eLayoutButtonSpring,
-    eLayoutButtonLimit,
-    eLayoutButtonRatchet,
-    eLayoutButtonMax
-    
-} eLayoutButtonType;
 
 -(void)setupBody
 {
@@ -155,25 +156,47 @@ typedef enum
     [scaleFreeNode addChild:jointAnchor];
     
     //Layout Controls
-    layoutControls = [CCLayoutBox node];
+    layoutControlBox = [CCLayoutBox node];
+    NSMutableArray * buttons = [NSMutableArray array];
     for (int i =0; i < eLayoutButtonMax; i++) {
         NSString * title = i == eLayoutButtonSpring ? @"S" : (i == eLayoutButtonLimit ? @"L" : @"R");
         CCButton * button = [CCButton buttonWithTitle:title spriteFrame:[CCSpriteFrame frameWithImageNamed:@"joint-layoutbutton-bg.png"]];
-        [layoutControls addChild:button];
+        [button setBlock:^(CCButton * sender) {
+            self.layoutType = [sender.userObject integerValue];
+            [self refreshLayoutButtons];
+        }];
+            
+        button.userObject = @(i);
+        [buttons addObject:button ];
     }
-    layoutControls.position = ccp(0.0f,-40.0f);
+    layoutButtons = buttons;
+    layoutControlBox.position = ccp(0.0f,-40.0f);
+    [scaleFreeNode addChild:layoutControlBox];
+    [self refreshLayoutButtons];
     
-    [scaleFreeNode addChild:layoutControls];
-    
+    //Reference Angle
     referenceAngleHandle = [CCSegmentHandle node];
     referenceAngleHandle.length = kSegmentHandleDefaultRadius * 0.7f;
     [scaleFreeNode addChild:referenceAngleHandle];
+    
     //Spring
     springNode = [CCNode node];
-    [scaleFreeNode addChild:springNode];
-    
     springRestAngleHandle = [CCSegmentHandle node];
     [springNode addChild:springRestAngleHandle];
+    
+    //Limit
+    limitNode = [CCNode node];
+    limitMinHandle = [CCSegmentHandle node];
+    limitMinHandle.length = kSegmentHandleDefaultRadius * .7f;
+    [limitNode addChild:limitMinHandle];
+    
+    limitMaxHandle = [CCSegmentHandle node];
+    limitMaxHandle.length = kSegmentHandleDefaultRadius;
+    [limitNode addChild:limitMaxHandle];
+    
+    //Ratched
+    ratchetNode = [CCNode node];
+    ratchedValueHandle = [CCSegmentHandle node];
     
 }
 
@@ -206,6 +229,8 @@ typedef enum
         
         springRestAngleHandle.rotation = rotation + self.referenceAngle + self.dampedSpringRestAngle + M_PI_2;
         referenceAngleHandle.rotation  = rotation + self.referenceAngle + M_PI_2;
+        limitMinHandle.rotation = rotation + self.referenceAngle + self.limitMin + M_PI_2;
+        limitMaxHandle.rotation = rotation + self.referenceAngle + self.limitMax + M_PI_2;
     }
 }
 
@@ -217,6 +242,7 @@ typedef enum
         joint.spriteFrame =       [self frameWithImageNamed:@"joint-pivot-sel.png"];
         jointAnchor.spriteFrame = [self frameWithImageNamed:@"joint-anchor-sel.png"];
         
+        
         //Refence angle Handle;
         if(referenceAngleHandle.parent == nil)
         {
@@ -224,15 +250,27 @@ typedef enum
         }
         
         //Spring.
-        if(self.dampedSpringEnabled && springNode.parent == nil)
+        if(self.layoutType == eLayoutButtonSpring && self.dampedSpringEnabled && springNode.parent == nil)
         {
             [scaleFreeNode addChild:springNode];
         }
-        else if(!self.dampedSpringEnabled && springNode.parent != nil)
+        else if((self.layoutType != eLayoutButtonSpring || !self.dampedSpringEnabled) && springNode.parent != nil)
         {
             [springNode removeFromParentAndCleanup:NO];
         }
         
+        //Limit
+        if(self.layoutType == eLayoutButtonLimit && self.limitEnabled && limitNode.parent == nil)
+        {
+            [scaleFreeNode addChild:limitNode];
+        }
+        else if((self.layoutType != eLayoutButtonLimit || !self.limitEnabled) && limitNode.parent != nil)
+        {
+            [limitNode removeFromParentAndCleanup:YES];
+        }
+        
+        
+        layoutControlBox.visible = YES;
     }
     //If its not selected
     else
@@ -249,15 +287,22 @@ typedef enum
         {
             [referenceAngleHandle removeFromParentAndCleanup:NO];
         }
+        
+        if(limitNode.parent != nil)
+        {
+            [limitNode removeFromParentAndCleanup:YES];
+        }
+        
+        layoutControlBox.visible = NO;
     }
     
     
 
-    springRestAngleHandle.highlighted = selectedBodyHandle & (1 << RestAngleHandle);
+    springRestAngleHandle.highlighted = selectedBodyHandle & (1 << RotarySpringRestAngleHandle);
     referenceAngleHandle.highlighted = selectedBodyHandle & (1 << ReferenceAngleHandle);
-    
+    limitMinHandle.highlighted = selectedBodyHandle & (1 << LimitMinHandle);
+    limitMaxHandle.highlighted = selectedBodyHandle & (1 << LimitMaxHandle);
 
-    
     [super updateSelectionUI];
 }
 
@@ -279,111 +324,6 @@ typedef enum
     return JointHandleUnknown;
 }
 
-
--(CGPoint)anchorA
-{
-    return anchorA;
-}
-
--(void)setAnchorA:(CGPoint)aAnchorA
-{
-    anchorA = aAnchorA;
-    [self setPositionFromAnchor];
-    
-}
-
-
--(void)setBodyA:(CCNode *)aBodyA
-{
-	bool bodyAChanges = false;
-    if(!bodyA || !aBodyA || bodyA.UUID != aBodyA.UUID)
-    {
-        bodyAChanges = true;
-    }
-
-    [super setBodyA:aBodyA];
-    
-    if(!aBodyA)
-    {
-        self.anchorA = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
-        return;
-    }
-    
-	if(bodyAChanges)
-	{
-		[self setAnchorFromBodyA];
-	}
-	[self setPositionFromAnchor];
-}
-
--(void)setPositionFromAnchor
-{
-    if(self.bodyA == nil || self.parent == nil)
-        return;
-    
-    CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
-    CGPoint nodePos = [self.parent convertToNodeSpace:worldPos];
-    self.position = nodePos;
-}
-
--(void)setAnchorFromBodyA
-{
-    if(self.bodyA == nil || self.parent == nil)
-        return;
-    
-    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
-    CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
-    anchorA = lAnchorA;
-    
-    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
-   
-}
-
--(void)setPosition:(CGPoint)position
-{
-    [super setPosition:position];
-    
-    if(!self.bodyA)
-    {
-        return;
-    }
-    
-    [self setAnchorFromBodyA];
-}
-
-
--(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
-{
-    if(jointAnchor)
-    {
-        CGPoint pointA = [jointAnchor convertToNodeSpaceAR:worlPos];
-        if(ccpLength(pointA) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-        {
-            return BodyAnchorA;
-        }
-    }
-    
-    if(self.dampedSpringEnabled)
-    {
-        CGPoint pointHit = [springRestAngleHandle.handle convertToNodeSpaceAR:worlPos];
-        if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-        {
-            return RestAngleHandle;
-        }
-    }
-    
-    if(self.dampedSpringEnabled || self.limitEnabled  || self.ratchetEnabled)
-    {
-        CGPoint pointHit = [referenceAngleHandle.handle convertToNodeSpaceAR:worlPos];
-        if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-        {
-            return ReferenceAngleHandle;
-        }
-    }
-    
-    return [super hitTestJointHandle:worlPos];;
-}
 
 
 - (BOOL) shouldDisableProperty:(NSString*) prop
@@ -446,7 +386,7 @@ typedef enum
         [self setPosition:newPosition];
     }
     
-    if(bodyType == RestAngleHandle)
+    if(bodyType == RotarySpringRestAngleHandle)
     {
         float degAngle = [self rotationFromWorldPos:worldPos];
         self.dampedSpringRestAngle = degAngle - self.referenceAngle;
@@ -457,6 +397,198 @@ typedef enum
         float degAngle = [self rotationFromWorldPos:worldPos];
         self.referenceAngle = degAngle;
     }
+    
+    
+    if(bodyType == LimitMaxHandle)
+    {
+        float degAngle = [self rotationFromWorldPos:worldPos];
+        self.limitMax = degAngle - self.referenceAngle;
+    }
+
+    if(bodyType == LimitMinHandle)
+    {
+        float degAngle = [self rotationFromWorldPos:worldPos];
+        self.limitMin = degAngle - self.referenceAngle;
+    }
+
+    if(bodyType == RatchedHandle)
+    {
+        float degAngle = [self rotationFromWorldPos:worldPos];
+        self.ratchetValue = degAngle - self.referenceAngle;
+    }
+
+    if(bodyType == RatchedPhaseHandle)
+    {
+        float degAngle = [self rotationFromWorldPos:worldPos];
+        self.ratchetPhase = degAngle - self.referenceAngle;
+    }
+}
+
+-(void)refreshLayoutButtons
+{
+    [layoutControlBox removeAllChildrenWithCleanup:NO];
+    for (int i = 0; i < eLayoutButtonMax; i++) {
+        switch (i)
+        {
+            case eLayoutButtonLimit:
+            {
+                if(self.limitEnabled)
+                {
+                    [layoutControlBox addChild:layoutButtons[i]];
+                }
+                break;
+            }
+            case eLayoutButtonRatchet:
+            {
+                if(self.ratchetEnabled)
+                {
+                    [layoutControlBox addChild:layoutButtons[i]];
+                }
+                break;
+            }
+
+            case eLayoutButtonSpring:
+            {
+                if(self.dampedSpringEnabled)
+                {
+                    [layoutControlBox addChild:layoutButtons[i]];
+                }
+                break;
+            }
+
+            default:
+                break;
+        }
+    }
+    
+}
+
+#pragma mark Properties
+#pragma mark -
+
+
+-(CGPoint)anchorA
+{
+    return anchorA;
+}
+
+-(void)setAnchorA:(CGPoint)aAnchorA
+{
+    anchorA = aAnchorA;
+    [self setPositionFromAnchor];
+    
+}
+
+
+-(void)setBodyA:(CCNode *)aBodyA
+{
+	bool bodyAChanges = false;
+    if(!bodyA || !aBodyA || bodyA.UUID != aBodyA.UUID)
+    {
+        bodyAChanges = true;
+    }
+    
+    [super setBodyA:aBodyA];
+    
+    if(!aBodyA)
+    {
+        self.anchorA = CGPointZero;
+        [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
+        return;
+    }
+    
+	if(bodyAChanges)
+	{
+		[self setAnchorFromBodyA];
+	}
+	[self setPositionFromAnchor];
+}
+
+-(void)setPositionFromAnchor
+{
+    if(self.bodyA == nil || self.parent == nil)
+        return;
+    
+    CGPoint worldPos = [self.bodyA convertToWorldSpace:self.anchorA];
+    CGPoint nodePos = [self.parent convertToNodeSpace:worldPos];
+    self.position = nodePos;
+}
+
+-(void)setAnchorFromBodyA
+{
+    if(self.bodyA == nil || self.parent == nil)
+        return;
+    
+    CGPoint worldPos = [self.parent convertToWorldSpace:self.position];
+    CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
+    anchorA = lAnchorA;
+    
+    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
+    
+}
+
+-(void)setPosition:(CGPoint)position
+{
+    [super setPosition:position];
+    
+    if(!self.bodyA)
+    {
+        return;
+    }
+    
+    [self setAnchorFromBodyA];
+}
+
+
+-(JointHandleType)hitTestJointHandle:(CGPoint)worlPos
+{
+    if(jointAnchor)
+    {
+        CGPoint pointA = [jointAnchor convertToNodeSpaceAR:worlPos];
+        if(ccpLength(pointA) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+        {
+            return BodyAnchorA;
+        }
+    }
+    
+    if(self.dampedSpringEnabled)
+    {
+        CGPoint pointHit = [springRestAngleHandle.handle convertToNodeSpaceAR:worlPos];
+        if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+        {
+            return RotarySpringRestAngleHandle;
+        }
+    }
+    
+    if(self.limitEnabled)
+    {
+        {
+            CGPoint pointHit = [limitMinHandle.handle convertToNodeSpaceAR:worlPos];
+            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+            {
+                return LimitMinHandle;
+            }
+        }
+        
+        {
+            CGPoint pointHit = [limitMaxHandle.handle convertToNodeSpaceAR:worlPos];
+            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+            {
+                return LimitMaxHandle;
+            }
+        }
+    }
+    
+    if(self.dampedSpringEnabled || self.limitEnabled  || self.ratchetEnabled)
+    {
+        CGPoint pointHit = [referenceAngleHandle.handle convertToNodeSpaceAR:worlPos];
+        if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
+        {
+            return ReferenceAngleHandle;
+        }
+    }
+    
+    return [super hitTestJointHandle:worlPos];;
 }
 
 -(void)setDampedSpringRestAngle:(float)dampedSpringRestAngle
@@ -472,11 +604,52 @@ typedef enum
     [[AppDelegate appDelegate]refreshProperty:@"referenceAngle"];
 }
 
+-(void)setLimitMax:(float)limitMax
+{
+    _limitMax = limitMax;
+    [[AppDelegate appDelegate]refreshProperty:@"limitMax"];
+}
 
+-(void)setLimitMin:(float)limitMin
+{
+    _limitMin = limitMin;
+    [[AppDelegate appDelegate]refreshProperty:@"limitMin"];
+}
 
+-(void)setRatchetPhase:(float)ratchetPhase
+{
+    _ratchetPhase = ratchetPhase;
+    [[AppDelegate appDelegate]refreshProperty:@"ratchetPhase"];
+}
+
+-(void)setRatchetValue:(float)ratchetValue
+{
+    _ratchetValue = ratchetValue;
+    [[AppDelegate appDelegate]refreshProperty:@"ratchetValue"];
+}
+
+-(void)setDampedSpringEnabled:(BOOL)dampedSpringEnabled
+{
+    _dampedSpringEnabled = dampedSpringEnabled;
+    [self refreshLayoutButtons];
+}
+
+-(void)setLimitEnabled:(BOOL)limitEnabled
+{
+    _limitEnabled = limitEnabled;
+    [self refreshLayoutButtons];
+}
+
+-(void)setRatchetEnabled:(BOOL)ratchetEnabled
+{
+    _ratchetEnabled = ratchetEnabled;
+    [self refreshLayoutButtons];
+}
+
+#pragma mark -
+#pragma mark KVO
 +(BOOL)nodeHasParent:(CCNode*)node parent:(CCNode*)parent
 {
-
     while(node)
     {
         if(node == parent)
