@@ -64,8 +64,6 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@ ", [self class], [_srcFilePath lastPathComponent]);
-
     [super cancel];
     [_formatConverter cancel];
 }

@@ -138,8 +138,6 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@@%@", [self class], [_spriteSheetFile lastPathComponent], _resolution);
-
     [super cancel];
     [_packer cancel];
 }

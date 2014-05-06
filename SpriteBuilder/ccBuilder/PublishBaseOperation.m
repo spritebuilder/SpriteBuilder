@@ -21,4 +21,10 @@
     return self;
 }
 
+- (void)cancel
+{
+    NSLog(@"[%@] CANCELLED %@", [self class], [self description]);
+    [super cancel];
+}
+
 @end

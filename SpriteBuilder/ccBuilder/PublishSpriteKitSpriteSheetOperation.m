@@ -85,7 +85,6 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@", [self class], _spriteSheetName);
     @try
     {
         [super cancel];

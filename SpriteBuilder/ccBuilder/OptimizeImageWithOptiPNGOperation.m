@@ -57,7 +57,6 @@
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@", [self class], [self description]);
     @try
     {
         [super cancel];
