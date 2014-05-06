@@ -22,9 +22,22 @@
 {
     NSLog(@"[%@] %@", [self class], [self description]);
 
+    [self assertProperties];
+
     [self publishImage];
 
     [_publishingTaskStatusProgress taskFinished];
+}
+
+- (void)assertProperties
+{
+    NSAssert(_srcPath != nil, @"srcPath should not be nil");
+    NSAssert(_dstPath != nil, @"dstPath should not be nil");
+    NSAssert(_outDir != nil, @"outDir should not be nil");
+    NSAssert(_resolution != nil, @"resolution should not be nil");
+    NSAssert(_publishedResources != nil, @"publishedResources should not be nil");
+    NSAssert(_publishedPNGFiles != nil, @"publishedPNGFiles should not be nil");
+    NSAssert(_fileLookup != nil, @"fileLookup should not be nil");
 }
 
 - (void)publishImage

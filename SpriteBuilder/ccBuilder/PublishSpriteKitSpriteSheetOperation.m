@@ -18,15 +18,26 @@
 {
     NSLog(@"[%@] %@", [self class], _spriteSheetName);
 
-    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+    [self assertProperties];
 
     [self publishSpriteKitSpriteSheet];
 
     [_publishingTaskStatusProgress taskFinished];
 }
 
+- (void)assertProperties
+{
+    NSAssert(_spriteSheetDir != nil, @"spriteSheetDir should not be nil");
+    NSAssert(_spriteSheetName != nil, @"spriteSheetName should not be nil");
+    NSAssert(_subPath != nil, @"subPath should not be nil");
+    NSAssert(_resolution != nil, @"resolution should not be nil");
+    NSAssert(_textureAtlasToolFilePath != nil, @"textureAtlasToolFilePath should not be nil");
+}
+
 - (void)publishSpriteKitSpriteSheet
 {
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+
     NSFileManager* fileManager = [NSFileManager defaultManager];
 
     // rename the resources-xxx folder for the atlas tool

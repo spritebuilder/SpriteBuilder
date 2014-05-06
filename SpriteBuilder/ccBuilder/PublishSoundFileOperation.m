@@ -22,12 +22,19 @@
     [_publishingTaskStatusProgress updateStatusText:@"Converting sound file"];
 
     NSLog(@"[%@] %@ -> %@", [self class], [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent]);
+    [self assertProperties];
 
     [self publishSoundFileOperation];
 
     [_publishingTaskStatusProgress taskFinished];
 }
 
+- (void)assertProperties
+{
+    NSAssert(_srcFilePath != nil, @"srcFilePath should not be nil");
+    NSAssert(_dstFilePath != nil, @"dstFilePath should not be nil");
+    NSAssert(_fileLookup != nil, @"fileLookup should not be nil");
+}
 - (void)publishSoundFileOperation
 {
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];

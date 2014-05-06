@@ -22,6 +22,8 @@
 {
     NSLog(@"[%@] %@", [self class], [self description]);
 
+    [self assertAllProperties];
+
     [self publishSpriteSheet];
 
     [_publishingTaskStatusProgress taskFinished];

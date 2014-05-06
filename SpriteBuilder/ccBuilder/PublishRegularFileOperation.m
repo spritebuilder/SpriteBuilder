@@ -10,9 +10,17 @@
 {
     NSLog(@"[%@] %@", [self class], [self description]);
 
+    [self assertProperties];
+
     [self publishRegularFile];
 
     [_publishingTaskStatusProgress taskFinished];
+}
+
+- (void)assertProperties
+{
+    NSAssert(_srcFilePath != nil, @"srcFilePath should not be nil");
+    NSAssert(_dstFilePath != nil, @"dstFilePath should not be nil");
 }
 
 - (void)publishRegularFile

@@ -13,9 +13,18 @@
 {
     NSLog(@"[%@] %@", [self class], [self description]);
 
+    [self assertProperties];
+
     [self publishGeneratedFiles];
 
     [_publishingTaskStatusProgress taskFinished];
+}
+
+- (void)assertProperties
+{
+    NSAssert(_outputDir != nil, @"outputDir should not be nil");
+    NSAssert(_publishedSpriteSheetFiles != nil, @"publishedSpriteSheetFiles should not be nil");
+    NSAssert(_fileLookup != nil, @"fileLookup should not be nil");
 }
 
 - (void)publishGeneratedFiles

@@ -9,6 +9,9 @@
 
 - (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings warnings:(CCBWarnings *)warnings statusProgress:(PublishingTaskStatusProgress *)statusProgress
 {
+    NSAssert(projectSettings != nil, @"projectSettings should not be nil");
+    NSAssert(warnings != nil, @"warnings should not be nil");
+
     self = [super init];
 
     if (self)

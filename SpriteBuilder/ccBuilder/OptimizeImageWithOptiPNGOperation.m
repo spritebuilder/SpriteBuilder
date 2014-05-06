@@ -17,9 +17,17 @@
 {
     NSLog(@"[%@] %@", [self class], [self description]);
 
+    [self assertProperties];
+
     [self optimizeImageWithOptiPNG];
 
     [_publishingTaskStatusProgress taskFinished];
+}
+
+- (void)assertProperties
+{
+    NSAssert(_filePath != nil, @"filePath should not be nil");
+    NSAssert(_optiPngPath != nil, @"optiPngPath should not be nil");
 }
 
 - (void)optimizeImageWithOptiPNG

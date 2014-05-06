@@ -20,9 +20,18 @@
 {
     NSLog(@"[%@] %@", [self class], [self description]);
 
+    [self assertProperties];
+
     [self publishCCB];
 
     [_publishingTaskStatusProgress taskFinished];
+}
+
+- (void)assertProperties
+{
+    NSAssert(_fileName != nil, @"fileName should not be nil");
+    NSAssert(_filePath != nil, @"filePath should not be nil");
+    NSAssert(_dstFile != nil, @"dstFile should not be nil");
 }
 
 - (void)publishCCB
