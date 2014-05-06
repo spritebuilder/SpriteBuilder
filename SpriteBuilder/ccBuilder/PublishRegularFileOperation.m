@@ -1,6 +1,7 @@
 #import "PublishRegularFileOperation.h"
+
 #import "CCBFileUtil.h"
-#import "CCBPublisher.h"
+#import "PublishingTaskStatusProgress.h"
 
 
 @implementation PublishRegularFileOperation
@@ -11,7 +12,7 @@
 
     [self publishRegularFile];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)publishRegularFile

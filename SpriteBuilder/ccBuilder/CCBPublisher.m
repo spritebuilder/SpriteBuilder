@@ -35,6 +35,7 @@
 #import "OptimizeImageWithOptiPNGOperation.h"
 #import "PublishSpriteSheetOperation.h"
 #import "PublishRegularFileOperation.h"
+#import "TaskStatusUpdaterProtocol.h"
 #import "PublishSoundFileOperation.h"
 #import "ProjectSettings+Convenience.h"
 #import "PublishCCBOperation.h"
@@ -44,11 +45,11 @@
 #import "PublishGeneratedFilesOperation.h"
 #import "PublishFileLookup.h"
 #import "PublishSpriteKitSpriteSheetOperation.h"
+#import "PublishingTaskStatusProgress.h"
 
 @interface CCBPublisher ()
 
-@property (nonatomic) NSUInteger operationsFinished;
-@property (nonatomic) NSUInteger totalProgressUnits;
+@property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 @property (nonatomic, strong) PublishFileLookup *fileLookup;
 @property (nonatomic, strong) NSArray *publishForResolutions;
 @property (nonatomic, strong) NSArray *supportedFileExtensions;
@@ -67,7 +68,6 @@
 
 
 @implementation CCBPublisher
-
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings
 {
@@ -109,7 +109,8 @@
 {
     PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:_projectSettings
                                                                                      warnings:_warnings
-                                                                                    publisher:self];
+                                                                               statusProgress:_publishingTaskStatusProgress];
+
     operation.srcPath = srcPath;
     operation.dstPath = dstPath;
     operation.isSpriteSheet = isSpriteSheet;
@@ -118,7 +119,6 @@
     operation.targetType = _targetType;
     operation.publishedResources = _publishedResources;
     operation.modifiedFileDateCache = _modifiedDatesCache;
-    operation.publisher = self;
     operation.publishedPNGFiles = _publishedPNGFiles;
     operation.fileLookup = _fileLookup;
 
@@ -140,7 +140,7 @@
 
     PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:_projectSettings
                                                                                              warnings:_warnings
-                                                                                            publisher:self];
+                                                                                       statusProgress:_publishingTaskStatusProgress];
     operation.srcFilePath = srcPath;
     operation.dstFilePath = dstPath;
     operation.format = format;
@@ -154,8 +154,7 @@
 {
     PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                  warnings:_warnings
-                                                                                                publisher:self];
-
+                                                                                           statusProgress:_publishingTaskStatusProgress];
     operation.srcFilePath = srcPath;
     operation.dstFilePath = dstPath;
 
@@ -372,7 +371,7 @@
 
     PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:_projectSettings
                                                                                  warnings:_warnings
-                                                                                publisher:self];
+                                                                           statusProgress:_publishingTaskStatusProgress];
     operation.fileName = fileName;
     operation.filePath = filePath;
     operation.dstFile = dstFile;
@@ -443,7 +442,7 @@
 
         PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                      warnings:_warnings
-                                                                                                    publisher:self];
+                                                                                               statusProgress:_publishingTaskStatusProgress];
         operation.appDelegate = [AppDelegate appDelegate];
         operation.publishDirectory = publishDirectory;
         operation.publishedPNGFiles = _publishedPNGFiles;
@@ -515,8 +514,8 @@
 	for (NSString* res in _publishForResolutions)
 	{
         PublishSpriteKitSpriteSheetOperation *operation = [[PublishSpriteKitSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                                       warnings:_warnings
-                                                                                                                      publisher:self];
+                                                                                                     warnings:_warnings
+                                                                                               statusProgress:_publishingTaskStatusProgress];
         operation.resolution = res;
         operation.spriteSheetDir = spriteSheetDir;
         operation.spriteSheetName = spriteSheetName;
@@ -531,7 +530,7 @@
 {
     PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                        warnings:_warnings
-                                                                                                      publisher:self];
+                                                                                                 statusProgress:_publishingTaskStatusProgress];
     operation.targetType = _targetType;
     operation.outputDir = _outputDir;
     operation.publishedResources = _publishedResources;
@@ -652,10 +651,9 @@
 
     for (NSString *pngFile in _publishedPNGFiles)
     {
-        OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc]  initWithProjectSettings:_projectSettings
-                                                                                                                  warnings:_warnings
-                                                                                                                 publisher:self];
-        operation.appDelegate = [AppDelegate appDelegate];
+        OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                                           warnings:_warnings
+                                                                                                     statusProgress:_publishingTaskStatusProgress];
         operation.filePath = pngFile;
         operation.optiPngPath = pathToOptiPNG;
 
@@ -683,7 +681,7 @@
 
     [self postProcessPublishedPNGFilesWithOptiPNG];
 
-    _totalProgressUnits = [_publishingQueue operationCount];
+    _publishingTaskStatusProgress.totalTasks = [_publishingQueue operationCount];
 
     [_publishingQueue setSuspended:NO];
     [_publishingQueue waitUntilAllOperationsAreFinished];
@@ -730,18 +728,10 @@
     [_publishingQueue cancelAllOperations];
 }
 
-
-
-// TODO: can this be move to a mediator class or something else?
-- (void)operationFinishedTick
+- (void)setTaskStatusUpdater:(id <TaskStatusUpdaterProtocol>)taskStatusUpdater
 {
-    self.operationsFinished += 1;
-    [self updateProgress];
-}
-
-- (void)updateProgress
-{
-    [[AppDelegate appDelegate] setProgress:(1.0 / _totalProgressUnits * _operationsFinished) * 100.0];
+    _taskStatusUpdater = taskStatusUpdater;
+    self.publishingTaskStatusProgress = [[PublishingTaskStatusProgress alloc] initWithTaskStatus:taskStatusUpdater];
 }
 
 @end

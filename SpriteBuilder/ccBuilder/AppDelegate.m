@@ -656,6 +656,7 @@ typedef enum
     {
         modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     }
+
     modalTaskStatusWindow.indeterminate = isIndeterminate;
     modalTaskStatusWindow.onCancelBlock = onCancelBlock;
     modalTaskStatusWindow.window.title = title;
@@ -681,12 +682,7 @@ typedef enum
 
 - (void) modalStatusWindowUpdateStatusText:(NSString*) text
 {
-    modalTaskStatusWindow.status = text;
-}
-
-- (void)setProgress:(double)newProgress
-{
-    [modalTaskStatusWindow setProgress:newProgress];
+    [modalTaskStatusWindow updateStatusText:text];
 }
 
 
@@ -3092,13 +3088,6 @@ static BOOL hideAllToNextSeparator;
         return;
     }
     
-    CCBWarnings* warnings = [[CCBWarnings alloc] init];
-    warnings.warningsDescription = @"Publisher Warnings";
-    
-    // Setup publisher, publisher is released in publisher:finishedWithWarnings:
-    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
-    publisher.runAfterPublishing = run;
-    
     // Check if there are unsaved documents
     if ([self hasDirtyDocument])
     {
@@ -3116,19 +3105,7 @@ static BOOL hideAllToNextSeparator;
                 // Falling through to publish
             case NSAlertOtherReturn:
                 // Open progress window and publish
-                if(async)
-                {
-                    [publisher startAsync];
-                    [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
-                    {
-                        [publisher cancel];
-                    }];
-                    [self modalStatusWindowUpdateStatusText:@"Starting up..."];
-                }
-                else
-                {
-                    [publisher start];
-                }
+                [self publishStartAsync:async run:run];
                 break;
             default:
                 break;
@@ -3136,20 +3113,34 @@ static BOOL hideAllToNextSeparator;
     }
     else
     {
-        // Open progress window and publish
-        if(async)
+        [self publishStartAsync:async run:run];
+    }
+}
+
+- (void)publishStartAsync:(BOOL)async run:(BOOL)run
+{
+    CCBWarnings* warnings = [[CCBWarnings alloc] init];
+    warnings.warningsDescription = @"Publisher Warnings";
+
+    // Setup publisher, publisher is released in publisher:finishedWithWarnings:
+    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
+    modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
+    publisher.taskStatusUpdater = modalTaskStatusWindow;
+    publisher.runAfterPublishing = run;
+
+    // Open progress window and publish
+    if (async)
+    {
+        [publisher startAsync];
+        [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
         {
-            [publisher startAsync];
-            [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
-            {
-                [publisher cancel];
-            }];
-            [self modalStatusWindowUpdateStatusText:@"Starting up..."];
-        }
-        else
-        {
-            [publisher start];
-        }
+            [publisher cancel];
+        }];
+        [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+    }
+    else
+    {
+        [publisher start];
     }
 }
 

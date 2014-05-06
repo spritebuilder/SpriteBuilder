@@ -5,8 +5,7 @@
 #import "NSArray+Query.h"
 #import "ProjectSettings.h"
 #import "CCBFileUtil.h"
-#import "AppDelegate.h"
-#import "CCBPublisher.h"
+#import "PublishingTaskStatusProgress.h"
 
 
 @interface PublishCCBOperation ()
@@ -23,7 +22,7 @@
 
     [self publishCCB];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)publishCCB
@@ -39,8 +38,7 @@
 
     if (![srcDate isEqualToDate:dstDate])
     {
-        // TODO move to base class and interface it
-        [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", self.fileName]];
+        [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Publishing %@...", self.fileName]];
 
         // Remove old file
         NSFileManager *fileManager = [NSFileManager defaultManager];;
@@ -49,7 +47,7 @@
         BOOL sucess = [self publishCCBFile:self.filePath to:self.dstFile];
         if (!sucess)
         {
-            [_publisher operationFinishedTick];
+            [_publishingTaskStatusProgress taskFinished];
             return;
         }
 

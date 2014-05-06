@@ -1,10 +1,9 @@
 #import "PublishSpriteSheetOperation.h"
+
 #import "CCBFileUtil.h"
 #import "Tupac.h"
-#import "CCBWarnings.h"
-#import "AppDelegate.h"
+#import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
-#import "CCBPublisher.h"
 
 @interface PublishSpriteSheetOperation()
 
@@ -25,17 +24,17 @@
 
     [self publishSpriteSheet];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)publishSpriteSheet
 {
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+
     [self loadSettings];
 
     [self configurePacker];
 
-    [_appDelegate modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"]
-                                                                                                                           lastPathComponent]]];
     NSLog(@"[%@] start: %@", [self class], _spriteSheetFile);
     // heavy task
     NSArray *createdFiles = [_packer createTextureAtlasFromDirectoryPaths:_srcDirs];

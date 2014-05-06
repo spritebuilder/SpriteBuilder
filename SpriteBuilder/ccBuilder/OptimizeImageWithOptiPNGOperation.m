@@ -1,29 +1,29 @@
 #import "OptimizeImageWithOptiPNGOperation.h"
-#import "AppDelegate.h"
+
 #import "CCBWarnings.h"
-#import "CCBPublisher.h"
+#import "PublishingTaskStatusProgress.h"
 
 
 @implementation OptimizeImageWithOptiPNGOperation
 
 - (void)main
 {
-    NSLog(@"[%@] %@", [self class], [_filePath lastPathComponent]);
+    NSLog(@"[%@] %@", [self class], [self description]);
 
     [self optimizeImageWithOptiPNG];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)optimizeImageWithOptiPNG
 {
-    [_appDelegate modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Optimizing %@...", [_filePath lastPathComponent]]];
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Optimizing %@...", [_filePath lastPathComponent]]];
 
     self.task = [[NSTask alloc] init];
     [_task setLaunchPath:_optiPngPath];
     [_task setArguments:@[_filePath]];
 
-    NSPipe *pipe = [NSPipe pipe];
+    // NSPipe *pipe = [NSPipe pipe];
     NSPipe *pipeErr = [NSPipe pipe];
     [_task setStandardError:pipeErr];
 
@@ -51,14 +51,13 @@
         NSData *data = [fileErr readDataToEndOfFile];
         NSString *stdErrOutput = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSString *warningDescription = [NSString stringWithFormat:@"optipng error: %@", stdErrOutput];
-
         [_warnings addWarningWithDescription:warningDescription];
     }
 }
 
 - (void)cancel
 {
-    NSLog(@"[%@] CANCELLED %@", [self class], [_filePath lastPathComponent]);
+    NSLog(@"[%@] CANCELLED %@", [self class], [self description]);
     @try
     {
         [super cancel];

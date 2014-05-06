@@ -438,7 +438,6 @@ enum {
 - (void) modalStatusWindowStartWithTitle:(NSString*)title;
 - (void) modalStatusWindowFinish;
 - (void) modalStatusWindowUpdateStatusText:(NSString*) text;
-- (void) setProgress:(double)newProgress;
 
 // Help
 - (IBAction)reportBug:(id)sender;

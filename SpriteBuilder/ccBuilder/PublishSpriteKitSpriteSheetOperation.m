@@ -1,7 +1,8 @@
 #import "PublishSpriteKitSpriteSheetOperation.h"
-#import "AppDelegate.h"
+
 #import "CCBWarnings.h"
-#import "CCBPublisher.h"
+#import "PublishingTaskStatusProgress.h"
+#import "ProjectSettings.h"
 
 
 @interface PublishSpriteKitSpriteSheetOperation ()
@@ -19,14 +20,12 @@
 
     [self publishSpriteKitSpriteSheet];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)publishSpriteKitSpriteSheet
 {
-    // Update progress
-    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...",
-                                                                           [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
 
     NSFileManager* fileManager = [NSFileManager defaultManager];
 

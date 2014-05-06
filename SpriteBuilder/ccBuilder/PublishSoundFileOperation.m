@@ -1,11 +1,12 @@
 #import "PublishSoundFileOperation.h"
+
 #import "CCBFileUtil.h"
 #import "FCFormatConverter.h"
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerUtil.h"
-#import "CCBPublisher.h"
 #import "PublishFileLookup.h"
+#import "PublishingTaskStatusProgress.h"
 
 
 @interface PublishSoundFileOperation ()
@@ -22,11 +23,13 @@
 
     [self publishSoundFileOperation];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)publishSoundFileOperation
 {
+    [_publishingTaskStatusProgress updateStatusText:@"Converting sound file"];
+
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
 
     [_fileLookup addRenamingRuleFrom:relPath to:[[FCFormatConverter defaultConverter] proposedNameForConvertedSoundAtPath:relPath

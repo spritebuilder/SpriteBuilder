@@ -1,10 +1,10 @@
 #import "PublishGeneratedFilesOperation.h"
-#import "CCBPublisher.h"
-#import "CCBWarnings.h"
+
 #import "CCBPublisherTemplate.h"
 #import "CCBFileUtil.h"
-#import "ProjectSettings+Convenience.h"
+#import "ProjectSettings.h"
 #import "PublishFileLookup.h"
+#import "PublishingTaskStatusProgress.h"
 
 
 @implementation PublishGeneratedFilesOperation
@@ -15,11 +15,13 @@
 
     [self publishGeneratedFiles];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)publishGeneratedFiles
 {
+    [_publishingTaskStatusProgress updateStatusText:@"Generating misc files"];
+
     // Create the directory if it doesn't exist
     BOOL createdDirs = [[NSFileManager defaultManager] createDirectoryAtPath:_outputDir withIntermediateDirectories:YES attributes:NULL error:NULL];
     if (!createdDirs)

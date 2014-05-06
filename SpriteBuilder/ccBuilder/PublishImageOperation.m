@@ -3,14 +3,12 @@
 #import "FCFormatConverter.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
-#import "AppDelegate.h"
 #import "ResourceManagerUtil.h"
-#import "CCBWarnings.h"
 #import "DateCache.h"
-#import "CCBPublisher.h"
 #import "NSString+Publishing.h"
 #import "PublishFileLookup.h"
-
+#import "PublishingTaskStatusProgress.h"
+#import "ProjectSettings.h"
 
 @interface PublishImageOperation ()
 
@@ -26,7 +24,7 @@
 
     [self publishImage];
 
-    [_publisher operationFinishedTick];
+    [_publishingTaskStatusProgress taskFinished];
 }
 
 - (void)publishImage
@@ -42,7 +40,7 @@
 
     [_publishedResources addObject:relPath];
 
-    [[AppDelegate appDelegate] modalStatusWindowUpdateStatusText:[NSString stringWithFormat:@"Publishing %@...", [_dstPath lastPathComponent]]];
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Publishing %@...", [_dstPath lastPathComponent]]];
 
     // Find out which file to copy for the current resolution
     NSFileManager *fileManager = [NSFileManager defaultManager];

@@ -27,6 +27,7 @@
 
 @class ProjectSettings;
 @class CCBWarnings;
+@protocol TaskStatusUpdaterProtocol;
 
 
 enum {
@@ -42,17 +43,15 @@ enum {
 @interface CCBPublisher : NSObject
 
 @property (nonatomic, assign) BOOL runAfterPublishing;
+@property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
 - (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;
 
 - (void)start;
 - (void)startAsync;
-- (void)startAsync:(BOOL)async;
 
 - (void)cancel;
 
 + (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
-
-- (void)operationFinishedTick;
 
 @end
