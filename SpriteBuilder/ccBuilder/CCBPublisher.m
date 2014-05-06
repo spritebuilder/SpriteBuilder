@@ -625,17 +625,13 @@
     if (_projectSettings.needRepublish
         && !_projectSettings.onlyPublishCCBs)
     {
-        NSFileManager *fm = [NSFileManager defaultManager];
-        NSString* publishDir;
-
-        publishDir = [_projectSettings.publishDirectory absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
-        [fm removeItemAtPath:publishDir error:NULL];
-
-        publishDir = [_projectSettings.publishDirectoryAndroid absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
-        [fm removeItemAtPath:publishDir error:NULL];
-
-        publishDir = [_projectSettings.publishDirectoryHTML5 absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
-        [fm removeItemAtPath:publishDir error:NULL];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSArray *publishDirs = @[_projectSettings.publishDirectory, _projectSettings.publishDirectoryAndroid];
+        for (NSString * dir in publishDirs)
+        {
+            NSString *publishDir = [dir absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
+            [fileManager removeItemAtPath:publishDir error:NULL];
+        }
     }
 }
 
