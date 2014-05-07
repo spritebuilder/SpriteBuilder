@@ -144,7 +144,7 @@
 
     for (NSString* file in files) {
         BOOL isDirectory;
-        NSString* filePath = [self stringByAppendingPathComponent:file];
+        NSString* filePath = [dir stringByAppendingPathComponent:file];
 
         if([fm fileExistsAtPath:filePath isDirectory:&isDirectory]){
             if(isDirectory){
