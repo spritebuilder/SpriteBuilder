@@ -64,7 +64,12 @@ typedef struct _PVRTexHeader
 } PVRTexHeader;
 
 
+@interface Tupac ()
+@property (nonatomic, strong) FCFormatConverter *formatConverter;
+@end
+
 @implementation Tupac {
+    BOOL cancelled_;
 }
 
 @synthesize scale=scale_, border=border_, filenames=filenames_, outputName=outputName_, outputFormat=outputFormat_, imageFormat=imageFormat_, directoryPrefix=directoryPrefix_, maxTextureSize=maxTextureSize_, padding=padding_, dither=dither_, compress=compress_;
@@ -81,6 +86,7 @@ typedef struct _PVRTexHeader
     {
         scale_ = 1.0;
         border_ = NO;
+        cancelled_ = NO;
         imageFormat_ = kFCImageFormatPNG;
         self.outputFormat = TupacOutputFormatCocos2D;
         self.maxTextureSize = 2048;
@@ -205,9 +211,14 @@ typedef struct _PVRTexHeader
         
     for (NSString *filename in self.filenames)
     {
+        if (cancelled_)
+        {
+            return nil;
+        }
+
         // Load CGImage
-				CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:filename], NULL);
-				CGImageRef srcImage = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+        CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:filename], NULL);
+        CGImageRef srcImage = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
         
         // Get info
         int w = (int)CGImageGetWidth(srcImage);
@@ -330,6 +341,11 @@ typedef struct _PVRTexHeader
     int index = 0;
     while (index < outRects.size())
     {
+        if (cancelled_)
+        {
+            return nil;
+        }
+        
         bool rot = false;
         int  x, y, w, h;
         
@@ -387,6 +403,11 @@ typedef struct _PVRTexHeader
     }
     
     [NSGraphicsContext restoreGraphicsState];
+
+    if (cancelled_)
+    {
+        return nil;
+    }
     
     NSString* textureFileName = NULL;
     
@@ -422,11 +443,23 @@ typedef struct _PVRTexHeader
 
     
     NSError * error = nil;
-    
-    if(![[FCFormatConverter defaultConverter] convertImageAtPath:pngFilename format:imageFormat_ dither:dither_ compress:compress_ isSpriteSheet:YES outputFilename:&textureFileName error:&error])
+
+    self.formatConverter = [FCFormatConverter defaultConverter];
+    if(![_formatConverter convertImageAtPath:pngFilename
+                                      format:imageFormat_
+                                      dither:dither_
+                                    compress:compress_
+                               isSpriteSheet:YES
+                              outputFilename:&textureFileName
+                                       error:&error])
     {
         [self setErrorMessage:error.localizedDescription];
-        
+    }
+    self.formatConverter = nil;
+
+    if (cancelled_)
+    {
+        return nil;
     }
 
     [result addObject:textureFileName];
@@ -513,7 +546,12 @@ typedef struct _PVRTexHeader
     for (NSString* dir in dirs)
     {
         NSArray* files = [fm contentsOfDirectoryAtPath:dir error:NULL];
-        
+
+        if (cancelled_)
+        {
+            return nil;
+        }
+
         for (NSString* file in files)
         {
 				    NSString *lower = [[file pathExtension] lowercaseString];
@@ -544,6 +582,13 @@ typedef struct _PVRTexHeader
     // Generate the sprite sheet
     self.filenames = absoluteFilepaths;
     return [self createTextureAtlas];
+}
+
+- (void)cancel
+{
+    [_formatConverter cancel];
+    cancelled_ = YES;
+    [self setErrorMessage:@"Cancelled by user"];
 }
 
 @end

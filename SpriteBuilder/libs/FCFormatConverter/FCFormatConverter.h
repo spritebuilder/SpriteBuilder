@@ -42,6 +42,8 @@ enum {
            outputFilename:(NSString**)outputFilename
                     error:(NSError**)error;
 
+- (void)cancel;
+
 - (NSString*) proposedNameForConvertedSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality;
 - (NSString*) convertSoundAtPath:(NSString*)srcPath format:(int)format quality:(int)quality;
 
