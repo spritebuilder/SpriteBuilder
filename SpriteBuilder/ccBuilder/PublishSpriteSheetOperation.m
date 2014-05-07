@@ -20,7 +20,22 @@
 @end
 
 
+// To prevent generation of previews for the same sprite sheet across resolutions
+// the names are stored and queried in this var
+static NSMutableSet *__spriteSheetPreviewsGenerated;
+
+
 @implementation PublishSpriteSheetOperation
+
++ (void)initialize
+{
+    [self resetSpriteSheetPreviewsGeneration];
+}
+
++ (void)resetSpriteSheetPreviewsGeneration
+{
+    __spriteSheetPreviewsGenerated = [NSMutableSet set];
+}
 
 - (void)main
 {
@@ -42,7 +57,6 @@
     NSAssert(_srcSpriteSheetDate != nil, @"srcSpriteSheetDate should not be nil");
     NSAssert(_publishDirectory != nil, @"publishDirectory should not be nil");
     NSAssert(_publishedPNGFiles != nil, @"publishedPNGFiles should not be nil");
-    NSAssert(_publishedSpriteSheetNames != nil, @"publishedSpriteSheetNames should not be nil");
 }
 
 - (void)publishSpriteSheet
@@ -87,10 +101,12 @@
 - (void)generatePreviewFilePath
 {
     self.previewFilePath = nil;
-    if (![_publishedSpriteSheetNames containsObject:_subPath])
+    NSLog(@"contains subpath? %@ - %@", _subPath, _resolution);
+    if (![__spriteSheetPreviewsGenerated containsObject:_subPath])
     {
         self.previewFilePath = [_publishDirectory stringByAppendingPathExtension:@"ppng"];
-        [_publishedSpriteSheetNames addObject:_subPath];
+        [__spriteSheetPreviewsGenerated addObject:_subPath];
+        NSLog(@"preview added %@ - %@", _subPath, self.previewFilePath);
     }
 }
 

@@ -57,7 +57,6 @@
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
 @property (nonatomic, copy) NSString *outputDir;
-@property (nonatomic, strong) NSMutableArray *publishedSpriteSheetNames;
 @property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
@@ -89,7 +88,6 @@
 
     self.supportedFileExtensions = @[@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang"];
     
-    self.publishedSpriteSheetNames = [[NSMutableArray alloc] init];
     self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
 
     return self;
@@ -425,6 +423,8 @@
 
 	[_publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 
+    [PublishSpriteSheetOperation resetSpriteSheetPreviewsGeneration];
+
 	for (NSString *resolution in _publishForResolutions)
 	{
 		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
@@ -441,7 +441,6 @@
                                                                                                statusProgress:_publishingTaskStatusProgress];
         operation.publishDirectory = publishDirectory;
         operation.publishedPNGFiles = _publishedPNGFiles;
-        operation.publishedSpriteSheetNames = _publishedSpriteSheetNames;
         operation.srcSpriteSheetDate = srcSpriteSheetDate;
         operation.resolution = resolution;
         operation.srcDirs = @[[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],

@@ -16,6 +16,8 @@
 @property (nonatomic, copy) NSDate *srcSpriteSheetDate;
 @property (nonatomic, copy) NSString *publishDirectory;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
-@property (nonatomic, strong) NSMutableArray *publishedSpriteSheetNames;
+
++ (void)resetSpriteSheetPreviewsGeneration;
 
 @end
+
