@@ -11,7 +11,8 @@
 
 typedef enum
 {
-    eLayoutButtonSpring,
+    eLayoutButtonNone = -1,
+    eLayoutButtonSpring = 0,
     eLayoutButtonLimit,
     eLayoutButtonRatchet,
     eLayoutButtonMax

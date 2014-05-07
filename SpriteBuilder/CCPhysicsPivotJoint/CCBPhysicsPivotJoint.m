@@ -11,6 +11,7 @@
 #import "CCNode+NodeInfo.h"
 #import "CCBPhysicsJoint+Private.h"
 #import "CCButton.h"
+#import "NSArray+Query.h"
 
 const float kSegmentHandleDefaultRadius = 17.0f;
 
@@ -82,6 +83,8 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     
     CCLayoutBox * layoutControlBox;
     NSArray     * layoutButtons;
+    CCNode      * layoutBox;
+    CCSprite    * layoutBackground;
     
     CCSegmentHandle      * referenceAngleHandle;
     
@@ -131,6 +134,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     self.ratchetValue = 30.0f;
     self.ratchetPhase = 0.0f;
     cachedRatchedValue = -1.0f;
+    _layoutType = eLayoutButtonNone;
     
     [self setupBody];
     
@@ -147,25 +151,10 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
+ 
     
-    //Layout Controls
-    layoutControlBox = [CCLayoutBox node];
-    NSMutableArray * buttons = [NSMutableArray array];
-    for (int i =0; i < eLayoutButtonMax; i++) {
-        NSString * title = i == eLayoutButtonSpring ? @"S" : (i == eLayoutButtonLimit ? @"L" : @"R");
-        CCButton * button = [CCButton buttonWithTitle:title spriteFrame:[CCSpriteFrame frameWithImageNamed:@"joint-layoutbutton-bg.png"]];
-        [button setBlock:^(CCButton * sender) {
-            self.layoutType = [sender.userObject integerValue];
-            [self refreshLayoutButtons];
-        }];
-            
-        button.userObject = @(i);
-        [buttons addObject:button ];
-    }
-    layoutButtons = buttons;
-    layoutControlBox.position = ccp(0.0f,-40.0f);
-    [scaleFreeNode addChild:layoutControlBox];
-    [self refreshLayoutButtons];
+    [self createLayoutButtons];
+
     
     //Reference Angle
     referenceAngleHandle = [CCSegmentHandle node];
@@ -263,7 +252,7 @@ const float kRatchedRenderRadius = 30.0f;
         
         if(self.layoutType == eLayoutButtonRatchet)
         {
-            ratchedValueHandle.rotation = rotation + self.referenceAngle + self.ratchetValue + M_PI_2;
+            ratchedValueHandle.rotation = rotation + self.referenceAngle + self.ratchetValue + (self.ratchetValue) * self.ratchetPhase/360.0f + M_PI_2;
             ratchedPhaseHandle.rotation = rotation + self.referenceAngle + (self.ratchetValue) * self.ratchetPhase/360.0f + M_PI_2;
             [self updateRenderRatchet];
         }
@@ -273,6 +262,8 @@ const float kRatchedRenderRadius = 30.0f;
 
 -(void)updateSelectionUI
 {
+    BOOL bodyAssigned = self.bodyA != nil && self.bodyB != nil;
+    
     //If selected, display selected sprites.
     if(selectedBodyHandle & (1 << EntireJoint))
     {
@@ -281,19 +272,19 @@ const float kRatchedRenderRadius = 30.0f;
         
         
         //Refence angle Handle;
-        referenceAngleHandle.visible = self.dampedSpringEnabled || self.limitEnabled || self.ratchetEnabled;
+        referenceAngleHandle.visible = bodyAssigned && (self.dampedSpringEnabled || self.limitEnabled || self.ratchetEnabled);
         
         //Spring.
-        springNode.visible = self.layoutType == eLayoutButtonSpring && self.dampedSpringEnabled;
+        springNode.visible = bodyAssigned &&self.layoutType == eLayoutButtonSpring && self.dampedSpringEnabled;
         
         //Limit
-        limitNode.visible = self.layoutType == eLayoutButtonLimit && self.limitEnabled;
+        limitNode.visible = bodyAssigned &&self.layoutType == eLayoutButtonLimit && self.limitEnabled;
         
-        ratchetNode.visible = self.layoutType == eLayoutButtonRatchet && self.ratchetEnabled;
+        ratchetNode.visible = bodyAssigned && self.layoutType == eLayoutButtonRatchet && self.ratchetEnabled;
         
         
         //Layout Control
-        layoutControlBox.visible = YES;
+        layoutBox.visible = bodyAssigned;
     }
     //If its not selected
     else
@@ -304,9 +295,13 @@ const float kRatchedRenderRadius = 30.0f;
         springNode.visible = NO;
         referenceAngleHandle.visible = NO;
         limitNode.visible = NO;
-        layoutControlBox.visible = NO;
+        layoutBox.visible = NO;
         ratchetNode.visible = NO;
     }
+    
+    
+    //Make them equivalent.
+    layoutBackground.visible = layoutBox.visible;
     
     [super updateSelectionUI];
 }
@@ -403,7 +398,6 @@ const float kRatchedRenderRadius = 30.0f;
         self.referenceAngle = degAngle;
     }
     
-    
     if(bodyType == LimitMaxHandle)
     {
         float degAngle = [self rotationFromWorldPos:worldPos];
@@ -419,21 +413,61 @@ const float kRatchedRenderRadius = 30.0f;
     if(bodyType == RatchedHandle)
     {
         float degAngle = [self rotationFromWorldPos:worldPos];
-        self.ratchetValue = degAngle - self.referenceAngle;
+        float currentAngle = degAngle - self.referenceAngle;
+        float oldAngle = self.ratchetValue + self.ratchetValue * self.ratchetPhase / 360.0f;
+        float delta = (currentAngle - oldAngle) / (1 + self.ratchetPhase / 360.0f);
+        self.ratchetValue = self.ratchetValue  + delta;
     }
 
     if(bodyType == RatchedPhaseHandle)
     {
         float degAngle = [self rotationFromWorldPos:worldPos];
-        
-        self.ratchetPhase = 360.0f * degAngle/self.ratchetValue;
-        
+        self.ratchetPhase = 360.0f * degAngle / self.ratchetValue;
     }
 }
 
+-(void)createLayoutButtons
+{
+    
+    //Layout Controls
+    layoutBox = [CCNode node];
+    layoutControlBox = [CCLayoutBox node];
+    layoutControlBox.spacing = 2.0f;
+    NSMutableArray * buttons = [NSMutableArray array];
+    for (int i =0; i < eLayoutButtonMax; i++) {
+        NSString * title = i == eLayoutButtonSpring ? @"s" : (i == eLayoutButtonLimit ? @"l" : @"r");
+
+        CCSpriteFrame * offSpriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"joint-pivot-mode-%@-off.png",title]];
+        CCSpriteFrame * onSpriteFrame = [CCSpriteFrame frameWithImageNamed: [NSString stringWithFormat:@"joint-pivot-mode-%@-on.png",title]];
+        
+        CCButton * button = [CCButton buttonWithTitle:@"" spriteFrame:offSpriteFrame highlightedSpriteFrame:onSpriteFrame disabledSpriteFrame:offSpriteFrame];
+        
+        [button setBlock:^(CCButton * sender) {
+            self.layoutType = [sender.userObject integerValue];
+        }];
+        
+        button.userObject = @(i);
+        [buttons addObject:button ];
+    }
+    layoutButtons = buttons;
+    
+    layoutBackground = [CCSprite spriteWithImageNamed:@"joint-pivot-mode-bg.png"];
+    layoutBackground.anchorPoint = ccp(0.0f,0.0f);
+    layoutBackground.position = ccp(-4.f,-2.0f);
+    [layoutBox addChild:layoutBackground z:-1];
+    [layoutBox addChild:layoutControlBox];;
+    layoutBox.position = ccp(0.0f,-70.0f);
+    
+    [scaleFreeNode addChild:layoutBox];
+    
+}
 -(void)refreshLayoutButtons
 {
     [layoutControlBox removeAllChildrenWithCleanup:NO];
+    
+    if(_layoutType == eLayoutButtonNone)
+        return;
+    
     for (int i = 0; i < eLayoutButtonMax; i++)
     {
         switch (i)
@@ -473,18 +507,30 @@ const float kRatchedRenderRadius = 30.0f;
     //If we've currently selected a button that's no longer available, select another.
     if(![layoutControlBox.children containsObject:layoutButtons[self.layoutType]] && layoutControlBox.children.count >= 1)
     {
-        self.layoutType = [[layoutControlBox.children[0] userObject] integerValue];
+        _layoutType = [[layoutControlBox.children[0] userObject] integerValue];
         
     }
-
     
     //If there's only one item selectable, select it and clear the screen.
     if(layoutControlBox.children.count == 1)
     {
         CCButton * button = layoutControlBox.children[0];
-        self.layoutType = [button.userObject integerValue];
+        _layoutType = [button.userObject integerValue];
         [layoutControlBox removeAllChildrenWithCleanup:NO];
     }
+    
+    
+    //Make sure all the other buttons are off off.
+    [layoutButtons forEach:^(CCButton * button, int idx) {
+        button.selected = ([button.userObject integerValue] == self.layoutType);
+    }];
+    
+    if(layoutControlBox.children.count ==0)
+        return;
+    
+    layoutBackground.scaleX = (float)layoutControlBox.children.count / (float)layoutButtons.count;
+    layoutBackground.position = ccp(-2.f * layoutBackground.scaleX,-2.0f);
+    
     
 }
 
@@ -624,6 +670,7 @@ const float kRatchedRenderRadius = 30.0f;
 -(void)setReferenceAngle:(float)referenceAngle
 {
     _referenceAngle = referenceAngle;
+    cachedRatchedValue = -1.0f;
     [[AppDelegate appDelegate]refreshProperty:@"referenceAngle"];
 }
 
@@ -645,6 +692,8 @@ const float kRatchedRenderRadius = 30.0f;
     _ratchetPhase = fmaxf(0.0f,_ratchetPhase);
     _ratchetPhase = fminf(360.0f,_ratchetPhase);
     
+    cachedRatchedValue = -1.0f;
+    
     [[AppDelegate appDelegate]refreshProperty:@"ratchetPhase"];
 }
 
@@ -661,13 +710,14 @@ const float kRatchedRenderRadius = 30.0f;
     }
     
     _ratchetValue = ratchetValue;
+    cachedRatchedValue = -1.0f;
     [[AppDelegate appDelegate]refreshProperty:@"ratchetValue"];
 }
 
 -(void)setDampedSpringEnabled:(BOOL)dampedSpringEnabled
 {
     _dampedSpringEnabled = dampedSpringEnabled;
-    if(_dampedSpringDamping)
+    if(_dampedSpringDamping && _layoutType != eLayoutButtonNone)
     {
         self.layoutType = eLayoutButtonSpring;
     }
@@ -679,7 +729,7 @@ const float kRatchedRenderRadius = 30.0f;
 {
     _limitEnabled = limitEnabled;
     
-    if(_limitEnabled)
+    if(_limitEnabled && _layoutType != eLayoutButtonNone)
     {
         self.layoutType = eLayoutButtonLimit;
     }
@@ -691,12 +741,28 @@ const float kRatchedRenderRadius = 30.0f;
 {
     _ratchetEnabled = ratchetEnabled;
     
-    if(_ratchetEnabled)
+    if(_ratchetEnabled && _layoutType != eLayoutButtonNone)
     {
         self.layoutType = eLayoutButtonRatchet;
     }
-    
     [self refreshLayoutButtons];
+}
+
+-(void)setLayoutType:(eLayoutButtonType)layoutType
+{
+    _layoutType = layoutType;
+    [self refreshLayoutButtons];
+}
+
+-(void)onEnter
+{
+	[super onEnter];
+
+	[self setPositionFromAnchor];
+    if(_layoutType == eLayoutButtonNone)
+    {
+        self.layoutType = eLayoutButtonSpring;
+    }
 }
 
 #pragma mark -
@@ -726,11 +792,7 @@ const float kRatchedRenderRadius = 30.0f;
     }
 }
 
--(void)onEnter
-{
-	[super onEnter];
-	[self setPositionFromAnchor];
-}
+
 
 
 -(void)dealloc
