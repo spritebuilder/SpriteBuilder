@@ -9,7 +9,7 @@
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
-#import "PublishLogging.h"
+
 
 @interface PublishImageOperation ()
 
@@ -17,11 +17,12 @@
 
 @end
 
+
 @implementation PublishImageOperation
 
 - (void)main
 {
-    LocalLog(@"[%@] %@", [self class], [self description]);
+    [super main];
 
     [self assertProperties];
 

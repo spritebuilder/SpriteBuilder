@@ -7,7 +7,6 @@
 #import "ResourceManagerUtil.h"
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
-#import "PublishLogging.h"
 
 
 @interface PublishSoundFileOperation ()
@@ -21,7 +20,7 @@
 
 - (void)main
 {
-    LocalLog(@"[%@] %@", [self class], [self description]);
+    [super main];
 
     [self assertProperties];
 

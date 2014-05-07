@@ -2,14 +2,13 @@
 
 #import "CCBFileUtil.h"
 #import "PublishingTaskStatusProgress.h"
-#import "PublishLogging.h"
 
 
 @implementation PublishRegularFileOperation
 
 - (void)main
 {
-    LocalLog(@"[%@] %@", [self class], [self description]);
+    [super main];
 
     [self assertProperties];
 

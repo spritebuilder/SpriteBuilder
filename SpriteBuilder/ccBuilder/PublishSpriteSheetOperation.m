@@ -4,7 +4,7 @@
 #import "Tupac.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
-#import "PublishLogging.h"
+
 
 @interface PublishSpriteSheetOperation()
 
@@ -19,11 +19,12 @@
 
 @end
 
+
 @implementation PublishSpriteSheetOperation
 
 - (void)main
 {
-    LocalLog(@"[%@] %@", [self class], [self description]);
+    [super main];
 
     [self assertProperties];
 

@@ -1,4 +1,5 @@
 #import "PublishCCBOperation.h"
+
 #import "PlugInManager.h"
 #import "PlugInExport.h"
 #import "CCBWarnings.h"
@@ -6,7 +7,6 @@
 #import "ProjectSettings.h"
 #import "CCBFileUtil.h"
 #import "PublishingTaskStatusProgress.h"
-#import "PublishLogging.h"
 
 
 @interface PublishCCBOperation ()
@@ -15,11 +15,12 @@
 
 @end
 
+
 @implementation PublishCCBOperation
 
 - (void)main
 {
-    LocalLog(@"[%@] %@", [self class], [self description]);
+    [super main];
 
     [self assertProperties];
 

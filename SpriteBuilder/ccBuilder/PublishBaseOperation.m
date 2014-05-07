@@ -25,6 +25,11 @@
     return self;
 }
 
+- (void)main
+{
+    LocalLog(@"[%@] STARTED %@", [self class], [self description]);
+}
+
 - (void)cancel
 {
     LocalLog(@"[%@] CANCELLED %@", [self class], [self description]);
