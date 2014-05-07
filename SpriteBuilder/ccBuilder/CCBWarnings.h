@@ -24,24 +24,24 @@
 
 #import <Foundation/Foundation.h>
 
-enum {
+typedef enum {
     kCCBPublisherTargetTypeHTML5,
     kCCBPublisherTargetTypeIPhone,
     kCCBPublisherTargetTypeAndroid,
-};
+} CCBPublisherTargetType;
 
 @interface CCBWarning : NSObject
 {
     NSString* message;
     NSString* relatedFile;
-    int targetType;
+    CCBPublisherTargetType targetType;
     NSString* resolution;
     
     BOOL fatal;
 }
 @property (nonatomic,copy) NSString* message;
 @property (nonatomic,copy) NSString* relatedFile;
-@property (nonatomic,assign) int targetType;
+@property (nonatomic,assign) CCBPublisherTargetType targetType;
 @property (nonatomic,copy) NSString* resolution;
 @property (nonatomic,readonly) NSString* description;
 
@@ -54,11 +54,11 @@ enum {
     NSString* warningsDescription;
     NSMutableDictionary* warningsFiles;
     
-    int currentTargetType;
+    CCBPublisherTargetType currentTargetType;
 }
 @property (nonatomic,readonly) NSMutableArray* warnings;
 @property (nonatomic,copy) NSString* warningsDescription;
-@property (nonatomic,assign) int currentTargetType;
+@property (nonatomic,assign) CCBPublisherTargetType currentTargetType;
 
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution;
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile;

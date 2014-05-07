@@ -31,6 +31,7 @@
 #import "ResourceManagerUtil.h"
 #import "AppDelegate.h"
 #import "ResourceManagerOutlineHandler.h"
+#import "CCBWarnings.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -588,6 +589,17 @@
 	{
 		// Sprite Kit doesn't run on non-Retina phones to begin with...
 		publishResolution_ios_phone = NO;
+	}
+}
+
+- (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings
+{
+	for (CCBWarning *warning in warnings.warnings)
+	{
+		if (warning.relatedFile)
+		{
+			[self markAsDirtyRelPath:warning.relatedFile];
+		}
 	}
 }
 

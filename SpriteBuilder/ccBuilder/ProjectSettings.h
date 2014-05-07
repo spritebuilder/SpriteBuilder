@@ -202,4 +202,7 @@ typedef enum
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
 
 - (NSString* ) getVersion;
+
+- (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
+
 @end

@@ -27,6 +27,7 @@
 
 @class ProjectSettings;
 @class CCBWarnings;
+@protocol TaskStatusUpdaterProtocol;
 
 
 enum {
@@ -39,32 +40,18 @@ enum {
 };
 
 
-@interface CCBPublisher : NSObject <CCBPublishDelegate>
-{
-    ProjectSettings* projectSettings;
-    CCBWarnings* warnings;
-    NSString* outputDir;
-    NSArray* copyExtensions;
-    NSString* publishFormat;
-    BOOL runAfterPublishing;
-    NSString* browser;
-    NSArray* publishForResolutions;
-    NSArray* generatedSpriteSheetDirs;
-    NSMutableSet* publishedResources;
-    NSMutableDictionary* renamedFiles;
-    NSMutableArray* publishedSpriteSheetNames;
-    NSMutableSet* publishedSpriteSheetFiles;
-    int targetType;
-    NSString * currentWorkingFile;//Used to help with warnings description.
-}
+@interface CCBPublisher : NSObject
 
-@property (nonatomic,copy) NSString* publishFormat;
-@property (nonatomic,assign) BOOL runAfterPublishing;
-@property (nonatomic,copy) NSString* browser;
+@property (nonatomic, assign) BOOL runAfterPublishing;
+@property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
-- (id) initWithProjectSettings:(ProjectSettings*)settings warnings:(CCBWarnings*)w;
-- (void) publish;
-- (void) publishAsync;
-+ (void) cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
+- (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;
+
+- (void)start;
+- (void)startAsync;
+
+- (void)cancel;
+
++ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
 
 @end
