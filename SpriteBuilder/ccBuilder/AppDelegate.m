@@ -606,6 +606,8 @@ typedef enum
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
+	// Restore window frame
+	[window setFrameUsingName:@"MainWindowFrame"];
     // Open files
     if (delayOpenFiles)
 	{
@@ -4854,6 +4856,9 @@ static BOOL hideAllToNextSeparator;
 
 - (void) windowWillClose:(NSNotification *)notification
 {
+	// Save window position
+	[window saveFrameUsingName:@"MainWindowFrame"];
+	// Terminate
     [[NSApplication sharedApplication] terminate:self];
 }
 
