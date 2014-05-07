@@ -42,12 +42,13 @@
     if (_targetType == kCCBPublisherTargetTypeIPhone
         || _targetType == kCCBPublisherTargetTypeAndroid)
     {
+        // TODO: Is this actually needed any more?
         [self generateMainJSFile];
     }
 
     [self generateFileLookup];
 
-    [self generateSpriteSheetLookup];
+    [self generateSpriteFrameFileList];
 
     [self generateCocos2dSetupFile];
 }
@@ -106,20 +107,19 @@
     [configCocos2d writeToFile:configCocos2dFile atomically:YES];
 }
 
-- (void)generateSpriteSheetLookup
+// TODO: is this a spriteFrameList or a dictionary for the publishedSpriteSheet files?
+- (void)generateSpriteFrameFileList
 {
-    NSMutableDictionary* spriteSheetLookup = [NSMutableDictionary dictionary];
+    NSMutableDictionary*spriteFrameFileList = [NSMutableDictionary dictionary];
 
     NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
     [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
 
-    [spriteSheetLookup setObject:metadata forKey:@"metadata"];
-
-    [spriteSheetLookup setObject:[_publishedSpriteSheetFiles allObjects] forKey:@"spriteFrameFiles"];
+    [spriteFrameFileList setObject:metadata forKey:@"metadata"];
+    [spriteFrameFileList setObject:[_publishedSpriteSheetFiles allObjects] forKey:@"spriteFrameFiles"];
 
     NSString* spriteSheetLookupFile = [_outputDir stringByAppendingPathComponent:@"spriteFrameFileList.plist"];
-
-    [spriteSheetLookup writeToFile:spriteSheetLookupFile atomically:YES];
+    [spriteFrameFileList writeToFile:spriteSheetLookupFile atomically:YES];
 }
 
 - (void)generateFileLookup

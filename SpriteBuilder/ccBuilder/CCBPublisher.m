@@ -51,7 +51,7 @@
 @interface CCBPublisher ()
 
 @property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
-@property (nonatomic, strong) PublishRenamedFilesLookup *fileLookup;
+@property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;
 @property (nonatomic, strong) NSArray *publishForResolutions;
 @property (nonatomic, strong) NSArray *supportedFileExtensions;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
@@ -70,6 +70,9 @@
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings
 {
+    NSAssert(someProjectSettings != nil, @"project settings should never be nil! Publisher won't work without.");
+    NSAssert(someWarnings != nil, @"warnings are nil. Are you sure you don't need them?");
+
     self = [super init];
 	if (!self)
 	{
@@ -120,7 +123,7 @@
     operation.targetType = _targetType;
     operation.modifiedFileDateCache = _modifiedDatesCache;
     operation.publishedPNGFiles = _publishedPNGFiles;
-    operation.fileLookup = _fileLookup;
+    operation.fileLookup = _renamedFilesLookup;
 
     [_publishingQueue addOperation:operation];
     return YES;
@@ -145,7 +148,7 @@
     operation.dstFilePath = dstFilePath;
     operation.format = format;
     operation.quality = quality;
-    operation.fileLookup = _fileLookup;
+    operation.fileLookup = _renamedFilesLookup;
 
     [_publishingQueue addOperation:operation];
 }
@@ -271,7 +274,7 @@
     if (isGeneratedSpriteSheet
         && ![fileName isSmartSpriteSheetCompatibleFile])
     {
-        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png|psd file in smart sprite sheet (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
+        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png|psd file in smart sprite sheet found (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
         return YES;
     }
 
@@ -523,15 +526,15 @@
     operation.targetType = _targetType;
     operation.outputDir = _outputDir;
     operation.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
-    operation.fileLookup = _fileLookup;
+    operation.fileLookup = _renamedFilesLookup;
 
     [_publishingQueue addOperation:operation];
 }
 
-- (BOOL)publishAllToDirectory:(NSString*)dir
+- (BOOL)publishAllToDirectory:(NSString*)outputDir
 {
-    self.outputDir = dir;
-    self.fileLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
+    self.outputDir = outputDir;
+    self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
     // Publish resources and ccb-files
     for (NSString* aDir in _projectSettings.absoluteResourcePaths)
