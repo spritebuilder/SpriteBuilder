@@ -126,8 +126,32 @@
 		92154ADF18A5565C00BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154AE018A5565C00BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
 		92154AE318A55A4200BD215C /* CCPhysicsPivotJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */; };
-		9218DF0C1919727B0033851E /* joint-layoutbutton-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF0A1919727B0033851E /* joint-layoutbutton-bg@2x.png */; };
-		9218DF0D1919727B0033851E /* joint-layoutbutton-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF0B1919727B0033851E /* joint-layoutbutton-bg.png */; };
+		9218DF291919B04D0033851E /* joint-pivot-handle-min.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF0F1919B04D0033851E /* joint-pivot-handle-min.png */; };
+		9218DF2A1919B04D0033851E /* joint-pivot-handle-ratchet.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF101919B04D0033851E /* joint-pivot-handle-ratchet.png */; };
+		9218DF2B1919B04D0033851E /* joint-pivot-handle-ratchetmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF111919B04D0033851E /* joint-pivot-handle-ratchetmark.png */; };
+		9218DF2C1919B04D0033851E /* joint-pivot-handle-ref.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF121919B04D0033851E /* joint-pivot-handle-ref.png */; };
+		9218DF2D1919B04D0033851E /* joint-pivot-mode-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF131919B04D0033851E /* joint-pivot-mode-bg.png */; };
+		9218DF2E1919B04D0033851E /* joint-pivot-mode-l-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF141919B04D0033851E /* joint-pivot-mode-l-off.png */; };
+		9218DF2F1919B04D0033851E /* joint-pivot-mode-l-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF151919B04D0033851E /* joint-pivot-mode-l-on.png */; };
+		9218DF301919B04D0033851E /* joint-pivot-mode-r-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF161919B04D0033851E /* joint-pivot-mode-r-off.png */; };
+		9218DF311919B04D0033851E /* joint-pivot-mode-r-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF171919B04D0033851E /* joint-pivot-mode-r-on.png */; };
+		9218DF321919B04D0033851E /* joint-pivot-mode-s-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF181919B04D0033851E /* joint-pivot-mode-s-off.png */; };
+		9218DF331919B04D0033851E /* joint-pivot-mode-s-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF191919B04D0033851E /* joint-pivot-mode-s-on.png */; };
+		9218DF341919B04D0033851E /* joint-pivot-motor.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF1A1919B04D0033851E /* joint-pivot-motor.png */; };
+		9218DF351919B04D0033851E /* joint-pivot-handle-max.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF1B1919B04D0033851E /* joint-pivot-handle-max.png */; };
+		9218DF361919B04D0033851E /* joint-pivot-mode-r-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF1C1919B04D0033851E /* joint-pivot-mode-r-on@2x.png */; };
+		9218DF371919B04D0033851E /* joint-pivot-mode-l-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF1D1919B04D0033851E /* joint-pivot-mode-l-on@2x.png */; };
+		9218DF381919B04D0033851E /* joint-pivot-mode-s-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF1E1919B04D0033851E /* joint-pivot-mode-s-on@2x.png */; };
+		9218DF391919B04D0033851E /* joint-pivot-mode-r-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF1F1919B04D0033851E /* joint-pivot-mode-r-off@2x.png */; };
+		9218DF3A1919B04D0033851E /* joint-pivot-mode-l-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF201919B04D0033851E /* joint-pivot-mode-l-off@2x.png */; };
+		9218DF3B1919B04D0033851E /* joint-pivot-mode-s-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF211919B04D0033851E /* joint-pivot-mode-s-off@2x.png */; };
+		9218DF3C1919B04D0033851E /* joint-pivot-mode-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF221919B04D0033851E /* joint-pivot-mode-bg@2x.png */; };
+		9218DF3D1919B04D0033851E /* joint-pivot-handle-ratchetmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF231919B04D0033851E /* joint-pivot-handle-ratchetmark@2x.png */; };
+		9218DF3E1919B04D0033851E /* joint-pivot-handle-ratchet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF241919B04D0033851E /* joint-pivot-handle-ratchet@2x.png */; };
+		9218DF3F1919B04D0033851E /* joint-pivot-handle-min@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF251919B04D0033851E /* joint-pivot-handle-min@2x.png */; };
+		9218DF401919B04D0033851E /* joint-pivot-handle-max@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF261919B04D0033851E /* joint-pivot-handle-max@2x.png */; };
+		9218DF411919B04D0033851E /* joint-pivot-handle-ref@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF271919B04D0033851E /* joint-pivot-handle-ref@2x.png */; };
+		9218DF421919B04D0033851E /* joint-pivot-motor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9218DF281919B04D0033851E /* joint-pivot-motor@2x.png */; };
 		921EEAD618A5760700D864C2 /* joint-anchor-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEACE18A5760700D864C2 /* joint-anchor-sel.png */; };
 		921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */; };
 		921EEAD818A5760700D864C2 /* joint-anchor.png in Resources */ = {isa = PBXBuildFile; fileRef = 921EEAD018A5760700D864C2 /* joint-anchor.png */; };
@@ -1221,8 +1245,32 @@
 		92154AC418A5531800BD215C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		92154AC518A5531800BD215C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		92154ADB18A5560B00BD215C /* CCPhysicsPivotJoint.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsPivotJoint.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		9218DF0A1919727B0033851E /* joint-layoutbutton-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-layoutbutton-bg@2x.png"; sourceTree = "<group>"; };
-		9218DF0B1919727B0033851E /* joint-layoutbutton-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-layoutbutton-bg.png"; sourceTree = "<group>"; };
+		9218DF0F1919B04D0033851E /* joint-pivot-handle-min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-min.png"; sourceTree = "<group>"; };
+		9218DF101919B04D0033851E /* joint-pivot-handle-ratchet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-ratchet.png"; sourceTree = "<group>"; };
+		9218DF111919B04D0033851E /* joint-pivot-handle-ratchetmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-ratchetmark.png"; sourceTree = "<group>"; };
+		9218DF121919B04D0033851E /* joint-pivot-handle-ref.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-ref.png"; sourceTree = "<group>"; };
+		9218DF131919B04D0033851E /* joint-pivot-mode-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-bg.png"; sourceTree = "<group>"; };
+		9218DF141919B04D0033851E /* joint-pivot-mode-l-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-l-off.png"; sourceTree = "<group>"; };
+		9218DF151919B04D0033851E /* joint-pivot-mode-l-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-l-on.png"; sourceTree = "<group>"; };
+		9218DF161919B04D0033851E /* joint-pivot-mode-r-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-r-off.png"; sourceTree = "<group>"; };
+		9218DF171919B04D0033851E /* joint-pivot-mode-r-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-r-on.png"; sourceTree = "<group>"; };
+		9218DF181919B04D0033851E /* joint-pivot-mode-s-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-s-off.png"; sourceTree = "<group>"; };
+		9218DF191919B04D0033851E /* joint-pivot-mode-s-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-s-on.png"; sourceTree = "<group>"; };
+		9218DF1A1919B04D0033851E /* joint-pivot-motor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-motor.png"; sourceTree = "<group>"; };
+		9218DF1B1919B04D0033851E /* joint-pivot-handle-max.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-max.png"; sourceTree = "<group>"; };
+		9218DF1C1919B04D0033851E /* joint-pivot-mode-r-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-r-on@2x.png"; sourceTree = "<group>"; };
+		9218DF1D1919B04D0033851E /* joint-pivot-mode-l-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-l-on@2x.png"; sourceTree = "<group>"; };
+		9218DF1E1919B04D0033851E /* joint-pivot-mode-s-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-s-on@2x.png"; sourceTree = "<group>"; };
+		9218DF1F1919B04D0033851E /* joint-pivot-mode-r-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-r-off@2x.png"; sourceTree = "<group>"; };
+		9218DF201919B04D0033851E /* joint-pivot-mode-l-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-l-off@2x.png"; sourceTree = "<group>"; };
+		9218DF211919B04D0033851E /* joint-pivot-mode-s-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-s-off@2x.png"; sourceTree = "<group>"; };
+		9218DF221919B04D0033851E /* joint-pivot-mode-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-mode-bg@2x.png"; sourceTree = "<group>"; };
+		9218DF231919B04D0033851E /* joint-pivot-handle-ratchetmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-ratchetmark@2x.png"; sourceTree = "<group>"; };
+		9218DF241919B04D0033851E /* joint-pivot-handle-ratchet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-ratchet@2x.png"; sourceTree = "<group>"; };
+		9218DF251919B04D0033851E /* joint-pivot-handle-min@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-min@2x.png"; sourceTree = "<group>"; };
+		9218DF261919B04D0033851E /* joint-pivot-handle-max@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-max@2x.png"; sourceTree = "<group>"; };
+		9218DF271919B04D0033851E /* joint-pivot-handle-ref@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-handle-ref@2x.png"; sourceTree = "<group>"; };
+		9218DF281919B04D0033851E /* joint-pivot-motor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-motor@2x.png"; sourceTree = "<group>"; };
 		921EEACE18A5760700D864C2 /* joint-anchor-sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor-sel.png"; sourceTree = "<group>"; };
 		921EEACF18A5760700D864C2 /* joint-anchor-sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor-sel@2x.png"; sourceTree = "<group>"; };
 		921EEAD018A5760700D864C2 /* joint-anchor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-anchor.png"; sourceTree = "<group>"; };
@@ -2556,8 +2604,32 @@
 		776041EF1498FCE50078095D /* Stage Assets */ = {
 			isa = PBXGroup;
 			children = (
-				9218DF0A1919727B0033851E /* joint-layoutbutton-bg@2x.png */,
-				9218DF0B1919727B0033851E /* joint-layoutbutton-bg.png */,
+				9218DF101919B04D0033851E /* joint-pivot-handle-ratchet.png */,
+				9218DF111919B04D0033851E /* joint-pivot-handle-ratchetmark.png */,
+				9218DF131919B04D0033851E /* joint-pivot-mode-bg.png */,
+				9218DF141919B04D0033851E /* joint-pivot-mode-l-off.png */,
+				9218DF151919B04D0033851E /* joint-pivot-mode-l-on.png */,
+				9218DF161919B04D0033851E /* joint-pivot-mode-r-off.png */,
+				9218DF171919B04D0033851E /* joint-pivot-mode-r-on.png */,
+				9218DF181919B04D0033851E /* joint-pivot-mode-s-off.png */,
+				9218DF191919B04D0033851E /* joint-pivot-mode-s-on.png */,
+				9218DF0F1919B04D0033851E /* joint-pivot-handle-min.png */,
+				9218DF1B1919B04D0033851E /* joint-pivot-handle-max.png */,
+				9218DF121919B04D0033851E /* joint-pivot-handle-ref.png */,
+				9218DF1A1919B04D0033851E /* joint-pivot-motor.png */,
+				9218DF1C1919B04D0033851E /* joint-pivot-mode-r-on@2x.png */,
+				9218DF1D1919B04D0033851E /* joint-pivot-mode-l-on@2x.png */,
+				9218DF1E1919B04D0033851E /* joint-pivot-mode-s-on@2x.png */,
+				9218DF1F1919B04D0033851E /* joint-pivot-mode-r-off@2x.png */,
+				9218DF201919B04D0033851E /* joint-pivot-mode-l-off@2x.png */,
+				9218DF211919B04D0033851E /* joint-pivot-mode-s-off@2x.png */,
+				9218DF221919B04D0033851E /* joint-pivot-mode-bg@2x.png */,
+				9218DF231919B04D0033851E /* joint-pivot-handle-ratchetmark@2x.png */,
+				9218DF241919B04D0033851E /* joint-pivot-handle-ratchet@2x.png */,
+				9218DF251919B04D0033851E /* joint-pivot-handle-min@2x.png */,
+				9218DF261919B04D0033851E /* joint-pivot-handle-max@2x.png */,
+				9218DF271919B04D0033851E /* joint-pivot-handle-ref@2x.png */,
+				9218DF281919B04D0033851E /* joint-pivot-motor@2x.png */,
 				926D13B418B5778300582959 /* joint-distance-handle-long.png */,
 				926D13B518B5778300582959 /* joint-distance-handle-long@2x.png */,
 				926D13B618B5778300582959 /* joint-distance-handle-short.png */,
@@ -5012,6 +5084,7 @@
 				772BE57C134398EE0009B5B9 /* NewDocWindow.xib in Resources */,
 				774F95C613638D74005D43EB /* missing-particle-texture.png in Resources */,
 				774E4EC2136D98AB0025D0A8 /* select-bl.png in Resources */,
+				9218DF3C1919B04D0033851E /* joint-pivot-mode-bg@2x.png in Resources */,
 				774E4EC3136D98AB0025D0A8 /* select-br.png in Resources */,
 				774E4EC4136D98AB0025D0A8 /* select-pt.png in Resources */,
 				774E4EC5136D98AB0025D0A8 /* select-tl.png in Resources */,
@@ -5029,13 +5102,16 @@
 				77E1995513858DE0006C361B /* TabClose_Dirty_Pressed.png in Resources */,
 				77E1995613858DE0006C361B /* TabClose_Dirty_Rollover.png in Resources */,
 				77E1995713858DE0006C361B /* TabClose_Dirty.png in Resources */,
+				9218DF2E1919B04D0033851E /* joint-pivot-mode-l-off.png in Resources */,
 				926D13C618B5778300582959 /* joint-distance-slide-sel.png in Resources */,
 				77E1995813858DE0006C361B /* TabClose_Front_Pressed.png in Resources */,
 				B7C3533717FA0FEF005697C1 /* inspector-physics.png in Resources */,
 				77E1995913858DE0006C361B /* TabClose_Front_Rollover.png in Resources */,
 				77E1995A13858DE0006C361B /* TabClose_Front.png in Resources */,
+				9218DF301919B04D0033851E /* joint-pivot-mode-r-off.png in Resources */,
 				77E1995B13858DE0006C361B /* TabNewMetal.png in Resources */,
 				77E1995C13858DE0006C361B /* TabNewMetalPressed.png in Resources */,
+				9218DF3D1919B04D0033851E /* joint-pivot-handle-ratchetmark@2x.png in Resources */,
 				921EEAD818A5760700D864C2 /* joint-anchor.png in Resources */,
 				926D13C818B5778300582959 /* joint-distance-slide.png in Resources */,
 				77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */,
@@ -5051,6 +5127,7 @@
 				7729F03D1390600200CAA44F /* frame-ipad.png in Resources */,
 				776A370B139544A200960E94 /* TB_actualSize.png in Resources */,
 				776A370C139544A200960E94 /* TB_grab.png in Resources */,
+				9218DF3A1919B04D0033851E /* joint-pivot-mode-l-off@2x.png in Resources */,
 				92F0960718F8851300D47A94 /* inspector-body-remove-dis.png in Resources */,
 				776A370D139544A200960E94 /* TB_select.png in Resources */,
 				B7096E27180CD98E00164A8A /* doc-layer@2x.png in Resources */,
@@ -5073,13 +5150,16 @@
 				E3B4221314E4A350004547D6 /* InspectorCheck.xib in Resources */,
 				E3B4221814E4BE6B004547D6 /* InspectorSpriteFrame.xib in Resources */,
 				92F0961618F8855A00D47A94 /* inspector-body-goto-hi.png in Resources */,
+				9218DF2A1919B04D0033851E /* joint-pivot-handle-ratchet.png in Resources */,
 				92F0961718F8855A00D47A94 /* inspector-body-goto.png in Resources */,
 				B759E4B81880B60B00E8166C /* logo-white.png in Resources */,
 				E3B4221D14E58C35004547D6 /* InspectorByte.xib in Resources */,
 				E3B4222214E58FEE004547D6 /* InspectorColor3.xib in Resources */,
-				9218DF0D1919727B0033851E /* joint-layoutbutton-bg.png in Resources */,
+				9218DF2F1919B04D0033851E /* joint-pivot-mode-l-on.png in Resources */,
+				9218DF351919B04D0033851E /* joint-pivot-handle-max.png in Resources */,
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
+				9218DF291919B04D0033851E /* joint-pivot-handle-min.png in Resources */,
 				DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */,
 				E3B4223414E5E68B004547D6 /* InspectorSeparator.xib in Resources */,
 				A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */,
@@ -5087,15 +5167,19 @@
 				E32D8CC514EC257000F4BD5E /* InspectorCodeConnections.xib in Resources */,
 				E35DBBBF14F29E9D0070A6E4 /* InspectorFntFile.xib in Resources */,
 				E35DBBC414F2A2900070A6E4 /* InspectorText.xib in Resources */,
+				9218DF2C1919B04D0033851E /* joint-pivot-handle-ref.png in Resources */,
 				E35DBBDF14F3D1B60070A6E4 /* FontListTTF.plist in Resources */,
 				E35DBBE114F3DCDF0070A6E4 /* InspectorFontTTF.xib in Resources */,
+				9218DF3B1919B04D0033851E /* joint-pivot-mode-s-off@2x.png in Resources */,
 				E35DBBFB14F3EE210070A6E4 /* InspectorFloat.xib in Resources */,
 				E35DBC1B14F4DED00070A6E4 /* InspectorStartStop.xib in Resources */,
 				E35DBC2014F4ED0E0070A6E4 /* InspectorIntegerLabeled.xib in Resources */,
 				E35DBC2514F4FEF90070A6E4 /* InspectorTexture.xib in Resources */,
 				926D13C218B5778300582959 /* joint-distance-handle-short.png in Resources */,
 				E325F64514F531F500D29BCF /* InspectorFloatVar.xib in Resources */,
+				9218DF411919B04D0033851E /* joint-pivot-handle-ref@2x.png in Resources */,
 				E325F64A14F53FD000D29BCF /* InspectorColor4FVar.xib in Resources */,
+				9218DF2B1919B04D0033851E /* joint-pivot-handle-ratchetmark.png in Resources */,
 				E325F64F14F5622200D29BCF /* InspectorSeparatorSub.xib in Resources */,
 				E385A42014F69FF300DFB12D /* InspectorBlock.xib in Resources */,
 				E398C04014FBC9D00078E771 /* PublishTypeAccessoryView.xib in Resources */,
@@ -5119,6 +5203,7 @@
 				E3F3F847153D9126005443EE /* StickyNoteEditView.xib in Resources */,
 				E3F3F849153DB893005443EE /* notes-close.png in Resources */,
 				921EEAD618A5760700D864C2 /* joint-anchor-sel.png in Resources */,
+				9218DF371919B04D0033851E /* joint-pivot-mode-l-on@2x.png in Resources */,
 				E3F3F84B153DBA43005443EE /* notes-close-down.png in Resources */,
 				92F0961918F8855A00D47A94 /* inspector-body-goto@2x.png in Resources */,
 				E35A2D8D1540111A00F78B72 /* position-0.png in Resources */,
@@ -5132,6 +5217,7 @@
 				E370BA0D1549B2460048ED73 /* scale-1.png in Resources */,
 				E334069715517225000FBD0B /* InspectorFloatScale.xib in Resources */,
 				E3DCFD9C15629FC700BD7D7F /* TaskStatusWindow.xib in Resources */,
+				9218DF401919B04D0033851E /* joint-pivot-handle-max@2x.png in Resources */,
 				E335CAEB15751C0D00A612EE /* seq-ctrl-bg.png in Resources */,
 				926D13C418B5778300582959 /* joint-distance-sel.png in Resources */,
 				E335CAF815764E6B00A612EE /* seq-btn-expand.png in Resources */,
@@ -5139,6 +5225,7 @@
 				E335CB0C1577D64C00A612EE /* seq-btn-collapse.png in Resources */,
 				E3E8B48A1578FEB100373983 /* seq-tl-bg.png in Resources */,
 				E3E8B48E15791FFB00373983 /* seq-tl-mark-major.png in Resources */,
+				9218DF391919B04D0033851E /* joint-pivot-mode-r-off@2x.png in Resources */,
 				E3E8B48F15791FFB00373983 /* seq-tl-mark-minor.png in Resources */,
 				B7096E2E180CD98E00164A8A /* doc-sprite@2x.png in Resources */,
 				E3E8B49015791FFB00373983 /* seq-tl-mark-origin.png in Resources */,
@@ -5153,7 +5240,6 @@
 				E3E8B49D15793AF800373983 /* seq-btn-stepforward.png in Resources */,
 				E3E8B49E15793AF800373983 /* seq-btn-stop.png in Resources */,
 				E3E8B4A4157CD5DB00373983 /* seq-scrub-handle.png in Resources */,
-				9218DF0C1919727B0033851E /* joint-layoutbutton-bg@2x.png in Resources */,
 				926D13C518B5778300582959 /* joint-distance-sel@2x.png in Resources */,
 				E3E8B4A5157CD5DB00373983 /* seq-scrub-line.png in Resources */,
 				B7C3533817FA0FEF005697C1 /* inspector-physics@2x.png in Resources */,
@@ -5173,16 +5259,19 @@
 				E3E0557E159B8466001066C5 /* seq-keyframe-easeout.png in Resources */,
 				E3E0557F159B8466001066C5 /* seq-keyframe-interpol.png in Resources */,
 				E392618F159CAAA10034FF1D /* seq-keyframe-interpol-vis.png in Resources */,
+				9218DF341919B04D0033851E /* joint-pivot-motor.png in Resources */,
 				E3926190159CAAA10034FF1D /* seq-keyframe-l-sel.png in Resources */,
 				8341326B18DADF9E0088FFAB /* optipng in Resources */,
 				926D13C018B5778300582959 /* joint-distance-handle-long.png in Resources */,
 				E3926191159CAAA10034FF1D /* seq-keyframe-l.png in Resources */,
+				9218DF311919B04D0033851E /* joint-pivot-mode-r-on.png in Resources */,
 				E3926192159CAAA10034FF1D /* seq-keyframe-r-sel.png in Resources */,
 				E3926193159CAAA10034FF1D /* seq-keyframe-r.png in Resources */,
 				B78B8B10185FF982006ADBBE /* Folder.icns in Resources */,
 				E3FD4DCF15A09F6D0032C2DD /* SequencerKeyframeEasingWindow.xib in Resources */,
 				E3FD4DDB15A301EF0032C2DD /* seq-next-seq.png in Resources */,
 				E3DFA7CD15ACA0CD005D3B6F /* frame-android-medium.png in Resources */,
+				9218DF2D1919B04D0033851E /* joint-pivot-mode-bg.png in Resources */,
 				E3DFA7CE15ACA0CD005D3B6F /* frame-android-small.png in Resources */,
 				922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */,
 				E3DFA7CF15ACA0CD005D3B6F /* frame-android-xsmall.png in Resources */,
@@ -5200,6 +5289,7 @@
 				B759E4B91880B60B00E8166C /* logo-white@2x.png in Resources */,
 				E3B7BC9C15E3B7F100CF95EF /* NodePlugInsList.plist in Resources */,
 				E3B7BCBE15E505CC00CF95EF /* TB_plugins.png in Resources */,
+				9218DF3E1919B04D0033851E /* joint-pivot-handle-ratchet@2x.png in Resources */,
 				E3B19F6D15E65229000B023E /* DefaultResourcesList.plist in Resources */,
 				E360789015EBA5420040A172 /* sel-frame.png in Resources */,
 				B7096E29180CD98E00164A8A /* doc-node@2x.png in Resources */,
@@ -5208,6 +5298,7 @@
 				E3AF6CE115F0CFAE0048DB2A /* Documentation in Resources */,
 				E3AF6CE615F0F5760048DB2A /* help-logo.png in Resources */,
 				E3DFE831160226760068CB50 /* frame-iphone5.png in Resources */,
+				9218DF421919B04D0033851E /* joint-pivot-motor@2x.png in Resources */,
 				E3C9CCB8161D08B8008A3784 /* InspectorCodeConnectionsJS.xib in Resources */,
 				58FA2034162D73F3006B8856 /* TB_bottomPanel.png in Resources */,
 				58FA2035162D73F3006B8856 /* TB_leftPanel.png in Resources */,
@@ -5244,6 +5335,7 @@
 				B7C3533A17FA2EDA005697C1 /* select-physics-corner.png in Resources */,
 				E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */,
 				E312973516CC677400A09155 /* SequencerPopoverSound.xib in Resources */,
+				9218DF321919B04D0033851E /* joint-pivot-mode-s-off.png in Resources */,
 				E32FA2F816D5781600254653 /* seq-row-channel-bg.png in Resources */,
 				E3B5EE8A16D6E0AA00C07990 /* InspectorFloatXY.xib in Resources */,
 				E318CB3916D83F3B00348E0D /* InspectorPopoverFloatXY.xib in Resources */,
@@ -5268,6 +5360,7 @@
 				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
 				92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */,
 				B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */,
+				9218DF3F1919B04D0033851E /* joint-pivot-handle-min@2x.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
 				B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */,
 				B732A1841799736500333C56 /* TB_build.png in Resources */,
@@ -5277,6 +5370,7 @@
 				B7AC6981179F50850041B8BD /* BFColorPickerPopover_LICENSE.txt in Resources */,
 				B7AC69A517A07DAD0041B8BD /* inspector-folder.png in Resources */,
 				B7AC69A617A07DAD0041B8BD /* inspector-objects.png in Resources */,
+				9218DF381919B04D0033851E /* joint-pivot-mode-s-on@2x.png in Resources */,
 				B7AC69A917A0923B0041B8BD /* inspector-nodes.png in Resources */,
 				B7AC69AD17A0938C0041B8BD /* inspector-nodes@2x.png in Resources */,
 				B7AC69B217A1969E0041B8BD /* header-bg2.png in Resources */,
@@ -5287,6 +5381,7 @@
 				926D13C918B5778300582959 /* joint-distance-slide@2x.png in Resources */,
 				926D13CB18B5778300582959 /* joint-distance@2x.png in Resources */,
 				B7AC69CA17A70A4B0041B8BD /* inspector-codeconnections@2x.png in Resources */,
+				9218DF331919B04D0033851E /* joint-pivot-mode-s-on.png in Resources */,
 				B7AC69CB17A70A4B0041B8BD /* inspector-props.png in Resources */,
 				92154AC918A5531800BD215C /* InfoPlist.strings in Resources */,
 				B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */,
@@ -5298,6 +5393,7 @@
 				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
 				B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */,
 				B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */,
+				9218DF361919B04D0033851E /* joint-pivot-mode-r-on@2x.png in Resources */,
 				B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */,
 				B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */,
 				B78AE45217E3B1600028BE0B /* scale-2.png in Resources */,

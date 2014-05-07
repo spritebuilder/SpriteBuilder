@@ -12,23 +12,20 @@
 #import "CCBPhysicsJoint+Private.h"
 #import "CCButton.h"
 
-const float kSegmentHandleDefaultRadius = 50.0f;
+const float kSegmentHandleDefaultRadius = 17.0f;
 
 @interface CCSegmentHandle : CCNode
 {
 
 }
 
-@property (nonatomic) CCDrawNode * segment;
 @property (nonatomic) CCSprite * handle;
-@property (nonatomic) float length;
-@property (nonatomic) BOOL highlighted;
+
 
 @end
 
 
 @implementation CCSegmentHandle
-@synthesize segment;
 @synthesize handle;
 
 -(id)init
@@ -36,43 +33,37 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     self = [super init];
     if(self)
     {
-        segment = [CCDrawNode node];
-        handle  = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png"];
-        [self addChild:segment];
+        handle  = [CCSprite spriteWithImageNamed:@"joint-pivot-handle-ref.png"];
+        handle.anchorPoint = ccp(0.5f,0.0f);
         [self addChild:handle];
-        _length = kSegmentHandleDefaultRadius;
     }
     return self;
 }
 
--(void)setLength:(float)length
+-(BOOL)hitTestWithWorldPos:(CGPoint)worlPos
 {
-    self->_length = length;
-}
+    CGPoint pointHit = [self.handle convertToNodeSpaceAR:worlPos];
+    pointHit.y = pointHit.y - self.handle.contentSizeInPoints.height + 4.0f;
 
--(void)setHighlighted:(BOOL)highlighted
-{
-    if(highlighted)
+    if(ccpLength(pointHit) < 4.0f * [CCDirector sharedDirector].UIScaleFactor)
     {
-        handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-connection-connected.png"];
+        return YES;;
     }
-    else
-    {
-        handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-connection-disconnected.png"];
-    }
+
+    return NO;
 }
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     
-    CGPoint nodeSpace = ccp(0.0f,self.length);
+    CGPoint nodeSpace = ccp(0.0f,kSegmentHandleDefaultRadius);
     CGPoint worldSpace = [self convertToWorldSpace:nodeSpace];
     worldSpace = ccp( floorf(worldSpace.x),
                      floorf(worldSpace.y));
     nodeSpace = [self convertToNodeSpace:worldSpace];
     
     handle.position = nodeSpace;
-    [segment drawSegmentFrom:ccp(0.0f,0.0f) to:ccp(0.0f,self.length) radius:1.0f color:[CCColor redColor]];
+
     
     [super visit:renderer parentTransform:parentTransform];
 }
@@ -179,35 +170,38 @@ const float kSegmentHandleDefaultRadius = 50.0f;
     //Reference Angle
     referenceAngleHandle = [CCSegmentHandle node];
     [scaleFreeNode addChild:referenceAngleHandle];
-    referenceAngleHandle.length = kSegmentHandleDefaultRadius * 0.7f;
+    referenceAngleHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-ref.png"];
     
     //Spring
     springNode = [CCNode node];
     [scaleFreeNode addChild:springNode];
     springRestAngleHandle = [CCSegmentHandle node];
     [springNode addChild:springRestAngleHandle];
+    springRestAngleHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png"];
     
     //Limit
     limitNode = [CCNode node];
     [scaleFreeNode addChild:limitNode];
     limitMinHandle = [CCSegmentHandle node];
-    limitMinHandle.length = kSegmentHandleDefaultRadius * .7f;
+    limitMinHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png"];
     [limitNode addChild:limitMinHandle];
     
+    
     limitMaxHandle = [CCSegmentHandle node];
-    limitMaxHandle.length = kSegmentHandleDefaultRadius;
+    limitMaxHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png"];
     [limitNode addChild:limitMaxHandle];
     
     //Ratched
     ratchetNode = [CCNode node];
     [scaleFreeNode addChild:ratchetNode];
     ratchedValueHandle = [CCSegmentHandle node];
-    ratchedValueHandle.length = kSegmentHandleDefaultRadius;
     [ratchetNode addChild:ratchedValueHandle];
-    
+    ratchedValueHandle.handle.spriteFrame =[CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-ratchet.png"];
+
     ratchedPhaseHandle = [CCSegmentHandle node];
-    ratchedPhaseHandle.length = kSegmentHandleDefaultRadius * .7f;
     [ratchetNode addChild:ratchedPhaseHandle];
+    ratchedPhaseHandle.handle.spriteFrame =[CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png"];
+
 }
 
 
@@ -239,17 +233,19 @@ const float kRatchedRenderRadius = 30.0f;
         
         [ratchedTicks removeFromParentAndCleanup:YES];
         ratchedTicks = [CCNode node];
-        float currentAngle = cachedRatchedValue;
-        while (currentAngle < (360.0f - cachedRatchedValue) && currentAngle > (-360 + cachedRatchedValue))
+        float currentAngle = 0.0f;
+        while (currentAngle < (360.0f - cachedRatchedValue) && currentAngle > (-360 - cachedRatchedValue))
         {
-            CCDrawNode * drawNode = [CCDrawNode node];
-            [drawNode drawSegmentFrom:ccp(.0f,.0f) to:ccp(0.0f, kRatchedRenderRadius) radius:1.0f color:[CCColor grayColor]];
-            [ratchedTicks addChild:drawNode];
-            drawNode.rotation = currentAngle;
+            CCSprite * sprite = [CCSprite spriteWithImageNamed:@"joint-pivot-handle-ratchetmark.png"];
+            sprite.anchorPoint = ccp(0.5f,0.0f);
+            [ratchedTicks addChild:sprite];
+            sprite.rotation = currentAngle;
+            sprite.position = ccpRotateByAngle(ccp(0.0f, kSegmentHandleDefaultRadius),ccp(0.0f,0.0f),CC_DEGREES_TO_RADIANS(-currentAngle));
             currentAngle += cachedRatchedValue;
         }
         
-        [ratchedValueHandle addChild:ratchedTicks];
+        ratchedTicks.rotation = ratchedValueHandle.rotation;
+        [ratchetNode addChild:ratchedTicks z:-1];
     }
 }
 
@@ -268,7 +264,7 @@ const float kRatchedRenderRadius = 30.0f;
         if(self.layoutType == eLayoutButtonRatchet)
         {
             ratchedValueHandle.rotation = rotation + self.referenceAngle + self.ratchetValue + M_PI_2;
-            ratchedPhaseHandle.rotation = rotation + self.referenceAngle + self.ratchetPhase + M_PI_2;
+            ratchedPhaseHandle.rotation = rotation + self.referenceAngle + (self.ratchetValue) * self.ratchetPhase/360.0f + M_PI_2;
             [self updateRenderRatchet];
         }
         
@@ -285,7 +281,8 @@ const float kRatchedRenderRadius = 30.0f;
         
         
         //Refence angle Handle;
-        referenceAngleHandle.visible = YES;
+        referenceAngleHandle.visible = self.dampedSpringEnabled || self.limitEnabled || self.ratchetEnabled;
+        
         //Spring.
         springNode.visible = self.layoutType == eLayoutButtonSpring && self.dampedSpringEnabled;
         
@@ -310,15 +307,6 @@ const float kRatchedRenderRadius = 30.0f;
         layoutControlBox.visible = NO;
         ratchetNode.visible = NO;
     }
-    
-    
-
-    springRestAngleHandle.highlighted = selectedBodyHandle & (1 << RotarySpringRestAngleHandle);
-    referenceAngleHandle.highlighted = selectedBodyHandle & (1 << ReferenceAngleHandle);
-    limitMinHandle.highlighted = selectedBodyHandle & (1 << LimitMinHandle);
-    limitMaxHandle.highlighted = selectedBodyHandle & (1 << LimitMaxHandle);
-    ratchedValueHandle.highlighted = selectedBodyHandle& (1 << RatchedHandle);
-    ratchedPhaseHandle.highlighted =selectedBodyHandle & (1 << RatchedPhaseHandle);
     
     [super updateSelectionUI];
 }
@@ -437,7 +425,9 @@ const float kRatchedRenderRadius = 30.0f;
     if(bodyType == RatchedPhaseHandle)
     {
         float degAngle = [self rotationFromWorldPos:worldPos];
-        self.ratchetPhase = degAngle - self.referenceAngle;
+        
+        self.ratchetPhase = 360.0f * degAngle/self.ratchetValue;
+        
     }
 }
 
@@ -588,57 +578,37 @@ const float kRatchedRenderRadius = 30.0f;
     
     if(self.dampedSpringEnabled)
     {
-        CGPoint pointHit = [springRestAngleHandle.handle convertToNodeSpaceAR:worlPos];
-        if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-        {
+        if([springRestAngleHandle hitTestWithWorldPos:worlPos])
             return RotarySpringRestAngleHandle;
-        }
+        
     }
     
     if(self.limitEnabled)
     {
-        {
-            CGPoint pointHit = [limitMinHandle.handle convertToNodeSpaceAR:worlPos];
-            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-            {
-                return LimitMinHandle;
-            }
-        }
+        if([limitMinHandle hitTestWithWorldPos:worlPos])
+            return LimitMinHandle;
         
-        {
-            CGPoint pointHit = [limitMaxHandle.handle convertToNodeSpaceAR:worlPos];
-            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-            {
-                return LimitMaxHandle;
-            }
-        }
+        
+        if([limitMaxHandle hitTestWithWorldPos:worlPos])
+            return LimitMaxHandle;
+        
     }
     
     if(self.ratchetEnabled)
     {
-        {
-            CGPoint pointHit = [ratchedValueHandle.handle convertToNodeSpaceAR:worlPos];
-            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-            {
-                return RatchedHandle;
-            }
-        }
-        {
-            CGPoint pointHit = [ratchedPhaseHandle.handle convertToNodeSpaceAR:worlPos];
-            if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-            {
-                return RatchedPhaseHandle;
-            }
-        }
+        if([ratchedValueHandle hitTestWithWorldPos:worlPos])
+            return RatchedHandle;
+        
+        if([ratchedPhaseHandle hitTestWithWorldPos:worlPos])
+            return RatchedPhaseHandle;
+        
     }
     
     if(self.dampedSpringEnabled || self.limitEnabled  || self.ratchetEnabled)
     {
-        CGPoint pointHit = [referenceAngleHandle.handle convertToNodeSpaceAR:worlPos];
-        if(ccpLength(pointHit) < 4.0f* [CCDirector sharedDirector].UIScaleFactor)
-        {
+        if([referenceAngleHandle hitTestWithWorldPos:worlPos])
             return ReferenceAngleHandle;
-        }
+        
     }
     
     return [super hitTestJointHandle:worlPos];;
@@ -672,6 +642,9 @@ const float kRatchedRenderRadius = 30.0f;
 -(void)setRatchetPhase:(float)ratchetPhase
 {
     _ratchetPhase = ratchetPhase;
+    _ratchetPhase = fmaxf(0.0f,_ratchetPhase);
+    _ratchetPhase = fminf(360.0f,_ratchetPhase);
+    
     [[AppDelegate appDelegate]refreshProperty:@"ratchetPhase"];
 }
 
