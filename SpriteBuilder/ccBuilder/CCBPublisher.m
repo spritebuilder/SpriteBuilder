@@ -203,7 +203,9 @@
     {
         [self publishSpriteKitAtlasDir:[outputDir stringByDeletingLastPathComponent]
                              sheetName:[outputDir lastPathComponent]
-                               subPath:subPath];
+                               subPath:subPath
+                            publishDir:publishDirectory
+                             outputDir:outputDir];
     }
     else
     {
@@ -435,7 +437,7 @@
 			continue;
 		}
 
-        [self prepareImagesForSpriteSheetPublishing:publishDirectory outDir:outputDir resolution:resolution];
+        [self prepareImagesForSpriteSheetPublishing:publishDirectory outputDir:outputDir resolution:resolution];
 
         PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                      warnings:_warnings
@@ -463,7 +465,7 @@
             && !isDirty;
 }
 
-- (void)prepareImagesForSpriteSheetPublishing:(NSString *)publishDirectory outDir:(NSString *)outDir resolution:(NSString *)resolution
+- (void)prepareImagesForSpriteSheetPublishing:(NSString *)publishDirectory outputDir:(NSString *)outputDir resolution:(NSString *)resolution
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
@@ -482,13 +484,17 @@
             [self publishImageFile:filePath
                                 to:dstFile
                      isSpriteSheet:NO
-                         outputDir:outDir
+                         outputDir:outputDir
                         resolution:resolution];
         }
     }
 }
 
-- (void)publishSpriteKitAtlasDir:(NSString *)spriteSheetDir sheetName:(NSString *)spriteSheetName subPath:(NSString *)subPath
+- (void)publishSpriteKitAtlasDir:(NSString *)spriteSheetDir
+                       sheetName:(NSString *)spriteSheetName
+                         subPath:(NSString *)subPath
+                      publishDir:(NSString *)publishDir
+                       outputDir:(NSString *)outputDir
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
@@ -503,16 +509,18 @@
         return;
     }
 	
-	for (NSString* res in _publishForResolutions)
+	for (NSString* resolution in _publishForResolutions)
 	{
+        [self prepareImagesForSpriteSheetPublishing:publishDir outputDir:outputDir resolution:resolution];
+
         PublishSpriteKitSpriteSheetOperation *operation = [[PublishSpriteKitSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                      warnings:_warnings
                                                                                                statusProgress:_publishingTaskStatusProgress];
-        operation.resolution = res;
+        operation.resolution = resolution;
         operation.spriteSheetDir = spriteSheetDir;
         operation.spriteSheetName = spriteSheetName;
         operation.subPath = subPath;
-        operation.textureAtlasToolFilePath = textureAtlasPath;
+        operation.textureAtlasToolFilePath = textureAtlasToolLocation;
 
         [_publishingQueue addOperation:operation];
     }
