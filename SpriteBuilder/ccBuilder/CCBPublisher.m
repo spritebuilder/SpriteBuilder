@@ -57,11 +57,11 @@
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
 @property (nonatomic, copy) NSString *outputDir;
-@property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
-@property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) NSOperationQueue *publishingQueue;
 @property (nonatomic) CCBPublisherTargetType targetType;
+@property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
+@property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 
 @end
 
@@ -76,18 +76,17 @@
 		return NULL;
 	}
 
-    self.modifiedDatesCache = [[DateCache alloc] init];
+    self.projectSettings = someProjectSettings;
+    self.warnings = someWarnings;
 
-    self.publishedPNGFiles = [NSMutableSet set];
+    self.modifiedDatesCache = [[DateCache alloc] init];
 
     self.publishingQueue = [[NSOperationQueue alloc] init];
     _publishingQueue.maxConcurrentOperationCount = 1;
 
-    self.projectSettings = someProjectSettings;
-    self.warnings = someWarnings;
-
     self.supportedFileExtensions = @[@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang"];
-    
+
+    self.publishedPNGFiles = [NSMutableSet set];
     self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
 
     return self;
@@ -383,7 +382,6 @@
     // Run after regular file has been copied, else png files cannot be found
     [_publishingQueue addOperationWithBlock:^
     {
-        // TODO: this can be generalized
         [_publishedPNGFiles addObjectsFromArray:[bmFontOutDir allPNGFilesInPath]];
     }];
 
