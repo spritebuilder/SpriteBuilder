@@ -17,6 +17,8 @@
 @property (nonatomic, copy) NSString *publishDirectory;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 
+// Prevents multiple creation of the same preview image of a spritesheet for different resolutions
+// Call before a sprite sheet is generated for multiple resolutions
 + (void)resetSpriteSheetPreviewsGeneration;
 
 @end

@@ -101,12 +101,10 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 - (void)generatePreviewFilePath
 {
     self.previewFilePath = nil;
-    NSLog(@"contains subpath? %@ - %@", _subPath, _resolution);
     if (![__spriteSheetPreviewsGenerated containsObject:_subPath])
     {
         self.previewFilePath = [_publishDirectory stringByAppendingPathExtension:@"ppng"];
         [__spriteSheetPreviewsGenerated addObject:_subPath];
-        NSLog(@"preview added %@ - %@", _subPath, self.previewFilePath);
     }
 }
 
