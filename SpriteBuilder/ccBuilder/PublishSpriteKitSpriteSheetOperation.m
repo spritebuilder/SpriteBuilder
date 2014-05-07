@@ -87,6 +87,7 @@
                                   resolution:_resolution];
     }
 
+    // NOTE: not needed anymore publishedResources was used for HTML5 publishing only and that won't be revived (NW)
     // TODO: ?? because SK TextureAtlas tool itself checks if the spritesheet needs to be updated
     /*
      [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];

@@ -14,7 +14,6 @@
 @property (nonatomic, copy) NSString *outputDir;
 @property (nonatomic, copy) NSString *resolution;
 
-@property (nonatomic, strong) NSMutableSet *publishedResources;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) PublishRenamedFilesLookup *fileLookup;
 

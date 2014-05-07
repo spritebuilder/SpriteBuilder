@@ -36,7 +36,6 @@
     NSAssert(_dstFilePath != nil, @"dstPath should not be nil");
     NSAssert(_outputDir != nil, @"outDir should not be nil");
     NSAssert(_resolution != nil, @"resolution should not be nil");
-    NSAssert(_publishedResources != nil, @"publishedResources should not be nil");
     NSAssert(_publishedPNGFiles != nil, @"publishedPNGFiles should not be nil");
     NSAssert(_fileLookup != nil, @"fileLookup should not be nil");
 }
@@ -51,8 +50,6 @@
     {
         return;
     }
-
-    [_publishedResources addObject:relPath];
 
     [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Publishing %@...", [_dstFilePath lastPathComponent]]];
 

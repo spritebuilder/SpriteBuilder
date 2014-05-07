@@ -57,7 +57,6 @@
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
 @property (nonatomic, copy) NSString *outputDir;
-@property (nonatomic, strong) NSMutableSet *publishedResources;
 @property (nonatomic, strong) NSMutableArray *publishedSpriteSheetNames;
 @property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
@@ -122,7 +121,6 @@
     operation.outputDir = outputDir;
     operation.resolution = resolution;
     operation.targetType = _targetType;
-    operation.publishedResources = _publishedResources;
     operation.modifiedFileDateCache = _modifiedDatesCache;
     operation.publishedPNGFiles = _publishedPNGFiles;
     operation.fileLookup = _fileLookup;
@@ -368,11 +366,6 @@
     NSString *dstFile = [[outputDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
                                  stringByAppendingPathExtension:_projectSettings.exporter];
 
-    // Add file to list of published files
-    NSString *localFileName = [dstFile relativePathFromBaseDirPath:_outputDir];
-    // TODO: move to base class or to a delegate
-    [_publishedResources addObject:localFileName];
-
     PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:_projectSettings
                                                                                  warnings:_warnings
                                                                            statusProgress:_publishingTaskStatusProgress];
@@ -459,9 +452,6 @@
 
         [_publishingQueue addOperation:operation];
 	}
-	
-	[_publishedResources addObject:[subPath stringByAppendingPathExtension:@"plist"]];
-	[_publishedResources addObject:[subPath stringByAppendingPathExtension:@"png"]];
 }
 
 - (BOOL)spriteSheetExistsAndUpToDate:(NSDate *)srcSpriteSheetDate spriteSheetFile:(NSString *)spriteSheetFile subPath:(NSString *)subPath
@@ -544,8 +534,6 @@
 - (BOOL)publishAllToDirectory:(NSString*)dir
 {
     self.outputDir = dir;
-    
-    self.publishedResources = [NSMutableSet set];
     self.fileLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
     // Publish resources and ccb-files
