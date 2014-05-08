@@ -3079,8 +3079,7 @@ static BOOL hideAllToNextSeparator;
 - (void)publishAndRun:(BOOL)run async:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
-        && !projectSettings.publishEnablediPhone
-        && !projectSettings.publishEnabledHTML5)
+        && !projectSettings.publishEnablediPhone)
     {
         if(async)
             [self modalDialogTitle:@"Published Failed" message:@"There are no configured publish target platforms. Please check your Publish Settings."];

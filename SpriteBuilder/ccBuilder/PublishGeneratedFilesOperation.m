@@ -39,38 +39,11 @@
         return;
     }
 
-    if (_targetType == kCCBPublisherTargetTypeIPhone
-        || _targetType == kCCBPublisherTargetTypeAndroid)
-    {
-        // TODO: Is this actually needed any more?
-        [self generateMainJSFile];
-    }
-
     [self generateFileLookup];
 
     [self generateSpriteFrameFileList];
 
     [self generateCocos2dSetupFile];
-}
-
-- (void)generateMainJSFile
-{
-    if (_projectSettings.javascriptBased
-        && _projectSettings.javascriptMainCCB
-        && ![_projectSettings.javascriptMainCCB isEqualToString:@""]
-        && ![self fileExistInResourcePaths:@"main.js"])
-    {
-        // Find all jsFiles
-        NSArray *jsFiles = [CCBFileUtil filesInResourcePathsWithExtension:@"js"];
-        NSString *mainFile = [_outputDir stringByAppendingPathComponent:@"main.js"];
-
-        // Generate file from template
-        CCBPublisherTemplate *tmpl = [CCBPublisherTemplate templateWithFile:@"main-jsb.txt"];
-        [tmpl setStrings:jsFiles forMarker:@"REQUIRED_FILES" prefix:@"require(\"" suffix:@"\");\n"];
-        [tmpl setString:_projectSettings.javascriptMainCCB forMarker:@"MAIN_SCENE"];
-
-        [tmpl writeToFile:mainFile];
-    }
 }
 
 - (void)generateCocos2dSetupFile
@@ -107,7 +80,6 @@
     [configCocos2d writeToFile:configCocos2dFile atomically:YES];
 }
 
-// TODO: is this a spriteFrameList or a dictionary for the publishedSpriteSheet files?
 - (void)generateSpriteFrameFileList
 {
     NSMutableDictionary*spriteFrameFileList = [NSMutableDictionary dictionary];
@@ -125,18 +97,6 @@
 - (void)generateFileLookup
 {
     [_fileLookup writeToFileAtomically:[_outputDir stringByAppendingPathComponent:@"fileLookup.plist"]];
-}
-
-- (BOOL) fileExistInResourcePaths:(NSString*)fileName
-{
-    for (NSString* dir in _projectSettings.absoluteResourcePaths)
-    {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[dir stringByAppendingPathComponent:fileName]])
-        {
-            return YES;
-        }
-    }
-    return NO;
 }
 
 - (NSString *)description
