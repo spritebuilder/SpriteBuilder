@@ -1305,7 +1305,7 @@ CA
                             </box>
                         </subviews>
                     </customView>
-                    <splitView canDrawConcurrently="YES" dividerStyle="thin" id="1530" userLabel="Center HorSplit Panel" customClass="CCBSplitHorizontalView">
+                    <splitView canDrawConcurrently="YES" autosaveName="CentralPaneFrame" dividerStyle="thin" id="1530" userLabel="Center HorSplit Panel" customClass="CCBSplitHorizontalView">
                         <rect key="frame" x="250" y="0.0" width="601" height="678"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
