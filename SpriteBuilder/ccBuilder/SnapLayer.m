@@ -97,12 +97,12 @@
 
 -(void) buildGrid {
     
+    [verticalGridLines removeAllObjects];
+    [horizontalGridLines removeAllObjects];
+    
     if(!gridActive) return;
     
     CocosScene *cs = [CocosScene cocosScene];
-    
-    [verticalGridLines removeAllObjects];
-    [horizontalGridLines removeAllObjects];
     
     for(int x=0;x<=cs.stageSize.width;x+=gridSize) {
         [verticalGridLines addObject:[NSNumber numberWithFloat:x]];
@@ -300,84 +300,91 @@
 - (void)snapIfNeeded {
     
     if(!optionKeyDown) {
+        
         // Don't snap if the user is holding down the option key
         for(CCNode *sNode in appDelegate.selectedNodes) {
+            
             if(sNode && sNode.parent) {
+                
                 CGPoint currentLocationInPoints = sNode.positionInPoints;
                 CocosScene* cs = [CocosScene cocosScene];
                 
                 // Try and snap with all children of the selected node's parent
                 NSMutableArray *nodesToSearchForSnapping = [NSMutableArray arrayWithArray:sNode.parent.children];
                 
-                for(CCNode *node in nodesToSearchForSnapping) {
-                    if(node != sNode) { // Ignore the selected node
-                        NSPoint point = [sNode convertPositionToPoints:sNode.position type:sNode.positionType];
-                        NSPoint nPoint = [sNode convertPositionToPoints:node.position type:node.positionType];
-                        
-                        float newX = point.x;
-                        float newY = point.y;
-                        
-                        // Snap from anchorPoint
-                        if(abs(point.x - nPoint.x) < sensitivity) {
-                            newX = nPoint.x;
-                        } if(abs(point.y - nPoint.y) < sensitivity) {
-                            newY = nPoint.y;
-                        }
-                        CGPoint pointToSnapFromAnchorPoint = [sNode convertPositionFromPoints:NSMakePoint(newX, newY) type:sNode.positionType];
-                        appDelegate.selectedNode.position = pointToSnapFromAnchorPoint;
-                        
-                        // Snap from center
-                        if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (node.leftInPoints + node.contentSizeInPoints.width / 2)) < sensitivity) {
-                            sNode.leftInPoints = node.leftInPoints + node.contentSizeInPoints.width / 2 - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
-                        } if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (node.bottomInPoints + node.contentSizeInPoints.height / 2)) < sensitivity) {
-                            sNode.bottomInPoints = node.bottomInPoints + node.contentSizeInPoints.height / 2 - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
-                        }
-                        
-                        // Snap to opposite sides
-                        if(abs(sNode.leftInPoints - node.rightInPoints) < sensitivity) {
-                            sNode.leftInPoints = node.rightInPoints;
-                        } else if(abs(sNode.rightInPoints - node.leftInPoints) < sensitivity) {
-                            sNode.rightInPoints = node.leftInPoints;
-                        }
-                        if(abs(sNode.topInPoints - node.bottomInPoints) < sensitivity) {
-                            sNode.topInPoints = node.bottomInPoints;
-                        } else if(abs(sNode.bottomInPoints - node.topInPoints) < sensitivity) {
-                            sNode.bottomInPoints = node.topInPoints;
-                            newY = sNode.position.y;
-                        }
-                        
-                        // Snap to same sides
-                        if(abs(sNode.leftInPoints - node.leftInPoints) < sensitivity) {
-                            sNode.leftInPoints = node.leftInPoints;
-                        } else if(abs(sNode.rightInPoints - node.rightInPoints) < sensitivity) {
-                            sNode.rightInPoints = node.rightInPoints;
-                        }
-                        if(abs(sNode.topInPoints - node.topInPoints) < sensitivity) {
-                            sNode.topInPoints = node.topInPoints;
-                        } else if(abs(sNode.bottomInPoints - node.bottomInPoints) < sensitivity) {
-                            sNode.bottomInPoints = node.bottomInPoints;
-                        }
+                if(snapActive) {
                     
+                    for(CCNode *node in nodesToSearchForSnapping) {
+                        
+                        if(node != sNode) { // Ignore the selected node
+                            NSPoint point = [sNode convertPositionToPoints:sNode.position type:sNode.positionType];
+                            NSPoint nPoint = [sNode convertPositionToPoints:node.position type:node.positionType];
+                            
+                            float newX = point.x;
+                            float newY = point.y;
+                            
+                            // Snap from anchorPoint
+                            if(abs(point.x - nPoint.x) < sensitivity) {
+                                newX = nPoint.x;
+                            } if(abs(point.y - nPoint.y) < sensitivity) {
+                                newY = nPoint.y;
+                            }
+                            CGPoint pointToSnapFromAnchorPoint = [sNode convertPositionFromPoints:NSMakePoint(newX, newY) type:sNode.positionType];
+                            appDelegate.selectedNode.position = pointToSnapFromAnchorPoint;
+                            
+                            // Snap from center
+                            if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (node.leftInPoints + node.contentSizeInPoints.width / 2)) < sensitivity) {
+                                sNode.leftInPoints = node.leftInPoints + node.contentSizeInPoints.width / 2 - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
+                            } if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (node.bottomInPoints + node.contentSizeInPoints.height / 2)) < sensitivity) {
+                                sNode.bottomInPoints = node.bottomInPoints + node.contentSizeInPoints.height / 2 - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
+                            }
+                            
+                            // Snap to opposite sides
+                            if(abs(sNode.leftInPoints - node.rightInPoints) < sensitivity) {
+                                sNode.leftInPoints = node.rightInPoints;
+                            } else if(abs(sNode.rightInPoints - node.leftInPoints) < sensitivity) {
+                                sNode.rightInPoints = node.leftInPoints;
+                            }
+                            if(abs(sNode.topInPoints - node.bottomInPoints) < sensitivity) {
+                                sNode.topInPoints = node.bottomInPoints;
+                            } else if(abs(sNode.bottomInPoints - node.topInPoints) < sensitivity) {
+                                sNode.bottomInPoints = node.topInPoints;
+                                newY = sNode.position.y;
+                            }
+                            
+                            // Snap to same sides
+                            if(abs(sNode.leftInPoints - node.leftInPoints) < sensitivity) {
+                                sNode.leftInPoints = node.leftInPoints;
+                            } else if(abs(sNode.rightInPoints - node.rightInPoints) < sensitivity) {
+                                sNode.rightInPoints = node.rightInPoints;
+                            }
+                            if(abs(sNode.topInPoints - node.topInPoints) < sensitivity) {
+                                sNode.topInPoints = node.topInPoints;
+                            } else if(abs(sNode.bottomInPoints - node.bottomInPoints) < sensitivity) {
+                                sNode.bottomInPoints = node.bottomInPoints;
+                            }
+                            
+                        }
                     }
-                }
-                
-                if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < sensitivity) {
-                    sNode.leftInPoints = (sNode.parent.contentSizeInPoints.width / 2) - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
-                }
-                if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (sNode.parent.contentSizeInPoints.height / 2)) < sensitivity) {
-                    sNode.bottomInPoints = (sNode.parent.contentSizeInPoints.height / 2) - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
-                }
-                
-                // Snap to sides to edge of view
-                if(abs(sNode.leftInPoints) < sensitivity) {
-                    sNode.leftInPoints = 0;
-                } else if(abs(sNode.rightInPoints - sNode.parent.contentSizeInPoints.width) < sensitivity) {
-                    sNode.rightInPoints = sNode.parent.contentSizeInPoints.width;
-                }
-                if(abs(sNode.topInPoints - sNode.parent.contentSizeInPoints.height) < sensitivity) {
-                    sNode.topInPoints = sNode.parent.contentSizeInPoints.height;
-                } else if(abs(sNode.bottomInPoints) < sensitivity) {
-                    sNode.bottomInPoints = 0;
+                    
+                    if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < sensitivity) {
+                        sNode.leftInPoints = (sNode.parent.contentSizeInPoints.width / 2) - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
+                    }
+                    if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (sNode.parent.contentSizeInPoints.height / 2)) < sensitivity) {
+                        sNode.bottomInPoints = (sNode.parent.contentSizeInPoints.height / 2) - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
+                    }
+                    
+                    // Snap to sides to edge of view
+                    if(abs(sNode.leftInPoints) < sensitivity) {
+                        sNode.leftInPoints = 0;
+                    } else if(abs(sNode.rightInPoints - sNode.parent.contentSizeInPoints.width) < sensitivity) {
+                        sNode.rightInPoints = sNode.parent.contentSizeInPoints.width;
+                    }
+                    if(abs(sNode.topInPoints - sNode.parent.contentSizeInPoints.height) < sensitivity) {
+                        sNode.topInPoints = sNode.parent.contentSizeInPoints.height;
+                    } else if(abs(sNode.bottomInPoints) < sensitivity) {
+                        sNode.bottomInPoints = 0;
+                    }
                 }
                 
                 // Snap to grid
@@ -469,11 +476,14 @@
 {
     BOOL success = YES;
     
+    /*
     if ([appDelegate.selectedNode hitTestWithWorldPos:pt]) {
         [self updateLines];
     } else {
         [drawLayer clear];
     }
+    */
+    [drawLayer clear];
     
     return success;
 }
