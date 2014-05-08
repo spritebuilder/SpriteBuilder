@@ -26,6 +26,7 @@
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "NSString+RelativePath.h"
+#import "CCBWarnings.h"
 
 @implementation PublishSettingsWindow
 
@@ -61,13 +62,13 @@
                 NSString* projectDir = [projectSettings.projectPath stringByDeletingLastPathComponent];
                 NSString* relDirName = [dirName relativePathFromBaseDirPath:projectDir];
                 
-                int type = [sender tag];
+                CCBPublisherTargetType type = [sender tag];
                 
-                if (type == 0)
+                if (type == kCCBPublisherTargetTypeIPhone)
                 {
                     projectSettings.publishDirectory = relDirName;
                 }
-                else if (type == 1)
+                else if (type == kCCBPublisherTargetTypeAndroid)
                 {
                     projectSettings.publishDirectoryAndroid = relDirName;
                 }
