@@ -62,12 +62,10 @@ typedef enum
     
     NSString* publishDirectory;
     NSString* publishDirectoryAndroid;
-    NSString* publishDirectoryHTML5;
-    
+
     BOOL publishEnablediPhone;
     BOOL publishEnabledAndroid;
-    BOOL publishEnabledHTML5;
-    
+
     BOOL publishResolution_ios_phone;
     BOOL publishResolution_ios_phonehd;
     BOOL publishResolution_ios_tablet;
@@ -76,10 +74,6 @@ typedef enum
     BOOL publishResolution_android_phonehd;
     BOOL publishResolution_android_tablet;
     BOOL publishResolution_android_tablethd;
-    
-    int publishResolutionHTML5_width;
-    int publishResolutionHTML5_height;
-    int publishResolutionHTML5_scale;
     
     int publishAudioQuality_ios;
     int publishAudioQuality_android;
@@ -90,11 +84,9 @@ typedef enum
     
     BOOL flattenPaths;
     BOOL publishToZipFile;
-    BOOL javascriptBased;
     BOOL onlyPublishCCBs;
     NSString* exporter;
     NSMutableArray* availableExporters;
-    NSString* javascriptMainCCB;
     BOOL deviceOrientationPortrait;
     BOOL deviceOrientationUpsideDown;
     BOOL deviceOrientationLandscapeLeft;
@@ -115,11 +107,9 @@ typedef enum
 
 @property (nonatomic,assign) BOOL publishEnablediPhone;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
-@property (nonatomic,assign) BOOL publishEnabledHTML5;
 
 @property (nonatomic, copy) NSString* publishDirectory;
 @property (nonatomic, copy) NSString* publishDirectoryAndroid;
-@property (nonatomic, copy) NSString* publishDirectoryHTML5;
 
 @property (nonatomic,assign) BOOL publishResolution_ios_phone;
 @property (nonatomic,assign) BOOL publishResolution_ios_phonehd;
@@ -130,10 +120,6 @@ typedef enum
 @property (nonatomic,assign) BOOL publishResolution_android_tablet;
 @property (nonatomic,assign) BOOL publishResolution_android_tablethd;
 
-@property (nonatomic,assign) int publishResolutionHTML5_width;
-@property (nonatomic,assign) int publishResolutionHTML5_height;
-@property (nonatomic,assign) int publishResolutionHTML5_scale;
-
 @property (nonatomic,assign) int publishAudioQuality_ios;
 @property (nonatomic,assign) int publishAudioQuality_android;
 
@@ -141,10 +127,8 @@ typedef enum
 @property (nonatomic,assign) BOOL isChromeExist;
 @property (nonatomic,assign) BOOL isFirefoxExist;
 
-@property (nonatomic, copy) NSString* javascriptMainCCB;
 @property (nonatomic, assign) BOOL flattenPaths;
 @property (nonatomic, assign) BOOL publishToZipFile;
-@property (nonatomic, assign) BOOL javascriptBased;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
 @property (nonatomic, readonly) NSArray* absoluteResourcePaths;
 @property (nonatomic, copy) NSString* exporter;

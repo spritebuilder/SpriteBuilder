@@ -71,10 +71,6 @@
                 {
                     projectSettings.publishDirectoryAndroid = relDirName;
                 }
-                else if (type == 2)
-                {
-                    projectSettings.publishDirectoryHTML5 = relDirName;
-                }
             }
             
             [[[CCDirector sharedDirector] view] unlockOpenGLContext];
