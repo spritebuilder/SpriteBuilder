@@ -13,8 +13,11 @@
 - (BOOL) mouseDown:(CGPoint)pt event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pt event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pt event:(NSEvent*)event;
-- (void)updateLines;
+- (void) updateLines;
 
 @property (nonatomic) CCNode *selectedNode;
+
+@property (nonatomic, readwrite) BOOL gridActive;
+@property (nonatomic, readwrite) BOOL snapActive;
 
 @end

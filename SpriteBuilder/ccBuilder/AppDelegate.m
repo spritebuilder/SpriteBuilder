@@ -137,6 +137,8 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize projectOutlineHandler;
 @synthesize showGuides;
 @synthesize snapToGuides;
+@synthesize snapGrid;
+@synthesize snapNode;
 @synthesize guiView;
 @synthesize guiWindow;
 @synthesize showStickyNotes;
@@ -602,6 +604,9 @@ typedef enum
     self.showGuides = YES;
     self.snapToGuides = YES;
     self.showStickyNotes = YES;
+    
+    self.snapGrid = NO;
+    self.snapNode = NO;
 	
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;

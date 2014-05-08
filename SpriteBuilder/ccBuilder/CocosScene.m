@@ -2057,6 +2057,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     notesLayer.visible = appDelegate.showStickyNotes;
     [notesLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
     
+    // Update Grid Snap
+    snapLayer.gridActive = appDelegate.snapGrid;
+    
+    // Update Node Snap
+    snapLayer.snapActive = appDelegate.snapNode;
+
     if (winSizeChanged)
     {
         // Update mouse tracking
