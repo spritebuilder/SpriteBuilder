@@ -618,6 +618,12 @@ typedef enum
 	{
 		[self openFiles:delayOpenFiles];
 		delayOpenFiles = nil;
+	} else {
+		// Load previously loaded project
+		NSString *buf = [def valueForKey:@"LastOpenProject"];
+		if (buf && [buf length] > 0) {
+			[self openProject:buf];
+		}
 	}
     
     // Check for first run
@@ -4852,6 +4858,13 @@ static BOOL hideAllToNextSeparator;
 	[def setBool:[panelVisibilityControl isSelectedForSegment:0] forKey:@"LeftPaneVisible"];
 	[def setBool:[panelVisibilityControl isSelectedForSegment:1] forKey:@"BottomPaneVisible"];
 	[def setBool:[panelVisibilityControl isSelectedForSegment:2] forKey:@"RightPaneVisible"];
+	// Save current project info
+	NSString *buf = @"";
+	if (projectSettings) {
+		buf = projectSettings.projectPath;
+		buf = [buf stringByDeletingLastPathComponent];
+	}
+	[def setValue:buf forKey:@"LastOpenProject"];
 	[def synchronize];
 	// Terminate
     [[NSApplication sharedApplication] terminate:self];
