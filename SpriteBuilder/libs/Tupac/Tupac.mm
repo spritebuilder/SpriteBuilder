@@ -588,7 +588,6 @@ typedef struct _PVRTexHeader
 {
     [_formatConverter cancel];
     cancelled_ = YES;
-    [self setErrorMessage:@"Cancelled by user"];
 }
 
 @end
