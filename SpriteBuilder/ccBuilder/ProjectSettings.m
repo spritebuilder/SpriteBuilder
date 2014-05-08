@@ -28,7 +28,6 @@
 #import "PlugInManager.h"
 #import "PlugInExport.h"
 #import "ResourceManager.h"
-#import "ResourceManagerUtil.h"
 #import "AppDelegate.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "CCBWarnings.h"
@@ -320,16 +319,6 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     return [[[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"display"]stringByAppendingPathComponent:self.projectPathHashed];
 }
-
-/*
-- (NSString*) publishCacheDirectory
-{
-    NSString* uuid = [PlayerConnection sharedPlayerConnection].selectedDeviceInfo.uuid;
-    NSAssert(uuid, @"No uuid for selected device");
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [[[[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"publish"]stringByAppendingPathComponent:self.projectPathHashed] stringByAppendingPathComponent:uuid];
-}*/
 
 @dynamic tempSpriteSheetCacheDirectory;
 - (NSString*) tempSpriteSheetCacheDirectory
