@@ -603,6 +603,13 @@ typedef enum
     self.snapToGuides = YES;
     self.showStickyNotes = YES;
 	
+	// Restore previous window state
+	NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+	[panelVisibilityControl setSelected:[def boolForKey:@"LeftPaneVisible"] forSegment:0];
+	[panelVisibilityControl setSelected:[def boolForKey:@"BottomPaneVisible"] forSegment:1];
+	[panelVisibilityControl setSelected:[def boolForKey:@"RightPaneVisible"] forSegment:2];
+	[self pressedPanelVisibility:panelVisibilityControl];
+	
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
@@ -3747,6 +3754,8 @@ static BOOL hideAllToNextSeparator;
     NSSegmentedControl* sc = sender;
     [window disableUpdatesUntilFlush];
     
+	
+	NSRect mainRect = splitHorizontalView.frame;
     // Left Panel
     if ([sc isSelectedForSegment:0]) {
         
@@ -3759,17 +3768,13 @@ static BOOL hideAllToNextSeparator;
                                                 origRect.size.height);
                                                      
             [leftPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(leftPanel.frame.size.width,
-                                         origRect.origin.y,
-                                         origRect.size.width-leftPanel.frame.size.width,
-                                         origRect.size.height);
+            mainRect = NSMakeRect(leftPanel.frame.size.width,
+                                         mainRect.origin.y,
+                                         mainRect.size.width-leftPanel.frame.size.width,
+                                         mainRect.size.height);
                                                
-            [splitHorizontalView setFrame:transitionFrame];
-            
             [leftPanel setHidden:NO];
             [leftPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
         }
     } else {
         
@@ -3782,17 +3787,13 @@ static BOOL hideAllToNextSeparator;
                                                  origRect.size.height);
                                                       
             [leftPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(0,
-                                         origRect.origin.y,
-                                         origRect.size.width+leftPanel.frame.size.width,
-                                         origRect.size.height);
+            mainRect = NSMakeRect(0,
+                                         mainRect.origin.y,
+                                         mainRect.size.width+leftPanel.frame.size.width,
+                                         mainRect.size.height);
                                          
-            [splitHorizontalView setFrame:transitionFrame];
-            
             [leftPanel setHidden:YES];
             [leftPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
         }
     }
     
@@ -3810,15 +3811,12 @@ static BOOL hideAllToNextSeparator;
                                                 origRect.size.height);
                                                 
             [rightPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(origRect.origin.x,
-                                        origRect.origin.y,
-                                        origRect.size.width-rightPanel.frame.size.width,
-                                         origRect.size.height);
+            mainRect = NSMakeRect(mainRect.origin.x,
+                                        mainRect.origin.y,
+                                        mainRect.size.width-rightPanel.frame.size.width,
+                                         mainRect.size.height);
                                         
-            [splitHorizontalView setFrame:transitionFrame];
             [rightPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
         }
     } else {
         
@@ -3831,22 +3829,20 @@ static BOOL hideAllToNextSeparator;
                                                 origRect.size.height);
                                                       
             [rightPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(origRect.origin.x,
-                                         origRect.origin.y,
-                                         origRect.size.width+rightPanel.frame.size.width,
-                                         origRect.size.height);
+            mainRect = NSMakeRect(mainRect.origin.x,
+                                         mainRect.origin.y,
+                                         mainRect.size.width+rightPanel.frame.size.width,
+                                         mainRect.size.height);
                                                
-            [splitHorizontalView setFrame:transitionFrame];
             [rightPanel setHidden:YES];
             [rightPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
         }
     }
     
-    if ([sc selectedSegment] == 1) {
-        [splitHorizontalView toggleBottomView:[sc isSelectedForSegment:1]];
-    }
+	[splitHorizontalView toggleBottomView:[sc isSelectedForSegment:1]];
+	[splitHorizontalView setFrame:mainRect];
+	[splitHorizontalView setNeedsDisplay:YES];
+	
 }
 
 - (int) uniqueSequenceIdFromSequences:(NSArray*) seqs
@@ -4851,6 +4847,13 @@ static BOOL hideAllToNextSeparator;
 
 - (void) windowWillClose:(NSNotification *)notification
 {
+	// Save main panel settings
+	NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+	[def setBool:[panelVisibilityControl isSelectedForSegment:0] forKey:@"LeftPaneVisible"];
+	[def setBool:[panelVisibilityControl isSelectedForSegment:1] forKey:@"BottomPaneVisible"];
+	[def setBool:[panelVisibilityControl isSelectedForSegment:2] forKey:@"RightPaneVisible"];
+	[def synchronize];
+	// Terminate
     [[NSApplication sharedApplication] terminate:self];
 }
 
