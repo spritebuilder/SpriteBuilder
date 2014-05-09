@@ -164,8 +164,13 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     contentLayer.name = @"contentLayer";
     contentLayer.contentSizeType = CCSizeTypeNormalized;
     contentLayer.contentSize = CGSizeMake(1, 1);
-    [stageBgLayer addChild:contentLayer];
     
+    anchorPointCompensationLayer = [CCNode node];
+    anchorPointCompensationLayer.contentSizeType = CCSizeTypeNormalized;
+    anchorPointCompensationLayer.contentSize = CGSizeMake(1, 1);
+    
+    [stageBgLayer addChild:anchorPointCompensationLayer];
+    [anchorPointCompensationLayer addChild:contentLayer];
     
     stageJointsLayer = [CCNode node];
     stageJointsLayer.name = @"stageJointsLayer";
@@ -1588,6 +1593,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         [appDelegate saveUndoStateWillChangeProperty:@"anchorPoint"];
         transformScalingNode.anchorPoint = ccpAdd(transformScalingNode.transformStartPosition, deltaAnchorPoint);
         [appDelegate refreshProperty:@"anchorPoint"];
+        
+        [self updateAnchorPointCompensation];
     }
     else if (isPanning)
     {
@@ -2079,6 +2086,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     if(snapLinesNeedUpdate) { // Update the snapping lines if the user is scrolling
         [snapLayer updateLines];
         snapLinesNeedUpdate = NO;
+    }
+    
+    [self updateAnchorPointCompensation];
+}
+
+- (void) updateAnchorPointCompensation
+{
+    if (rootNode)
+    {
+        CGPoint compensation = ccp(rootNode.anchorPoint.x * contentLayer.contentSizeInPoints.width,
+                                   rootNode.anchorPoint.y * contentLayer.contentSizeInPoints.height);
+        anchorPointCompensationLayer.position = compensation;
     }
 }
 

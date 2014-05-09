@@ -80,6 +80,7 @@ enum {
     CCNodeColor* bgLayer;
     CCNodeColor* stageBgLayer;
     CCNode     * stageJointsLayer;
+    CCNode* anchorPointCompensationLayer;
     CCNode* contentLayer;
     CCNode* selectionLayer;
     CCNode* physicsLayer;
