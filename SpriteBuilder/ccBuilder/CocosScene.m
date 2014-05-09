@@ -511,7 +511,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 CGPoint localAnchor = ccp(node.anchorPoint.x * node.contentSizeInPoints.width,
                                           node.anchorPoint.y * node.contentSizeInPoints.height);
                 
-                CGPoint anchorPointPos = [node convertToWorldSpace:localAnchor];
+                CGPoint anchorPointPos = ccpRound([node convertToWorldSpace:localAnchor]);
                 
                 CCSprite* anchorPointSprite = [CCSprite spriteWithImageNamed:@"select-pt.png"];
                 anchorPointSprite.position = anchorPointPos;
