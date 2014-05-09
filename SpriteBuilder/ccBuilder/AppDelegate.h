@@ -358,7 +358,7 @@ enum {
 - (void) openFile:(NSString*) fileName;
 
 // Publish commands
-- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser async:(BOOL)async;
+- (void)publishAndRun:(BOOL)run async:(BOOL)async;
 
 // Menu options
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent;
@@ -431,7 +431,6 @@ enum {
 
 // Publishing & running
 - (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings;
-- (IBAction) menuPublishProjectAndRun:(id)sender;
 
 // For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;
@@ -454,4 +453,5 @@ enum {
 @property (weak) IBOutlet NSTableView *warningTableView;
 
 @property (weak) IBOutlet NSView *inspectorPhysics;
+
 @end

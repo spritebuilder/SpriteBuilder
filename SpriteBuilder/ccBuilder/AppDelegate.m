@@ -655,30 +655,41 @@ typedef enum
     }
 }
 
-- (void) modalStatusWindowStartWithTitle:(NSString*)title
+- (void)modalStatusWindowStartWithTitle:(NSString *)title isIndeterminate:(BOOL)isIndeterminate onCancelBlock:(OnCancelBlock)onCancelBlock
 {
     if (!modalTaskStatusWindow)
     {
         modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     }
-    
+
+    modalTaskStatusWindow.indeterminate = isIndeterminate;
+    modalTaskStatusWindow.onCancelBlock = onCancelBlock;
     modalTaskStatusWindow.window.title = title;
     [modalTaskStatusWindow.window center];
     [modalTaskStatusWindow.window makeKeyAndOrderFront:self];
-    
+
     [[NSApplication sharedApplication] runModalForWindow:modalTaskStatusWindow.window];
+}
+
+- (void) modalStatusWindowStartWithTitle:(NSString*)title
+{
+    [self modalStatusWindowStartWithTitle:title isIndeterminate:NO onCancelBlock:nil];
 }
 
 - (void) modalStatusWindowFinish
 {
+    modalTaskStatusWindow.indeterminate = YES;
+    modalTaskStatusWindow.onCancelBlock = nil;
     [[NSApplication sharedApplication] stopModal];
     [modalTaskStatusWindow.window orderOut:self];
+    modalTaskStatusWindow = nil;
 }
 
 - (void) modalStatusWindowUpdateStatusText:(NSString*) text
 {
-    modalTaskStatusWindow.status = text;
+    [modalTaskStatusWindow updateStatusText:text];
 }
+
 
 #pragma mark Handling the gui layer
 
@@ -3070,25 +3081,16 @@ static BOOL hideAllToNextSeparator;
 }
 
 
-- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser async:(BOOL)async
+- (void)publishAndRun:(BOOL)run async:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
-        && !projectSettings.publishEnablediPhone
-        && !projectSettings.publishEnabledHTML5)
+        && !projectSettings.publishEnablediPhone)
     {
         if(async)
             [self modalDialogTitle:@"Published Failed" message:@"There are no configured publish target platforms. Please check your Publish Settings."];
         
         return;
     }
-    
-    CCBWarnings* warnings = [[CCBWarnings alloc] init];
-    warnings.warningsDescription = @"Publisher Warnings";
-    
-    // Setup publisher, publisher is released in publisher:finishedWithWarnings:
-    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
-    publisher.runAfterPublishing = run;
-    publisher.browser = browser;
     
     // Check if there are unsaved documents
     if ([self hasDirtyDocument])
@@ -3107,16 +3109,7 @@ static BOOL hideAllToNextSeparator;
                 // Falling through to publish
             case NSAlertOtherReturn:
                 // Open progress window and publish
-                if(async)
-                {
-                    [publisher publishAsync];
-                    [self modalStatusWindowStartWithTitle:@"Publishing"];
-                    [self modalStatusWindowUpdateStatusText:@"Starting up..."];
-                }
-                else
-                {
-                    [publisher publish];
-                }
+                [self publishStartAsync:async run:run];
                 break;
             default:
                 break;
@@ -3124,17 +3117,34 @@ static BOOL hideAllToNextSeparator;
     }
     else
     {
-        // Open progress window and publish
-        if(async)
+        [self publishStartAsync:async run:run];
+    }
+}
+
+- (void)publishStartAsync:(BOOL)async run:(BOOL)run
+{
+    CCBWarnings* warnings = [[CCBWarnings alloc] init];
+    warnings.warningsDescription = @"Publisher Warnings";
+
+    // Setup publisher, publisher is released in publisher:finishedWithWarnings:
+    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
+    modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
+    publisher.taskStatusUpdater = modalTaskStatusWindow;
+    publisher.runAfterPublishing = run;
+
+    // Open progress window and publish
+    if (async)
+    {
+        [publisher startAsync];
+        [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
         {
-            [publisher publishAsync];
-            [self modalStatusWindowStartWithTitle:@"Publishing"];
-            [self modalStatusWindowUpdateStatusText:@"Starting up..."];
-        }
-        else
-        {
-            [publisher publish];
-        }
+            [publisher cancel];
+        }];
+        [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+    }
+    else
+    {
+        [publisher start];
     }
 }
 
@@ -3153,25 +3163,11 @@ static BOOL hideAllToNextSeparator;
     {
         [projectViewTabs selectBarButtonIndex:3];
     }
-    
-    
-    
 }
 
 - (IBAction) menuPublishProject:(id)sender
 {
-    [self publishAndRun:NO runInBrowser:NULL async:YES];
-}
-
-- (IBAction) menuPublishProjectAndRun:(id)sender
-{
-    [self publishAndRun:YES runInBrowser:NULL async:YES];
-}
-
-- (IBAction)menuPublishProjectAndRunInBrowser:(id)sender
-{
-    NSMenuItem* item = (NSMenuItem *)sender;
-    [self publishAndRun:YES runInBrowser:item.title async:YES];
+    [self publishAndRun:NO async:YES];
 }
 
 - (IBAction) menuCleanCacheDirectories:(id)sender

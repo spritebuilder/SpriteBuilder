@@ -24,6 +24,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class FCFormatConverter;
+
 @interface Tupac : NSObject
 {
     NSString* errorMessage;
@@ -49,6 +51,8 @@
 
 - (NSArray *)createTextureAtlasFromDirectoryPaths:(NSArray *)dirs;
 - (NSArray *)createTextureAtlas;
+
+- (void)cancel;
 
 @end
 

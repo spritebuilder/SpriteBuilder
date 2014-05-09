@@ -366,6 +366,12 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 {
     NSString *versionFilePath = [[NSBundle mainBundle] pathForResource:@"cocos2d_version" ofType:@"txt" inDirectory:@"Generated"];
 
+    if (versionFilePath == nil)
+    {
+        LocalLog(@"[COCO2D-UPDATER] [ERROR] Generated/cocos2d_version.txt could not be found! Version cannot be determined. If developing, rerun scripts/BuildDistribution.sh and try again.");
+        return nil;
+    }
+
     NSError *error;
     NSString *result = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:&error];
     if (!result)

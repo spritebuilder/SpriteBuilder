@@ -28,21 +28,51 @@
 
 @synthesize status;
 
-- (id)initWithWindow:(NSWindow *)window
+- (IBAction)onCancel:(id)sender
 {
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
+    if (_onCancelBlock)
+    {
+        _onCancelBlock();
     }
-    
-    return self;
+
+    [cancelButton setTitle:@"Cancelling..."];
+    [cancelButton setEnabled:NO];
 }
 
 - (void) windowDidLoad
 {
     [super windowDidLoad];
-    [progress startAnimation:self];
-    [progress setUsesThreadedAnimation:YES];
+    [progressIndicator startAnimation:self];
+    [progressIndicator setUsesThreadedAnimation:YES];
+
+    self.showCancelButton = YES;
+    if (_showCancelButton)
+    {
+        NSRect frame = [self.window frame];
+        frame.size = CGSizeMake(frame.size.width, frame.size.height + 28.0);
+        [self.window setFrame:frame display:YES animate:NO];
+    }
+
+    [progressIndicator setIndeterminate:self.indeterminate];
+}
+
+- (void)setIndeterminate:(BOOL)indeterminate
+{
+    _indeterminate = indeterminate;
+    [progressIndicator setIndeterminate:indeterminate];
+}
+
+
+#pragma mark - TaskStatusProtocol methods
+
+- (void)updateStatusText:(NSString *)text
+{
+    self.status = text;
+}
+
+- (void)setProgress:(double)newProgress
+{
+    [progressIndicator setDoubleValue:newProgress];
 }
 
 @end
