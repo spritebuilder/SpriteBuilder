@@ -42,7 +42,6 @@ enum {
 
 @interface CCBPublisher : NSObject
 
-@property (nonatomic, assign) BOOL runAfterPublishing;
 @property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
 - (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;

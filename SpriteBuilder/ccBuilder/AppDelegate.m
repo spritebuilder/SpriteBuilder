@@ -3075,8 +3075,7 @@ static BOOL hideAllToNextSeparator;
     [self switchToDocument:oldCurDoc forceReload:NO];
 }
 
-
-- (void)publishAndRun:(BOOL)run async:(BOOL)async
+- (void)checkForDirtyDocumentAndPublishAsync:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
         && !projectSettings.publishEnablediPhone)
@@ -3104,7 +3103,7 @@ static BOOL hideAllToNextSeparator;
                 // Falling through to publish
             case NSAlertOtherReturn:
                 // Open progress window and publish
-                [self publishStartAsync:async run:run];
+                [self publishStartAsync:async];
                 break;
             default:
                 break;
@@ -3112,11 +3111,11 @@ static BOOL hideAllToNextSeparator;
     }
     else
     {
-        [self publishStartAsync:async run:run];
+        [self publishStartAsync:async];
     }
 }
 
-- (void)publishStartAsync:(BOOL)async run:(BOOL)run
+- (void)publishStartAsync:(BOOL)async
 {
     CCBWarnings* warnings = [[CCBWarnings alloc] init];
     warnings.warningsDescription = @"Publisher Warnings";
@@ -3125,7 +3124,6 @@ static BOOL hideAllToNextSeparator;
     CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     publisher.taskStatusUpdater = modalTaskStatusWindow;
-    publisher.runAfterPublishing = run;
 
     // Open progress window and publish
     if (async)
@@ -3162,7 +3160,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuPublishProject:(id)sender
 {
-    [self publishAndRun:NO async:YES];
+    [self checkForDirtyDocumentAndPublishAsync:YES];
 }
 
 - (IBAction) menuCleanCacheDirectories:(id)sender

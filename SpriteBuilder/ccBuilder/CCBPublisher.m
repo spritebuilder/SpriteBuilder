@@ -566,21 +566,17 @@
 {
     [self removeOldPublishDirIfCacheCleaned];
 
-    if (!_runAfterPublishing)
+    if (![self publishForTargetType:kCCBPublisherTargetTypeIPhone])
     {
-
-        if (![self publishForTargetType:kCCBPublisherTargetTypeIPhone])
-        {
-            return NO;
-        }
+        return NO;
+    }
 
 /*
-        if (![self publishForTargetType:kCCBPublisherTargetTypeAndroid])
-        {
-            return NO;
-        }
-*/
+    if (![self publishForTargetType:kCCBPublisherTargetTypeAndroid])
+    {
+        return NO;
     }
+*/
 
     [_projectSettings clearAllDirtyMarkers];
 
