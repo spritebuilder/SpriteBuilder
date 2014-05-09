@@ -30,6 +30,7 @@
 @class RulersLayer;
 @class GuidesLayer;
 @class NotesLayer;
+@class SnapLayer;
 
 enum {
     kCCBParticleTypeExplosion = 0,
@@ -87,6 +88,7 @@ enum {
     RulersLayer* rulerLayer;
     GuidesLayer* guideLayer;
     NotesLayer* notesLayer;
+    SnapLayer* snapLayer;
     CCNode* rootNode;
     CCRenderTexture* renderedScene;
     AppDelegate* appDelegate;
@@ -108,6 +110,7 @@ enum {
     CCBTransformHandle currentMouseTransform;
     BOOL isMouseTransforming;
     BOOL isPanning;
+    BOOL snapLinesNeedUpdate;
     CGPoint scrollOffset;
     CGPoint panningStartScrollOffset;
     
@@ -144,6 +147,7 @@ enum {
 @property (nonatomic,readonly) GuidesLayer* guideLayer;
 @property (nonatomic,readonly) RulersLayer* rulerLayer;
 @property (nonatomic,readonly) NotesLayer* notesLayer;
+@property (nonatomic,readonly) SnapLayer* snapLayer;
 @property (nonatomic,readonly) CCNode * physicsLayer;
 
 // Used to creat the scene
@@ -172,6 +176,8 @@ enum {
 
 - (void) updateSelection;
 - (void) selectBehind;
+
+- (void) selectionUpdated;
 
 // Event handling forwarded by view
 - (void)mouseMoved:(NSEvent *)event;

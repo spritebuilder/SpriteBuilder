@@ -34,6 +34,7 @@
 #import "RulersLayer.h"
 #import "GuidesLayer.h"
 #import "NotesLayer.h"
+#import "SnapLayer.h"
 #import "CCBTransparentWindow.h"
 #import "CCBTransparentView.h"
 #import "PositionPropertySetter.h"
@@ -67,6 +68,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 @synthesize guideLayer;
 @synthesize rulerLayer;
 @synthesize notesLayer;
+@synthesize snapLayer;
 @synthesize physicsLayer;
 
 +(id) sceneWithAppDelegate:(AppDelegate*)app
@@ -105,6 +107,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     notesLayer = [NotesLayer node];
     [self addChild:notesLayer z:6];
     
+    // Snapping
+    snapLayer = [SnapLayer node];
+    [self addChild:snapLayer z:3];
     
     // Selection layer
     selectionLayer = [CCNode node];
@@ -362,7 +367,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 - (void) setStageSize: (CGSize) size centeredOrigin:(BOOL)centeredOrigin
 {
-    
+    snapLinesNeedUpdate = YES; // This will cause the snap/alignment lines to update after undo/redo are called
     stageBgLayer.contentSize = size;
     stageJointsLayer.contentSize = size;
 
@@ -422,6 +427,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     stageJointsLayer.scale = zoom;
     
     stageZoom = zoom;
+    snapLinesNeedUpdate = YES;
 }
 
 - (float) stageZoom
@@ -1133,6 +1139,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         }
     }
     
+    [snapLayer mouseDown:pos event:event];
+    
     return;
 }
 
@@ -1256,6 +1264,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     if (!appDelegate.hasOpenedDocument) return;
     [self mouseMoved:event];
     
+    BOOL updatedSnapLines = NO;
+    
     CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDragged:pos event:event]) return;
@@ -1361,6 +1371,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos type:selectedNode.positionType];
         }
         [appDelegate refreshProperty:@"position"];
+        [snapLayer mouseDragged:pos event:event]; // Updates the snap lines
+        updatedSnapLines = YES;
     }
     else if (currentMouseTransform == kCCBTransformHandleScale)
     {
@@ -1583,11 +1595,16 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         scrollOffset = ccpAdd(panningStartScrollOffset, delta);
     }
     
+    if(!updatedSnapLines) { // If it all ready updated don't update again
+        [snapLayer updateLines];
+    }
+    
     return;
 }
 
 - (void) updateAnimateablePropertyValue:(id)value propName:(NSString*)propertyName type:(int)type
 {
+    snapLinesNeedUpdate = YES;
     CCNode* selectedNode = appDelegate.selectedNode;
     
     NodeInfo* nodeInfo = selectedNode.userObject;
@@ -1742,6 +1759,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     if ([notesLayer mouseUp:pos event:event]) return;
     if ([guideLayer mouseUp:pos event:event]) return;
+    [snapLayer mouseUp:pos event:event];
     
     isMouseTransforming = NO;
     
@@ -1911,6 +1929,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 - (void) scrollWheel:(NSEvent *)theEvent
 {
+    snapLinesNeedUpdate = YES; // Disabled in update
     if (!appDelegate.window.isKeyWindow) return;
     if (isMouseTransforming || isPanning || currentMouseTransform != kCCBTransformHandleNone) return;
     if (!appDelegate.hasOpenedDocument) return;
@@ -1922,11 +1941,19 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     scrollOffset.y = scrollOffset.y+dy;
 }
 
+#pragma mark Post update methods
+
+// This method is called once anytime the selection changes
+- (void)selectionUpdated {
+    snapLinesNeedUpdate = YES;
+}
+
 #pragma mark Updates every frame
 
 - (void) forceRedraw
 {
     [self update:0];
+    snapLinesNeedUpdate = YES; // Required after the update call to prevent lines from being in random places when switching screen sizes.
 }
 
 -(BOOL)hideJoints
@@ -1982,7 +2009,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         [renderedScene end];
         [borderDevice texture].antialiased = NO;
     }
-    
     // Update selection & physics editor
     [selectionLayer removeAllChildrenWithCleanup:YES];
     [physicsLayer removeAllChildrenWithCleanup:YES];
@@ -2031,6 +2057,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     notesLayer.visible = appDelegate.showStickyNotes;
     [notesLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
     
+    // Update Grid Snap
+    snapLayer.gridActive = appDelegate.snapGrid;
+    
+    // Update Node Snap
+    snapLayer.snapActive = appDelegate.snapNode;
+
     if (winSizeChanged)
     {
         // Update mouse tracking
@@ -2042,6 +2074,11 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 				CGSize sizeInPixels = [[CCDirector sharedDirector] viewSizeInPixels];
         trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0, 0, sizeInPixels.width, sizeInPixels.height) options:NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited | NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow  owner:[appDelegate cocosView] userInfo:NULL];
         [[appDelegate cocosView] addTrackingArea:trackingArea];
+        snapLinesNeedUpdate = YES;
+    }
+    if(snapLinesNeedUpdate) { // Update the snapping lines if the user is scrolling
+        [snapLayer updateLines];
+        snapLinesNeedUpdate = NO;
     }
 }
 

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D0C1E7618F4760800B028CA /* SnapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7318F472D600B028CA /* SnapLayer.m */; };
+		4D0C1E7918F49A3700B028CA /* CCNode+PositionExtentions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7818F49A3700B028CA /* CCNode+PositionExtentions.m */; };
+		4DB7C95719083B9C00ECE19F /* SnapLayerKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7C95419083ACF00ECE19F /* SnapLayerKeys.m */; };
 		581130601639C52500A86D70 /* seq-startmarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 5811305F1639C52000A86D70 /* seq-startmarker.png */; };
 		581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 581BCFE7162DADE7007DE600 /* CCBSplitHorizontalView.m */; };
 		58FA2034162D73F3006B8856 /* TB_bottomPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2031162D73F3006B8856 /* TB_bottomPanel.png */; };
@@ -1044,6 +1047,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D0C1E7218F472D600B028CA /* SnapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapLayer.h; sourceTree = "<group>"; };
+		4D0C1E7318F472D600B028CA /* SnapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapLayer.m; sourceTree = "<group>"; };
+		4D0C1E7718F49A3700B028CA /* CCNode+PositionExtentions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+PositionExtentions.h"; sourceTree = "<group>"; };
+		4D0C1E7818F49A3700B028CA /* CCNode+PositionExtentions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+PositionExtentions.m"; sourceTree = "<group>"; };
+		4DB7C95319083ACF00ECE19F /* SnapLayerKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapLayerKeys.h; sourceTree = "<group>"; };
+		4DB7C95419083ACF00ECE19F /* SnapLayerKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapLayerKeys.m; sourceTree = "<group>"; };
 		5811305E1639BF1200A86D70 /* SequencerTimelineDrawDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerTimelineDrawDelegate.h; sourceTree = "<group>"; };
 		5811305F1639C52000A86D70 /* seq-startmarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-startmarker.png"; sourceTree = "<group>"; };
 		581BCFE6162DADE7007DE600 /* CCBSplitHorizontalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSplitHorizontalView.h; sourceTree = "<group>"; };
@@ -2413,6 +2422,8 @@
 		776041E21498F5A70078095D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4D0C1E7718F49A3700B028CA /* CCNode+PositionExtentions.h */,
+				4D0C1E7818F49A3700B028CA /* CCNode+PositionExtentions.m */,
 				921EEB2218ADB7EA00D864C2 /* GeometryUtil.h */,
 				921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */,
 				E3E05576159B2322001066C5 /* NSString+AppendToFile.h */,
@@ -3136,6 +3147,8 @@
 				83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */,
 				83F8673218D1DCEA007441E4 /* SBErrors.h */,
 				83F8673318D1DCEA007441E4 /* SBErrors.m */,
+				4DB7C95319083ACF00ECE19F /* SnapLayerKeys.h */,
+				4DB7C95419083ACF00ECE19F /* SnapLayerKeys.m */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -3763,6 +3776,8 @@
 				E34E5D6515357CF2000201FB /* RulersLayer.m */,
 				E3A16AF11536D096004B528A /* GuidesLayer.h */,
 				E3A16AF21536D096004B528A /* GuidesLayer.m */,
+				4D0C1E7218F472D600B028CA /* SnapLayer.h */,
+				4D0C1E7318F472D600B028CA /* SnapLayer.m */,
 				E3F3F83D153C72A3005443EE /* NotesLayer.h */,
 				E3F3F83E153C72A3005443EE /* NotesLayer.m */,
 				E3F3F846153D9126005443EE /* StickyNoteEditView.xib */,
@@ -5726,6 +5741,7 @@
 				77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */,
 				77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */,
 				776A37B61398D6BF00960E94 /* CCBGLView.m in Sources */,
+				4DB7C95719083B9C00ECE19F /* SnapLayerKeys.m in Sources */,
 				E3B7AEDD14E3246100DFD402 /* PlugInManager.m in Sources */,
 				E3B7AEE014E32E7F00DFD402 /* PlugInNode.m in Sources */,
 				E3B7AEEC14E342E200DFD402 /* InspectorPosition.m in Sources */,
@@ -5799,6 +5815,7 @@
 				E3DCFD9F1562A3AD00BD7D7F /* TaskStatusWindow.m in Sources */,
 				E335CAF3157603C200A612EE /* SequencerHandler.m in Sources */,
 				E335CAF6157649F900A612EE /* SequencerExpandBtnCell.m in Sources */,
+				4D0C1E7618F4760800B028CA /* SnapLayer.m in Sources */,
 				E335CAFB1576592600A612EE /* SequencerCell.m in Sources */,
 				E335CB001576702300A612EE /* MainWindow.m in Sources */,
 				E335CB031577838800A612EE /* SequencerOutlineView.m in Sources */,
@@ -6101,6 +6118,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D0C1E7918F49A3700B028CA /* CCNode+PositionExtentions.m in Sources */,
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
 			);

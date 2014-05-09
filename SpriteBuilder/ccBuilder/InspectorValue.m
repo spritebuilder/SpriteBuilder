@@ -32,6 +32,7 @@
 #import "SequencerSequence.h"
 #import "SequencerKeyframe.h"
 #import "SequencerNodeProperty.h"
+#import "SnapLayerKeys.h"
 
 @implementation InspectorValue
 
@@ -94,6 +95,7 @@
     {
         [[AppDelegate appDelegate] updateInspectorFromSelection];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:SnapLayerRefreshLines object:nil]; // Used to updated the snap/alignment lines after a property has been modified in the properties menu
 }
 
 - (id) propertyForSelection

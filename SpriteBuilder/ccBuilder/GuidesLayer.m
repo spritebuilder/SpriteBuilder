@@ -70,6 +70,7 @@
     
     for (Guide* g in guides)
     {
+        NSLog(@"Guide(%i): %f", g->orientation, g->position);
         if (g->orientation == kCCBGuideOrientationHorizontal)
         {
             CGPoint viewPos = [cs convertToViewSpace:ccp(0,g->position)];
