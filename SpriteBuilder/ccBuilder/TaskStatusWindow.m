@@ -35,7 +35,7 @@
         _onCancelBlock();
     }
 
-    [cancelButton setTitle:@"Cancelling..."];
+    [cancelButton setTitle:@"Cancelling"];
     [cancelButton setEnabled:NO];
 }
 
