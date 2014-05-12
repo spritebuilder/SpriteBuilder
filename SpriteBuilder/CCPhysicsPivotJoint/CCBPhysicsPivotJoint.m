@@ -152,10 +152,8 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
  
-    
     [self createLayoutButtons];
-
-    
+   
     //Reference Angle
     referenceAngleHandle = [CCSegmentHandle node];
     [scaleFreeNode addChild:referenceAngleHandle];
@@ -171,14 +169,14 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     //Limit
     limitNode = [CCNode node];
     [scaleFreeNode addChild:limitNode];
-    limitMinHandle = [CCSegmentHandle node];
-    limitMinHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png"];
-    [limitNode addChild:limitMinHandle];
-    
-    
+
     limitMaxHandle = [CCSegmentHandle node];
     limitMaxHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png"];
     [limitNode addChild:limitMaxHandle];
+    
+    limitMinHandle = [CCSegmentHandle node];
+    limitMinHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png"];
+    [limitNode addChild:limitMinHandle];
     
     //Ratched
     ratchetNode = [CCNode node];
@@ -249,10 +247,10 @@ const float kRatchedRenderRadius = 30.0f;
     {
         float rotation = [self worldRotation:self.bodyA];
         
-        springRestAngleHandle.rotation = rotation + self.referenceAngle + self.dampedSpringRestAngle + M_PI_2;
-        referenceAngleHandle.rotation  = rotation + self.referenceAngle + M_PI_2;
-        limitMinHandle.rotation = rotation + self.referenceAngle + self.limitMin + M_PI_2;
-        limitMaxHandle.rotation = rotation + self.referenceAngle + self.limitMax + M_PI_2;
+        springRestAngleHandle.rotation  = rotation + self.referenceAngle + self.dampedSpringRestAngle + M_PI_2;
+        referenceAngleHandle.rotation   = rotation + self.referenceAngle + M_PI_2;
+        limitMinHandle.rotation         = rotation + self.referenceAngle + self.limitMin + M_PI_2;
+        limitMaxHandle.rotation         = rotation + self.referenceAngle + self.limitMax + M_PI_2;
         
         if(self.layoutType == eLayoutButtonRatchet)
         {
@@ -305,7 +303,7 @@ const float kRatchedRenderRadius = 30.0f;
     
     
     //Make them equivalent.
-    layoutBackground.visible = layoutBox.visible;
+    layoutBackground.visible = layoutBox.visible && layoutControlBox.children.count >= 1;
     
     [super updateSelectionUI];
 }
@@ -337,7 +335,7 @@ const float kRatchedRenderRadius = 30.0f;
         return YES;
     }
     
-    if([prop isEqualToString:@"dampedspringRestAngleHandle"] ||
+    if([prop isEqualToString:@"dampedSpringRestAngle"] ||
        [prop isEqualToString:@"dampedSpringStiffness"] ||
        [prop isEqualToString:@"dampedSpringDamping"])
     {
@@ -404,14 +402,56 @@ const float kRatchedRenderRadius = 30.0f;
     
     if(bodyType == LimitMaxHandle)
     {
-        float degAngle = [self rotationFromWorldPos:worldPos];
-        self.limitMax = degAngle - self.referenceAngle;
+        float degAngle = [self rotationFromWorldPos: worldPos] - self.referenceAngle;
+        
+        if(degAngle < 0.0f)
+        {
+            float halfMin = self.limitMin / 2.0f;
+        
+            if(degAngle <  halfMin)
+                degAngle = 360 + degAngle;
+            else
+                degAngle = 0.0f;
+        }
+        
+        //Within limits, then set.
+        if(degAngle < (360 + self.limitMin))
+        {
+            self.limitMax = degAngle ;
+        }
+        else
+        {
+            self.limitMax = (360 + self.limitMin);
+        }
     }
 
     if(bodyType == LimitMinHandle)
     {
-        float degAngle = [self rotationFromWorldPos:worldPos];
-        self.limitMin = degAngle - self.referenceAngle;
+        float degAngle = [self rotationFromWorldPos: worldPos] - self.referenceAngle;
+        if(degAngle > 0.0f )
+        {
+            //Figure out it we should Zero snap or limitMax snap.
+            float halfMax = self.limitMax/2.0f;
+            if(degAngle < halfMax)
+            {
+                degAngle = 0.0f;
+            }
+            else
+            {
+                degAngle = -360 + degAngle;
+            }
+        }
+       
+        //Within limits, then set.
+        if(self.limitMax - 360  <= degAngle)
+        {
+            self.limitMin = degAngle ;
+        }
+        else
+        {
+            self.limitMin = (self.limitMax - 360);
+        }
+        
     }
 
     if(bodyType == RatchedHandle)
