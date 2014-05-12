@@ -720,13 +720,21 @@ const float kRatchedRenderRadius = 30.0f;
 
 -(void)setLimitMax:(float)limitMax
 {
-    _limitMax = limitMax;
+    if(limitMax > 0 && (limitMax <= (360 + _limitMin)))
+    {
+        _limitMax = limitMax;
+    }
+    
     [[AppDelegate appDelegate]refreshProperty:@"limitMax"];
 }
 
 -(void)setLimitMin:(float)limitMin
 {
-    _limitMin = limitMin;
+    if(limitMin < 0.0f && ((360+limitMin) >= _limitMax))
+    {
+        _limitMin = limitMin;
+    }
+    
     [[AppDelegate appDelegate]refreshProperty:@"limitMin"];
 }
 
