@@ -12,6 +12,7 @@
 #import "CCBPhysicsJoint+Private.h"
 #import "CCButton.h"
 #import "NSArray+Query.h"
+#import "CCProgressNode.h"
 
 const float kSegmentHandleDefaultRadius = 17.0f;
 
@@ -94,6 +95,8 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     CCNode               * limitNode;
     CCSegmentHandle      * limitMaxHandle;
     CCSegmentHandle      * limitMinHandle;
+    CCProgressNode       * limitSubtendingAngle;
+    BOOL                   limitSubtendingAngleValid;
     
     CCNode               * ratchetNode;
     CCSegmentHandle      * ratchedPhaseHandle;
@@ -124,7 +127,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     self.limitEnabled = NO;
     self.limitMin = 0;
     self.limitMax = 90;
-
+    limitSubtendingAngleValid = NO;
 
     self.motorEnabled = NO;
     self.motorRate = 1;
@@ -169,7 +172,14 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     //Limit
     limitNode = [CCNode node];
     [scaleFreeNode addChild:limitNode];
-
+    
+    CCSprite * progressSprite = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
+    limitSubtendingAngle = [CCProgressNode progressWithSprite:progressSprite];
+    limitSubtendingAngle.type = CCProgressNodeTypeRadial;
+    limitSubtendingAngle.scale = 1.20f;
+    limitSubtendingAngle.reverseDirection = YES;
+    [limitNode addChild:limitSubtendingAngle];
+    
     limitMaxHandle = [CCSegmentHandle node];
     limitMaxHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png"];
     [limitNode addChild:limitMaxHandle];
@@ -240,6 +250,16 @@ const float kRatchedRenderRadius = 30.0f;
     }
 }
 
+-(void)updateLimit
+{
+    if(limitSubtendingAngleValid)
+        return;
+    
+    limitSubtendingAngleValid = YES;
+    limitSubtendingAngle.percentage = 100.0f * (self.limitMax - self.limitMin) / 360.0f;
+
+}
+
 -(void)updateRenderBody
 {
     //Spring
@@ -251,12 +271,18 @@ const float kRatchedRenderRadius = 30.0f;
         referenceAngleHandle.rotation   = rotation + self.referenceAngle + M_PI_2;
         limitMinHandle.rotation         = rotation + self.referenceAngle + self.limitMin + M_PI_2;
         limitMaxHandle.rotation         = rotation + self.referenceAngle + self.limitMax + M_PI_2;
+        limitSubtendingAngle.rotation   = limitMinHandle.rotation;
         
         if(self.layoutType == eLayoutButtonRatchet)
         {
             ratchedValueHandle.rotation = rotation + self.referenceAngle + self.ratchetValue + (self.ratchetValue) * self.ratchetPhase/360.0f + M_PI_2;
             ratchedPhaseHandle.rotation = rotation + self.referenceAngle + (self.ratchetValue) * self.ratchetPhase/360.0f + M_PI_2;
             [self updateRenderRatchet];
+        }
+        
+        if(self.layoutType == eLayoutButtonLimit)
+        {
+            [self updateLimit];
         }
         
     }
@@ -720,21 +746,23 @@ const float kRatchedRenderRadius = 30.0f;
 
 -(void)setLimitMax:(float)limitMax
 {
-    if(limitMax > 0 && (limitMax <= (360 + _limitMin)))
+    if(limitMax >= 0 && (limitMax <= (360 + _limitMin)))
     {
         _limitMax = limitMax;
     }
     
+    limitSubtendingAngleValid = NO;
     [[AppDelegate appDelegate]refreshProperty:@"limitMax"];
 }
 
 -(void)setLimitMin:(float)limitMin
 {
-    if(limitMin < 0.0f && ((360+limitMin) >= _limitMax))
+    if(limitMin <= 0.0f && ((360 + limitMin) >= _limitMax))
     {
         _limitMin = limitMin;
     }
     
+    limitSubtendingAngleValid = NO;
     [[AppDelegate appDelegate]refreshProperty:@"limitMin"];
 }
 
