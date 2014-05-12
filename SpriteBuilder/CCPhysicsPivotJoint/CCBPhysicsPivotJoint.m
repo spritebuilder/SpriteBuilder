@@ -222,8 +222,12 @@ const float kRatchedRenderRadius = 30.0f;
         
         [ratchedTicks removeFromParentAndCleanup:YES];
         ratchedTicks = [CCNode node];
-        float currentAngle = 0.0f;
-        while (currentAngle < (360.0f - cachedRatchedValue) && currentAngle > (-360 - cachedRatchedValue))
+        float currentAngle = cachedRatchedValue;
+        while (currentAngle < (360.0f - cachedRatchedValue) &&
+               currentAngle > (-360 - cachedRatchedValue) &&
+               (cachedRatchedValue > 0.0f ?
+               (currentAngle + cachedRatchedValue * self.ratchetPhase / 360.0f + cachedRatchedValue) <= 360.0f :
+               (currentAngle - cachedRatchedValue * self.ratchetPhase / 360.0f + cachedRatchedValue) >= -360.0f))
         {
             CCSprite * sprite = [CCSprite spriteWithImageNamed:@"joint-pivot-handle-ratchetmark.png"];
             sprite.anchorPoint = ccp(0.5f,0.0f);
