@@ -18,7 +18,7 @@
 
 - (id)performDefaultImplementation
 {
-    [[AppDelegate appDelegate] publishAndRun:NO runInBrowser:NULL async:NO];
+    [[AppDelegate appDelegate] checkForDirtyDocumentAndPublishAsync:NO];
     return [NSNumber numberWithBool:YES];
 }
 

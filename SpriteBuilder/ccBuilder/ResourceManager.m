@@ -965,11 +965,7 @@
     if ([res isEqualToString:@"phonehd"]) dstScale = 2;
     else if ([res isEqualToString:@"tablet"]) dstScale = 1 * tabletScale;
     else if ([res isEqualToString:@"tablethd"]) dstScale = 2 * tabletScale;
-    else if ([res isEqualToString:@"html5"])
-    {
-        dstScale = [AppDelegate appDelegate].projectSettings.publishResolutionHTML5_scale;
-    }
-    
+
     // Calculate src scale factor
     float srcScale = 1;
     if (srcScaleSetting)

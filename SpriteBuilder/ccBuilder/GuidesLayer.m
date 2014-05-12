@@ -31,21 +31,28 @@
 #define kCCBGuideMoveAreaRadius 4
 #define kCCBGuideSnapDistance 4
 
+#define kCCBGuideTypeGrid     1
+#define kCCBGuideGridMatrix   32
+
 #pragma mark Guide
 @interface Guide : NSObject
 {
     @public
     float position;
     int orientation;
+    int type;
 }
 @end
 
 @implementation Guide
+
 @end
 
 #pragma mark GuidesLayer
 
 @implementation GuidesLayer
+
+@synthesize gridSize;
 
 - (id)init
 {
@@ -53,11 +60,57 @@
     if (!self) return NULL;
     
     draggingGuide = kCCBGuideNone;
-    guides = [[NSMutableArray alloc] init];
+    guides        = [[NSMutableArray alloc] init];
+    gridSize      = CGSizeMake(kCCBGuideGridMatrix,kCCBGuideGridMatrix);
     
     return self;
 }
 
+- (void)buildGuideGrid {
+    
+    [self clearGuideGrid];
+    
+    CocosScene* cs = [CocosScene cocosScene];
+    
+    // Create Horizontal Guides
+    for(int i=-gridSize.height;i<=cs.stageSize.height+gridSize.height;i+=gridSize.height) {
+        
+        Guide* g = [[Guide alloc] init];
+        g->orientation = kCCBGuideOrientationHorizontal;
+        g->position    = i;
+        g->type        = kCCBGuideTypeGrid;
+        
+        [guides addObject:g];
+    }
+    
+    // Create Horizontal Guides
+    for(int i=-gridSize.width;i<=cs.stageSize.width+gridSize.width;i+=gridSize.width) {
+        
+        Guide* g = [[Guide alloc] init];
+        g->orientation = kCCBGuideOrientationVertical;
+        g->position    = i;
+        g->type        = kCCBGuideTypeGrid;
+        
+        [guides addObject:g];
+    }
+    
+    [self updateGuides];
+
+}
+
+- (void)clearGuideGrid {
+    
+    NSMutableArray* guidesCopy = [guides copy];
+    
+    for(Guide* g in guidesCopy) {
+        if(g->type==kCCBGuideTypeGrid) {
+            [guides removeObject:g];
+        }
+    }
+    
+    [self updateGuides];
+    
+}
 
 - (void) updateGuides
 {
@@ -83,6 +136,11 @@
                 sprtGuide.anchorPoint = ccp(0, 0.5f);
                 sprtGuide.position = viewPos;
                 [self addChild:sprtGuide];
+                
+                // Grid Color
+                if(g->type==kCCBGuideTypeGrid) {
+                    [sprtGuide setColor:[CCColor colorWithCcColor3b:ccc3(0xFF, 0xFF, 0x22)]];
+                }
             }
         }
         else
@@ -99,6 +157,11 @@
                 sprtGuide.rotation = -90;
                 sprtGuide.position = viewPos;
                 [self addChild:sprtGuide];
+                
+                // Grid Color
+                if(g->type==kCCBGuideTypeGrid) {
+                    [sprtGuide setColor:[CCColor colorWithCcColor3b:ccc3(0xFF, 0xFF, 0x22)]];
+                }
             }
         }
     }
@@ -138,6 +201,9 @@
         for (int i = 0; i < [guides count]; i++)
         {
             Guide* guide = [guides objectAtIndex:i];
+            
+            // Grid Guide is fixed
+            if(guide->type==kCCBGuideTypeGrid) continue;
             
             if (guide->orientation == kCCBGuideOrientationHorizontal)
             {
@@ -257,10 +323,13 @@
     
     for (Guide* g in guides)
     {
+        if(g->type==kCCBGuideTypeGrid) continue;
+        
         NSMutableDictionary* gDict = [NSMutableDictionary dictionary];
         
         [gDict setObject:[NSNumber numberWithInt:g->orientation] forKey:@"orientation"];
         [gDict setObject:[NSNumber numberWithFloat:g->position] forKey:@"position"];
+        [gDict setObject:[NSNumber numberWithInt:g->type] forKey:@"type"];
         
         [ser addObject:gDict];
     }
@@ -278,10 +347,12 @@
     {
         int orientation = [[gDict objectForKey:@"orientation"] intValue];
         float pos = [[gDict objectForKey:@"position"] floatValue];
+        int type = [[gDict objectForKey:@"type"] intValue];
         
-        Guide* g = [[Guide alloc] init];
-        g->position = pos;
+        Guide* g       = [[Guide alloc] init];
+        g->position    = pos;
         g->orientation = orientation;
+        g->type        = type;
         [guides addObject:g];
     }
     

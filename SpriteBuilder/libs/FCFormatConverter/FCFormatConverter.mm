@@ -14,6 +14,14 @@ static FCFormatConverter* gDefaultConverter = NULL;
 
 static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
 
+@interface FCFormatConverter ()
+
+@property (nonatomic, strong) NSTask *pngQuantTask;
+@property (nonatomic, strong) NSTask *zipTask;
+@property (nonatomic, strong) NSTask *sndTask;
+
+@end
+
 @implementation FCFormatConverter
 
 + (FCFormatConverter*) defaultConverter
@@ -57,6 +65,7 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     }
     return NULL;
 }
+
 -(BOOL)convertImageAtPath:(NSString*)srcPath
                    format:(int)format
                    dither:(BOOL)dither
@@ -65,8 +74,6 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
            outputFilename:(NSString**)outputFilename
                     error:(NSError**)error;
 {
-    
-    
     NSFileManager* fm = [NSFileManager defaultManager];
     NSString* dstDir = [srcPath stringByDeletingLastPathComponent];
     
@@ -74,21 +81,21 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     // Unless the .psd is part of a spritesheet, then the original name has to be preserved.
     if ( [[srcPath pathExtension] isEqualToString:@"psd"] && !isSpriteSheet)
     {
-            CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
-            CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
-            
-            NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
-            CFURLRef out_url = (__bridge CFURLRef)[NSURL fileURLWithPath:out_path];
-            CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
-            CGImageDestinationAddImage(image_destination, image, NULL);
-            CGImageDestinationFinalize(image_destination);
-            
-            CFRelease(image_source);
-            CGImageRelease(image);
-            CFRelease(image_destination);
-            
-            [fm removeItemAtPath:srcPath error:nil];
-            srcPath = out_path;
+        CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:srcPath], NULL);
+        CGImageRef image = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+
+        NSString *out_path = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
+        CFURLRef out_url = (__bridge CFURLRef)[NSURL fileURLWithPath:out_path];
+        CGImageDestinationRef image_destination = CGImageDestinationCreateWithURL(out_url, kUTTypePNG, 1, NULL);
+        CGImageDestinationAddImage(image_destination, image, NULL);
+        CGImageDestinationFinalize(image_destination);
+
+        CFRelease(image_source);
+        CGImageRelease(image);
+        CFRelease(image_destination);
+
+        [fm removeItemAtPath:srcPath error:nil];
+        srcPath = out_path;
     }
 		
     if (format == kFCImageFormatPNG)
@@ -100,15 +107,16 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     if (format == kFCImageFormatPNG_8BIT)
     {
         // 8 bit PNG image
-        NSTask* pngTask = [[NSTask alloc] init];
-        [pngTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"pngquant"]];
+        self.pngQuantTask = [[NSTask alloc] init];
+        [_pngQuantTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"pngquant"]];
         NSMutableArray* args = [NSMutableArray arrayWithObjects:
                                 @"--force", @"--ext", @".png", srcPath, nil];
         if (dither) [args addObject:@"-dither"];
-        [pngTask setArguments:args];
-        [pngTask launch];
-        [pngTask waitUntilExit];
+        [_pngQuantTask setArguments:args];
+        [_pngQuantTask launch];
+        [_pngQuantTask waitUntilExit];
         
+        self.pngQuantTask = nil;
         if ([fm fileExistsAtPath:srcPath])
         {
             *outputFilename = [srcPath copy];
@@ -121,7 +129,6 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
              format == kFCImageFormatPVRTC_4BPP ||
              format == kFCImageFormatPVRTC_2BPP)
     {
-        
         // PVR(TC) image
         NSString *dstPath = [[srcPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"pvr"];
         
@@ -186,7 +193,6 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
             }
         }
         
-        
         // Remove PNG file
         [[NSFileManager defaultManager] removeItemAtPath:srcPath error:NULL];
         //Clean up memory.
@@ -200,14 +206,15 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
         if (compress)
         {
             // Create compressed file (ccz)
-            NSTask* zipTask = [[NSTask alloc] init];
-            [zipTask setCurrentDirectoryPath:dstDir];
-            [zipTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ccz"]];
+            self.zipTask = [[NSTask alloc] init];
+            [_zipTask setCurrentDirectoryPath:dstDir];
+            [_zipTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ccz"]];
             NSMutableArray* args = [NSMutableArray arrayWithObjects:dstPath, nil];
-            [zipTask setArguments:args];
-            [zipTask launch];
-            [zipTask waitUntilExit];
-            
+            [_zipTask setArguments:args];
+            [_zipTask launch];
+            [_zipTask waitUntilExit];
+            self.zipTask = nil;
+
             // Remove uncompressed file
             [[NSFileManager defaultManager] removeItemAtPath:dstPath error:NULL];
             
@@ -284,25 +291,25 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     if (format == kFCSoundFormatCAF)
     {
         // Convert to CAF
-        NSTask* sndTask = [[NSTask alloc] init];
+        self.sndTask = [[NSTask alloc] init];
         
-        [sndTask setLaunchPath:@"/usr/bin/afconvert"];
+        [_sndTask setLaunchPath:@"/usr/bin/afconvert"];
         NSMutableArray* args = [NSMutableArray arrayWithObjects:
                                 @"-f", @"caff",
                                 @"-d", @"LEI16@44100",
                                 @"-c", @"1",
                                 srcPath, dstPath, nil];
-        [sndTask setArguments:args];
-        [sndTask launch];
-        [sndTask waitUntilExit];
-        
-        
+        [_sndTask setArguments:args];
+        [_sndTask launch];
+        [_sndTask waitUntilExit];
+
         // Remove old file
         if (![srcPath isEqualToString:dstPath])
         {
             [fm removeItemAtPath:srcPath error:NULL];
         }
-        
+
+        self.sndTask = nil;
         return dstPath;
     }
     else if (format == kFCSoundFormatMP4)
@@ -312,9 +319,9 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
         int qualityScaled = ((quality -1) * 127) / 7;//Quality [1,8]
         
         // Do the conversion
-        NSTask* sndTask = [[NSTask alloc] init];
+        self.sndTask = [[NSTask alloc] init];
         
-        [sndTask setLaunchPath:@"/usr/bin/afconvert"];
+        [_sndTask setLaunchPath:@"/usr/bin/afconvert"];
         NSMutableArray* args = [NSMutableArray arrayWithObjects:
                                 @"-f", @"m4af",
                                 @"-d", @"aac",
@@ -323,43 +330,62 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
                                 @"-q", @"127",
                                 @"-s", @"3",
                                 srcPath, dstPath, nil];
-        [sndTask setArguments:args];
-        [sndTask launch];
-        [sndTask waitUntilExit];
-        
-        
-        // Remove old file
-        if (![srcPath isEqualToString:dstPath])
-        {
-            [fm removeItemAtPath:srcPath error:NULL];
-        }
-        
-        return dstPath;
-    }
-    else if (format == kFCSoundFormatOGG)
-    {
-        // Convert to OGG
-        NSTask* sndTask = [[NSTask alloc] init];
-        [sndTask setCurrentDirectoryPath:[srcPath stringByDeletingLastPathComponent]];
-        [sndTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"oggenc"]];
-        NSMutableArray* args = [NSMutableArray arrayWithObjects:
-                                [NSString stringWithFormat:@"-q%d", quality],
-                                @"-o", dstPath, srcPath,
-                                nil];
-        [sndTask setArguments:args];
-        [sndTask launch];
-        [sndTask waitUntilExit];
+        [_sndTask setArguments:args];
+        [_sndTask launch];
+        [_sndTask waitUntilExit];
 
         // Remove old file
         if (![srcPath isEqualToString:dstPath])
         {
             [fm removeItemAtPath:srcPath error:NULL];
         }
-        
+
+        self.sndTask = nil;
+        return dstPath;
+    }
+    else if (format == kFCSoundFormatOGG)
+    {
+        // Convert to OGG
+        self.sndTask = [[NSTask alloc] init];
+        [_sndTask setCurrentDirectoryPath:[srcPath stringByDeletingLastPathComponent]];
+        [_sndTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"oggenc"]];
+        NSMutableArray* args = [NSMutableArray arrayWithObjects:
+                                [NSString stringWithFormat:@"-q%d", quality],
+                                @"-o", dstPath, srcPath,
+                                nil];
+        [_sndTask setArguments:args];
+        [_sndTask launch];
+        [_sndTask waitUntilExit];
+
+        // Remove old file
+        if (![srcPath isEqualToString:dstPath])
+        {
+            [fm removeItemAtPath:srcPath error:NULL];
+        }
+
+        self.sndTask = nil;
         return dstPath;
     }
     
     return NULL;
+}
+
+- (void)cancel
+{
+    @try
+    {
+        [_pngQuantTask terminate];
+        [_zipTask terminate];
+        [_sndTask  terminate];
+
+        self.pngQuantTask = nil;
+        self.zipTask = nil;
+        self.sndTask = nil;
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Exception: %@", exception);
+    }
 }
 
 @end

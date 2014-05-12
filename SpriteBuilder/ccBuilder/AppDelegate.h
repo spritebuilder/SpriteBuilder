@@ -249,6 +249,7 @@ enum {
     // Guides
     BOOL showGuides;
     BOOL snapToGuides;
+    BOOL showGuideGrid;
     
     // Sticky notes
     BOOL showStickyNotes;
@@ -313,8 +314,11 @@ enum {
 
 @property (nonatomic,assign) BOOL showGuides;
 @property (nonatomic,assign) BOOL snapToGuides;
+@property (nonatomic,assign) BOOL showGuideGrid;
 @property (nonatomic,assign) BOOL showStickyNotes;
 @property (nonatomic,assign) BOOL showJoints;
+@property (nonatomic,assign) BOOL snapGrid;
+@property (nonatomic,assign) BOOL snapNode;
 
 @property (nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;
@@ -356,7 +360,7 @@ enum {
 - (void) openFile:(NSString*) fileName;
 
 // Publish commands
-- (void) publishAndRun:(BOOL)run runInBrowser:(NSString *)browser async:(BOOL)async;
+- (void)checkForDirtyDocumentAndPublishAsync:(BOOL)async;
 
 // Menu options
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent;
@@ -429,7 +433,6 @@ enum {
 
 // Publishing & running
 - (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings;
-- (IBAction) menuPublishProjectAndRun:(id)sender;
 
 // For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;
@@ -445,6 +448,9 @@ enum {
 - (IBAction)visitCommunity:(id)sender;
 - (IBAction)showHelp:(id)sender;
 
+// Guide Extras
+- (IBAction) menuGuideGrid:(id)sender;
+
 //Help dialogs.
 -(BOOL)showHelpDialog:(NSString*)type;
 -(void)disableHelpDialog:(NSString*)type;
@@ -452,4 +458,5 @@ enum {
 @property (weak) IBOutlet NSTableView *warningTableView;
 
 @property (weak) IBOutlet NSView *inspectorPhysics;
+
 @end

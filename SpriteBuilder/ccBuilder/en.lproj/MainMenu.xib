@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="5056"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -740,7 +740,33 @@ CA
                                     <binding destination="494" name="value" keyPath="snapToGuides" id="1459"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1462"/>
+                            <menuItem title="Guide Extras" id="aBZ-Zm-uHs">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Guide Extras" id="d7s-CM-B7U">
+                                    <items>
+                                        <menuItem title="Grid" id="M3E-RM-Ynw">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuGuideGrid:" target="494" id="H9I-ST-cKd"/>
+                                                <binding destination="494" name="value" keyPath="showGuideGrid" id="avL-Wq-bgf"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Edit Grid Size..." id="hJy-gA-aZr">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuGuideGridSettings:" target="494" id="aO3-4q-2Gh"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Snap Nodes" id="hxf-TH-2em">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <binding destination="494" name="value" keyPath="snapNode" id="mHv-rh-kSA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="laT-dq-KEs"/>
                             <menuItem title="Show Sticky Notes" alternate="YES" id="1463">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

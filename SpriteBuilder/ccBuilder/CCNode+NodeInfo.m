@@ -160,7 +160,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 	//Set dynamic bodies to be static if animating.
 	if(self.nodePhysicsBody.dynamic)
 	{
-		[[AppDelegate appDelegate] modalDialogTitle:@"Animation of physics bodies." message:@"Attemping to add a keyframe to a physics body. This will force the body to change from a static to a dynamic body." disableKey:kAnimationOfPhysicsWarning];
+		[[AppDelegate appDelegate] modalDialogTitle:@"Animation of physics bodies" message:@"Your are adding a keyframe to a node with a physics body. This will force the body to change from dynamic to static." disableKey:kAnimationOfPhysicsWarning];
 		
 		self.nodePhysicsBody.dynamic = NO;
 

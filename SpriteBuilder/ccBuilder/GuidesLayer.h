@@ -42,6 +42,8 @@ enum
     float zoom;
 }
 
+@property (nonatomic,readwrite) CGSize gridSize;
+
 - (BOOL) mouseDown:(CGPoint)pt event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pt event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pt event:(NSEvent*)event;
@@ -50,6 +52,10 @@ enum
 - (id) serializeGuides;
 - (void) loadSerializedGuides:(id)ser;
 - (void) removeAllGuides;
+
+// Guide Grid
+- (void)buildGuideGrid;
+- (void)clearGuideGrid;
 
 // Snaps to a point in view coordinates
 - (CGPoint) snapPoint:(CGPoint)pt;

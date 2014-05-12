@@ -1,7 +1,6 @@
 /*
- * CocosBuilder: http://www.cocosbuilder.com
  *
- * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2014 Martin Walsh
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,16 +21,21 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#import "GuideGridSizeWindow.h"
 
-@interface CCBDirectoryComparer : NSObject
+@implementation GuideGridSizeWindow
+
+@synthesize wStage, hStage;
+
+- (id)init
 {
+    self = [super init];
+    if (self) {
+        // Initialization code here.
+    }
+    
+    return self;
 }
 
-@property (nonatomic,readonly) NSMutableDictionary* files;
-
-- (void) loadDirectory: (NSString*) dir;
-
-- (NSArray*) diffWithFiles:(NSDictionary*) diffFiles;
 
 @end
