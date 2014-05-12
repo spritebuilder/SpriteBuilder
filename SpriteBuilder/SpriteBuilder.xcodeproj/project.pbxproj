@@ -15,6 +15,10 @@
 		58FA2034162D73F3006B8856 /* TB_bottomPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2031162D73F3006B8856 /* TB_bottomPanel.png */; };
 		58FA2035162D73F3006B8856 /* TB_leftPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2032162D73F3006B8856 /* TB_leftPanel.png */; };
 		58FA2036162D73F3006B8856 /* TB_rightPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2033162D73F3006B8856 /* TB_rightPanel.png */; };
+		5BA3DC32192108AB0055DD96 /* GuideGridSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */; };
+		5BA3DC33192108AB0055DD96 /* GuideGridSizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */; };
+		5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */; };
+		5BA3DC36192110BA0055DD96 /* GuideGridSizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */; };
 		77055FB513D0E5CA009DD63A /* logo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 77055FB313D0E5CA009DD63A /* logo-icon.png */; };
 		77055FB613D0E5CA009DD63A /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 77055FB413D0E5CA009DD63A /* logo.png */; };
 		77156DB1137F0351005EF746 /* CCBSpriteSheetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 77156DB0137F0351005EF746 /* CCBSpriteSheetParser.m */; };
@@ -1060,6 +1064,9 @@
 		58FA2031162D73F3006B8856 /* TB_bottomPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_bottomPanel.png; sourceTree = "<group>"; };
 		58FA2032162D73F3006B8856 /* TB_leftPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_leftPanel.png; sourceTree = "<group>"; };
 		58FA2033162D73F3006B8856 /* TB_rightPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_rightPanel.png; sourceTree = "<group>"; };
+		5BA3DC2F192108AB0055DD96 /* GuideGridSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideGridSizeWindow.h; sourceTree = "<group>"; };
+		5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideGridSizeWindow.m; sourceTree = "<group>"; };
+		5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideGridSizeWindow.xib; sourceTree = "<group>"; };
 		77055FB313D0E5CA009DD63A /* logo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-icon.png"; sourceTree = "<group>"; };
 		77055FB413D0E5CA009DD63A /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		77156DAF137F0351005EF746 /* CCBSpriteSheetParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteSheetParser.h; sourceTree = "<group>"; };
@@ -2535,6 +2542,9 @@
 		776041EA1498FB600078095D /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
+				5BA3DC2F192108AB0055DD96 /* GuideGridSizeWindow.h */,
+				5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */,
+				5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */,
 				772BE57B134398EE0009B5B9 /* NewDocWindow.xib */,
 				771B2B301353818000B260BA /* NewDocWindowController.h */,
 				771B2B311353818000B260BA /* NewDocWindowController.m */,
@@ -5325,6 +5335,7 @@
 				E3DA6FFA16CB2B8700B12FFB /* InspectorPopoverSpriteFrame.xib in Resources */,
 				E3DA6FFC16CB2BEB00B12FFB /* InspectorPopoverByte.xib in Resources */,
 				E3DA6FFE16CB2C3C00B12FFB /* InspectorPopoverColor3.xib in Resources */,
+				5BA3DC36192110BA0055DD96 /* GuideGridSizeWindow.xib in Resources */,
 				B7C3533A17FA2EDA005697C1 /* select-physics-corner.png in Resources */,
 				E312972E16CC33B200A09155 /* SequencerPopoverBlock.xib in Resources */,
 				E312973516CC677400A09155 /* SequencerPopoverSound.xib in Resources */,
@@ -5633,6 +5644,7 @@
 				9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */,
 				92B792CC18C92C60007DF895 /* Icon.png in Resources */,
 				92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */,
+				5BA3DC33192108AB0055DD96 /* GuideGridSizeWindow.xib in Resources */,
 				92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
 				D2E0168A18D789E700927430 /* SpriteBuilder.sdef in Resources */,
 				9254805A18D913C500236DED /* seq-locked-faint.png in Resources */,
@@ -5759,6 +5771,7 @@
 				E3B4222014E58C75004547D6 /* InspectorByte.m in Sources */,
 				E3B4222514E59035004547D6 /* InspectorColor3.m in Sources */,
 				E3B4222A14E59F5D004547D6 /* InspectorFlip.m in Sources */,
+				5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */,
 				E3B4222F14E5A849004547D6 /* InspectorBlendmode.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
 				E3B4223714E5E6AD004547D6 /* InspectorSeparator.m in Sources */,
@@ -6121,6 +6134,7 @@
 				4D0C1E7918F49A3700B028CA /* CCNode+PositionExtentions.m in Sources */,
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
 				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
+				5BA3DC32192108AB0055DD96 /* GuideGridSizeWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

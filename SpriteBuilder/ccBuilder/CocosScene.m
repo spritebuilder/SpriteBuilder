@@ -1345,16 +1345,13 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             
             CGPoint newPos = ccp(selectedNode.transformStartPosition.x+xDelta, selectedNode.transformStartPosition.y+yDelta);
             
-            // Snap to guides
-            /*
+            // Guide Snap
             if (appDelegate.showGuides && appDelegate.snapToGuides)
             {
                 // Convert to absolute position (conversion need to happen in node space)
                 CGPoint newAbsPos = [selectedNode.parent convertToNodeSpace:newPos];
                 
-                newAbsPos = NSPointToCGPoint([PositionPropertySetter calcAbsolutePositionFromRelative:NSPointFromCGPoint(newAbsPos) type:positionType parentSize:parentSize]);
-                
-                newAbsPos = [selectedNode.parent convertToWorldSpace:newAbsPos];
+                           newAbsPos = [selectedNode.parent convertToWorldSpace:newAbsPos];
                 
                 // Perform snapping (snapping happens in world space)
                 newAbsPos = [guideLayer snapPoint:newAbsPos];
@@ -1362,13 +1359,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 // Convert back to relative (conversion need to happen in node space)
                 newAbsPos = [selectedNode.parent convertToNodeSpace:newAbsPos];
                 
-                newAbsPos = NSPointToCGPoint([PositionPropertySetter calcRelativePositionFromAbsolute:NSPointFromCGPoint(newAbsPos) type:positionType parentSize:parentSize]);
-                
                 newPos = [selectedNode.parent convertToWorldSpace:newAbsPos];
             }
-             */
-            
-        
+
             CGPoint newLocalPos = [selectedNode.parent convertToNodeSpace:newPos];
             
             [appDelegate saveUndoStateWillChangeProperty:@"position"];
@@ -2063,9 +2056,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Update sticky notes
     notesLayer.visible = appDelegate.showStickyNotes;
     [notesLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
-    
-    // Update Grid Snap
-    snapLayer.gridActive = appDelegate.snapGrid;
     
     // Update Node Snap
     snapLayer.snapActive = appDelegate.snapNode;

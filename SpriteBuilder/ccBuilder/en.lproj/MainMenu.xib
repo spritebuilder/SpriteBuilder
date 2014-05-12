@@ -740,14 +740,27 @@ CA
                                     <binding destination="494" name="value" keyPath="snapToGuides" id="1459"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1462"/>
-                            <menuItem title="Snap Grid" id="8od-jE-Tcv">
+                            <menuItem title="Guide Extras" id="aBZ-Zm-uHs">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <binding destination="494" name="value" keyPath="snapGrid" id="UCh-k2-UoX"/>
-                                </connections>
+                                <menu key="submenu" title="Guide Extras" id="d7s-CM-B7U">
+                                    <items>
+                                        <menuItem title="Grid" id="M3E-RM-Ynw">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuGuideGrid:" target="494" id="H9I-ST-cKd"/>
+                                                <binding destination="494" name="value" keyPath="showGuideGrid" id="avL-Wq-bgf"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Edit Grid Size..." id="hJy-gA-aZr">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuGuideGridSettings:" target="494" id="aO3-4q-2Gh"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
                             </menuItem>
-                            <menuItem title="Snap Node" id="hxf-TH-2em">
+                            <menuItem title="Snap Nodes" id="hxf-TH-2em">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <binding destination="494" name="value" keyPath="snapNode" id="mHv-rh-kSA"/>

@@ -249,6 +249,7 @@ enum {
     // Guides
     BOOL showGuides;
     BOOL snapToGuides;
+    BOOL showGuideGrid;
     
     // Sticky notes
     BOOL showStickyNotes;
@@ -313,6 +314,7 @@ enum {
 
 @property (nonatomic,assign) BOOL showGuides;
 @property (nonatomic,assign) BOOL snapToGuides;
+@property (nonatomic,assign) BOOL showGuideGrid;
 @property (nonatomic,assign) BOOL showStickyNotes;
 @property (nonatomic,assign) BOOL showJoints;
 @property (nonatomic,assign) BOOL snapGrid;
@@ -445,6 +447,9 @@ enum {
 - (IBAction)reportBug:(id)sender;
 - (IBAction)visitCommunity:(id)sender;
 - (IBAction)showHelp:(id)sender;
+
+// Guide Extras
+- (IBAction) menuGuideGrid:(id)sender;
 
 //Help dialogs.
 -(BOOL)showHelpDialog:(NSString*)type;

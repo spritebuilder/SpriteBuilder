@@ -46,7 +46,6 @@
 @synthesize verticalGridLines;
 @synthesize horizontalGridLines;
 
-@synthesize gridActive;
 @synthesize snapActive;
 
 #pragma mark - Setup
@@ -67,7 +66,6 @@
     
     gridSize   = kSnapLayerGrid;
     
-    gridActive = NO;
     snapActive = NO;
     
     verticalGridLines   = [NSMutableSet new];
@@ -95,24 +93,6 @@
     }];
 }
 
--(void) buildGrid {
-    
-    [verticalGridLines removeAllObjects];
-    [horizontalGridLines removeAllObjects];
-    
-    if(!gridActive) return;
-    
-    CocosScene *cs = [CocosScene cocosScene];
-    
-    for(int x=0;x<=cs.stageSize.width;x+=gridSize) {
-        [verticalGridLines addObject:[NSNumber numberWithFloat:x]];
-    }
-    
-    for(int y=0;y<=cs.stageSize.height;y+=gridSize) {
-        [horizontalGridLines addObject:[NSNumber numberWithFloat:y]];
-    }
-}
-
 #pragma mark - Memory Management
 
 - (void)dealloc {
@@ -121,28 +101,6 @@
 }
 
 #pragma mark - Drawing
-
-- (void)drawGrid {
-    
-    [self buildGrid];
-    CocosScene *cs = [CocosScene cocosScene];
-
-    for(NSNumber *x in verticalGridLines) {
-        
-        CGPoint start = ccp([x floatValue],0);
-        CGPoint end   = ccp([x floatValue],cs.stageSize.height);
-
-        [drawLayer drawSegmentFrom:[cs convertToViewSpace:start] to:[cs convertToViewSpace:end] radius:1 color:[CCColor colorWithCcColor3b:ccc3(0xFF, 0xFF, 0xCC)]];
-    }
-    
-    for(NSNumber *y in horizontalGridLines) {
-        
-        CGPoint start = ccp(0,[y floatValue]);
-        CGPoint end   = ccp(cs.stageSize.width,[y floatValue]);
-        
-        [drawLayer drawSegmentFrom:[cs convertToViewSpace:start] to:[cs convertToViewSpace:end] radius:1 color:[CCColor colorWithCcColor3b:ccc3(0xFF, 0xFF, 0xCC)]];
-    }
-}
 
 - (void)drawLines {
     [drawLayer clear];
@@ -199,7 +157,6 @@
 - (void)updateLines {
     [self findSnappedLines];
     [self drawLines];
-    [self drawGrid];
 }
 
 - (void)findSnappedLines {
@@ -269,6 +226,7 @@
                 }
             }
             
+            /*
             // Snap lines from center of sNode to center of rootNode
             if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < 1) {
                 [verticalSnapLines addObject:[NSNumber numberWithFloat:roundf(sNode.parent.contentSizeInPoints.width / 2)]];
@@ -288,6 +246,7 @@
             } else if(abs(sNode.bottomInPoints) < sensitivity) {
                 [horizontalSnapLines addObject:[NSNumber numberWithFloat:0]];
             }
+            */
             
             cs = nil;
             nodesToSearchForSnapping = nil;
@@ -367,6 +326,8 @@
                         }
                     }
                     
+                    /*
+                    // Center View
                     if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < sensitivity) {
                         sNode.leftInPoints = (sNode.parent.contentSizeInPoints.width / 2) - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
                     }
@@ -385,49 +346,8 @@
                     } else if(abs(sNode.bottomInPoints) < sensitivity) {
                         sNode.bottomInPoints = 0;
                     }
+                    */
                 }
-                
-                // Snap to grid
-                if(gridActive) {
-                    
-                    for(NSNumber *x in verticalGridLines) {
-                        
-                        /*
-                        // Snap to opposite sides
-                        if(abs(sNode.leftInPoints - [x floatValue]) < sensitivity) {
-                            sNode.leftInPoints = [x floatValue];
-                        } else if(abs(sNode.rightInPoints - [x floatValue]) < sensitivity) {
-                            sNode.rightInPoints = [x floatValue];
-                        }
-                        */
-                        
-                        // Anchor Snap
-                        if(abs(sNode.position.x - [x floatValue]) < sensitivity) {
-                            sNode.position = ccp([x floatValue],sNode.position.y);
-                        }
-
-                    }
-                    
-                    for(NSNumber *y in horizontalGridLines) {
-                        
-                        /*
-                        // Snap to opposite sides
-                        if(abs(sNode.topInPoints - [y floatValue]) < sensitivity) {
-                            sNode.topInPoints = [y floatValue];
-                        } else if(abs(sNode.bottomInPoints - [y floatValue]) < sensitivity) {
-                            sNode.bottomInPoints = [y floatValue];
-                        }
-                        */
-                        
-                        // Anchor Snap
-                        if(abs(sNode.position.y - [y floatValue]) < sensitivity) {
-                            sNode.position = ccp(sNode.position.x,[y floatValue]);
-                        }
-               
-                    }
-                    
-                }
-                
                 
                 nodesToSearchForSnapping = nil;
                 cs = nil;
@@ -467,7 +387,6 @@
     
     [self snapIfNeeded];
     [self drawLines];
-    [self drawGrid];
     
     return success;
 }
