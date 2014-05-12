@@ -17,7 +17,6 @@
 
 @property (nonatomic) CCNode *selectedNode;
 
-@property (nonatomic, readwrite) BOOL gridActive;
 @property (nonatomic, readwrite) BOOL snapActive;
 
 @end

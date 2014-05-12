@@ -38,6 +38,7 @@
 #import "CCBSpriteSheetParser.h"
 #import "CCBUtil.h"
 #import "StageSizeWindow.h"
+#import "GuideGridSizeWindow.h"
 #import "ResolutionSettingsWindow.h"
 #import "PlugInManager.h"
 #import "InspectorPosition.h"
@@ -137,7 +138,8 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize projectOutlineHandler;
 @synthesize showGuides;
 @synthesize snapToGuides;
-@synthesize snapGrid;
+@synthesize showGuideGrid;
+
 @synthesize snapNode;
 @synthesize guiView;
 @synthesize guiWindow;
@@ -601,11 +603,12 @@ typedef enum
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
     
-    self.showGuides = YES;
-    self.snapToGuides = YES;
+    self.showGuides      = YES;
+    self.snapToGuides    = YES;
     self.showStickyNotes = YES;
     
-    self.snapGrid = NO;
+    self.showGuideGrid   = NO;
+    
     self.snapNode = NO;
 	
     [self.window makeKeyWindow];
@@ -1707,6 +1710,9 @@ static BOOL hideAllToNextSeparator;
     if (guides)
     {
         [[CocosScene cocosScene].guideLayer loadSerializedGuides:guides];
+        if(showGuideGrid) {
+            [[CocosScene cocosScene].guideLayer buildGuideGrid];
+        }
     }
     else
     {
@@ -4709,6 +4715,36 @@ static BOOL hideAllToNextSeparator;
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window
 {
     return currentDocument.undoManager;
+}
+
+// Guide Extras
+- (IBAction) menuGuideGrid:(id)sender {
+    if(!showGuideGrid) {
+        [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
+    } else {
+        [[[CocosScene cocosScene] guideLayer] clearGuideGrid];
+    }
+}
+
+- (IBAction) menuGuideGridSettings:(id)sender
+{
+    if (!currentDocument) return;
+
+    GuideGridSizeWindow* wc = [[GuideGridSizeWindow alloc] initWithWindowNibName:@"GuideGridSizeWindow"];
+    
+    wc.wStage = [[[CocosScene cocosScene] guideLayer] gridSize].width;
+    wc.hStage = [[[CocosScene cocosScene] guideLayer] gridSize].height;
+    
+    int success = [wc runModalSheetForWindow:window];
+    if (success)
+    {
+        CGSize newSize = CGSizeMake(wc.wStage,wc.hStage);
+        [[[CocosScene cocosScene] guideLayer] setGridSize:newSize];
+    }
+    
+    if(showGuideGrid) {
+        [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
+    }
 }
 
 #pragma mark Playback countrols

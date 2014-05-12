@@ -1,7 +1,6 @@
 /*
- * CocosBuilder: http://www.cocosbuilder.com
  *
- * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2014 Martin Walsh
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,41 +21,17 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d.h"
+#import <Foundation/Foundation.h>
 
-#define kCCBGuideNone -1
+#import "CCBModalSheetController.h"
 
-enum
-{
-    kCCBGuideOrientationHorizontal,
-    kCCBGuideOrientationVertical
-};
-
-@interface GuidesLayer : CCNode
-{
-    NSMutableArray* guides;
-    int draggingGuide;
-    
-    CGSize winSize;
-    CGPoint stageOrigin;
-    float zoom;
+@interface GuideGridSizeWindow : CCBModalSheetController
+{   
+    int wStage;
+    int hStage;
 }
 
-@property (nonatomic,readwrite) CGSize gridSize;
+@property (nonatomic,assign) int wStage;
+@property (nonatomic,assign) int hStage;
 
-- (BOOL) mouseDown:(CGPoint)pt event:(NSEvent*)event;
-- (BOOL) mouseDragged:(CGPoint)pt event:(NSEvent*)event;
-- (BOOL) mouseUp:(CGPoint)pt event:(NSEvent*)event;
-- (void) updateWithSize:(CGSize)ws stageOrigin:(CGPoint)so zoom:(float)zm;
-
-- (id) serializeGuides;
-- (void) loadSerializedGuides:(id)ser;
-- (void) removeAllGuides;
-
-// Guide Grid
-- (void)buildGuideGrid;
-- (void)clearGuideGrid;
-
-// Snaps to a point in view coordinates
-- (CGPoint) snapPoint:(CGPoint)pt;
 @end
