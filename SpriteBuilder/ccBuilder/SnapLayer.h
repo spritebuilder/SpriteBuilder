@@ -8,15 +8,19 @@
 
 #import "CCNode.h"
 
-@interface SnapLayer : CCNode
+@interface SnapLayer : CCNode {
+    
+    CGSize winSize;
+    CGPoint stageOrigin;
+    float zoom;
+}
 
 - (BOOL) mouseDown:(CGPoint)pt event:(NSEvent*)event;
 - (BOOL) mouseDragged:(CGPoint)pt event:(NSEvent*)event;
 - (BOOL) mouseUp:(CGPoint)pt event:(NSEvent*)event;
 - (void) updateLines;
+- (void) updateWithSize:(CGSize)ws stageOrigin:(CGPoint)so zoom:(float)zm;
 
 @property (nonatomic) CCNode *selectedNode;
-
-@property (nonatomic, readwrite) BOOL snapActive;
 
 @end
