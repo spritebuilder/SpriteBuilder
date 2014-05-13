@@ -156,6 +156,10 @@ enum
 
 - (void) reloadAllResources;
 
+// Will update the resource manager immediately for a new file instead of waiting for
+// the pathWatcher to trigger
+- (void)updateForNewFile:(NSString *)newFile;
+
 - (NSString*) toAbsolutePath:(NSString*)path;
 + (NSArray*) resIndependentExts;
 + (NSArray*) resIndependentDirs;
