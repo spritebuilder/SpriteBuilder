@@ -25,6 +25,11 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="RX6-40-MaY">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="value" keyPath="displayName" id="20"/>
                     </connections>
                 </textField>
