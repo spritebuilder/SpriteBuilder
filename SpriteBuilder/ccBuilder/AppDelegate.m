@@ -2103,7 +2103,6 @@ static BOOL hideAllToNextSeparator;
     int currentResolution = currentDocument.currentResolution;
     SequencerSequence* currentSeq = sequenceHandler.currentSequence;
     
-    currentDocument.currentResolution = 0;
     sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
     sequenceHandler.currentSequence.timelinePosition = 0;
     [self reloadResources];
@@ -2249,6 +2248,8 @@ static BOOL hideAllToNextSeparator;
     [[CocosScene cocosScene] setScrollOffset:ccp(0,0)];
     
     [self checkForTooManyDirectoriesInCurrentDoc];
+
+    [[ResourceManager sharedManager] updateForNewFile:fileName];
 }
 
 /*

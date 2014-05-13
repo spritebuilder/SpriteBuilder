@@ -134,12 +134,13 @@
                 sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
                 sprtGuide.contentSize = CGSizeMake(winSize.width, 2);
                 sprtGuide.anchorPoint = ccp(0, 0.5f);
-                sprtGuide.position = viewPos;
+                sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
+                [sprtGuide setColor:[CCColor blueColor]];
                 [self addChild:sprtGuide];
                 
                 // Grid Color
                 if(g->type==kCCBGuideTypeGrid) {
-                    [sprtGuide setColor:[CCColor colorWithCcColor3b:ccc3(0xFF, 0xFF, 0x22)]];
+                     [sprtGuide setColor:[CCColor greenColor]];
                 }
             }
         }
@@ -155,12 +156,13 @@
                 sprtGuide.contentSize = CGSizeMake(winSize.height, 2);
                 sprtGuide.anchorPoint = ccp(0, 0.5f);
                 sprtGuide.rotation = -90;
-                sprtGuide.position = viewPos;
+                sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
+                [sprtGuide setColor:[CCColor blueColor]];
                 [self addChild:sprtGuide];
                 
                 // Grid Color
                 if(g->type==kCCBGuideTypeGrid) {
-                    [sprtGuide setColor:[CCColor colorWithCcColor3b:ccc3(0xFF, 0xFF, 0x22)]];
+                    [sprtGuide setColor:[CCColor greenColor]];
                 }
             }
         }
