@@ -434,14 +434,22 @@ typedef struct _PVRTexHeader
         CFRelease(colorSpace);
     }
     
+    // Generate preview file
     if (self.previewFile)
     {
-        // Generate preview file
-        [[NSFileManager defaultManager] copyItemAtPath:pngFilename toPath:self.previewFile error:NULL];
-    }
-    
+        NSError *error;
+        if (![[NSFileManager defaultManager] removeItemAtPath:self.previewFile error:&error])
+        {
+            NSLog(@"[TEXTUREPACKER] Error removing preview image %@: %@", self.previewFile, error);
+        }
 
-    
+        error = nil;
+        if (![[NSFileManager defaultManager] copyItemAtPath:pngFilename toPath:self.previewFile error:&error])
+        {
+            NSLog(@"[TEXTUREPACKER] Error copying preview image from %@ to %@: %@", pngFilename, self.previewFile, error);
+        }
+    }
+
     NSError * error = nil;
 
     self.formatConverter = [FCFormatConverter defaultConverter];
