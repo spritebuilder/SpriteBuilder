@@ -129,7 +129,7 @@
 			<string>referenceAngle</string>
 			<key>displayName</key>
 			<string>Reference</string>
-		</dict>		
+		</dict>
 		<dict>
 			<key>type</key>
 			<string>Separator</string>
@@ -186,7 +186,7 @@
 			<key>displayName</key>
 			<string>Stiffness</string>
 		</dict>
-	<dict>
+		<dict>
 			<key>type</key>
 			<string>Separator</string>
 			<key>dontSetInEditor</key>
@@ -265,54 +265,9 @@
 			<key>displayName</key>
 			<string>Rate</string>
 		</dict>
-			<dict>
-			<key>type</key>
-			<string>Separator</string>
-			<key>dontSetInEditor</key>
-			<true/>
-			<key>displayName</key>
-			<string>Ratchet</string>
-			<key>name</key>
-			<string>Ratchet</string>
-		</dict>
 		<dict>
 			<key>defaultSerialization</key>
 			<integer>0</integer>
-			<key>affectsProperties</key>
-			<array>
-				<string>ratchetValue</string>
-				<string>ratchetPhase</string>
-			</array>
-			<key>displayName</key>
-			<string>Ratchet Enabled</string>
-			<key>type</key>
-			<string>Check</string>
-			<key>name</key>
-			<string>ratchetEnabled</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<integer>30</integer>
-			<key>type</key>
-			<string>Degrees</string>
-			<key>name</key>
-			<string>ratchetValue</string>
-			<key>displayName</key>
-			<string>Ratchet</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<integer>0</integer>
-			<key>type</key>
-			<string>Degrees</string>
-			<key>name</key>
-			<string>ratchetPhase</string>
-			<key>displayName</key>
-			<string>Phase</string>
-		</dict>
-		<dict>
-			<key>defaultSerialization</key>
-			<integer>0</integer>		
 			<key>displayName</key>
 			<string>layoutType</string>
 			<key>type</key>
@@ -320,8 +275,8 @@
 			<key>name</key>
 			<string>layoutType</string>
 			<key>inspectorDisabled</key>
-			<true/>			
-		</dict>		
+			<true/>
+		</dict>
 	</array>
 	<key>editorClassName</key>
 	<string>CCBPhysicsPivotJoint</string>
