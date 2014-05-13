@@ -63,9 +63,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     worldSpace = ccp( floorf(worldSpace.x),
                      floorf(worldSpace.y));
     nodeSpace = [self convertToNodeSpace:worldSpace];
-    
     handle.position = nodeSpace;
-
     
     [super visit:renderer parentTransform:parentTransform];
 }
@@ -104,6 +102,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     CCNode               * ratchedTicks;
     float                  cachedRatchedValue;
     
+    CCSprite             * motorNode;
     
 }
 
@@ -136,6 +135,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     self.ratchetEnabled = NO;
     self.ratchetValue = 30.0f;
     self.ratchetPhase = 0.0f;
+    
     cachedRatchedValue = -1.0f;
     _layoutType = eLayoutButtonNone;
     
@@ -177,7 +177,6 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     limitSubtendingAngle = [CCProgressNode progressWithSprite:progressSprite];
     limitSubtendingAngle.type = CCProgressNodeTypeRadial;
     limitSubtendingAngle.scale = 1.20f;
-    limitSubtendingAngle.reverseDirection = YES;
     [limitNode addChild:limitSubtendingAngle];
     
     limitMaxHandle = [CCSegmentHandle node];
@@ -199,6 +198,9 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     [ratchetNode addChild:ratchedPhaseHandle];
     ratchedPhaseHandle.handle.spriteFrame =[CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png"];
 
+    //Motor
+    motorNode = [CCSprite spriteWithImageNamed:@"joint-pivot-motor.png"];
+    [scaleFreeNode addChild:motorNode];
 }
 
 
@@ -325,8 +327,14 @@ const float kRatchedRenderRadius = 30.0f;
         limitNode.visible = NO;
         layoutBox.visible = NO;
         ratchetNode.visible = NO;
+
+        
     }
     
+    //Motor nodes. Its always visible.
+    motorNode.visible = bodyAssigned && self.motorEnabled;
+    motorNode.scaleX = self.motorRate > 1.0f ? -1.0f : 1.0f;
+
     
     //Make them equivalent.
     layoutBackground.visible = layoutBox.visible && layoutControlBox.children.count >= 1;
