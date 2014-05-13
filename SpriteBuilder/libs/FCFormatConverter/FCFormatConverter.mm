@@ -164,18 +164,33 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
         pvrtexture::CPVRTextureHeader header(pvrtexture::PVRStandard8PixelType.PixelTypeID, image.size.height , image.size.width);
         pvrtexture::CPVRTexture     * pvrTexture = new pvrtexture::CPVRTexture(header , rawImg.bitmapData);
         
+        
+        
         bool hasError = NO;
         
-        if(!Transcode(*pvrTexture, pixelType, variableType, ePVRTCSpacelRGB, pvrtexture::ePVRTCBest, dither))
+        if(!pvrtexture::PreMultiplyAlpha(*pvrTexture))
         {
-			if (error)
+            if (error)
 			{
-				NSString * errorMessage = [NSString stringWithFormat:@"Failure to transcode image: %@", srcPath];
+				NSString * errorMessage = [NSString stringWithFormat:@"Failure to premultiple alpha: %@", srcPath];
 				NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
 				*error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
 			}
             hasError = YES;
         }
+        
+       
+        if(!hasError && !Transcode(*pvrTexture, pixelType, variableType, ePVRTCSpacelRGB, pvrtexture::ePVRTCBest, dither))
+        {
+            if (error)
+            {
+                NSString * errorMessage = [NSString stringWithFormat:@"Failure to transcode image: %@", srcPath];
+                NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
+                *error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+            }
+            hasError = YES;
+        }
+    
         
         if(!hasError)
         {
