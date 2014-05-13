@@ -2247,6 +2247,8 @@ static BOOL hideAllToNextSeparator;
     [[CocosScene cocosScene] setScrollOffset:ccp(0,0)];
     
     [self checkForTooManyDirectoriesInCurrentDoc];
+
+    [[ResourceManager sharedManager] updateForNewFile:fileName];
 }
 
 /*

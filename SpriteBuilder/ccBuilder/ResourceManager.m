@@ -939,6 +939,21 @@
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
+- (void)updateForNewFile:(NSString *)newFile
+{
+    for (RMDirectory *dir in activeDirectories)
+    {
+        NSString *dirPath = dir.dirPath;
+
+        if ([newFile rangeOfString:dirPath].location != NSNotFound)
+        {
+            [self updateResourcesForPath:dirPath];
+        }
+        return;
+    }
+}
+
+
 @dynamic mainActiveDirectoryPath; // prevent auto-synthesis of property ivar of the same name
 - (NSString*) mainActiveDirectoryPath
 {
