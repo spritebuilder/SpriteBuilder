@@ -2058,7 +2058,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [notesLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
     
     // Update Node Snap
-    snapLayer.snapActive = appDelegate.snapNode;
+    snapLayer.visible = appDelegate.snapNode;
+    [snapLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
 
     if (winSizeChanged)
     {
@@ -2071,11 +2072,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 				CGSize sizeInPixels = [[CCDirector sharedDirector] viewSizeInPixels];
         trackingArea = [[NSTrackingArea alloc] initWithRect:NSMakeRect(0, 0, sizeInPixels.width, sizeInPixels.height) options:NSTrackingMouseMoved | NSTrackingMouseEnteredAndExited | NSTrackingCursorUpdate | NSTrackingActiveInKeyWindow  owner:[appDelegate cocosView] userInfo:NULL];
         [[appDelegate cocosView] addTrackingArea:trackingArea];
-        snapLinesNeedUpdate = YES;
-    }
-    if(snapLinesNeedUpdate) { // Update the snapping lines if the user is scrolling
-        [snapLayer updateLines];
-        snapLinesNeedUpdate = NO;
     }
     
     [self updateAnchorPointCompensation];

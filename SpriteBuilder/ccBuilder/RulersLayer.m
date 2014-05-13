@@ -62,12 +62,14 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 	mouseMarkVertical = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
 	mouseMarkVertical.anchorPoint = ccp(0, 0.5f);
 	mouseMarkVertical.visible = NO;
+    [mouseMarkVertical setColor:[CCColor blueColor]];
 	[self addChild:mouseMarkVertical z:4];
 	
 	mouseMarkHorizontal = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
 	mouseMarkHorizontal.rotation = -90;
 	mouseMarkHorizontal.anchorPoint = ccp(0, 0.5f);
 	mouseMarkHorizontal.visible = NO;
+    [mouseMarkVertical setColor:[CCColor blueColor]];
 	[self addChild:mouseMarkHorizontal z:4];
 	
 	CCSprite* xyBg = [CCSprite spriteWithImageNamed:@"ruler-xy.png"];

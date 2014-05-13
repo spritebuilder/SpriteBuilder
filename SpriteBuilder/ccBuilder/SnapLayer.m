@@ -13,40 +13,26 @@
 #import "PositionPropertySetter.h"
 #import "SnapLayerKeys.h"
 
-#define kOptionKey              58
 #define kSnapLayerSensitivity   4
-#define kSnapLayerGrid          32
 
 @interface SnapLayer() {
-    BOOL optionKeyDown;
     float sensitivity;
-    
     float gridSize;
 }
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
-@property (nonatomic, strong) CCDrawNode *drawLayer;
 
 @property (nonatomic, strong) NSMutableSet *verticalSnapLines;
 @property (nonatomic, strong) NSMutableSet *horizontalSnapLines;
-
-@property (nonatomic, strong) NSMutableSet *verticalGridLines;
-@property (nonatomic, strong) NSMutableSet *horizontalGridLines;
 
 @end
 
 @implementation SnapLayer
 
 @synthesize appDelegate;
-@synthesize drawLayer;
 
 @synthesize verticalSnapLines;
 @synthesize horizontalSnapLines;
-
-@synthesize verticalGridLines;
-@synthesize horizontalGridLines;
-
-@synthesize snapActive;
 
 #pragma mark - Setup
 
@@ -62,35 +48,10 @@
     appDelegate = [AppDelegate appDelegate];
     
     sensitivity = kSnapLayerSensitivity;
-    drawLayer = [CCDrawNode node];
-    
-    gridSize   = kSnapLayerGrid;
-    
-    snapActive = NO;
-    
-    verticalGridLines   = [NSMutableSet new];
-    horizontalGridLines = [NSMutableSet new];
-    
+
     verticalSnapLines   = [NSMutableSet new];
     horizontalSnapLines = [NSMutableSet new];
-    
-    [self addChild:drawLayer];
-    [self setupOptionKeyListener];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLines) name:SnapLayerRefreshLines object:nil];
-}
 
-- (void)setupOptionKeyListener {
-    [NSEvent addLocalMonitorForEventsMatchingMask:NSFlagsChangedMask handler:^NSEvent *(NSEvent *incomingEvent) {
-        if(incomingEvent.keyCode == kOptionKey) {
-            if(incomingEvent.modifierFlags & NSAlternateKeyMask) {
-                optionKeyDown = YES;
-            } else {
-                optionKeyDown = NO;
-            }
-        }
-        return incomingEvent;
-    }];
 }
 
 #pragma mark - Memory Management
@@ -103,41 +64,58 @@
 #pragma mark - Drawing
 
 - (void)drawLines {
-    [drawLayer clear];
+    
+    [self removeAllChildrenWithCleanup:YES];
     
     CocosScene *cs = [CocosScene cocosScene];
+    
+    CGRect viewRect = CGRectZero;
+    viewRect.size = winSize;
+    
     for(CCNode *sNode in appDelegate.selectedNodes) {
 
         if(sNode != cs.rootNode) {
-            for(NSNumber *x in verticalSnapLines) {
+            
+            for(NSNumber *x in horizontalSnapLines) {
                 
-                CGPoint start = [self getStagePointWithPoint:ccp([x floatValue], 0) forNode:sNode]; // Get the start coordinate in relation to the stage
-                int screenX = start.x; // Remember the x position so we can determine wether or not to draw the line if it's outside of the stage
-                start.y = 0; // Make sure to line draws to the bottom side of the stage node
-                start = [cs convertToViewSpace:start]; // Convert the stage coordinate to the screen coordinate
-                CGPoint end = [self getStagePointWithPoint:ccp([x floatValue], cs.stageSize.height) forNode:sNode]; // Get the end coordinate in relation to the stage
-                end.y = cs.stageSize.height; // Make sure to line draws to the top side of the stage node
-                end = [cs convertToViewSpace:end]; // Convert the stage coordinate to the screen coordinate
+                CGPoint viewPos = [cs convertToViewSpace:ccp(0,[x floatValue])];
+                viewPos.x = 0;
                 
-                if(screenX >= 0 && screenX <= cs.stageSize.width) { // Don't draw lines outside of the stage node
-                    [drawLayer drawSegmentFrom:start to:end radius:1 color:[CCColor colorWithCcColor3b:ccc3(0xFF, 0x69, 0xB4)]];
+                if (CGRectContainsPoint(viewRect, viewPos))
+                {
+                    CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
+                    sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
+                    sprtGuide.contentSize = CGSizeMake(winSize.width, 2);
+                    sprtGuide.anchorPoint = ccp(0, 0.5f);
+                    sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
+                    [sprtGuide setColor:[CCColor redColor]];
+                    [self addChild:sprtGuide];
+                    
                 }
+
             }
             
-            for(NSNumber *y in horizontalSnapLines) {
+            
+            for(NSNumber *y in verticalSnapLines) {
                 
-                CGPoint start = [self getStagePointWithPoint:ccp(0, [y floatValue]) forNode:sNode]; // Get the start coordinate in relation to the stage
-                int screenY = start.y; // Remember the y position so we can determine wether or not to draw the line if it's outside of the stage
-                start.x = 0; // Make sure to line draws to the left side of the stage node
-                start = [cs convertToViewSpace:start]; // Convert the stage coordinate to the screen coordinate
-                CGPoint end = [self getStagePointWithPoint:ccp(cs.stageSize.width, [y floatValue]) forNode:sNode]; // Get the end coordinate in relation to the stage
-                end.x = cs.stageSize.width; // Make sure to line draws to the right side of the stage node
-                end = [cs convertToViewSpace:end]; // Convert the stage coordinate to the screen coordinate
+                CGPoint viewPos = [cs convertToViewSpace:ccp([y floatValue],0)];
+                viewPos.y = 0;
                 
-                if(screenY >= 0 && screenY <= cs.stageSize.height) { // Don't draw lines outside of the stage node
-                    [drawLayer drawSegmentFrom:start to:end radius:1 color:[CCColor colorWithCcColor3b:ccc3(0xFF, 0x69, 0xB4)]];
+                if (CGRectContainsPoint(viewRect, viewPos))
+                {
+                    CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
+                    sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
+                    sprtGuide.contentSize = CGSizeMake(winSize.height, 2);
+                    sprtGuide.anchorPoint = ccp(0, 0.5f);
+                    sprtGuide.rotation = -90;
+                    sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
+                    [sprtGuide setColor:[CCColor redColor]];
+                    [self addChild:sprtGuide];
+
                 }
+                
             }
+            
         }
     }
 }
@@ -152,6 +130,26 @@
     return offset;
 }
 
+- (void) updateWithSize:(CGSize)ws stageOrigin:(CGPoint)so zoom:(float)zm
+{
+    if (!self.visible) return;
+    
+    if (CGSizeEqualToSize(ws, winSize)
+        && CGPointEqualToPoint(so, stageOrigin)
+        && zm == zoom)
+    {
+        return;
+    }
+    
+    // Store values
+    winSize     = ws;
+    stageOrigin = so;
+    zoom        = zm;
+    
+    [self drawLines];
+}
+
+
 #pragma mark - Snap Lines Methods
 
 - (void)updateLines {
@@ -162,8 +160,6 @@
 - (void)findSnappedLines {
     [verticalSnapLines removeAllObjects];
     [horizontalSnapLines removeAllObjects];
-    
-    if(!snapActive) return;
 
     for(CCNode *sNode in appDelegate.selectedNodes) {
         
@@ -257,10 +253,7 @@
 #pragma mark - Snapping Methods
 
 - (void)snapIfNeeded {
-    
-    if(!optionKeyDown) {
-        
-        // Don't snap if the user is holding down the option key
+
         for(CCNode *sNode in appDelegate.selectedNodes) {
             
             if(sNode && sNode.parent) {
@@ -271,97 +264,98 @@
                 // Try and snap with all children of the selected node's parent
                 NSMutableArray *nodesToSearchForSnapping = [NSMutableArray arrayWithArray:sNode.parent.children];
                 
-                if(snapActive) {
+                
+                
+                for(CCNode *node in nodesToSearchForSnapping) {
                     
-                    for(CCNode *node in nodesToSearchForSnapping) {
+                    if(node != sNode) { // Ignore the selected node
+                        NSPoint point = [sNode convertPositionToPoints:sNode.position type:sNode.positionType];
+                        NSPoint nPoint = [sNode convertPositionToPoints:node.position type:node.positionType];
                         
-                        if(node != sNode) { // Ignore the selected node
-                            NSPoint point = [sNode convertPositionToPoints:sNode.position type:sNode.positionType];
-                            NSPoint nPoint = [sNode convertPositionToPoints:node.position type:node.positionType];
-                            
-                            float newX = point.x;
-                            float newY = point.y;
-                            
-                            // Snap from anchorPoint
-                            if(abs(point.x - nPoint.x) < sensitivity) {
-                                newX = nPoint.x;
-                            } if(abs(point.y - nPoint.y) < sensitivity) {
-                                newY = nPoint.y;
-                            }
-                            CGPoint pointToSnapFromAnchorPoint = [sNode convertPositionFromPoints:NSMakePoint(newX, newY) type:sNode.positionType];
-                            appDelegate.selectedNode.position = pointToSnapFromAnchorPoint;
-                            
-                            // Snap from center
-                            if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (node.leftInPoints + node.contentSizeInPoints.width / 2)) < sensitivity) {
-                                sNode.leftInPoints = node.leftInPoints + node.contentSizeInPoints.width / 2 - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
-                            } if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (node.bottomInPoints + node.contentSizeInPoints.height / 2)) < sensitivity) {
-                                sNode.bottomInPoints = node.bottomInPoints + node.contentSizeInPoints.height / 2 - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
-                            }
-                            
-                            // Snap to opposite sides
-                            if(abs(sNode.leftInPoints - node.rightInPoints) < sensitivity) {
-                                sNode.leftInPoints = node.rightInPoints;
-                            } else if(abs(sNode.rightInPoints - node.leftInPoints) < sensitivity) {
-                                sNode.rightInPoints = node.leftInPoints;
-                            }
-                            if(abs(sNode.topInPoints - node.bottomInPoints) < sensitivity) {
-                                sNode.topInPoints = node.bottomInPoints;
-                            } else if(abs(sNode.bottomInPoints - node.topInPoints) < sensitivity) {
-                                sNode.bottomInPoints = node.topInPoints;
-                                newY = sNode.position.y;
-                            }
-                            
-                            // Snap to same sides
-                            if(abs(sNode.leftInPoints - node.leftInPoints) < sensitivity) {
-                                sNode.leftInPoints = node.leftInPoints;
-                            } else if(abs(sNode.rightInPoints - node.rightInPoints) < sensitivity) {
-                                sNode.rightInPoints = node.rightInPoints;
-                            }
-                            if(abs(sNode.topInPoints - node.topInPoints) < sensitivity) {
-                                sNode.topInPoints = node.topInPoints;
-                            } else if(abs(sNode.bottomInPoints - node.bottomInPoints) < sensitivity) {
-                                sNode.bottomInPoints = node.bottomInPoints;
-                            }
-                            
+                        float newX = point.x;
+                        float newY = point.y;
+                        
+                        // Snap from anchorPoint
+                        if(abs(point.x - nPoint.x) < sensitivity) {
+                            newX = nPoint.x;
+                        } if(abs(point.y - nPoint.y) < sensitivity) {
+                            newY = nPoint.y;
                         }
+                        CGPoint pointToSnapFromAnchorPoint = [sNode convertPositionFromPoints:NSMakePoint(newX, newY) type:sNode.positionType];
+                        appDelegate.selectedNode.position = pointToSnapFromAnchorPoint;
+                        
+                        // Snap from center
+                        if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (node.leftInPoints + node.contentSizeInPoints.width / 2)) < sensitivity) {
+                            sNode.leftInPoints = node.leftInPoints + node.contentSizeInPoints.width / 2 - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
+                        } if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (node.bottomInPoints + node.contentSizeInPoints.height / 2)) < sensitivity) {
+                            sNode.bottomInPoints = node.bottomInPoints + node.contentSizeInPoints.height / 2 - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
+                        }
+                        
+                        // Snap to opposite sides
+                        if(abs(sNode.leftInPoints - node.rightInPoints) < sensitivity) {
+                            sNode.leftInPoints = node.rightInPoints;
+                        } else if(abs(sNode.rightInPoints - node.leftInPoints) < sensitivity) {
+                            sNode.rightInPoints = node.leftInPoints;
+                        }
+                        if(abs(sNode.topInPoints - node.bottomInPoints) < sensitivity) {
+                            sNode.topInPoints = node.bottomInPoints;
+                        } else if(abs(sNode.bottomInPoints - node.topInPoints) < sensitivity) {
+                            sNode.bottomInPoints = node.topInPoints;
+                            newY = sNode.position.y;
+                        }
+                        
+                        // Snap to same sides
+                        if(abs(sNode.leftInPoints - node.leftInPoints) < sensitivity) {
+                            sNode.leftInPoints = node.leftInPoints;
+                        } else if(abs(sNode.rightInPoints - node.rightInPoints) < sensitivity) {
+                            sNode.rightInPoints = node.rightInPoints;
+                        }
+                        if(abs(sNode.topInPoints - node.topInPoints) < sensitivity) {
+                            sNode.topInPoints = node.topInPoints;
+                        } else if(abs(sNode.bottomInPoints - node.bottomInPoints) < sensitivity) {
+                            sNode.bottomInPoints = node.bottomInPoints;
+                        }
+                        
                     }
-                    
-                    /*
-                    // Center View
-                    if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < sensitivity) {
-                        sNode.leftInPoints = (sNode.parent.contentSizeInPoints.width / 2) - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
-                    }
-                    if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (sNode.parent.contentSizeInPoints.height / 2)) < sensitivity) {
-                        sNode.bottomInPoints = (sNode.parent.contentSizeInPoints.height / 2) - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
-                    }
-                    
-                    // Snap to sides to edge of view
-                    if(abs(sNode.leftInPoints) < sensitivity) {
-                        sNode.leftInPoints = 0;
-                    } else if(abs(sNode.rightInPoints - sNode.parent.contentSizeInPoints.width) < sensitivity) {
-                        sNode.rightInPoints = sNode.parent.contentSizeInPoints.width;
-                    }
-                    if(abs(sNode.topInPoints - sNode.parent.contentSizeInPoints.height) < sensitivity) {
-                        sNode.topInPoints = sNode.parent.contentSizeInPoints.height;
-                    } else if(abs(sNode.bottomInPoints) < sensitivity) {
-                        sNode.bottomInPoints = 0;
-                    }
-                    */
                 }
                 
-                nodesToSearchForSnapping = nil;
-                cs = nil;
-                CGPoint difference = ccpSub(currentLocationInPoints, sNode.positionInPoints);
-                for(CCNode *node in appDelegate.selectedNodes) {
-                    if(node != sNode) {
-                        NSPoint point = ccpSub(node.positionInPoints, difference);
-                        point = [self convertPositionFromPoints:point type:self.positionType];
-                        node.position = point;
-                    }
+                /*
+                 // Center View
+                 if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < sensitivity) {
+                 sNode.leftInPoints = (sNode.parent.contentSizeInPoints.width / 2) - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
+                 }
+                 if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (sNode.parent.contentSizeInPoints.height / 2)) < sensitivity) {
+                 sNode.bottomInPoints = (sNode.parent.contentSizeInPoints.height / 2) - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
+                 }
+                 
+                 // Snap to sides to edge of view
+                 if(abs(sNode.leftInPoints) < sensitivity) {
+                 sNode.leftInPoints = 0;
+                 } else if(abs(sNode.rightInPoints - sNode.parent.contentSizeInPoints.width) < sensitivity) {
+                 sNode.rightInPoints = sNode.parent.contentSizeInPoints.width;
+                 }
+                 if(abs(sNode.topInPoints - sNode.parent.contentSizeInPoints.height) < sensitivity) {
+                 sNode.topInPoints = sNode.parent.contentSizeInPoints.height;
+                 } else if(abs(sNode.bottomInPoints) < sensitivity) {
+                 sNode.bottomInPoints = 0;
+                 }
+                 */
+            
+            
+            nodesToSearchForSnapping = nil;
+            cs = nil;
+            CGPoint difference = ccpSub(currentLocationInPoints, sNode.positionInPoints);
+            for(CCNode *node in appDelegate.selectedNodes) {
+                if(node != sNode) {
+                    NSPoint point = ccpSub(node.positionInPoints, difference);
+                    point = [self convertPositionFromPoints:point type:self.positionType];
+                    node.position = point;
                 }
             }
         }
     }
+    
+    
     [self findSnappedLines];
     [appDelegate refreshProperty:@"position"];
 }
@@ -370,41 +364,31 @@
 
 - (BOOL) mouseDown:(CGPoint)pt event:(NSEvent*)event
 {
-    BOOL success = YES;
+    if (!self.visible) return NO;
     
     if ([appDelegate.selectedNode hitTestWithWorldPos:pt]) {
         [self updateLines];
-    } else {
-        [drawLayer clear];
     }
     
-    return success;
+    return YES;
 }
 
 - (BOOL) mouseDragged:(CGPoint)pt event:(NSEvent*)event
 {
-    BOOL success = YES;
     
+    if (!self.visible) return NO;
+
     [self snapIfNeeded];
     [self drawLines];
     
-    return success;
+    return YES;
 }
 
 - (BOOL) mouseUp:(CGPoint)pt event:(NSEvent*)event
 {
-    BOOL success = YES;
+    if (!self.visible) return NO;
     
-    /*
-    if ([appDelegate.selectedNode hitTestWithWorldPos:pt]) {
-        [self updateLines];
-    } else {
-        [drawLayer clear];
-    }
-    */
-    [drawLayer clear];
-    
-    return success;
+    return YES;
 }
 
 @end
