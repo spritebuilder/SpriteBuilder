@@ -87,6 +87,7 @@
     
     [self willChangeValueForKey:@"blendDst"];
     [self didChangeValueForKey:@"blendDst"];
+    [super refresh];
 }
 
 @end

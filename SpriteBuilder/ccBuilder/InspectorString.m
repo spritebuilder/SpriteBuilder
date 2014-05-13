@@ -87,6 +87,7 @@
     [self didChangeValueForKey:@"hasTranslation"];
     
     [StringPropertySetter refreshStringProp:propertyName forNode:selection];
+    [super refresh];    
 }
 
 - (IBAction)pressedEditTranslation:(id)sender

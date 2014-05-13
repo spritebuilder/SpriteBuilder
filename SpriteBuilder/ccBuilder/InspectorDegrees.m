@@ -29,6 +29,7 @@
 - (void) setDegrees:(float)degrees
 {
     [self setPropertyForSelection:[NSNumber numberWithFloat:degrees]];
+    [self performSelector:@selector(refresh) withObject:Nil afterDelay:0];
 }
 
 - (float) degrees
@@ -40,6 +41,8 @@
 {
     [self willChangeValueForKey:@"degrees"];
     [self didChangeValueForKey:@"degrees"];
+    
+    [super refresh];
 }
 
 @end

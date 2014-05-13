@@ -127,6 +127,7 @@
     
     [self willChangeValueForKey:@"heightUnit"];
     [self didChangeValueForKey:@"heightUnit"];
+    [super refresh];    
 }
 
 @end
