@@ -45,9 +45,9 @@ const float kSegmentHandleDefaultRadius = 17.0f;
 -(BOOL)hitTestWithWorldPos:(CGPoint)worlPos
 {
     CGPoint pointHit = [self.handle convertToNodeSpaceAR:worlPos];
-    pointHit.y = pointHit.y - self.handle.contentSizeInPoints.height + 4.0f;
+    pointHit.y = pointHit.y - self.handle.contentSizeInPoints.height + 6.0f * [CCDirector sharedDirector].UIScaleFactor;
 
-    if(ccpLength(pointHit) < 4.0f * [CCDirector sharedDirector].UIScaleFactor)
+    if(ccpLength(pointHit) < 4.0f )
     {
         return YES;;
     }
@@ -58,7 +58,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     
-    CGPoint nodeSpace = ccp(0.0f,kSegmentHandleDefaultRadius);
+    CGPoint nodeSpace = ccp(0.0f,kSegmentHandleDefaultRadius * [CCDirector sharedDirector].UIScaleFactor);
     CGPoint worldSpace = [self convertToWorldSpace:nodeSpace];
     worldSpace = ccp( floorf(worldSpace.x),
                      floorf(worldSpace.y));
@@ -509,7 +509,7 @@ const float kRatchedRenderRadius = 30.0f;
     //Layout Controls
     layoutBox = [CCNode node];
     layoutControlBox = [CCLayoutBox node];
-    layoutControlBox.spacing = 2.0f;
+    layoutControlBox.spacing = 2.0f * [CCDirector sharedDirector].UIScaleFactor;
     NSMutableArray * buttons = [NSMutableArray array];
     for (int i =0; i < eLayoutButtonMax; i++) {
         NSString * title = i == eLayoutButtonSpring ? @"s" : (i == eLayoutButtonLimit ? @"l" : @"r");
@@ -530,10 +530,9 @@ const float kRatchedRenderRadius = 30.0f;
     
     layoutBackground = [CCSprite spriteWithImageNamed:@"joint-pivot-mode-bg.png"];
     layoutBackground.anchorPoint = ccp(0.0f,0.0f);
-    layoutBackground.position = ccp(-4.f,-2.0f);
     [layoutBox addChild:layoutBackground z:-1];
     [layoutBox addChild:layoutControlBox];;
-    layoutBox.position = ccp(0.0f,-70.0f);
+    layoutBox.position = ccp(0.0f,-70.0f * [CCDirector sharedDirector].UIScaleFactor);
     
     [scaleFreeNode addChild:layoutBox];
     
@@ -606,7 +605,8 @@ const float kRatchedRenderRadius = 30.0f;
         return;
     
     layoutBackground.scaleX = (float)layoutControlBox.children.count / (float)layoutButtons.count;
-    layoutBackground.position = ccp(-2.f * layoutBackground.scaleX,-2.0f);
+    
+    layoutBackground.position = ccpMult(ccp(-2.f * layoutBackground.scaleX,-2.0f),[CCDirector sharedDirector].UIScaleFactor);
     
     
 }
