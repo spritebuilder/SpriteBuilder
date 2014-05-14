@@ -1041,6 +1041,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     if ([notesLayer mouseDown:pos event:event]) return;
     if ([guideLayer mouseDown:pos event:event]) return;
+    [snapLayer mouseDown:pos event:event];
     if ([appDelegate.physicsHandler mouseDown:pos event:event]) return;
     
     mouseDownPos = pos;
@@ -1143,8 +1144,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             appDelegate.selectedNodes = NULL;
         }
     }
-    
-    [snapLayer mouseDown:pos event:event];
     
     return;
 }
@@ -1268,9 +1267,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     if (!appDelegate.hasOpenedDocument) return;
     [self mouseMoved:event];
-    
-    BOOL updatedSnapLines = NO;
-    
+
     CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDragged:pos event:event]) return;
@@ -1351,7 +1348,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 // Convert to absolute position (conversion need to happen in node space)
                 CGPoint newAbsPos = [selectedNode.parent convertToNodeSpace:newPos];
                 
-                           newAbsPos = [selectedNode.parent convertToWorldSpace:newAbsPos];
+                newAbsPos = [selectedNode.parent convertToWorldSpace:newAbsPos];
                 
                 // Perform snapping (snapping happens in world space)
                 newAbsPos = [guideLayer snapPoint:newAbsPos];
@@ -1369,8 +1366,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos type:selectedNode.positionType];
         }
         [appDelegate refreshProperty:@"position"];
-        [snapLayer mouseDragged:pos event:event]; // Updates the snap lines
-        updatedSnapLines = YES;
+        [snapLayer mouseDragged:pos event:event];
     }
     else if (currentMouseTransform == kCCBTransformHandleScale)
     {
@@ -1593,10 +1589,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         CGPoint delta = ccpSub(pos, mouseDownPos);
         scrollOffset = ccpAdd(panningStartScrollOffset, delta);
-    }
-    
-    if(!updatedSnapLines) { // If it all ready updated don't update again
-        [snapLayer updateLines];
     }
     
     return;
