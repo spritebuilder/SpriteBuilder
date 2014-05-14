@@ -207,6 +207,8 @@
 		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
+		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
+		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
 		92B7900518C808B7007DF895 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
 		92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */; };
@@ -1362,6 +1364,8 @@
 		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
 		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
+		92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range.png"; sourceTree = "<group>"; };
+		92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range@2x.png"; sourceTree = "<group>"; };
 		92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsSpringJoint.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		92B792BC18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsSpringJointPlaceholder.h; sourceTree = "<group>"; };
 		92B792BD18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsSpringJointPlaceholder.m; sourceTree = "<group>"; };
@@ -2670,6 +2674,8 @@
 		776041EF1498FCE50078095D /* Stage Assets */ = {
 			isa = PBXGroup;
 			children = (
+				92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */,
+				92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */,
 				9218DF101919B04D0033851E /* joint-pivot-handle-ratchet.png */,
 				9218DF111919B04D0033851E /* joint-pivot-handle-ratchetmark.png */,
 				9218DF131919B04D0033851E /* joint-pivot-mode-bg.png */,
@@ -5346,6 +5352,7 @@
 				E3E8B4A5157CD5DB00373983 /* seq-scrub-line.png in Resources */,
 				B7C3533817FA0FEF005697C1 /* inspector-physics@2x.png in Resources */,
 				E3E8B4AA157D127300373983 /* seq-scaleslide-bg.png in Resources */,
+				92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */,
 				E36ECD6415869779003C177E /* seq-btn-back.png in Resources */,
 				E36ECD6515869779003C177E /* seq-keyframe-sel.png in Resources */,
 				E36ECD6615869779003C177E /* seq-keyframe.png in Resources */,
@@ -5495,6 +5502,7 @@
 				B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */,
 				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
 				B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */,
+				92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */,
 				B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */,
 				9218DF361919B04D0033851E /* joint-pivot-mode-r-on@2x.png in Resources */,
 				B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */,

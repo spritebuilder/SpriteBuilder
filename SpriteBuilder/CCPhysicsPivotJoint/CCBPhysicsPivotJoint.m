@@ -173,10 +173,9 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     limitNode = [CCNode node];
     [scaleFreeNode addChild:limitNode];
     
-    CCSprite * progressSprite = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
+    CCSprite * progressSprite = [CCSprite spriteWithImageNamed:@"joint-pivot-range.png"];
     limitSubtendingAngle = [CCProgressNode progressWithSprite:progressSprite];
     limitSubtendingAngle.type = CCProgressNodeTypeRadial;
-    limitSubtendingAngle.scale = 1.20f;
     [limitNode addChild:limitSubtendingAngle];
     
     limitMaxHandle = [CCSegmentHandle node];
