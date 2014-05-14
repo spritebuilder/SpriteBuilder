@@ -174,9 +174,38 @@
     [data appendBytes:temp length:numBytes];
 }
 
-// Encode integers using Elias Gamma encoding, pad with zeros up to next
-// even byte. Handle negative values using bijection.
-- (void) writeInt:(int)d withSign:(BOOL) sign
+static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
+    target[0] = (uint8)(value | 0x80);
+    if (value >= (1 << 7)) {
+        target[1] = (uint8)((value >>  7) | 0x80);
+        if (value >= (1 << 14)) {
+            target[2] = (uint8)((value >> 14) | 0x80);
+            if (value >= (1 << 21)) {
+                target[3] = (uint8)((value >> 21) | 0x80);
+                if (value >= (1 << 28)) {
+                    target[4] = (uint8)(value >> 28);
+                    return  5;
+                } else {
+                    target[3] &= 0x7F;
+                    return 4;
+                }
+            } else {
+                target[2] &= 0x7F;
+                return 3;
+            }
+        } else {
+            target[1] &= 0x7F;
+            return 2;
+        }
+    } else {
+        target[0] &= 0x7F;
+        return 1;
+    }
+}
+
+//Encode integers using google protobuf algorithm
+//Handle negative values using bijection.
+- (void) writeInt:(long long)d withSign:(BOOL) sign
 {
     [self clearTempBuffer];
     
@@ -186,35 +215,23 @@
         // Support for signed numbers
         long long dl = d;
         long long bijection;
-        if (d < 0) bijection = (-dl)*2;
-        else bijection = dl*2+1;
+        if (d >= 0) bijection = (dl)*2;
+        else bijection = (-dl)*2-1;
         num = bijection;
     }
     else
     {
-        // Support for 0
-        num = d+1;
+        num = d;
     }
     
-    NSAssert(num > 0, @"ccbi export: Trying to store negative int as unsigned");
+    uint8 target[5];
+    unsigned int ret=WriteVarint32FallbackToArray((unsigned int)num,target);
     
-    // Write number of bits used
-    int l = log2(num);
-    
-    for (int a = 0; a < l; a++)
-    {
-        [self putBit:NO];
-    }
-    [self putBit:YES];
-    
-    // Write the actual number
-    for (int a=l-1; a >= 0; a--)
-    {
-        if (num & 1 << a) [self putBit:YES];
-        else [self putBit:NO];
-    }
-    [self flushBits];
+    for(unsigned int pos = 0; pos<ret; ++pos)
+        [self writeByte:target[pos]];
 }
+
+
 
 - (void) writeFloat:(float)f
 {
