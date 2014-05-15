@@ -163,9 +163,6 @@
     [_splitHorizontalView toggleBottomView:[sc isSelectedForSegment:1]];
     [_splitHorizontalView setFrame:mainRect];
     [_splitHorizontalView setNeedsDisplay:YES];
-
-
-    [self flushWindow];
 }
 
 - (void)restorePreviousOpenedPanels
