@@ -536,7 +536,9 @@ typedef enum
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
-    
+
+    [self registerUserDefaults];
+
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
     
@@ -634,6 +636,16 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+}
+
+- (void)registerUserDefaults
+{
+    NSDictionary *defaults = @{
+            LAST_VISIT_LEFT_PANEL_VISIBLE : @(1),
+            LAST_VISIT_BOTTOM_PANEL_VISIBLE : @(1),
+            LAST_VISIT_RIGHT_PANEL_VISIBLE : @(1)};
+
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 - (void)restorePreviousOpenedPanels
