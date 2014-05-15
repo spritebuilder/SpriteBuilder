@@ -2259,7 +2259,7 @@ CA
                                 </segments>
                             </segmentedCell>
                             <connections>
-                                <action selector="pressedPanelVisibility:" target="kBR-KV-5Hj" id="n6t-rE-jr6"/>
+                                <action selector="pressedPanelVisibility:" target="371" id="QFe-uI-XBy"/>
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
@@ -2311,6 +2311,12 @@ CA
                     <toolbarItem reference="1788"/>
                 </defaultToolbarItems>
             </toolbar>
+            <connections>
+                <outlet property="leftPanel" destination="1491" id="hB7-u0-2qx"/>
+                <outlet property="panelVisibilityControl" destination="1786" id="bY7-Ju-J1z"/>
+                <outlet property="rightPanel" destination="1795" id="T8V-be-6fP"/>
+                <outlet property="splitHorizontalView" destination="1530" id="C6I-Nz-jAu"/>
+            </connections>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
@@ -2360,18 +2366,10 @@ CA
                 <outlet property="timelineScroller" destination="1543" id="1569"/>
                 <outlet property="toolbar" destination="1224" id="1755"/>
                 <outlet property="warningTableView" destination="8cF-q7-mD1" id="Rtv-ig-OyD"/>
-                <outlet property="window" destination="kBR-KV-5Hj" id="6Wr-gk-eD1"/>
+                <outlet property="window" destination="371" id="GSe-qk-SnF"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
-        <customObject id="kBR-KV-5Hj" customClass="MainWindow">
-            <connections>
-                <outlet property="leftPanel" destination="1491" id="EBj-9L-uap"/>
-                <outlet property="panelVisibilityControl" destination="1786" id="ucO-n1-hoV"/>
-                <outlet property="rightPanel" destination="1795" id="eYV-rn-dea"/>
-                <outlet property="splitHorizontalView" destination="1530" id="v3K-dN-Tio"/>
-            </connections>
-        </customObject>
         <userDefaultsController representsSharedInstance="YES" id="1042"/>
         <arrayController id="1056"/>
         <menu title="Keyframe" autoenablesItems="NO" id="1600">
