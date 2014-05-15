@@ -116,6 +116,7 @@
 #import "NSArray+Query.h"
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
+#import "SBUserDefaultsKeys.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -638,9 +639,9 @@ typedef enum
 - (void)restorePreviousOpenedPanels
 {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [panelVisibilityControl setSelected:[def boolForKey:@"LeftPaneVisible"] forSegment:0];
-    [panelVisibilityControl setSelected:[def boolForKey:@"BottomPaneVisible"] forSegment:1];
-    [panelVisibilityControl setSelected:[def boolForKey:@"RightPaneVisible"] forSegment:2];
+    [panelVisibilityControl setSelected:[def boolForKey:LAST_VISIT_LEFT_PANEL_VISIBLE] forSegment:0];
+    [panelVisibilityControl setSelected:[def boolForKey:LAST_VISIT_BOTTOM_PANEL_VISIBLE] forSegment:1];
+    [panelVisibilityControl setSelected:[def boolForKey:LAST_VISIT_RIGHT_PANEL_VISIBLE] forSegment:2];
     [self pressedPanelVisibility:panelVisibilityControl];
 }
 
@@ -648,7 +649,7 @@ typedef enum
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    NSString *filePath = [defaults valueForKey:@"LastOpenProject"];
+    NSString *filePath = [defaults valueForKey:LAST_OPENED_PROJECT_PATH];
     if (filePath)
     {
         [self openProject:filePath];
@@ -4919,11 +4920,11 @@ static BOOL hideAllToNextSeparator;
     if (projectSettings) {
 		projectPath = projectSettings.projectPath;
 		projectPath = [projectPath stringByDeletingLastPathComponent];
-        [defaults setObject:projectPath forKey:@"LastOpenProject"];
+        [defaults setObject:projectPath forKey:LAST_OPENED_PROJECT_PATH];
 	}
     else
     {
-        [defaults removeObjectForKey:@"LastOpenProject"];
+        [defaults removeObjectForKey:LAST_OPENED_PROJECT_PATH];
     }
     [defaults synchronize];
 }
@@ -4931,9 +4932,9 @@ static BOOL hideAllToNextSeparator;
 - (void)saveMainWindowPanelsVisibility
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:[panelVisibilityControl isSelectedForSegment:0] forKey:@"LeftPaneVisible"];
-    [defaults setBool:[panelVisibilityControl isSelectedForSegment:1] forKey:@"BottomPaneVisible"];
-    [defaults setBool:[panelVisibilityControl isSelectedForSegment:2] forKey:@"RightPaneVisible"];
+    [defaults setBool:[panelVisibilityControl isSelectedForSegment:0] forKey:LAST_VISIT_LEFT_PANEL_VISIBLE];
+    [defaults setBool:[panelVisibilityControl isSelectedForSegment:1] forKey:LAST_VISIT_BOTTOM_PANEL_VISIBLE];
+    [defaults setBool:[panelVisibilityControl isSelectedForSegment:2] forKey:LAST_VISIT_RIGHT_PANEL_VISIBLE];
     [defaults synchronize];
 }
 
