@@ -613,7 +613,7 @@ typedef enum
     self.showGuideGrid   = NO;
     self.snapNode = NO;
 
-    [self restorePreviousOpenedPanels];
+    [window restorePreviousOpenedPanels];
 
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
@@ -646,15 +646,6 @@ typedef enum
             LAST_VISIT_RIGHT_PANEL_VISIBLE : @(1)};
 
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-}
-
-- (void)restorePreviousOpenedPanels
-{
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [panelVisibilityControl setSelected:[def boolForKey:LAST_VISIT_LEFT_PANEL_VISIBLE] forSegment:0];
-    [panelVisibilityControl setSelected:[def boolForKey:LAST_VISIT_BOTTOM_PANEL_VISIBLE] forSegment:1];
-    [panelVisibilityControl setSelected:[def boolForKey:LAST_VISIT_RIGHT_PANEL_VISIBLE] forSegment:2];
-    [self pressedPanelVisibility:panelVisibilityControl];
 }
 
 - (void)openLastOpenProject
@@ -3790,102 +3781,6 @@ static BOOL hideAllToNextSeparator;
     cs.currentTool = [sc selectedSegment];
 }
 
-- (IBAction) pressedPanelVisibility:(id)sender
-{
-    NSSegmentedControl* sc = sender;
-    [window disableUpdatesUntilFlush];
-    
-	
-	NSRect mainRect = splitHorizontalView.frame;
-    // Left Panel
-    if ([sc isSelectedForSegment:0]) {
-        
-        if ([leftPanel isHidden]) {
-            // Show left panel & shrink splitHorizontalView
-            NSRect origRect = leftPanel.frame;
-            NSRect transitionFrame = NSMakeRect(0,
-                                                origRect.origin.y,
-                                                origRect.size.width,
-                                                origRect.size.height);
-                                                     
-            [leftPanel setFrame:transitionFrame];
-            mainRect = NSMakeRect(leftPanel.frame.size.width,
-                                         mainRect.origin.y,
-                                         mainRect.size.width-leftPanel.frame.size.width,
-                                         mainRect.size.height);
-                                               
-            [leftPanel setHidden:NO];
-            [leftPanel setNeedsDisplay:YES];
-        }
-    } else {
-        
-        if (![leftPanel isHidden]) {
-            // Hide left panel & expand splitView
-            NSRect origRect = leftPanel.frame;
-            NSRect transitionFrame = NSMakeRect(-origRect.size.width,
-                                                 origRect.origin.y,
-                                                 origRect.size.width,
-                                                 origRect.size.height);
-                                                      
-            [leftPanel setFrame:transitionFrame];
-            mainRect = NSMakeRect(0,
-                                         mainRect.origin.y,
-                                         mainRect.size.width+leftPanel.frame.size.width,
-                                         mainRect.size.height);
-                                         
-            [leftPanel setHidden:YES];
-            [leftPanel setNeedsDisplay:YES];
-        }
-    }
-    
-    
-    // Right Panel (InspectorScroll)
-    if ([sc isSelectedForSegment:2]) {
-        
-        if ([rightPanel isHidden]) {
-            // Show right panel & shrink splitView
-            [rightPanel setHidden:NO];
-            NSRect origRect = rightPanel.frame;
-            NSRect transitionFrame = NSMakeRect(origRect.origin.x-origRect.size.width,
-                                                origRect.origin.y,
-                                                origRect.size.width,
-                                                origRect.size.height);
-                                                
-            [rightPanel setFrame:transitionFrame];
-            mainRect = NSMakeRect(mainRect.origin.x,
-                                        mainRect.origin.y,
-                                        mainRect.size.width-rightPanel.frame.size.width,
-                                         mainRect.size.height);
-                                        
-            [rightPanel setNeedsDisplay:YES];
-        }
-    } else {
-        
-        if (![rightPanel isHidden]) {
-            // Hide right panel & expand splitView
-            NSRect origRect = rightPanel.frame;
-            NSRect transitionFrame = NSMakeRect(origRect.origin.x+origRect.size.width,
-                                                origRect.origin.y,
-                                                origRect.size.width,
-                                                origRect.size.height);
-                                                      
-            [rightPanel setFrame:transitionFrame];
-            mainRect = NSMakeRect(mainRect.origin.x,
-                                         mainRect.origin.y,
-                                         mainRect.size.width+rightPanel.frame.size.width,
-                                         mainRect.size.height);
-                                               
-            [rightPanel setHidden:YES];
-            [rightPanel setNeedsDisplay:YES];
-        }
-    }
-    
-	[splitHorizontalView toggleBottomView:[sc isSelectedForSegment:1]];
-	[splitHorizontalView setFrame:mainRect];
-	[splitHorizontalView setNeedsDisplay:YES];
-	
-}
-
 - (int) uniqueSequenceIdFromSequences:(NSArray*) seqs
 {
     int maxId = -1;
@@ -4918,7 +4813,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) windowWillClose:(NSNotification *)notification
 {
-    [self saveMainWindowPanelsVisibility];
+    [window saveMainWindowPanelsVisibility];
 
     [self saveOpenProjectPathToDefaults];
 
@@ -4938,15 +4833,6 @@ static BOOL hideAllToNextSeparator;
     {
         [defaults removeObjectForKey:LAST_OPENED_PROJECT_PATH];
     }
-    [defaults synchronize];
-}
-
-- (void)saveMainWindowPanelsVisibility
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:[panelVisibilityControl isSelectedForSegment:0] forKey:LAST_VISIT_LEFT_PANEL_VISIBLE];
-    [defaults setBool:[panelVisibilityControl isSelectedForSegment:1] forKey:LAST_VISIT_BOTTOM_PANEL_VISIBLE];
-    [defaults setBool:[panelVisibilityControl isSelectedForSegment:2] forKey:LAST_VISIT_RIGHT_PANEL_VISIBLE];
     [defaults synchronize];
 }
 

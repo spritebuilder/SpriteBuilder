@@ -24,11 +24,24 @@
 
 #import <AppKit/AppKit.h>
 
+@class CCBSplitHorizontalView;
+
 @interface MainWindow : NSWindow
 {
     BOOL needsEnableUpdate;
 }
 
+@property (nonatomic, weak) IBOutlet NSSegmentedControl *panelVisibilityControl;
+@property (nonatomic, weak) IBOutlet CCBSplitHorizontalView *splitHorizontalView;
+@property (nonatomic, weak) IBOutlet NSView *leftPanel;
+@property (nonatomic, weak) IBOutlet NSView *rightPanel;
+
 -(void)disableUpdatesUntilFlush;
+
+- (IBAction)pressedPanelVisibility:(id)sender;
+
+- (void)restorePreviousOpenedPanels;
+
+- (void)saveMainWindowPanelsVisibility;
 
 @end
