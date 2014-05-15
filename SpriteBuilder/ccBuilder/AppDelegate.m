@@ -484,7 +484,6 @@ typedef enum
     NSArray* topLevelObjs = NULL;
     [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
     
-    
     for (id obj in topLevelObjs)
     {
         if ([obj isKindOfClass:[NSView class]])
@@ -492,6 +491,7 @@ typedef enum
             NSView* view = obj;
             
             [previewViewContainer addSubview:view];
+            view.frame = NSMakeRect(0.0, 0.0, previewViewContainer.frame.size.width, previewViewContainer.frame.size.height);
         }
     }
     
