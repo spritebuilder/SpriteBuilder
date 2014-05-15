@@ -130,7 +130,8 @@ const float kSegmentHandleDefaultRadius = 17.0f;
 
     self.motorEnabled = NO;
     self.motorRate = 1;
-
+    self.motorMaxForce = 100.0f;
+    self.motorMaxForceEnabled = NO;
 
     self.ratchetEnabled = NO;
     self.ratchetValue = 30.0f;
@@ -832,6 +833,19 @@ const float kRatchedRenderRadius = 30.0f;
         self.layoutType = eLayoutButtonRatchet;
     }
     [self refreshLayoutButtons];
+}
+
+
+-(void)setMotorMaxForceEnabled:(BOOL)motorMaxForceEnabled
+{
+	if(_motorMaxForceEnabled != motorMaxForceEnabled)
+	{
+		if(motorMaxForceEnabled && isinf(self.motorMaxForce))
+			self.motorMaxForce = 100.0f;
+		
+	}
+	
+	_motorMaxForceEnabled = motorMaxForceEnabled;
 }
 
 -(void)setLayoutType:(eLayoutButtonType)layoutType
