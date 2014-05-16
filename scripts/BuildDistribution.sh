@@ -17,21 +17,7 @@ CCB_DIR=$(pwd)
 rm -Rf build/
 rm -Rf SpriteBuilder/build/
 
-# Update version for about box
-echo "Version: $1" > Generated/Version.txt
-echo -n "GitHub: " >> Generated/Version.txt
-git rev-parse --short=10 HEAD >> Generated/Version.txt
-touch Generated/Version.txt
-
-# Copy cocos2d version file to generated
-cp SpriteBuilder/libs/cocos2d-iphone/VERSION Generated/cocos2d_version.txt
-
-# Generate default projects
-echo "=== GENERATING COCOS2D SB-PROJECT ==="
-bash scripts/GenerateTemplateProject.sh PROJECTNAME
-
-echo "=== GENERATING SPRITE KIT SB-PROJECT ==="
-bash scripts/GenerateTemplateProject.sh SPRITEKITPROJECTNAME
+./scripts/CreateAllGeneratedFiles.sh $1
 
 # Clean and build CocosBuilder
 echo "=== CLEANING PROJECT ==="

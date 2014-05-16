@@ -116,6 +116,7 @@
 #import "NSArray+Query.h"
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
+#import "SBUserDefaultsKeys.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -484,7 +485,6 @@ typedef enum
     NSArray* topLevelObjs = NULL;
     [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
     
-    
     for (id obj in topLevelObjs)
     {
         if ([obj isKindOfClass:[NSView class]])
@@ -492,6 +492,7 @@ typedef enum
             NSView* view = obj;
             
             [previewViewContainer addSubview:view];
+            view.frame = NSMakeRect(0.0, 0.0, previewViewContainer.frame.size.width, previewViewContainer.frame.size.height);
         }
     }
     
@@ -535,7 +536,9 @@ typedef enum
     [[BITHockeyManager sharedHockeyManager] startManager];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
-    
+
+    [self registerUserDefaults];
+
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
     
@@ -608,18 +611,22 @@ typedef enum
     self.showStickyNotes = YES;
     
     self.showGuideGrid   = NO;
-    
     self.snapNode = NO;
-	
+
+    [window restorePreviousOpenedPanels];
+
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
-    // Open files
     if (delayOpenFiles)
-	{
-		[self openFiles:delayOpenFiles];
-		delayOpenFiles = nil;
-	}
+    {
+        [self openFiles:delayOpenFiles];
+        delayOpenFiles = nil;
+    }
+    else
+    {
+        [self openLastOpenProject];
+    }
     
     // Check for first run
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"completedFirstRun"] boolValue])
@@ -628,6 +635,27 @@ typedef enum
         
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
+    }
+}
+
+- (void)registerUserDefaults
+{
+    NSDictionary *defaults = @{
+            LAST_VISIT_LEFT_PANEL_VISIBLE : @(1),
+            LAST_VISIT_BOTTOM_PANEL_VISIBLE : @(1),
+            LAST_VISIT_RIGHT_PANEL_VISIBLE : @(1)};
+
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
+- (void)openLastOpenProject
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSString *filePath = [defaults valueForKey:LAST_OPENED_PROJECT_PATH];
+    if (filePath)
+    {
+        [self openProject:filePath];
     }
 }
 
@@ -3753,113 +3781,6 @@ static BOOL hideAllToNextSeparator;
     cs.currentTool = [sc selectedSegment];
 }
 
-- (IBAction) pressedPanelVisibility:(id)sender
-{
-    NSSegmentedControl* sc = sender;
-    [window disableUpdatesUntilFlush];
-    
-    // Left Panel
-    if ([sc isSelectedForSegment:0]) {
-        
-        if ([leftPanel isHidden]) {
-            // Show left panel & shrink splitHorizontalView
-            NSRect origRect = leftPanel.frame;
-            NSRect transitionFrame = NSMakeRect(0,
-                                                origRect.origin.y,
-                                                origRect.size.width,
-                                                origRect.size.height);
-                                                     
-            [leftPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(leftPanel.frame.size.width,
-                                         origRect.origin.y,
-                                         origRect.size.width-leftPanel.frame.size.width,
-                                         origRect.size.height);
-                                               
-            [splitHorizontalView setFrame:transitionFrame];
-            
-            [leftPanel setHidden:NO];
-            [leftPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
-        }
-    } else {
-        
-        if (![leftPanel isHidden]) {
-            // Hide left panel & expand splitView
-            NSRect origRect = leftPanel.frame;
-            NSRect transitionFrame = NSMakeRect(-origRect.size.width,
-                                                 origRect.origin.y,
-                                                 origRect.size.width,
-                                                 origRect.size.height);
-                                                      
-            [leftPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(0,
-                                         origRect.origin.y,
-                                         origRect.size.width+leftPanel.frame.size.width,
-                                         origRect.size.height);
-                                         
-            [splitHorizontalView setFrame:transitionFrame];
-            
-            [leftPanel setHidden:YES];
-            [leftPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
-        }
-    }
-    
-    
-    // Right Panel (InspectorScroll)
-    if ([sc isSelectedForSegment:2]) {
-        
-        if ([rightPanel isHidden]) {
-            // Show right panel & shrink splitView
-            [rightPanel setHidden:NO];
-            NSRect origRect = rightPanel.frame;
-            NSRect transitionFrame = NSMakeRect(origRect.origin.x-origRect.size.width,
-                                                origRect.origin.y,
-                                                origRect.size.width,
-                                                origRect.size.height);
-                                                
-            [rightPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(origRect.origin.x,
-                                        origRect.origin.y,
-                                        origRect.size.width-rightPanel.frame.size.width,
-                                         origRect.size.height);
-                                        
-            [splitHorizontalView setFrame:transitionFrame];
-            [rightPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
-        }
-    } else {
-        
-        if (![rightPanel isHidden]) {
-            // Hide right panel & expand splitView
-            NSRect origRect = rightPanel.frame;
-            NSRect transitionFrame = NSMakeRect(origRect.origin.x+origRect.size.width,
-                                                origRect.origin.y,
-                                                origRect.size.width,
-                                                origRect.size.height);
-                                                      
-            [rightPanel setFrame:transitionFrame];
-            origRect = splitHorizontalView.frame;
-            transitionFrame = NSMakeRect(origRect.origin.x,
-                                         origRect.origin.y,
-                                         origRect.size.width+rightPanel.frame.size.width,
-                                         origRect.size.height);
-                                               
-            [splitHorizontalView setFrame:transitionFrame];
-            [rightPanel setHidden:YES];
-            [rightPanel setNeedsDisplay:YES];
-            [splitHorizontalView setNeedsDisplay:YES];
-        }
-    }
-    
-    if ([sc selectedSegment] == 1) {
-        [splitHorizontalView toggleBottomView:[sc isSelectedForSegment:1]];
-    }
-}
-
 - (int) uniqueSequenceIdFromSequences:(NSArray*) seqs
 {
     int maxId = -1;
@@ -4892,7 +4813,27 @@ static BOOL hideAllToNextSeparator;
 
 - (void) windowWillClose:(NSNotification *)notification
 {
+    [window saveMainWindowPanelsVisibility];
+
+    [self saveOpenProjectPathToDefaults];
+
     [[NSApplication sharedApplication] terminate:self];
+}
+
+- (void)saveOpenProjectPathToDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *projectPath = @"";
+    if (projectSettings) {
+		projectPath = projectSettings.projectPath;
+		projectPath = [projectPath stringByDeletingLastPathComponent];
+        [defaults setObject:projectPath forKey:LAST_OPENED_PROJECT_PATH];
+	}
+    else
+    {
+        [defaults removeObjectForKey:LAST_OPENED_PROJECT_PATH];
+    }
+    [defaults synchronize];
 }
 
 - (NSSize) windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize

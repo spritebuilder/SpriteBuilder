@@ -23,4 +23,10 @@ if [ -f ../../Generated/$PROJECTNAME.zip ]; then
 fi
 
 zip -q -r ../../Generated/$PROJECTNAME.zip * -x *.git* */tests/*
+
+# Adds default project .gitignore file to archive
+cp ../default_projects.gitignore ./.gitignore
+zip -q ../../Generated/$PROJECTNAME.zip .gitignore
+rm .gitignore
+
 echo ""

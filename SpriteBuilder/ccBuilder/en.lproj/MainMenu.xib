@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="5053"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -978,7 +978,7 @@ CA
                 </menuItem>
             </items>
         </menu>
-        <window title="SpriteBuilder" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="371" customClass="MainWindow">
+        <window title="SpriteBuilder" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" frameAutosaveName="MainMenu" animationBehavior="default" id="371" customClass="MainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="255" y="184" width="1150" height="700"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
@@ -1001,7 +1001,7 @@ CA
                                             <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <splitView dividerStyle="thin" id="1956">
+                                                <splitView autosaveName="leftpanelfileviewsplit" dividerStyle="thin" id="1956">
                                                     <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -1072,7 +1072,7 @@ CA
                                             <rect key="frame" x="0.0" y="0.0" width="249" height="640"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <splitView dividerStyle="thin" id="1979">
+                                                <splitView autosaveName="leftpaneltilelessviewsplit" dividerStyle="thin" id="1979">
                                                     <rect key="frame" x="0.0" y="0.0" width="250" height="640"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -1097,11 +1097,11 @@ CA
                                                                         </subviews>
                                                                     </clipView>
                                                                     <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="1990">
-                                                                        <rect key="frame" x="0.0" y="436" width="251" height="16"/>
+                                                                        <rect key="frame" x="0.0" y="437" width="236" height="15"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1991">
-                                                                        <rect key="frame" x="235" y="0.0" width="16" height="452"/>
+                                                                        <rect key="frame" x="236" y="0.0" width="15" height="437"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                     </scroller>
                                                                 </scrollView>
@@ -1331,7 +1331,7 @@ CA
                             </box>
                         </subviews>
                     </customView>
-                    <splitView canDrawConcurrently="YES" dividerStyle="thin" id="1530" userLabel="Center HorSplit Panel" customClass="CCBSplitHorizontalView">
+                    <splitView canDrawConcurrently="YES" autosaveName="centerpaneltimelinesplit" dividerStyle="thin" id="1530" userLabel="Center HorSplit Panel" customClass="CCBSplitHorizontalView">
                         <rect key="frame" x="250" y="0.0" width="601" height="678"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -2259,7 +2259,7 @@ CA
                                 </segments>
                             </segmentedCell>
                             <connections>
-                                <action selector="pressedPanelVisibility:" target="494" id="1789"/>
+                                <action selector="pressedPanelVisibility:" target="371" id="QFe-uI-XBy"/>
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
@@ -2311,6 +2311,12 @@ CA
                     <toolbarItem reference="1788"/>
                 </defaultToolbarItems>
             </toolbar>
+            <connections>
+                <outlet property="leftPanel" destination="1491" id="hB7-u0-2qx"/>
+                <outlet property="panelVisibilityControl" destination="1786" id="bY7-Ju-J1z"/>
+                <outlet property="rightPanel" destination="1795" id="T8V-be-6fP"/>
+                <outlet property="splitHorizontalView" destination="1530" id="C6I-Nz-jAu"/>
+            </connections>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
@@ -2340,7 +2346,6 @@ CA
                 <outlet property="menuTimelinePopup" destination="1573" id="1588"/>
                 <outlet property="outlineHierarchy" destination="570" id="1040"/>
                 <outlet property="outlineProject" destination="1499" id="1504"/>
-                <outlet property="panelVisibilityControl" destination="1786" id="1794"/>
                 <outlet property="physicsHandler" destination="fa4-D5-pFD" id="ZWp-5N-Rhs"/>
                 <outlet property="plugInNodeCollectionView" destination="2015" id="2022"/>
                 <outlet property="previewViewContainer" destination="1957" id="1962"/>
@@ -2361,7 +2366,7 @@ CA
                 <outlet property="timelineScroller" destination="1543" id="1569"/>
                 <outlet property="toolbar" destination="1224" id="1755"/>
                 <outlet property="warningTableView" destination="8cF-q7-mD1" id="Rtv-ig-OyD"/>
-                <outlet property="window" destination="371" id="532"/>
+                <outlet property="window" destination="371" id="GSe-qk-SnF"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
