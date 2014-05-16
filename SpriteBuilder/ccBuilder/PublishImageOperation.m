@@ -9,6 +9,7 @@
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
+#import "PublishLogging.h"
 
 
 @interface PublishImageOperation ()
@@ -49,6 +50,7 @@
     if (_isSpriteSheet
         && [self isSpriteSheetAlreadyPublished:_srcFilePath outDir:_outputDir resolution:_resolution])
     {
+        LocalLog(@"[%@] SKIPPING spritesheet and already published - %@", [self class], [self description]);
         return;
     }
 
@@ -130,6 +132,7 @@
             && [srcDate isEqualToDate:dstDate]
             && !isDirty)
         {
+            LocalLog(@"[%@] SKIPPING file exists, same dates (src: %@, dst: %@) and not dirty - %@", [self class], srcDate, dstDate, [self description]);
             return;
         }
 
@@ -177,6 +180,7 @@
             && [srcDate isEqualToDate:dstDate]
             && !isDirty)
         {
+            LocalLog(@"[%@] SKIPPING file exists, same dates (src: %@, dst: %@) and not dirty - %@", [self class], srcDate, dstDate, [self description]);
             return;
         }
 
