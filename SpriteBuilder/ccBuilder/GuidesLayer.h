@@ -59,4 +59,6 @@ enum
 
 // Snaps to a point in view coordinates
 - (CGPoint) snapPoint:(CGPoint)pt;
+- (CGPoint) snapPointNode:(CCNode*)node pos:(CGPoint) pt;
+
 @end

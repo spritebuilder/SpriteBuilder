@@ -145,6 +145,7 @@ enum {
 
 @property (nonatomic,assign) CCBTool currentTool;
 
+@property (nonatomic,readonly) CCNodeColor* bgLayer;
 @property (nonatomic,readonly) GuidesLayer* guideLayer;
 @property (nonatomic,readonly) RulersLayer* rulerLayer;
 @property (nonatomic,readonly) NotesLayer* notesLayer;

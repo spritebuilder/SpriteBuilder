@@ -50,6 +50,7 @@
 #import "CCBUtil.h"
 #import "CCTextureCache.h"
 #import "NSArray+Query.h"
+#import "CCNode+PositionExtentions.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -61,6 +62,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 @implementation CocosScene
 
+@synthesize bgLayer;
 @synthesize rootNode;
 @synthesize isMouseTransforming;
 @synthesize scrollOffset;
@@ -1340,27 +1342,26 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 }
             }
             
-            CGPoint newPos = ccp(selectedNode.transformStartPosition.x+xDelta, selectedNode.transformStartPosition.y+yDelta);
             
+            CGPoint newPos  = ccp(selectedNode.transformStartPosition.x+xDelta, selectedNode.transformStartPosition.y+yDelta);
+            
+            CGPoint points[4]; //{bl,br,tr,tl}
+            [self getCornerPointsForNode:selectedNode withPoints:points];
+
             // Guide Snap
-            if (appDelegate.showGuides && appDelegate.snapToGuides)
+            if (appDelegate.showGuides && appDelegate.snapToGuides && !([event modifierFlags] & NSCommandKeyMask) )
             {
-                // Convert to absolute position (conversion need to happen in node space)
-                CGPoint newAbsPos = [selectedNode.parent convertToNodeSpace:newPos];
+
+                CGPoint newAbsPos = newPos; // BL
+                //CGPoint delta = ccpSub(newPos, newAbsPos);
+
+                newPos = [guideLayer snapPointNode:selectedNode pos:newAbsPos];
                 
-                newAbsPos = [selectedNode.parent convertToWorldSpace:newAbsPos];
-                
-                // Perform snapping (snapping happens in world space)
-                newAbsPos = [guideLayer snapPoint:newAbsPos];
-                
-                // Convert back to relative (conversion need to happen in node space)
-                newAbsPos = [selectedNode.parent convertToNodeSpace:newAbsPos];
-                
-                newPos = [selectedNode.parent convertToWorldSpace:newAbsPos];
+                //newPos = ccpAdd(newPos,delta);
             }
 
             CGPoint newLocalPos = [selectedNode.parent convertToNodeSpace:newPos];
-            
+         
             [appDelegate saveUndoStateWillChangeProperty:@"position"];
             
             selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos type:selectedNode.positionType];
