@@ -232,6 +232,50 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 }
 
 
+//DEPRICATED
+// Encode integers using Elias Gamma encoding, pad with zeros up to next
+// even byte. Handle negative values using bijection.
+//DEPRICATED
+- (void) writeIntOLD:(int)d withSign:(BOOL) sign
+{
+    [self clearTempBuffer];
+    
+    unsigned long long num;
+    if (sign)
+    {
+        // Support for signed numbers
+        long long dl = d;
+        long long bijection;
+        if (d < 0) bijection = (-dl)*2;
+        else bijection = dl*2+1;
+        num = bijection;
+    }
+    else
+    {
+        // Support for 0
+        num = d+1;
+    }
+    
+    NSAssert(num > 0, @"ccbi export: Trying to store negative int as unsigned");
+    
+    // Write number of bits used
+    int l = log2(num);
+    
+    for (int a = 0; a < l; a++)
+    {
+        [self putBit:NO];
+    }
+    [self putBit:YES];
+    
+    // Write the actual number
+    for (int a=l-1; a >= 0; a--)
+    {
+        if (num & 1 << a) [self putBit:YES];
+        else [self putBit:NO];
+    }
+    [self flushBits];
+}
+
 
 - (void) writeFloat:(float)f
 {
@@ -846,7 +890,7 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     [data appendBytes:&magic length:4];
     
     // Version
-    [self writeInt:kCCBXVersion withSign:NO];
+    [self writeIntOLD:kCCBXVersion withSign:NO];
 }
 
 - (void) writeStringCache

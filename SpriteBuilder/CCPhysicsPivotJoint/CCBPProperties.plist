@@ -257,6 +257,16 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>FloatCheck</string>
+			<key>name</key>
+			<string>motorMaxForce</string>
+			<key>displayName</key>
+			<string>Max force</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
 			<integer>1</integer>
 			<key>type</key>
 			<string>Float</string>

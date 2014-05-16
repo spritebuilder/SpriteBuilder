@@ -41,6 +41,8 @@ typedef enum
 
 //Motor proprties.
 @property (nonatomic) BOOL  motorEnabled;
+@property (nonatomic) BOOL  motorMaxForceEnabled;
+@property (nonatomic) float motorMaxForce;
 @property (nonatomic) float motorRate;
 
 //Ratchet Properties.
