@@ -241,7 +241,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 
 -(void)customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
-    if(self.hidden)
+    if([self.userObject isKindOfClass:[NodeInfo class]] &&  self.hidden)
         return;
     
     [self performSelector:@selector(oldVisit:parentTransform:) withObject:renderer withObject:(__bridge id)(parentTransform)];
@@ -878,6 +878,15 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
         else if ([prop isEqualToString:@"visible"]) return YES;
         else if ([prop isEqualToString:@"skew"]) return YES;
     }
+    
+    //If I'm locked.
+    if(self.locked)
+        return YES;
+    
+    //If this is a joint and its parent is locked. (joints inherit locked behavior from the SequencerJoints object.
+    if(self.plugIn.isJoint && self.parent.locked)
+        return YES;
+    
     
     // Disable position property for nodes handled by layouts
     if ([self.parent isKindOfClass:[CCLayout class]] && [prop isEqualToString:@"position"])

@@ -37,6 +37,7 @@
     [self willChangeValueForKey:@"f"];
     [self didChangeValueForKey:@"f"];
 
+    [super refresh];    
 }
 
 @end

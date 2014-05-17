@@ -265,6 +265,7 @@
     [self didChangeValueForKey:@"nodeName"];
     
 	[self.outletButton setNeedsDisplay:YES];
+    [super refresh];    
 }
 
 - (IBAction)handleDeleteNode:(id)sender

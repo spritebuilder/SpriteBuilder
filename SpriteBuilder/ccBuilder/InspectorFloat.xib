@@ -16,8 +16,8 @@
             <rect key="frame" x="0.0" y="0.0" width="233" height="33"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" id="2">
-                    <rect key="frame" x="-3" y="14" width="82" height="14"/>
+                <textField verticalHuggingPriority="750" id="2" customClass="CCBTextFieldLabel">
+                    <rect key="frame" x="-2" y="14" width="82" height="14"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Position" id="3">
                         <font key="font" metaFont="smallSystem"/>
@@ -26,6 +26,11 @@
                     </textFieldCell>
                     <connections>
                         <binding destination="-2" name="value" keyPath="displayName" id="20"/>
+                        <binding destination="-2" name="enabled" keyPath="self.readOnly" id="hGJ-0X-i4E">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="4">
@@ -43,12 +48,12 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="f" id="30"/>
                         <binding destination="-2" name="enabled" keyPath="readOnly" id="kNA-cW-QHA">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="f" id="30"/>
                     </connections>
                 </textField>
             </subviews>

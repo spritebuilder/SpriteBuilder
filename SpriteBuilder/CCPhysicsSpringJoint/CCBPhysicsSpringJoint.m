@@ -181,11 +181,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     }
 }
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
-{
-    [self updateRenderBody];
-    [super visit:renderer parentTransform:parentTransform];
-}
+
 
 
 
