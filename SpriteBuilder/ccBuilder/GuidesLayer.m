@@ -32,7 +32,7 @@
 #define kCCBGuideSnapDistance 4
 
 #define kCCBGuideTypeGrid     1
-#define kCCBGuideGridMatrix   32
+#define kCCBGuideGridMatrix   64
 
 #pragma mark Guide
 @interface Guide : NSObject
@@ -84,7 +84,7 @@
     }
     
     // Create Vertical Guides
-    for(int i=-cs.bgLayer.contentSize.width*0.5f;i<=cs.bgLayer.contentSize.width;i+=gridSize.height) {
+    for(int i=-cs.bgLayer.contentSize.width*0.5f;i<=cs.bgLayer.contentSize.width;i+=gridSize.width) {
         
         Guide* g = [[Guide alloc] init];
         g->orientation = kCCBGuideOrientationVertical;
@@ -402,24 +402,6 @@
     }
     
     return snappedPt;
-}
-
-- (CGPoint) snapPointNode:(CCNode*)node pos:(CGPoint) pt
-{
-    
-    // Convert to absolute position (conversion need to happen in node space)
-    pt = [node.parent convertToNodeSpace:pt];
-    
-    pt = [node.parent convertToWorldSpace:pt];
-    
-    // Perform snapping (snapping happens in world space)
-    pt = [self snapPoint:pt];
-    
-    // Convert back to relative (conversion need to happen in node space)
-    pt = [node.parent convertToNodeSpace:pt];
-    
-    return [node.parent convertToWorldSpace:pt];
-
 }
 
 @end

@@ -19,6 +19,7 @@
     float sensitivity;
     float gridSize;
     CGPoint lastPoint;
+    BOOL drag;
 }
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
@@ -42,6 +43,7 @@
     if (self = [super init]) {
         [self setup];
         lastPoint = ccp(0,0);
+        drag      = false;
     }
     return self;
 }
@@ -66,6 +68,8 @@
 #pragma mark - Drawing
 
 - (void)drawLines {
+    
+    if(!drag) return;
     
     [self removeAllChildren];
     
@@ -241,13 +245,15 @@
 }
 
 -(void) addVerticalSnapLine:(float)x node:(CCNode*)node {
-    CGPoint newAbsPos = [node.parent.parent convertToNodeSpace:ccp(x,0)];
+    CocosScene *cs = [CocosScene cocosScene];
+    CGPoint newAbsPos = [cs.anchorPointCompensationLayer convertToNodeSpace:ccp(x,0)];
     newAbsPos = [node.parent convertToWorldSpace:newAbsPos];
     [verticalSnapLines addObject:[NSNumber numberWithFloat:roundf(newAbsPos.x)]];
 }
 
 -(void) addHorizontalSnapLine:(float)y node:(CCNode*)node {
-    CGPoint newAbsPos = [node.parent.parent convertToNodeSpace:ccp(0,y)];
+    CocosScene *cs = [CocosScene cocosScene];
+    CGPoint newAbsPos = [cs.anchorPointCompensationLayer convertToNodeSpace:ccp(0,y)];
     newAbsPos = [node.parent convertToWorldSpace:newAbsPos];
     [horizontalSnapLines addObject:[NSNumber numberWithFloat:roundf(newAbsPos.y)]];
 }
@@ -376,7 +382,9 @@
         return NO;
     }
     
-    if(lastPoint.x==pt.x && lastPoint.y==pt.y) return NO;
+    if(CGPointEqualToPoint(lastPoint, pt)) return NO;
+    
+    drag = YES;
     
     [self snapIfNeeded];
     
@@ -385,6 +393,7 @@
 
 - (BOOL) mouseUp:(CGPoint)pt event:(NSEvent*)event
 {
+    drag = NO;
     if (!self.visible) return NO;
     
     [self removeAllChildren];

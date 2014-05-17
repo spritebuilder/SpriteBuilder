@@ -888,16 +888,24 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     return NO;
 }
 
+
+
+- (CGAffineTransform) startTransform;
+{
+    NodeInfo* info = self.userObject;
+    return info.startTransform;
+}
+
+- (void) setStartTransform:(CGAffineTransform)startTransform
+{
+    NodeInfo* info = self.userObject;
+    info.startTransform = startTransform;
+}
+
 - (CGPoint) transformStartPosition
 {
     NodeInfo* info = self.userObject;
-    return info.transformStartPosition;
-}
-
-- (void) setTransformStartPosition:(CGPoint)transformStartPosition
-{
-    NodeInfo* info = self.userObject;
-    info.transformStartPosition= transformStartPosition;
+    return CGPointApplyAffineTransform(self.anchorPointInPoints, info.startTransform);
 }
 
 - (void) setUsesFlashSkew:(BOOL)seqExpanded

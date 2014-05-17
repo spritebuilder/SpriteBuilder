@@ -50,7 +50,6 @@
 #import "CCBUtil.h"
 #import "CCTextureCache.h"
 #import "NSArray+Query.h"
-#import "CCNode+PositionExtentions.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -63,6 +62,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 @implementation CocosScene
 
 @synthesize bgLayer;
+@synthesize anchorPointCompensationLayer;
 @synthesize rootNode;
 @synthesize isMouseTransforming;
 @synthesize scrollOffset;
@@ -1082,7 +1082,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             
             // Transform anchor point
             currentMouseTransform = kCCBTransformHandleAnchorPoint;
-            transformScalingNode.transformStartPosition = transformScalingNode.anchorPoint;
+            transformScalingNode.startTransform = transformScalingNode.startTransform;
             return;
         }
         if(th == kCCBTransformHandleRotate && appDelegate.selectedNode != rootNode)
@@ -1305,9 +1305,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         {
             if(selectedNode.locked)
                 continue;
-            
-            CGPoint pos = NSPointToCGPoint(selectedNode.positionInPoints);
-            selectedNode.transformStartPosition = [selectedNode.parent convertToWorldSpace:pos];
+          
+            selectedNode.startTransform = selectedNode.nodeToWorldTransform;
         }
     
         if (appDelegate.selectedNode != rootNode &&
@@ -1325,43 +1324,78 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         {
             if(selectedNode.locked)
                 continue;
-            
-            float xDelta = (int)(pos.x - mouseDownPos.x);
-            float yDelta = (int)(pos.y - mouseDownPos.y);
-            
+          
+            CGPoint delta = ccp((int)(pos.x - mouseDownPos.x), (int)(pos.y - mouseDownPos.y));
+          
             // Handle shift key (straight drags)
             if ([event modifierFlags] & NSShiftKeyMask)
             {
-                if (fabs(xDelta) > fabs(yDelta))
+                if (fabs(delta.x) > fabs(delta.y))
                 {
-                    yDelta = 0;
+                    delta.y = 0;
                 }
                 else
                 {
-                    xDelta = 0;
+                    delta.x = 0;
                 }
             }
+          
+            CGAffineTransform startTransform = selectedNode.startTransform;
+            CGPoint newAbsPos = ccpAdd(selectedNode.transformStartPosition, delta);
+            CGPoint snapDelta = CGPointZero;
             
-            
-            CGPoint newPos  = ccp(selectedNode.transformStartPosition.x+xDelta, selectedNode.transformStartPosition.y+yDelta);
-            
-            CGPoint points[4]; //{bl,br,tr,tl}
-            [self getCornerPointsForNode:selectedNode withPoints:points];
-
             // Guide Snap
-            if (appDelegate.showGuides && appDelegate.snapToGuides && !([event modifierFlags] & NSCommandKeyMask) )
+            if (appDelegate.showGuides && appDelegate.snapToGuides  && !([event modifierFlags] & NSCommandKeyMask))
             {
+                CGSize size = selectedNode.contentSizeInPoints;
 
-                CGPoint newAbsPos = newPos; // BL
-                //CGPoint delta = ccpSub(newPos, newAbsPos);
-
-                newPos = [guideLayer snapPointNode:selectedNode pos:newAbsPos];
+                // Perform snapping (snapping happens in world space)
+                CGPoint snapDeltaAP = ccpSub([guideLayer snapPoint:newAbsPos], newAbsPos);
+                snapDelta = ccpAdd(snapDelta,snapDeltaAP);
                 
-                //newPos = ccpAdd(newPos,delta);
+                CGPoint cornerBL = ccpAdd(CGPointApplyAffineTransform(ccp(0, 0), startTransform), delta);
+                CGPoint snapDeltaBL = ccpSub([guideLayer snapPoint:cornerBL], cornerBL);
+                
+                // Unique Snaps
+                if(snapDelta.x!=snapDeltaBL.x && snapDelta.x==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(snapDeltaBL.x,0));
+                }
+                if(snapDelta.y!=snapDeltaBL.y && snapDelta.y==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(0,snapDeltaBL.y));
+                }
+                
+                CGPoint cornerBR = ccpAdd(CGPointApplyAffineTransform(ccp(size.width, 0), startTransform), delta);
+                CGPoint snapDeltaBR = ccpSub([guideLayer snapPoint:cornerBR], cornerBR);
+                if(snapDelta.x!=snapDeltaBR.x && snapDelta.x==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(snapDeltaBR.x,0));
+                }
+                if(snapDelta.y!=snapDeltaBR.y && snapDelta.y==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(0,snapDeltaBR.y));
+                }
+                
+                CGPoint cornerTL = ccpAdd(CGPointApplyAffineTransform(ccp(0, size.height), startTransform), delta);
+                CGPoint snapDeltaTL = ccpSub([guideLayer snapPoint:cornerTL], cornerTL);
+                if(snapDelta.x!=snapDeltaTL.x && snapDelta.x==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(snapDeltaTL.x,0));
+                }
+                if(snapDelta.y!=snapDeltaTL.y && snapDelta.y==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(0,snapDeltaTL.y));
+                }
+       
+                CGPoint cornerTR = ccpAdd(CGPointApplyAffineTransform(ccp(size.width, size.height), startTransform), delta);
+                CGPoint snapDeltaTR = ccpSub([guideLayer snapPoint:cornerTR], cornerTR);
+                if(snapDelta.x!=snapDeltaTR.x && snapDelta.x==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(snapDeltaTR.x,0));
+                }
+                if(snapDelta.y!=snapDeltaTR.y && snapDelta.y==0) {
+                    snapDelta = ccpAdd(snapDelta,ccp(0,snapDeltaTR.y));
+                }
+            
             }
-
-            CGPoint newLocalPos = [selectedNode.parent convertToNodeSpace:newPos];
-         
+            
+            newAbsPos = ccpAdd(newAbsPos, snapDelta);
+            CGPoint newLocalPos = [selectedNode.parent convertToNodeSpace:newAbsPos];
+            
             [appDelegate saveUndoStateWillChangeProperty:@"position"];
             
             selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos type:selectedNode.positionType];
