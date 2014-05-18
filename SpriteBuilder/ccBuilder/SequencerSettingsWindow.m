@@ -55,19 +55,6 @@
         return NO;
     }
 
-    
-    if(![self.sequences findFirst:^BOOL(SequencerSequence * sequence, int idx) {
-        return sequence.autoPlay;
-    }])
-    {
-        // Display warning!
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Missing Autoplay" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You need to have at least one timeline in your document marked as AutoPlay."];
-        [alert beginSheetModalForWindow:[self window] modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-        
-        return NO;
-
-    }
-    
     return YES;
 }
 
