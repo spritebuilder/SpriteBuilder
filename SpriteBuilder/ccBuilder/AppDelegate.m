@@ -2564,6 +2564,8 @@ static BOOL hideAllToNextSeparator;
 
 - (CCNode*) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild
 {
+    [animationPlaybackManager stop];
+
     self.errorDescription = NULL;
     CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:name];
     BOOL success = [self addCCObject:node asChild:asChild];
@@ -2579,6 +2581,8 @@ static BOOL hideAllToNextSeparator;
 
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent
 {
+    [animationPlaybackManager stop];
+
     NodeInfo* info = parent.userObject;
     PlugInNode* plugIn = info.plugIn;
     
