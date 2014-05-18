@@ -2,6 +2,7 @@
 
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
+#import "NotificationNames.h"
 
 
 @interface AnimationPlaybackManager ()
@@ -88,8 +89,7 @@
         _sequencerHandler.currentSequence.timelinePosition = 0;
     }
 
-    // TODO Deselect all objects to improve performance
-    //self.selectedNodes = NULL;
+    [[NSNotificationCenter defaultCenter] postNotificationName:ANIMATION_PLAYBACK_WILL_START object:nil];
 
     // Start playback
     self.playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];

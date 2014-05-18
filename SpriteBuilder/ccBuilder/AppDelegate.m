@@ -118,6 +118,7 @@
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
 #import "AnimationPlaybackManager.h"
+#import "NotificationNames.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -540,6 +541,8 @@ typedef enum
 
     [self registerUserDefaults];
 
+    [self registerNotificationObservers];
+
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
     
@@ -638,6 +641,11 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+}
+
+- (void)registerNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
 
 - (void)registerUserDefaults
