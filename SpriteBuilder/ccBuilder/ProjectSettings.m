@@ -374,6 +374,7 @@
 {
     NSString* relPath = res.relativePath;
     [self setValue:val forRelPath:relPath andKey:key];
+    [self markAsDirtyResource:res];
 }
 
 - (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key

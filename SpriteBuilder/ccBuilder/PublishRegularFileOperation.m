@@ -2,6 +2,7 @@
 
 #import "CCBFileUtil.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishLogging.h"
 
 
 @implementation PublishRegularFileOperation
@@ -25,10 +26,14 @@
 
 - (void)publishRegularFile
 {
+    NSDate *srcDate = [CCBFileUtil modificationDateForFile:_srcFilePath];
+    NSDate *dstDate = [CCBFileUtil modificationDateForFile:_dstFilePath];
+
     // Check if file already exists
     if ([[NSFileManager defaultManager] fileExistsAtPath:_dstFilePath] &&
-        [[CCBFileUtil modificationDateForFile:_srcFilePath] isEqualToDate:[CCBFileUtil modificationDateForFile:_dstFilePath]])
+        [srcDate isEqualToDate:dstDate])
     {
+        LocalLog(@"[%@] SKIPPING file exists and dates (src: %@, dst: %@) are equal - %@", [self class], srcDate, dstDate, [self description]);
         return;
     }
 
