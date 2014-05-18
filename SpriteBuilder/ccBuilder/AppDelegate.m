@@ -2845,6 +2845,8 @@ static BOOL hideAllToNextSeparator;
     
     if (type)
     {
+        [animationPlaybackManager stop];
+
         NSData* clipData = [cb dataForType:type];
         NSMutableDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:clipData];
         
