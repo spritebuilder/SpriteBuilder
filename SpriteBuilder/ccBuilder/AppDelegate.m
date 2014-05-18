@@ -117,6 +117,7 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
+#import "AnimationPlaybackManager.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -582,6 +583,7 @@ typedef enum
     [self setupInspectorPane];
     [self setupCocos2d];
     [self setupSequenceHandler];
+    animationPlaybackManager.sequencerHandler = sequenceHandler;
     [self updateInspectorFromSelection];
     
     [[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
@@ -4672,6 +4674,20 @@ static BOOL hideAllToNextSeparator;
 }
 
 #pragma mark Playback countrols
+
+
+// TODO: these methods until next pragma can be removed after refactoring
+- (void)setCurrentDocument:(CCBDocument *)aCurrentDocument
+{
+    currentDocument = aCurrentDocument;
+    animationPlaybackManager.currentDocument = aCurrentDocument;
+}
+
+- (void)setHasOpenedDocument:(BOOL)aHasOpenedDocument
+{
+    hasOpenedDocument = aHasOpenedDocument;
+    animationPlaybackManager.hasOpenedDocument = aHasOpenedDocument;
+}
 
 - (void) updatePlayback
 {
