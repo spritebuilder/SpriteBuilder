@@ -862,19 +862,19 @@ CA
                             <menuItem title="Jump to Start" keyEquivalent="" id="1714">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="playbackJumpToStart:" target="TMe-KA-zbR" id="aWe-c5-Kuj"/>
+                                    <action selector="jumpToStart:" target="TMe-KA-zbR" id="aWe-c5-Kuj"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Step Forward" keyEquivalent="" id="1712">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="playbackStepForward:" target="TMe-KA-zbR" id="0tZ-YW-8c7"/>
+                                    <action selector="stepOneFrameForward:" target="TMe-KA-zbR" id="0tZ-YW-8c7"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Step Backward" keyEquivalent="" id="1713">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="playbackStepBack:" target="TMe-KA-zbR" id="QcQ-8t-whV"/>
+                                    <action selector="stepOneFrameBack:" target="TMe-KA-zbR" id="QcQ-8t-whV"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1711"/>

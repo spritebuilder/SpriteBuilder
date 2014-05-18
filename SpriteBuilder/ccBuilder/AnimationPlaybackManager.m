@@ -19,7 +19,7 @@
 {
     if (!_enabled)
     {
-        [self playbackStop:NULL];
+        [self stop];
     }
 
     if (_playingBack)
@@ -40,13 +40,13 @@
             //If we loop, calulate the overhang
             if (targetNewTime >= _sequencerHandler.currentSequence.timelinePosition && _sequencerHandler.loopPlayback)
             {
-                [self playbackJumpToStart:nil];
+                [self jumpToStart:nil];
                 steps = (int) ((targetNewTime - _sequencerHandler.currentSequence.timelineLength) / frameDelta);
                 [_sequencerHandler.currentSequence stepForward:steps];
             }
             else
             {
-                [self playbackStop:NULL];
+                [self stop];
                 return;
             }
         }
@@ -62,11 +62,11 @@
 {
     if (!_playingBack)
     {
-        [self playbackPlay:sender];
+        [self play:sender];
     }
     else
     {
-        [self playbackStop:sender];
+        [self stop];
     }
 }
 
@@ -75,7 +75,7 @@
     _sequencerHandler.loopPlayback = [(NSButton *) sender state] == 1;
 }
 
-- (IBAction)playbackPlay:(id)sender
+- (IBAction)play:(id)sender
 {
     if (!_enabled
         || _playingBack)
@@ -97,12 +97,12 @@
     [self updatePlayback];
 }
 
-- (IBAction)playbackStop:(id)sender
+- (IBAction)stop
 {
     self.playingBack = NO;
 }
 
-- (IBAction)playbackJumpToStart:(id)sender
+- (IBAction)jumpToStart:(id)sender
 {
     if (!_enabled)
     {
@@ -114,7 +114,7 @@
     [[SequencerHandler sharedHandler] updateScrollerToShowCurrentTime];
 }
 
-- (IBAction)playbackStepBack:(id)sender
+- (IBAction)stepOneFrameBack:(id)sender
 {
     if (!_enabled)
     {
@@ -124,7 +124,7 @@
     [_sequencerHandler.currentSequence stepBack:1];
 }
 
-- (IBAction)playbackStepForward:(id)sender
+- (IBAction)stepOneFrameForward:(id)sender
 {
     if (!_enabled)
     {
@@ -141,15 +141,20 @@
     int tag = [sc selectedSegment];
     switch (tag)
     {
-        case 0: [self playbackJumpToStart:sender];
+        case 0:
+            [self jumpToStart:sender];
             break;
-        case 1: [self playbackStepBack:sender];
+        case 1:
+            [self stepOneFrameBack:sender];
             break;
-        case 2: [self playbackStepForward:sender];
+        case 2:
+            [self stepOneFrameForward:sender];
             break;
-        case 3: [self playbackStop:sender];
+        case 3:
+            [self stop];
             break;
-        case 4: [self playbackPlay:sender];
+        case 4:
+            [self play:sender];
             break;
 
         default:

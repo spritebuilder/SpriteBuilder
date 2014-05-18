@@ -11,15 +11,15 @@
 
 - (IBAction)toggleLoopingPlayback:(id)sender;
 
-- (IBAction)playbackPlay:(id)sender;
+- (IBAction)play:(id)sender;
 
-- (IBAction)playbackStop:(id)sender;
+- (IBAction)stop;
 
-- (IBAction)playbackJumpToStart:(id)sender;
+- (IBAction)jumpToStart:(id)sender;
 
-- (IBAction)playbackStepBack:(id)sender;
+- (IBAction)stepOneFrameBack:(id)sender;
 
-- (IBAction)playbackStepForward:(id)sender;
+- (IBAction)stepOneFrameForward:(id)sender;
 
 - (IBAction)pressedPlaybackControl:(id)sender;
 
