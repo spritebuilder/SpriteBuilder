@@ -33,7 +33,7 @@
 @synthesize baseValues;
 @synthesize displayName;
 @synthesize customProperties;
-@synthesize transformStartPosition;
+@synthesize startTransform;
 
 + (id) nodeInfoWithPlugIn:(PlugInNode*)pin
 {

@@ -32,7 +32,7 @@
 #define kCCBGuideSnapDistance 4
 
 #define kCCBGuideTypeGrid     1
-#define kCCBGuideGridMatrix   32
+#define kCCBGuideGridMatrix   64
 
 #pragma mark Guide
 @interface Guide : NSObject
@@ -73,7 +73,7 @@
     CocosScene* cs = [CocosScene cocosScene];
     
     // Create Horizontal Guides
-    for(int i=-gridSize.height;i<=cs.stageSize.height+gridSize.height;i+=gridSize.height) {
+    for(int i=-cs.bgLayer.contentSize.height*0.5f;i<=cs.bgLayer.contentSize.height;i+=gridSize.height) {
         
         Guide* g = [[Guide alloc] init];
         g->orientation = kCCBGuideOrientationHorizontal;
@@ -83,8 +83,8 @@
         [guides addObject:g];
     }
     
-    // Create Horizontal Guides
-    for(int i=-gridSize.width;i<=cs.stageSize.width+gridSize.width;i+=gridSize.width) {
+    // Create Vertical Guides
+    for(int i=-cs.bgLayer.contentSize.width*0.5f;i<=cs.bgLayer.contentSize.width;i+=gridSize.width) {
         
         Guide* g = [[Guide alloc] init];
         g->orientation = kCCBGuideOrientationVertical;

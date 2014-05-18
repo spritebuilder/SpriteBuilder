@@ -34,7 +34,6 @@
     NSMutableDictionary* animatableProperties;
     NSMutableDictionary* baseValues;
     NSMutableArray* customProperties;
-    CGPoint transformStartPosition;
     NSString* displayName;
 }
 
@@ -44,7 +43,7 @@
 @property (nonatomic,readonly) NSMutableDictionary* baseValues;
 @property (nonatomic,copy) NSString* displayName;
 @property (nonatomic,strong) NSMutableArray* customProperties;
-@property (nonatomic,assign) CGPoint transformStartPosition;
+@property (nonatomic,assign) CGAffineTransform startTransform;
 
 + (id) nodeInfoWithPlugIn:(PlugInNode*)pin;
 

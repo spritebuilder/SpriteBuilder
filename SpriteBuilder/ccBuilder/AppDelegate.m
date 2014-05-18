@@ -4664,10 +4664,10 @@ static BOOL hideAllToNextSeparator;
     {
         CGSize newSize = CGSizeMake(wc.wStage,wc.hStage);
         [[[CocosScene cocosScene] guideLayer] setGridSize:newSize];
-    }
-    
-    if(showGuideGrid) {
-        [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
+        
+        if(showGuideGrid) {
+            [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
+        }
     }
 }
 
