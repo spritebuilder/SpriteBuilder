@@ -914,6 +914,10 @@ typedef enum
     }
 }
 
+- (void)deselectAll
+{
+    self.selectedNodes = nil;
+}
 
 -(BOOL)selectedNodeCanHavePhysics
 {
@@ -1718,7 +1722,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Replace open document
-    self.selectedNodes = NULL;
+    [self deselectAll];
     
     SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
     [g.joints deserialize:doc[@"SequencerJoints"]];
@@ -1835,7 +1839,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) closeLastDocument
 {
-    self.selectedNodes = NULL;
+    [self deselectAll];
     
     SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
     [[CocosScene cocosScene] replaceSceneNodes: g];
@@ -2203,7 +2207,7 @@ static BOOL hideAllToNextSeparator;
     
     [[CocosScene cocosScene].notesLayer removeAllNotes];
     
-    self.selectedNodes = NULL;
+    [self deselectAll];
     [[CocosScene cocosScene] setStageSize:stageSize centeredOrigin:centered];
     
     if (type == kCCBNewDocTypeScene)
@@ -2945,7 +2949,7 @@ static BOOL hideAllToNextSeparator;
     [node.parent sortAllChildren];
     [outlineHierarchy reloadData];
     
-    self.selectedNodes = NULL;
+    [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
 }
 
