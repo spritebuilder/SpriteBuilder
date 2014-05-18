@@ -1,17 +1,11 @@
 #import <Foundation/Foundation.h>
 
 @class SequencerHandler;
-@class CCBDocument;
 
 @interface AnimationPlaybackManager : NSObject
 
-
 @property (nonatomic, weak) SequencerHandler *sequencerHandler;
-
-// TODO: make this manager enable-able
-@property (nonatomic, weak) CCBDocument *currentDocument;
-@property (nonatomic) BOOL hasOpenedDocument;
-
+@property (nonatomic) BOOL enabled;
 
 - (IBAction)togglePlayback:(id)sender;
 

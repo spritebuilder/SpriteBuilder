@@ -1,7 +1,7 @@
 #import "AnimationPlaybackManager.h"
+
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
-#import "CCBDocument.h"
 
 
 @interface AnimationPlaybackManager ()
@@ -9,14 +9,14 @@
 @property (nonatomic) BOOL playingBack;
 @property (nonatomic) double playbackLastFrameTime;
 
-
 @end
+
 
 @implementation AnimationPlaybackManager
 
 - (void)updatePlayback
 {
-    if (!_currentDocument)
+    if (!_enabled)
     {
         [self playbackStop:NULL];
     }
@@ -24,11 +24,10 @@
     if (_playingBack)
     {
         // Step forward
-
         double thisTime = [NSDate timeIntervalSinceReferenceDate];
         double deltaTime = thisTime - _playbackLastFrameTime;
         double frameDelta = 1.0 / _sequencerHandler.currentSequence.timelineResolution;
-        float targetNewTime = _sequencerHandler.currentSequence.timelinePosition + deltaTime;
+        double targetNewTime = _sequencerHandler.currentSequence.timelinePosition + deltaTime;
 
         int steps = (int) (deltaTime / frameDelta);
 
@@ -72,12 +71,12 @@
 
 - (IBAction)toggleLoopingPlayback:(id)sender
 {
-    _sequencerHandler.loopPlayback = [(NSButton *) sender state] == 1 ? YES : NO;
+    _sequencerHandler.loopPlayback = [(NSButton *) sender state] == 1;
 }
 
 - (IBAction)playbackPlay:(id)sender
 {
-    if (!_hasOpenedDocument
+    if (!_enabled
         || _playingBack)
     {
         return;
@@ -105,7 +104,7 @@
 
 - (IBAction)playbackJumpToStart:(id)sender
 {
-    if (!_hasOpenedDocument)
+    if (!_enabled)
     {
         return;
     }
@@ -117,7 +116,7 @@
 
 - (IBAction)playbackStepBack:(id)sender
 {
-    if (!_hasOpenedDocument)
+    if (!_enabled)
     {
         return;
     }
@@ -127,7 +126,7 @@
 
 - (IBAction)playbackStepForward:(id)sender
 {
-    if (!_hasOpenedDocument)
+    if (!_enabled)
     {
         return;
     }
