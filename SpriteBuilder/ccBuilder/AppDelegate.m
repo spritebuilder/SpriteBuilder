@@ -4664,10 +4664,10 @@ static BOOL hideAllToNextSeparator;
     {
         CGSize newSize = CGSizeMake(wc.wStage,wc.hStage);
         [[[CocosScene cocosScene] guideLayer] setGridSize:newSize];
-    }
-    
-    if(showGuideGrid) {
-        [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
+        
+        if(showGuideGrid) {
+            [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
+        }
     }
 }
 
@@ -4803,10 +4803,25 @@ static BOOL hideAllToNextSeparator;
 {
     if ([self hasDirtyDocument])
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Quit SpriteBuilder" defaultButton:@"Cancel" alternateButton:@"Quit" otherButton:NULL informativeTextWithFormat:@"There are unsaved documents. If you quit now you will lose any changes you have made."];
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Quit SpriteBuilder"
+                                         defaultButton:@"Cancel"
+                                       alternateButton:@"Quit"
+                                           otherButton:@"Save All & Quit"
+                             informativeTextWithFormat:@"There are unsaved documents. If you quit now you will lose any changes you have made."];
+
         [alert setAlertStyle:NSWarningAlertStyle];
         NSInteger result = [alert runModal];
-        if (result == NSAlertDefaultReturn) return NO;
+
+        if (result == NSAlertOtherReturn)
+        {
+            [self saveAllDocuments:nil];
+            return YES;
+        }
+
+        if (result == NSAlertDefaultReturn)
+        {
+            return NO;
+        }
     }
     return YES;
 }

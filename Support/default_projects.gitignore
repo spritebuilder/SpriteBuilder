@@ -1,6 +1,8 @@
 # SpriteBuilder
 #
 *.ppng
+Source/Resources/Published-iOS
+Source/Resources/Published-Android
 
 # Xcode
 #
@@ -32,3 +34,10 @@ xcuserdata
 # http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
 # Pods/
+
+
+# Misc
+*.sconsign.dblite
+*.pyc
+*.orig
+*.ninja_log
