@@ -1981,7 +1981,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     stageBgLayer.position = stageCenter;
     stageJointsLayer.position = stageCenter;
     renderedScene.position = stageCenter;
-    renderedScene.anchorPoint = ccp(0.0f, 0.0f);
+    renderedScene.anchorPoint = ccp(0.50f, 0.50f);
     
     if (stageZoom <= 1 || !renderedScene)
     {
