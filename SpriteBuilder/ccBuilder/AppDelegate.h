@@ -312,13 +312,19 @@ enum {
 @property (nonatomic,strong) NSArray* selectedNodes;
 @property (nonatomic,readonly) NSMutableArray* loadedSelectedNodes;
 
+// Guides
+@property (nonatomic,assign) BOOL showExtras;
 @property (nonatomic,assign) BOOL showGuides;
-@property (nonatomic,assign) BOOL snapToGuides;
 @property (nonatomic,assign) BOOL showGuideGrid;
 @property (nonatomic,assign) BOOL showStickyNotes;
-@property (nonatomic,assign) BOOL showJoints;
+
+// Awww Snap
+@property (nonatomic,assign) BOOL snapToggle;
 @property (nonatomic,assign) BOOL snapGrid;
+@property (nonatomic,assign) BOOL snapToGuides;
 @property (nonatomic,assign) BOOL snapNode;
+
+@property (nonatomic,assign) BOOL showJoints;
 
 @property (nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;
@@ -447,9 +453,6 @@ enum {
 - (IBAction)reportBug:(id)sender;
 - (IBAction)visitCommunity:(id)sender;
 - (IBAction)showHelp:(id)sender;
-
-// Guide Extras
-- (IBAction) menuGuideGrid:(id)sender;
 
 //Help dialogs.
 -(BOOL)showHelpDialog:(NSString*)type;

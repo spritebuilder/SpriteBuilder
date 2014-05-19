@@ -1344,8 +1344,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             CGPoint newAbsPos = ccpAdd(selectedNode.transformStartPosition, delta);
             CGPoint snapDelta = CGPointZero;
             
-            // Guide Snap
-            if (appDelegate.showGuides && appDelegate.snapToGuides  && !([event modifierFlags] & NSCommandKeyMask))
+            // Guide Snap Rules
+            if ( ((appDelegate.showGuides && appDelegate.snapToGuides && appDelegate.snapToggle) ||
+                 (appDelegate.showGuideGrid && appDelegate.showGuideGrid && appDelegate.snapToggle)) &&
+                !([event modifierFlags] & NSCommandKeyMask))
             {
                 CGSize size = selectedNode.contentSizeInPoints;
 
@@ -2077,15 +2079,15 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     [rulerLayer updateMousePos:mousePos];
     
     // Update guides
-    guideLayer.visible = appDelegate.showGuides;
+    guideLayer.visible = (appDelegate.showGuides || appDelegate.showGuideGrid) && appDelegate.showExtras;
     [guideLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
     
     // Update sticky notes
-    notesLayer.visible = appDelegate.showStickyNotes;
+    notesLayer.visible = appDelegate.showStickyNotes && appDelegate.showExtras;
     [notesLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
     
     // Update Node Snap
-    snapLayer.visible = appDelegate.snapNode;
+    snapLayer.visible = appDelegate.snapNode && appDelegate.snapToggle;
     [snapLayer updateWithSize:winSize stageOrigin:origin zoom:stageZoom];
 
     if (winSizeChanged)

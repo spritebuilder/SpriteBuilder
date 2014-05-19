@@ -31,6 +31,7 @@
 #define kCCBGuideMoveAreaRadius 4
 #define kCCBGuideSnapDistance 4
 
+#define kCCBGuideTypeDefault  0
 #define kCCBGuideTypeGrid     1
 #define kCCBGuideGridMatrix   64
 
@@ -93,8 +94,6 @@
         
         [guides addObject:g];
     }
-    
-    [self updateGuides];
 
 }
 
@@ -107,9 +106,6 @@
             [guides removeObject:g];
         }
     }
-    
-    [self updateGuides];
-    
 }
 
 - (void) updateGuides
@@ -118,11 +114,16 @@
     
     [self removeAllChildrenWithCleanup:YES];
     
+    [self buildGuideGrid];
+    
     CGRect viewRect = CGRectZero;
     viewRect.size = winSize;
     
     for (Guide* g in guides)
     {
+        if(g->type==kCCBGuideTypeGrid && ![AppDelegate appDelegate].showGuideGrid) continue;
+        if(g->type==kCCBGuideTypeDefault && ![AppDelegate appDelegate].showGuides) continue;
+        
         if (g->orientation == kCCBGuideOrientationHorizontal)
         {
             CGPoint viewPos = [cs convertToViewSpace:ccp(0,g->position)];
@@ -302,6 +303,7 @@
 
 - (void) updateWithSize:(CGSize)ws stageOrigin:(CGPoint)so zoom:(float)zm
 {
+  
     if (!self.visible) return;
     
     if (CGSizeEqualToSize(ws, winSize)
@@ -377,6 +379,11 @@
     
     for (Guide* g in guides)
     {
+        
+        // Check Guide Type
+        if(g->type==kCCBGuideTypeGrid && ![AppDelegate appDelegate].snapGrid) continue;
+        if(g->type==kCCBGuideTypeDefault && ![AppDelegate appDelegate].snapToGuides) continue;
+        
         if (g->orientation == kCCBGuideOrientationHorizontal)
         {
             CGPoint viewPos = [cs convertToViewSpace:ccp(0,g->position)];
