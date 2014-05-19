@@ -1423,6 +1423,9 @@ static BOOL hideAllToNextSeparator;
     
     [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
     
+    // Save Grid Spacing
+    [dict setObject:[NSValue valueWithSize:[[CocosScene cocosScene].guideLayer gridSize]] forKey:@"gridspace"];
+    
     
     //////////////    //////////////    //////////////    //////////////    //////////////
     //Joints
@@ -1751,6 +1754,12 @@ static BOOL hideAllToNextSeparator;
     else
     {
         [[CocosScene cocosScene].notesLayer removeAllNotes];
+    }
+    
+    // Restore Grid Spacing
+    id gridspace = [doc objectForKey:@"gridspace"];
+    if(gridspace) {
+        [[CocosScene cocosScene].guideLayer setGridSize:[gridspace sizeValue]];
     }
     
     // Restore selections
