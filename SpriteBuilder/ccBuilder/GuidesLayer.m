@@ -366,7 +366,7 @@
 - (void) removeAllGuides
 {
     [guides removeAllObjects];
-    [self updateGuides];
+    [self removeAllChildrenWithCleanup:YES];
 }
 
 - (CGPoint) snapPoint:(CGPoint)pt

@@ -1424,8 +1424,9 @@ static BOOL hideAllToNextSeparator;
     [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
     
     // Save Grid Spacing
-    [dict setObject:[NSValue valueWithSize:[[CocosScene cocosScene].guideLayer gridSize]] forKey:@"gridspace"];
-    
+    //[dict setObject:[NSValue valueWithSize:(NSSize)[[CocosScene cocosScene].guideLayer gridSize]] forKey:@"gridspace"];
+    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.width] forKey:@"gridspaceWidth"];
+    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.height] forKey:@"gridspaceHeight"];
     
     //////////////    //////////////    //////////////    //////////////    //////////////
     //Joints
@@ -1757,11 +1758,13 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Restore Grid Spacing
-    id gridspace = [doc objectForKey:@"gridspace"];
-    if(gridspace) {
-        [[CocosScene cocosScene].guideLayer setGridSize:[gridspace sizeValue]];
-    }
-    
+    id gridspaceWidth  = [doc objectForKey:@"gridspaceWidth"];
+    id gridspaceHeight = [doc objectForKey:@"gridspaceHeight"];
+    if(gridspaceWidth && gridspaceHeight) {
+        CGSize gridspace = CGSizeMake([gridspaceWidth intValue],[gridspaceHeight intValue]);
+        [[CocosScene cocosScene].guideLayer setGridSize:gridspace];
+   }
+
     // Restore selections
     self.selectedNodes = loadedSelectedNodes;
     
@@ -1843,6 +1846,7 @@ static BOOL hideAllToNextSeparator;
     [[CocosScene cocosScene].guideLayer removeAllGuides];
     [[CocosScene cocosScene].notesLayer removeAllNotes];
     [[CocosScene cocosScene].rulerLayer mouseExited:NULL];
+    [self setupExtras]; // Reset
     self.currentDocument = NULL;
     sequenceHandler.currentSequence = NULL;
     
