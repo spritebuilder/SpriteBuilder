@@ -796,6 +796,7 @@ CA
                                         <menuItem title="Grid" id="zA6-4S-M8f">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
+                                                <binding destination="494" name="argument" keyPath="self" id="Uh6-AC-ARO"/>
                                                 <binding destination="494" name="enabled2" keyPath="showExtras" previousBinding="y6p-d5-LWn" id="w1S-n2-mLx">
                                                     <dictionary key="options">
                                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
