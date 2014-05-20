@@ -9,5 +9,5 @@
 #import "CCButton.h"
 
 @interface CCBPButton : CCButton
-
+-(void)onSetSizeFromTexture;
 @end
