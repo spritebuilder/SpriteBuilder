@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "833A5C49192B48CA001837B3"
+               BuildableName = "SpriteBuilder Tests.xctest"
+               BlueprintName = "SpriteBuilder Tests"
+               ReferencedContainer = "container:SpriteBuilder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
