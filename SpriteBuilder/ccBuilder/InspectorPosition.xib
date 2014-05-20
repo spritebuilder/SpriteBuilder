@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment defaultVersion="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InspectorPosition">
@@ -50,57 +50,47 @@
                     <rect key="frame" x="84" y="12" width="68" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="5">
-                        <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.0" negativeFormat="#0.0" numberStyle="decimal" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="1" maximumFractionDigits="1" nilSymbol="L!nDy" id="6">
-                            <real key="roundingIncrement" value="0.0"/>
-                            <metadata>
-                                <bool key="localizesFormat" value="YES"/>
-                            </metadata>
-                        </numberFormatter>
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.0" negativeFormat="#0.0" numberStyle="decimal" usesGroupingSeparator="NO" paddingCharacter="*" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="1" maximumFractionDigits="1" nilSymbol="L!nDy" notANumberSymbol="NaN" positivePrefix="" positiveSuffix="" negativeSuffix="" id="6"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="posX" id="23"/>
                         <binding destination="-2" name="enabled" keyPath="readOnly" id="30">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="posX" id="23"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="10">
                     <rect key="frame" x="155" y="12" width="68" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="11">
-                        <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.0" negativeFormat="#0.0" numberStyle="decimal" usesGroupingSeparator="NO" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="1" maximumFractionDigits="1" nilSymbol="L!nDy" id="12">
-                            <real key="roundingIncrement" value="0.0"/>
-                            <metadata>
-                                <bool key="localizesFormat" value="YES"/>
-                            </metadata>
-                        </numberFormatter>
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.0" negativeFormat="#0.0" numberStyle="decimal" usesGroupingSeparator="NO" paddingCharacter="*" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="1" maximumFractionDigits="1" nilSymbol="L!nDy" notANumberSymbol="NaN" positivePrefix="" positiveSuffix="" negativeSuffix="" id="12"/>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="value" keyPath="posY" id="26"/>
                         <binding destination="-2" name="enabled" keyPath="readOnly" id="33">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="value" keyPath="posY" id="26"/>
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="44">
                     <rect key="frame" x="81" y="31" width="48" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Bottom-left" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="45">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="45">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="46">
                             <items>
-                                <menuItem title="Bottom-left" state="on" image="position-0" id="47"/>
+                                <menuItem title="Bottom-left" image="position-0" id="47"/>
                                 <menuItem title="Top-left" image="position-1" tag="1" id="48"/>
                                 <menuItem title="Top-right" image="position-2" tag="2" id="49"/>
                                 <menuItem title="Bottom-right" image="position-3" tag="3" id="50"/>
@@ -124,19 +114,19 @@
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="53">
                             <items>
-                                <menuItem title="X in points" state="on" image="scale-0" id="57"/>
+                                <menuItem title="X in points" image="scale-0" id="57"/>
                                 <menuItem title="X in UI points" image="scale-1" tag="1" id="56"/>
                                 <menuItem title="X in percent of parent container" state="on" image="scale-2" tag="2" id="55"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <binding destination="-2" name="selectedTag" keyPath="positionUnitX" id="76"/>
                         <binding destination="-2" name="enabled" keyPath="readOnly" id="85">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="selectedTag" keyPath="positionUnitX" id="76"/>
                     </connections>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" id="65">
@@ -147,19 +137,19 @@
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="67">
                             <items>
-                                <menuItem title="Y in points" state="on" image="scale-0" id="68"/>
+                                <menuItem title="Y in points" image="scale-0" id="68"/>
                                 <menuItem title="Y in UI points" state="on" image="scale-1" tag="1" id="69"/>
                                 <menuItem title="Y in percent of parent container" image="scale-2" tag="2" id="70"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <binding destination="-2" name="selectedTag" keyPath="positionUnitY" id="79"/>
                         <binding destination="-2" name="enabled" keyPath="readOnly" id="88">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="selectedTag" keyPath="positionUnitY" id="79"/>
                     </connections>
                 </popUpButton>
             </subviews>
