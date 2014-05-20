@@ -137,14 +137,16 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize hasOpenedDocument;
 @synthesize defaultCanvasSize;
 @synthesize projectOutlineHandler;
+@synthesize showExtras;
 @synthesize showGuides;
-@synthesize snapToGuides;
 @synthesize showGuideGrid;
-
+@synthesize showStickyNotes;
+@synthesize snapToggle;
+@synthesize snapGrid;
+@synthesize snapToGuides;
 @synthesize snapNode;
 @synthesize guiView;
 @synthesize guiWindow;
-@synthesize showStickyNotes;
 @synthesize menuContextKeyframe;
 @synthesize menuContextKeyframeInterpol;
 @synthesize menuContextResManager;
@@ -605,13 +607,7 @@ typedef enum
     [self setupResourceManager];
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
-    
-    self.showGuides      = YES;
-    self.snapToGuides    = YES;
-    self.showStickyNotes = YES;
-    
-    self.showGuideGrid   = NO;
-    self.snapNode = NO;
+    [self setupExtras];
 
     [window restorePreviousOpenedPanels];
 
@@ -1427,6 +1423,10 @@ static BOOL hideAllToNextSeparator;
     
     [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
     
+    // Save Grid Spacing
+    //[dict setObject:[NSValue valueWithSize:(NSSize)[[CocosScene cocosScene].guideLayer gridSize]] forKey:@"gridspace"];
+    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.width] forKey:@"gridspaceWidth"];
+    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.height] forKey:@"gridspaceHeight"];
     
     //////////////    //////////////    //////////////    //////////////    //////////////
     //Joints
@@ -1740,9 +1740,6 @@ static BOOL hideAllToNextSeparator;
     if (guides)
     {
         [[CocosScene cocosScene].guideLayer loadSerializedGuides:guides];
-        if(showGuideGrid) {
-            [[CocosScene cocosScene].guideLayer buildGuideGrid];
-        }
     }
     else
     {
@@ -1760,6 +1757,14 @@ static BOOL hideAllToNextSeparator;
         [[CocosScene cocosScene].notesLayer removeAllNotes];
     }
     
+    // Restore Grid Spacing
+    id gridspaceWidth  = [doc objectForKey:@"gridspaceWidth"];
+    id gridspaceHeight = [doc objectForKey:@"gridspaceHeight"];
+    if(gridspaceWidth && gridspaceHeight) {
+        CGSize gridspace = CGSizeMake([gridspaceWidth intValue],[gridspaceHeight intValue]);
+        [[CocosScene cocosScene].guideLayer setGridSize:gridspace];
+   }
+
     // Restore selections
     self.selectedNodes = loadedSelectedNodes;
     
@@ -1841,6 +1846,7 @@ static BOOL hideAllToNextSeparator;
     [[CocosScene cocosScene].guideLayer removeAllGuides];
     [[CocosScene cocosScene].notesLayer removeAllNotes];
     [[CocosScene cocosScene].rulerLayer mouseExited:NULL];
+    [self setupExtras]; // Reset
     self.currentDocument = NULL;
     sequenceHandler.currentSequence = NULL;
     
@@ -4641,13 +4647,31 @@ static BOOL hideAllToNextSeparator;
     return currentDocument.undoManager;
 }
 
-// Guide Extras
-- (IBAction) menuGuideGrid:(id)sender {
-    if(!showGuideGrid) {
-        [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
-    } else {
-        [[[CocosScene cocosScene] guideLayer] clearGuideGrid];
-    }
+#pragma mark Extras / Snap
+
+- (void)setupExtras
+{
+    // Default Extras
+    self.showExtras      = YES;
+    self.showGuides      = YES;
+    self.showGuideGrid   = NO;
+    self.showStickyNotes = YES;
+    
+    // Default Snap
+    self.snapToggle      = YES;
+    self.snapToGuides    = YES;
+    self.snapGrid        = NO;
+    self.snapNode        = NO;
+}
+
+-(void) setShowGuides:(BOOL)showGuidesNew {
+    showGuides = showGuidesNew;
+    [[[CocosScene cocosScene] guideLayer] updateGuides];
+}
+
+-(void) setShowGuideGrid:(BOOL)showGuideGridNew {
+    showGuideGrid = showGuideGridNew;
+    [[[CocosScene cocosScene] guideLayer] updateGuides];
 }
 
 - (IBAction) menuGuideGridSettings:(id)sender
@@ -4663,11 +4687,9 @@ static BOOL hideAllToNextSeparator;
     if (success)
     {
         CGSize newSize = CGSizeMake(wc.wStage,wc.hStage);
-        [[[CocosScene cocosScene] guideLayer] setGridSize:newSize];
         
-        if(showGuideGrid) {
-            [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
-        }
+        [[[CocosScene cocosScene] guideLayer] setGridSize:newSize];
+        [[[CocosScene cocosScene] guideLayer] updateGuides];
     }
 }
 
