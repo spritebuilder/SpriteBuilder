@@ -17,6 +17,9 @@
     
     _sleepTimeThreshold = 0.5f;
     
+    //self.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitNormalized);
+    //self.contentSize     = CGSizeMake(1,1);
+    
     return self;
 }
 

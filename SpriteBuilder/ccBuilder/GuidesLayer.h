@@ -53,6 +53,7 @@ enum
 - (void) loadSerializedGuides:(id)ser;
 - (void) removeAllGuides;
 - (void) updateGuides;
+- (void) buildGuideGrid;
 
 // Snaps to a point in view coordinates
 - (CGPoint) snapPoint:(CGPoint)pt;
