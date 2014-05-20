@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C1021" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="5056"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -729,50 +729,98 @@ CA
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1451"/>
-                            <menuItem title="Show Guides" alternate="YES" keyEquivalent="H" id="1452">
+                            <menuItem title="Extras" alternate="YES" keyEquivalent="H" id="5aS-8M-yP4">
                                 <connections>
-                                    <binding destination="494" name="value" keyPath="showGuides" id="1456"/>
+                                    <binding destination="494" name="value" keyPath="showExtras" id="gcl-aw-o4u"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Snap to Guides" alternate="YES" keyEquivalent="u" id="1453">
-                                <connections>
-                                    <binding destination="494" name="enabled" keyPath="showGuides" id="1461"/>
-                                    <binding destination="494" name="value" keyPath="snapToGuides" id="1459"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Guide Extras" id="aBZ-Zm-uHs">
+                            <menuItem title="Show" id="aBZ-Zm-uHs">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Guide Extras" id="d7s-CM-B7U">
+                                <menu key="submenu" title="Show" id="d7s-CM-B7U">
                                     <items>
+                                        <menuItem title="Guides" id="ccU-Km-Swq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="494" name="value" keyPath="showGuides" id="Amc-NN-YCi"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Grid" id="M3E-RM-Ynw">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="menuGuideGrid:" target="494" id="H9I-ST-cKd"/>
                                                 <binding destination="494" name="value" keyPath="showGuideGrid" id="avL-Wq-bgf"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Edit Grid Size..." id="hJy-gA-aZr">
+                                        <menuItem title="Sticky Notes" id="4jT-zO-Ia3">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="menuGuideGridSettings:" target="494" id="aO3-4q-2Gh"/>
+                                                <binding destination="494" name="value" keyPath="showStickyNotes" id="sg9-lg-g2R"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <binding destination="494" name="enabled" keyPath="showExtras" id="8Wa-NH-poI"/>
+                                </connections>
                             </menuItem>
-                            <menuItem title="Snap Nodes" id="hxf-TH-2em">
+                            <menuItem title="Edit Grid Spacing..." id="J5P-KN-6WM">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <binding destination="494" name="value" keyPath="snapNode" id="mHv-rh-kSA"/>
+                                    <action selector="menuGuideGridSettings:" target="494" id="NEA-ts-Kyh"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="adN-EU-TOI"/>
+                            <menuItem title="Snap" keyEquivalent="u" id="QAM-Jc-lrD">
+                                <connections>
+                                    <binding destination="494" name="value" keyPath="snapToggle" id="X9T-jc-FHC"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Snap To" id="Usf-TL-Eiq">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Snap To" id="fmg-Oj-Pry">
+                                    <items>
+                                        <menuItem title="Guides" id="yS0-CY-5hV">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="494" name="enabled2" keyPath="showExtras" previousBinding="ns4-Ku-GvA" id="mrm-E9-Hsy">
+                                                    <dictionary key="options">
+                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                                    </dictionary>
+                                                </binding>
+                                                <binding destination="494" name="enabled" keyPath="showGuides" id="ns4-Ku-GvA"/>
+                                                <binding destination="494" name="value" keyPath="snapToGuides" id="8vF-y2-iHB"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Grid" id="zA6-4S-M8f">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="494" name="enabled2" keyPath="showExtras" previousBinding="y6p-d5-LWn" id="w1S-n2-mLx">
+                                                    <dictionary key="options">
+                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                                    </dictionary>
+                                                </binding>
+                                                <binding destination="494" name="enabled" keyPath="showGuideGrid" id="y6p-d5-LWn"/>
+                                                <binding destination="494" name="value" keyPath="snapGrid" id="U8b-ZR-KcI"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Nodes" id="D67-xc-Ktq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="494" name="value" keyPath="snapNode" id="aWO-es-O2Y"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <binding destination="494" name="enabled" keyPath="snapToggle" id="lxD-d8-6Mo"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="laT-dq-KEs"/>
-                            <menuItem title="Show Sticky Notes" alternate="YES" id="1463">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <binding destination="494" name="value" keyPath="showStickyNotes" id="1468"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Add Sticky Note" keyEquivalent="n" id="1464">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
