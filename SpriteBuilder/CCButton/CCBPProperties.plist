@@ -107,12 +107,12 @@
 		</dict>
 		<dict>
 			<key>displayName</key>
-			<string>Set size from texture.</string>
+			<string>Reset to default size</string>
 			<key>type</key>
 			<string>Button</string>
 			<key>name</key>
 			<string>onSetSizeFromTexture</string>
-		</dict>		
+		</dict>
 		<dict>
 			<key>displayName</key>
 			<string>Normal State</string>
