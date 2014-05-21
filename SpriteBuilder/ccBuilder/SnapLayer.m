@@ -82,10 +82,8 @@
 
         if(sNode != cs.rootNode) {
             
-            for(NSNumber *x in horizontalSnapLines) {
-                
-                CGPoint viewPos = [cs convertToViewSpace:ccp(0,[x floatValue])];
-                viewPos.x = 0;
+            for(NSNumber *y in horizontalSnapLines) {
+                CGPoint viewPos = ccp(0, y.floatValue);
                 
                 if (CGRectContainsPoint(viewRect, viewPos))
                 {
@@ -101,10 +99,8 @@
 
             }
             
-            for(NSNumber *y in verticalSnapLines) {
-                
-                CGPoint viewPos = [cs convertToViewSpace:ccp([y floatValue],0)];
-                viewPos.y = 0;
+            for(NSNumber *x in verticalSnapLines) {
+                CGPoint viewPos = ccp(x.floatValue, 0);
                 
                 if (CGRectContainsPoint(viewRect, viewPos))
                 {
@@ -168,23 +164,23 @@
                 // Ignore the selected node
                 if(node != sNode) {
                     
-                    NSPoint point = [sNode convertPositionToPoints:sNode.position type:sNode.positionType];
-                    NSPoint nPoint = [sNode convertPositionToPoints:node.position type:node.positionType];
+                    NSPoint sPoint = [sNode convertToWorldSpace:sNode.anchorPointInPoints];
+                    NSPoint point = [node convertToWorldSpace:node.anchorPointInPoints];
                     
                     // Snap lines from anchorPoint
-                    if(point.x == nPoint.x) {
-                        [self addVerticalSnapLine:point.x node:sNode];
+                    if(abs(sPoint.x - point.x) < 1) {
+                        [self addVerticalSnapLine:sPoint.x node:sNode];
                     }
-                    if(point.y == nPoint.y) {
-                        [self addHorizontalSnapLine:point.y node:sNode];
+                    if(abs(sPoint.y - point.y) < 1) {
+                        [self addHorizontalSnapLine:sPoint.y node:sNode];
                     }
                     
                     // Snap lines from center
-                    if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (node.leftInPoints + node.contentSizeInPoints.width / 2)) < 1) {
-                         [self addVerticalSnapLine:(sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) node:sNode];
-                        
-                    } if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (node.bottomInPoints + node.contentSizeInPoints.height / 2)) < 1) {
-                        [self addHorizontalSnapLine:(sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) node:sNode];
+                    if(abs(sNode.centerXInPoints - node.centerXInPoints) < 1) {
+                         [self addVerticalSnapLine:sNode.centerXInPoints node:sNode];
+                    }
+										if(abs(sNode.centerYInPoints - node.centerYInPoints) < 1) {
+                        [self addHorizontalSnapLine:sNode.centerYInPoints node:sNode];
                     }
                     
                     // Snap lines for opposite sides
@@ -219,43 +215,37 @@
             }
             
             
-            // Snap lines from center of sNode to center of rootNode
-            if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < 1) {
-                [self addVerticalSnapLine:sNode.parent.contentSizeInPoints.width*0.5f node:sNode];
+            // Snap lines from center of sNode to center of parent
+            if(abs(sNode.centerXInPoints - sNode.parent.centerXInPoints ) < 1) {
+                [self addVerticalSnapLine:sNode.parent.centerXInPoints node:sNode];
             }
-            if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (sNode.parent.contentSizeInPoints.height / 2)) < 1) {
-                [self addHorizontalSnapLine:sNode.parent.contentSizeInPoints.height*0.5f node:sNode];
-            }
-            
-            // Snap to sides to edge of view
-            if(abs(sNode.leftInPoints) < sensitivity) {
-                [self addVerticalSnapLine:0 node:sNode];
-            } else if(abs(sNode.rightInPoints - sNode.parent.contentSizeInPoints.width) < sensitivity) {
-                [self addVerticalSnapLine:sNode.parent.contentSizeInPoints.width node:sNode];
-            }
-            if(abs(sNode.topInPoints - sNode.parent.contentSizeInPoints.height) < sensitivity) {
-                [self addHorizontalSnapLine:sNode.parent.contentSizeInPoints.height node:sNode];
-            } else if(abs(sNode.bottomInPoints) < sensitivity) {
-                [self addHorizontalSnapLine:0 node:sNode];
+            if(abs(sNode.centerYInPoints - sNode.parent.centerYInPoints) < 1) {
+                [self addHorizontalSnapLine:sNode.parent.centerYInPoints node:sNode];
             }
             
+            // Snap to sides to edge of parent
+            if(abs(sNode.leftInPoints - sNode.parent.leftInPoints) < sensitivity) {
+                [self addVerticalSnapLine:sNode.parent.leftInPoints node:sNode];
+            } else if(abs(sNode.rightInPoints - sNode.parent.rightInPoints) < sensitivity) {
+                [self addVerticalSnapLine:sNode.parent.rightInPoints node:sNode];
+            }
+            if(abs(sNode.topInPoints - sNode.parent.topInPoints) < sensitivity) {
+                [self addHorizontalSnapLine:sNode.parent.topInPoints node:sNode];
+            } else if(abs(sNode.bottomInPoints - sNode.parent.bottomInPoints) < sensitivity) {
+                [self addHorizontalSnapLine:sNode.parent.bottomInPoints node:sNode];
+            }
+						
             nodesToSearchForSnapping = nil;
         }
     }
 }
 
 -(void) addVerticalSnapLine:(float)x node:(CCNode*)node {
-    CocosScene *cs = [CocosScene cocosScene];
-    CGPoint newAbsPos = [cs.anchorPointCompensationLayer convertToNodeSpace:ccp(x,0)];
-    newAbsPos = [node.parent convertToWorldSpace:newAbsPos];
-    [verticalSnapLines addObject:[NSNumber numberWithFloat:roundf(newAbsPos.x)]];
+    [verticalSnapLines addObject:[NSNumber numberWithFloat:roundf(x)]];
 }
 
 -(void) addHorizontalSnapLine:(float)y node:(CCNode*)node {
-    CocosScene *cs = [CocosScene cocosScene];
-    CGPoint newAbsPos = [cs.anchorPointCompensationLayer convertToNodeSpace:ccp(0,y)];
-    newAbsPos = [node.parent convertToWorldSpace:newAbsPos];
-    [horizontalSnapLines addObject:[NSNumber numberWithFloat:roundf(newAbsPos.y)]];
+    [horizontalSnapLines addObject:[NSNumber numberWithFloat:roundf(y)]];
 }
 
 #pragma mark - Snapping Methods
@@ -274,26 +264,24 @@
             for(CCNode *node in nodesToSearchForSnapping) {
                 
                 if(node != sNode) { // Ignore the selected node
-                    NSPoint point = [sNode convertPositionToPoints:sNode.position type:sNode.positionType];
-                    NSPoint nPoint = [sNode convertPositionToPoints:node.position type:node.positionType];
-                    
-                    float newX = point.x;
-                    float newY = point.y;
+                    NSPoint sPoint = [sNode convertToWorldSpace:sNode.anchorPointInPoints];
+                    NSPoint point = [node convertToWorldSpace:node.anchorPointInPoints];
                     
                     // Snap from anchorPoint
-                    if(abs(point.x - nPoint.x) < sensitivity) {
-                        newX = nPoint.x;
-                    } if(abs(point.y - nPoint.y) < sensitivity) {
-                        newY = nPoint.y;
+                    if(abs(sPoint.x - point.x) < sensitivity) {
+                        sPoint.x = point.x;
                     }
-                    CGPoint pointToSnapFromAnchorPoint = [sNode convertPositionFromPoints:NSMakePoint(newX, newY) type:sNode.positionType];
-                    appDelegate.selectedNode.position = pointToSnapFromAnchorPoint;
+										if(abs(sPoint.y - point.y) < sensitivity) {
+                        sPoint.y = point.y;
+                    }
+                    sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
                     
                     // Snap from center
-                    if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (node.leftInPoints + node.contentSizeInPoints.width / 2)) < sensitivity) {
-                        sNode.leftInPoints = node.leftInPoints + node.contentSizeInPoints.width / 2 - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
-                    } if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (node.bottomInPoints + node.contentSizeInPoints.height / 2)) < sensitivity) {
-                        sNode.bottomInPoints = node.bottomInPoints + node.contentSizeInPoints.height / 2 - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
+                    if(abs(sNode.centerXInPoints - node.centerXInPoints) < sensitivity) {
+                        sNode.centerXInPoints = node.centerXInPoints;
+                    }
+										if(abs(sNode.centerYInPoints - node.centerYInPoints) < sensitivity) {
+                        sNode.centerYInPoints = node.centerYInPoints;
                     }
                     
                     // Snap to opposite sides
@@ -306,7 +294,6 @@
                         sNode.topInPoints = node.bottomInPoints;
                     } else if(abs(sNode.bottomInPoints - node.topInPoints) < sensitivity) {
                         sNode.bottomInPoints = node.topInPoints;
-                        newY = sNode.position.y;
                     }
                     
                     // Snap to same sides
@@ -325,24 +312,24 @@
             }
             
             
-            // Center View
-            if(abs((sNode.leftInPoints + (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints) - (sNode.parent.contentSizeInPoints.width / 2) ) < sensitivity) {
-                sNode.leftInPoints = (sNode.parent.contentSizeInPoints.width / 2) - (sNode.contentSizeInPoints.width / 2) * sNode.scaleXInPoints;
+            // Center parent
+            if(abs(sNode.centerXInPoints - sNode.parent.centerXInPoints ) < sensitivity) {
+                sNode.centerXInPoints = sNode.parent.centerXInPoints;
             }
-            if(abs((sNode.bottomInPoints + (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints) - (sNode.parent.contentSizeInPoints.height / 2)) < sensitivity) {
-                sNode.bottomInPoints = (sNode.parent.contentSizeInPoints.height / 2) - (sNode.contentSizeInPoints.height / 2) * sNode.scaleYInPoints;
+            if(abs(sNode.centerYInPoints - sNode.parent.centerYInPoints) < sensitivity) {
+                sNode.centerYInPoints = sNode.parent.centerYInPoints;
             }
             
-            // Snap to sides to edge of view
-            if(abs(sNode.leftInPoints) < sensitivity) {
-                sNode.leftInPoints = 0;
-            } else if(abs(sNode.rightInPoints - sNode.parent.contentSizeInPoints.width) < sensitivity) {
-                sNode.rightInPoints = sNode.parent.contentSizeInPoints.width;
+            // Snap to sides to edge of parent.
+            if(abs(sNode.leftInPoints - sNode.parent.leftInPoints) < sensitivity) {
+                sNode.leftInPoints = sNode.parent.leftInPoints;
+            } else if(abs(sNode.rightInPoints - sNode.parent.rightInPoints) < sensitivity) {
+                sNode.rightInPoints = sNode.parent.rightInPoints;
             }
-            if(abs(sNode.topInPoints - sNode.parent.contentSizeInPoints.height) < sensitivity) {
-                sNode.topInPoints = sNode.parent.contentSizeInPoints.height;
-            } else if(abs(sNode.bottomInPoints) < sensitivity) {
-                sNode.bottomInPoints = 0;
+            if(abs(sNode.topInPoints - sNode.parent.topInPoints) < sensitivity) {
+                sNode.topInPoints = sNode.parent.topInPoints;
+            } else if(abs(sNode.bottomInPoints - sNode.parent.bottomInPoints) < sensitivity) {
+                sNode.bottomInPoints = sNode.parent.bottomInPoints;
             }
             
             nodesToSearchForSnapping = nil;
