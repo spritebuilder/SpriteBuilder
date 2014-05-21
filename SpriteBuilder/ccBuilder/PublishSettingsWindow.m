@@ -48,6 +48,7 @@
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:NO];
     [openDlg setCanChooseDirectories:YES];
+    [openDlg setCanCreateDirectories:YES];
     
     [openDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
