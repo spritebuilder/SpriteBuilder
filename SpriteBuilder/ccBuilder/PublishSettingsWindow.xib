@@ -162,7 +162,7 @@
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="232"/>
                                 </connections>
                             </textField>
-                            <button identifier=" " verticalHuggingPriority="750" tag="1" id="24">
+                            <button identifier=" " verticalHuggingPriority="750" id="24">
                                 <rect key="frame" x="413" y="40" width="48" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="smallSquare" title="Select" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="25">
@@ -170,7 +170,7 @@
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="selectPublishDirectory:" target="-2" id="47"/>
+                                    <action selector="selectPublishDirectoryIOS:" target="-2" id="47"/>
                                     <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="235" id="406">
                                         <dictionary key="options">
                                             <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -580,11 +580,11 @@ DQ
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
-                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="vWt-XX-swP"/>
                                     <binding destination="-2" name="value" keyPath="projectSettings.publishDirectoryAndroid" id="Mef-PY-yrH"/>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="vWt-XX-swP"/>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" tag="2" id="Y5s-0L-0gX">
+                            <button verticalHuggingPriority="750" id="Y5s-0L-0gX">
                                 <rect key="frame" x="412" y="40" width="48" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="smallSquare" title="Select" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7RH-FK-7vK">
@@ -592,18 +592,18 @@ DQ
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="selectPublishDirectory:" target="-2" id="X0G-Fb-ATq"/>
+                                    <action selector="selectPublishDirectoryAndroid:" target="-2" id="bVX-3X-mRm"/>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.onlyPublishCCBs" id="RYq-H1-496">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
                                     <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="RYq-H1-496" id="eDv-v7-qur">
                                         <dictionary key="options">
                                             <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                        </dictionary>
-                                    </binding>
-                                    <binding destination="-2" name="enabled" keyPath="projectSettings.onlyPublishCCBs" id="RYq-H1-496">
-                                        <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
@@ -712,12 +712,12 @@ DQ
                             <popUpButton verticalHuggingPriority="750" id="Pvs-1k-0aG">
                                 <rect key="frame" x="367" y="14" width="96" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="10 - Best" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="10" imageScaling="proportionallyDown" inset="2" id="uif-Cd-B3H">
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="uif-Cd-B3H">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                     <menu key="menu" title="OtherViews" id="STg-9d-Ft0">
                                         <items>
-                                            <menuItem title="10 - Best" state="on" tag="10" id="jlA-aw-UBO"/>
+                                            <menuItem title="10 - Best" tag="10" id="jlA-aw-UBO"/>
                                             <menuItem title="9" tag="9" id="9jR-fg-7g5"/>
                                             <menuItem title="8" tag="8" id="sLs-mN-Jvb"/>
                                             <menuItem title="7" tag="7" id="3yJ-zj-hhk">
@@ -754,8 +754,8 @@ DQ
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
-                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="tfu-M1-aTI"/>
                                     <binding destination="-2" name="selectedTag" keyPath="projectSettings.publishAudioQuality_android" id="neJ-Dx-qei"/>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="tfu-M1-aTI"/>
                                 </connections>
                             </popUpButton>
                             <textField verticalHuggingPriority="750" id="dQy-YJ-MmW" customClass="CCBTextFieldLabel">
@@ -871,7 +871,7 @@ DQ
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectPublishDirectory:" target="-2" id="182"/>
+                        <action selector="selectPublishDirectoryIOS:" target="-2" id="182"/>
                         <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="256" id="436">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
