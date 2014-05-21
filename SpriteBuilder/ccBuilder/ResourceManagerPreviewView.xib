@@ -795,6 +795,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="c8S-W6-s3X"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="c8S-W6-s3X" id="lDo-zb-F71">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -803,6 +804,7 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_compress" id="gAf-JU-Ck8"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_compress_enabled" previousBinding="lDo-zb-F71" id="3AO-8a-14A">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -811,8 +813,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="c8S-W6-s3X"/>
-                        <binding destination="-2" name="value" keyPath="format_android_compress" id="gAf-JU-Ck8"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="mmL-7u-54n" customClass="CCBTextFieldLabel">
@@ -824,6 +824,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="qUP-4W-6sq"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="qUP-4W-6sq" id="j5y-fE-WxN">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -832,18 +833,17 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="qUP-4W-6sq"/>
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="CLx-nv-PBi">
                     <rect key="frame" x="41" y="76" width="94" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="PNG" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="l2c-yd-BlU">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="l2c-yd-BlU">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="tgf-1P-eWB">
                             <items>
-                                <menuItem title="PNG" state="on" id="9n2-gt-sto"/>
+                                <menuItem title="PNG" id="9n2-gt-sto"/>
                                 <menuItem title="PNG 8-bit" tag="1" id="jWn-eq-4li"/>
                                 <menuItem isSeparatorItem="YES" id="zGL-T5-dad"/>
                                 <menuItem title="PVR RGBA8888" tag="2" id="RZX-eE-Mwn"/>
@@ -857,6 +857,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="mnY-Ld-Um5"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="mnY-Ld-Um5" id="147-j6-ZAn">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -865,7 +866,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="mnY-Ld-Um5"/>
                         <binding destination="-2" name="selectedTag" keyPath="format_android" id="y0e-qj-liL"/>
                     </connections>
                 </popUpButton>
@@ -877,6 +877,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="gZ9-Z2-Jx0"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="gZ9-Z2-Jx0" id="tLF-dX-63b">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -885,6 +886,7 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_dither" id="iP4-OU-cVv"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_dither_enabled" previousBinding="tLF-dX-63b" id="ngN-kb-IP5">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -893,8 +895,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="gZ9-Z2-Jx0"/>
-                        <binding destination="-2" name="value" keyPath="format_android_dither" id="iP4-OU-cVv"/>
                     </connections>
                 </button>
             </subviews>
@@ -1151,6 +1151,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="PzD-VH-N2V"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="PzD-VH-N2V" id="uMM-dt-UZa">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1159,6 +1160,7 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_compress" id="fcI-3w-35n"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_compress_enabled" previousBinding="uMM-dt-UZa" id="Hjr-EZ-1xf">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1167,8 +1169,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="PzD-VH-N2V"/>
-                        <binding destination="-2" name="value" keyPath="format_android_compress" id="fcI-3w-35n"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="XCZ-iH-g3j" customClass="CCBTextFieldLabel">
@@ -1180,6 +1180,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xKy-IN-Xev"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="xKy-IN-Xev" id="mOn-Mk-0bh">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1188,18 +1189,17 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xKy-IN-Xev"/>
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="R6B-CI-XVz">
                     <rect key="frame" x="41" y="6" width="94" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="PNG" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="p40-uP-yQr">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="p40-uP-yQr">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="Zaq-Hw-aP9">
                             <items>
-                                <menuItem title="PNG" state="on" id="otV-Ll-GWi"/>
+                                <menuItem title="PNG" id="otV-Ll-GWi"/>
                                 <menuItem title="PNG 8-bit" tag="1" id="5B6-OP-WON"/>
                                 <menuItem isSeparatorItem="YES" id="ktC-s2-2jM"/>
                                 <menuItem title="PVR RGBA8888" tag="2" id="ag5-Xm-1TV"/>
@@ -1213,6 +1213,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="5oG-ga-eSn"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="5oG-ga-eSn" id="QDU-DS-2d7">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1221,7 +1222,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="5oG-ga-eSn"/>
                         <binding destination="-2" name="selectedTag" keyPath="format_android" id="CNf-6g-a8j"/>
                     </connections>
                 </popUpButton>
@@ -1233,6 +1233,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="edw-Au-3df"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="edw-Au-3df" id="msi-3n-xlh">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1241,6 +1242,7 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_dither" id="bxB-Mn-IWg"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_dither_enabled" previousBinding="msi-3n-xlh" id="Xr9-Vq-RzS">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1249,8 +1251,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="edw-Au-3df"/>
-                        <binding destination="-2" name="value" keyPath="format_android_dither" id="bxB-Mn-IWg"/>
                     </connections>
                 </button>
             </subviews>
@@ -1436,6 +1436,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xZD-OO-Sp1"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="xZD-OO-Sp1" id="XOq-Ae-i68">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1444,7 +1445,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xZD-OO-Sp1"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="yKy-b7-9P4" customClass="CCBTextFieldLabel">
@@ -1456,6 +1456,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="QOq-Ud-6Rs"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="QOq-Ud-6Rs" id="fn0-oY-Gj3">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1464,43 +1465,17 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="QOq-Ud-6Rs"/>
                     </connections>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" id="k0b-7U-4Ps">
-                    <rect key="frame" x="41" y="6" width="73" height="15"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="OGG" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="2dX-YF-E2Z" id="hPH-uD-Y1F">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
-                        <menu key="menu" title="OtherViews" id="bMo-HQ-dLV">
-                            <items>
-                                <menuItem title="OGG" state="on" tag="1" id="2dX-YF-E2Z"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                    <connections>
-                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="7o0-ac-mti" id="4Ad-Us-MP0">
-                            <dictionary key="options">
-                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="7o0-ac-mti"/>
-                        <binding destination="-2" name="selectedTag" keyPath="format_android_sound" id="hWp-ue-cFI"/>
-                    </connections>
-                </popUpButton>
                 <popUpButton verticalHuggingPriority="750" id="5Nh-1F-3PA">
                     <rect key="frame" x="159" y="6" width="88" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="KXb-Pd-3A9">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="KXb-Pd-3A9">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="yDL-Dh-x2k">
                             <items>
-                                <menuItem title="Default" state="on" id="9TV-ek-RyE"/>
+                                <menuItem title="Default" id="9TV-ek-RyE"/>
                                 <menuItem title="8 - Best" tag="8" id="0Tp-1G-xFC"/>
                                 <menuItem title="7" tag="7" id="SFH-wB-I5u"/>
                                 <menuItem title="6" tag="6" id="CeD-Xm-lcI"/>
@@ -1513,6 +1488,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="p4I-2B-XaQ"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="p4I-2B-XaQ" id="g4w-Qe-ECC">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1521,6 +1497,7 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
+                        <binding destination="-2" name="selectedTag" keyPath="format_android_sound_quality" id="XTp-x0-s4x"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_sound_quality_enabled" previousBinding="g4w-Qe-ECC" id="VSn-gS-2R9">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1529,8 +1506,6 @@
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="p4I-2B-XaQ"/>
-                        <binding destination="-2" name="selectedTag" keyPath="format_android_sound_quality" id="XTp-x0-s4x"/>
                     </connections>
                 </popUpButton>
                 <popUpButton hidden="YES" verticalHuggingPriority="750" id="1079">
@@ -1650,6 +1625,31 @@
                     <rect key="frame" x="5" y="45" width="240" height="94"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </customView>
+                <popUpButton verticalHuggingPriority="750" id="Iqw-qx-zkI">
+                    <rect key="frame" x="41" y="6" width="73" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="9Az-FD-Mmw">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                        <menu key="menu" title="OtherViews" id="EQp-f3-f0o">
+                            <items>
+                                <menuItem title="OGG" id="riX-EC-CQV"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="8Er-aj-Cn4" id="WVQ-oE-Uig">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="8Er-aj-Cn4"/>
+                        <binding destination="-2" name="selectedTag" keyPath="format_android_sound" id="b2Q-29-Ix5"/>
+                    </connections>
+                </popUpButton>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="130"/>
