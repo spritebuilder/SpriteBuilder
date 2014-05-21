@@ -4671,6 +4671,9 @@ static BOOL hideAllToNextSeparator;
 
 -(void) setShowGuideGrid:(BOOL)showGuideGridNew {
     showGuideGrid = showGuideGridNew;
+    if(showGuideGrid) {
+        [self setSnapGrid:YES];
+    }
     [[[CocosScene cocosScene] guideLayer] updateGuides];
 }
 
@@ -4689,6 +4692,7 @@ static BOOL hideAllToNextSeparator;
         CGSize newSize = CGSizeMake(wc.wStage,wc.hStage);
         
         [[[CocosScene cocosScene] guideLayer] setGridSize:newSize];
+        [[[CocosScene cocosScene] guideLayer] buildGuideGrid];
         [[[CocosScene cocosScene] guideLayer] updateGuides];
     }
 }
