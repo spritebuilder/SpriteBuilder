@@ -167,12 +167,24 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
         
         
         bool hasError = NO;
+      
         
         if(!pvrtexture::PreMultiplyAlpha(*pvrTexture))
         {
             if (error)
 			{
 				NSString * errorMessage = [NSString stringWithFormat:@"Failure to premultiple alpha: %@", srcPath];
+				NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
+				*error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+			}
+            hasError = YES;
+        }
+        
+        if(!hasError && !pvrtexture::Flip(*pvrTexture, ePVRTAxisY))
+        {
+            if (error)
+			{
+				NSString * errorMessage = [NSString stringWithFormat:@"Failure to flip texture: %@", srcPath];
 				NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
 				*error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
 			}
