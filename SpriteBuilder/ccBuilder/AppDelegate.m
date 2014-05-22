@@ -118,6 +118,7 @@
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
 #import "PackageCreator.h"
+#import "SnapLayerKeys.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -586,6 +587,7 @@ typedef enum
     [self setupCocos2d];
     [self setupSequenceHandler];
     [self updateInspectorFromSelection];
+    [self setupObservers];
     
     [[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
     
@@ -633,6 +635,14 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+}
+
+- (void)setupObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateEverythingAfterSettingsChanged)
+                                                 name:RESOURCE_PATHS_CHANGED
+                                               object:nil];
 }
 
 - (void)registerUserDefaults
@@ -3267,12 +3277,17 @@ static BOOL hideAllToNextSeparator;
     int success = [wc runModalSheetForWindow:window];
     if (success)
     {
-        [self.projectSettings store];
-        [self updateResourcePathsFromProjectSettings];
-        [self menuCleanCacheDirectories:sender];
-        [self reloadResources];
-        [self setResolution:0];
+        [self updateEverythingAfterSettingsChanged];
     }
+}
+
+- (void)updateEverythingAfterSettingsChanged
+{
+    [self.projectSettings store];
+    [self updateResourcePathsFromProjectSettings];
+    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [self reloadResources];
+    [self setResolution:0];
 }
 
 - (IBAction) openDocument:(id)sender
@@ -3369,8 +3384,11 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuNewPackage:(id)sender
 {
+    [[[CCDirector sharedDirector] view] lockOpenGLContext];
     PackageCreator *packageController = [[PackageCreator alloc] initWithWindow:window];
+    packageController.projectSettings = projectSettings;
     [packageController showCreateNewPackageDialog];
+    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (IBAction) newFolder:(id)sender
