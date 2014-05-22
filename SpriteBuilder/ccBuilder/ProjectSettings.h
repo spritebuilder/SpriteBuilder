@@ -102,6 +102,8 @@ typedef enum
 }
 
 @property (nonatomic, copy) NSString* projectPath;
+@property (nonatomic, readonly) NSString* projectPathDir;
+
 @property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 
@@ -184,6 +186,8 @@ typedef enum
 // Handling moved and deleted resources
 - (void) removedResourceAt:(NSString*) relPath;
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
+
+- (BOOL)addResourcePath:(NSString *)path error:(NSError **)error;
 
 - (NSString* ) getVersion;
 

@@ -31,6 +31,7 @@
 #import "AppDelegate.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "CCBWarnings.h"
+#import "SBErrors.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -484,6 +485,38 @@
     [resourceProperties removeObjectForKey:relPathOld];
 }
 
+- (BOOL)addResourcePath:(NSString *)path error:(NSError **)error
+{
+    NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
+    NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
+
+    if (![self isRelResourcePathAlreadyInProject:relResourcePath])
+    {
+        [resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:relResourcePath forKey:@"path"]];
+        return YES;
+    }
+    else
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBDuplicateResourcePathError
+                                 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Cannot create %@, already present.", relResourcePath]}];
+        return NO;
+    }
+}
+
+- (BOOL)isRelResourcePathAlreadyInProject:(NSString *)relResourcePath
+{
+    for (NSDictionary *row in resourcePaths)
+    {
+        NSString *resourcePath = [row objectForKey:@"path"];
+        if ([resourcePath isEqualToString:relResourcePath])
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void) detectBrowserPresence
 {
     isSafariExist = FALSE;
@@ -551,6 +584,11 @@
 			[self markAsDirtyRelPath:warning.relatedFile];
 		}
 	}
+}
+
+- (NSString *)projectPathDir
+{
+    return [projectPath stringByDeletingLastPathComponent];
 }
 
 @end
