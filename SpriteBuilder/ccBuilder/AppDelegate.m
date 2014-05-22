@@ -117,6 +117,7 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
+#import "PackageCreator.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3364,6 +3365,12 @@ static BOOL hideAllToNextSeparator;
 -(IBAction) menuNewSpriteKitProject:(id)sender
 {
 	[self createNewProjectTargetting:CCBTargetEngineSpriteKit];
+}
+
+- (IBAction) menuNewPackage:(id)sender
+{
+    PackageCreator *packageController = [[PackageCreator alloc] initWithWindow:window];
+    [packageController showCreateNewPackageDialog];
 }
 
 - (IBAction) newFolder:(id)sender
