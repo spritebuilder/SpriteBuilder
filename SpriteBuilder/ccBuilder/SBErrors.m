@@ -12,3 +12,6 @@ NSInteger const SBParentDoesNotPermitSpecificChildrenError = 1002;
 NSInteger const SBCocos2dUpdateTemplateZipFileDoesNotExistError = 2000;
 NSInteger const SBCocos2dUpdateUnzipTemplateFailedError = 2001;
 NSInteger const SBCocos2dUpdateUnzipTaskError = 2002;
+
+// Create Resource path
+NSInteger const SBDuplicateResourcePathError = 2100;
