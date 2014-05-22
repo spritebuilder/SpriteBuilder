@@ -50,7 +50,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="self.packageName" id="6iG-RE-ld8"/>
+                            <binding destination="-2" name="value" keyPath="packageName" id="JsF-ot-j09"/>
                             <outlet property="delegate" destination="-2" id="ozb-dN-TqS"/>
                         </connections>
                     </textField>
