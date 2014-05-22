@@ -51,12 +51,18 @@
     }
 }
 
+
 # pragma mark - PackageCreateDelegate
 
 - (BOOL)canCreatePackageWithName:(NSString *)packageName error:(NSError **)error
 {
-    *error = [NSError errorWithDomain:@"asdasd" code:100 userInfo:@{NSLocalizedDescriptionKey:@"Package already exists"}];
-    return NO;
+/*
+    *error = [NSError errorWithDomain:@"asdasd"
+                                 code:100
+                             userInfo:@{NSLocalizedDescriptionKey:@"Package already exists"}];
+*/
+
+    return YES;
 }
 
 @end
