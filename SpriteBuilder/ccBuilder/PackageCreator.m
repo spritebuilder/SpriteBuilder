@@ -1,5 +1,7 @@
 #import "PackageCreator.h"
 #import "NewPackageWindowController.h"
+#import "ProjectSettings.h"
+#import "SnapLayerKeys.h"
 
 
 @interface PackageCreator ()
@@ -47,18 +49,47 @@
 
     if (acceptedModal == 1)
     {
-        NSLog(@"[PACKAGE] Creating package %@", packageWindowController.packageName);
+        NSError *error;
+        if (![self createPackageWithName:packageWindowController.packageName error:&error])
+        {
+            NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                             defaultButton:@"Ok"
+                                           alternateButton:nil
+                                               otherButton:nil
+                                 informativeTextWithFormat:error.localizedDescription];
+
+            [alert runModal];
+        }
     }
 }
 
+
+- (BOOL)createPackageWithName:(NSString *)packageName error:(NSError **)error
+{
+    NSLog(@"[PACKAGE] Creating package %@", packageName);
+
+    NSString *newPackagePath = [_projectSettings.projectPathDir stringByAppendingPathComponent:packageName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    if ([fileManager createDirectoryAtPath:newPackagePath withIntermediateDirectories:NO attributes:nil error:error])
+    {
+        if ([_projectSettings addResourcePath:newPackagePath error:error])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED
+                                                                object:nil];
+            return YES;
+        }
+    }
+    return NO;
+}
 
 # pragma mark - PackageCreateDelegate
 
 - (BOOL)canCreatePackageWithName:(NSString *)packageName error:(NSError **)error
 {
 /*
-    *error = [NSError errorWithDomain:@"asdasd"
-                                 code:100
+    *error = [NSError errorWithDomain:SBErrorDomain
+                                 code:create constant
                              userInfo:@{NSLocalizedDescriptionKey:@"Package already exists"}];
 */
 
