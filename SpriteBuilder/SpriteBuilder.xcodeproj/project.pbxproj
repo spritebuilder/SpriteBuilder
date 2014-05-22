@@ -118,6 +118,8 @@
 		80FBACCD183423F800C4BB69 /* inspector-warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACC9183422BD00C4BB69 /* inspector-warning@2x.png */; };
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
+		830F4E7E192DF937002B832D /* NewPackageWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E7D192DF937002B832D /* NewPackageWindow.xib */; };
+		830F4E81192DF9D1002B832D /* NewPackageWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830F4E80192DF9D1002B832D /* NewPackageWindowController.m */; };
 		833A5C4C192B48CB001837B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833A5C4B192B48CB001837B3 /* XCTest.framework */; };
 		833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 833A5C50192B48CB001837B3 /* InfoPlist.strings */; };
 		833A5C5C192B4981001837B3 /* CCBReader_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 833A5C5B192B4981001837B3 /* CCBReader_Tests.m */; };
@@ -791,6 +793,7 @@
 		E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD2D849749BB67455943 /* DateCache.m */; };
 		E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F74ADF149FB8398AE965 /* NSString+Publishing.m */; };
 		E525F50C89C6296C9FE062F9 /* ruler-numbers.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */; };
+		E525F549B73C33797CD485BE /* PackageCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F148A8B90E93D1D71D32 /* PackageCreator.m */; };
 		E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */; };
 		E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */; };
 		E525FA398CC2E279B3D65D16 /* PublishingTaskStatusProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */; };
@@ -1275,6 +1278,9 @@
 		80FBACC9183422BD00C4BB69 /* inspector-warning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning@2x.png"; sourceTree = "<group>"; };
 		80FBACCA183422BD00C4BB69 /* inspector-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning.png"; sourceTree = "<group>"; };
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
+		830F4E7D192DF937002B832D /* NewPackageWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPackageWindow.xib; sourceTree = "<group>"; };
+		830F4E7F192DF9D1002B832D /* NewPackageWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPackageWindowController.h; sourceTree = "<group>"; };
+		830F4E80192DF9D1002B832D /* NewPackageWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPackageWindowController.m; sourceTree = "<group>"; };
 		833A5C4A192B48CB001837B3 /* SpriteBuilder Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpriteBuilder Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		833A5C4B192B48CB001837B3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		833A5C4F192B48CB001837B3 /* SpriteBuilder Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpriteBuilder Tests-Info.plist"; sourceTree = "<group>"; };
@@ -2177,9 +2183,12 @@
 		E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteSheetOperation.m; sourceTree = "<group>"; };
 		E525F0A6B228717C246675C0 /* PublishLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishLogging.h; sourceTree = "<group>"; };
 		E525F0ED6F868B09686F38DF /* PublishRegularFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishRegularFileOperation.h; sourceTree = "<group>"; };
+		E525F148A8B90E93D1D71D32 /* PackageCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCreator.m; sourceTree = "<group>"; };
+		E525F2F97BD5D52FB528C442 /* PackageCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreator.h; sourceTree = "<group>"; };
 		E525F31A72346871646C218C /* ProjectSettings+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProjectSettings+Convenience.h"; sourceTree = "<group>"; };
 		E525F31D5A311C0DBE9C1CD6 /* PublishCCBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishCCBOperation.h; sourceTree = "<group>"; };
 		E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteKitSpriteSheetOperation.m; sourceTree = "<group>"; };
+		E525F6C644CA9F78DAE45A13 /* PackageCreateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreateDelegate.h; sourceTree = "<group>"; };
 		E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishingTaskStatusProgress.m; sourceTree = "<group>"; };
 		E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSoundFileOperation.m; sourceTree = "<group>"; };
 		E525F74ADF149FB8398AE965 /* NSString+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing.m"; sourceTree = "<group>"; };
@@ -2652,6 +2661,9 @@
 				E35D78D216826C0100A53BEF /* SpriteSheetSettingsWindow.h */,
 				E35D78D316826C0100A53BEF /* SpriteSheetSettingsWindow.m */,
 				E35D78D416826C0100A53BEF /* SpriteSheetSettingsWindow.xib */,
+				830F4E7D192DF937002B832D /* NewPackageWindow.xib */,
+				830F4E7F192DF9D1002B832D /* NewPackageWindowController.h */,
+				830F4E80192DF9D1002B832D /* NewPackageWindowController.m */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -3062,6 +3074,7 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				830F4E83192DFBA2002B832D /* Packages */,
 				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
 				D2E0167218D782B500927430 /* SpriteBuilderCommands */,
@@ -3227,6 +3240,16 @@
 				80AD799F1863871200B653B7 /* PVRTTexture.h */,
 			);
 			path = Include;
+			sourceTree = "<group>";
+		};
+		830F4E83192DFBA2002B832D /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E525F2F97BD5D52FB528C442 /* PackageCreator.h */,
+				E525F148A8B90E93D1D71D32 /* PackageCreator.m */,
+				E525F6C644CA9F78DAE45A13 /* PackageCreateDelegate.h */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		8319539318FECDF800ED4BA0 /* PublishingOperations */ = {
@@ -5369,6 +5392,7 @@
 				E35DBC2014F4ED0E0070A6E4 /* InspectorIntegerLabeled.xib in Resources */,
 				E35DBC2514F4FEF90070A6E4 /* InspectorTexture.xib in Resources */,
 				926D13C218B5778300582959 /* joint-distance-handle-short.png in Resources */,
+				830F4E7E192DF937002B832D /* NewPackageWindow.xib in Resources */,
 				E325F64514F531F500D29BCF /* InspectorFloatVar.xib in Resources */,
 				9218DF411919B04D0033851E /* joint-pivot-handle-ref@2x.png in Resources */,
 				E325F64A14F53FD000D29BCF /* InspectorColor4FVar.xib in Resources */,
@@ -5924,6 +5948,7 @@
 				80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */,
 				80FBACC31833FAE000C4BB69 /* WarningTableView.m in Sources */,
 				80FBACC41833FAE000C4BB69 /* WarningTableViewHandler.m in Sources */,
+				830F4E81192DF9D1002B832D /* NewPackageWindowController.m in Sources */,
 				921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */,
 				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
 				7789ABD0133AA82000CEFCC7 /* main.m in Sources */,
@@ -6146,6 +6171,7 @@
 				E525FBB73A012AC88E99B21B /* PublishRenamedFilesLookup.m in Sources */,
 				E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */,
 				E525FA398CC2E279B3D65D16 /* PublishingTaskStatusProgress.m in Sources */,
+				E525F549B73C33797CD485BE /* PackageCreator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8926,6 +8952,7 @@
 				833A5C5A192B48CB001837B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		92154AD818A5560B00BD215C /* Build configuration list for PBXNativeTarget "CCPhysicsPivotJoint" */ = {
 			isa = XCConfigurationList;
