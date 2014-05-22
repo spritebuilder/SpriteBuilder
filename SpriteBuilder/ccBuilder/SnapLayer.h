@@ -9,6 +9,17 @@
 
 #import "CCNode.h"
 
+enum
+{
+    kCCBSnapOrientationHorizontal,
+    kCCBSnapOrientationVertical
+};
+
+enum
+{
+    kCCBSnapTypeDefault,
+};
+
 @interface SnapLayer : CCNode {
     
     CGSize winSize;

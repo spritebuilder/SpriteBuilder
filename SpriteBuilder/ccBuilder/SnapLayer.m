@@ -17,6 +17,20 @@
 #define kSnapLayerSensitivity       4
 #define kSnapLayerSensitivityLine   1
 
+#pragma mark Guide
+@interface Snap : NSObject {
+@public
+    float position;
+    int orientation;
+    int type;
+    float length;
+}
+@end
+
+@implementation Snap
+
+@end
+
 @interface SnapLayer() {
     float sensitivity;
     float gridSize;
@@ -25,9 +39,7 @@
 }
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
-
-@property (nonatomic, strong) NSMutableSet *verticalSnapLines;
-@property (nonatomic, strong) NSMutableSet *horizontalSnapLines;
+@property (nonatomic, strong) NSMutableSet *snapLines;
 
 @end
 
@@ -35,8 +47,7 @@
 
 @synthesize appDelegate;
 
-@synthesize verticalSnapLines;
-@synthesize horizontalSnapLines;
+@synthesize snapLines;
 
 #pragma mark - Setup
 
@@ -55,8 +66,7 @@
     
     sensitivity = kSnapLayerSensitivity;
 
-    verticalSnapLines   = [NSMutableSet new];
-    horizontalSnapLines = [NSMutableSet new];
+    snapLines   = [NSMutableSet new];
 
 }
 
@@ -84,39 +94,43 @@
 
         if(sNode != cs.rootNode) {
             
-            for(NSNumber *y in horizontalSnapLines) {
-                CGPoint viewPos = ccp(0, y.floatValue);
+            for(Snap *s in snapLines) {
                 
-                if (CGRectContainsPoint(viewRect, viewPos))
-                {
-                    CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
-                    sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
-                    sprtGuide.contentSize = CGSizeMake(winSize.width, 2);
-                    sprtGuide.anchorPoint = ccp(0, 0.5f);
-                    sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
-                    [sprtGuide setColor:[CCColor redColor]];
-                    [self addChild:sprtGuide];
+                if(s->orientation==kCCBSnapOrientationHorizontal) {
+                    
+                    CGPoint viewPos = ccp(0, s->position);
+                    
+                    if (CGRectContainsPoint(viewRect, viewPos))
+                    {
+                        CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
+                        sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
+                        sprtGuide.contentSize = CGSizeMake(winSize.width, 2);
+                        sprtGuide.anchorPoint = ccp(0, 0.5f);
+                        sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
+                        [sprtGuide setColor:[CCColor  colorWithRed:0.941 green:0.502 blue:0.502 alpha:0.9]];
+                        [self addChild:sprtGuide];
+                        
+                    }
                     
                 }
-
-            }
             
-            for(NSNumber *x in verticalSnapLines) {
-                CGPoint viewPos = ccp(x.floatValue, 0);
-                
-                if (CGRectContainsPoint(viewRect, viewPos))
-                {
-                    CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
-                    sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
-                    sprtGuide.contentSize = CGSizeMake(winSize.height, 2);
-                    sprtGuide.anchorPoint = ccp(0, 0.5f);
-                    sprtGuide.rotation = -90;
-                    sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
-                    [sprtGuide setColor:[CCColor redColor]];
-                    [self addChild:sprtGuide];
-
+                if(s->orientation==kCCBSnapOrientationVertical) {
+                    CGPoint viewPos = ccp(s->position, 0);
+                    
+                    if (CGRectContainsPoint(viewRect, viewPos))
+                    {
+                        CCSprite9Slice* sprtGuide = [CCSprite9Slice spriteWithImageNamed:@"ruler-guide.png"];
+                        sprtGuide.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitUIPoints);
+                        sprtGuide.contentSize = CGSizeMake(winSize.height, 2);
+                        sprtGuide.anchorPoint = ccp(0, 0.5f);
+                        sprtGuide.rotation = -90;
+                        sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
+                        [sprtGuide setColor:[CCColor  colorWithRed:0.941 green:0.502 blue:0.502 alpha:0.9]];
+                        [self addChild:sprtGuide];
+                        
+                    }
+                    
                 }
-                
             }
             
         }
@@ -152,8 +166,7 @@
 
 - (void)findSnappedLines {
     
-    [verticalSnapLines removeAllObjects];
-    [horizontalSnapLines removeAllObjects];
+    [snapLines removeAllObjects];
     
     CocosScene* cs = [CocosScene cocosScene];
     
@@ -287,12 +300,20 @@
     }
 }
 
--(void) addVerticalSnapLine:(float)x{
-    [verticalSnapLines addObject:[NSNumber numberWithFloat:roundf(x)]];
+-(void) addVerticalSnapLine:(float)x {
+    Snap* snap = [[Snap alloc] init];
+    snap->position    = roundf(x);
+    snap->orientation = kCCBSnapOrientationVertical;
+    snap->type        = kCCBSnapTypeDefault;
+    [snapLines addObject:snap];
 }
 
 -(void) addHorizontalSnapLine:(float)y{
-    [horizontalSnapLines addObject:[NSNumber numberWithFloat:roundf(y)]];
+    Snap* snap = [[Snap alloc] init];
+    snap->position    = roundf(y);
+    snap->orientation = kCCBSnapOrientationHorizontal;
+    snap->type        = kCCBSnapTypeDefault;
+    [snapLines addObject:snap];
 }
 
 #pragma mark - Snapping Methods
