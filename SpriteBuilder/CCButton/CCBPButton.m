@@ -7,6 +7,9 @@
 //
 
 #import "CCBPButton.h"
+#import "CCSpriteFrame.h"
+#import "CCTexture.h"
+#import "AppDelegate.h"
 
 @implementation CCBPButton
 
@@ -18,6 +21,21 @@
     self.userInteractionEnabled = NO;
     
     return self;
+}
+
+
+-(void)onSetSizeFromTexture
+{
+    CCSpriteFrame * spriteFrame = _backgroundSpriteFrames[@(CCControlStateNormal)];
+    if(spriteFrame == nil)
+        return;
+    
+    self.preferredSize = spriteFrame.texture.contentSize;
+    
+    [self willChangeValueForKey:@"preferredSize"];
+    [self didChangeValueForKey:@"preferredSize"];
+    [[AppDelegate appDelegate] refreshProperty:@"preferredSize"];
+    
 }
 
 @end

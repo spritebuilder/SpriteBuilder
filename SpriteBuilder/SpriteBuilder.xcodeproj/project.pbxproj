@@ -227,6 +227,8 @@
 		92B8A32818E1063600EE52FC /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
+		92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */; };
+		92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */; };
 		92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */; };
 		92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */; };
 		92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */; };
@@ -1403,6 +1405,9 @@
 		92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPhysicsTwoBodyJoint.h; path = ccBuilder/CCBPhysicsTwoBodyJoint.h; sourceTree = "<group>"; };
 		92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPhysicsTwoBodyJoint.m; path = ccBuilder/CCBPhysicsTwoBodyJoint.m; sourceTree = "<group>"; };
 		92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
+		92BF8AB0192BCDF300C1BC28 /* InspectorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorButton.h; sourceTree = "<group>"; };
+		92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorButton.m; sourceTree = "<group>"; };
+		92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
 		92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected.png"; sourceTree = "<group>"; };
 		92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected@2x.png"; sourceTree = "<group>"; };
 		92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-disconnected.png"; sourceTree = "<group>"; };
@@ -4415,6 +4420,9 @@
 				921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */,
 				921EEB2A18ADE5C600D864C2 /* InspectorNodeReference.h */,
 				921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */,
+				92BF8AB0192BCDF300C1BC28 /* InspectorButton.h */,
+				92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */,
+				92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */,
 			);
 			name = "Inspector Properties";
 			sourceTree = "<group>";
@@ -5335,6 +5343,7 @@
 				E3B4221814E4BE6B004547D6 /* InspectorSpriteFrame.xib in Resources */,
 				92F0961618F8855A00D47A94 /* inspector-body-goto-hi.png in Resources */,
 				9218DF2A1919B04D0033851E /* joint-pivot-handle-ratchet.png in Resources */,
+				92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */,
 				92F0961718F8855A00D47A94 /* inspector-body-goto.png in Resources */,
 				B759E4B81880B60B00E8166C /* logo-white.png in Resources */,
 				E3B4221D14E58C35004547D6 /* InspectorByte.xib in Resources */,
@@ -5942,6 +5951,7 @@
 				77E1992B13858D78006C361B /* PSMTabDragWindow.m in Sources */,
 				77E1992C13858D78006C361B /* PSMTabDragWindowController.m in Sources */,
 				776C683E1385C02000153214 /* CCBOutlineView.m in Sources */,
+				92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */,
 				776C68421385C4F100153214 /* CCBTextFieldCell.m in Sources */,
 				922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */,
 				776C68451385D37E00153214 /* CCBTableView.m in Sources */,

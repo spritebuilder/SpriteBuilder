@@ -12,80 +12,90 @@
 
 #pragma mark - Side Positions in Points
 
+-(CGRect)rectInPoints
+{
+    CGSize size = self.contentSizeInPoints;
+    return CGRectApplyAffineTransform(CGRectMake(0, 0, size.width, size.height), self.nodeToWorldTransform);
+}
+
+// I could swear that CoreGraphics had a CGVectorApplyTransform()...
+static inline CGPoint
+TransformDirection(CGAffineTransform t, CGPoint v)
+{
+  return ccp(t.a*v.x + t.c*v.y, t.b*v.x + t.d*v.y);
+}
+
+
 - (CGFloat)topInPoints
 {
-    return self.positionInPoints.y + (self.contentSizeInPoints.height * (1.0f - self.anchorPoint.y)) * self.scaleYInPoints;
+    return CGRectGetMaxY(self.rectInPoints);
 }
 
 - (void)setTopInPoints:(CGFloat)top {
-    NSPoint point = ccp(self.positionInPoints.x, top - (self.contentSizeInPoints.height * (1.0f - self.anchorPoint.y)) * self.scaleYInPoints);
-    point = [self convertPositionFromPoints:point type:self.positionType];
-    self.position = point;
+		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(0, top - self.topInPoints));
+		self.position = ccpAdd(self.position, delta);
 }
 
 
 
 - (CGFloat)rightInPoints
 {
-    return self.positionInPoints.x + (self.contentSizeInPoints.width * (1.0f - self.anchorPoint.x)) * self.scaleXInPoints;
+    return CGRectGetMaxX(self.rectInPoints);
 }
 
 - (void)setRightInPoints:(CGFloat)right {
-    NSPoint point = ccp(right - (self.contentSizeInPoints.width * (1.0f - self.anchorPoint.x)) * self.scaleXInPoints, self.positionInPoints.y);
-    point = [self convertPositionFromPoints:point type:self.positionType];
-    self.position = point;
+		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(right - self.rightInPoints, 0));
+		self.position = ccpAdd(self.position, delta);
 }
 
 
 
 - (CGFloat)bottomInPoints
 {
-    return self.positionInPoints.y - (self.contentSizeInPoints.height * self.anchorPoint.y) * self.scaleYInPoints;
+    return CGRectGetMinY(self.rectInPoints);
 }
 
 - (void)setBottomInPoints:(CGFloat)bottom {
-    NSPoint point = ccp(self.positionInPoints.x, bottom + (self.contentSizeInPoints.height * self.anchorPoint.y) * self.scaleYInPoints);
-    point = [self convertPositionFromPoints:point type:self.positionType];
-    self.position = point;
+		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(0, bottom - self.bottomInPoints));
+		self.position = ccpAdd(self.position, delta);
 }
 
 
 
 - (CGFloat)leftInPoints
-{
-    return self.positionInPoints.x - (self.contentSizeInPoints.width * self.anchorPoint.x) * self.scaleXInPoints;
+{	
+    return CGRectGetMinX(self.rectInPoints);
 }
 
 - (void)setLeftInPoints:(CGFloat)left {
-    NSPoint point = ccp(left + (self.contentSizeInPoints.width * self.anchorPoint.x) * self.scaleXInPoints, self.positionInPoints.y);
-    point = [self convertPositionFromPoints:point type:self.positionType];
-    self.position = point;
+		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(left - self.leftInPoints, 0));
+		self.position = ccpAdd(self.position, delta);
 }
 
 
 
 - (CGFloat)centerXInPoints
 {
-    return self.positionInPoints.x - (self.contentSizeInPoints.width * self.anchorPoint.x) * self.scaleXInPoints + (self.contentSizeInPoints.width / 2) * self.scaleXInPoints;
+    CGRect rect = self.rectInPoints;
+    return (CGRectGetMinX(rect) + CGRectGetMaxX(rect))/2.0;
 }
 
 - (void)setCenterXInPoints:(CGFloat)centerXInPoints {
-    NSPoint point = ccp(centerXInPoints + (self.contentSizeInPoints.width * self.anchorPoint.x + self.contentSizeInPoints.width / 2) * self.scaleXInPoints, self.positionInPoints.y);
-    point = [self convertPositionFromPoints:point type:self.positionType];
-    self.position = point;
+		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(centerXInPoints - self.centerXInPoints, 0));
+		self.position = ccpAdd(self.position, delta);
 }
 
 
 
 - (CGFloat)centerYInPoints
 {
-    return self.positionInPoints.y - (self.contentSizeInPoints.height * self.anchorPoint.y) * self.scaleYInPoints + (self.contentSizeInPoints.height / 2) * self.scaleYInPoints;
+    CGRect rect = self.rectInPoints;
+    return (CGRectGetMinY(rect) + CGRectGetMaxY(rect))/2.0;
 }
 
 - (void)setCenterYInPoints:(CGFloat)centerYInPoints {
-    NSPoint point = ccp(self.positionInPoints.x, centerYInPoints + (self.contentSizeInPoints.height * self.anchorPoint.y + self.contentSizeInPoints.height / 2) * self.scaleYInPoints);
-    point = [self convertPositionFromPoints:point type:self.positionType];
-    self.position = point;
+		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(0, centerYInPoints - self.centerYInPoints));
+		self.position = ccpAdd(self.position, delta);
 }
 
 @end

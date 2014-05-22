@@ -69,7 +69,7 @@
 
 - (void)buildGuideGrid {
     
-    [self clearGuideGrid];
+    [self clearGuides:kCCBGuideTypeGrid];
     
     CocosScene* cs = [CocosScene cocosScene];
     
@@ -97,12 +97,12 @@
 
 }
 
-- (void)clearGuideGrid {
+- (void)clearGuides:(int)type{
     
     NSMutableArray* guidesCopy = [guides copy];
     
     for(Guide* g in guidesCopy) {
-        if(g->type==kCCBGuideTypeGrid) {
+        if(g->type==type) {
             [guides removeObject:g];
         }
     }
@@ -113,8 +113,6 @@
     CocosScene* cs = [CocosScene cocosScene];
     
     [self removeAllChildrenWithCleanup:YES];
-    
-    [self buildGuideGrid];
     
     CGRect viewRect = CGRectZero;
     viewRect.size = winSize;
@@ -318,6 +316,7 @@
     stageOrigin = so;
     zoom = zm;
     
+    [self buildGuideGrid];
     [self updateGuides];
 }
 
@@ -345,7 +344,7 @@
 {
     if (![ser isKindOfClass:[NSArray class]]) return;
     
-    [guides removeAllObjects];
+    [self clearGuides:kCCBGuideTypeDefault];
     
     for (NSDictionary* gDict in ser)
     {

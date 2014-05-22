@@ -99,7 +99,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     // Rulers
     rulerLayer = [RulersLayer node];
-    [self addChild:rulerLayer z:6];
+    [self addChild:rulerLayer z:7];
     
     // Guides
     guideLayer = [GuidesLayer node];
@@ -107,21 +107,21 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Sticky notes
     notesLayer = [NotesLayer node];
-    [self addChild:notesLayer z:6];
+    [self addChild:notesLayer z:7];
     
     // Snapping
     snapLayer = [SnapLayer node];
-    [self addChild:snapLayer z:3];
+    [self addChild:snapLayer z:4];
     
     // Selection layer
     selectionLayer = [CCNode node];
     selectionLayer.name = @"selectionLayer";
-    [self addChild:selectionLayer z:4];
+    [self addChild:selectionLayer z:5];
     
     // Physics layer
     physicsLayer = [CCNode node];
     physicsLayer.name = @"physicsLayer";
-    [self addChild:physicsLayer z:5];
+    [self addChild:physicsLayer z:6];
     
     // Border layer
     borderLayer = [CCNode node];
