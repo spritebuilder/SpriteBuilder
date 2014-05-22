@@ -25,7 +25,6 @@ TransformDirection(CGAffineTransform t, CGPoint v)
   return ccp(t.a*v.x + t.c*v.y, t.b*v.x + t.d*v.y);
 }
 
-
 - (CGFloat)topInPoints
 {
     return CGRectGetMaxY(self.rectInPoints);
@@ -35,8 +34,6 @@ TransformDirection(CGAffineTransform t, CGPoint v)
 		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(0, top - self.topInPoints));
 		self.position = ccpAdd(self.position, delta);
 }
-
-
 
 - (CGFloat)rightInPoints
 {
@@ -48,8 +45,6 @@ TransformDirection(CGAffineTransform t, CGPoint v)
 		self.position = ccpAdd(self.position, delta);
 }
 
-
-
 - (CGFloat)bottomInPoints
 {
     return CGRectGetMinY(self.rectInPoints);
@@ -59,8 +54,6 @@ TransformDirection(CGAffineTransform t, CGPoint v)
 		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(0, bottom - self.bottomInPoints));
 		self.position = ccpAdd(self.position, delta);
 }
-
-
 
 - (CGFloat)leftInPoints
 {	
@@ -72,8 +65,6 @@ TransformDirection(CGAffineTransform t, CGPoint v)
 		self.position = ccpAdd(self.position, delta);
 }
 
-
-
 - (CGFloat)centerXInPoints
 {
     CGRect rect = self.rectInPoints;
@@ -84,8 +75,6 @@ TransformDirection(CGAffineTransform t, CGPoint v)
 		CGPoint delta = TransformDirection(self.parent.worldToNodeTransform, ccp(centerXInPoints - self.centerXInPoints, 0));
 		self.position = ccpAdd(self.position, delta);
 }
-
-
 
 - (CGFloat)centerYInPoints
 {

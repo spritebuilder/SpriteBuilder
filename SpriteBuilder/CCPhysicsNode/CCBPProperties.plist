@@ -19,21 +19,6 @@
 	<key>properties</key>
 	<array>
 		<dict>
-			<key>default</key>
-			<array>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>2</integer>
-			</array>
-			<key>type</key>
-			<string>Size</string>
-			<key>name</key>
-			<string>contentSize</string>
-			<key>displayName</key>
-			<string>Content size</string>
-		</dict>
-		<dict>
 			<key>type</key>
 			<string>Separator</string>
 			<key>dontSetInEditor</key>

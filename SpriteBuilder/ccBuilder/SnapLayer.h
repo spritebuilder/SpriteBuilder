@@ -3,6 +3,7 @@
 //  SpriteBuilder
 //
 //  Created by Michael Daniels on 4/8/14.
+//  Extended by SpriteBuilder Authors May 2014
 //
 //
 
