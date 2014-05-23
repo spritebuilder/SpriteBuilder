@@ -1,10 +1,10 @@
-#import "PackageCreator.h"
-
 #import "PackageCreateDelegateProtocol.h"
+#import "PackageCreator.h"
 #import "NewPackageWindowController.h"
 #import "ProjectSettings.h"
 #import "SnapLayerKeys.h"
 #import "SBErrors.h"
+#import "MiscConstants.h"
 
 
 @interface PackageCreator ()
@@ -57,7 +57,8 @@
 
 - (BOOL)createPackageWithName:(NSString *)packageName error:(NSError **)error
 {
-    NSString *newPackagePath = [_projectSettings.projectPathDir stringByAppendingPathComponent:packageName];
+    NSString *fullPackageName = [NSString stringWithFormat:@"%@.%@", packageName, PACKAGE_NAME_SUFFIX];
+    NSString *newPackagePath = [_projectSettings.projectPathDir stringByAppendingPathComponent:fullPackageName];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     if ([_projectSettings isResourcePathAlreadyInProject:newPackagePath])
