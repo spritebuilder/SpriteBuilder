@@ -81,4 +81,21 @@
     }
 }
 
+- (void)removePackagesFromProject:(NSArray *)packagePaths
+{
+    if (!packagePaths)
+    {
+        return;
+    }
+
+    // TODO: error checking?
+    for (NSString *packagePath in packagePaths)
+    {
+        [_projectSettings removeResourcePath:packagePath];
+    }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+}
+
+
 @end

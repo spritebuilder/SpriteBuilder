@@ -485,6 +485,22 @@
     [resourceProperties removeObjectForKey:relPathOld];
 }
 
+- (void)removeResourcePath:(NSString *)path
+{
+    NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
+    NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
+
+    for (NSMutableDictionary *resourcePath in [resourcePaths copy])
+    {
+        NSString *relPath = resourcePath[@"path"];
+        if ([relPath isEqualToString:relResourcePath])
+        {
+            [resourcePaths removeObject:resourcePath];
+            return;
+        }
+    }
+}
+
 - (BOOL)addResourcePath:(NSString *)path error:(NSError **)error
 {
     if (![self isResourcePathAlreadyInProject:path])

@@ -13,4 +13,8 @@
 
 - (void)importPackage:(NSString *)packagePath;
 
+// Removesa packages from project, not deleting the folders, and send a RESOURCE_PATHS_CHANGED notification after finishing
+// to reload resources and update view for example
+- (void)removePackagesFromProject:(NSArray *)packagePaths;
+
 @end
