@@ -10,15 +10,12 @@
 
 @protocol PackageCreateDelegateProtocol;
 
-@interface NewPackageWindowController : NSWindowController <NSTextFieldDelegate>
+@interface NewPackageWindowController : NSWindowController
 
-@property (nonatomic, strong) IBOutlet NSTextField *packageNameInput;
-@property (nonatomic, strong) IBOutlet NSTextField *errorMessage;
 @property (nonatomic, readonly, copy) NSString *packageName;
 @property (nonatomic, weak) id<PackageCreateDelegateProtocol>delegate;
 
 - (IBAction)onCreate:(id)sender;
 - (IBAction)onCancel:(id)sender;
-
 
 @end

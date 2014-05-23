@@ -51,15 +51,10 @@
 
 - (void)showCannotCreatePackageWarningWithError:(NSError *)error
 {
-    _errorMessage.hidden = NO;
-    _errorMessage.stringValue = error.localizedDescription;
-    _packageNameInput.textColor = [NSColor colorWithSRGBRed:1.0 green:0.0 blue:0.0 alpha:1.0];
 }
 
 - (void)resetWarning
 {
-    _errorMessage.hidden = YES;
-    _packageNameInput.textColor = [NSColor blackColor];
 }
 
 - (IBAction)onCancel:(id)sender

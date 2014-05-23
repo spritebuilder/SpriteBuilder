@@ -7,8 +7,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NewPackageWindowController">
             <connections>
-                <outlet property="errorMessage" destination="J7v-VM-cJ8" id="SGX-Ky-Xcp"/>
-                <outlet property="packageNameInput" destination="1P5-PT-REz" id="GA7-kl-zmP"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="nJO-Qm-aLT"/>
             </connections>
         </customObject>
@@ -18,7 +16,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="538" height="95"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="538" height="95"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -32,15 +30,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J7v-VM-cJ8">
-                        <rect key="frame" x="18" y="22" width="301" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Error message" id="yUh-A3-6I9">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1P5-PT-REz">
                         <rect key="frame" x="153" y="53" width="365" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -51,7 +40,6 @@
                         </textFieldCell>
                         <connections>
                             <binding destination="-2" name="value" keyPath="packageName" id="JsF-ot-j09"/>
-                            <outlet property="delegate" destination="-2" id="ozb-dN-TqS"/>
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GgX-YV-XaF">
