@@ -28,6 +28,7 @@
 #import "ResourceManagerUtil.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "ProjectSettings.h"
+#import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 
 @implementation ResourceManagerOutlineView
@@ -177,7 +178,7 @@
 
     PackageController *packageController = [[PackageController alloc] init];
     packageController.projectSettings = [AppDelegate appDelegate].projectSettings;
-    [packageController removePackagesFromProject:packagesPathsToDelete];
+    [packageController removePackagesFromProject:packagesPathsToDelete error:NULL];
 
 	[self deselectAll:NULL];
 

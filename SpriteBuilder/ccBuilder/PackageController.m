@@ -26,66 +26,45 @@
     [[packageWindowController window] close];
 }
 
-
-# pragma mark - PackageCreateDelegate
-
-- (BOOL)createPackageWithName:(NSString *)packageName error:(NSError **)error
-{
-    NSString *fullPackageName = [NSString stringWithFormat:@"%@.%@", packageName, PACKAGE_NAME_SUFFIX];
-    NSString *newPackagePath = [_projectSettings.projectPathDir stringByAppendingPathComponent:fullPackageName];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    if ([_projectSettings isResourcePathAlreadyInProject:newPackagePath])
-    {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBDuplicateResourcePathError
-                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
-        return NO;
-    }
-
-    if([fileManager createDirectoryAtPath:newPackagePath withIntermediateDirectories:NO attributes:nil error:error]
-        && [_projectSettings addResourcePath:newPackagePath error:error])
-    {
-        [self addIconToPackageFile:newPackagePath];
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
-        return YES;
-    }
-    return NO;
-}
-
 - (void)addIconToPackageFile:(NSString *)packagePath
 {
     NSImage* folderIcon = [NSImage imageNamed:@"Package.icns"];
     [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:packagePath options:0];
 }
 
-- (void)importPackage:(NSString *)packagePath
+- (NSString *)fullPathForPackageName:(NSString *)packageName
+{
+    NSString *fullPackageName = [NSString stringWithFormat:@"%@.%@", packageName, PACKAGE_NAME_SUFFIX];
+    return [_projectSettings.projectPathDir stringByAppendingPathComponent:fullPackageName];
+}
+
+
+# pragma mark - PackageCreateDelegate
+
+- (BOOL)importPackageWithName:(NSString *)packageName error:(NSError **)error
+{
+    NSString *fullPath = [self fullPathForPackageName:packageName];
+    return [self importPackageWithPath:fullPath error:error];
+}
+
+- (BOOL)importPackageWithPath:(NSString *)packagePath error:(NSError **)error
 {
     NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
 
-    NSError *error;
-    if ([_projectSettings addResourcePath:packagePath error:&error])
+    if ([_projectSettings addResourcePath:packagePath error:error])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+        return YES;
     }
-    else
-    {
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
-                                         defaultButton:@"Ok"
-                                       alternateButton:nil
-                                           otherButton:nil
-                             informativeTextWithFormat:error.localizedDescription];
 
-        [alert runModal];
-    }
+    return NO;
 }
 
-- (void)removePackagesFromProject:(NSArray *)packagePaths
+- (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error
 {
     if (!packagePaths)
     {
-        return;
+        return YES;
     }
 
     // TODO: error checking?
@@ -97,5 +76,28 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
 }
 
+- (BOOL)createPackageWithName:(NSString *)packageName error:(NSError **)error
+{
+    NSString *fullPath = [self fullPathForPackageName:packageName];
+
+    if ([_projectSettings isResourcePathAlreadyInProject:fullPath])
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBDuplicateResourcePathError
+                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
+        return NO;
+    }
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if([fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:error]
+        && [_projectSettings addResourcePath:fullPath error:error])
+    {
+        [self addIconToPackageFile:fullPath];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+        return YES;
+    }
+    return NO;
+}
 
 @end

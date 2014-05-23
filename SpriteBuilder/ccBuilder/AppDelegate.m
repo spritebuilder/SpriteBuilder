@@ -117,6 +117,7 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
+#import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "SnapLayerKeys.h"
 #import "MiscConstants.h"
@@ -3316,7 +3317,7 @@ static BOOL hideAllToNextSeparator;
                     {
                         PackageController *packageCreator = [[PackageController alloc] init];
                         packageCreator.projectSettings = projectSettings;
-                        [packageCreator importPackage:fileName];
+                        [packageCreator importPackageWithPath:fileName error:NULL];
                     }
                     else
                     {
