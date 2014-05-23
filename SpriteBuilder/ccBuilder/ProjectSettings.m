@@ -487,11 +487,11 @@
 
 - (BOOL)addResourcePath:(NSString *)path error:(NSError **)error
 {
-    NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
-    NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
-
-    if (![self isRelResourcePathAlreadyInProject:relResourcePath])
+    if (![self isResourcePathAlreadyInProject:path])
     {
+        NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
+        NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
+
         [resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:relResourcePath forKey:@"path"]];
         return YES;
     }
@@ -499,9 +499,17 @@
     {
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBDuplicateResourcePathError
-                                 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Cannot create %@, already present.", relResourcePath]}];
+                                 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Cannot create %@, already present.", [path lastPathComponent]]}];
         return NO;
     }
+}
+
+- (BOOL)isResourcePathAlreadyInProject:(NSString *)resourcePath
+{
+    NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
+    NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:projectDir];
+
+    return [self isRelResourcePathAlreadyInProject:relResourcePath];
 }
 
 - (BOOL)isRelResourcePathAlreadyInProject:(NSString *)relResourcePath

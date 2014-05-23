@@ -32,13 +32,10 @@
     return self;
 }
 
-- (void)controlTextDidChange:(NSNotification *)obj
-{
-    [self resetWarning];
-}
-
 - (IBAction)onCreate:(id)sender
 {
+    NSAssert(_delegate != nil, @"No <PackageCreateDelegateProtocol> delegate set.");
+
     NSError *error;
     if (![_delegate createPackageWithName:_packageName error:&error])
     {
@@ -51,10 +48,13 @@
 
 - (void)showCannotCreatePackageWarningWithError:(NSError *)error
 {
-}
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                     defaultButton:@"Ok"
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:error.localizedDescription];
 
-- (void)resetWarning
-{
+    [alert runModal];
 }
 
 - (IBAction)onCancel:(id)sender
