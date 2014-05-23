@@ -86,4 +86,25 @@
     [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:packagePath options:0];
 }
 
+- (void)importPackage:(NSString *)packagePath
+{
+    NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
+
+    NSError *error;
+    if ([_projectSettings addResourcePath:packagePath error:&error])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+    }
+    else
+    {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                         defaultButton:@"Ok"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:error.localizedDescription];
+
+        [alert runModal];
+    }
+}
+
 @end

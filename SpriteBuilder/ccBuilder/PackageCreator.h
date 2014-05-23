@@ -13,4 +13,6 @@
 
 - (void)showCreateNewPackageDialog;
 
+- (void)importPackage:(NSString *)packagePath;
+
 @end

@@ -119,6 +119,7 @@
 #import "SBUserDefaultsKeys.h"
 #import "PackageCreator.h"
 #import "SnapLayerKeys.h"
+#import "MiscConstants.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3295,18 +3296,32 @@ static BOOL hideAllToNextSeparator;
     // Create the File Open Dialog
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:YES];
-    [openDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
-    
-    [openDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
+
+    NSArray *allowedFileTypes = currentDocument
+        ? @[@"spritebuilder", PACKAGE_NAME_SUFFIX]
+        : @[@"spritebuilder"];
+    [openDlg setAllowedFileTypes:allowedFileTypes];
+
+    [openDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result)
+    {
         if (result == NSOKButton)
         {
             NSArray* files = [openDlg URLs];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_current_queue(), ^
+            {
                 for (int i = 0; i < [files count]; i++)
                 {
-                    NSString* fileName = [[files objectAtIndex:i] path];
-                    [self openProject:fileName];
+                    NSString *fileName = [[files objectAtIndex:i] path];
+                    if ([fileName hasSuffix:PACKAGE_NAME_SUFFIX])
+                    {
+                        PackageCreator *packageCreator = [[PackageCreator alloc] initWithWindow:window];
+                        packageCreator.projectSettings = projectSettings;
+                        [packageCreator importPackage:fileName];
+                    }
+                    else
+                    {
+                        [self openProject:fileName];
+                    }
                 }
             });
         }
