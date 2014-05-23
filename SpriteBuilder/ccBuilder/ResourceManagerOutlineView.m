@@ -28,6 +28,7 @@
 #import "ResourceManagerUtil.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "ProjectSettings.h"
+#import "PackageController.h"
 
 @implementation ResourceManagerOutlineView
 
@@ -89,11 +90,14 @@
         }
         else if (item.action == @selector(menuActionDelete:))
         {
+			[item setEnabled:NO];
+
+            BOOL isPackage = [clickedItem isKindOfClass:[RMDirectory class]] && [clickedItem isPackage];
             item.title = @"Delete";
 
-			[item setEnabled:NO];
 			if ([clickedItem isKindOfClass:[RMResource class]]
-				|| [self isSomethingSelected])
+				|| [self isSomethingSelected]
+                || isPackage)
 			{
             	[item setEnabled:YES];
 			}
@@ -135,6 +139,7 @@
 
 	NSMutableArray *resourcesToDelete = [[NSMutableArray alloc] init];
 	NSMutableArray *foldersToDelete = [[NSMutableArray alloc] init];
+    NSMutableArray *packagesPathsToDelete = [[NSMutableArray alloc] init];
 
 	while (row != NSNotFound)
 	{
@@ -151,6 +156,11 @@
 				[resourcesToDelete addObject:resource];
 			}
 		}
+        else if ([selectedItem isKindOfClass:[RMDirectory class]] && [selectedItem isPackage])
+        {
+            RMDirectory *rmDirectory = (RMDirectory *)selectedItem;
+            [packagesPathsToDelete addObject:rmDirectory.dirPath];
+        }
 
 		row = [resources indexGreaterThanIndex:row];
 	}
@@ -165,6 +175,10 @@
 		[ResourceManager removeResource:res];
 	}
 
+    PackageController *packageController = [[PackageController alloc] init];
+    packageController.projectSettings = [AppDelegate appDelegate].projectSettings;
+    [packageController removePackagesFromProject:packagesPathsToDelete];
+
 	[self deselectAll:NULL];
 
 	[[ResourceManager sharedManager] reloadAllResources];
@@ -174,10 +188,9 @@
 {
     if([self selectedRow] == -1 && rightClickedRowIndex == -1)
     {
-        NSBeep();
         return;
     }
-    
+
     // Confirm remove of items
     NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?"
 									 defaultButton:@"Cancel"
