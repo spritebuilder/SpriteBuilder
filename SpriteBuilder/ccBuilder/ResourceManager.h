@@ -106,6 +106,7 @@ enum
 @property (nonatomic,strong) NSString* dirPath;
 @property (nonatomic,readonly) NSMutableDictionary* resources;
 @property (nonatomic,readonly) BOOL isDynamicSpriteSheet;
+@property (nonatomic,readonly) BOOL isPackage;
 
 @property (nonatomic,readonly) NSMutableArray* any;
 @property (nonatomic,readonly) NSMutableArray* images;

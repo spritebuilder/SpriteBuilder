@@ -36,6 +36,7 @@
 #import <QTKit/QTKit.h>
 #import "CCBPublisher.h"
 #import "SoundFileImageController.h"
+#import "MiscConstants.h"
 
 #pragma mark RMSpriteFrame
 
@@ -362,6 +363,11 @@
         }
     }
     return NO;
+}
+
+- (BOOL)isPackage
+{
+    return [[dirPath lastPathComponent] hasSuffix:PACKAGE_NAME_SUFFIX];
 }
 
 - (void) setDirPath:(NSString *)dp
