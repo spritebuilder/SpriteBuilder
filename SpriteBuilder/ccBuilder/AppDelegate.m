@@ -3314,7 +3314,7 @@ static BOOL hideAllToNextSeparator;
                     NSString *fileName = [[files objectAtIndex:i] path];
                     if ([fileName hasSuffix:PACKAGE_NAME_SUFFIX])
                     {
-                        PackageController *packageCreator = [[PackageController alloc] initWithWindow:window];
+                        PackageController *packageCreator = [[PackageController alloc] init];
                         packageCreator.projectSettings = projectSettings;
                         [packageCreator importPackage:fileName];
                     }
@@ -3400,9 +3400,9 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) menuNewPackage:(id)sender
 {
     [[[CCDirector sharedDirector] view] lockOpenGLContext];
-    PackageController *packageController = [[PackageController alloc] initWithWindow:window];
+    PackageController *packageController = [[PackageController alloc] init];
     packageController.projectSettings = projectSettings;
-    [packageController showCreateNewPackageDialog];
+    [packageController showCreateNewPackageDialogForWindow:window];
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 

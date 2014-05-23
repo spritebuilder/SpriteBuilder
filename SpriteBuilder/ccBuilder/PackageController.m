@@ -7,42 +7,16 @@
 #import "MiscConstants.h"
 
 
-@interface PackageController ()
-
-@property (nonatomic, strong) NSWindow *window;
-
-@end
-
-
 @implementation PackageController
 
-- (instancetype)init
-{
-    NSLog(@"ERROR: Use initWithWindow: to create instances");
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
-- (instancetype)initWithWindow:(NSWindow *)window
-{
-    self = [super init];
-
-    if (self)
-    {
-        self.window = window;
-    }
-
-    return self;
-}
-
-- (void)showCreateNewPackageDialog
+- (void)showCreateNewPackageDialogForWindow:(NSWindow *)window
 {
     NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
     packageWindowController.delegate = self;
 
     // Show new document sheet
     [NSApp beginSheet:[packageWindowController window]
-       modalForWindow:_window
+       modalForWindow:window
         modalDelegate:NULL
        didEndSelector:NULL
           contextInfo:NULL];

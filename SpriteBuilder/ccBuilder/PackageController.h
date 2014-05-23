@@ -9,9 +9,7 @@
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 
-- (instancetype)initWithWindow:(NSWindow *)window;
-
-- (void)showCreateNewPackageDialog;
+- (void)showCreateNewPackageDialogForWindow:(NSWindow *)window;
 
 - (void)importPackage:(NSString *)packagePath;
 
