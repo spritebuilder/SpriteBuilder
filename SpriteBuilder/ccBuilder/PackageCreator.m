@@ -9,7 +9,7 @@
 
 @interface PackageCreator ()
 
-@property (nonatomic, weak) NSWindow *window;
+@property (nonatomic, strong) NSWindow *window;
 
 @end
 
@@ -20,6 +20,7 @@
 {
     NSLog(@"ERROR: Use initWithWindow: to create instances");
     [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 - (instancetype)initWithWindow:(NSWindow *)window
