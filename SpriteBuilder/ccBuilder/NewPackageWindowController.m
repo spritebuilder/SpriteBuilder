@@ -39,11 +39,49 @@
     NSError *error;
     if (![_delegate createPackageWithName:_packageName error:&error])
     {
-        [self showCannotCreatePackageWarningWithError:error];
-        return;
+        if (error.code == NSFileWriteFileExistsError)
+        {
+            if (![self showImportExistingPackageDialogue])
+            {
+                return;
+            }
+        }
+        else
+        {
+            [self showCannotCreatePackageWarningWithError:error];
+            return;
+        }
     }
 
     [NSApp stopModalWithCode:1];
+}
+
+- (BOOL)showImportExistingPackageDialogue
+{
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Import"
+                                     defaultButton:@"Yes"
+                                   alternateButton:@"No"
+                                       otherButton:nil
+                         informativeTextWithFormat:@"A package already exists with that name, do you like to import it?"];
+
+    NSInteger result = [alert runModal];
+
+    return result == NSAlertDefaultReturn
+           && [self importPackage];
+}
+
+- (BOOL)importPackage
+{
+    NSError *error;
+    if ([_delegate importPackageWithName:_packageName error:&error])
+    {
+        return YES;
+    }
+    else
+    {
+        [self showCannotCreatePackageWarningWithError:error];
+        return NO;
+    }
 }
 
 - (void)showCannotCreatePackageWarningWithError:(NSError *)error
