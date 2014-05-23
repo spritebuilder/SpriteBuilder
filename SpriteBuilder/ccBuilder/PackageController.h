@@ -4,7 +4,7 @@
 @class ProjectSettings;
 
 
-@interface PackageCreator : NSObject <PackageCreateDelegateProtocol>
+@interface PackageController : NSObject <PackageCreateDelegateProtocol>
 
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;

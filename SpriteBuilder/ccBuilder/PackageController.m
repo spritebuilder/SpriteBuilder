@@ -1,5 +1,5 @@
 #import "PackageCreateDelegateProtocol.h"
-#import "PackageCreator.h"
+#import "PackageController.h"
 #import "NewPackageWindowController.h"
 #import "ProjectSettings.h"
 #import "SnapLayerKeys.h"
@@ -7,14 +7,14 @@
 #import "MiscConstants.h"
 
 
-@interface PackageCreator ()
+@interface PackageController ()
 
 @property (nonatomic, strong) NSWindow *window;
 
 @end
 
 
-@implementation PackageCreator
+@implementation PackageController
 
 - (instancetype)init
 {

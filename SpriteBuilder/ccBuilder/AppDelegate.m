@@ -117,7 +117,7 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
-#import "PackageCreator.h"
+#import "PackageController.h"
 #import "SnapLayerKeys.h"
 #import "MiscConstants.h"
 
@@ -3314,7 +3314,7 @@ static BOOL hideAllToNextSeparator;
                     NSString *fileName = [[files objectAtIndex:i] path];
                     if ([fileName hasSuffix:PACKAGE_NAME_SUFFIX])
                     {
-                        PackageCreator *packageCreator = [[PackageCreator alloc] initWithWindow:window];
+                        PackageController *packageCreator = [[PackageController alloc] initWithWindow:window];
                         packageCreator.projectSettings = projectSettings;
                         [packageCreator importPackage:fileName];
                     }
@@ -3400,7 +3400,7 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) menuNewPackage:(id)sender
 {
     [[[CCDirector sharedDirector] view] lockOpenGLContext];
-    PackageCreator *packageController = [[PackageCreator alloc] initWithWindow:window];
+    PackageController *packageController = [[PackageController alloc] initWithWindow:window];
     packageController.projectSettings = projectSettings;
     [packageController showCreateNewPackageDialog];
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
