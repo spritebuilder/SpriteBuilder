@@ -7,7 +7,9 @@
 //
 
 #import "NewPackageWindowController.h"
-#import "PackageCreateDelegate.h"
+
+#import "PackageCreateDelegateProtocol.h"
+
 
 @interface NewPackageWindowController ()
 
@@ -38,7 +40,7 @@
 - (IBAction)onCreate:(id)sender
 {
     NSError *error;
-    if (![_delegate canCreatePackageWithName:_packageName error:&error])
+    if (![_delegate createPackageWithName:_packageName error:&error])
     {
         [self showCannotCreatePackageWarningWithError:error];
         return;

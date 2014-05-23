@@ -1,4 +1,6 @@
 #import "PackageCreator.h"
+
+#import "PackageCreateDelegateProtocol.h"
 #import "NewPackageWindowController.h"
 #import "ProjectSettings.h"
 #import "SnapLayerKeys.h"

@@ -1,10 +1,11 @@
 #import <Foundation/Foundation.h>
-#import "PackageCreateDelegate.h"
 
+@protocol PackageCreateDelegateProtocol;
 @class ProjectSettings;
 
 
-@interface PackageCreator : NSObject <PackageCreateDelegate>
+@interface PackageCreator : NSObject <PackageCreateDelegateProtocol>
+
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 
