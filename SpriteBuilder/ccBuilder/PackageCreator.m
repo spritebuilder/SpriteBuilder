@@ -72,11 +72,18 @@
     if([fileManager createDirectoryAtPath:newPackagePath withIntermediateDirectories:NO attributes:nil error:error]
         && [_projectSettings addResourcePath:newPackagePath error:error])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED
-                                                            object:nil];
+        [self addIconToPackageFile:newPackagePath];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
         return YES;
     }
     return NO;
+}
+
+- (void)addIconToPackageFile:(NSString *)packagePath
+{
+    NSImage* folderIcon = [NSImage imageNamed:@"Package.icns"];
+    [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:packagePath options:0];
 }
 
 @end
