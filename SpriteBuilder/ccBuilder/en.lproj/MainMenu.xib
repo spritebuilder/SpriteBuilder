@@ -1370,6 +1370,11 @@ CA
                                                     <action selector="menuNewFolder:" target="494" id="fEV-XG-RIU"/>
                                                 </connections>
                                             </menuItem>
+                                            <menuItem title="New Package" id="fe0-WO-wub">
+                                                <connections>
+                                                    <action selector="menuNewPackage:" target="494" id="b2M-0S-MIK"/>
+                                                </connections>
+                                            </menuItem>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
