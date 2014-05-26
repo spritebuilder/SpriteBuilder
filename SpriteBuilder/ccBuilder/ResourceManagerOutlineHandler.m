@@ -32,6 +32,9 @@
 #import "NSPasteboard+CCB.h"
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
+#import "MiscConstants.h"
+#import "PackageController.h"
+#import "SBErrors.h"
 
 @implementation ResourceManagerOutlineHandler
 
@@ -390,8 +393,8 @@
     }
 
     // Get dropped items
-    NSPasteboard* pb = [info draggingPasteboard];
-    
+    NSPasteboard* pasteboard = [info draggingPasteboard];
+
     // Find out the destination directory
     NSString* dstDir = NULL;
     if ([item isKindOfClass:[RMResource class]])
@@ -410,30 +413,127 @@
         dstDir = dir.dirPath;
     }
     
-    BOOL movedFile = NO;
+    BOOL movedOrImportedFiles = NO;
     
     // Move files
-    NSArray* pbRes = [pb propertyListsForType:@"com.cocosbuilder.RMResource"];
+    NSArray* pbRes = [pasteboard propertyListsForType:@"com.cocosbuilder.RMResource"];
     for (NSDictionary* dict in pbRes)
     {
         NSString* srcPath = [dict objectForKey:@"filePath"];
         int type = [[dict objectForKey:@"type"] intValue];
         
-        movedFile |= [ResourceManager moveResourceFile:srcPath ofType:type toDirectory:dstDir];
+        movedOrImportedFiles |= [ResourceManager moveResourceFile:srcPath ofType:type toDirectory:dstDir];
     }
     
-    // Import files
-    NSArray* pbFilenames = [pb propertyListForType:NSFilenamesPboardType];
-    movedFile |= [ResourceManager importResources:pbFilenames intoDir:dstDir];
+    // Import files & Packages
+    NSArray* pbFilenames = [pasteboard propertyListForType:NSFilenamesPboardType];
+
+    movedOrImportedFiles |= [self importPackagesWithPaths:pbFilenames];
+    pbFilenames = [self removePackagesFromPaths:pbFilenames];
+
+    movedOrImportedFiles |= [ResourceManager importResources:pbFilenames intoDir:dstDir];
     
     // Make sure list is up-to-date
-    if (movedFile)
+    if (movedOrImportedFiles)
     {
         [resourceList deselectAll:NULL];
         [[ResourceManager sharedManager] reloadAllResources];
     }
     
-    return movedFile;
+    return movedOrImportedFiles;
+}
+
+- (BOOL)importPackagesWithPaths:(NSArray *)paths
+{
+    NSArray *packagePathsToImport = [self allPackagesInPaths:paths];
+
+    if (packagePathsToImport.count <= 0)
+    {
+        return YES;
+    }
+
+    NSError *error;
+    PackageController *packageController = [[PackageController alloc] init];
+    packageController.projectSettings = [AppDelegate appDelegate].projectSettings;
+    if (![packageController importPackagesWithPaths:packagePathsToImport error:&error])
+    {
+        [self handleImportErrors:error];
+    }
+
+    return YES;
+}
+
+- (NSArray *)removePackagesFromPaths:(NSArray *)paths
+{
+    if (!paths)
+    {
+        return nil;
+    }
+
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:paths.count];
+
+    for (NSString *path in paths)
+    {
+        if (![self isPackageWithPath:path])
+        {
+            [result addObject:path];
+        }
+    }
+
+    return result;
+}
+
+- (NSArray *)allPackagesInPaths:(NSArray *)paths
+{
+    if (!paths)
+    {
+        return nil;
+    }
+
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSString *path in paths)
+    {
+        if ([self isPackageWithPath:path])
+        {
+            [result addObject:path];
+        }
+    }
+    return result;
+}
+
+- (void)handleImportErrors:(NSError *)error
+{
+    NSMutableString *errorMessage = [NSMutableString string];
+    NSArray *errors = error.userInfo[@"errors"];
+    for (NSError *anError in errors)
+    {
+        if (anError.code != SBDuplicateResourcePathError)
+        {
+            [errorMessage appendFormat:@"%@\n", anError.localizedDescription];
+        }
+    }
+
+    if (errorMessage.length > 0)
+    {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:errorMessage];
+        [alert runModal];
+    }
+}
+
+- (BOOL)isPackageWithPath:(NSString *)path
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+    BOOL *isDirectory;
+    if ([fileManager fileExistsAtPath:path isDirectory:&isDirectory])
+    {
+        return isDirectory
+               && [[path lastPathComponent] hasSuffix:PACKAGE_NAME_SUFFIX];
+    }
+    return NO;
 }
 
 #pragma mark Selections and edit

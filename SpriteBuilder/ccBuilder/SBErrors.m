@@ -15,3 +15,5 @@ NSInteger const SBCocos2dUpdateUnzipTaskError = 2002;
 
 // Create Resource path
 NSInteger const SBDuplicateResourcePathError = 2100;
+NSInteger const SBResourcePathNotInProject = 2101;
+NSInteger const SBImportingPackagesError = 2102;

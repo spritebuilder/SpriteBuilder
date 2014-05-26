@@ -13,5 +13,7 @@ extern NSInteger const SBCocos2dUpdateTemplateZipFileDoesNotExistError;
 extern NSInteger const SBCocos2dUpdateUnzipTemplateFailedError;
 extern NSInteger const SBCocos2dUpdateUnzipTaskError;
 
-// Create Resource path
+// Resource path / Packages
 extern NSInteger const SBDuplicateResourcePathError;
+extern NSInteger const SBResourcePathNotInProject;
+extern NSInteger const SBImportingPackagesError;

@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "NewPackageWindowController.h"
@@ -49,19 +50,55 @@
 
 - (BOOL)importPackageWithPath:(NSString *)packagePath error:(NSError **)error
 {
+    return [self importPackagesWithPaths:@[packagePath] error:error];
+}
+
+- (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error
+{
     NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
 
-    if ([_projectSettings addResourcePath:packagePath error:error])
+    if (!packagePaths)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
         return YES;
     }
 
-    return NO;
+    BOOL result = YES;
+    NSUInteger packagesAdded = 0;
+    NSMutableArray *errors = [NSMutableArray array];
+
+    for (NSString *packagePath in packagePaths)
+    {
+        NSError *anError;
+        if (![_projectSettings addResourcePath:packagePath error:&anError])
+        {
+            [errors addObject:anError];
+            result = NO;
+        }
+        else
+        {
+            packagesAdded++;
+        }
+    }
+
+    if (errors.count > 0)
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBImportingPackagesError
+                                 userInfo:@{NSLocalizedDescriptionKey : @"One or more packages could not be added.", @"errors" : errors}];
+    }
+
+    if (packagesAdded > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+    }
+
+    return result;
 }
 
 - (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error
 {
+    NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
+
     if (!packagePaths)
     {
         return YES;
