@@ -498,14 +498,11 @@
             [resourcePaths removeObject:resourcePath];
             return YES;
         }
-        else
-        {
-            *error = [NSError errorWithDomain:SBErrorDomain
-                                         code:SBResourcePathNotInProject
-                                     userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relPath]}];
-            return NO;
-        }
     }
+    *error = [NSError errorWithDomain:SBErrorDomain
+                                 code:SBResourcePathNotInProject
+                             userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]}];
+    return NO;
 }
 
 - (BOOL)addResourcePath:(NSString *)path error:(NSError **)error

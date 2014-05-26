@@ -111,7 +111,7 @@
     for (NSString *packagePath in packagePaths)
     {
         NSError *anError;
-        if ([_projectSettings removeResourcePath:packagePath error:&anError])
+        if (![_projectSettings removeResourcePath:packagePath error:&anError])
         {
             [errors addObject:anError];
             result = NO;
