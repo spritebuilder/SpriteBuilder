@@ -57,7 +57,6 @@
     
     resourceList = outlineView;
     imagePreview = p;
-    //lblNoPreview = [lbl retain];
     resType = rt;
     
     ImageAndTextCell* imageTextCell = [[ImageAndTextCell alloc] init];
@@ -350,90 +349,15 @@
     }
     
     return NO;
-    
-    /*
-    NSString* spriteFile = NULL;
-    NSString* spriteSheetFile = NULL;
-    NSString* ccbFile = NULL;
-    NSString* audioFile = NULL;
-    
-    for (id item in items)
-    {
-        if ([item isKindOfClass:[RMResource class]])
-        {
-            RMResource* res = item;
-            if (res.type == kCCBResTypeImage)
-            {
-                spriteFile = [ResourceManagerUtil relativePathFromAbsolutePath: res.filePath];
-            }
-            else if (res.type == kCCBResTypeCCBFile)
-            {
-                ccbFile = [ResourceManagerUtil relativePathFromAbsolutePath: res.filePath];
-            }
-            else if (res.type == kCCBResTypeAudio)
-            {
-                audioFile = [ResourceManagerUtil relativePathFromAbsolutePath: res.filePath];
-            }
-        }
-        else if ([item isKindOfClass:[RMSpriteFrame class]])
-        {
-            RMSpriteFrame* frame = item;
-            spriteFile = frame.spriteFrameName;
-            spriteSheetFile = [ResourceManagerUtil relativePathFromAbsolutePath: frame.spriteSheetFile];
-            if (!spriteSheetFile) spriteFile = NULL;
-        }
-    }
-    
-    
-    if (spriteFile)
-    {
-        NSMutableDictionary* clipDict = [NSMutableDictionary dictionary];
-        [clipDict setObject:spriteFile forKey:@"spriteFile"];
-        if (spriteSheetFile)
-        {
-            [clipDict setObject:spriteSheetFile forKey:@"spriteSheetFile"];
-        }
-        
-        NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
-        [pasteboard declareTypes:[NSArray arrayWithObject:@"com.cocosbuilder.texture"] owner:NULL];
-        [pasteboard setData:clipData forType:@"com.cocosbuilder.texture"];
-        
-        return YES;
-    }
-    else if (ccbFile)
-    {
-        NSMutableDictionary* clipDict = [NSMutableDictionary dictionary];
-        [clipDict setObject:ccbFile forKey:@"ccbFile"];
-        
-        NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
-        [pasteboard declareTypes:[NSArray arrayWithObject:@"com.cocosbuilder.ccb"] owner:NULL];
-        [pasteboard setData:clipData forType:@"com.cocosbuilder.ccb"];
-        
-        return YES;
-    }
-    else if (audioFile)
-    {
-        NSMutableDictionary* clipDict = [NSMutableDictionary dictionary];
-        [clipDict setObject:audioFile forKey:@"audioFile"];
-        
-        NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
-        [pasteboard declareTypes:[NSArray arrayWithObject:@"com.cocosbuilder.audio"] owner:NULL];
-        [pasteboard setData:clipData forType:@"com.cocosbuilder.audio"];
-        
-        return YES;
-    }
-    
-    return NO;
-     */
 }
 
 - (NSDragOperation) outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1) return NSDragOperationNone;
-    
-    // Ignore dropping on specific indexes
-    //if (index != -1) return NSDragOperationNone;
-    
+    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1)
+    {
+        return NSDragOperationNone;
+    }
+
     if ([item isKindOfClass:[RMResource class]])
     {
         RMResource* res = item;
@@ -460,8 +384,11 @@
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
 {
-    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1) return NO;
-    
+    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1)
+    {
+        return NO;
+    }
+
     // Get dropped items
     NSPasteboard* pb = [info draggingPasteboard];
     
