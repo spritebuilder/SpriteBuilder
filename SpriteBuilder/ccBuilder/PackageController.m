@@ -104,13 +104,37 @@
         return YES;
     }
 
-    // TODO: error checking?
+    BOOL result = YES;
+    NSUInteger packagesRemoved = 0;
+    NSMutableArray *errors = [NSMutableArray array];
+
     for (NSString *packagePath in packagePaths)
     {
-        [_projectSettings removeResourcePath:packagePath];
+        NSError *anError;
+        if ([_projectSettings removeResourcePath:packagePath error:&anError])
+        {
+            [errors addObject:anError];
+            result = NO;
+        }
+        else
+        {
+            packagesRemoved++;
+        }
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+    if (errors.count > 0)
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBImportingPackagesError
+                                 userInfo:@{NSLocalizedDescriptionKey : @"One or more packages could not be removed.", @"errors" : errors}];
+    }
+
+    if (packagesRemoved > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+    }
+
+    return result;
 }
 
 - (BOOL)createPackageWithName:(NSString *)packageName error:(NSError **)error

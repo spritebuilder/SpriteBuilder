@@ -189,7 +189,8 @@ typedef enum
 
 - (BOOL)addResourcePath:(NSString *)path error:(NSError **)error;
 - (BOOL)isResourcePathAlreadyInProject:(NSString *)resourcePath;
-- (void)removeResourcePath:(NSString *)path;
+
+- (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error;
 
 - (NSString* ) getVersion;
 

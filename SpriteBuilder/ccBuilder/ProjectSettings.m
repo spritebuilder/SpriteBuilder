@@ -485,7 +485,7 @@
     [resourceProperties removeObjectForKey:relPathOld];
 }
 
-- (void)removeResourcePath:(NSString *)path
+- (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error
 {
     NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
     NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
@@ -496,7 +496,14 @@
         if ([relPath isEqualToString:relResourcePath])
         {
             [resourcePaths removeObject:resourcePath];
-            return;
+            return YES;
+        }
+        else
+        {
+            *error = [NSError errorWithDomain:SBErrorDomain
+                                         code:SBResourcePathNotInProject
+                                     userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relPath]}];
+            return NO;
         }
     }
 }
