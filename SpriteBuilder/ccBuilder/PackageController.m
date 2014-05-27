@@ -110,7 +110,7 @@
 {
     NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
 
-    if (!packagePaths)
+    if (!packagePaths || packagePaths.count <= 0)
     {
         return YES;
     }

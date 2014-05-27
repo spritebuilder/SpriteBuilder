@@ -13,6 +13,7 @@
 #import "PackageController.h"
 #import "ProjectSettings.h"
 #import "SBErrors.h"
+#import "SnapLayerKeys.h"
 
 
 @interface PackageController_Tests : XCTestCase
@@ -42,6 +43,60 @@
 - (void)tearDown
 {
     [super tearDown];
+}
+
+- (void)testRemovePackagesExitsWithoutErrorsForNilParamAndEmptyArray
+{
+    NSError *error1;
+    XCTAssertTrue([_packageController removePackagesFromProject:nil error:&error1]);
+    XCTAssertNil(error1);
+
+    NSError *error2;
+    XCTAssertTrue([_packageController removePackagesFromProject:@[] error:&error2]);
+    XCTAssertNil(error2);
+}
+
+- (void)testRemovePackageSuccessfully
+{
+    id observerMock = [OCMockObject observerMock];
+    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:RESOURCE_PATHS_CHANGED object:nil];
+    [[observerMock expect] notificationWithName:RESOURCE_PATHS_CHANGED object:[OCMArg any]];
+
+    NSString *packagePath = @"/package1";
+
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:packagePath error:[OCMArg anyObjectRef]];
+
+    NSError *error;
+    XCTAssertTrue([_packageController removePackagesFromProject:@[packagePath] error:&error]);
+    XCTAssertNil(error);
+
+    [observerMock verify];
+    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
+}
+
+- (void)testRemovePackagesWithAGoodAndOneErroneousPath
+{
+    id observerMock = [OCMockObject observerMock];
+    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:RESOURCE_PATHS_CHANGED object:nil];
+    [[observerMock expect] notificationWithName:RESOURCE_PATHS_CHANGED object:[OCMArg any]];
+
+    NSString *packagePathGood = @"/goodPath";
+    NSString *packagePathBad = @"/badPath";
+    NSArray *packagePaths = @[packagePathGood, packagePathBad];
+
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:packagePathGood error:[OCMArg anyObjectRef]];
+    NSError *underlyingRemoveError = [NSError errorWithDomain:SBErrorDomain code:SBResourcePathNotInProject userInfo:nil];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] removeResourcePath:packagePathBad  error:[OCMArg setTo:underlyingRemoveError]];
+
+    NSError *error;
+    XCTAssertFalse([_packageController removePackagesFromProject:packagePaths error:&error]);
+    XCTAssertNotNil(error);
+
+    NSArray *errors = error.userInfo[@"errors"];
+    XCTAssertEqual(errors.count, 1);
+
+    [observerMock verify];
+    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
 }
 
 - (void)testCreatePackageWithName
@@ -80,7 +135,7 @@
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
     [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
 
-    NSError *underlyingFileError = [NSError errorWithDomain:@"none" code:NSFileWriteFileExistsError userInfo:nil];
+    NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteFileExistsError userInfo:nil];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"
                                                  withIntermediateDirectories:NO
                                                                   attributes:nil
@@ -100,7 +155,7 @@
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
     [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
 
-    NSError *underlyingFileError = [NSError errorWithDomain:@"none" code:NSFileWriteNoPermissionError userInfo:nil];
+    NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteNoPermissionError userInfo:nil];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"
                                                  withIntermediateDirectories:NO
                                                                   attributes:nil
