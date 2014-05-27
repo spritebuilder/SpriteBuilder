@@ -154,21 +154,49 @@
 
     if ([_projectSettings isResourcePathAlreadyInProject:fullPath])
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBDuplicateResourcePathError
-                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
+        *error = [self duplicatePackageError:packageName];
         return NO;
     }
 
-    if([_fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:error]
-        && [_projectSettings addResourcePath:fullPath error:error])
+    NSError *underlyingErrorCreate;
+    BOOL createDirSuccess = [_fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:&underlyingErrorCreate];
+    if (!createDirSuccess && underlyingErrorCreate.code == NSFileWriteFileExistsError)
+    {
+        *error = [self packageExistsButNotInProjectError:packageName];
+        return NO;
+    }
+    else if (!createDirSuccess)
+    {
+        *error = underlyingErrorCreate;
+        return NO;
+    }
+
+    NSError *underlyingErrorAddResPath;
+    BOOL addResPathSuccess = [_projectSettings addResourcePath:fullPath error:&underlyingErrorAddResPath];
+    if(addResPathSuccess)
     {
         [self addIconToPackageFile:fullPath];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
         return YES;
     }
+
+    *error = underlyingErrorAddResPath;
     return NO;
+}
+
+- (NSError *)packageExistsButNotInProjectError:(NSString *)packageName
+{
+    return [NSError errorWithDomain:SBErrorDomain
+                               code:SBResourcePathExistsButNotInProjectError
+                           userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
+}
+
+- (NSError *)duplicatePackageError:(NSString *)packageName
+{
+    return [NSError errorWithDomain:SBErrorDomain
+                               code:SBDuplicateResourcePathError
+                           userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
 }
 
 @end

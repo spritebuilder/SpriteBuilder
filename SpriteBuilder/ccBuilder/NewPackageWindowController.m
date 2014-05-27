@@ -9,6 +9,7 @@
 #import "NewPackageWindowController.h"
 
 #import "PackageCreateDelegateProtocol.h"
+#import "SBErrors.h"
 
 
 @interface NewPackageWindowController ()
@@ -39,7 +40,7 @@
     NSError *error;
     if (![_delegate createPackageWithName:_packageName error:&error])
     {
-        if (error.code == NSFileWriteFileExistsError)
+        if (error.code == SBResourcePathExistsButNotInProjectError)
         {
             if (![self showImportExistingPackageDialogue])
             {
