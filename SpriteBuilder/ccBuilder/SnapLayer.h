@@ -3,10 +3,22 @@
 //  SpriteBuilder
 //
 //  Created by Michael Daniels on 4/8/14.
+//  Extended by SpriteBuilder Authors May 2014
 //
 //
 
 #import "CCNode.h"
+
+enum
+{
+    kCCBSnapOrientationHorizontal,
+    kCCBSnapOrientationVertical
+};
+
+enum
+{
+    kCCBSnapTypeDefault,
+};
 
 @interface SnapLayer : CCNode {
     
