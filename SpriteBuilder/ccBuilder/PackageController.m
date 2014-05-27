@@ -10,6 +10,17 @@
 
 @implementation PackageController
 
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+        // default until we get some injection framework running
+        self.fileManager = [NSFileManager defaultManager];
+    }
+    return self;
+}
+
 - (void)showCreateNewPackageDialogForWindow:(NSWindow *)window
 {
     NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
@@ -149,8 +160,7 @@
         return NO;
     }
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if([fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:error]
+    if([_fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:error]
         && [_projectSettings addResourcePath:fullPath error:error])
     {
         [self addIconToPackageFile:fullPath];

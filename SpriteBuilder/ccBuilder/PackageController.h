@@ -7,6 +7,7 @@
 @interface PackageController : NSObject <PackageCreateDelegateProtocol>
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
+@property (nonatomic, strong) NSFileManager *fileManager;
 
 - (void)showCreateNewPackageDialogForWindow:(NSWindow *)window;
 
