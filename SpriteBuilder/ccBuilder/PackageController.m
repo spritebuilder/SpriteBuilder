@@ -10,6 +10,8 @@
 
 @implementation PackageController
 
+typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error);
+
 - (id)init
 {
     self = [super init];
@@ -64,7 +66,11 @@
     return [self importPackagesWithPaths:@[packagePath] error:error];
 }
 
-- (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error
+- (BOOL)applyProjectSettingBlockForPackagePaths:(NSArray *)packagePaths
+                                          error:(NSError **)error
+                            prevailingErrorCode:(NSInteger)prevailingErrorCode
+                               errorDescription:(NSString *)errorDescription
+                                          block:(PackageManipulationBlock)block
 {
     NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
 
@@ -74,31 +80,31 @@
     }
 
     BOOL result = YES;
-    NSUInteger packagesAdded = 0;
+    NSUInteger packagesAltered = 0;
     NSMutableArray *errors = [NSMutableArray array];
 
     for (NSString *packagePath in packagePaths)
     {
         NSError *anError;
-        if (![_projectSettings addResourcePath:packagePath error:&anError])
+        if (!block(packagePath, &anError))
         {
             [errors addObject:anError];
             result = NO;
         }
         else
         {
-            packagesAdded++;
+            packagesAltered++;
         }
     }
 
     if (errors.count > 0)
     {
         *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBImportingPackagesError
-                                 userInfo:@{NSLocalizedDescriptionKey : @"One or more packages could not be added.", @"errors" : errors}];
+                                     code:prevailingErrorCode
+                                 userInfo:@{NSLocalizedDescriptionKey : errorDescription, @"errors" : errors}];
     }
 
-    if (packagesAdded > 0)
+    if (packagesAltered > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
     }
@@ -106,46 +112,32 @@
     return result;
 }
 
+- (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error
+{
+    PackageManipulationBlock block = ^BOOL(NSString *packagePath, NSError **localError)
+    {
+        return [_projectSettings addResourcePath:packagePath error:localError];
+    };
+
+    return [self applyProjectSettingBlockForPackagePaths:packagePaths
+                                                   error:error
+                                     prevailingErrorCode:SBImportingPackagesError
+                                        errorDescription:@"One or more packages could not be imported."
+                                                   block:block];
+}
+
 - (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error
 {
-    NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
-
-    if (!packagePaths || packagePaths.count <= 0)
+    PackageManipulationBlock block = ^BOOL(NSString *packagePath, NSError **localError)
     {
-        return YES;
-    }
+        return [_projectSettings removeResourcePath:packagePath error:localError];
+    };
 
-    BOOL result = YES;
-    NSUInteger packagesRemoved = 0;
-    NSMutableArray *errors = [NSMutableArray array];
-
-    for (NSString *packagePath in packagePaths)
-    {
-        NSError *anError;
-        if (![_projectSettings removeResourcePath:packagePath error:&anError])
-        {
-            [errors addObject:anError];
-            result = NO;
-        }
-        else
-        {
-            packagesRemoved++;
-        }
-    }
-
-    if (errors.count > 0)
-    {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBRemovePackagesError
-                                 userInfo:@{NSLocalizedDescriptionKey : @"One or more packages could not be removed.", @"errors" : errors}];
-    }
-
-    if (packagesRemoved > 0)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
-    }
-
-    return result;
+    return [self applyProjectSettingBlockForPackagePaths:packagePaths
+                                                   error:error
+                                     prevailingErrorCode:SBRemovePackagesError
+                                        errorDescription:@"One or more packages could not be removed."
+                                                   block:block];
 }
 
 - (BOOL)createPackageWithName:(NSString *)packageName error:(NSError **)error
