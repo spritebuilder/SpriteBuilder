@@ -17,4 +17,5 @@ extern NSInteger const SBCocos2dUpdateUnzipTaskError;
 extern NSInteger const SBDuplicateResourcePathError;
 extern NSInteger const SBResourcePathNotInProject;
 extern NSInteger const SBImportingPackagesError;
+extern NSInteger const SBRemovePackagesError;
 extern NSInteger const SBResourcePathExistsButNotInProjectError;

@@ -18,3 +18,4 @@ NSInteger const SBDuplicateResourcePathError = 2100;
 NSInteger const SBResourcePathNotInProject = 2101;
 NSInteger const SBImportingPackagesError = 2102;
 NSInteger const SBResourcePathExistsButNotInProjectError = 2103;
+NSInteger const SBRemovePackagesError = 2104;

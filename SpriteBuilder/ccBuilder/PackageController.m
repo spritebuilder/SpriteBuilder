@@ -68,7 +68,7 @@
 {
     NSAssert(_projectSettings != nil, @"No ProjectSettings injected.");
 
-    if (!packagePaths)
+    if (!packagePaths || packagePaths.count <= 0)
     {
         return YES;
     }
@@ -136,7 +136,7 @@
     if (errors.count > 0)
     {
         *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBImportingPackagesError
+                                     code:SBRemovePackagesError
                                  userInfo:@{NSLocalizedDescriptionKey : @"One or more packages could not be removed.", @"errors" : errors}];
     }
 

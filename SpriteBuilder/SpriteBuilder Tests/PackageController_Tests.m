@@ -9,11 +9,13 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import <objc/runtime.h>
+#import <MacTypes.h>
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "ProjectSettings.h"
 #import "SBErrors.h"
 #import "SnapLayerKeys.h"
+#import "MiscConstants.h"
 
 
 @interface PackageController_Tests : XCTestCase
@@ -45,6 +47,77 @@
     [super tearDown];
 }
 
+- (void)testImportPackageWithName
+{
+    [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
+
+    id packageControllerMock = [OCMockObject partialMockForObject:_packageController];
+
+    NSString *expectedFullPath = [NSString stringWithFormat:@"/foo.%@", PACKAGE_NAME_SUFFIX];
+
+    [[[packageControllerMock expect] andReturnValue:@(YES)] importPackageWithPath:expectedFullPath error:[OCMArg anyObjectRef]];
+    [[[packageControllerMock expect] andReturnValue:@(YES)] importPackagesWithPaths:[OCMArg checkWithSelector:@selector(isEqualToArray:) onObject:@[expectedFullPath]] error:[OCMArg anyObjectRef]];
+
+    XCTAssertTrue([_packageController importPackageWithName:@"foo" error:nil]);
+
+    [_projectSettingsMock verify];
+}
+
+- (void)testImportPackagesWithAGoodAndOneErroneousPath
+{
+    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
+
+    NSString *packagePathGood = @"/goodPath";
+    NSString *packagePathBad = @"/badPath";
+    NSArray *packagePaths = @[packagePathGood, packagePathBad];
+
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] addResourcePath:packagePathGood error:[OCMArg anyObjectRef]];
+    NSError *underlyingImportError = [NSError errorWithDomain:SBErrorDomain code:SBDuplicateResourcePathError userInfo:nil];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] addResourcePath:packagePathBad  error:[OCMArg setTo:underlyingImportError]];
+
+    NSError *error;
+    XCTAssertFalse([_packageController importPackagesWithPaths:packagePaths error:&error]);
+    XCTAssertNotNil(error);
+
+    NSArray *errors = error.userInfo[@"errors"];
+    XCTAssertEqual(errors.count, 1);
+    XCTAssertEqual(error.code, SBImportingPackagesError);
+
+    [self verifyAndRemoveObserverMock:observerMock];
+}
+
+- (void)testImportPackageSuccessfully
+{
+    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
+
+    NSString *packagePath = @"/package";
+
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] addResourcePath:packagePath error:[OCMArg anyObjectRef]];
+
+    NSError *error;
+    XCTAssertTrue([_packageController importPackagesWithPaths:@[packagePath] error:&error]);
+    XCTAssertNil(error);
+
+    [self verifyAndRemoveObserverMock:observerMock];
+}
+
+- (void)verifyAndRemoveObserverMock:(id)observerMock
+{
+    [observerMock verify];
+    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
+}
+
+- (void)testImportPackageWithPathsExitIfNilOrEmptyArrayParam
+{
+    NSError *error1;
+    XCTAssertTrue([_packageController importPackagesWithPaths:nil error:&error1]);
+    XCTAssertNil(error1);
+
+    NSError *error2;
+    XCTAssertTrue([_packageController importPackagesWithPaths:@[] error:&error2]);
+    XCTAssertNil(error2);
+}
+
 - (void)testRemovePackagesExitsWithoutErrorsForNilParamAndEmptyArray
 {
     NSError *error1;
@@ -58,9 +131,7 @@
 
 - (void)testRemovePackageSuccessfully
 {
-    id observerMock = [OCMockObject observerMock];
-    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:RESOURCE_PATHS_CHANGED object:nil];
-    [[observerMock expect] notificationWithName:RESOURCE_PATHS_CHANGED object:[OCMArg any]];
+    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePath = @"/package1";
 
@@ -70,15 +141,22 @@
     XCTAssertTrue([_packageController removePackagesFromProject:@[packagePath] error:&error]);
     XCTAssertNil(error);
 
-    [observerMock verify];
-    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
+    [self verifyAndRemoveObserverMock:observerMock];
+}
+
+- (id)observerMockForNotification:(NSString *)notificationName
+{
+    id observerMock = [OCMockObject observerMock];
+
+    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:notificationName object:nil];
+    [[observerMock expect] notificationWithName:notificationName object:[OCMArg any]];
+
+    return observerMock;
 }
 
 - (void)testRemovePackagesWithAGoodAndOneErroneousPath
 {
-    id observerMock = [OCMockObject observerMock];
-    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:RESOURCE_PATHS_CHANGED object:nil];
-    [[observerMock expect] notificationWithName:RESOURCE_PATHS_CHANGED object:[OCMArg any]];
+    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePathGood = @"/goodPath";
     NSString *packagePathBad = @"/badPath";
@@ -94,9 +172,9 @@
 
     NSArray *errors = error.userInfo[@"errors"];
     XCTAssertEqual(errors.count, 1);
+    XCTAssertEqual(error.code, SBRemovePackagesError);
 
-    [observerMock verify];
-    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
+    [self verifyAndRemoveObserverMock:observerMock];
 }
 
 - (void)testCreatePackageWithName
