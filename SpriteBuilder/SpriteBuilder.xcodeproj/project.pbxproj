@@ -225,6 +225,8 @@
 		92B792D718C9339E007DF895 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C518C92C60007DF895 /* Icon.png */; };
 		92B792D918C933B7007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
 		92B8A32818E1063600EE52FC /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
+		92B91022193412A600E346B5 /* InspectorAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B91021193412A600E346B5 /* InspectorAnimation.xib */; };
+		92B91026193413F500E346B5 /* InspectorAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B91025193413F500E346B5 /* InspectorAnimation.m */; };
 		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */; };
@@ -1406,6 +1408,9 @@
 		92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPhysicsTwoBodyJoint.h; path = ccBuilder/CCBPhysicsTwoBodyJoint.h; sourceTree = "<group>"; };
 		92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPhysicsTwoBodyJoint.m; path = ccBuilder/CCBPhysicsTwoBodyJoint.m; sourceTree = "<group>"; };
 		92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
+		92B91021193412A600E346B5 /* InspectorAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorAnimation.xib; sourceTree = "<group>"; };
+		92B91024193413F500E346B5 /* InspectorAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorAnimation.h; sourceTree = "<group>"; };
+		92B91025193413F500E346B5 /* InspectorAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorAnimation.m; sourceTree = "<group>"; };
 		92BF8AB0192BCDF300C1BC28 /* InspectorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorButton.h; sourceTree = "<group>"; };
 		92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorButton.m; sourceTree = "<group>"; };
 		92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
@@ -4428,6 +4433,9 @@
 				92BF8AB0192BCDF300C1BC28 /* InspectorButton.h */,
 				92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */,
 				92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */,
+				92B91021193412A600E346B5 /* InspectorAnimation.xib */,
+				92B91024193413F500E346B5 /* InspectorAnimation.h */,
+				92B91025193413F500E346B5 /* InspectorAnimation.m */,
 			);
 			name = "Inspector Properties";
 			sourceTree = "<group>";
@@ -5505,6 +5513,7 @@
 				921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */,
 				E367E32016384F0C00247F12 /* orientation-landscapeleft.png in Resources */,
 				E367E32116384F0C00247F12 /* orientation-landscaperight.png in Resources */,
+				92B91022193412A600E346B5 /* InspectorAnimation.xib in Resources */,
 				92D9D48418F8AB3800F167C1 /* joint-connection-bg.png in Resources */,
 				E367E32316384F0C00247F12 /* orientation-upsidedown.png in Resources */,
 				E367E32516384F3600247F12 /* orientation-portrait.png in Resources */,
@@ -6142,6 +6151,7 @@
 				E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */,
 				E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */,
 				E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */,
+				92B91026193413F500E346B5 /* InspectorAnimation.m in Sources */,
 				E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */,
 				E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */,
 				E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */,

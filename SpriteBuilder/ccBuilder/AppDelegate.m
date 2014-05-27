@@ -4559,7 +4559,7 @@ static BOOL hideAllToNextSeparator;
 
 - (NSString*) keyframePropNameFromTag:(int)tag
 {
-    if (tag == 0) return @"visible";
+    if      (tag == 0) return @"visible";
     else if (tag == 1) return @"position";
     else if (tag == 2) return @"scale";
     else if (tag == 3) return @"rotation";

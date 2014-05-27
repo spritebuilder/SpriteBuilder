@@ -83,7 +83,7 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
     return ser;
 }
 
-+ (int) keyframeTypeFromPropertyType:(NSString*)type
++ (kCCBKeyframeType) keyframeTypeFromPropertyType:(NSString*)type
 {
     if ([type isEqualToString:@"Degrees"])
     {
@@ -120,6 +120,10 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
     else if([type isEqualToString:@"Float"])
     {
         return kCCBKeyframeTypeFloat;
+    }
+    else if ([type isEqualToString:@"String"])
+    {
+        return kCCBKeyframeTypeString;
     }
     else
     {
