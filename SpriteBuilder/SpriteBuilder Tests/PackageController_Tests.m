@@ -62,7 +62,7 @@
     [_fileManagerMock verify];
 }
 
-- (void)testCreatePackageWithNameAlreadyInProject
+- (void)testCreatePackageFailsWithPackageAlreadyInProject
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
     [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
@@ -73,6 +73,46 @@
     XCTAssertEqual(error.code, SBDuplicateResourcePathError, @"Error code should equal constant SBDuplicateResourcePathError");
 
     [_projectSettingsMock verify];
+}
+
+- (void)testCreatePackageFailsWithExistingPackageButNotInProject
+{
+    [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
+
+    NSError *underlyingFileError = [NSError errorWithDomain:@"none" code:NSFileWriteFileExistsError userInfo:nil];
+    [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"
+                                                 withIntermediateDirectories:NO
+                                                                  attributes:nil
+                                                                       error:[OCMArg setTo:underlyingFileError]];
+
+    NSError *error;
+    XCTAssertFalse([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertNotNil(error, @"Error object should be set");
+    XCTAssertEqual(error.code, SBResourcePathExistsButNotInProjectError, @"Error code should equal constant SBResourcePathExistsButNotInProjectError");
+
+    [_projectSettingsMock verify];
+    [_fileManagerMock verify];
+}
+
+- (void)testCreatePackageFailsBecauseOfOtherDiskErrorThanFileExists
+{
+    [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
+
+    NSError *underlyingFileError = [NSError errorWithDomain:@"none" code:NSFileWriteNoPermissionError userInfo:nil];
+    [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"
+                                                 withIntermediateDirectories:NO
+                                                                  attributes:nil
+                                                                       error:[OCMArg setTo:underlyingFileError]];
+
+    NSError *error;
+    XCTAssertFalse([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertNotNil(error, @"Error object should be set");
+    XCTAssertEqual(error.code, NSFileWriteNoPermissionError, @"Error code should equal constant NSFileWriteNoPermissionError");
+
+    [_projectSettingsMock verify];
+    [_fileManagerMock verify];
 }
 
 @end
