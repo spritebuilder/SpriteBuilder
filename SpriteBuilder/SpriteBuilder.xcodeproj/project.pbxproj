@@ -121,6 +121,9 @@
 		830F4E7E192DF937002B832D /* NewPackageWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E7D192DF937002B832D /* NewPackageWindow.xib */; };
 		830F4E81192DF9D1002B832D /* NewPackageWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830F4E80192DF9D1002B832D /* NewPackageWindowController.m */; };
 		830F4E9B192F5263002B832D /* Package.icns in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E9A192F5263002B832D /* Package.icns */; };
+		830F4EAF19336A36002B832D /* PackageController_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 830F4EAE19336A35002B832D /* PackageController_Tests.m */; };
+		830F4EB21934706C002B832D /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
+		830F4ECB193486E5002B832D /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
 		833A5C4C192B48CB001837B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833A5C4B192B48CB001837B3 /* XCTest.framework */; };
 		833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 833A5C50192B48CB001837B3 /* InfoPlist.strings */; };
 		833A5C5C192B4981001837B3 /* CCBReader_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 833A5C5B192B4981001837B3 /* CCBReader_Tests.m */; };
@@ -1053,6 +1056,16 @@
 			name = "Copy Files (Sparkle framework)";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		830F4ECA193486DA002B832D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				830F4ECB193486E5002B832D /* OCMock.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E3B7AED414E31E5D00DFD402 /* Copy PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1284,6 +1297,8 @@
 		830F4E7F192DF9D1002B832D /* NewPackageWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPackageWindowController.h; sourceTree = "<group>"; };
 		830F4E80192DF9D1002B832D /* NewPackageWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPackageWindowController.m; sourceTree = "<group>"; };
 		830F4E9A192F5263002B832D /* Package.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Package.icns; sourceTree = "<group>"; };
+		830F4EAE19336A35002B832D /* PackageController_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageController_Tests.m; sourceTree = "<group>"; };
+		830F4EB019347032002B832D /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = libs/OCMock.framework; sourceTree = "<group>"; };
 		833A5C4A192B48CB001837B3 /* SpriteBuilder Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpriteBuilder Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		833A5C4B192B48CB001837B3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		833A5C4F192B48CB001837B3 /* SpriteBuilder Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpriteBuilder Tests-Info.plist"; sourceTree = "<group>"; };
@@ -2259,6 +2274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				830F4EB21934706C002B832D /* OCMock.framework in Frameworks */,
 				833A5C4C192B48CB001837B3 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3036,6 +3052,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				830F4EB019347032002B832D /* OCMock.framework */,
 				D35E589D18E391DA008571EC /* GLKit.framework */,
 				D2E0168418D783C900927430 /* AppleScriptKit.framework */,
 				DC68033A189168390060BE39 /* SpriteKit.framework */,
@@ -3258,6 +3275,22 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
+		830F4EA219336959002B832D /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				830F4EAE19336A35002B832D /* PackageController_Tests.m */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		830F4EA419336962002B832D /* Cocos2DIntegration */ = {
+			isa = PBXGroup;
+			children = (
+				833A5C5B192B4981001837B3 /* CCBReader_Tests.m */,
+			);
+			name = Cocos2DIntegration;
+			sourceTree = "<group>";
+		};
 		8319539318FECDF800ED4BA0 /* PublishingOperations */ = {
 			isa = PBXGroup;
 			children = (
@@ -3286,7 +3319,8 @@
 		833A5C4D192B48CB001837B3 /* SpriteBuilder Tests */ = {
 			isa = PBXGroup;
 			children = (
-				833A5C5B192B4981001837B3 /* CCBReader_Tests.m */,
+				830F4EA419336962002B832D /* Cocos2DIntegration */,
+				830F4EA219336959002B832D /* Packages */,
 				833A5C4E192B48CB001837B3 /* Supporting Files */,
 			);
 			path = "SpriteBuilder Tests";
@@ -4686,6 +4720,7 @@
 				833A5C46192B48CA001837B3 /* Sources */,
 				833A5C47192B48CA001837B3 /* Frameworks */,
 				833A5C48192B48CA001837B3 /* Resources */,
+				830F4ECA193486DA002B832D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -6189,6 +6224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				830F4EAF19336A36002B832D /* PackageController_Tests.m in Sources */,
 				833A5C5C192B4981001837B3 /* CCBReader_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6949,6 +6985,9 @@
 					"libs/cocos2d-iphone/cocos2d-ui/**",
 				);
 				INFOPLIST_FILE = "SpriteBuilder Tests/SpriteBuilder Tests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -6986,6 +7025,9 @@
 					"libs/cocos2d-iphone/cocos2d-ui/**",
 				);
 				INFOPLIST_FILE = "SpriteBuilder Tests/SpriteBuilder Tests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
