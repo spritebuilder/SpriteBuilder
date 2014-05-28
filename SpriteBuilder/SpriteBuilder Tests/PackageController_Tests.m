@@ -180,7 +180,7 @@
 - (void)testCreatePackageWithName
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/NewPackage.sbpack"];
     [[[_projectSettingsMock expect] andReturnValue:@(YES)] addResourcePath:@"/NewPackage.sbpack" error:[OCMArg anyObjectRef]];
 
     [[[_fileManagerMock expect] andReturnValue:@(YES)] createDirectoryAtPath:@"/NewPackage.sbpack"
@@ -198,7 +198,7 @@
 - (void)testCreatePackageFailsWithPackageAlreadyInProject
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathInProject:@"/NewPackage.sbpack"];
 
     NSError *error;
     XCTAssertFalse([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
@@ -211,7 +211,7 @@
 - (void)testCreatePackageFailsWithExistingPackageButNotInProject
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/NewPackage.sbpack"];
 
     NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteFileExistsError userInfo:nil];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"
@@ -231,7 +231,7 @@
 - (void)testCreatePackageFailsBecauseOfOtherDiskErrorThanFileExists
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathAlreadyInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/NewPackage.sbpack"];
 
     NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteNoPermissionError userInfo:nil];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"

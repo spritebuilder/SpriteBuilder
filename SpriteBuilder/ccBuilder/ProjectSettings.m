@@ -507,7 +507,7 @@
 
 - (BOOL)addResourcePath:(NSString *)path error:(NSError **)error
 {
-    if (![self isResourcePathAlreadyInProject:path])
+    if (![self isResourcePathInProject:path])
     {
         NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
         NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
@@ -524,7 +524,7 @@
     }
 }
 
-- (BOOL)isResourcePathAlreadyInProject:(NSString *)resourcePath
+- (BOOL)isResourcePathInProject:(NSString *)resourcePath
 {
     NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
     NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:projectDir];

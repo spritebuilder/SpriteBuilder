@@ -144,7 +144,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 {
     NSString *fullPath = [self fullPathForPackageName:packageName];
 
-    if ([_projectSettings isResourcePathAlreadyInProject:fullPath])
+    if ([_projectSettings isResourcePathInProject:fullPath])
     {
         *error = [self duplicatePackageError:packageName];
         return NO;
