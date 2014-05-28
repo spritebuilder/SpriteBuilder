@@ -986,16 +986,19 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     [self writeCachedString:class isPath:NO];
     
     // Write assignment type and name
-    int memberVarAssignmentType = [[node objectForKey:@"memberVarAssignmentType"] intValue];
+    NSString * memberVarAssignmentName = [node objectForKey:@"memberVarAssignmentName"];
+    
+    int memberVarAssignmentType = 0;
+    
+    //If the assignment name is empty, then don't bother exporting the assignment Type.
+    if(memberVarAssignmentName != nil && ![memberVarAssignmentName isEqualToString:@""])
+    {
+        memberVarAssignmentType = [[node objectForKey:@"memberVarAssignmentType"] intValue];
+    }
+    
     [self writeInt:memberVarAssignmentType withSign:NO];
     if (memberVarAssignmentType)
     {
-        if([[node objectForKey:@"memberVarAssignmentName"] isEqualToString:@""])
-        {
-            
-            [self.delegate addWarningWithDescription:[NSString stringWithFormat:@"Member ivar assigned with <blank> name. This will likely fail at runtime. Node %@", node[@"displayName"]] isFatal:NO relatedFile:Nil resolution:nil];
-            
-        }
         [self writeCachedString:[node objectForKey:@"memberVarAssignmentName"] isPath:NO];
     }
     

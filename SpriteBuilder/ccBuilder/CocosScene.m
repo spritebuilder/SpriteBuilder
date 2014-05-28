@@ -2122,6 +2122,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     // Remember old position of root node
     CGPoint oldPosition = rootNode.position;
+    rootNode.scaleY = rootNode.scaleY * -1.0f;
     
     // Create render context
     CCRenderTexture* render = NULL;
@@ -2129,7 +2130,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     if (self.stageSize.width > 0 && self.stageSize.height > 0)
     {
         render = [CCRenderTexture renderTextureWithWidth:self.stageSize.width height:self.stageSize.height];
-        rootNode.position = ccp(0,0);
+        rootNode.position = ccp(0,self.stageSize.height);
     }
     else
     {
@@ -2145,6 +2146,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Reset old position
     rootNode.position = oldPosition;
+    rootNode.scaleY = rootNode.scaleY * -1.0f;
     
     CGImageRef imgRef = [render newCGImage];
     

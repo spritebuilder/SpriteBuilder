@@ -495,6 +495,13 @@ __strong NSDictionary* renamedProperties = nil;
     if (!memberVarName) memberVarName = @"";
     int memberVarType = [[dict objectForKey:@"memberVarAssignmentType"] intValue];
     
+    //memberVarType is obsolete. Set to 1 upon deserialization.
+    if(memberVarType == 0)
+    {
+        memberVarType = 1;
+        memberVarName = @""; //Make sure we clear the name, since it was unassigned.
+    }
+    
     [extraProps setObject:customClass forKey:@"customClass"];
     [extraProps setObject:memberVarName forKey:@"memberVarAssignmentName"];
     [extraProps setObject:[NSNumber numberWithInt:memberVarType] forKey:@"memberVarAssignmentType"];

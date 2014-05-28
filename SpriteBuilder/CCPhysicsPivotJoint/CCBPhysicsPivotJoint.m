@@ -332,7 +332,7 @@ const float kRatchedRenderRadius = 30.0f;
     
     //Motor nodes. Its always visible.
     motorNode.visible = bodyAssigned && self.motorEnabled;
-    motorNode.scaleX = self.motorRate < 0.0f ? -1.0f : 1.0f;
+    motorNode.scaleX = self.motorRate > 0.0f ? -1.0f : 1.0f;
 
     
     //Make them equivalent.
