@@ -163,7 +163,7 @@
     NSArray *packagePaths = @[packagePathGood, packagePathBad];
 
     [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:packagePathGood error:[OCMArg anyObjectRef]];
-    NSError *underlyingRemoveError = [NSError errorWithDomain:SBErrorDomain code:SBResourcePathNotInProject userInfo:nil];
+    NSError *underlyingRemoveError = [NSError errorWithDomain:SBErrorDomain code:SBResourcePathNotInProjectError userInfo:nil];
     [[[_projectSettingsMock expect] andReturnValue:@(NO)] removeResourcePath:packagePathBad  error:[OCMArg setTo:underlyingRemoveError]];
 
     NSError *error;

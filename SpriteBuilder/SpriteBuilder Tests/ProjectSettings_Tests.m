@@ -96,7 +96,7 @@
     NSError *error;
     XCTAssertFalse([_projectSettings removeResourcePath:@"/project/test" error:&error]);
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, SBResourcePathNotInProject);
+    XCTAssertEqual(error.code, SBResourcePathNotInProjectError);
 }
 
 @end

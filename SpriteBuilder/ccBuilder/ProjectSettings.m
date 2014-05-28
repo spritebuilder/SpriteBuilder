@@ -500,7 +500,7 @@
         }
     }
     *error = [NSError errorWithDomain:SBErrorDomain
-                                 code:SBResourcePathNotInProject
+                                 code:SBResourcePathNotInProjectError
                              userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]}];
     return NO;
 }
