@@ -107,7 +107,7 @@
                         sprtGuide.contentSize = CGSizeMake(winSize.width, 2);
                         sprtGuide.anchorPoint = ccp(0, 0.5f);
                         sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
-                        [sprtGuide setColor:[CCColor  colorWithRed:0.941 green:0.502 blue:0.502 alpha:0.9]];
+                        [sprtGuide setColor:[CCColor colorWithRed:0.84 green:0.27 blue:0.78 alpha:0.7]];
                         [self addChild:sprtGuide];
                         
                     }
@@ -125,7 +125,7 @@
                         sprtGuide.anchorPoint = ccp(0, 0.5f);
                         sprtGuide.rotation = -90;
                         sprtGuide.position = ccp(roundf(viewPos.x),roundf(viewPos.y));
-                        [sprtGuide setColor:[CCColor  colorWithRed:0.941 green:0.502 blue:0.502 alpha:0.9]];
+                        [sprtGuide setColor:[CCColor colorWithRed:0.84 green:0.27 blue:0.78 alpha:0.7]];
                         [self addChild:sprtGuide];
                         
                     }

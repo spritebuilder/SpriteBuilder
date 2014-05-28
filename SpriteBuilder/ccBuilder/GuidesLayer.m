@@ -139,7 +139,8 @@
                 
                 // Grid Color
                 if(g->type==kCCBGuideTypeGrid) {
-                     [sprtGuide setColor:[CCColor greenColor]];
+                    [sprtGuide setColor:[CCColor colorWithRed:0.3 green:0.3 blue:0.3]];
+                    [sprtGuide setOpacity:0.5];
                 }
             }
         }
@@ -161,7 +162,8 @@
                 
                 // Grid Color
                 if(g->type==kCCBGuideTypeGrid) {
-                    [sprtGuide setColor:[CCColor greenColor]];
+                    [sprtGuide setColor:[CCColor colorWithRed:0.3 green:0.3 blue:0.3]];
+                    [sprtGuide setOpacity:0.5];
                 }
             }
         }
