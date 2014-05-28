@@ -640,6 +640,17 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+
+    [self toggleFeatures];
+}
+
+- (void)toggleFeatures
+{
+    if (![FeatureToggle sharedFeatures].arePackagesEnabled)
+    {
+        [menuPlusButtonNewPackage setHidden:YES];
+        [menuFileNewPackage setHidden:YES];
+    }
 }
 
 - (id)initializeFeatureToggle

@@ -2402,8 +2402,10 @@ CA
                 <outlet property="menuContextKeyframeInterpol" destination="1604" id="1613"/>
                 <outlet property="menuContextKeyframeNoselection" destination="o0p-0U-Ks5" id="H9k-Jz-Iau"/>
                 <outlet property="menuContextResManager" destination="1696" id="1703"/>
+                <outlet property="menuFileNewPackage" destination="g6Z-Mh-Dls" id="D5e-wF-NCl"/>
                 <outlet property="menuItemSnapGrid" destination="zA6-4S-M8f" id="UZF-mG-oQZ"/>
                 <outlet property="menuItemStageColor" destination="KQF-gw-sgJ" id="cG7-Q4-aYh"/>
+                <outlet property="menuPlusButtonNewPackage" destination="fe0-WO-wub" id="qKr-zd-Bou"/>
                 <outlet property="menuResolution" destination="1264" id="1474"/>
                 <outlet property="menuTimeline" destination="1581" id="1585"/>
                 <outlet property="menuTimelineChained" destination="1670" id="1685"/>

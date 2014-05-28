@@ -30,6 +30,7 @@
 #import "ProjectSettings.h"
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
+#import "FeatureToggle.h"
 
 @implementation ResourceManagerOutlineView
 
@@ -157,7 +158,9 @@
 				[resourcesToDelete addObject:resource];
 			}
 		}
-        else if ([selectedItem isKindOfClass:[RMDirectory class]] && [selectedItem isPackage])
+        else if ([selectedItem isKindOfClass:[RMDirectory class]]
+                 && [selectedItem isPackage]
+                 && [FeatureToggle sharedFeatures].arePackagesEnabled)
         {
             RMDirectory *rmDirectory = (RMDirectory *)selectedItem;
             [packagesPathsToDelete addObject:rmDirectory.dirPath];

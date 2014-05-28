@@ -35,6 +35,7 @@
 #import "MiscConstants.h"
 #import "PackageController.h"
 #import "SBErrors.h"
+#import "FeatureToggle.h"
 
 @implementation ResourceManagerOutlineHandler
 
@@ -428,8 +429,11 @@
     // Import files & Packages
     NSArray* pbFilenames = [pasteboard propertyListForType:NSFilenamesPboardType];
 
-    movedOrImportedFiles |= [self importPackagesWithPaths:pbFilenames];
-    pbFilenames = [self removePackagesFromPaths:pbFilenames];
+    if ([FeatureToggle sharedFeatures].arePackagesEnabled)
+    {
+        movedOrImportedFiles |= [self importPackagesWithPaths:pbFilenames];
+        pbFilenames = [self removePackagesFromPaths:pbFilenames];
+    }
 
     movedOrImportedFiles |= [ResourceManager importResources:pbFilenames intoDir:dstDir];
     
