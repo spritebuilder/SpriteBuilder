@@ -64,6 +64,19 @@
     XCTAssertEqual(error2.code, SBDuplicateResourcePathError);
 
     XCTAssertEqual(_projectSettings.resourcePaths.count, 2);
+}
+
+- (void)testIsResourcePathAlreadyInProject
+{
+    NSString *resourcePath = @"/project/resourcepath1";
+
+    [_projectSettings addResourcePath:resourcePath error:nil];
+
+    XCTAssertTrue([_projectSettings isResourcePathInProject:resourcePath]);
+
+    XCTAssertFalse([_projectSettings isResourcePathInProject:@"/foo/notinproject"]);
+}
+
 - (void)testRemoveResourcePath
 {
     _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
