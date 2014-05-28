@@ -8,7 +8,7 @@ CCB_VERSION=$1
 # Solution from: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #echo Script working directory: $SCRIPT_DIR
-cd $SCRIPT_DIR
+cd "$SCRIPT_DIR"
 
 # Remove build directory
 cd ..
