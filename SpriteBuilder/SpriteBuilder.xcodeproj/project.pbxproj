@@ -132,6 +132,8 @@
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */; };
 		83993DA91935D6EC001C228B /* ProjectSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */; };
+		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
+		83993DB519361305001C228B /* FeatureToggle_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DB419361305001C228B /* FeatureToggle_Tests.m */; };
 		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
@@ -793,6 +795,7 @@
 		E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BA14E4989900119FBE /* InspectorDegrees.xib */; };
 		E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */; };
 		E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */; };
+		E525F1412DEF690AF46E6D4C /* features.config.json in Resources */ = {isa = PBXBuildFile; fileRef = E525FEA6030E1A16AFB2715F /* features.config.json */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD2D849749BB67455943 /* DateCache.m */; };
@@ -1313,6 +1316,9 @@
 		8392006D18ED91BC00B6C429 /* Cocos2dUpdater+Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cocos2dUpdater+Errors.h"; sourceTree = "<group>"; };
 		8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Cocos2dUpdater+Errors.m"; sourceTree = "<group>"; };
 		83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettings_Tests.m; sourceTree = "<group>"; };
+		83993DAD19360A28001C228B /* FeatureToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureToggle.h; sourceTree = "<group>"; };
+		83993DAE19360A28001C228B /* FeatureToggle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureToggle.m; sourceTree = "<group>"; };
+		83993DB419361305001C228B /* FeatureToggle_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureToggle_Tests.m; sourceTree = "<group>"; };
 		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
@@ -2234,6 +2240,7 @@
 		E525FD2D849749BB67455943 /* DateCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCache.m; sourceTree = "<group>"; };
 		E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseOperation.h; sourceTree = "<group>"; };
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
+		E525FEA6030E1A16AFB2715F /* features.config.json */ = {isa = PBXFileReference; lastKnownFileType = file.json; path = features.config.json; sourceTree = "<group>"; };
 		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
 		FA98CFC1154E7D1C006E58C5 /* ccbpublish */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ccbpublish; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2531,6 +2538,7 @@
 		776041E11498F56D0078095D /* Application Settings & Globals */ = {
 			isa = PBXGroup;
 			children = (
+				83993DAB1935F6A0001C228B /* Feature Toggle */,
 				772BE570133E48340009B5B9 /* CCBGlobals.h */,
 				772BE571133E48340009B5B9 /* CCBGlobals.m */,
 				E3EDBC0E1546D23000EEF1F3 /* ResolutionSetting.h */,
@@ -3362,8 +3370,18 @@
 			isa = PBXGroup;
 			children = (
 				83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */,
+				83993DB419361305001C228B /* FeatureToggle_Tests.m */,
 			);
 			name = "Application Settings & Globals";
+			sourceTree = "<group>";
+		};
+		83993DAB1935F6A0001C228B /* Feature Toggle */ = {
+			isa = PBXGroup;
+			children = (
+				83993DAD19360A28001C228B /* FeatureToggle.h */,
+				83993DAE19360A28001C228B /* FeatureToggle.m */,
+			);
+			name = "Feature Toggle";
 			sourceTree = "<group>";
 		};
 		83F8672F18D1DCBD007441E4 /* Constants */ = {
@@ -4174,6 +4192,7 @@
 				E35DBBDE14F3D1B60070A6E4 /* FontListTTF.plist */,
 				E3B7BC9B15E3B7F100CF95EF /* NodePlugInsList.plist */,
 				E3B19F6C15E65229000B023E /* DefaultResourcesList.plist */,
+				E525FEA6030E1A16AFB2715F /* features.config.json */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -5676,6 +5695,7 @@
 				B78AE45317E3B1600028BE0B /* scale-3.png in Resources */,
 				B78AE45417E3B1600028BE0B /* scale-4.png in Resources */,
 				E525F50C89C6296C9FE062F9 /* ruler-numbers.fnt in Resources */,
+				E525F1412DEF690AF46E6D4C /* features.config.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6176,6 +6196,7 @@
 				E334A4E4170CFDE3001604F7 /* CCBTextField.m in Sources */,
 				B7C3533E17FA30BB005697C1 /* NodePhysicsBody.m in Sources */,
 				E3C12B1B171DD386001EEDDB /* NSWindow+CCBAccessoryView.m in Sources */,
+				83993DB019360A28001C228B /* FeatureToggle.m in Sources */,
 				E37FCAF4175D68FF009F81D6 /* ResourceManagerPreviewView.m in Sources */,
 				E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */,
 				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
@@ -6235,6 +6256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83993DB519361305001C228B /* FeatureToggle_Tests.m in Sources */,
 				830F4EAF19336A36002B832D /* PackageController_Tests.m in Sources */,
 				833A5C5C192B4981001837B3 /* CCBReader_Tests.m in Sources */,
 				83993DA91935D6EC001C228B /* ProjectSettings_Tests.m in Sources */,

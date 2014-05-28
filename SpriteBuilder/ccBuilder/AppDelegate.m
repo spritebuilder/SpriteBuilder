@@ -121,6 +121,7 @@
 #import "PackageController.h"
 #import "SnapLayerKeys.h"
 #import "MiscConstants.h"
+#import "FeatureToggle.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -554,6 +555,8 @@ typedef enum
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
     [propertyInspectorHandler loadTemplateLibrary];
+
+    [self initializeFeatureToggle];
     
     selectedNodes = [[NSMutableArray alloc] init];
     loadedSelectedNodes = [[NSMutableArray alloc] init];
@@ -637,6 +640,11 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+}
+
+- (id)initializeFeatureToggle
+{
+    [[FeatureToggle sharedFeatures] loadFeatureJsonConfigFromBundleWithFileName:@"features.config.json"];
 }
 
 - (void)setupObservers
