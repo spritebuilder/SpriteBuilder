@@ -208,17 +208,10 @@
 
 - (void) setAutoPlay:(BOOL)ap
 {
-    if(autoPlay && !ap)
-        return;
-    
     if (ap)
     {
         [settingsWindow disableAutoPlayForAllItems];
     }
-    
-
-    
-    NSLog(@"setAutoPlay: %d", ap);
     autoPlay = ap;
 }
 
