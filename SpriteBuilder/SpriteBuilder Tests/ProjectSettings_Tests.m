@@ -41,6 +41,29 @@
     XCTAssertEqualObjects([firstResourcePath objectForKey:@"path"], @"Resources");
 }
 
+- (void)testAddResourcePath
+{
+    NSError *error;
+    XCTAssertTrue([_projectSettings addResourcePath:@"/project/resourcepath1" error:&error]);
+    XCTAssertNil(error);
+    // Default init will add a default value to resourcePaths, see testStandardInitialization
+    XCTAssertEqual(_projectSettings.resourcePaths.count, 2);
+}
+
+- (void)testAddResourcePathTwice
+{
+    NSString *resourcePath = @"/project/resourcepath1";
+
+    NSError *error;
+    XCTAssertTrue([_projectSettings addResourcePath:resourcePath error:&error]);
+    XCTAssertNil(error);
+
+    NSError *error2;
+    XCTAssertFalse([_projectSettings addResourcePath:resourcePath error:&error2]);
+    XCTAssertNotNil(error2);
+    XCTAssertEqual(error2.code, SBDuplicateResourcePathError);
+
+    XCTAssertEqual(_projectSettings.resourcePaths.count, 2);
 - (void)testRemoveResourcePath
 {
     _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
