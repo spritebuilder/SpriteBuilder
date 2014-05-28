@@ -131,6 +131,7 @@
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */; };
+		83993DA91935D6EC001C228B /* ProjectSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */; };
 		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
@@ -1311,6 +1312,7 @@
 		8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocos2dUpdater.m; sourceTree = "<group>"; };
 		8392006D18ED91BC00B6C429 /* Cocos2dUpdater+Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cocos2dUpdater+Errors.h"; sourceTree = "<group>"; };
 		8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Cocos2dUpdater+Errors.m"; sourceTree = "<group>"; };
+		83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettings_Tests.m; sourceTree = "<group>"; };
 		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
@@ -3319,6 +3321,7 @@
 		833A5C4D192B48CB001837B3 /* SpriteBuilder Tests */ = {
 			isa = PBXGroup;
 			children = (
+				83993DA61935D6D2001C228B /* Application Settings & Globals */,
 				830F4EA419336962002B832D /* Cocos2DIntegration */,
 				830F4EA219336959002B832D /* Packages */,
 				833A5C4E192B48CB001837B3 /* Supporting Files */,
@@ -3353,6 +3356,14 @@
 				8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */,
 			);
 			name = Cocos2dUpdater;
+			sourceTree = "<group>";
+		};
+		83993DA61935D6D2001C228B /* Application Settings & Globals */ = {
+			isa = PBXGroup;
+			children = (
+				83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */,
+			);
+			name = "Application Settings & Globals";
 			sourceTree = "<group>";
 		};
 		83F8672F18D1DCBD007441E4 /* Constants */ = {
@@ -6226,6 +6237,7 @@
 			files = (
 				830F4EAF19336A36002B832D /* PackageController_Tests.m in Sources */,
 				833A5C5C192B4981001837B3 /* CCBReader_Tests.m in Sources */,
+				83993DA91935D6EC001C228B /* ProjectSettings_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6985,9 +6997,7 @@
 					"libs/cocos2d-iphone/cocos2d-ui/**",
 				);
 				INFOPLIST_FILE = "SpriteBuilder Tests/SpriteBuilder Tests-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -7025,9 +7035,7 @@
 					"libs/cocos2d-iphone/cocos2d-ui/**",
 				);
 				INFOPLIST_FILE = "SpriteBuilder Tests/SpriteBuilder Tests-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"@loader_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
