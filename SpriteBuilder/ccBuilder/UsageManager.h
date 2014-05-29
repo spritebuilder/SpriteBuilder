@@ -15,4 +15,6 @@
 
 - (void) registerUsage;
 
+- (void) registerEmail:(NSString*)email;
+
 @end
