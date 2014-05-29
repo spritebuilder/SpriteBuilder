@@ -61,13 +61,13 @@
     return [self.seqNodeProp serialization];
 }
 
-- (int) keyframeType
+- (kCCBKeyframeType) keyframeType
 {
     if ([self isKindOfClass:[SequencerCallbackChannel class]]) return kCCBKeyframeTypeCallbacks;
     if ([self isKindOfClass:[SequencerSoundChannel class]]) return kCCBKeyframeTypeSoundEffects;
     
     NSAssert(NO, @"Unknown channel type");
-    return -1;
+    return kCCBKeyframeTypeUndefined;
 }
 
 - (SequencerKeyframe*) defaultKeyframe

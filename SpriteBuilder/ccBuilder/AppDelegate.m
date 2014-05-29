@@ -119,6 +119,7 @@
 #import "SBUserDefaultsKeys.h"
 #import "AnimationPlaybackManager.h"
 #import "NotificationNames.h"
+#import "RegistrationWindow.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -637,6 +638,9 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+    
+    // Open registration window
+    [self openRegistrationWindow];
 }
 
 - (void)registerNotificationObservers
@@ -4559,7 +4563,7 @@ static BOOL hideAllToNextSeparator;
 
 - (NSString*) keyframePropNameFromTag:(int)tag
 {
-    if (tag == 0) return @"visible";
+    if      (tag == 0) return @"visible";
     else if (tag == 1) return @"position";
     else if (tag == 2) return @"scale";
     else if (tag == 3) return @"rotation";
@@ -4659,6 +4663,22 @@ static BOOL hideAllToNextSeparator;
     }
     
     [[aboutWindow window] makeKeyAndOrderFront:self];
+}
+
+- (void) openRegistrationWindow
+{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
+    {
+        // Email already registered or skipped
+        return;
+    }
+    
+    if (!registrationWindow)
+    {
+        registrationWindow = [[RegistrationWindow alloc] initWithWindowNibName:@"RegistrationWindow"];
+    }
+    
+    [[registrationWindow window] makeKeyAndOrderFront:window];
 }
 
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window

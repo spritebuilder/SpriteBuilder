@@ -66,6 +66,21 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
     if (![self supportsFiniteTimeInterpolations]) {
         easing.type = kCCBKeyframeEasingInstant;
     }
+	
+	//Fixup Callback Sequencers to not have 'None' selector type.
+	if(self.type == kCCBKeyframeTypeCallbacks)
+	{
+		NSMutableArray * callbackProperties = self.value;
+		if(callbackProperties.count >= 2)
+		{
+			//If it equals None, fixup to @""
+			if([callbackProperties[1] integerValue] == 0)
+			{
+				callbackProperties[0] = @"";
+				callbackProperties[1] = @(1);
+			}
+		}
+	}
     
     return self;
 }
@@ -83,7 +98,7 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
     return ser;
 }
 
-+ (int) keyframeTypeFromPropertyType:(NSString*)type
++ (kCCBKeyframeType) keyframeTypeFromPropertyType:(NSString*)type
 {
     if ([type isEqualToString:@"Degrees"])
     {
@@ -120,6 +135,11 @@ NSString * kClipboardChannelKeyframes   = @"com.cocosbuilder.channelkeyframes";
     else if([type isEqualToString:@"Float"])
     {
         return kCCBKeyframeTypeFloat;
+    }
+    else if ([type isEqualToString:@"String"])
+    {
+		NSAssert(false, @"Need to handle");//TODO
+        return kCCBKeyframeTypeUndefined;
     }
     else
     {
