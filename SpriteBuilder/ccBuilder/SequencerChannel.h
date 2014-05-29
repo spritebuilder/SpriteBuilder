@@ -23,6 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "SequencerKeyframe.h"
 
 @class SequencerNodeProperty;
 @class SequencerKeyframe;
@@ -31,7 +32,7 @@
 
 @property (nonatomic, copy) NSString* displayName;
 @property (nonatomic, strong) SequencerNodeProperty* seqNodeProp;
-@property (nonatomic, readonly) int keyframeType;
+@property (nonatomic, readonly) kCCBKeyframeType keyframeType;
 
 - (id) initWithSerialization:(id)ser;
 - (id) serialize;

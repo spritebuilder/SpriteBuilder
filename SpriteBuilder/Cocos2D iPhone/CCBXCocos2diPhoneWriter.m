@@ -443,6 +443,13 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     {
         NSString* a = [prop objectAtIndex:0];
         NSNumber* b = [prop objectAtIndex:1];
+		
+		//If string is empty, write None
+		if([a isEqualToString:@""])
+		{
+			b = @(0);
+		}
+		
         [self writeCachedString:a isPath:NO];
         [self writeInt:[b intValue] withSign:NO];
     }
@@ -788,6 +795,12 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     {
         NSString* selector = [value objectAtIndex:0];
         int target = [[value objectAtIndex:1] intValue];
+		
+		//if the string is empty, make it write 0 (none).
+		if([selector isEqualToString:@""])
+		{
+			target = 0;
+		}
         
         [self writeCachedString:selector isPath:NO];
         [self writeInt:target withSign:NO];

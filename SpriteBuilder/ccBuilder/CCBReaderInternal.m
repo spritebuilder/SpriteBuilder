@@ -365,6 +365,15 @@ __strong NSDictionary* renamedProperties = nil;
         NSNumber* target = [serializedValue objectAtIndex:1];
         if (!selector) selector = @"";
         if (!target) target = [NSNumber numberWithInt:0];
+		
+
+		//Fixup blocks so if target = NOne, set string = @"" and target = 1;
+		if([target integerValue] == 0)
+		{
+			selector = @"";
+			target = @(1);
+		}
+		
         [extraProps setObject: selector forKey:name];
         [extraProps setObject:target forKey:[NSString stringWithFormat:@"%@Target",name]];
     }
