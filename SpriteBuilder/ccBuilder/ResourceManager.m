@@ -1018,14 +1018,20 @@
     BOOL save8BitPNG = NO;
     
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(imageSrc);
+	CGImageAlphaInfo bitmapInfo = kCGImageAlphaPremultipliedLast;
+	
     if (CGColorSpaceGetModel(colorSpace) == kCGColorSpaceModelIndexed)
     {
         colorSpace = CGColorSpaceCreateDeviceRGB();
         save8BitPNG = YES;
     }
+	if (CGColorSpaceGetModel(colorSpace) == kCGColorSpaceModelMonochrome)
+	{
+		bitmapInfo = kCGImageAlphaNone;
+	}
     
     // Create new, scaled image
-    CGContextRef newContext = CGBitmapContextCreate(NULL, wDst, hDst, 8, wDst*32, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
+    CGContextRef newContext = CGBitmapContextCreate(NULL, wDst, hDst, 8, wDst*32, colorSpace, (CGBitmapInfo)bitmapInfo);
 	NSAssert(newContext != nil, @"CG draw context is nil");
     
     // Enable anti-aliasing
