@@ -394,6 +394,11 @@
 		B7C623DB17F3903900928F91 /* CCControl.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */; };
 		B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C623DC17F392FE00928F91 /* CCBPProperties.plist */; };
 		B7D0918A17C2C17D0007FE7F /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D0918417C2C12B0007FE7F /* libcocos2d.a */; };
+		B7DE848D1937A8030039FB72 /* RegistrationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */; };
+		B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DE848F1937A8390039FB72 /* RegistrationWindow.m */; };
+		B7DE84931937B18B0039FB72 /* signup-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84911937B18B0039FB72 /* signup-bg.png */; };
+		B7DE84941937B18B0039FB72 /* signup-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84921937B18B0039FB72 /* signup-bottom.png */; };
+		B7DE84961937C6380039FB72 /* SpriteBuilder-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */; };
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
 		B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */; };
 		B7E775E218563F8C004221AA /* frame-fixed.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E775E118563F8C004221AA /* frame-fixed.png */; };
@@ -1627,6 +1632,12 @@
 		B7C623D517F38B7800928F91 /* CCControl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCControl-Prefix.pch"; sourceTree = "<group>"; };
 		B7C623DC17F392FE00928F91 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "cocos2d-osx.xcodeproj"; path = "cocos2d-iphone/cocos2d-osx.xcodeproj"; sourceTree = "<group>"; };
+		B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegistrationWindow.xib; sourceTree = "<group>"; };
+		B7DE848E1937A8390039FB72 /* RegistrationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationWindow.h; sourceTree = "<group>"; };
+		B7DE848F1937A8390039FB72 /* RegistrationWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationWindow.m; sourceTree = "<group>"; };
+		B7DE84911937B18B0039FB72 /* signup-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup-bg.png"; sourceTree = "<group>"; };
+		B7DE84921937B18B0039FB72 /* signup-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup-bottom.png"; sourceTree = "<group>"; };
+		B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpriteBuilder-logo.png"; sourceTree = "<group>"; };
 		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SpriteBuilder.icns; path = ../SpriteBuilder.icns; sourceTree = "<group>"; };
 		B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		B7E775E118563F8C004221AA /* frame-fixed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-fixed.png"; sourceTree = "<group>"; };
@@ -3089,7 +3100,7 @@
 				776041EA1498FB600078095D /* Dialogs */,
 				E3B7BC9D15E3B97900CF95EF /* Toolbar */,
 				E3AF6CD615F0A77F0048DB2A /* Help */,
-				E390C77A170A2C20003E9E92 /* About Box */,
+				E390C77A170A2C20003E9E92 /* About Box & Email list */,
 				B7083DEF17B1C31E006628C7 /* Localization Editor */,
 				E3B7AEE614E33E5700DFD402 /* Inspector Properties */,
 				E3214C3F15D3B9D0002413A7 /* Custom Properties */,
@@ -3711,6 +3722,9 @@
 		B7F02D4517D12D9E008A2E2D /* About Box */ = {
 			isa = PBXGroup;
 			children = (
+				B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */,
+				B7DE84911937B18B0039FB72 /* signup-bg.png */,
+				B7DE84921937B18B0039FB72 /* signup-bottom.png */,
 				B7F02D4617D12DB1008A2E2D /* about-bg.png */,
 				B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */,
 			);
@@ -4181,14 +4195,17 @@
 			name = Tupac;
 			sourceTree = "<group>";
 		};
-		E390C77A170A2C20003E9E92 /* About Box */ = {
+		E390C77A170A2C20003E9E92 /* About Box & Email list */ = {
 			isa = PBXGroup;
 			children = (
 				E390C77B170A2C9B003E9E92 /* AboutWindow.h */,
 				E390C77C170A2C9B003E9E92 /* AboutWindow.m */,
 				E390C77D170A2C9B003E9E92 /* AboutWindow.xib */,
+				B7DE848E1937A8390039FB72 /* RegistrationWindow.h */,
+				B7DE848F1937A8390039FB72 /* RegistrationWindow.m */,
+				B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */,
 			);
-			name = "About Box";
+			name = "About Box & Email list";
 			sourceTree = "<group>";
 		};
 		E398C01D14FB813C0078E771 /* PlugIns (Exporters) */ = {
@@ -5262,6 +5279,7 @@
 				929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */,
 				92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */,
 				92F0960A18F8851300D47A94 /* inspector-body-remove.png in Resources */,
+				B7DE84961937C6380039FB72 /* SpriteBuilder-logo.png in Resources */,
 				92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */,
 				92F0960918F8851300D47A94 /* inspector-body-bg.png in Resources */,
 				92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */,
@@ -5365,6 +5383,7 @@
 				9218DF351919B04D0033851E /* joint-pivot-handle-max.png in Resources */,
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
+				B7DE84931937B18B0039FB72 /* signup-bg.png in Resources */,
 				9218DF291919B04D0033851E /* joint-pivot-handle-min.png in Resources */,
 				DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */,
 				E3B4223414E5E68B004547D6 /* InspectorSeparator.xib in Resources */,
@@ -5437,6 +5456,7 @@
 				E3E8B49015791FFB00373983 /* seq-tl-mark-origin.png in Resources */,
 				E3E8B4921579326A00373983 /* seq-timedisplay-bg.png in Resources */,
 				B73788F71804D8200076A88C /* ccbproj.icns in Resources */,
+				B7DE848D1937A8030039FB72 /* RegistrationWindow.xib in Resources */,
 				E3E8B49915793AF800373983 /* seq-btn-play.png in Resources */,
 				926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */,
 				E3E8B49A15793AF800373983 /* seq-btn-restart.png in Resources */,
@@ -5560,6 +5580,7 @@
 				E38F79361715FD8D00E299E4 /* editor-warning.png in Resources */,
 				E3C12B1F171E0DE7001EEDDB /* editor-check.png in Resources */,
 				E388FD19171F03C7002548ED /* editor-border.png in Resources */,
+				B7DE84941937B18B0039FB72 /* signup-bottom.png in Resources */,
 				E3748303171F83A300486659 /* editor-jump.png in Resources */,
 				92F0961018F8851300D47A94 /* inspector-body-bg@2x.png in Resources */,
 				926D13C718B5778300582959 /* joint-distance-slide-sel@2x.png in Resources */,
@@ -6068,6 +6089,7 @@
 				E3926188159C69D20034FF1D /* SequencerKeyframeEasing.m in Sources */,
 				E3FD4DD315A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m in Sources */,
 				E3FD4DDF15A455B90032C2DD /* SequencerSequenceArrayController.m in Sources */,
+				B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */,
 				E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */,
 				E35A136015B038D700C9AA15 /* ThoMoNetworkStub.m in Sources */,
 				E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */,

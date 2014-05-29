@@ -118,6 +118,7 @@ enum {
 @class PhysicsHandler;
 @class WarningTableViewHandler;
 @class AnimationPlaybackManager;
+@class RegistrationWindow;
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
@@ -272,6 +273,7 @@ enum {
     
     // About window
     AboutWindow* aboutWindow;
+    RegistrationWindow* registrationWindow;
     
     // Animation playback
     BOOL playingBack;
