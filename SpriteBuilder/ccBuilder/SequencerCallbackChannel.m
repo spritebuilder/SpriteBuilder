@@ -42,7 +42,7 @@
 {
     SequencerKeyframe* kf = [[SequencerKeyframe alloc] init];
     
-    kf.value = [NSArray arrayWithObjects:@"", [NSNumber numberWithInt:0], nil];
+    kf.value = [NSArray arrayWithObjects:@"", @(1), nil];
     kf.type = kCCBKeyframeTypeCallbacks;
     kf.name = NULL;
     kf.easing = [[SequencerKeyframeEasing alloc] init];

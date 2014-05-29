@@ -27,6 +27,11 @@
 			<true/>
 		</dict>
 		<dict>
+			<key>default</key>
+			<array>
+				<string></string>
+				<integer>1</integer>
+			</array>
 			<key>codeConnection</key>
 			<true/>
 			<key>displayName</key>
