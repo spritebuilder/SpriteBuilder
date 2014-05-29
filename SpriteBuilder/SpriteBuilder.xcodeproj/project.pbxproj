@@ -8932,6 +8932,7 @@
 				833A5C5A192B48CB001837B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		92154AD818A5560B00BD215C /* Build configuration list for PBXNativeTarget "CCPhysicsPivotJoint" */ = {
 			isa = XCConfigurationList;
