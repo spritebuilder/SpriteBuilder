@@ -117,6 +117,7 @@ enum {
 @class LocalizationEditorHandler;
 @class PhysicsHandler;
 @class WarningTableViewHandler;
+@class AnimationPlaybackManager;
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
@@ -172,6 +173,7 @@ enum {
     
     // Outline view heirarchy
     SequencerHandler* sequenceHandler;
+    IBOutlet AnimationPlaybackManager *animationPlaybackManager;
     IBOutlet NSOutlineView* outlineHierarchy;
     IBOutlet SequencerScrubberSelectionView* scrubberSelectionView;
     IBOutlet NSTextField* timeDisplay;

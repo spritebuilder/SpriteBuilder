@@ -12,7 +12,7 @@
 #import "CocosScene.h"
 #import "CCNode+PositionExtentions.h"
 #import "PositionPropertySetter.h"
-#import "SnapLayerKeys.h"
+#import "NotificationNames.h"
 
 #define kSnapLayerSensitivity       4
 #define kSnapLayerSensitivityLine   1

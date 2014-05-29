@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D0C1E7618F4760800B028CA /* SnapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7318F472D600B028CA /* SnapLayer.m */; };
 		4D0C1E7918F49A3700B028CA /* CCNode+PositionExtentions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7818F49A3700B028CA /* CCNode+PositionExtentions.m */; };
-		4DB7C95719083B9C00ECE19F /* SnapLayerKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7C95419083ACF00ECE19F /* SnapLayerKeys.m */; };
+		4DB7C95719083B9C00ECE19F /* NotificationNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7C95419083ACF00ECE19F /* NotificationNames.m */; };
 		581130601639C52500A86D70 /* seq-startmarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 5811305F1639C52000A86D70 /* seq-startmarker.png */; };
 		581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 581BCFE7162DADE7007DE600 /* CCBSplitHorizontalView.m */; };
 		58FA2034162D73F3006B8856 /* TB_bottomPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2031162D73F3006B8856 /* TB_bottomPanel.png */; };
@@ -786,6 +786,7 @@
 		E3FEA8BB14E4989A00119FBE /* InspectorDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BA14E4989900119FBE /* InspectorDegrees.xib */; };
 		E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FEA8BD14E498B700119FBE /* InspectorDegrees.m */; };
 		E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */; };
+		E525F07CCBACEC15F8A13EC7 /* AnimationPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD2D849749BB67455943 /* DateCache.m */; };
@@ -1102,8 +1103,8 @@
 		4D0C1E7318F472D600B028CA /* SnapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapLayer.m; sourceTree = "<group>"; };
 		4D0C1E7718F49A3700B028CA /* CCNode+PositionExtentions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+PositionExtentions.h"; sourceTree = "<group>"; };
 		4D0C1E7818F49A3700B028CA /* CCNode+PositionExtentions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+PositionExtentions.m"; sourceTree = "<group>"; };
-		4DB7C95319083ACF00ECE19F /* SnapLayerKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapLayerKeys.h; sourceTree = "<group>"; };
-		4DB7C95419083ACF00ECE19F /* SnapLayerKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapLayerKeys.m; sourceTree = "<group>"; };
+		4DB7C95319083ACF00ECE19F /* NotificationNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationNames.h; sourceTree = "<group>"; };
+		4DB7C95419083ACF00ECE19F /* NotificationNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationNames.m; sourceTree = "<group>"; };
 		5811305E1639BF1200A86D70 /* SequencerTimelineDrawDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerTimelineDrawDelegate.h; sourceTree = "<group>"; };
 		5811305F1639C52000A86D70 /* seq-startmarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-startmarker.png"; sourceTree = "<group>"; };
 		581BCFE6162DADE7007DE600 /* CCBSplitHorizontalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSplitHorizontalView.h; sourceTree = "<group>"; };
@@ -2180,6 +2181,7 @@
 		E525F31A72346871646C218C /* ProjectSettings+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProjectSettings+Convenience.h"; sourceTree = "<group>"; };
 		E525F31D5A311C0DBE9C1CD6 /* PublishCCBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishCCBOperation.h; sourceTree = "<group>"; };
 		E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteKitSpriteSheetOperation.m; sourceTree = "<group>"; };
+		E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPlaybackManager.m; sourceTree = "<group>"; };
 		E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishingTaskStatusProgress.m; sourceTree = "<group>"; };
 		E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSoundFileOperation.m; sourceTree = "<group>"; };
 		E525F74ADF149FB8398AE965 /* NSString+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing.m"; sourceTree = "<group>"; };
@@ -2205,6 +2207,7 @@
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
 		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
+		E525FFA89CA744B94C708834 /* AnimationPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationPlaybackManager.h; sourceTree = "<group>"; };
 		FA98CFC1154E7D1C006E58C5 /* ccbpublish */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ccbpublish; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA98CFC3154E7D1C006E58C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ccbpublish.m; sourceTree = "<group>"; };
@@ -3299,8 +3302,8 @@
 				83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */,
 				83F8673218D1DCEA007441E4 /* SBErrors.h */,
 				83F8673318D1DCEA007441E4 /* SBErrors.m */,
-				4DB7C95319083ACF00ECE19F /* SnapLayerKeys.h */,
-				4DB7C95419083ACF00ECE19F /* SnapLayerKeys.m */,
+				4DB7C95319083ACF00ECE19F /* NotificationNames.h */,
+				4DB7C95419083ACF00ECE19F /* NotificationNames.m */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -3906,6 +3909,8 @@
 				8045F13B183AF1DC0082BD94 /* SequencerButtonCell.m */,
 				921EEADE18A5884300D864C2 /* SequencerJoints.h */,
 				921EEADF18A5884300D864C2 /* SequencerJoints.m */,
+				E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */,
+				E525FFA89CA744B94C708834 /* AnimationPlaybackManager.h */,
 			);
 			name = Sequencer;
 			sourceTree = "<group>";
@@ -5959,7 +5964,7 @@
 				77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */,
 				77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */,
 				776A37B61398D6BF00960E94 /* CCBGLView.m in Sources */,
-				4DB7C95719083B9C00ECE19F /* SnapLayerKeys.m in Sources */,
+				4DB7C95719083B9C00ECE19F /* NotificationNames.m in Sources */,
 				E3B7AEDD14E3246100DFD402 /* PlugInManager.m in Sources */,
 				E3B7AEE014E32E7F00DFD402 /* PlugInNode.m in Sources */,
 				E3B7AEEC14E342E200DFD402 /* InspectorPosition.m in Sources */,
@@ -6146,6 +6151,7 @@
 				E525FBB73A012AC88E99B21B /* PublishRenamedFilesLookup.m in Sources */,
 				E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */,
 				E525FA398CC2E279B3D65D16 /* PublishingTaskStatusProgress.m in Sources */,
+				E525F07CCBACEC15F8A13EC7 /* AnimationPlaybackManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

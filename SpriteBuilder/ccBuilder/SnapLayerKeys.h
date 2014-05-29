@@ -1,1 +1,0 @@
-extern NSString *const SnapLayerRefreshLines;

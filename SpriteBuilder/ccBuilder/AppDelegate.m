@@ -117,6 +117,8 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
+#import "AnimationPlaybackManager.h"
+#import "NotificationNames.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -541,6 +543,8 @@ typedef enum
 
     [self registerUserDefaults];
 
+    [self registerNotificationObservers];
+
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
     
@@ -584,6 +588,7 @@ typedef enum
     [self setupInspectorPane];
     [self setupCocos2d];
     [self setupSequenceHandler];
+    animationPlaybackManager.sequencerHandler = sequenceHandler;
     [self updateInspectorFromSelection];
     
     [[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
@@ -632,6 +637,11 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
+}
+
+- (void)registerNotificationObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
 
 - (void)registerUserDefaults
@@ -908,6 +918,10 @@ typedef enum
     }
 }
 
+- (void)deselectAll
+{
+    self.selectedNodes = nil;
+}
 
 -(BOOL)selectedNodeCanHavePhysics
 {
@@ -1716,7 +1730,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Replace open document
-    self.selectedNodes = NULL;
+    [self deselectAll];
     
     SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
     [g.joints deserialize:doc[@"SequencerJoints"]];
@@ -1838,7 +1852,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) closeLastDocument
 {
-    self.selectedNodes = NULL;
+    [self deselectAll];
     
     SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
     [[CocosScene cocosScene] replaceSceneNodes: g];
@@ -2106,7 +2120,6 @@ static BOOL hideAllToNextSeparator;
     [self setSelectedNodes:NULL];
     
 	[[[CCDirector sharedDirector] view] unlockOpenGLContext];
-    
 }
 
 - (void) saveFile:(NSString*) fileName
@@ -2208,7 +2221,7 @@ static BOOL hideAllToNextSeparator;
     
     [[CocosScene cocosScene].notesLayer removeAllNotes];
     
-    self.selectedNodes = NULL;
+    [self deselectAll];
     [[CocosScene cocosScene] setStageSize:stageSize centeredOrigin:centered];
     
     if (type == kCCBNewDocTypeScene)
@@ -2557,6 +2570,8 @@ static BOOL hideAllToNextSeparator;
 
 - (CCNode*) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild
 {
+    [animationPlaybackManager stop];
+
     self.errorDescription = NULL;
     CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:name];
     BOOL success = [self addCCObject:node asChild:asChild];
@@ -2572,6 +2587,8 @@ static BOOL hideAllToNextSeparator;
 
 - (void) dropAddSpriteNamed:(NSString*)spriteFile inSpriteSheet:(NSString*)spriteSheetFile at:(CGPoint)pt parent:(CCNode*)parent
 {
+    [animationPlaybackManager stop];
+
     NodeInfo* info = parent.userObject;
     PlugInNode* plugIn = info.plugIn;
     
@@ -2834,6 +2851,8 @@ static BOOL hideAllToNextSeparator;
     
     if (type)
     {
+        [animationPlaybackManager stop];
+
         NSData* clipData = [cb dataForType:type];
         NSMutableDictionary* clipDict = [NSKeyedUnarchiver unarchiveObjectWithData:clipData];
         
@@ -2950,7 +2969,7 @@ static BOOL hideAllToNextSeparator;
     [node.parent sortAllChildren];
     [outlineHierarchy reloadData];
     
-    self.selectedNodes = NULL;
+    [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
 }
 
@@ -4697,130 +4716,10 @@ static BOOL hideAllToNextSeparator;
     }
 }
 
-#pragma mark Playback countrols
-
-- (void) updatePlayback
+- (void)setCurrentDocument:(CCBDocument *)aCurrentDocument
 {
-    
-    if (!currentDocument)
-    {
-        [self playbackStop:NULL];
-    }
-    
-    if (playingBack)
-    {
-        // Step forward
-        
-        double thisTime = [NSDate timeIntervalSinceReferenceDate];
-        double deltaTime = thisTime - playbackLastFrameTime;
-        double frameDelta = 1.0/sequenceHandler.currentSequence.timelineResolution;
-        float targetNewTime =  sequenceHandler.currentSequence.timelinePosition + deltaTime;
-        
-        int steps = (int)(deltaTime/frameDelta);
-        
-        //determine new time in to the future.
-        
-        [sequenceHandler.currentSequence stepForward:steps];
-        
-        if (sequenceHandler.currentSequence.timelinePosition >= sequenceHandler.currentSequence.timelineLength)
-        {
-            //If we loop, calulate the overhang
-            if(targetNewTime >= sequenceHandler.currentSequence.timelinePosition && sequenceHandler.loopPlayback)
-            {
-                [self playbackJumpToStart:nil];
-                steps = (int)((targetNewTime - sequenceHandler.currentSequence.timelineLength)/frameDelta);
-                [sequenceHandler.currentSequence stepForward:steps];
-            }
-            else
-            {
-                [self playbackStop:NULL];
-                return;
-            }
-        }
-    
-        playbackLastFrameTime += steps * frameDelta;
-        
-        // Call this method again in a little while
-        [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:frameDelta];
-        
-    }
-}
-
-- (IBAction)togglePlayback:(id)sender {
-    if(!playingBack)
-    {
-        [self playbackPlay:sender];
-    }
-    else
-    {
-        [self playbackStop:sender];
-    }
-}
-
-- (IBAction)toggleLoopingPlayback:(id)sender
-{
-    sequenceHandler.loopPlayback = [(NSButton*)sender state] == 1 ? YES : NO;
-}
-
-- (IBAction)playbackPlay:(id)sender
-{
-    if (!self.hasOpenedDocument) return;
-    if (playingBack) return;
-    
-    // Jump to start of sequence if the end is reached
-    if (sequenceHandler.currentSequence.timelinePosition >= sequenceHandler.currentSequence.timelineLength)
-    {
-        sequenceHandler.currentSequence.timelinePosition = 0;
-    }
-    
-    // Deselect all objects to improve performance
-    self.selectedNodes = NULL;
-    
-    // Start playback
-    playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
-    playingBack = YES;
-    [self updatePlayback];
-}
-
-- (IBAction)playbackStop:(id)sender
-{
-    playingBack = NO;
-}
-
-- (IBAction)playbackJumpToStart:(id)sender
-{
-    if (!self.hasOpenedDocument) return;
-    playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
-    sequenceHandler.currentSequence.timelinePosition = 0;
-    [[SequencerHandler sharedHandler] updateScrollerToShowCurrentTime];
-}
-
-- (IBAction)playbackStepBack:(id)sender
-{
-    if (!self.hasOpenedDocument) return;
-    [sequenceHandler.currentSequence stepBack:1];
-}
-
-- (IBAction)playbackStepForward:(id)sender
-{
-    if (!self.hasOpenedDocument) return;
-    [sequenceHandler.currentSequence stepForward:1];
-}
-
-- (IBAction)pressedPlaybackControl:(id)sender
-{
-    NSSegmentedControl* sc = sender;
-    
-    int tag = [sc selectedSegment];
-    if (tag == 0) [self playbackJumpToStart:sender];
-    else if (tag == 1) [self playbackStepBack:sender];
-    else if (tag == 2) [self playbackStepForward:sender];
-    else if (tag == 3) [self playbackStop:sender];
-    else if (tag == 4) [self playbackPlay:sender];
-    else if (tag == -1)
-    {
-        NSLog(@"No selected index!!");
-    }
+    currentDocument = aCurrentDocument;
+    animationPlaybackManager.enabled = aCurrentDocument != nil;
 }
 
 #pragma mark Delegate methods
