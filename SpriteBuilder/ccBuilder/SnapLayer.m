@@ -345,14 +345,31 @@
                         sPoint.y = point.y;
                     }
                     
-                    sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                    sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
                     
                     // Snap from center
                     if(abs(sNode.centerXInPoints - node.centerXInPoints) < sensitivity) {
                         sNode.centerXInPoints = node.centerXInPoints;
                     }
-					if(abs(sNode.centerYInPoints - node.centerYInPoints) < sensitivity) {
+                    if(abs(sNode.centerYInPoints - node.centerYInPoints) < sensitivity) {
                         sNode.centerYInPoints = node.centerYInPoints;
+                    }
+                    
+                    // Snap anchor point to edges
+                    if(abs(sPoint.x - node.rightInPoints) < sensitivity) {
+                        sPoint.x = node.rightInPoints;
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
+                    } else if(abs(sPoint.x - node.leftInPoints) < sensitivity) {
+                        sPoint.x = node.leftInPoints;
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
+                    }
+                    
+                    if(abs(sPoint.y - node.bottomInPoints) < sensitivity) {
+                        sPoint.y = node.bottomInPoints;
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
+                    } else if(abs(sPoint.y - node.topInPoints) < sensitivity) {
+                        sPoint.y = node.topInPoints;
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
                     }
                     
                     // Snap to opposite sides
@@ -362,26 +379,10 @@
                         sNode.rightInPoints = node.leftInPoints;
                     }
                     
-                    if(abs(sPoint.x - node.rightInPoints) < sensitivity) {
-                        sPoint.x = node.rightInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
-                    } else if(abs(sPoint.x - node.leftInPoints) < sensitivity) {
-                        sPoint.x = node.leftInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
-                    }
-                    
                     if(abs(sNode.topInPoints - node.bottomInPoints) < sensitivity) {
                         sNode.topInPoints = node.bottomInPoints;
                     } else if(abs(sNode.bottomInPoints - node.topInPoints) < sensitivity) {
                         sNode.bottomInPoints = node.topInPoints;
-                    }
-                    
-                    if(abs(sPoint.y - node.bottomInPoints) < sensitivity) {
-                        sPoint.y = node.bottomInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
-                    } else if(abs(sPoint.y - node.topInPoints) < sensitivity) {
-                        sPoint.y = node.topInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
                     }
                     
                     // Snap to same sides
@@ -427,10 +428,10 @@
             
             if(abs(sPoint.x - edgeNode.leftInPoints) < sensitivity) {
                 sPoint.x = edgeNode.leftInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             } else if(abs(sPoint.x - edgeNode.rightInPoints) < sensitivity) {
                 sPoint.x = edgeNode.rightInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             }
             
             if(abs(sNode.topInPoints - edgeNode.topInPoints) < sensitivity) {
@@ -441,10 +442,10 @@
             
             if(abs(sPoint.y - edgeNode.topInPoints) < sensitivity) {
                 sPoint.y = edgeNode.topInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             } else if(abs(sPoint.y - edgeNode.bottomInPoints) < sensitivity) {
                 sPoint.y = edgeNode.bottomInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             }
             
             nodesToSearchForSnapping = nil;
@@ -452,8 +453,7 @@
             for(CCNode *node in appDelegate.selectedNodes) {
                 if(node != sNode) {
                     NSPoint point = ccpSub(node.positionInPoints, difference);
-                    point = [self convertPositionFromPoints:point type:self.positionType];
-                    node.position = point;
+                    sNode.positionInPoints = [sNode.parent convertToNodeSpace:point];
                 }
             }
         }
