@@ -12,7 +12,7 @@
 
 -(void)refresh
 {
-    self.sele
+
     
 }
 
