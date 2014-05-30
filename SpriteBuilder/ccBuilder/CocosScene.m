@@ -1082,7 +1082,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             
             // Transform anchor point
             currentMouseTransform = kCCBTransformHandleAnchorPoint;
-            transformScalingNode.startTransform = transformScalingNode.startTransform;
+            [transformScalingNode cacheStartTransformAndAnchor];
             return;
         }
         if(th == kCCBTransformHandleRotate && appDelegate.selectedNode != rootNode)
@@ -1306,7 +1306,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             if(selectedNode.locked)
                 continue;
           
-            selectedNode.startTransform = selectedNode.nodeToWorldTransform;
+            [selectedNode cacheStartTransformAndAnchor];
         }
     
         if (appDelegate.selectedNode != rootNode &&
@@ -1617,7 +1617,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         CGPoint deltaAnchorPoint = ccp(deltaLocal.x / transformScalingNode.contentSizeInPoints.width, deltaLocal.y / transformScalingNode.contentSizeInPoints.height);
         
         [appDelegate saveUndoStateWillChangeProperty:@"anchorPoint"];
-        transformScalingNode.anchorPoint = ccpAdd(transformScalingNode.transformStartPosition, deltaAnchorPoint);
+        transformScalingNode.anchorPoint = ccpAdd(transformScalingNode.startAnchorPoint, deltaAnchorPoint);
         [appDelegate refreshProperty:@"anchorPoint"];
         
         [self updateAnchorPointCompensation];
