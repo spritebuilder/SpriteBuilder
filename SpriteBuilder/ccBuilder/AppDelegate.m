@@ -550,7 +550,7 @@ typedef enum
     [usageManager registerUsage];
     
     // Initialize Audio
-    [OALSimpleAudio sharedInstance];
+    //[OALSimpleAudio sharedInstance];
     
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
@@ -2374,6 +2374,8 @@ static BOOL hideAllToNextSeparator;
     [self menuCleanCacheDirectories:sender];
     [propertyInspectorHandler installDefaultTemplatesReplace:YES];
     [propertyInspectorHandler loadTemplateLibrary];
+    
+    [NSUserDefaults resetStandardUserDefaults];
 }
 
 #pragma mark Undo
