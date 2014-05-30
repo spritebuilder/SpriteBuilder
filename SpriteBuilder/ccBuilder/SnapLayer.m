@@ -361,7 +361,7 @@
                         snapY = NO;
                     }
                     
-                    sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                    sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
                     
                     // Snap from center
                     if(snapX && abs(sNode.centerXInPoints - node.centerXInPoints) < sensitivity) {
@@ -384,11 +384,11 @@
                     
                     if(snapX && abs(sPoint.x - node.rightInPoints) < sensitivity) {
                         sPoint.x = node.rightInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
                         snapX = NO;
                     } else if(snapX && abs(sPoint.x - node.leftInPoints) < sensitivity) {
                         sPoint.x = node.leftInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
                         snapX = NO;
                     }
                     
@@ -402,11 +402,11 @@
                     
                     if(snapY && abs(sPoint.y - node.bottomInPoints) < sensitivity) {
                         sPoint.y = node.bottomInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
                         snapY = NO;
                     } else if(snapY && abs(sPoint.y - node.topInPoints) < sensitivity) {
                         sPoint.y = node.topInPoints;
-                        sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                        sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
                         snapY = NO;
                     }
                     
@@ -450,10 +450,10 @@
             
             if(abs(sPoint.x - edgeNode.leftInPoints) < sensitivity) {
                 sPoint.x = edgeNode.leftInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                 sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             } else if(abs(sPoint.x - edgeNode.rightInPoints) < sensitivity) {
                 sPoint.x = edgeNode.rightInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                 sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             }
             
             if(abs(sNode.topInPoints - edgeNode.topInPoints) < sensitivity) {
@@ -464,10 +464,10 @@
             
             if(abs(sPoint.y - edgeNode.topInPoints) < sensitivity) {
                 sPoint.y = edgeNode.topInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                 sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             } else if(abs(sPoint.y - edgeNode.bottomInPoints) < sensitivity) {
                 sPoint.y = edgeNode.bottomInPoints;
-                sNode.position = [sNode convertPositionFromPoints:[sNode.parent convertToNodeSpace:sPoint] type:self.positionType];
+                 sNode.positionInPoints = [sNode.parent convertToNodeSpace:sPoint];
             }
             
             nodesToSearchForSnapping = nil;
@@ -475,8 +475,7 @@
             for(CCNode *node in appDelegate.selectedNodes) {
                 if(node != sNode) {
                     NSPoint point = ccpSub(node.positionInPoints, difference);
-                    point = [self convertPositionFromPoints:point type:self.positionType];
-                    node.position = point;
+                    sNode.positionInPoints = [sNode.parent convertToNodeSpace:point];
                 }
             }
         }
