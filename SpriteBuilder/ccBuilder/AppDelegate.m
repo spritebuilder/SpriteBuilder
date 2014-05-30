@@ -550,7 +550,7 @@ typedef enum
     [usageManager registerUsage];
     
     // Initialize Audio
-    [OALSimpleAudio sharedInstance];
+    //[OALSimpleAudio sharedInstance];
     
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
