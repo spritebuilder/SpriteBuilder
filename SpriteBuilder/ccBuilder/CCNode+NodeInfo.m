@@ -254,7 +254,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     kCCBKeyframeType keyframeType = [SequencerKeyframe keyframeTypeFromPropertyType:propType];
     
     // Ensure that the keyframe type is supported
-    if (keyframeType != kCCBKeyframeTypeUndefined)
+    if (keyframeType == kCCBKeyframeTypeUndefined)
     {
         return nil;
     }
