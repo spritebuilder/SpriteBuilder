@@ -2374,6 +2374,8 @@ static BOOL hideAllToNextSeparator;
     [self menuCleanCacheDirectories:sender];
     [propertyInspectorHandler installDefaultTemplatesReplace:YES];
     [propertyInspectorHandler loadTemplateLibrary];
+    
+    [NSUserDefaults resetStandardUserDefaults];
 }
 
 #pragma mark Undo
