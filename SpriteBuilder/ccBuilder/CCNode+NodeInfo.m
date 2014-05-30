@@ -905,16 +905,23 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     return info.startTransform;
 }
 
-- (void) setStartTransform:(CGAffineTransform)startTransform
-{
-    NodeInfo* info = self.userObject;
-    info.startTransform = startTransform;
-}
-
 - (CGPoint) transformStartPosition
 {
     NodeInfo* info = self.userObject;
     return CGPointApplyAffineTransform(self.anchorPointInPoints, info.startTransform);
+}
+
+- (CGPoint) startAnchorPoint
+{
+    NodeInfo* info = self.userObject;
+    return info.startAnchorPoint;
+}
+
+- (void) cacheStartTransformAndAnchor
+{
+    NodeInfo* info = self.userObject;
+    info.startTransform = self.nodeToWorldTransform;
+		info.startAnchorPoint = self.anchorPoint;
 }
 
 - (void) setUsesFlashSkew:(BOOL)seqExpanded
