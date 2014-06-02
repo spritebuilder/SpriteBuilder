@@ -36,13 +36,29 @@
     }
 }
 
+- (void) registerEmail:(NSString*)email
+{
+    // Get user ID
+    _userID = [[NSUserDefaults standardUserDefaults] valueForKey:@"sbUserID"];
+    if (!_userID) return;
+    
+    [self sendEvent:@"register" email:email];
+}
+
 - (void) sendEvent:(NSString*)evt
 {
+    [self sendEvent:evt email:@""];
+}
+
+- (void) sendEvent:(NSString*)evt email:(NSString*)email
+{
     ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
+    
+    // Version
     NSString* version = [projectSettings getVersion];
     if (version)
     {
-        // URL encode
+        // URL encode version
         version = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)version, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
     }
     else
@@ -50,8 +66,11 @@
         version = @"";
     }
     
+    // URL encode email
+    email = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)email, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
+    
     // Create URL
-    NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/track?event=%@&id=%@&version=%@", evt, _userID, version];
+    NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/track?event=%@&id=%@&version=%@&email=%@", evt, _userID, version,email];
     NSURL* url = [NSURL URLWithString:urlStr];
     
     // Create the request

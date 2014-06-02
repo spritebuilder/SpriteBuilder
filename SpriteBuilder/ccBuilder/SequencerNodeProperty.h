@@ -23,19 +23,21 @@
  */
 
 #import "cocos2d.h"
+#import "SequencerKeyframe.h"
 
 @class SequencerKeyframe;
 @class SequencerChannel;
+
 
 @interface SequencerNodeProperty : NSObject
 {
     NSMutableArray* keyframes;
     NSString* propName;
-    int type;
+    kCCBKeyframeType type;
 }
 
 @property (nonatomic,readonly) NSMutableArray* keyframes;
-@property (nonatomic,readonly) int type;
+@property (nonatomic,readonly) kCCBKeyframeType type;
 @property (nonatomic,readonly) NSString* propName;
 
 - (id) initWithProperty:(NSString*) name node:(CCNode*)n;

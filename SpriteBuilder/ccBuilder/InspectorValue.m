@@ -32,7 +32,7 @@
 #import "SequencerSequence.h"
 #import "SequencerKeyframe.h"
 #import "SequencerNodeProperty.h"
-#import "SnapLayerKeys.h"
+#import "NotificationNames.h"
 
 @implementation InspectorValue
 

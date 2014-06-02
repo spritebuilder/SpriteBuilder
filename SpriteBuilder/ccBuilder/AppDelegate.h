@@ -117,6 +117,8 @@ enum {
 @class LocalizationEditorHandler;
 @class PhysicsHandler;
 @class WarningTableViewHandler;
+@class AnimationPlaybackManager;
+@class RegistrationWindow;
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
@@ -172,6 +174,7 @@ enum {
     
     // Outline view heirarchy
     SequencerHandler* sequenceHandler;
+    IBOutlet AnimationPlaybackManager *animationPlaybackManager;
     IBOutlet NSOutlineView* outlineHierarchy;
     IBOutlet SequencerScrubberSelectionView* scrubberSelectionView;
     IBOutlet NSTextField* timeDisplay;
@@ -275,6 +278,7 @@ enum {
     
     // About window
     AboutWindow* aboutWindow;
+    RegistrationWindow* registrationWindow;
     
     // Animation playback
     BOOL playingBack;

@@ -42,10 +42,13 @@ NSString * kAnimationOfPhysicsWarning;
 @property (nonatomic,copy) NSString* displayName;
 @property (nonatomic,retain) NSMutableArray* customProperties;
 @property (nonatomic,readonly) CGPoint transformStartPosition;
-@property (nonatomic,assign) CGAffineTransform startTransform;
+@property (nonatomic,readonly) CGAffineTransform startTransform;
+@property (nonatomic,readonly) CGPoint startAnchorPoint;
 @property (nonatomic,retain) NodePhysicsBody* nodePhysicsBody;
 @property (nonatomic,assign) NSUInteger UUID;
 @property (nonatomic, readonly) BOOL hasKeyframes;
+
+- (void) cacheStartTransformAndAnchor;
 
 - (id) extraPropForKey:(NSString*)key;
 - (void) setExtraProp:(id)prop forKey:(NSString*)key;
