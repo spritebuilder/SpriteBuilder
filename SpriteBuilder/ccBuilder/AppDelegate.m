@@ -907,7 +907,8 @@ typedef enum
     
     physicsHandler.selectedNodePhysicsBody = self.selectedNode.nodePhysicsBody;
     [physicsHandler didChangeSelection];
-    
+
+    [animationPlaybackManager stop];
 }
 
 - (CCNode*) selectedNode
