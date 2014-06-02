@@ -14,7 +14,7 @@
 #import "PackageController.h"
 #import "ProjectSettings.h"
 #import "SBErrors.h"
-#import "SnapLayerKeys.h"
+#import "NotificationNames.h"
 #import "MiscConstants.h"
 
 

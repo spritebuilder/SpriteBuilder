@@ -443,6 +443,13 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     {
         NSString* a = [prop objectAtIndex:0];
         NSNumber* b = [prop objectAtIndex:1];
+		
+		//If string is empty, write None
+		if([a isEqualToString:@""])
+		{
+			b = @(0);
+		}
+		
         [self writeCachedString:a isPath:NO];
         [self writeInt:[b intValue] withSign:NO];
     }
@@ -788,6 +795,12 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     {
         NSString* selector = [value objectAtIndex:0];
         int target = [[value objectAtIndex:1] intValue];
+		
+		//if the string is empty, make it write 0 (none).
+		if([selector isEqualToString:@""])
+		{
+			target = 0;
+		}
         
         [self writeCachedString:selector isPath:NO];
         [self writeInt:target withSign:NO];
@@ -986,16 +999,19 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     [self writeCachedString:class isPath:NO];
     
     // Write assignment type and name
-    int memberVarAssignmentType = [[node objectForKey:@"memberVarAssignmentType"] intValue];
+    NSString * memberVarAssignmentName = [node objectForKey:@"memberVarAssignmentName"];
+    
+    int memberVarAssignmentType = 0;
+    
+    //If the assignment name is empty, then don't bother exporting the assignment Type.
+    if(memberVarAssignmentName != nil && ![memberVarAssignmentName isEqualToString:@""])
+    {
+        memberVarAssignmentType = [[node objectForKey:@"memberVarAssignmentType"] intValue];
+    }
+    
     [self writeInt:memberVarAssignmentType withSign:NO];
     if (memberVarAssignmentType)
     {
-        if([[node objectForKey:@"memberVarAssignmentName"] isEqualToString:@""])
-        {
-            
-            [self.delegate addWarningWithDescription:[NSString stringWithFormat:@"Member ivar assigned with <blank> name. This will likely fail at runtime. Node %@", node[@"displayName"]] isFatal:NO relatedFile:Nil resolution:nil];
-            
-        }
         [self writeCachedString:[node objectForKey:@"memberVarAssignmentName"] isPath:NO];
     }
     

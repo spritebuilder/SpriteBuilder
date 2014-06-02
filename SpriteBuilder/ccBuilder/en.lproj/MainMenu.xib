@@ -858,7 +858,7 @@ CA
                             <menuItem title="Play/Stop" keyEquivalent=" " id="1715">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="togglePlayback:" target="494" id="6lX-ux-ZY5"/>
+                                    <action selector="togglePlayback:" target="TMe-KA-zbR" id="IC7-sB-Xjb"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1741"/>
@@ -921,19 +921,19 @@ CA
                             <menuItem title="Jump to Start" keyEquivalent="" id="1714">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="playbackJumpToStart:" target="494" id="1726"/>
+                                    <action selector="jumpToStart:" target="TMe-KA-zbR" id="aWe-c5-Kuj"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Step Forward" keyEquivalent="" id="1712">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="playbackStepForward:" target="494" id="1718"/>
+                                    <action selector="stepOneFrameForward:" target="TMe-KA-zbR" id="0tZ-YW-8c7"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Step Backward" keyEquivalent="" id="1713">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
-                                    <action selector="playbackStepBack:" target="494" id="1719"/>
+                                    <action selector="stepOneFrameBack:" target="TMe-KA-zbR" id="QcQ-8t-whV"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1711"/>
@@ -1039,6 +1039,7 @@ CA
         </menu>
         <window title="SpriteBuilder" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" frameAutosaveName="MainMenu" animationBehavior="default" id="371" customClass="MainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="255" y="184" width="1150" height="700"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="1150" height="675"/>
@@ -1648,7 +1649,7 @@ CA
                                             </segments>
                                         </segmentedCell>
                                         <connections>
-                                            <action selector="pressedPlaybackControl:" target="494" id="1645"/>
+                                            <action selector="pressedPlaybackControl:" target="TMe-KA-zbR" id="Q34-Ri-qDd"/>
                                             <binding destination="494" name="enabled" keyPath="hasOpenedDocument" id="1649"/>
                                         </connections>
                                     </segmentedControl>
@@ -1658,9 +1659,11 @@ CA
                                         <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="seq-btn-loop" imagePosition="only" borderStyle="border" inset="2" id="KQc-hl-Mig">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <connections>
+                                                <action selector="toggleLoopingPlayback:" target="TMe-KA-zbR" id="hzT-cF-Pzs"/>
+                                            </connections>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="toggleLoopingPlayback:" target="494" id="nJe-Ul-KfI"/>
                                             <binding destination="494" name="enabled" keyPath="hasOpenedDocument" id="RA9-Q1-oz6"/>
                                         </connections>
                                     </button>
@@ -2384,6 +2387,7 @@ CA
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
+                <outlet property="animationPlaybackManager" destination="TMe-KA-zbR" id="F3h-M9-Nfa"/>
                 <outlet property="assetsList" destination="1056" id="1057"/>
                 <outlet property="cocosView" destination="603" id="604"/>
                 <outlet property="inspectorCodeScroll" destination="2045" id="2049"/>
@@ -2436,6 +2440,7 @@ CA
                 <outlet property="window" destination="371" id="GSe-qk-SnF"/>
             </connections>
         </customObject>
+        <customObject id="TMe-KA-zbR" customClass="AnimationPlaybackManager"/>
         <customObject id="420" customClass="NSFontManager"/>
         <userDefaultsController representsSharedInstance="YES" id="1042"/>
         <arrayController id="1056"/>

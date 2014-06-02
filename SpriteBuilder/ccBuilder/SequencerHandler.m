@@ -46,6 +46,7 @@
 #import "MainWindow.h"
 #import "NSArray+Query.h"
 #import "CCBPhysicsJoint.h"
+#import "PlugInManager.h"
 
 // TODO: move these to a constants file and replace hard coded strings in project with constants.
 static NSString *const PASTEBOARD_TYPE_NODE = @"com.cocosbuilder.node";
@@ -649,7 +650,7 @@ static SequencerHandler* sharedSequencerHandler;
     NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
 	if (pbNodePlugIn.count > 0)
     {
-		return [self validateDropForPluginNodes:dropTarget];
+		return [self validateDropForPluginNodes:pbNodePlugIn[0] target:dropTarget];
 	}
     
     //Default behavior for Joints is don't accept drag and drops.
@@ -676,17 +677,37 @@ static SequencerHandler* sharedSequencerHandler;
 	return [[pasteboard types] count] > 2;
 }
 
-- (NSDragOperation)validateDropForPluginNodes:(id)dropTarget
+- (NSDragOperation)validateDropForPluginNodes:(NSDictionary*)pluginNodeDescription target:(id)dropTarget
 {
+	PlugInNode * pluginNode = [[PlugInManager sharedManager] plugInNodeNamed:pluginNodeDescription[@"nodeClassName"]];
+	
+	//If we're dropping a joint onto the Sequencer Joints object, all's good.
+	if([dropTarget isKindOfClass:[SequencerJoints class]] && pluginNode.isJoint)
+	{
+		return NSDragOperationGeneric;
+	}
+	
+	//If its some other undefined object type, its not good.
 	if (![dropTarget isKindOfClass:[CCNode class]])
 	{
 		return NSDragOperationNone;
 	}
 
 	CCNode *node = dropTarget;
-	if (node.plugIn.isJoint)
+	
+	//If the incoming plugin is a joint?
+	if (pluginNode.isJoint)
 	{
-		return NSDragOperationNone;
+		//Allow dropping joints onto joints.
+		if(node.plugIn.isJoint)
+		{
+			return NSDragOperationGeneric;
+		}
+		else
+		{
+			//Don't allow dropping joints onto general timeline nodes.
+			return NSDragOperationNone;
+		}
 	}
 
 	return NSDragOperationGeneric;
@@ -818,7 +839,30 @@ static SequencerHandler* sharedSequencerHandler;
 	NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
 	for (NSDictionary* dict in pbNodePlugIn)
     {
-        [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
+		//Add joints differently.
+		PlugInNode * pluginNode = [[PlugInManager sharedManager] plugInNodeNamed:dict[@"nodeClassName"]];
+		if(pluginNode.isJoint)
+		{
+			//Default position is near the root nodes position.
+			CGPoint point = [[CocosScene cocosScene].rootNode.parent convertToWorldSpace:[CocosScene cocosScene].rootNode.position];
+			
+			//If we're dropping it on another joints, place it near it.
+			if([item isKindOfClass:[CCNode class]])
+			{
+				CCNode * node = (CCNode*)item;
+				point = [node.parent convertToWorldSpaceAR:node.position];
+
+			}
+			//But don't place it directly on top.
+			point = ccpAdd(point, ccp(5.0f,5.0f));
+			
+			[appDelegate dropAddPlugInNodeNamed:dict[@"nodeClassName"] at: point];
+		}
+		else //Default add node.
+		{
+			
+			[appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] parent:item index:index];
+		}
         addedObject = YES;
     }
 	return addedObject;

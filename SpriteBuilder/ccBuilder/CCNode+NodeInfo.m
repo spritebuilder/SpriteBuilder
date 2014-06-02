@@ -251,10 +251,10 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 {
     // Get property type
     NSString* propType = [self.plugIn propertyTypeForProperty:name];
-    int keyframeType = [SequencerKeyframe keyframeTypeFromPropertyType:propType];
+    kCCBKeyframeType keyframeType = [SequencerKeyframe keyframeTypeFromPropertyType:propType];
     
     // Ensure that the keyframe type is supported
-    if (!keyframeType)
+    if (keyframeType == kCCBKeyframeTypeUndefined)
     {
         return nil;
     }
@@ -327,7 +327,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 {
     SequencerNodeProperty* seqNodeProp = [self sequenceNodeProperty:name sequenceId:seqId];
     
-    int type = [SequencerKeyframe keyframeTypeFromPropertyType:[self.plugIn propertyTypeForProperty:name]];
+    kCCBKeyframeType type = [SequencerKeyframe keyframeTypeFromPropertyType:[self.plugIn propertyTypeForProperty:name]];
     
     // Check that type is supported
     NSAssert(type, @"Unsupported animated property type (%@)",[self.plugIn propertyTypeForProperty:name]);
@@ -405,7 +405,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 
 - (void) updateProperty:(NSString*) propName time:(float)time sequenceId:(int)seqId
 {
-    int type = [SequencerKeyframe keyframeTypeFromPropertyType:[self.plugIn propertyTypeForProperty:propName]];
+    kCCBKeyframeType type = [SequencerKeyframe keyframeTypeFromPropertyType:[self.plugIn propertyTypeForProperty:propName]];
     
     if (!type) return;
     
@@ -905,16 +905,23 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     return info.startTransform;
 }
 
-- (void) setStartTransform:(CGAffineTransform)startTransform
-{
-    NodeInfo* info = self.userObject;
-    info.startTransform = startTransform;
-}
-
 - (CGPoint) transformStartPosition
 {
     NodeInfo* info = self.userObject;
     return CGPointApplyAffineTransform(self.anchorPointInPoints, info.startTransform);
+}
+
+- (CGPoint) startAnchorPoint
+{
+    NodeInfo* info = self.userObject;
+    return info.startAnchorPoint;
+}
+
+- (void) cacheStartTransformAndAnchor
+{
+    NodeInfo* info = self.userObject;
+    info.startTransform = self.nodeToWorldTransform;
+		info.startAnchorPoint = self.anchorPoint;
 }
 
 - (void) setUsesFlashSkew:(BOOL)seqExpanded

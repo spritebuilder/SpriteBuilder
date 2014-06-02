@@ -27,7 +27,7 @@
 @class SequencerNodeProperty;
 @class SequencerKeyframeEasing;
 
-enum
+typedef enum
 {
     // Node properties
     kCCBKeyframeTypeUndefined,
@@ -41,11 +41,12 @@ enum
     kCCBKeyframeTypeFloatXY,
     kCCBKeyframeTypeColor4,
     kCCBKeyframeTypeFloat,
+    kCCBKeyframeTypeAnimation,
     
     // Channels
     kCCBKeyframeTypeSoundEffects,
     kCCBKeyframeTypeCallbacks,
-};
+} kCCBKeyframeType;
 
 NSString * kClipboardKeyFrames;
 NSString * kClipboardChannelKeyframes;
@@ -53,7 +54,7 @@ NSString * kClipboardChannelKeyframes;
 @interface SequencerKeyframe : NSObject
 {
     id value;
-    int type;
+    kCCBKeyframeType type;
     NSString* name;
     
     float time;
@@ -65,7 +66,7 @@ NSString * kClipboardChannelKeyframes;
 }
 
 @property (nonatomic,strong) id value;
-@property (nonatomic,assign) int type;
+@property (nonatomic,assign) kCCBKeyframeType type;
 @property (nonatomic,strong) NSString* name;
 
 @property (nonatomic,assign) float time;
@@ -78,7 +79,7 @@ NSString * kClipboardChannelKeyframes;
 - (id) initWithSerialization:(id)ser;
 - (id) serialization;
 
-+ (int) keyframeTypeFromPropertyType:(NSString*)type;
++ (kCCBKeyframeType) keyframeTypeFromPropertyType:(NSString*)type;
 
 - (BOOL) valueIsEqualTo:(SequencerKeyframe*)keyframe;
 - (BOOL) supportsFiniteTimeInterpolations;

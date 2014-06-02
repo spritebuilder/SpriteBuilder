@@ -51,7 +51,7 @@
     
     [extraProps setObject:@"" forKey:@"customClass"];
     [extraProps setObject:[NSNumber numberWithBool:YES] forKey:@"isExpanded"];
-    [extraProps setObject:[NSNumber numberWithInt:0] forKey:@"memberVarAssignmentType"];
+    [extraProps setObject:[NSNumber numberWithInt:1] forKey:@"memberVarAssignmentType"];
     [extraProps setObject:@"" forKey:@"memberVarAssignmentName"];
     
     self.animatableProperties = [NSMutableDictionary dictionary];

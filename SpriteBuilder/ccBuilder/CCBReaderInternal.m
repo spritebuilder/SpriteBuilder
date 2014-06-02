@@ -365,6 +365,15 @@ __strong NSDictionary* renamedProperties = nil;
         NSNumber* target = [serializedValue objectAtIndex:1];
         if (!selector) selector = @"";
         if (!target) target = [NSNumber numberWithInt:0];
+		
+
+		//Fixup blocks so if target = NOne, set string = @"" and target = 1;
+		if([target integerValue] == 0)
+		{
+			selector = @"";
+			target = @(1);
+		}
+		
         [extraProps setObject: selector forKey:name];
         [extraProps setObject:target forKey:[NSString stringWithFormat:@"%@Target",name]];
     }
@@ -494,6 +503,13 @@ __strong NSDictionary* renamedProperties = nil;
     NSString* memberVarName = [dict objectForKey:@"memberVarAssignmentName"];
     if (!memberVarName) memberVarName = @"";
     int memberVarType = [[dict objectForKey:@"memberVarAssignmentType"] intValue];
+    
+    //memberVarType is obsolete. Set to 1 upon deserialization.
+    if(memberVarType == 0)
+    {
+        memberVarType = 1;
+        memberVarName = @""; //Make sure we clear the name, since it was unassigned.
+    }
     
     [extraProps setObject:customClass forKey:@"customClass"];
     [extraProps setObject:memberVarName forKey:@"memberVarAssignmentName"];
