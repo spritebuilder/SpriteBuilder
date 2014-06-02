@@ -2138,12 +2138,18 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         rootNode.position = ccp(1024,1024);
         trimImage = YES;
     }
-    
+
+    // Flip Y for preview image
+    rootNode.scaleY = (float) (rootNode.scaleY * -1.0);
+    rootNode.position = ccp(rootNode.position.x, self.stageSize.height);
+
     // Render the root node
     [render beginWithClear:0 g:0 b:0 a:0];
     [rootNode visit];
     [render end];
-    
+
+    // restore state before flipping
+    rootNode.scaleY = (float) (rootNode.scaleY * -1.0);
     // Reset old position
     rootNode.position = oldPosition;
     rootNode.scaleY = rootNode.scaleY * -1.0f;
