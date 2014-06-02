@@ -1793,7 +1793,9 @@ static BOOL hideAllToNextSeparator;
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
 {
     if (!forceReload && [document.fileName isEqualToString:currentDocument.fileName]) return;
-    
+
+    [animationPlaybackManager stop];
+
     [self prepareForDocumentSwitch];
     
     self.currentDocument = document;
