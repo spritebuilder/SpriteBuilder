@@ -1389,6 +1389,8 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }
+
+    [animationPlaybackManager stop];
 }
 
 #pragma mark Document handling
@@ -3872,6 +3874,8 @@ static BOOL hideAllToNextSeparator;
         // Update the timelines
         currentDocument.sequences = wc.sequences;
         sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
+
+        [animationPlaybackManager stop];
     }
 }
 
@@ -3889,6 +3893,8 @@ static BOOL hideAllToNextSeparator;
     
     // and set it to current
     sequenceHandler.currentSequence = newSeq;
+
+    [animationPlaybackManager stop];
 }
 
 - (IBAction)menuTimelineDuplicate:(id)sender
@@ -3904,6 +3910,8 @@ static BOOL hideAllToNextSeparator;
     
     // and set it to current
     sequenceHandler.currentSequence = newSeq;
+
+    [animationPlaybackManager stop];
 }
 
 - (IBAction)menuTimelineDuration:(id)sender
@@ -3919,6 +3927,7 @@ static BOOL hideAllToNextSeparator;
         [sequenceHandler deleteKeyframesForCurrentSequenceAfterTime:wc.duration];
         sequenceHandler.currentSequence.timelineLength = wc.duration;
         [self updateInspectorFromSelection];
+        [animationPlaybackManager stop];
     }
 }
 
