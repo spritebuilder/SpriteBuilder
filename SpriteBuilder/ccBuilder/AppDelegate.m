@@ -3215,6 +3215,8 @@ static BOOL hideAllToNextSeparator;
     {
         [publisher start];
     }
+
+    [animationPlaybackManager stop];
 }
 
 - (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings
