@@ -40,6 +40,7 @@
 #import "RMResource.h"
 #import "RMDirectory.h"
 #import "ResourceTypes.h"
+#import "RMPackage.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
 
@@ -502,7 +503,10 @@
     }
     else
     {
-        dir = [[RMDirectory alloc] init];
+        dir = [self isPackage:dirPath]
+          ? [[RMPackage alloc] init]
+          : [[RMDirectory alloc] init];
+
         dir.count = 1;
         dir.dirPath = dirPath;
         [directories setObject:dir forKey:dirPath];
@@ -511,6 +515,12 @@
     }
     
     [self updateResourcesForPath:dirPath];
+}
+
+
+- (BOOL)isPackage:(NSString *)dirPath
+{
+    return [[dirPath lastPathComponent] hasSuffix:PACKAGE_NAME_SUFFIX];
 }
 
 - (void) removeDirectory:(NSString *)dirPath

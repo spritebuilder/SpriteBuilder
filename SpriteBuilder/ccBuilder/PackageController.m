@@ -6,7 +6,7 @@
 #import "SnapLayerKeys.h"
 #import "SBErrors.h"
 #import "MiscConstants.h"
-#import "Package.h"
+#import "RMPackage.h"
 
 
 @implementation PackageController
@@ -192,9 +192,9 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
                            userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
 }
 
-- (BOOL)exportPackage:(Package *)package toPath:(NSString *)toPath error:(NSError **)error
+- (BOOL)exportPackage:(RMPackage *)package toPath:(NSString *)toPath error:(NSError **)error
 {
-    if (!package || ![package isKindOfClass:[Package class]])
+    if (!package || ![package isKindOfClass:[RMPackage class]])
     {
         *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageExportInvalidPackageError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]}];
         return NO;
@@ -206,7 +206,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
         return NO;
     }
 
-    return [_fileManager copyItemAtPath:package.path toPath:toPath error:error];
+    return [_fileManager copyItemAtPath:package.dirPath toPath:toPath error:error];
 }
 
 @end

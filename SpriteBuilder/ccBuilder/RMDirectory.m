@@ -67,11 +67,6 @@
     return NO;
 }
 
-- (BOOL)isPackage
-{
-    return [[dirPath lastPathComponent] hasSuffix:PACKAGE_NAME_SUFFIX];
-}
-
 - (void) setDirPath:(NSString *)dp
 {
     if (dp != dirPath)

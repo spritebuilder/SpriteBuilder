@@ -31,6 +31,7 @@
 #import "RMDirectory.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"
+#import "RMPackage.h"
 
 @implementation ResourceManagerOutlineView
 
@@ -47,7 +48,7 @@
 
     NSMenu* menu = [AppDelegate appDelegate].menuContextResManager;
     menu.autoenablesItems = NO;
-    
+
     NSArray* items = [menu itemArray];
     for (NSMenuItem* item in items)
     {
@@ -93,13 +94,11 @@
         else if (item.action == @selector(menuActionDelete:))
         {
 			[item setEnabled:NO];
-
-            BOOL isPackage = [clickedItem isKindOfClass:[RMDirectory class]] && [clickedItem isPackage];
             item.title = @"Delete";
 
 			if ([clickedItem isKindOfClass:[RMResource class]]
 				|| [self isSomethingSelected]
-                || isPackage)
+                || [clickedItem isKindOfClass:[RMPackage class]])
 			{
             	[item setEnabled:YES];
 			}
@@ -122,7 +121,67 @@
 		}
     }
 
+    if ([clickedItem isKindOfClass:[RMPackage class]])
+    {
+        [menu addItem:[NSMenuItem separatorItem]];
+
+        NSMenuItem *exportItem = [[NSMenuItem alloc] initWithTitle:@"Export to..."
+                                                            action:@selector(onExportPackageTo:)
+                                                     keyEquivalent:@""];
+        [exportItem setTarget:self];
+        [menu addItem:exportItem];
+    }
+
     return menu;
+}
+
+- (void)onExportPackageTo:(id)sender
+{
+    if([self clickedRow] == -1)
+    {
+        return;
+    }
+
+    id selectedItem = [self itemAtRow:[self clickedRow]];
+    if ([selectedItem isKindOfClass:[RMPackage class]])
+    {
+        NSOpenPanel *openPanel = [self exportPanel];
+
+        [openPanel beginSheetModalForWindow:[AppDelegate appDelegate].window
+                          completionHandler:^(NSInteger result)
+        {
+            if (result == NSFileHandlingPanelOKButton)
+            {
+                [self tryToExportPackage:selectedItem toPath:openPanel.directoryURL.path];
+            }
+        }];
+    }
+}
+
+- (void)tryToExportPackage:(RMDirectory *)package toPath:(NSString *)exportPath
+{
+    PackageController *packageController = [[PackageController alloc] init];
+    NSError *error;
+
+    if (![packageController exportPackage:package toPath:exportPath error:&error])
+    {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:error.localizedDescription];
+        [alert runModal];
+    }
+}
+
+- (NSOpenPanel *)exportPanel
+{
+    NSOpenPanel *openPanel = [NSOpenPanel savePanel];
+    [openPanel setCanCreateDirectories:YES];
+    [openPanel setCanChooseDirectories:YES];
+    [openPanel setCanChooseFiles:NO];
+    [openPanel setPrompt:@"Export"];
+    return openPanel;
 }
 
 - (BOOL)isSomethingSelected
@@ -158,11 +217,10 @@
 				[resourcesToDelete addObject:resource];
 			}
 		}
-        else if ([selectedItem isKindOfClass:[RMDirectory class]]
-                 && [selectedItem isPackage]
+        else if ([selectedItem isKindOfClass:[RMPackage class]]
                  && [FeatureToggle sharedFeatures].arePackagesEnabled)
         {
-            RMDirectory *rmDirectory = (RMDirectory *)selectedItem;
+            RMPackage *rmDirectory = (RMPackage *)selectedItem;
             [packagesPathsToDelete addObject:rmDirectory.dirPath];
         }
 

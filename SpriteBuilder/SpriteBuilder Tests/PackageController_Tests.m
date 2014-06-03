@@ -9,14 +9,13 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import <objc/runtime.h>
-#import <MacTypes.h>
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "ProjectSettings.h"
 #import "SBErrors.h"
 #import "NotificationNames.h"
 #import "MiscConstants.h"
-#import "Package.h"
+#import "RMPackage.h"
 
 
 @interface PackageController_Tests : XCTestCase
@@ -256,7 +255,7 @@
 
     [[[mockFileManager expect] andReturnValue:@(YES)] fileExistsAtPath:OCMOCK_ANY];
 
-    Package *package = [[Package alloc] init];
+    RMPackage *package = [[RMPackage alloc] init];
 
     NSError *error;
     XCTAssertFalse([_packageController exportPackage:package toPath:@"/foo" error:&error]);
@@ -271,8 +270,8 @@
     id mockFileManager = [OCMockObject mockForClass:[NSFileManager class]];
     _packageController.fileManager = mockFileManager;
 
-    Package *package = [[Package alloc] init];
-    package.path = @"/baa";
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/baa";
     NSString *toPath = @"/foo";
 
     [[[mockFileManager expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
@@ -292,6 +291,5 @@
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBPackageExportInvalidPackageError);
 }
-
 
 @end

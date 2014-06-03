@@ -2,7 +2,7 @@
 
 @protocol PackageCreateDelegateProtocol;
 @class ProjectSettings;
-@class Package;
+@class RMPackage;
 
 @interface PackageController : NSObject <PackageCreateDelegateProtocol>
 
@@ -47,6 +47,6 @@
 
 // Copies the pacakge to a given path
 // Returns NO if an error occured, check error object.
-- (BOOL)exportPackage:(Package *)package toPath:(NSString *)toPath error:(NSError **)error;
+- (BOOL)exportPackage:(RMPackage *)package toPath:(NSString *)toPath error:(NSError **)error;
 
 @end

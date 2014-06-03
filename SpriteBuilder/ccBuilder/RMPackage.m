@@ -1,7 +1,7 @@
-#import "Package.h"
+#import "RMPackage.h"
 
 
-@implementation Package
+@implementation RMPackage
 
 #pragma mark - Initialization
 
