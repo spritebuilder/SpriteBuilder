@@ -3,18 +3,9 @@
 
 @implementation RMPackage
 
-#pragma mark - Initialization
-
-- (id)init
+- (NSString *)description
 {
-    self = [super init];
-
-    if (self)
-    {
-
-    }
-
-    return self;
+    return [NSString stringWithFormat:@"Path: %@ ", self.dirPath];
 }
 
 @end
