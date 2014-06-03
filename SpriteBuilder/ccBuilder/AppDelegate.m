@@ -561,7 +561,7 @@ typedef enum
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
     [propertyInspectorHandler loadTemplateLibrary];
 
-    [self initializeFeatureToggle];
+    [self setupFeatureToggle];
     
     selectedNodes = [[NSMutableArray alloc] init];
     loadedSelectedNodes = [[NSMutableArray alloc] init];
@@ -661,7 +661,7 @@ typedef enum
     }
 }
 
-- (id)initializeFeatureToggle
+- (void)setupFeatureToggle
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Features" ofType:@"plist"];
     NSDictionary *features = [NSDictionary dictionaryWithContentsOfFile:path];
