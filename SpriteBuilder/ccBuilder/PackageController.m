@@ -194,19 +194,28 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
 - (BOOL)exportPackage:(RMPackage *)package toPath:(NSString *)toPath error:(NSError **)error
 {
-    if (!package || ![package isKindOfClass:[RMPackage class]])
+    if ([self isPackageValid:package])
     {
         *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageExportInvalidPackageError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]}];
         return NO;
     }
-    
-    if ([_fileManager fileExistsAtPath:toPath])
+
+    NSString *copyToPath = [toPath stringByAppendingPathComponent:[package.dirPath lastPathComponent]];
+
+    if ([_fileManager fileExistsAtPath:copyToPath])
     {
-        *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageAlreadyExistsAtPathError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Package already exists at path %@.", toPath]}];
+        *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageAlreadyExistsAtPathError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Package %@ already exists at path %@.", package, toPath]}];
         return NO;
     }
 
-    return [_fileManager copyItemAtPath:package.dirPath toPath:toPath error:error];
+    return [_fileManager copyItemAtPath:package.dirPath toPath:copyToPath error:error];
+}
+
+- (BOOL)isPackageValid:(RMPackage *)package
+{
+    return !package
+        || ![package isKindOfClass:[RMPackage class]]
+        || !package.dirPath;
 }
 
 @end
