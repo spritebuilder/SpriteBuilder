@@ -124,6 +124,9 @@
 #import "AnimationPlaybackManager.h"
 #import "NotificationNames.h"
 #import "RegistrationWindow.h"
+#import "ResourceTypes.h"
+#import "RMDirectory.h"
+#import "RMResource.h"
 
 
 static const int CCNODE_INDEX_LAST = -1;

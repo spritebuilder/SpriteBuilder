@@ -36,6 +36,11 @@
 #import "PackageController.h"
 #import "SBErrors.h"
 #import "FeatureToggle.h"
+#import "RMResource.h"
+#import "ResourceTypes.h"
+#import "RMDirectory.h"
+#import "RMSpriteFrame.h"
+#import "RMAnimation.h"
 
 @implementation ResourceManagerOutlineHandler
 

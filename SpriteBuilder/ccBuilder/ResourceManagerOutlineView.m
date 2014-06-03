@@ -25,12 +25,12 @@
 #import "ResourceManagerOutlineView.h"
 #import "AppDelegate.h"
 #import "ResourceManager.h"
-#import "ResourceManagerUtil.h"
-#import "ResourceManagerOutlineHandler.h"
-#import "ProjectSettings.h"
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "FeatureToggle.h"
+#import "RMDirectory.h"
+#import "RMResource.h"
+#import "ResourceTypes.h"
 
 @implementation ResourceManagerOutlineView
 

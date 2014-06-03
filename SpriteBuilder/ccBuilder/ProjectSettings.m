@@ -1,4 +1,4 @@
-/*
+#import "RMResource.h"/*
  * CocosBuilder: http://www.cocosbuilder.com
  *
  * Copyright (c) 2012 Zynga Inc.
@@ -32,6 +32,7 @@
 #import "ResourceManagerOutlineHandler.h"
 #import "CCBWarnings.h"
 #import "SBErrors.h"
+#import "ResourceTypes.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 

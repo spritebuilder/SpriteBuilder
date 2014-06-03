@@ -27,6 +27,8 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "AppDelegate.h"
+#import "RMResource.h"
+#import "ResourceTypes.h"
 
 @implementation SequencerPopoverSound
 

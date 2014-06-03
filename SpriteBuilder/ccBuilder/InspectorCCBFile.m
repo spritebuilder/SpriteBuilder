@@ -32,6 +32,8 @@
 #import "NodeGraphPropertySetter.h"
 #import "PositionPropertySetter.h"
 #import "CCNode+NodeInfo.h"
+#import "ResourceTypes.h"
+#import "RMResource.h"
 
 @implementation InspectorCCBFile
 
