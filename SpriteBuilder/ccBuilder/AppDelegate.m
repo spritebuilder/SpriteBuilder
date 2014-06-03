@@ -907,7 +907,8 @@ typedef enum
     
     physicsHandler.selectedNodePhysicsBody = self.selectedNode.nodePhysicsBody;
     [physicsHandler didChangeSelection];
-    
+
+    [animationPlaybackManager stop];
 }
 
 - (CCNode*) selectedNode
@@ -1388,6 +1389,8 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }
+
+    [animationPlaybackManager stop];
 }
 
 #pragma mark Document handling
@@ -1793,7 +1796,9 @@ static BOOL hideAllToNextSeparator;
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
 {
     if (!forceReload && [document.fileName isEqualToString:currentDocument.fileName]) return;
-    
+
+    [animationPlaybackManager stop];
+
     [self prepareForDocumentSwitch];
     
     self.currentDocument = document;
@@ -3212,6 +3217,8 @@ static BOOL hideAllToNextSeparator;
     {
         [publisher start];
     }
+
+    [animationPlaybackManager stop];
 }
 
 - (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings
@@ -3867,6 +3874,8 @@ static BOOL hideAllToNextSeparator;
         // Update the timelines
         currentDocument.sequences = wc.sequences;
         sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
+
+        [animationPlaybackManager stop];
     }
 }
 
@@ -3884,6 +3893,8 @@ static BOOL hideAllToNextSeparator;
     
     // and set it to current
     sequenceHandler.currentSequence = newSeq;
+
+    [animationPlaybackManager stop];
 }
 
 - (IBAction)menuTimelineDuplicate:(id)sender
@@ -3899,6 +3910,8 @@ static BOOL hideAllToNextSeparator;
     
     // and set it to current
     sequenceHandler.currentSequence = newSeq;
+
+    [animationPlaybackManager stop];
 }
 
 - (IBAction)menuTimelineDuration:(id)sender
@@ -3914,6 +3927,7 @@ static BOOL hideAllToNextSeparator;
         [sequenceHandler deleteKeyframesForCurrentSequenceAfterTime:wc.duration];
         sequenceHandler.currentSequence.timelineLength = wc.duration;
         [self updateInspectorFromSelection];
+        [animationPlaybackManager stop];
     }
 }
 
