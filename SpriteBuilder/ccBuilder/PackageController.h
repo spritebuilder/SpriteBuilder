@@ -2,7 +2,7 @@
 
 @protocol PackageCreateDelegateProtocol;
 @class ProjectSettings;
-
+@class Package;
 
 @interface PackageController : NSObject <PackageCreateDelegateProtocol>
 
@@ -44,5 +44,9 @@
 // Returns NO if there was at least one error.
 // In error's userInfo dictionary there'll be the "errors" key with all underlying errors
 - (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error;
+
+// Copies the pacakge to a given path
+// Returns NO if an error occured, check error object.
+- (BOOL)exportPackage:(Package *)package toPath:(NSString *)toPath error:(NSError **)error;
 
 @end

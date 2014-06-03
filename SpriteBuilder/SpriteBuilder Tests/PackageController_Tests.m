@@ -16,6 +16,7 @@
 #import "SBErrors.h"
 #import "NotificationNames.h"
 #import "MiscConstants.h"
+#import "Package.h"
 
 
 @interface PackageController_Tests : XCTestCase
@@ -247,5 +248,50 @@
     [_projectSettingsMock verify];
     [_fileManagerMock verify];
 }
+
+- (void)testPackageExportWithExistingExportFolderAtDestination
+{
+    id mockFileManager = [OCMockObject mockForClass:[NSFileManager class]];
+    _packageController.fileManager = mockFileManager;
+
+    [[[mockFileManager expect] andReturnValue:@(YES)] fileExistsAtPath:OCMOCK_ANY];
+
+    Package *package = [[Package alloc] init];
+
+    NSError *error;
+    XCTAssertFalse([_packageController exportPackage:package toPath:@"/foo" error:&error]);
+    XCTAssertNotNil(error, @"Error object should be set");
+    XCTAssertEqual(error.code, SBPackageAlreadyExistsAtPathError);
+
+    [mockFileManager verify];
+}
+
+- (void)testPackageExport
+{
+    id mockFileManager = [OCMockObject mockForClass:[NSFileManager class]];
+    _packageController.fileManager = mockFileManager;
+
+    Package *package = [[Package alloc] init];
+    package.path = @"/baa";
+    NSString *toPath = @"/foo";
+
+    [[[mockFileManager expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
+    [[[mockFileManager expect] andReturnValue:@(YES)] copyItemAtPath:package.path toPath:toPath error:[OCMArg anyObjectRef]];
+
+    NSError *error;
+    XCTAssertTrue([_packageController exportPackage:package toPath:toPath error:&error]);
+    XCTAssertNil(error);
+}
+
+- (void)testPackageExportWithWrongInput
+{
+    id wrongPackage = @"I'm a package for sure!";
+    NSError *error;
+
+    XCTAssertFalse([_packageController exportPackage:wrongPackage toPath:@"/foo" error:&error]);
+    XCTAssertNotNil(error);
+    XCTAssertEqual(error.code, SBPackageExportInvalidPackageError);
+}
+
 
 @end

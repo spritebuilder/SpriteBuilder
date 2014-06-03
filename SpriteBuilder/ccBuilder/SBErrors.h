@@ -19,3 +19,5 @@ extern NSInteger const SBResourcePathNotInProjectError;
 extern NSInteger const SBImportingPackagesError;
 extern NSInteger const SBRemovePackagesError;
 extern NSInteger const SBResourcePathExistsButNotInProjectError;
+extern NSInteger const SBPackageExportInvalidPackageError;
+extern NSInteger const SBPackageAlreadyExistsAtPathError;

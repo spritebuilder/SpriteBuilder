@@ -6,6 +6,7 @@
 #import "SnapLayerKeys.h"
 #import "SBErrors.h"
 #import "MiscConstants.h"
+#import "Package.h"
 
 
 @implementation PackageController
@@ -189,6 +190,23 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
     return [NSError errorWithDomain:SBErrorDomain
                                code:SBDuplicateResourcePathError
                            userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
+}
+
+- (BOOL)exportPackage:(Package *)package toPath:(NSString *)toPath error:(NSError **)error
+{
+    if (!package || ![package isKindOfClass:[Package class]])
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageExportInvalidPackageError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]}];
+        return NO;
+    }
+    
+    if ([_fileManager fileExistsAtPath:toPath])
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageAlreadyExistsAtPathError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Package already exists at path %@.", toPath]}];
+        return NO;
+    }
+
+    return [_fileManager copyItemAtPath:package.path toPath:toPath error:error];
 }
 
 @end
