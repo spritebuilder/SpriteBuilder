@@ -30,7 +30,6 @@
 
 + (FeatureToggle *)sharedFeatures;
 
-- (void)loadFeatureJsonConfigFromBundleWithFileName:(NSString *)fileName;
-- (void)loadFeaturesWithJsonData:(NSData *)data;
+- (void)loadFeaturesWithDictionary:(NSDictionary *)dict;
 
 @end

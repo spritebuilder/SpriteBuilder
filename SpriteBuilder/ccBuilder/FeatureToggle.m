@@ -31,59 +31,23 @@ static dispatch_once_t onceToken;
     return sharedFeatures;
 }
 
-- (void)loadFeatureJsonConfigFromBundleWithFileName:(NSString *)fileName
+- (void)loadFeaturesWithDictionary:(NSDictionary *)dict
 {
-    NSString *configPath = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
-
-    if (!configPath)
-    {
-        NSLog(@"[FEATURETOGGLE] ERROR file does not exist: %@", fileName);
-        return;
-    }
-
-    NSError *errorConfigLoading;
-    NSData *configContents = [NSData dataWithContentsOfFile:configPath
-                                                    options:NSDataReadingUncached
-                                                      error:&errorConfigLoading];
-
-    if (!configContents)
-    {
-        NSLog(@"[FEATURETOGGLE] ERROR reading feature config file: %@", errorConfigLoading);
-        return;
-    }
-
-    [self loadFeaturesWithJsonData:configContents];
-}
-
-- (void)loadFeaturesWithJsonData:(NSData *)data
-{
-    if(!data)
+    if(!dict)
     {
         return;
     }
 
-    NSError *errorJsonParsing;
-    NSMutableDictionary *objectGraph = [NSJSONSerialization JSONObjectWithData:data
-                                                                       options:NSJSONReadingMutableContainers
-                                                                         error:&errorJsonParsing];
-
-    if (!objectGraph)
-    {
-        NSLog(@"[FEATURETOGGLE] ERROR reading feature config file: %@", errorJsonParsing);
-        return;
-    }
-
-    [self setPropertiesWithFeatures:objectGraph];
-}
-
-- (void)setPropertiesWithFeatures:(NSDictionary *)features
-{
-    for (NSString *key in features)
+    for (NSString *key in dict)
     {
         if ([self isPropertyKeySettable:key onInstance:self])
         {
-            [self setValue:[features objectForKey:key] forKey:key];
-            NSLog(@"[FEATURETOGGLE] feature loaded: %@:%@", key, [features objectForKey:key]);
+            [self setValue:[dict objectForKey:key] forKey:key];
+            BOOL isEnabled = [[dict objectForKey:key] boolValue];
+            if (isEnabled)
+            {
+                NSLog(@"[FEATURETOGGLE] Feature enabled: %@", key);
+            }
         }
     }
 }

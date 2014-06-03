@@ -663,7 +663,9 @@ typedef enum
 
 - (id)initializeFeatureToggle
 {
-    [[FeatureToggle sharedFeatures] loadFeatureJsonConfigFromBundleWithFileName:@"features.config.json"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Features" ofType:@"plist"];
+    NSDictionary *features = [NSDictionary dictionaryWithContentsOfFile:path];
+    [[FeatureToggle sharedFeatures] loadFeaturesWithDictionary:features];
 }
 
 - (void)registerNotificationObservers

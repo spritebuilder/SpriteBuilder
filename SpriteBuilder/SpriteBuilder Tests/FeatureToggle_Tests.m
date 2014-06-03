@@ -32,20 +32,14 @@
 
 @implementation FeatureToggle_Tests
 
-- (void)setUp
-{
-    [super setUp];
-}
-
-- (void)testLoadingFeaturesWithJsonData
+- (void)testLoadingFeaturesWithDictionary
 {
     NSString *featureName = @"foo";
-    NSString *json = [NSString stringWithFormat:@"{\"%@\" : true}", featureName];
-    NSData *jsonData = [json dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *featuresDict = @{featureName : @(1)};
 
     FeatureToggleTestSubclass *featureToggle = [[FeatureToggleTestSubclass alloc] init];
 
-    [featureToggle loadFeaturesWithJsonData:jsonData];
+    [featureToggle loadFeaturesWithDictionary:featuresDict];
 
     @try
     {
@@ -56,6 +50,5 @@
         XCTFail(@"Failed to set feature with name %@", featureName);
     }
 }
-
 
 @end
