@@ -1164,7 +1164,7 @@ static BOOL hideAllToNextSeparator;
         
         if([sequenceHandler currentSequence].timelinePosition != 0.0f || ![sequenceHandler currentSequence].autoPlay)
         {
-            paneOffset = [self addInspectorPropertyOfType:@"SeparatorSub" name:@"name" displayName:@"Must select frame Zero of the autoplay timeline" extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
+            paneOffset = [self addInspectorPropertyOfType:@"PhysicsUnavailable" name:@"name" displayName:nil extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
             displayPluginProperties = NO;
         }
     }
@@ -2681,6 +2681,19 @@ static BOOL hideAllToNextSeparator;
     [self updateInspectorFromSelection];
 }
 
+- (void) gotoAutoplaySequence
+{
+	SequencerSequence * autoPlaySequence = [currentDocument.sequences findFirst:^BOOL(SequencerSequence * sequence, int idx) {
+		return sequence.autoPlay;
+	}];
+	
+	if(autoPlaySequence)
+	{
+		sequenceHandler.currentSequence = autoPlaySequence;
+		sequenceHandler.currentSequence.timelinePosition = 0.0f;
+	}
+}
+
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt
 {
     PlugInNode* pluginDescription = [[PlugInManager sharedManager] plugInNodeNamed:nodeName];
@@ -2690,15 +2703,8 @@ static BOOL hideAllToNextSeparator;
 		{
 			[self modalDialogTitle:@"Changing Timeline" message:@"In order to add a new joint, you must be viewing the first frame of the 'autoplay' timeline." disableKey:@"AddJointSetSequencer"];
 			
-			SequencerSequence * autoPlaySequence = [currentDocument.sequences findFirst:^BOOL(SequencerSequence * sequence, int idx) {
-				return sequence.autoPlay;
-			}];
-
-			if(autoPlaySequence)
-			{
-				sequenceHandler.currentSequence = autoPlaySequence;
-				sequenceHandler.currentSequence.timelinePosition = 0.0f;
-			}
+		
+			[self gotoAutoplaySequence];
 		}
 
 		

@@ -304,6 +304,7 @@ enum {
 @property (nonatomic,assign) BOOL hasOpenedDocument;
 @property (weak, nonatomic,readonly) CCBGLView* cocosView;
 
+
 @property (nonatomic,strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
 
 @property (nonatomic,assign) BOOL canEditContentSize;
@@ -360,10 +361,12 @@ enum {
 // Sequencer
 @property (nonatomic, readonly) BOOL playingBack;
 
+
 // Methods
 + (AppDelegate*) appDelegate;
 
 - (void) updateTimelineMenu;
+- (void) gotoAutoplaySequence;
 - (void) updateInspectorFromSelection;
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
