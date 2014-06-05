@@ -5,12 +5,10 @@
 #import "RMDirectory.h"
 #import "RMPackage.h"
 #import "ResourceActionController.h"
-#import "ResourceMenuItem.h"
 
 
 @interface ResourceContextMenu ()
 
-@property (nonatomic, strong, readwrite) id resource;
 @property (nonatomic, strong, readwrite) NSArray *resources;
 @property (nonatomic, weak) id actionTarget;
 
@@ -22,14 +20,11 @@
 
 #pragma mark - Initialization
 
-// TODO: mixed selection support to show contextual menu items
-// TODO: At least test first resource in array
-- (instancetype)initWithResource:(id)resource actionTarget:(id)actionTarget resources:(NSArray *)resources
+- (instancetype)initWithActionTarget:(id)actionTarget resources:(NSArray *)resources
 {
     self = [super init];
     if (self)
     {
-        self.resource = resource;
         self.resources = resources;
         self.actionTarget = actionTarget;
 
@@ -67,7 +62,7 @@
 
 - (NSMenuItem *)openInExternalEditor
 {
-    if ([_resource isKindOfClass:[RMResource class]]
+    if ([_resources.firstObject isKindOfClass:[RMResource class]]
        && [self isResourceCCBFileOrDirectory])
     {
         return [self createMenuItemWithTitle:@"Open with External Editor" selector:@selector(openResourceWithExternalEditor:)];
@@ -77,9 +72,9 @@
 
 - (NSMenuItem *)toggleSmartSheet
 {
-    if ([_resource isKindOfClass:[RMResource class]])
+    if ([_resources.firstObject isKindOfClass:[RMResource class]])
     {
-        RMResource *clickedResource = _resource;
+        RMResource *clickedResource = _resources.firstObject;
         if (clickedResource.type == kCCBResTypeDirectory)
         {
             RMDirectory *dir = clickedResource.data;
@@ -120,9 +115,9 @@
 
 - (NSMenuItem *)delete
 {
-    if ([_resource isKindOfClass:[RMResource class]]
+    if ([_resources.firstObject isKindOfClass:[RMResource class]]
         || (_resources.count > 0)
-        || [_resource isKindOfClass:[RMPackage class]])
+        || [_resources.firstObject isKindOfClass:[RMPackage class]])
     {
         return [self createMenuItemWithTitle:@"Delete" selector:@selector(deleteResource:)];
     }
@@ -132,7 +127,7 @@
 
 - (NSMenuItem *)exportTo
 {
-    if ([_resource isKindOfClass:[RMPackage class]])
+    if ([_resources.firstObject isKindOfClass:[RMPackage class]])
     {
         return [self createMenuItemWithTitle:@"Export to..." selector:@selector(exportPackage:)];
     }
@@ -141,7 +136,7 @@
 
 - (NSMenuItem *)createMenuItemWithTitle:(NSString *)title selector:(SEL)selector
 {
-    ResourceMenuItem *result = [[ResourceMenuItem alloc] initWithTitle:title selector:selector resources:_resources];
+    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title action:selector keyEquivalent:@""];
     [result setEnabled:YES];
     result.target = _actionTarget;
     return result;
@@ -171,7 +166,7 @@
 
 - (BOOL)isResourceCCBFileOrDirectory
 {
-    RMResource *aResource = (RMResource *)_resource;
+    RMResource *aResource = (RMResource *)_resources.firstObject;
 	return aResource.type == kCCBResTypeCCBFile || aResource.type == kCCBResTypeDirectory;
 }
 

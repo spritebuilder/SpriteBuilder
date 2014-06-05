@@ -49,16 +49,7 @@
 	// the menu outlet of the outline view has to be just set as well
 	[super menuForEvent:evt];
 
-	NSPoint clickedPoint = [self convertPoint:[evt locationInWindow] fromView:nil];
-	int row = [self rowAtPoint:clickedPoint];
-
-	id clickedItem = [self itemAtRow:row];
-
-    ResourceContextMenu *resourceContextMenu = [[ResourceContextMenu alloc] initWithResource:clickedItem
-                                                                                actionTarget:_actionTarget
-                                                                                   resources:[self selectedResources]];
-
-    return resourceContextMenu;
+    return [[ResourceContextMenu alloc] initWithActionTarget:_actionTarget resources:[self selectedResources]];
 }
 
 - (NSArray *)selectedResources

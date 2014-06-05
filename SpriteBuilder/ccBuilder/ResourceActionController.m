@@ -4,7 +4,6 @@
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "AppDelegate.h"
-#import "ResourceMenuItem.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerOutlineView.h"
 #import "RMResource.h"
@@ -264,7 +263,6 @@
         }
     }
 
-    // Create directory
     [fileManager createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
     [[ResourceManager sharedManager] reloadAllResources];
 
