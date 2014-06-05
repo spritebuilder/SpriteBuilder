@@ -62,7 +62,7 @@
 	id clickedItem = [self itemAtRow:row];
 
     ResourceContextMenu *resourceContextMenu = [[ResourceContextMenu alloc] initWithResource:clickedItem
-                                                                            actionController:[ResourceActionController sharedController]
+                                                                                actionTarget:_actionTarget
                                                                                    resources:[self selectedResources]];
 
     return resourceContextMenu;

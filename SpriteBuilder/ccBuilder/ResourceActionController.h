@@ -1,11 +1,12 @@
 #import <Foundation/Foundation.h>
 
 @class ProjectSettings;
+@class ResourceManagerOutlineView;
 
 @interface ResourceActionController : NSObject
 
-
-@property (nonatomic, strong) ProjectSettings *projectSettings;
+@property (nonatomic, weak) ProjectSettings *projectSettings;
+@property (nonatomic, weak) ResourceManagerOutlineView *resourceManagerOutlineView;
 
 
 + (id)sharedController;
@@ -18,10 +19,12 @@
 - (void)createKeyFrameFromSelection:(id)sender;
 
 - (void)newFile:(id)sender;
-- (void)newFileWithResource:(id)resource outlineView:(NSOutlineView *)outlineView;
+
+- (void)newFileWithResource:(id)resource;
 
 - (void)newFolder:(id)sender;
-- (void)newFolderWithResource:(id)resource outlineView:(NSOutlineView *)outlineView;
+
+- (void)newFolderWithResource:(id)resource;
 
 - (void)deleteResource:(id)sender;
 - (void)deleteResources:(NSArray *)resources;

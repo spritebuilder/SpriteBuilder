@@ -22,7 +22,7 @@
 - (void)testShowMenuItemsForEmptySelection
 {
     ResourceContextMenu *resourceContextMenu = [[ResourceContextMenu alloc] initWithResource:nil
-                                                                            actionController:nil
+                                                                                actionTarget:nil
                                                                                    resources:@[]];
 
     XCTAssertTrue([self menu:resourceContextMenu containsItemWithSelector:@selector(newFile:)]);

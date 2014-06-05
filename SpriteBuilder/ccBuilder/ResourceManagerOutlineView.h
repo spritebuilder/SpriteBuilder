@@ -24,6 +24,10 @@
 
 #import "CCBOutlineView.h"
 
+@class ResourceActionController;
+
 @interface ResourceManagerOutlineView : CCBOutlineView
+
+@property (nonatomic, weak) id actionTarget;
 
 @end

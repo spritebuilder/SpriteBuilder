@@ -1,10 +1,12 @@
 #import "ResourceActionController.h"
+
 #import "RMPackage.h"
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "AppDelegate.h"
 #import "ResourceMenuItem.h"
 #import "ProjectSettings.h"
+#import "ResourceManagerOutlineView.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"
 #import "FeatureToggle.h"
@@ -12,9 +14,6 @@
 #import "NotificationNames.h"
 #import "SequencerUtil.h"
 #import "NewDocWindowController.h"
-#import "ResolutionSetting.h"
-#import "CocosScene.h"
-#import "NotesLayer.h"
 #import "NSAlert+Convenience.h"
 
 
@@ -30,12 +29,6 @@
         sharedResourceActionController = [[self alloc] init];
     });
     return sharedResourceActionController;
-}
-
-// TODO: temporary solution until automatic wiring can be done
-- (ProjectSettings *)projectSettings
-{
-    return [AppDelegate appDelegate].projectSettings;
 }
 
 - (void)showResourceInFinder:(id)sender
@@ -97,7 +90,7 @@
 - (void)toggleSmartSheet:(id)sender
 {
     ResourceMenuItem *resourceMenuItem = sender;
-    if (resourceMenuItem.resources.count == 0 || !self.projectSettings)
+    if (resourceMenuItem.resources.count == 0 || !_projectSettings)
     {
         return;
     }
@@ -109,11 +102,11 @@
 
     if (directory.isDynamicSpriteSheet)
     {
-        [self.projectSettings removeSmartSpriteSheet:resource];
+        [_projectSettings removeSmartSpriteSheet:resource];
     }
     else
     {
-        [self.projectSettings makeSmartSpriteSheet:resource];
+        [_projectSettings makeSmartSpriteSheet:resource];
     }
 }
 
@@ -126,10 +119,10 @@
 {
     ResourceMenuItem *resourceMenuItem = sender;
 
-    [self newFileWithResource:[resourceMenuItem.resources firstObject] outlineView:nil];
+    [self newFileWithResource:[resourceMenuItem.resources firstObject]];
 }
 
-- (void)newFileWithResource:(id)resource outlineView:(NSOutlineView *)outlineView
+- (void)newFileWithResource:(id)resource
 {
     NewDocWindowController *newFileWindowController = [[NewDocWindowController alloc] initWithWindowNibName:@"NewDocWindow"];
 
@@ -180,7 +173,7 @@
                            dispatch_get_current_queue(), ^{
                                [[AppDelegate appDelegate] newFile:filePath type:type resolutions:resolutions];
                                id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
-                               [outlineView expandItem:parentResource];
+                               [_resourceManagerOutlineView expandItem:parentResource];
                            });
         }
     }
@@ -190,11 +183,10 @@
 {
     ResourceMenuItem *resourceMenuItem = sender;
 
-    // TODO: add outlineview to properties in here or update differently to put new folder into edit mode
-    [self newFolderWithResource:[resourceMenuItem.resources firstObject] outlineView:nil];
+    [self newFolderWithResource:[resourceMenuItem.resources firstObject]];
 }
 
-- (void)newFolderWithResource:(id)resource outlineView:(NSOutlineView *)outlineView
+- (void)newFolderWithResource:(id)resource
 {
     NSString *dirPath = [self dirPathWithFirstDirFallbackForResource:resource];
     if (!dirPath)
@@ -204,10 +196,7 @@
 
     NSString *newDirPath = [self newUntitledFolderInDirPath:dirPath];
 
-    if (outlineView)
-    {
-        [self selectAndMakeFolderEditable:dirPath newDirPath:newDirPath outlineView:outlineView];
-    }
+    [self selectAndMakeFolderEditable:dirPath newDirPath:newDirPath];
 }
 
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource
@@ -253,13 +242,13 @@
     return dirPath;
 }
 
-- (void)selectAndMakeFolderEditable:(NSString *)dirPath newDirPath:(NSString *)newDirPath outlineView:(NSOutlineView *)outlineView
+- (void)selectAndMakeFolderEditable:(NSString *)dirPath newDirPath:(NSString *)newDirPath
 {
     RMResource *newResource = [[ResourceManager sharedManager] resourceForPath:newDirPath];
 
     id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
-    [outlineView expandItem:parentResource];
-    [outlineView editColumn:0 row:[outlineView rowForItem:newResource] withEvent:nil select:YES];
+    [_resourceManagerOutlineView expandItem:parentResource];
+    [_resourceManagerOutlineView editColumn:0 row:[_resourceManagerOutlineView rowForItem:newResource] withEvent:nil select:YES];
 }
 
 - (NSString *)newUntitledFolderInDirPath:(NSString *)dirPath

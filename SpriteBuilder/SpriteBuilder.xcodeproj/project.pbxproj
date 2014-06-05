@@ -812,7 +812,6 @@
 		E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F74ADF149FB8398AE965 /* NSString+Publishing.m */; };
 		E525F50C89C6296C9FE062F9 /* ruler-numbers.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */; };
 		E525F549B73C33797CD485BE /* PackageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F148A8B90E93D1D71D32 /* PackageController.m */; };
-		E525F5627EDE44EFE1D88255 /* ResourceActionController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5EC15D1846D9E66EEB7 /* ResourceActionController.m */; };
 		E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */; };
 		E525F8907D4A233EE610B150 /* ResourceContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA1C66FCA2430EEFB44F /* ResourceContextMenu.m */; };
 		E525F90784006C34BD20E775 /* RMPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F49BD7988117B20F261D /* RMPackage.m */; };
@@ -829,6 +828,7 @@
 		E525FD71DA9970A211540812 /* RMDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDE1E2157A624E4395A5 /* RMDirectory.m */; };
 		E525FEF248B6441F79F7B62C /* ResourceMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F1E470E70F517E91BEDA /* ResourceMenuItem.m */; };
 		E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */; };
+		E525FF5FB1CCCDABE19542EC /* ResourceActionController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9DCAC90DFA3438D22FD /* ResourceActionController.m */; };
 		FA98CFC4154E7D1C006E58C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA98CFC3154E7D1C006E58C5 /* Foundation.framework */; };
 		FA98CFC7154E7D1C006E58C5 /* ccbpublish.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */; };
 		FA98CFD1154E7F7D006E58C5 /* CCBX.m in Sources */ = {isa = PBXBuildFile; fileRef = E398C03614FB8A430078E771 /* CCBX.m */; };
@@ -2238,6 +2238,7 @@
 		E525F0A6B228717C246675C0 /* PublishLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishLogging.h; sourceTree = "<group>"; };
 		E525F0BC44FE0FDD5840BDC8 /* ResourceTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceTypes.h; sourceTree = "<group>"; };
 		E525F0ED6F868B09686F38DF /* PublishRegularFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishRegularFileOperation.h; sourceTree = "<group>"; };
+		E525F0F30379667FD6285EA3 /* ResourceActionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceActionController.h; sourceTree = "<group>"; };
 		E525F148A8B90E93D1D71D32 /* PackageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageController.m; sourceTree = "<group>"; };
 		E525F1E470E70F517E91BEDA /* ResourceMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceMenuItem.m; sourceTree = "<group>"; };
 		E525F2ADCDB6F6933CAD7A97 /* RMAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMAnimation.m; sourceTree = "<group>"; };
@@ -2247,10 +2248,8 @@
 		E525F48CD0F42A2D56A68444 /* NSAlert+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+Convenience.m"; sourceTree = "<group>"; };
 		E525F49BD7988117B20F261D /* RMPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPackage.m; sourceTree = "<group>"; };
 		E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteKitSpriteSheetOperation.m; sourceTree = "<group>"; };
-		E525F5EC15D1846D9E66EEB7 /* ResourceActionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceActionController.m; sourceTree = "<group>"; };
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
 		E525F60141EECA8FC9DF3034 /* MiscConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscConstants.m; sourceTree = "<group>"; };
-		E525F653ECA1CA645282FDFE /* ResourceActionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceActionController.h; sourceTree = "<group>"; };
 		E525F6C644CA9F78DAE45A13 /* PackageCreateDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreateDelegateProtocol.h; sourceTree = "<group>"; };
 		E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPlaybackManager.m; sourceTree = "<group>"; };
 		E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishingTaskStatusProgress.m; sourceTree = "<group>"; };
@@ -2272,6 +2271,7 @@
 		E525F9A9F017343391589C8B /* PublishRenamedFilesLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishRenamedFilesLookup.h; sourceTree = "<group>"; };
 		E525F9BDAEF872AB23D84977 /* TaskStatusUpdaterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskStatusUpdaterProtocol.h; sourceTree = "<group>"; };
 		E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishGeneratedFilesOperation.m; sourceTree = "<group>"; };
+		E525F9DCAC90DFA3438D22FD /* ResourceActionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceActionController.m; sourceTree = "<group>"; };
 		E525FA122097E3A343BA0A68 /* RMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMResource.h; sourceTree = "<group>"; };
 		E525FA1C66FCA2430EEFB44F /* ResourceContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu.m; sourceTree = "<group>"; };
 		E525FAF305E29FFBA1ADF131 /* RMAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMAnimation.h; sourceTree = "<group>"; };
@@ -3410,8 +3410,6 @@
 			children = (
 				E525FA1C66FCA2430EEFB44F /* ResourceContextMenu.m */,
 				E525F0A0D5A7FE369D2597CF /* ResourceContextMenu.h */,
-				E525F5EC15D1846D9E66EEB7 /* ResourceActionController.m */,
-				E525F653ECA1CA645282FDFE /* ResourceActionController.h */,
 				E525F1E470E70F517E91BEDA /* ResourceMenuItem.m */,
 				E525F8D898F8B1D09E06AD28 /* ResourceMenuItem.h */,
 			);
@@ -4675,6 +4673,8 @@
 				B7AC69AE17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.h */,
 				B7AC69AF17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m */,
 				E525F0BC44FE0FDD5840BDC8 /* ResourceTypes.h */,
+				E525F0F30379667FD6285EA3 /* ResourceActionController.h */,
+				E525F9DCAC90DFA3438D22FD /* ResourceActionController.m */,
 			);
 			name = "Resource Manager";
 			sourceTree = "<group>";
@@ -6364,9 +6364,9 @@
 				E525F4A65E3BA6A5C69470AD /* RMAnimation.m in Sources */,
 				E525F90784006C34BD20E775 /* RMPackage.m in Sources */,
 				E525F8907D4A233EE610B150 /* ResourceContextMenu.m in Sources */,
-				E525F5627EDE44EFE1D88255 /* ResourceActionController.m in Sources */,
 				E525FEF248B6441F79F7B62C /* ResourceMenuItem.m in Sources */,
 				E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */,
+				E525FF5FB1CCCDABE19542EC /* ResourceActionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

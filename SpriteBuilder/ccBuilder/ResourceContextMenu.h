@@ -7,8 +7,7 @@
 
 @property (nonatomic, strong, readonly) id resource;
 @property (nonatomic, strong, readonly) NSArray *resources;
-@property (nonatomic, strong) ResourceActionController *actionController;
 
-- (instancetype)initWithResource:(id)resource actionController:(ResourceActionController *)actionController resources:(NSArray *)resources;
+- (instancetype)initWithResource:(id)resource actionTarget:(id)actionTarget resources:(NSArray *)resources;
 
 @end

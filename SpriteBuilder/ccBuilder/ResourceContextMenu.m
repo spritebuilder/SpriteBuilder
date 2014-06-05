@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong, readwrite) id resource;
 @property (nonatomic, strong, readwrite) NSArray *resources;
+@property (nonatomic, weak) id actionTarget;
 
 @end
 
@@ -23,14 +24,14 @@
 
 // TODO: mixed selection support to show contextual menu items
 // TODO: At least test first resource in array
-- (instancetype)initWithResource:(id)resource actionController:(ResourceActionController *)actionController resources:(NSArray *)resources
+- (instancetype)initWithResource:(id)resource actionTarget:(id)actionTarget resources:(NSArray *)resources
 {
     self = [super init];
     if (self)
     {
         self.resource = resource;
         self.resources = resources;
-        self.actionController = actionController;
+        self.actionTarget = actionTarget;
 
         [self setupMenu];
     }
@@ -142,7 +143,7 @@
 {
     ResourceMenuItem *result = [[ResourceMenuItem alloc] initWithTitle:title selector:selector resources:_resources];
     [result setEnabled:YES];
-    result.target = _actionController;
+    result.target = _actionTarget;
     return result;
 }
 

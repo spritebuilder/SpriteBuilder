@@ -139,6 +139,9 @@ static const int CCNODE_INDEX_LAST = -1;
 @end
 
 @implementation AppDelegate
+{
+    ResourceActionController *_resourceActionController;
+}
 
 @synthesize window;
 @synthesize projectSettings;
@@ -624,6 +627,7 @@ typedef enum
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
     [self setupExtras];
+    [self setupActionController];
 
     [window restorePreviousOpenedPanels];
 
@@ -653,6 +657,14 @@ typedef enum
 
     // Open registration window
     [self openRegistrationWindow];
+}
+
+- (void)setupActionController
+{
+    _resourceActionController = [[ResourceActionController alloc] init];
+    _resourceActionController.resourceManagerOutlineView = outlineProject;
+
+    outlineProject.actionTarget = _resourceActionController;
 }
 
 - (void)toggleFeatures
@@ -2060,6 +2072,7 @@ static BOOL hideAllToNextSeparator;
     project.projectPath = fileName;
     [project store];
     self.projectSettings = project;
+    _resourceActionController.projectSettings = self.projectSettings;
     
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
@@ -3458,7 +3471,7 @@ static BOOL hideAllToNextSeparator;
         resource = [outlineProject itemAtRow:selectedRow];
     }
 
-    [[ResourceActionController sharedController] newFolderWithResource:resource outlineView:outlineProject];
+    [[ResourceActionController sharedController] newFolderWithResource:resource];
 }
 
 - (IBAction) newDocument:(id)sender
@@ -3468,7 +3481,7 @@ static BOOL hideAllToNextSeparator;
     if (selectedRow >= 0 && projectSettings)
     {
         RMResource *res = [outlineProject itemAtRow:selectedRow];
-        [[ResourceActionController sharedController] newFileWithResource:res outlineView:outlineProject];
+        [[ResourceActionController sharedController] newFileWithResource:res];
     }
 }
 

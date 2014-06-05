@@ -119,6 +119,7 @@ enum {
 @class WarningTableViewHandler;
 @class AnimationPlaybackManager;
 @class RegistrationWindow;
+@class ResourceManagerOutlineView;
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
@@ -242,7 +243,7 @@ enum {
     ProjectSettings* projectSettings;
     
     // Project display
-    IBOutlet NSOutlineView* __weak outlineProject;
+    IBOutlet ResourceManagerOutlineView* __weak outlineProject;
     ResourceManagerOutlineHandler* projectOutlineHandler;
     
     // Project Warnings.
@@ -301,7 +302,7 @@ enum {
 
 @property (weak) IBOutlet MainWindow *window;
 
-@property (weak, nonatomic,readonly) IBOutlet NSOutlineView* outlineProject;
+@property (weak, nonatomic,readonly) IBOutlet ResourceManagerOutlineView *outlineProject;
 
 
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
