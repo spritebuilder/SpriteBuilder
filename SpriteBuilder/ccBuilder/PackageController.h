@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
-@protocol PackageCreateDelegateProtocol;
+#import "PackageCreateDelegateProtocol.h"
+
 @class ProjectSettings;
 @class RMPackage;
 

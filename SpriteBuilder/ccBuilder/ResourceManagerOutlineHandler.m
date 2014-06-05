@@ -528,7 +528,7 @@
                                          defaultButton:@"OK"
                                        alternateButton:nil
                                            otherButton:nil
-                             informativeTextWithFormat:errorMessage];
+                             informativeTextWithFormat:@"%@", error.localizedDescription];
         [alert runModal];
     }
 }
@@ -536,7 +536,7 @@
 - (BOOL)isPackageWithPath:(NSString *)path
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];;
-    BOOL *isDirectory;
+    BOOL isDirectory;
     if ([fileManager fileExistsAtPath:path isDirectory:&isDirectory])
     {
         return isDirectory
