@@ -24,6 +24,7 @@
 - (void)newFolderWithResource:(id)resource outlineView:(NSOutlineView *)outlineView;
 
 - (void)deleteResource:(id)sender;
+- (void)deleteResources:(NSArray *)resources;
 
 - (void)exportPackage:(id)sender;
 

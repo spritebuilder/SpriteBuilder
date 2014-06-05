@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "ResourceActionController.h"
 #import "RMPackage.h"
 #import "PackageCreateDelegateProtocol.h"
