@@ -105,6 +105,16 @@
 
 - (void) setGain:(float)gain
 {
+	if(gain > 1.0f || gain < 0)
+	{
+
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  100), dispatch_get_main_queue(), ^{
+				[[AppDelegate appDelegate] modalDialogTitle:@"Invalid Range" message:@"The gain must be between 0.0 and 1.0"];
+		});
+		
+		return;
+	}
+	
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*popoversound"];
     
     _keyframe.value = [self replaceObjectAtIndex:3 inArray:_keyframe.value withObject:[NSNumber numberWithFloat:gain]];
