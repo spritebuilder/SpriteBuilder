@@ -340,7 +340,6 @@ enum {
 
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
-@property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextResManager;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;
 @property (weak, nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
 
@@ -373,6 +372,8 @@ enum {
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
 - (void) openFile:(NSString*) fileName;
+
+- (void)newFile:(NSString *)fileName type:(int)type resolutions:(NSMutableArray *)resolutions;
 
 // Publish commands
 - (void)checkForDirtyDocumentAndPublishAsync:(BOOL)async;
@@ -415,10 +416,7 @@ enum {
 - (IBAction) menuZoomIn:(id)sender;
 - (IBAction) menuZoomOut:(id)sender;
 
-- (IBAction)menuCreateSmartSpriteSheet:(id)sender;
-- (IBAction)menuShowInFinder:(id)sender;
 - (IBAction) pressedToolSelection:(id)sender;
-- (IBAction) pressedPanelVisibility:(id)sender;
 
 - (IBAction) menuOpenResourceManager:(id)sender;
 - (void) reloadResources;
@@ -429,11 +427,6 @@ enum {
 
 // selectors exposed to suppress 'undeclared selector' warnings
 - (IBAction)menuPasteKeyframes:(id)sender;
-- (IBAction)menuEditSmartSpriteSheet:(id)sender;
-- (IBAction)menuActionDelete:(id)sender;
-- (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender;
-- (IBAction)menuActionNewFolder:(NSMenuItem*)sender;
-- (IBAction)menuOpenExternal:(id)sender;
 
 // Undo / Redo
 - (void) updateDirtyMark;

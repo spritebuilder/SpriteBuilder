@@ -127,6 +127,7 @@
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "RMResource.h"
+#import "ResourceActionController.h"
 
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -160,7 +161,6 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize guiWindow;
 @synthesize menuContextKeyframe;
 @synthesize menuContextKeyframeInterpol;
-@synthesize menuContextResManager;
 @synthesize menuContextKeyframeNoselection;
 @synthesize outlineProject;
 @synthesize errorDescription;
@@ -705,7 +705,6 @@ typedef enum
 {
     NSAlert* alert = [NSAlert alertWithMessageText:title defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"%@",msg];
 	[alert runModal];
-
 }
 
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg disableKey:(NSString*)key
@@ -3451,153 +3450,25 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) newFolder:(id)sender
 {
-    NSFileManager* fm = [NSFileManager defaultManager];
-    
-    // Find directory
-    NSArray* dirs = [ResourceManager sharedManager].activeDirectories;
-    if (dirs.count == 0)
-        return;
-    
-    
-    RMDirectory* dir = [dirs objectAtIndex:0];
-    NSString* dirPath = dir.dirPath;
+    RMResource *resource;
 
     int selectedRow = [sender tag];
+    if(selectedRow >= 0 && projectSettings)
+    {
+        resource = [outlineProject itemAtRow:selectedRow];
+    }
 
-    if(selectedRow != -1)
-    {
-        if (selectedRow >= 0 && projectSettings)
-        {
-            RMResource* res = [outlineProject itemAtRow:selectedRow];
-            
-            if([res isKindOfClass:[RMDirectory class]])
-            {
-                RMDirectory * directoryResource = (RMDirectory *)res;
-                dirPath = directoryResource.dirPath;
-                
-            }
-            else
-            {
-                
-                if(res.type == kCCBResTypeDirectory)
-                {
-                    dirPath = res.filePath;
-                }
-                else
-                {
-                    dirPath = [res.filePath stringByDeletingLastPathComponent];
-                }
-            }
-        }
-    }
-    
-    int attempt = 0;
-    NSString* newDirPath = NULL;
-    while (newDirPath == NULL)
-    {
-        NSString* dirName = NULL;
-        if (attempt == 0) dirName = @"Untitled Folder";
-        else dirName = [NSString stringWithFormat:@"Untitled Folder %d", attempt];
-        
-        newDirPath = [dirPath stringByAppendingPathComponent:dirName];
-        
-        if ([fm fileExistsAtPath:newDirPath])
-        {
-            attempt++;
-            newDirPath = NULL;
-        }
-    }
-    
-    // Create directory
-    [fm createDirectoryAtPath:newDirPath withIntermediateDirectories:YES attributes:NULL error:NULL];
-    [[ResourceManager sharedManager] reloadAllResources];
-    
-    RMResource * res = [[ResourceManager sharedManager] resourceForPath:newDirPath];
-    
-    id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
-    [outlineProject expandItem:parentResource];
-    
-    [outlineProject editColumn:0 row:[outlineProject rowForItem:res] withEvent:sender select:YES];
+    [[ResourceActionController sharedController] newFolderWithResource:resource outlineView:outlineProject];
 }
 
 - (IBAction) newDocument:(id)sender
 {
-    NewDocWindowController* wc = [[NewDocWindowController alloc] initWithWindowNibName:@"NewDocWindow"];
-    
-    // Show new document sheet
-    [NSApp beginSheet:[wc window] modalForWindow:window modalDelegate:NULL didEndSelector:NULL contextInfo:NULL];
-    int acceptedModal = (int)[NSApp runModalForWindow:[wc window]];
-    [NSApp endSheet:[wc window]];
-    [[wc window] close];
-    
-    if (acceptedModal)
-    {
-        NSString* dirPath = [[[ResourceManager sharedManager].activeDirectories objectAtIndex:0] dirPath];
-        
-        int selectedRow = [sender tag];
+    int selectedRow = [sender tag];
 
-        if(selectedRow != -1)
-        {
-            if (selectedRow >= 0 && projectSettings)
-            {
-                RMResource* res = [outlineProject itemAtRow:selectedRow];
-                
-                if([res isKindOfClass:[RMDirectory class]])
-                {
-                    RMDirectory * directoryResource = (RMDirectory *)res;
-                    dirPath = directoryResource.dirPath;
-                }
-                else
-                {
-                    
-                    if(res.type == kCCBResTypeDirectory)
-                    {
-                        dirPath = res.filePath;
-                    }
-                    else
-                    {
-                        dirPath = [res.filePath stringByDeletingLastPathComponent];
-                    }
-                }
-            }
-        }
-        
-        NSString* filePath = [dirPath stringByAppendingPathComponent:wc.documentName];
-        
-        
-        if (![[filePath pathExtension] isEqualToString:@"ccb"])
-        {
-            filePath = [filePath stringByAppendingPathExtension:@"ccb"];
-        }
-        
-        BOOL isDir = NO;
-        
-        if (!wc.documentName)
-        {
-            [self modalDialogTitle:@"Missing File Name" message:@"Failed to create file, no file name was specified."];
-        }
-        else if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-        {
-            [self modalDialogTitle:@"File Already Exists" message:@"Failed to create file, a file with the same name already exists."];
-        }
-        else if (![[NSFileManager defaultManager] fileExistsAtPath:[filePath stringByDeletingLastPathComponent] isDirectory:&isDir] || !isDir)
-        {
-            [self modalDialogTitle:@"Invalid Directory" message:@"Failed to create file, the directory for the file doesn't exist."];
-        }
-        else
-        {
-            int type = wc.rootObjectType;
-            NSMutableArray *resolutions = wc.availableResolutions;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
-                               [self newFile:filePath type:type resolutions:resolutions];
-                               id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
-                               [outlineProject expandItem:parentResource];
-                           });
-        }
-    }
-    else
+    if (selectedRow >= 0 && projectSettings)
     {
+        RMResource *res = [outlineProject itemAtRow:selectedRow];
+        [[ResourceActionController sharedController] newFileWithResource:res outlineView:outlineProject];
     }
 }
 
@@ -4459,65 +4330,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuCreateKeyframesFromSelection:(id)sender
 {
-    [SequencerUtil createFramesFromSelectedResources];
-}
-
-- (IBAction)menuOpenExternal:(id)sender
-{
-    NSString* path = [self getPathOfMenuItem:sender];
-    if (path) {
-        [[NSWorkspace sharedWorkspace] openFile:path];
-    }
-}
-- (IBAction)menuShowInFinder:(id)sender {
-    NSString* path = [self getPathOfMenuItem:sender];
-    if (path) {
-        [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
-
-    }
-}
-
-- (IBAction)menuCreateSmartSpriteSheet:(id)sender
-{
-    int selectedRow = [sender tag];
-    
-    if (selectedRow >= 0 && projectSettings)
-    {
-        RMResource* res = [outlineProject itemAtRow:selectedRow];
-        RMDirectory* dir = res.data;
-        
-        if (dir.isDynamicSpriteSheet)
-        {
-            [projectSettings removeSmartSpriteSheet:res];
-        }
-        else
-        {
-            [projectSettings makeSmartSpriteSheet:res];
-        }
-    }
-}
-
-- (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender
-{
-    //forward to normal handler.
-    [self newDocument:sender];
-}
-
-- (IBAction)menuActionDelete:(id)sender
-{
-    int selectedRow = [sender tag];
-    
-    if (projectSettings)
-    {
-        ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
-		[resManagerOutlineView deleteSelectedResourcesWithRightClickedRow:selectedRow];
-    }
-}
-
-- (IBAction)menuActionNewFolder:(NSMenuItem*)sender
-{
-    //forward to normal handler.
-    [self newFolder:sender];
+    [[ResourceActionController sharedController] createKeyFrameFromSelection:nil];
 }
 
 - (IBAction)menuNewFolder:(NSMenuItem*)sender
@@ -4528,67 +4341,12 @@ static BOOL hideAllToNextSeparator;
     [self newFolder:sender];
 }
 
-
 - (IBAction)menuNewFile:(NSMenuItem*)sender
 {
     ResourceManagerOutlineView * resManagerOutlineView = (ResourceManagerOutlineView*)outlineProject;
     sender.tag = resManagerOutlineView.selectedRow;
     
     [self newDocument:sender];
-}
-
-
-
-- (IBAction)menuEditSmartSpriteSheet:(id)sender
-{
-	/*
-    int selectedRow = [sender tag];
-    
-    if (selectedRow >= 0 && projectSettings)
-    {
-        RMResource* res = [outlineProject itemAtRow:selectedRow];
-        
-        ProjectSettingsGeneratedSpriteSheet* ssSettings = [projectSettings smartSpriteSheetForRes:res];
-        if (!ssSettings) return;
-        
-        SpriteSheetSettingsWindow* wc = [[[SpriteSheetSettingsWindow alloc] initWithWindowNibName:@"SpriteSheetSettingsWindow"] autorelease];
-        
-        wc.compress = ssSettings.compress;
-        wc.dither = ssSettings.dither;
-        wc.textureFileFormat = ssSettings.textureFileFormat;
-        wc.ditherAndroid = ssSettings.ditherAndroid;
-        wc.textureFileFormatAndroid = ssSettings.textureFileFormatAndroid;
-        wc.textureFileFormatHTML5 = ssSettings.textureFileFormatHTML5;
-        wc.ditherHTML5 = ssSettings.ditherHTML5;
-        wc.iOSEnabled = projectSettings.publishEnablediPhone;
-        wc.androidEnabled = projectSettings.publishEnabledAndroid;
-        wc.HTML5Enabled = projectSettings.publishEnabledHTML5;
-
-        int success = [wc runModalSheetForWindow:window];
-        
-        if (success)
-        {
-            BOOL settingDirty  = (ssSettings.compress != wc.compress)||
-                                 (ssSettings.dither != wc.dither)||
-                                 (ssSettings.textureFileFormat != wc.textureFileFormat)||
-                                 (ssSettings.ditherAndroid != wc.ditherAndroid)||
-                                 (ssSettings.textureFileFormatAndroid != wc.textureFileFormatAndroid)||
-                                 (ssSettings.textureFileFormatHTML5 != wc.textureFileFormatHTML5)||
-                                 (ssSettings.ditherHTML5 != wc.ditherHTML5);
-            if(settingDirty){
-                ssSettings.isDirty = YES;
-                ssSettings.compress = wc.compress;
-                ssSettings.dither = wc.dither;
-                ssSettings.textureFileFormat = wc.textureFileFormat;
-                ssSettings.ditherAndroid = wc.ditherAndroid;
-                ssSettings.textureFileFormatAndroid = wc.textureFileFormatAndroid;
-                ssSettings.textureFileFormatHTML5 = wc.textureFileFormatHTML5;
-                ssSettings.ditherHTML5 = wc.ditherHTML5;
-                [projectSettings store];
-            }
-        }
-    }
-	 */
 }
 
 - (IBAction)menuAlignKeyframeToMarker:(id)sender
