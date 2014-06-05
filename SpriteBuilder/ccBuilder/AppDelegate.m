@@ -3430,6 +3430,8 @@ static BOOL hideAllToNextSeparator;
                 RMDirectory * directoryResource = (RMDirectory *)res;
                 dirPath = directoryResource.dirPath;
                 
+				//Expand it.
+				[outlineProject expandItem:directoryResource];
             }
             else
             {
@@ -3501,6 +3503,9 @@ static BOOL hideAllToNextSeparator;
                 {
                     RMDirectory * directoryResource = (RMDirectory *)res;
                     dirPath = directoryResource.dirPath;
+					
+					//Expand to view.
+					[outlineProject expandItem:directoryResource];
                 }
                 else
                 {
@@ -4898,7 +4903,19 @@ static BOOL hideAllToNextSeparator;
 {
     NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
     NSUInteger idx = [item tag];
-    NSString* fullpath = [[outlineView itemAtRow:idx] filePath];
+	
+	NSString * fullpath;
+	
+	id row = [outlineView itemAtRow:idx];
+	if([row isKindOfClass:[RMDirectory class]])
+	{
+		fullpath = [row dirPath];
+	}
+	else if([row isKindOfClass:[RMResource class]])
+	{
+		fullpath = [row filePath];
+	}
+
     
     // if it doesn't exist, peek inside "resources-auto" (only needed in the case of resources, which has a different visual
     // layout than what is actually on the disk).
