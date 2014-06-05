@@ -3463,26 +3463,12 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) newFolder:(id)sender
 {
-    RMResource *resource;
-
-    int selectedRow = [sender tag];
-    if(selectedRow >= 0 && projectSettings)
-    {
-        resource = [outlineProject itemAtRow:selectedRow];
-    }
-
-    [[ResourceActionController sharedController] newFolderWithResource:resource];
+    [_resourceActionController newFolder:nil];
 }
 
 - (IBAction) newDocument:(id)sender
 {
-    int selectedRow = [sender tag];
-
-    if (selectedRow >= 0 && projectSettings)
-    {
-        RMResource *res = [outlineProject itemAtRow:selectedRow];
-        [[ResourceActionController sharedController] newFileWithResource:res];
-    }
+    [_resourceActionController newFile:nil];
 }
 
 - (IBAction) performClose:(id)sender

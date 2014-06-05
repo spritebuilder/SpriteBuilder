@@ -20,8 +20,6 @@
 
 - (void)newFile:(id)sender;
 
-- (void)newFileWithResource:(id)resource;
-
 - (void)newFolder:(id)sender;
 
 - (void)newFolderWithResource:(id)resource;

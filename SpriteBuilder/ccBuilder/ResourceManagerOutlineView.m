@@ -36,21 +36,11 @@
 
     if (self)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(deselectAll:)
-                                                     name:RESOURCES_CHANGED
-                                                   object:nil];
-
         // NW: bugfix for source list highlight style for right clicks otherwise no highlighting borders
         self.menu = [[NSMenu alloc] init];
     }
 
     return self;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSMenu *)menuForEvent:(NSEvent *)evt

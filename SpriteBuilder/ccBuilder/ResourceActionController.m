@@ -31,10 +31,14 @@
     return sharedResourceActionController;
 }
 
+- (NSArray *)selectedResources
+{
+    return _resourceManagerOutlineView.selectedResources;
+}
+
 - (void)showResourceInFinder:(id)sender
 {
-    ResourceMenuItem *resourceMenuItem = sender;
-    NSString *path = [self getPathOfResource:[resourceMenuItem.resources firstObject]];
+    NSString *path = [self getPathOfResource:[[self selectedResources] firstObject]];
     if (path)
     {
         [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
@@ -79,8 +83,7 @@
 
 - (void)openResourceWithExternalEditor:(id)sender
 {
-    ResourceMenuItem *resourceMenuItem = sender;
-    NSString *path = [self getPathOfResource:[resourceMenuItem.resources firstObject]];
+    NSString *path = [self getPathOfResource:[[self selectedResources] firstObject]];
     if (path)
     {
         [[NSWorkspace sharedWorkspace] openFile:path];
@@ -89,15 +92,12 @@
 
 - (void)toggleSmartSheet:(id)sender
 {
-    ResourceMenuItem *resourceMenuItem = sender;
-    if (resourceMenuItem.resources.count == 0 || !_projectSettings)
+    if ([self selectedResources].count == 0 || !_projectSettings)
     {
         return;
     }
 
-    id firstResource = [resourceMenuItem.resources objectAtIndex:0];
-
-    RMResource *resource = (RMResource *) firstResource;
+    RMResource *resource = (RMResource *) [self selectedResources].firstObject;
     RMDirectory *directory = resource.data;
 
     if (directory.isDynamicSpriteSheet)
@@ -117,13 +117,6 @@
 
 - (void)newFile:(id)sender
 {
-    ResourceMenuItem *resourceMenuItem = sender;
-
-    [self newFileWithResource:[resourceMenuItem.resources firstObject]];
-}
-
-- (void)newFileWithResource:(id)resource
-{
     NewDocWindowController *newFileWindowController = [[NewDocWindowController alloc] initWithWindowNibName:@"NewDocWindow"];
 
     [NSApp beginSheet:[newFileWindowController window]
@@ -138,7 +131,7 @@
 
     if (acceptedModal)
     {
-        NSString *dirPath = [self dirPathWithFirstDirFallbackForResource:resource];
+        NSString *dirPath = [self dirPathWithFirstDirFallbackForResource:[self selectedResources].firstObject];
         if (!dirPath)
         {
             return;
@@ -181,14 +174,7 @@
 
 - (void)newFolder:(id)sender
 {
-    ResourceMenuItem *resourceMenuItem = sender;
-
-    [self newFolderWithResource:[resourceMenuItem.resources firstObject]];
-}
-
-- (void)newFolderWithResource:(id)resource
-{
-    NSString *dirPath = [self dirPathWithFirstDirFallbackForResource:resource];
+    NSString *dirPath = [self dirPathWithFirstDirFallbackForResource:[self selectedResources].firstObject];
     if (!dirPath)
     {
         return;
@@ -287,8 +273,7 @@
 
 - (void)deleteResource:(id)sender
 {
-    ResourceMenuItem *resourceMenuItem = sender;
-    [self deleteResources:resourceMenuItem.resources];
+    [self deleteResources:[self selectedResources]];
 }
 
 - (void)deleteResources:(NSArray *)resources
@@ -310,7 +295,6 @@
     NSMutableArray *foldersToDelete = [[NSMutableArray alloc] init];
     NSMutableArray *packagesPathsToDelete = [[NSMutableArray alloc] init];
 
-    // TODO: this can all be moved to the resource manager
     for (id resource in resources)
     {
         if ([resource isKindOfClass:[RMResource class]])
@@ -347,8 +331,7 @@
     packageController.projectSettings = [AppDelegate appDelegate].projectSettings;
     [packageController removePackagesFromProject:packagesPathsToDelete error:NULL];
 
-    // TODO: move to reloadAllResources?
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
+    [_resourceManagerOutlineView deselectAll:nil];
 
     [[ResourceManager sharedManager] reloadAllResources];
 }
@@ -358,8 +341,7 @@
 
 - (void)exportPackage:(id)sender
 {
-    ResourceMenuItem *resourceMenuItem = sender;
-    id firstResource = [resourceMenuItem.resources objectAtIndex:0];
+    id firstResource = [self selectedResources].firstObject;
 
     // Export supports only one package at a time, sorry
     if ([firstResource isKindOfClass:[RMPackage class]])
@@ -368,12 +350,12 @@
 
         [openPanel beginSheetModalForWindow:[AppDelegate appDelegate].window
                           completionHandler:^(NSInteger result)
-                {
-                    if (result == NSFileHandlingPanelOKButton)
-                    {
-                        [self tryToExportPackage:firstResource toPath:openPanel.directoryURL.path];
-                    }
-                }];
+        {
+            if (result == NSFileHandlingPanelOKButton)
+            {
+                [self tryToExportPackage:firstResource toPath:openPanel.directoryURL.path];
+            }
+        }];
     }
 }
 

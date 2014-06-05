@@ -30,4 +30,6 @@
 
 @property (nonatomic, weak) id actionTarget;
 
+- (NSArray *)selectedResources;
+
 @end
