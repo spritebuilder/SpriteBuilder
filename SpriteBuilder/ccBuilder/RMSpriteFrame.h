@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
+#import "RMResourceBase.h"
 
 
-@interface RMSpriteFrame : NSObject
+@interface RMSpriteFrame : RMResourceBase
 {
     NSString *spriteSheetFile;
     NSString *spriteFrameName;
