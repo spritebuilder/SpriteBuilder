@@ -1,6 +1,5 @@
 #import "ResourceExportPackageCommand.h"
 
-#import "AppDelegate.h"
 #import "RMPackage.h"
 #import "PackageController.h"
 
@@ -9,6 +8,8 @@
 
 - (void)execute
 {
+    NSAssert(_windowForModals != nil, @"windowForModals must no be nil, modal sheet can't be attached.");
+
     id firstResource = _resources.firstObject;
 
     // Export supports only one package at a time, sorry
@@ -16,7 +17,7 @@
     {
         NSOpenPanel *openPanel = [self exportPanel];
 
-        [openPanel beginSheetModalForWindow:[AppDelegate appDelegate].window
+        [openPanel beginSheetModalForWindow:_windowForModals
                           completionHandler:^(NSInteger result)
         {
             if (result == NSFileHandlingPanelOKButton)

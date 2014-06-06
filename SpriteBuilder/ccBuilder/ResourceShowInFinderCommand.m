@@ -1,7 +1,7 @@
 #import "ResourceShowInFinderCommand.h"
+
 #import "RMResource.h"
 #import "RMDirectory.h"
-
 
 @implementation ResourceShowInFinderCommand
 

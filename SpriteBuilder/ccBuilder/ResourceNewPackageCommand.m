@@ -3,16 +3,16 @@
 #import "ResourceNewPackageCommand.h"
 #import "ProjectSettings.h"
 #import "PackageController.h"
-#import "AppDelegate.h"
-
 
 @implementation ResourceNewPackageCommand
 
 - (void)execute
 {
+    NSAssert(_windowForModals != nil, @"windowForModals must no be nil, modal sheet can't be attached.");
+
     PackageController *packageController = [[PackageController alloc] init];
     packageController.projectSettings = _projectSettings;
-    [packageController showCreateNewPackageDialogForWindow:[AppDelegate appDelegate].window];
+    [packageController showCreateNewPackageDialogForWindow:_windowForModals];
 }
 
 

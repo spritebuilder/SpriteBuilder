@@ -1,7 +1,7 @@
-#import <MacTypes.h>
 #import "ResourceNewFileCommand.h"
-#import "NewDocWindowController.h"
+
 #import "AppDelegate.h"
+#import "NewDocWindowController.h"
 #import "NSAlert+Convenience.h"
 #import "ResourceManager.h"
 #import "RMDirectory.h"
@@ -13,10 +13,12 @@
 
 - (void)execute
 {
+    NSAssert(_windowForModals != nil, @"windowForModals must no be nil, modal sheet can't be attached.");
+
     NewDocWindowController *newFileWindowController = [[NewDocWindowController alloc] initWithWindowNibName:@"NewDocWindow"];
 
     [NSApp beginSheet:[newFileWindowController window]
-       modalForWindow:[AppDelegate appDelegate].window
+       modalForWindow:_windowForModals
         modalDelegate:NULL
        didEndSelector:NULL
           contextInfo:NULL];
@@ -59,11 +61,13 @@
             int type = newFileWindowController.rootObjectType;
             NSMutableArray *resolutions = newFileWindowController.availableResolutions;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
-                               [[AppDelegate appDelegate] newFile:filePath type:type resolutions:resolutions];
-                               id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
-                               [_outlineView expandItem:parentResource];
-                           });
+                           dispatch_get_current_queue(), ^
+                    {
+                        [[AppDelegate appDelegate] newFile:filePath type:type resolutions:resolutions];
+
+                        id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
+                        [_outlineView expandItem:parentResource];
+                    });
         }
     }
 }

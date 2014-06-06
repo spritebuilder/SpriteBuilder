@@ -1,8 +1,8 @@
 #import "ResourceOpenInExternalEditorCommand.h"
+
 #import "RMResource.h"
 #import "RMDirectory.h"
 #import "ResourceTypes.h"
-
 
 @implementation ResourceOpenInExternalEditorCommand
 

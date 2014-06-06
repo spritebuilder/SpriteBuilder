@@ -1,15 +1,17 @@
 #import "ResourceToggleSmartSpriteSheetCommand.h"
+
 #import "RMDirectory.h"
 #import "ProjectSettings.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"
 
-
 @implementation ResourceToggleSmartSpriteSheetCommand
 
 - (void)execute
 {
-    if (_resources.count == 0 || !_projectSettings)
+    NSAssert(_projectSettings != nil, @"Project settings nil, cannot toggle smartsheets.");
+
+    if (_resources.count == 0)
     {
         return;
     }
@@ -25,7 +27,6 @@
     {
         [_projectSettings makeSmartSpriteSheet:resource];
     }
-
 }
 
 

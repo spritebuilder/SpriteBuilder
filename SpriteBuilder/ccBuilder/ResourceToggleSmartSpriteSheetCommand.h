@@ -5,7 +5,6 @@
 
 @class ProjectSettings;
 
-
 @interface ResourceToggleSmartSpriteSheetCommand :  NSObject <ResourceCommandProtocol, ResourceCommandContextMenuProtocol>
 
 @property (nonatomic, strong) NSArray *resources;

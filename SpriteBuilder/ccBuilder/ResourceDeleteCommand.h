@@ -6,7 +6,6 @@
 @class ProjectSettings;
 @class ResourceManagerOutlineView;
 
-
 @interface ResourceDeleteCommand : NSObject <ResourceCommandProtocol, ResourceCommandContextMenuProtocol>
 
 @property (nonatomic, strong) NSArray *resources;

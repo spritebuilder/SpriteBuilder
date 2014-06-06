@@ -64,6 +64,7 @@
     ResourceNewFileCommand *command = [[ResourceNewFileCommand alloc] init];
     command.resources = [self selectedResources];
     command.outlineView = _resourceManagerOutlineView;
+    command.windowForModals = _window;
     [command execute];
 }
 
@@ -79,6 +80,7 @@
 {
     ResourceNewPackageCommand *command = [[ResourceNewPackageCommand alloc] init];
     command.projectSettings = _projectSettings;
+    command.windowForModals = _window;
     [command execute];
 }
 
@@ -95,6 +97,7 @@
 {
     ResourceExportPackageCommand *command = [[ResourceExportPackageCommand alloc] init];
     command.resources = [self selectedResources];
+    command.windowForModals = _window;
     [command execute];
 }
 

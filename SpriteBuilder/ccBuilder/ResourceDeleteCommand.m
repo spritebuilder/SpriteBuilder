@@ -1,14 +1,12 @@
 #import "ResourceDeleteCommand.h"
+
 #import "ResourceManager.h"
-#import "AppDelegate.h"
 #import "PackageController.h"
 #import "RMPackage.h"
-#import "FeatureToggle.h"
-#import "ResourceTypes.h"
 #import "RMResource.h"
+#import "ResourceTypes.h"
 #import "ProjectSettings.h"
-#import "ResourceManagerOutlineView.h"
-
+#import "FeatureToggle.h"
 
 @implementation ResourceDeleteCommand
 

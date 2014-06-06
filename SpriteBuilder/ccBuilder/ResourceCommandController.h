@@ -7,6 +7,7 @@
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, weak) ResourceManagerOutlineView *resourceManagerOutlineView;
+@property (nonatomic, weak) NSWindow *window;
 
 
 + (id)sharedController;

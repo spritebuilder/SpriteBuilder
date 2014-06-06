@@ -1,4 +1,5 @@
 #import "ResourceCommandContextMenuProtocol.h"
+
 #import "ResourceCreateKeyframesCommand.h"
 #import "SequencerUtil.h"
 

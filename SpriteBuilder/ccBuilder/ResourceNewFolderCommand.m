@@ -1,4 +1,5 @@
 #import "ResourceNewFolderCommand.h"
+
 #import "ResourceManager.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"

@@ -663,6 +663,7 @@ typedef enum
 {
     _resourceCommandController = [[ResourceCommandController alloc] init];
     _resourceCommandController.resourceManagerOutlineView = outlineProject;
+    _resourceCommandController.window = window;
 
     outlineProject.actionTarget = _resourceCommandController;
 }
