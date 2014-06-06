@@ -3,7 +3,7 @@
 @class ProjectSettings;
 @class ResourceManagerOutlineView;
 
-@interface ResourceActionController : NSObject
+@interface ResourceCommandController : NSObject
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, weak) ResourceManagerOutlineView *resourceManagerOutlineView;
@@ -19,13 +19,9 @@
 - (void)createKeyFrameFromSelection:(id)sender;
 
 - (void)newFile:(id)sender;
-
 - (void)newFolder:(id)sender;
-
-- (void)newFolderWithResource:(id)resource;
-
+- (void)newPackage:(id)sender;
 - (void)deleteResource:(id)sender;
-- (void)deleteResources:(NSArray *)resources;
 
 - (void)exportPackage:(id)sender;
 

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@class ResourceActionController;
+@class ResourceCommandController;
 
 
 @interface ResourceContextMenu : NSMenu

@@ -24,7 +24,7 @@
 
 #import "CCBOutlineView.h"
 
-@class ResourceActionController;
+@class ResourceCommandController;
 
 @interface ResourceManagerOutlineView : CCBOutlineView
 

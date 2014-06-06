@@ -127,7 +127,7 @@
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "RMResource.h"
-#import "ResourceActionController.h"
+#import "ResourceCommandController.h"
 
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -140,7 +140,7 @@ static const int CCNODE_INDEX_LAST = -1;
 
 @implementation AppDelegate
 {
-    ResourceActionController *_resourceActionController;
+    ResourceCommandController *_resourceCommandController;
 }
 
 @synthesize window;
@@ -661,10 +661,10 @@ typedef enum
 
 - (void)setupActionController
 {
-    _resourceActionController = [[ResourceActionController alloc] init];
-    _resourceActionController.resourceManagerOutlineView = outlineProject;
+    _resourceCommandController = [[ResourceCommandController alloc] init];
+    _resourceCommandController.resourceManagerOutlineView = outlineProject;
 
-    outlineProject.actionTarget = _resourceActionController;
+    outlineProject.actionTarget = _resourceCommandController;
 }
 
 - (void)toggleFeatures
@@ -2072,7 +2072,7 @@ static BOOL hideAllToNextSeparator;
     project.projectPath = fileName;
     [project store];
     self.projectSettings = project;
-    _resourceActionController.projectSettings = self.projectSettings;
+    _resourceCommandController.projectSettings = self.projectSettings;
     
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
@@ -3454,21 +3454,17 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuNewPackage:(id)sender
 {
-    [[[CCDirector sharedDirector] view] lockOpenGLContext];
-    PackageController *packageController = [[PackageController alloc] init];
-    packageController.projectSettings = projectSettings;
-    [packageController showCreateNewPackageDialogForWindow:window];
-    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+    [_resourceCommandController newPackage:nil];
 }
 
 - (IBAction) newFolder:(id)sender
 {
-    [_resourceActionController newFolder:nil];
+    [_resourceCommandController newFolder:nil];
 }
 
 - (IBAction) newDocument:(id)sender
 {
-    [_resourceActionController newFile:nil];
+    [_resourceCommandController newFile:nil];
 }
 
 - (IBAction) performClose:(id)sender
@@ -4329,7 +4325,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuCreateKeyframesFromSelection:(id)sender
 {
-    [[ResourceActionController sharedController] createKeyFrameFromSelection:nil];
+    [[ResourceCommandController sharedController] createKeyFrameFromSelection:nil];
 }
 
 - (IBAction)menuNewFolder:(NSMenuItem*)sender

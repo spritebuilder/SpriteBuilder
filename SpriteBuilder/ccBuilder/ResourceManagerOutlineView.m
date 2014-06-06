@@ -25,7 +25,7 @@
 #import "ResourceManagerOutlineView.h"
 #import "AppDelegate.h"
 #import "ResourceContextMenu.h"
-#import "ResourceActionController.h"
+#import "ResourceCommandController.h"
 #import "NotificationNames.h"
 
 @implementation ResourceManagerOutlineView
@@ -92,7 +92,7 @@
     unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
     if(key == NSDeleteCharacter)
     {
-        [[ResourceActionController sharedController] deleteResources:[self selectedResources]];
+        [[ResourceCommandController sharedController] deleteResource:nil];
         return;
     }
     

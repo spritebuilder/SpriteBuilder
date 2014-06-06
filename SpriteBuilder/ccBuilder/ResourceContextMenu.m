@@ -1,10 +1,20 @@
+#import <MacTypes.h>
 #import "ResourceContextMenu.h"
 
 #import "RMResource.h"
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "RMPackage.h"
-#import "ResourceActionController.h"
+#import "ResourceCommandController.h"
+#import "ResourceShowInFinderCommand.h"
+#import "ResourceOpenInExternalEditorCommand.h"
+#import "ResourceToggleSmartSpriteSheetCommand.h"
+#import "ResourceCreateKeyframesCommand.h"
+#import "ResourceNewFileCommand.h"
+#import "ResourceNewFolderCommand.h"
+#import "ResourceNewPackageCommand.h"
+#import "ResourceDeleteCommand.h"
+#import "ResourceExportPackageCommand.h"
 
 
 @interface ResourceContextMenu ()
@@ -39,99 +49,36 @@
     [self removeAllItems];
     [self setAutoenablesItems:NO];
 
-    [self appendItemToMenu:[self showInFinder] addSeparator:NO];
-    [self appendItemToMenu:[self openInExternalEditor] addSeparator:YES];
-    [self appendItemToMenu:[self toggleSmartSheet] addSeparator:YES];
-    [self appendItemToMenu:[self createKeyFrames] addSeparator:YES];
-    [self appendItemToMenu:[self newFile] addSeparator:NO];
-    [self appendItemToMenu:[self newFolder] addSeparator:NO];
-    [self appendItemToMenu:[self delete] addSeparator:YES];
-    [self appendItemToMenu:[self exportTo] addSeparator:YES];
+    [self appendItemToMenuWithClass:[ResourceShowInFinderCommand class] addSeparator:NO action:@selector(showResourceInFinder:)];
+    [self appendItemToMenuWithClass:[ResourceOpenInExternalEditorCommand class] addSeparator:YES action:@selector(openResourceWithExternalEditor:)];
+    [self appendItemToMenuWithClass:[ResourceToggleSmartSpriteSheetCommand class] addSeparator:YES action:@selector(toggleSmartSheet:)];
+    [self appendItemToMenuWithClass:[ResourceCreateKeyframesCommand class] addSeparator:YES action:@selector(createKeyFrameFromSelection:)];
+    [self appendItemToMenuWithClass:[ResourceNewFileCommand class] addSeparator:NO action:@selector(newFile:)];
+    [self appendItemToMenuWithClass:[ResourceNewFolderCommand class] addSeparator:NO action:@selector(newFolder:)];
+    [self appendItemToMenuWithClass:[ResourceNewPackageCommand class] addSeparator:NO action:@selector(newPackage:)];
+    [self appendItemToMenuWithClass:[ResourceDeleteCommand class] addSeparator:YES action:@selector(deleteResource:)];
+    [self appendItemToMenuWithClass:[ResourceExportPackageCommand class] addSeparator:NO action:@selector(exportPackage:)];
 
     [self removeLastItemIfSeparator];
 }
 
-- (NSMenuItem *)showInFinder
+- (void)appendItemToMenuWithClass:(Class)aClass addSeparator:(BOOL)addSeparator action:(SEL)action
 {
-    if (_resources.count > 0)
+    if ([aClass conformsToProtocol:@protocol(ResourceCommandContextMenuProtocol)])
     {
-        return [self createMenuItemWithTitle:@"Show in Finder" selector:@selector(showResourceInFinder:)];
-    }
-    return nil;
-}
-
-- (NSMenuItem *)openInExternalEditor
-{
-    if ([_resources.firstObject isKindOfClass:[RMResource class]]
-       && [self isResourceCCBFileOrDirectory])
-    {
-        return [self createMenuItemWithTitle:@"Open with External Editor" selector:@selector(openResourceWithExternalEditor:)];
-    }
-    return nil;
-}
-
-- (NSMenuItem *)toggleSmartSheet
-{
-    if ([_resources.firstObject isKindOfClass:[RMResource class]])
-    {
-        RMResource *clickedResource = _resources.firstObject;
-        if (clickedResource.type == kCCBResTypeDirectory)
+        if ([aClass performSelector:@selector(isValidForSelectedResources:) withObject:_resources])
         {
-            RMDirectory *dir = clickedResource.data;
-            NSString *title;
-            if (dir.isDynamicSpriteSheet)
-            {
-                title = @"Remove Smart Sprite Sheet";
-            }
-            else
-            {
-                title = @"Make Smart Sprite Sheet";
-            }
+            NSMenuItem *menuItem = [self createMenuItemWithTitle:[aClass performSelector:@selector(nameForResources:) withObject:_resources]
+                                                        selector:action];
 
-            return [self createMenuItemWithTitle:title selector:@selector(toggleSmartSheet:)];
+            [self addItem:menuItem];
+
+            if (addSeparator)
+            {
+                [self addItem:[NSMenuItem separatorItem]];
+            }
         }
     }
-    return nil;
-}
-
-- (NSMenuItem *)createKeyFrames
-{
-    if (_resources.count > 0)
-    {
-        return [self createMenuItemWithTitle:@"Create Keyframes from Selection" selector:@selector(createKeyFrameFromSelection:)];
-    }
-    return nil;
-}
-
-- (NSMenuItem *)newFile
-{
-    return [self createMenuItemWithTitle:@"New File..." selector:@selector(newFile:)];
-}
-
-- (NSMenuItem *)newFolder
-{
-    return [self createMenuItemWithTitle:@"New Folder" selector:@selector(newFolder:)];
-}
-
-- (NSMenuItem *)delete
-{
-    if ([_resources.firstObject isKindOfClass:[RMResource class]]
-        || (_resources.count > 0)
-        || [_resources.firstObject isKindOfClass:[RMPackage class]])
-    {
-        return [self createMenuItemWithTitle:@"Delete" selector:@selector(deleteResource:)];
-    }
-    return nil;
-
-}
-
-- (NSMenuItem *)exportTo
-{
-    if ([_resources.firstObject isKindOfClass:[RMPackage class]])
-    {
-        return [self createMenuItemWithTitle:@"Export to..." selector:@selector(exportPackage:)];
-    }
-    return nil;
 }
 
 - (NSMenuItem *)createMenuItemWithTitle:(NSString *)title selector:(SEL)selector
@@ -149,25 +96,6 @@
     {
         [self removeItem:item];
     }
-}
-
-- (void)appendItemToMenu:(NSMenuItem *)item addSeparator:(BOOL)addSeparator
-{
-    if (item)
-    {
-        [self addItem:item];
-    }
-
-    if (item && addSeparator)
-    {
-        [self addItem:[NSMenuItem separatorItem]];
-    }
-}
-
-- (BOOL)isResourceCCBFileOrDirectory
-{
-    RMResource *aResource = (RMResource *)_resources.firstObject;
-	return aResource.type == kCCBResTypeCCBFile || aResource.type == kCCBResTypeDirectory;
 }
 
 @end

@@ -10,7 +10,7 @@
 #import <OCMock/OCMock.h>
 
 #import "ResourceContextMenu.h"
-#import "ResourceActionController.h"
+#import "ResourceCommandController.h"
 
 @interface ResourceContextMenu_Tests : XCTestCase
 
