@@ -4,9 +4,7 @@
 #import "NewDocWindowController.h"
 #import "NSAlert+Convenience.h"
 #import "ResourceManager.h"
-#import "RMDirectory.h"
 #import "RMResource.h"
-#import "ResourceTypes.h"
 
 
 @implementation ResourceNewFileCommand
@@ -29,7 +27,7 @@
 
     if (acceptedModal)
     {
-        NSString *dirPath = [self dirPathWithFirstDirFallbackForResource:_resources.firstObject];
+        NSString *dirPath = [_resourceManager dirPathWithFirstDirFallbackForResource:_resources.firstObject];
         if (!dirPath)
         {
             return;
@@ -65,54 +63,11 @@
                     {
                         [[AppDelegate appDelegate] newFile:filePath type:type resolutions:resolutions];
 
-                        id parentResource = [[ResourceManager sharedManager] resourceForPath:dirPath];
+                        id parentResource = [_resourceManager resourceForPath:dirPath];
                         [_outlineView expandItem:parentResource];
                     });
         }
     }
-}
-
-- (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource
-{
-    NSString *dirPath = [self dirPathForResource:resource];
-
-    // Find directory
-    NSArray *dirs = [ResourceManager sharedManager].activeDirectories;
-    if (dirs.count == 0)
-    {
-        return nil;
-    }
-
-    RMDirectory *dir = [dirs objectAtIndex:0];
-    if (!dirPath)
-    {
-        dirPath = dir.dirPath;
-    }
-    return dirPath;
-}
-
-- (NSString *)dirPathForResource:(id)resource
-{
-    NSString *dirPath;
-    if ([resource isKindOfClass:[RMDirectory class]])
-    {
-        RMDirectory *directoryResource = (RMDirectory *) resource;
-        dirPath = directoryResource.dirPath;
-
-    }
-    else if ([resource isKindOfClass:[RMResource class]])
-    {
-        RMResource *aResource = (RMResource *) resource;
-        if (aResource.type == kCCBResTypeDirectory)
-        {
-            dirPath = aResource.filePath;
-        }
-        else
-        {
-            dirPath = [aResource.filePath stringByDeletingLastPathComponent];
-        }
-    }
-    return dirPath;
 }
 
 

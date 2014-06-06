@@ -664,6 +664,7 @@ typedef enum
     _resourceCommandController = [[ResourceCommandController alloc] init];
     _resourceCommandController.resourceManagerOutlineView = outlineProject;
     _resourceCommandController.window = window;
+    _resourceCommandController.resourceManager = [ResourceManager sharedManager];
 
     outlineProject.actionTarget = _resourceCommandController;
 }

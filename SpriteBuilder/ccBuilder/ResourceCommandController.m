@@ -8,9 +8,9 @@
 #import "ResourceOpenInExternalEditorCommand.h"
 #import "ResourceToggleSmartSpriteSheetCommand.h"
 #import "ResourceNewFileCommand.h"
+#import "ResourceManager.h"
 #import "ResourceNewFolderCommand.h"
 #import "ResourceNewPackageCommand.h"
-
 
 @implementation ResourceCommandController
 
@@ -65,6 +65,7 @@
     command.resources = [self selectedResources];
     command.outlineView = _resourceManagerOutlineView;
     command.windowForModals = _window;
+    command.resourceManager = _resourceManager;
     [command execute];
 }
 
@@ -73,6 +74,7 @@
     ResourceNewFolderCommand *command = [[ResourceNewFolderCommand alloc] init];
     command.resources = [self selectedResources];
     command.outlineView = _resourceManagerOutlineView;
+    command.resourceManager = _resourceManager;
     [command execute];
 }
 

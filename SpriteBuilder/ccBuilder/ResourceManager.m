@@ -1176,6 +1176,53 @@
     return NULL;
 }
 
+
+#pragma mark - Locating resources
+
+- (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource
+{
+    NSString *dirPath = [self dirPathForResource:resource];
+
+    // Find directory
+    NSArray *dirs = [ResourceManager sharedManager].activeDirectories;
+    if (dirs.count == 0)
+    {
+        return nil;
+    }
+
+    RMDirectory *dir = [dirs objectAtIndex:0];
+    if (!dirPath)
+    {
+        dirPath = dir.dirPath;
+    }
+    return dirPath;
+}
+
+- (NSString *)dirPathForResource:(id)resource
+{
+    NSString *dirPath;
+    if ([resource isKindOfClass:[RMDirectory class]])
+    {
+        RMDirectory *directoryResource = (RMDirectory *) resource;
+        dirPath = directoryResource.dirPath;
+
+    }
+    else if ([resource isKindOfClass:[RMResource class]])
+    {
+        RMResource *aResource = (RMResource *) resource;
+        if (aResource.type == kCCBResTypeDirectory)
+        {
+            dirPath = aResource.filePath;
+        }
+        else
+        {
+            dirPath = [aResource.filePath stringByDeletingLastPathComponent];
+        }
+    }
+    return dirPath;
+}
+
+
 #pragma mark Debug
 
 - (void) debugPrintDirectories

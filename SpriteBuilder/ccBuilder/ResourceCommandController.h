@@ -2,13 +2,14 @@
 
 @class ProjectSettings;
 @class ResourceManagerOutlineView;
+@class ResourceManager;
 
 @interface ResourceCommandController : NSObject
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, weak) ResourceManagerOutlineView *resourceManagerOutlineView;
 @property (nonatomic, weak) NSWindow *window;
-
+@property (nonatomic, weak) ResourceManager *resourceManager;
 
 + (id)sharedController;
 
