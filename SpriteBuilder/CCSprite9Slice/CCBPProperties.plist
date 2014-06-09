@@ -24,7 +24,7 @@
 		<string>spriteFrame</string>
 	</dict>
 	<key>editorClassName</key>
-	<string>CCBPSprite9Slice</string>
+	<string>CCSprite9Slice</string>
 	<key>propertiesOverridden</key>
 	<array>
 		<dict>
