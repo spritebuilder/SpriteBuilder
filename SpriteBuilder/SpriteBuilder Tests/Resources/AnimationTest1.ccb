@@ -43,121 +43,6 @@
 		<array>
 			<dict>
 				<key>UUID</key>
-				<integer>2</integer>
-				<key>baseClass</key>
-				<string>CCNodeGradient</string>
-				<key>children</key>
-				<array/>
-				<key>customClass</key>
-				<string></string>
-				<key>displayName</key>
-				<string>CCNodeGradient</string>
-				<key>memberVarAssignmentName</key>
-				<string></string>
-				<key>memberVarAssignmentType</key>
-				<integer>1</integer>
-				<key>properties</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>name</string>
-						<key>type</key>
-						<string>StringSimple</string>
-						<key>value</key>
-						<string></string>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>position</string>
-						<key>type</key>
-						<string>Position</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>1</real>
-							<real>1</real>
-							<integer>2</integer>
-							<integer>2</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>anchorPoint</string>
-						<key>type</key>
-						<string>Point</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>scale</string>
-						<key>type</key>
-						<string>ScaleLock</string>
-						<key>value</key>
-						<array>
-							<real>1</real>
-							<real>1</real>
-							<false/>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>startColor</string>
-						<key>type</key>
-						<string>Color3</string>
-						<key>value</key>
-						<array>
-							<real>0.20999999344348907</real>
-							<real>0.64999997615814209</real>
-							<real>0.87000000476837158</real>
-							<real>1</real>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>endColor</string>
-						<key>type</key>
-						<string>Color3</string>
-						<key>value</key>
-						<array>
-							<real>0.12999999523162842</real>
-							<real>0.5</real>
-							<real>0.80000001192092896</real>
-							<real>1</real>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>vector</string>
-						<key>type</key>
-						<string>Point</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>-1</real>
-						</array>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>UUID</key>
 				<integer>4</integer>
 				<key>animatedProperties</key>
 				<dict>
@@ -199,7 +84,7 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>518</real>
+										<real>500</real>
 										<real>0.0</real>
 									</array>
 								</dict>
@@ -217,7 +102,7 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>518</real>
+										<real>500</real>
 										<real>0.0</real>
 									</array>
 								</dict>
@@ -281,7 +166,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>518</real>
+							<real>0.0</real>
 							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -423,7 +308,7 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>518</real>
+										<real>500</real>
 										<real>50</real>
 									</array>
 								</dict>
@@ -441,7 +326,7 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>518</real>
+										<real>500</real>
 										<real>50</real>
 									</array>
 								</dict>
@@ -624,7 +509,7 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>518</real>
+										<real>500</real>
 										<real>100</real>
 									</array>
 								</dict>
@@ -659,7 +544,7 @@
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string>CCTestColor</string>
+				<string></string>
 				<key>displayName</key>
 				<string>node2</string>
 				<key>memberVarAssignmentName</key>
@@ -759,7 +644,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string>MainScene</string>
+		<string></string>
 		<key>displayName</key>
 		<string>CCNode</string>
 		<key>memberVarAssignmentName</key>
@@ -884,24 +769,7 @@
 			<key>callbackChannel</key>
 			<dict>
 				<key>keyframes</key>
-				<array>
-					<dict>
-						<key>easing</key>
-						<dict>
-							<key>type</key>
-							<integer>0</integer>
-						</dict>
-						<key>time</key>
-						<real>1</real>
-						<key>type</key>
-						<integer>12</integer>
-						<key>value</key>
-						<array>
-							<string>testCallback</string>
-							<integer>1</integer>
-						</array>
-					</dict>
-				</array>
+				<array/>
 				<key>type</key>
 				<integer>11</integer>
 			</dict>
@@ -914,11 +782,11 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>1</real>
+			<real>4</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
-			<real>128</real>
+			<real>75.125</real>
 			<key>sequenceId</key>
 			<integer>0</integer>
 			<key>soundChannel</key>
