@@ -52,7 +52,7 @@
             }
         }
     }
-    return nil;
+    return @"Make Smart Sprite Sheet";
 }
 
 + (BOOL)isValidForSelectedResources:(NSArray *)resources

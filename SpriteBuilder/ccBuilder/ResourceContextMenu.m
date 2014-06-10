@@ -66,17 +66,16 @@
 {
     if ([aClass conformsToProtocol:@protocol(ResourceCommandContextMenuProtocol)])
     {
-        if ([aClass performSelector:@selector(isValidForSelectedResources:) withObject:_resources])
+        NSString *name = [aClass performSelector:@selector(nameForResources:) withObject:_resources];
+        NSMenuItem *menuItem = [self createMenuItemWithTitle:name selector:action];
+        [self addItem:menuItem];
+
+        BOOL isValid = [[aClass performSelector:@selector(isValidForSelectedResources:) withObject:_resources] boolValue];
+        [menuItem setEnabled:isValid];
+
+        if (addSeparator)
         {
-            NSMenuItem *menuItem = [self createMenuItemWithTitle:[aClass performSelector:@selector(nameForResources:) withObject:_resources]
-                                                        selector:action];
-
-            [self addItem:menuItem];
-
-            if (addSeparator)
-            {
-                [self addItem:[NSMenuItem separatorItem]];
-            }
+            [self addItem:[NSMenuItem separatorItem]];
         }
     }
 }

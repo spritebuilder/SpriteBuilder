@@ -31,8 +31,8 @@
             @"newFolder:",
             @"newPackage:"];
 
-    [self assertMenu:resourceContextMenu containsItemsWithSelectorNames:selectors];
-    [self assertMenuItemsCount:resourceContextMenu withExpectedSelectors:selectors];
+    [self assertMenu:resourceContextMenu containsEnabledItemsWithSelectorNames:selectors];
+    [self assertMenuItemsEnabledCount:resourceContextMenu withExpectedSelectors:selectors];
 }
 
 - (void)testContextWithSelectedImage
@@ -49,8 +49,8 @@
             @"createKeyFrameFromSelection:",
             @"deleteResource:"];
 
-    [self assertMenu:resourceContextMenu containsItemsWithSelectorNames:selectors];
-    [self assertMenuItemsCount:resourceContextMenu withExpectedSelectors:selectors];
+    [self assertMenu:resourceContextMenu containsEnabledItemsWithSelectorNames:selectors];
+    [self assertMenuItemsEnabledCount:resourceContextMenu withExpectedSelectors:selectors];
 }
 
 - (void)testContextWithSelectedPackage
@@ -67,8 +67,8 @@
             @"deleteResource:",
             @"exportPackage:"];
 
-    [self assertMenu:resourceContextMenu containsItemsWithSelectorNames:selectors];
-    [self assertMenuItemsCount:resourceContextMenu withExpectedSelectors:selectors];
+    [self assertMenu:resourceContextMenu containsEnabledItemsWithSelectorNames:selectors];
+    [self assertMenuItemsEnabledCount:resourceContextMenu withExpectedSelectors:selectors];
 }
 
 - (void)testContextWithSelectedFolder
@@ -87,25 +87,25 @@
             @"deleteResource:",
             @"toggleSmartSheet:"];
 
-    [self assertMenu:resourceContextMenu containsItemsWithSelectorNames:selectors];
-    [self assertMenuItemsCount:resourceContextMenu withExpectedSelectors:selectors];
+    [self assertMenu:resourceContextMenu containsEnabledItemsWithSelectorNames:selectors];
+    [self assertMenuItemsEnabledCount:resourceContextMenu withExpectedSelectors:selectors];
 }
 
 
 #pragma mark - test helper
 
-- (void)assertMenuItemsCount:(ResourceContextMenu *)menu withExpectedSelectors:(NSArray *)selectors
+- (void)assertMenuItemsEnabledCount:(ResourceContextMenu *)menu withExpectedSelectors:(NSArray *)selectors
 {
-    XCTAssertEqual([self countMenuItemsWithoutSeparators:menu], selectors.count, @"Mismatch of menu items expected %@ and found: %@",  selectors, [self menuItemsToString:menu]);
+    XCTAssertEqual([self countMenuItemsEnabledWithoutSeparators:menu], selectors.count, @"Mismatch of menu items expected %@ and found: %@",  selectors, [self menuItemsToString:menu]);
 }
 
-- (NSUInteger)countMenuItemsWithoutSeparators:(NSMenu *)menu
+- (NSUInteger)countMenuItemsEnabledWithoutSeparators:(NSMenu *)menu
 {
     NSUInteger result = 0;
 
     for (NSMenuItem *menuItem in [menu itemArray])
     {
-        if (![menuItem isSeparatorItem])
+        if (![menuItem isSeparatorItem] && menuItem.isEnabled)
         {
             result++;
         }
@@ -137,21 +137,21 @@
     return [result description];
 }
 
-- (void)assertMenu:(NSMenu *)menu containsItemsWithSelectorNames:(NSArray *)selectorNames
+- (void)assertMenu:(NSMenu *)menu containsEnabledItemsWithSelectorNames:(NSArray *)selectorNames
 {
     for (NSString *selectorName in selectorNames)
     {
         SEL sel = NSSelectorFromString(selectorName);
-        XCTAssertTrue([self menu:menu containsItemWithSelector:sel], @"Menu does not contain menuitem with selector: \"%@\"", NSStringFromSelector(sel));
+        XCTAssertTrue([self menu:menu containsEnabledItemWithSelector:sel], @"Menu does not contain menuitem with selector: \"%@\"", NSStringFromSelector(sel));
     }
 }
 
-- (BOOL)menu:(NSMenu *)menu containsItemWithSelector:(SEL)selector
+- (BOOL)menu:(NSMenu *)menu containsEnabledItemWithSelector:(SEL)selector
 {
     NSArray *items = [menu itemArray];
     for (NSMenuItem *menuItem in items)
     {
-        if (menuItem.action == selector)
+        if (menuItem.action == selector && menuItem.isEnabled)
         {
             return YES;
         }
