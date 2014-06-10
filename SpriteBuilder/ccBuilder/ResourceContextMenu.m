@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "ResourceContextMenu.h"
 
 #import "RMResource.h"
