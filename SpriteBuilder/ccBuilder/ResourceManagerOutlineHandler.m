@@ -41,6 +41,7 @@
 #import "RMDirectory.h"
 #import "RMSpriteFrame.h"
 #import "RMAnimation.h"
+#import "RMPackage.h"
 
 @implementation ResourceManagerOutlineHandler
 
@@ -284,8 +285,13 @@
     
     NSImage* icon = NULL;
     NSImage* warningIcon = NULL;
-    
-    if ([item isKindOfClass:[RMResource class]])
+
+    if ([item isKindOfClass:[RMPackage class]])
+    {
+        RMPackage* dir = item;
+        icon = [self smallIconForFileType:PACKAGE_NAME_SUFFIX];
+    }
+    else if ([item isKindOfClass:[RMResource class]])
     {
         RMResource* res = item;
 		// FIXME: Do all images by type
