@@ -298,4 +298,13 @@
     [super keyDown:theEvent];
 }
 
+- (void)cancelOperation:(id)sender
+{
+    if ([self currentEditor] != nil)
+    {
+        [self abortEditing];
+        [[self window] makeFirstResponder:self];
+    }
+}
+
 @end
