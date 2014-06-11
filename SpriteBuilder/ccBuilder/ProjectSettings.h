@@ -191,19 +191,23 @@ typedef enum
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
 
 // *** Resource Paths ***
-// Adds a resourcePath to the project, provide full filePath
+// Adds a full resourcePath to the project, provide full filePath
 // Returns NO if resource path could not be added.
 // Returns SBDuplicateResourcePathError if given resource path is already present,
 - (BOOL)addResourcePath:(NSString *)path error:(NSError **)error;
 
-// Tests if a given resource path is already in the project, provide full filePath
+// Tests if a given full resource path is already in the project, provide full filePath
 - (BOOL)isResourcePathInProject:(NSString *)resourcePath;
 
-// Removes a resourcePath from the project, provide full filePath
+// Removes a full resourcePath from the project, provide full filePath
 // Returns NO if resource path could not be removed.
 // Returns SBResourcePathNotInProjectError if given resource path does not exist,
 - (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error;
 
+// Changes the path component of a resourcePath, provide full paths
+// Returns NO if resource path could not be moved.
+// Returns SBDuplicateResourcePathError if resource path toPath already exists
+- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
 
 // *** Misc ***
 - (NSString* ) getVersion;

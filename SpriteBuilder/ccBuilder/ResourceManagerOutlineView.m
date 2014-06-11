@@ -38,8 +38,7 @@
     {
         // NW: bugfix for source list highlight style for right clicks otherwise no highlighting borders
         self.menu = [[NSMenu alloc] init];
-    }
-
+	}
     return self;
 }
 
@@ -97,6 +96,15 @@
     }
     
     [super keyDown:theEvent];
+}
+
+- (void)cancelOperation:(id)sender
+{
+    if ([self currentEditor] != nil)
+    {
+        [self abortEditing];
+        [[self window] makeFirstResponder:self];
+    }
 }
 
 @end

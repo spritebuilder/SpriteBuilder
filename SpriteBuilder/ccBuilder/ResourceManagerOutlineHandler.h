@@ -26,6 +26,7 @@
 
 @class ResourceManager;
 @class ResourceManagerPreviewView;
+@class ProjectSettings;
 
 @interface ResourceManagerOutlineHandler : NSObject <NSOutlineViewDelegate, NSOutlineViewDataSource>
 {
@@ -37,6 +38,7 @@
 }
 
 @property (nonatomic,assign) int resType;
+@property (nonatomic,weak) ProjectSettings *projectSettings;
 
 - (id) initWithOutlineView:(NSOutlineView *)outlineView resType:(int)rt;
 

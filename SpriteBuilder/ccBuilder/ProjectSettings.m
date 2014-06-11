@@ -33,6 +33,7 @@
 #import "CCBWarnings.h"
 #import "SBErrors.h"
 #import "ResourceTypes.h"
+#import "NSError+SBErrors.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -500,9 +501,8 @@
             return YES;
         }
     }
-    *error = [NSError errorWithDomain:SBErrorDomain
-                                 code:SBResourcePathNotInProjectError
-                             userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]}];
+
+    [NSError setNewErrorWithCode:error code:SBResourcePathNotInProjectError message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]    ];
     return NO;
 }
 
@@ -510,40 +510,52 @@
 {
     if (![self isResourcePathInProject:path])
     {
-        NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
-        NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
+        NSString *relResourcePath = [path relativePathFromBaseDirPath:self.projectPathDir];
 
         [resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:relResourcePath forKey:@"path"]];
         return YES;
     }
     else
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBDuplicateResourcePathError
-                                 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Cannot create %@, already present.", [path lastPathComponent]]}];
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Cannot create %@, already present.", [path lastPathComponent]]];
         return NO;
     }
 }
 
 - (BOOL)isResourcePathInProject:(NSString *)resourcePath
 {
-    NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
-    NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:projectDir];
+    NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:self.projectPathDir];
 
-    return [self isRelResourcePathAlreadyInProject:relResourcePath];
+    return [self resourcePathForRelativePath:relResourcePath] != nil;
 }
 
-- (BOOL)isRelResourcePathAlreadyInProject:(NSString *)relResourcePath
+- (NSMutableDictionary *)resourcePathForRelativePath:(NSString *)path
 {
-    for (NSDictionary *row in resourcePaths)
+    for (NSMutableDictionary *resourcePath in resourcePaths)
     {
-        NSString *resourcePath = [row objectForKey:@"path"];
-        if ([resourcePath isEqualToString:relResourcePath])
+        NSString *aResourcePath = [resourcePath objectForKey:@"path"];
+        if ([aResourcePath isEqualToString:path])
         {
-            return YES;
+            return resourcePath;
         }
     }
-    return NO;
+    return nil;
+}
+
+- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+{
+    if ([self isResourcePathInProject:toPath])
+    {
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:@"Cannot move resource path, there's already one with the same name."];
+        return NO;
+    }
+
+    NSString *relResourcePathOld = [fromPath relativePathFromBaseDirPath:self.projectPathDir];
+
+    NSMutableDictionary *resourcePath = [self resourcePathForRelativePath:relResourcePathOld];
+    resourcePath[@"path"] = [toPath relativePathFromBaseDirPath:self.projectPathDir];
+
+    return YES;
 }
 
 - (void) detectBrowserPresence

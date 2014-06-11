@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import <objc/runtime.h>
+#import <MacTypes.h>
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "ProjectSettings.h"
@@ -16,6 +17,7 @@
 #import "NotificationNames.h"
 #import "MiscConstants.h"
 #import "RMPackage.h"
+#import "SBAssserts.h"
 
 
 @interface PackageController_Tests : XCTestCase
@@ -35,10 +37,10 @@
 
     _packageController = [[PackageController alloc] init];
 
-    _projectSettingsMock = [OCMockObject mockForClass:[ProjectSettings class]];
+    _projectSettingsMock = [OCMockObject niceMockForClass:[ProjectSettings class]];
     _packageController.projectSettings = _projectSettingsMock;
 
-    _fileManagerMock = [OCMockObject mockForClass:[NSFileManager class]];
+    _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
     _packageController.fileManager = _fileManagerMock;
 }
 
@@ -302,6 +304,87 @@
     XCTAssertFalse([_packageController exportPackage:package toPath:@"/foo" error:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBPackageExportInvalidPackageError);
+}
+
+- (void)testCanRenamePackageWithExistingFullPathInProject
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/project/pack_old.sbpack";
+
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathInProject:@"/project/pack_new.sbpack"];
+
+    NSError *error;
+    XCTAssertFalse([_packageController canRenamePackage:package toName:@"pack_new" error:&error]);
+    XCTAssertEqual(error.code, SBDuplicateResourcePathError);
+
+    [_projectSettingsMock verify];
+}
+
+- (void)testCanRenamePackageWithExistingFullPathInFileSystemButNotInProject
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/project/pack_old.sbpack";
+
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] fileExistsAtPath:@"/project/pack_new.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:OCMOCK_ANY];
+
+    NSError *error;
+    XCTAssertFalse([_packageController canRenamePackage:package toName:@"pack_new" error:&error]);
+    XCTAssertEqual(error.code, SBResourcePathExistsButNotInProjectError);
+
+    [_projectSettingsMock verify];
+    [_fileManagerMock verify];
+}
+
+- (void)testCanRenamePackage
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/project/pack_old.sbpack";
+
+    [[[_fileManagerMock expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/project/pack_new.sbpack"];
+
+    XCTAssertTrue([_packageController canRenamePackage:package toName:@"pack_new" error:nil]);
+
+    [_projectSettingsMock verify];
+    [_fileManagerMock verify];
+}
+
+- (void)testCanRenamePackageWithNoChange
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/project/pack_old.sbpack";
+
+    XCTAssertTrue([_packageController canRenamePackage:package toName:package.dirPath error:nil]);
+}
+
+- (void)testRenamePackage
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/project/pack_old.sbpack";
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    _packageController.projectSettings = projectSettings;
+    [projectSettings addResourcePath:package.dirPath error:nil];
+
+    NSString *destPath = @"/project/foo.sbpack";
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] moveItemAtPath:package.dirPath toPath:destPath error:[OCMArg anyObjectRef]];
+    [[[_fileManagerMock expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
+
+    NSError *error;
+    XCTAssertTrue([_packageController renamePackage:package toName:@"foo" error:&error]);
+    SBAssertStringsEqual(package.dirPath, destPath);
+    XCTAssertNil(error);
+
+    [_fileManagerMock verify];
+}
+
+- (void)testRenamePackageWithSameName
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/project/pack_old.sbpack";
+
+    XCTAssertTrue([_packageController renamePackage:package toName:@"pack_old" error:nil]);
 }
 
 @end
