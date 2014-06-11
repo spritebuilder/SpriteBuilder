@@ -33,6 +33,7 @@
 #import "CCBWarnings.h"
 #import "SBErrors.h"
 #import "ResourceTypes.h"
+#import "NSError+SBErrors.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -500,9 +501,8 @@
             return YES;
         }
     }
-    *error = [NSError errorWithDomain:SBErrorDomain
-                                 code:SBResourcePathNotInProjectError
-                             userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]}];
+
+    [NSError setNewErrorWithCode:error code:SBResourcePathNotInProjectError message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]    ];
     return NO;
 }
 
@@ -517,9 +517,7 @@
     }
     else
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBDuplicateResourcePathError
-                                 userInfo:@{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"Cannot create %@, already present.", [path lastPathComponent]]}];
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Cannot create %@, already present.", [path lastPathComponent]]];
         return NO;
     }
 }
@@ -548,9 +546,7 @@
 {
     if ([self isResourcePathInProject:toPath])
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBDuplicateResourcePathError
-                                 userInfo:@{NSLocalizedDescriptionKey : @"Cannot move resource path, there's already one with the same name."}];
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:@"Cannot move resource path, there's already one with the same name."];
         return NO;
     }
 

@@ -7,6 +7,7 @@
 #import "SBErrors.h"
 #import "MiscConstants.h"
 #import "RMPackage.h"
+#import "NSError+SBErrors.h"
 
 
 @implementation PackageController
@@ -103,9 +104,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
     if (errors.count > 0)
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:prevailingErrorCode
-                                 userInfo:@{NSLocalizedDescriptionKey : errorDescription, @"errors" : errors}];
+        [NSError setNewErrorWithCode:error code:prevailingErrorCode userInfo:@{NSLocalizedDescriptionKey : errorDescription, @"errors" : errors}];
     }
 
     if (packagesAltered > 0)
@@ -150,7 +149,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
     if ([_projectSettings isResourcePathInProject:fullPath])
     {
-        *error = [self duplicatePackageError:packageName];
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
         return NO;
     }
 
@@ -159,12 +158,12 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
     if (!createDirSuccess
         && underlyingErrorCreate.code == NSFileWriteFileExistsError)
     {
-        *error = [self packageExistsButNotInProjectError:packageName];
+        [NSError setNewErrorWithCode:error code:SBResourcePathExistsButNotInProjectError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
         return NO;
     }
     else if (!createDirSuccess)
     {
-        *error = underlyingErrorCreate;
+        [NSError setError:error withError:underlyingErrorCreate];
         return NO;
     }
 
@@ -178,31 +177,15 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
         return YES;
     }
 
-    *error = underlyingErrorAddResPath;
+    [NSError setError:error withError:underlyingErrorAddResPath];
     return NO;
-}
-
-- (NSError *)packageExistsButNotInProjectError:(NSString *)packageName
-{
-    return [NSError errorWithDomain:SBErrorDomain
-                               code:SBResourcePathExistsButNotInProjectError
-                           userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
-}
-
-- (NSError *)duplicatePackageError:(NSString *)packageName
-{
-    return [NSError errorWithDomain:SBErrorDomain
-                               code:SBDuplicateResourcePathError
-                           userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already in project", packageName]}];
 }
 
 - (BOOL)exportPackage:(RMPackage *)package toPath:(NSString *)toPath error:(NSError **)error
 {
     if ([self isPackageValid:package])
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBPackageExportInvalidPackageError
-                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]}];
+        [NSError setNewErrorWithCode:error code:SBPackageExportInvalidPackageError message:[NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]];
         return NO;
     }
 
@@ -238,7 +221,6 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
     }
 
     // Note: moveResourcePathFrom has to happen last, package.dirPath is modified
-
     BOOL renameSuccessful = ([self canRenamePackage:package toName:newName error:error]
                             && [_fileManager moveItemAtPath:package.dirPath toPath:newFullPath error:error]
                             && [_projectSettings moveResourcePathFrom:package.dirPath toPath:newFullPath error:error]);
@@ -249,11 +231,9 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
         return YES;
     }
 
-    if (error && !*error)
+    if (!*error)
     {
-        *error = [NSError errorWithDomain:SBErrorDomain
-                                     code:SBRenamePackageGenericError
-                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"An unexpected error occured. Code %li", SBRenamePackageGenericError]}];
+        [NSError setNewErrorWithCode:error code:SBRenamePackageGenericError message:[NSString stringWithFormat:@"An unexpected error occured. Code %li", SBRenamePackageGenericError]];
     }
     return NO;
 }
@@ -269,24 +249,13 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
     if ([_projectSettings isResourcePathInProject:newFullPath])
     {
-        if (error)
-        {
-            *error = [NSError errorWithDomain:SBErrorDomain
-                                         code:SBDuplicateResourcePathError
-                                     userInfo:@{NSLocalizedDescriptionKey : @"A package with this name already exists in the project"}];
-        }
-
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:@"A package with this name already exists in the project"];
         return NO;
     }
 
     if ([_fileManager fileExistsAtPath:newFullPath])
     {
-        if (error)
-        {
-            *error = [NSError errorWithDomain:SBErrorDomain
-                                         code:SBResourcePathExistsButNotInProjectError
-                                     userInfo:@{NSLocalizedDescriptionKey : @"A package with this name already exists on the file system, but is not in the project."}];
-        }
+        [NSError setNewErrorWithCode:error code:SBResourcePathExistsButNotInProjectError message:@"A package with this name already exists on the file system, but is not in the project."];
         return NO;
     }
 
