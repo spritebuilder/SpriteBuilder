@@ -5,4 +5,8 @@
 // That has to be verified later on when the packages feature and migration has been fully specified
 @interface RMPackage : RMDirectory
 
+// Returns the name of the package, no path, without the .PACKAGE_NAME_SUFFIX.
+// Will remove only the first occurance starting at the back of the path
+@property (nonatomic, copy, readonly) NSString *name;
+
 @end
