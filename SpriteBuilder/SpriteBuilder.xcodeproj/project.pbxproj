@@ -220,6 +220,8 @@
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
 		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
+		92B6D0DA193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */; };
+		92B6D0DE193FE32100FD27F4 /* InspectorPhysicsUnavailable.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D0DD193FE32100FD27F4 /* InspectorPhysicsUnavailable.m */; };
 		92B7900518C808B7007DF895 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C018C92C60007DF895 /* CCBPProperties.plist */; };
 		92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C118C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist */; };
@@ -1437,6 +1439,9 @@
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
 		92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range.png"; sourceTree = "<group>"; };
 		92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range@2x.png"; sourceTree = "<group>"; };
+		92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPhysicsUnavailable.xib; sourceTree = "<group>"; };
+		92B6D0DC193FE32100FD27F4 /* InspectorPhysicsUnavailable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPhysicsUnavailable.h; sourceTree = "<group>"; };
+		92B6D0DD193FE32100FD27F4 /* InspectorPhysicsUnavailable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorPhysicsUnavailable.m; sourceTree = "<group>"; };
 		92B7900D18C808B7007DF895 /* CCPhysicsSpringJoint.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsSpringJoint.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		92B792BC18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsSpringJointPlaceholder.h; sourceTree = "<group>"; };
 		92B792BD18C92C60007DF895 /* CCBPhyicsSpringJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsSpringJointPlaceholder.m; sourceTree = "<group>"; };
@@ -4589,6 +4594,9 @@
 				92B91021193412A600E346B5 /* InspectorAnimation.xib */,
 				92B91024193413F500E346B5 /* InspectorAnimation.h */,
 				92B91025193413F500E346B5 /* InspectorAnimation.m */,
+				92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */,
+				92B6D0DC193FE32100FD27F4 /* InspectorPhysicsUnavailable.h */,
+				92B6D0DD193FE32100FD27F4 /* InspectorPhysicsUnavailable.m */,
 			);
 			name = "Inspector Properties";
 			sourceTree = "<group>";
@@ -5637,6 +5645,7 @@
 				E3E8B4AA157D127300373983 /* seq-scaleslide-bg.png in Resources */,
 				92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */,
 				E36ECD6415869779003C177E /* seq-btn-back.png in Resources */,
+				92B6D0DA193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib in Resources */,
 				E36ECD6515869779003C177E /* seq-keyframe-sel.png in Resources */,
 				E36ECD6615869779003C177E /* seq-keyframe.png in Resources */,
 				E39B63A11587E56D009BDE38 /* seq-row-0-bg.png in Resources */,
@@ -6146,6 +6155,7 @@
 				77E1992513858D78006C361B /* PSMRolloverButton.m in Sources */,
 				77E1992613858D78006C361B /* PSMTabBarCell.m in Sources */,
 				77E1992713858D78006C361B /* PSMTabBarControl.m in Sources */,
+				92B6D0DE193FE32100FD27F4 /* InspectorPhysicsUnavailable.m in Sources */,
 				77E1992813858D78006C361B /* PSMTabBarController.m in Sources */,
 				77E1992913858D78006C361B /* PSMTabDragAssistant.m in Sources */,
 				77E1992A13858D78006C361B /* PSMTabDragView.m in Sources */,
@@ -7051,6 +7061,7 @@
 					"\"$(SRCROOT)/libs/Tupac\"",
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				WRAPPER_EXTENSION = app;
@@ -7090,6 +7101,7 @@
 					"\"$(SRCROOT)/libs/Tupac\"",
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				WRAPPER_EXTENSION = app;

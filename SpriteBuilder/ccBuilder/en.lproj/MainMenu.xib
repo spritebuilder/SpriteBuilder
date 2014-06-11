@@ -35,6 +35,13 @@
                                     <action selector="menuResetSpriteBuilder:" target="494" id="2093"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Register..." id="4nS-3I-W6J">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openRegistrationWindow:" target="494" id="Cga-Fu-5Rw"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="kam-BS-41L"/>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>

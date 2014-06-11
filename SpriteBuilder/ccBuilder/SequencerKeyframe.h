@@ -41,11 +41,13 @@ typedef enum
     kCCBKeyframeTypeFloatXY,
     kCCBKeyframeTypeColor4,
     kCCBKeyframeTypeFloat,
-    kCCBKeyframeTypeAnimation,
     
     // Channels
     kCCBKeyframeTypeSoundEffects,
     kCCBKeyframeTypeCallbacks,
+	
+	//Further Properties.
+    kCCBKeyframeTypeAnimation,	
 } kCCBKeyframeType;
 
 NSString * kClipboardKeyFrames;

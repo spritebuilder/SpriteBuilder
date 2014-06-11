@@ -75,6 +75,10 @@
                     [item setEnabled:YES];
                 }
             }
+			else
+			{
+				[item setEnabled:NO];
+			}
         }
         else if (item.action == @selector(menuEditSmartSpriteSheet:))
         {
@@ -117,6 +121,13 @@
 			{
 				RMResource *clickedResource = clickedItem;
 				[item setEnabled:[self isCCBFileOrResourceDirectory:clickedResource]];
+			}
+		}
+		else if (item.action == @selector(menuCreateKeyframesFromSelection:))
+        {
+			if([clickedItem isKindOfClass:[RMDirectory class]])
+			{
+				[item setEnabled:NO];
 			}
 		}
     }
