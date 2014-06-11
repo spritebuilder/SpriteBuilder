@@ -280,9 +280,6 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-    AppDelegate* ad = [AppDelegate appDelegate];
-    ProjectSettings* settings = ad.projectSettings;
-    
     NSImage* icon = NULL;
     NSImage* warningIcon = NULL;
 
@@ -324,7 +321,7 @@
         }
         
         // Add warning sign if there is a warning related to this file
-        if ([settings.lastWarnings warningsForRelatedFile:res.relativePath])
+        if ([_projectSettings.lastWarnings warningsForRelatedFile:res.relativePath])
         {
             warningIcon = [NSImage imageNamed:@"editor-warning.png"];
         }
@@ -340,6 +337,7 @@
     [cell setImage:icon];
     [cell setImageAlt:warningIcon];
 }
+
 
 #pragma mark Dragging and dropping
 
@@ -469,7 +467,7 @@
 
     NSError *error;
     PackageController *packageController = [[PackageController alloc] init];
-    packageController.projectSettings = [AppDelegate appDelegate].projectSettings;
+    packageController.projectSettings = _projectSettings;
     if (![packageController importPackagesWithPaths:packagePathsToImport error:&error])
     {
         [self handleImportErrors:error];

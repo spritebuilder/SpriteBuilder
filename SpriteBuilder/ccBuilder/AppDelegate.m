@@ -476,7 +476,6 @@ typedef enum
 
 - (void) setupResourceManager
 {
-    
     NSColor * color = [NSColor colorWithCalibratedRed:0.0f green:0.50f blue:0.50f alpha:1.0f];
     
     color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
@@ -511,6 +510,7 @@ typedef enum
     
     // Setup project display
     projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
+    projectOutlineHandler.projectSettings = projectSettings;
     
     resourceManagerSplitView.delegate = previewViewOwner;
     
@@ -2061,6 +2061,7 @@ static BOOL hideAllToNextSeparator;
     project.projectPath = fileName;
     [project store];
     self.projectSettings = project;
+    projectOutlineHandler.projectSettings = projectSettings;
     
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
