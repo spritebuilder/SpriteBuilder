@@ -49,10 +49,13 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
 - (NSString *)fullPathForPackageName:(NSString *)packageName
 {
-    NSString *fullPackageName = [NSString stringWithFormat:@"%@.%@", packageName, PACKAGE_NAME_SUFFIX];
-    return [_projectSettings.projectPathDir stringByAppendingPathComponent:fullPackageName];
+    return [_projectSettings.projectPathDir stringByAppendingPathComponent:[self fullPackageName:packageName]];
 }
 
+- (NSString *)fullPackageName:(NSString *)packageName
+{
+    return [NSString stringWithFormat:@"%@.%@", packageName, PACKAGE_NAME_SUFFIX];
+}
 
 # pragma mark - PackageCreateDelegate
 
@@ -153,7 +156,8 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
     NSError *underlyingErrorCreate;
     BOOL createDirSuccess = [_fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:&underlyingErrorCreate];
-    if (!createDirSuccess && underlyingErrorCreate.code == NSFileWriteFileExistsError)
+    if (!createDirSuccess
+        && underlyingErrorCreate.code == NSFileWriteFileExistsError)
     {
         *error = [self packageExistsButNotInProjectError:packageName];
         return NO;
@@ -196,7 +200,9 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 {
     if ([self isPackageValid:package])
     {
-        *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageExportInvalidPackageError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]}];
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBPackageExportInvalidPackageError
+                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]}];
         return NO;
     }
 
@@ -204,7 +210,9 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
     if ([_fileManager fileExistsAtPath:copyToPath])
     {
-        *error = [NSError errorWithDomain:SBErrorDomain code:SBPackageAlreadyExistsAtPathError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Package %@ already exists at path %@.", package, toPath]}];
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBPackageAlreadyExistsAtPathError
+                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already exists at path %@.", package, toPath]}];
         return NO;
     }
 
@@ -216,6 +224,78 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
     return !package
         || ![package isKindOfClass:[RMPackage class]]
         || !package.dirPath;
+}
+
+- (BOOL)renamePackage:(RMPackage *)package toName:(NSString *)newName error:(NSError **)error
+{
+    NSAssert(_projectSettings != nil, @"ProjectSetting must not be nil");
+
+    NSString *newFullPath = [self fullPathForRenamedPackage:package toName:newName];
+
+    if ([package.dirPath isEqualToString:newFullPath])
+    {
+        return YES;
+    }
+
+    // Note: moveResourcePathFrom has to happen last, package.dirPath is modified
+
+    BOOL renameSuccessful = ([self canRenamePackage:package toName:newName error:error]
+                            && [_fileManager moveItemAtPath:package.dirPath toPath:newFullPath error:error]
+                            && [_projectSettings moveResourcePathFrom:package.dirPath toPath:newFullPath error:error]);
+
+    if (renameSuccessful)
+    {
+        package.dirPath = newFullPath;
+        return YES;
+    }
+
+    if (error && !*error)
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBRenamePackageGenericError
+                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"An unexpected error occured. Code %li", SBRenamePackageGenericError]}];
+    }
+    return NO;
+}
+
+- (BOOL)canRenamePackage:(RMPackage *)package toName:(NSString *)newName error:(NSError **)error
+{
+    NSString *newFullPath = [self fullPathForRenamedPackage:package toName:newName];
+
+    if ([newFullPath isEqualToString:package.dirPath])
+    {
+        return YES;
+    }
+
+    if ([_projectSettings isResourcePathInProject:newFullPath])
+    {
+        if (error)
+        {
+            *error = [NSError errorWithDomain:SBErrorDomain
+                                         code:SBDuplicateResourcePathError
+                                     userInfo:@{NSLocalizedDescriptionKey : @"A package with this name already exists in the project"}];
+        }
+
+        return NO;
+    }
+
+    if ([_fileManager fileExistsAtPath:newFullPath])
+    {
+        if (error)
+        {
+            *error = [NSError errorWithDomain:SBErrorDomain
+                                         code:SBResourcePathExistsButNotInProjectError
+                                     userInfo:@{NSLocalizedDescriptionKey : @"A package with this name already exists on the file system, but is not in the project."}];
+        }
+        return NO;
+    }
+
+    return YES;
+}
+
+- (NSString *)fullPathForRenamedPackage:(RMPackage *)package toName:(NSString *)newName
+{
+    return [[package.dirPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:[self fullPackageName:newName]];
 }
 
 @end

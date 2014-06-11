@@ -21,3 +21,4 @@ extern NSInteger const SBRemovePackagesError;
 extern NSInteger const SBResourcePathExistsButNotInProjectError;
 extern NSInteger const SBPackageExportInvalidPackageError;
 extern NSInteger const SBPackageAlreadyExistsAtPathError;
+extern NSInteger const SBRenamePackageGenericError;

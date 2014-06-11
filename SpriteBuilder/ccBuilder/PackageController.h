@@ -49,4 +49,8 @@
 // Returns NO if an error occured, check error object.
 - (BOOL)exportPackage:(RMPackage *)package toPath:(NSString *)toPath error:(NSError **)error;
 
+- (BOOL)renamePackage:(RMPackage *)package toName:(NSString *)newName error:(NSError **)error;
+
+- (BOOL)canRenamePackage:(RMPackage *)aPackage toName:(NSString *)newName error:(NSError **)error;
+
 @end
