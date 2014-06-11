@@ -510,8 +510,7 @@
 {
     if (![self isResourcePathInProject:path])
     {
-        NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
-        NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
+        NSString *relResourcePath = [path relativePathFromBaseDirPath:self.projectPathDir];
 
         [resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:relResourcePath forKey:@"path"]];
         return YES;
@@ -527,23 +526,40 @@
 
 - (BOOL)isResourcePathInProject:(NSString *)resourcePath
 {
-    NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
-    NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:projectDir];
+    NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:self.projectPathDir];
 
-    return [self isRelResourcePathAlreadyInProject:relResourcePath];
+    return [self resourcePathForRelativePath:relResourcePath] != nil;
 }
 
-- (BOOL)isRelResourcePathAlreadyInProject:(NSString *)relResourcePath
+- (NSMutableDictionary *)resourcePathForRelativePath:(NSString *)path
 {
-    for (NSDictionary *row in resourcePaths)
+    for (NSMutableDictionary *resourcePath in resourcePaths)
     {
-        NSString *resourcePath = [row objectForKey:@"path"];
-        if ([resourcePath isEqualToString:relResourcePath])
+        NSString *aResourcePath = [resourcePath objectForKey:@"path"];
+        if ([aResourcePath isEqualToString:path])
         {
-            return YES;
+            return resourcePath;
         }
     }
-    return NO;
+    return nil;
+}
+
+- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+{
+    if ([self isResourcePathInProject:toPath])
+    {
+        *error = [NSError errorWithDomain:SBErrorDomain
+                                     code:SBDuplicateResourcePathError
+                                 userInfo:@{NSLocalizedDescriptionKey : @"Cannot move resource path, there's already one with the same name."}];
+        return NO;
+    }
+
+    NSString *relResourcePathOld = [fromPath relativePathFromBaseDirPath:self.projectPathDir];
+
+    NSMutableDictionary *resourcePath = [self resourcePathForRelativePath:relResourcePathOld];
+    resourcePath[@"path"] = [toPath relativePathFromBaseDirPath:self.projectPathDir];
+
+    return YES;
 }
 
 - (void) detectBrowserPresence

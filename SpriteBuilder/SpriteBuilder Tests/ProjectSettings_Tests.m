@@ -99,4 +99,33 @@
     XCTAssertEqual(error.code, SBResourcePathNotInProjectError);
 }
 
+- (void)testMoveResourcePath
+{
+    _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
+
+    NSString *pathOld = @"/somewhere/path_old";
+    [_projectSettings addResourcePath:pathOld error:nil];
+
+    NSString *pathNew = @"/somewhere/path_new";
+    NSError *error;
+    XCTAssertTrue([_projectSettings moveResourcePathFrom:pathOld toPath:pathNew error:&error]);
+    XCTAssertNil(error);
+
+    XCTAssertFalse([_projectSettings isResourcePathInProject:pathOld]);
+    XCTAssertTrue([_projectSettings isResourcePathInProject:pathNew]);
+}
+
+- (void)testMoveResourcePathFailingBecauseThereIsAlreadyOneWithTheSameName
+{
+    NSString *path1 = @"/somewhere/path1";
+    [_projectSettings addResourcePath:path1 error:nil];
+    NSString *path2 = @"/somewhere/path2";
+    [_projectSettings addResourcePath:path2 error:nil];
+
+    NSError *error;
+    XCTAssertFalse([_projectSettings moveResourcePathFrom:path1 toPath:path2 error:&error]);
+    XCTAssertNotNil(error);
+    XCTAssertEqual(error.code, SBDuplicateResourcePathError);
+}
+
 @end
