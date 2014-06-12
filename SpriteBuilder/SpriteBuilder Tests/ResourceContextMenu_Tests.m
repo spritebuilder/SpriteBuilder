@@ -14,6 +14,7 @@
 #import "RMResource.h"
 #import "ResourceTypes.h"
 #import "RMPackage.h"
+#import "FeatureToggle.h"
 
 @interface ResourceContextMenu_Tests : XCTestCase
 
@@ -21,6 +22,11 @@
 
 
 @implementation ResourceContextMenu_Tests
+
+- (void)setUp
+{
+    [FeatureToggle sharedFeatures].packages = YES;
+}
 
 - (void)testContextWithEmptySelection
 {
@@ -45,6 +51,7 @@
     NSArray *selectors = @[
             @"newFile:",
             @"newFolder:",
+            @"openResourceWithExternalEditor:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
             @"deleteResource:"];
@@ -83,14 +90,12 @@
             @"newFolder:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
-            @"openResourceWithExternalEditor:",
             @"deleteResource:",
             @"toggleSmartSheet:"];
 
     [self assertMenu:resourceContextMenu containsEnabledItemsWithSelectorNames:selectors];
     [self assertMenuItemsEnabledCount:resourceContextMenu withExpectedSelectors:selectors];
 }
-
 
 #pragma mark - test helper
 
@@ -126,7 +131,7 @@
 
         if (menuItem.action)
         {
-            [result addObject:NSStringFromSelector(menuItem.action)];
+            [result addObject:[NSString stringWithFormat:@"%@, enabled: %d",NSStringFromSelector(menuItem.action), menuItem.isEnabled]];
         }
         else
         {
@@ -142,7 +147,7 @@
     for (NSString *selectorName in selectorNames)
     {
         SEL sel = NSSelectorFromString(selectorName);
-        XCTAssertTrue([self menu:menu containsEnabledItemWithSelector:sel], @"Menu does not contain menuitem with selector: \"%@\"", NSStringFromSelector(sel));
+        XCTAssertTrue([self menu:menu containsEnabledItemWithSelector:sel], @"Menu does not contain enabled menuitem with selector: \"%@\"", NSStringFromSelector(sel));
     }
 }
 
