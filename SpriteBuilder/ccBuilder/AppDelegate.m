@@ -4341,7 +4341,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)menuCreateKeyframesFromSelection:(id)sender
 {
-    [[ResourceCommandController sharedController] createKeyFrameFromSelection:nil];
+    [_resourceCommandController createKeyFrameFromSelection:nil];
 }
 
 - (IBAction)menuNewFolder:(NSMenuItem*)sender
