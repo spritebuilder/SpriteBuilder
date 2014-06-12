@@ -631,10 +631,7 @@
 
 - (void)postProcessPublishedPNGFilesWithOptiPNG
 {
-    if ([_projectSettings isPublishEnvironmentDebug])
-    {
-        return;
-    }
+  
 
     NSString *pathToOptiPNG = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"optipng"];
     if (!pathToOptiPNG)
@@ -674,13 +671,16 @@
 
     [self doPublish];
 
-    [self postProcessPublishedPNGFilesWithOptiPNG];
-
     _publishingTaskStatusProgress.totalTasks = [_publishingQueue operationCount];
 
     [_publishingQueue setSuspended:NO];
     [_publishingQueue waitUntilAllOperationsAreFinished];
+	
+	[self postProcessPublishedPNGFilesWithOptiPNG];
 
+	[_publishingQueue setSuspended:NO];
+    [_publishingQueue waitUntilAllOperationsAreFinished];
+	
     [_projectSettings flagFilesDirtyWithWarnings:_warnings];
 
     NSLog(@"[PUBLISH] Done in %.2f seconds.", [[NSDate date] timeIntervalSince1970] - startTime);
