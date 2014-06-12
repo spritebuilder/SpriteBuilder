@@ -8,6 +8,7 @@
 #import "MiscConstants.h"
 #import "RMPackage.h"
 #import "NSError+SBErrors.h"
+#import "ResourceManager.h"
 
 
 @implementation PackageController
@@ -212,6 +213,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 - (BOOL)renamePackage:(RMPackage *)package toName:(NSString *)newName error:(NSError **)error
 {
     NSAssert(_projectSettings != nil, @"ProjectSetting must not be nil");
+    NSAssert(_resourceManager != nil, @"ResourceManager must not be nil");
 
     NSString *newFullPath = [self fullPathForRenamedPackage:package toName:newName];
 
@@ -227,7 +229,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
     if (renameSuccessful)
     {
-        package.dirPath = newFullPath;
+        [_resourceManager setActiveDirectoriesWithFullReset:[_projectSettings absoluteResourcePaths]];
         return YES;
     }
 
