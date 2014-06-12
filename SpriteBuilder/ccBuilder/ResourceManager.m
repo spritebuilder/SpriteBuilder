@@ -487,6 +487,18 @@
     }
 }
 
+- (void)setActiveDirectoriesWithFullReset:(NSArray *)newActiveDirectories
+{
+    [self removeAllDirectories];
+
+    for (NSString* dir in newActiveDirectories)
+    {
+        [[ResourceManager sharedManager] addDirectory:dir];
+    }
+
+    [self setActiveDirectories:newActiveDirectories];
+}
+
 - (void) addDirectory:(NSString *)dirPath
 {
     if ([directories count] > kCCBMaxTrackedDirectories)

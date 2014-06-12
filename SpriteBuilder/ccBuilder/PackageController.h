@@ -4,11 +4,13 @@
 
 @class ProjectSettings;
 @class RMPackage;
+@class ResourceManager;
 
 @interface PackageController : NSObject <PackageCreateDelegateProtocol>
 
-@property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) NSFileManager *fileManager;
+@property (nonatomic, weak) ProjectSettings *projectSettings;
+@property (nonatomic, weak) NSFileManager *fileManager;
+@property (nonatomic, weak) ResourceManager *resourceManager;
 
 - (void)showCreateNewPackageDialogForWindow:(NSWindow *)window;
 

@@ -618,6 +618,7 @@
     {
         PackageController *packageController = [[PackageController alloc] init];
         packageController.projectSettings = _projectSettings;
+        packageController.resourceManager = [ResourceManager sharedManager];
         NSString *newName = object;
         NSError *error;
         if (![packageController renamePackage:item toName:newName error:&error])

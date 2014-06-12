@@ -58,6 +58,9 @@
 
 @property (nonatomic,readonly) NSArray* systemFontList;
 
+// Will remove all active directories first then recreate all file system observers anew
+- (void)setActiveDirectoriesWithFullReset:(NSArray *)activeDirectories;
+
 - (void) addDirectory:(NSString*)dir;
 - (void) removeDirectory:(NSString*)dir;
 - (void) removeAllDirectories;

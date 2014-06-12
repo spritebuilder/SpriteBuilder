@@ -551,10 +551,12 @@
     }
 
     NSString *relResourcePathOld = [fromPath relativePathFromBaseDirPath:self.projectPathDir];
+    NSString *relResourcePathNew = [toPath relativePathFromBaseDirPath:self.projectPathDir];
 
     NSMutableDictionary *resourcePath = [self resourcePathForRelativePath:relResourcePathOld];
-    resourcePath[@"path"] = [toPath relativePathFromBaseDirPath:self.projectPathDir];
+    resourcePath[@"path"] = relResourcePathNew;
 
+    [self movedResourceFrom:relResourcePathOld to:relResourcePathNew];
     return YES;
 }
 
