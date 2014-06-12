@@ -24,9 +24,9 @@
 // *** Add features as BOOL properties, name has to match key in feature.config.json, use custom getter
 // to improve readability. Example:
 //
-// @property (nonatomic, getter=isMyFeatureEnabled, readonly) BOOL myFeature;
+// @property (nonatomic, getter=isMyFeatureEnabled) BOOL myFeature;
 
-@property (nonatomic, getter=arePackagesEnabled, readonly) BOOL packages;
+@property (nonatomic, getter=arePackagesEnabled) BOOL packages;
 
 + (FeatureToggle *)sharedFeatures;
 
