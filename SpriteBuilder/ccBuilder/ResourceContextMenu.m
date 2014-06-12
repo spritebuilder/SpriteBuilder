@@ -14,6 +14,7 @@
 #import "ResourceNewPackageCommand.h"
 #import "ResourceDeleteCommand.h"
 #import "ResourceExportPackageCommand.h"
+#import "FeatureToggle.h"
 
 
 @interface ResourceContextMenu ()
@@ -56,7 +57,11 @@
     [self appendItemToMenuWithClass:[ResourceNewFolderCommand class] addSeparator:NO action:@selector(newFolder:)];
     [self appendItemToMenuWithClass:[ResourceNewPackageCommand class] addSeparator:NO action:@selector(newPackage:)];
     [self appendItemToMenuWithClass:[ResourceDeleteCommand class] addSeparator:YES action:@selector(deleteResource:)];
-    [self appendItemToMenuWithClass:[ResourceExportPackageCommand class] addSeparator:NO action:@selector(exportPackage:)];
+
+    if ([FeatureToggle sharedFeatures].arePackagesEnabled)
+    {
+        [self appendItemToMenuWithClass:[ResourceExportPackageCommand class] addSeparator:NO action:@selector(exportPackage:)];
+    }
 
     [self removeLastItemIfSeparator];
 }
