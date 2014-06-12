@@ -1992,14 +1992,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updateResourcePathsFromProjectSettings
 {
-    [[ResourceManager sharedManager] removeAllDirectories];
-    
-    // Setup links to directories
-    for (NSString* dir in [projectSettings absoluteResourcePaths])
-    {
-        [[ResourceManager sharedManager] addDirectory:dir];
-    }
-    [[ResourceManager sharedManager] setActiveDirectories:[projectSettings absoluteResourcePaths]];
+    [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absoluteResourcePaths]];
 }
 
 - (void) closeProject
