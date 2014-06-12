@@ -9,6 +9,7 @@
 #import "RMPackage.h"
 #import "NSError+SBErrors.h"
 #import "ResourceManager.h"
+#import "NSString+Packages.h"
 
 
 @implementation PackageController
@@ -116,14 +117,34 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
     return result;
 }
 
-- (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error
+- (NSArray *)allPackagesInPaths:(NSArray *)paths
 {
+    if (!paths)
+    {
+        return nil;
+    }
+
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSString *path in paths)
+    {
+        if ([path hasPackageSuffix])
+        {
+            [result addObject:path];
+        }
+    }
+    return result;
+}
+
+- (BOOL)importPackagesWithPaths:(NSArray *)paths error:(NSError **)error
+{
+    NSArray *filteredPaths = [self allPackagesInPaths:paths];
+
     PackageManipulationBlock block = ^BOOL(NSString *packagePath, NSError **localError)
     {
         return [_projectSettings addResourcePath:packagePath error:localError];
     };
 
-    return [self applyProjectSettingBlockForPackagePaths:packagePaths
+    return [self applyProjectSettingBlockForPackagePaths:filteredPaths
                                                    error:error
                                      prevailingErrorCode:SBImportingPackagesError
                                         errorDescription:@"One or more packages could not be imported."
@@ -222,7 +243,6 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
         return YES;
     }
 
-    // Note: moveResourcePathFrom has to happen last, package.dirPath is modified
     BOOL renameSuccessful = ([self canRenamePackage:package toName:newName error:error]
                             && [_fileManager moveItemAtPath:package.dirPath toPath:newFullPath error:error]
                             && [_projectSettings moveResourcePathFrom:package.dirPath toPath:newFullPath error:error]);

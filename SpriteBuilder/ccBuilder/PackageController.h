@@ -35,11 +35,12 @@
 - (BOOL)importPackageWithPath:(NSString *)packagePath error:(NSError **)error;
 
 // Will import an array of package paths. All package names have to contain the PACKAGE_NAME_SUFFIX.
+// Everything that is not a package path is ignored
 // Sends RESOURCE_PATHS_CHANGED notification after all packages
 // have been added. Notification only sent if there is at least one succesfully added package.
 // Returns NO if there were errors. Will try to add all packages given, won't exit prematurely on error
 // In error's userInfo dictionary there'll be the "errors" key with all underlying errors
-- (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error;
+- (BOOL)importPackagesWithPaths:(NSArray *)paths error:(NSError **)error;
 
 // Will remove package paths from the project, it won't delete the folders just the project reference
 // All package names have to contain the PACKAGE_NAME_SUFFIX.
@@ -48,12 +49,17 @@
 // In error's userInfo dictionary there'll be the "errors" key with all underlying errors
 - (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error;
 
-// Copies the pacakge to a given path
+// Copies the package to a given path
 // Returns NO if an error occured, check error object.
 - (BOOL)exportPackage:(RMPackage *)package toPath:(NSString *)toPath error:(NSError **)error;
 
+// Renames a package, provide the package and a name not containing the .PACKAGE_NAME_SUFFIX
+// Returns NO if an error occured, check error object for reasons.
 - (BOOL)renamePackage:(RMPackage *)package toName:(NSString *)newName error:(NSError **)error;
 
+// Tests if a given package can be renamed to the given name.
+// Name should not contain the .PACKAGE_NAME_SUFFIX
+// Returns NO if an error occured, check error object for reasons.
 - (BOOL)canRenamePackage:(RMPackage *)aPackage toName:(NSString *)newName error:(NSError **)error;
 
 @end

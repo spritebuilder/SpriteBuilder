@@ -841,6 +841,7 @@
 		E525FF15523F47E23FC1A6AB /* ResourceNewFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */; };
 		E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */; };
 		E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */; };
+		E525FF7AD7E8BFE584A8BBDE /* NSString+Packages.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA15437B8CAB27509534 /* NSString+Packages.m */; };
 		E525FF949D54CFB8CD7B9F55 /* RMResourceBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F001371D1628D87FFF3E /* RMResourceBase.m */; };
 		FA98CFC4154E7D1C006E58C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA98CFC3154E7D1C006E58C5 /* Foundation.framework */; };
 		FA98CFC7154E7D1C006E58C5 /* ccbpublish.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98CFC6154E7D1C006E58C5 /* ccbpublish.m */; };
@@ -2261,6 +2262,7 @@
 		E525F12E427752EA9AA4EB37 /* ResourceNewFolderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewFolderCommand.h; sourceTree = "<group>"; };
 		E525F14190B50F98308504B5 /* ResourceContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu.m; sourceTree = "<group>"; };
 		E525F148A8B90E93D1D71D32 /* PackageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageController.m; sourceTree = "<group>"; };
+		E525F19851B99B6926435235 /* NSString+Packages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Packages.h"; sourceTree = "<group>"; };
 		E525F213547BCB1BBA54EC87 /* SBAssserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAssserts.h; sourceTree = "<group>"; };
 		E525F2ADCDB6F6933CAD7A97 /* RMAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMAnimation.m; sourceTree = "<group>"; };
 		E525F2BAB63B7076A97C24A2 /* RMResourceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMResourceBase.h; sourceTree = "<group>"; };
@@ -2305,6 +2307,7 @@
 		E525F9C14C875B0656796AE2 /* ResourceExportPackageCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceExportPackageCommand.h; sourceTree = "<group>"; };
 		E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceCommandController.m; sourceTree = "<group>"; };
 		E525FA122097E3A343BA0A68 /* RMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMResource.h; sourceTree = "<group>"; };
+		E525FA15437B8CAB27509534 /* NSString+Packages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Packages.m"; sourceTree = "<group>"; };
 		E525FA2687DAA762E0CF0430 /* ResourceCreateKeyframesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCreateKeyframesCommand.h; sourceTree = "<group>"; };
 		E525FA65E33EA86E49CED363 /* ResourceCommandContextMenuProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCommandContextMenuProtocol.h; sourceTree = "<group>"; };
 		E525FAF305E29FFBA1ADF131 /* RMAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMAnimation.h; sourceTree = "<group>"; };
@@ -3372,6 +3375,8 @@
 				E525F2F97BD5D52FB528C442 /* PackageController.h */,
 				E525F148A8B90E93D1D71D32 /* PackageController.m */,
 				E525F6C644CA9F78DAE45A13 /* PackageCreateDelegateProtocol.h */,
+				E525FA15437B8CAB27509534 /* NSString+Packages.m */,
+				E525F19851B99B6926435235 /* NSString+Packages.h */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -6470,6 +6475,7 @@
 				E525F0EA925087B3D2ABE8D3 /* ResourceNewPackageCommand.m in Sources */,
 				E525FF949D54CFB8CD7B9F55 /* RMResourceBase.m in Sources */,
 				E525F9C561CF0D13BB57D6F5 /* NSError+SBErrors.m in Sources */,
+				E525FF7AD7E8BFE584A8BBDE /* NSString+Packages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

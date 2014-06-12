@@ -44,20 +44,11 @@
 #import "RMAnimation.h"
 #import "RMPackage.h"
 #import "AppDelegate.h"
+#import "NSString+Packages.h"
 
 @implementation ResourceManagerOutlineHandler
 
 @synthesize resType;
-
-- (void) reload
-{
-    [resourceList reloadData];
-}
-
-- (id) initWithOutlineView:(NSOutlineView *)outlineView resType:(int)rt
-{
-    return [self initWithOutlineView:outlineView resType:rt preview:NULL];
-}
 
 - (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)rt preview:(ResourceManagerPreviewView*)p
 {
@@ -85,6 +76,13 @@
     
     return self;
 }
+
+- (void) reload
+{
+    [resourceList reloadData];
+}
+
+
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
@@ -415,8 +413,10 @@
 
     if ([FeatureToggle sharedFeatures].arePackagesEnabled)
     {
-        // TODO: clarify what this is doing
+        // Have packages been imported?
         movedOrImportedFiles |= [self importPackagesWithPaths:pbFilenames];
+        // NOTE: after importing packages, the array is reduced by these paths to allow
+        // further importing of other resources
         pbFilenames = [self removePackagesFromPaths:pbFilenames];
     }
 
@@ -437,21 +437,14 @@
 
 - (BOOL)importPackagesWithPaths:(NSArray *)paths
 {
-    NSArray *packagePathsToImport = [self allPackagesInPaths:paths];
-
-    if (packagePathsToImport.count <= 0)
-    {
-        return YES;
-    }
-
     NSError *error;
     PackageController *packageController = [[PackageController alloc] init];
     packageController.projectSettings = _projectSettings;
-    if (![packageController importPackagesWithPaths:packagePathsToImport error:&error])
+    if (![packageController importPackagesWithPaths:paths error:&error])
     {
         [self handleImportErrors:error];
+        return NO;
     }
-
     return YES;
 }
 
@@ -463,33 +456,14 @@
     }
 
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:paths.count];
-
     for (NSString *path in paths)
     {
-        if (![self isPackageWithPath:path])
+        if (![path hasPackageSuffix])
         {
             [result addObject:path];
         }
     }
 
-    return result;
-}
-
-- (NSArray *)allPackagesInPaths:(NSArray *)paths
-{
-    if (!paths)
-    {
-        return nil;
-    }
-
-    NSMutableArray *result = [NSMutableArray array];
-    for (NSString *path in paths)
-    {
-        if ([self isPackageWithPath:path])
-        {
-            [result addObject:path];
-        }
-    }
     return result;
 }
 
@@ -511,23 +485,10 @@
                                          defaultButton:@"OK"
                                        alternateButton:nil
                                            otherButton:nil
-                             informativeTextWithFormat:@"%@", error.localizedDescription];
+                             informativeTextWithFormat:@"%@", errorMessage];
         [alert runModal];
     }
 }
-
-- (BOOL)isPackageWithPath:(NSString *)path
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];;
-    BOOL isDirectory;
-    if ([fileManager fileExistsAtPath:path isDirectory:&isDirectory])
-    {
-        return isDirectory
-               && [[path lastPathComponent] hasSuffix:PACKAGE_NAME_SUFFIX];
-    }
-    return NO;
-}
-
 
 #pragma mark Selections and edit
 

@@ -18,6 +18,8 @@
 #import "MiscConstants.h"
 #import "RMPackage.h"
 #import "SBAssserts.h"
+#import "ResourceManager.h"
+#import "NSString+Packages.h"
 
 
 @interface PackageController_Tests : XCTestCase
@@ -49,13 +51,14 @@
     [super tearDown];
 }
 
+
 - (void)testImportPackageWithName
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
 
     id packageControllerMock = [OCMockObject partialMockForObject:_packageController];
 
-    NSString *expectedFullPath = [NSString stringWithFormat:@"/foo.%@", PACKAGE_NAME_SUFFIX];
+    NSString *expectedFullPath = [@"/foo" pathByAppendingPackageSuffix];
 
     [[[packageControllerMock expect] andReturnValue:@(YES)] importPackageWithPath:expectedFullPath error:[OCMArg anyObjectRef]];
     [[[packageControllerMock expect] andReturnValue:@(YES)] importPackagesWithPaths:[OCMArg checkWithSelector:@selector(isEqualToArray:) onObject:@[expectedFullPath]] error:[OCMArg anyObjectRef]];
@@ -65,17 +68,21 @@
     [_projectSettingsMock verify];
 }
 
-- (void)testImportPackagesWithAGoodAndOneErroneousPath
+
+- (void)testImportPackagesWithTwoPackages
 {
+    // One package is addable
+    // The other one already is in the project
+
     id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
-    NSString *packagePathGood = @"/goodPath";
-    NSString *packagePathBad = @"/badPath";
-    NSArray *packagePaths = @[packagePathGood, packagePathBad];
+    NSString *packagePathNotInProject = [@"/notYetInProject" pathByAppendingPackageSuffix];
+    NSString *packagePathInProject = [@"/alreadyInProject" pathByAppendingPackageSuffix];
+    NSArray *packagePaths = @[packagePathNotInProject, packagePathInProject];
 
-    [[[_projectSettingsMock expect] andReturnValue:@(YES)] addResourcePath:packagePathGood error:[OCMArg anyObjectRef]];
-    NSError *underlyingImportError = [NSError errorWithDomain:SBErrorDomain code:SBDuplicateResourcePathError userInfo:nil];
-    [[[_projectSettingsMock expect] andReturnValue:@(NO)] addResourcePath:packagePathBad  error:[OCMArg setTo:underlyingImportError]];
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    [projectSettings addResourcePath:packagePathInProject error:nil];
+    _packageController.projectSettings = projectSettings;
 
     NSError *error;
     XCTAssertFalse([_packageController importPackagesWithPaths:packagePaths error:&error]);
@@ -92,21 +99,16 @@
 {
     id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
-    NSString *packagePath = @"/package";
+    NSString *packagePath = [@"/package/foo" pathByAppendingPackageSuffix];
 
-    [[[_projectSettingsMock expect] andReturnValue:@(YES)] addResourcePath:packagePath error:[OCMArg anyObjectRef]];
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    _packageController.projectSettings = projectSettings;
 
     NSError *error;
     XCTAssertTrue([_packageController importPackagesWithPaths:@[packagePath] error:&error]);
     XCTAssertNil(error);
 
     [self verifyAndRemoveObserverMock:observerMock];
-}
-
-- (void)verifyAndRemoveObserverMock:(id)observerMock
-{
-    [observerMock verify];
-    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
 }
 
 - (void)testImportPackageWithPathsExitIfNilOrEmptyArrayParam
@@ -135,7 +137,7 @@
 {
     id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
-    NSString *packagePath = @"/package1";
+    NSString *packagePath = [@"/package1" pathByAppendingPackageSuffix];
 
     [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:packagePath error:[OCMArg anyObjectRef]];
 
@@ -146,22 +148,12 @@
     [self verifyAndRemoveObserverMock:observerMock];
 }
 
-- (id)observerMockForNotification:(NSString *)notificationName
-{
-    id observerMock = [OCMockObject observerMock];
-
-    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:notificationName object:nil];
-    [[observerMock expect] notificationWithName:notificationName object:[OCMArg any]];
-
-    return observerMock;
-}
-
 - (void)testRemovePackagesWithAGoodAndOneErroneousPath
 {
     id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
-    NSString *packagePathGood = @"/goodPath";
-    NSString *packagePathBad = @"/badPath";
+    NSString *packagePathGood = [@"/goodPath" pathByAppendingPackageSuffix];
+    NSString *packagePathBad = [@"/badPath" pathByAppendingPackageSuffix];
     NSArray *packagePaths = @[packagePathGood, packagePathBad];
 
     [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:packagePathGood error:[OCMArg anyObjectRef]];
@@ -182,10 +174,10 @@
 - (void)testCreatePackageWithName
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:[@"/NewPackage" pathByAppendingPackageSuffix]];
     [[[_projectSettingsMock expect] andReturnValue:@(YES)] addResourcePath:@"/NewPackage.sbpack" error:[OCMArg anyObjectRef]];
 
-    [[[_fileManagerMock expect] andReturnValue:@(YES)] createDirectoryAtPath:@"/NewPackage.sbpack"
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] createDirectoryAtPath:[@"/NewPackage" pathByAppendingPackageSuffix]
                                                  withIntermediateDirectories:NO
                                                                   attributes:nil
                                                                        error:[OCMArg anyObjectRef]];
@@ -197,10 +189,11 @@
     [_fileManagerMock verify];
 }
 
+
 - (void)testCreatePackageFailsWithPackageAlreadyInProject
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathInProject:[@"/NewPackage" pathByAppendingPackageSuffix]];
 
     NSError *error;
     XCTAssertFalse([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
@@ -213,10 +206,10 @@
 - (void)testCreatePackageFailsWithExistingPackageButNotInProject
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:[@"/NewPackage" pathByAppendingPackageSuffix]];
 
     NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteFileExistsError userInfo:nil];
-    [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"
+    [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:[@"/NewPackage" pathByAppendingPackageSuffix]
                                                  withIntermediateDirectories:NO
                                                                   attributes:nil
                                                                        error:[OCMArg setTo:underlyingFileError]];
@@ -233,10 +226,10 @@
 - (void)testCreatePackageFailsBecauseOfOtherDiskErrorThanFileExists
 {
     [[[_projectSettingsMock expect] andReturn:@"/"] projectPathDir];
-    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/NewPackage.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:[@"/NewPackage" pathByAppendingPackageSuffix]];
 
     NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteNoPermissionError userInfo:nil];
-    [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:@"/NewPackage.sbpack"
+    [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:[@"/NewPackage" pathByAppendingPackageSuffix]
                                                  withIntermediateDirectories:NO
                                                                   attributes:nil
                                                                        error:[OCMArg setTo:underlyingFileError]];
@@ -258,7 +251,7 @@
     [[[mockFileManager expect] andReturnValue:@(YES)] fileExistsAtPath:OCMOCK_ANY];
 
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = @"/baa/foo.sbpack";
+    package.dirPath = [@"/baa/foo" pathByAppendingPackageSuffix];
 
     NSError *error;
     XCTAssertFalse([_packageController exportPackage:package toPath:@"/foo" error:&error]);
@@ -276,7 +269,7 @@
     NSString *toPath = @"/foo";
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = @"/baa/superpackage.sbpack";
-    NSString *expectedCopyToPath = @"/foo/superpackage.sbpack";
+    NSString *expectedCopyToPath = [@"/foo/superpackage" pathByAppendingPackageSuffix];
 
     [[[mockFileManager expect] andReturnValue:@(NO)] fileExistsAtPath:expectedCopyToPath];
     [[[mockFileManager expect] andReturnValue:@(YES)] copyItemAtPath:package.dirPath toPath:expectedCopyToPath error:[OCMArg anyObjectRef]];
@@ -309,9 +302,9 @@
 - (void)testCanRenamePackageWithExistingFullPathInProject
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = @"/project/pack_old.sbpack";
+    package.dirPath = [@"/project/pack_old" pathByAppendingPackageSuffix];
 
-    [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathInProject:@"/project/pack_new.sbpack"];
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] isResourcePathInProject:[@"/project/pack_new" pathByAppendingPackageSuffix]];
 
     NSError *error;
     XCTAssertFalse([_packageController canRenamePackage:package toName:@"pack_new" error:&error]);
@@ -323,9 +316,9 @@
 - (void)testCanRenamePackageWithExistingFullPathInFileSystemButNotInProject
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = @"/project/pack_old.sbpack";
+    package.dirPath = [@"/project/pack_old" pathByAppendingPackageSuffix];
 
-    [[[_fileManagerMock expect] andReturnValue:@(YES)] fileExistsAtPath:@"/project/pack_new.sbpack"];
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] fileExistsAtPath:[@"/project/pack_new" pathByAppendingPackageSuffix]];
     [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:OCMOCK_ANY];
 
     NSError *error;
@@ -339,7 +332,7 @@
 - (void)testCanRenamePackage
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = @"/project/pack_old.sbpack";
+    package.dirPath = [@"/project/pack_old" pathByAppendingPackageSuffix];
 
     [[[_fileManagerMock expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
     [[[_projectSettingsMock expect] andReturnValue:@(NO)] isResourcePathInProject:@"/project/pack_new.sbpack"];
@@ -353,7 +346,7 @@
 - (void)testCanRenamePackageWithNoChange
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = @"/project/pack_old.sbpack";
+    package.dirPath = [@"/project/pack_old" pathByAppendingPackageSuffix];
 
     XCTAssertTrue([_packageController canRenamePackage:package toName:package.dirPath error:nil]);
 }
@@ -361,19 +354,22 @@
 - (void)testRenamePackage
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = @"/project/pack_old.sbpack";
+    package.dirPath = [@"/project/pack_old" pathByAppendingPackageSuffix];
 
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    projectSettings.projectPath = @"/project";
     _packageController.projectSettings = projectSettings;
     [projectSettings addResourcePath:package.dirPath error:nil];
 
-    NSString *destPath = @"/project/foo.sbpack";
+    id resourceManagerMock = [OCMockObject niceMockForClass:[ResourceManager class]];
+    _packageController.resourceManager = resourceManagerMock;
+
+    NSString *destPath = [@"/project/foo" pathByAppendingPackageSuffix];
     [[[_fileManagerMock expect] andReturnValue:@(YES)] moveItemAtPath:package.dirPath toPath:destPath error:[OCMArg anyObjectRef]];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
 
     NSError *error;
     XCTAssertTrue([_packageController renamePackage:package toName:@"foo" error:&error]);
-    SBAssertStringsEqual(package.dirPath, destPath);
     XCTAssertNil(error);
 
     [_fileManagerMock verify];
@@ -382,9 +378,31 @@
 - (void)testRenamePackageWithSameName
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = @"/project/pack_old.sbpack";
+    package.dirPath = [@"/project/pack_old" pathByAppendingPackageSuffix];
+
+    id resourceManagerMock = [OCMockObject niceMockForClass:[ResourceManager class]];
+    _packageController.resourceManager = resourceManagerMock;
 
     XCTAssertTrue([_packageController renamePackage:package toName:@"pack_old" error:nil]);
+}
+
+
+#pragma mark - test helper
+
+- (id)observerMockForNotification:(NSString *)notificationName
+{
+    id observerMock = [OCMockObject observerMock];
+
+    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:notificationName object:nil];
+    [[observerMock expect] notificationWithName:notificationName object:[OCMArg any]];
+
+    return observerMock;
+}
+
+- (void)verifyAndRemoveObserverMock:(id)observerMock
+{
+    [observerMock verify];
+    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
 }
 
 @end
