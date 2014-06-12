@@ -49,16 +49,6 @@
 
 @synthesize resType;
 
-- (void) reload
-{
-    [resourceList reloadData];
-}
-
-- (id) initWithOutlineView:(NSOutlineView *)outlineView resType:(int)rt
-{
-    return [self initWithOutlineView:outlineView resType:rt preview:NULL];
-}
-
 - (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)rt preview:(ResourceManagerPreviewView*)p
 {
     self = [super init];
@@ -85,6 +75,13 @@
     
     return self;
 }
+
+- (void) reload
+{
+    [resourceList reloadData];
+}
+
+
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {

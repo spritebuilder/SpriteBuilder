@@ -40,8 +40,6 @@
 @property (nonatomic,assign) int resType;
 @property (nonatomic,weak) ProjectSettings *projectSettings;
 
-- (id) initWithOutlineView:(NSOutlineView *)outlineView resType:(int)rt;
-
 - (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)rt preview:(ResourceManagerPreviewView*)preview;
 
 - (void) reload;

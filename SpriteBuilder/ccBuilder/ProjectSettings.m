@@ -502,7 +502,9 @@
         }
     }
 
-    [NSError setNewErrorWithCode:error code:SBResourcePathNotInProjectError message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]    ];
+    [NSError setNewErrorWithCode:error
+                            code:SBResourcePathNotInProjectError
+                         message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]];
     return NO;
 }
 
