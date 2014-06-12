@@ -174,6 +174,7 @@
 		921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */; };
 		921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */; };
 		922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 922CC395194676B600B34854 /* AnimationTest1.ccb */; };
+		922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 922CC3971946873A00B34854 /* AnimationTest2.ccb */; };
 		922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */; };
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
@@ -1361,6 +1362,7 @@
 		921EEB2A18ADE5C600D864C2 /* InspectorNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorNodeReference.h; sourceTree = "<group>"; };
 		921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorNodeReference.m; sourceTree = "<group>"; };
 		922CC395194676B600B34854 /* AnimationTest1.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest1.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest1.ccb"; sourceTree = "<group>"; };
+		922CC3971946873A00B34854 /* AnimationTest2.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest2.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest2.ccb"; sourceTree = "<group>"; };
 		922E8EF418BFE47A008E1764 /* InspectorFloatCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorFloatCheck.h; sourceTree = "<group>"; };
 		922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFloatCheck.m; sourceTree = "<group>"; };
 		922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorFloatCheck.xib; sourceTree = "<group>"; };
@@ -3368,6 +3370,7 @@
 		922CC3941946769B00B34854 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				922CC3971946873A00B34854 /* AnimationTest2.ccb */,
 				922CC395194676B600B34854 /* AnimationTest1.ccb */,
 			);
 			name = Resources;
@@ -5668,6 +5671,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */,
 				833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */,
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
 			);

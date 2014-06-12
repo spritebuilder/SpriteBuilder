@@ -95,7 +95,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 @implementation CCAnimation_Tests
 
--(NSData*)writeCCB:(NSString*)srcFileName
+-(NSData*)readCCB:(NSString*)srcFileName
 {
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *path = [bundle pathForResource:srcFileName ofType:@"ccb"];
@@ -131,7 +131,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 	
 	
-	NSData * animData = [self writeCCB:@"AnimationTest1"];
+	NSData * animData = [self readCCB:@"AnimationTest1"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 
 	CCBReader * reader = [CCBReader reader];
@@ -192,7 +192,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	CCAnimationDelegateTester * callbackTest = [[CCAnimationDelegateTester alloc] init];
 
-	NSData * animData = [self writeCCB:@"AnimationTest1"];
+	NSData * animData = [self readCCB:@"AnimationTest1"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	
 	CCBReader * reader = [CCBReader reader];
@@ -233,9 +233,59 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	}
 	
 	XCTAssert(endCallbackWasCalled, @"Should be called");
-	
-	
 		
 }
+
+
+
+-(void)testAnimationTween1
+{
+	
+	CCAnimationDelegateTester * callbackTest = [[CCAnimationDelegateTester alloc] init];
+	
+	NSData * animData = [self readCCB:@"AnimationTest2"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
+	
+	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	rootNode.animationManager.delegate = callbackTest;
+	
+	const float kDelta = 0.1f;//100ms;
+	const CGFloat kAccuracy = 0.01f;
+	const CGFloat kTranslation = 500.0f;
+	const CGFloat kTween = 1.0f;
+	
+	float totalElapsed = 0.0f;
+	__block float currentAnimElapsed = 0.0f;
+	
+	__block BOOL playingDefaultAnimToggle = YES;
+	[callbackTest setSequenceFinishedCallback:^{
+		playingDefaultAnimToggle = !playingDefaultAnimToggle;
+		if(playingDefaultAnimToggle)
+		{
+			[rootNode.animationManager runAnimationsForSequenceNamed:playingDefaultAnimToggle ? @"T1" : @"T2" tweenDuration:kTween];
+		}
+
+	}];
+	
+	//
+	while(totalElapsed <= (seq.duration + kTween) * 20)
+	{
+		[rootNode.animationManager update:kDelta];
+		
+		totalElapsed += kDelta;
+		currentAnimElapsed += kDelta;
+		
+		if(playingDefaultAnimToggle)
+		{
+			
+		}
+	}
+		
+	
+}
+
 
 @end
