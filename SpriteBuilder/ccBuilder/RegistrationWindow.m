@@ -37,7 +37,14 @@
 
 - (IBAction) pressedContinue:(id)sender
 {
-    if (_checkBox.state == NSOnState)
+    // Fetch email
+    NSString* email = _email.stringValue;
+    
+    if (!email || [email isEqualToString:@""])
+    {
+        // The user choose not to sign up
+    }
+    else if (_checkBox.state == NSOnState)
     {
         // Check if email is valid
         if (![self isValidEmail])
@@ -46,9 +53,6 @@
             NSBeep();
             return;
         }
-        
-        // Fetch email
-        NSString* email = _email.stringValue;
         
         // Send it to the server
         [[[UsageManager alloc] init] registerEmail:email];
@@ -65,7 +69,7 @@
 
 - (IBAction) pressedPrivacyPolicy:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://spritebuilder.com/privacypolicy"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://spritebuilder.com/privacy"]];
 }
 
 - (BOOL) isValidEmail

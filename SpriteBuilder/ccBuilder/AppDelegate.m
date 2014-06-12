@@ -640,7 +640,7 @@ typedef enum
     }
     
     // Open registration window
-    [self openRegistrationWindow];
+    [self openRegistrationWindow:NULL];
 }
 
 - (void)registerNotificationObservers
@@ -4692,9 +4692,9 @@ static BOOL hideAllToNextSeparator;
     [[aboutWindow window] makeKeyAndOrderFront:self];
 }
 
-- (void) openRegistrationWindow
+- (IBAction) openRegistrationWindow:(id)sender
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
+    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
     {
         // Email already registered or skipped
         return;

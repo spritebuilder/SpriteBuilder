@@ -6879,6 +6879,7 @@
 					"\"$(SRCROOT)/libs/Tupac\"",
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				WRAPPER_EXTENSION = app;
@@ -6918,6 +6919,7 @@
 					"\"$(SRCROOT)/libs/Tupac\"",
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				WRAPPER_EXTENSION = app;
