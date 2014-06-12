@@ -11,7 +11,6 @@
 @property (nonatomic, weak) NSWindow *window;
 @property (nonatomic, weak) ResourceManager *resourceManager;
 
-+ (id)sharedController;
 
 - (void)showResourceInFinder:(id)sender;
 - (void)openResourceWithExternalEditor:(id)sender;

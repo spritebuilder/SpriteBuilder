@@ -89,9 +89,10 @@
 - (void) keyDown:(NSEvent *)theEvent
 {
     unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
-    if(key == NSDeleteCharacter)
+    if(key == NSDeleteCharacter
+       && [_actionTarget respondsToSelector:@selector(deleteResource:)])
     {
-        [[ResourceCommandController sharedController] deleteResource:nil];
+        [_actionTarget deleteResource:nil];
         return;
     }
     

@@ -14,17 +14,8 @@
 
 @implementation ResourceCommandController
 
-#pragma mark - Initialization
 
-+ (id)sharedController
-{
-    static ResourceCommandController *sharedResourceActionController;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedResourceActionController = [[self alloc] init];
-    });
-    return sharedResourceActionController;
-}
+#pragma mark - Initialization
 
 - (NSArray *)selectedResources
 {
