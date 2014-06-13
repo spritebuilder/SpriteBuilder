@@ -52,13 +52,9 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
 - (NSString *)fullPathForPackageName:(NSString *)packageName
 {
-    return [_projectSettings.projectPathDir stringByAppendingPathComponent:[self fullPackageName:packageName]];
+    return [_projectSettings.projectPathDir stringByAppendingPathComponent:[packageName pathByAppendingPackageSuffix]];
 }
 
-- (NSString *)fullPackageName:(NSString *)packageName
-{
-    return [NSString stringWithFormat:@"%@.%@", packageName, PACKAGE_NAME_SUFFIX];
-}
 
 # pragma mark - PackageCreateDelegate
 
@@ -286,7 +282,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
 - (NSString *)fullPathForRenamedPackage:(RMPackage *)package toName:(NSString *)newName
 {
-    return [[package.dirPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:[self fullPackageName:newName]];
+    return [[package.dirPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:[newName pathByAppendingPackageSuffix]];
 }
 
 @end
