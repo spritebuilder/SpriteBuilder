@@ -170,7 +170,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
     }
 
     NSError *underlyingErrorCreate;
-    BOOL createDirSuccess = [_fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:&underlyingErrorCreate];
+    BOOL createDirSuccess = [_fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:&underlyingErrorCreate];
     if (!createDirSuccess
         && underlyingErrorCreate.code == NSFileWriteFileExistsError)
     {
