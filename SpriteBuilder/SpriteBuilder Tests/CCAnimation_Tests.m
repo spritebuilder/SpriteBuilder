@@ -206,7 +206,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	const float kDelta = 0.1f;//100ms;
 	const CGFloat kAccuracy = 0.01f;
-	const CGFloat kTranslation = 500.0f;
 	
 	float totalElapsed = 0.0f;
 	__block float currentAnimElapsed = 0.0f;
@@ -303,8 +302,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 		}
 		else if(timeIntoAnimation < 3.0f || IS_NEAR(timeIntoAnimation,3.0f,kAccuracy))
 		{
-			int break_here = 1;
-			
 			XCTAssertEqualWithAccuracy(node0.position.x, kXTranslation, kAccuracy, @"Error: timeIntoAnim:%0.2f", timeIntoAnimation);
 		}
 		else if(timeIntoAnimation  < 4.0f || IS_NEAR(timeIntoAnimation,4.0f,kAccuracy))
@@ -317,7 +314,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 	};
 	
-	bool alreadyDone = NO;
 	
 	while(totalElapsed <= (seq.duration + kTween) * 20)
 	{
@@ -331,8 +327,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 			validationAnimBlock(currentAnimElapsed);
 			continue;
 		}
-		
-		
 		
 		
 		if(!playingDefaultAnimToggle)
@@ -382,9 +376,72 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 			}
 		}
 	}
-		
 	
 }
 
 
+//This test file  "AnimationTest3.ccb".
+//The test ensures that default animation loops properly.
+-(void)testAnimationLoop1
+{
+	CCAnimationDelegateTester * callbackHelper = [[CCAnimationDelegateTester alloc] init];
+	
+	NSData * animData = [self readCCB:@"AnimationTest3"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:callbackHelper];
+	CCNode * node0 = rootNode.children[0];
+	
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
+	
+	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	rootNode.animationManager.delegate = callbackHelper;
+	
+	const float   kDelta = 0.1f;//100ms;
+	const CGFloat kAccuracy = 0.01f;
+	const CGFloat kXTranslation = 500.0f;
+	const CGFloat kTween = 1.0f;
+	
+	float totalElapsed = 0.0f;
+	__block BOOL firstTime = YES;
+	__block float currentAnimElapsed = 0.0f;
+	__block BOOL playingDefaultAnimToggle = YES;
+
+	[callbackHelper setSequenceFinishedCallback:^{
+		
+		//When the animation finished, Toggle over to the next T1/T2 animation.
+		firstTime = NO;
+		
+		//Reset clock.
+		currentAnimElapsed = 0.0f;
+	}];
+	
+	[rootNode.animationManager update:0];//Zero'th update.
+	
+	while(totalElapsed <= (seq.duration * 20))
+	{
+		totalElapsed += kDelta;
+		currentAnimElapsed += kDelta;
+		
+		[rootNode.animationManager update:kDelta];
+		
+		if(currentAnimElapsed <= 1.0f || IS_NEAR(currentAnimElapsed, 1.0f, kAccuracy))
+		{
+			float percentage = currentAnimElapsed;
+			XCTAssertEqualWithAccuracy(node0.position.x, percentage * kXTranslation, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+		}
+		else
+		{
+			//We should be translating from X = 500 -> x = 0;
+			float percentage = currentAnimElapsed - 1.0f;
+			float xCoord = kXTranslation * (1.0f - percentage);
+			
+			XCTAssertEqualWithAccuracy(node0.position.x, xCoord, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+			
+		}
+		
+
+	}
+}
 @end
