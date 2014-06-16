@@ -119,7 +119,6 @@
 		830F4E7E192DF937002B832D /* NewPackageWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E7D192DF937002B832D /* NewPackageWindow.xib */; };
 		830F4E81192DF9D1002B832D /* NewPackageWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830F4E80192DF9D1002B832D /* NewPackageWindowController.m */; };
 		830F4E9B192F5263002B832D /* Package.icns in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E9A192F5263002B832D /* Package.icns */; };
-		830F4EAF19336A36002B832D /* PackageController_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 830F4EAE19336A35002B832D /* PackageController_Tests.m */; };
 		830F4EB21934706C002B832D /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
 		830F4ECB193486E5002B832D /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
 		833A5C4C192B48CB001837B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833A5C4B192B48CB001837B3 /* XCTest.framework */; };
@@ -806,17 +805,22 @@
 		E525F07CCBACEC15F8A13EC7 /* AnimationPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */; };
 		E525F17044E58B6DFE7A2248 /* RMPackage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A4E3F488FCF4347F62 /* RMPackage_Tests.m */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
+		E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */; };
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F354B165DA655818733B /* RMResource.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF18D2784BB119B2882A /* RMResource.m */; };
 		E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD2D849749BB67455943 /* DateCache.m */; };
+		E525F46FC0F80AEC8AA43D48 /* PackageRemover_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */; };
 		E525F4A65E3BA6A5C69470AD /* RMAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2ADCDB6F6933CAD7A97 /* RMAnimation.m */; };
 		E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F74ADF149FB8398AE965 /* NSString+Publishing.m */; };
 		E525F50C89C6296C9FE062F9 /* ruler-numbers.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */; };
 		E525F549B73C33797CD485BE /* PackageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F148A8B90E93D1D71D32 /* PackageController.m */; };
 		E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */; };
+		E525F7AC155C1C4502F6A34A /* PackageImporter_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */; };
+		E525F7D63B68B99ADD44F94C /* PackageCreator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */; };
 		E525F90784006C34BD20E775 /* RMPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F49BD7988117B20F261D /* RMPackage.m */; };
 		E525F9C561CF0D13BB57D6F5 /* NSError+SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F90876BE1677B68F8373 /* NSError+SBErrors.m */; };
 		E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */; };
+		E525FA2BAA3D669C41F83FA2 /* PackageExporter_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD702E268242A41C54F4 /* PackageExporter_Tests.m */; };
 		E525FA398CC2E279B3D65D16 /* PublishingTaskStatusProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */; };
 		E525FA5D4791EB730859BF2C /* ProjectSettings+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCD604B9708D96E9EE11 /* ProjectSettings+Convenience.m */; };
 		E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */; };
@@ -1318,7 +1322,6 @@
 		830F4E7F192DF9D1002B832D /* NewPackageWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPackageWindowController.h; sourceTree = "<group>"; };
 		830F4E80192DF9D1002B832D /* NewPackageWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPackageWindowController.m; sourceTree = "<group>"; };
 		830F4E9A192F5263002B832D /* Package.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Package.icns; sourceTree = "<group>"; };
-		830F4EAE19336A35002B832D /* PackageController_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageController_Tests.m; sourceTree = "<group>"; };
 		830F4EB019347032002B832D /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = libs/OCMock.framework; sourceTree = "<group>"; };
 		833A5C4A192B48CB001837B3 /* SpriteBuilder Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpriteBuilder Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		833A5C4B192B48CB001837B3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -2254,11 +2257,13 @@
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
 		E525F60141EECA8FC9DF3034 /* MiscConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscConstants.m; sourceTree = "<group>"; };
 		E525F616AAA64620A9528730 /* ObserverTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObserverTestHelper.h; sourceTree = "<group>"; };
+		E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer_Tests.m; sourceTree = "<group>"; };
 		E525F6C644CA9F78DAE45A13 /* PackageCreateDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreateDelegateProtocol.h; sourceTree = "<group>"; };
 		E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPlaybackManager.m; sourceTree = "<group>"; };
 		E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishingTaskStatusProgress.m; sourceTree = "<group>"; };
 		E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSoundFileOperation.m; sourceTree = "<group>"; };
 		E525F74ADF149FB8398AE965 /* NSString+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing.m"; sourceTree = "<group>"; };
+		E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageImporter_Tests.m; sourceTree = "<group>"; };
 		E525F7D66E8C3826418D67AE /* RMSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMSpriteFrame.m; sourceTree = "<group>"; };
 		E525F7EE37BDD5941E6C0AC9 /* PublishRenamedFilesLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRenamedFilesLookup.m; sourceTree = "<group>"; };
 		E525F7FDEB6E06727F3674DC /* OptimizeImageWithOptiPNGOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptimizeImageWithOptiPNGOperation.h; sourceTree = "<group>"; };
@@ -2286,9 +2291,12 @@
 		E525FCC7B2A33EFBD178B87D /* NSString+Publishing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Publishing.h"; sourceTree = "<group>"; };
 		E525FCD604B9708D96E9EE11 /* ProjectSettings+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ProjectSettings+Convenience.m"; sourceTree = "<group>"; };
 		E525FD2D849749BB67455943 /* DateCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCache.m; sourceTree = "<group>"; };
+		E525FD702E268242A41C54F4 /* PackageExporter_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageExporter_Tests.m; sourceTree = "<group>"; };
 		E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseOperation.h; sourceTree = "<group>"; };
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
 		E525FDE1E2157A624E4395A5 /* RMDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDirectory.m; sourceTree = "<group>"; };
+		E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRemover_Tests.m; sourceTree = "<group>"; };
+		E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCreator_Tests.m; sourceTree = "<group>"; };
 		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FF18D2784BB119B2882A /* RMResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource.m; sourceTree = "<group>"; };
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
@@ -3342,7 +3350,11 @@
 		830F4EA219336959002B832D /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				830F4EAE19336A35002B832D /* PackageController_Tests.m */,
+				E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */,
+				E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */,
+				E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */,
+				E525FD702E268242A41C54F4 /* PackageExporter_Tests.m */,
+				E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -6389,10 +6401,14 @@
 			files = (
 				83EDACF5193DB70200327B86 /* ProjectSettings_Tests.m in Sources */,
 				83993DB519361305001C228B /* FeatureToggle_Tests.m in Sources */,
-				830F4EAF19336A36002B832D /* PackageController_Tests.m in Sources */,
 				833A5C5C192B4981001837B3 /* CCBReader_Tests.m in Sources */,
 				E525F17044E58B6DFE7A2248 /* RMPackage_Tests.m in Sources */,
 				E525FC3487265AE7715CE955 /* ObserverTestHelper.m in Sources */,
+				E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */,
+				E525F7D63B68B99ADD44F94C /* PackageCreator_Tests.m in Sources */,
+				E525F46FC0F80AEC8AA43D48 /* PackageRemover_Tests.m in Sources */,
+				E525FA2BAA3D669C41F83FA2 /* PackageExporter_Tests.m in Sources */,
+				E525F7AC155C1C4502F6A34A /* PackageImporter_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
