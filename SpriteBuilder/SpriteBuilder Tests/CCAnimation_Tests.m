@@ -18,6 +18,9 @@
 
 #define IS_NEAR(a,b,accuracy) (fabsf(a - b) < kAccuracy)
 
+const float kDelta = 0.1f;//100ms;
+const CGFloat kAccuracy = 0.01f;
+
 
 @implementation CCAnimationManager (Test)
 
@@ -155,8 +158,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	XCTAssertTrue([node2.name isEqualToString:@"node2"]);
 	 
 	
-	const float kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
 	const CGFloat kTranslation = 500.0f;
 	
 	
@@ -557,6 +558,39 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	XCTAssert([rootNode.animationManager.runningSequence.name isEqualToString:@"T2"], @"Should be on sequence T2");
 	XCTAssertEqualWithAccuracy(rootNode.animationManager.runningSequence.time, overHang, kAccuracy, @"Should be at the start of T2 animation");
+
+}
+
+
+//In T3 animation, it goes from invisible to visible after 2 seconds.
+-(void)testVisibility1
+{
+	
+	NSData * animData = [self readCCB:@"AnimationTest5"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
+	
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:nil];
+
+	CCNode * node0 = rootNode.children[0];
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
+
+	[rootNode.animationManager runAnimationsForSequenceNamed:@"T3"];
+	XCTAssert(!node0.visible, @"should be invisible");
+	
+	const float   kDelta = 0.1f;//100ms;
+	float totalElapsed = 0.0f;
+	
+	while(totalElapsed <= (2.0f) || IS_NEAR(totalElapsed, 2.0f, kAccuracy))
+	{
+		[rootNode.animationManager update:kDelta];
+		totalElapsed += kDelta;
+	}
+
+	//Should be visible after three seconds.
+	XCTAssert(node0.visible, @"should be visible");
 
 }
 
