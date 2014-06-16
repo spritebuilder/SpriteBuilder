@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import <objc/runtime.h>
-#import <MacTypes.h>
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageController.h"
 #import "ProjectSettings.h"
@@ -20,6 +19,7 @@
 #import "SBAssserts.h"
 #import "ResourceManager.h"
 #import "NSString+Packages.h"
+#import "ObserverTestHelper.h"
 
 
 @interface PackageController_Tests : XCTestCase
@@ -74,7 +74,7 @@
     // One package is addable
     // The other one already is in the project
 
-    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
+    id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePathNotInProject = [@"/notYetInProject" pathByAppendingPackageSuffix];
     NSString *packagePathInProject = [@"/alreadyInProject" pathByAppendingPackageSuffix];
@@ -92,14 +92,13 @@
     XCTAssertEqual(errors.count, 1);
     XCTAssertEqual(error.code, SBImportingPackagesError);
 
-    [self verifyAndRemoveObserverMock:observerMock];
+    [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 }
 
 - (void)testImportPackageSuccessfully
 {
-    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
-
     NSString *packagePath = [@"/package/foo" pathByAppendingPackageSuffix];
+    id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     _packageController.projectSettings = projectSettings;
@@ -135,7 +134,7 @@
 
 - (void)testRemovePackageSuccessfully
 {
-    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
+    id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePath = [@"/package1" pathByAppendingPackageSuffix];
 
@@ -145,12 +144,12 @@
     XCTAssertTrue([_packageController removePackagesFromProject:@[packagePath] error:&error]);
     XCTAssertNil(error);
 
-    [self verifyAndRemoveObserverMock:observerMock];
+    [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 }
 
 - (void)testRemovePackagesWithAGoodAndOneErroneousPath
 {
-    id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
+    id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePathGood = [@"/goodPath" pathByAppendingPackageSuffix];
     NSString *packagePathBad = [@"/badPath" pathByAppendingPackageSuffix];
@@ -168,7 +167,7 @@
     XCTAssertEqual(errors.count, 1);
     XCTAssertEqual(error.code, SBRemovePackagesError);
 
-    [self verifyAndRemoveObserverMock:observerMock];
+    [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 }
 
 - (void)testCreatePackageWithName
@@ -384,25 +383,6 @@
     _packageController.resourceManager = resourceManagerMock;
 
     XCTAssertTrue([_packageController renamePackage:package toName:@"pack_old" error:nil]);
-}
-
-
-#pragma mark - test helper
-
-- (id)observerMockForNotification:(NSString *)notificationName
-{
-    id observerMock = [OCMockObject observerMock];
-
-    [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:notificationName object:nil];
-    [[observerMock expect] notificationWithName:notificationName object:[OCMArg any]];
-
-    return observerMock;
-}
-
-- (void)verifyAndRemoveObserverMock:(id)observerMock
-{
-    [observerMock verify];
-    [[NSNotificationCenter defaultCenter] removeObserver:observerMock];
 }
 
 @end
