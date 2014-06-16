@@ -16,7 +16,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>docDimensionsType</key>
 	<integer>0</integer>
 	<key>fileType</key>
@@ -84,8 +84,8 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>0.0</real>
-										<real>0.0</real>
+										<real>500</real>
+										<real>200</real>
 									</array>
 								</dict>
 								<dict>
@@ -102,8 +102,8 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>0.0</real>
-										<real>0.0</real>
+										<real>500</real>
+										<real>200</real>
 									</array>
 								</dict>
 								<dict>
@@ -120,8 +120,8 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>500</real>
 										<real>0.0</real>
+										<real>200</real>
 									</array>
 								</dict>
 							</array>
@@ -205,8 +205,8 @@
 									<integer>3</integer>
 									<key>value</key>
 									<array>
-										<real>500</real>
-										<real>200</real>
+										<real>0.0</real>
+										<real>0.0</real>
 									</array>
 								</dict>
 							</array>
@@ -252,7 +252,7 @@
 						<key>value</key>
 						<array>
 							<real>0.0</real>
-							<real>200</real>
+							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -487,7 +487,7 @@
 				<integer>11</integer>
 			</dict>
 			<key>chainedSequenceId</key>
-			<integer>0</integer>
+			<integer>-1</integer>
 			<key>length</key>
 			<real>4</real>
 			<key>name</key>
@@ -495,7 +495,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.0</real>
+			<real>4</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
@@ -556,7 +556,7 @@
 				<integer>11</integer>
 			</dict>
 			<key>chainedSequenceId</key>
-			<integer>0</integer>
+			<integer>-1</integer>
 			<key>length</key>
 			<real>4</real>
 			<key>name</key>
@@ -564,7 +564,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>4</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>

@@ -16,6 +16,9 @@
 #import "CCAnimationManager_Private.h"
 #import "CCBSequence.h"
 
+#define IS_NEAR(a,b,accuracy) (fabsf(a - b) < kAccuracy)
+
+
 @implementation CCAnimationManager (Test)
 
 -(CCBSequence*)runningSequence
@@ -237,7 +240,8 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 }
 
 
-
+//This test file  "AnimationTest2.ccb" has two animations. T1 and T2.
+//The test ensures that when T1 ends, we launch T2 with a tween of 100ms.
 -(void)testAnimationTween1
 {
 	
@@ -248,39 +252,134 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	CCBReader * reader = [CCBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
+	CCNode * node0 = rootNode.children[0];
+	
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
 	
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackTest;
 	
 	const float kDelta = 0.1f;//100ms;
 	const CGFloat kAccuracy = 0.01f;
-	const CGFloat kTranslation = 500.0f;
+	const CGFloat kXTranslation = 500.0f;
+	const CGFloat kYTranslation = 200.0f;
 	const CGFloat kTween = 1.0f;
 	
 	float totalElapsed = 0.0f;
+	__block BOOL firstTime = YES;
 	__block float currentAnimElapsed = 0.0f;
-	
 	__block BOOL playingDefaultAnimToggle = YES;
+	
 	[callbackTest setSequenceFinishedCallback:^{
+		
+		//When the animation finished, Toggle over to the next T1/T2 animation.
+		firstTime = NO;
 		playingDefaultAnimToggle = !playingDefaultAnimToggle;
-		if(playingDefaultAnimToggle)
-		{
-			[rootNode.animationManager runAnimationsForSequenceNamed:playingDefaultAnimToggle ? @"T1" : @"T2" tweenDuration:kTween];
-		}
+		[rootNode.animationManager runAnimationsForSequenceNamed:playingDefaultAnimToggle ? @"T1" : @"T2" tweenDuration:kTween];
 
+		//Reset clock.
+		currentAnimElapsed = 0.0f;
 	}];
 	
 	//
+	
+	typedef void (^ValidateAnimation) (float timeIntoAnimation);
+	
+	ValidateAnimation validationAnimBlock =^(float timeIntoAnimation)
+	{
+		//We're in T1 + tween. Ensure valid
+		//Also, always skip frame 0.
+		
+		if(timeIntoAnimation < 0.0f || IS_NEAR(timeIntoAnimation,0.0f,kAccuracy))
+		{
+			return;
+		}
+		else if(timeIntoAnimation < 1.0f || IS_NEAR(timeIntoAnimation,1.0f,kAccuracy))
+		{
+			
+			float percentage = (timeIntoAnimation - kDelta);
+			float xCoord =  kXTranslation * (percentage);
+			XCTAssertEqualWithAccuracy(node0.position.x, xCoord, kAccuracy, @"They should all equal each other");
+		}
+		else if(timeIntoAnimation < 3.0f || IS_NEAR(timeIntoAnimation,3.0f,kAccuracy))
+		{
+			int break_here = 1;
+			
+			XCTAssertEqualWithAccuracy(node0.position.x, kXTranslation, kAccuracy, @"Error: timeIntoAnim:%0.2f", timeIntoAnimation);
+		}
+		else if(timeIntoAnimation  < 4.0f || IS_NEAR(timeIntoAnimation,4.0f,kAccuracy))
+		{
+			
+			float percentage = (timeIntoAnimation  - 3.0f);
+			float xCoord = kXTranslation * (1.0f - percentage);
+			XCTAssertEqualWithAccuracy(node0.position.x, xCoord, kAccuracy, @"They should all equal each other");
+		}
+
+	};
+	
+	bool alreadyDone = NO;
+	
 	while(totalElapsed <= (seq.duration + kTween) * 20)
 	{
-		[rootNode.animationManager update:kDelta];
-		
 		totalElapsed += kDelta;
 		currentAnimElapsed += kDelta;
 		
-		if(playingDefaultAnimToggle)
+		[rootNode.animationManager update:kDelta];
+				
+		if(firstTime)
 		{
+			validationAnimBlock(currentAnimElapsed);
+			continue;
+		}
+		
+		
+		
+		
+		if(!playingDefaultAnimToggle)
+		{
+			//Playing T2 animation.
 			
+			//In tween and greather that the first frame, as the first frame stutters.
+			if(currentAnimElapsed < kTween || IS_NEAR(currentAnimElapsed, kTween,kAccuracy))
+			{
+				//Skip first frame as it halts for one frme.
+				if(currentAnimElapsed < kDelta)
+					continue;
+
+				
+				//All final translations go from y=200 -> y=0
+				float percentage = (currentAnimElapsed - kDelta)/ kTween;
+				float yCoord = kYTranslation * (1.0f - percentage);
+				
+				XCTAssertEqualWithAccuracy(node0.position.y, yCoord, kAccuracy, @"They should all equal each other");
+			}
+			else
+			{
+				float timeIntoAnimation = currentAnimElapsed - kTween;
+				validationAnimBlock(timeIntoAnimation);
+			}
+
+		}
+		else //Playing T1 animation.
+		{
+			//Ensure tween from T2(end) -> T1(start)
+			if(currentAnimElapsed < kTween)
+			{
+				//Skip first frame as it halts for one frme.
+				if(currentAnimElapsed < kDelta)
+					continue;
+				
+				//Should interpolate from y= 0 -> y = 200;
+				float percentage = (currentAnimElapsed - kDelta)/ kTween;
+				float yCoord = kYTranslation * (percentage);
+				
+				XCTAssertEqualWithAccuracy(node0.position.y, yCoord, kAccuracy, @"They should all equal each other");
+			}
+			else
+			{
+				float timeIntoAnimation = currentAnimElapsed - kTween;
+				validationAnimBlock(timeIntoAnimation);
+			}
 		}
 	}
 		
