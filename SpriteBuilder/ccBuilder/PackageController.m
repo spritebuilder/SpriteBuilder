@@ -280,7 +280,7 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
 - (NSString *)fullPathForRenamedPackage:(RMPackage *)package toName:(NSString *)newName
 {
-    return [[package.dirPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:[newName pathByAppendingPackageSuffix]];
+    return [[package.dirPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:[newName stringByAppendingPackageSuffix]];
 }
 
 @end

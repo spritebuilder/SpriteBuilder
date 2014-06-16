@@ -414,7 +414,7 @@
     if ([FeatureToggle sharedFeatures].arePackagesEnabled)
     {
         // Have packages been imported?
-        movedOrImportedFiles |= [self importPackagesWithPaths:pbFilenames];
+        movedOrImportedFiles |= [self importPackagesWithMixedPaths:pbFilenames];
         // NOTE: after importing packages, the array is reduced by these paths to allow
         // further importing of other resources
         pbFilenames = [self removePackagesFromPaths:pbFilenames];
@@ -435,7 +435,7 @@
 
 #pragma mark Importing Packages
 
-- (BOOL)importPackagesWithPaths:(NSArray *)paths
+- (BOOL)importPackagesWithMixedPaths:(NSArray *)paths
 {
     NSError *error;
     PackageController *packageController = [[PackageController alloc] init];
