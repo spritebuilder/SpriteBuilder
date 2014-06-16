@@ -125,6 +125,7 @@
 		8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */; };
 		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
+		9203805B19465679000A8816 /* CCAnimation_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9203805A19465679000A8816 /* CCAnimation_Tests.m */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
@@ -172,6 +173,8 @@
 		921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */; };
 		921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */; };
 		921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */; };
+		922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 922CC395194676B600B34854 /* AnimationTest1.ccb */; };
+		922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 922CC3971946873A00B34854 /* AnimationTest2.ccb */; };
 		922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */; };
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
@@ -832,6 +835,13 @@
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
 		};
+		9203806019465955000A8816 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E398C02114FB81A30078E771;
+			remoteInfo = "Cocos2D iPhone";
+		};
 		92154AE118A5567400BD215C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -1299,6 +1309,7 @@
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
 		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
+		9203805A19465679000A8816 /* CCAnimation_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimation_Tests.m; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
 		92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPivotJoint.h; sourceTree = "<group>"; };
 		92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPivotJoint.m; sourceTree = "<group>"; };
@@ -1350,6 +1361,8 @@
 		921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorNodeReference.xib; sourceTree = "<group>"; };
 		921EEB2A18ADE5C600D864C2 /* InspectorNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorNodeReference.h; sourceTree = "<group>"; };
 		921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorNodeReference.m; sourceTree = "<group>"; };
+		922CC395194676B600B34854 /* AnimationTest1.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest1.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest1.ccb"; sourceTree = "<group>"; };
+		922CC3971946873A00B34854 /* AnimationTest2.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest2.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest2.ccb"; sourceTree = "<group>"; };
 		922E8EF418BFE47A008E1764 /* InspectorFloatCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorFloatCheck.h; sourceTree = "<group>"; };
 		922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFloatCheck.m; sourceTree = "<group>"; };
 		922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorFloatCheck.xib; sourceTree = "<group>"; };
@@ -3279,6 +3292,8 @@
 		833A5C4D192B48CB001837B3 /* SpriteBuilder Tests */ = {
 			isa = PBXGroup;
 			children = (
+				922CC3941946769B00B34854 /* Resources */,
+				9203805A19465679000A8816 /* CCAnimation_Tests.m */,
 				833A5C5B192B4981001837B3 /* CCBReader_Tests.m */,
 				833A5C4E192B48CB001837B3 /* Supporting Files */,
 			);
@@ -3350,6 +3365,15 @@
 				92154AC518A5531800BD215C /* Icon@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		922CC3941946769B00B34854 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				922CC3971946873A00B34854 /* AnimationTest2.ccb */,
+				922CC395194676B600B34854 /* AnimationTest1.ccb */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		926D13E718B57E1500582959 /* CCPhysicsPinJoint */ = {
@@ -4695,6 +4719,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9203806119465955000A8816 /* PBXTargetDependency */,
 				833A5C60192B4F00001837B3 /* PBXTargetDependency */,
 				833A5C57192B48CB001837B3 /* PBXTargetDependency */,
 			);
@@ -5646,7 +5671,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */,
 				833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */,
+				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6198,6 +6225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9203805B19465679000A8816 /* CCAnimation_Tests.m in Sources */,
 				833A5C5C192B4981001837B3 /* CCBReader_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6443,6 +6471,11 @@
 			isa = PBXTargetDependency;
 			name = cocos2d;
 			targetProxy = 833A5C5F192B4F00001837B3 /* PBXContainerItemProxy */;
+		};
+		9203806119465955000A8816 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E398C02114FB81A30078E771 /* Cocos2D iPhone */;
+			targetProxy = 9203806019465955000A8816 /* PBXContainerItemProxy */;
 		};
 		92154AE218A5567400BD215C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
