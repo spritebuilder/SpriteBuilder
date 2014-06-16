@@ -579,4 +579,36 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 }
 
+
+//In T4 animation, the duration is Zero.
+-(void)testZeroDurationTimeline1
+{
+	
+	NSData * animData = [self readCCB:@"AnimationTest5"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
+	
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:nil];
+	
+	CCNode * node0 = rootNode.children[0];
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
+	
+	[rootNode.animationManager runAnimationsForSequenceNamed:@"T4"];
+	
+	XCTAssert([rootNode.animationManager.runningSequenceName isEqualToString:@"T4"], @"wrong anim");
+	XCTAssertEqual(rootNode.animationManager.runningSequence.duration, 0.0f, @"Should be zero lenght");
+		
+	[rootNode.animationManager update:kDelta];
+	[rootNode.animationManager update:kDelta];
+	[rootNode.animationManager update:kDelta];
+	[rootNode.animationManager update:kDelta];
+	
+	XCTAssertNil(rootNode.animationManager.runningSequence, @"Should be nil");
+
+
+}
+
+
 @end
