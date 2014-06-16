@@ -204,6 +204,8 @@ enum {
     IBOutlet NSPopUpButton* menuTimelineChainedPopup;
     IBOutlet NSMenu* menuTimelineChained;
     IBOutlet NSTextField* lblTimelineChained;
+    
+    IBOutlet NSMenuItem* _menuItemExperimentalSpriteKitProject;
 
     CGSize defaultCanvasSizes[kCCBNumCanvasDevices+1];
     // IBOutlet NSMenuItem* menuItemStageCentered;
