@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
+        <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
         <plugIn identifier="com.apple.imagekit.ibplugin" version="5056"/>
     </dependencies>
@@ -85,13 +85,13 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="New" id="1477">
                                     <items>
-                                        <menuItem title="Cocos2D Project..." id="1479">
+                                        <menuItem title="Project..." id="1479">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNewProject:" target="494" id="1485"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Sprite Kit Project..." id="9mK-yK-jy5">
+                                        <menuItem title="Sprite Kit Project (Experimental)..." id="9mK-yK-jy5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuNewSpriteKitProject:" target="-1" id="2FM-eR-10L"/>
@@ -2391,6 +2391,7 @@ CA
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
+                <outlet property="_menuItemExperimentalSpriteKitProject" destination="9mK-yK-jy5" id="tkD-ej-LME"/>
                 <outlet property="animationPlaybackManager" destination="TMe-KA-zbR" id="F3h-M9-Nfa"/>
                 <outlet property="assetsList" destination="1056" id="1057"/>
                 <outlet property="cocosView" destination="603" id="604"/>

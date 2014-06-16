@@ -556,6 +556,12 @@ typedef enum
     [self registerUserDefaults];
 
     [self registerNotificationObservers];
+    
+    // Disable experimental features
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"EnableSpriteKit"] boolValue])
+    {
+        [[_menuItemExperimentalSpriteKitProject menu] removeItem:_menuItemExperimentalSpriteKitProject];
+    }
 
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
