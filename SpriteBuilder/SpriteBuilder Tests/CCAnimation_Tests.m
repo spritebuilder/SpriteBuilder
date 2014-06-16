@@ -135,10 +135,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 - (void)testAnimationSync1
 {
-	
 	CCAnimationDelegateTester * callbackTest = [[CCAnimationDelegateTester alloc] init];
-
-	
 	
 	NSData * animData = [self readCCB:@"AnimationTest1"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
@@ -212,8 +209,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackTest;
 	
-	const float kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
 	
 	float totalElapsed = 0.0f;
 	__block float currentAnimElapsed = 0.0f;
@@ -268,8 +263,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackTest;
 	
-	const float kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
 	const CGFloat kXTranslation = 500.0f;
 	const CGFloat kYTranslation = 200.0f;
 	const CGFloat kTween = 1.0f;
@@ -410,8 +403,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackHelper;
 	
-	const float   kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
 	const CGFloat kXTranslation = 500.0f;
 
 	
@@ -474,8 +465,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
 	
-	const float   kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
 	const CGFloat kXTranslation = 500.0f;
 	
 	float totalElapsed = 0.0f;
@@ -542,10 +531,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	CCBReader * reader = [CCBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:nil];
 	
-	const float   kDelta = 0.1f;//100ms;
 	const CGFloat kAnimationDuration = 1.0f;
-	const CGFloat kAccuracy = 0.01f;
-
 	float totalElapsed = 0.0f;
 	
 
@@ -580,7 +566,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	[rootNode.animationManager runAnimationsForSequenceNamed:@"T3"];
 	XCTAssert(!node0.visible, @"should be invisible");
 	
-	const float   kDelta = 0.1f;//100ms;
 	float totalElapsed = 0.0f;
 	
 	while(totalElapsed <= (2.0f) || IS_NEAR(totalElapsed, 2.0f, kAccuracy))
