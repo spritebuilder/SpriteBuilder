@@ -28,18 +28,13 @@
 // Returns NO if there was an error.
 - (BOOL)importPackageWithName:(NSString *)packageName error:(NSError **)error;
 
-// Will import an package with a full path. Sends RESOURCE_PATHS_CHANGED notification after package has been added
-// Notification only sent if package was added succesfully.
-// Returns NO if there was an error
-- (BOOL)importPackageWithPath:(NSString *)packagePath error:(NSError **)error;
-
 // Will import an array of package paths. All package names have to contain the PACKAGE_NAME_SUFFIX.
 // Everything that is not a package path is ignored
 // Sends RESOURCE_PATHS_CHANGED notification after all packages
 // have been added. Notification only sent if there is at least one succesfully added package.
 // Returns NO if there were errors. Will try to add all packages given, won't exit prematurely on error
 // In error's userInfo dictionary there'll be the "errors" key with all underlying errors
-- (BOOL)importPackagesWithPaths:(NSArray *)paths error:(NSError **)error;
+- (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error;
 
 // Will remove package paths from the project, it won't delete the folders just the project reference
 // All package names have to contain the PACKAGE_NAME_SUFFIX.

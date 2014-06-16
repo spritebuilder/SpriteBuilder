@@ -52,7 +52,9 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 
 - (NSString *)fullPathForPackageName:(NSString *)packageName
 {
-    return [_projectSettings.projectPathDir stringByAppendingPathComponent:[packageName pathByAppendingPackageSuffix]];
+    NSString *packagesFolderPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+
+    return [packagesFolderPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
 }
 
 
@@ -61,12 +63,8 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
 - (BOOL)importPackageWithName:(NSString *)packageName error:(NSError **)error
 {
     NSString *fullPath = [self fullPathForPackageName:packageName];
-    return [self importPackageWithPath:fullPath error:error];
-}
 
-- (BOOL)importPackageWithPath:(NSString *)packagePath error:(NSError **)error
-{
-    return [self importPackagesWithPaths:@[packagePath] error:error];
+    return [self importPackagesWithPaths:@[fullPath] error:nil];
 }
 
 - (BOOL)applyProjectSettingBlockForPackagePaths:(NSArray *)packagePaths
@@ -131,9 +129,9 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
     return result;
 }
 
-- (BOOL)importPackagesWithPaths:(NSArray *)paths error:(NSError **)error
+- (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error
 {
-    NSArray *filteredPaths = [self allPackagesInPaths:paths];
+    NSArray *filteredPaths = [self allPackagesInPaths:packagePaths];
 
     PackageManipulationBlock block = ^BOOL(NSString *packagePath, NSError **localError)
     {

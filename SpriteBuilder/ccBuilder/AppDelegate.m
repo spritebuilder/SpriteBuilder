@@ -3366,7 +3366,7 @@ static BOOL hideAllToNextSeparator;
                     {
                         PackageController *packageCreator = [[PackageController alloc] init];
                         packageCreator.projectSettings = projectSettings;
-                        [packageCreator importPackageWithPath:fileName error:NULL];
+                        [packageCreator importPackagesWithPaths:@[fileName] error:NULL];
                     }
                     else
                     {
