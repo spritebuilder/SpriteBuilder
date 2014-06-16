@@ -9,12 +9,12 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
 #import "ProjectSettings.h"
 #import "ObserverTestHelper.h"
 #import "NotificationNames.h"
 #import "NSString+Packages.h"
 #import "SBErrors.h"
+#import "PackageRemover.h"
 
 @interface PackageRemover_Tests : XCTestCase
 
@@ -22,7 +22,7 @@
 
 @implementation PackageRemover_Tests
 {
-    PackageController *_packageController;
+    PackageRemover *_packageRemover;
     ProjectSettings *_projectSettings;
     id _fileManagerMock;
 }
@@ -31,15 +31,15 @@
 {
     [super setUp];
 
-    _packageController = [[PackageController alloc] init];
+    _packageRemover = [[PackageRemover alloc] init];
 
     _projectSettings = [[ProjectSettings alloc] init];
 
     _projectSettings.projectPath = @"/packagestests.ccbproj";
-    _packageController.projectSettings = _projectSettings;
+    _packageRemover.projectSettings = _projectSettings;
 
     _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
-    _packageController.fileManager = _fileManagerMock;
+    _packageRemover.fileManager = _fileManagerMock;
 }
 
 - (void)tearDown
@@ -50,11 +50,11 @@
 - (void)testRemovePackagesExitsWithoutErrorsForNilParamAndEmptyArray
 {
     NSError *error1;
-    XCTAssertTrue([_packageController removePackagesFromProject:nil error:&error1]);
+    XCTAssertTrue([_packageRemover removePackagesFromProject:nil error:&error1]);
     XCTAssertNil(error1);
 
     NSError *error2;
-    XCTAssertTrue([_packageController removePackagesFromProject:@[] error:&error2]);
+    XCTAssertTrue([_packageRemover removePackagesFromProject:@[] error:&error2]);
     XCTAssertNil(error2);
 }
 
@@ -67,7 +67,7 @@
     [_projectSettings addResourcePath:packagePath error:nil];
 
     NSError *error;
-    XCTAssertTrue([_packageController removePackagesFromProject:@[packagePath] error:&error]);
+    XCTAssertTrue([_packageRemover removePackagesFromProject:@[packagePath] error:&error]);
     XCTAssertNil(error);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
@@ -84,7 +84,7 @@
     [_projectSettings addResourcePath:packagePathGood error:nil];
 
     NSError *error;
-    XCTAssertFalse([_packageController removePackagesFromProject:packagePaths error:&error]);
+    XCTAssertFalse([_packageRemover removePackagesFromProject:packagePaths error:&error]);
     XCTAssertNotNil(error);
 
     NSArray *errors = error.userInfo[@"errors"];

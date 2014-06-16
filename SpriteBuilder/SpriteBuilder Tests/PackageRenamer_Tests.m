@@ -8,13 +8,13 @@
 
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
+
 #import "ProjectSettings.h"
-#import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
 #import "NSString+Packages.h"
 #import "SBErrors.h"
 #import "RMPackage.h"
 #import "ResourceManager.h"
+#import "PackageRenamer.h"
 
 @interface PackageRenamer_Tests : XCTestCase
 
@@ -22,7 +22,7 @@
 
 @implementation PackageRenamer_Tests
 {
-    PackageController *_packageController;
+    PackageRenamer *_packageRenamer;
     ProjectSettings *_projectSettings;
     id _fileManagerMock;
 }
@@ -31,14 +31,14 @@
 {
     [super setUp];
 
-    _packageController = [[PackageController alloc] init];
+    _packageRenamer = [[PackageRenamer alloc] init];
 
     _projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = @"/packagestests.ccbproj";
-    _packageController.projectSettings = _projectSettings;
+    _packageRenamer.projectSettings = _projectSettings;
 
     _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
-    _packageController.fileManager = _fileManagerMock;
+    _packageRenamer.fileManager = _fileManagerMock;
 }
 
 - (void)testCanRenamePackageWithExistingFullPathInProject
@@ -49,7 +49,7 @@
     [_projectSettings addResourcePath:[@"/project/pack_new" stringByAppendingPackageSuffix] error:nil];
 
     NSError *error;
-    XCTAssertFalse([_packageController canRenamePackage:package toName:@"pack_new" error:&error]);
+    XCTAssertFalse([_packageRenamer canRenamePackage:package toName:@"pack_new" error:&error]);
     XCTAssertEqual(error.code, SBDuplicateResourcePathError);
 }
 
@@ -61,7 +61,7 @@
     [[[_fileManagerMock expect] andReturnValue:@(YES)] fileExistsAtPath:[@"/project/pack_new" stringByAppendingPackageSuffix]];
 
     NSError *error;
-    XCTAssertFalse([_packageController canRenamePackage:package toName:@"pack_new" error:&error]);
+    XCTAssertFalse([_packageRenamer canRenamePackage:package toName:@"pack_new" error:&error]);
     XCTAssertEqual(error.code, SBResourcePathExistsButNotInProjectError);
 
     [_fileManagerMock verify];
@@ -74,7 +74,7 @@
 
     [[[_fileManagerMock expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
 
-    XCTAssertTrue([_packageController canRenamePackage:package toName:@"pack_new" error:nil]);
+    XCTAssertTrue([_packageRenamer canRenamePackage:package toName:@"pack_new" error:nil]);
 
     [_fileManagerMock verify];
 }
@@ -84,7 +84,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [@"/project/pack_old" stringByAppendingPackageSuffix];
 
-    XCTAssertTrue([_packageController canRenamePackage:package toName:package.dirPath error:nil]);
+    XCTAssertTrue([_packageRenamer canRenamePackage:package toName:package.dirPath error:nil]);
 }
 
 - (void)testRenamePackage
@@ -95,14 +95,14 @@
     [_projectSettings addResourcePath:package.dirPath error:nil];
 
     id resourceManagerMock = [OCMockObject niceMockForClass:[ResourceManager class]];
-    _packageController.resourceManager = resourceManagerMock;
+    _packageRenamer.resourceManager = resourceManagerMock;
 
     NSString *destPath = [@"/project/foo" stringByAppendingPackageSuffix];
     [[[_fileManagerMock expect] andReturnValue:@(YES)] moveItemAtPath:package.dirPath toPath:destPath error:[OCMArg anyObjectRef]];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] fileExistsAtPath:OCMOCK_ANY];
 
     NSError *error;
-    XCTAssertTrue([_packageController renamePackage:package toName:@"foo" error:&error]);
+    XCTAssertTrue([_packageRenamer renamePackage:package toName:@"foo" error:&error]);
     XCTAssertNil(error);
 
     [_fileManagerMock verify];
@@ -114,9 +114,9 @@
     package.dirPath = [@"/project/pack_old" stringByAppendingPackageSuffix];
 
     id resourceManagerMock = [OCMockObject niceMockForClass:[ResourceManager class]];
-    _packageController.resourceManager = resourceManagerMock;
+    _packageRenamer.resourceManager = resourceManagerMock;
 
-    XCTAssertTrue([_packageController renamePackage:package toName:@"pack_old" error:nil]);
+    XCTAssertTrue([_packageRenamer renamePackage:package toName:@"pack_old" error:nil]);
 }
 
 

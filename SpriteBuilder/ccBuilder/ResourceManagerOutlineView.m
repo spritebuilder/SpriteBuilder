@@ -26,12 +26,13 @@
 #import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
 #import "FeatureToggle.h"
 #import "RMDirectory.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"
 #import "RMPackage.h"
+#import "PackageRemover.h"
+#import "PackageExporter.h"
 
 @implementation ResourceManagerOutlineView
 
@@ -171,10 +172,10 @@
 
 - (void)tryToExportPackage:(RMDirectory *)package toPath:(NSString *)exportPath
 {
-    PackageController *packageController = [[PackageController alloc] init];
+    PackageExporter *packageExporter = [[PackageExporter alloc] init];
     NSError *error;
 
-    if (![packageController exportPackage:package toPath:exportPath error:&error])
+    if (![packageExporter exportPackage:package toPath:exportPath error:&error])
     {
         NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
                                          defaultButton:@"OK"
@@ -248,9 +249,9 @@
 		[ResourceManager removeResource:res];
 	}
 
-    PackageController *packageController = [[PackageController alloc] init];
-    packageController.projectSettings = [AppDelegate appDelegate].projectSettings;
-    [packageController removePackagesFromProject:packagesPathsToDelete error:NULL];
+    PackageRemover *packageRemover = [[PackageRemover alloc] init];
+    packageRemover.projectSettings = [AppDelegate appDelegate].projectSettings;
+    [packageRemover removePackagesFromProject:packagesPathsToDelete error:NULL];
 
 	[self deselectAll:NULL];
 

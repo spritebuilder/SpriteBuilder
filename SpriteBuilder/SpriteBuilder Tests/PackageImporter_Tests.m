@@ -14,7 +14,7 @@
 #import "SBErrors.h"
 #import "ProjectSettings.h"
 #import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
+#import "PackageImporter.h"
 
 @interface PackageImporter_Tests : XCTestCase
 
@@ -22,7 +22,7 @@
 
 @implementation PackageImporter_Tests
 {
-    PackageController *_packageController;
+    PackageImporter *_packageImporter;
     ProjectSettings *_projectSettings;
     id _fileManagerMock;
 }
@@ -31,20 +31,20 @@
 {
     [super setUp];
 
-    _packageController = [[PackageController alloc] init];
+    _packageImporter = [[PackageImporter alloc] init];
 
     _projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = @"/packagestests.ccbproj";
-    _packageController.projectSettings = _projectSettings;
+    _packageImporter.projectSettings = _projectSettings;
 
     _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
-    _packageController.fileManager = _fileManagerMock;
+    _packageImporter.fileManager = _fileManagerMock;
 }
 
 - (void)testImportPackageWithName
 {
     NSError *error;
-    XCTAssertTrue([_packageController importPackageWithName:@"foo" error:&error]);
+    XCTAssertTrue([_packageImporter importPackageWithName:@"foo" error:&error]);
     XCTAssertNil(error);
 }
 
@@ -61,7 +61,7 @@
     [_projectSettings addResourcePath:packagePathInProject error:nil];
 
     NSError *error;
-    XCTAssertFalse([_packageController importPackagesWithPaths:packagePaths error:&error]);
+    XCTAssertFalse([_packageImporter importPackagesWithPaths:packagePaths error:&error]);
     XCTAssertNotNil(error);
 
     NSArray *errors = error.userInfo[@"errors"];
@@ -78,7 +78,7 @@
     NSString *packagePath = [@"/package/foo" stringByAppendingPackageSuffix];
 
     NSError *error;
-    XCTAssertTrue([_packageController importPackagesWithPaths:@[packagePath] error:&error]);
+    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[packagePath] error:&error]);
     XCTAssertNil(error);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
@@ -91,7 +91,7 @@
     NSString *packagePath = [@"/package/foo" stringByAppendingPackageSuffix];
 
     NSError *error;
-    XCTAssertTrue([_packageController importPackagesWithPaths:@[packagePath] error:&error]);
+    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[packagePath] error:&error]);
     XCTAssertNil(error);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
@@ -100,11 +100,11 @@
 - (void)testImportPackageWithPathsExitIfNilOrEmptyArrayParam
 {
     NSError *error1;
-    XCTAssertTrue([_packageController importPackagesWithPaths:nil error:&error1]);
+    XCTAssertTrue([_packageImporter importPackagesWithPaths:nil error:&error1]);
     XCTAssertNil(error1);
 
     NSError *error2;
-    XCTAssertTrue([_packageController importPackagesWithPaths:@[] error:&error2]);
+    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[] error:&error2]);
     XCTAssertNil(error2);
 }
 

@@ -118,7 +118,6 @@
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
 #import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
 #import "MiscConstants.h"
 #import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
@@ -127,6 +126,8 @@
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "RMResource.h"
+#import "PackageImporter.h"
+#import "PackageCreator.h"
 
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -3370,9 +3371,9 @@ static BOOL hideAllToNextSeparator;
                     NSString *fileName = [[files objectAtIndex:i] path];
                     if ([fileName hasSuffix:PACKAGE_NAME_SUFFIX])
                     {
-                        PackageController *packageCreator = [[PackageController alloc] init];
-                        packageCreator.projectSettings = projectSettings;
-                        [packageCreator importPackagesWithPaths:@[fileName] error:NULL];
+                        PackageImporter *packageImporter = [[PackageImporter alloc] init];
+                        packageImporter.projectSettings = projectSettings;
+                        [packageImporter importPackagesWithPaths:@[fileName] error:NULL];
                     }
                     else
                     {
@@ -3456,9 +3457,9 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) menuNewPackage:(id)sender
 {
     [[[CCDirector sharedDirector] view] lockOpenGLContext];
-    PackageController *packageController = [[PackageController alloc] init];
-    packageController.projectSettings = projectSettings;
-    [packageController showCreateNewPackageDialogForWindow:window];
+    PackageCreator *packageCreator = [[PackageCreator alloc] init];
+    packageCreator.projectSettings = projectSettings;
+    [packageCreator showCreateNewPackageDialogForWindow:window];
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 

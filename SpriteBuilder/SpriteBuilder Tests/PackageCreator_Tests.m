@@ -10,10 +10,10 @@
 #import <OCMock/OCMock.h>
 #import "ProjectSettings.h"
 #import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
 #import "SBErrors.h"
 #import "NSString+Packages.h"
 #import "MiscConstants.h"
+#import "PackageCreator.h"
 
 @interface PackageCreator_Tests : XCTestCase
 
@@ -21,7 +21,7 @@
 
 @implementation PackageCreator_Tests
 {
-    PackageController *_packageController;
+    PackageCreator *_packageCreator;
     ProjectSettings *_projectSettings;
     id _fileManagerMock;
 }
@@ -30,14 +30,14 @@
 {
     [super setUp];
 
-    _packageController = [[PackageController alloc] init];
+    _packageCreator = [[PackageCreator alloc] init];
 
     _projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = @"/packagestests.ccbproj";
-    _packageController.projectSettings = _projectSettings;
+    _packageCreator.projectSettings = _projectSettings;
 
     _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
-    _packageController.fileManager = _fileManagerMock;
+    _packageCreator.fileManager = _fileManagerMock;
 }
 
 - (void)testCreatePackageWithName
@@ -49,7 +49,7 @@
                                                                   attributes:nil
                                                                        error:[OCMArg anyObjectRef]];
     NSError *error;
-    XCTAssertTrue([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return YES.");
+    XCTAssertTrue([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return YES.");
     XCTAssertNil(error, @"Error object should nil");
 
     [_fileManagerMock verify];
@@ -67,7 +67,7 @@
                                                                        error:[OCMArg anyObjectRef]];
 
     NSError *error;
-    XCTAssertFalse([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
     XCTAssertNotNil(error, @"Error object should be set");
     XCTAssertEqual(error.code, SBDuplicateResourcePathError, @"Error code should equal constant SBDuplicateResourcePathError");
 }
@@ -83,7 +83,7 @@
                                                                        error:[OCMArg setTo:underlyingFileError]];
 
     NSError *error;
-    XCTAssertFalse([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
     XCTAssertNotNil(error, @"Error object should be set");
     XCTAssertEqual(error.code, SBResourcePathExistsButNotInProjectError, @"Error code should equal constant SBResourcePathExistsButNotInProjectError");
 
@@ -101,7 +101,7 @@
                                                                        error:[OCMArg setTo:underlyingFileError]];
 
     NSError *error;
-    XCTAssertFalse([_packageController createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
     XCTAssertNotNil(error, @"Error object should be set");
     XCTAssertEqual(error.code, NSFileWriteNoPermissionError, @"Error code should equal constant NSFileWriteNoPermissionError");
 
