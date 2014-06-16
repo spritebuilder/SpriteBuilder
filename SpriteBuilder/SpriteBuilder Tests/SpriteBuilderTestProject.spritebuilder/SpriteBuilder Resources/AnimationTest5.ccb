@@ -16,7 +16,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>docDimensionsType</key>
 	<integer>0</integer>
 	<key>fileType</key>
@@ -86,6 +86,19 @@
 										<real>0.0</real>
 									</array>
 								</dict>
+							</array>
+							<key>name</key>
+							<string>position</string>
+							<key>type</key>
+							<integer>3</integer>
+						</dict>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>position</key>
+						<dict>
+							<key>keyframes</key>
+							<array>
 								<dict>
 									<key>easing</key>
 									<dict>
@@ -95,12 +108,30 @@
 									<key>name</key>
 									<string>position</string>
 									<key>time</key>
-									<real>2</real>
+									<real>0.0</real>
 									<key>type</key>
 									<integer>3</integer>
 									<key>value</key>
 									<array>
 										<real>0.0</real>
+										<real>0.0</real>
+									</array>
+								</dict>
+								<dict>
+									<key>easing</key>
+									<dict>
+										<key>type</key>
+										<integer>1</integer>
+									</dict>
+									<key>name</key>
+									<string>position</string>
+									<key>time</key>
+									<real>1</real>
+									<key>type</key>
+									<integer>3</integer>
+									<key>value</key>
+									<array>
+										<real>500</real>
 										<real>0.0</real>
 									</array>
 								</dict>
@@ -119,7 +150,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>Node0</string>
+				<string>CCNodeColor</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -132,12 +163,12 @@
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string>node0</string>
+						<string></string>
 					</dict>
 					<dict>
 						<key>baseValue</key>
 						<array>
-							<real>500</real>
+							<real>0.0</real>
 							<real>0.0</real>
 						</array>
 						<key>name</key>
@@ -146,7 +177,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
+							<real>500</real>
 							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -212,6 +243,8 @@
 						<real>1</real>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 				<key>seqExpanded</key>
 				<true/>
 			</dict>
@@ -288,22 +321,7 @@
 		</array>
 	</dict>
 	<key>notes</key>
-	<array>
-		<dict>
-			<key>height</key>
-			<real>150</real>
-			<key>text</key>
-			<string>Test Looping behavior.
-
-</string>
-			<key>width</key>
-			<real>150</real>
-			<key>xPos</key>
-			<real>337</real>
-			<key>yPos</key>
-			<real>259</real>
-		</dict>
-	</array>
+	<array/>
 	<key>resolutions</key>
 	<array>
 		<dict>
@@ -362,11 +380,11 @@
 				<integer>12</integer>
 			</dict>
 			<key>chainedSequenceId</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>length</key>
-			<real>2</real>
+			<real>1</real>
 			<key>name</key>
-			<string>Default Timeline</string>
+			<string>T1</string>
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
@@ -377,6 +395,42 @@
 			<real>128</real>
 			<key>sequenceId</key>
 			<integer>0</integer>
+			<key>soundChannel</key>
+			<dict>
+				<key>isExpanded</key>
+				<false/>
+				<key>keyframes</key>
+				<array/>
+				<key>type</key>
+				<integer>11</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>autoPlay</key>
+			<false/>
+			<key>callbackChannel</key>
+			<dict>
+				<key>keyframes</key>
+				<array/>
+				<key>type</key>
+				<integer>12</integer>
+			</dict>
+			<key>chainedSequenceId</key>
+			<integer>0</integer>
+			<key>length</key>
+			<real>1</real>
+			<key>name</key>
+			<string>T2</string>
+			<key>offset</key>
+			<real>0.0</real>
+			<key>position</key>
+			<real>1</real>
+			<key>resolution</key>
+			<real>30</real>
+			<key>scale</key>
+			<real>128</real>
+			<key>sequenceId</key>
+			<integer>1</integer>
 			<key>soundChannel</key>
 			<dict>
 				<key>isExpanded</key>
