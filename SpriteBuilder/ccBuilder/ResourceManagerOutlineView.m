@@ -170,7 +170,7 @@
     }
 }
 
-- (void)tryToExportPackage:(RMDirectory *)package toPath:(NSString *)exportPath
+- (void)tryToExportPackage:(RMPackage *)package toPath:(NSString *)exportPath
 {
     PackageExporter *packageExporter = [[PackageExporter alloc] init];
     NSError *error;
@@ -181,14 +181,14 @@
                                          defaultButton:@"OK"
                                        alternateButton:nil
                                            otherButton:nil
-                             informativeTextWithFormat:error.localizedDescription];
+                             informativeTextWithFormat:@"%@", error.localizedDescription];
         [alert runModal];
     }
 }
 
 - (NSOpenPanel *)exportPanel
 {
-    NSOpenPanel *openPanel = [NSOpenPanel savePanel];
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     [openPanel setCanCreateDirectories:YES];
     [openPanel setCanChooseDirectories:YES];
     [openPanel setCanChooseFiles:NO];
