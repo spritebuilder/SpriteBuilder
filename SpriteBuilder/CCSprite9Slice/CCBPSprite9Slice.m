@@ -27,8 +27,7 @@
 	if(self.marginRight + marginLeft >= 1)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The left & right margins should add up to less than 1"];
-		[[AppDelegate appDelegate] refreshProperty:@"marginLeft"];
-
+		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginLeft" afterDelay:0];
 		return;
 	}
 	[super setMarginLeft:marginLeft];
@@ -40,7 +39,7 @@
 	if(self.marginLeft + marginRight >= 1)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The left & right margins should add up to less than 1"];
-		[[AppDelegate appDelegate] refreshProperty:@"marginRight"];
+		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginRight" afterDelay:0];
 		
 		return;
 	}
@@ -54,7 +53,7 @@
 	if(self.marginBottom + marginTop >= 1)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The top & bottom margins should add up to less than 1"];
-		[[AppDelegate appDelegate] refreshProperty:@"marginTop"];
+		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginTop" afterDelay:0];
 		return;
 	}
 	
@@ -68,7 +67,7 @@
 	if(self.marginTop + marginBottom >= 1)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The top & bottom margins should add up to less than 1"];
-		[[AppDelegate appDelegate] refreshProperty:@"marginBottom"];
+		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginBottom" afterDelay:0];
 		return;
 	}
 	
