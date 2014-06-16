@@ -3,6 +3,7 @@
 #import "SBErrors.h"
 #import "PackageUtil.h"
 #import "ProjectSettings.h"
+#import "NotificationNames.h"
 
 @implementation PackageRemover
 
@@ -19,17 +20,23 @@
 
 - (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error
 {
-    PackageManipulationBlock block = ^BOOL(NSString *packagePath, NSError **localError)
+    PackagePathBlock block = ^BOOL(NSString *packagePath, NSError **localError)
     {
-        return [_projectSettings removeResourcePath:packagePath error:localError];
+        if ([_projectSettings removeResourcePath:packagePath error:localError])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+            return YES;
+        }
+
+        return NO;
     };
 
     PackageUtil *packageUtil = [[PackageUtil alloc] init];
-    return [packageUtil applyProjectSettingBlockForPackagePaths:packagePaths
-                                                   error:error
-                                     prevailingErrorCode:SBRemovePackagesError
-                                        errorDescription:@"One or more packages could not be removed."
-                                                   block:block];
+    return [packageUtil enumeratePackagePaths:packagePaths
+                                        error:error
+                          prevailingErrorCode:SBRemovePackagesError
+                             errorDescription:@"One or more packages could not be removed."
+                                        block:block];
 }
 
 @end

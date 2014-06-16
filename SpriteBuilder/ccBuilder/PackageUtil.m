@@ -5,11 +5,11 @@
 
 @implementation PackageUtil
 
-- (BOOL)applyProjectSettingBlockForPackagePaths:(NSArray *)packagePaths
-                                          error:(NSError **)error
-                            prevailingErrorCode:(NSInteger)prevailingErrorCode
-                               errorDescription:(NSString *)errorDescription
-                                          block:(PackageManipulationBlock)block
+- (BOOL)enumeratePackagePaths:(NSArray *)packagePaths
+                        error:(NSError **)error
+          prevailingErrorCode:(NSInteger)prevailingErrorCode
+             errorDescription:(NSString *)errorDescription
+                        block:(PackagePathBlock)block
 {
     if (!packagePaths || packagePaths.count <= 0)
     {
@@ -37,11 +37,6 @@
     if (errors.count > 0)
     {
         [NSError setNewErrorWithCode:error code:prevailingErrorCode userInfo:@{NSLocalizedDescriptionKey : errorDescription, @"errors" : errors}];
-    }
-
-    if (packagesAltered > 0)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
     }
 
     return result;

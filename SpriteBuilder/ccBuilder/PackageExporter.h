@@ -3,7 +3,6 @@
 @class ProjectSettings;
 @class RMPackage;
 
-
 @interface PackageExporter : NSObject
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;

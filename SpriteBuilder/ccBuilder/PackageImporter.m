@@ -4,6 +4,7 @@
 #import "NSString+Packages.h"
 #import "SBErrors.h"
 #import "PackageUtil.h"
+#import "NotificationNames.h"
 
 @implementation PackageImporter
 
@@ -47,17 +48,23 @@
 {
     NSArray *filteredPaths = [self allPackagesInPaths:packagePaths];
 
-    PackageManipulationBlock block = ^BOOL(NSString *packagePath, NSError **localError)
+    PackagePathBlock block = ^BOOL(NSString *packagePath, NSError **localError)
     {
-        return [_projectSettings addResourcePath:packagePath error:localError];
+        if ([_projectSettings addResourcePath:packagePath error:localError])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+            return YES;
+        }
+
+        return NO;
     };
 
     PackageUtil *packageUtil = [[PackageUtil alloc] init];
-    return [packageUtil applyProjectSettingBlockForPackagePaths:filteredPaths
-                                                   error:error
-                                     prevailingErrorCode:SBImportingPackagesError
-                                        errorDescription:@"One or more packages could not be imported."
-                                                   block:block];
+    return [packageUtil enumeratePackagePaths:filteredPaths
+                                        error:error
+                          prevailingErrorCode:SBImportingPackagesError
+                             errorDescription:@"One or more packages could not be imported."
+                                        block:block];
 }
 
 @end
