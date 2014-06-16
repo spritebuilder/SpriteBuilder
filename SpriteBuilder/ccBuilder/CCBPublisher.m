@@ -631,7 +631,10 @@
 
 - (void)postProcessPublishedPNGFilesWithOptiPNG
 {
-  
+    if ([_projectSettings isPublishEnvironmentDebug])
+    {
+        return;
+    }
 
     NSString *pathToOptiPNG = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"optipng"];
     if (!pathToOptiPNG)

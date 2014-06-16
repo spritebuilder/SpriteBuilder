@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>cocos2dUpdateIgnoredVersions</key>
+	<array/>
+	<key>defaultOrientation</key>
+	<integer>0</integer>
+	<key>designTarget</key>
+	<integer>0</integer>
+	<key>deviceOrientationLandscapeLeft</key>
+	<true/>
+	<key>deviceOrientationLandscapeRight</key>
+	<true/>
+	<key>deviceOrientationPortrait</key>
+	<false/>
+	<key>deviceOrientationUpsideDown</key>
+	<false/>
+	<key>deviceScaling</key>
+	<integer>0</integer>
+	<key>engine</key>
+	<integer>0</integer>
+	<key>exporter</key>
+	<string>ccbi</string>
+	<key>fileType</key>
+	<string>CocosBuilderProject</string>
+	<key>fileVersion</key>
+	<integer>1</integer>
+	<key>flattenPaths</key>
+	<false/>
+	<key>needRepublish</key>
+	<false/>
+	<key>onlyPublishCCBs</key>
+	<false/>
+	<key>publishAudioQuality_android</key>
+	<integer>4</integer>
+	<key>publishAudioQuality_ios</key>
+	<integer>4</integer>
+	<key>publishDirectory</key>
+	<string>Source/Resources/Published-iOS</string>
+	<key>publishDirectoryAndroid</key>
+	<string>Source/Resources/Published-Android</string>
+	<key>publishEnabledAndroid</key>
+	<true/>
+	<key>publishEnablediPhone</key>
+	<true/>
+	<key>publishEnvironment</key>
+	<integer>0</integer>
+	<key>publishResolution_android_phone</key>
+	<true/>
+	<key>publishResolution_android_phonehd</key>
+	<true/>
+	<key>publishResolution_android_tablet</key>
+	<true/>
+	<key>publishResolution_android_tablethd</key>
+	<true/>
+	<key>publishResolution_ios_phone</key>
+	<true/>
+	<key>publishResolution_ios_phonehd</key>
+	<true/>
+	<key>publishResolution_ios_tablet</key>
+	<true/>
+	<key>publishResolution_ios_tablethd</key>
+	<true/>
+	<key>publishToZipFile</key>
+	<false/>
+	<key>resourceAutoScaleFactor</key>
+	<integer>4</integer>
+	<key>resourcePaths</key>
+	<array>
+		<dict>
+			<key>path</key>
+			<string>SpriteBuilder Resources</string>
+		</dict>
+	</array>
+	<key>resourceProperties</key>
+	<dict>
+		<key></key>
+		<dict>
+			<key>previewFolderHidden</key>
+			<true/>
+		</dict>
+		<key>Sprites</key>
+		<dict/>
+		<key>ccbResources</key>
+		<dict>
+			<key>previewFolderHidden</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>versionStr</key>
+	<string>Version: 0.9
+GitHub: 551c4795b8
+</string>
+</dict>
+</plist>
