@@ -97,15 +97,22 @@
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 }
 
-- (void)testImportPackageWithPathsExitIfNilOrEmptyArrayParam
+- (void)testImportPackageWithInvalidPaths
 {
     NSError *error1;
-    XCTAssertTrue([_packageImporter importPackagesWithPaths:nil error:&error1]);
-    XCTAssertNil(error1);
+    XCTAssertFalse([_packageImporter importPackagesWithPaths:nil error:&error1]);
+    XCTAssertNotNil(error1);
+    XCTAssertEqual(error1.code, SBInvalidPackagePaths);
 
     NSError *error2;
-    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[] error:&error2]);
-    XCTAssertNil(error2);
+    XCTAssertFalse([_packageImporter importPackagesWithPaths:@[] error:&error2]);
+    XCTAssertNotNil(error2);
+    XCTAssertEqual(error2.code, SBInvalidPackagePaths);
+
+    NSError *error3;
+    XCTAssertFalse([_packageImporter importPackagesWithPaths:@[@"/foo/package"] error:&error3]);
+    XCTAssertNotNil(error3);
+    XCTAssertEqual(error3.code, SBPathWithoutPackageSuffix);
 }
 
 @end

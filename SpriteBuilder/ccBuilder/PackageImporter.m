@@ -5,6 +5,8 @@
 #import "SBErrors.h"
 #import "PackageUtil.h"
 #import "NotificationNames.h"
+#import "NSError+SBErrors.h"
+#import "MiscConstants.h"
 
 @implementation PackageImporter
 
@@ -46,7 +48,18 @@
 
 - (BOOL)importPackagesWithPaths:(NSArray *)packagePaths error:(NSError **)error
 {
+    if (!packagePaths || packagePaths.count == 0)
+    {
+        [NSError setNewErrorWithCode:error code:SBInvalidPackagePaths message:[NSString stringWithFormat:@"No paths to import given"]];
+        return NO;
+    }
+
     NSArray *filteredPaths = [self allPackagesInPaths:packagePaths];
+    if (filteredPaths.count == 0)
+    {
+        [NSError setNewErrorWithCode:error code:SBPathWithoutPackageSuffix message:[NSString stringWithFormat:@"No paths to import given with .%@ suffix", PACKAGE_NAME_SUFFIX]];
+        return NO;
+    }
 
     PackagePathBlock block = ^BOOL(NSString *packagePath, NSError **localError)
     {
