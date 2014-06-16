@@ -91,7 +91,7 @@
                                      defaultButton:@"Ok"
                                    alternateButton:nil
                                        otherButton:nil
-                         informativeTextWithFormat:error.localizedDescription];
+                         informativeTextWithFormat:@"%@", error.localizedDescription];
 
     [alert runModal];
 }
