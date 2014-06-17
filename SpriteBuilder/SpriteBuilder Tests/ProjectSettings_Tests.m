@@ -11,6 +11,10 @@
 
 #import "ProjectSettings.h"
 #import "SBErrors.h"
+#import "ProjectSettings+Packages.h"
+#import "NSString+Packages.h"
+#import "SBAssserts.h"
+#import "MiscConstants.h"
 
 @interface ProjectSettings_Tests : XCTestCase
 
@@ -126,6 +130,19 @@
     XCTAssertFalse([_projectSettings moveResourcePathFrom:path1 toPath:path2 error:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBDuplicateResourcePathError);
+}
+
+- (void)testFullPathForPackageName
+{
+    _projectSettings.projectPath = @"/project/abc.ccbproj";
+
+    NSString *packageName = @"foo";
+    NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+
+    NSString *a = [_projectSettings fullPathForPackageName:packageName];
+    NSString *b = [fullPackagesPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
+
+    SBAssertStringsEqual(a,b);
 }
 
 @end
