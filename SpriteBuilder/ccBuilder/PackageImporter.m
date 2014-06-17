@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "PackageImporter.h"
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
@@ -50,7 +51,7 @@
 {
     if (!packagePaths || packagePaths.count == 0)
     {
-        [NSError setNewErrorWithCode:error code:SBInvalidPackagePaths message:[NSString stringWithFormat:@"No paths to import given"]];
+        [NSError setNewErrorWithCode:error code:SBNoPackagePathsToImport message:[NSString stringWithFormat:@"No paths to import given"]];
         return NO;
     }
 
@@ -61,16 +62,7 @@
         return NO;
     }
 
-    PackagePathBlock block = ^BOOL(NSString *packagePath, NSError **localError)
-    {
-        if ([_projectSettings addResourcePath:packagePath error:localError])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
-            return YES;
-        }
-
-        return NO;
-    };
+    PackagePathBlock block = [self importBlock];
 
     PackageUtil *packageUtil = [[PackageUtil alloc] init];
     return [packageUtil enumeratePackagePaths:filteredPaths
@@ -78,6 +70,34 @@
                           prevailingErrorCode:SBImportingPackagesError
                              errorDescription:@"One or more packages could not be imported."
                                         block:block];
+}
+
+- (PackagePathBlock)importBlock
+{
+    return ^BOOL(NSString *packagePathToImport, NSError **localError)
+    {
+        if ([_projectSettings isResourcePathInProject:packagePathToImport])
+        {
+            [NSError setNewErrorWithCode:localError code:SBPackageAlreadyExistsAtPathError message:@"Package already in packages folder."];
+            return NO;
+        }
+
+        NSString *packageName = [[packagePathToImport lastPathComponent] stringByDeletingPathExtension];
+        NSString *newPathInPackagesFolder = [_projectSettings fullPathForPackageName:packageName];
+
+        if (![_fileManager copyItemAtPath:packagePathToImport toPath:newPathInPackagesFolder error:localError])
+        {
+            return NO;
+        }
+
+        if ([_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+            return YES;
+        }
+
+        return NO;
+    };
 }
 
 @end

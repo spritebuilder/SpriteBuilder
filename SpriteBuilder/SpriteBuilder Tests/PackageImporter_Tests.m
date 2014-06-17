@@ -15,6 +15,9 @@
 #import "ProjectSettings.h"
 #import "PackageCreateDelegateProtocol.h"
 #import "PackageImporter.h"
+#import "SBAssserts.h"
+#import "MiscConstants.h"
+#import "ProjectSettings+Packages.h"
 
 @interface PackageImporter_Tests : XCTestCase
 
@@ -43,6 +46,8 @@
 
 - (void)testImportPackageWithName
 {
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] copyItemAtPath:OCMOCK_ANY toPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
+
     NSError *error;
     XCTAssertTrue([_packageImporter importPackageWithName:@"foo" error:&error]);
     XCTAssertNil(error);
@@ -55,8 +60,10 @@
     id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePathNotInProject = [@"/notYetInProject" stringByAppendingPackageSuffix];
-    NSString *packagePathInProject = [@"/alreadyInProject" stringByAppendingPackageSuffix];
+    NSString *packagePathInProject = [_projectSettings fullPathForPackageName:@"alreadyInProject"];
     NSArray *packagePaths = @[packagePathNotInProject, packagePathInProject];
+
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] copyItemAtPath:OCMOCK_ANY toPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
 
     [_projectSettings addResourcePath:packagePathInProject error:nil];
 
@@ -67,6 +74,8 @@
     NSArray *errors = error.userInfo[@"errors"];
     XCTAssertEqual(errors.count, 1);
     XCTAssertEqual(error.code, SBImportingPackagesError);
+    NSError *underlyingError = errors[0];
+    XCTAssertEqual(underlyingError.code, SBPackageAlreadyExistsAtPathError);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 }
@@ -75,26 +84,38 @@
 {
     id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
-    NSString *packagePath = [@"/package/foo" stringByAppendingPackageSuffix];
+    NSString *packagePath = [@"/somewhere/foo" stringByAppendingPackageSuffix];
+    NSString *packagesName = [[packagePath lastPathComponent] stringByDeletingPathExtension];
+    NSString *importedPackagePath = [_projectSettings fullPathForPackageName:packagesName];
+
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] copyItemAtPath:packagePath toPath:importedPackagePath error:[OCMArg anyObjectRef]];
 
     NSError *error;
     XCTAssertTrue([_packageImporter importPackagesWithPaths:@[packagePath] error:&error]);
     XCTAssertNil(error);
-
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
+
+    XCTAssertTrue([_projectSettings isResourcePathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.resourcePaths);
+
+    [_fileManagerMock verify];
 }
 
-- (void)testImportPackageWithPathNotHavingPackageSuffix
+- (void)testImportOfExistingPackageInFileSystem
 {
-    id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
+    NSString *packagePath = [@"/somewhere/foo" stringByAppendingPackageSuffix];
+    NSString *packagesName = [[packagePath lastPathComponent] stringByDeletingPathExtension];
+    NSString *importedPackagePath = [_projectSettings fullPathForPackageName:packagesName];
 
-    NSString *packagePath = [@"/package/foo" stringByAppendingPackageSuffix];
+    NSError *fileSystemError = [NSError errorWithDomain:@"some domain" code:123 userInfo:nil];
+    [[[_fileManagerMock expect] andReturnValue:@(NO)] copyItemAtPath:packagePath toPath:importedPackagePath error:((NSError __autoreleasing **)[OCMArg setTo:fileSystemError])];
 
     NSError *error;
-    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[packagePath] error:&error]);
-    XCTAssertNil(error);
+    XCTAssertFalse([_packageImporter importPackagesWithPaths:@[packagePath] error:&error]);
+    XCTAssertNotNil(error);
 
-    [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
+    XCTAssertFalse([_projectSettings isResourcePathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.resourcePaths);
+
+    [_fileManagerMock verify];
 }
 
 - (void)testImportPackageWithInvalidPaths
@@ -102,17 +123,17 @@
     NSError *error1;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:nil error:&error1]);
     XCTAssertNotNil(error1);
-    XCTAssertEqual(error1.code, SBInvalidPackagePaths);
+    XCTAssertEqual(error1.code, SBNoPackagePathsToImport, @"error code should be set to SBNoPackagePathsToImport");
 
     NSError *error2;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[] error:&error2]);
     XCTAssertNotNil(error2);
-    XCTAssertEqual(error2.code, SBInvalidPackagePaths);
+    XCTAssertEqual(error2.code, SBNoPackagePathsToImport, @"error code should be set to SBNoPackagePathsToImport");
 
     NSError *error3;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[@"/foo/package"] error:&error3]);
     XCTAssertNotNil(error3);
-    XCTAssertEqual(error3.code, SBPathWithoutPackageSuffix);
+    XCTAssertEqual(error3.code, SBPathWithoutPackageSuffix, @"error code should be set to SBPathWithoutPackageSuffix");
 }
 
 @end
