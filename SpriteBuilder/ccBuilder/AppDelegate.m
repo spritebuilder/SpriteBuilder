@@ -3653,6 +3653,20 @@ static BOOL hideAllToNextSeparator;
     [item setLabel:doc.formattedName];
 }
 
+- (void)renamedResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath
+{
+    NSArray *items = [tabView tabViewItems];
+   	for (NSUInteger i = 0; i < [items count]; i++)
+   	{
+   		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
+        if ([doc.fileName rangeOfString:fromPath].location != NSNotFound)
+        {
+            NSString *newFileName = [doc.fileName stringByReplacingOccurrencesOfString:fromPath withString:toPath];
+            doc.fileName = newFileName;
+        }
+   	}
+}
+
 - (IBAction) menuSelectBehind:(id)sender
 {
     [[CocosScene cocosScene] selectBehind];

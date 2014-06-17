@@ -5,6 +5,7 @@
 #import "NSError+SBErrors.h"
 #import "ProjectSettings.h"
 #import "ResourceManager.h"
+#import "AppDelegate.h"
 
 @implementation PackageRenamer
 
@@ -31,6 +32,8 @@
         return YES;
     }
 
+    NSString *oldFullPath = [package.dirPath copy];
+
     BOOL renameSuccessful = ([self canRenamePackage:package toName:newName error:error]
                             && [_fileManager moveItemAtPath:package.dirPath toPath:newFullPath error:error]
                             && [_projectSettings moveResourcePathFrom:package.dirPath toPath:newFullPath error:error]);
@@ -38,6 +41,7 @@
     if (renameSuccessful)
     {
         [_resourceManager setActiveDirectoriesWithFullReset:[_projectSettings absoluteResourcePaths]];
+        [[AppDelegate appDelegate] renamedResourcePathFrom:oldFullPath toPath:newFullPath];
         return YES;
     }
 
