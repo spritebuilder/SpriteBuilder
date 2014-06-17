@@ -20,23 +20,6 @@
     return self;
 }
 
-- (void)showCreateNewPackageDialogForWindow:(NSWindow *)window
-{
-    NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
-    packageWindowController.delegate = self;
-
-    // Show new document sheet
-    [NSApp beginSheet:[packageWindowController window]
-       modalForWindow:window
-        modalDelegate:NULL
-       didEndSelector:NULL
-          contextInfo:NULL];
-
-    [NSApp runModalForWindow:[packageWindowController window]];
-    [NSApp endSheet:[packageWindowController window]];
-    [[packageWindowController window] close];
-}
-
 - (void)addIconToPackageFile:(NSString *)packagePath
 {
     NSImage* folderIcon = [NSImage imageNamed:@"Package.icns"];

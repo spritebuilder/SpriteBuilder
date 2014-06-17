@@ -117,7 +117,6 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
-#import "PackageCreateDelegateProtocol.h"
 #import "MiscConstants.h"
 #import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
@@ -128,6 +127,7 @@
 #import "RMResource.h"
 #import "PackageImporter.h"
 #import "PackageCreator.h"
+#import "NewPackageWindowController.h"
 
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -3457,9 +3457,24 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) menuNewPackage:(id)sender
 {
     [[[CCDirector sharedDirector] view] lockOpenGLContext];
+    
     PackageCreator *packageCreator = [[PackageCreator alloc] init];
     packageCreator.projectSettings = projectSettings;
-    [packageCreator showCreateNewPackageDialogForWindow:window];
+    
+    NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
+    packageWindowController.packageCreator = packageCreator;
+
+    // Show new document sheet
+    [NSApp beginSheet:[packageWindowController window]
+       modalForWindow:window
+        modalDelegate:NULL
+       didEndSelector:NULL
+          contextInfo:NULL];
+
+    [NSApp runModalForWindow:[packageWindowController window]];
+    [NSApp endSheet:[packageWindowController window]];
+    [[packageWindowController window] close];
+
     [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 

@@ -8,8 +8,6 @@
 @property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, weak) NSFileManager *fileManager;
 
-- (void)showCreateNewPackageDialogForWindow:(NSWindow *)window;
-
 // Creates a package at the root level of the project directory. A package is a special folder.
 // A suffix defined in PACKAGE_NAME_SUFFIX is added to the folder name.
 // Sends RESOURCE_PATHS_CHANGED notification after package has been added successfully.
