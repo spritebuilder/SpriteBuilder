@@ -296,15 +296,6 @@ void ApplyCustomNodeVisitSwizzle()
     [window setShowsToolbarButton:NO];
 }
 
-- (void) setupToolbar
-{
-    /*
-    toolbarDelegate = [[MainToolbarDelegate alloc] init];
-    toolbar.delegate = toolbarDelegate;
-    [toolbarDelegate addPlugInItemsToToolbar:toolbar];
-     */
-}
-
 - (void) setupPlugInNodeView
 {
     plugInNodeViewHandler  = [[PlugInNodeViewHandler alloc] initWithCollectionView:plugInNodeCollectionView];
@@ -620,8 +611,6 @@ typedef enum
     // Load plug-ins
     [[PlugInManager sharedManager] loadPlugIns];
     
-    // Update toolbar with plug-ins
-    [self setupToolbar];
     [self setupPlugInNodeView];
     [self setupProjectViewTabBar];
     [self setupItemViewTabBar];
