@@ -605,6 +605,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	[rootNode.animationManager update:kDelta];
 	[rootNode.animationManager update:kDelta];
 	
+	//After enough trials, the animation should be finished.	
 	XCTAssertNil(rootNode.animationManager.runningSequence, @"Should be nil");
 
 
