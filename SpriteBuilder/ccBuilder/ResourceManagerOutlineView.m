@@ -248,13 +248,26 @@
 		[ResourceManager removeResource:res];
 	}
 
-    PackageRemover *packageRemover = [[PackageRemover alloc] init];
-    packageRemover.projectSettings = [AppDelegate appDelegate].projectSettings;
-    [packageRemover removePackagesFromProject:packagesPathsToDelete error:NULL];
+    [self removePackagePaths:packagesPathsToDelete];
 
-	[self deselectAll:NULL];
+    [self deselectAll:NULL];
 
 	[[ResourceManager sharedManager] reloadAllResources];
+}
+
+- (void)removePackagePaths:(NSMutableArray *)packagesPathsToDelete
+{
+    PackageRemover *packageRemover = [[PackageRemover alloc] init];
+    packageRemover.projectSettings = [AppDelegate appDelegate].projectSettings;
+    NSError *error;
+    if (![packageRemover removePackagesFromProject:packagesPathsToDelete error:&error])
+    {
+        [[NSAlert alertWithMessageText:@"Error"
+                        defaultButton:@"OK"
+                      alternateButton:nil
+                          otherButton:nil
+            informativeTextWithFormat:@"%@", error.localizedDescription] runModal];
+    }
 }
 
 - (void)deleteSelectedResourcesWithRightClickedRow:(NSInteger)rightClickedRowIndex
@@ -264,7 +277,6 @@
         return;
     }
 
-    // Confirm remove of items
     NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?"
 									 defaultButton:@"Cancel"
 								   alternateButton:@"Delete"
