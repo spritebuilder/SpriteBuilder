@@ -62,7 +62,7 @@
         return NO;
     }
 
-    PackagePathBlock block = [self importBlock];
+    PackagePathBlock block = [self packagePathImportBlock];
 
     PackageUtil *packageUtil = [[PackageUtil alloc] init];
     return [packageUtil enumeratePackagePaths:filteredPaths
@@ -72,7 +72,7 @@
                                         block:block];
 }
 
-- (PackagePathBlock)importBlock
+- (PackagePathBlock)packagePathImportBlock
 {
     return ^BOOL(NSString *packagePathToImport, NSError **localError)
     {
