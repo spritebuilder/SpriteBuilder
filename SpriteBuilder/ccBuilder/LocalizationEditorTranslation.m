@@ -12,14 +12,14 @@
 @implementation LocalizationEditorTranslation
 
 @synthesize translations = _translations;
-
+@synthesize languagesDownloading = _languagesDownloading;
 - (id) init
 {
     self = [super init];
     if (!self) return NULL;
     
     _translations = [[NSMutableDictionary alloc] init];
-    
+    _languagesDownloading = [[NSMutableArray alloc] init];
     return self;
 }
 

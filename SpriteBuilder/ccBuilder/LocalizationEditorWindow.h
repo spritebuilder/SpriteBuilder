@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class LocalizationTranslateWindow;
 
 @interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate>
 {
@@ -15,6 +16,7 @@
     IBOutlet NSPopUpButton* popLanguageAdd;
     IBOutlet NSPopUpButton* popCurrentLanguage;
     IBOutlet NSTextView* textInspectorKey;
+    LocalizationTranslateWindow* _ltw;
 }
 
 @property (nonatomic,assign) BOOL inspectorEnabled;
@@ -27,6 +29,7 @@
 
 - (IBAction)pressedAdd:(id)sender;
 - (IBAction)pressedAddGroup:(id)sender;
+- (IBAction)pressedTranslate:(id)sender;
 
 - (IBAction)selectedAddLanguage:(id)sender;
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs;

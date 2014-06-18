@@ -6,14 +6,15 @@
 //
 //
 
+#import "LocalizationTranslateWindow.h"
 #import "LocalizationEditorWindow.h"
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorHandler.h"
 #import "LocalizationEditorTranslation.h"
+#import "LocalizationEditorLanguageTableView.h"
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
-
 @implementation LocalizationEditorWindow
 
 #pragma mark Init and Updating stuff
@@ -26,6 +27,7 @@
     [self updateLanguageSelectionMenu];
     [self addLanguageColumns];
     [self updateQuickEditLangs];
+    
 }
 
 - (void) populateLanguageAddMenu
@@ -197,6 +199,19 @@
 - (IBAction)pressedAddGroup:(id)sender
 {}
 
+/*
+ * Just displays a translate window.
+ * TODO Make the window key and main
+ */
+- (IBAction)pressedTranslate:(id)sender {
+    _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+    [[_ltw window] makeKeyAndOrderFront:nil];
+}
+
+/*
+ * If a language is added, do what is shown here but also reload the langauge menu on the
+ * language translation window if there is one open.
+ */
 - (IBAction)selectedAddLanguage:(id)sender
 {
     NSString* name = popLanguageAdd.selectedItem.title;
@@ -208,6 +223,8 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
+    if(_ltw)
+        [_ltw reloadLanguageMenu];
     
     [handler setEdited];
 }
@@ -234,6 +251,10 @@
 - (IBAction)selectedCurrentLanguage:(id)sender
 {
     [self updateInspector];
+}
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    
+
 }
 
 - (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs
@@ -411,13 +432,23 @@
         }
         else
         {
-            return [translation.translations objectForKey:aTableColumn.identifier];
+            if([translation.languagesDownloading containsObject:aTableColumn.identifier]){
+                [[aTableColumn dataCellForRow:rowIndex] setEnabled:0];
+                return @"Downloading...";
+            }else{
+                [[aTableColumn dataCellForRow:rowIndex] setEnabled:1];
+                return [translation.translations objectForKey:aTableColumn.identifier];
+            }
         }
     }
     
     return NULL;
 }
 
+/*
+ * If a translation is updated, update the tableView in the translation window if there
+ * is one open.
+ */
 - (void) tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
@@ -481,6 +512,8 @@
                 [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
                 [handler setEdited];
             }
+            if(_ltw)
+                [_ltw reloadCost];
         }
         
         [self updateInspector];
@@ -602,6 +635,7 @@
     {
         [handler setEdited];
     }
+    
 }
 
 #pragma mark Split view delegate

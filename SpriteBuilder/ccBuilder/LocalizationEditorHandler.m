@@ -17,6 +17,7 @@
 
 @implementation LocalizationEditorHandler
 
+@synthesize currentLanguage;
 @synthesize languages;
 @synthesize activeLanguages;
 @synthesize translations;

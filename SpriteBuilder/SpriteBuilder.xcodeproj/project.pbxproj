@@ -99,6 +99,10 @@
 		77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 77E1995113858DE0006C361B /* TabNewMetalRollover.png */; };
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
+		7B5135C21947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */; };
+		7BCC1C0D194904190062DF38 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC1C0C194904190062DF38 /* StoreKit.framework */; };
+		7BF55303193F8A7500183F09 /* LocalizationTranslateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */; };
+		7BF55307193F912200183F09 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
 		80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E97F6318370F400052647D /* WarningCell.m */; };
 		8045F136183ADA900082BD94 /* seq-visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12C183AD6D30082BD94 /* seq-visible.png */; };
@@ -1239,6 +1243,11 @@
 		77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBModalSheetController.m; sourceTree = "<group>"; };
 		77E7D04D138F78F600E8EE67 /* StageSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StageSizeWindow.h; sourceTree = "<group>"; };
 		77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StageSizeWindow.m; sourceTree = "<group>"; };
+		7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = LocalizationInAppPurchasesPIDs.plist; path = ../ccBuilder/LocalizationInAppPurchasesPIDs.plist; sourceTree = "<group>"; };
+		7BCC1C0C194904190062DF38 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationTranslateWindow.xib; sourceTree = "<group>"; };
+		7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindow.h; sourceTree = "<group>"; };
+		7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindow.m; sourceTree = "<group>"; };
 		800C005E1846A40D00544BD2 /* select-scale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-scale.png"; sourceTree = "<group>"; };
 		800C006F1848178D00544BD2 /* select-crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-crosshair.png"; sourceTree = "<group>"; };
 		8045F12C183AD6D30082BD94 /* seq-visible.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-visible.png"; sourceTree = "<group>"; };
@@ -2255,6 +2264,7 @@
 				7789ABE8133AB10500CEFCC7 /* ApplicationServices.framework in Frameworks */,
 				7789ABC3133AA82000CEFCC7 /* Cocoa.framework in Frameworks */,
 				E3AF6CDF15F0CF8B0048DB2A /* libMMMarkdown-Mac.a in Frameworks */,
+				7BCC1C0D194904190062DF38 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3035,6 +3045,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BCC1C0C194904190062DF38 /* StoreKit.framework */,
 				D35E589D18E391DA008571EC /* GLKit.framework */,
 				D2E0168418D783C900927430 /* AppleScriptKit.framework */,
 				DC68033A189168390060BE39 /* SpriteKit.framework */,
@@ -3152,6 +3163,7 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */,
 				DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */,
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
@@ -3394,6 +3406,9 @@
 			children = (
 				B7083DF717B1CBC8006628C7 /* LocalizationEditorHandler.h */,
 				B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */,
+				7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */,
+				7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */,
+				7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */,
 				B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */,
 				B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */,
 				B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */,
@@ -5181,6 +5196,9 @@
 					7789ABBD133AA82000CEFCC7 = {
 						DevelopmentTeam = U2K5E32W7G;
 						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 							com.apple.Sandbox = {
 								enabled = 1;
 							};
@@ -5434,6 +5452,7 @@
 				92F0960818F8851300D47A94 /* inspector-body-remove-hi.png in Resources */,
 				E35A2D8F1540111A00F78B72 /* position-2.png in Resources */,
 				E35A2D901540111A00F78B72 /* position-3.png in Resources */,
+				7B5135C21947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist in Resources */,
 				921EEADC18A5760700D864C2 /* joint-pivot.png in Resources */,
 				E3EDBC1615483EE000EEF1F3 /* ResolutionSettingsWindow.xib in Resources */,
 				E370BA0C1549B2460048ED73 /* scale-0.png in Resources */,
@@ -5604,6 +5623,7 @@
 				B7AC69B217A1969E0041B8BD /* header-bg2.png in Resources */,
 				B7AC69B417A1A2040041B8BD /* header-bg2-crop.png in Resources */,
 				B72D1DC0186125E80091252F /* Requirements.plist in Resources */,
+				7BF55303193F8A7500183F09 /* LocalizationTranslateWindow.xib in Resources */,
 				B7AC69C917A70A4B0041B8BD /* inspector-codeconnections.png in Resources */,
 				92D9D48318F8AB3800F167C1 /* joint-connection-disconnected@2x.png in Resources */,
 				926D13C918B5778300582959 /* joint-distance-slide@2x.png in Resources */,
@@ -6174,6 +6194,7 @@
 				E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */,
 				E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */,
 				E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */,
+				7BF55307193F912200183F09 /* LocalizationTranslateWindow.m in Sources */,
 				E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */,
 				E525FA5D4791EB730859BF2C /* ProjectSettings+Convenience.m in Sources */,
 				E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */,
@@ -6842,6 +6863,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6869,8 +6893,10 @@
 					"\"$(SRCROOT)/libs/Tupac\"",
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--deep";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
+				PROVISIONING_PROFILE = "3C61F300-140F-4802-AB93-852E91DF6DEB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -6881,6 +6907,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -6908,8 +6937,10 @@
 					"\"$(SRCROOT)/libs/Tupac\"",
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--deep";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
+				PROVISIONING_PROFILE = "3C61F300-140F-4802-AB93-852E91DF6DEB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

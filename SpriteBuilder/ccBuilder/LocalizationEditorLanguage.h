@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LocalizationEditorLanguage : NSObject
+@interface LocalizationEditorLanguage : NSObject <NSCopying>
 
 @property (nonatomic,copy) NSString* isoLangCode;
 @property (nonatomic,copy) NSString* name;
