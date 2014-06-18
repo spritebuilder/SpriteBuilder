@@ -31,11 +31,7 @@
     [super setUp];
 
     _projectSettings = [[ProjectSettings alloc] init];
-}
-
-- (void)tearDown
-{
-    [super tearDown];
+    _projectSettings.projectPath = @"/project/abc.ccbproj";
 }
 
 - (void)testStandardInitialization
@@ -134,15 +130,27 @@
 
 - (void)testFullPathForPackageName
 {
-    _projectSettings.projectPath = @"/project/abc.ccbproj";
-
     NSString *packageName = @"foo";
     NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
 
-    NSString *a = [_projectSettings fullPathForPackageName:packageName];
-    NSString *b = [fullPackagesPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
+    NSString *fullPathForPackageName = [_projectSettings fullPathForPackageName:packageName];
+    NSString *supposedFullPath = [fullPackagesPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
 
-    SBAssertStringsEqual(a,b);
+    SBAssertStringsEqual(fullPathForPackageName,supposedFullPath);
+}
+
+- (void)testIsPathWithinPackagesFolder
+{
+    NSString *pathWithinPackagesFolder = [_projectSettings.packagesFolderPath stringByAppendingPathComponent:@"foo"];
+
+    XCTAssertTrue([_projectSettings isPathInPackagesFolder:pathWithinPackagesFolder]);
+}
+
+- (void)testPackagesFolderPath
+{
+    NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+
+    SBAssertStringsEqual(fullPackagesPath, _projectSettings.packagesFolderPath);
 }
 
 @end

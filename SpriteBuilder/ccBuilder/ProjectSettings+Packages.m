@@ -9,9 +9,17 @@
 
 - (NSString *)fullPathForPackageName:(NSString *)packageName
 {
-    NSString *packagesFolderPath = [self.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+    return [self.packagesFolderPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
+}
 
-    return [packagesFolderPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
+- (BOOL)isPathInPackagesFolder:(NSString *)path
+{
+    return [path rangeOfString:self.packagesFolderPath].location != NSNotFound;
+}
+
+- (NSString *)packagesFolderPath
+{
+    return [self.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
 }
 
 @end
