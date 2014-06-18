@@ -545,6 +545,12 @@ typedef enum
     [self registerUserDefaults];
 
     [self registerNotificationObservers];
+    
+    // Disable experimental features
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"EnableSpriteKit"] boolValue])
+    {
+        [[_menuItemExperimentalSpriteKitProject menu] removeItem:_menuItemExperimentalSpriteKitProject];
+    }
 
     UsageManager* usageManager = [[UsageManager alloc] init];
     [usageManager registerUsage];
@@ -640,7 +646,7 @@ typedef enum
     }
     
     // Open registration window
-    [self openRegistrationWindow];
+    [self openRegistrationWindow:NULL];
 }
 
 - (void)registerNotificationObservers
@@ -907,7 +913,8 @@ typedef enum
     
     physicsHandler.selectedNodePhysicsBody = self.selectedNode.nodePhysicsBody;
     [physicsHandler didChangeSelection];
-    
+
+    [animationPlaybackManager stop];
 }
 
 - (CCNode*) selectedNode
@@ -1163,7 +1170,7 @@ static BOOL hideAllToNextSeparator;
         
         if([sequenceHandler currentSequence].timelinePosition != 0.0f || ![sequenceHandler currentSequence].autoPlay)
         {
-            paneOffset = [self addInspectorPropertyOfType:@"SeparatorSub" name:@"name" displayName:@"Must select frame Zero of the autoplay timeline" extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
+            paneOffset = [self addInspectorPropertyOfType:@"PhysicsUnavailable" name:@"name" displayName:nil extra:@"" readOnly:YES affectsProps:nil atOffset:0 isCodeConnection:NO];
             displayPluginProperties = NO;
         }
     }
@@ -1388,6 +1395,8 @@ static BOOL hideAllToNextSeparator;
             }
         }
     }
+
+    [animationPlaybackManager stop];
 }
 
 #pragma mark Document handling
@@ -1793,7 +1802,9 @@ static BOOL hideAllToNextSeparator;
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
 {
     if (!forceReload && [document.fileName isEqualToString:currentDocument.fileName]) return;
-    
+
+    [animationPlaybackManager stop];
+
     [self prepareForDocumentSwitch];
     
     self.currentDocument = document;
@@ -2676,6 +2687,19 @@ static BOOL hideAllToNextSeparator;
     [self updateInspectorFromSelection];
 }
 
+- (void) gotoAutoplaySequence
+{
+	SequencerSequence * autoPlaySequence = [currentDocument.sequences findFirst:^BOOL(SequencerSequence * sequence, int idx) {
+		return sequence.autoPlay;
+	}];
+	
+	if(autoPlaySequence)
+	{
+		sequenceHandler.currentSequence = autoPlaySequence;
+		sequenceHandler.currentSequence.timelinePosition = 0.0f;
+	}
+}
+
 - (void) dropAddPlugInNodeNamed:(NSString*) nodeName at:(CGPoint)pt
 {
     PlugInNode* pluginDescription = [[PlugInManager sharedManager] plugInNodeNamed:nodeName];
@@ -2685,15 +2709,8 @@ static BOOL hideAllToNextSeparator;
 		{
 			[self modalDialogTitle:@"Changing Timeline" message:@"In order to add a new joint, you must be viewing the first frame of the 'autoplay' timeline." disableKey:@"AddJointSetSequencer"];
 			
-			SequencerSequence * autoPlaySequence = [currentDocument.sequences findFirst:^BOOL(SequencerSequence * sequence, int idx) {
-				return sequence.autoPlay;
-			}];
-
-			if(autoPlaySequence)
-			{
-				sequenceHandler.currentSequence = autoPlaySequence;
-				sequenceHandler.currentSequence.timelinePosition = 0.0f;
-			}
+		
+			[self gotoAutoplaySequence];
 		}
 
 		
@@ -3212,6 +3229,8 @@ static BOOL hideAllToNextSeparator;
     {
         [publisher start];
     }
+
+    [animationPlaybackManager stop];
 }
 
 - (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings
@@ -3417,6 +3436,8 @@ static BOOL hideAllToNextSeparator;
                 RMDirectory * directoryResource = (RMDirectory *)res;
                 dirPath = directoryResource.dirPath;
                 
+				//Expand it.
+				[outlineProject expandItem:directoryResource];
             }
             else
             {
@@ -3488,6 +3509,9 @@ static BOOL hideAllToNextSeparator;
                 {
                     RMDirectory * directoryResource = (RMDirectory *)res;
                     dirPath = directoryResource.dirPath;
+					
+					//Expand to view.
+					[outlineProject expandItem:directoryResource];
                 }
                 else
                 {
@@ -3867,6 +3891,8 @@ static BOOL hideAllToNextSeparator;
         // Update the timelines
         currentDocument.sequences = wc.sequences;
         sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
+
+        [animationPlaybackManager stop];
     }
 }
 
@@ -3884,6 +3910,8 @@ static BOOL hideAllToNextSeparator;
     
     // and set it to current
     sequenceHandler.currentSequence = newSeq;
+
+    [animationPlaybackManager stop];
 }
 
 - (IBAction)menuTimelineDuplicate:(id)sender
@@ -3899,6 +3927,8 @@ static BOOL hideAllToNextSeparator;
     
     // and set it to current
     sequenceHandler.currentSequence = newSeq;
+
+    [animationPlaybackManager stop];
 }
 
 - (IBAction)menuTimelineDuration:(id)sender
@@ -3914,6 +3944,7 @@ static BOOL hideAllToNextSeparator;
         [sequenceHandler deleteKeyframesForCurrentSequenceAfterTime:wc.duration];
         sequenceHandler.currentSequence.timelineLength = wc.duration;
         [self updateInspectorFromSelection];
+        [animationPlaybackManager stop];
     }
 }
 
@@ -4667,9 +4698,9 @@ static BOOL hideAllToNextSeparator;
     [[aboutWindow window] makeKeyAndOrderFront:self];
 }
 
-- (void) openRegistrationWindow
+- (IBAction) openRegistrationWindow:(id)sender
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
+    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
     {
         // Email already registered or skipped
         return;
@@ -4878,7 +4909,19 @@ static BOOL hideAllToNextSeparator;
 {
     NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
     NSUInteger idx = [item tag];
-    NSString* fullpath = [[outlineView itemAtRow:idx] filePath];
+	
+	NSString * fullpath;
+	
+	id row = [outlineView itemAtRow:idx];
+	if([row isKindOfClass:[RMDirectory class]])
+	{
+		fullpath = [row dirPath];
+	}
+	else if([row isKindOfClass:[RMResource class]])
+	{
+		fullpath = [row filePath];
+	}
+
     
     // if it doesn't exist, peek inside "resources-auto" (only needed in the case of resources, which has a different visual
     // layout than what is actually on the disk).

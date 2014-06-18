@@ -47,6 +47,13 @@
 #define kCCBPhysicsSnapDist 10
 
 
+@interface CCResponderManager (Private)
+
+-(void)cancelAllResponders;
+
+@end
+
+
 @implementation PhysicsHandler
 
 
@@ -353,6 +360,7 @@
     outletWindow = nil;
     [_currentJoint refreshOutletStatus];
     _currentJoint = nil;
+	[[CCDirector sharedDirector].responderManager cancelAllResponders];
     
 }
 
