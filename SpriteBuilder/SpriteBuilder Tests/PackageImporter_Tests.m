@@ -74,7 +74,7 @@
     XCTAssertEqual(errors.count, 1);
     XCTAssertEqual(error.code, SBImportingPackagesError);
     NSError *underlyingError = errors[0];
-    XCTAssertEqual(underlyingError.code, SBPackageAlreadyExistsAtPathError);
+    XCTAssertEqual(underlyingError.code, SBPackageAlreayInProject);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 }
@@ -113,6 +113,21 @@
     XCTAssertNotNil(error);
 
     XCTAssertFalse([_projectSettings isResourcePathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.resourcePaths);
+
+    [_fileManagerMock verify];
+}
+
+- (void)testReImportPackageInPackageFolderButNotInProject
+{
+    _fileManagerMock = [OCMockObject mockForClass:[NSFileManager class]];
+
+    NSString *toImportPackagePath = [_projectSettings fullPathForPackageName:@"foo"];
+
+    NSError *error;
+    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[toImportPackagePath] error:&error]);
+    XCTAssertNil(error);
+
+    XCTAssertTrue([_projectSettings isResourcePathInProject:toImportPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", toImportPackagePath, _projectSettings.resourcePaths);
 
     [_fileManagerMock verify];
 }

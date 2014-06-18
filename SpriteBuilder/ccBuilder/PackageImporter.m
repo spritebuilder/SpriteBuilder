@@ -78,16 +78,19 @@
     {
         if ([_projectSettings isResourcePathInProject:packagePathToImport])
         {
-            [NSError setNewErrorWithCode:localError code:SBPackageAlreadyExistsAtPathError message:@"Package already in packages folder."];
+            [NSError setNewErrorWithCode:localError code:SBPackageAlreayInProject message:@"Package already in project folder."];
             return NO;
         }
 
         NSString *packageName = [[packagePathToImport lastPathComponent] stringByDeletingPathExtension];
         NSString *newPathInPackagesFolder = [_projectSettings fullPathForPackageName:packageName];
 
-        if (![_fileManager copyItemAtPath:packagePathToImport toPath:newPathInPackagesFolder error:localError])
+        if (![_projectSettings isPathInPackagesFolder:packagePathToImport])
         {
-            return NO;
+            if (![_fileManager copyItemAtPath:packagePathToImport toPath:newPathInPackagesFolder error:localError])
+            {
+                return NO;
+            }
         }
 
         if ([_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
