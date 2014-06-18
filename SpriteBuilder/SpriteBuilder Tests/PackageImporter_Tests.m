@@ -13,7 +13,6 @@
 #import "NotificationNames.h"
 #import "SBErrors.h"
 #import "ProjectSettings.h"
-#import "PackageCreateDelegateProtocol.h"
 #import "PackageImporter.h"
 #import "SBAssserts.h"
 #import "MiscConstants.h"

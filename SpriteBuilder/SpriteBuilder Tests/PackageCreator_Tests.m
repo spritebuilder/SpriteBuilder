@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "ProjectSettings.h"
-#import "PackageCreateDelegateProtocol.h"
 #import "SBErrors.h"
 #import "NSString+Packages.h"
 #import "MiscConstants.h"

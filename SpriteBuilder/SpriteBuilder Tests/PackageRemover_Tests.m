@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import "PackageCreateDelegateProtocol.h"
 #import "ProjectSettings.h"
 #import "ObserverTestHelper.h"
 #import "NotificationNames.h"
