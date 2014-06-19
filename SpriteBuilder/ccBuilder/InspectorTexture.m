@@ -29,6 +29,8 @@
 #import "ResourceManagerUtil.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
+#import "ResourceTypes.h"
+#import "RMResource.h"
 
 @implementation InspectorTexture
 

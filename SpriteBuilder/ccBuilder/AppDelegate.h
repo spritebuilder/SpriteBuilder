@@ -194,7 +194,12 @@ enum {
     IBOutlet NSMenu* __weak menuContextKeyframeInterpol;
     IBOutlet NSMenu* __weak menuContextResManager;
     IBOutlet NSMenu *__weak menuContextKeyframeNoselection;
-    
+
+    // TODO: not needed any more when PACKAGE feature is released
+    IBOutlet NSMenuItem* menuPlusButtonNewPackage;
+    IBOutlet NSMenuItem* menuFileNewPackage;
+    // TODO: END OF not needed any more when PACKAGE feature is released
+
     IBOutlet NSMenuItem *__weak menuItemStageColor;
     
     IBOutlet NSPopUpButton* menuTimelinePopup;

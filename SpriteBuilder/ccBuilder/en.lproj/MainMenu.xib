@@ -118,6 +118,17 @@
                                                 </binding>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Package..." keyEquivalent="N" id="g6Z-Mh-Dls">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="menuNewPackage:" target="494" id="KZt-lS-hjH"/>
+                                                <binding destination="494" name="enabled" keyPath="projectSettings" id="Pzv-bK-jnb">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -1367,6 +1378,11 @@ CA
                                                     <action selector="menuNewFolder:" target="494" id="fEV-XG-RIU"/>
                                                 </connections>
                                             </menuItem>
+                                            <menuItem title="New Package" id="fe0-WO-wub">
+                                                <connections>
+                                                    <action selector="menuNewPackage:" target="494" id="b2M-0S-MIK"/>
+                                                </connections>
+                                            </menuItem>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
@@ -2398,8 +2414,10 @@ CA
                 <outlet property="menuContextKeyframeInterpol" destination="1604" id="1613"/>
                 <outlet property="menuContextKeyframeNoselection" destination="o0p-0U-Ks5" id="H9k-Jz-Iau"/>
                 <outlet property="menuContextResManager" destination="1696" id="1703"/>
+                <outlet property="menuFileNewPackage" destination="g6Z-Mh-Dls" id="D5e-wF-NCl"/>
                 <outlet property="menuItemSnapGrid" destination="zA6-4S-M8f" id="UZF-mG-oQZ"/>
                 <outlet property="menuItemStageColor" destination="KQF-gw-sgJ" id="cG7-Q4-aYh"/>
+                <outlet property="menuPlusButtonNewPackage" destination="fe0-WO-wub" id="qKr-zd-Bou"/>
                 <outlet property="menuResolution" destination="1264" id="1474"/>
                 <outlet property="menuTimeline" destination="1581" id="1585"/>
                 <outlet property="menuTimelineChained" destination="1670" id="1685"/>

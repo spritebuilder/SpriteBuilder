@@ -24,6 +24,7 @@
 
 #import "SavePanelLimiter.h"
 #import "ResourceManager.h"
+#import "RMDirectory.h"
 #import <AppKit/AppKitErrors.h>
 
 @implementation SavePanelLimiter
