@@ -102,6 +102,8 @@ typedef enum
 }
 
 @property (nonatomic, copy) NSString* projectPath;
+@property (nonatomic, readonly) NSString* projectPathDir;
+
 @property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 
@@ -134,7 +136,6 @@ typedef enum
 @property (nonatomic, copy) NSString* exporter;
 @property (nonatomic, strong) NSMutableArray* availableExporters;
 @property (nonatomic, readonly) NSString* displayCacheDirectory;
-//@property (nonatomic, readonly) NSString* publishCacheDirectory;
 @property (nonatomic, readonly) NSString* tempSpriteSheetCacheDirectory;
 @property (nonatomic, assign) BOOL deviceOrientationPortrait;
 @property (nonatomic, assign) BOOL deviceOrientationUpsideDown;
@@ -143,7 +144,7 @@ typedef enum
 @property (nonatomic, assign) int resourceAutoScaleFactor;
 @property (nonatomic, assign) NSInteger publishEnvironment;
 
-// Temporary property, do not persist
+// *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
 @property (nonatomic) NSMutableArray *cocos2dUpdateIgnoredVersions;
 
@@ -163,10 +164,12 @@ typedef enum
 - (BOOL) store;
 - (id) serialize;
 
+// *** Smart Sprite Sheets ***
 - (void) makeSmartSpriteSheet:(RMResource*) res;
 - (void) removeSmartSpriteSheet:(RMResource*) res;
+- (NSArray*) smartSpriteSheetDirectories;
 
-// Setting and reading file properties
+// *** Setting and reading file properties ***
 - (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key;
 - (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key;
 - (id) valueForResource:(RMResource*) res andKey:(id) key;
@@ -175,18 +178,38 @@ typedef enum
 - (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key;
 - (BOOL) isDirtyResource:(RMResource*) res;
 - (BOOL) isDirtyRelPath:(NSString*) relPath;
+
+// *** Dirty markers ***
 - (void) markAsDirtyResource:(RMResource*) res;
 - (void) markAsDirtyRelPath:(NSString*) relPath;
 - (void) clearAllDirtyMarkers;
+- (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
 
-- (NSArray*) smartSpriteSheetDirectories;
 
-// Handling moved and deleted resources
+// *** Handling moved and deleted resources ***
 - (void) removedResourceAt:(NSString*) relPath;
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
 
-- (NSString* ) getVersion;
+// *** Resource Paths ***
+// Adds a full resourcePath to the project, provide full filePath
+// Returns NO if resource path could not be added.
+// Returns SBDuplicateResourcePathError if given resource path is already present,
+- (BOOL)addResourcePath:(NSString *)path error:(NSError **)error;
 
-- (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
+// Tests if a given full resource path is already in the project, provide full filePath
+- (BOOL)isResourcePathInProject:(NSString *)resourcePath;
+
+// Removes a full resourcePath from the project, provide full filePath
+// Returns NO if resource path could not be removed.
+// Returns SBResourcePathNotInProjectError if given resource path does not exist,
+- (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error;
+
+// Changes the path component of a resourcePath, provide full paths
+// Returns NO if resource path could not be moved.
+// Returns SBDuplicateResourcePathError if resource path toPath already exists
+- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
+
+// *** Misc ***
+- (NSString* ) getVersion;
 
 @end

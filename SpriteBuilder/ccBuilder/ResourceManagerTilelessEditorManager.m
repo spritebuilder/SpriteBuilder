@@ -12,6 +12,9 @@
 #import "CCBImageBrowserView.h"
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
+#import "RMDirectory.h"
+#import "RMResource.h"
+#import "ResourceTypes.h"
 
 @implementation ResourceManagerTilelessEditorManager
 

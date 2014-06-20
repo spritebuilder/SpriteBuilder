@@ -26,6 +26,11 @@
 
 #import "ResourceManagerUtil.h"
 #import "ResourceManager.h"
+#import "RMDirectory.h"
+#import "RMResource.h"
+#import "ResourceTypes.h"
+#import "RMSpriteFrame.h"
+#import "RMAnimation.h"
 
 @protocol ResourceManagerUtil_UndeclaredSelectors <NSObject>
 @optional

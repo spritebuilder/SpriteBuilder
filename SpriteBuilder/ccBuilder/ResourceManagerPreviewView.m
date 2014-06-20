@@ -31,6 +31,9 @@
 #import "FCFormatConverter.h"
 #import <AVFoundation/AVFoundation.h>
 #import "ResourceManagerPreivewAudio.h"
+#import "ResourceTypes.h"
+#import "RMResource.h"
+#import "RMDirectory.h"
 
 @implementation ResourceManagerPreviewView
 
