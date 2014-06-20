@@ -117,9 +117,17 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
+#import "PackageCreateDelegateProtocol.h"
+#import "PackageController.h"
+#import "MiscConstants.h"
+#import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
 #import "NotificationNames.h"
 #import "RegistrationWindow.h"
+#import "ResourceTypes.h"
+#import "RMDirectory.h"
+#import "RMResource.h"
+
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -468,7 +476,6 @@ typedef enum
 
 - (void) setupResourceManager
 {
-    
     NSColor * color = [NSColor colorWithCalibratedRed:0.0f green:0.50f blue:0.50f alpha:1.0f];
     
     color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
@@ -503,6 +510,7 @@ typedef enum
     
     // Setup project display
     projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
+    projectOutlineHandler.projectSettings = projectSettings;
     
     resourceManagerSplitView.delegate = previewViewOwner;
     
@@ -561,6 +569,8 @@ typedef enum
     // Install default templates
     [propertyInspectorHandler installDefaultTemplatesReplace:NO];
     [propertyInspectorHandler loadTemplateLibrary];
+
+    [self setupFeatureToggle];
     
     selectedNodes = [[NSMutableArray alloc] init];
     loadedSelectedNodes = [[NSMutableArray alloc] init];
@@ -597,7 +607,7 @@ typedef enum
     [self setupSequenceHandler];
     animationPlaybackManager.sequencerHandler = sequenceHandler;
     [self updateInspectorFromSelection];
-    
+
     [[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
     
     CocosScene* cs = [CocosScene cocosScene];
@@ -644,13 +654,33 @@ typedef enum
         // First run completed
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
     }
-    
+
+    [self toggleFeatures];
+
     // Open registration window
     [self openRegistrationWindow:NULL];
 }
 
+- (void)toggleFeatures
+{
+    if (![FeatureToggle sharedFeatures].arePackagesEnabled)
+    {
+        [menuPlusButtonNewPackage setHidden:YES];
+        [menuFileNewPackage setHidden:YES];
+    }
+}
+
+- (void)setupFeatureToggle
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Features" ofType:@"plist"];
+    NSDictionary *features = [NSDictionary dictionaryWithContentsOfFile:path];
+    [[FeatureToggle sharedFeatures] loadFeaturesWithDictionary:features];
+}
+
 - (void)registerNotificationObservers
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateEverythingAfterSettingsChanged) name:RESOURCE_PATHS_CHANGED object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
 
@@ -1968,14 +1998,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) updateResourcePathsFromProjectSettings
 {
-    [[ResourceManager sharedManager] removeAllDirectories];
-    
-    // Setup links to directories
-    for (NSString* dir in [projectSettings absoluteResourcePaths])
-    {
-        [[ResourceManager sharedManager] addDirectory:dir];
-    }
-    [[ResourceManager sharedManager] setActiveDirectories:[projectSettings absoluteResourcePaths]];
+    [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absoluteResourcePaths]];
 }
 
 - (void) closeProject
@@ -2042,6 +2065,7 @@ static BOOL hideAllToNextSeparator;
     project.projectPath = fileName;
     [project store];
     self.projectSettings = project;
+    projectOutlineHandler.projectSettings = projectSettings;
     
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
@@ -3310,12 +3334,17 @@ static BOOL hideAllToNextSeparator;
     int success = [wc runModalSheetForWindow:window];
     if (success)
     {
-        [self.projectSettings store];
-        [self updateResourcePathsFromProjectSettings];
-        [self menuCleanCacheDirectories:sender];
-        [self reloadResources];
-        [self setResolution:0];
+        [self updateEverythingAfterSettingsChanged];
     }
+}
+
+- (void)updateEverythingAfterSettingsChanged
+{
+    [self.projectSettings store];
+    [self updateResourcePathsFromProjectSettings];
+    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [self reloadResources];
+    [self setResolution:0];
 }
 
 - (IBAction) openDocument:(id)sender
@@ -3323,18 +3352,32 @@ static BOOL hideAllToNextSeparator;
     // Create the File Open Dialog
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:YES];
-    [openDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
-    
-    [openDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
+
+    NSArray *allowedFileTypes = currentDocument
+        ? @[@"spritebuilder", PACKAGE_NAME_SUFFIX]
+        : @[@"spritebuilder"];
+    [openDlg setAllowedFileTypes:allowedFileTypes];
+
+    [openDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result)
+    {
         if (result == NSOKButton)
         {
             NSArray* files = [openDlg URLs];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_current_queue(), ^
+            {
                 for (int i = 0; i < [files count]; i++)
                 {
-                    NSString* fileName = [[files objectAtIndex:i] path];
-                    [self openProject:fileName];
+                    NSString *fileName = [[files objectAtIndex:i] path];
+                    if ([fileName hasSuffix:PACKAGE_NAME_SUFFIX])
+                    {
+                        PackageController *packageCreator = [[PackageController alloc] init];
+                        packageCreator.projectSettings = projectSettings;
+                        [packageCreator importPackageWithPath:fileName error:NULL];
+                    }
+                    else
+                    {
+                        [self openProject:fileName];
+                    }
                 }
             });
         }
@@ -3408,6 +3451,15 @@ static BOOL hideAllToNextSeparator;
 -(IBAction) menuNewSpriteKitProject:(id)sender
 {
 	[self createNewProjectTargetting:CCBTargetEngineSpriteKit];
+}
+
+- (IBAction) menuNewPackage:(id)sender
+{
+    [[[CCDirector sharedDirector] view] lockOpenGLContext];
+    PackageController *packageController = [[PackageController alloc] init];
+    packageController.projectSettings = projectSettings;
+    [packageController showCreateNewPackageDialogForWindow:window];
+    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (IBAction) newFolder:(id)sender

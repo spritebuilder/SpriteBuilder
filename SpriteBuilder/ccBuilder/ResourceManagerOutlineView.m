@@ -25,9 +25,13 @@
 #import "ResourceManagerOutlineView.h"
 #import "AppDelegate.h"
 #import "ResourceManager.h"
-#import "ResourceManagerUtil.h"
-#import "ResourceManagerOutlineHandler.h"
-#import "ProjectSettings.h"
+#import "PackageCreateDelegateProtocol.h"
+#import "PackageController.h"
+#import "FeatureToggle.h"
+#import "RMDirectory.h"
+#import "RMResource.h"
+#import "ResourceTypes.h"
+#import "RMPackage.h"
 
 @implementation ResourceManagerOutlineView
 
@@ -44,7 +48,7 @@
 
     NSMenu* menu = [AppDelegate appDelegate].menuContextResManager;
     menu.autoenablesItems = NO;
-    
+
     NSArray* items = [menu itemArray];
     for (NSMenuItem* item in items)
     {
@@ -93,11 +97,12 @@
         }
         else if (item.action == @selector(menuActionDelete:))
         {
+			[item setEnabled:NO];
             item.title = @"Delete";
 
-			[item setEnabled:NO];
 			if ([clickedItem isKindOfClass:[RMResource class]]
-				&& [self isSomethingSelected])
+				|| [self isSomethingSelected]
+                || [clickedItem isKindOfClass:[RMPackage class]])
 			{
             	[item setEnabled:YES];
 			}
@@ -127,7 +132,67 @@
 		}
     }
 
+    if ([clickedItem isKindOfClass:[RMPackage class]])
+    {
+        [menu addItem:[NSMenuItem separatorItem]];
+
+        NSMenuItem *exportItem = [[NSMenuItem alloc] initWithTitle:@"Export to..."
+                                                            action:@selector(onExportPackageTo:)
+                                                     keyEquivalent:@""];
+        [exportItem setTarget:self];
+        [menu addItem:exportItem];
+    }
+
     return menu;
+}
+
+- (void)onExportPackageTo:(id)sender
+{
+    if([self clickedRow] == -1)
+    {
+        return;
+    }
+
+    id selectedItem = [self itemAtRow:[self clickedRow]];
+    if ([selectedItem isKindOfClass:[RMPackage class]])
+    {
+        NSOpenPanel *openPanel = [self exportPanel];
+
+        [openPanel beginSheetModalForWindow:[AppDelegate appDelegate].window
+                          completionHandler:^(NSInteger result)
+        {
+            if (result == NSFileHandlingPanelOKButton)
+            {
+                [self tryToExportPackage:selectedItem toPath:openPanel.directoryURL.path];
+            }
+        }];
+    }
+}
+
+- (void)tryToExportPackage:(RMDirectory *)package toPath:(NSString *)exportPath
+{
+    PackageController *packageController = [[PackageController alloc] init];
+    NSError *error;
+
+    if (![packageController exportPackage:package toPath:exportPath error:&error])
+    {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:error.localizedDescription];
+        [alert runModal];
+    }
+}
+
+- (NSOpenPanel *)exportPanel
+{
+    NSOpenPanel *openPanel = [NSOpenPanel savePanel];
+    [openPanel setCanCreateDirectories:YES];
+    [openPanel setCanChooseDirectories:YES];
+    [openPanel setCanChooseFiles:NO];
+    [openPanel setPrompt:@"Export"];
+    return openPanel;
 }
 
 - (BOOL)isSomethingSelected
@@ -146,6 +211,7 @@
 
 	NSMutableArray *resourcesToDelete = [[NSMutableArray alloc] init];
 	NSMutableArray *foldersToDelete = [[NSMutableArray alloc] init];
+    NSMutableArray *packagesPathsToDelete = [[NSMutableArray alloc] init];
 
 	while (row != NSNotFound)
 	{
@@ -162,6 +228,12 @@
 				[resourcesToDelete addObject:resource];
 			}
 		}
+        else if ([selectedItem isKindOfClass:[RMPackage class]]
+                 && [FeatureToggle sharedFeatures].arePackagesEnabled)
+        {
+            RMPackage *rmDirectory = (RMPackage *)selectedItem;
+            [packagesPathsToDelete addObject:rmDirectory.dirPath];
+        }
 
 		row = [resources indexGreaterThanIndex:row];
 	}
@@ -176,6 +248,10 @@
 		[ResourceManager removeResource:res];
 	}
 
+    PackageController *packageController = [[PackageController alloc] init];
+    packageController.projectSettings = [AppDelegate appDelegate].projectSettings;
+    [packageController removePackagesFromProject:packagesPathsToDelete error:NULL];
+
 	[self deselectAll:NULL];
 
 	[[ResourceManager sharedManager] reloadAllResources];
@@ -185,11 +261,23 @@
 {
     if([self selectedRow] == -1 && rightClickedRowIndex == -1)
     {
-        NSBeep();
         return;
     }
+
+    // Confirm remove of items
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?"
+									 defaultButton:@"Cancel"
+								   alternateButton:@"Delete"
+									   otherButton:NULL
+						 informativeTextWithFormat:@"You cannot undo this operation."];
+
+    NSInteger result = [alert runModal];
     
- 
+    if (result == NSAlertDefaultReturn)
+    {
+        return;
+    }
+
 	NSIndexSet *selectedRows;
 	if ([self isRightClickInSelectionOrEmpty:rightClickedRowIndex])
 	{
@@ -200,26 +288,6 @@
 		selectedRows = [NSIndexSet indexSetWithIndex:(NSUInteger)rightClickedRowIndex];
 	}
 
-	NSUInteger row = [selectedRows firstIndex];
-	id selectedItem = [self itemAtRow:row];
-	if (![selectedItem isKindOfClass:[RMResource class]])
-	{
-		return;
-	}
-
-	// Confirm remove of items
-    NSAlert* alert = [NSAlert alertWithMessageText:@"Are you sure you want to delete the selected files?"
-									 defaultButton:@"Cancel"
-								   alternateButton:@"Delete"
-									   otherButton:NULL
-						 informativeTextWithFormat:@"You cannot undo this operation."];
-	
-    NSInteger result = [alert runModal];
-	if (result == NSAlertDefaultReturn)
-    {
-        return;
-    }
-	
 	[self deleteResources:selectedRows];
 }
 
@@ -239,6 +307,15 @@
     }
     
     [super keyDown:theEvent];
+}
+
+- (void)cancelOperation:(id)sender
+{
+    if ([self currentEditor] != nil)
+    {
+        [self abortEditing];
+        [[self window] makeFirstResponder:self];
+    }
 }
 
 @end
