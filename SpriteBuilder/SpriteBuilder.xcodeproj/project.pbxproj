@@ -182,6 +182,7 @@
 		921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2318ADB7EA00D864C2 /* GeometryUtil.m */; };
 		921EEB2918ADE43700D864C2 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = 921EEB2818ADE43700D864C2 /* InspectorNodeReference.xib */; };
 		921EEB2C18ADE5C600D864C2 /* InspectorNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EEB2B18ADE5C600D864C2 /* InspectorNodeReference.m */; };
+		9223E12E1954D4E60089D0B2 /* CCEffectNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */; };
 		922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 922CC395194676B600B34854 /* AnimationTest1.ccb */; };
 		922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 922CC3971946873A00B34854 /* AnimationTest2.ccb */; };
 		922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */; };
@@ -220,6 +221,11 @@
 		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
+		929D1B9B1954D16C00B27340 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
+		929D1BB11954D34300B27340 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B8F1954D15400B27340 /* CCBPProperties.plist */; };
+		929D1BB21954D34300B27340 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B921954D15400B27340 /* InfoPlist.strings */; };
+		929D1BB31954D34300B27340 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B941954D15400B27340 /* Icon.png */; };
+		929D1BB51954D36200B27340 /* CCBPEffectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B8E1954D15400B27340 /* CCBPEffectNode.m */; };
 		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
 		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
 		92B6D0DA193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */; };
@@ -810,8 +816,8 @@
 		E3FEA8C014E49D8300119FBE /* InspectorInteger.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FEA8BF14E49D8300119FBE /* InspectorInteger.xib */; };
 		E525F041845D2D5ABB99D990 /* ResourceToggleSmartSpriteSheetCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD3EA53480310EC675E1 /* ResourceToggleSmartSpriteSheetCommand.m */; };
 		E525F07CCBACEC15F8A13EC7 /* AnimationPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */; };
-		E525F0EA925087B3D2ABE8D3 /* ResourceNewPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDFD10EE6761E4E94BED /* ResourceNewPackageCommand.m */; };
 		E525F09EC8AF83CADB163700 /* CCBReader_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A64BC1B591FE3A2C5D /* CCBReader_Tests.m */; };
+		E525F0EA925087B3D2ABE8D3 /* ResourceNewPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDFD10EE6761E4E94BED /* ResourceNewPackageCommand.m */; };
 		E525F17044E58B6DFE7A2248 /* RMPackage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A4E3F488FCF4347F62 /* RMPackage_Tests.m */; };
 		E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
@@ -892,6 +898,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 926D13D718B57B9500582959;
 			remoteInfo = CCPhysicsPinJoint;
+		};
+		929D1BB61954D37000B27340 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 929D1B971954D16C00B27340;
+			remoteInfo = CCEffectNode;
 		};
 		92A805C418D3CFAC004508E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1119,6 +1132,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				9223E12E1954D4E60089D0B2 /* CCEffectNode.ccbPlugNode in Copy PlugIns */,
 				DCFB065118E32C3900DF02A0 /* SKFile.ccbPlugNode in Copy PlugIns */,
 				DC05E79B18D0ADF800592A1E /* SBControlNode.ccbPlugNode in Copy PlugIns */,
 				DC05E79C18D0ADF800592A1E /* SBButtonNode.ccbPlugNode in Copy PlugIns */,
@@ -1467,6 +1481,15 @@
 		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
 		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
+		929D1B8D1954D15400B27340 /* CCBPEffectNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPEffectNode.h; sourceTree = "<group>"; };
+		929D1B8E1954D15400B27340 /* CCBPEffectNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCBPEffectNode.m; sourceTree = "<group>"; };
+		929D1B8F1954D15400B27340 /* CCBPProperties.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		929D1B901954D15400B27340 /* CCEffectNode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCEffectNode-Info.plist"; sourceTree = "<group>"; };
+		929D1B911954D15400B27340 /* CCEffectNode-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCEffectNode-Prefix.pch"; sourceTree = "<group>"; };
+		929D1B931954D15400B27340 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		929D1B941954D15400B27340 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		929D1B951954D15400B27340 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCEffectNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range.png"; sourceTree = "<group>"; };
 		92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range@2x.png"; sourceTree = "<group>"; };
 		92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPhysicsUnavailable.xib; sourceTree = "<group>"; };
@@ -2413,6 +2436,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		929D1B9A1954D16C00B27340 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				929D1B9B1954D16C00B27340 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		92B7900418C808B7007DF895 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3168,6 +3199,7 @@
 				DC05E79018D0ACE000592A1E /* SBButtonNode.ccbPlugNode */,
 				DCFB063F18E32B7500DF02A0 /* SKFile.ccbPlugNode */,
 				833A5C4A192B48CB001837B3 /* SpriteBuilder Tests.xctest */,
+				929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3633,6 +3665,21 @@
 				926D13F018B57E1600582959 /* icon@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		929D1B8C1954D15400B27340 /* CCEffectNode */ = {
+			isa = PBXGroup;
+			children = (
+				929D1B8D1954D15400B27340 /* CCBPEffectNode.h */,
+				929D1B8E1954D15400B27340 /* CCBPEffectNode.m */,
+				929D1B8F1954D15400B27340 /* CCBPProperties.plist */,
+				929D1B901954D15400B27340 /* CCEffectNode-Info.plist */,
+				929D1B911954D15400B27340 /* CCEffectNode-Prefix.pch */,
+				929D1B921954D15400B27340 /* InfoPlist.strings */,
+				929D1B941954D15400B27340 /* Icon.png */,
+				929D1B951954D15400B27340 /* Icon@2x.png */,
+			);
+			path = CCEffectNode;
 			sourceTree = "<group>";
 		};
 		92B792BB18C92C60007DF895 /* CCPhysicsSpringJoint */ = {
@@ -4246,6 +4293,7 @@
 		E35392461518AD0A00471721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				929D1B8C1954D15400B27340 /* CCEffectNode */,
 				E3D59123150F5367004180CA /* CCBFile */,
 				E3B7AEC714E3193500DFD402 /* CCNode */,
 				B7EE69FA1819EE0D00B983FE /* CCLayoutBox */,
@@ -4948,6 +4996,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				929D1BB71954D37000B27340 /* PBXTargetDependency */,
 				DCFB065018E32C2D00DF02A0 /* PBXTargetDependency */,
 				DC05E79818D0ADDC00592A1E /* PBXTargetDependency */,
 				DC05E79A18D0ADDC00592A1E /* PBXTargetDependency */,
@@ -5035,6 +5084,23 @@
 			name = CCPhysicsPinJoint;
 			productName = CCPhysicsNode;
 			productReference = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		929D1B971954D16C00B27340 /* CCEffectNode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 929D1BA01954D16C00B27340 /* Build configuration list for PBXNativeTarget "CCEffectNode" */;
+			buildPhases = (
+				929D1B981954D16C00B27340 /* Sources */,
+				929D1B9A1954D16C00B27340 /* Frameworks */,
+				929D1B9C1954D16C00B27340 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCEffectNode;
+			productName = CCLayerColor;
+			productReference = 929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */ = {
@@ -5525,6 +5591,7 @@
 				B7EE69F71819EE0D00B983FE /* CCLayoutBox */,
 				E3C365EA14E9E4D1007CD5FF /* CCSprite */,
 				B7C3532117F65547005697C1 /* CCSprite9Slice */,
+				929D1B971954D16C00B27340 /* CCEffectNode */,
 				E35DBB7F14F225D30070A6E4 /* CCNodeColor */,
 				E35DBB9714F244BB0070A6E4 /* CCNodeGradient */,
 				E35DBBCB14F2AA350070A6E4 /* CCLabelBMFont */,
@@ -5975,6 +6042,16 @@
 				926D13F518B57E1600582959 /* Icon.png in Resources */,
 				926D13F418B57E1600582959 /* InfoPlist.strings in Resources */,
 				926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		929D1B9C1954D16C00B27340 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				929D1BB11954D34300B27340 /* CCBPProperties.plist in Resources */,
+				929D1BB21954D34300B27340 /* InfoPlist.strings in Resources */,
+				929D1BB31954D34300B27340 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6556,6 +6633,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		929D1B981954D16C00B27340 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				929D1BB51954D36200B27340 /* CCBPEffectNode.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		92B7900218C808B7007DF895 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6797,6 +6882,11 @@
 			target = 926D13D718B57B9500582959 /* CCPhysicsPinJoint */;
 			targetProxy = 926D13E518B57C4200582959 /* PBXContainerItemProxy */;
 		};
+		929D1BB71954D37000B27340 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 929D1B971954D16C00B27340 /* CCEffectNode */;
+			targetProxy = 929D1BB61954D37000B27340 /* PBXContainerItemProxy */;
+		};
 		92A805C518D3CFAC004508E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */;
@@ -6974,6 +7064,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				926D13EE18B57E1600582959 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		929D1B921954D15400B27340 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				929D1B931954D15400B27340 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -7524,6 +7622,64 @@
 					dynamic_lookup,
 				);
 				PRODUCT_NAME = CCPhysicsPinJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
+		929D1BA11954D16C00B27340 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCEffectNode/CCEffectNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCEffectNode/CCEffectNode-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCEffectNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		929D1BA21954D16C00B27340 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCEffectNode/CCEffectNode-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCEffectNode/CCEffectNode-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCEffectNode;
 				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;
@@ -9333,6 +9489,15 @@
 			buildConfigurations = (
 				926D13E118B57B9500582959 /* Debug */,
 				926D13E218B57B9500582959 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		929D1BA01954D16C00B27340 /* Build configuration list for PBXNativeTarget "CCEffectNode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				929D1BA11954D16C00B27340 /* Debug */,
+				929D1BA21954D16C00B27340 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

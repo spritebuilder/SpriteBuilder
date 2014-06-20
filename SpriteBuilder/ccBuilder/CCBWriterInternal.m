@@ -419,7 +419,11 @@
 + (NSMutableDictionary*) dictionaryFromCCObject:(CCNode *)node
 {
     NodeInfo* info = node.userObject;
+	NSAssert(info, @"Node does not have an NodeInfo");
     PlugInNode* plugIn = info.plugIn;
+	NSAssert(plugIn, @"Node does not have a plugin");
+
+	
     NSMutableDictionary* extraProps = info.extraProps;
     
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
@@ -480,7 +484,13 @@
     {
         for (int i = 0; i < [[node children] count]; i++)
         {
-            [children addObject:[CCBWriterInternal dictionaryFromCCObject:[[node children] objectAtIndex:i]]];
+			CCNode * childNode = [[node children] objectAtIndex:i];
+			if(!childNode.userObject)
+			{
+				continue;
+			}
+			NSDictionary * serializedChild = [CCBWriterInternal dictionaryFromCCObject:childNode];
+            [children addObject:serializedChild];
         }
     }
     
