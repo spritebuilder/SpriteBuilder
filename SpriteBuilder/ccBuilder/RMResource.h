@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
+#import "RMResourceBase.h"
 
-@interface RMResource : NSObject <NSPasteboardWriting>
+@interface RMResource : RMResourceBase <NSPasteboardWriting>
 {
     int type;
     BOOL touched;

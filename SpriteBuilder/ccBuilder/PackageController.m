@@ -151,12 +151,18 @@ typedef BOOL (^PackageManipulationBlock) (NSString *packagePath, NSError **error
                                                    block:block];
 }
 
-- (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error
+- (BOOL)removePackagesFromProject:(NSArray *)packages error:(NSError **)error
 {
     PackageManipulationBlock block = ^BOOL(NSString *packagePath, NSError **localError)
     {
         return [_projectSettings removeResourcePath:packagePath error:localError];
     };
+
+    NSMutableArray *packagePaths = [NSMutableArray arrayWithCapacity:packages.count];
+    for (RMPackage *package in packages)
+    {
+        [packagePaths addObject:package.dirPath];
+    }
 
     return [self applyProjectSettingBlockForPackagePaths:packagePaths
                                                    error:error

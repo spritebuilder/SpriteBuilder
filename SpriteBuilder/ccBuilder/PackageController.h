@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
-@protocol PackageCreateDelegateProtocol;
+#import "PackageCreateDelegateProtocol.h"
+
 @class ProjectSettings;
 @class RMPackage;
 @class ResourceManager;
@@ -41,12 +42,11 @@
 // In error's userInfo dictionary there'll be the "errors" key with all underlying errors
 - (BOOL)importPackagesWithPaths:(NSArray *)paths error:(NSError **)error;
 
-// Will remove package paths from the project, it won't delete the folders just the project reference
-// All package names have to contain the PACKAGE_NAME_SUFFIX.
+// Will remove packages from the project, it won't delete the folders just the project reference
 // Sends RESOURCE_PATHS_CHANGED notification if there is at least one package that was removed successfully.
 // Returns NO if there was at least one error.
 // In error's userInfo dictionary there'll be the "errors" key with all underlying errors
-- (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error;
+- (BOOL)removePackagesFromProject:(NSArray *)packages error:(NSError **)error;
 
 // Copies the package to a given path
 // Returns NO if an error occured, check error object.

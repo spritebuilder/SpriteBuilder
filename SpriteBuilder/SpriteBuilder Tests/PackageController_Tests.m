@@ -122,6 +122,7 @@
     XCTAssertNil(error2);
 }
 
+
 - (void)testRemovePackagesExitsWithoutErrorsForNilParamAndEmptyArray
 {
     NSError *error1;
@@ -137,12 +138,13 @@
 {
     id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
-    NSString *packagePath = [@"/package1" pathByAppendingPackageSuffix];
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [@"/package1" pathByAppendingPackageSuffix];
 
-    [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:packagePath error:[OCMArg anyObjectRef]];
+    [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:package.dirPath error:[OCMArg anyObjectRef]];
 
     NSError *error;
-    XCTAssertTrue([_packageController removePackagesFromProject:@[packagePath] error:&error]);
+    XCTAssertTrue([_packageController removePackagesFromProject:@[package] error:&error]);
     XCTAssertNil(error);
 
     [self verifyAndRemoveObserverMock:observerMock];
@@ -152,9 +154,14 @@
 {
     id observerMock = [self observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
+    RMPackage *packageGood = [[RMPackage alloc] init];
     NSString *packagePathGood = [@"/goodPath" pathByAppendingPackageSuffix];
+    packageGood.dirPath = packagePathGood;
+
+    RMPackage *packageBad = [[RMPackage alloc] init];
     NSString *packagePathBad = [@"/badPath" pathByAppendingPackageSuffix];
-    NSArray *packagePaths = @[packagePathGood, packagePathBad];
+    packageBad.dirPath = packagePathBad;
+    NSArray *packagePaths = @[packageGood, packageBad];
 
     [[[_projectSettingsMock expect] andReturnValue:@(YES)] removeResourcePath:packagePathGood error:[OCMArg anyObjectRef]];
     NSError *underlyingRemoveError = [NSError errorWithDomain:SBErrorDomain code:SBResourcePathNotInProjectError userInfo:nil];

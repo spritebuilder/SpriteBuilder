@@ -1,4 +1,4 @@
-enum
+typedef enum
 {
     kCCBResTypeNone,
     kCCBResTypeDirectory,
@@ -12,4 +12,4 @@ enum
     kCCBResTypeJSON,
     kCCBResTypeAudio,
     kCCBResTypeGeneratedSpriteSheetDef,
-};
+} CCBResourceType;

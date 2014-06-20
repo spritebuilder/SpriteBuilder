@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
+#import "RMResourceBase.h"
 
 
-@interface RMAnimation : NSObject
+@interface RMAnimation : RMResourceBase
 {
     NSString *animationFile;
     NSString *animationName;

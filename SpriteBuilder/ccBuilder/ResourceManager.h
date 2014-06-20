@@ -91,10 +91,14 @@
 
 + (void) touchResource:(RMResource*) res;
 
+// *** Locating resources ***
 - (RMResource*) resourceForPath:(NSString*) path;
 - (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir;
 
+- (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;
+- (NSString *)dirPathForResource:(id)resource;
 
+// *** Debug ***
 - (void) debugPrintDirectories;
 
 @end
