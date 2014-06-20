@@ -1,3 +1,4 @@
+
 /*
  * CocosBuilder: http://www.cocosbuilder.com
  *
@@ -278,7 +279,7 @@ typedef struct _PVRTexHeader
     std::vector<TPRect> outRects;
     
     BOOL makeSquare = NO;
-    if (self.imageFormat == kFCImageFormatPVRTC_2BPP || kFCImageFormatPVRTC_4BPP)
+    if (self.imageFormat == kFCImageFormatPVRTC_2BPP || self.imageFormat == kFCImageFormatPVRTC_4BPP)
     {
         makeSquare = YES;
         outH = outW;
