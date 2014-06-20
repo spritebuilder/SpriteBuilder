@@ -55,6 +55,8 @@
     NSError *error2;
     XCTAssertTrue([_packageRemover removePackagesFromProject:@[] error:&error2]);
     XCTAssertNil(error2);
+
+    [_fileManagerMock verify];
 }
 
 - (void)testRemovePackageSuccessfully
@@ -62,6 +64,7 @@
     id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePath = [@"/package1" stringByAppendingPackageSuffix];
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] removeItemAtPath:packagePath error:[OCMArg anyObjectRef]];
 
     [_projectSettings addResourcePath:packagePath error:nil];
 
@@ -70,6 +73,7 @@
     XCTAssertNil(error);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
+    [_fileManagerMock verify];
 }
 
 - (void)testRemovePackagesWithAGoodAndOneErroneousPath
@@ -82,6 +86,8 @@
 
     [_projectSettings addResourcePath:packagePathGood error:nil];
 
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] removeItemAtPath:packagePathGood error:[OCMArg anyObjectRef]];
+
     NSError *error;
     XCTAssertFalse([_packageRemover removePackagesFromProject:packagePaths error:&error]);
     XCTAssertNotNil(error);
@@ -91,6 +97,7 @@
     XCTAssertEqual(error.code, SBRemovePackagesError);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
+    [_fileManagerMock verify];
 }
 
 @end

@@ -25,7 +25,8 @@
         if ([_projectSettings removeResourcePath:packagePath error:localError])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
-            return YES;
+
+            return [_fileManager removeItemAtPath:packagePath error:localError];
         }
 
         return NO;
