@@ -1108,9 +1108,6 @@ CA
                                                                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                                     </tableColumn>
                                                                                 </tableColumns>
-                                                                                <connections>
-                                                                                    <outlet property="menu" destination="1696" id="9j6-tR-0KV"/>
-                                                                                </connections>
                                                                             </outlineView>
                                                                         </subviews>
                                                                     </clipView>
@@ -2413,7 +2410,6 @@ CA
                 <outlet property="menuContextKeyframe" destination="1600" id="1612"/>
                 <outlet property="menuContextKeyframeInterpol" destination="1604" id="1613"/>
                 <outlet property="menuContextKeyframeNoselection" destination="o0p-0U-Ks5" id="H9k-Jz-Iau"/>
-                <outlet property="menuContextResManager" destination="1696" id="1703"/>
                 <outlet property="menuFileNewPackage" destination="g6Z-Mh-Dls" id="D5e-wF-NCl"/>
                 <outlet property="menuItemSnapGrid" destination="zA6-4S-M8f" id="UZF-mG-oQZ"/>
                 <outlet property="menuItemStageColor" destination="KQF-gw-sgJ" id="cG7-Q4-aYh"/>
@@ -2576,90 +2572,6 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuPasteKeyframes:" target="494" id="nRT-bW-3MQ"/>
-                    </connections>
-                </menuItem>
-            </items>
-        </menu>
-        <menu title="ResourceManager" autoenablesItems="NO" id="1696">
-            <items>
-                <menuItem title="Show in Finder" id="IRc-Ms-zaf">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuShowInFinder:" target="494" id="GRa-By-GNK"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="QAj-XD-yJX">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem title="Open with External Editor" id="1837">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuOpenExternal:" target="494" id="1839"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="tgM-fJ-aI6">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="1836"/>
-                <menuItem title="Make Smart Sprite Sheet" id="1801">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuCreateSmartSpriteSheet:" target="494" id="1803"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="0dH-cw-ISx">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="1802"/>
-                <menuItem title="Create Keyframes from Selection" id="1702">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuCreateKeyframesFromSelection:" target="494" id="1704"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="a51-Ij-Ite">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="7hy-dA-Awn"/>
-                <menuItem title="New Interface File..." id="ON2-nH-8h4">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuActionInterfaceFile:" target="494" id="uq1-bu-kIq"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="EZ1-IO-EqH">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem title="New Folder" id="ZnY-Uc-6ar">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuActionNewFolder:" target="494" id="jqi-Pb-64m"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="ERd-Sg-SIM">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem title="Delete" id="dCr-Uf-VbD">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuActionDelete:" target="494" id="5g5-MT-Dbi"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="uGX-nZ-twF">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
             </items>

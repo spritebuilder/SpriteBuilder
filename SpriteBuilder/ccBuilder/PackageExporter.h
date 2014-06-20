@@ -5,7 +5,6 @@
 
 @interface PackageExporter : NSObject
 
-@property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, weak) NSFileManager *fileManager;
 
 // Copies the package to a given path

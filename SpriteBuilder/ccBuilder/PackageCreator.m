@@ -3,7 +3,6 @@
 #import "NotificationNames.h"
 #import "SBErrors.h"
 #import "ProjectSettings.h"
-#import "NewPackageWindowController.h"
 #import "ProjectSettings+Packages.h"
 
 

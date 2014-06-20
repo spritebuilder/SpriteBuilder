@@ -21,7 +21,6 @@
 @implementation PackageExporter_Tests
 {
     PackageExporter *_packageExporter;
-    ProjectSettings *_projectSettings;
     id _fileManagerMock;
 }
 
@@ -30,10 +29,6 @@
     [super setUp];
 
     _packageExporter = [[PackageExporter alloc] init];
-
-    _projectSettings = [[ProjectSettings alloc] init];
-    _projectSettings.projectPath = @"/packagestests.ccbproj";
-    _packageExporter.projectSettings = _projectSettings;
 
     _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
     _packageExporter.fileManager = _fileManagerMock;

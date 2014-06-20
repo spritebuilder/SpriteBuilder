@@ -2,8 +2,6 @@
 #import "RMPackage.h"
 #import "SBErrors.h"
 #import "NSError+SBErrors.h"
-#import "ProjectSettings.h"
-
 
 @implementation PackageExporter
 

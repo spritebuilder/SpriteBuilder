@@ -21,7 +21,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Path: %@ ", self.dirPath];
+    return [NSString stringWithFormat:@"<%@: %p> Path: %@ ", [self class], self, self.dirPath];
 }
 
 @end
