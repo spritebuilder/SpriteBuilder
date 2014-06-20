@@ -461,14 +461,26 @@
         {
             NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(toggleNoActiveLangsAlpha) userInfo:nil repeats:NO];
             timer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(toggleNoActiveLangsAlpha) userInfo:nil repeats:NO];
-            return;
         }
-        [_translateFromTabView selectTabViewItemAtIndex:2];
-        [_popTranslateFrom setEnabled:1];
-        [self updateLanguageSelectionMenu: 0];
+        else
+        {
+            [_translateFromTabView selectTabViewItemAtIndex:2];
+            [_popTranslateFrom setEnabled:1];
+            [self updateLanguageSelectionMenu: 0];
+        }
     }else{
-        [self updateMissingActiveLangs];
-        [self updateLanguageSelectionMenu: 1];
+        if(!_activeLanguages.count)
+        {
+            [_translateFromTabView selectTabViewItemAtIndex:1];
+            [_translateFromInfo setHidden:1];
+            [_popTranslateFrom setEnabled:0];
+            _popTranslateFrom.title = @"No active languages!";
+            _currLang = NULL;
+            [_languageTable reloadData];
+        }else{
+            [self updateMissingActiveLangs];
+            [self updateLanguageSelectionMenu: 1];
+        }
     }
 }
 
@@ -516,7 +528,7 @@
         }
         [s appendString:l.name];
     }
-    _noActiveLangsError.stringValue = [NSString stringWithFormat:@"You haven't added any languages that we can translate! The languages you can translate from are: %@. Add at least one of them in the Language Editor window and fill in the phrases you would like to translate.", s];
+    _noActiveLangsError.stringValue = [NSString stringWithFormat:@"You haven't added any languages that we can translate! The languages you can translate from are: %@.\rAdd at least one of them in the Language Editor window and fill in the phrases you would like to translate.", s];
 }
 /*
  * Go through the dictionary of 'translate to' languages for the current language
