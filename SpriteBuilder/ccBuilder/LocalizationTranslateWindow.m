@@ -23,23 +23,10 @@
     _guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"PayloadUUID"];
     _languages = [[NSMutableDictionary alloc] init];
     [self getLanguagesFromServer];
-    [_translateFromInfoV setEditable:0];
-    __weak typeof(self) weakSelf = self;
-    monitorHandler = ^NSEvent * (NSEvent * theEvent){
-        
-        if(theEvent.keyCode == 36)
-        {
-           [weakSelf buy:nil];
-        }
-        // Return the event, a new event, or, to stop
-        // the event from being dispatched, nil
-        return theEvent;
-    };
+    [[_translateFromTabView tabViewItemAtIndex:0] setView:_downloadingLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:1] setView:_noActiveLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:2] setView:_standardLangsView];
     
-    // Creates an object we do not own, but must keep track of so that
-    // it can be "removed" when we're done; therefore, put it in an ivar.
-    eventMon = [NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask
-                                                     handler:monitorHandler];
 }
 
 /*
@@ -51,17 +38,12 @@
  * then a the pop-up menu is disabled, an error message with instructions is shown.
  */
 -(void)finishSetUp{
-    [_languagesDownloading setHidden:1];
-    [_languagesDownloadingText setHidden:1];
+    
     [_languagesDownloading stopAnimation:self];
     [self uncheckLanguageDict];
     if(_activeLanguages.count)
     {
-        [_ignoreText setHidden:0];
-        [_cost setHidden:0];
-        [_numWords setHidden:0];
-        [_costText setHidden:0];
-        [_numWordsText setHidden:0];
+        [_translateFromTabView selectTabViewItemAtIndex:2];
         [_popTranslateFrom setEnabled:1];
         LocalizationEditorLanguage* l = [_activeLanguages objectAtIndex:0];
         _popTranslateFrom.title = l.name;
@@ -73,7 +55,7 @@
         _currLang = NULL;
         _popTranslateFrom.title = @"No Active Languages!";
         [self updateNoActiveLangsError];
-        [_noActiveLangsError setHidden:0];
+        [_translateFromTabView selectTabViewItemAtIndex:1];
     }
 }
 
@@ -325,8 +307,7 @@
 -(void)getLanguagesFromServer{
     _popTranslateFrom.title = @"Downloading...";
     [_popTranslateFrom setEnabled:0];
-    [_languagesDownloading setHidden:0];
-    [_languagesDownloadingText setHidden:0];
+    [_translateFromTabView selectTabViewItemAtIndex:0];
     [_languagesDownloading startAnimation:self];
     NSString* URLstring =
         [NSString stringWithFormat:@"http://spritebuilder-rails.herokuapp.com/translations/languages?key=%@", _guid];
@@ -473,7 +454,8 @@
  */
 - (void)reloadLanguageMenu{
     [self updateActiveLanguages];
-    if(!_noActiveLangsError.isHidden)
+    if([_translateFromTabView indexOfTabViewItem:[_translateFromTabView selectedTabViewItem]]
+       == 1)
     {
         if(!_activeLanguages.count)
         {
@@ -481,12 +463,7 @@
             timer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(toggleNoActiveLangsAlpha) userInfo:nil repeats:NO];
             return;
         }
-        [_ignoreText setHidden:0];
-        [_cost setHidden:0];
-        [_numWords setHidden:0];
-        [_costText setHidden:0];
-        [_numWordsText setHidden:0];
-        [_noActiveLangsError setHidden:1];
+        [_translateFromTabView selectTabViewItemAtIndex:2];
         [_popTranslateFrom setEnabled:1];
         [self updateLanguageSelectionMenu: 0];
     }else{
@@ -520,7 +497,7 @@
             [s appendString:l.name];
         }
     }
-    NSString* info = [NSString stringWithFormat: @"Remember! If you don't see a language in the menu above, it could be because you haven't activated it! You can still activate the following language(s): %@. To activate, go the Language Translation window, select \"Add Language\" and fill in the phrases you want to translate.", s];
+    NSString* info = [NSString stringWithFormat: @"Additional translatable language(s): %@.\rTo activate, select \"Add Language\" in Language Translation window and add phrases you want to translate.", s];
     
     _translateFromInfoV.string = info;
 }

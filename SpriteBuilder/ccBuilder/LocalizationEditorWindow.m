@@ -244,7 +244,8 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
-    
+    if(_ltw)
+        [_ltw reloadLanguageMenu];
     [handler setEdited];
 }
 

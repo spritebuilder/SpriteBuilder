@@ -14,24 +14,25 @@
 
 @interface LocalizationTranslateWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver>
 {
+    IBOutlet NSView* _noActiveLangsView;
+    IBOutlet NSView* _standardLangsView;
+    IBOutlet NSView* _downloadingLangsView;
+    IBOutlet NSTabView* _translateFromTabView;
     NSEvent * (^monitorHandler)(NSEvent *);
     IBOutlet NSButton *_buy;
     NSEvent* eventMon;
     IBOutlet NSTableView* _languageTable;
     IBOutlet NSTextField* _numWords;
-    IBOutlet NSTextField* _numWordsText;
     IBOutlet NSTextField* _cost;
-    IBOutlet NSTextField* _costText;
     IBOutlet NSPopUpButton* _popTranslateFrom;
     IBOutlet NSButton* _translateFromInfo;
     NSTextView *_translateFromInfoV;
     NSPopover *_translatePopOver;
     IBOutlet NSTextField* _noActiveLangsError;
-    IBOutlet NSButton* _ignoreText;
     IBOutlet NSButton* _checkAll;
     IBOutlet NSButton* _cancel;
+    IBOutlet NSButton* _ignoreText;
     IBOutlet NSProgressIndicator* _languagesDownloading;
-    IBOutlet NSTextField* _languagesDownloadingText;
     IBOutlet NSProgressIndicator* _costDownloading;
     IBOutlet NSTextField* _costDownloadingText;
     NSViewController *_translateInfoVC;
