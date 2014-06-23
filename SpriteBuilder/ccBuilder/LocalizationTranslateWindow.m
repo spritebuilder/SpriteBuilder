@@ -12,8 +12,13 @@
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorWindow.h"
+#import "LocalizationTranslateWindowHandler.h"
 
 @implementation LocalizationTranslateWindow
+
+static int downloadLangsIndex = 0;
+static int noActiveLangsIndex = 1;
+static int standardLangsIndex = 2;
 /*
  * Set up the guid, the languages global dictionary and get the dictionary's contents from the server
  */
@@ -22,11 +27,11 @@
     //_guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     _guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"PayloadUUID"];
     _languages = [[NSMutableDictionary alloc] init];
+    [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:noActiveLangsIndex] setView:_noActiveLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
     [self getLanguagesFromServer];
-    [[_translateFromTabView tabViewItemAtIndex:0] setView:_downloadingLangsView];
-    [[_translateFromTabView tabViewItemAtIndex:1] setView:_noActiveLangsView];
-    [[_translateFromTabView tabViewItemAtIndex:2] setView:_standardLangsView];
-    
+    [_w setPopOver:_translatePopOver button:_translateFromInfo];
 }
 
 /*
@@ -43,7 +48,7 @@
     [self uncheckLanguageDict];
     if(_activeLanguages.count)
     {
-        [_translateFromTabView selectTabViewItemAtIndex:2];
+        [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
         [_popTranslateFrom setEnabled:1];
         LocalizationEditorLanguage* l = [_activeLanguages objectAtIndex:0];
         _popTranslateFrom.title = l.name;
@@ -55,7 +60,7 @@
         _currLang = NULL;
         _popTranslateFrom.title = @"No Active Languages!";
         [self updateNoActiveLangsError];
-        [_translateFromTabView selectTabViewItemAtIndex:1];
+        [_translateFromTabView selectTabViewItemAtIndex:noActiveLangsIndex];
     }
 }
 
@@ -307,7 +312,7 @@
 -(void)getLanguagesFromServer{
     _popTranslateFrom.title = @"Downloading...";
     [_popTranslateFrom setEnabled:0];
-    [_translateFromTabView selectTabViewItemAtIndex:0];
+    [_translateFromTabView selectTabViewItemAtIndex:downloadLangsIndex];
     [_languagesDownloading startAnimation:self];
     NSString* URLstring =
         [NSString stringWithFormat:@"http://spritebuilder-rails.herokuapp.com/translations/languages?key=%@", _guid];
@@ -380,7 +385,7 @@
     //[_buy setState:NSOnState];
     SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
-    _cancel.stringValue = @"Finish";
+    _cancel.title = @"Finish";
 }
 
 /*
@@ -423,7 +428,7 @@
 - (IBAction)showInfo:(id)sender {
     [self updateMissingActiveLangs];
     if(_translateFromInfo.intValue == 1){
-    [_translatePopOver showRelativeToRect:[_translateFromInfo bounds] ofView:_translateFromInfo preferredEdge:NSMaxYEdge];
+        [_translatePopOver showRelativeToRect:[_translateFromInfo bounds] ofView:_translateFromInfo preferredEdge:NSMaxYEdge];
     }else{
         [_translatePopOver close];
     }
@@ -455,7 +460,7 @@
 - (void)reloadLanguageMenu{
     [self updateActiveLanguages];
     if([_translateFromTabView indexOfTabViewItem:[_translateFromTabView selectedTabViewItem]]
-       == 1)
+       == noActiveLangsIndex)
     {
         if(!_activeLanguages.count)
         {
@@ -464,14 +469,14 @@
         }
         else
         {
-            [_translateFromTabView selectTabViewItemAtIndex:2];
+            [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
             [_popTranslateFrom setEnabled:1];
             [self updateLanguageSelectionMenu: 0];
         }
     }else{
         if(!_activeLanguages.count)
         {
-            [_translateFromTabView selectTabViewItemAtIndex:1];
+            [_translateFromTabView selectTabViewItemAtIndex:noActiveLangsIndex];
             [_translateFromInfo setHidden:1];
             [_popTranslateFrom setEnabled:0];
             _popTranslateFrom.title = @"No active languages!";
@@ -607,7 +612,7 @@
 }
 
 /*
- * Update the check all box and get new cost when the user toggles one of the languages in the main language table.
+ * Update the check all box and get new cost when the user toggles one of the languages in the main language table.x
  */
 - (void) tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
@@ -801,5 +806,6 @@
     }
     [_languageTable reloadData];
 }
+
 
 @end
