@@ -11,6 +11,10 @@
 
 #import "ProjectSettings.h"
 #import "SBErrors.h"
+#import "ProjectSettings+Packages.h"
+#import "NSString+Packages.h"
+#import "SBAssserts.h"
+#import "MiscConstants.h"
 
 @interface ProjectSettings_Tests : XCTestCase
 
@@ -27,11 +31,7 @@
     [super setUp];
 
     _projectSettings = [[ProjectSettings alloc] init];
-}
-
-- (void)tearDown
-{
-    [super tearDown];
+    _projectSettings.projectPath = @"/project/abc.ccbproj";
 }
 
 - (void)testStandardInitialization
@@ -126,6 +126,31 @@
     XCTAssertFalse([_projectSettings moveResourcePathFrom:path1 toPath:path2 error:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBDuplicateResourcePathError);
+}
+
+- (void)testFullPathForPackageName
+{
+    NSString *packageName = @"foo";
+    NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+
+    NSString *fullPathForPackageName = [_projectSettings fullPathForPackageName:packageName];
+    NSString *supposedFullPath = [fullPackagesPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
+
+    SBAssertStringsEqual(fullPathForPackageName,supposedFullPath);
+}
+
+- (void)testIsPathWithinPackagesFolder
+{
+    NSString *pathWithinPackagesFolder = [_projectSettings.packagesFolderPath stringByAppendingPathComponent:@"foo"];
+
+    XCTAssertTrue([_projectSettings isPathInPackagesFolder:pathWithinPackagesFolder]);
+}
+
+- (void)testPackagesFolderPath
+{
+    NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+
+    SBAssertStringsEqual(fullPackagesPath, _projectSettings.packagesFolderPath);
 }
 
 @end

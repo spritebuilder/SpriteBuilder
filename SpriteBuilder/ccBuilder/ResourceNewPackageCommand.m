@@ -2,7 +2,8 @@
 
 #import "ResourceNewPackageCommand.h"
 #import "ProjectSettings.h"
-#import "PackageController.h"
+#import "PackageCreator.h"
+#import "NewPackageWindowController.h"
 
 @implementation ResourceNewPackageCommand
 
@@ -10,9 +11,22 @@
 {
     NSAssert(_windowForModals != nil, @"windowForModals must no be nil, modal sheet can't be attached.");
 
-    PackageController *packageController = [[PackageController alloc] init];
-    packageController.projectSettings = _projectSettings;
-    [packageController showCreateNewPackageDialogForWindow:_windowForModals];
+    PackageCreator *packageCreator = [[PackageCreator alloc] init];
+    packageCreator.projectSettings = _projectSettings;
+
+    NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
+    packageWindowController.packageCreator = packageCreator;
+
+    // Show new document sheet
+    [NSApp beginSheet:[packageWindowController window]
+       modalForWindow:_windowForModals
+        modalDelegate:NULL
+       didEndSelector:NULL
+          contextInfo:NULL];
+
+    [NSApp runModalForWindow:[packageWindowController window]];
+    [NSApp endSheet:[packageWindowController window]];
+    [[packageWindowController window] close];
 }
 
 

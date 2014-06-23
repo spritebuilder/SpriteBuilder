@@ -1,7 +1,8 @@
 #import "ResourceExportPackageCommand.h"
 
 #import "RMPackage.h"
-#import "PackageController.h"
+#import "PackageExporter.h"
+#import "ProjectSettings.h"
 
 
 @implementation ResourceExportPackageCommand
@@ -30,10 +31,10 @@
 
 - (void)tryToExportPackage:(RMPackage *)package toPath:(NSString *)exportPath
 {
-    PackageController *packageController = [[PackageController alloc] init];
-    NSError *error;
+    PackageExporter *packageExporter = [[PackageExporter alloc] init];
 
-    if (![packageController exportPackage:package toPath:exportPath error:&error])
+    NSError *error;
+    if (![packageExporter exportPackage:package toPath:exportPath error:&error])
     {
         NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
                                          defaultButton:@"OK"

@@ -4,5 +4,5 @@
 
 - (BOOL)hasPackageSuffix;
 
-- (NSString *)pathByAppendingPackageSuffix;
+- (NSString *)stringByAppendingPackageSuffix;
 @end

@@ -22,3 +22,6 @@ NSInteger const SBRemovePackagesError = 2104;
 NSInteger const SBPackageExportInvalidPackageError = 2105;
 NSInteger const SBPackageAlreadyExistsAtPathError = 2106;
 NSInteger const SBRenamePackageGenericError = 2107;
+NSInteger const SBPathWithoutPackageSuffix = 2108;
+NSInteger const SBNoPackagePathsToImport = 2109;
+NSInteger const SBPackageAlreayInProject = 2110;
