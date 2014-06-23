@@ -99,6 +99,7 @@
 		77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 77E1995113858DE0006C361B /* TabNewMetalRollover.png */; };
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
+		7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */; };
 		7B5135C21947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */; };
 		7BCC1C0D194904190062DF38 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC1C0C194904190062DF38 /* StoreKit.framework */; };
 		7BF55303193F8A7500183F09 /* LocalizationTranslateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */; };
@@ -1255,6 +1256,8 @@
 		77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBModalSheetController.m; sourceTree = "<group>"; };
 		77E7D04D138F78F600E8EE67 /* StageSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StageSizeWindow.h; sourceTree = "<group>"; };
 		77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StageSizeWindow.m; sourceTree = "<group>"; };
+		7B3EF5D9195885F20023C169 /* LocalizationTranslateWindowHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindowHandler.h; sourceTree = "<group>"; };
+		7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindowHandler.m; sourceTree = "<group>"; };
 		7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = LocalizationInAppPurchasesPIDs.plist; path = ../ccBuilder/LocalizationInAppPurchasesPIDs.plist; sourceTree = "<group>"; };
 		7BCC1C0C194904190062DF38 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationTranslateWindow.xib; sourceTree = "<group>"; };
@@ -3435,6 +3438,8 @@
 			children = (
 				B7083DF717B1CBC8006628C7 /* LocalizationEditorHandler.h */,
 				B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */,
+				7B3EF5D9195885F20023C169 /* LocalizationTranslateWindowHandler.h */,
+				7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */,
 				7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */,
 				7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */,
 				7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */,
@@ -6195,6 +6200,7 @@
 				B7AC6982179F50850041B8BD /* BFPopoverColorWell.m in Sources */,
 				B7AC6983179F50850041B8BD /* NSColor+BFColorPickerPopover.m in Sources */,
 				B7AC6984179F50850041B8BD /* NSColorPanel+BFColorPickerPopover.m in Sources */,
+				7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */,
 				B7AC6985179F50850041B8BD /* NSColorWell+BFColorPickerPopover.m in Sources */,
 				B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */,
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
@@ -6937,6 +6943,8 @@
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--deep";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				PROVISIONING_PROFILE = "";
@@ -6981,6 +6989,7 @@
 					"\"$(SRCROOT)/libs/PVRTexTool\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = SpriteBuilder;
 				PROVISIONING_PROFILE = "";
