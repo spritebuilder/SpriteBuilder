@@ -56,7 +56,7 @@
 #import "CCBTransparentView.h"
 #import "NotesLayer.h"
 #import "ResolutionSetting.h"
-#import "PublishSettingsWindow.h"
+#import "ProjectSettingsWindowController.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "ResourceManagerOutlineView.h"
@@ -3331,13 +3331,15 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuPublishSettings:(id)sender
 {
-    if (!projectSettings) return;
-    
-    PublishSettingsWindow* wc = [[PublishSettingsWindow alloc] initWithWindowNibName:@"PublishSettingsWindow"];
-    wc.projectSettings = self.projectSettings;
-    
-    int success = [wc runModalSheetForWindow:window];
-    if (success)
+    if (!projectSettings)
+    {
+        return;
+    }
+
+    ProjectSettingsWindowController *settingsWindowController = [[ProjectSettingsWindowController alloc] init];
+    settingsWindowController.projectSettings = self.projectSettings;
+
+    if ([settingsWindowController runModalSheetForWindow:window])
     {
         [self updateEverythingAfterSettingsChanged];
     }

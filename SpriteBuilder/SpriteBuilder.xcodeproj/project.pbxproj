@@ -607,8 +607,8 @@
 		E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37FCAED175D2704009F81D6 /* ui-cogs@2x.png */; };
 		E37FCAF4175D68FF009F81D6 /* ResourceManagerPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */; };
 		E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37FCAF8175FF70F009F81D6 /* CCBImageView.m */; };
-		E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3808DB31641C45B00398456 /* PublishSettingsWindow.xib */; };
-		E3808DB71641CB6400398456 /* PublishSettingsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3808DB61641CB6400398456 /* PublishSettingsWindow.m */; };
+		E3808DB41641C45B00398456 /* ProjectSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3808DB31641C45B00398456 /* ProjectSettingsWindow.xib */; };
+		E3808DB71641CB6400398456 /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3808DB61641CB6400398456 /* ProjectSettingsWindowController.m */; };
 		E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3808DB91641D4B800398456 /* CCBTextFieldLabel.m */; };
 		E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E380B24D1642FC3C0006D31C /* TexturePacker.cpp */; };
 		E380B2531642FC3C0006D31C /* Tupac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E380B2501642FC3C0006D31C /* Tupac.mm */; };
@@ -1985,9 +1985,9 @@
 		E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewView.m; sourceTree = "<group>"; };
 		E37FCAF7175FF70F009F81D6 /* CCBImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBImageView.h; sourceTree = "<group>"; };
 		E37FCAF8175FF70F009F81D6 /* CCBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBImageView.m; sourceTree = "<group>"; };
-		E3808DB31641C45B00398456 /* PublishSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishSettingsWindow.xib; sourceTree = "<group>"; };
-		E3808DB51641CB6300398456 /* PublishSettingsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSettingsWindow.h; sourceTree = "<group>"; };
-		E3808DB61641CB6400398456 /* PublishSettingsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSettingsWindow.m; sourceTree = "<group>"; };
+		E3808DB31641C45B00398456 /* ProjectSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsWindow.xib; sourceTree = "<group>"; };
+		E3808DB51641CB6300398456 /* ProjectSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsWindowController.h; sourceTree = "<group>"; };
+		E3808DB61641CB6400398456 /* ProjectSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindowController.m; sourceTree = "<group>"; };
 		E3808DB81641D4B800398456 /* CCBTextFieldLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTextFieldLabel.h; sourceTree = "<group>"; };
 		E3808DB91641D4B800398456 /* CCBTextFieldLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTextFieldLabel.m; sourceTree = "<group>"; };
 		E380B24C1642FC3C0006D31C /* pvrtc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvrtc.h; path = Tupac/pvrtc.h; sourceTree = "<group>"; };
@@ -2677,9 +2677,9 @@
 				E3EDBC0F1546D23000EEF1F3 /* ResolutionSetting.m */,
 				E3799EAB155979BF00196B4A /* ProjectSettings.h */,
 				E3799EAC155979BF00196B4A /* ProjectSettings.m */,
-				E3808DB31641C45B00398456 /* PublishSettingsWindow.xib */,
-				E3808DB51641CB6300398456 /* PublishSettingsWindow.h */,
-				E3808DB61641CB6400398456 /* PublishSettingsWindow.m */,
+				E3808DB31641C45B00398456 /* ProjectSettingsWindow.xib */,
+				E3808DB51641CB6300398456 /* ProjectSettingsWindowController.h */,
+				E3808DB61641CB6400398456 /* ProjectSettingsWindowController.m */,
 				E34039BC1624BF610067C7B8 /* CCBDocumentController.h */,
 				E34039BD1624BF610067C7B8 /* CCBDocumentController.m */,
 				9249983018B7E1F500DE9ADA /* SceneGraph.h */,
@@ -5886,7 +5886,7 @@
 				E367E32516384F3600247F12 /* orientation-portrait.png in Resources */,
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
 				92F0960E18F8851300D47A94 /* inspector-body-connected@2x.png in Resources */,
-				E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */,
+				E3808DB41641C45B00398456 /* ProjectSettingsWindow.xib in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
 				B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */,
 				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
@@ -6458,7 +6458,7 @@
 				E3C9CCBB161D0BBF008A3784 /* InspectorCodeConnectionsJS.m in Sources */,
 				E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */,
 				581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */,
-				E3808DB71641CB6400398456 /* PublishSettingsWindow.m in Sources */,
+				E3808DB71641CB6400398456 /* ProjectSettingsWindowController.m in Sources */,
 				E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */,
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
