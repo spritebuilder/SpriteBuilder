@@ -34,7 +34,8 @@
 - (IBAction)selectedAddLanguage:(id)sender;
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs;
 - (IBAction)selectedCurrentLanguage:(id)sender;
-
+- (void)addLanguages:(NSArray*)langs;
+//- (void)removeLanguages:(NSArray*)langs;
 - (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs;
 
 - (void) reload;

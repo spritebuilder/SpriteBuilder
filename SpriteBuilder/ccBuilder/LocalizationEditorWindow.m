@@ -205,6 +205,7 @@
  */
 - (IBAction)pressedTranslate:(id)sender {
     _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+    [_ltw setParentWindow:self];
     [[_ltw window] makeKeyAndOrderFront:nil];
 }
 
@@ -227,6 +228,29 @@
         [_ltw reloadLanguageMenu];
     
     [handler setEdited];
+}
+
+/*
+ * TO COMMENT
+ */
+- (void)addLanguages:(NSArray*)langs
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    for(NSString* iso in langs){
+        if([iso isEqualToString:@"zh"])
+        {
+            [handler addActiveLanguage:[handler getLanguageByIsoLangCode:@"zh-Hans"]];
+        }
+        else
+        {
+            [handler addActiveLanguage:[handler getLanguageByIsoLangCode:iso]];
+        }
+    }
+    [tableLanguages reloadData];
+    [self updateLanguageSelectionMenu];
+    [self updateQuickEditLangs];
+    [self updateInspector];
+    //[handler setEdited];
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs

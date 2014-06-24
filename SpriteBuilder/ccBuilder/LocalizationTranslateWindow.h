@@ -22,7 +22,7 @@
     IBOutlet NSButton* _translateFromInfo;
     
     //Window Handler (To deal with mouse events)
-    IBOutlet LocalizationTranslateWindowHandler* _w;
+    IBOutlet LocalizationTranslateWindowHandler* _handler;
     
     //tab views
     IBOutlet NSView* _noActiveLangsView;
@@ -66,6 +66,8 @@
     NSString* _guid;
     NSMutableDictionary* _receipts;
     
+    LocalizationEditorWindow* _parentWindow;
+    
 }
 
 - (IBAction)buy:(id)sender;
@@ -78,4 +80,7 @@
 - (IBAction)retryCost:(id)sender;
 - (void)reloadLanguageMenu;
 - (void)reloadCost;
+
+@property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
+
 @end
