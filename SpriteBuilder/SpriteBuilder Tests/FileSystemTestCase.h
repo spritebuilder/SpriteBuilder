@@ -17,4 +17,5 @@
 
 - (void)assertFileDoesNotExists:(NSString *)filePath;
 
+- (NSString *)fullPathForFile:(NSString *)filePath;
 @end
