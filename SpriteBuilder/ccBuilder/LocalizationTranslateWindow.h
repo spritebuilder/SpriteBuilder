@@ -21,10 +21,15 @@
     NSViewController *_translateInfoVC;
     IBOutlet NSButton* _translateFromInfo;
     
+    //Window Handler (To deal with mouse events)
+    IBOutlet LocalizationTranslateWindowHandler* _w;
+    
     //tab views
     IBOutlet NSView* _noActiveLangsView;
     IBOutlet NSView* _standardLangsView;
     IBOutlet NSView* _downloadingLangsView;
+    IBOutlet NSView* _downloadingLangsErrorView;
+    IBOutlet NSView* _downloadingCostsErrorView;
     IBOutlet NSTabView* _translateFromTabView;
     
     //fields inside tab views
@@ -51,8 +56,6 @@
     NSInteger _numTransToDownload;
     NSTimer* _timerTransDownload;
     
-    IBOutlet LocalizationTranslateWindowHandler* _w;
-    
     //Global variables
     LocalizationEditorLanguage* _currLang;
     NSMutableDictionary* _languages;
@@ -71,6 +74,8 @@
 - (IBAction)selectedTranslateFromMenu:(id)sender;
 - (IBAction)toggleCheckAll:(id)sender;
 - (IBAction)showInfo:(id)sender;
+- (IBAction)retryLanguages:(id)sender;
+- (IBAction)retryCost:(id)sender;
 - (void)reloadLanguageMenu;
 - (void)reloadCost;
 @end

@@ -19,19 +19,30 @@
 static int downloadLangsIndex = 0;
 static int noActiveLangsIndex = 1;
 static int standardLangsIndex = 2;
+static int downloadCostErrorIndex = 3;
+static int downloadLangsErrorIndex = 4;
+static NSString* languageURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1/translations/languages?key=%@";
+static NSString* const estimateURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1/translations/estimate";
+static NSString* const receiptURL = @"http://spritebuilder-rails.herokuapp.com/translations";
+static NSString* translationsURL = @"http://spritebuilder-rails.herokuapp.com/translations?key=%@";
+static NSString* const noActiveLangsString = @"No Active Languages!";
+static NSString* const downloadingLangsString = @"Downloading...";
+static NSString* missingActiveLangsErrorString = @"Additional translatable language(s): %@.\rTo activate, select \"Add Language\" in Language Translation window and add phrases you want to translate.";
+static NSString* noActiveLangsErrorString = @"You haven't added any languages that we can translate! The languages you can translate from are: %@.\rAdd at least one of them in the Language Editor window and fill in the phrases you would like to translate.";
 /*
  * Set up the guid, the languages global dictionary and get the dictionary's contents from the server
  */
 -(void) awakeFromNib
 {
-    //_guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
-    _guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"PayloadUUID"];
+    _guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     _languages = [[NSMutableDictionary alloc] init];
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
     [[_translateFromTabView tabViewItemAtIndex:noActiveLangsIndex] setView:_noActiveLangsView];
     [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
-    [self getLanguagesFromServer];
+    [[_translateFromTabView tabViewItemAtIndex:downloadCostErrorIndex] setView:_downloadingCostsErrorView];
+    [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
     [_w setPopOver:_translatePopOver button:_translateFromInfo];
+    [self getLanguagesFromServer];
 }
 
 /*
@@ -58,7 +69,7 @@ static int standardLangsIndex = 2;
     else
     {
         _currLang = NULL;
-        _popTranslateFrom.title = @"No Active Languages!";
+        _popTranslateFrom.title = noActiveLangsString;
         [self updateNoActiveLangsError];
         [_translateFromTabView selectTabViewItemAtIndex:noActiveLangsIndex];
     }
@@ -185,6 +196,7 @@ static int standardLangsIndex = 2;
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSMutableArray* trans = handler.translations;
     [_phrasesToTranslate removeAllObjects];
+    _phrasesToTranslate = [[NSMutableArray alloc] init];
     NSInteger words = 0;
     for(LocalizationEditorTranslation* t in trans)
     {
@@ -248,7 +260,7 @@ static int standardLangsIndex = 2;
  * the appropriate, localized price.
  * TODO uncomment HTTP request.
  */
--(void) getCost{
+-(void)getCost{
     
     NSInteger words = [self updatePhrasesToTranslate];
     _numWords.stringValue = [NSString stringWithFormat:@"%ld", words];
@@ -257,6 +269,7 @@ static int standardLangsIndex = 2;
         _cost.stringValue = [NSString stringWithFormat:@"%ld", words];
         return;
     }
+    [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
     [_costDownloading setHidden:0];
     [_costDownloadingText setHidden:0];
     [_costDownloading startAnimation:self];
@@ -264,21 +277,30 @@ static int standardLangsIndex = 2;
                                  _guid,@"key",
                                  _phrasesToTranslate,@"phrases",
                                  nil];
+    if(![NSJSONSerialization isValidJSONObject:JSONObject]){
+        NSLog(@"Not a JSON Object!!!");
+    }
      NSError *error;
-     NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
-     NSURL *url = [NSURL URLWithString:@"http://spritebuilder-rails.herokuapp.com/translations/estimate"];
+     NSData *postdata = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
+    if(error){
+        NSLog(@"Error: %@", error);
+    }
+     NSURL *url = [NSURL URLWithString:estimateURL];
      NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
      request.HTTPMethod = @"POST";
-     request.HTTPBody = postdata2;
-     /*NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest: request
+     request.HTTPBody = postdata;
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest: request
                                                                   completionHandler:^(NSData *data,
                                                                                       NSURLResponse *response,
                                                                                       NSError *error)
     {
                     if (!error)
                     {
-                        NSDictionary* dataDict = (NSDictionary *)data;
-                        tierForTranslations  = [[dataDict objectForKey:@"tier"] intValue];
+                        [self parseJSONEstimate:data];
+                        if(_tierForTranslations > 0){
+                            [self requestIAPProducts];
+                        }
                         NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                     }
                     else
@@ -286,11 +308,25 @@ static int standardLangsIndex = 2;
                         NSLog(@"Error: %@", error.localizedDescription);
                     }
      }];
-     [task resume];*/
-    _tierForTranslations = 1;
-    [self requestIAPProducts];
+     [task resume];
+    //_tierForTranslations = 1;
+    //[self requestIAPProducts];
 }
 
+-(void)parseJSONEstimate:(NSData*)data{
+    NSError *JSONerror;
+    NSDictionary* dataDict  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&JSONerror];
+    if(JSONerror || [[[dataDict allKeys] firstObject] isEqualToString:@"Error"])
+    {
+        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"JSONError: %@", JSONerror.localizedDescription] :
+              [NSString stringWithFormat:@"Error: %@", [dataDict objectForKey:@"Error"]]);
+        [_costDownloading stopAnimation:self];
+        [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
+        return;
+    }
+    _tierForTranslations  = [[dataDict objectForKey:@"iap_price_tier"] intValue];
+    _numWords.stringValue = [[dataDict objectForKey:@"wordcount"] stringValue];
+}
 /*
  * Get the IAP PIDs from the correct plist, put those into a Products Request and start that request.
  */
@@ -310,12 +346,12 @@ static int standardLangsIndex = 2;
  * parsed if there wasn't an error.
  */
 -(void)getLanguagesFromServer{
-    _popTranslateFrom.title = @"Downloading...";
+    _popTranslateFrom.title = downloadingLangsString;
     [_popTranslateFrom setEnabled:0];
     [_translateFromTabView selectTabViewItemAtIndex:downloadLangsIndex];
     [_languagesDownloading startAnimation:self];
     NSString* URLstring =
-        [NSString stringWithFormat:@"http://spritebuilder-rails.herokuapp.com/translations/languages?key=%@", _guid];
+        [NSString stringWithFormat:languageURL, _guid];
     NSURL* url = [NSURL URLWithString:URLstring];
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL: url
                                                                  completionHandler:^(NSData *data,
@@ -344,9 +380,12 @@ static int standardLangsIndex = 2;
     NSError *JSONerror;
     NSMutableDictionary* availableLanguagesDict = [NSJSONSerialization JSONObjectWithData:data
                                                     options:NSJSONReadingMutableContainers error:&JSONerror];
-    if(JSONerror)
+    if(JSONerror || [[[availableLanguagesDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        NSLog(@"JSONError: %@", JSONerror.localizedDescription);
+        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"JSONError: %@", JSONerror.localizedDescription] :
+              [NSString stringWithFormat:@"Error: %@", [availableLanguagesDict objectForKey:@"Error"]]);
+        [_languagesDownloading stopAnimation:self];
+        [_translateFromTabView selectTabViewItemAtIndex:downloadLangsErrorIndex];
         return;
     }
     for(NSString* lIso in availableLanguagesDict.allKeys)
@@ -385,7 +424,7 @@ static int standardLangsIndex = 2;
     //[_buy setState:NSOnState];
     SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
-    _cancel.title = @"Finish";
+    _buy.title = @"Finish";
 }
 
 /*
@@ -433,17 +472,22 @@ static int standardLangsIndex = 2;
         [_translatePopOver close];
     }
 }
+
+- (IBAction)retryLanguages:(id)sender {
+    [self getLanguagesFromServer];
+}
+
+- (IBAction)retryCost:(id)sender {
+    [self getCost];
+}
+
+
 /*
  * Once a new language is input to the Language Translate window's main
  * table, this is called to reload the cost in the translate window.
  */
 - (void)reloadCost{
     [self getCost];
-}
-
--(IBAction)unclick:(id)sender{
-    [_translatePopOver close];
-    [_translateFromInfo setIntValue:0];
 }
 
 /*
@@ -479,7 +523,7 @@ static int standardLangsIndex = 2;
             [_translateFromTabView selectTabViewItemAtIndex:noActiveLangsIndex];
             [_translateFromInfo setHidden:1];
             [_popTranslateFrom setEnabled:0];
-            _popTranslateFrom.title = @"No active languages!";
+            _popTranslateFrom.title = noActiveLangsString;
             _currLang = NULL;
             [_languageTable reloadData];
         }else{
@@ -514,7 +558,7 @@ static int standardLangsIndex = 2;
             [s appendString:l.name];
         }
     }
-    NSString* info = [NSString stringWithFormat: @"Additional translatable language(s): %@.\rTo activate, select \"Add Language\" in Language Translation window and add phrases you want to translate.", s];
+    NSString* info = [NSString stringWithFormat: missingActiveLangsErrorString, s];
     
     _translateFromInfoV.string = info;
 }
@@ -533,7 +577,7 @@ static int standardLangsIndex = 2;
         }
         [s appendString:l.name];
     }
-    _noActiveLangsError.stringValue = [NSString stringWithFormat:@"You haven't added any languages that we can translate! The languages you can translate from are: %@.\rAdd at least one of them in the Language Editor window and fill in the phrases you would like to translate.", s];
+    _noActiveLangsError.stringValue = [NSString stringWithFormat:noActiveLangsErrorString, s];
 }
 /*
  * Go through the dictionary of 'translate to' languages for the current language
@@ -698,7 +742,7 @@ static int standardLangsIndex = 2;
                                 nil];
     NSError *error;
     NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
-    NSURL *url = [NSURL URLWithString:@"http://spritebuilder-rails.herokuapp.com/translations/receipt/"];
+    NSURL *url = [NSURL URLWithString:receiptURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postdata2;
@@ -732,7 +776,7 @@ static int standardLangsIndex = 2;
 
 -(void)getTranslations{
     NSString* URLstring =
-    [NSString stringWithFormat:@"http://spritebuilder-rails.herokuapp.com/translations?key=%@", _guid];
+    [NSString stringWithFormat:translationsURL, _guid];
     NSURL* url = [NSURL URLWithString:URLstring];
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL: url
                                                              completionHandler:^(NSData *data,
