@@ -26,6 +26,16 @@
 			<key>dontSetInEditor</key>
 			<true/>
 		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Effects</string>
+			<key>name</key>
+			<string>effects</string>
+			<key>type</key>
+			<string>EffectControl</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
 	</array>
 	<key>editorClassName</key>
 	<string>CCBPEffectNode</string>
@@ -51,6 +61,6 @@
 			<key>displayName</key>
 			<string>Content size</string>
 		</dict>
-	</array>	
+	</array>
 </dict>
 </plist>

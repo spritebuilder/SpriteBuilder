@@ -188,6 +188,10 @@
 		922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */; };
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
+		922EAC3E1958E095006F2D75 /* EffectDescriptionRowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */; };
+		922EAC431958F342006F2D75 /* EffectBrightnessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 922EAC411958F342006F2D75 /* EffectBrightnessControl.m */; };
+		922EAC441958F342006F2D75 /* EffectBrightnessControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922EAC421958F342006F2D75 /* EffectBrightnessControl.xib */; };
+		922EAC471958F41E006F2D75 /* CCBPEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
 		9254805A18D913C500236DED /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
@@ -210,6 +214,13 @@
 		926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		926D13F418B57E1600582959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
 		926D13F518B57E1600582959 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
+		9276C1321959F71C00A1D4DC /* EffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9276C1311959F71C00A1D4DC /* EffectViewController.m */; };
+		928696201958950100402DD8 /* InspectorEffectControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9286961F1958950100402DD8 /* InspectorEffectControl.m */; };
+		928696231958952100402DD8 /* InspectorEffectControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 928696221958952100402DD8 /* InspectorEffectControl.xib */; };
+		9286962A1958A05F00402DD8 /* EffectSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696281958A05F00402DD8 /* EffectSelectViewController.m */; };
+		9286962B1958A05F00402DD8 /* EffectSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 928696291958A05F00402DD8 /* EffectSelectViewController.xib */; };
+		928696341958CC9A00402DD8 /* EffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696331958CC9A00402DD8 /* EffectsManager.m */; };
+		9286963A1958E02000402DD8 /* EffectDescriptionRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696381958E02000402DD8 /* EffectDescriptionRowViewController.m */; };
 		9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
 		9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
 		9294EC9018C65EC10059014C /* CCBPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13D518B57A8100582959 /* CCBPhysicsJoint.m */; };
@@ -1439,6 +1450,12 @@
 		922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorFloatCheck.xib; sourceTree = "<group>"; };
 		922E8EFC18C13666008E1764 /* OutletDrawWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OutletDrawWindow.h; path = ccBuilder/OutletDrawWindow.h; sourceTree = SOURCE_ROOT; };
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
+		922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectDescriptionRowViewController.xib; path = ccBuilder/EffectDescriptionRowViewController.xib; sourceTree = "<group>"; };
+		922EAC401958F342006F2D75 /* EffectBrightnessControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectBrightnessControl.h; sourceTree = "<group>"; };
+		922EAC411958F342006F2D75 /* EffectBrightnessControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EffectBrightnessControl.m; sourceTree = "<group>"; };
+		922EAC421958F342006F2D75 /* EffectBrightnessControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EffectBrightnessControl.xib; sourceTree = "<group>"; };
+		922EAC451958F41E006F2D75 /* CCBPEffectBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectBrightness.h; path = ccBuilder/CCBPEffectBrightness.h; sourceTree = "<group>"; };
+		922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBrightness.m; path = ccBuilder/CCBPEffectBrightness.m; sourceTree = "<group>"; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
@@ -1469,6 +1486,18 @@
 		926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJoint.m; sourceTree = "<group>"; };
 		926D13FD18B57FEA00582959 /* CCPhysicsPinJoint-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CCPhysicsPinJoint-Info.plist"; sourceTree = "<group>"; };
 		926D13FE18B57FEA00582959 /* CCPhysicsPinJoint-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsPinJoint-Prefix.pch"; sourceTree = "<group>"; };
+		9276C1301959F71C00A1D4DC /* EffectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectViewController.h; path = ccBuilder/EffectViewController.h; sourceTree = "<group>"; };
+		9276C1311959F71C00A1D4DC /* EffectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectViewController.m; path = ccBuilder/EffectViewController.m; sourceTree = "<group>"; };
+		9286961E1958950100402DD8 /* InspectorEffectControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEffectControl.h; sourceTree = "<group>"; };
+		9286961F1958950100402DD8 /* InspectorEffectControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEffectControl.m; sourceTree = "<group>"; };
+		928696221958952100402DD8 /* InspectorEffectControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorEffectControl.xib; sourceTree = "<group>"; };
+		928696271958A05F00402DD8 /* EffectSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectSelectViewController.h; path = ccBuilder/EffectSelectViewController.h; sourceTree = "<group>"; };
+		928696281958A05F00402DD8 /* EffectSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectSelectViewController.m; path = ccBuilder/EffectSelectViewController.m; sourceTree = "<group>"; };
+		928696291958A05F00402DD8 /* EffectSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectSelectViewController.xib; path = ccBuilder/EffectSelectViewController.xib; sourceTree = "<group>"; };
+		928696321958CC9A00402DD8 /* EffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsManager.h; path = ccBuilder/EffectsManager.h; sourceTree = "<group>"; };
+		928696331958CC9A00402DD8 /* EffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsManager.m; path = ccBuilder/EffectsManager.m; sourceTree = "<group>"; };
+		928696371958E02000402DD8 /* EffectDescriptionRowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectDescriptionRowViewController.h; path = ccBuilder/EffectDescriptionRowViewController.h; sourceTree = "<group>"; };
+		928696381958E02000402DD8 /* EffectDescriptionRowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectDescriptionRowViewController.m; path = ccBuilder/EffectDescriptionRowViewController.m; sourceTree = "<group>"; };
 		9294EC9118C660480059014C /* CCBPhyicsPivotJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsPivotJointPlaceholder.h; sourceTree = "<group>"; };
 		9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsPivotJointPlaceholder.m; sourceTree = "<group>"; };
 		9294EC9418C6606F0059014C /* CCBPhysicsPinJointPlacefolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPinJointPlacefolder.h; sourceTree = "<group>"; };
@@ -3279,6 +3308,7 @@
 				E335CB071577C55F00A612EE /* Node info */,
 				776041E21498F5A70078095D /* Util */,
 				776041EE1498FC320078095D /* GUI Util */,
+				928696311958CAC100402DD8 /* Effects */,
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
 			);
 			name = SpriteBuilder;
@@ -3642,6 +3672,25 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		922EAC3F1958F2FB006F2D75 /* BrightnessEffect */ = {
+			isa = PBXGroup;
+			children = (
+				922EAC401958F342006F2D75 /* EffectBrightnessControl.h */,
+				922EAC411958F342006F2D75 /* EffectBrightnessControl.m */,
+				922EAC421958F342006F2D75 /* EffectBrightnessControl.xib */,
+				922EAC451958F41E006F2D75 /* CCBPEffectBrightness.h */,
+				922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */,
+			);
+			name = BrightnessEffect;
+			sourceTree = "<group>";
+		};
+		922EAC481958F700006F2D75 /* ContrastEffect */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ContrastEffect;
+			sourceTree = "<group>";
+		};
 		926D13E718B57E1500582959 /* CCPhysicsPinJoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -3665,6 +3714,26 @@
 				926D13F018B57E1600582959 /* icon@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		928696311958CAC100402DD8 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				922EAC481958F700006F2D75 /* ContrastEffect */,
+				922EAC3F1958F2FB006F2D75 /* BrightnessEffect */,
+				928696271958A05F00402DD8 /* EffectSelectViewController.h */,
+				928696281958A05F00402DD8 /* EffectSelectViewController.m */,
+				928696291958A05F00402DD8 /* EffectSelectViewController.xib */,
+				928696321958CC9A00402DD8 /* EffectsManager.h */,
+				928696331958CC9A00402DD8 /* EffectsManager.m */,
+				928696371958E02000402DD8 /* EffectDescriptionRowViewController.h */,
+				928696381958E02000402DD8 /* EffectDescriptionRowViewController.m */,
+				922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */,
+				9276C1301959F71C00A1D4DC /* EffectViewController.h */,
+				9276C1311959F71C00A1D4DC /* EffectViewController.m */,
+			);
+			name = Effects;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		929D1B8C1954D15400B27340 /* CCEffectNode */ = {
@@ -4766,6 +4835,9 @@
 				92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */,
 				92B6D0DC193FE32100FD27F4 /* InspectorPhysicsUnavailable.h */,
 				92B6D0DD193FE32100FD27F4 /* InspectorPhysicsUnavailable.m */,
+				9286961E1958950100402DD8 /* InspectorEffectControl.h */,
+				9286961F1958950100402DD8 /* InspectorEffectControl.m */,
+				928696221958952100402DD8 /* InspectorEffectControl.xib */,
 			);
 			name = "Inspector Properties";
 			sourceTree = "<group>";
@@ -5752,18 +5824,21 @@
 				92F0961718F8855A00D47A94 /* inspector-body-goto.png in Resources */,
 				B759E4B81880B60B00E8166C /* logo-white.png in Resources */,
 				E3B4221D14E58C35004547D6 /* InspectorByte.xib in Resources */,
+				922EAC441958F342006F2D75 /* EffectBrightnessControl.xib in Resources */,
 				E3B4222214E58FEE004547D6 /* InspectorColor3.xib in Resources */,
 				9218DF2F1919B04D0033851E /* joint-pivot-mode-l-on.png in Resources */,
 				9218DF351919B04D0033851E /* joint-pivot-handle-max.png in Resources */,
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
 				B7DE84931937B18B0039FB72 /* signup-bg.png in Resources */,
+				9286962B1958A05F00402DD8 /* EffectSelectViewController.xib in Resources */,
 				9218DF291919B04D0033851E /* joint-pivot-handle-min.png in Resources */,
 				DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */,
 				E3B4223414E5E68B004547D6 /* InspectorSeparator.xib in Resources */,
 				A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */,
 				B71706CE184ECD660081720A /* select-move.png in Resources */,
 				E32D8CC514EC257000F4BD5E /* InspectorCodeConnections.xib in Resources */,
+				928696231958952100402DD8 /* InspectorEffectControl.xib in Resources */,
 				E35DBBBF14F29E9D0070A6E4 /* InspectorFntFile.xib in Resources */,
 				E35DBBC414F2A2900070A6E4 /* InspectorText.xib in Resources */,
 				9218DF2C1919B04D0033851E /* joint-pivot-handle-ref.png in Resources */,
@@ -5816,6 +5891,7 @@
 				E370BA0C1549B2460048ED73 /* scale-0.png in Resources */,
 				E370BA0D1549B2460048ED73 /* scale-1.png in Resources */,
 				E334069715517225000FBD0B /* InspectorFloatScale.xib in Resources */,
+				922EAC3E1958E095006F2D75 /* EffectDescriptionRowViewController.xib in Resources */,
 				E3DCFD9C15629FC700BD7D7F /* TaskStatusWindow.xib in Resources */,
 				9218DF401919B04D0033851E /* joint-pivot-handle-max@2x.png in Resources */,
 				E335CAEB15751C0D00A612EE /* seq-ctrl-bg.png in Resources */,
@@ -6360,6 +6436,7 @@
 				772BE572133E48350009B5B9 /* CCBGlobals.m in Sources */,
 				772BE5801343A6EF0009B5B9 /* CCBWriterInternal.m in Sources */,
 				772BE58E134BB6C00009B5B9 /* CCBDocument.m in Sources */,
+				922EAC431958F342006F2D75 /* EffectBrightnessControl.m in Sources */,
 				772BE594134BC2BF0009B5B9 /* CCBReaderInternalV1.m in Sources */,
 				771B2B321353818200B260BA /* NewDocWindowController.m in Sources */,
 				77156DB1137F0351005EF746 /* CCBSpriteSheetParser.m in Sources */,
@@ -6369,6 +6446,7 @@
 				77E1992213858D78006C361B /* PSMMetalTabStyle.m in Sources */,
 				77E1992313858D78006C361B /* PSMOverflowPopUpButton.m in Sources */,
 				77E1992413858D78006C361B /* PSMProgressIndicator.m in Sources */,
+				928696201958950100402DD8 /* InspectorEffectControl.m in Sources */,
 				77E1992513858D78006C361B /* PSMRolloverButton.m in Sources */,
 				77E1992613858D78006C361B /* PSMTabBarCell.m in Sources */,
 				77E1992713858D78006C361B /* PSMTabBarControl.m in Sources */,
@@ -6488,6 +6566,7 @@
 				E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */,
 				E35A136215B038D700C9AA15 /* ThoMoTCPConnection.m in Sources */,
 				E33C2AAC15C987EB0043EF9B /* ResourceManagerOutlineView.m in Sources */,
+				9286962A1958A05F00402DD8 /* EffectSelectViewController.m in Sources */,
 				E33C2AAF15C9A0D40043EF9B /* SequencerUtil.m in Sources */,
 				926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */,
 				E33C2AB815CAE3980043EF9B /* SequencerStretchWindow.m in Sources */,
@@ -6511,6 +6590,7 @@
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
 				8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */,
 				E35D78D516826C0100A53BEF /* SpriteSheetSettingsWindow.m in Sources */,
+				922EAC471958F41E006F2D75 /* CCBPEffectBrightness.m in Sources */,
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
 				D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */,
@@ -6521,6 +6601,7 @@
 				E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */,
 				E312973816CC67CB00A09155 /* SequencerPopoverSound.m in Sources */,
 				E3B5EE8916D6E0AA00C07990 /* InspectorFloatXY.m in Sources */,
+				928696341958CC9A00402DD8 /* EffectsManager.m in Sources */,
 				E390C77E170A2C9B003E9E92 /* AboutWindow.m in Sources */,
 				E334A4E4170CFDE3001604F7 /* CCBTextField.m in Sources */,
 				B7C3533E17FA30BB005697C1 /* NodePhysicsBody.m in Sources */,
@@ -6553,6 +6634,7 @@
 				B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */,
 				B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */,
 				B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */,
+				9276C1321959F71C00A1D4DC /* EffectViewController.m in Sources */,
 				B7083DF917B1CBC8006628C7 /* LocalizationEditorHandler.m in Sources */,
 				B7083DFE17B2CDA0006628C7 /* LocalizationEditorLanguage.m in Sources */,
 				B7083E0117B2F992006628C7 /* LocalizationEditorTranslation.m in Sources */,
@@ -6587,6 +6669,7 @@
 				E525F90784006C34BD20E775 /* RMPackage.m in Sources */,
 				E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */,
 				E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */,
+				9286963A1958E02000402DD8 /* EffectDescriptionRowViewController.m in Sources */,
 				E525F710D92CDE366BCEE575 /* ResourceContextMenu.m in Sources */,
 				E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */,
 				E525FF15523F47E23FC1A6AB /* ResourceNewFileCommand.m in Sources */,
