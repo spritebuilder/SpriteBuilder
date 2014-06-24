@@ -10,6 +10,5 @@
 #import "EffectsManager.h"
 
 @interface CCBPEffectBrightness : CCEffectBrightness <EffectProtocol>
-@property (nonatomic,readonly) EffectDescription * effectDescription;
 
 @end

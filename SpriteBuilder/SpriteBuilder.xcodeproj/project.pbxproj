@@ -196,6 +196,20 @@
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
 		9254805A18D913C500236DED /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */; };
+		9266EE14195A1578006CBE81 /* CCBPEffectContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE13195A1578006CBE81 /* CCBPEffectContrast.m */; };
+		9266EE23195A15EE006CBE81 /* EffectContrastControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE21195A15EE006CBE81 /* EffectContrastControl.m */; };
+		9266EE24195A15EE006CBE81 /* EffectContrastControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE22195A15EE006CBE81 /* EffectContrastControl.xib */; };
+		9266EE29195A1603006CBE81 /* effect-glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE25195A1603006CBE81 /* effect-glow.png */; };
+		9266EE2B195A1603006CBE81 /* effect-contrast.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE27195A1603006CBE81 /* effect-contrast.png */; };
+		9266EE2C195A1603006CBE81 /* effect-brightness.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE28195A1603006CBE81 /* effect-brightness.png */; };
+		9266EE2E195A1695006CBE81 /* effect-pixelate.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE2D195A1695006CBE81 /* effect-pixelate.png */; };
+		9266EE30195A171B006CBE81 /* effect-saturation.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE2F195A171B006CBE81 /* effect-saturation.png */; };
+		9266EE34195A1786006CBE81 /* CCBPEffectSaturation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE33195A1786006CBE81 /* CCBPEffectSaturation.m */; };
+		9266EE38195A17A4006CBE81 /* EffectSaturationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */; };
+		9266EE39195A17A4006CBE81 /* EffectSaturationControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */; };
+		9266EE3D195A17D4006CBE81 /* CCBPEffectPixelate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE3C195A17D4006CBE81 /* CCBPEffectPixelate.m */; };
+		9266EE41195A17EE006CBE81 /* EffectPixelateControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */; };
+		9266EE42195A17EE006CBE81 /* EffectPixelateControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */; };
 		926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D139418B2DC2E00582959 /* NSDictionary+Query.m */; };
 		926D13C018B5778300582959 /* joint-distance-handle-long.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B418B5778300582959 /* joint-distance-handle-long.png */; };
 		926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B518B5778300582959 /* joint-distance-handle-long@2x.png */; };
@@ -1459,6 +1473,26 @@
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
+		9266EE12195A1578006CBE81 /* CCBPEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectContrast.h; path = ccBuilder/CCBPEffectContrast.h; sourceTree = "<group>"; };
+		9266EE13195A1578006CBE81 /* CCBPEffectContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectContrast.m; path = ccBuilder/CCBPEffectContrast.m; sourceTree = "<group>"; };
+		9266EE20195A15EE006CBE81 /* EffectContrastControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectContrastControl.h; path = ccBuilder/EffectContrastControl.h; sourceTree = "<group>"; };
+		9266EE21195A15EE006CBE81 /* EffectContrastControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectContrastControl.m; path = ccBuilder/EffectContrastControl.m; sourceTree = "<group>"; };
+		9266EE22195A15EE006CBE81 /* EffectContrastControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectContrastControl.xib; path = ccBuilder/EffectContrastControl.xib; sourceTree = "<group>"; };
+		9266EE25195A1603006CBE81 /* effect-glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-glow.png"; path = "Resources/effect-glow.png"; sourceTree = "<group>"; };
+		9266EE27195A1603006CBE81 /* effect-contrast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-contrast.png"; path = "Resources/effect-contrast.png"; sourceTree = "<group>"; };
+		9266EE28195A1603006CBE81 /* effect-brightness.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-brightness.png"; path = "Resources/effect-brightness.png"; sourceTree = "<group>"; };
+		9266EE2D195A1695006CBE81 /* effect-pixelate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-pixelate.png"; path = "Resources/effect-pixelate.png"; sourceTree = "<group>"; };
+		9266EE2F195A171B006CBE81 /* effect-saturation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-saturation.png"; path = "Resources/effect-saturation.png"; sourceTree = "<group>"; };
+		9266EE32195A1786006CBE81 /* CCBPEffectSaturation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectSaturation.h; path = ccBuilder/CCBPEffectSaturation.h; sourceTree = "<group>"; };
+		9266EE33195A1786006CBE81 /* CCBPEffectSaturation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectSaturation.m; path = ccBuilder/CCBPEffectSaturation.m; sourceTree = "<group>"; };
+		9266EE35195A17A4006CBE81 /* EffectSaturationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectSaturationControl.h; path = ccBuilder/EffectSaturationControl.h; sourceTree = "<group>"; };
+		9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectSaturationControl.m; path = ccBuilder/EffectSaturationControl.m; sourceTree = "<group>"; };
+		9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectSaturationControl.xib; path = ccBuilder/EffectSaturationControl.xib; sourceTree = "<group>"; };
+		9266EE3B195A17D4006CBE81 /* CCBPEffectPixelate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPEffectPixelate.h; sourceTree = "<group>"; };
+		9266EE3C195A17D4006CBE81 /* CCBPEffectPixelate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPEffectPixelate.m; sourceTree = "<group>"; };
+		9266EE3E195A17EE006CBE81 /* EffectPixelateControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectPixelateControl.h; path = ccBuilder/EffectPixelateControl.h; sourceTree = "<group>"; };
+		9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectPixelateControl.m; path = ccBuilder/EffectPixelateControl.m; sourceTree = "<group>"; };
+		9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectPixelateControl.xib; path = ccBuilder/EffectPixelateControl.xib; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
 		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
 		926D13B418B5778300582959 /* joint-distance-handle-long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-distance-handle-long.png"; sourceTree = "<group>"; };
@@ -3675,6 +3709,7 @@
 		922EAC3F1958F2FB006F2D75 /* BrightnessEffect */ = {
 			isa = PBXGroup;
 			children = (
+				9266EE28195A1603006CBE81 /* effect-brightness.png */,
 				922EAC401958F342006F2D75 /* EffectBrightnessControl.h */,
 				922EAC411958F342006F2D75 /* EffectBrightnessControl.m */,
 				922EAC421958F342006F2D75 /* EffectBrightnessControl.xib */,
@@ -3687,8 +3722,40 @@
 		922EAC481958F700006F2D75 /* ContrastEffect */ = {
 			isa = PBXGroup;
 			children = (
+				9266EE27195A1603006CBE81 /* effect-contrast.png */,
+				9266EE12195A1578006CBE81 /* CCBPEffectContrast.h */,
+				9266EE13195A1578006CBE81 /* CCBPEffectContrast.m */,
+				9266EE20195A15EE006CBE81 /* EffectContrastControl.h */,
+				9266EE21195A15EE006CBE81 /* EffectContrastControl.m */,
+				9266EE22195A15EE006CBE81 /* EffectContrastControl.xib */,
 			);
 			name = ContrastEffect;
+			sourceTree = "<group>";
+		};
+		9266EE31195A176A006CBE81 /* Saturation */ = {
+			isa = PBXGroup;
+			children = (
+				9266EE2F195A171B006CBE81 /* effect-saturation.png */,
+				9266EE32195A1786006CBE81 /* CCBPEffectSaturation.h */,
+				9266EE33195A1786006CBE81 /* CCBPEffectSaturation.m */,
+				9266EE35195A17A4006CBE81 /* EffectSaturationControl.h */,
+				9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */,
+				9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */,
+			);
+			name = Saturation;
+			sourceTree = "<group>";
+		};
+		9266EE3A195A17AE006CBE81 /* Pixelate */ = {
+			isa = PBXGroup;
+			children = (
+				9266EE2D195A1695006CBE81 /* effect-pixelate.png */,
+				9266EE3B195A17D4006CBE81 /* CCBPEffectPixelate.h */,
+				9266EE3C195A17D4006CBE81 /* CCBPEffectPixelate.m */,
+				9266EE3E195A17EE006CBE81 /* EffectPixelateControl.h */,
+				9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */,
+				9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */,
+			);
+			name = Pixelate;
 			sourceTree = "<group>";
 		};
 		926D13E718B57E1500582959 /* CCPhysicsPinJoint */ = {
@@ -3719,8 +3786,11 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				9266EE3A195A17AE006CBE81 /* Pixelate */,
+				9266EE31195A176A006CBE81 /* Saturation */,
 				922EAC481958F700006F2D75 /* ContrastEffect */,
 				922EAC3F1958F2FB006F2D75 /* BrightnessEffect */,
+				9266EE25195A1603006CBE81 /* effect-glow.png */,
 				928696271958A05F00402DD8 /* EffectSelectViewController.h */,
 				928696281958A05F00402DD8 /* EffectSelectViewController.m */,
 				928696291958A05F00402DD8 /* EffectSelectViewController.xib */,
@@ -5789,6 +5859,7 @@
 				D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */,
 				B71706D1184ECD660081720A /* select-scale@2x.png in Resources */,
 				776C68921388107400153214 /* missing-font.png in Resources */,
+				9266EE2E195A1695006CBE81 /* effect-pixelate.png in Resources */,
 				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
 				776C6896138874C200153214 /* dsa_pub.pem in Resources */,
 				77D33EAD138EFBD800012A88 /* StageSizeWindow.xib in Resources */,
@@ -5799,6 +5870,8 @@
 				9218DF3A1919B04D0033851E /* joint-pivot-mode-l-off@2x.png in Resources */,
 				92F0960718F8851300D47A94 /* inspector-body-remove-dis.png in Resources */,
 				776A370D139544A200960E94 /* TB_select.png in Resources */,
+				9266EE39195A17A4006CBE81 /* EffectSaturationControl.xib in Resources */,
+				9266EE2B195A1603006CBE81 /* effect-contrast.png in Resources */,
 				B7096E27180CD98E00164A8A /* doc-layer@2x.png in Resources */,
 				776A370E139544A200960E94 /* TB_zoomIn.png in Resources */,
 				776A370F139544A200960E94 /* TB_zoomOut.png in Resources */,
@@ -5867,6 +5940,7 @@
 				E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */,
 				E34E5D6B153585EC000201FB /* ruler-bg-vertical.png in Resources */,
 				B7096E2B180CD98E00164A8A /* doc-scene.png in Resources */,
+				9266EE24195A15EE006CBE81 /* EffectContrastControl.xib in Resources */,
 				E34E5D6E1535AA78000201FB /* ruler-mark-major.png in Resources */,
 				E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */,
 				E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */,
@@ -5990,12 +6064,14 @@
 				92D9D48418F8AB3800F167C1 /* joint-connection-bg.png in Resources */,
 				E367E32316384F0C00247F12 /* orientation-upsidedown.png in Resources */,
 				E367E32516384F3600247F12 /* orientation-portrait.png in Resources */,
+				9266EE30195A171B006CBE81 /* effect-saturation.png in Resources */,
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
 				92F0960E18F8851300D47A94 /* inspector-body-connected@2x.png in Resources */,
 				E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
 				B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */,
 				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
+				9266EE42195A17EE006CBE81 /* EffectPixelateControl.xib in Resources */,
 				E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */,
 				E3DEF5B7169B359C00B9DCF4 /* lame in Resources */,
 				E3DEF5B9169B35DF00B9DCF4 /* lame-COPYING in Resources */,
@@ -6051,6 +6127,7 @@
 				B732A1851799736500333C56 /* TB_build@2x.png in Resources */,
 				B7AC6969179E03BF0041B8BD /* select-corner.png in Resources */,
 				B7AC6981179F50850041B8BD /* BFColorPickerPopover_LICENSE.txt in Resources */,
+				9266EE2C195A1603006CBE81 /* effect-brightness.png in Resources */,
 				B7AC69A517A07DAD0041B8BD /* inspector-folder.png in Resources */,
 				B7AC69A617A07DAD0041B8BD /* inspector-objects.png in Resources */,
 				9218DF381919B04D0033851E /* joint-pivot-mode-s-on@2x.png in Resources */,
@@ -6071,6 +6148,7 @@
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
 				92F0960B18F8851300D47A94 /* inspector-body-remove-hi@2x.png in Resources */,
 				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
+				9266EE29195A1603006CBE81 /* effect-glow.png in Resources */,
 				926D13C318B5778300582959 /* joint-distance-handle-short@2x.png in Resources */,
 				B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */,
 				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
@@ -6475,6 +6553,7 @@
 				E3FEA8B414E4874C00119FBE /* InspectorPointLock.m in Sources */,
 				B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */,
 				E3FEA8B914E492DA00119FBE /* InspectorScaleLock.m in Sources */,
+				9266EE23195A15EE006CBE81 /* EffectContrastControl.m in Sources */,
 				E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */,
 				E3B4221114E49DEB004547D6 /* InspectorInteger.m in Sources */,
 				92F0961D18F891A900D47A94 /* InspectorEnabledFloat.m in Sources */,
@@ -6483,6 +6562,7 @@
 				E3B4222014E58C75004547D6 /* InspectorByte.m in Sources */,
 				E3B4222514E59035004547D6 /* InspectorColor3.m in Sources */,
 				E3B4222A14E59F5D004547D6 /* InspectorFlip.m in Sources */,
+				9266EE3D195A17D4006CBE81 /* CCBPEffectPixelate.m in Sources */,
 				5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */,
 				E3B4222F14E5A849004547D6 /* InspectorBlendmode.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
@@ -6546,6 +6626,7 @@
 				E335CB031577838800A612EE /* SequencerOutlineView.m in Sources */,
 				922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */,
 				E335CB061577995F00A612EE /* CCBSplitView.m in Sources */,
+				9266EE14195A1578006CBE81 /* CCBPEffectContrast.m in Sources */,
 				E335CB0A1577C5FB00A612EE /* CCNode+NodeInfo.m in Sources */,
 				E335CB0F1578C2C600A612EE /* SequencerStructureCell.m in Sources */,
 				E3E8B4871578F8F800373983 /* SequencerTimelineView.m in Sources */,
@@ -6598,6 +6679,7 @@
 				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
 				E3D6BA2616C46E91006AFE0A /* SequencerChannel.m in Sources */,
 				E3DA6FEE16CAEC7800B12FFB /* SequencerPopoverHandler.m in Sources */,
+				9266EE41195A17EE006CBE81 /* EffectPixelateControl.m in Sources */,
 				E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */,
 				E312973816CC67CB00A09155 /* SequencerPopoverSound.m in Sources */,
 				E3B5EE8916D6E0AA00C07990 /* InspectorFloatXY.m in Sources */,
@@ -6621,6 +6703,7 @@
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
 				B7AC6988179F50850041B8BD /* BFIconTabBar.m in Sources */,
 				B7AC699C17A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m in Sources */,
+				9266EE38195A17A4006CBE81 /* EffectSaturationControl.m in Sources */,
 				B7AC699D17A079C80041B8BD /* SMBar.m in Sources */,
 				B7AC699E17A079C80041B8BD /* SMTabBar.m in Sources */,
 				B7AC699F17A079C80041B8BD /* SMTabBarButtonCell.m in Sources */,
@@ -6638,6 +6721,7 @@
 				B7083DF917B1CBC8006628C7 /* LocalizationEditorHandler.m in Sources */,
 				B7083DFE17B2CDA0006628C7 /* LocalizationEditorLanguage.m in Sources */,
 				B7083E0117B2F992006628C7 /* LocalizationEditorTranslation.m in Sources */,
+				9266EE34195A1786006CBE81 /* CCBPEffectSaturation.m in Sources */,
 				B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */,
 				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,

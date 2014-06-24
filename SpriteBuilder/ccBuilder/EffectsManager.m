@@ -8,12 +8,15 @@
 
 #import "EffectsManager.h"
 #import "CCBPEffectBrightness.h"
-#import "CCEffectContrast.h"
-#import "CCEffectGlow.h"
-#import "CCEffectPixellate.h"
-#import "CCEffectSaturation.h"
+#import "CCBPEffectContrast.h"
+//#import "CCBPEffectGlow.h"
+#import "CCBPEffectPixelate.h"
+#import "CCBPEffectSaturation.h"
 #import "NSArray+Query.h"
 #import "EffectBrightnessControl.h"
+#import "EffectContrastControl.h"
+#import "EffectPixelateControl.h"
+#import "EffectSaturationControl.h"
 
 @implementation EffectDescription
 
@@ -40,7 +43,7 @@
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Brightness";
 		effectDescription.description = @"Makes things bright";
-		effectDescription.imageName = @"notes-bg.png";
+		effectDescription.imageName = @"effect-brightness.png";
 		effectDescription.className = NSStringFromClass([CCBPEffectBrightness class]);
 		effectDescription.viewController = NSStringFromClass([EffectBrightnessControl class]);
 		
@@ -51,8 +54,9 @@
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Contrast";
 		effectDescription.description = @"Makes things contrast";
-		effectDescription.imageName = @"";
-		effectDescription.className = NSStringFromClass([CCEffectContrast class]);
+		effectDescription.imageName = @"effect-contrast.png";
+		effectDescription.className = NSStringFromClass([CCBPEffectContrast class]);
+		effectDescription.viewController = NSStringFromClass([EffectContrastControl class]);
 		
 		
 		
@@ -62,10 +66,11 @@
 	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Pixellate";
-		effectDescription.description = @"Makes things pixellate";
-		effectDescription.imageName = @"";
-		effectDescription.className = NSStringFromClass([CCEffectPixellate class]);
-				
+		effectDescription.description = @"Makes things pixelate";
+		effectDescription.imageName = @"effect-pixelate.png";
+		effectDescription.className = NSStringFromClass([CCBPEffectPixelate class]);
+		effectDescription.viewController = NSStringFromClass([EffectPixelateControl class]);
+		
 		[effectDescriptions addObject:effectDescription];
 	}
 	
@@ -73,10 +78,9 @@
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Saturation";
 		effectDescription.description = @"Makes things saturate";
-		effectDescription.imageName = @"";
-		effectDescription.className = NSStringFromClass([CCEffectSaturation class]);
-		
-
+		effectDescription.imageName = @"effect-saturation.png";
+		effectDescription.className = NSStringFromClass([CCBPEffectSaturation class]);
+		effectDescription.viewController = NSStringFromClass([EffectSaturationControl class]);
 		
 		[effectDescriptions addObject:effectDescription];
 	}

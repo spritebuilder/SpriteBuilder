@@ -50,7 +50,7 @@
 	
 	NSView * returnView = effectRowView.view;
 	
-	effectRowView.imageView.image = [NSImage imageNamed:@"notes-bg.png"];
+	effectRowView.imageView.image = [NSImage imageNamed:effectDescription.imageName];
 	effectRowView.descriptionLabel.stringValue = effectDescription.description;
 	effectRowView.titleLabel.stringValue = effectDescription.title;
 	

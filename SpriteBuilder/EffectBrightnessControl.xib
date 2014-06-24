@@ -41,24 +41,24 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSTextField" id="551027735">
+					<object class="NSTextField" id="730142473">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{134, 15}, {50, 22}}</string>
+						<string key="NSFrame">{{121, 9}, {50, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="21533844">
+						<object class="NSTextFieldCell" key="NSCell" id="885893840">
 							<int key="NSCellFlags">-1804599231</int>
 							<int key="NSCellFlags2">272630784</int>
-							<object class="NSFont" key="NSSupport" id="278480393">
-								<string key="NSName">.LucidaGrandeUI</string>
-								<double key="NSSize">13</double>
-								<int key="NSfFlags">1044</int>
+							<object class="NSFont" key="NSSupport" id="669380753">
+								<string key="NSName">LucidaGrande</string>
+								<double key="NSSize">11</double>
+								<int key="NSfFlags">16</int>
 							</object>
-							<object class="NSNumberFormatter" key="NSFormatter" id="759551586">
+							<object class="NSNumberFormatter" key="NSFormatter" id="411781994">
 								<dictionary class="NSMutableDictionary" key="NS.attributes">
 									<boolean value="YES" key="allowsFloats"/>
 									<integer value="1040" key="formatterBehavior"/>
@@ -82,7 +82,7 @@
 									<string key="NSString">NaN</string>
 									<dictionary key="NSAttributes"/>
 								</object>
-								<object class="NSDecimalNumberPlaceholder" key="NS.min" id="144480434">
+								<object class="NSDecimalNumberPlaceholder" key="NS.min" id="664208890">
 									<int key="NS.exponent">0</int>
 									<int key="NS.length">0</int>
 									<bool key="NS.negative">YES</bool>
@@ -90,7 +90,7 @@
 									<int key="NS.mantissa.bo">1</int>
 									<bytes key="NS.mantissa">AAAAAAAAAAAAAAAAAAAAAA</bytes>
 								</object>
-								<reference key="NS.max" ref="144480434"/>
+								<reference key="NS.max" ref="664208890"/>
 								<object class="NSDecimalNumberHandler" key="NS.rounding">
 									<int key="NS.roundingmode">3</int>
 									<bool key="NS.raise.overflow">YES</bool>
@@ -104,7 +104,7 @@
 								<bool key="NS.allowsfloats">YES</bool>
 							</object>
 							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="551027735"/>
+							<reference key="NSControlView" ref="730142473"/>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">6</int>
@@ -131,10 +131,10 @@
 					<object class="NSTextField" id="580728377">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{54, 20}, {152, 17}}</string>
+						<string key="NSFrame">{{37, 10}, {152, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="551027735"/>
+						<reference key="NSNextKeyView" ref="730142473"/>
 						<string key="NSReuseIdentifierKey">_NS:397</string>
 						<string key="NSHuggingPriority">{251, 750}</string>
 						<bool key="NSEnabled">YES</bool>
@@ -142,7 +142,7 @@
 							<int key="NSCellFlags">68157504</int>
 							<int key="NSCellFlags2">272630784</int>
 							<string key="NSContents">Brightness</string>
-							<reference key="NSSupport" ref="278480393"/>
+							<reference key="NSSupport" ref="669380753"/>
 							<string key="NSCellIdentifier">_NS:397</string>
 							<reference key="NSControlView" ref="580728377"/>
 							<object class="NSColor" key="NSBackgroundColor">
@@ -175,7 +175,7 @@
 							<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 							<string>NeXT TIFF v4.0 pasteboard type</string>
 						</set>
-						<string key="NSFrame">{{3, 2}, {48, 48}}</string>
+						<string key="NSFrame">{{6, 2}, {32, 32}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="580728377"/>
@@ -185,6 +185,10 @@
 						<object class="NSImageCell" key="NSCell" id="662436687">
 							<int key="NSCellFlags">134217728</int>
 							<int key="NSCellFlags2">33554432</int>
+							<object class="NSCustomResource" key="NSContents">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">effect-brightness</string>
+							</object>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<int key="NSAlign">0</int>
 							<int key="NSScale">0</int>
@@ -195,7 +199,7 @@
 						<bool key="NSEditable">YES</bool>
 					</object>
 				</array>
-				<string key="NSFrameSize">{250, 52}</string>
+				<string key="NSFrameSize">{250, 36}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="238309328"/>
@@ -218,10 +222,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: self.effect.brightness</string>
-						<reference key="source" ref="551027735"/>
+						<reference key="source" ref="730142473"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="551027735"/>
+							<reference key="NSSource" ref="730142473"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">value: self.effect.brightness</string>
 							<string key="NSBinding">value</string>
@@ -264,7 +268,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="238309328"/>
 							<reference ref="580728377"/>
-							<reference ref="551027735"/>
+							<reference ref="730142473"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -301,24 +305,24 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">53</int>
-						<reference key="object" ref="551027735"/>
+						<reference key="object" ref="730142473"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="21533844"/>
+							<reference ref="885893840"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">54</int>
-						<reference key="object" ref="21533844"/>
+						<reference key="object" ref="885893840"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="759551586"/>
+							<reference ref="411781994"/>
 						</array>
-						<reference key="parent" ref="551027735"/>
+						<reference key="parent" ref="730142473"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">55</int>
-						<reference key="object" ref="759551586"/>
-						<reference key="parent" ref="21533844"/>
+						<reference key="object" ref="411781994"/>
+						<reference key="parent" ref="885893840"/>
 					</object>
 				</array>
 			</object>
@@ -342,7 +346,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">62</int>
+			<int key="maxID">64</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -377,5 +381,9 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">effect-brightness</string>
+			<string key="NS.object.0">{128, 128}</string>
+		</object>
 	</data>
 </archive>

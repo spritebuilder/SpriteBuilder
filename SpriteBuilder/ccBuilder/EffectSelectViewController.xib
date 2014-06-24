@@ -132,8 +132,8 @@
 													<bytes key="NSWhite">MC41AA</bytes>
 												</object>
 											</object>
-											<double key="NSRowHeight">69</double>
-											<int key="NSTvFlags">-700448768</int>
+											<double key="NSRowHeight">56</double>
+											<int key="NSTvFlags">-692060160</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<int key="NSColumnAutoresizingStyle">4</int>
@@ -198,7 +198,7 @@
 							<reference key="NSVScroller" ref="658987352"/>
 							<reference key="NSHScroller" ref="879860771"/>
 							<reference key="NSContentView" ref="41053128"/>
-							<bytes key="NSScrollAmts">QSAAAEEgAABCjgAAQo4AAA</bytes>
+							<bytes key="NSScrollAmts">QSAAAEEgAABCaAAAQmgAAA</bytes>
 							<double key="NSMinMagnification">0.25</double>
 							<double key="NSMaxMagnification">4</double>
 							<double key="NSMagnification">1</double>

@@ -12,7 +12,7 @@
 
 +(CCEffect*)defaultConstruct
 {
-	return [self effectWithBrightness:3.0f];
+	return [self effectWithBrightness:0.4f];
 }
 
 -(id)serialize

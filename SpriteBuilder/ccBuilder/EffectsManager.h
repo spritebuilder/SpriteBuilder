@@ -12,11 +12,14 @@
 @class EffectDescription;
 
 @protocol EffectProtocol <NSObject>
-
+@required
 @property (nonatomic,readonly) EffectDescription * effectDescription;
++(CCEffect*)defaultConstruct;
+
+@optional
 -(id)serialize;
 -(void)deserialize:(NSDictionary*)dict;
-+(CCEffect*)defaultConstruct;
+
 @end
 
 
