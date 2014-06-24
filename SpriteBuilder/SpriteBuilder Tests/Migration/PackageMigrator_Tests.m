@@ -57,14 +57,43 @@
 
     NSError *error;
     XCTAssertTrue([packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertNil(error);
 
     [self assertFileExists:@"packages"];
     [self assertFileDoesNotExists:@"SpriteBuilder Resources"];
     [self assertFileExists:[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix]];
+    [self assertFileExists:[[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
     [self assertResourcePaths:@[[projectSettings fullPathForPackageName:@"SpriteBuilder Resources"]]
             inProjectSettings:projectSettings];
     [self assertResourcePaths:@[[self fullPathForFile:@"SpriteBuilder Resources"]]
             notInProjectSettings:projectSettings];
+}
+
+- (void)testMigrationWithExistingPackagesFolderAsResourcePath
+{
+    [self createFolders:@[@"packages"]];
+
+    [self createEmptyFiles:@[
+            @"packages/asset.png",
+            @"packages/scene.ccb"]];
+
+    [self createProjectSettingsFileWithName:@"migrationtest"];
+    [self assertFileExists:@"migrationtest.ccbproj"];
+
+    ProjectSettings *projectSettings = [self createProjectSettingsWithResourcePaths:@[@"packages"]];
+
+    PackageMigrator *packageMigrator = [[PackageMigrator alloc] initWithProjectSettings:projectSettings];
+
+    NSError *error;
+    XCTAssertTrue([packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertNil(error);
+
+    [self assertFileExists:@"packages"];
+    [self assertFileExists:[@"packages/packages" stringByAppendingPackageSuffix]];
+    [self assertFileExists:[[@"packages/packages" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
+
+    [self assertResourcePaths:@[[projectSettings fullPathForPackageName:@"packages"]] inProjectSettings:projectSettings];
+    [self assertResourcePaths:@[[self fullPathForFile:@"packages"]] notInProjectSettings:projectSettings];
 }
 
 

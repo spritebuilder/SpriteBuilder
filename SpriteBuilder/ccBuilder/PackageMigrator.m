@@ -1,9 +1,14 @@
+#import <MacTypes.h>
 #import "PackageMigrator.h"
 
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "NSString+Packages.h"
 #import "PackageImporter.h"
+#import "MiscConstants.h"
+#import "PackageRenamer.h"
+#import "ResourceManager.h"
+#import "RMPackage.h"
 
 #define LocalLogDebug( s, ... ) NSLog( @"[DEBUG] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #define LocalLogError( s, ... ) NSLog( @"[ERROR] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
@@ -12,7 +17,9 @@
 
 @property (nonatomic, strong) NSMutableDictionary *renameMap;
 @property (nonatomic, weak)ProjectSettings *projectSettings;
+
 @property (nonatomic) BOOL resourcePathWithPackagesFolderNameFound;
+@property (nonatomic, copy) NSString *packageAsResourcePathTempName;
 
 @end
 
@@ -23,6 +30,7 @@
 {
     NSLog(@"Create instances of %@ with designated initializer.", [self class]);
     [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 - (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings
@@ -42,24 +50,43 @@
 {
     LocalLogDebug(@"Package migration started...");
 
-/*    if (![self renameResourcePathWithPackagesFolderName:error])
+    if (![self renameResourcePathWithPackagesFolderName:error])
     {
         return NO;
     }
-
-
-    if (![self migrateAllResourcePaths:error])
-    {
-        return NO;
-    }*/
-
 
     if (![self createPackagesFolderIfNotExisting:NULL])
     {
         return NO;
     }
 
+    NSArray *resourcePathsToImport = [self allResourcePathsToBeImported];
+
+    if (![self removeResourcePathsToImportFromProjectResourcePathsToImport:resourcePathsToImport error:error])
+    {
+        return NO;
+    }
+
+    if (![self appendPackageSuffixToResourcePathsToImport:resourcePathsToImport error:error])
+    {
+        return NO;
+    }
+
+    if (![self importAndDeleteOldResourcePathsToImport:resourcePathsToImport error:error])
+    {
+        return NO;
+    }
+
+    [self restorePackageAsResourcePathName];
+
+    LocalLogDebug(@"Package finished successfully!");
+    return YES;
+}
+
+- (NSArray *)allResourcePathsToBeImported
+{
     NSMutableArray *resourcePathsToImport = [NSMutableArray array];
+
     for (NSMutableDictionary *resourcePathDict in [_projectSettings.resourcePaths copy])
     {
         NSString *fullResourcePath = [_projectSettings fullPathForResourcePathDict:resourcePathDict];
@@ -69,12 +96,25 @@
         }
 
         [resourcePathsToImport addObject:[fullResourcePath mutableCopy]];
+    }
+    return resourcePathsToImport;
+}
+
+- (BOOL)removeResourcePathsToImportFromProjectResourcePathsToImport:(NSArray *)resourcePathsToImport error:(NSError **)error
+{
+    for (NSMutableDictionary *resourcePathDict in [_projectSettings.resourcePaths copy])
+    {
+        NSString *fullResourcePath = [_projectSettings fullPathForResourcePathDict:resourcePathDict];
         if (![_projectSettings removeResourcePath:fullResourcePath error:error])
         {
             return NO;
         }
     }
+    return YES;
+}
 
+- (BOOL)appendPackageSuffixToResourcePathsToImport:(NSArray *)resourcePathsToImport error:(NSError **)error
+{
     for (NSMutableString *fullPath in resourcePathsToImport)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -89,25 +129,44 @@
 
         [fullPath setString:newPath];
     }
+    return YES;
+}
 
-    PackageImporter *packageImporter = [[PackageImporter alloc] init];
-    packageImporter.projectSettings = _projectSettings;
-    if (![packageImporter importPackagesWithPaths:resourcePathsToImport error:error])
+- (BOOL)importAndDeleteOldResourcePathsToImport:(NSArray *)resourcePathsToImport error:(NSError **)error
+{
+    for (NSString *pathToImport in resourcePathsToImport)
     {
-        return NO;
-    }
-
-    for (NSMutableString *fullPath in resourcePathsToImport)
-    {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if (![fileManager removeItemAtPath:fullPath error:error])
+        PackageImporter *packageImporter = [[PackageImporter alloc] init];
+        packageImporter.projectSettings = _projectSettings;
+        if ([packageImporter importPackagesWithPaths:@[pathToImport] error:error])
+        {
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if (![fileManager removeItemAtPath:pathToImport error:error])
+            {
+                return NO;
+            }
+        }
+        else
         {
             return NO;
         }
     }
-
-    LocalLogDebug(@"Package finished successfully!");
     return YES;
+}
+
+- (void)restorePackageAsResourcePathName
+{
+    if (_resourcePathWithPackagesFolderNameFound)
+    {
+        PackageRenamer *packageRenamer = [[PackageRenamer alloc] init];
+        packageRenamer.projectSettings = _projectSettings;
+        packageRenamer.resourceManager = [ResourceManager sharedManager];
+
+        RMPackage *package = [[RMPackage alloc] init];
+        package.dirPath = [_projectSettings fullPathForPackageName:_packageAsResourcePathTempName];
+
+        [packageRenamer renamePackage:package toName:PACKAGES_FOLDER_NAME error:nil];
+    }
 }
 
 - (BOOL)createPackagesFolderIfNotExisting:(NSError **)error
@@ -150,7 +209,6 @@
 }
 
 
-/*
 - (BOOL)renameResourcePathWithPackagesFolderName:(NSError **)error
 {
     if ([self packageFolderExists]
@@ -160,7 +218,6 @@
     }
     return YES;
 }
-
 
 - (BOOL)isPackageFolderAResourcePath
 {
@@ -180,6 +237,7 @@
 
     NSFileManager *fileManager = [NSFileManager defaultManager];;
     NSString *renamePathTo = [self renamePathForSpecialCasePackagesFolderAsResourcePath:@"user"];
+    self.packageAsResourcePathTempName = [renamePathTo lastPathComponent];
 
     NSString *renamePathFrom = [_projectSettings packagesFolderPath];
     if (![fileManager moveItemAtPath:renamePathFrom toPath:renamePathTo error:error])
@@ -223,6 +281,7 @@
     return renamePathTo;
 }
 
+/*
 - (BOOL)migrateAllResourcePaths:(NSError **)error
 {
     LocalLogDebug(@"Migrating resource paths...");
@@ -342,7 +401,6 @@
 {
     return YES;
 }
-
 */
 
 @end
