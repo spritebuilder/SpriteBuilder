@@ -80,7 +80,6 @@
 	_engine = CCBTargetEngineCocos2d;
 
     resourcePaths = [[NSMutableArray alloc] init];
-    [resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:@"Resources" forKey:@"path"]];
     self.publishDirectory = @"Published-iOS";
     self.publishDirectoryAndroid = @"Published-Android";
     self.onlyPublishCCBs = NO;
