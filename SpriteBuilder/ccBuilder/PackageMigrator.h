@@ -5,6 +5,7 @@
 
 @interface PackageMigrator : NSObject
 
+// Designated initializer
 - (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings;
 
 - (BOOL)migrate:(NSError **)error;

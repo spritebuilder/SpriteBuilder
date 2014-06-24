@@ -19,6 +19,12 @@
 
 @implementation PackageMigrator
 
+- (instancetype)init
+{
+    NSLog(@"Create instances of %@ with designated initializer.", [self class]);
+    [self doesNotRecognizeSelector:_cmd];
+}
+
 - (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings
 {
     self = [super init];
@@ -119,6 +125,9 @@
 {
     LocalLogDebug(@"Trying to create packages folder...");
     NSString *packageFolderPath = [_projectSettings packagesFolderPath];
+
+    NSAssert(packageFolderPath, @"ProjectSettings' packagesFolderPath not yielding anything, forgot to set projectPath property?");
+
     NSFileManager *fileManager = [NSFileManager defaultManager];;
     if (![fileManager createDirectoryAtPath:packageFolderPath
                           withIntermediateDirectories:NO
