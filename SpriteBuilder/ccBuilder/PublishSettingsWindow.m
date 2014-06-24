@@ -43,37 +43,46 @@
 	}
 }
 
-- (IBAction)selectPublishDirectory:(id)sender
+- (IBAction)selectPublishDirectoryIOS:(id)sender
+{
+    [self selectPublishDirForType:kCCBPublisherTargetTypeIPhone];
+}
+
+- (IBAction)selectPublishDirectoryAndroid:(id)sender
+{
+    [self selectPublishDirForType:kCCBPublisherTargetTypeAndroid];
+}
+
+- (void)selectPublishDirForType:(CCBPublisherTargetType)publishType
 {
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:NO];
     [openDlg setCanChooseDirectories:YES];
-    
+    [openDlg setCanCreateDirectories:YES];
+
     [openDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
         {
             [[[CCDirector sharedDirector] view] lockOpenGLContext];
-            
+
             NSArray* files = [openDlg URLs];
-            
+
             for (int i = 0; i < [files count]; i++)
             {
                 NSString* dirName = [[files objectAtIndex:i] path];
                 NSString* projectDir = [projectSettings.projectPath stringByDeletingLastPathComponent];
                 NSString* relDirName = [dirName relativePathFromBaseDirPath:projectDir];
-                
-                CCBPublisherTargetType type = [sender tag];
-                
-                if (type == kCCBPublisherTargetTypeIPhone)
+
+                if (publishType == kCCBPublisherTargetTypeIPhone)
                 {
                     projectSettings.publishDirectory = relDirName;
                 }
-                else if (type == kCCBPublisherTargetTypeAndroid)
+                else if (publishType == kCCBPublisherTargetTypeAndroid)
                 {
                     projectSettings.publishDirectoryAndroid = relDirName;
                 }
             }
-            
+
             [[[CCDirector sharedDirector] view] unlockOpenGLContext];
         }
     }];

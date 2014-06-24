@@ -8,12 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol PackageCreateDelegateProtocol;
+@class PackageCreator;
+@class PackageImporter;
 
 @interface NewPackageWindowController : NSWindowController
 
 @property (nonatomic, readonly, copy) NSString *packageName;
-@property (nonatomic, weak) id<PackageCreateDelegateProtocol>delegate;
+@property (nonatomic, strong) PackageCreator *packageCreator;
 
 - (IBAction)onCreate:(id)sender;
 - (IBAction)onCancel:(id)sender;

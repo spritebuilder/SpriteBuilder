@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3028" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ResourceManagerPreviewView">
@@ -31,7 +31,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView id="2" customClass="CCBImageView">
-                    <rect key="frame" x="2" y="98" width="246" height="138"/>
+                    <rect key="frame" x="2" y="111" width="246" height="125"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="3"/>
                     <connections>
@@ -43,9 +43,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="134" id="229">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -64,9 +64,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="421" id="423">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -86,9 +86,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="428" id="430">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -108,9 +108,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="434" id="436">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -130,9 +130,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="441" id="443">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -155,9 +155,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="494" id="497">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -179,9 +179,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="502" id="505">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -203,9 +203,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="509" id="511">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -227,9 +227,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="515" id="518">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -256,9 +256,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="472" id="476">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -291,9 +291,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="484" id="488">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -306,7 +306,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="165" customClass="CCBTextFieldLabel">
-                    <rect key="frame" x="2" y="80" width="38" height="11"/>
+                    <rect key="frame" x="2" y="96" width="38" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iOS" id="166">
                         <font key="font" metaFont="miniSystem"/>
@@ -317,16 +317,16 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="309"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="309" id="327">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="167">
-                    <rect key="frame" x="41" y="78" width="94" height="15"/>
+                    <rect key="frame" x="41" y="94" width="94" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="168">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -372,9 +372,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="312"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="312" id="313">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -382,7 +382,7 @@
                     </connections>
                 </popUpButton>
                 <button id="178">
-                    <rect key="frame" x="135" y="77" width="49" height="18"/>
+                    <rect key="frame" x="135" y="93" width="49" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="check" title="Dither" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="179">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -392,25 +392,25 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="317"/>
                         <binding destination="-2" name="enabled3" keyPath="enabled" previousBinding="318" id="319">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_ios_dither" id="258"/>
                         <binding destination="-2" name="enabled2" keyPath="format_ios_dither_enabled" previousBinding="317" id="318">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                     </connections>
                 </button>
                 <button id="180">
-                    <rect key="frame" x="181" y="77" width="66" height="19"/>
+                    <rect key="frame" x="181" y="93" width="66" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="check" title="Compress" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="181">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -420,18 +420,18 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="323"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="323" id="324">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_ios_compress" id="266"/>
                         <binding destination="-2" name="enabled3" keyPath="format_ios_compress_enabled" previousBinding="324" id="325">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -448,18 +448,18 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="340"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="340" id="343">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_android_compress" id="338"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_compress_enabled" previousBinding="343" id="347">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -477,9 +477,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="306"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="306" id="307">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -520,9 +520,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="300"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="300" id="303">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -540,18 +540,18 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="332"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="332" id="335">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_android_dither" id="330"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_dither_enabled" previousBinding="335" id="345">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -572,9 +572,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="450" id="454">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -600,9 +600,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="462" id="466">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -614,7 +614,7 @@
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" id="219">
-                    <rect key="frame" x="181" y="106" width="62" height="15"/>
+                    <rect key="frame" x="181" y="118" width="62" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="220">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -638,9 +638,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="240" id="242">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -648,7 +648,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="226" customClass="CCBTextFieldLabel">
-                    <rect key="frame" x="131" y="108" width="50" height="11"/>
+                    <rect key="frame" x="131" y="120" width="50" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scale from" id="227">
                         <font key="font" metaFont="miniSystem"/>
@@ -663,9 +663,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="234" id="236">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -687,9 +687,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="521" id="522">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -716,9 +716,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="532" id="533">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -745,9 +745,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="537" id="538">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -774,9 +774,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="542" id="543">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -787,6 +787,116 @@
                         </binding>
                     </connections>
                 </textField>
+                <button id="TdL-TX-57X">
+                    <rect key="frame" x="181" y="75" width="66" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="check" title="Compress" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" enabled="NO" state="on" inset="2" id="oye-kJ-3Eo">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="c8S-W6-s3X"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="c8S-W6-s3X" id="lDo-zb-F71">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_compress" id="gAf-JU-Ck8"/>
+                        <binding destination="-2" name="enabled3" keyPath="format_android_compress_enabled" previousBinding="lDo-zb-F71" id="3AO-8a-14A">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="mmL-7u-54n" customClass="CCBTextFieldLabel">
+                    <rect key="frame" x="2" y="78" width="39" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Android" id="GQo-tu-bps">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="qUP-4W-6sq"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="qUP-4W-6sq" id="j5y-fE-WxN">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="CLx-nv-PBi">
+                    <rect key="frame" x="41" y="76" width="94" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="l2c-yd-BlU">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                        <menu key="menu" title="OtherViews" id="tgf-1P-eWB">
+                            <items>
+                                <menuItem title="PNG" id="9n2-gt-sto"/>
+                                <menuItem title="PNG 8-bit" tag="1" id="jWn-eq-4li"/>
+                                <menuItem isSeparatorItem="YES" id="zGL-T5-dad"/>
+                                <menuItem title="PVR RGBA8888" tag="2" id="RZX-eE-Mwn"/>
+                                <menuItem title="PVR RGBA4444" tag="3" id="m3P-vX-Ncy">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="PVR RGB565" tag="4" id="sqa-em-fiz">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="mnY-Ld-Um5"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="mnY-Ld-Um5" id="147-j6-ZAn">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="selectedTag" keyPath="format_android" id="y0e-qj-liL"/>
+                    </connections>
+                </popUpButton>
+                <button id="jhR-g1-rbS">
+                    <rect key="frame" x="135" y="75" width="49" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="check" title="Dither" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="Xyz-RJ-g6a">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="gZ9-Z2-Jx0"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="gZ9-Z2-Jx0" id="tLF-dX-63b">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_dither" id="iP4-OU-cVv"/>
+                        <binding destination="-2" name="enabled3" keyPath="format_android_dither_enabled" previousBinding="tLF-dX-63b" id="ngN-kb-IP5">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <customView id="730">
@@ -794,7 +904,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView id="757" customClass="CCBImageView">
-                    <rect key="frame" x="2" y="26" width="246" height="210"/>
+                    <rect key="frame" x="2" y="42" width="246" height="194"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="758"/>
                     <connections>
@@ -802,7 +912,7 @@
                     </connections>
                 </imageView>
                 <textField verticalHuggingPriority="750" id="746" customClass="CCBTextFieldLabel">
-                    <rect key="frame" x="2" y="8" width="38" height="11"/>
+                    <rect key="frame" x="2" y="26" width="38" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iOS" id="775">
                         <font key="font" metaFont="miniSystem"/>
@@ -813,16 +923,16 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="827"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="827" id="907">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="745">
-                    <rect key="frame" x="41" y="6" width="94" height="15"/>
+                    <rect key="frame" x="41" y="24" width="94" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="PVRTC 2bpp" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="6" imageScaling="proportionallyDown" inset="2" selectedItem="783" id="776">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -858,9 +968,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="891"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="891" id="892">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -868,7 +978,7 @@
                     </connections>
                 </popUpButton>
                 <button id="744">
-                    <rect key="frame" x="135" y="5" width="49" height="18"/>
+                    <rect key="frame" x="135" y="23" width="49" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="check" title="Dither" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="790">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -878,25 +988,25 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="877"/>
                         <binding destination="-2" name="enabled3" keyPath="enabled" previousBinding="878" id="879">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_ios_dither" id="885"/>
                         <binding destination="-2" name="enabled2" keyPath="format_ios_dither_enabled" previousBinding="877" id="878">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                     </connections>
                 </button>
                 <button id="743">
-                    <rect key="frame" x="181" y="5" width="66" height="19"/>
+                    <rect key="frame" x="181" y="23" width="66" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="check" title="Compress" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="791">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -906,18 +1016,18 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="874"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="874" id="875">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_ios_compress" id="849"/>
                         <binding destination="-2" name="enabled3" keyPath="format_ios_compress_enabled" previousBinding="875" id="876">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -934,18 +1044,18 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="838"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="838" id="839">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_android_compress" id="844"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_compress_enabled" previousBinding="839" id="840">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -963,9 +1073,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="872"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="872" id="873">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -996,9 +1106,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="893"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="893" id="894">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1016,18 +1126,128 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="824"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="824" id="825">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="value" keyPath="format_android_dither" id="845"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_dither_enabled" previousBinding="825" id="826">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <button id="rxx-oR-WeI">
+                    <rect key="frame" x="181" y="5" width="66" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="check" title="Compress" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" enabled="NO" state="on" inset="2" id="wmM-Rr-hkC">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="PzD-VH-N2V"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="PzD-VH-N2V" id="uMM-dt-UZa">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_compress" id="fcI-3w-35n"/>
+                        <binding destination="-2" name="enabled3" keyPath="format_android_compress_enabled" previousBinding="uMM-dt-UZa" id="Hjr-EZ-1xf">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="XCZ-iH-g3j" customClass="CCBTextFieldLabel">
+                    <rect key="frame" x="2" y="8" width="39" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Android" id="Ob8-Dl-icT">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xKy-IN-Xev"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="xKy-IN-Xev" id="mOn-Mk-0bh">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="R6B-CI-XVz">
+                    <rect key="frame" x="41" y="6" width="94" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="p40-uP-yQr">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                        <menu key="menu" title="OtherViews" id="Zaq-Hw-aP9">
+                            <items>
+                                <menuItem title="PNG" id="otV-Ll-GWi"/>
+                                <menuItem title="PNG 8-bit" tag="1" id="5B6-OP-WON"/>
+                                <menuItem isSeparatorItem="YES" id="ktC-s2-2jM"/>
+                                <menuItem title="PVR RGBA8888" tag="2" id="ag5-Xm-1TV"/>
+                                <menuItem title="PVR RGBA4444" tag="3" id="Oua-0U-0KS">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="PVR RGB565" tag="4" id="p8m-w7-App">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="5oG-ga-eSn"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="5oG-ga-eSn" id="QDU-DS-2d7">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="selectedTag" keyPath="format_android" id="CNf-6g-a8j"/>
+                    </connections>
+                </popUpButton>
+                <button id="f8P-02-ijH">
+                    <rect key="frame" x="135" y="5" width="49" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <buttonCell key="cell" type="check" title="Dither" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="MBX-1H-Tnv">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="edw-Au-3df"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="edw-Au-3df" id="msi-3n-xlh">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="value" keyPath="format_android_dither" id="bxB-Mn-IWg"/>
+                        <binding destination="-2" name="enabled3" keyPath="format_android_dither_enabled" previousBinding="msi-3n-xlh" id="Xr9-Vq-RzS">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1052,9 +1272,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="701" id="702">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1078,9 +1298,9 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1108" id="1109">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1093,7 +1313,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView id="987" customClass="CCBImageView">
-                    <rect key="frame" x="2" y="26" width="246" height="210"/>
+                    <rect key="frame" x="2" y="42" width="246" height="194"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="988"/>
                     <connections>
@@ -1101,7 +1321,7 @@
                     </connections>
                 </imageView>
                 <textField verticalHuggingPriority="750" id="986" customClass="CCBTextFieldLabel">
-                    <rect key="frame" x="2" y="8" width="38" height="11"/>
+                    <rect key="frame" x="2" y="26" width="38" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iOS" id="989">
                         <font key="font" metaFont="miniSystem"/>
@@ -1112,16 +1332,16 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1040"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1040" id="1041">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1054" customClass="CCBTextFieldLabel">
-                    <rect key="frame" x="120" y="8" width="38" height="11"/>
+                    <rect key="frame" x="120" y="26" width="38" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Quality" id="1055">
                         <font key="font" metaFont="miniSystem"/>
@@ -1132,16 +1352,16 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1056"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1056" id="1057">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" id="985">
-                    <rect key="frame" x="41" y="6" width="73" height="15"/>
+                    <rect key="frame" x="41" y="24" width="73" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="MP4" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="993" id="990">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1157,9 +1377,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1021"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1021" id="1022">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1167,7 +1387,7 @@
                     </connections>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" id="1062">
-                    <rect key="frame" x="159" y="6" width="88" height="15"/>
+                    <rect key="frame" x="159" y="24" width="88" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="1063">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1190,18 +1410,99 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1068"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1068" id="1069">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="selectedTag" keyPath="format_ios_sound_quality" id="1098"/>
                         <binding destination="-2" name="enabled3" keyPath="format_ios_sound_quality_enabled" previousBinding="1069" id="1100">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </popUpButton>
+                <textField verticalHuggingPriority="750" id="vyi-BA-kHl" customClass="CCBTextFieldLabel">
+                    <rect key="frame" x="2" y="8" width="39" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Android" id="A8B-C4-9Nv">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xZD-OO-Sp1"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="xZD-OO-Sp1" id="XOq-Ae-i68">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" id="yKy-b7-9P4" customClass="CCBTextFieldLabel">
+                    <rect key="frame" x="120" y="8" width="38" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Quality" id="h45-cd-NPe">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="QOq-Ud-6Rs"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="QOq-Ud-6Rs" id="fn0-oY-Gj3">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="5Nh-1F-3PA">
+                    <rect key="frame" x="159" y="6" width="88" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="KXb-Pd-3A9">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                        <menu key="menu" title="OtherViews" id="yDL-Dh-x2k">
+                            <items>
+                                <menuItem title="Default" id="9TV-ek-RyE"/>
+                                <menuItem title="8 - Best" tag="8" id="0Tp-1G-xFC"/>
+                                <menuItem title="7" tag="7" id="SFH-wB-I5u"/>
+                                <menuItem title="6" tag="6" id="CeD-Xm-lcI"/>
+                                <menuItem title="5" tag="5" id="616-ow-mpx"/>
+                                <menuItem title="4" tag="4" id="eOA-bj-RYM"/>
+                                <menuItem title="3" tag="3" id="aED-ZE-nxm"/>
+                                <menuItem title="2" tag="2" id="5c7-De-JR4"/>
+                                <menuItem title="1 - Smallest" tag="1" id="WEI-MK-Y6V"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="p4I-2B-XaQ"/>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="p4I-2B-XaQ" id="g4w-Qe-ECC">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="selectedTag" keyPath="format_android_sound_quality" id="XTp-x0-s4x"/>
+                        <binding destination="-2" name="enabled3" keyPath="format_android_sound_quality_enabled" previousBinding="g4w-Qe-ECC" id="VSn-gS-2R9">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1233,18 +1534,18 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1093"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1093" id="1094">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
                         <binding destination="-2" name="selectedTag" keyPath="format_android_sound_quality" id="1104"/>
                         <binding destination="-2" name="enabled3" keyPath="format_android_sound_quality_enabled" previousBinding="1094" id="1103">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1262,9 +1563,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="1042"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1042" id="1043">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1282,9 +1583,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="1060"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1060" id="1061">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1306,9 +1607,9 @@
                         <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="1045"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1045" id="1046">
                             <dictionary key="options">
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
                             </dictionary>
                         </binding>
@@ -1321,9 +1622,34 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="1052"/>
                 </imageView>
                 <customView id="Acd-rN-rb4">
-                    <rect key="frame" x="5" y="29" width="240" height="110"/>
+                    <rect key="frame" x="5" y="45" width="240" height="94"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </customView>
+                <popUpButton verticalHuggingPriority="750" id="Iqw-qx-zkI">
+                    <rect key="frame" x="41" y="6" width="73" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="9Az-FD-Mmw">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                        <menu key="menu" title="OtherViews" id="EQp-f3-f0o">
+                            <items>
+                                <menuItem title="OGG" id="riX-EC-CQV"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="8Er-aj-Cn4" id="WVQ-oE-Uig">
+                            <dictionary key="options">
+                                <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
+                            </dictionary>
+                        </binding>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="8Er-aj-Cn4"/>
+                        <binding destination="-2" name="selectedTag" keyPath="format_android_sound" id="b2Q-29-Ix5"/>
+                    </connections>
+                </popUpButton>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="130"/>
@@ -1340,10 +1666,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewPhone.image" previousBinding="380" id="384">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
@@ -1364,10 +1690,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewPhonehd.image" previousBinding="392" id="406">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
@@ -1388,10 +1714,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewTablet.image" previousBinding="397" id="408">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>
@@ -1412,10 +1738,10 @@
                         </binding>
                         <binding destination="-2" name="enabled2" keyPath="previewTablethd.image" previousBinding="402" id="409">
                             <dictionary key="options">
-                                <integer key="NSNullPlaceholder" value="-1"/>
-                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                <integer key="NSNullPlaceholder" value="-1"/>
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
                         </binding>

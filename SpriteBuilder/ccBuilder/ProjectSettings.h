@@ -101,7 +101,10 @@ typedef enum
     BOOL storing;
 }
 
+// Full path to the project file, e.g. /foo/baa.spritebuilder/baa.ccbproj
 @property (nonatomic, copy) NSString* projectPath;
+
+// Full path to the project's root folder, according to -projectPath example: /foo/baa.spritebuilder/
 @property (nonatomic, readonly) NSString* projectPathDir;
 
 @property (nonatomic, readonly) NSString* projectPathHashed;
