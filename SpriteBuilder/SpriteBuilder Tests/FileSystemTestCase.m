@@ -102,4 +102,18 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     XCTAssertTrue([projectSettings store], @"Could not create project file at \"%@\"", projectSettings.projectPath);
 }
 
+- (void)assertFileExists:(NSString *)filePath
+{
+    NSString *fullPath = [_testDirecotoryPath stringByAppendingPathComponent:filePath];
+
+    XCTAssertTrue([_fileManager fileExistsAtPath:fullPath], @"File does not exist at \"%@\"", fullPath);
+}
+
+- (void)assertFileDoesNotExists:(NSString *)filePath
+{
+    NSString *fullPath = [_testDirecotoryPath stringByAppendingPathComponent:filePath];
+
+    XCTAssertFalse([_fileManager fileExistsAtPath:fullPath], @"File exists at \"%@\"", fullPath);
+}
+
 @end

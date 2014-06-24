@@ -12,4 +12,9 @@
 
 - (void)createProjectSettingsFileWithName:(NSString *)name;
 
+
+- (void)assertFileExists:(NSString *)filePath;
+
+- (void)assertFileDoesNotExists:(NSString *)filePath;
+
 @end
