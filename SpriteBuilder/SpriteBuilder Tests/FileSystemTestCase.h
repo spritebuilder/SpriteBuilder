@@ -1,0 +1,15 @@
+#import <Foundation/Foundation.h>
+#import <XCTest/XCTest.h>
+
+@interface FileSystemTestCase : XCTestCase
+
+@property (nonatomic, copy, readonly) NSString *testDirecotoryPath;
+@property (nonatomic, strong) NSFileManager *fileManager;
+
+- (void)createFolders:(NSArray *)folders;
+
+- (void)createEmptyFiles:(NSArray *)files;
+
+- (void)createProjectSettingsFileWithName:(NSString *)name;
+
+@end
