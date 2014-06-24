@@ -587,6 +587,12 @@
     }
 }
 
+// TODO: remove after transition state to ResourcePath class
+- (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict
+{
+    return [self.projectPathDir stringByAppendingPathComponent:resourcePathDict[@"path"]];
+}
+
 - (NSString* ) getVersion
 {
     NSString* versionPath = [[NSBundle mainBundle] pathForResource:@"Version" ofType:@"txt" inDirectory:@"Generated"];

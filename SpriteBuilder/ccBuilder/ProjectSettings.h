@@ -212,6 +212,8 @@ typedef enum
 // Returns SBDuplicateResourcePathError if resource path toPath already exists
 - (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
 
+- (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict;
+
 // *** Misc ***
 - (NSString* ) getVersion;
 
