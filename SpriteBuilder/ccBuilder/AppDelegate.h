@@ -468,6 +468,8 @@ enum {
 
 @property (weak) IBOutlet NSTableView *warningTableView;
 
+- (void)renamedResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath;
+
 @property (weak) IBOutlet NSView *inspectorPhysics;
 
 @end

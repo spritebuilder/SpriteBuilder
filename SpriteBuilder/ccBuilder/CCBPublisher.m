@@ -572,12 +572,10 @@
         return NO;
     }
 
-/*
     if (![self publishForTargetType:kCCBPublisherTargetTypeAndroid])
     {
         return NO;
     }
-*/
 
     [_projectSettings clearAllDirtyMarkers];
 

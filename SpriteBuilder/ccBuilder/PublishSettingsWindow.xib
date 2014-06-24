@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -17,14 +17,14 @@
         <window title="Publish Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="480" height="331"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="467"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="331"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="467"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView id="qKt-3g-PhI" userLabel="Resource Paths">
-                        <rect key="frame" x="0.0" y="202" width="480" height="129"/>
+                        <rect key="frame" x="0.0" y="338" width="480" height="129"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="459">
@@ -116,11 +116,11 @@
                         </subviews>
                     </customView>
                     <customView appearanceType="aqua" id="hkC-ij-R4Z" userLabel="Publish Directory">
-                        <rect key="frame" x="0.0" y="126" width="480" height="77"/>
+                        <rect key="frame" x="0.0" y="232" width="480" height="107"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" id="20" customClass="CCBTextFieldLabel">
-                                <rect key="frame" x="19" y="57" width="112" height="14"/>
+                                <rect key="frame" x="19" y="65" width="112" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Publish to directory:" id="21">
                                     <font key="font" metaFont="smallSystem"/>
@@ -141,7 +141,7 @@
                                 </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" id="22">
-                                <rect key="frame" x="21" y="33" width="389" height="19"/>
+                                <rect key="frame" x="21" y="41" width="389" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="23">
                                     <font key="font" metaFont="smallSystem"/>
@@ -162,15 +162,15 @@
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="232"/>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" id="24">
-                                <rect key="frame" x="413" y="32" width="48" height="21"/>
+                            <button identifier=" " verticalHuggingPriority="750" id="24">
+                                <rect key="frame" x="413" y="40" width="48" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="smallSquare" title="Select" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="25">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystem"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="selectPublishDirectory:" target="-2" id="47"/>
+                                    <action selector="selectPublishDirectoryIOS:" target="-2" id="47"/>
                                     <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="235" id="406">
                                         <dictionary key="options">
                                             <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -183,8 +183,8 @@
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="235"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" id="139">
-                                <rect key="frame" x="133" y="54" width="61" height="18"/>
+                            <button id="139">
+                                <rect key="frame" x="18" y="82" width="61" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="iOS" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="140">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -200,7 +200,7 @@
                                 </connections>
                             </button>
                             <button id="141">
-                                <rect key="frame" x="18" y="9" width="56" height="18"/>
+                                <rect key="frame" x="18" y="17" width="56" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="phone" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="142">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -221,7 +221,7 @@
                                 </connections>
                             </button>
                             <button id="143">
-                                <rect key="frame" x="76" y="9" width="70" height="18"/>
+                                <rect key="frame" x="76" y="17" width="70" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="phonehd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="144">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -242,7 +242,7 @@
                                 </connections>
                             </button>
                             <button id="147">
-                                <rect key="frame" x="208" y="9" width="67" height="18"/>
+                                <rect key="frame" x="208" y="17" width="67" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="tablethd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="148">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -263,7 +263,7 @@
                                 </connections>
                             </button>
                             <button id="312">
-                                <rect key="frame" x="149" y="9" width="53" height="18"/>
+                                <rect key="frame" x="149" y="17" width="53" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="tablet" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="313">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -284,7 +284,7 @@
                                 </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" id="349">
-                                <rect key="frame" x="368" y="6" width="96" height="22"/>
+                                <rect key="frame" x="368" y="14" width="96" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="8 - Best" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="8" imageScaling="proportionallyDown" inset="2" selectedItem="354" id="350">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -331,7 +331,7 @@
                                 </connections>
                             </popUpButton>
                             <textField verticalHuggingPriority="750" id="355" customClass="CCBTextFieldLabel">
-                                <rect key="frame" x="291" y="11" width="75" height="14"/>
+                                <rect key="frame" x="291" y="19" width="75" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Audio quality" id="356">
                                     <font key="font" metaFont="smallSystem"/>
@@ -351,15 +351,15 @@
                                     <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="387"/>
                                 </connections>
                             </textField>
-                            <box autoresizesSubviews="NO" appearanceType="aqua" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="tHA-gP-g90">
-                                <rect key="frame" x="0.0" y="-2" width="480" height="5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <font key="titleFont" metaFont="system"/>
-                            </box>
                         </subviews>
                     </customView>
+                    <box autoresizesSubviews="NO" appearanceType="aqua" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="dTk-ST-8pF">
+                        <rect key="frame" x="0.0" y="230" width="480" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
                     <customView id="Vcd-9o-njP" userLabel="CCB files">
                         <rect key="frame" x="0.0" y="74" width="480" height="53"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -537,6 +537,257 @@ DQ
                             </button>
                         </subviews>
                     </customView>
+                    <customView id="dDD-vW-SAn">
+                        <rect key="frame" x="0.0" y="126" width="480" height="107"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" id="JxN-Al-blj" customClass="CCBTextFieldLabel">
+                                <rect key="frame" x="17" y="65" width="112" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Publish to directory:" id="T8O-bL-K7T">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="Hf7-Cw-l8R" id="Vnx-G2-TqZ">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="Hf7-Cw-l8R"/>
+                                </connections>
+                            </textField>
+                            <textField verticalHuggingPriority="750" id="LvT-hK-Nox">
+                                <rect key="frame" x="20" y="41" width="389" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="jQr-fe-HyY">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="vWt-XX-swP" id="k8s-P7-HM6">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.publishDirectoryAndroid" id="Mef-PY-yrH"/>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="vWt-XX-swP"/>
+                                </connections>
+                            </textField>
+                            <button verticalHuggingPriority="750" id="Y5s-0L-0gX">
+                                <rect key="frame" x="412" y="40" width="48" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="smallSquare" title="Select" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7RH-FK-7vK">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="selectPublishDirectoryAndroid:" target="-2" id="bVX-3X-mRm"/>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.onlyPublishCCBs" id="RYq-H1-496">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="RYq-H1-496" id="eDv-v7-qur">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </button>
+                            <button id="UD6-v1-1uw">
+                                <rect key="frame" x="17" y="82" width="68" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Android" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="YBn-ho-gXj">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.onlyPublishCCBs" id="fxD-0w-C4l">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.publishEnabledAndroid" id="zds-92-Vpt"/>
+                                </connections>
+                            </button>
+                            <button id="SQD-VJ-zQk">
+                                <rect key="frame" x="17" y="17" width="56" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="phone" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="7Fx-pw-RPw">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="tQf-oM-63G" id="L4i-Rj-jkD">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="tQf-oM-63G"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_android_phone" id="wtJ-3e-ScM"/>
+                                </connections>
+                            </button>
+                            <button id="pIC-bn-bde">
+                                <rect key="frame" x="75" y="17" width="70" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="phonehd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="bOk-uA-qt6">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="ZlL-Fb-Qt0" id="I20-4E-Lyt">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="ZlL-Fb-Qt0"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_android_phonehd" id="Dj3-N7-OVQ"/>
+                                </connections>
+                            </button>
+                            <button id="Bx3-QT-jBr">
+                                <rect key="frame" x="150" y="17" width="53" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="tablet" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="ShK-hL-229">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="et6-ax-BCp" id="nkF-XF-uri">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="et6-ax-BCp"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_android_tablet" id="tAg-fx-Yx2"/>
+                                </connections>
+                            </button>
+                            <button id="Gy2-KB-ahR">
+                                <rect key="frame" x="207" y="17" width="67" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="tablethd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="xyI-qf-Kde">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                </buttonCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="4mf-Gr-rQb" id="8ze-Hr-NCa">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="4mf-Gr-rQb"/>
+                                    <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_android_tablethd" id="wB0-4B-FWH"/>
+                                </connections>
+                            </button>
+                            <popUpButton verticalHuggingPriority="750" id="Pvs-1k-0aG">
+                                <rect key="frame" x="367" y="14" width="96" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="uif-Cd-B3H">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <menu key="menu" title="OtherViews" id="STg-9d-Ft0">
+                                        <items>
+                                            <menuItem title="10 - Best" tag="10" id="jlA-aw-UBO"/>
+                                            <menuItem title="9" tag="9" id="9jR-fg-7g5"/>
+                                            <menuItem title="8" tag="8" id="sLs-mN-Jvb"/>
+                                            <menuItem title="7" tag="7" id="3yJ-zj-hhk">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="6" tag="6" id="CaS-1V-0MT">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="5" tag="5" id="V1w-Y9-495">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="4" tag="4" id="hZS-s5-Rqs">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="3" tag="3" id="a7x-mO-jci">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="2" tag="2" id="YNm-PB-WFE">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="1 - Smallest" tag="1" id="s1S-xx-Qjr">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="tfu-M1-aTI" id="A2V-5i-wB8">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="selectedTag" keyPath="projectSettings.publishAudioQuality_android" id="neJ-Dx-qei"/>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="tfu-M1-aTI"/>
+                                </connections>
+                            </popUpButton>
+                            <textField verticalHuggingPriority="750" id="dQy-YJ-MmW" customClass="CCBTextFieldLabel">
+                                <rect key="frame" x="290" y="19" width="75" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Audio quality" id="nfR-Sq-0qQ">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="fnK-go-V5U" id="lZ7-Cz-8Xx">
+                                        <dictionary key="options">
+                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="fnK-go-V5U"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                    </customView>
+                    <box autoresizesSubviews="NO" appearanceType="aqua" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="RLl-bP-JYS">
+                        <rect key="frame" x="0.0" y="124" width="480" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
                 </subviews>
             </view>
         </window>
@@ -620,7 +871,7 @@ DQ
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectPublishDirectory:" target="-2" id="182"/>
+                        <action selector="selectPublishDirectoryIOS:" target="-2" id="182"/>
                         <binding destination="-2" name="enabled2" keyPath="projectSettings.onlyPublishCCBs" previousBinding="256" id="436">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>

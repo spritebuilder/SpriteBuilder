@@ -117,8 +117,6 @@
 #import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
-#import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
 #import "MiscConstants.h"
 #import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
@@ -127,8 +125,10 @@
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "RMResource.h"
+#import "PackageImporter.h"
+#import "PackageCreator.h"
+#import "NewPackageWindowController.h"
 #import "ResourceCommandController.h"
-
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -296,15 +296,6 @@ void ApplyCustomNodeVisitSwizzle()
     [tabBar setCanCloseOnlyTab:YES];
     
     [window setShowsToolbarButton:NO];
-}
-
-- (void) setupToolbar
-{
-    /*
-    toolbarDelegate = [[MainToolbarDelegate alloc] init];
-    toolbar.delegate = toolbarDelegate;
-    [toolbarDelegate addPlugInItemsToToolbar:toolbar];
-     */
 }
 
 - (void) setupPlugInNodeView
@@ -548,9 +539,11 @@ typedef enum
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+#if TEST_TARGET
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"138b7cc7454016e05dbbc512f38082b7" companyName:@"Apportable" crashReportManagerDelegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
-    
+#endif
+
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"ApplePersistenceIgnoreState"];
 
     [self registerUserDefaults];
@@ -622,8 +615,6 @@ typedef enum
     // Load plug-ins
     [[PlugInManager sharedManager] loadPlugIns];
     
-    // Update toolbar with plug-ins
-    [self setupToolbar];
     [self setupPlugInNodeView];
     [self setupProjectViewTabBar];
     [self setupItemViewTabBar];
@@ -633,7 +624,7 @@ typedef enum
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
     [self setupExtras];
-    [self setupActionController];
+    [self setupResourceCommandController];
 
     [window restorePreviousOpenedPanels];
 
@@ -665,7 +656,7 @@ typedef enum
     [self openRegistrationWindow:NULL];
 }
 
-- (void)setupActionController
+- (void)setupResourceCommandController
 {
     _resourceCommandController = [[ResourceCommandController alloc] init];
     _resourceCommandController.resourceManagerOutlineView = outlineProject;
@@ -3384,9 +3375,9 @@ static BOOL hideAllToNextSeparator;
                     NSString *fileName = [[files objectAtIndex:i] path];
                     if ([fileName hasSuffix:PACKAGE_NAME_SUFFIX])
                     {
-                        PackageController *packageCreator = [[PackageController alloc] init];
-                        packageCreator.projectSettings = projectSettings;
-                        [packageCreator importPackageWithPath:fileName error:NULL];
+                        PackageImporter *packageImporter = [[PackageImporter alloc] init];
+                        packageImporter.projectSettings = projectSettings;
+                        [packageImporter importPackagesWithPaths:@[fileName] error:NULL];
                     }
                     else
                     {
@@ -3469,7 +3460,26 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuNewPackage:(id)sender
 {
-    [_resourceCommandController newPackage:nil];
+    [[[CCDirector sharedDirector] view] lockOpenGLContext];
+    
+    PackageCreator *packageCreator = [[PackageCreator alloc] init];
+    packageCreator.projectSettings = projectSettings;
+    
+    NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
+    packageWindowController.packageCreator = packageCreator;
+
+    // Show new document sheet
+    [NSApp beginSheet:[packageWindowController window]
+       modalForWindow:window
+        modalDelegate:NULL
+       didEndSelector:NULL
+          contextInfo:NULL];
+
+    [NSApp runModalForWindow:[packageWindowController window]];
+    [NSApp endSheet:[packageWindowController window]];
+    [[packageWindowController window] close];
+
+    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (IBAction) newFolder:(id)sender
@@ -3509,6 +3519,20 @@ static BOOL hideAllToNextSeparator;
     CCBDocument* doc = [item identifier];
     doc.fileName = newPath;
     [item setLabel:doc.formattedName];
+}
+
+- (void)renamedResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath
+{
+    NSArray *items = [tabView tabViewItems];
+   	for (NSUInteger i = 0; i < [items count]; i++)
+   	{
+   		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
+        if ([doc.fileName rangeOfString:fromPath].location != NSNotFound)
+        {
+            NSString *newFileName = [doc.fileName stringByReplacingOccurrencesOfString:fromPath withString:toPath];
+            doc.fileName = newFileName;
+        }
+   	}
 }
 
 - (IBAction) menuSelectBehind:(id)sender
