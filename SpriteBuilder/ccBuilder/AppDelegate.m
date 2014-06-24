@@ -639,7 +639,9 @@ typedef enum
     }
     else
     {
+        #if TEST_TARGET != 0
         [self openLastOpenProject];
+        #endif
     }
     
     // Check for first run
