@@ -32,4 +32,7 @@
 @property (nonatomic,strong) ProjectSettings* projectSettings;
 @property (weak) IBOutlet NSButton *publishiPhoneCheckbox;
 
+- (IBAction)selectPublishDirectoryIOS:(id)sender;
+- (IBAction)selectPublishDirectoryAndroid:(id)sender;
+
 @end
