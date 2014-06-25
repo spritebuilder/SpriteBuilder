@@ -34,7 +34,7 @@
         return NO;
     }
 
-    self.tmpPath = [tmpDir stringByAppendingPathExtension:[[NSUUID UUID] UUIDString]];
+    self.tmpPath = [tmpDir stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
 
     return [fileManager moveItemAtPath:_filePath toPath:_tmpPath error:error];
 }
@@ -42,6 +42,11 @@
 - (BOOL)undo:(NSError **)error
 {
     return [[NSFileManager defaultManager] moveItemAtPath:_tmpPath toPath:_filePath error:error];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"[%@] removed file at:\"%@\" moved to temp:\"%@\"", [self class], _filePath, _tmpPath];
 }
 
 @end
