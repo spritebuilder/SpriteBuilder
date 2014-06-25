@@ -13,28 +13,51 @@
 #import "NSString+Packages.h"
 #import "ProjectSettings+Packages.h"
 
+
 @interface PackageMigrator_Tests : FileSystemTestCase
+
+@property (nonatomic, strong) ProjectSettings *projectSettings;
+@property (nonatomic, strong) PackageMigrator *packageMigrator;
 
 @end
 
+
 @implementation PackageMigrator_Tests
+
+- (void)setUp
+{
+    [super setUp];
+
+    [self createProjectSettingsFileWithName:@"migrationtest"];
+
+    self.projectSettings = [self loadProjectSettingsWithProjectName:@"migrationtest"];
+
+    self.packageMigrator = [[PackageMigrator alloc] initWithProjectSettings:_projectSettings];
+}
+
 
 #pragma mark - setup
 
-- (ProjectSettings *)createProjectSettingsWithResourcePaths:(NSArray *)resourcePaths
+- (ProjectSettings *)loadProjectSettingsWithProjectName:(NSString *)projectName
 {
-    NSString *projectSettingsPath = [self fullPathForFile:@"migrationtest.ccbproj"];
+    NSString *projectFileName = [NSString stringWithFormat:@"%@.ccbproj", projectName];
+    NSString *projectSettingsPath = [self fullPathForFile:projectFileName];
 
     NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectSettingsPath];
     ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     projectSettings.projectPath = projectSettingsPath;
 
-    for (NSString *resourcePath in resourcePaths)
-    {
-        [projectSettings addResourcePath:[self fullPathForFile:resourcePath] error:nil];
-    }
+    [self assertFileExists:projectFileName];
 
     return projectSettings;
+}
+
+- (void)setProjectsResourcePaths:(NSArray *)resourcePaths
+{
+    for (NSString *resourcePath in resourcePaths)
+    {
+        [_projectSettings addResourcePath:[self fullPathForFile:resourcePath] error:nil];
+    }
 }
 
 
@@ -43,30 +66,22 @@
 - (void)testMigrationStandardCaseNoPackageFolderNoPackages
 {
     [self createFolders:@[@"SpriteBuilder Resources"]];
-
-    [self createProjectSettingsFileWithName:@"migrationtest"];
-    [self assertFileExists:@"migrationtest.ccbproj"];
-
     [self createEmptyFiles:@[
             @"SpriteBuilder Resources/asset.png",
             @"SpriteBuilder Resources/scene.ccb"]];
 
-    ProjectSettings *projectSettings = [self createProjectSettingsWithResourcePaths:@[@"SpriteBuilder Resources"]];
-
-    PackageMigrator *packageMigrator = [[PackageMigrator alloc] initWithProjectSettings:projectSettings];
+    [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
 
     NSError *error;
-    XCTAssertTrue([packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
     [self assertFileExists:@"packages"];
     [self assertFileDoesNotExists:@"SpriteBuilder Resources"];
     [self assertFileExists:[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
-    [self assertResourcePaths:@[[projectSettings fullPathForPackageName:@"SpriteBuilder Resources"]]
-            inProjectSettings:projectSettings];
-    [self assertResourcePaths:@[[self fullPathForFile:@"SpriteBuilder Resources"]]
-            notInProjectSettings:projectSettings];
+    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"SpriteBuilder Resources"]]];
+    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]]];
 }
 
 - (void)testMigrationWithExistingPackagesFolderAsResourcePath
@@ -77,41 +92,38 @@
             @"packages/asset.png",
             @"packages/scene.ccb"]];
 
-    [self createProjectSettingsFileWithName:@"migrationtest"];
-    [self assertFileExists:@"migrationtest.ccbproj"];
-
-    ProjectSettings *projectSettings = [self createProjectSettingsWithResourcePaths:@[@"packages"]];
-
-    PackageMigrator *packageMigrator = [[PackageMigrator alloc] initWithProjectSettings:projectSettings];
+    [self setProjectsResourcePaths:@[@"packages"]];
 
     NSError *error;
-    XCTAssertTrue([packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
     [self assertFileExists:@"packages"];
     [self assertFileExists:[@"packages/packages" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"packages/packages" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
 
-    [self assertResourcePaths:@[[projectSettings fullPathForPackageName:@"packages"]] inProjectSettings:projectSettings];
-    [self assertResourcePaths:@[[self fullPathForFile:@"packages"]] notInProjectSettings:projectSettings];
+    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"packages"]]];
+    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"packages"]]];
+}
+
 }
 
 
 #pragma mark - assertion helper
 
-- (void)assertResourcePaths:(NSArray *)resourcePaths inProjectSettings:(ProjectSettings *)projectSettings
+- (void)assertResourcePathsInProject:(NSArray *)resourcePaths
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertTrue([projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Found in settings: %@", resourcePath, projectSettings.resourcePaths);
+        XCTAssertTrue([_projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Found in settings: %@", resourcePath, _projectSettings.resourcePaths);
     }
 }
 
-- (void)assertResourcePaths:(NSArray *)resourcePaths notInProjectSettings:(ProjectSettings *)projectSettings
+- (void)assertResourcePathsNotInProject:(NSArray *)resourcePaths
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertFalse([projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is in project settings.");
+        XCTAssertFalse([_projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is in project settings.");
     }
 }
 
