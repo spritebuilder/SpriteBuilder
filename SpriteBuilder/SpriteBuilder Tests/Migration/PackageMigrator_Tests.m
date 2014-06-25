@@ -106,6 +106,43 @@
     [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"packages"]]];
 }
 
+- (void)testWithExistingPackagesFolderAndANotInProjectPackageFolderInside
+{
+    [self createFolders:@[@"sprites"]];
+    [self createEmptyFiles:@[@"sprites/asset.png"]];
+
+    [self createFolders:@[@"packages/sprites.sbpack"]];
+    [self createEmptyFiles:@[@"packages/sprites.sbpack/smiley.png"]];
+
+    [self setProjectsResourcePaths:@[@"sprites"]];
+
+    NSError *error;
+    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertNil(error);
+
+    [self assertFileExists:[@"packages/sprites" stringByAppendingPackageSuffix]];
+    [self assertFileExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
+    [self assertFileDoesNotExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"smiley.png"]];
+
+    // This is a bit brittle, but should be easily fixed if renaming rules change
+    [self assertFileExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingString:@".renamed"]];
+    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"sprites"]]];
+}
+
+- (void)testImportingAResourcePathWithPackageSuffixButOutsidePackagesFolder
+{
+    [self createFolders:@[[@"sprites" stringByAppendingPackageSuffix]]];
+    [self setProjectsResourcePaths:@[[@"sprites" stringByAppendingPackageSuffix]]];
+
+    NSError *error;
+    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertNil(error);
+
+    [self assertFileExists:[@"packages/sprites" stringByAppendingPackageSuffix]];
+    [self assertFileDoesNotExists:[@"sprites" stringByAppendingPackageSuffix]];
+    [self assertFileDoesNotExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPackageSuffix]];
+
+    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"sprites"]]];
 }
 
 

@@ -65,6 +65,11 @@
         return NO;
     }
 
+    if (![self renameCollidingFoldersInPackagesFolderBeforeImporting:resourcePathsToImport error:error])
+    {
+        return NO;
+    }
+
     if (![self appendPackageSuffixToResourcePathsToImport:resourcePathsToImport error:error])
     {
         return NO;
@@ -78,6 +83,25 @@
     [self restoreCollidingResourcePathName];
 
     LocalLogDebug(@"Package finished successfully!");
+    return YES;
+}
+
+- (BOOL)renameCollidingFoldersInPackagesFolderBeforeImporting:(NSArray *)resourcePathsToImport error:(NSError **)error
+{
+    for (NSMutableString *resourcePath in resourcePathsToImport)
+    {
+        NSString *futurePackageName = [resourcePath lastPathComponent];
+        NSString *futurePackagePath = [_projectSettings fullPathForPackageName:futurePackageName];
+        NSFileManager *fileManager = [NSFileManager defaultManager];;
+        if ([fileManager fileExistsAtPath:futurePackagePath])
+        {
+            NSString *newPath = [self rollingRenamedPathForPath:futurePackagePath suffix:@"renamed"];
+            if (![fileManager moveItemAtPath:futurePackagePath toPath:newPath error:error])
+            {
+                return NO;
+            }
+        }
+    }
     return YES;
 }
 
@@ -114,16 +138,19 @@
 {
     for (NSMutableString *fullPath in resourcePathsToImport)
     {
-        NSString *oldPath = fullPath;
-        NSString *newPath = [fullPath stringByAppendingPackageSuffix];
-
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if (![fileManager moveItemAtPath:oldPath toPath:newPath error:error])
+        if (![fullPath hasPackageSuffix])
         {
-            return NO;
-        }
+            NSString *oldPath = fullPath;
+            NSString *newPath = [fullPath stringByAppendingPackageSuffix];
 
-        [fullPath setString:newPath];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if (![fileManager moveItemAtPath:oldPath toPath:newPath error:error])
+            {
+                return NO;
+            }
+
+            [fullPath setString:newPath];
+        }
     }
     return YES;
 }
@@ -234,7 +261,7 @@
     LocalLogDebug(@"Trying to rename resource folder with \"packages\" name...");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];;
-    NSString *renamePathTo = [self renamePathForSpecialCasePackagesFolderAsResourcePath:@"user"];
+    NSString *renamePathTo = [self renamePathForSpecialCasePackagesFolderAsResourcePath];
     self.packageAsResourcePathTempName = [renamePathTo lastPathComponent];
 
     NSString *renamePathFrom = [_projectSettings packagesFolderPath];
@@ -261,8 +288,11 @@
     return YES;
 }
 
-- (NSString *)renamePathForSpecialCasePackagesFolderAsResourcePath:(NSString *)suffix
+- (NSString *)renamePathForSpecialCasePackagesFolderAsResourcePath
 {
+    return [self rollingRenamedPathForPath:[_projectSettings packagesFolderPath] suffix:@"user"];
+
+/*
     NSFileManager *fileManager = [NSFileManager defaultManager];;
     NSString *renamePathTo = [[_projectSettings packagesFolderPath] stringByAppendingPathExtension:suffix];
     NSUInteger count = 0;
@@ -275,6 +305,23 @@
         count ++;
     }
     return renamePathTo;
+*/
+}
+
+- (NSString *)rollingRenamedPathForPath:(NSString *)path suffix:(NSString *)suffix
+{
+    NSString *originalPath = path;
+    NSString *result = [originalPath stringByAppendingPathExtension:suffix];
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+    NSUInteger count = 0;
+
+    while ([fileManager fileExistsAtPath:result])
+    {
+        NSString *renameSuffixWithCount = [NSString stringWithFormat:@"%@.%lu", suffix, count];
+        result = [originalPath stringByAppendingPathExtension:renameSuffixWithCount];
+        count ++;
+    }
+    return result;
 }
 
 /*
