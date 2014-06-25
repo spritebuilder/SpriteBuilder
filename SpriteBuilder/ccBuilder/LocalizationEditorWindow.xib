@@ -360,7 +360,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button id="23">
-                        <rect key="frame" x="366" y="-1" width="109" height="22"/>
+                        <rect key="frame" x="316" y="-1" width="109" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" title="Add Translation" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="24">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -396,9 +396,9 @@
                         </connections>
                     </popUpButton>
                     <button id="7jT-cI-9YC">
-                        <rect key="frame" x="474" y="-1" width="92" height="22"/>
+                        <rect key="frame" x="424" y="-1" width="142" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="square" title="Translate!" bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PVp-0O-jL0">
+                        <buttonCell key="cell" type="square" title="Buy Translations" bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PVp-0O-jL0">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -406,6 +406,19 @@
                             <action selector="pressedTranslate:" target="-2" id="mJO-Mr-Tc1"/>
                         </connections>
                     </button>
+                    <progressIndicator hidden="YES" maxValue="100" controlSize="small" style="bar" id="F8M-hz-w6i">
+                        <rect key="frame" x="126" y="4" width="96" height="12"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </progressIndicator>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Lc3-7O-qiH">
+                        <rect key="frame" x="9" y="3" width="112" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Translation Progress" id="QMh-0A-k0y">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
         </window>
