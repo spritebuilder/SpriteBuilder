@@ -253,10 +253,10 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         }
         [_translateFromInfo setHidden:1];
     }
-    else
+    /*else
     {
         [_translateFromInfo setHidden:0];
-    }
+    }*/
 }
 
 #pragma mark Downloading Cost Estimate and word count
@@ -747,9 +747,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         {
             case SKPaymentTransactionStatePurchased:
                 receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-                NSString* receipt = [NSData dataWithContentsOfURL:receiptURL];
+                NSData* receipt = [NSData dataWithContentsOfURL:receiptURL];
                 [_receipts setObject:receipt forKey:transaction.transactionIdentifier];
-                [self validateReceipt:receipt];
+                [self validateReceipt:[[NSString alloc] initWithData:receipt encoding:NSASCIIStringEncoding]];
                 break;
         }
     }
@@ -760,8 +760,12 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  * TODO check for translations!
  */
 -(void)validateReceipt:(NSString *)receipt{
-    NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",_phrasesToTranslate,@"phrases",nil];
+    NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",receipt,@"receipt",_phrasesToTranslate,@"phrases",nil];
     NSError *error;
+    if(![NSJSONSerialization isValidJSONObject:JSONObject]){
+        NSLog(@"Invalid JSON");
+        return;
+    }
     NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
     NSURL *url = [NSURL URLWithString:receiptURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -774,7 +778,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                   {
                                       if (!error)
                                       {
-                                          NSLog(@"Yo");
                                           [self showTranslationsDownloading];
                                           [self setLanguageWindowDownloading];
                                           [self parseJSONTranslations:data];
@@ -783,7 +786,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       }
                                       else
                                       {
-                                          NSLog(@"Yo1");
                                           NSLog(@"Error: %@", error.localizedDescription);
                                       }
                                   }];
@@ -791,7 +793,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 -(void)showTranslationsDownloading{
-    NSLog(@"Yo2");
     [_translationsProgressBar startAnimation:self];
     [_translationsProgressBar setMaxValue:_numTransToDownload];
     [_translationsDownloadText setHidden:0];
@@ -799,7 +800,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 -(void)getTranslations{
-    NSLog(@"Yo3");
     NSString* URLstring =
     [NSString stringWithFormat:translationsURL, _guid];
     NSURL* url = [NSURL URLWithString:URLstring];
@@ -824,7 +824,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 -(void)setLanguageWindowDownloading{
-    NSLog(@"Yo4");
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* translations = handler.translations;
     for(LocalizationEditorTranslation* t in translations)
@@ -846,7 +845,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  * only done once in the beginning of the SpriteBuilder session.
  */
 -(void)parseJSONTranslations:(NSData *)data{
-    NSLog(@"Yo5");
     NSError *JSONerror;
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
                                                                                   options:NSJSONReadingMutableContainers error:&JSONerror];
@@ -881,6 +879,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     }
     [_languageTable reloadData];
 }
+
 
 
 @end
