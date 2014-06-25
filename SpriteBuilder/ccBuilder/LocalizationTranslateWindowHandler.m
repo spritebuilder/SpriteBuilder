@@ -29,4 +29,11 @@
     newHandler->_translatePopOver = _translatePopOver;
     return newHandler;
 }
+
+-(void)close{
+    if([self isModalPanel]){
+        [NSApp endSheet:self];
+        [self orderOut:nil];
+    }
+}
 @end

@@ -16,7 +16,6 @@
                 <outlet property="_downloadingCostsErrorView" destination="d13-Kv-Xm3" id="mmV-5V-eJj"/>
                 <outlet property="_downloadingLangsErrorView" destination="e7K-mg-ubN" id="whD-Yu-uLx"/>
                 <outlet property="_downloadingLangsView" destination="lT6-gx-Tx2" id="pQj-NI-6g4"/>
-                <outlet property="_handler" destination="QvC-M9-y7g" id="kCG-nC-kYQ"/>
                 <outlet property="_ignoreText" destination="SvM-vx-0un" id="0NU-8Y-mkP"/>
                 <outlet property="_languageTable" destination="dI1-YN-4qR" id="b5J-Jk-PE3"/>
                 <outlet property="_languagesDownloading" destination="1vV-Ub-65Y" id="Fma-kZ-aDb"/>
@@ -30,6 +29,7 @@
                 <outlet property="_translateFromTabView" destination="xXK-m4-1Rg" id="vx8-Zw-Owg"/>
                 <outlet property="_translatePopOver" destination="eDT-x7-XT2" id="ndd-Hk-Uyu"/>
                 <outlet property="buy" destination="p70-UZ-TuU" id="mDP-KQ-KA0"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="XdH-kp-wnk"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -113,7 +113,7 @@
                     <button verticalHuggingPriority="750" id="p70-UZ-TuU">
                         <rect key="frame" x="380" y="14" width="102" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="Buy" bezelStyle="rounded" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Tyf-bn-jNo">
+                        <buttonCell key="cell" type="push" title="Buy" bezelStyle="rounded" alignment="center" controlSize="small" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Tyf-bn-jNo">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -318,7 +318,7 @@ Gw
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="53F-ck-Dys">
                     <rect key="frame" x="-2" y="-36" width="200" height="194"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="We support traslations from: English. " id="TQH-C8-d3I">
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="We support traslations from: English. " id="TQH-C8-d3I">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

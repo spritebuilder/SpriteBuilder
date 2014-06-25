@@ -16,6 +16,9 @@
     IBOutlet NSPopUpButton* popLanguageAdd;
     IBOutlet NSPopUpButton* popCurrentLanguage;
     IBOutlet NSTextView* textInspectorKey;
+    IBOutlet NSTextField* _translationProgressText;
+    IBOutlet NSProgressIndicator* _translationProgress;
+    IBOutlet NSButton* _translationsButton;
     LocalizationTranslateWindow* _ltw;
 }
 
@@ -35,7 +38,12 @@
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs;
 - (IBAction)selectedCurrentLanguage:(id)sender;
 - (void)addLanguages:(NSArray*)langs;
-//- (void)removeLanguages:(NSArray*)langs;
+- (void)removeLanguages:(NSArray*)langs;
+- (void)setDownloadingTranslations:(double)numToTrans;
+- (void)incrementTransByOne;
+- (double)translationProgress;
+- (void)finishDownloadingTranslations;
+
 - (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs;
 
 - (void) reload;

@@ -52,8 +52,10 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
     [[_translateFromTabView tabViewItemAtIndex:downloadCostErrorIndex] setView:_downloadingCostsErrorView];
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
-    [_handler setPopOver:_translatePopOver button:_translateFromInfo];
+    [((LocalizationTranslateWindowHandler*)self.window) setPopOver:_translatePopOver button:_translateFromInfo];
+    [self disableAll];
     [self getLanguagesFromServer];
+    
 }
 
 #pragma mark Downloading and updating languages
@@ -65,7 +67,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  */
 -(void)getLanguagesFromServer{
     _popTranslateFrom.title = downloadingLangsString;
-    [_popTranslateFrom setEnabled:0];
     [_translateFromTabView selectTabViewItemAtIndex:downloadLangsIndex];
     [_languagesDownloading startAnimation:self];
     NSString* URLstring =
@@ -89,6 +90,21 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [task resume];
 }
 
+-(void)disableAll{
+    [_popTranslateFrom setEnabled:0];
+    [_languageTable setEnabled:0];
+    [_checkAll setEnabled:0];
+    [_ignoreText setEnabled:0];
+    [_cancel setEnabled:0];
+}
+
+-(void)enableAll{
+    [_popTranslateFrom setEnabled:1];
+    [_languageTable setEnabled:1];
+    [_checkAll setEnabled:1];
+    [_ignoreText setEnabled:1];
+    [_cancel setEnabled:1];
+}
 /*
  * Turns the JSON response into a dictionary and fill the _languages global accordingly.
  * Then update the active languages array, the pop-up menu and the table. This is
@@ -154,7 +170,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         LocalizationEditorLanguage* l = [_activeLanguages objectAtIndex:0];
         _currLang = l;
         _popTranslateFrom.title = l.name;
-        [_popTranslateFrom setEnabled:1];
+        [self enableAll];
         [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
         [self updateLanguageSelectionMenu:0];
     }
@@ -279,6 +295,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     if(phrases == 0)
     {
         _cost.stringValue = _numWords.stringValue = @"0";
+        [_buy setEnabled:0];
         return;
     }
     [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
@@ -310,7 +327,8 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                     if (!error)
                     {
                         [self parseJSONEstimate:data];
-                        if(_tierForTranslations > 0){
+                        if(_tierForTranslations > 0)
+                        {
                             [self requestIAPProducts];
                         }
                         NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
@@ -439,7 +457,8 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  * Close the window.
  */
 - (IBAction)cancel:(id)sender {
-    [[sender window] close];
+    [NSApp endSheet:self.window];
+    [self.window close];
 }
 
 /*
@@ -732,6 +751,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [_costDownloading setHidden:1];
     [_costDownloadingText setHidden:1];
     [_costDownloading stopAnimation:self];
+    [_buy setEnabled:1];
 }
 
 #pragma mark payment transaction observer
@@ -778,7 +798,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                   {
                                       if (!error)
                                       {
-                                          [self showTranslationsDownloading];
                                           [self setLanguageWindowDownloading];
                                           [self parseJSONTranslations:data];
                                           _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
@@ -792,37 +811,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [task resume];
 }
 
--(void)showTranslationsDownloading{
-    [_translationsProgressBar startAnimation:self];
-    [_translationsProgressBar setMaxValue:_numTransToDownload];
-    [_translationsDownloadText setHidden:0];
-    [_translationsProgressBar setHidden:0];
-}
-
--(void)getTranslations{
-    NSString* URLstring =
-    [NSString stringWithFormat:translationsURL, _guid];
-    NSURL* url = [NSURL URLWithString:URLstring];
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL: url
-                                                             completionHandler:^(NSData *data,
-                                                                                 NSURLResponse *response,
-                                                                                 NSError *error)
-                                  {
-                                      if (!error)
-                                      {
-                                          
-                                          [self parseJSONTranslations:data];
-                                          NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
-                                      }
-                                      else
-                                      {
-                                          NSLog(@"Error: %@", error.localizedDescription);
-                                      }
-                                  }];
-    [task resume];
-
-}
-
 -(void)setLanguageWindowDownloading{
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* translations = handler.translations;
@@ -832,12 +820,13 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         {
             if([t.key isEqualToString:[d objectForKey:@"key"]])
             {
-                [_parentWindow addLanguages:[d objectForKey:@"target_languages"]];
                 t.languagesDownloading = [d objectForKey:@"target_languages"];
+                [_parentWindow addLanguages:[d objectForKey:@"target_languages"]];
                 break;
             }
         }
     }
+    [_parentWindow setDownloadingTranslations:_numTransToDownload];
 }
 /*
  * Turns the JSON response into a dictionary and fill the _languages global accordingly.
@@ -867,19 +856,37 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                 if([t.key isEqualToString:keyToTranslate] && [t.languagesDownloading containsObject:lang]){
                     [t.translations setObject:translation forKey:lang];
                     [t.languagesDownloading removeObject:lang];
-                    [_translationsProgressBar incrementBy:1];
+                    [_parentWindow incrementTransByOne];
                 }
             }
         }
     }
-    if(_translationsProgressBar.doubleValue == _numTransToDownload){
-        [_timerTransDownload invalidate];
-        [_translationsDownloadText setHidden:1];
-        [_translationsProgressBar setHidden:1];
+    if([_parentWindow translationProgress] == _numTransToDownload){
+        [_parentWindow finishDownloadingTranslations];
     }
-    [_languageTable reloadData];
 }
 
-
-
+-(void)getTranslations{
+    NSString* URLstring =
+    [NSString stringWithFormat:translationsURL, _guid];
+    NSURL* url = [NSURL URLWithString:URLstring];
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL: url
+                                                             completionHandler:^(NSData *data,
+                                                                                 NSURLResponse *response,
+                                                                                 NSError *error)
+                                  {
+                                      if (!error)
+                                      {
+                                          
+                                          [self parseJSONTranslations:data];
+                                          NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                      }
+                                      else
+                                      {
+                                          NSLog(@"Error: %@", error.localizedDescription);
+                                      }
+                                  }];
+    [task resume];
+    
+}
 @end

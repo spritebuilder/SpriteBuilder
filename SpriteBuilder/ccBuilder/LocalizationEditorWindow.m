@@ -12,13 +12,12 @@
 #import "LocalizationEditorHandler.h"
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorLanguageTableView.h"
+#import "LocalizationTranslateWindowHandler.h"
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
 @implementation LocalizationEditorWindow
-
-#pragma mark Init and Updating stuff
-
+@synthesize temp;
 - (void) awakeFromNib
 {
     [tableTranslations registerForDraggedTypes:[NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"]];
@@ -200,16 +199,6 @@
 {}
 
 /*
- * Just displays a translate window.
- * TODO Make the window key and main
- */
-- (IBAction)pressedTranslate:(id)sender {
-    _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
-    [_ltw setParentWindow:self];
-    [[_ltw window] makeKeyAndOrderFront:nil];
-}
-
-/*
  * If a language is added, do what is shown here but also reload the langauge menu on the
  * language translation window if there is one open.
  */
@@ -228,6 +217,23 @@
         [_ltw reloadLanguageMenu];
     
     [handler setEdited];
+}
+
+/*
+ * Just displays a translate window.
+ * TODO Make the window key and main
+ */
+- (IBAction)pressedTranslate:(id)sender {
+    if([_translationsButton.title isEqualToString:@"Buy Translations"]){
+        _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+        [_ltw setParentWindow:self];
+        [_ltw.window makeKeyAndOrderFront:sender];
+        [NSApp runModalForWindow:_ltw.window];
+    }
+    else
+    {
+        
+    }
 }
 
 /*
@@ -251,6 +257,34 @@
     [self updateQuickEditLangs];
     [self updateInspector];
     //[handler setEdited];
+}
+
+-(void)setDownloadingTranslations:(double)numToTrans{
+    [_translationProgress setMaxValue:numToTrans];
+    [_translationProgress setHidden:0];
+    [_translationProgressText setHidden:0];
+    [tableTranslations setEnabled:0];
+    [tableLanguages setEnabled:0];
+    [popLanguageAdd setEnabled:0];
+    [popCurrentLanguage setEnabled:0];
+    _translationsButton.title = @"Cancel Download";
+}
+
+-(void)incrementTransByOne{
+    [_translationProgress incrementBy:1.0];
+}
+
+- (double)translationProgress{
+    return _translationProgress.doubleValue;
+}
+-(void)finishDownloadingTranslations{
+    [_translationProgress setHidden:1];
+    [_translationProgressText setHidden:1];
+    [tableTranslations setEnabled:1];
+    [tableLanguages setEnabled:1];
+    [popLanguageAdd setEnabled:1];
+    [popCurrentLanguage setEnabled:1];
+    _translationsButton.title = @"Buy Translations";
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
