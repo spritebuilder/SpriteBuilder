@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "PackageMigrator.h"
 
 #import "ProjectSettings.h"
@@ -15,9 +14,7 @@
 
 @interface PackageMigrator ()
 
-@property (nonatomic, strong) NSMutableDictionary *renameMap;
 @property (nonatomic, weak)ProjectSettings *projectSettings;
-
 @property (nonatomic) BOOL resourcePathWithPackagesFolderNameFound;
 @property (nonatomic, copy) NSString *packageAsResourcePathTempName;
 
@@ -40,7 +37,6 @@
     {
         self.projectSettings = projectSettings;
         self.resourcePathWithPackagesFolderNameFound = NO;
-        self.renameMap = [NSMutableDictionary dictionary];
     }
 
     return self;
@@ -50,19 +46,21 @@
 {
     LocalLogDebug(@"Package migration started...");
 
-    if (![self renameResourcePathWithPackagesFolderName:error])
+    // The folder PACKAGE_FOLDER_NAME is special, if it is already taken by a resource
+    // path it will be renamed now and restore after importing
+    if (![self renameResourcePathCollidingWithPackagesFolderName:error])
     {
         return NO;
     }
 
-    if (![self createPackagesFolderIfNotExisting:NULL])
+    if (![self createPackagesFolderIfNotExisting:error])
     {
         return NO;
     }
 
     NSArray *resourcePathsToImport = [self allResourcePathsToBeImported];
 
-    if (![self removeResourcePathsToImportFromProjectResourcePathsToImport:resourcePathsToImport error:error])
+    if (![self removeResourcePathsToImportFromProject:resourcePathsToImport error:error])
     {
         return NO;
     }
@@ -77,7 +75,7 @@
         return NO;
     }
 
-    [self restorePackageAsResourcePathName];
+    [self restoreCollidingResourcePathName];
 
     LocalLogDebug(@"Package finished successfully!");
     return YES;
@@ -100,12 +98,11 @@
     return resourcePathsToImport;
 }
 
-- (BOOL)removeResourcePathsToImportFromProjectResourcePathsToImport:(NSArray *)resourcePathsToImport error:(NSError **)error
+- (BOOL)removeResourcePathsToImportFromProject:(NSArray *)resourcePathsToImport error:(NSError **)error
 {
-    for (NSMutableDictionary *resourcePathDict in [_projectSettings.resourcePaths copy])
+    for (NSMutableString *resourcePath in resourcePathsToImport)
     {
-        NSString *fullResourcePath = [_projectSettings fullPathForResourcePathDict:resourcePathDict];
-        if (![_projectSettings removeResourcePath:fullResourcePath error:error])
+        if (![_projectSettings removeResourcePath:resourcePath error:error])
         {
             return NO;
         }
@@ -117,11 +114,10 @@
 {
     for (NSMutableString *fullPath in resourcePathsToImport)
     {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-
         NSString *oldPath = fullPath;
         NSString *newPath = [fullPath stringByAppendingPackageSuffix];
 
+        NSFileManager *fileManager = [NSFileManager defaultManager];
         if (![fileManager moveItemAtPath:oldPath toPath:newPath error:error])
         {
             return NO;
@@ -138,6 +134,7 @@
     {
         PackageImporter *packageImporter = [[PackageImporter alloc] init];
         packageImporter.projectSettings = _projectSettings;
+
         if ([packageImporter importPackagesWithPaths:@[pathToImport] error:error])
         {
             NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -154,7 +151,7 @@
     return YES;
 }
 
-- (void)restorePackageAsResourcePathName
+- (void)restoreCollidingResourcePathName
 {
     if (_resourcePathWithPackagesFolderNameFound)
     {
@@ -185,7 +182,7 @@
     LocalLogDebug(@"Trying to create packages folder...");
     NSString *packageFolderPath = [_projectSettings packagesFolderPath];
 
-    NSAssert(packageFolderPath, @"ProjectSettings' packagesFolderPath not yielding anything, forgot to set projectPath property?");
+    NSAssert(packageFolderPath, @"ProjectSettings' packagesFolderPath not yielding anything, forgot to set projectsettings.projectPath property?");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];;
     if (![fileManager createDirectoryAtPath:packageFolderPath
@@ -196,6 +193,7 @@
         LocalLogError(@"ERROR Creating packages folder: %@", (*error).localizedDescription);
         return NO;
     }
+
     LocalLogDebug(@"Trying to create packages folder DONE");
     return YES;
 }
@@ -209,7 +207,7 @@
 }
 
 
-- (BOOL)renameResourcePathWithPackagesFolderName:(NSError **)error
+- (BOOL)renameResourcePathCollidingWithPackagesFolderName:(NSError **)error
 {
     if ([self packageFolderExists]
         && [self isPackageFolderAResourcePath])
@@ -245,8 +243,6 @@
         LocalLogError(@"ERROR Special case renaming: %@ -> \"%@\" found: renaming to: \"%@\"", (*error).localizedDescription, renamePathFrom, renamePathTo);
         return NO;
     }
-
-    _renameMap[renamePathFrom] = renamePathTo;
 
     LocalLogDebug(@"Special case: resource path with name \"%@\" found: renaming to: \"%@\"", PACKAGES_FOLDER_NAME, renamePathTo);
     LocalLogDebug(@"Trying to rename resource folder with \"packages\" name DONE");
