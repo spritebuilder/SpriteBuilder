@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+
 #import "FileSystemTestCase.h"
 #import "MoveFileCommand.h"
 
@@ -31,7 +32,6 @@
     NSError *error;
     XCTAssertTrue([moveFileCommand execute:&error], @"Move file command failed with error: %@", error);
     XCTAssertNil(error);
-    XCTAssertTrue(moveFileCommand.successful);
 
     [self assertFileExists:@"anotherplace/important.txt"];
     [self assertFileDoesNotExists:@"oneplace/important.txt"];
@@ -50,9 +50,11 @@
 
     NSError *error;
     XCTAssertTrue([moveFileCommand execute:&error], @"Move file command failed with error: %@", error);
-    XCTAssertTrue([moveFileCommand undo:&error], @"Move file command  UNDO failed with error: %@", error);
     XCTAssertNil(error);
-    XCTAssertTrue(moveFileCommand.successful);
+
+    NSError *error2;
+    XCTAssertTrue([moveFileCommand undo:&error], @"Move file command  UNDO failed with error: %@", error2);
+    XCTAssertNil(error2);
 
     [self assertFileExists:@"oneplace/important.txt"];
     [self assertFileDoesNotExists:@"anotherplace/important.txt"];
@@ -66,7 +68,6 @@
     NSError *error;
     XCTAssertFalse([moveFileCommand execute:&error], @"Move file command succeeded although it shouldn't have.");
     XCTAssertNotNil(error);
-    XCTAssertFalse(moveFileCommand.successful);
 }
 
 @end

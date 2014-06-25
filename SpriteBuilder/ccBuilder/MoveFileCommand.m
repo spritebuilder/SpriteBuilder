@@ -2,9 +2,6 @@
 
 @interface MoveFileCommand()
 
-@property (nonatomic, readwrite) BOOL successful;
-@property (nonatomic, strong, readwrite) NSError *error;
-
 @end
 
 
@@ -28,31 +25,13 @@
     NSAssert(_toPath != nil, @"toPath must be set");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager moveItemAtPath:_fromPath toPath:_toPath error:error])
-    {
-        self.error = *error;
-        return NO;
-    }
-
-    self.successful = YES;
-    return YES;
+    return [fileManager moveItemAtPath:_fromPath toPath:_toPath error:error];
 }
 
 - (BOOL)undo:(NSError **)error;
 {
-    if (_successful)
-    {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if (![fileManager moveItemAtPath:_toPath toPath:_fromPath error:error])
-        {
-            return NO;
-        }
-    }
-    else
-    {
-        NSLog(@"Nothing to undo: %@", [self description]);
-    }
-    return YES;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [fileManager moveItemAtPath:_toPath toPath:_fromPath error:error];
 }
 
 - (NSString *)description
