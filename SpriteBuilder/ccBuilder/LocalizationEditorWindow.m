@@ -17,7 +17,7 @@
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
 @implementation LocalizationEditorWindow
-@synthesize temp;
+
 - (void) awakeFromNib
 {
     [tableTranslations registerForDraggedTypes:[NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"]];
@@ -259,6 +259,8 @@
     //[handler setEdited];
 }
 
+- (void)removeLanguages:(NSArray*)langs
+{}
 -(void)setDownloadingTranslations:(double)numToTrans{
     [_translationProgress setMaxValue:numToTrans];
     [_translationProgress setHidden:0];
