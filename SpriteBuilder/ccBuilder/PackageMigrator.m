@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "PackageMigrator.h"
 
 #import "ProjectSettings.h"
@@ -8,6 +9,8 @@
 #import "PackageRenamer.h"
 #import "ResourceManager.h"
 #import "RMPackage.h"
+#import "MoveFileCommand.h"
+#import "CreateDirectoryFileCommand.h"
 
 #define LocalLogDebug( s, ... ) NSLog( @"[DEBUG] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #define LocalLogError( s, ... ) NSLog( @"[ERROR] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
@@ -17,6 +20,9 @@
 @property (nonatomic, weak)ProjectSettings *projectSettings;
 @property (nonatomic) BOOL resourcePathWithPackagesFolderNameFound;
 @property (nonatomic, copy) NSString *packageAsResourcePathTempName;
+
+@property (nonatomic, strong) NSMutableArray *migrationCommandsStack;
+@property (nonatomic, strong) NSMutableArray *resourePathsRemoved;
 
 @end
 
@@ -37,6 +43,8 @@
     {
         self.projectSettings = projectSettings;
         self.resourcePathWithPackagesFolderNameFound = NO;
+        self.migrationCommandsStack = [NSMutableArray array];
+        self.resourePathsRemoved = [NSMutableArray array];
     }
 
     return self;
@@ -80,7 +88,12 @@
         return NO;
     }
 
-    [self restoreCollidingResourcePathName];
+    if (![self restoreCollidingResourcePathName:error])
+    {
+        return NO;
+    }
+
+    // NSLog(@"%@", _migrationCommandsStack);
 
     LocalLogDebug(@"Package finished successfully!");
     return YES;
@@ -92,11 +105,11 @@
     {
         NSString *futurePackageName = [resourcePath lastPathComponent];
         NSString *futurePackagePath = [_projectSettings fullPathForPackageName:futurePackageName];
-        NSFileManager *fileManager = [NSFileManager defaultManager];;
-        if ([fileManager fileExistsAtPath:futurePackagePath])
+        if ([[NSFileManager defaultManager] fileExistsAtPath:futurePackagePath])
         {
             NSString *newPath = [self rollingRenamedPathForPath:futurePackagePath suffix:@"renamed"];
-            if (![fileManager moveItemAtPath:futurePackagePath toPath:newPath error:error])
+
+            if (![self moveFileAndAddToCommandStackAtPath:futurePackagePath toPath:newPath error:error])
             {
                 return NO;
             }
@@ -130,6 +143,7 @@
         {
             return NO;
         }
+        [_resourePathsRemoved addObject:[resourcePath copy]];
     }
     return YES;
 }
@@ -143,8 +157,7 @@
             NSString *oldPath = fullPath;
             NSString *newPath = [fullPath stringByAppendingPackageSuffix];
 
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            if (![fileManager moveItemAtPath:oldPath toPath:newPath error:error])
+            if (![self moveFileAndAddToCommandStackAtPath:oldPath toPath:newPath error:error])
             {
                 return NO;
             }
@@ -178,7 +191,7 @@
     return YES;
 }
 
-- (void)restoreCollidingResourcePathName
+- (BOOL)restoreCollidingResourcePathName:(NSError **)error
 {
     if (_resourcePathWithPackagesFolderNameFound)
     {
@@ -189,7 +202,7 @@
         RMPackage *package = [[RMPackage alloc] init];
         package.dirPath = [_projectSettings fullPathForPackageName:_packageAsResourcePathTempName];
 
-        [packageRenamer renamePackage:package toName:PACKAGES_FOLDER_NAME error:nil];
+        return [packageRenamer renamePackage:package toName:PACKAGES_FOLDER_NAME error:error];
     }
 }
 
@@ -211,28 +224,17 @@
 
     NSAssert(packageFolderPath, @"ProjectSettings' packagesFolderPath not yielding anything, forgot to set projectsettings.projectPath property?");
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];;
-    if (![fileManager createDirectoryAtPath:packageFolderPath
-                          withIntermediateDirectories:NO
-                                           attributes:nil
-                                                error:error])
-    {
-        LocalLogError(@"ERROR Creating packages folder: %@", (*error).localizedDescription);
-        return NO;
-    }
+    CreateDirectoryFileCommand *createDirectoryFileCommand = [[CreateDirectoryFileCommand alloc] initWithDirPath:packageFolderPath];
 
-    LocalLogDebug(@"Trying to create packages folder DONE");
-    return YES;
+    return [self executeCommandAndAddToStackOnSuccess:createDirectoryFileCommand error:error];
 }
 
 - (BOOL)packageFolderExists
 {
     NSString *packageFolderPath = [_projectSettings packagesFolderPath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    return [fileManager fileExistsAtPath:packageFolderPath];
+    return [[NSFileManager defaultManager] fileExistsAtPath:packageFolderPath];
 }
-
 
 - (BOOL)renameResourcePathCollidingWithPackagesFolderName:(NSError **)error
 {
@@ -260,12 +262,11 @@
 {
     LocalLogDebug(@"Trying to rename resource folder with \"packages\" name...");
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];;
     NSString *renamePathTo = [self renamePathForSpecialCasePackagesFolderAsResourcePath];
     self.packageAsResourcePathTempName = [renamePathTo lastPathComponent];
 
     NSString *renamePathFrom = [_projectSettings packagesFolderPath];
-    if (![fileManager moveItemAtPath:renamePathFrom toPath:renamePathTo error:error])
+    if (![self moveFileAndAddToCommandStackAtPath:renamePathFrom toPath:renamePathTo error:error])
     {
         LocalLogError(@"ERROR Special case renaming: %@ -> \"%@\" found: renaming to: \"%@\"", (*error).localizedDescription, renamePathFrom, renamePathTo);
         return NO;
@@ -297,16 +298,31 @@
 {
     NSString *originalPath = path;
     NSString *result = [originalPath stringByAppendingPathExtension:suffix];
-    NSFileManager *fileManager = [NSFileManager defaultManager];;
     NSUInteger count = 0;
 
-    while ([fileManager fileExistsAtPath:result])
+    while ([[NSFileManager defaultManager] fileExistsAtPath:result])
     {
         NSString *renameSuffixWithCount = [NSString stringWithFormat:@"%@.%lu", suffix, count];
         result = [originalPath stringByAppendingPathExtension:renameSuffixWithCount];
         count ++;
     }
     return result;
+}
+
+- (BOOL)moveFileAndAddToCommandStackAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+{
+    MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:fromPath toPath:toPath];
+    return [self executeCommandAndAddToStackOnSuccess:moveFileCommand error:error];
+}
+
+- (BOOL)executeCommandAndAddToStackOnSuccess:(id<FileCommandProtocol>)command error:(NSError **)error;
+{
+    BOOL success = [command execute:error];
+    if (success)
+    {
+        [_migrationCommandsStack addObject:command];
+    }
+    return success;
 }
 
 @end
