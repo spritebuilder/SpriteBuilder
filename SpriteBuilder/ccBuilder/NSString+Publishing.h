@@ -12,6 +12,8 @@
 
 - (BOOL)isWaveSoundFile;
 
+- (BOOL)isIntermediateFileLookup;
+
 // Tests if the file has a spritesheet compatible extension (e.g. psd and png)
 - (BOOL)isSmartSpriteSheetCompatibleFile;
 

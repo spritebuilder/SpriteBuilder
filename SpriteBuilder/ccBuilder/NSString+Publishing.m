@@ -1,6 +1,7 @@
 #import "NSString+Publishing.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
+#import "MiscConstants.h"
 
 
 @implementation NSString (Publishing)
@@ -25,6 +26,11 @@
 {
     NSString *extension = [[self pathExtension] lowercaseString];
     return [extension isEqualToString:@"wav"];
+}
+
+- (BOOL)isIntermediateFileLookup
+{
+    return [[self lastPathComponent] isEqualToString:INTERMEDIATE_FILE_LOOKUP_NAME];
 }
 
 - (BOOL)isSmartSpriteSheetCompatibleFile

@@ -50,13 +50,13 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)assertProperties
 {
-    NSAssert(_spriteSheetFile != nil, @"spriteSheetFile should not be nil");
-    NSAssert(_subPath != nil, @"subPath should not be nil");
-    NSAssert(_srcDirs != nil, @"srcDirs should not be nil");
-    NSAssert(_resolution != nil, @"resolution should not be nil");
-    NSAssert(_srcSpriteSheetDate != nil, @"srcSpriteSheetDate should not be nil");
-    NSAssert(_publishDirectory != nil, @"publishDirectory should not be nil");
-    NSAssert(_publishedPNGFiles != nil, @"publishedPNGFiles should not be nil");
+    NSAssert(_spriteSheetFile != nil, @"spriteSheetFile must not be nil");
+    NSAssert(_subPath != nil, @"subPath must not be nil");
+    NSAssert(_srcDirs != nil, @"srcDirs must not be nil");
+    NSAssert(_resolution != nil, @"resolution must not be nil");
+    NSAssert(_srcSpriteSheetDate != nil, @"srcSpriteSheetDate must not be nil");
+    NSAssert(_publishDirectory != nil, @"publishDirectory must not be nil");
+    NSAssert(_publishedPNGFiles != nil, @"publishedPNGFiles must not be nil");
 }
 
 - (void)publishSpriteSheet
