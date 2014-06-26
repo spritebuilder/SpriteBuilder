@@ -17,6 +17,8 @@
 - (IBAction)yes:(id)sender {
     [_editorWindow finishDownloadingTranslations];
     [_translateWindow cancelDownload];
+    [NSApp endSheet:self.window];
+    [self.window orderOut:nil];
 }
 
 - (IBAction)no:(id)sender {

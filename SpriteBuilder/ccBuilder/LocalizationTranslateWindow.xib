@@ -25,7 +25,6 @@
                 <outlet property="_popTranslateFrom" destination="I6b-JE-8U4" id="F0c-9k-7Fr"/>
                 <outlet property="_standardLangsView" destination="Urd-Xj-CU6" id="uXS-VI-nOc"/>
                 <outlet property="_translateFromInfo" destination="2Lu-mC-tJx" id="XMi-JF-ufN"/>
-                <outlet property="_translateFromInfoV" destination="3OB-tK-zIQ" id="4WF-zR-KIU"/>
                 <outlet property="_translateFromTabView" destination="xXK-m4-1Rg" id="vx8-Zw-Owg"/>
                 <outlet property="_translatePopOver" destination="eDT-x7-XT2" id="ndd-Hk-Uyu"/>
                 <outlet property="buy" destination="p70-UZ-TuU" id="mDP-KQ-KA0"/>
@@ -174,9 +173,6 @@ Gw
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
-                        <connections>
-                            <action selector="showInfo:" target="-2" id="78b-FY-KSX"/>
-                        </connections>
                     </button>
                     <tabView type="noTabsNoBorder" id="xXK-m4-1Rg">
                         <rect key="frame" x="272" y="77" width="205" height="195"/>
@@ -216,7 +212,7 @@ Gw
                         </tabViewItems>
                     </tabView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="XX1-uv-gg5">
-                        <rect key="frame" x="100" y="229" width="29" height="17"/>
+                        <rect key="frame" x="116" y="229" width="29" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Into" id="fhn-IL-uyg">
                             <font key="font" metaFont="smallSystem"/>
@@ -227,56 +223,7 @@ Gw
                 </subviews>
             </view>
         </window>
-        <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="SrZ-FS-nbl">
-            <rect key="frame" x="0.0" y="0.0" width="249" height="110"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <clipView key="contentView" id="ZIP-ty-pkr">
-                <rect key="frame" x="0.0" y="0.0" width="249" height="110"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="3OB-tK-zIQ">
-                        <rect key="frame" x="0.0" y="0.0" width="249" height="110"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
-                        <size key="minSize" width="249" height="110"/>
-                        <size key="maxSize" width="463" height="10000000"/>
-                        <attributedString key="textStorage">
-                            <fragment>
-                                <string key="content">Additional translatable language(s): English. To activate, select "Add Language" in Language Translation window and add phrases you want to translate."</string>
-                                <attributes>
-                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="13" name=".LucidaGrandeUI"/>
-                                    <integer key="NSLigature" value="0"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" defaultTabInterval="26.449999999999999">
-                                        <tabStops>
-                                            <textTab alignment="left" location="26.450000762939453"/>
-                                        </tabStops>
-                                    </paragraphStyle>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                        <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <size key="minSize" width="249" height="110"/>
-                        <size key="maxSize" width="463" height="10000000"/>
-                    </textView>
-                </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            </clipView>
-            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="cY3-8J-Y5W">
-                <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </scroller>
-            <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="9Co-zF-geu">
-                <rect key="frame" x="233" y="0.0" width="16" height="110"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </scroller>
-        </scrollView>
-        <viewController id="eTF-dF-sjx" userLabel="Popover View Controller">
-            <connections>
-                <outlet property="view" destination="SrZ-FS-nbl" id="KdT-oo-Li2"/>
-            </connections>
-        </viewController>
+        <viewController id="eTF-dF-sjx" userLabel="Popover View Controller"/>
         <popover id="eDT-x7-XT2">
             <connections>
                 <outlet property="contentViewController" destination="eTF-dF-sjx" id="dy8-ZM-JWl"/>

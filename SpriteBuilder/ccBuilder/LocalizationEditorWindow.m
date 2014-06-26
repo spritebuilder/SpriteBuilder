@@ -215,8 +215,6 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
-    if(_ltw)
-        [_ltw reloadLanguageMenu];
     
     [handler setEdited];
 }
@@ -227,10 +225,10 @@
  */
 - (IBAction)pressedTranslate:(id)sender {
     if([_translationsButton.title isEqualToString:@"Buy Translations"]){
-        if(!_ltw)
-        {
+        //if(!_ltw)
+        //{
             _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
-        }
+        //}
         [_ltw setParentWindow:self];
         [_ltw.window makeKeyAndOrderFront:sender];
         [NSApp runModalForWindow:_ltw.window];
@@ -316,8 +314,6 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
-    if(_ltw)
-        [_ltw reloadLanguageMenu];
     [handler setEdited];
 }
 
@@ -505,7 +501,7 @@
         }
         else
         {
-            if([translation.languagesDownloading containsObject:aTableColumn.identifier]){
+            if(translation.languagesDownloading && [translation.languagesDownloading containsObject:aTableColumn.identifier]){
                 [[aTableColumn dataCellForRow:rowIndex] setEnabled:0];
                 return @"Downloading...";
             }else{
@@ -585,8 +581,6 @@
                 [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
                 [handler setEdited];
             }
-            if(_ltw)
-                [_ltw reloadCost];
         }
         
         [self updateInspector];

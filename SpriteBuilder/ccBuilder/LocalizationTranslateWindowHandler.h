@@ -9,8 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface LocalizationTranslateWindowHandler : NSWindow
-@property (nonatomic,strong) NSPopover* translatePopOver;
-@property (nonatomic,strong) NSButton* translateButton;
--(void)setPopOver:(NSPopover*)p button:(NSButton*)b;
 
 @end

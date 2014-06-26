@@ -15,15 +15,6 @@
 
 @interface LocalizationTranslateWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver, NSWindowDelegate>
 {
-    //info button
-    NSPopover *_translatePopOver;
-    NSTextView *_translateFromInfoV;
-    NSViewController *_translateInfoVC;
-    IBOutlet NSButton* _translateFromInfo;
-    
-    //Window Handler (To deal with mouse events)
-    IBOutlet LocalizationTranslateWindowHandler* _handler;
-    
     //tab views
     IBOutlet NSView* _noActiveLangsView;
     IBOutlet NSView* _standardLangsView;
@@ -51,8 +42,6 @@
     IBOutlet NSButton *_buy;
     
     //Translations downloading stuff
-    IBOutlet NSTextField* _translationsDownloadText;
-    IBOutlet NSProgressIndicator* _translationsProgressBar;
     NSInteger _numTransToDownload;
     NSTimer* _timerTransDownload;
     
@@ -75,13 +64,9 @@
 - (IBAction)toggleIgnore:(id)sender;
 - (IBAction)selectedTranslateFromMenu:(id)sender;
 - (IBAction)toggleCheckAll:(id)sender;
-- (IBAction)showInfo:(id)sender;
 - (IBAction)retryLanguages:(id)sender;
 - (IBAction)retryCost:(id)sender;
-- (void)reloadLanguageMenu;
-- (void)reloadCost;
 - (void)cancelDownload;
-
 @property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
 
 @end

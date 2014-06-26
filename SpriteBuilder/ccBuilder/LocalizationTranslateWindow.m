@@ -12,29 +12,28 @@
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorWindow.h"
-#import "LocalizationTranslateWindowHandler.h"
 
 @implementation LocalizationTranslateWindow
 
 @synthesize parentWindow = _parentWindow;
 
-#pragma mark Standards for the tab view
+//Standards for the tab view
 static int downloadLangsIndex = 0;
 static int noActiveLangsIndex = 1;
 static int standardLangsIndex = 2;
 static int downloadCostErrorIndex = 3;
 static int downloadLangsErrorIndex = 4;
 
-#pragma mark URLs
+//URLs
 static NSString* languageURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1/translations/languages?key=%@";
 static NSString* const estimateURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1/translations/estimate";
 static NSString* const receiptURL = @"http://spritebuilder-rails.herokuapp.com/translations";
 static NSString* translationsURL = @"http://spritebuilder-rails.herokuapp.com/translations?key=%@";
+static NSString* const cancelURL = @"http://spritebuilder-rails.herokuapp.com/translations/cancel";
 
-#pragma mark Messages for the user
+//Messages for the user
 static NSString* const noActiveLangsString = @"No Valid Languages";
 static NSString* const downloadingLangsString = @"Downloading...";
-static NSString* missingActiveLangsErrorString = @"Additional translatable language(s): %@.\r\rTo activate, select \"Add Language\" in Language Translation window and add phrases you want to translate.";
 static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%@.";
 
 #pragma mark Init
@@ -52,9 +51,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
     [[_translateFromTabView tabViewItemAtIndex:downloadCostErrorIndex] setView:_downloadingCostsErrorView];
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
-    [((LocalizationTranslateWindowHandler*)self.window) setPopOver:_translatePopOver button:_translateFromInfo];
     [self disableAll];
     [self getLanguagesFromServer];
+    
     
 }
 
@@ -213,10 +212,10 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  * 'translate from' language from the Langauge window, and just sets the current language
  * and language selection menu accordingly.
  */
-- (void) updateLanguageSelectionMenu:(NSInteger)userReselection
+- (void) updateLanguageSelectionMenu:(int)userSelection
 {
     NSString* newLangSelection = _popTranslateFrom.selectedItem.title;
-    if(self.isWindowLoaded && _currLang && userReselection && [newLangSelection isEqualToString:_currLang.name])
+    if(self.isWindowLoaded && _currLang && userSelection && [newLangSelection isEqualToString:_currLang.name])
     {
         return;
     }
@@ -252,27 +251,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         [_languageTable reloadData];
         [self updateCheckAll];
     }
-    [self toggleTranslateFromInfo];
     
-}
-
-/*
- * Toggles whether or not you can see the 'Translate From Info' button
- * depending on if there are languages that can still be activated.
- */
--(void)toggleTranslateFromInfo{
-    if(_activeLanguages.count == [_languages allKeys].count)
-    {
-        if(_translatePopOver.isShown)
-        {
-            [_translatePopOver close];
-        }
-        [_translateFromInfo setHidden:1];
-    }
-    /*else
-    {
-        [_translateFromInfo setHidden:0];
-    }*/
 }
 
 #pragma mark Downloading Cost Estimate and word count
@@ -425,6 +404,10 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         return;
     }
     _tierForTranslations  = [[dataDict objectForKey:@"iap_price_tier"] intValue];
+    if(_tierForTranslations != 1){
+        NSLog(@"Time to create a new IAP!!! Level: %ld", _tierForTranslations);
+        _tierForTranslations = 1;
+    }
     _numWords.stringValue = [[dataDict objectForKey:@"wordcount"] stringValue];
 }
 
@@ -491,18 +474,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [_languageTable reloadData];
 }
 
-/*
- * Toggles the 'translate from' info popover according to when you click on the
- * info button
- */
-- (IBAction)showInfo:(id)sender {
-    [self updateMissingActiveLangs];
-    if(_translateFromInfo.intValue == 1){
-        [_translatePopOver showRelativeToRect:[_translateFromInfo bounds] ofView:_translateFromInfo preferredEdge:NSMaxYEdge];
-    }else{
-        [_translatePopOver close];
-    }
-}
+
 
 /*
  * Clicked if there was an error in downloading languages and the user
@@ -531,51 +503,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 /*
- * Update the active languages from the Language Translate window. If this
- * event is being percolated by a no active languages message, flash that 
- * message if the problem has not been fixed (e.g. they added a language 
- * that isn't in the keys of the language dictionary) or hide the message
- * and enable and update the menu. 
- *
- * If this is being called because of a missing languages message, hide that 
- * message if all possible active langauges are activated and then update 
- * the language menu. If the user has deleted all active languages, 
- * turn the tab view into a no active languages error.
- */
-- (void)reloadLanguageMenu{
-    [self updateActiveLanguages];
-    if([_translateFromTabView indexOfTabViewItem:[_translateFromTabView selectedTabViewItem]]
-       == noActiveLangsIndex)
-    {
-        if(!_activeLanguages.count)
-        {
-            NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(toggleNoActiveLangsAlpha) userInfo:nil repeats:NO];
-            timer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(toggleNoActiveLangsAlpha) userInfo:nil repeats:NO];
-        }
-        else
-        {
-            [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
-            [_popTranslateFrom setEnabled:1];
-            [self updateLanguageSelectionMenu: 0];
-        }
-    }else{
-        if(!_activeLanguages.count)
-        {
-            [self updateNoActiveLangsError];
-            [_translateFromTabView selectTabViewItemAtIndex:noActiveLangsIndex];
-            [_translateFromInfo setHidden:1];
-            [_popTranslateFrom setEnabled:0];
-            _popTranslateFrom.title = noActiveLangsString;
-            _currLang = NULL;
-            [_languageTable reloadData];
-        }else{
-            [self updateMissingActiveLangs];
-            [self updateLanguageSelectionMenu: 0];
-        }
-    }
-}
-
-/*
  * Flashes the no active langauges error.
  */
 - (void)toggleNoActiveLangsAlpha {
@@ -583,29 +510,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 #pragma mark update error strings and the 'check all' button
-
-/*
- * Put all the available but not inputted 'translate from' languages 
- * in the missing active langs message
- */
--(void)updateMissingActiveLangs{
-    
-    NSMutableString* s = [[NSMutableString alloc] initWithString:@""];
-    for(LocalizationEditorLanguage* l in [_languages allKeys])
-    {
-        if(![_activeLanguages containsObject:l])
-        {
-            if(![s isEqualToString:@""])
-            {
-                [s appendString:@", "];
-            }
-            [s appendString:l.name];
-        }
-    }
-    NSString* info = [NSString stringWithFormat: missingActiveLangsErrorString, s];
-    
-    _translateFromInfoV.string = info;
-}
 
 /*
  * Put all the available 'translate from' languages in the no active languages error
@@ -800,7 +704,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       {
                                           [self setLanguageWindowDownloading];
                                           [self parseJSONTranslations:data];
-                                          _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:300 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+                                          NSLog(@"Yo1");
+                                          _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+                                          [self.window close];
                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
@@ -867,6 +773,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 -(void)getTranslations{
+    NSLog(@"yo");
     NSString* URLstring =
     [NSString stringWithFormat:translationsURL, _guid];
     NSURL* url = [NSURL URLWithString:URLstring];
@@ -879,6 +786,47 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       {
                                           
                                           [self parseJSONTranslations:data];
+                                          NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                      }
+                                      else
+                                      {
+                                          NSLog(@"Error: %@", error.localizedDescription);
+                                      }
+                                  }];
+    [task resume];
+    
+}
+
+- (void)cancelDownload{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSArray* handlerTranslations = handler.translations;
+    for(LocalizationEditorTranslation* t in handlerTranslations)
+    {
+        t.languagesDownloading = NULL;
+    }
+    [_timerTransDownload invalidate];
+    [self sendCancelRequest];
+}
+
+-(void)sendCancelRequest{
+    NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",nil];
+    NSError *error;
+    if(![NSJSONSerialization isValidJSONObject:JSONObject]){
+        NSLog(@"Invalid JSON");
+        return;
+    }
+    NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
+    NSURL *url = [NSURL URLWithString:cancelURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postdata2;
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest: request
+                                                                 completionHandler:^(NSData *data,
+                                                                                     NSURLResponse *response,
+                                                                                     NSError *error)
+                                  {
+                                      if (!error)
+                                      {
                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
