@@ -13,9 +13,11 @@
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorLanguageTableView.h"
 #import "LocalizationTranslateWindowHandler.h"
+#import "LocalizationCancelTranslationsWindow.h"
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
+
 @implementation LocalizationEditorWindow
 
 - (void) awakeFromNib
@@ -225,14 +227,21 @@
  */
 - (IBAction)pressedTranslate:(id)sender {
     if([_translationsButton.title isEqualToString:@"Buy Translations"]){
-        _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+        if(!_ltw)
+        {
+            _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+        }
         [_ltw setParentWindow:self];
         [_ltw.window makeKeyAndOrderFront:sender];
         [NSApp runModalForWindow:_ltw.window];
     }
     else
     {
-        
+        _lctw = [[LocalizationCancelTranslationsWindow alloc] initWithWindowNibName:@"LocalizationCancelTranslationsWindow"];
+        [_lctw setEditorWindow:self];
+        [_lctw setTranslateWindow:_ltw];
+        [_lctw.window makeKeyAndOrderFront:sender];
+        [NSApp runModalForWindow:_lctw.window];
     }
 }
 
@@ -261,6 +270,7 @@
 
 - (void)removeLanguages:(NSArray*)langs
 {}
+
 -(void)setDownloadingTranslations:(double)numToTrans{
     [_translationProgress setMaxValue:numToTrans];
     [_translationProgress setHidden:0];
@@ -268,6 +278,7 @@
     [tableTranslations setEnabled:0];
     [tableLanguages setEnabled:0];
     [popLanguageAdd setEnabled:0];
+    [_addTranslation setEnabled:0];
     [popCurrentLanguage setEnabled:0];
     _translationsButton.title = @"Cancel Download";
 }
@@ -286,6 +297,7 @@
     [tableLanguages setEnabled:1];
     [popLanguageAdd setEnabled:1];
     [popCurrentLanguage setEnabled:1];
+    [_addTranslation setEnabled:1];
     _translationsButton.title = @"Buy Translations";
 }
 
@@ -713,5 +725,4 @@
     if (proposedMaximumPosition > max) return max;
     else return proposedMaximumPosition;
 }
-
 @end

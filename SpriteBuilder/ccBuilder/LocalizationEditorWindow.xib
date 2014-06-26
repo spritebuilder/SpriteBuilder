@@ -7,9 +7,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LocalizationEditorWindow">
             <connections>
+                <outlet property="_addTranslation" destination="23" id="d5X-0M-IEM"/>
                 <outlet property="_buyTranslations" destination="7jT-cI-9YC" id="Cfc-l0-rWu"/>
                 <outlet property="_translationProgress" destination="F8M-hz-w6i" id="dHl-Z3-AYH"/>
                 <outlet property="_translationProgressText" destination="Lc3-7O-qiH" id="swn-en-YBK"/>
+                <outlet property="_translationsButton" destination="7jT-cI-9YC" id="pmx-0r-1kr"/>
                 <outlet property="popCurrentLanguage" destination="54" id="84"/>
                 <outlet property="popLanguageAdd" destination="72" id="78"/>
                 <outlet property="tableLanguages" destination="39" id="81"/>

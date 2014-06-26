@@ -24,12 +24,6 @@
     self.translateButton.intValue = 0;
 }
 
--(id)copyWithZone:(NSZone *)zone{
-    LocalizationTranslateWindowHandler* newHandler = [[[self class] allocWithZone:zone] init];
-    newHandler->_translatePopOver = _translatePopOver;
-    return newHandler;
-}
-
 -(void)close{
     if([self isModalPanel]){
         [NSApp endSheet:self];

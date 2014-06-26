@@ -102,6 +102,8 @@
 		7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */; };
 		7B5135C21947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */; };
 		7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */; };
+		7B88AD4C195B8111001BF73C /* LocalizationCancelTranslationsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B88AD4B195B8111001BF73C /* LocalizationCancelTranslationsWindow.xib */; };
+		7B88AD4F195B812C001BF73C /* LocalizationCancelTranslationsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD4E195B812C001BF73C /* LocalizationCancelTranslationsWindow.m */; };
 		7BCC1C0D194904190062DF38 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC1C0C194904190062DF38 /* StoreKit.framework */; };
 		7BF55303193F8A7500183F09 /* LocalizationTranslateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */; };
 		7BF55307193F912200183F09 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
@@ -1262,6 +1264,9 @@
 		7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = LocalizationInAppPurchasesPIDs.plist; path = ../ccBuilder/LocalizationInAppPurchasesPIDs.plist; sourceTree = "<group>"; };
 		7B88AD45195A4846001BF73C /* LocalizationEditorTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorTextFieldCell.h; sourceTree = "<group>"; };
 		7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTextFieldCell.m; sourceTree = "<group>"; };
+		7B88AD4B195B8111001BF73C /* LocalizationCancelTranslationsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationCancelTranslationsWindow.xib; sourceTree = "<group>"; };
+		7B88AD4D195B812C001BF73C /* LocalizationCancelTranslationsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationCancelTranslationsWindow.h; sourceTree = "<group>"; };
+		7B88AD4E195B812C001BF73C /* LocalizationCancelTranslationsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationCancelTranslationsWindow.m; sourceTree = "<group>"; };
 		7BCC1C0C194904190062DF38 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationTranslateWindow.xib; sourceTree = "<group>"; };
 		7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindow.h; sourceTree = "<group>"; };
@@ -3441,6 +3446,9 @@
 			children = (
 				B7083DF717B1CBC8006628C7 /* LocalizationEditorHandler.h */,
 				B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */,
+				7B88AD4B195B8111001BF73C /* LocalizationCancelTranslationsWindow.xib */,
+				7B88AD4D195B812C001BF73C /* LocalizationCancelTranslationsWindow.h */,
+				7B88AD4E195B812C001BF73C /* LocalizationCancelTranslationsWindow.m */,
 				7B3EF5D9195885F20023C169 /* LocalizationTranslateWindowHandler.h */,
 				7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */,
 				7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */,
@@ -5473,6 +5481,7 @@
 				92F0960518F8851300D47A94 /* inspector-body-connected.png in Resources */,
 				E3C65106151A3B7C00D639C0 /* InspectorString.xib in Resources */,
 				E3C65128151C7B9000D639C0 /* InspectorBlockCCControl.xib in Resources */,
+				7B88AD4C195B8111001BF73C /* LocalizationCancelTranslationsWindow.xib in Resources */,
 				E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */,
 				E34E5D6B153585EC000201FB /* ruler-bg-vertical.png in Resources */,
 				B7096E2B180CD98E00164A8A /* doc-scene.png in Resources */,
@@ -6198,6 +6207,7 @@
 				B7C3533E17FA30BB005697C1 /* NodePhysicsBody.m in Sources */,
 				E3C12B1B171DD386001EEDDB /* NSWindow+CCBAccessoryView.m in Sources */,
 				E37FCAF4175D68FF009F81D6 /* ResourceManagerPreviewView.m in Sources */,
+				7B88AD4F195B812C001BF73C /* LocalizationCancelTranslationsWindow.m in Sources */,
 				E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */,
 				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
 				B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */,

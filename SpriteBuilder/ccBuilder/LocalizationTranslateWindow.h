@@ -80,6 +80,7 @@
 - (IBAction)retryCost:(id)sender;
 - (void)reloadLanguageMenu;
 - (void)reloadCost;
+- (void)cancelDownload;
 
 @property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
 
