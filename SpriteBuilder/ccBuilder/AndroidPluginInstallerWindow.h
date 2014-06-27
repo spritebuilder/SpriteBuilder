@@ -12,7 +12,4 @@
 {
 	
 }
-
-
-+(BOOL)needsInstallation;
 @end

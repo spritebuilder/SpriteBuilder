@@ -75,15 +75,34 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 	return [self runPythonScript:@"validate" output:output];
 }
 
+NSString * getVersionFile()
+{
+	NSArray *domains = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask,YES);
+	NSString *baseDir= [domains objectAtIndex:0];
+	NSString *versionFilePath = [baseDir stringByAppendingPathComponent:@"Application Support/Developer/Shared/Xcode/Plug-ins/AndroidPluginFile.plist"];
+	return versionFilePath;
+}
 
 +(BOOL)needsInstallation
 {
 	
+	
 #ifdef SBPRO_TEST_INSTALLER
-	return YES;
+	//return YES;
 #endif
 	
-	NSNumber * currentVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kSBDefualtsIdentifier];
+	NSFileManager * fm =[[NSFileManager alloc] init];
+	
+	NSString *versionFilePath = getVersionFile();
+	
+	if(![fm fileExistsAtPath:versionFilePath])
+		return YES;
+	
+	NSDictionary * versionInfo = [NSDictionary dictionaryWithContentsOfFile:versionFilePath];
+	if(versionInfo == nil)
+		return YES;
+		
+	NSNumber * currentVersion = versionInfo[kSBDefualtsIdentifier];
 	if(currentVersion == nil || [currentVersion floatValue] < kSBProPluginVersion)
 	{
 		return YES;
@@ -93,7 +112,9 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 
 +(void)setInstallationVersion
 {
-	[[NSUserDefaults standardUserDefaults] setObject:@(kSBProPluginVersion) forKey:kSBDefualtsIdentifier];
+	NSString *versionFilePath = getVersionFile();
+	NSDictionary * versionInfo = @{kSBDefualtsIdentifier : @(kSBProPluginVersion)};
+	[versionInfo writeToFile:versionFilePath atomically:YES];
 }
 
 

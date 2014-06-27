@@ -74,7 +74,7 @@ def package_plugin(bundle):
     if os.path.isfile(bundle):
         raise UserError("Bundle file already exists: " + bundle)
     if os.path.isdir(bundle):
-        bundle = os.path.join(bundle, "apportable_xcode_bundle_"+time.strftime("%Y_%m_%d-%H_%M_%S")+".zip")
+        bundle = os.path.join(bundle, "android_xcode_bundle_"+time.strftime("%Y_%m_%d-%H_%M_%S")+".zip")
     component_roots = get_component_roots()
     for name, path in component_roots:
         if not os.path.exists(path):
@@ -105,7 +105,7 @@ def package_plugin(bundle):
                         zip.write(filepath, arcname)
                         modes[arcname] = os.stat(filepath).st_mode
         metadata = {
-            'bundle_type': 'apportable_xcode_bundle',
+            'bundle_type': 'android_xcode_bundle',
             'version': BUNDLE_VERSION,
             'symlinks': links,
             'modes': modes
@@ -127,13 +127,14 @@ def validate_bundle(bundle):
             raise UserError("Bundle format unknown - can't find metadata.json")
         metadata = json.loads(zip.read('metadata.json'))
         bundle_version = (metadata.get('bundle_type', None), metadata.get('version', None))
-        expected = ('apportable_xcode_bundle', BUNDLE_VERSION)
+        expected = ('android_xcode_bundle', BUNDLE_VERSION)
         if bundle_version != expected:
             raise UserError("Version mismatch!  Expected %s but was %s" % (expected, bundle_version))
     # print some stats so we can verify the bundle later
     size = round(os.stat(bundle).st_size / 1024.0 / 1024.0, 2)
     md5 = subprocess.check_output(['md5', '-q', bundle]).strip()
     print ("Bundle is valid! (%s MB, md5: %s)" % (size, md5))
+
 
 def clean_plugin():
     print ("Cleaning . . . ")
