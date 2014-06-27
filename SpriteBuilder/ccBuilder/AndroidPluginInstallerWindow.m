@@ -11,12 +11,6 @@
 #import "AppDelegate.h"
 #import "NSAlert+Convenience.h"
 
-#ifdef DEBUG
-#define SBPRO_TEST_INSTALLER
-#endif
-static const float kSBProPluginVersion = 1.0;
-static NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
-
 @interface AndroidPluginInstallerWindow ()
 {
 
@@ -82,7 +76,7 @@ static NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 		
 		if(success)
 		{
-			[[NSUserDefaults standardUserDefaults] setObject:@(kSBProPluginVersion) forKey:kSBDefualtsIdentifier];
+			[AndroidPluginInstaller setInstallationVersion];
 		}
 				
 		dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -107,20 +101,4 @@ static NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 	NSMutableArray * fileLines = [[NSMutableArray alloc] initWithArray:[string componentsSeparatedByString:@"\r\n"] copyItems: YES];
 	return fileLines.lastObject;
 }
-
-+(BOOL)needsInstallation
-{
-	
-#ifdef SBPRO_TEST_INSTALLER
-	return YES;
-#endif
-
-	NSNumber * currentVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kSBDefualtsIdentifier];
-	if(currentVersion == nil || [currentVersion floatValue] < kSBProPluginVersion)
-	{
-		return YES;
-	}
-	return NO;
-}
-
 @end

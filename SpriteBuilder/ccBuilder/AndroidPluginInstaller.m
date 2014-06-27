@@ -8,6 +8,17 @@
 
 #import "AndroidPluginInstaller.h"
 
+
+
+#ifdef DEBUG
+#define SBPRO_TEST_INSTALLER
+#endif
+
+
+
+static const float kSBProPluginVersion = 1.0;
+NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
+
 @implementation AndroidPluginInstaller
 
 +(BOOL)runPythonScript:(NSString*)command output:(NSString**)result
@@ -16,7 +27,7 @@
     task.launchPath = @"/usr/bin/python";
 	
 	NSString *scriptPath = [[NSBundle mainBundle] pathForResource:@"plugin_installer" ofType:@"py"];
-	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidXcodePlugin" ofType:@"zip" inDirectory:@"Generated"];
+	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidPlugin" ofType:@"zip" inDirectory:@"Generated"];
 	
     task.arguments = [NSArray arrayWithObjects: scriptPath, command, pluginBundlePath, nil];
 	
@@ -63,5 +74,27 @@
 {
 	return [self runPythonScript:@"validate" output:output];
 }
+
+
++(BOOL)needsInstallation
+{
+	
+#ifdef SBPRO_TEST_INSTALLER
+	return YES;
+#endif
+	
+	NSNumber * currentVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kSBDefualtsIdentifier];
+	if(currentVersion == nil || [currentVersion floatValue] < kSBProPluginVersion)
+	{
+		return YES;
+	}
+	return NO;
+}
+
++(void)setInstallationVersion
+{
+	[[NSUserDefaults standardUserDefaults] setObject:@(kSBProPluginVersion) forKey:kSBDefualtsIdentifier];
+}
+
 
 @end

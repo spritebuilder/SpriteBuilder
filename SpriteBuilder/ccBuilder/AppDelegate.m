@@ -130,6 +130,7 @@
 #import "NewPackageWindowController.h"
 #import "ResourceCommandController.h"
 #import "AndroidPluginInstallerWindow.h"
+#import "AndroidPluginInstaller.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -4557,8 +4558,11 @@ static BOOL hideAllToNextSeparator;
 
 -(void)setupSpriteBuilderPro
 {
-#ifdef SPRITEBUILDER_PRO
-
+#ifdef SPRITEBUILDER_PRO		
+	if(![AndroidPluginInstaller needsInstallation])
+	{
+		return;
+	}
 	
 	AndroidPluginInstallerWindow *installerWindow = [[AndroidPluginInstallerWindow alloc] initWithWindowNibName:@"AndroidPluginInstallerWindow"];
 	
