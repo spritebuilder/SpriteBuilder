@@ -164,5 +164,9 @@
     return NO;
 }
 
+- (BOOL)isIntermediateFileLookup
+{
+    return [self isEqualToString:@"intermediateFileLookup.plist"];
+}
 
 @end
