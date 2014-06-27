@@ -225,21 +225,19 @@
  */
 - (IBAction)pressedTranslate:(id)sender {
     if([_translationsButton.title isEqualToString:@"Buy Translations"]){
-        //if(!_ltw)
-        //{
-            _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
-        //}
+        _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
         [_ltw setParentWindow:self];
         [_ltw.window makeKeyAndOrderFront:sender];
         [NSApp runModalForWindow:_ltw.window];
     }
     else
     {
-        _lctw = [[LocalizationCancelTranslationsWindow alloc] initWithWindowNibName:@"LocalizationCancelTranslationsWindow"];
-        [_lctw setEditorWindow:self];
-        [_lctw setTranslateWindow:_ltw];
-        [_lctw.window makeKeyAndOrderFront:sender];
-        [NSApp runModalForWindow:_lctw.window];
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Cancel Download" defaultButton:@"OK" alternateButton:@"Cancel" otherButton:NULL informativeTextWithFormat:@"If you cancel your translations download, you will not get a refund."];
+        NSInteger result = [alert runModal];
+        if(result == NSAlertDefaultReturn){
+            [self finishDownloadingTranslations];
+            [_ltw cancelDownload];
+        }
     }
 }
 

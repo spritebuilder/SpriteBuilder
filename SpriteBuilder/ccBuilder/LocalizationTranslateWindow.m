@@ -618,18 +618,11 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 
 #pragma mark request delegate (and price display)
 
--(void)request:(SKRequest *)request didFailWithError:(NSError *)error{
-    NSLog(@"Request failed");
-}
--(void)requestDidFinish:(SKRequest *)request{
-    NSLog(@"Request finished");
-}
 /*
  * Takes in the products returned by apple, prints any invalid identifiers and displays
  * the price of those products.
  */
 -(void) productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response{
-    NSLog(@"Product Request");
     _products = response.products;
     for(NSString *invalidIdentifier in response.invalidProductIdentifiers)
     {
@@ -664,17 +657,32 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  * Ask for a receipt for any updated paymnent transactions.
  */
 -(void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions{
-    NSURL* receiptURL;
     for (SKPaymentTransaction* transaction in transactions)
     {
         switch(transaction.transactionState)
         {
+            case SKPaymentTransactionStateFailed:
+            {
+                NSLog(@"Failed");
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                break;
+            }
             case SKPaymentTransactionStatePurchased:
-                receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+            {
+                NSURL* receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
                 NSData* receipt = [NSData dataWithContentsOfURL:receiptURL];
                 [_receipts setObject:receipt forKey:transaction.transactionIdentifier];
-                [self validateReceipt:[[NSString alloc] initWithData:receipt encoding:NSASCIIStringEncoding]];
+                [self validateReceipt:[[NSString alloc] initWithData:receipt encoding:NSUTF8StringEncoding] transaction:transaction];
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
+            }
+            case SKPaymentTransactionStateRestored:
+            {
+                NSLog(@"Restored");
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                break;
+            }
+            
         }
     }
 }
@@ -683,7 +691,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  * Validates the receipt with our server.
  * TODO check for translations!
  */
--(void)validateReceipt:(NSString *)receipt{
+-(void)validateReceipt:(NSString *)receipt transaction:(SKPaymentTransaction*)transaction{
     NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",receipt,@"receipt",_phrasesToTranslate,@"phrases",nil];
     NSError *error;
     if(![NSJSONSerialization isValidJSONObject:JSONObject]){
@@ -702,15 +710,17 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                   {
                                       if (!error)
                                       {
-                                          [self setLanguageWindowDownloading];
                                           [self parseJSONTranslations:data];
                                           NSLog(@"Yo1");
                                           _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+                                          [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
                                           [self.window close];
+                                          [self setLanguageWindowDownloading];
                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
                                       {
+                                          [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                                           NSLog(@"Error: %@", error.localizedDescription);
                                       }
                                   }];
@@ -805,6 +815,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         t.languagesDownloading = NULL;
     }
     [_timerTransDownload invalidate];
+    _timerTransDownload = nil;
     [self sendCancelRequest];
 }
 
