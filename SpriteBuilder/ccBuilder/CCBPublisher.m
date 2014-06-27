@@ -99,7 +99,7 @@
 {
     for (NSString* resolution in _publishForResolutions)
     {
-        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution];
+        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution intermediateProduct:NO];
 	}
 
     return YES;
@@ -110,6 +110,7 @@
            isSpriteSheet:(BOOL)isSpriteSheet
                outputDir:(NSString *)outputDir
               resolution:(NSString *)resolution
+     intermediateProduct:(BOOL)intermediateProduct
 {
     PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:_projectSettings
                                                                                      warnings:_warnings
@@ -122,8 +123,9 @@
     operation.resolution = resolution;
     operation.targetType = _targetType;
     operation.modifiedFileDateCache = _modifiedDatesCache;
-    operation.publishedPNGFiles = _publishedPNGFiles;
     operation.fileLookup = _renamedFilesLookup;
+    operation.publishedPNGFiles = _publishedPNGFiles;
+    operation.intermediateProduct = intermediateProduct;
 
     [_publishingQueue addOperation:operation];
     return YES;
@@ -486,7 +488,8 @@
                                 to:dstFile
                      isSpriteSheet:NO
                          outputDir:outputDir
-                        resolution:resolution];
+                        resolution:resolution
+               intermediateProduct:YES];
         }
     }
 }

@@ -22,4 +22,6 @@
 
 @property (nonatomic, strong) DateCache *modifiedFileDateCache;
 
+@property (nonatomic) BOOL intermediateProduct;
+
 @end

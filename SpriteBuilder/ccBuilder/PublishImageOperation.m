@@ -163,6 +163,7 @@
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
 
         if (!_isSpriteSheet
+            && !_intermediateProduct
             && format == kFCImageFormatPNG)
         {
             [_publishedPNGFiles addObject:dstPathConverted];
@@ -209,6 +210,7 @@
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
 
         if (!_isSpriteSheet
+            && !_intermediateProduct
             && format == kFCImageFormatPNG)
         {
             [_publishedPNGFiles addObject:dstPathConverted];
