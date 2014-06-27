@@ -9,7 +9,7 @@
 #import "EffectsManager.h"
 #import "CCBPEffectBrightness.h"
 #import "CCBPEffectContrast.h"
-//#import "CCBPEffectGlow.h"
+#import "CCBPEffectGlow.h"
 #import "CCBPEffectPixelate.h"
 #import "CCBPEffectSaturation.h"
 #import "NSArray+Query.h"
@@ -17,6 +17,7 @@
 #import "EffectContrastControl.h"
 #import "EffectPixelateControl.h"
 #import "EffectSaturationControl.h"
+#import "EffectGlowControl.h"
 
 @implementation EffectDescription
 
@@ -85,6 +86,18 @@
 		[effectDescriptions addObject:effectDescription];
 	}
 	
+	
+	{
+		EffectDescription * effectDescription = [[EffectDescription alloc] init];
+		effectDescription.title = @"Glow";
+		effectDescription.description = @"Makes things Glow";
+		effectDescription.imageName = @"effect-glow";
+		effectDescription.className = NSStringFromClass([CCBPEffectGlow class]);
+		effectDescription.viewController = NSStringFromClass([EffectGlowControl class]);
+		
+		[effectDescriptions addObject:effectDescription];
+	}
+
 	return effectDescriptions;
 }
 

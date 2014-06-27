@@ -273,6 +273,9 @@
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */; };
 		92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */; };
+		92CAC1C6195A4C540035EA39 /* CCBPEffectGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CAC1C5195A4C540035EA39 /* CCBPEffectGlow.m */; };
+		92CAC1CA195A4C6C0035EA39 /* EffectGlowControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CAC1C8195A4C6C0035EA39 /* EffectGlowControl.m */; };
+		92CAC1CB195A4C6C0035EA39 /* EffectGlowControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */; };
 		92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */; };
 		92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */; };
 		92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */; };
@@ -1588,6 +1591,11 @@
 		92BF8AB0192BCDF300C1BC28 /* InspectorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorButton.h; sourceTree = "<group>"; };
 		92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorButton.m; sourceTree = "<group>"; };
 		92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
+		92CAC1C4195A4C540035EA39 /* CCBPEffectGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectGlow.h; path = ccBuilder/CCBPEffectGlow.h; sourceTree = "<group>"; };
+		92CAC1C5195A4C540035EA39 /* CCBPEffectGlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectGlow.m; path = ccBuilder/CCBPEffectGlow.m; sourceTree = "<group>"; };
+		92CAC1C7195A4C6C0035EA39 /* EffectGlowControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectGlowControl.h; path = ccBuilder/EffectGlowControl.h; sourceTree = "<group>"; };
+		92CAC1C8195A4C6C0035EA39 /* EffectGlowControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectGlowControl.m; path = ccBuilder/EffectGlowControl.m; sourceTree = "<group>"; };
+		92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectGlowControl.xib; path = ccBuilder/EffectGlowControl.xib; sourceTree = "<group>"; };
 		92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected.png"; sourceTree = "<group>"; };
 		92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected@2x.png"; sourceTree = "<group>"; };
 		92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-disconnected.png"; sourceTree = "<group>"; };
@@ -2398,7 +2406,6 @@
 		E525F616AAA64620A9528730 /* ObserverTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObserverTestHelper.h; sourceTree = "<group>"; };
 		E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer_Tests.m; sourceTree = "<group>"; };
 		E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceNewFileCommand.m; sourceTree = "<group>"; };
-		E525F6C644CA9F78DAE45A13 /* PackageCreateDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreateDelegateProtocol.h; sourceTree = "<group>"; };
 		E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPlaybackManager.m; sourceTree = "<group>"; };
 		E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishingTaskStatusProgress.m; sourceTree = "<group>"; };
 		E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSoundFileOperation.m; sourceTree = "<group>"; };
@@ -3830,11 +3837,11 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				92CAC1C2195A4C310035EA39 /* Glow */,
 				9266EE3A195A17AE006CBE81 /* Pixelate */,
 				9266EE31195A176A006CBE81 /* Saturation */,
 				922EAC481958F700006F2D75 /* ContrastEffect */,
 				922EAC3F1958F2FB006F2D75 /* BrightnessEffect */,
-				9266EE25195A1603006CBE81 /* effect-glow.png */,
 				928696271958A05F00402DD8 /* EffectSelectViewController.h */,
 				928696281958A05F00402DD8 /* EffectSelectViewController.m */,
 				928696291958A05F00402DD8 /* EffectSelectViewController.xib */,
@@ -3880,6 +3887,19 @@
 				92B792C618C92C60007DF895 /* Icon@2x.png */,
 			);
 			path = CCPhysicsSpringJoint;
+			sourceTree = "<group>";
+		};
+		92CAC1C2195A4C310035EA39 /* Glow */ = {
+			isa = PBXGroup;
+			children = (
+				9266EE25195A1603006CBE81 /* effect-glow.png */,
+				92CAC1C4195A4C540035EA39 /* CCBPEffectGlow.h */,
+				92CAC1C5195A4C540035EA39 /* CCBPEffectGlow.m */,
+				92CAC1C7195A4C6C0035EA39 /* EffectGlowControl.h */,
+				92CAC1C8195A4C6C0035EA39 /* EffectGlowControl.m */,
+				92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */,
+			);
+			name = Glow;
 			sourceTree = "<group>";
 		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
@@ -5909,6 +5929,7 @@
 				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
 				776C6896138874C200153214 /* dsa_pub.pem in Resources */,
 				77D33EAD138EFBD800012A88 /* StageSizeWindow.xib in Resources */,
+				92CAC1CB195A4C6C0035EA39 /* EffectGlowControl.xib in Resources */,
 				7729F03A1390215400CAA44F /* frame-iphone.png in Resources */,
 				7729F03D1390600200CAA44F /* frame-ipad.png in Resources */,
 				776A370B139544A200960E94 /* TB_actualSize.png in Resources */,
@@ -6570,6 +6591,7 @@
 				77E1992213858D78006C361B /* PSMMetalTabStyle.m in Sources */,
 				77E1992313858D78006C361B /* PSMOverflowPopUpButton.m in Sources */,
 				77E1992413858D78006C361B /* PSMProgressIndicator.m in Sources */,
+				92CAC1C6195A4C540035EA39 /* CCBPEffectGlow.m in Sources */,
 				928696201958950100402DD8 /* InspectorEffectControl.m in Sources */,
 				77E1992513858D78006C361B /* PSMRolloverButton.m in Sources */,
 				77E1992613858D78006C361B /* PSMTabBarCell.m in Sources */,
@@ -6777,6 +6799,7 @@
 				E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */,
 				E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */,
 				E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */,
+				92CAC1CA195A4C6C0035EA39 /* EffectGlowControl.m in Sources */,
 				E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */,
 				E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */,
 				92B91026193413F500E346B5 /* InspectorAnimation.m in Sources */,
