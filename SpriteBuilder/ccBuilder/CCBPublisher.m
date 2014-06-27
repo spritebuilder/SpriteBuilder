@@ -47,6 +47,8 @@
 #import "PublishSpriteKitSpriteSheetOperation.h"
 #import "PublishingTaskStatusProgress.h"
 #import "PublishLogging.h"
+#import "MiscConstants.h"
+#import "PublishIntermediateFilesLookup.h"
 
 @interface CCBPublisher ()
 
@@ -438,7 +440,7 @@
 	{
 		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
 
-        NSString *intermediateFileLookupPath = [publishDirectory  stringByAppendingPathComponent:@"intermediateFileLookup.plist"];
+        NSString *intermediateFileLookupPath = [publishDirectory  stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
 		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
@@ -549,7 +551,7 @@
 	
 	for (NSString* resolution in _publishForResolutions)
 	{
-        NSString *intermediateFileLookupPath = [publishDirectory stringByAppendingPathComponent:@"intermediateFileLookup.plist"];
+        NSString *intermediateFileLookupPath = [publishDirectory stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
         // Note: these lookups are written as intermediate products to generate the final fileLookup.plist

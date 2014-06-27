@@ -1,6 +1,7 @@
 #import "NSString+Publishing.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
+#import "MiscConstants.h"
 
 
 @implementation NSString (Publishing)
@@ -166,7 +167,7 @@
 
 - (BOOL)isIntermediateFileLookup
 {
-    return [self isEqualToString:@"intermediateFileLookup.plist"];
+    return [self isEqualToString:INTERMEDIATE_FILE_LOOKUP_NAME];
 }
 
 @end

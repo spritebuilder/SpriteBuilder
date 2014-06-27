@@ -11,7 +11,6 @@
 #import "ProjectSettings.h"
 #import "PublishLogging.h"
 
-
 @interface PublishImageOperation ()
 
 @property (nonatomic, strong) FCFormatConverter *formatConverter;

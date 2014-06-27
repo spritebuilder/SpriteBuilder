@@ -1,26 +1,5 @@
 #import <Foundation/Foundation.h>
-
-// TODO: Move to it's own file after cherry picking
-@protocol PublishFileLookupProtocol <NSObject>
-
-- (void)addRenamingRuleFrom:(NSString *)src to:(NSString *)dst;
-
-@end
-
-
-#pragma mark -----------------------------------------------------------------------------
-
-// TODO: Move to it's own file after cherry picking
-@interface PublishIntermediateFilesLookup : NSObject <PublishFileLookupProtocol>
-
-- (instancetype)initWithFlattenPaths:(BOOL)flattenPaths;
-
-- (BOOL)writeToFile:(NSString *)path;
-
-@end
-
-
-#pragma mark -----------------------------------------------------------------------------
+#import "PublishFileLookupProtocol.h"
 
 @interface PublishRenamedFilesLookup : NSObject  <PublishFileLookupProtocol>
 
