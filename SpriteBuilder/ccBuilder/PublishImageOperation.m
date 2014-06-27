@@ -16,6 +16,10 @@
 
 @property (nonatomic, strong) FCFormatConverter *formatConverter;
 
+@property (nonatomic) int format;
+@property (nonatomic) BOOL dither;
+@property (nonatomic) BOOL compress;
+
 @end
 
 
@@ -42,15 +46,20 @@
     NSAssert(_fileLookup != nil, @"fileLookup should not be nil");
 }
 
+// TODO: this is a long method -> split up!
 - (void)publishImage
 {
-    // TODO: this is a long method -> split up!
     NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
+
+    [self setFormatDitherAndCompress:relPath];
+
+    // Note: always do this, filelookup is created everytime from scratch
+    [self addRenamingRuleToFileLookup:relPath];
 
     if (_isSpriteSheet
         && [self isSpriteSheetAlreadyPublished:_srcFilePath outDir:_outputDir resolution:_resolution])
     {
-        LocalLog(@"[%@] SKIPPING spritesheet and already published - %@", [self class], [self description]);
+        LocalLog(@"[%@] SKIPPING spritesheet is already published - %@", [self class], [self description]);
         return;
     }
 
@@ -81,41 +90,11 @@
     // Create destination directory if it doesn't exist
     [fileManager createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
 
-    // Get the format of the published image
-    int format = kFCImageFormatPNG;
-    BOOL dither = NO;
-    BOOL compress = NO;
-
-    // TODO: Move to data object: format, dither, compress
-    if (!_isSpriteSheet)
-    {
-        if (_targetType == kCCBPublisherTargetTypeIPhone)
-        {
-            format = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios"] intValue];
-            dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_dither"] boolValue];
-            compress = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_compress"] boolValue];
-        }
-        else if (_targetType == kCCBPublisherTargetTypeAndroid)
-        {
-            format = [[_projectSettings valueForRelPath:relPath andKey:@"format_android"] intValue];
-            dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_dither"] boolValue];
-            compress = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_compress"] boolValue];
-        }
-    }
-
     // Fetch new name
     NSString *dstPathProposal = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:_dstFilePath
-                                                                                                   format:format
-                                                                                                 compress:compress
+                                                                                                   format:_format
+                                                                                                 compress:_compress
                                                                                             isSpriteSheet:_isSpriteSheet];
-
-    // Add renaming rule
-    NSString *relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath
-                                                                                                  format:format
-                                                                                                compress:compress
-                                                                                           isSpriteSheet:_isSpriteSheet];
-
-    [_fileLookup addRenamingRuleFrom:relPath to:relPathRenamed];
 
     // Copy and convert the image
     BOOL isDirty = [_projectSettings isDirtyRelPath:relPath];
@@ -145,9 +124,9 @@
 
         self.formatConverter = [FCFormatConverter defaultConverter];
         if (![_formatConverter convertImageAtPath:_dstFilePath
-                                           format:format
-                                           dither:dither
-                                         compress:compress
+                                           format:_format
+                                           dither:_dither
+                                         compress:_compress
                                     isSpriteSheet:_isSpriteSheet
                                    outputFilename:&dstPathConverted
                                             error:&error])
@@ -163,7 +142,7 @@
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
 
         if (!_isSpriteSheet
-            && format == kFCImageFormatPNG)
+            && _format == kFCImageFormatPNG)
         {
             [_publishedPNGFiles addObject:dstPathConverted];
         }
@@ -193,9 +172,9 @@
 
         self.formatConverter = [FCFormatConverter defaultConverter];
         if (![_formatConverter convertImageAtPath:_dstFilePath
-                                           format:format
-                                           dither:dither
-                                         compress:compress
+                                           format:_format
+                                           dither:_dither
+                                         compress:_compress
                                     isSpriteSheet:_isSpriteSheet
                                    outputFilename:&dstPathConverted
                                             error:&error])
@@ -209,7 +188,7 @@
         [CCBFileUtil setModificationDate:srcDate forFile:dstPathConverted];
 
         if (!_isSpriteSheet
-            && format == kFCImageFormatPNG)
+            && _format == kFCImageFormatPNG)
         {
             [_publishedPNGFiles addObject:dstPathConverted];
         }
@@ -217,6 +196,39 @@
     else
     {
         [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Failed to publish file %@, make sure it is in the resources-auto folder.", srcFileName] isFatal:NO];
+    }
+}
+
+- (void)addRenamingRuleToFileLookup:(NSString *)relPath
+{
+    NSString *relPathRenamed = [[FCFormatConverter defaultConverter] proposedNameForConvertedImageAtPath:relPath
+                                                                                                  format:_format
+                                                                                                compress:_compress
+                                                                                           isSpriteSheet:_isSpriteSheet];
+    [_fileLookup addRenamingRuleFrom:relPath to:relPathRenamed];
+}
+
+- (void)setFormatDitherAndCompress:(NSString *)relPath
+{
+    self.format = kFCImageFormatPNG;
+    self.dither = NO;
+    self.compress = NO;
+
+    // TODO: Move to data object: format, dither, compress
+    if (!_isSpriteSheet)
+    {
+        if (_targetType == kCCBPublisherTargetTypeIPhone)
+        {
+            self.format = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios"] intValue];
+            self.dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_dither"] boolValue];
+            self.compress = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_compress"] boolValue];
+        }
+        else if (_targetType == kCCBPublisherTargetTypeAndroid)
+        {
+            self.format = [[_projectSettings valueForRelPath:relPath andKey:@"format_android"] intValue];
+            self.dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_dither"] boolValue];
+            self.compress = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_compress"] boolValue];
+        }
     }
 }
 
