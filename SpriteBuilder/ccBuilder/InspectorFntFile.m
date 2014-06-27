@@ -28,6 +28,8 @@
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
 #import "AppDelegate.h"
+#import "ResourceTypes.h"
+#import "RMResource.h"
 
 @implementation InspectorFntFile
 

@@ -26,97 +26,10 @@
 #import "SCEvents.h"
 #import "SCEvent.h"
 
+@class RMResource;
+@class RMDirectory;
+
 #define kCCBMaxTrackedDirectories 50
-
-enum
-{
-    kCCBResTypeNone,
-    kCCBResTypeDirectory,
-    kCCBResTypeSpriteSheet,
-    kCCBResTypeAnimation,
-    kCCBResTypeImage,
-    kCCBResTypeBMFont,
-    kCCBResTypeTTF,
-    kCCBResTypeCCBFile,
-    kCCBResTypeJS,
-    kCCBResTypeJSON,
-    kCCBResTypeAudio,
-    kCCBResTypeGeneratedSpriteSheetDef,
-};
-
-
-@interface RMSpriteFrame : NSObject
-{
-    NSString* spriteSheetFile;
-    NSString* spriteFrameName;
-}
-@property (nonatomic,strong) NSString* spriteSheetFile;
-@property (nonatomic,strong) NSString* spriteFrameName;
-@end
-
-
-@interface RMAnimation : NSObject
-{
-    NSString* animationFile;
-    NSString* animationName;
-}
-@property (nonatomic,strong) NSString* animationFile;
-@property (nonatomic,strong) NSString* animationName;
-@end
-
-
-@interface RMResource : NSObject <NSPasteboardWriting>
-{
-    int type;
-    BOOL touched;
-    NSString* filePath;
-    NSDate* modifiedTime;
-    id data;
-}
-
-@property (nonatomic,strong) NSString* filePath;
-@property (nonatomic,readonly) NSString* relativePath;
-@property (nonatomic,strong) NSDate* modifiedTime;
-@property (nonatomic,assign) int type;
-@property (nonatomic,assign) BOOL touched;
-@property (nonatomic,strong) id data;
-- (void) loadData;
-- (NSImage*) previewForResolution:(NSString*) res;
-
-@end
-
-
-@interface RMDirectory : NSObject
-{
-    int count;
-    NSString* dirPath;
-    NSMutableDictionary* resources;
-    BOOL isDynamicSpriteSheet;
-    
-    NSMutableArray* any;
-    NSMutableArray* images;
-    NSMutableArray* animations;
-    NSMutableArray* bmFonts;
-    NSMutableArray* ttfFonts;
-    NSMutableArray* ccbFiles;
-    NSMutableArray* audioFiles;
-}
-
-@property (nonatomic,assign) int count;
-@property (nonatomic,strong) NSString* dirPath;
-@property (nonatomic,readonly) NSMutableDictionary* resources;
-@property (nonatomic,readonly) BOOL isDynamicSpriteSheet;
-
-@property (nonatomic,readonly) NSMutableArray* any;
-@property (nonatomic,readonly) NSMutableArray* images;
-@property (nonatomic,readonly) NSMutableArray* animations;
-@property (nonatomic,readonly) NSMutableArray* bmFonts;
-@property (nonatomic,readonly) NSMutableArray* ttfFonts;
-@property (nonatomic,readonly) NSMutableArray* ccbFiles;
-@property (nonatomic,readonly) NSMutableArray* audioFiles;
-- (NSArray*) resourcesForType:(int)type;
-
-@end
 
 
 @interface ResourceManager : NSObject <SCEventListenerProtocol>
@@ -144,6 +57,9 @@ enum
 @property (nonatomic,assign) BOOL tooManyDirectoriesAdded;
 
 @property (nonatomic,readonly) NSArray* systemFontList;
+
+// Will remove all active directories first then recreate all file system observers anew
+- (void)setActiveDirectoriesWithFullReset:(NSArray *)activeDirectories;
 
 - (void) addDirectory:(NSString*)dir;
 - (void) removeDirectory:(NSString*)dir;
@@ -175,12 +91,14 @@ enum
 
 + (void) touchResource:(RMResource*) res;
 
+// *** Locating resources ***
 - (RMResource*) resourceForPath:(NSString*) path;
 - (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir;
 
+- (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;
+- (NSString *)dirPathForResource:(id)resource;
 
+// *** Debug ***
 - (void) debugPrintDirectories;
-
-
 
 @end

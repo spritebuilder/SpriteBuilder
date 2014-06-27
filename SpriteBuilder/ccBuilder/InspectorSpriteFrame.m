@@ -35,6 +35,9 @@
 #import "CCNode+NodeInfo.h"
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
+#import "ResourceTypes.h"
+#import "RMResource.h"
+#import "RMSpriteFrame.h"
 
 @implementation InspectorSpriteFrame
 

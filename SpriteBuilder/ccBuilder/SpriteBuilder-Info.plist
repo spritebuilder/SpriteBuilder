@@ -9,6 +9,26 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>sbpack</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>Package.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>SpriteBuilder Package</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>????</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>NSDocumentClass</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>ccb</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>

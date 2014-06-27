@@ -1,3 +1,4 @@
+
 /*
  * CocosBuilder: http://www.cocosbuilder.com
  *
@@ -278,13 +279,15 @@ typedef struct _PVRTexHeader
     std::vector<TPRect> outRects;
     
     BOOL makeSquare = NO;
-    if (self.imageFormat == kFCImageFormatPVRTC_2BPP || kFCImageFormatPVRTC_4BPP)
+    if (self.imageFormat == kFCImageFormatPVRTC_2BPP || self.imageFormat == kFCImageFormatPVRTC_4BPP)
     {
         makeSquare = YES;
         outH = outW;
     }
+    
     BOOL allFitted = NO;
-    while (outW <= self.maxTextureSize && !allFitted)
+    BOOL packingError = NO;
+    while (!packingError && !allFitted)
     {
         MaxRectsBinPack bin(outW, outH);
         
@@ -311,24 +314,25 @@ typedef struct _PVRTexHeader
         }
         else
         {
-            outH *= 2;
-            
             if (makeSquare)
             {
-                outW = outH;
+                outW *= 2;
+                outH *= 2;
             }
             else
             {
-                if (outH > self.maxTextureSize)
-                {
-                    outH = 8;
+                if (outW > outH)
+                    outH *= 2;
+                else
                     outW *= 2;
-                }
             }
+            
+            if (outW > self.maxTextureSize)
+                packingError = YES;
         }
     }
     
-    if (!allFitted)
+    if (packingError)
     {
         [self setErrorMessage:@"Failed to fit all sprites in smart sprite sheet."];
     }

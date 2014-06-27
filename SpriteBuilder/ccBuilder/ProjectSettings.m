@@ -1,4 +1,4 @@
-/*
+#import "RMResource.h"/*
  * CocosBuilder: http://www.cocosbuilder.com
  *
  * Copyright (c) 2012 Zynga Inc.
@@ -31,6 +31,9 @@
 #import "AppDelegate.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "CCBWarnings.h"
+#import "SBErrors.h"
+#import "ResourceTypes.h"
+#import "NSError+SBErrors.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -500,6 +503,81 @@
     [resourceProperties removeObjectForKey:relPathOld];
 }
 
+- (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error
+{
+    NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
+    NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
+
+    for (NSMutableDictionary *resourcePath in [resourcePaths copy])
+    {
+        NSString *relPath = resourcePath[@"path"];
+        if ([relPath isEqualToString:relResourcePath])
+        {
+            [resourcePaths removeObject:resourcePath];
+            return YES;
+        }
+    }
+
+    [NSError setNewErrorWithCode:error
+                            code:SBResourcePathNotInProjectError
+                         message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]];
+    return NO;
+}
+
+- (BOOL)addResourcePath:(NSString *)path error:(NSError **)error
+{
+    if (![self isResourcePathInProject:path])
+    {
+        NSString *relResourcePath = [path relativePathFromBaseDirPath:self.projectPathDir];
+
+        [resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:relResourcePath forKey:@"path"]];
+        return YES;
+    }
+    else
+    {
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Cannot create %@, already present.", [path lastPathComponent]]];
+        return NO;
+    }
+}
+
+- (BOOL)isResourcePathInProject:(NSString *)resourcePath
+{
+    NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:self.projectPathDir];
+
+    return [self resourcePathForRelativePath:relResourcePath] != nil;
+}
+
+- (NSMutableDictionary *)resourcePathForRelativePath:(NSString *)path
+{
+    for (NSMutableDictionary *resourcePath in resourcePaths)
+    {
+        NSString *aResourcePath = [resourcePath objectForKey:@"path"];
+        if ([aResourcePath isEqualToString:path])
+        {
+            return resourcePath;
+        }
+    }
+    return nil;
+}
+
+- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+{
+    if ([self isResourcePathInProject:toPath])
+    {
+        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:@"Cannot move resource path, there's already one with the same name."];
+        return NO;
+    }
+
+    NSString *relResourcePathOld = [fromPath relativePathFromBaseDirPath:self.projectPathDir];
+    NSString *relResourcePathNew = [toPath relativePathFromBaseDirPath:self.projectPathDir];
+
+    NSMutableDictionary *resourcePath = [self resourcePathForRelativePath:relResourcePathOld];
+    resourcePath[@"path"] = relResourcePathNew;
+
+    [self movedResourceFrom:relResourcePathOld to:relResourcePathNew];
+    return YES;
+}
+
 - (void) detectBrowserPresence
 {
     isSafariExist = FALSE;
@@ -567,6 +645,11 @@
 			[self markAsDirtyRelPath:warning.relatedFile];
 		}
 	}
+}
+
+- (NSString *)projectPathDir
+{
+    return [projectPath stringByDeletingLastPathComponent];
 }
 
 @end

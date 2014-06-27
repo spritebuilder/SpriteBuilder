@@ -12,3 +12,16 @@ extern NSInteger const SBParentDoesNotPermitSpecificChildrenError;
 extern NSInteger const SBCocos2dUpdateTemplateZipFileDoesNotExistError;
 extern NSInteger const SBCocos2dUpdateUnzipTemplateFailedError;
 extern NSInteger const SBCocos2dUpdateUnzipTaskError;
+
+// Resource path / Packages
+extern NSInteger const SBDuplicateResourcePathError;
+extern NSInteger const SBResourcePathNotInProjectError;
+extern NSInteger const SBImportingPackagesError;
+extern NSInteger const SBRemovePackagesError;
+extern NSInteger const SBResourcePathExistsButNotInProjectError;
+extern NSInteger const SBPackageExportInvalidPackageError;
+extern NSInteger const SBPackageAlreadyExistsAtPathError;
+extern NSInteger const SBRenamePackageGenericError;
+extern NSInteger const SBPathWithoutPackageSuffix;
+extern NSInteger const SBNoPackagePathsToImport;
+extern NSInteger const SBPackageAlreayInProject;

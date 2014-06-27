@@ -22,30 +22,33 @@
  * THE SOFTWARE.
  */
 
+#import <MacTypes.h>
 #import "ResourceManagerOutlineHandler.h"
 #import "ImageAndTextCell.h"
 #import "ResourceManager.h"
 #import "ResourceManagerUtil.h"
-#import "AppDelegate.h"
 #import "CCBGlobals.h"
 #import "ResourceManagerPreviewView.h"
 #import "NSPasteboard+CCB.h"
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
+#import "MiscConstants.h"
+#import "SBErrors.h"
+#import "FeatureToggle.h"
+#import "RMResource.h"
+#import "ResourceTypes.h"
+#import "RMDirectory.h"
+#import "RMSpriteFrame.h"
+#import "RMAnimation.h"
+#import "RMPackage.h"
+#import "AppDelegate.h"
+#import "NSString+Packages.h"
+#import "PackageRenamer.h"
+#import "PackageImporter.h"
 
 @implementation ResourceManagerOutlineHandler
 
 @synthesize resType;
-
-- (void) reload
-{
-    [resourceList reloadData];
-}
-
-- (id) initWithOutlineView:(NSOutlineView *)outlineView resType:(int)rt
-{
-    return [self initWithOutlineView:outlineView resType:rt preview:NULL];
-}
 
 - (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)rt preview:(ResourceManagerPreviewView*)p
 {
@@ -57,7 +60,6 @@
     
     resourceList = outlineView;
     imagePreview = p;
-    //lblNoPreview = [lbl retain];
     resType = rt;
     
     ImageAndTextCell* imageTextCell = [[ImageAndTextCell alloc] init];
@@ -74,6 +76,13 @@
     
     return self;
 }
+
+- (void) reload
+{
+    [resourceList reloadData];
+}
+
+
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
@@ -199,7 +208,12 @@
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-    if ([item isKindOfClass:[RMDirectory class]])
+    if ([item isKindOfClass:[RMPackage class]])
+    {
+        RMPackage *package = item;
+        return package.name;
+    }
+    else if ([item isKindOfClass:[RMDirectory class]])
     {
         RMDirectory* dir = item;
         return [dir.dirPath lastPathComponent];
@@ -222,37 +236,6 @@
     return @"";
 }
 
-- (void) outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
-{
-    if ([item isKindOfClass:[RMResource class]])
-    {
-        RMResource* res = item;
-        
-        NSString* oldPath = res.filePath;
-        NSString* oldExt = [[oldPath pathExtension] lowercaseString];
-        
-        NSString* newName = object;
-        NSString* newExt = [[newName pathExtension] lowercaseString];
-        
-        // Make sure we have a valid extension
-        if (!newExt || ![oldExt isEqualToString:newExt])
-        {
-            newName = [newName stringByAppendingPathExtension:oldExt];
-        }
-        
-        // Make sure that the name is a valid file name
-        newName = [newName stringByReplacingOccurrencesOfString:@"/" withString:@""];
-        
-        if (newName && [newName length] > 0)
-        {
-            // Rename the file
-            [ResourceManager renameResourceFile:oldPath toNewName:newName];
-        }
-    }
-    
-    [resourceList deselectAll:NULL];
-}
-
 - (NSImage*) smallIconForFile:(NSString*)file
 {
     NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFile:file];
@@ -271,13 +254,14 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-    AppDelegate* ad = [AppDelegate appDelegate];
-    ProjectSettings* settings = ad.projectSettings;
-    
     NSImage* icon = NULL;
     NSImage* warningIcon = NULL;
-    
-    if ([item isKindOfClass:[RMResource class]])
+
+    if ([item isKindOfClass:[RMPackage class]])
+    {
+        icon = [self smallIconForFileType:PACKAGE_NAME_SUFFIX];
+    }
+    else if ([item isKindOfClass:[RMResource class]])
     {
         RMResource* res = item;
 		// FIXME: Do all images by type
@@ -310,7 +294,7 @@
         }
         
         // Add warning sign if there is a warning related to this file
-        if ([settings.lastWarnings warningsForRelatedFile:res.relativePath])
+        if ([_projectSettings.lastWarnings warningsForRelatedFile:res.relativePath])
         {
             warningIcon = [NSImage imageNamed:@"editor-warning.png"];
         }
@@ -326,6 +310,7 @@
     [cell setImage:icon];
     [cell setImageAlt:warningIcon];
 }
+
 
 #pragma mark Dragging and dropping
 
@@ -350,90 +335,15 @@
     }
     
     return NO;
-    
-    /*
-    NSString* spriteFile = NULL;
-    NSString* spriteSheetFile = NULL;
-    NSString* ccbFile = NULL;
-    NSString* audioFile = NULL;
-    
-    for (id item in items)
-    {
-        if ([item isKindOfClass:[RMResource class]])
-        {
-            RMResource* res = item;
-            if (res.type == kCCBResTypeImage)
-            {
-                spriteFile = [ResourceManagerUtil relativePathFromAbsolutePath: res.filePath];
-            }
-            else if (res.type == kCCBResTypeCCBFile)
-            {
-                ccbFile = [ResourceManagerUtil relativePathFromAbsolutePath: res.filePath];
-            }
-            else if (res.type == kCCBResTypeAudio)
-            {
-                audioFile = [ResourceManagerUtil relativePathFromAbsolutePath: res.filePath];
-            }
-        }
-        else if ([item isKindOfClass:[RMSpriteFrame class]])
-        {
-            RMSpriteFrame* frame = item;
-            spriteFile = frame.spriteFrameName;
-            spriteSheetFile = [ResourceManagerUtil relativePathFromAbsolutePath: frame.spriteSheetFile];
-            if (!spriteSheetFile) spriteFile = NULL;
-        }
-    }
-    
-    
-    if (spriteFile)
-    {
-        NSMutableDictionary* clipDict = [NSMutableDictionary dictionary];
-        [clipDict setObject:spriteFile forKey:@"spriteFile"];
-        if (spriteSheetFile)
-        {
-            [clipDict setObject:spriteSheetFile forKey:@"spriteSheetFile"];
-        }
-        
-        NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
-        [pasteboard declareTypes:[NSArray arrayWithObject:@"com.cocosbuilder.texture"] owner:NULL];
-        [pasteboard setData:clipData forType:@"com.cocosbuilder.texture"];
-        
-        return YES;
-    }
-    else if (ccbFile)
-    {
-        NSMutableDictionary* clipDict = [NSMutableDictionary dictionary];
-        [clipDict setObject:ccbFile forKey:@"ccbFile"];
-        
-        NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
-        [pasteboard declareTypes:[NSArray arrayWithObject:@"com.cocosbuilder.ccb"] owner:NULL];
-        [pasteboard setData:clipData forType:@"com.cocosbuilder.ccb"];
-        
-        return YES;
-    }
-    else if (audioFile)
-    {
-        NSMutableDictionary* clipDict = [NSMutableDictionary dictionary];
-        [clipDict setObject:audioFile forKey:@"audioFile"];
-        
-        NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
-        [pasteboard declareTypes:[NSArray arrayWithObject:@"com.cocosbuilder.audio"] owner:NULL];
-        [pasteboard setData:clipData forType:@"com.cocosbuilder.audio"];
-        
-        return YES;
-    }
-    
-    return NO;
-     */
 }
 
 - (NSDragOperation) outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1) return NSDragOperationNone;
-    
-    // Ignore dropping on specific indexes
-    //if (index != -1) return NSDragOperationNone;
-    
+    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1)
+    {
+        return NSDragOperationNone;
+    }
+
     if ([item isKindOfClass:[RMResource class]])
     {
         RMResource* res = item;
@@ -460,11 +370,14 @@
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
 {
-    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1) return NO;
-    
+    if (!item && [ResourceManager sharedManager].activeDirectories.count != 1)
+    {
+        return NO;
+    }
+
     // Get dropped items
-    NSPasteboard* pb = [info draggingPasteboard];
-    
+    NSPasteboard* pasteboard = [info draggingPasteboard];
+
     // Find out the destination directory
     NSString* dstDir = NULL;
     if ([item isKindOfClass:[RMResource class]])
@@ -483,30 +396,98 @@
         dstDir = dir.dirPath;
     }
     
-    BOOL movedFile = NO;
+    BOOL movedOrImportedFiles = NO;
     
     // Move files
-    NSArray* pbRes = [pb propertyListsForType:@"com.cocosbuilder.RMResource"];
+    NSArray* pbRes = [pasteboard propertyListsForType:@"com.cocosbuilder.RMResource"];
     for (NSDictionary* dict in pbRes)
     {
         NSString* srcPath = [dict objectForKey:@"filePath"];
         int type = [[dict objectForKey:@"type"] intValue];
         
-        movedFile |= [ResourceManager moveResourceFile:srcPath ofType:type toDirectory:dstDir];
+        movedOrImportedFiles |= [ResourceManager moveResourceFile:srcPath ofType:type toDirectory:dstDir];
     }
     
-    // Import files
-    NSArray* pbFilenames = [pb propertyListForType:NSFilenamesPboardType];
-    movedFile |= [ResourceManager importResources:pbFilenames intoDir:dstDir];
+    // Import files & Packages
+    NSArray* pbFilenames = [pasteboard propertyListForType:NSFilenamesPboardType];
+
+    if ([FeatureToggle sharedFeatures].arePackagesEnabled)
+    {
+        // Have packages been imported?
+        movedOrImportedFiles |= [self importPackagesWithMixedPaths:pbFilenames];
+        // NOTE: after importing packages, the array is reduced by these paths to allow
+        // further importing of other resources
+        pbFilenames = [self removePackagesFromPaths:pbFilenames];
+    }
+
+    movedOrImportedFiles |= [ResourceManager importResources:pbFilenames intoDir:dstDir];
     
     // Make sure list is up-to-date
-    if (movedFile)
+    if (movedOrImportedFiles)
     {
         [resourceList deselectAll:NULL];
         [[ResourceManager sharedManager] reloadAllResources];
     }
     
-    return movedFile;
+    return movedOrImportedFiles;
+}
+
+
+#pragma mark Importing Packages
+
+- (BOOL)importPackagesWithMixedPaths:(NSArray *)paths
+{
+    NSError *error;
+    PackageImporter *packageImporter = [[PackageImporter alloc] init];
+    packageImporter.projectSettings = _projectSettings;
+    if (![packageImporter importPackagesWithPaths:paths error:&error])
+    {
+        [self handleImportErrors:error];
+        return NO;
+    }
+    return YES;
+}
+
+- (NSArray *)removePackagesFromPaths:(NSArray *)paths
+{
+    if (!paths)
+    {
+        return nil;
+    }
+
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:paths.count];
+    for (NSString *path in paths)
+    {
+        if (![path hasPackageSuffix])
+        {
+            [result addObject:path];
+        }
+    }
+
+    return result;
+}
+
+- (void)handleImportErrors:(NSError *)error
+{
+    NSMutableString *errorMessage = [NSMutableString string];
+    NSArray *errors = error.userInfo[@"errors"];
+    for (NSError *anError in errors)
+    {
+        if (anError.code != SBDuplicateResourcePathError)
+        {
+            [errorMessage appendFormat:@"%@\n", anError.localizedDescription];
+        }
+    }
+
+    if (errorMessage.length > 0)
+    {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                         defaultButton:@"OK"
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@"%@", errorMessage];
+        [alert runModal];
+    }
 }
 
 #pragma mark Selections and edit
@@ -535,17 +516,83 @@
             [[AppDelegate appDelegate] openFile: res.filePath];
         }
     }
-    
 }
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-    if (!item) return NO;
+    return [item isKindOfClass:[RMResource class]]
+            || [item isKindOfClass:[RMPackage class]];
+}
+
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    NSOutlineView *outlineView = (NSOutlineView *)control;
+
+    id item = [outlineView itemAtRow:outlineView.editedRow];
+
+    if ([item isKindOfClass:[RMPackage class]])
+    {
+        PackageRenamer *packageRenamer = [[PackageRenamer alloc] init];
+        packageRenamer.projectSettings = _projectSettings;
+        NSError *error;
+        if (![packageRenamer canRenamePackage:item toName:fieldEditor.string error:&error])
+        {
+            [[NSAlert alertWithMessageText:@"Error"
+                             defaultButton:@"OK"
+                           alternateButton:nil
+                               otherButton:nil
+                 informativeTextWithFormat:@"%@", error.localizedDescription] runModal];
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void) outlineView:(NSOutlineView *)outlineView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+{
     if ([item isKindOfClass:[RMResource class]])
     {
-        return YES;
+        RMResource *res = item;
+
+        NSString *oldPath = res.filePath;
+        NSString *oldExt = [[oldPath pathExtension] lowercaseString];
+
+        NSString *newName = object;
+        NSString *newExt = [[newName pathExtension] lowercaseString];
+
+        // Make sure we have a valid extension
+        if (!newExt || ![oldExt isEqualToString:newExt])
+        {
+            newName = [newName stringByAppendingPathExtension:oldExt];
+        }
+
+        // Make sure that the name is a valid file name
+        newName = [newName stringByReplacingOccurrencesOfString:@"/" withString:@""];
+
+        if (newName && [newName length] > 0)
+        {
+            // Rename the file
+            [ResourceManager renameResourceFile:oldPath toNewName:newName];
+        }
     }
-    return NO;
+    else if ([item isKindOfClass:[RMPackage class]])
+    {
+        PackageRenamer *packageRenamer = [[PackageRenamer alloc] init];
+        packageRenamer.projectSettings = _projectSettings;
+        packageRenamer.resourceManager = [ResourceManager sharedManager];
+        NSString *newName = object;
+        NSError *error;
+        if (![packageRenamer renamePackage:item toName:newName error:&error])
+        {
+            [[NSAlert alertWithMessageText:@"Error"
+                             defaultButton:@"OK"
+                           alternateButton:nil
+                               otherButton:nil
+                 informativeTextWithFormat:@"%@", error.localizedDescription] runModal];
+        }
+    }
+
+    [resourceList deselectAll:NULL];
 }
 
 - (void) resourceListUpdated

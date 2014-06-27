@@ -34,6 +34,9 @@
 #import "SequencerKeyframeEasing.h"
 #import "SequencerNodeProperty.h"
 #import "CCBWriterInternal.h"
+#import "RMSpriteFrame.h"
+#import "ResourceTypes.h"
+#import "RMResource.h"
 
 @implementation SequencerUtil
 
