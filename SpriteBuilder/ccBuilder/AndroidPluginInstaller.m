@@ -14,7 +14,7 @@
 //#define SBPRO_TEST_INSTALLER
 #endif
 
-static const float kSBProPluginVersion = 2.0;
+static const float kSBProPluginVersion = 3.0;
 
 
 NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
@@ -35,7 +35,7 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 	if(![fm fileExistsAtPath:pluginBundlePath])
 	{
 		*result = [NSString stringWithFormat:@"AndroidPlugin.zip does not exist at path: %@",pluginBundlePath];
-		return 1;
+		return false;
 	}
 	
 

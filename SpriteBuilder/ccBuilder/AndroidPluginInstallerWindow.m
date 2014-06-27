@@ -82,9 +82,11 @@
 				NSString * errorLine = [self lastLine:output];
 				[NSAlert showModalDialogWithTitle:@"Failed to install Android Plugin" message:errorLine];
 				[NSApp stopModalWithCode:0];
+				return;
 			}
 				
 			[NSApp stopModalWithCode:1];
+			return;
 		});
 	});
 	
