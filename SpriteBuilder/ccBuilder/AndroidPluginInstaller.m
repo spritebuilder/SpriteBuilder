@@ -11,24 +11,34 @@
 
 
 #ifdef DEBUG
-#define SBPRO_TEST_INSTALLER
+//#define SBPRO_TEST_INSTALLER
 #endif
 
+static const float kSBProPluginVersion = 2.0;
 
 
-static const float kSBProPluginVersion = 1.0;
 NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 
 @implementation AndroidPluginInstaller
 
 +(BOOL)runPythonScript:(NSString*)command output:(NSString**)result
 {
+	
+	
     NSTask* task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/python";
 	
 	NSString *scriptPath = [[NSBundle mainBundle] pathForResource:@"plugin_installer" ofType:@"py"];
-	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidPlugin" ofType:@"zip" inDirectory:@"Generated"];
 	
+	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidPlugin" ofType:@"zip" inDirectory:@"Generated"];
+	NSFileManager * fm =[[NSFileManager alloc] init];
+	if(![fm fileExistsAtPath:pluginBundlePath])
+	{
+		*result = [NSString stringWithFormat:@"AndroidPlugin.zip does not exist at path: %@",pluginBundlePath];
+		return 1;
+	}
+	
+
     task.arguments = [NSArray arrayWithObjects: scriptPath, command, pluginBundlePath, nil];
 	
     // NSLog breaks if we don't do this...
@@ -36,7 +46,7 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 	
     NSPipe *stdOutPipe = nil;
     stdOutPipe = [NSPipe pipe];
-    [task setStandardOutput:stdOutPipe];
+    [task setStandardOutput:stdOutPipe];	
 	
     NSPipe* stdErrPipe = nil;
     stdErrPipe = [NSPipe pipe];
@@ -83,12 +93,12 @@ NSString * getVersionFile()
 	return versionFilePath;
 }
 
+
+
 +(BOOL)needsInstallation
 {
-	
-	
 #ifdef SBPRO_TEST_INSTALLER
-	//return YES;
+	return YES;
 #endif
 	
 	NSFileManager * fm =[[NSFileManager alloc] init];

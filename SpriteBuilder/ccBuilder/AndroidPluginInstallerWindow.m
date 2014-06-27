@@ -45,17 +45,13 @@
 	
 	dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
 		
-		NSNumber * currentVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"SBProPluginVersion"];
-		BOOL upgrading = currentVersion == nil;
-		
-		
 		
 		BOOL success = YES;
 		NSString*output;
 		
 		//////		//////		//////		//////		//////		//////		//////
 		//If we're upgrading, clean
-		if(upgrading && ![AndroidPluginInstaller removePlugin:&output])
+		if(success && ![AndroidPluginInstaller removePlugin:&output])
 		{
 			success = false;
 		}
