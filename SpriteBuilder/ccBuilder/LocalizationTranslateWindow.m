@@ -25,11 +25,12 @@ static int downloadCostErrorIndex = 3;
 static int downloadLangsErrorIndex = 4;
 
 //URLs
-static NSString* languageURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1/translations/languages?key=%@";
-static NSString* const estimateURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1/translations/estimate";
-static NSString* const receiptURL = @"http://spritebuilder-rails.herokuapp.com/translations";
-static NSString* translationsURL = @"http://spritebuilder-rails.herokuapp.com/translations?key=%@";
-static NSString* const cancelURL = @"http://spritebuilder-rails.herokuapp.com/translations/cancel";
+static NSString* baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
+static NSString* languageURL;
+static NSString* estimateURL;
+static NSString* receiptTranslationsURL;
+static NSString* translationsURL;
+static NSString* cancelURL;
 
 //Messages for the user
 static NSString* const noActiveLangsString = @"No Valid Languages";
@@ -44,6 +45,12 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  */
 -(void) awakeFromNib
 {
+    languageURL = [baseURL stringByAppendingString:@"/translations/languages?key=%@"];
+    estimateURL = [baseURL stringByAppendingString:@"/translations/estimate"];
+    receiptTranslationsURL = [baseURL stringByAppendingString:@"/translations"];
+    translationsURL = [baseURL stringByAppendingString:@"/translations?key=%@"];
+    cancelURL = [baseURL stringByAppendingString:@"/translations/cancel"];
+    
     _guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     _languages = [[NSMutableDictionary alloc] init];
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
@@ -669,10 +676,11 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
             }
             case SKPaymentTransactionStatePurchased:
             {
+                NSLog(@"Purchased");
                 NSURL* receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
                 NSData* receipt = [NSData dataWithContentsOfURL:receiptURL];
                 [_receipts setObject:receipt forKey:transaction.transactionIdentifier];
-                [self validateReceipt:[[NSString alloc] initWithData:receipt encoding:NSUTF8StringEncoding] transaction:transaction];
+                [self validateReceipt:[receipt base64EncodedStringWithOptions:0] transaction:transaction];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
             }
@@ -699,10 +707,11 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         return;
     }
     NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
-    NSURL *url = [NSURL URLWithString:receiptURL];
+    NSURL *url = [NSURL URLWithString:receiptTranslationsURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postdata2;
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest: request
                                                              completionHandler:^(NSData *data,
                                                                                  NSURLResponse *response,
@@ -831,6 +840,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postdata2;
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest: request
                                                                  completionHandler:^(NSData *data,
                                                                                      NSURLResponse *response,
