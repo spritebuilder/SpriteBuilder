@@ -719,10 +719,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                   {
                                       if (!error)
                                       {
-                                          [self parseJSONTranslations:data];
+                                          [self parseJSONConfirmation:data];
                                           NSLog(@"Yo1");
                                           _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
-                                          [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
                                           [self.window close];
                                           [self setLanguageWindowDownloading];
                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
@@ -736,6 +735,17 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [task resume];
 }
 
+-(void)parseJSONConfirmation:(NSData *)data{
+    NSError *JSONerror;
+    NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
+                                                                    options:NSJSONReadingMutableContainers error:&JSONerror];
+    if(JSONerror)
+    {
+        NSLog(@"JSONError: %@", JSONerror.localizedDescription);
+        return;
+    }
+    _latestRequestID = [initialTransDict objectForKey:@"request_id"];
+}
 -(void)setLanguageWindowDownloading{
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* translations = handler.translations;
@@ -769,24 +779,37 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     }
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* handlerTranslations = handler.translations;
-    NSArray* initialTrans = [initialTransDict objectForKey:@"phrases"];
-    for(NSDictionary* transForKeys in initialTrans)
-    {
-        NSString* keyToTranslate = [transForKeys.allKeys objectAtIndex:0];
-        NSDictionary* transDict = [transForKeys objectForKey:keyToTranslate];
-        for(NSString* lang in transDict.allKeys){
-            NSString* translation = [transDict objectForKey:lang];
-            for(LocalizationEditorTranslation* t in handlerTranslations)
-            {
-                if([t.key isEqualToString:keyToTranslate] && [t.languagesDownloading containsObject:lang]){
-                    [t.translations setObject:translation forKey:lang];
-                    [t.languagesDownloading removeObject:lang];
-                    [_parentWindow incrementTransByOne];
+    NSArray* requests = [initialTransDict objectForKey:@"requests"];
+    NSDictionary* request = [requests objectAtIndex:0];
+    NSString* requestID = [request objectForKey:@"request_id"];
+    if(![requestID isEqualToString:_latestRequestID]){
+        NSLog(@"Something went wrong");
+    }
+    NSArray* phrases = [request objectForKey:@"phrases"];
+    for(NSDictionary* phrase in phrases){
+        NSString* text = [phrase objectForKey:@"text"];
+        NSString* context = [phrase objectForKey:@"context"];
+        NSString* sourceLangIso = [phrase objectForKey:@"source_language"];
+        NSArray* translations = [phrase objectForKey:@"translations"];
+        for(NSDictionary* translation in translations){
+            NSString* translationIso = [translation objectForKey:@"target_language"];
+            NSString* translationStatus = [translation objectForKey:@"status"];
+            NSString* translationText = [translation objectForKey:@"text"];
+            if([translationStatus isEqualToString:@"completed"]){
+                for(LocalizationEditorTranslation* t in handlerTranslations)
+                {
+                    NSString* sourceText = [t.translations objectForKey:sourceLangIso];
+                    if([sourceText isEqualToString:text] && [t.comment isEqualToString:context] && [t.languagesDownloading containsObject:translationIso]){
+                        [t.translations setObject:translationText forKey:translationIso];
+                        [t.languagesDownloading removeObject:translationIso];
+                        [_parentWindow incrementTransByOne];
+                    }
                 }
             }
         }
     }
     if([_parentWindow translationProgress] == _numTransToDownload){
+        [self endDownload];
         [_parentWindow finishDownloadingTranslations];
     }
 }
@@ -803,7 +826,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                   {
                                       if (!error)
                                       {
-                                          
                                           [self parseJSONTranslations:data];
                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
@@ -814,6 +836,20 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                   }];
     [task resume];
     
+}
+- (void)endDownload{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSArray* handlerTranslations = handler.translations;
+    for(LocalizationEditorTranslation* t in handlerTranslations)
+    {
+        if(t.languagesDownloading.count)
+        {
+            NSLog(@"Oops, language still downloading");
+            t.languagesDownloading = NULL;
+        }
+    }
+    [_timerTransDownload invalidate];
+    _timerTransDownload = nil;
 }
 
 - (void)cancelDownload{

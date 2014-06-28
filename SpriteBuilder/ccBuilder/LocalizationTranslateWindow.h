@@ -54,7 +54,7 @@
     NSArray* _products;
     NSString* _guid;
     NSMutableDictionary* _receipts;
-    
+    NSString* _latestRequestID;
     LocalizationEditorWindow* _parentWindow;
     
 }
