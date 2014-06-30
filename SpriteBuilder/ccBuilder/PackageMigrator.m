@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "PackageMigrator.h"
 
 #import "ProjectSettings.h"
@@ -11,10 +10,13 @@
 #import "RMPackage.h"
 #import "MoveFileCommand.h"
 #import "CreateDirectoryFileCommand.h"
+#import "RemoveFileCommand.h"
+#import "NSError+SBErrors.h"
+#import "SBErrors.h"
+
+
 NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
-#define LocalLogDebug( s, ... ) NSLog( @"[DEBUG] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
-#define LocalLogError( s, ... ) NSLog( @"[ERROR] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 
 @interface PackageMigrator ()
 
@@ -53,11 +55,17 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)migrate:(NSError **)error
 {
-    LocalLogDebug(@"Package migration started...");
+    if (![self needsMigration])
+    {
+        return YES;
+    }
+
+    [self logMigrationStep:@"Starting..."];
+
     [self backupResourcePaths];
 
     // The folder PACKAGE_FOLDER_NAME is special, if it is already taken by a resource
-    // path it will be renamed now and restore after importing
+    // path it will be renamed now and restored after importing
     if (![self renameResourcePathCollidingWithPackagesFolderName:error])
     {
         return NO;
@@ -95,9 +103,25 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         return NO;
     }
 
-    // NSLog(@"%@", _migrationCommandsStack);
+    [self logMigrationStep:@"successful!"];
+    return YES;
+}
 
-    LocalLogDebug(@"Package finished successfully!");
+- (NSError *)standardError
+{
+    NSString *message = [NSString stringWithFormat:
+                                          @"@Migration of project to packages format failed."
+                                          @"The different migration steps have been rolled back."
+                                          @"Please have a look at the system log and search for %@"
+                                          @"You can use the Console app do view and search the system log", PACKAGES_LOG_HASHTAG];
+
+    return [NSError errorWithDomain:SBErrorDomain
+                               code:SBMigrationError
+                           userInfo:@{NSLocalizedDescriptionKey : message}];
+}
+
+- (BOOL)needsMigration
+{
     return YES;
 }
 
@@ -187,8 +211,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
         if ([packageImporter importPackagesWithPaths:@[pathToImport] error:error])
         {
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            if (![fileManager removeItemAtPath:pathToImport error:error])
+            RemoveFileCommand *removeFileCommand = [[RemoveFileCommand alloc] initWithFilePath:pathToImport];
+
+            if (![self executeCommandAndAddToStackOnSuccess:removeFileCommand error:error])
             {
                 return NO;
             }
@@ -220,7 +245,6 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     if ([self packageFolderExists])
     {
-        LocalLogDebug(@"Creating packages folder...already exists.");
         return YES;
     }
 
@@ -229,7 +253,6 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)tryToCreatePackagesFolder:(NSError **)error
 {
-    LocalLogDebug(@"Trying to create packages folder...");
     NSString *packageFolderPath = [_projectSettings packagesFolderPath];
 
     NSAssert(packageFolderPath, @"ProjectSettings' packagesFolderPath not yielding anything, forgot to set projectsettings.projectPath property?");
@@ -270,20 +293,14 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)renamePackagesResourcePathFolder:(NSError **)error
 {
-    LocalLogDebug(@"Trying to rename resource folder with \"packages\" name...");
-
     NSString *renamePathTo = [self renamePathForSpecialCasePackagesFolderAsResourcePath];
     self.packageAsResourcePathTempName = [renamePathTo lastPathComponent];
 
     NSString *renamePathFrom = [_projectSettings packagesFolderPath];
     if (![self moveFileAndAddToCommandStackAtPath:renamePathFrom toPath:renamePathTo error:error])
     {
-        LocalLogError(@"ERROR Special case renaming: %@ -> \"%@\" found: renaming to: \"%@\"", (*error).localizedDescription, renamePathFrom, renamePathTo);
         return NO;
     }
-
-    LocalLogDebug(@"Special case: resource path with name \"%@\" found: renaming to: \"%@\"", PACKAGES_FOLDER_NAME, renamePathTo);
-    LocalLogDebug(@"Trying to rename resource folder with \"packages\" name DONE");
 
     NSString *newResourcePathName = [renamePathTo lastPathComponent];
     for (NSMutableDictionary *resourcePath in _projectSettings.resourcePaths)
@@ -292,7 +309,6 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         {
             // TODO: use ResourcePath object
             resourcePath[@"path"] = [[resourcePath[@"path"] stringByDeletingLastPathComponent] stringByAppendingPathComponent:newResourcePathName];
-            LocalLogDebug(@"New relative path: \"%@\"", [_projectSettings fullPathForResourcePathDict:resourcePath]);
         }
     }
 
@@ -322,15 +338,22 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 - (BOOL)moveFileAndAddToCommandStackAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
 {
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:fromPath toPath:toPath];
+
     return [self executeCommandAndAddToStackOnSuccess:moveFileCommand error:error];
 }
 
 - (BOOL)executeCommandAndAddToStackOnSuccess:(id<FileCommandProtocol>)command error:(NSError **)error;
 {
+    [self logMigrationStep:@"#Filesystem %@", [command description]];
+
     BOOL success = [command execute:error];
     if (success)
     {
         [_migrationCommandsStack addObject:command];
+    }
+    else
+    {
+        [self logMigrationStep:@"#error %@ - %@", [command description], (*error).localizedDescription];
     }
     return success;
 }

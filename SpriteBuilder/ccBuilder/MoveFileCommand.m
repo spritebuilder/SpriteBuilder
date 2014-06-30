@@ -36,7 +36,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"[%@] from:\"%@\" to:\"%@\"", [self class], _fromPath, _toPath];
+    return [NSString stringWithFormat:@"Move file from:\"%@\" to:\"%@\"", _fromPath, _toPath];
 }
 
 @end

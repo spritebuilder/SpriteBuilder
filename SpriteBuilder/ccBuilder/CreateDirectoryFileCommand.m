@@ -36,7 +36,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"[%@] create dir at:\"%@\"", [self class], _dirPath];
+    return [NSString stringWithFormat:@"Create directory at \"%@\"", _dirPath];
 }
 
 @end

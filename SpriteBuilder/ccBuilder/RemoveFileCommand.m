@@ -4,7 +4,7 @@
 @interface RemoveFileCommand()
 
 @property (nonatomic, copy, readwrite) NSString *filePath;
-@property (nonatomic, copy) NSString *tmpPath;
+@property (nonatomic, copy, readwrite) NSString *tempFileName;
 
 @end
 
@@ -34,19 +34,19 @@
         return NO;
     }
 
-    self.tmpPath = [tmpDir stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
+    self.tempFileName = [tmpDir stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
 
-    return [fileManager moveItemAtPath:_filePath toPath:_tmpPath error:error];
+    return [fileManager moveItemAtPath:_filePath toPath:_tempFileName error:error];
 }
 
 - (BOOL)undo:(NSError **)error
 {
-    return [[NSFileManager defaultManager] moveItemAtPath:_tmpPath toPath:_filePath error:error];
+    return [[NSFileManager defaultManager] moveItemAtPath:_tempFileName toPath:_filePath error:error];
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"[%@] removed file at:\"%@\" moved to temp:\"%@\"", [self class], _filePath, _tmpPath];
+    return [NSString stringWithFormat:@"Remove file at \"%@\" move to temp:\"%@\"", _filePath, _tempFileName];
 }
 
 @end

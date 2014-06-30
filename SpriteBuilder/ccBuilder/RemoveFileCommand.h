@@ -5,6 +5,7 @@
 @interface RemoveFileCommand : NSObject <FileCommandProtocol>
 
 @property (nonatomic, copy, readonly) NSString *filePath;
+@property (nonatomic, copy, readonly) NSString *tempFileName;
 
 - (instancetype)initWithFilePath:(NSString *)filePath;
 
