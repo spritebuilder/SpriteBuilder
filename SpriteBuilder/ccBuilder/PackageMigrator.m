@@ -53,6 +53,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return self;
 }
 
+
 - (BOOL)migrate:(NSError **)error
 {
     if (![self needsMigration])
@@ -66,40 +67,47 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
     // The folder PACKAGE_FOLDER_NAME is special, if it is already taken by a resource
     // path it will be renamed now and restored after importing
-    if (![self renameResourcePathCollidingWithPackagesFolderName:error])
+    if (![self renameResourcePathCollidingWithPackagesFolderName])
     {
+        [NSError setError:error withError:[self standardError]];
         return NO;
     }
 
-    if (![self createPackagesFolderIfNotExisting:error])
+    if (![self createPackagesFolderIfNotExisting])
     {
+        [NSError setError:error withError:[self standardError]];
         return NO;
     }
 
     NSArray *resourcePathsToImport = [self allResourcePathsToBeImported];
 
-    if (![self removeResourcePathsToImportFromProject:resourcePathsToImport error:error])
+    if (![self removeResourcePathsToImportFromProject:resourcePathsToImport])
     {
+        [NSError setError:error withError:[self standardError]];
         return NO;
     }
 
-    if (![self renameCollidingFoldersInPackagesFolderBeforeImporting:resourcePathsToImport error:error])
+    if (![self renameCollidingFoldersInPackagesFolderBeforeImporting:resourcePathsToImport])
     {
+        [NSError setError:error withError:[self standardError]];
         return NO;
     }
 
-    if (![self appendPackageSuffixToResourcePathsToImport:resourcePathsToImport error:error])
+    if (![self appendPackageSuffixToResourcePathsToImport:resourcePathsToImport])
     {
+        [NSError setError:error withError:[self standardError]];
         return NO;
     }
 
-    if (![self importAndDeleteOldResourcePathsToImport:resourcePathsToImport error:error])
+    if (![self importAndDeleteOldResourcePathsToImport:resourcePathsToImport])
     {
+        [NSError setError:error withError:[self standardError]];
         return NO;
     }
 
-    if (![self restoreCollidingResourcePathName:error])
+    if (![self restoreCollidingResourcePathName])
     {
+        [NSError setError:error withError:[self standardError]];
         return NO;
     }
 
@@ -134,7 +142,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     }
 }
 
-- (BOOL)renameCollidingFoldersInPackagesFolderBeforeImporting:(NSArray *)resourcePathsToImport error:(NSError **)error
+- (BOOL)renameCollidingFoldersInPackagesFolderBeforeImporting:(NSArray *)resourcePathsToImport
 {
     for (NSMutableString *resourcePath in resourcePathsToImport)
     {
@@ -144,7 +152,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         {
             NSString *newPath = [self rollingRenamedPathForPath:futurePackagePath suffix:@"renamed"];
 
-            if (![self moveFileAndAddToCommandStackAtPath:futurePackagePath toPath:newPath error:error])
+            if (![self moveFileAndAddToCommandStackAtPath:futurePackagePath toPath:newPath])
             {
                 return NO;
             }
@@ -170,19 +178,21 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return resourcePathsToImport;
 }
 
-- (BOOL)removeResourcePathsToImportFromProject:(NSArray *)resourcePathsToImport error:(NSError **)error
+- (BOOL)removeResourcePathsToImportFromProject:(NSArray *)resourcePathsToImport
 {
     for (NSMutableString *resourcePath in resourcePathsToImport)
     {
-        if (![_projectSettings removeResourcePath:resourcePath error:error])
+        NSError *error;
+        if (![_projectSettings removeResourcePath:resourcePath error:&error])
         {
+            [self logMigrationStep:@"#error removing resource path %@ - %@", resourcePath, error.localizedDescription];
             return NO;
         }
     }
     return YES;
 }
 
-- (BOOL)appendPackageSuffixToResourcePathsToImport:(NSArray *)resourcePathsToImport error:(NSError **)error
+- (BOOL)appendPackageSuffixToResourcePathsToImport:(NSArray *)resourcePathsToImport
 {
     for (NSMutableString *fullPath in resourcePathsToImport)
     {
@@ -191,7 +201,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
             NSString *oldPath = fullPath;
             NSString *newPath = [fullPath stringByAppendingPackageSuffix];
 
-            if (![self moveFileAndAddToCommandStackAtPath:oldPath toPath:newPath error:error])
+            if (![self moveFileAndAddToCommandStackAtPath:oldPath toPath:newPath])
             {
                 return NO;
             }
@@ -202,31 +212,33 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return YES;
 }
 
-- (BOOL)importAndDeleteOldResourcePathsToImport:(NSArray *)resourcePathsToImport error:(NSError **)error
+- (BOOL)importAndDeleteOldResourcePathsToImport:(NSArray *)resourcePathsToImport
 {
     for (NSString *pathToImport in resourcePathsToImport)
     {
         PackageImporter *packageImporter = [[PackageImporter alloc] init];
         packageImporter.projectSettings = _projectSettings;
 
-        if ([packageImporter importPackagesWithPaths:@[pathToImport] error:error])
+        NSError *error;
+        if ([packageImporter importPackagesWithPaths:@[pathToImport] error:&error])
         {
             RemoveFileCommand *removeFileCommand = [[RemoveFileCommand alloc] initWithFilePath:pathToImport];
 
-            if (![self executeCommandAndAddToStackOnSuccess:removeFileCommand error:error])
+            if (![self executeCommandAndAddToStackOnSuccess:removeFileCommand])
             {
                 return NO;
             }
         }
         else
         {
+            [self logMigrationStep:@"#error Package importing \"%@\" failed: %@", pathToImport, error.localizedDescription];
             return NO;
         }
     }
     return YES;
 }
 
-- (BOOL)restoreCollidingResourcePathName:(NSError **)error
+- (BOOL)restoreCollidingResourcePathName
 {
     if (_resourcePathWithPackagesFolderNameFound)
     {
@@ -237,21 +249,29 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         RMPackage *package = [[RMPackage alloc] init];
         package.dirPath = [_projectSettings fullPathForPackageName:_packageAsResourcePathTempName];
 
-        return [packageRenamer renamePackage:package toName:PACKAGES_FOLDER_NAME error:error];
+        NSError *error;
+        BOOL success = [packageRenamer renamePackage:package toName:PACKAGES_FOLDER_NAME error:&error];
+        if (!success)
+        {
+            [self logMigrationStep:@"#error Package renaming failed: %@", error.localizedDescription];
+        }
+
+        return success;
     }
+    return YES;
 }
 
-- (BOOL)createPackagesFolderIfNotExisting:(NSError **)error
+- (BOOL)createPackagesFolderIfNotExisting
 {
     if ([self packageFolderExists])
     {
         return YES;
     }
 
-    return [self tryToCreatePackagesFolder:error];
+    return [self tryToCreatePackagesFolder];
 }
 
-- (BOOL)tryToCreatePackagesFolder:(NSError **)error
+- (BOOL)tryToCreatePackagesFolder
 {
     NSString *packageFolderPath = [_projectSettings packagesFolderPath];
 
@@ -259,7 +279,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
     CreateDirectoryFileCommand *createDirectoryFileCommand = [[CreateDirectoryFileCommand alloc] initWithDirPath:packageFolderPath];
 
-    return [self executeCommandAndAddToStackOnSuccess:createDirectoryFileCommand error:error];
+    return [self executeCommandAndAddToStackOnSuccess:createDirectoryFileCommand];
 }
 
 - (BOOL)packageFolderExists
@@ -269,12 +289,12 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return [[NSFileManager defaultManager] fileExistsAtPath:packageFolderPath];
 }
 
-- (BOOL)renameResourcePathCollidingWithPackagesFolderName:(NSError **)error
+- (BOOL)renameResourcePathCollidingWithPackagesFolderName
 {
     if ([self packageFolderExists]
         && [self isPackageFolderAResourcePath])
     {
-        return [self renamePackagesResourcePathFolder:error];
+        return [self renamePackagesResourcePathFolder];
     }
     return YES;
 }
@@ -291,13 +311,13 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return NO;
 }
 
-- (BOOL)renamePackagesResourcePathFolder:(NSError **)error
+- (BOOL)renamePackagesResourcePathFolder
 {
     NSString *renamePathTo = [self renamePathForSpecialCasePackagesFolderAsResourcePath];
     self.packageAsResourcePathTempName = [renamePathTo lastPathComponent];
 
     NSString *renamePathFrom = [_projectSettings packagesFolderPath];
-    if (![self moveFileAndAddToCommandStackAtPath:renamePathFrom toPath:renamePathTo error:error])
+    if (![self moveFileAndAddToCommandStackAtPath:renamePathFrom toPath:renamePathTo])
     {
         return NO;
     }
@@ -335,25 +355,26 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return result;
 }
 
-- (BOOL)moveFileAndAddToCommandStackAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+- (BOOL)moveFileAndAddToCommandStackAtPath:(NSString *)fromPath toPath:(NSString *)toPath
 {
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:fromPath toPath:toPath];
 
-    return [self executeCommandAndAddToStackOnSuccess:moveFileCommand error:error];
+    return [self executeCommandAndAddToStackOnSuccess:moveFileCommand];
 }
 
-- (BOOL)executeCommandAndAddToStackOnSuccess:(id<FileCommandProtocol>)command error:(NSError **)error;
+- (BOOL)executeCommandAndAddToStackOnSuccess:(id <FileCommandProtocol>)command
 {
     [self logMigrationStep:@"#Filesystem %@", [command description]];
 
-    BOOL success = [command execute:error];
+    NSError *error;
+    BOOL success = [command execute:&error];
     if (success)
     {
         [_migrationCommandsStack addObject:command];
     }
     else
     {
-        [self logMigrationStep:@"#error %@ - %@", [command description], (*error).localizedDescription];
+        [self logMigrationStep:@"#error %@ - %@", [command description], error.localizedDescription];
     }
     return success;
 }

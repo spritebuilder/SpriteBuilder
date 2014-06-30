@@ -1,5 +1,5 @@
-#import <MacTypes.h>
 #import "ProjectMigrator.h"
+
 #import "PackageMigrator.h"
 #import "ProjectSettings.h"
 #import "NSAlert+Convenience.h"
