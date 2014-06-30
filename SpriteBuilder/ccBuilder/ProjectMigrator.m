@@ -7,7 +7,8 @@
 
 @interface ProjectMigrator ()
 
-@property (nonatomic, weak)ProjectSettings *projectSettings;
+@property (nonatomic, weak) ProjectSettings *projectSettings;
+@property (nonatomic, strong) PackageMigrator *packageMigrator;
 
 @end
 
@@ -25,15 +26,29 @@
     return self;
 }
 
-- (void)migrate
+- (BOOL)migrate
 {
-    PackageMigrator *packageMigrator = [[PackageMigrator  alloc] initWithProjectSettings:_projectSettings];
+    if (!_packageMigrator)
+    {
+        self.packageMigrator = [[PackageMigrator  alloc] initWithProjectSettings:_projectSettings];
+    }
 
     NSError *error;
-    if (![packageMigrator migrate:&error])
+    if (![_packageMigrator migrate:&error])
     {
+        [_packageMigrator rollback];
+
         [NSAlert showModalDialogWithTitle:@"Error migrating" message:error.localizedDescription];
+
+        return NO;
     }
+
+    return YES;
+}
+
+- (void)rollback
+{
+    [_packageMigrator rollback];
 }
 
 @end

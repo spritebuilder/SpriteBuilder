@@ -10,4 +10,6 @@
 
 - (BOOL)migrate:(NSError **)error;
 
+- (void)rollback;
+
 @end

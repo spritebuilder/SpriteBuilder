@@ -11,6 +11,7 @@
 #import "RMPackage.h"
 #import "MoveFileCommand.h"
 #import "CreateDirectoryFileCommand.h"
+NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 #define LocalLogDebug( s, ... ) NSLog( @"[DEBUG] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #define LocalLogError( s, ... ) NSLog( @"[ERROR] <%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
@@ -22,7 +23,7 @@
 @property (nonatomic, copy) NSString *packageAsResourcePathTempName;
 
 @property (nonatomic, strong) NSMutableArray *migrationCommandsStack;
-@property (nonatomic, strong) NSMutableArray *resourePathsRemoved;
+@property (nonatomic, strong) NSMutableArray *resourePathsBackup;
 
 @end
 
@@ -44,7 +45,7 @@
         self.projectSettings = projectSettings;
         self.resourcePathWithPackagesFolderNameFound = NO;
         self.migrationCommandsStack = [NSMutableArray array];
-        self.resourePathsRemoved = [NSMutableArray array];
+        self.resourePathsBackup = [NSMutableArray array];
     }
 
     return self;
@@ -53,6 +54,7 @@
 - (BOOL)migrate:(NSError **)error
 {
     LocalLogDebug(@"Package migration started...");
+    [self backupResourcePaths];
 
     // The folder PACKAGE_FOLDER_NAME is special, if it is already taken by a resource
     // path it will be renamed now and restore after importing
@@ -99,6 +101,15 @@
     return YES;
 }
 
+- (void)backupResourcePaths
+{
+    [_resourePathsBackup removeAllObjects];
+    for (NSMutableDictionary *resourcePath in _projectSettings.resourcePaths)
+    {
+        [_resourePathsBackup addObject:[resourcePath copy]];
+    }
+}
+
 - (BOOL)renameCollidingFoldersInPackagesFolderBeforeImporting:(NSArray *)resourcePathsToImport error:(NSError **)error
 {
     for (NSMutableString *resourcePath in resourcePathsToImport)
@@ -143,7 +154,6 @@
         {
             return NO;
         }
-        [_resourePathsRemoved addObject:[resourcePath copy]];
     }
     return YES;
 }
@@ -323,6 +333,44 @@
         [_migrationCommandsStack addObject:command];
     }
     return success;
+}
+
+- (void)rollback
+{
+    [self logMigrationStep:@"#rollback ..."];
+
+    [self rollbackResourcePathChanges];
+
+    [self rollbackFileSystemChanges];
+}
+
+- (void)rollbackFileSystemChanges
+{
+    NSArray *reversedStack = [[_migrationCommandsStack reverseObjectEnumerator] allObjects];
+    for (id<FileCommandProtocol> command in reversedStack)
+    {
+        [self logMigrationStep:@"#rollback #Filesystem Undoing %@", command];
+        NSError *error;
+        if (![command undo:&error])
+        {
+            [self logMigrationStep:@"#rollback #Filesystem #error Undoing %@ - %@", command, error];
+        }
+    }
+}
+
+- (void)rollbackResourcePathChanges
+{
+    _projectSettings.resourcePaths = [_resourePathsBackup copy];
+}
+
+- (void)logMigrationStep:(NSString *)format, ...
+{
+    va_list args;
+    va_start(args, format);
+    // #if TEST_TARGET != 0
+    NSLogv([NSString stringWithFormat:@"%@ %@", PACKAGES_LOG_HASHTAG, format], args);
+    // #endif
+    va_end(args);
 }
 
 @end

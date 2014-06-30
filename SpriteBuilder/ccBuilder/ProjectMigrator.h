@@ -6,6 +6,8 @@
 
 - (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings;
 
-- (void)migrate;
+- (BOOL)migrate;
+
+- (void)rollback;
 
 @end

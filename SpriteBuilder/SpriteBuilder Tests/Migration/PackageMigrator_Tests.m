@@ -145,6 +145,28 @@
     [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"sprites"]]];
 }
 
+- (void)testRollback
+{
+    [self createFolders:@[@"SpriteBuilder Resources"]];
+    [self createEmptyFiles:@[
+            @"SpriteBuilder Resources/asset.png",
+            @"SpriteBuilder Resources/scene.ccb"]];
+
+    [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
+
+    NSError *error;
+    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertNil(error);
+
+    [_packageMigrator rollback];
+
+    [self assertFileExists:@"SpriteBuilder Resources/asset.png"];
+    [self assertFileExists:@"SpriteBuilder Resources/scene.ccb"];
+    [self assertFileDoesNotExists:@"packages"];
+    [self assertResourcePathsInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]]];
+    XCTAssertTrue(_projectSettings.resourcePaths.count == 1, @"There should be only 1 resourcepath but %lu found: %@", _projectSettings.resourcePaths.count, _projectSettings.resourcePaths);
+}
+
 
 #pragma mark - assertion helper
 
