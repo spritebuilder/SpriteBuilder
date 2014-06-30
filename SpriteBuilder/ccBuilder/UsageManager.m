@@ -10,6 +10,12 @@
 #import "HashValue.h"
 #import "ProjectSettings.h"
 
+//#ifdef SPRITEBUILDER_PRO
+//NSString * kSpriteBuilderVersion
+//#else
+
+//#endif
+
 @implementation UsageManager
 
 - (void) registerUsage

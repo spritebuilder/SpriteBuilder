@@ -4554,11 +4554,13 @@ static BOOL hideAllToNextSeparator;
 }
 
 #pragma mark Spritebuilder Pro
-#define SPRITEBUILDER_PRO
+//#define SPRITEBUILDER_PRO
 
 -(void)setupSpriteBuilderPro
 {
-#ifdef SPRITEBUILDER_PRO		
+	
+#ifdef SPRITEBUILDER_PRO	
+#error NO SB PRO
 	if(![AndroidPluginInstaller needsInstallation])
 	{
 		return;

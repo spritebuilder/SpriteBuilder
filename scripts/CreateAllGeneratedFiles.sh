@@ -1,5 +1,6 @@
-if [ "$#" -ne 1 ]; then
-    echo "Please provide the SpriteBuilder version"
+if [ "$#" -ne 2 ]; then
+    echo "Please provide the SpriteBuilder version and sku [default|pro]."
+    echo "eg ./CreateAllGeneratedFiles 0.9 pro"
     exit 1
 fi
 
@@ -14,7 +15,8 @@ fi
 
 # Update version for about box
 echo "Version: $1" > Generated/Version.txt
-echo -n "GitHub: " >> Generated/Version.txt
+echo "Sku: $2" >> Generated/Version.txt
+echo "GitHub: " >> Generated/Version.txt
 git rev-parse --short=10 HEAD >> Generated/Version.txt
 echo "=== GENERATING SpriteBuilder version file ==="
 touch Generated/Version.txt
