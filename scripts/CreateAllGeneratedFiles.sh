@@ -13,6 +13,16 @@ if [ ! -d "SpriteBuilder" ]; then
     exit 1
 fi
 
+
+if [ "$2" = "pro" ]; then
+	echo "=== GENERATING Android Plugin ==="
+	rm "Generated/AndroidPlugin.zip";
+	python "SpriteBuilder/libs/AndroidPlugin/plugin_installer.py" package "Generated/AndroidPlugin.zip";
+	exit 1
+fi
+
+
+
 # Update version for about box
 echo "Version: $1" > Generated/Version.txt
 echo "Sku: $2" >> Generated/Version.txt

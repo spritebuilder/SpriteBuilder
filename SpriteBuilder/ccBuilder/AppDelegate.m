@@ -4560,7 +4560,6 @@ static BOOL hideAllToNextSeparator;
 {
 	
 #ifdef SPRITEBUILDER_PRO	
-#error NO SB PRO
 	if(![AndroidPluginInstaller needsInstallation])
 	{
 		return;

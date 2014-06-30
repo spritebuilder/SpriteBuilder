@@ -48,7 +48,6 @@ xcodebuild -alltargets clean | egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\
 
 echo "=== BUILDING SPRITEBUILDER === (please be patient)"
 echo "Additional PreProcessor Defines: $SB_PRO_PREPROCESSOR"
-exit 1
 
 xcodebuild -target SpriteBuilder -configuration Release GCC_PREPROCESSOR_DEFINITIONS='${inherited} $SB_PRO_PREPROCESSOR' build | egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)"
 
