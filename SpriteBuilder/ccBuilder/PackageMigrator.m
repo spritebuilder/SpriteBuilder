@@ -53,7 +53,6 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return self;
 }
 
-
 - (BOOL)migrate:(NSError **)error
 {
     if (![self needsMigration])
@@ -67,13 +66,8 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
     // The folder PACKAGE_FOLDER_NAME is special, if it is already taken by a resource
     // path it will be renamed now and restored after importing
-    if (![self renameResourcePathCollidingWithPackagesFolderName])
-    {
-        [NSError setError:error withError:[self standardError]];
-        return NO;
-    }
-
-    if (![self createPackagesFolderIfNotExisting])
+    if (![self renameResourcePathCollidingWithPackagesFolderName]
+        || ![self createPackagesFolderIfNotExisting])
     {
         [NSError setError:error withError:[self standardError]];
         return NO;
@@ -81,31 +75,11 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
     NSArray *resourcePathsToImport = [self allResourcePathsToBeImported];
 
-    if (![self removeResourcePathsToImportFromProject:resourcePathsToImport])
-    {
-        [NSError setError:error withError:[self standardError]];
-        return NO;
-    }
-
-    if (![self renameCollidingFoldersInPackagesFolderBeforeImporting:resourcePathsToImport])
-    {
-        [NSError setError:error withError:[self standardError]];
-        return NO;
-    }
-
-    if (![self appendPackageSuffixToResourcePathsToImport:resourcePathsToImport])
-    {
-        [NSError setError:error withError:[self standardError]];
-        return NO;
-    }
-
-    if (![self importAndDeleteOldResourcePathsToImport:resourcePathsToImport])
-    {
-        [NSError setError:error withError:[self standardError]];
-        return NO;
-    }
-
-    if (![self restoreCollidingResourcePathName])
+    if (![self removeResourcePathsToImportFromProject:resourcePathsToImport]
+        || ![self renameCollidingFoldersInPackagesFolderBeforeImporting:resourcePathsToImport]
+        || ![self appendPackageSuffixToResourcePathsToImport:resourcePathsToImport]
+        || ![self importAndDeleteOldResourcePathsToImport:resourcePathsToImport]
+        || ![self restoreCollidingResourcePathName])
     {
         [NSError setError:error withError:[self standardError]];
         return NO;
@@ -118,10 +92,11 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 - (NSError *)standardError
 {
     NSString *message = [NSString stringWithFormat:
-                                          @"@Migration of project to packages format failed."
-                                          @"The different migration steps have been rolled back."
-                                          @"Please have a look at the system log and search for %@"
-                                          @"You can use the Console app do view and search the system log", PACKAGES_LOG_HASHTAG];
+                                          @"Migration of project to packages format failed. "
+                                          @"The different migration steps have been rolled back. "
+                                          @"Project will be opened as usual, however you can help us by creating an issue on github and posting the content of the log, see below. "
+                                          @"Please have a look at the system log and search for %@. "
+                                          @"You can use the Console app to view and search the system log.", PACKAGES_LOG_HASHTAG];
 
     return [NSError errorWithDomain:SBErrorDomain
                                code:SBMigrationError
