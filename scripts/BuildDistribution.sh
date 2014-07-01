@@ -5,6 +5,7 @@ echo ""
 CCB_VERSION=$1
 SB_SKU=$2
 XCCONFIG="SpriteBuilder.xcconfig"
+PRODUCT_NAME=SpriteBuilder
 
 if [ "$#" -ne 2 ]; then
     echo "uasge: ./BuildDistribution.sh <version eg:0.9> <sku eg:[default|pro]>"
@@ -21,6 +22,7 @@ fi
 
 if [ "$SB_SKU" = "pro" ]; then
 	XCCONFIG="SpriteBuilderPro.xcconfig"
+	PRODUCT_NAME=SpriteBuilderPro
 fi
 
 
@@ -58,14 +60,16 @@ xcodebuild -target SpriteBuilder -configuration Release -xcconfig $XCCONFIG buil
 
 # Create archives
 echo "=== ZIPPING UP FILES ==="
+
 cd ..
 mkdir build
-cp -R SpriteBuilder/build/Release/SpriteBuilder.app build/SpriteBuilder.app
-cp -R SpriteBuilder/build/Release/SpriteBuilder.app.dSYM build/SpriteBuilder.app.dSYM
+pwd
+cp -R SpriteBuilder/build/Release/$PRODUCT_NAME.app build/$PRODUCT_NAME.app
+cp -R SpriteBuilder/build/Release/$PRODUCT_NAME.app.dSYM build/$PRODUCT_NAME.app.dSYM
 
 cd build/
-zip -q -r "SpriteBuilder.app.dSYM.zip" SpriteBuilder.app.dSYM
+zip -q -r "$PRODUCT_NAME.app.dSYM.zip" $PRODUCT_NAME.app.dSYM
 
 echo ""
-echo "SpriteBuilder Distribution Build complete!"
-echo "You can now open SpriteBuilder/SpriteBuilder.xcodeproj"
+echo "$PRODUCT_NAME Distribution Build complete!"
+echo "You can now open $PRODUCT_NAME/$PRODUCT_NAME.xcodeproj"
