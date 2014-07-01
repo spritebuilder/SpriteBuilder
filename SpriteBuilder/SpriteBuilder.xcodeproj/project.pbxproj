@@ -187,6 +187,7 @@
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
+		9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */; };
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
 		9254805A18D913C500236DED /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */; };
@@ -1248,7 +1249,7 @@
 		776C688F1388107400153214 /* missing-font.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "missing-font.fnt"; sourceTree = "<group>"; };
 		776C68901388107400153214 /* missing-font.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missing-font.png"; sourceTree = "<group>"; };
 		776C6895138874C200153214 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7789ABBE133AA82000CEFCC7 /* "SpriteBuilder".app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "\"SpriteBuilder\".app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7789ABC2133AA82000CEFCC7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7789ABC5133AA82000CEFCC7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		7789ABC6133AA82000CEFCC7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -1443,6 +1444,8 @@
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
+		92520731196238D000BFC071 /* SpriteBuilderPro.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SpriteBuilderPro.xcconfig; sourceTree = "<group>"; };
+		9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpriteBuilder.xcconfig; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
 		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
@@ -3164,6 +3167,8 @@
 		7789ABB3133AA82000CEFCC7 = {
 			isa = PBXGroup;
 			children = (
+				9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */,
+				92520731196238D000BFC071 /* SpriteBuilderPro.xcconfig */,
 				E3D08A321524581100E55891 /* README.md */,
 				E3D59118150F50D1004180CA /* AUTHORS */,
 				E395DC7D1511FDF70075979E /* CHANGELOG */,
@@ -3186,7 +3191,7 @@
 		7789ABBF133AA82000CEFCC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */,
+				7789ABBE133AA82000CEFCC7 /* "SpriteBuilder".app */,
 				E3B7AEC514E3193500DFD402 /* CCNode.ccbPlugNode */,
 				E3C365EB14E9E4D1007CD5FF /* CCSprite.ccbPlugNode */,
 				E35DBB8014F225D30070A6E4 /* CCNodeColor.ccbPlugNode */,
@@ -5052,7 +5057,7 @@
 			);
 			name = SpriteBuilder;
 			productName = ccBuilder;
-			productReference = 7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */;
+			productReference = 7789ABBE133AA82000CEFCC7 /* "SpriteBuilder".app */;
 			productType = "com.apple.product-type.application";
 		};
 		833A5C49192B48CA001837B3 /* SpriteBuilder Tests */ = {
@@ -5887,6 +5892,7 @@
 				922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */,
 				E3DFA7CF15ACA0CD005D3B6F /* frame-android-xsmall.png in Resources */,
 				E3E2704815B18CF500287470 /* TB_play.png in Resources */,
+				9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */,
 				E3E2704915B18CF500287470 /* TB_stop.png in Resources */,
 				E3E2704B15B1904400287470 /* toolbar-bottom.png in Resources */,
 				E326EFB615C84123006D6CE6 /* seq-endmarker.png in Resources */,
@@ -7281,6 +7287,7 @@
 		};
 		7789ABDD133AA82000CEFCC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -7290,12 +7297,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ccBuilder/SpriteBuilder-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"CC_DIRECTOR_MAC_THREAD=2",
-					"COCOS2D_DEBUG=1",
-					"CC_ENABLE_GL_STATE_CACHE=1",
-					DEBUG,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(SB_DEBUG_PREPROCESSOR_DEFINES)";
 				HEADER_SEARCH_PATHS = (
 					libs/Fragaria,
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
@@ -7314,13 +7316,14 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = SpriteBuilder;
+				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		7789ABDE133AA82000CEFCC7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -7330,12 +7333,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ccBuilder/SpriteBuilder-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"CC_DIRECTOR_MAC_THREAD=2",
-					NDEBUG,
-					NS_BLOCK_ASSERTIONS,
-					"CC_ENABLE_GL_STATE_CACHE=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(SB_RELEASE_PREPROCESSOR_DEFINES)";
 				HEADER_SEARCH_PATHS = (
 					libs/Fragaria,
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
@@ -7354,7 +7352,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = SpriteBuilder;
+				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

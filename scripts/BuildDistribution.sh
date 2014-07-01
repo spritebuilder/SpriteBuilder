@@ -3,9 +3,8 @@
 echo ""
 
 CCB_VERSION=$1
-SB_PRO=$2
-SB_PRO_PREPROCESSOR=""
-
+SB_SKU=$2
+XCCONFIG="SpriteBuilder.xcconfig"
 
 if [ "$#" -ne 2 ]; then
     echo "uasge: ./BuildDistribution.sh <version eg:0.9> <sku eg:[default|pro]>"
@@ -13,15 +12,16 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-if [ "$SB_PRO" != "pro" ] && [ "$SB_PRO" != "default" ]; then
+if [ "$SB_SKU" != "pro" ] && [ "$SB_SKU" != "default" ]; then
 	echo "Sku must be 'default' or 'pro'"
 	exit 1
 fi
 
-if [ "$SB_PRO" = "pro" ]; then
-	SB_PRO_PREPROCESSOR="SPRITEBUILDER_PRO=1"; 
-fi
 
+
+if [ "$SB_SKU" = "pro" ]; then
+	XCCONFIG="SpriteBuilderPro.xcconfig"
+fi
 
 
 # Change to the script's working directory no matter from where the script was called (except if there are symlinks used)
@@ -37,7 +37,10 @@ CCB_DIR=$(pwd)
 rm -Rf build/
 rm -Rf SpriteBuilder/build/
 
-sh ./scripts/CreateAllGeneratedFiles.sh $1 $2
+sh ./scripts/CreateAllGeneratedFiles.sh $CCB_VERSION $SB_SKU
+
+
+
 
 
 # Clean and build CocosBuilder
@@ -47,10 +50,10 @@ cd SpriteBuilder/
 xcodebuild -alltargets clean | egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)"
 
 echo "=== BUILDING SPRITEBUILDER === (please be patient)"
-echo "Additional PreProcessor Defines: $SB_PRO_PREPROCESSOR"
 
-xcodebuild -target SpriteBuilder -configuration Release GCC_PREPROCESSOR_DEFINITIONS='${inherited} $SB_PRO_PREPROCESSOR' build | egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)"
 
+#| egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)"
+xcodebuild -target SpriteBuilder -configuration Release -xcconfig $XCCONFIG build | egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)" 
 
 
 # Create archives
