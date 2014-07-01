@@ -436,6 +436,14 @@ typedef enum
         item.enabled = allEnable && itemEnable;
     }
     
+    // If physics isn't available select first tab instead
+    SMTabBarItem* physicsItem = [itemViewTabs.items objectAtIndex:2];
+    if (!physicsEnabled && [itemViewTabs selectedItem] == physicsItem)
+    {
+        [itemViewTabs setSelectedItem:[itemViewTabs.items objectAtIndex:0]];
+        [itemTabView selectTabViewItemAtIndex:0];
+    }
+    
     BOOL templateEnable = (itemEnable && self.selectedNode.plugIn.supportsTemplates);
     SMTabBarItem* templateItem = [itemViewTabs.items objectAtIndex:3];
     templateItem.enabled = templateEnable;
