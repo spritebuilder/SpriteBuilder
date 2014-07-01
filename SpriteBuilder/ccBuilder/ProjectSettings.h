@@ -159,6 +159,8 @@ typedef enum
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
 
+@property (nonatomic,assign) BOOL isDownloadingTranslations;
+
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;
 - (id) serialize;

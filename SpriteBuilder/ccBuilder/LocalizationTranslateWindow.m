@@ -101,15 +101,16 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [_languageTable setEnabled:0];
     [_checkAll setEnabled:0];
     [_ignoreText setEnabled:0];
-    [_cancel setEnabled:0];
 }
 
 -(void)enableAll{
-    [_popTranslateFrom setEnabled:1];
-    [_languageTable setEnabled:1];
-    [_checkAll setEnabled:1];
-    [_ignoreText setEnabled:1];
-    [_cancel setEnabled:1];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_popTranslateFrom setEnabled:1];
+        [_languageTable setEnabled:1];
+        [_checkAll setEnabled:1];
+        [_ignoreText setEnabled:1];
+        [_cancel setEnabled:1];
+    });
 }
 /*
  * Turns the JSON response into a dictionary and fill the _languages global accordingly.
@@ -221,6 +222,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  */
 - (void) updateLanguageSelectionMenu:(int)userSelection
 {
+    
     NSString* newLangSelection = _popTranslateFrom.selectedItem.title;
     if(self.isWindowLoaded && _currLang && userSelection && [newLangSelection isEqualToString:_currLang.name])
     {
@@ -253,11 +255,16 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     {
         [_popTranslateFrom selectItemWithTitle:newLangSelection];
     }
+    
     if([self isWindowLoaded])
     {
-        [_languageTable reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_languageTable reloadData];
+        });
         [self updateCheckAll];
     }
+        
+    
     
 }
 
@@ -720,10 +727,13 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       if (!error)
                                       {
                                           [self parseJSONConfirmation:data];
-                                          NSLog(@"Yo1");
-                                          _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
-                                          [self.window close];
-                                          [self setLanguageWindowDownloading];
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+                                              [self.window close];
+                                              [self setLanguageWindowDownloading];
+                                              LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+                                              [handler setEdited];
+                                          });
                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
@@ -815,7 +825,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 -(void)getTranslations{
-    NSLog(@"yo");
     NSString* URLstring =
     [NSString stringWithFormat:translationsURL, _guid];
     NSURL* url = [NSURL URLWithString:URLstring];

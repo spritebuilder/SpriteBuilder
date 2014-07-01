@@ -86,7 +86,6 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="146"/>
                                         <outlet property="dataSource" destination="-2" id="96"/>
                                         <outlet property="delegate" destination="-2" id="97"/>
                                     </connections>
@@ -331,7 +330,6 @@
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
-                                                        <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="149"/>
                                                         <outlet property="dataSource" destination="-2" id="83"/>
                                                     </connections>
                                                 </tableView>
@@ -373,7 +371,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="pressedAdd:" target="-2" id="30"/>
-                            <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="140"/>
                         </connections>
                     </button>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="29">
@@ -397,13 +394,12 @@
                         </popUpButtonCell>
                         <connections>
                             <action selector="selectedAddLanguage:" target="-2" id="79"/>
-                            <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="143"/>
                         </connections>
                     </popUpButton>
                     <button id="7jT-cI-9YC">
                         <rect key="frame" x="424" y="-1" width="142" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="square" title="Buy Translations" bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PVp-0O-jL0">
+                        <buttonCell key="cell" type="square" title="Buy Translations..." bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PVp-0O-jL0">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -413,11 +409,11 @@
                     </button>
                     <progressIndicator hidden="YES" maxValue="100" controlSize="small" style="bar" id="F8M-hz-w6i">
                         <rect key="frame" x="126" y="4" width="96" height="12"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Lc3-7O-qiH">
-                        <rect key="frame" x="9" y="3" width="112" height="14"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="8" y="3" width="112" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Translation Progress" id="QMh-0A-k0y">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>

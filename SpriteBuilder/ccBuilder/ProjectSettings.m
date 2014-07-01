@@ -147,7 +147,7 @@
 
     self.publishEnablediPhone = [[dict objectForKey:@"publishEnablediPhone"] boolValue];
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
-
+    self.isDownloadingTranslations = [[dict objectForKey:@"isDownloadingTranslations"] boolValue];
     self.publishResolution_ios_phone = [[dict objectForKey:@"publishResolution_ios_phone"] boolValue];
     self.publishResolution_ios_phonehd = [[dict objectForKey:@"publishResolution_ios_phonehd"] boolValue];
     self.publishResolution_ios_tablet = [[dict objectForKey:@"publishResolution_ios_tablet"] boolValue];
@@ -256,7 +256,7 @@
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
-
+    [dict setObject:[NSNumber numberWithInt:self.isDownloadingTranslations] forKey:@"isDownloadingTranslations"];
     [dict setObject:[NSNumber numberWithInt:self.publishEnvironment] forKey:@"publishEnvironment"];
 
     if (resourceProperties)

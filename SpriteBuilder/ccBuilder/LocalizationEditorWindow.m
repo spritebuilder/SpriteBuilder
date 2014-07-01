@@ -17,7 +17,7 @@
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
-
+#import "ProjectSettings.h"
 @implementation LocalizationEditorWindow
 
 - (void) awakeFromNib
@@ -28,7 +28,7 @@
     [self updateLanguageSelectionMenu];
     [self addLanguageColumns];
     [self updateQuickEditLangs];
-    
+    [self addObserver:self forKeyPath:@"hasOpenFile" options:0 context:nil];
 }
 
 - (void) populateLanguageAddMenu
@@ -224,7 +224,8 @@
  * TODO Make the window key and main
  */
 - (IBAction)pressedTranslate:(id)sender {
-    if([_translationsButton.title isEqualToString:@"Buy Translations"]){
+    
+    if([_translationsButton.title isEqualToString:@"Buy Translations..."]){
         _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
         [_ltw setParentWindow:self];
         [_ltw.window makeKeyAndOrderFront:sender];
@@ -232,9 +233,9 @@
     }
     else
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Cancel Download" defaultButton:@"OK" alternateButton:@"Cancel" otherButton:NULL informativeTextWithFormat:@"If you cancel your translations download, you will not get a refund."];
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Cancel Download" defaultButton:@"Cancel" alternateButton:@"OK" otherButton:NULL informativeTextWithFormat:@"If you cancel your translations download, you will not get a refund."];
         NSInteger result = [alert runModal];
-        if(result == NSAlertDefaultReturn){
+        if(result == NSAlertAlternateReturn){
             [self finishDownloadingTranslations];
             [_ltw cancelDownload];
         }
@@ -268,7 +269,11 @@
 {}
 
 -(void)setDownloadingTranslations:(double)numToTrans{
-    [_translationProgress setMaxValue:numToTrans];
+    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations=1;
+    if(numToTrans)
+    {
+        [_translationProgress setMaxValue:numToTrans];
+    }
     [_translationProgress setHidden:0];
     [_translationProgressText setHidden:0];
     [tableTranslations setEnabled:0];
@@ -276,7 +281,7 @@
     [popLanguageAdd setEnabled:0];
     [_addTranslation setEnabled:0];
     [popCurrentLanguage setEnabled:0];
-    _translationsButton.title = @"Cancel Download";
+    _translationsButton.title = @"Cancel Download...";
 }
 
 -(void)incrementTransByOne{
@@ -287,6 +292,7 @@
     return _translationProgress.doubleValue;
 }
 -(void)finishDownloadingTranslations{
+    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations=0;
     [_translationProgress setHidden:1];
     [_translationProgressText setHidden:1];
     [tableTranslations setEnabled:1];
@@ -294,7 +300,7 @@
     [popLanguageAdd setEnabled:1];
     [popCurrentLanguage setEnabled:1];
     [_addTranslation setEnabled:1];
-    _translationsButton.title = @"Buy Translations";
+    _translationsButton.title = @"Buy Translations...";
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
@@ -716,5 +722,17 @@
     float max = splitView.frame.size.height - 40;
     if (proposedMaximumPosition > max) return max;
     else return proposedMaximumPosition;
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if([keyPath isEqualToString:@"hasOpenFile"]){
+        if(((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations)
+        {
+            [self setDownloadingTranslations:0];
+        }else{
+            [self finishDownloadingTranslations];
+        }
+    }
+    
 }
 @end

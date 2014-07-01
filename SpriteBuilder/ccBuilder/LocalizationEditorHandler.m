@@ -10,7 +10,7 @@
 #import "LocalizationEditorWindow.h"
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorTranslation.h"
-
+#import "ProjectSettings.h"
 #import "AppDelegate.h"
 #import "CocosScene.h"
 #import "StringPropertySetter.h"
@@ -288,6 +288,12 @@
     }
     [windowController.window makeKeyAndOrderFront:sender];
     windowController.hasOpenFile = (managedFile != NULL);
+    if(((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations)
+    {
+        [windowController setDownloadingTranslations:0];
+    }else{
+        [windowController finishDownloadingTranslations];
+    }
 }
 
 - (NSString*) translationForKey:(NSString*)key
