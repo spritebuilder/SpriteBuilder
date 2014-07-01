@@ -1249,7 +1249,7 @@
 		776C688F1388107400153214 /* missing-font.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "missing-font.fnt"; sourceTree = "<group>"; };
 		776C68901388107400153214 /* missing-font.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missing-font.png"; sourceTree = "<group>"; };
 		776C6895138874C200153214 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		7789ABBE133AA82000CEFCC7 /* "SpriteBuilder".app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "\"SpriteBuilder\".app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7789ABC2133AA82000CEFCC7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7789ABC5133AA82000CEFCC7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		7789ABC6133AA82000CEFCC7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -3191,7 +3191,7 @@
 		7789ABBF133AA82000CEFCC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7789ABBE133AA82000CEFCC7 /* "SpriteBuilder".app */,
+				7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */,
 				E3B7AEC514E3193500DFD402 /* CCNode.ccbPlugNode */,
 				E3C365EB14E9E4D1007CD5FF /* CCSprite.ccbPlugNode */,
 				E35DBB8014F225D30070A6E4 /* CCNodeColor.ccbPlugNode */,
@@ -5057,7 +5057,7 @@
 			);
 			name = SpriteBuilder;
 			productName = ccBuilder;
-			productReference = 7789ABBE133AA82000CEFCC7 /* "SpriteBuilder".app */;
+			productReference = 7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */;
 			productType = "com.apple.product-type.application";
 		};
 		833A5C49192B48CA001837B3 /* SpriteBuilder Tests */ = {
