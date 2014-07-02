@@ -55,7 +55,7 @@ echo "=== BUILDING SPRITEBUILDER === (please be patient)"
 
 
 #| egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)"
-xcodebuild -target SpriteBuilder -configuration Release -xcconfig $XCCONFIG build | egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)" 
+xcodebuild -target SpriteBuilder -configuration Release -xcconfig $XCCONFIG build 
 
 
 # Create archives
