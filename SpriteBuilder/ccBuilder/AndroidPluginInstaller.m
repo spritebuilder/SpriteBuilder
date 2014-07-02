@@ -34,7 +34,7 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 	NSFileManager * fm =[[NSFileManager alloc] init];
 	if(![fm fileExistsAtPath:pluginBundlePath])
 	{
-		*result = [NSString stringWithFormat:@"AndroidPlugin.zip does not exist at path: %@",pluginBundlePath];
+		*result = [NSString stringWithFormat:@"AndroidPlugin.zip is not in Generated Folder. Android Xcode plugin will not be installed properly."];
 		return false;
 	}
 	
