@@ -33,17 +33,19 @@ NSString * kSbUserID = @"sbUserID";
 	if([fileManager fileExistsAtPath:preferencesPath])
 	{
 		NSDictionary * sandBoxedPrefs = [NSDictionary dictionaryWithContentsOfFile:preferencesPath];
-		_userID = sandBoxedPrefs[kSbUserID];
-		[[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
-		
-		if(sandBoxedPrefs[@"sbRegisteredEmail"])
+		if(sandBoxedPrefs[kSbUserID])
 		{
-			[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"sbRegisteredEmail"];
+			
+			_userID = sandBoxedPrefs[kSbUserID];
+			[[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
+			
+			if(sandBoxedPrefs[@"sbRegisteredEmail"])
+			{
+				[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"sbRegisteredEmail"];
+			}
+			[self sendEvent:@"migrate"];
 		}
-		[self sendEvent:@"migrate"];
 	}
-	
-
 }
 
 
