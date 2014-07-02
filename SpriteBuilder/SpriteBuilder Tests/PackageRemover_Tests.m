@@ -93,7 +93,7 @@
     XCTAssertNotNil(error);
 
     NSArray *errors = error.userInfo[@"errors"];
-    XCTAssertEqual(errors.count, 1);
+    XCTAssertEqual((int)errors.count, 1);
     XCTAssertEqual(error.code, SBRemovePackagesError);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];

@@ -102,7 +102,7 @@
     NSError *error;
     XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
     XCTAssertNotNil(error, @"Error object should be set");
-    XCTAssertEqual(error.code, NSFileWriteNoPermissionError, @"Error code should equal constant NSFileWriteNoPermissionError");
+    XCTAssertEqual((int)error.code, NSFileWriteNoPermissionError, @"Error code should equal constant NSFileWriteNoPermissionError");
 
     [_fileManagerMock verify];
 }
