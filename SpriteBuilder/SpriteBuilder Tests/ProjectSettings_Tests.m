@@ -36,7 +36,7 @@
 
 - (void)testStandardInitialization
 {
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
     id firstResourcePath = _projectSettings.resourcePaths[0];
     XCTAssertEqualObjects([firstResourcePath objectForKey:@"path"], @"Resources");
 }
@@ -47,7 +47,7 @@
     XCTAssertTrue([_projectSettings addResourcePath:@"/project/resourcepath1" error:&error]);
     XCTAssertNil(error);
     // Default init will add a default value to resourcePaths, see testStandardInitialization
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 2);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 2);
 }
 
 - (void)testAddResourcePathTwice
@@ -63,7 +63,7 @@
     XCTAssertNotNil(error2);
     XCTAssertEqual(error2.code, SBDuplicateResourcePathError);
 
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 2);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 2);
 }
 
 - (void)testIsResourcePathAlreadyInProject
@@ -85,7 +85,7 @@
     NSError *error;
     XCTAssertTrue([_projectSettings removeResourcePath:@"/project/test" error:&error]);
     // Default init will add a default value to resourcePaths, see testStandardInitialization
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
     XCTAssertNil(error);
 }
 

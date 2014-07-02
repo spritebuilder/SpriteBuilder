@@ -96,7 +96,10 @@
 
 - (void)generateFileLookup
 {
-    [_fileLookup writeToFileAtomically:[_outputDir stringByAppendingPathComponent:@"fileLookup.plist"]];
+    if (![_fileLookup writeToFileAtomically:[_outputDir stringByAppendingPathComponent:@"fileLookup.plist"]])
+    {
+        [_warnings addWarningWithDescription:@"Could not write fileLookup.plist."];
+    }
 }
 
 - (NSString *)description

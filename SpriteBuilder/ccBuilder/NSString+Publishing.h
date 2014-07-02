@@ -33,4 +33,5 @@
 // Recursively tests if the path contains a file with a .ccb suffix
 - (BOOL)containsCCBFile;
 
+- (BOOL)isIntermediateFileLookup;
 @end
