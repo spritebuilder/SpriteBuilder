@@ -217,8 +217,12 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 		currentAnimElapsed = 0.0f;
 	}];
 	
+	
+	__block BOOL middleCallbackWasCalled = NO;
+	
 	[callbackTest registerMethod:@"onMiddleOfAnimation" block:^{
 		XCTAssertTrue(fabsf(currentAnimElapsed - seq.duration /2.0f) < kAccuracy, @"Not in the middle of the sequence");
+		middleCallbackWasCalled = YES;
 	}];
 	
 	__block BOOL endCallbackWasCalled = NO;
@@ -236,8 +240,9 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 		currentAnimElapsed += kDelta;
 		
 	}
-	
-	XCTAssert(endCallbackWasCalled, @"Should be called");
+
+	XCTAssert(middleCallbackWasCalled, @"Middle Callback should be called");
+	XCTAssert(endCallbackWasCalled, @"End callback should be called");
 		
 }
 

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-               BuildableName = "&quot;SpriteBuilderPro&quot;.app"
+               BuildableName = "SpriteBuilder.app"
                BlueprintName = "SpriteBuilder"
                ReferencedContainer = "container:SpriteBuilder.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "&quot;SpriteBuilderPro&quot;.app"
+            BuildableName = "SpriteBuilder.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>
@@ -54,7 +54,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "&quot;SpriteBuilderPro&quot;.app"
+            BuildableName = "SpriteBuilder.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "&quot;SpriteBuilderPro&quot;.app"
+            BuildableName = "SpriteBuilder.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>
