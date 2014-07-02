@@ -33,14 +33,16 @@
     return [extension isEqualToString:@"png"] || [extension isEqualToString:@"psd"];
 }
 
-- (NSDate *)latestModifiedDateOfPath
+- (NSDate *)latestModifiedDateOfPathIgnoringDirs:(BOOL)ignoreDirs
 {
-    return [self latestModifiedDateForDirectory:self];
+    return [self latestModifiedDateForDirectory:self ignoreDirs:ignoreDirs];
 }
 
-- (NSDate *)latestModifiedDateForDirectory:(NSString *)dir
+- (NSDate *)latestModifiedDateForDirectory:(NSString *)dir ignoreDirs:(BOOL)ignoreDirs
 {
-	NSDate* latestDate = [CCBFileUtil modificationDateForFile:dir];
+	NSDate* latestDate = ignoreDirs
+        ? [NSDate distantPast]
+        : [CCBFileUtil modificationDateForFile:dir];
 
     NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
     for (NSString* file in files)
@@ -54,12 +56,14 @@
 
             if (isDir)
             {
-				fileDate = [self latestModifiedDateForDirectory:absFile];
+				fileDate = [self latestModifiedDateForDirectory:absFile ignoreDirs:ignoreDirs];
 			}
             else
             {
 				fileDate = [CCBFileUtil modificationDateForFile:absFile];
             }
+
+            NSLog(@"--> %@ - %@", fileDate, absFile);
 
             if ([fileDate compare:latestDate] == NSOrderedDescending)
             {

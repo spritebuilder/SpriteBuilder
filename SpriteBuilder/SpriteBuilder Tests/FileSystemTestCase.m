@@ -102,6 +102,26 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     XCTAssertTrue([projectSettings store], @"Could not create project file at \"%@\"", projectSettings.projectPath);
 }
 
+- (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files
+{
+    for (NSString *filePath in files)
+    {
+        NSString *fullFilePath = [self fullPathForFile:filePath];
+
+        NSLog(@"%@", fullFilePath);
+
+        NSDictionary *attr = @{NSFileModificationDate : date};
+        [[NSFileManager defaultManager] setAttributes:attr ofItemAtPath:fullFilePath error:NULL];
+    }
+}
+
+- (NSDate *)modificationDateOfFile:(NSString *)filePath
+{
+    NSString *fullFilePath = [self fullPathForFile:filePath];
+    NSDictionary* attr = [[NSFileManager defaultManager] attributesOfItemAtPath:fullFilePath error:NULL];
+    return [attr objectForKey:NSFileModificationDate];
+}
+
 - (void)assertFileExists:(NSString *)filePath
 {
     NSString *fullPath = [_testDirecotoryPath stringByAppendingPathComponent:filePath];
