@@ -25,7 +25,7 @@
 }
 
 @property (nonatomic,assign) BOOL inspectorEnabled;
-
+@property (nonatomic,strong) LocalizationTranslateWindow* ltw;
 @property (nonatomic,copy) NSAttributedString* inspectorTextKey;
 @property (nonatomic,copy) NSAttributedString* inspectorTextComment;
 @property (nonatomic,copy) NSAttributedString* inspectorTextTranslation;

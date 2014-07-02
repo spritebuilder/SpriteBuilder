@@ -16,7 +16,8 @@
 @implementation LocalizationTranslateWindow
 
 @synthesize parentWindow = _parentWindow;
-
+@synthesize guid = _guid;
+@synthesize languages = _languages;
 //Standards for the tab view
 static int downloadLangsIndex = 0;
 static int noActiveLangsIndex = 1;
@@ -38,7 +39,26 @@ static NSString* const downloadingLangsString = @"Downloading...";
 static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%@.";
 
 #pragma mark Init
-
+-(id)init{
+    self = [super init];
+    languageURL = [baseURL stringByAppendingString:@"/translations/languages?key=%@"];
+    estimateURL = [baseURL stringByAppendingString:@"/translations/estimate"];
+    receiptTranslationsURL = [baseURL stringByAppendingString:@"/translations"];
+    translationsURL = [baseURL stringByAppendingString:@"/translations?key=%@"];
+    cancelURL = [baseURL stringByAppendingString:@"/translations/cancel"];
+    
+    self.guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
+    self.languages = [[NSMutableDictionary alloc] init];
+    return self;
+}
+-(id)initWithDownload:(NSString*)requestID parentWindow:(LocalizationEditorWindow*)pw numToDownload:(double)numTrans{
+    self = [self init];
+    if (!self) return NULL;
+    _latestRequestID = requestID;
+    _parentWindow = pw;
+    _numTransToDownload = numTrans;
+    return self;
+}
 /*
  * Set up the guid, the languages global dictionary, the tab views, the window handler
  * and get the dictionary's contents from the server
@@ -60,7 +80,6 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
     [self disableAll];
     [self getLanguagesFromServer];
-    
     
 }
 
@@ -755,7 +774,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         return;
     }
     _latestRequestID = [initialTransDict objectForKey:@"request_id"];
+    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).latestRequestID = _latestRequestID;
 }
+
 -(void)setLanguageWindowDownloading{
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* translations = handler.translations;
@@ -846,6 +867,12 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [task resume];
     
 }
+
+- (void)pauseDownload{
+    [_timerTransDownload invalidate];
+    _timerTransDownload = nil;
+}
+
 - (void)endDownload{
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* handlerTranslations = handler.translations;
@@ -861,7 +888,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     _timerTransDownload = nil;
 }
 
-- (void)cancelDownload{
+- (void)stopDownload{
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* handlerTranslations = handler.translations;
     for(LocalizationEditorTranslation* t in handlerTranslations)
@@ -902,5 +929,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                   }];
     [task resume];
     
+}
+
+-(void)restartDownload{
+    _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
 }
 @end

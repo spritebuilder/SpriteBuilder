@@ -13,13 +13,13 @@
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorLanguageTableView.h"
 #import "LocalizationTranslateWindowHandler.h"
-#import "LocalizationCancelTranslationsWindow.h"
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
 #import "ProjectSettings.h"
 @implementation LocalizationEditorWindow
 
+@synthesize ltw =  _ltw;
 - (void) awakeFromNib
 {
     [tableTranslations registerForDraggedTypes:[NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"]];
@@ -226,18 +226,22 @@
 - (IBAction)pressedTranslate:(id)sender {
     
     if([_translationsButton.title isEqualToString:@"Buy Translations..."]){
-        _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+        if(!_ltw){
+            _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+        }
         [_ltw setParentWindow:self];
         [_ltw.window makeKeyAndOrderFront:sender];
         [NSApp runModalForWindow:_ltw.window];
     }
     else
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Cancel Download" defaultButton:@"Cancel" alternateButton:@"OK" otherButton:NULL informativeTextWithFormat:@"If you cancel your translations download, you will not get a refund."];
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Stop Download" defaultButton:@"Cancel" alternateButton:@"OK" otherButton:NULL informativeTextWithFormat:@"If you stop your translations download, you will not get a refund."];
         NSInteger result = [alert runModal];
         if(result == NSAlertAlternateReturn){
             [self finishDownloadingTranslations];
-            [_ltw cancelDownload];
+            [_ltw stopDownload];
+            [tableLanguages reloadData];
+            _ltw = nil;
         }
     }
 }
@@ -269,11 +273,17 @@
 {}
 
 -(void)setDownloadingTranslations:(double)numToTrans{
-    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations=1;
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.isDownloadingTranslations = 1;
     if(numToTrans)
     {
         [_translationProgress setMaxValue:numToTrans];
+        ps.numToDownload = numToTrans;
     }
+    else{
+        [_translationProgress setMaxValue:ps.numToDownload];
+    }
+    [_translationProgress setDoubleValue:ps.numDownloaded];
     [_translationProgress setHidden:0];
     [_translationProgressText setHidden:0];
     [tableTranslations setEnabled:0];
@@ -281,10 +291,12 @@
     [popLanguageAdd setEnabled:0];
     [_addTranslation setEnabled:0];
     [popCurrentLanguage setEnabled:0];
-    _translationsButton.title = @"Cancel Download...";
+    _translationsButton.title = @"Stop Download...";
 }
 
 -(void)incrementTransByOne{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.numDownloaded++;
     [_translationProgress incrementBy:1.0];
 }
 
@@ -505,10 +517,15 @@
         }
         else
         {
-            if(translation.languagesDownloading && [translation.languagesDownloading containsObject:aTableColumn.identifier]){
+            if(translation.languagesDownloading &&
+               ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations &&
+               [translation.languagesDownloading containsObject:aTableColumn.identifier])
+            {
                 [[aTableColumn dataCellForRow:rowIndex] setEnabled:0];
                 return @"Downloading...";
-            }else{
+            }
+            else
+            {
                 [[aTableColumn dataCellForRow:rowIndex] setEnabled:1];
                 return [translation.translations objectForKey:aTableColumn.identifier];
             }
@@ -725,11 +742,16 @@
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
     if([keyPath isEqualToString:@"hasOpenFile"]){
-        if(((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations)
+        if(ps.isDownloadingTranslations)
         {
-            [self setDownloadingTranslations:0];
+            _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps.latestRequestID parentWindow:self numToDownload:ps.numToDownload];
+            [_ltw restartDownload];
+            [self setDownloadingTranslations:ps.numToDownload];
         }else{
+            [_ltw pauseDownload];
+            _ltw = nil;
             [self finishDownloadingTranslations];
         }
     }

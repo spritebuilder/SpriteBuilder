@@ -59,6 +59,7 @@
     
 }
 
+- (id)initWithDownload:(NSString*)requestID parentWindow:(LocalizationEditorWindow*)pw numToDownload:(double)numTrans;
 - (IBAction)buy:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)toggleIgnore:(id)sender;
@@ -66,7 +67,10 @@
 - (IBAction)toggleCheckAll:(id)sender;
 - (IBAction)retryLanguages:(id)sender;
 - (IBAction)retryCost:(id)sender;
-- (void)cancelDownload;
+- (void)stopDownload;
+- (void)pauseDownload;
+- (void)restartDownload;
 @property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
-
+@property (nonatomic,strong) NSString* guid;
+@property (nonatomic,strong) NSMutableDictionary* languages;
 @end
