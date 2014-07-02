@@ -131,6 +131,7 @@
 #import "ResourceCommandController.h"
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
+#import "UsageManager.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -4534,6 +4535,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) openRegistrationWindow:(id)sender
 {
+	
     if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
     {
         // Email already registered or skipped
@@ -4554,6 +4556,16 @@ static BOOL hideAllToNextSeparator;
 }
 
 #pragma mark Spritebuilder Pro
+
+-(NSString*)applicationTitle
+{
+#ifdef SPRITEBUILDER_PRO
+	return @"SpriteBuilder Pro";
+#else
+	return @"SpriteBuilder";
+#endif
+}
+
 
 -(void)setupSpriteBuilderPro
 {
