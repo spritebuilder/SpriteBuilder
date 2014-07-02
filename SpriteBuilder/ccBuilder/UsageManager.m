@@ -10,11 +10,59 @@
 #import "HashValue.h"
 #import "ProjectSettings.h"
 
+NSString * kSbUserID = @"sbUserID";
+
 @implementation UsageManager
 
+#ifdef SPRITEBUILDER_PRO
+-(void)migrateSandboxToPro
+{
+	NSString* userID = [[NSUserDefaults standardUserDefaults] valueForKey:kSbUserID];
+
+    //Its already all setup.
+    if (userID)
+		return;
+
+	//Check for previous SpriteBuilder (Sandboxed) information.
+	//Sandboxed path
+	NSString * preferencesPath = [self pathFromUserLibraryPath:@"/Containers/SpriteBuilder/Data/Library/Preferences/SpriteBuilder.plist"];
+	
+
+	NSFileManager * fileManager  = [[NSFileManager alloc] init];
+
+	if([fileManager fileExistsAtPath:preferencesPath])
+	{
+		NSDictionary * sandBoxedPrefs = [NSDictionary dictionaryWithContentsOfFile:preferencesPath];
+		_userID = sandBoxedPrefs[kSbUserID];
+		[[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
+		
+		if(sandBoxedPrefs[@"sbRegisteredEmail"])
+		{
+			[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"sbRegisteredEmail"];
+		}
+		[self sendEvent:@"migrate"];
+	}
+	
+
+}
+
+
+-  (NSString *) pathFromUserLibraryPath:(NSString *)inSubPath
+{
+	NSArray *domains = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask,YES);
+	NSString *baseDir= [domains objectAtIndex:0];
+	NSString *result = [baseDir stringByAppendingPathComponent:inSubPath];
+	return result;
+}
+
+
+#endif
 - (void) registerUsage
 {
-    _userID = [[NSUserDefaults standardUserDefaults] valueForKey:@"sbUserID"];
+#ifdef SPRITEBUILDER_PRO
+	[self migrateSandboxToPro];
+#endif
+    _userID = [[NSUserDefaults standardUserDefaults] valueForKey:kSbUserID];
     
     BOOL firstTimeUser = NO;
     
@@ -22,7 +70,7 @@
     {
         // Create and save new unique id
         _userID = [[HashValue md5HashWithString:[NSString stringWithFormat:@"%d", (int)arc4random()]] description];
-        [[NSUserDefaults standardUserDefaults] setValue:_userID forKey:@"sbUserID"];
+        [[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
         firstTimeUser = YES;
     }
     
@@ -39,7 +87,7 @@
 - (void) registerEmail:(NSString*)email
 {
     // Get user ID
-    _userID = [[NSUserDefaults standardUserDefaults] valueForKey:@"sbUserID"];
+    _userID = [[NSUserDefaults standardUserDefaults] valueForKey:kSbUserID];
     if (!_userID) return;
     
     [self sendEvent:@"register" email:email];

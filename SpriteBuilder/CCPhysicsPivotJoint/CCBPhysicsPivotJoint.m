@@ -740,9 +740,19 @@ const float kRatchedRenderRadius = 30.0f;
 -(void)setDampedSpringRestAngle:(float)dampedSpringRestAngle
 {
     _dampedSpringRestAngle = dampedSpringRestAngle;
-    [[AppDelegate appDelegate]refreshProperty:@"dampedSpringRestAngle"];
+    [[AppDelegate appDelegate] refreshProperty:@"dampedSpringRestAngle"];
 }
 
+-(void)setDampedSpringStiffness:(float)dampedSpringStiffness
+{
+	if(dampedSpringStiffness < 0)
+	{
+		[[AppDelegate appDelegate] modalDialogTitle:@"Stiffness Restrictions" message:@"The spring stiffness must be greater than Zero"];
+		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"dampedSpringStiffness" afterDelay:0];
+		return;
+	}
+	_dampedSpringStiffness = dampedSpringStiffness;
+}
 
 -(void)setReferenceAngle:(float)referenceAngle
 {

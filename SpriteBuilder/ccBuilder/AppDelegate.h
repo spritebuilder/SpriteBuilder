@@ -348,6 +348,7 @@ enum {
 @property (weak, nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
 
 @property (nonatomic,strong) ProjectSettings* projectSettings;
+@property (nonatomic,strong,readonly) NSString * applicationTitle;
 
 @property (nonatomic,copy) NSString* errorDescription;
 
