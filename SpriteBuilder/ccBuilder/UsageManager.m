@@ -11,21 +11,32 @@
 #import "ProjectSettings.h"
 
 NSString * kSbUserID = @"sbUserID";
+NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
 
 @implementation UsageManager
 
+-(id)init
+{
+	self = [super init];
+	if(self)
+	{
+		 _userID = [[NSUserDefaults standardUserDefaults] valueForKey:kSbUserID];
+	}
+	
+	return self;
+}
+
 #ifdef SPRITEBUILDER_PRO
+
 -(void)migrateSandboxToPro
 {
-	NSString* userID = [[NSUserDefaults standardUserDefaults] valueForKey:kSbUserID];
-
     //Its already all setup.
-    if (userID)
+    if (_userID)
 		return;
 
 	//Check for previous SpriteBuilder (Sandboxed) information.
 	//Sandboxed path
-	NSString * preferencesPath = [self pathFromUserLibraryPath:@"/Containers/SpriteBuilder/Data/Library/Preferences/SpriteBuilder.plist"];
+	NSString * preferencesPath = [self sandboxPreferencesPath];
 	
 
 	NSFileManager * fileManager  = [[NSFileManager alloc] init];
@@ -33,36 +44,75 @@ NSString * kSbUserID = @"sbUserID";
 	if([fileManager fileExistsAtPath:preferencesPath])
 	{
 		NSDictionary * sandBoxedPrefs = [NSDictionary dictionaryWithContentsOfFile:preferencesPath];
-		_userID = sandBoxedPrefs[kSbUserID];
-		[[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
-		
-		if(sandBoxedPrefs[@"sbRegisteredEmail"])
+		if(sandBoxedPrefs[kSbUserID])
 		{
-			[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"sbRegisteredEmail"];
+			
+			_userID = sandBoxedPrefs[kSbUserID];
+			[[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
+			
+			if(sandBoxedPrefs[kSbRegisteredEmail])
+			{
+				[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kSbRegisteredEmail];
+			}
+			[self sendEvent:@"migrate"];
 		}
-		[self sendEvent:@"migrate"];
 	}
-	
-
 }
 
 
--  (NSString *) pathFromUserLibraryPath:(NSString *)inSubPath
+-  (NSString *) sandboxPreferencesPath
 {
 	NSArray *domains = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask,YES);
 	NSString *baseDir= [domains objectAtIndex:0];
-	NSString *result = [baseDir stringByAppendingPathComponent:inSubPath];
+	NSString *result = [baseDir stringByAppendingPathComponent:@"/Containers/SpriteBuilder/Data/Library/Preferences/SpriteBuilder.plist"];
 	return result;
 }
 
+//This ensures that if we've opened SB Pro for the first time, AND the user's never opened SB Default before, a pref's file is created for when SB default is launched.
+//https://developer.apple.com/library/mac/documentation/Security/Conceptual/AppSandboxDesignGuide/MigratingALegacyApp/MigratingAnAppToASandbox.html#//apple_ref/doc/uid/TP40011183-CH6-SW1
+
+-(void)ensureSandboxConsistancy
+{
+	
+	NSArray *domains = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask,YES);
+	NSString *baseDir= [domains objectAtIndex:0];
+	NSString * sandboxMigrationPath = [baseDir stringByAppendingPathComponent:@"/Preferences/SpriteBuilder.plist"];
+
+	NSMutableDictionary * userSettingsDictionary = [NSMutableDictionary dictionary];
+	
+	userSettingsDictionary[kSbUserID] = _userID;
+	BOOL registeredEmail = [[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail] != nil;
+	
+	if(registeredEmail)
+	{
+		userSettingsDictionary[kSbRegisteredEmail] = @(registeredEmail);
+	}
+	
+	if(![userSettingsDictionary writeToFile:sandboxMigrationPath atomically:YES])
+	{
+		NSLog(@"Failed to write to: %@",sandboxMigrationPath);
+	}
+	
+}
 
 #endif
+
+-(void)setRegisterdEmailFlag
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kSbRegisteredEmail];
+		
+#ifdef SPRITEBUILDER_PRO
+	[self ensureSandboxConsistancy];
+#endif
+}
+
+
 - (void) registerUsage
 {
 #ifdef SPRITEBUILDER_PRO
 	[self migrateSandboxToPro];
 #endif
-    _userID = [[NSUserDefaults standardUserDefaults] valueForKey:kSbUserID];
+   
     
     BOOL firstTimeUser = NO;
     
@@ -72,6 +122,11 @@ NSString * kSbUserID = @"sbUserID";
         _userID = [[HashValue md5HashWithString:[NSString stringWithFormat:@"%d", (int)arc4random()]] description];
         [[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
         firstTimeUser = YES;
+		
+#ifdef SPRITEBUILDER_PRO
+		[self ensureSandboxConsistancy];
+#endif
+		
     }
     
     if (firstTimeUser)
@@ -87,7 +142,6 @@ NSString * kSbUserID = @"sbUserID";
 - (void) registerEmail:(NSString*)email
 {
     // Get user ID
-    _userID = [[NSUserDefaults standardUserDefaults] valueForKey:kSbUserID];
     if (!_userID) return;
     
     [self sendEvent:@"register" email:email];
