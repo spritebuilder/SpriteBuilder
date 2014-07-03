@@ -40,8 +40,7 @@
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs;
 - (IBAction)selectedCurrentLanguage:(id)sender;
 - (void)addLanguages:(NSArray*)langs;
-- (void)removeLanguages:(NSArray*)langs;
-- (void)setDownloadingTranslations:(double)numToTrans;
+- (void)setDownloadingTranslations;
 - (void)incrementTransByOne;
 - (double)translationProgress;
 - (void)finishDownloadingTranslations;

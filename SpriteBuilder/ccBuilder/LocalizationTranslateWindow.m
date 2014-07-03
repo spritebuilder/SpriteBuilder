@@ -18,12 +18,14 @@
 @synthesize parentWindow = _parentWindow;
 @synthesize guid = _guid;
 @synthesize languages = _languages;
+
 //Standards for the tab view
 static int downloadLangsIndex = 0;
 static int noActiveLangsIndex = 1;
 static int standardLangsIndex = 2;
 static int downloadCostErrorIndex = 3;
 static int downloadLangsErrorIndex = 4;
+static int paymentErrorIndex = 5;
 
 //URLs
 static NSString* baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
@@ -38,9 +40,48 @@ static NSString* const noActiveLangsString = @"No Valid Languages";
 static NSString* const downloadingLangsString = @"Downloading...";
 static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%@.";
 
-#pragma mark Init
--(id)init{
+//Download time
+//static double downloadRepeatInterval = 300;
+static double downloadRepeatInterval = 5;
+
+#pragma mark Initializing
+/*
+ * Set up URLs and global variables and initialize with the information to restart a download request.
+ * Used when restarting a download request without showing the window
+ */
+-(id)initWithDownload:(NSString*)requestID parentWindow:(LocalizationEditorWindow*)pw numToDownload:(double)numTrans{
     self = [super init];
+    if (!self) return NULL;
+    [self setUpURLsAndGlobals];
+    _latestRequestID = requestID;
+    _parentWindow = pw;
+    _numTransToDownload = numTrans;
+    return self;
+}
+
+/*
+ * Set up URLs and global variables and prepare the tab views, disable everything in the window until the 
+ * languages are downloaded and get the available languages from the server.
+ * Used when opening a new translation window.
+ */
+-(void) awakeFromNib
+{
+    [self setUpURLsAndGlobals];
+    [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:noActiveLangsIndex] setView:_noActiveLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:downloadCostErrorIndex] setView:_downloadingCostsErrorView];
+    [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
+    [[_translateFromTabView tabViewItemAtIndex:paymentErrorIndex] setView:_paymentErrorView];
+    [self disableAll];
+    [self getLanguagesFromServer];
+    
+}
+
+/*
+ * Set up URLs and global variables like guid and language translation mapping dictionary.
+ */
+-(void)setUpURLsAndGlobals{
     languageURL = [baseURL stringByAppendingString:@"/translations/languages?key=%@"];
     estimateURL = [baseURL stringByAppendingString:@"/translations/estimate"];
     receiptTranslationsURL = [baseURL stringByAppendingString:@"/translations"];
@@ -49,53 +90,21 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     
     self.guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     self.languages = [[NSMutableDictionary alloc] init];
-    return self;
-}
--(id)initWithDownload:(NSString*)requestID parentWindow:(LocalizationEditorWindow*)pw numToDownload:(double)numTrans{
-    self = [self init];
-    if (!self) return NULL;
-    _latestRequestID = requestID;
-    _parentWindow = pw;
-    _numTransToDownload = numTrans;
-    return self;
-}
-/*
- * Set up the guid, the languages global dictionary, the tab views, the window handler
- * and get the dictionary's contents from the server
- */
--(void) awakeFromNib
-{
-    languageURL = [baseURL stringByAppendingString:@"/translations/languages?key=%@"];
-    estimateURL = [baseURL stringByAppendingString:@"/translations/estimate"];
-    receiptTranslationsURL = [baseURL stringByAppendingString:@"/translations"];
-    translationsURL = [baseURL stringByAppendingString:@"/translations?key=%@"];
-    cancelURL = [baseURL stringByAppendingString:@"/translations/cancel"];
-    
-    _guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
-    _languages = [[NSMutableDictionary alloc] init];
-    [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
-    [[_translateFromTabView tabViewItemAtIndex:noActiveLangsIndex] setView:_noActiveLangsView];
-    [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
-    [[_translateFromTabView tabViewItemAtIndex:downloadCostErrorIndex] setView:_downloadingCostsErrorView];
-    [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
-    [self disableAll];
-    [self getLanguagesFromServer];
-    
 }
 
-#pragma mark Downloading and updating languages
+#pragma mark Downloading and Updating Languages
 
 /*
- * Disable the translate from menu and show the downloading languages message.
+ * Show the downloading languages message.
  * Get languages from server and update active langauges. Once the session 
- * is done the JSON data will be parsed if there wasn't an error.
+ * is done the JSON data will be parsed if there wasn't an error. Errors handled and
+ * displayed.
  */
 -(void)getLanguagesFromServer{
     _popTranslateFrom.title = downloadingLangsString;
     [_translateFromTabView selectTabViewItemAtIndex:downloadLangsIndex];
     [_languagesDownloading startAnimation:self];
-    NSString* URLstring =
-    [NSString stringWithFormat:languageURL, _guid];
+    NSString* URLstring =[NSString stringWithFormat:languageURL, _guid];
     NSURL* url = [NSURL URLWithString:URLstring];
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL: url
                                                              completionHandler:^(NSData *data,
@@ -109,32 +118,19 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       }
                                       else
                                       {
+                                          [_languagesDownloading stopAnimation:self];
+                                          [_translateFromTabView selectTabViewItemAtIndex:downloadLangsErrorIndex];
                                           NSLog(@"Error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
 }
 
--(void)disableAll{
-    [_popTranslateFrom setEnabled:0];
-    [_languageTable setEnabled:0];
-    [_checkAll setEnabled:0];
-    [_ignoreText setEnabled:0];
-}
 
--(void)enableAll{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_popTranslateFrom setEnabled:1];
-        [_languageTable setEnabled:1];
-        [_checkAll setEnabled:1];
-        [_ignoreText setEnabled:1];
-        [_cancel setEnabled:1];
-    });
-}
 /*
  * Turns the JSON response into a dictionary and fill the _languages global accordingly.
  * Then update the active languages array, the pop-up menu and the table. This is
- * only done once in the beginning of the SpriteBuilder session. Errors handled and 
+ * only done once in the beginning of the session. Errors handled and
  * displayed.
  */
 -(void)parseJSONLanguages:(NSData *)data{
@@ -159,7 +155,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         [_languages setObject:translateTo forKey:[[LocalizationEditorLanguage alloc] initWithIsoLangCode:lIso]];
     }
     [self updateActiveLanguages];
-    [self finishSetUp];
+    [self finishLanguageSetUp];
 }
 
 /*
@@ -187,7 +183,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
  * If there are no active languages that we can translate from
  * then a the pop-up menu is disabled, an error message with instructions is shown.
  */
--(void)finishSetUp{
+-(void)finishLanguageSetUp{
     
     [_languagesDownloading stopAnimation:self];
     [self uncheckLanguageDict];
@@ -210,40 +206,20 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 /*
- * Turns off the 'quick edit' option in the languages global dictionary
- * e.g. 'unchecks' them
- */
--(void)uncheckLanguageDict{
-    for(LocalizationEditorLanguage* l in [_languages allKeys])
-    {
-        l.quickEdit = 0;
-        for(LocalizationEditorLanguage* l2 in [_languages objectForKey:l])
-            l2.quickEdit = 0;
-    }
-}
-
-/*
  * If this is coming out of an instance where the language selection menu has to be 
- * updated without a user selection (the initial post-download call or reload after 
- * a language is added/deleted on the Language Translation window) everything is normal. But
+ * updated without a user selection (the initial post-download call) everything is normal. But
  * if this is just a normal user selection, and the user reselected the current language, 
  * ignore this and return.
  *
  * Otherwise, remove all items from the menu, then put all the active langauges back into it.
- * Set the global currLang to the newly selected language and if this isn't the initial
- * update (e.g. if the window is already loaded and someone is selecting a new language
- * to translate from) then update the main language table and the check all box accordingly.
- * Finally, toggle the visibility of the 'Translate From Info' button.
- *
- * The 'isNewLangActive' variable handles the edge case where a user deletes an active
- * 'translate from' language from the Langauge window, and just sets the current language
- * and language selection menu accordingly.
+ * Set the global currLang to the newly selected language and then update the main language 
+ * table and the check all box accordingly. Dispatch get main queue is used because it makes this work.
  */
 - (void) updateLanguageSelectionMenu:(int)userSelection
 {
     
     NSString* newLangSelection = _popTranslateFrom.selectedItem.title;
-    if(self.isWindowLoaded && _currLang && userSelection && [newLangSelection isEqualToString:_currLang.name])
+    if(userSelection && [newLangSelection isEqualToString:_currLang.name])
     {
         return;
     }
@@ -254,40 +230,30 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     
     [_popTranslateFrom removeAllItems];
     NSMutableArray* langTitles = [NSMutableArray array];
-    int isNewLangActive = 0;
     for (LocalizationEditorLanguage* lang in _activeLanguages)
     {
         if([lang.name isEqualToString:newLangSelection])
         {
-            isNewLangActive = 1;
             _currLang = lang;
         }
         [langTitles addObject:lang.name];
     }
+    
     [_popTranslateFrom addItemsWithTitles:langTitles];
     
-    if(!isNewLangActive){
-        _currLang = [_activeLanguages objectAtIndex:0];
-        [_popTranslateFrom selectItemWithTitle:_currLang.name];
-    }
-    else if (newLangSelection)
+    if (newLangSelection)
     {
         [_popTranslateFrom selectItemWithTitle:newLangSelection];
     }
     
-    if([self isWindowLoaded])
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_languageTable reloadData];
-        });
-        [self updateCheckAll];
-    }
-        
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_languageTable reloadData];
+    });
+    [self updateCheckAll];
     
 }
 
-#pragma mark Downloading Cost Estimate and word count
+#pragma mark Downloading Cost Estimate and Word Count
 
 /*
  * Gets the estimated cost of a translation request using the currrent user-set parameters.
@@ -318,12 +284,14 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                  _guid,@"key",
                                  _phrasesToTranslate,@"phrases",
                                  nil];
-    if(![NSJSONSerialization isValidJSONObject:JSONObject]){
+    if(![NSJSONSerialization isValidJSONObject:JSONObject])
+    {
         NSLog(@"Not a JSON Object!!!");
     }
      NSError *error;
      NSData *postdata = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
-    if(error){
+    if(error)
+    {
         NSLog(@"Error: %@", error);
     }
      NSURL *url = [NSURL URLWithString:estimateURL];
@@ -335,34 +303,42 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                                                   completionHandler:^(NSData *data,
                                                                                       NSURLResponse *response,
                                                                                       NSError *error)
-    {
-                    if (!error)
-                    {
-                        [self parseJSONEstimate:data];
-                        if(_tierForTranslations > 0)
-                        {
-                            [self requestIAPProducts];
-                        }
-                        NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
-                    }
-                    else
-                    {
-                        NSLog(@"Error: %@", error.localizedDescription);
-                    }
-     }];
+                                   {
+                                       if (!error)
+                                       {
+                                           [self parseJSONEstimate:data];
+                                           if(_tierForTranslations > 0)
+                                           {
+                                               [self requestIAPProducts];
+                                           }
+                                           else
+                                           {
+                                               [_costDownloading stopAnimation:self];
+                                               [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
+                                           }
+                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                       }
+                                       else
+                                       {
+                                           [_costDownloading stopAnimation:self];
+                                           [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
+                                           NSLog(@"Error: %@", error.localizedDescription);
+                                       }
+                                   }];
      [task resume];
 }
 
 /*
  * Goes through every LocalizationEditorTranslation, first seeing if there is a
- * version of the phrase in the 'translate from' language.
+ * version of the phrase in the 'translate from' language that isn't null or just 
+ * whitespace.
  * Then populating an array of the isoCodes for every language the phrase should be
  * translated to. (If we are ignoring already translated text, this is every language
  * with 'quick edit' enable. If we aren't, this is only those translations that don't
  * have a translation string already.)
- * If that array remains unpopulated, then we ignore this translation. We then add this
- * number to the number of tranlsations to download (for the progress bar later). Then
- * we create a dictionary of the 'translate from' text, the context (if it exists), the
+ * If that array remains unpopulated, then we ignore this translation. Else we then add the
+ * count of the array to the number of tranlsations to download (for the progress bar later). 
+ * Then we create a dictionary of the 'translate from' text, the context (if it exists), the
  * source language, the languages to translate to and add that dictionary to an array
  * of phrases.
  *
@@ -375,7 +351,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     for(LocalizationEditorTranslation* t in trans)
     {
         NSString* toTranslate = [t.translations objectForKey:_currLang.isoLangCode];
-        if(!toTranslate || [toTranslate isEqualToString:@""])
+        NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+        if(!toTranslate || [toTranslate isEqualToString:@""]
+           || ([[toTranslate stringByTrimmingCharactersInSet: set] length] == 0))
         {
             continue;
         }
@@ -422,8 +400,10 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 }
 
 /*
- * Parses the JSON response from a request for a cost estimate. Handles error and sets
- * the translation tier and number of words.
+ * Parses the JSON response from a request for a cost estimate. Sets the tier for
+ * translations, and the number of words we asked to translate as determined by
+ * the server. Handles error and sets the translation tier and number of words.
+ * TODO add all the translation tiers.
  */
 -(void)parseJSONEstimate:(NSData*)data{
     NSError *JSONerror;
@@ -437,7 +417,8 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
         return;
     }
     _tierForTranslations  = [[dataDict objectForKey:@"iap_price_tier"] intValue];
-    if(_tierForTranslations != 1){
+    if(_tierForTranslations != 1)
+    {
         NSLog(@"Time to create a new IAP!!! Level: %ld", _tierForTranslations);
         _tierForTranslations = 1;
     }
@@ -456,14 +437,19 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [request start];
 }
 
-#pragma mark Toggling/Clicking button events
+#pragma mark Toggling/Clicking Button Events
 
 /*
  * Solicit a payment and set the cancel button to say 'Finish'.
  */
 - (IBAction)buy:(id)sender {
     if(!_products.count || !_phrasesToTranslate.count)
+    {
+        NSLog(@"Shouldn't have been able to click buy!!");
         return;
+    }
+    for(int i = 0; i < 20; i++)
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
     [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
     SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
@@ -487,7 +473,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 
 /*
  * Update the langauge select menu if someone has selected the pop-up
- * 'translate from' menu. Send 0 because this is not a reload, it is a
+ * 'translate from' menu. Send 1 because this is a
  * user-click generated event.
  */
 - (IBAction)selectedTranslateFromMenu:(id)sender {
@@ -503,11 +489,11 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 - (IBAction)toggleCheckAll:(id)sender {
     _checkAll.allowsMixedState = 0;
     for (LocalizationEditorLanguage* l in [_languages objectForKey:_currLang])
+    {
         l.quickEdit = _checkAll.state;
+    }
     [_languageTable reloadData];
 }
-
-
 
 /*
  * Clicked if there was an error in downloading languages and the user
@@ -525,24 +511,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [self getCostEstimate];
 }
 
-#pragma mark Response to events in the main Language Window
-
-/*
- * Once a new language is input to the Language Translate window's main
- * table, this is called to reload the cost in the translate window.
- */
-- (void)reloadCost{
-    [self getCostEstimate];
-}
-
-/*
- * Flashes the no active langauges error.
- */
-- (void)toggleNoActiveLangsAlpha {
-    [_noActiveLangsError setHidden:(!_noActiveLangsError.isHidden)];
-}
-
-#pragma mark update error strings and the 'check all' button
+#pragma mark Update Error Strings and the 'Check All' Button
 
 /*
  * Put all the available 'translate from' languages in the no active languages error
@@ -571,9 +540,13 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     for(LocalizationEditorLanguage* l in [_languages objectForKey:_currLang])
     {
         if(!l.quickEdit)
+        {
             checkAllTrue = 0;
+        }
         else
+        {
             checkAllFalse = 1;
+        }
     }
     if(checkAllFalse && !checkAllTrue)
     {
@@ -592,7 +565,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     }
 }
 
-#pragma mark table view delegate
+#pragma mark Table View Delegate
 
 /*
  * If there's no current language then there's going to be nothing to
@@ -622,7 +595,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     {
      return 0;
     }
-   if ([aTableColumn.identifier isEqualToString:@"enabled"])
+    if ([aTableColumn.identifier isEqualToString:@"enabled"])
     {
         LocalizationEditorLanguage* lang = [((NSArray*)[_languages objectForKey:_currLang]) objectAtIndex:rowIndex];
         return [NSNumber numberWithBool:lang.quickEdit];
@@ -649,7 +622,16 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     }
 }
 
-#pragma mark request delegate (and price display)
+#pragma mark Product Request Delegate
+
+/*
+ * If product request fails, say that the cost estimate failed.
+ */
+-(void) request:(SKRequest *)request didFailWithError:(NSError *)error{
+    [_costDownloading stopAnimation:self];
+    [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
+    NSLog(@"Product Request Failed");
+}
 
 /*
  * Takes in the products returned by apple, prints any invalid identifiers and displays
@@ -667,27 +649,11 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     [self displayPrice];
 }
 
-/*
- * Locally format the price of the current translation estimate, display it,
- * and hide the cost downloading message and spinning icon.
- */
--(void)displayPrice{
-    SKProduct* p = [_products objectAtIndex:(_tierForTranslations - 1)];
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [numberFormatter setLocale:p.priceLocale];
-    NSString *formattedString = [numberFormatter stringFromNumber:p.price];
-    _cost.stringValue = formattedString;
-    [_costDownloading setHidden:1];
-    [_costDownloadingText setHidden:1];
-    [_costDownloading stopAnimation:self];
-    [_buy setEnabled:1];
-}
-
-#pragma mark payment transaction observer
+#pragma mark Payment Transaction Observer
 
 /*
- * Ask for a receipt for any updated paymnent transactions.
+ * Ask for a receipt for any updated paymnent transactions. If it succeeds,
+ * validate the receipt with the server.
  */
 -(void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions{
     for (SKPaymentTransaction* transaction in transactions)
@@ -698,6 +664,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
             {
                 NSLog(@"Failed");
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
                 break;
             }
             case SKPaymentTransactionStatePurchased:
@@ -710,25 +677,22 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
             }
-            case SKPaymentTransactionStateRestored:
-            {
-                NSLog(@"Restored");
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-                break;
-            }
-            
         }
     }
 }
 
+#pragma mark Validate Receipt and Set Up Downloading Translations
+
 /*
- * Validates the receipt with our server.
- * TODO check for translations!
+ * Validates the receipt with our server. If receipt is valid, set up timer for future
+ * 'get translation' events, and close the translation window. Also, set up the main editor
+ * window for its 'downloading translations' phase.
  */
 -(void)validateReceipt:(NSString *)receipt transaction:(SKPaymentTransaction*)transaction{
     NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",receipt,@"receipt",_phrasesToTranslate,@"phrases",nil];
     NSError *error;
-    if(![NSJSONSerialization isValidJSONObject:JSONObject]){
+    if(![NSJSONSerialization isValidJSONObject:JSONObject])
+    {
         NSLog(@"Invalid JSON");
         return;
     }
@@ -747,7 +711,7 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       {
                                           [self parseJSONConfirmation:data];
                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                              _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+                                              _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
                                               [self.window close];
                                               [self setLanguageWindowDownloading];
                                               LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
@@ -758,18 +722,24 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       else
                                       {
                                           [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                                          [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
                                           NSLog(@"Error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
 }
 
+/*
+ * JSON confirmation just gives latest request ID. Put that in the project settings.
+ * TODO handle failure
+ */
 -(void)parseJSONConfirmation:(NSData *)data{
     NSError *JSONerror;
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
                                                                     options:NSJSONReadingMutableContainers error:&JSONerror];
     if(JSONerror)
     {
+        [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
         NSLog(@"JSONError: %@", JSONerror.localizedDescription);
         return;
     }
@@ -777,6 +747,10 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).latestRequestID = _latestRequestID;
 }
 
+/*
+ * Set the 'downloading languages' for each translation and call the localization editor
+ * window's own 'set downloading translations' function.
+ */
 -(void)setLanguageWindowDownloading{
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* translations = handler.translations;
@@ -792,62 +766,17 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
             }
         }
     }
-    [_parentWindow setDownloadingTranslations:_numTransToDownload];
-}
-/*
- * Turns the JSON response into a dictionary and fill the _languages global accordingly.
- * Then update the active languages array, the pop-up menu and the table. This is
- * only done once in the beginning of the SpriteBuilder session.
- */
--(void)parseJSONTranslations:(NSData *)data{
-    NSError *JSONerror;
-    NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
-                                                                                  options:NSJSONReadingMutableContainers error:&JSONerror];
-    if(JSONerror)
-    {
-        NSLog(@"JSONError: %@", JSONerror.localizedDescription);
-        return;
-    }
-    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
-    NSArray* handlerTranslations = handler.translations;
-    NSArray* requests = [initialTransDict objectForKey:@"requests"];
-    NSDictionary* request = [requests objectAtIndex:0];
-    NSString* requestID = [request objectForKey:@"request_id"];
-    if(![requestID isEqualToString:_latestRequestID]){
-        NSLog(@"Something went wrong");
-    }
-    NSArray* phrases = [request objectForKey:@"phrases"];
-    for(NSDictionary* phrase in phrases){
-        NSString* text = [phrase objectForKey:@"text"];
-        NSString* context = [phrase objectForKey:@"context"];
-        NSString* sourceLangIso = [phrase objectForKey:@"source_language"];
-        NSArray* translations = [phrase objectForKey:@"translations"];
-        for(NSDictionary* translation in translations){
-            NSString* translationIso = [translation objectForKey:@"target_language"];
-            NSString* translationStatus = [translation objectForKey:@"status"];
-            NSString* translationText = [translation objectForKey:@"text"];
-            if([translationStatus isEqualToString:@"completed"]){
-                for(LocalizationEditorTranslation* t in handlerTranslations)
-                {
-                    NSString* sourceText = [t.translations objectForKey:sourceLangIso];
-                    if([sourceText isEqualToString:text] && [t.comment isEqualToString:context] && [t.languagesDownloading containsObject:translationIso]){
-                        [t.translations setObject:translationText forKey:translationIso];
-                        [t.languagesDownloading removeObject:translationIso];
-                        [_parentWindow incrementTransByOne];
-                    }
-                }
-            }
-        }
-    }
-    if([_parentWindow translationProgress] == _numTransToDownload){
-        [self endDownload];
-        [_parentWindow finishDownloadingTranslations];
-    }
+    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).numToDownload = _numTransToDownload;
+    [_parentWindow setDownloadingTranslations];
 }
 
+#pragma mark Download Translations
+
+/*
+ * Get translations for the user and parse them into the current localization editor window.
+ */
 -(void)getTranslations{
-    NSString* URLstring =
-    [NSString stringWithFormat:translationsURL, _guid];
+    NSString* URLstring = [NSString stringWithFormat:translationsURL, _guid];
     NSURL* url = [NSURL URLWithString:URLstring];
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL: url
                                                              completionHandler:^(NSData *data,
@@ -861,45 +790,134 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
                                       }
                                       else
                                       {
+                                          NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. You will not be charged. Please try again in a few minutes."];
+                                          NSInteger result = [alert runModal];
+                                          if(result == NSAlertDefaultReturn)
+                                          {
+                                              [_parentWindow finishDownloadingTranslations];
+                                              [self cancelDownloadWithError:[[NSError alloc] init]];
+                                          }
                                           NSLog(@"Error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
-    
 }
 
+/*
+ * Find the current request in the response dictionary, and parse out translations
+ * from the phrases and put them into the handler's translation objects. Then increment
+ * the parent's download progress indicator by one, and, when the download is done,
+ * end it here and finish it in the window.
+ * TODO use actual text
+ */
+-(void)parseJSONTranslations:(NSData *)data{
+    NSError *JSONerror;
+    NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
+                                                                                  options:NSJSONReadingMutableContainers error:&JSONerror];
+    if(JSONerror)
+    {
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. You will not be charged. Please try again in a few minutes."];
+        NSInteger result = [alert runModal];
+        if(result == NSAlertDefaultReturn)
+        {
+            [_parentWindow finishDownloadingTranslations];
+            [self cancelDownloadWithError:[[NSError alloc] init]];
+        }
+        NSLog(@"JSONError: %@", JSONerror.localizedDescription);
+        return;
+    }
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    NSArray* handlerTranslations = handler.translations;
+    NSArray* requests = [initialTransDict objectForKey:@"requests"];
+    NSDictionary* request = NULL;
+    for(NSDictionary* r in requests)
+    {
+        if([[r objectForKey:@"id"] isEqualToString:_latestRequestID])
+        {
+            request = r;
+        }
+    }
+    NSArray* phrases = [request objectForKey:@"phrases"];
+    for(NSDictionary* phrase in phrases)
+    {
+        NSString* text = [phrase objectForKey:@"text"];
+        NSString* context = [phrase objectForKey:@"context"];
+        NSString* sourceLangIso = [phrase objectForKey:@"source_language"];
+        NSArray* serverTranslations = [phrase objectForKey:@"translations"];
+        for(NSDictionary* translation in serverTranslations)
+        {
+            NSString* translationIso = [translation objectForKey:@"target_language"];
+            NSString* translationStatus = [translation objectForKey:@"status"];
+            NSString* translationText = [translation objectForKey:@"text"];
+            if([translationStatus isEqualToString:@"received"])
+            {
+                for(LocalizationEditorTranslation* t in handlerTranslations)
+                {
+                    NSString* sourceText = [t.translations objectForKey:sourceLangIso];
+                    if([sourceText isEqualToString:text] && [t.comment isEqualToString:context] && [t.languagesDownloading containsObject:translationIso])
+                    {
+                        //[t.translations setObject:translationText forKey:translationIso];
+                        [t.translations setObject:@"Completed!" forKey:translationIso];
+                        [t.languagesDownloading removeObject:translationIso];
+                        [_parentWindow incrementTransByOne];
+                    }
+                }
+            }
+        }
+    }
+    if([_parentWindow translationProgress] == _numTransToDownload)
+    {
+        [self endDownload];
+        [_parentWindow finishDownloadingTranslations];
+    }
+}
+
+/*
+ * Kills the timer for the repeated download function
+ * but doesn't stop the download in the project settings or anything.
+ * Used when a language window changes to a different project.
+ */
 - (void)pauseDownload{
     [_timerTransDownload invalidate];
     _timerTransDownload = nil;
 }
 
+/*
+ * Restarts the timer for the download function.
+ */
+-(void)restartDownload{
+    _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+}
+
+/*
+ * Ends the download cleanly in the translation window.
+ */
 - (void)endDownload{
-    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
-    NSArray* handlerTranslations = handler.translations;
-    for(LocalizationEditorTranslation* t in handlerTranslations)
-    {
-        if(t.languagesDownloading.count)
-        {
-            NSLog(@"Oops, language still downloading");
-            t.languagesDownloading = NULL;
-        }
-    }
+    _numTransToDownload = 0;
+    _latestRequestID = nil;
     [_timerTransDownload invalidate];
     _timerTransDownload = nil;
 }
 
-- (void)stopDownload{
-    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
-    NSArray* handlerTranslations = handler.translations;
-    for(LocalizationEditorTranslation* t in handlerTranslations)
-    {
-        t.languagesDownloading = NULL;
-    }
+#pragma mark Cancel Download
+
+/*
+ * Stops the download after a cancellation request has been sent.
+ */
+- (void)cancelDownloadWithError:(NSError*)error{
+    _numTransToDownload = 0;
+    _latestRequestID = nil;
     [_timerTransDownload invalidate];
     _timerTransDownload = nil;
-    [self sendCancelRequest];
+    if(!error){
+        [self sendCancelRequest];
+    }
 }
 
+/*
+ * Sends cancel request to the server
+ * TODO actually make this do something
+ */
 -(void)sendCancelRequest{
     NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",nil];
     NSError *error;
@@ -931,7 +949,63 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
     
 }
 
--(void)restartDownload{
-    _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+
+#pragma mark Misc. helper funcs
+
+/*
+ * Turns off the 'quick edit' option in the languages global dictionary
+ * e.g. 'unchecks' them
+ */
+-(void)uncheckLanguageDict{
+    for(LocalizationEditorLanguage* l in [_languages allKeys])
+    {
+        l.quickEdit = 0;
+        for(LocalizationEditorLanguage* l2 in [_languages objectForKey:l])
+        {
+            l2.quickEdit = 0;
+        }
+    }
+}
+
+/*
+ * Disable everything that can be disabled (except buy button since that is handled separately according to
+ * availability of a cost estimate, and cancel, since that shouldn't usually/ever be disabled)
+ */
+-(void)disableAll{
+    [_popTranslateFrom setEnabled:0];
+    [_languageTable setEnabled:0];
+    [_checkAll setEnabled:0];
+    [_ignoreText setEnabled:0];
+}
+
+/*
+ * Enable everything that can be enabled (except buy button since that is handled separately according to
+ * availability of a cost estimate, and cancel, since that shouldn't usually/ever be disabled)
+ * Use on main queue because that makes it work.
+ */
+-(void)enableAll{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_popTranslateFrom setEnabled:1];
+        [_languageTable setEnabled:1];
+        [_checkAll setEnabled:1];
+        [_ignoreText setEnabled:1];
+    });
+}
+
+/*
+ * Locally format the price of the current translation estimate, display it,
+ * and hide the cost downloading message and spinning icon.
+ */
+-(void)displayPrice{
+    SKProduct* p = [_products objectAtIndex:(_tierForTranslations - 1)];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [numberFormatter setLocale:p.priceLocale];
+    NSString *formattedString = [numberFormatter stringFromNumber:p.price];
+    _cost.stringValue = formattedString;
+    [_costDownloading setHidden:1];
+    [_costDownloadingText setHidden:1];
+    [_costDownloading stopAnimation:self];
+    [_buy setEnabled:1];
 }
 @end

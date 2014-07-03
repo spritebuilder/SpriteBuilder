@@ -21,6 +21,7 @@
     IBOutlet NSView* _downloadingLangsView;
     IBOutlet NSView* _downloadingLangsErrorView;
     IBOutlet NSView* _downloadingCostsErrorView;
+    IBOutlet NSView* _paymentErrorView;
     IBOutlet NSTabView* _translateFromTabView;
     
     //fields inside tab views
@@ -67,7 +68,7 @@
 - (IBAction)toggleCheckAll:(id)sender;
 - (IBAction)retryLanguages:(id)sender;
 - (IBAction)retryCost:(id)sender;
-- (void)stopDownload;
+- (void)cancelDownloadWithError:(NSError*)error;
 - (void)pauseDownload;
 - (void)restartDownload;
 @property (nonatomic,strong) LocalizationEditorWindow* parentWindow;

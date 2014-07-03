@@ -42,6 +42,9 @@
     return self;
 }
 
+/*
+ * Returns the name of a language from the iso code.
+ */
 + (NSString*) nameFromCode:(NSString*)code
 {
     NSString* name = NULL;

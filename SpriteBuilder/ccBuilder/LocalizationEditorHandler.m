@@ -280,6 +280,10 @@
     [self setCurrentLanguage:currentLanguage];
 }
 
+/*
+ * In addition to its normal functionality, now sets the 'downloading' state of the window
+ * according to project settings.
+ */
 - (IBAction)openEditor:(id)sender
 {
     if (!windowController)
@@ -290,8 +294,10 @@
     windowController.hasOpenFile = (managedFile != NULL);
     if(((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations)
     {
-        [windowController setDownloadingTranslations:0];
-    }else{
+        [windowController setDownloadingTranslations];
+    }
+    else
+    {
         [windowController finishDownloadingTranslations];
     }
 }

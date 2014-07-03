@@ -22,6 +22,7 @@
                 <outlet property="_noActiveLangsError" destination="53F-ck-Dys" id="9ah-UK-Rkt"/>
                 <outlet property="_noActiveLangsView" destination="bJK-vy-SPe" id="yMd-UH-Iyw"/>
                 <outlet property="_numWords" destination="53M-iT-uMr" id="EZm-Jx-HiP"/>
+                <outlet property="_paymentErrorView" destination="08h-t3-yZY" id="n7p-CN-Psj"/>
                 <outlet property="_popTranslateFrom" destination="I6b-JE-8U4" id="F0c-9k-7Fr"/>
                 <outlet property="_standardLangsView" destination="Urd-Xj-CU6" id="uXS-VI-nOc"/>
                 <outlet property="_translateFromInfo" destination="2Lu-mC-tJx" id="XMi-JF-ufN"/>
@@ -248,7 +249,7 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField hidden="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="Qro-Wv-tiG">
-                    <rect key="frame" x="103" y="10" width="104" height="14"/>
+                    <rect key="frame" x="103" y="6" width="104" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" title="Updating estimate" id="7ta-C9-wbb">
                         <font key="font" metaFont="smallSystem"/>
@@ -257,11 +258,11 @@ Gw
                     </textFieldCell>
                 </textField>
                 <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="224-Ym-xC9">
-                    <rect key="frame" x="81" y="8" width="16" height="16"/>
+                    <rect key="frame" x="81" y="4" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <button id="3Xx-gF-bbr">
-                    <rect key="frame" x="24" y="78" width="179" height="18"/>
+                    <rect key="frame" x="24" y="74" width="179" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Ignore already translated text" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="g8P-Om-S7m">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -272,7 +273,7 @@ Gw
                     </buttonCell>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="SWz-Bc-6Ko">
-                    <rect key="frame" x="65" y="34" width="36" height="14"/>
+                    <rect key="frame" x="65" y="30" width="36" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Cost:" id="ou0-Fy-Axh">
                         <font key="font" metaFont="smallSystem"/>
@@ -281,7 +282,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="F2g-U3-2Kx">
-                    <rect key="frame" x="150" y="34" width="53" height="14"/>
+                    <rect key="frame" x="150" y="30" width="53" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0" id="wqR-n3-00l">
                         <font key="font" metaFont="smallSystem"/>
@@ -290,7 +291,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ilM-kB-kIY">
-                    <rect key="frame" x="65" y="56" width="119" height="14"/>
+                    <rect key="frame" x="65" y="52" width="119" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Number of Words:" id="1h2-iV-i2e">
                         <font key="font" metaFont="smallSystem"/>
@@ -299,7 +300,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="53M-iT-uMr">
-                    <rect key="frame" x="144" y="59" width="59" height="11"/>
+                    <rect key="frame" x="144" y="55" width="59" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0" id="VWG-9r-eBZ">
                         <font key="font" metaFont="smallSystem"/>
@@ -378,6 +379,21 @@ Gw
                         <action selector="retryCost:" target="-2" id="YN0-wf-RYc"/>
                     </connections>
                 </button>
+            </subviews>
+        </customView>
+        <customView id="08h-t3-yZY">
+            <rect key="frame" x="0.0" y="0.0" width="204" height="183"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="KdK-Bb-2HA">
+                    <rect key="frame" x="-2" y="140" width="208" height="43"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="The was an issue processing your payment information. Please press the &quot;Buy...&quot; button below to try again." id="1Fv-Eo-TzK">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
         </customView>
     </objects>
