@@ -5,7 +5,6 @@
 @class DateCache;
 @class CCBPublisher;
 @class FCFormatConverter;
-@class PublishRenamedFilesLookup;
 @protocol PublishFileLookupProtocol;
 
 @interface PublishImageOperation : PublishBaseOperation
