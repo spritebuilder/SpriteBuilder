@@ -27,28 +27,28 @@
 #define kCCBProjectSettingsVersion 1
 #define kCCBDefaultExportPlugIn @"ccbi"
 
-enum
+typedef enum
 {
-    kCCBDesignTargetFlexible,
-    kCCBDesignTargetFixed,
-};
+    kCCBDesignTargetFlexible = 0,
+    kCCBDesignTargetFixed = 1,
+} CCBDesignTarget;
 
-enum
+typedef enum
 {
-    kCCBOrientationLandscape,
-    kCCBOrientationPortrait,
-};
+    kCCBOrientationLandscape = 0,
+    kCCBOrientationPortrait = 1,
+} CCBOrientation;
 
 typedef NS_ENUM(int8_t, CCBTargetEngine)
 {
 	CCBTargetEngineCocos2d = 0,
-	CCBTargetEngineSpriteKit,
+	CCBTargetEngineSpriteKit = 1,
 };
 
 typedef enum
 {
     PublishEnvironmentDevelop = 0,
-    PublishEnvironmentRelease,
+    PublishEnvironmentRelease = 1,
 } SBPublishEnvironment;
 
 @class RMResource;
