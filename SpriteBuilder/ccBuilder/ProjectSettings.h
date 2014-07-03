@@ -57,9 +57,7 @@ typedef enum
 @interface ProjectSettings : NSObject
 {
     NSString* projectPath;
-    NSMutableArray* resourcePaths;
-    NSMutableDictionary* resourceProperties;
-    
+
     NSString* publishDirectory;
     NSString* publishDirectoryAndroid;
 
@@ -162,6 +160,7 @@ typedef enum
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
+
 
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;
