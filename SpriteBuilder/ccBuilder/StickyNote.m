@@ -68,7 +68,7 @@
 {
     bg.contentSize = contentSize;
     
-    NSLog(@"set lbl.dimensions: (%f,%f)", contentSize.width - (2*kCCBNoteLblInsetH), contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot);
+    //NSLog(@"set lbl.dimensions: (%f,%f)", contentSize.width - (2*kCCBNoteLblInsetH), contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot);
     
     lbl.dimensions = CGSizeMake((contentSize.width - (2*kCCBNoteLblInsetH))/[CCDirector sharedDirector].contentScaleFactor, (contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot)/[CCDirector sharedDirector].contentScaleFactor);
     

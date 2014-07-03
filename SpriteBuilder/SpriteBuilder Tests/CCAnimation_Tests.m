@@ -18,6 +18,9 @@
 
 #define IS_NEAR(a,b,accuracy) (fabsf(a - b) < kAccuracy)
 
+const float kDelta = 0.1f;//100ms;
+const CGFloat kAccuracy = 0.01f;
+
 
 @implementation CCAnimationManager (Test)
 
@@ -103,6 +106,9 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSString *path = [bundle pathForResource:srcFileName ofType:@"ccb"];
 	NSDictionary *  doc  = [NSDictionary dictionaryWithContentsOfFile:path];
+	XCTAssertNotNil(doc, @"Can't find animation File %@",srcFileName);
+	if(doc == nil)
+		return nil;
 	
 	PlugInExport *plugIn = [[PlugInManager sharedManager] plugInExportForExtension:@"ccbi"];
 	NSData *data = [plugIn exportDocument:doc];
@@ -129,13 +135,12 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 - (void)testAnimationSync1
 {
-	
 	CCAnimationDelegateTester * callbackTest = [[CCAnimationDelegateTester alloc] init];
-
-	
 	
 	NSData * animData = [self readCCB:@"AnimationTest1"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
 
 	CCBReader * reader = [CCBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
@@ -150,8 +155,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	XCTAssertTrue([node2.name isEqualToString:@"node2"]);
 	 
 	
-	const float kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
 	const CGFloat kTranslation = 500.0f;
 	
 	
@@ -197,16 +200,15 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 	NSData * animData = [self readCCB:@"AnimationTest1"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
-	
+	if(!animData)
+		return;
+
 	CCBReader * reader = [CCBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
 	
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackTest;
 	
-	const float kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
-	const CGFloat kTranslation = 500.0f;
 	
 	float totalElapsed = 0.0f;
 	__block float currentAnimElapsed = 0.0f;
@@ -215,8 +217,12 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 		currentAnimElapsed = 0.0f;
 	}];
 	
+	
+	__block BOOL middleCallbackWasCalled = NO;
+	
 	[callbackTest registerMethod:@"onMiddleOfAnimation" block:^{
 		XCTAssertTrue(fabsf(currentAnimElapsed - seq.duration /2.0f) < kAccuracy, @"Not in the middle of the sequence");
+		middleCallbackWasCalled = YES;
 	}];
 	
 	__block BOOL endCallbackWasCalled = NO;
@@ -234,8 +240,9 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 		currentAnimElapsed += kDelta;
 		
 	}
-	
-	XCTAssert(endCallbackWasCalled, @"Should be called");
+
+	XCTAssert(middleCallbackWasCalled, @"Middle Callback should be called");
+	XCTAssert(endCallbackWasCalled, @"End callback should be called");
 		
 }
 
@@ -249,7 +256,9 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	NSData * animData = [self readCCB:@"AnimationTest2"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
-	
+	if(!animData)
+		return;
+
 	CCBReader * reader = [CCBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
 	CCNode * node0 = rootNode.children[0];
@@ -259,8 +268,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackTest;
 	
-	const float kDelta = 0.1f;//100ms;
-	const CGFloat kAccuracy = 0.01f;
 	const CGFloat kXTranslation = 500.0f;
 	const CGFloat kYTranslation = 200.0f;
 	const CGFloat kTween = 1.0f;
@@ -303,8 +310,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 		}
 		else if(timeIntoAnimation < 3.0f || IS_NEAR(timeIntoAnimation,3.0f,kAccuracy))
 		{
-			int break_here = 1;
-			
 			XCTAssertEqualWithAccuracy(node0.position.x, kXTranslation, kAccuracy, @"Error: timeIntoAnim:%0.2f", timeIntoAnimation);
 		}
 		else if(timeIntoAnimation  < 4.0f || IS_NEAR(timeIntoAnimation,4.0f,kAccuracy))
@@ -317,7 +322,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 	};
 	
-	bool alreadyDone = NO;
 	
 	while(totalElapsed <= (seq.duration + kTween) * 20)
 	{
@@ -331,8 +335,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 			validationAnimBlock(currentAnimElapsed);
 			continue;
 		}
-		
-		
 		
 		
 		if(!playingDefaultAnimToggle)
@@ -382,8 +384,236 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 			}
 		}
 	}
-		
 	
+}
+
+
+//This test file  "AnimationTest3.ccb".
+//The test ensures that default animation loops properly.
+-(void)testAnimationLoop1
+{
+	CCAnimationDelegateTester * callbackHelper = [[CCAnimationDelegateTester alloc] init];
+	
+	NSData * animData = [self readCCB:@"AnimationTest3"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
+
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:callbackHelper];
+	CCNode * node0 = rootNode.children[0];
+	
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
+	
+	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	rootNode.animationManager.delegate = callbackHelper;
+	
+	const CGFloat kXTranslation = 500.0f;
+
+	
+	float totalElapsed = 0.0f;
+	__block BOOL firstTime = YES;
+	__block float currentAnimElapsed = 0.0f;
+
+	[callbackHelper setSequenceFinishedCallback:^{
+		
+		//When the animation finished, Toggle over to the next T1/T2 animation.
+		firstTime = NO;
+		
+		//Reset clock.
+		currentAnimElapsed = 0.0f;
+	}];
+	
+	[rootNode.animationManager update:0];//Zero'th update.
+	
+	while(totalElapsed <= (seq.duration * 20))
+	{
+		totalElapsed += kDelta;
+		currentAnimElapsed += kDelta;
+		
+		[rootNode.animationManager update:kDelta];
+		
+		if(currentAnimElapsed <= 1.0f || IS_NEAR(currentAnimElapsed, 1.0f, kAccuracy))
+		{
+			float percentage = currentAnimElapsed;
+			XCTAssertEqualWithAccuracy(node0.position.x, percentage * kXTranslation, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+		}
+		else
+		{
+			//We should be translating from X = 500 -> x = 0;
+			float percentage = currentAnimElapsed - 1.0f;
+			float xCoord = kXTranslation * (1.0f - percentage);
+			
+			XCTAssertEqualWithAccuracy(node0.position.x, xCoord, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+			
+		}
+	}
+}
+
+
+
+//This test file  "AnimationTest4.ccb".
+//The test ensures that seeking into the middle of an animation works.
+-(void)testAnimationSeeking1
+{
+	
+	NSData * animData = [self readCCB:@"AnimationTest4"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
+
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:nil];
+	CCNode * node0 = rootNode.children[0];
+	
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
+	
+	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	
+	const CGFloat kXTranslation = 500.0f;
+	
+	float totalElapsed = 0.0f;
+
+	[rootNode.animationManager jumpToSequenceNamed:seq.name time:seq.duration/2.0f];
+
+	totalElapsed =seq.duration/2.0f;//move time forward because we've seeked.
+	while(totalElapsed <= (seq.duration * 2))
+	{
+		if(totalElapsed <= seq.duration || IS_NEAR(totalElapsed, seq.duration, kAccuracy))
+		{
+			float percentage = totalElapsed/seq.duration;
+			XCTAssertEqualWithAccuracy(node0.position.x, percentage * kXTranslation, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+		}
+		else
+		{
+			XCTAssertEqualWithAccuracy(node0.position.x, kXTranslation, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+		}
+		
+		//Update at end of loop.
+		totalElapsed += kDelta;
+		[rootNode.animationManager update:kDelta];
+
+	}
+	
+	/////////////	/////////////	/////////////	/////////////	/////////////	/////////////
+	//T2 Test
+	totalElapsed = 0.0f;
+	const float kT2Duration = 3.0f;
+	const float kSkipDuration = 1.0f;
+	[rootNode.animationManager jumpToSequenceNamed:@"T2" time:kSkipDuration];
+	totalElapsed = kSkipDuration;
+	
+	totalElapsed =seq.duration/2.0f;//move time forward because we've seeked.
+	while(totalElapsed <= (kT2Duration * 2))
+	{
+		if(totalElapsed <= kT2Duration || IS_NEAR(totalElapsed, kT2Duration, kAccuracy))
+		{
+			float percentage = (totalElapsed - kSkipDuration)/2.0f;
+			XCTAssertEqualWithAccuracy(node0.position.x, percentage * kXTranslation, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+		}
+		else
+		{
+			XCTAssertEqualWithAccuracy(node0.position.x, kXTranslation, kAccuracy, @"Should be equial: Elapsed:%0.2f", totalElapsed);
+		}
+		
+		//Update at end of loop.
+		totalElapsed += kDelta;
+		[rootNode.animationManager update:kDelta];
+		
+	}
+	
+}
+
+//ANIMATION SHOUld chain from T1->T2->T1->T2....
+-(void)testAnimationChaining1
+{
+	
+	NSData * animData = [self readCCB:@"AnimationTest5"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
+	
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:nil];
+	
+	const CGFloat kAnimationDuration = 1.0f;
+	float totalElapsed = 0.0f;
+	
+
+	while(totalElapsed < (kAnimationDuration * 29))
+	{
+		[rootNode.animationManager update:kDelta];
+		totalElapsed += kDelta;
+	}
+	float overHang  = fmodf(totalElapsed, 1.0f);
+	
+	XCTAssert([rootNode.animationManager.runningSequence.name isEqualToString:@"T2"], @"Should be on sequence T2");
+	XCTAssertEqualWithAccuracy(rootNode.animationManager.runningSequence.time, overHang, kAccuracy, @"Should be at the start of T2 animation");
+
+}
+
+
+//In T3 animation, it goes from invisible to visible after 2 seconds.
+-(void)testVisibility1
+{
+	
+	NSData * animData = [self readCCB:@"AnimationTest5"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
+	
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:nil];
+
+	CCNode * node0 = rootNode.children[0];
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
+
+	[rootNode.animationManager runAnimationsForSequenceNamed:@"T3"];
+	XCTAssert(!node0.visible, @"should be invisible");
+	
+	float totalElapsed = 0.0f;
+	
+	while(totalElapsed <= (2.0f) || IS_NEAR(totalElapsed, 2.0f, kAccuracy))
+	{
+		[rootNode.animationManager update:kDelta];
+		totalElapsed += kDelta;
+	}
+
+	//Should be visible after three seconds.
+	XCTAssert(node0.visible, @"should be visible");
+
+}
+
+
+//In T4 animation, the duration is Zero.
+-(void)testZeroDurationTimeline1
+{
+	
+	NSData * animData = [self readCCB:@"AnimationTest5"];
+	XCTAssertNotNil(animData, @"Can't find ccb File");
+	if(!animData)
+		return;
+	
+	CCBReader * reader = [CCBReader reader];
+	CCNode * rootNode = [reader loadWithData:animData owner:nil];
+	
+	CCNode * node0 = rootNode.children[0];
+	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
+	
+	[rootNode.animationManager runAnimationsForSequenceNamed:@"T4"];
+	
+	XCTAssert([rootNode.animationManager.runningSequenceName isEqualToString:@"T4"], @"wrong anim");
+	XCTAssertEqual(rootNode.animationManager.runningSequence.duration, 0.0f, @"Should be zero lenght");
+		
+	[rootNode.animationManager update:kDelta];
+	[rootNode.animationManager update:kDelta];
+	[rootNode.animationManager update:kDelta];
+	[rootNode.animationManager update:kDelta];
+	
+	//After enough trials, the animation should be finished.	
+	XCTAssertNil(rootNode.animationManager.runningSequence, @"Should be nil");
+
+
 }
 
 

@@ -428,7 +428,7 @@
         [fileManager removeItemAtPath:[_projectSettings tempSpriteSheetCacheDirectory] error:NULL];
     }];
 
-    NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPath];
+    NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPathIgnoringDirs:YES];
 
 	[_publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 

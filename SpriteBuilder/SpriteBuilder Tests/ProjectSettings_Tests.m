@@ -39,7 +39,7 @@
     NSError *error;
     XCTAssertTrue([_projectSettings addResourcePath:@"/project/resourcepath1" error:&error]);
     XCTAssertNil(error);
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
 }
 
 - (void)testAddResourcePathTwice
@@ -55,7 +55,7 @@
     XCTAssertNotNil(error2);
     XCTAssertEqual(error2.code, SBDuplicateResourcePathError);
 
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
 }
 
 - (void)testIsResourcePathAlreadyInProject
@@ -76,7 +76,7 @@
 
     NSError *error;
     XCTAssertTrue([_projectSettings removeResourcePath:@"/project/test" error:&error]);
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 0);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 0);
     XCTAssertNil(error);
 }
 
