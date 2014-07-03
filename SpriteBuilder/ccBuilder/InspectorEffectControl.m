@@ -38,7 +38,13 @@
 
 - (IBAction)handleRemoveButton:(id)sender
 {
-	
+	if([self.tableView selectedRow] >=0)
+	{
+		NSInteger row = [self.tableView selectedRow];
+		CCEffect<EffectProtocol> *effect = [self.effectNode effects][row];
+		[self.effectNode removeEffect:effect];
+		[self refresh];
+	}
 }
 
 - (IBAction)handleAddButton:(id)sender
@@ -50,10 +56,16 @@
 	if(success)
 	{
 		EffectDescription * effectDescription = vc.selectedEffect;
-		[[self effectNode] addEffect:effectDescription];
+		[[self effectNode] addEffect:[effectDescription constructDefault]];
 		[self refresh];
 	}
 
+}
+
+
+- (void) willBeAdded
+{
+	[self refresh];
 }
 
 -(void)refresh

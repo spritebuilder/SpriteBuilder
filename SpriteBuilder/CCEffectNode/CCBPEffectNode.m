@@ -8,10 +8,10 @@
 
 #import "CCBPEffectNode.h"
 #import "CCEffectStack.h"
-
+#import "NSArray+Query.h"
 
 @interface CCBPEffectNode()
-@property (nonatomic) NSMutableArray * effectDescriptors;
+
 @end
 
 @implementation CCBPEffectNode
@@ -22,24 +22,51 @@
 	self = [super init];
 	if(self != nil)
 	{
-		self.effectDescriptors = [NSMutableArray new];
+		
 	}
 	return self;
 }
 
--(void)addEffect:(EffectDescription*)effectDescription
+-(void)addEffect:(CCEffect<EffectProtocol>*)effect
 {
 	[self willChangeValueForKey:@"effects"];
-	[_effectDescriptors addObject:effectDescription];
+
+	NSMutableArray * mutableEffects = [NSMutableArray arrayWithArray:self.effects];
+	[mutableEffects addObject:effect];
+	self.effects = mutableEffects;
+	[self didChangeValueForKey:@"effects"];
+	[self reloadEffects];
+
+}
+
+-(void)removeEffect:(CCEffect<EffectProtocol>*)effect
+{
+	
+	[self willChangeValueForKey:@"effects"];
+	NSAssert([self.effects containsObject:effect], @"Does not contain the effect");
+	
+	NSMutableArray * mutableEffects = [NSMutableArray arrayWithArray:self.effects];
+	[mutableEffects removeObject:effect];
+	self.effects = mutableEffects;
 	[self didChangeValueForKey:@"effects"];
 	[self reloadEffects];
 }
 
--(void)removeEffect:(EffectDescription*)effectDescription
+-(NSArray*)effectDescriptors{
+	
+	NSArray * effectDescriptors = [self.effects convertAll:^id(id<EffectProtocol> obj, int idx) {
+		return obj.effectDescription;
+	}];
+	return effectDescriptors;
+}
+
+-(NSArray*)effects
 {
-	[self willChangeValueForKey:@"effects"];
-	[_effectDescriptors removeObject:effectDescription];
-	[self didChangeValueForKey:@"effects"];
+	return effects;
+}
+-(void)setEffects:(NSArray *)lEffects
+{
+	self->effects = lEffects;
 	[self reloadEffects];
 }
 
@@ -47,21 +74,10 @@
 {
 	self.effect = nil;
 	
-	if(_effectDescriptors.count == 0)
+	if(self.effects.count == 0)
 		return;
-	
-	
-	NSMutableArray * _effects = [NSMutableArray new];
-	
-	for (EffectDescription * effectDescription in _effectDescriptors) {
 
-		//Temp code.
-		CCEffect * tempEffect = [effectDescription constructDefault];
-		[_effects  addObject:tempEffect];
-	}
-	
-    self.effects = _effects;
-	self.effect = [[CCEffectStack alloc] initWithEffects:_effects];
+	self.effect = [[CCEffectStack alloc] initWithEffects:self.effects];
 	
 }
 

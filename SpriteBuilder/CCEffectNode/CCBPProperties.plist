@@ -33,8 +33,6 @@
 			<string>effects</string>
 			<key>type</key>
 			<string>EffectControl</string>
-			<key>dontSetInEditor</key>
-			<true/>
 		</dict>
 	</array>
 	<key>editorClassName</key>

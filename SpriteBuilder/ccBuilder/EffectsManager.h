@@ -14,9 +14,7 @@
 @protocol EffectProtocol <NSObject>
 @required
 @property (nonatomic,readonly) EffectDescription * effectDescription;
-+(CCEffect*)defaultConstruct;
-
-@optional
++(CCEffect<CCEffectProtocol>*)defaultConstruct;
 -(id)serialize;
 -(void)deserialize:(NSDictionary*)dict;
 
@@ -33,7 +31,7 @@
 @property (nonatomic) NSString * className;
 @property (nonatomic) NSString * viewController;
 @property (nonatomic) NSString * popupViewController;//Optional
--(CCEffect*)constructDefault;
+-(CCEffect<EffectProtocol>*)constructDefault;
 
 @end
 

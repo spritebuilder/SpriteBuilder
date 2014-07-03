@@ -12,7 +12,7 @@
 @implementation CCBPEffectGlow
 
 
-+(CCEffect*)defaultConstruct
++(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
 	return [self effectWithBlurStrength:0.007f];
 }

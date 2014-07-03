@@ -12,7 +12,7 @@
 
 
 
-+(CCEffect*)defaultConstruct
++(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
 	return [self effectWithBlockSize:4.0f];
 }

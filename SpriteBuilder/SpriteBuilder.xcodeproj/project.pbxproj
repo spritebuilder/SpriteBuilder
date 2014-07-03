@@ -278,6 +278,7 @@
 		92CD1C201965D824002BF2DE /* CCBPEffectPixelate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */; };
 		92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */; };
 		92CD1C221965D824002BF2DE /* EffectBrightnessControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */; };
+		92CD1C241965D9F9002BF2DE /* effect-bloom.png in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C231965D9F9002BF2DE /* effect-bloom.png */; };
 		92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */; };
 		92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */; };
 		92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */; };
@@ -1611,6 +1612,7 @@
 		92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectBrightnessControl.m; path = ccBuilder/EffectBrightnessControl.m; sourceTree = "<group>"; };
 		92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBrightnessControl.xib; path = ccBuilder/EffectBrightnessControl.xib; sourceTree = "<group>"; };
 		92CD1C1F1965D824002BF2DE /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CCBPhysicsJoint+Private.h"; path = "ccBuilder/CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
+		92CD1C231965D9F9002BF2DE /* effect-bloom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-bloom.png"; path = "Resources/effect-bloom.png"; sourceTree = "<group>"; };
 		92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected.png"; sourceTree = "<group>"; };
 		92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected@2x.png"; sourceTree = "<group>"; };
 		92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-disconnected.png"; sourceTree = "<group>"; };
@@ -3937,6 +3939,7 @@
 		92CD1C0E1965D703002BF2DE /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
+				92CD1C231965D9F9002BF2DE /* effect-bloom.png */,
 				92CD1C171965D809002BF2DE /* CCBPEffectBloom.h */,
 				92CD1C181965D809002BF2DE /* CCBPEffectBloom.m */,
 				92CD1C121965D745002BF2DE /* EffectBloomControl.h */,
@@ -6259,6 +6262,7 @@
 				B7AC69B417A1A2040041B8BD /* header-bg2-crop.png in Resources */,
 				B72D1DC0186125E80091252F /* Requirements.plist in Resources */,
 				B7AC69C917A70A4B0041B8BD /* inspector-codeconnections.png in Resources */,
+				92CD1C241965D9F9002BF2DE /* effect-bloom.png in Resources */,
 				92CD1C221965D824002BF2DE /* EffectBrightnessControl.xib in Resources */,
 				92D9D48318F8AB3800F167C1 /* joint-connection-disconnected@2x.png in Resources */,
 				926D13C918B5778300582959 /* joint-distance-slide@2x.png in Resources */,

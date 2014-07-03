@@ -12,7 +12,7 @@
 @implementation CCBPEffectContrast
 
 
-+(CCEffect*)defaultConstruct
++(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
 	return [self effectWithContrast:0.6f];
 }

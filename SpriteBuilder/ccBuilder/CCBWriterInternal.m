@@ -32,6 +32,7 @@
 #import "CCNode+NodeInfo.h"
 #import "AppDelegate.h"
 #import "NodePhysicsBody.h"
+#import "CCBPEffectNode.h"
 
 @protocol CCBWriterInternal_UndeclaredSelectors <NSObject>
 - (NSArray*) ccbExcludePropertiesForSave;
@@ -408,6 +409,25 @@
              serializedValue = @(nodeRef.UUID);
          }
     }
+	else if([type isEqualToString:@"EffectControl"])
+	{
+	
+		NSAssert([node conformsToProtocol:@protocol(CCEffectNodeProtocol)], @"Node %@ shoudl conform to protocol CCEffectNodeProtocol",node);
+		id<CCEffectNodeProtocol> effectNode = (id<CCEffectNodeProtocol>)node;
+
+		NSMutableArray * serializedEffectsData = [NSMutableArray new];
+		for (id<EffectProtocol> effect in effectNode.effects) {
+
+			NSDictionary * effectProperties = [effect serialize];
+			NSDictionary * effectDescription = @{@"className": NSStringFromClass([effect class]),
+												 @"properties":effectProperties};
+			
+				[serializedEffectsData addObject:effectDescription];
+		
+		}
+		serializedValue = serializedEffectsData;
+		
+	}
     else
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);
@@ -448,8 +468,10 @@
         id defaultSerialization = [propInfo objectForKey:@"defaultSerialization"];
         id serializedValue = NULL;
         
+	
         serializedValue = [CCBWriterInternal serializePropertyForNode:node propInfo:propInfo excludeProps:excludeProps];
-        if (!serializedValue) continue;
+        if (!serializedValue)
+			continue;
         
         // Skip default values
         if ([serializedValue isEqual:defaultSerialization] && !hasKeyframes)

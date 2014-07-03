@@ -13,11 +13,10 @@
 @protocol CCEffectNodeProtocol <NSObject>
 @required
 @property (nonatomic,readonly) NSArray * effectDescriptors;
-@property (nonatomic,readonly) NSArray * effects;
+@property (nonatomic) NSArray * effects;
 
--(void)addEffect:(EffectDescription*)effectDescription;
--(void)removeEffect:(EffectDescription*)effectDescription;
-
+-(void)addEffect:(CCEffect<EffectProtocol>*)effect;
+-(void)removeEffect:(CCEffect<EffectProtocol>*)effect;
 
 @end
 

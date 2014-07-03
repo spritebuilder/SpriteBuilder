@@ -1,4 +1,4 @@
-//
+	//
 //  CCBPEffectBrightness.m
 //  SpriteBuilder
 //
@@ -10,7 +10,7 @@
 
 @implementation CCBPEffectBrightness 
 
-+(CCEffect*)defaultConstruct
++(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
 	return [self effectWithBrightness:0.4f];
 }

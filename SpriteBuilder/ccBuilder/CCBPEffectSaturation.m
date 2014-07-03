@@ -12,7 +12,7 @@
 @implementation CCBPEffectSaturation
 
 
-+(CCEffect*)defaultConstruct
++(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
 	return [self effectWithSaturation:5.0f];
 }
