@@ -68,6 +68,7 @@
     [propTypes addObject:@"Color4"];
     [propTypes addObject:@"NodeReference"];
     [propTypes addObject:@"FloatCheck"];
+	[propTypes addObject:@"EffectControl"];
 }
 
 - (id) init
@@ -275,6 +276,7 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     }
     [self flushBits];
 }
+
 
 
 - (void) writeFloat:(float)f
@@ -550,10 +552,70 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
         [self writeBool:[propArray[1] boolValue]];
 
     }
+	else if([type isEqualToString:@"EffectControl"])
+	{
+		for (NSDictionary * effectDescription in prop) {
+
+			[self writeEffect:effectDescription];
+		}
+	}
     else
     {
         NSLog(@"WARNING: Unknown property Type:%@" , type);
     }
+}
+
+-(void)writeEffect:(NSDictionary*)effectDescription
+{
+	
+	NSString* baseClass = effectDescription[@"baseClass"];
+	[self writeCachedString:baseClass isPath:NO];
+	NSDictionary * properties = effectDescription[@"properties"];
+	[self writeInt:properties.count withSign:NO];
+	
+	for (NSString * property in properties) {
+		
+		[self writeGenericProperty:property value:properties[property]];
+	}
+}
+
+//Extend as you please.
+//Only handles a limited number of types so far.
+-(void)writeGenericProperty:(NSString*)propKey value:(id)value
+{
+
+	if([value isKindOfClass:[NSNumber class]])
+	{
+		NSString* type = nil;
+		if (strcmp([value objCType], @encode(BOOL)) == 0)
+		{
+			type = @"Check";
+		}
+		else if ((strcmp([value objCType], @encode(int)) == 0)||
+				 (strcmp([value objCType], @encode(long)) == 0))
+		{
+			type = @"Integer";
+
+		}
+		else if((strcmp([value objCType], @encode(double)) == 0)||
+				(strcmp([value objCType], @encode(float)) == 0))
+		{
+			type = @"Float";
+		}
+		else
+		{
+			NSAssert(false, @"Failed to write generic property type: %@", propKey);
+			
+		}
+		[self writeProperty:value type:type name:propKey platform:nil];
+
+		
+	}
+	else
+	{
+		NSAssert(false, @"Failed to write generic property type: %@", propKey);
+	}
+
 }
 
 -(void)cacheStringsForJoints:(NSArray*)joints
@@ -713,6 +775,16 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
         {
             [self addToStringCache:value isPath:NO];
         }
+		else if([type isEqualToString:@"EffectControl"])
+		{
+			for (NSDictionary * effect in value) {
+				[self addToStringCache:effect[@"baseClass"] isPath:NO];
+				for (NSString * propKey in effect[@"properties"])
+				{
+					[self addToStringCache:propKey isPath:NO];
+				}
+			}
+		}
     }
     
     // Custom properties

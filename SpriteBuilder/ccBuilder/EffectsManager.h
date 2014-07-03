@@ -25,12 +25,12 @@
 {
 
 }
-@property (nonatomic) NSString * title;
-@property (nonatomic) NSString * description;
-@property (nonatomic) NSString * imageName;
-@property (nonatomic) NSString * className;
-@property (nonatomic) NSString * viewController;
-@property (nonatomic) NSString * popupViewController;//Optional
+@property (nonatomic) NSString * title; //Title of the effect.
+@property (nonatomic) NSString * description;//Short description.
+@property (nonatomic) NSString * imageName;//Icon image.
+@property (nonatomic) NSString * className;//Sprite builder class.
+@property (nonatomic) NSString * baseClass;//Actual runtime class.
+@property (nonatomic) NSString * viewController; //UI Control to control the values.
 -(CCEffect<EffectProtocol>*)constructDefault;
 
 @end

@@ -425,9 +425,7 @@ __strong NSDictionary* renamedProperties = nil;
 			NSString* className = serializedEffect[@"className"];
 			NSDictionary * serializedProperties = serializedEffect[@"properties"];
 			
-			EffectDescription * effectDescription = [[EffectsManager effects] findFirst:^BOOL(EffectDescription * obj, int idx) {
-				return [obj.className isEqualToString:className];
-			}];
+			EffectDescription * effectDescription = [EffectsManager effectByClassName:className];
 			
 			if(!effectDescription)
 			{

@@ -420,7 +420,9 @@
 
 			NSDictionary * effectProperties = [effect serialize];
 			NSDictionary * effectDescription = @{@"className": NSStringFromClass([effect class]),
-												 @"properties":effectProperties};
+												 @"baseClass" : [effect effectDescription].baseClass,
+												 @"properties":effectProperties
+												 };
 			
 				[serializedEffectsData addObject:effectDescription];
 		

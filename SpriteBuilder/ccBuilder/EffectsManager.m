@@ -48,6 +48,7 @@
 		effectDescription.description = @"Makes things bright";
 		effectDescription.imageName = @"effect-brightness.png";
 		effectDescription.className = NSStringFromClass([CCBPEffectBrightness class]);
+		effectDescription.baseClass = @"CCEffectBrightness";
 		effectDescription.viewController = NSStringFromClass([EffectBrightnessControl class]);
 		
 		[effectDescriptions addObject:effectDescription];
@@ -59,6 +60,7 @@
 		effectDescription.description = @"Makes things contrast";
 		effectDescription.imageName = @"effect-contrast.png";
 		effectDescription.className = NSStringFromClass([CCBPEffectContrast class]);
+		effectDescription.baseClass = @"CCEffectContrast";
 		effectDescription.viewController = NSStringFromClass([EffectContrastControl class]);
 		[effectDescriptions addObject:effectDescription];
 	}
@@ -69,6 +71,7 @@
 		effectDescription.description = @"Makes things pixelate";
 		effectDescription.imageName = @"effect-pixelate.png";
 		effectDescription.className = NSStringFromClass([CCBPEffectPixelate class]);
+		effectDescription.baseClass = @"CCEffectPixelate";
 		effectDescription.viewController = NSStringFromClass([EffectPixelateControl class]);
 		[effectDescriptions addObject:effectDescription];
 	}
@@ -78,6 +81,7 @@
 		effectDescription.title = @"Saturation";
 		effectDescription.description = @"Makes things saturate";
 		effectDescription.imageName = @"effect-saturation.png";
+		effectDescription.baseClass = @"CCEffectSaturation";
 		effectDescription.className = NSStringFromClass([CCBPEffectSaturation class]);
 		effectDescription.viewController = NSStringFromClass([EffectSaturationControl class]);
 		[effectDescriptions addObject:effectDescription];
@@ -89,6 +93,7 @@
 		effectDescription.description = @"Makes things bloom";
 		effectDescription.imageName = @"effect-bloom.png";
 		effectDescription.className = NSStringFromClass([CCBPEffectBloom class]);
+		effectDescription.baseClass = @"CCEffectBloom";
 		effectDescription.viewController = NSStringFromClass([EffectBloomControl class]);
 		[effectDescriptions addObject:effectDescription];
 	}
