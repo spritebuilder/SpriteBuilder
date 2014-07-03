@@ -188,8 +188,6 @@
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
 		922EAC3E1958E095006F2D75 /* EffectDescriptionRowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */; };
-		922EAC431958F342006F2D75 /* EffectBrightnessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 922EAC411958F342006F2D75 /* EffectBrightnessControl.m */; };
-		922EAC441958F342006F2D75 /* EffectBrightnessControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922EAC421958F342006F2D75 /* EffectBrightnessControl.xib */; };
 		922EAC471958F41E006F2D75 /* CCBPEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
 		9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */; };
@@ -207,7 +205,6 @@
 		9266EE34195A1786006CBE81 /* CCBPEffectSaturation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE33195A1786006CBE81 /* CCBPEffectSaturation.m */; };
 		9266EE38195A17A4006CBE81 /* EffectSaturationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */; };
 		9266EE39195A17A4006CBE81 /* EffectSaturationControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */; };
-		9266EE3D195A17D4006CBE81 /* CCBPEffectPixelate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE3C195A17D4006CBE81 /* CCBPEffectPixelate.m */; };
 		9266EE41195A17EE006CBE81 /* EffectPixelateControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */; };
 		9266EE42195A17EE006CBE81 /* EffectPixelateControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */; };
 		926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D139418B2DC2E00582959 /* NSDictionary+Query.m */; };
@@ -274,9 +271,13 @@
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */; };
 		92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */; };
-		92CAC1C6195A4C540035EA39 /* CCBPEffectGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CAC1C5195A4C540035EA39 /* CCBPEffectGlow.m */; };
-		92CAC1CA195A4C6C0035EA39 /* EffectGlowControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CAC1C8195A4C6C0035EA39 /* EffectGlowControl.m */; };
 		92CAC1CB195A4C6C0035EA39 /* EffectGlowControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */; };
+		92CD1C151965D745002BF2DE /* EffectBloomControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C131965D745002BF2DE /* EffectBloomControl.m */; };
+		92CD1C161965D745002BF2DE /* EffectBloomControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C141965D745002BF2DE /* EffectBloomControl.xib */; };
+		92CD1C191965D809002BF2DE /* CCBPEffectBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C181965D809002BF2DE /* CCBPEffectBloom.m */; };
+		92CD1C201965D824002BF2DE /* CCBPEffectPixelate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */; };
+		92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */; };
+		92CD1C221965D824002BF2DE /* EffectBrightnessControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */; };
 		92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */; };
 		92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */; };
 		92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */; };
@@ -1485,9 +1486,6 @@
 		922E8EFC18C13666008E1764 /* OutletDrawWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OutletDrawWindow.h; path = ccBuilder/OutletDrawWindow.h; sourceTree = SOURCE_ROOT; };
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
 		922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectDescriptionRowViewController.xib; path = ccBuilder/EffectDescriptionRowViewController.xib; sourceTree = "<group>"; };
-		922EAC401958F342006F2D75 /* EffectBrightnessControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectBrightnessControl.h; sourceTree = "<group>"; };
-		922EAC411958F342006F2D75 /* EffectBrightnessControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EffectBrightnessControl.m; sourceTree = "<group>"; };
-		922EAC421958F342006F2D75 /* EffectBrightnessControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EffectBrightnessControl.xib; sourceTree = "<group>"; };
 		922EAC451958F41E006F2D75 /* CCBPEffectBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectBrightness.h; path = ccBuilder/CCBPEffectBrightness.h; sourceTree = "<group>"; };
 		922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBrightness.m; path = ccBuilder/CCBPEffectBrightness.m; sourceTree = "<group>"; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
@@ -1510,8 +1508,6 @@
 		9266EE35195A17A4006CBE81 /* EffectSaturationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectSaturationControl.h; path = ccBuilder/EffectSaturationControl.h; sourceTree = "<group>"; };
 		9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectSaturationControl.m; path = ccBuilder/EffectSaturationControl.m; sourceTree = "<group>"; };
 		9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectSaturationControl.xib; path = ccBuilder/EffectSaturationControl.xib; sourceTree = "<group>"; };
-		9266EE3B195A17D4006CBE81 /* CCBPEffectPixelate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPEffectPixelate.h; sourceTree = "<group>"; };
-		9266EE3C195A17D4006CBE81 /* CCBPEffectPixelate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPEffectPixelate.m; sourceTree = "<group>"; };
 		9266EE3E195A17EE006CBE81 /* EffectPixelateControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectPixelateControl.h; path = ccBuilder/EffectPixelateControl.h; sourceTree = "<group>"; };
 		9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectPixelateControl.m; path = ccBuilder/EffectPixelateControl.m; sourceTree = "<group>"; };
 		9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectPixelateControl.xib; path = ccBuilder/EffectPixelateControl.xib; sourceTree = "<group>"; };
@@ -1593,7 +1589,6 @@
 		92B792C618C92C60007DF895 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPhysicsTwoBodyJoint.h; path = ccBuilder/CCBPhysicsTwoBodyJoint.h; sourceTree = "<group>"; };
 		92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPhysicsTwoBodyJoint.m; path = ccBuilder/CCBPhysicsTwoBodyJoint.m; sourceTree = "<group>"; };
-		92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
 		92B91021193412A600E346B5 /* InspectorAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorAnimation.xib; sourceTree = "<group>"; };
 		92B91024193413F500E346B5 /* InspectorAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorAnimation.h; sourceTree = "<group>"; };
 		92B91025193413F500E346B5 /* InspectorAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorAnimation.m; sourceTree = "<group>"; };
@@ -1605,6 +1600,17 @@
 		92CAC1C7195A4C6C0035EA39 /* EffectGlowControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectGlowControl.h; path = ccBuilder/EffectGlowControl.h; sourceTree = "<group>"; };
 		92CAC1C8195A4C6C0035EA39 /* EffectGlowControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectGlowControl.m; path = ccBuilder/EffectGlowControl.m; sourceTree = "<group>"; };
 		92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectGlowControl.xib; path = ccBuilder/EffectGlowControl.xib; sourceTree = "<group>"; };
+		92CD1C121965D745002BF2DE /* EffectBloomControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectBloomControl.h; path = ccBuilder/EffectBloomControl.h; sourceTree = "<group>"; };
+		92CD1C131965D745002BF2DE /* EffectBloomControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectBloomControl.m; path = ccBuilder/EffectBloomControl.m; sourceTree = "<group>"; };
+		92CD1C141965D745002BF2DE /* EffectBloomControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBloomControl.xib; path = ccBuilder/EffectBloomControl.xib; sourceTree = "<group>"; };
+		92CD1C171965D809002BF2DE /* CCBPEffectBloom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectBloom.h; path = ccBuilder/CCBPEffectBloom.h; sourceTree = "<group>"; };
+		92CD1C181965D809002BF2DE /* CCBPEffectBloom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBloom.m; path = ccBuilder/CCBPEffectBloom.m; sourceTree = "<group>"; };
+		92CD1C1A1965D824002BF2DE /* CCBPEffectPixelate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectPixelate.h; path = ccBuilder/CCBPEffectPixelate.h; sourceTree = "<group>"; };
+		92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectPixelate.m; path = ccBuilder/CCBPEffectPixelate.m; sourceTree = "<group>"; };
+		92CD1C1C1965D824002BF2DE /* EffectBrightnessControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectBrightnessControl.h; path = ccBuilder/EffectBrightnessControl.h; sourceTree = "<group>"; };
+		92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectBrightnessControl.m; path = ccBuilder/EffectBrightnessControl.m; sourceTree = "<group>"; };
+		92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBrightnessControl.xib; path = ccBuilder/EffectBrightnessControl.xib; sourceTree = "<group>"; };
+		92CD1C1F1965D824002BF2DE /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CCBPhysicsJoint+Private.h"; path = "ccBuilder/CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
 		92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected.png"; sourceTree = "<group>"; };
 		92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected@2x.png"; sourceTree = "<group>"; };
 		92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-disconnected.png"; sourceTree = "<group>"; };
@@ -3785,10 +3791,10 @@
 		922EAC3F1958F2FB006F2D75 /* BrightnessEffect */ = {
 			isa = PBXGroup;
 			children = (
+				92CD1C1C1965D824002BF2DE /* EffectBrightnessControl.h */,
+				92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */,
+				92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */,
 				9266EE28195A1603006CBE81 /* effect-brightness.png */,
-				922EAC401958F342006F2D75 /* EffectBrightnessControl.h */,
-				922EAC411958F342006F2D75 /* EffectBrightnessControl.m */,
-				922EAC421958F342006F2D75 /* EffectBrightnessControl.xib */,
 				922EAC451958F41E006F2D75 /* CCBPEffectBrightness.h */,
 				922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */,
 			);
@@ -3824,9 +3830,9 @@
 		9266EE3A195A17AE006CBE81 /* Pixelate */ = {
 			isa = PBXGroup;
 			children = (
+				92CD1C1A1965D824002BF2DE /* CCBPEffectPixelate.h */,
+				92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */,
 				9266EE2D195A1695006CBE81 /* effect-pixelate.png */,
-				9266EE3B195A17D4006CBE81 /* CCBPEffectPixelate.h */,
-				9266EE3C195A17D4006CBE81 /* CCBPEffectPixelate.m */,
 				9266EE3E195A17EE006CBE81 /* EffectPixelateControl.h */,
 				9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */,
 				9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */,
@@ -3862,6 +3868,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				92CD1C0E1965D703002BF2DE /* Bloom */,
 				92CAC1C2195A4C310035EA39 /* Glow */,
 				9266EE3A195A17AE006CBE81 /* Pixelate */,
 				9266EE31195A176A006CBE81 /* Saturation */,
@@ -3914,14 +3921,6 @@
 			path = CCPhysicsSpringJoint;
 			sourceTree = "<group>";
 		};
-		92FFB857195DEC1100E9C96F /* AndroidPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				92FFB858195DEC1100E9C96F /* plugin_installer.py */,
-			);
-			path = AndroidPlugin;
-			sourceTree = "<group>";
-		};
 		92CAC1C2195A4C310035EA39 /* Glow */ = {
 			isa = PBXGroup;
 			children = (
@@ -3934,7 +3933,27 @@
 			);
 			name = Glow;
 			sourceTree = "<group>";
-		};		
+		};
+		92CD1C0E1965D703002BF2DE /* Bloom */ = {
+			isa = PBXGroup;
+			children = (
+				92CD1C171965D809002BF2DE /* CCBPEffectBloom.h */,
+				92CD1C181965D809002BF2DE /* CCBPEffectBloom.m */,
+				92CD1C121965D745002BF2DE /* EffectBloomControl.h */,
+				92CD1C131965D745002BF2DE /* EffectBloomControl.m */,
+				92CD1C141965D745002BF2DE /* EffectBloomControl.xib */,
+			);
+			name = Bloom;
+			sourceTree = "<group>";
+		};
+		92FFB857195DEC1100E9C96F /* AndroidPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				92FFB858195DEC1100E9C96F /* plugin_installer.py */,
+			);
+			path = AndroidPlugin;
+			sourceTree = "<group>";
+		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -4047,7 +4066,7 @@
 				922E8EFD18C13666008E1764 /* OutletDrawWindow.m */,
 				92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */,
 				92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */,
-				92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */,
+				92CD1C1F1965D824002BF2DE /* CCBPhysicsJoint+Private.h */,
 			);
 			name = Physics;
 			sourceTree = "<group>";
@@ -5999,7 +6018,6 @@
 				92F0961718F8855A00D47A94 /* inspector-body-goto.png in Resources */,
 				B759E4B81880B60B00E8166C /* logo-white.png in Resources */,
 				E3B4221D14E58C35004547D6 /* InspectorByte.xib in Resources */,
-				922EAC441958F342006F2D75 /* EffectBrightnessControl.xib in Resources */,
 				E3B4222214E58FEE004547D6 /* InspectorColor3.xib in Resources */,
 				9218DF2F1919B04D0033851E /* joint-pivot-mode-l-on.png in Resources */,
 				9218DF351919B04D0033851E /* joint-pivot-handle-max.png in Resources */,
@@ -6130,6 +6148,7 @@
 				E3DFA7CE15ACA0CD005D3B6F /* frame-android-small.png in Resources */,
 				922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */,
 				E3DFA7CF15ACA0CD005D3B6F /* frame-android-xsmall.png in Resources */,
+				92CD1C161965D745002BF2DE /* EffectBloomControl.xib in Resources */,
 				E3E2704815B18CF500287470 /* TB_play.png in Resources */,
 				9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */,
 				E3E2704915B18CF500287470 /* TB_stop.png in Resources */,
@@ -6240,6 +6259,7 @@
 				B7AC69B417A1A2040041B8BD /* header-bg2-crop.png in Resources */,
 				B72D1DC0186125E80091252F /* Requirements.plist in Resources */,
 				B7AC69C917A70A4B0041B8BD /* inspector-codeconnections.png in Resources */,
+				92CD1C221965D824002BF2DE /* EffectBrightnessControl.xib in Resources */,
 				92D9D48318F8AB3800F167C1 /* joint-connection-disconnected@2x.png in Resources */,
 				926D13C918B5778300582959 /* joint-distance-slide@2x.png in Resources */,
 				926D13CB18B5778300582959 /* joint-distance@2x.png in Resources */,
@@ -6608,6 +6628,7 @@
 				80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */,
 				80FBACC31833FAE000C4BB69 /* WarningTableView.m in Sources */,
 				80FBACC41833FAE000C4BB69 /* WarningTableViewHandler.m in Sources */,
+				92CD1C201965D824002BF2DE /* CCBPEffectPixelate.m in Sources */,
 				830F4E81192DF9D1002B832D /* NewPackageWindowController.m in Sources */,
 				921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */,
 				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
@@ -6618,7 +6639,6 @@
 				772BE572133E48350009B5B9 /* CCBGlobals.m in Sources */,
 				772BE5801343A6EF0009B5B9 /* CCBWriterInternal.m in Sources */,
 				772BE58E134BB6C00009B5B9 /* CCBDocument.m in Sources */,
-				922EAC431958F342006F2D75 /* EffectBrightnessControl.m in Sources */,
 				772BE594134BC2BF0009B5B9 /* CCBReaderInternalV1.m in Sources */,
 				771B2B321353818200B260BA /* NewDocWindowController.m in Sources */,
 				77156DB1137F0351005EF746 /* CCBSpriteSheetParser.m in Sources */,
@@ -6628,7 +6648,6 @@
 				77E1992213858D78006C361B /* PSMMetalTabStyle.m in Sources */,
 				77E1992313858D78006C361B /* PSMOverflowPopUpButton.m in Sources */,
 				77E1992413858D78006C361B /* PSMProgressIndicator.m in Sources */,
-				92CAC1C6195A4C540035EA39 /* CCBPEffectGlow.m in Sources */,
 				928696201958950100402DD8 /* InspectorEffectControl.m in Sources */,
 				77E1992513858D78006C361B /* PSMRolloverButton.m in Sources */,
 				77E1992613858D78006C361B /* PSMTabBarCell.m in Sources */,
@@ -6668,7 +6687,6 @@
 				E3B4222014E58C75004547D6 /* InspectorByte.m in Sources */,
 				E3B4222514E59035004547D6 /* InspectorColor3.m in Sources */,
 				E3B4222A14E59F5D004547D6 /* InspectorFlip.m in Sources */,
-				9266EE3D195A17D4006CBE81 /* CCBPEffectPixelate.m in Sources */,
 				5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */,
 				E3B4222F14E5A849004547D6 /* InspectorBlendmode.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
@@ -6714,6 +6732,7 @@
 				E3F3F843153C7700005443EE /* StickyNote.m in Sources */,
 				E35A2D9C1540207000F78B72 /* PositionPropertySetter.m in Sources */,
 				E3EDBC101546D23000EEF1F3 /* ResolutionSetting.m in Sources */,
+				92CD1C151965D745002BF2DE /* EffectBloomControl.m in Sources */,
 				E3EDBC1415483E3200EEF1F3 /* ResolutionSettingsWindow.m in Sources */,
 				E3EDBC251549971000EEF1F3 /* CCBFileUtil.m in Sources */,
 				E334069B1551725F000FBD0B /* InspectorFloatScale.m in Sources */,
@@ -6749,6 +6768,7 @@
 				E3FD4DD315A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m in Sources */,
 				E3FD4DDF15A455B90032C2DD /* SequencerSequenceArrayController.m in Sources */,
 				B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */,
+				92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */,
 				E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */,
 				E35A136015B038D700C9AA15 /* ThoMoNetworkStub.m in Sources */,
 				E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */,
@@ -6805,6 +6825,7 @@
 				B7AC6982179F50850041B8BD /* BFPopoverColorWell.m in Sources */,
 				B7AC6983179F50850041B8BD /* NSColor+BFColorPickerPopover.m in Sources */,
 				B7AC6984179F50850041B8BD /* NSColorPanel+BFColorPickerPopover.m in Sources */,
+				92CD1C191965D809002BF2DE /* CCBPEffectBloom.m in Sources */,
 				B7AC6985179F50850041B8BD /* NSColorWell+BFColorPickerPopover.m in Sources */,
 				B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */,
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
@@ -6838,7 +6859,6 @@
 				E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */,
 				E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */,
 				E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */,
-				92CAC1CA195A4C6C0035EA39 /* EffectGlowControl.m in Sources */,
 				E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */,
 				E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */,
 				92B91026193413F500E346B5 /* InspectorAnimation.m in Sources */,
