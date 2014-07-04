@@ -71,7 +71,7 @@
 		effectDescription.description = @"Makes things pixelate";
 		effectDescription.imageName = @"effect-pixelate.png";
 		effectDescription.className = NSStringFromClass([CCBPEffectPixelate class]);
-		effectDescription.baseClass = @"CCEffectPixelate";
+		effectDescription.baseClass = @"CCEffectPixellate";
 		effectDescription.viewController = NSStringFromClass([EffectPixelateControl class]);
 		[effectDescriptions addObject:effectDescription];
 	}

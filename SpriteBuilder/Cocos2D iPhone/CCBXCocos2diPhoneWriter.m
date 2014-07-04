@@ -554,6 +554,9 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     }
 	else if([type isEqualToString:@"EffectControl"])
 	{
+		NSArray * propArray = (NSArray*)prop;
+		[self writeInt:propArray.count withSign:NO];
+
 		for (NSDictionary * effectDescription in prop) {
 
 			[self writeEffect:effectDescription];
@@ -605,17 +608,13 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 		else
 		{
 			NSAssert(false, @"Failed to write generic property type: %@", propKey);
-			
 		}
 		[self writeProperty:value type:type name:propKey platform:nil];
-
-		
 	}
 	else
 	{
 		NSAssert(false, @"Failed to write generic property type: %@", propKey);
 	}
-
 }
 
 -(void)cacheStringsForJoints:(NSArray*)joints
