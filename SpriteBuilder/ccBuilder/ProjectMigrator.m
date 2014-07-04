@@ -38,7 +38,7 @@
     {
         [_packageMigrator rollback];
 
-        [NSAlert showModalDialogWithTitle:@"Error migrating" message:error.localizedDescription];
+        [NSAlert showModalDialogWithTitle:@"Error migrating" htmlBodyText:error.localizedDescription];
 
         return NO;
     }

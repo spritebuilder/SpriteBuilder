@@ -13,6 +13,7 @@
 #import "RemoveFileCommand.h"
 #import "NSError+SBErrors.h"
 #import "SBErrors.h"
+#import "NSAlert+Convenience.h"
 
 
 NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
@@ -60,6 +61,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         return YES;
     }
 
+    *error = [self standardError];
+    return NO;
+
     [self logMigrationStep:@"Starting..."];
 
     [self backupResourcePaths];
@@ -91,12 +95,14 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (NSError *)standardError
 {
-    NSString *message = [NSString stringWithFormat:
-                                          @"Migration of project to packages format failed. "
-                                          @"The different migration steps have been rolled back. "
-                                          @"Project will be opened as usual, however you can help us by creating an issue on github and posting the content of the log, see below. "
-                                          @"Please have a look at the system log and search for %@. "
-                                          @"You can use the Console app to view and search the system log.", PACKAGES_LOG_HASHTAG];
+    NSString *message = [NSString stringWithFormat:@
+            "Migration of project to new packages structure failed. "
+            "<b>The different migration steps have been rolled back.</b><br/><br/> "
+            "The project will be opened as usual, however you can help us by creating an <a href=\"https://github.com/spritebuilder/SpriteBuilder/issues/new\">issue on github</a> and posting the content of the log, see below. "
+            "You can use the <a href=\"file:///Applications/Utilities/Console.app\">Console app</a> to view the system log. "
+            "Search for <b>%@.</b><br/><br/> "
+            "There is more information about package migration on the <a href=\"%@\">forums.</a> "
+            , @"link", PACKAGES_LOG_HASHTAG];
 
     return [NSError errorWithDomain:SBErrorDomain
                                code:SBMigrationError
