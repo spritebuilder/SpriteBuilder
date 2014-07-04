@@ -111,7 +111,17 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)needsMigration
 {
-    return YES;
+    for (NSMutableDictionary *dict in _projectSettings.resourcePaths)
+    {
+        NSString *fullPath = [_projectSettings fullPathForResourcePathDict:dict];
+
+        if (![fullPath hasPackageSuffix]
+            || ![_projectSettings isPathInPackagesFolder:fullPath])
+        {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)backupResourcePaths
