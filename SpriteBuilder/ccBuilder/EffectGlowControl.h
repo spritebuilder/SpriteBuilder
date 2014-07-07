@@ -9,6 +9,7 @@
 #import "EffectViewController.h"
 #import "CCBPEffectGlow.h"
 
+@class CCBPEffectGlow;
 @interface EffectGlowControl : EffectViewController
 @property (nonatomic) CCBPEffectGlow * effect;
 @end

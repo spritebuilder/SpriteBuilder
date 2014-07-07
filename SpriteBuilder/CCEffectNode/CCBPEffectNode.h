@@ -10,6 +10,8 @@
 #import "CCEffectNode.h"
 #import "CCEffect.h"
 
+
+
 @protocol CCEffectNodeProtocol <NSObject>
 @required
 @property (nonatomic,readonly) NSArray * effectDescriptors;
@@ -20,7 +22,7 @@
 
 @end
 
-
+#ifdef SB_EFFECTS_ENABLED
 
 @interface CCBPEffectNode : CCEffectNode <CCEffectNodeProtocol>
 {
@@ -28,4 +30,9 @@
 }
 
 @property (nonatomic) NSArray * effects;
+
+
+
 @end
+
+#endif

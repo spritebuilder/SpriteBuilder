@@ -10,6 +10,7 @@
 #import "CCBPEffectBrightness.h"
 #import "EffectViewController.h"
 
+@class CCBPEffectBrightness;
 @interface EffectBrightnessControl : EffectViewController
-@property (nonatomic) CCBPEffectBrightness * effect;
+@property (nonatomic) CCBPEffectBrightness<EffectProtocol> * effect;
 @end

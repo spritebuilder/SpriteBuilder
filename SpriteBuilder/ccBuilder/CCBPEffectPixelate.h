@@ -9,6 +9,8 @@
 #import "CCEffectPixellate.h"
 #import "EffectsManager.h"
 
+#ifdef SB_EFFECTS_ENABLED
 @interface CCBPEffectPixelate : CCEffectPixellate <EffectProtocol>
 
 @end
+#endif

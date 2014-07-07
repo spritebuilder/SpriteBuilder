@@ -8,6 +8,7 @@
 
 #import "CCBPEffectPixelate.h"
 
+#ifdef SB_EFFECTS_ENABLED
 @implementation CCBPEffectPixelate
 
 
@@ -36,3 +37,4 @@
 
 
 @end
+#endif

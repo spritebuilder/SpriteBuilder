@@ -10,6 +10,8 @@
 #import "CCEffectStack.h"
 #import "NSArray+Query.h"
 
+#ifdef SB_EFFECTS_ENABLED
+
 @interface CCBPEffectNode()
 
 @end
@@ -82,3 +84,5 @@
 }
 
 @end
+
+#endif

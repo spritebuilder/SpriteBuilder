@@ -9,6 +9,7 @@
 #import "EffectViewController.h"
 #import "CCBPEffectPixelate.h"
 
+@class CCBPEffectPixelate;
 @interface EffectPixelateControl : EffectViewController
 @property (nonatomic) CCBPEffectPixelate * effect;
 @end

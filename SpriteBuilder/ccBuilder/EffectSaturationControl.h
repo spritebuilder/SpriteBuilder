@@ -9,6 +9,7 @@
 #import "EffectViewController.h"
 #import "CCBPEffectSaturation.h"
 
+@class CCBPEffectSaturation;
 @interface EffectSaturationControl : EffectViewController
 @property (nonatomic) CCBPEffectSaturation * effect;
 @end

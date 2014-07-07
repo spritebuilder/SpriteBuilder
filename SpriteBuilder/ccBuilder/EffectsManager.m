@@ -41,7 +41,9 @@
 {
 	
 	NSMutableArray * effectDescriptions = [NSMutableArray new];
-	
+
+#ifdef SB_EFFECTS_ENABLED
+		
 	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Brightness";
@@ -111,6 +113,8 @@
 		[effectDescriptions addObject:effectDescription];
 	}
 	 */
+	
+#endif
 
 	return effectDescriptions;
 }

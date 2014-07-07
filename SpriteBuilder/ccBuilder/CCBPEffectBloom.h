@@ -8,6 +8,8 @@
 #import "EffectsManager.h"
 #import "CCEffectBloom.h"
 
+#ifdef SB_EFFECTS_ENABLED
 @interface CCBPEffectBloom : CCEffectBloom <EffectProtocol>
 
 @end
+#endif

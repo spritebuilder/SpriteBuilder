@@ -9,6 +9,7 @@
 #import "EffectViewController.h"
 #import "CCBPEffectContrast.h"
 
+@class CCBPEffectContrast;
 @interface EffectContrastControl : EffectViewController
-@property (nonatomic) CCBPEffectContrast * effect;
+@property (nonatomic) CCBPEffectContrast<EffectProtocol> * effect;
 @end

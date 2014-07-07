@@ -9,8 +9,8 @@
 #import "CCBPEffectSaturation.h"
 #import "EffectsManager.h"
 
+#ifdef SB_EFFECTS_ENABLED
 @implementation CCBPEffectSaturation
-
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
@@ -35,3 +35,4 @@
 
 
 @end
+#endif

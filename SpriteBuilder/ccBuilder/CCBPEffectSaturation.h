@@ -9,7 +9,9 @@
 #import "EffectsManager.h"
 #import "CCEffectSaturation.h"
 
+#ifdef SB_EFFECTS_ENABLED
 @interface CCBPEffectSaturation : CCEffectSaturation <EffectProtocol>
 @property (nonatomic,readonly) EffectDescription * effectDescription;
 
 @end
+#endif
