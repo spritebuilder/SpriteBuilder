@@ -106,6 +106,7 @@
     [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"packages"]]];
 }
 
+
 - (void)testWithExistingPackagesFolderAndANotInProjectPackageFolderInside
 {
     [self createFolders:@[@"sprites"]];

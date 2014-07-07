@@ -61,7 +61,7 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)publishSpriteSheet
 {
-    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [[_subPath stringByAppendingPathExtension:@"plist"] lastPathComponent]]];
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [_subPath lastPathComponent]]];
 
     [self loadSettings];
 
@@ -73,7 +73,15 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
     [self processWarnings];
 
-    [CCBFileUtil setModificationDate:_srcSpriteSheetDate forFile:[_spriteSheetFile stringByAppendingPathExtension:@"plist"]];
+    [self setDateForCreatedFiles:createdFiles];
+}
+
+- (void)setDateForCreatedFiles:(NSArray *)createFiles
+{
+    for (NSString *filePath in createFiles)
+    {
+        [CCBFileUtil setModificationDate:_srcSpriteSheetDate forFile:filePath];
+    }
 }
 
 - (void)addCreatedPNGFilesToCreatedFilesSet:(NSArray *)createdFiles

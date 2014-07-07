@@ -34,6 +34,7 @@
 #import "SBErrors.h"
 #import "ResourceTypes.h"
 #import "NSError+SBErrors.h"
+#import "MiscConstants.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -403,7 +404,7 @@
 - (void)removeIntermediateFileLookupFile:(RMResource *)res
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *intermediateFileLookup = [res.filePath stringByAppendingPathComponent:@"intermediateFileLookup.plist"];
+    NSString *intermediateFileLookup = [res.filePath stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
     if ([fileManager fileExistsAtPath:intermediateFileLookup])
     {
         NSError *error;

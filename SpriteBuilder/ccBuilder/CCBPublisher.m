@@ -47,6 +47,8 @@
 #import "PublishSpriteKitSpriteSheetOperation.h"
 #import "PublishingTaskStatusProgress.h"
 #import "PublishLogging.h"
+#import "MiscConstants.h"
+#import "PublishIntermediateFilesLookup.h"
 
 @interface CCBPublisher ()
 
@@ -103,7 +105,7 @@
 {
     for (NSString* resolution in _publishForResolutions)
     {
-        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution fileLookup:fileLookup];
+        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution intermediateProduct:NO fileLookup:fileLookup];
 	}
 
     return YES;
@@ -114,6 +116,7 @@
            isSpriteSheet:(BOOL)isSpriteSheet
                outputDir:(NSString *)outputDir
               resolution:(NSString *)resolution
+     intermediateProduct:(BOOL)intermediateProduct
               fileLookup:(id<PublishFileLookupProtocol>)fileLookup
 {
     PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:_projectSettings
@@ -127,6 +130,7 @@
     operation.resolution = resolution;
     operation.targetType = _targetType;
     operation.modifiedFileDateCache = _modifiedDatesCache;
+    operation.intermediateProduct = intermediateProduct;
     operation.publishedPNGFiles = _publishedPNGFiles;
     operation.fileLookup = fileLookup;
 
@@ -438,7 +442,7 @@
 	{
 		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
 
-        NSString *intermediateFileLookupPath = [publishDirectory  stringByAppendingPathComponent:@"intermediateFileLookup.plist"];
+        NSString *intermediateFileLookupPath = [publishDirectory  stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
 		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
@@ -468,6 +472,7 @@
             {
                 [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@", spriteSheetName, resolution]];
             }
+            [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:intermediateFileLookupPath];
         }];
 	}
 }
@@ -523,6 +528,7 @@
                      isSpriteSheet:NO
                          outputDir:outputDir
                         resolution:resolution
+               intermediateProduct:YES
                         fileLookup:fileLookup];
         }
     }
@@ -549,7 +555,7 @@
 	
 	for (NSString* resolution in _publishForResolutions)
 	{
-        NSString *intermediateFileLookupPath = [publishDirectory stringByAppendingPathComponent:@"intermediateFileLookup.plist"];
+        NSString *intermediateFileLookupPath = [publishDirectory stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
         // Note: these lookups are written as intermediate products to generate the final fileLookup.plist

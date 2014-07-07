@@ -1,6 +1,7 @@
 #import "NSString+Publishing.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
+#import "MiscConstants.h"
 
 
 @implementation NSString (Publishing)
@@ -62,8 +63,6 @@
             {
 				fileDate = [CCBFileUtil modificationDateForFile:absFile];
             }
-
-            NSLog(@"--> %@ - %@", fileDate, absFile);
 
             if ([fileDate compare:latestDate] == NSOrderedDescending)
             {
@@ -170,7 +169,7 @@
 
 - (BOOL)isIntermediateFileLookup
 {
-    return [self isEqualToString:@"intermediateFileLookup.plist"];
+    return [self isEqualToString:INTERMEDIATE_FILE_LOOKUP_NAME];
 }
 
 @end

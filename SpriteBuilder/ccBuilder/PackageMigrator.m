@@ -61,9 +61,6 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         return YES;
     }
 
-    *error = [self standardError];
-    return NO;
-
     [self logMigrationStep:@"Starting..."];
 
     [self backupResourcePaths];
