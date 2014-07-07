@@ -5,7 +5,6 @@
 @class DateCache;
 @class CCBPublisher;
 @class FCFormatConverter;
-@class PublishRenamedFilesLookup;
 @protocol PublishFileLookupProtocol;
 
 @interface PublishImageOperation : PublishBaseOperation
@@ -22,5 +21,7 @@
 @property (nonatomic) CCBPublisherTargetType targetType;
 
 @property (nonatomic, strong) DateCache *modifiedFileDateCache;
+
+@property (nonatomic) BOOL intermediateProduct;
 
 @end
