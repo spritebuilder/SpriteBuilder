@@ -64,6 +64,7 @@
 									<object class="NSLocale" key="locale">
 										<string key="NS.identifier"/>
 									</object>
+									<real value="1" key="minimum"/>
 									<string key="negativeInfinitySymbol">-∞</string>
 									<string key="nilSymbol"/>
 									<integer value="1" key="numberStyle"/>
@@ -81,7 +82,8 @@
 									<string key="NSString">NaN</string>
 									<dictionary key="NSAttributes"/>
 								</object>
-								<object class="NSDecimalNumberPlaceholder" key="NS.min" id="1043460659">
+								<real value="1" key="NS.min"/>
+								<object class="NSDecimalNumberPlaceholder" key="NS.max">
 									<int key="NS.exponent">0</int>
 									<int key="NS.length">0</int>
 									<bool key="NS.negative">YES</bool>
@@ -89,7 +91,6 @@
 									<int key="NS.mantissa.bo">1</int>
 									<bytes key="NS.mantissa">AAAAAAAAAAAAAAAAAAAAAA</bytes>
 								</object>
-								<reference key="NS.max" ref="1043460659"/>
 								<object class="NSDecimalNumberHandler" key="NS.rounding">
 									<int key="NS.roundingmode">3</int>
 									<bool key="NS.raise.overflow">YES</bool>
@@ -617,7 +618,7 @@
 				<boolean value="NO" key="26.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="1041" key="28.IBNumberFormatterBehaviorMetadataKey"/>
+				<integer value="1040" key="28.IBNumberFormatterBehaviorMetadataKey"/>
 				<boolean value="YES" key="28.IBNumberFormatterLocalizesFormatMetadataKey"/>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

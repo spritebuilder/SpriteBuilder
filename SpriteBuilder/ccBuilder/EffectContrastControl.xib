@@ -61,9 +61,9 @@
 								<dictionary class="NSMutableDictionary" key="NS.attributes">
 									<boolean value="YES" key="allowsFloats"/>
 									<integer value="1040" key="formatterBehavior"/>
-									<object class="NSLocale" key="locale">
-										<string key="NS.identifier"/>
-									</object>
+									<boolean value="NO" key="lenient"/>
+									<real value="1" key="maximum"/>
+									<real value="-1" key="minimum"/>
 									<string key="negativeInfinitySymbol">-∞</string>
 									<string key="nilSymbol"/>
 									<integer value="1" key="numberStyle"/>
@@ -81,15 +81,8 @@
 									<string key="NSString">NaN</string>
 									<dictionary key="NSAttributes"/>
 								</object>
-								<object class="NSDecimalNumberPlaceholder" key="NS.min" id="868474281">
-									<int key="NS.exponent">0</int>
-									<int key="NS.length">0</int>
-									<bool key="NS.negative">YES</bool>
-									<bool key="NS.compact">NO</bool>
-									<int key="NS.mantissa.bo">1</int>
-									<bytes key="NS.mantissa">AAAAAAAAAAAAAAAAAAAAAA</bytes>
-								</object>
-								<reference key="NS.max" ref="868474281"/>
+								<real value="-1" key="NS.min"/>
+								<real value="1" key="NS.max"/>
 								<object class="NSDecimalNumberHandler" key="NS.rounding">
 									<int key="NS.roundingmode">3</int>
 									<bool key="NS.raise.overflow">YES</bool>
@@ -99,7 +92,7 @@
 								<string key="NS.decimal">.</string>
 								<string key="NS.thousand">,</string>
 								<bool key="NS.hasthousands">YES</bool>
-								<bool key="NS.localized">NO</bool>
+								<bool key="NS.localized">YES</bool>
 								<bool key="NS.allowsfloats">YES</bool>
 							</object>
 							<string key="NSCellIdentifier">_NS:9</string>
@@ -610,7 +603,7 @@
 				<boolean value="NO" key="21.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<integer value="1041" key="23.IBNumberFormatterBehaviorMetadataKey"/>
+				<integer value="1040" key="23.IBNumberFormatterBehaviorMetadataKey"/>
 				<boolean value="YES" key="23.IBNumberFormatterLocalizesFormatMetadataKey"/>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -640,7 +633,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">77</int>
+			<int key="maxID">83</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
