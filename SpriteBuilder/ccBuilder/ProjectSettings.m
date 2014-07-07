@@ -211,7 +211,13 @@
     self.publishEnvironment = [[dict objectForKey:@"publishEnvironment"] integerValue];
 
     self.resourceProperties = [[dict objectForKey:@"resourceProperties"] mutableCopy];
-    
+
+    self.excludedFromPackageMigration = [[dict objectForKey:@"excludedFromPackageMigration"] boolValue];
+    if (!self.excludedFromPackageMigration)
+    {
+        self.excludedFromPackageMigration = NO;
+    }
+
     [self detectBrowserPresence];
 
     [self initializeVersionStringWithProjectDict:dict];
@@ -288,6 +294,8 @@
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
 
     [dict setObject:[NSNumber numberWithInt:self.publishEnvironment] forKey:@"publishEnvironment"];
+
+    [dict setObject:[NSNumber numberWithInt:self.excludedFromPackageMigration] forKey:@"excludedFromPackageMigration"];
 
     if (_resourceProperties)
     {

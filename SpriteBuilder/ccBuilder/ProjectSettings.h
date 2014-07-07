@@ -147,7 +147,9 @@ typedef enum
 
 // *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
-@property (nonatomic) NSMutableArray *cocos2dUpdateIgnoredVersions;
+
+@property (nonatomic, strong) NSMutableArray *cocos2dUpdateIgnoredVersions;
+@property (nonatomic) BOOL excludedFromPackageMigration;
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;

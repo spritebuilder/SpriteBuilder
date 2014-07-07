@@ -234,6 +234,7 @@
       @"deviceOrientationLandscapeRight":@(YES),
       @"onlyPublishCCBs":@(NO),
       @"deviceScaling":@(0),
+      @"excludedFromPackageMigration":@(YES),
       @"designTarget":@(0),
       @"cocos@(2)dUpdateIgnoredVersions":@[],
       @"engine":@(0)
@@ -281,6 +282,8 @@
     XCTAssertFalse(project.publishToZipFile);
     XCTAssertEqual(project.publishEnvironment, PublishEnvironmentDevelop);
 
+    XCTAssertTrue(project.excludedFromPackageMigration);
+
     NSNumber *scaleFrom = [project valueForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:@"scaleFrom"];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
 }
@@ -309,10 +312,11 @@
     XCTAssertEqual(project.publishAudioQuality_ios, 1);
     SBAssertStringsEqual(project.publishDirectory, @"");
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"");
+    XCTAssertFalse(project.excludedFromPackageMigration);
 }
 
-// This test exists to ensure noone changes values by mistake that are persisted and have to
-// be migrated with more effort to fix this change
+// This test exists to ensure noone changes enum values by mistake that are persisted and have to
+// be migrated with more effort to fix this change later on
 - (void)testEnums
 {
     XCTAssertEqual(PublishEnvironmentDevelop, 0);
