@@ -8,4 +8,8 @@
 // Helps to add hyperlinks and text formatting.
 + (void)showModalDialogWithTitle:(NSString *)title htmlBodyText:(NSString *)htmlBodyText;
 
+// Same as showModalDialogWithTitle:htmlBodyText but does not show the alert modally,
+// instead it is returned
++ (NSAlert *)alertWithTitle:(NSString *)title htmlBodyText:(NSString *)htmlBodyText;
+
 @end
