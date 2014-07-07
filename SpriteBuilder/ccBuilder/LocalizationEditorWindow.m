@@ -311,7 +311,10 @@
  * progress information.
  */
 -(void)finishDownloadingTranslations{
-    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations=0;
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.isDownloadingTranslations = 0;
+    ps.numDownloaded = 0;
+    ps.numToDownload = 0;
     [_translationProgress setHidden:1];
     [_translationProgressText setHidden:1];
     [tableTranslations setEnabled:1];

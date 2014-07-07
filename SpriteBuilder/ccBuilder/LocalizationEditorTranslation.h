@@ -18,7 +18,7 @@
 
 @property (nonatomic,copy) NSString* key;
 @property (nonatomic,copy) NSString* comment;
-@property (nonatomic,copy) NSMutableArray* languagesDownloading;
+@property (nonatomic,strong) NSMutableArray* languagesDownloading;
 @property (nonatomic,readonly) NSMutableDictionary* translations;
 
 - (BOOL) hasTranslationsForLanguages:(NSArray*)languages;

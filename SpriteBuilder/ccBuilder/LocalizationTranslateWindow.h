@@ -74,4 +74,5 @@
 @property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
 @property (nonatomic,strong) NSString* guid;
 @property (nonatomic,strong) NSMutableDictionary* languages;
+@property (nonatomic,strong) NSMutableDictionary* receipts;
 @end
