@@ -8,6 +8,4 @@
 
 - (BOOL)migrate;
 
-- (void)rollback;
-
 @end
