@@ -12,3 +12,6 @@ extern NSInteger const SBParentDoesNotPermitSpecificChildrenError;
 extern NSInteger const SBCocos2dUpdateTemplateZipFileDoesNotExistError;
 extern NSInteger const SBCocos2dUpdateUnzipTemplateFailedError;
 extern NSInteger const SBCocos2dUpdateUnzipTaskError;
+
+//Downloading Language Translations Failed
+extern NSInteger const SBTranslationDownloadCancelledError;

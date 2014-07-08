@@ -12,6 +12,7 @@
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorWindow.h"
+#import "SBErrors.h"
 
 @implementation LocalizationTranslateWindow
 
@@ -31,7 +32,9 @@ static int downloadLangsErrorIndex = 5;
 static int paymentErrorIndex = 6;
 
 //URLs
-static NSString* const baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
+//TODO switch back to non test URL
+//static NSString* const baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
+static NSString* const baseURL = @"http://10.0.3.28/api/v1";
 static NSString* languageURL;
 static NSString* estimateURL;
 static NSString* receiptTranslationsURL;
@@ -49,9 +52,9 @@ static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%
 static double downloadRepeatInterval = 5;
 
 //Amount of server downtime allowed until download cancelled, in seconds
-static double serverTimeOut = 86400;
+static double serverTimeOut = 86400; //86400 = 24 hours
 
-//Number of intervals where the server has been unavailabel
+//Number of intervals where the server has been unavailable
 static int numTimedOutIntervals = 0;
 
 #pragma mark Initializing
@@ -84,7 +87,7 @@ static int numTimedOutIntervals = 0;
     [[_translateFromTabView tabViewItemAtIndex:downloadCostErrorIndex] setView:_downloadingCostsErrorView];
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
     [[_translateFromTabView tabViewItemAtIndex:paymentErrorIndex] setView:_paymentErrorView];
-    [self disableAll];
+    [self disableAllExceptButtons];
     [self getLanguagesFromServer];
     
 }
@@ -102,8 +105,8 @@ static int numTimedOutIntervals = 0;
     self.guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     self.languages = [[NSMutableDictionary alloc] init];
     self.receipts = [[NSMutableDictionary alloc] init];
-    self.buyAlert = [NSAlert alertWithMessageText:@"Long Translation Download Time" defaultButton:@"Continue Download..." alternateButton:@"Cancel Download" otherButton:NULL informativeTextWithFormat:@"The average wait is 30 minutes, but translation downloads can sometimes take days. These downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified. However, projects can be closed, opened and modified, and SpriteBuilder can be quit and reopened without cancelling your download."];
-    [self.buyAlert setShowsSuppressionButton:1];
+    self.buyAlert = [NSAlert alertWithMessageText:@"Long Translation Download Time" defaultButton:@"Continue Download..." alternateButton:@"Cancel Download" otherButton:NULL informativeTextWithFormat:@"The average translation download wait is 30 minutes, but translation downloads can sometimes take days. These downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified. However, projects can be closed, opened and modified, and SpriteBuilder can be quit and reopened without affecting your download."];
+    [self.buyAlert setShowsSuppressionButton:YES];
 }
 
 #pragma mark Downloading and Updating Languages
@@ -148,13 +151,12 @@ static int numTimedOutIntervals = 0;
  * displayed.
  */
 -(void)parseJSONLanguages:(NSData *)data{
-    NSError *JSONerror;
+    NSError *JSONError;
     NSMutableDictionary* availableLanguagesDict = [NSJSONSerialization JSONObjectWithData:data
-                                                                                  options:NSJSONReadingMutableContainers error:&JSONerror];
-    if(JSONerror || [[[availableLanguagesDict allKeys] firstObject] isEqualToString:@"Error"])
+                                                                                  options:NSJSONReadingMutableContainers error:&JSONError];
+    if(JSONError || [[[availableLanguagesDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"Languages JSONError: %@", JSONerror.localizedDescription] :
-              [NSString stringWithFormat:@"Languages Error: %@", [availableLanguagesDict objectForKey:@"Error"]]);
+        [self printJSONOrNormalError:JSONError Error:[availableLanguagesDict objectForKey:@"Error"]];
         [_languagesDownloading stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:downloadLangsErrorIndex];
         return;
@@ -206,7 +208,7 @@ static int numTimedOutIntervals = 0;
         LocalizationEditorLanguage* l = [_activeLanguages objectAtIndex:0];
         _currLang = l;
         _popTranslateFrom.title = l.name;
-        [self enableAll];
+        [self enableAllExceptButtons];
         [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
         [self updateLanguageSelectionMenu:0];
     }
@@ -282,12 +284,14 @@ static int numTimedOutIntervals = 0;
  * localized price.
  */
 -(void)getCostEstimate{
+    [self disableAllExceptButtons];
     [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
     NSInteger phrases = [self updatePhrasesToTranslate];
     if(phrases == 0)
     {
         _cost.stringValue = _numWords.stringValue = @"0";
         [_buy setEnabled:0];
+        [self enableAllExceptButtons];
         return;
     }
     [_costDownloading setHidden:0];
@@ -297,10 +301,6 @@ static int numTimedOutIntervals = 0;
                                  _guid,@"key",
                                  _phrasesToTranslate,@"phrases",
                                  nil];
-    if(![NSJSONSerialization isValidJSONObject:JSONObject])
-    {
-        NSLog(@"Not a JSON Object!!!");
-    }
      NSError *error;
      NSData *postdata = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
     if(error)
@@ -326,6 +326,7 @@ static int numTimedOutIntervals = 0;
                                            }
                                            else
                                            {
+                                               [self enableAllExceptButtons];
                                                [_costDownloading stopAnimation:self];
                                                [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
                                            }
@@ -333,6 +334,7 @@ static int numTimedOutIntervals = 0;
                                        }
                                        else
                                        {
+                                           [self enableAllExceptButtons];
                                            [_costDownloading stopAnimation:self];
                                            [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
                                            NSLog(@"Estimate Error: %@", error.localizedDescription);
@@ -421,8 +423,8 @@ static int numTimedOutIntervals = 0;
     NSDictionary* dataDict  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&JSONerror];
     if(JSONerror || [[[dataDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"JSONError: %@", JSONerror.localizedDescription] :
-              [NSString stringWithFormat:@"Error: %@", [dataDict objectForKey:@"Error"]]);
+        [self printJSONOrNormalError:JSONerror Error:[dataDict objectForKey:@"Error"]];
+        [self enableAllExceptButtons];
         [_costDownloading stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
         return;
@@ -468,14 +470,11 @@ static int numTimedOutIntervals = 0;
         SKPaymentQueue* defaultQueue = [SKPaymentQueue defaultQueue];
         [defaultQueue removeTransactionObserver:self];
         [defaultQueue addTransactionObserver:self];
-        NSLog(@"+1 TO");
         SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
         [defaultQueue addPayment:payment];
         [_paymentValidating startAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:validatingPaymentIndex];
         [self disableAll];
-        [_buy setEnabled:0];
-        [_cancel setEnabled:0];
     }
 }
 
@@ -652,9 +651,10 @@ static int numTimedOutIntervals = 0;
  * If product request fails, say that the cost estimate failed.
  */
 -(void) request:(SKRequest *)request didFailWithError:(NSError *)error{
+    [self enableAllExceptButtons];
     [_costDownloading stopAnimation:self];
     [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
-    NSLog(@"Product Request Failed");
+    NSLog(@"Product Request Failed: %@", error.localizedDescription);
 }
 
 /*
@@ -666,6 +666,7 @@ static int numTimedOutIntervals = 0;
     for(NSString *invalidIdentifier in response.invalidProductIdentifiers)
     {
         [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
+        [self enableAllExceptButtons];
         [_costDownloading stopAnimation:self];
         NSLog(@"Invalid Identifier: %@",invalidIdentifier);
         return;
@@ -689,8 +690,6 @@ static int numTimedOutIntervals = 0;
             {
                 NSLog(@"Failed");
                 [self enableAll];
-                [_buy setEnabled:1];
-                [_cancel setEnabled:1];
                 [_paymentValidating stopAnimation:self];
                 [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
                 [queue finishTransaction:transaction];
@@ -708,6 +707,7 @@ static int numTimedOutIntervals = 0;
             }
             case SKPaymentTransactionStateRestored:
             {
+                NSLog(@"Restored - Shouldn't happen");
                 [queue finishTransaction:transaction];
                 break;
             }
@@ -725,11 +725,6 @@ static int numTimedOutIntervals = 0;
 -(void)validateReceipt:(NSString *)receipt{
     NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",receipt,@"receipt",_phrasesToTranslate,@"phrases",nil];
     NSError *error;
-    if(![NSJSONSerialization isValidJSONObject:JSONObject])
-    {
-        NSLog(@"Invalid JSON");
-        return;
-    }
     NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
     NSURL *url = [NSURL URLWithString:receiptTranslationsURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -754,8 +749,6 @@ static int numTimedOutIntervals = 0;
                                                   [handler setEdited];
                                               });
                                               [self enableAll];
-                                              [_buy setEnabled:1];
-                                              [_cancel setEnabled:1];
                                               [_paymentValidating stopAnimation:self];
                                               [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
                                           }
@@ -764,8 +757,6 @@ static int numTimedOutIntervals = 0;
                                       else
                                       {
                                           [self enableAll];
-                                          [_buy setEnabled:1];
-                                          [_cancel setEnabled:1];
                                           [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
                                           NSLog(@"Receipt Validation error: %@", error.localizedDescription);
                                       }
@@ -777,17 +768,14 @@ static int numTimedOutIntervals = 0;
  * JSON confirmation just gives latest request ID. Put that in the project settings.
  */
 -(int)parseJSONConfirmation:(NSData *)data{
-    NSError *JSONerror;;
+    NSError *JSONError;;
     NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
-                                                                    options:kNilOptions error:&JSONerror];
-    if(JSONerror || [[[initialTransDict allKeys] firstObject] isEqualToString:@"Error"])
+                                                                    options:kNilOptions error:&JSONError];
+    if(JSONError || [[[initialTransDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"Receipt Validation JSONError: %@", JSONerror.localizedDescription] :
-              [NSString stringWithFormat:@"Receipt Validation Error: %@", [initialTransDict objectForKey:@"Error"]]);
+        [self printJSONOrNormalError:JSONError Error:[initialTransDict objectForKey:@"Error"]];
         [self enableAll];
-        [_buy setEnabled:1];
-        [_cancel setEnabled:1];
         [_paymentValidating stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
         return -1;
@@ -869,7 +857,7 @@ static int numTimedOutIntervals = 0;
     NSError *JSONerror;
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
                                                                                   options:NSJSONReadingMutableContainers error:&JSONerror];
-    if(JSONerror)
+    if(JSONerror || [[[initialTransDict allKeys] firstObject] isEqualToString:@"Error"])
     {
         numTimedOutIntervals++;
         if(numTimedOutIntervals*downloadRepeatInterval >= serverTimeOut)
@@ -983,7 +971,7 @@ static int numTimedOutIntervals = 0;
     if(error)
     {
         JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",
-                                _latestRequestID,@"id",error,@"error",nil];
+                                _latestRequestID,@"id",error,@"server_error",SBTranslationDownloadCancelledError,@"SB_error",nil];
     }
     else
     {
@@ -991,11 +979,6 @@ static int numTimedOutIntervals = 0;
                       _latestRequestID,@"id",nil];
     }
     NSError *JSONError;
-    if(![NSJSONSerialization isValidJSONObject:JSONObject])
-    {
-        NSLog(@"Invalid JSON");
-        return;
-    }
     NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&JSONError];
     NSURL *url = [NSURL URLWithString:cancelURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -1024,6 +1007,14 @@ static int numTimedOutIntervals = 0;
 #pragma mark Misc. helper funcs
 
 /*
+ * This function uses a ternary operator! Thank you high school computer science!!
+ */
+- (void)printJSONOrNormalError:(NSError*)JSONError Error:(NSError*)error{
+    NSLog(@"%@", JSONError ? [NSString stringWithFormat:@"Languages JSONError: %@", JSONError.localizedDescription] :
+          [NSString stringWithFormat:@"Languages Error: %@", error]);
+}
+
+/*
  * Turns off the 'quick edit' option in the languages global dictionary
  * e.g. 'unchecks' them
  */
@@ -1042,7 +1033,7 @@ static int numTimedOutIntervals = 0;
  * Disable everything that can be disabled (except buy button since that is handled separately according to
  * availability of a cost estimate, and cancel, since that shouldn't usually/ever be disabled)
  */
--(void)disableAll{
+-(void)disableAllExceptButtons{
     [_popTranslateFrom setEnabled:0];
     [_languageTable setEnabled:0];
     [_checkAll setEnabled:0];
@@ -1050,8 +1041,33 @@ static int numTimedOutIntervals = 0;
 }
 
 /*
+ * Disable everything that can be disabled
+ */
+-(void)disableAll{
+    [_popTranslateFrom setEnabled:0];
+    [_languageTable setEnabled:0];
+    [_checkAll setEnabled:0];
+    [_ignoreText setEnabled:0];
+    [_cancel setEnabled:0];
+    [_buy setEnabled:0];
+}
+
+/*
  * Enable everything that can be enabled (except buy button since that is handled separately according to
  * availability of a cost estimate, and cancel, since that shouldn't usually/ever be disabled)
+ * Use on main queue because that makes it work.
+ */
+-(void)enableAllExceptButtons{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_popTranslateFrom setEnabled:1];
+        [_languageTable setEnabled:1];
+        [_checkAll setEnabled:1];
+        [_ignoreText setEnabled:1];
+    });
+}
+
+/*
+ * Enable everything that can be enabled
  * Use on main queue because that makes it work.
  */
 -(void)enableAll{
@@ -1060,6 +1076,8 @@ static int numTimedOutIntervals = 0;
         [_languageTable setEnabled:1];
         [_checkAll setEnabled:1];
         [_ignoreText setEnabled:1];
+        [_cancel setEnabled:1];
+        [_buy setEnabled:1];
     });
 }
 
@@ -1074,6 +1092,7 @@ static int numTimedOutIntervals = 0;
     [numberFormatter setLocale:p.priceLocale];
     NSString *formattedString = [numberFormatter stringFromNumber:p.price];
     _cost.stringValue = formattedString;
+    [self enableAllExceptButtons];
     [_costDownloading setHidden:1];
     [_costDownloadingText setHidden:1];
     [_costDownloading stopAnimation:self];
