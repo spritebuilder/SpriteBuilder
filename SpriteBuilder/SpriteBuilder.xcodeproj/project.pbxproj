@@ -100,11 +100,9 @@
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
 		7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */; };
-		7B5135C21947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */; };
 		7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */; };
-		7BCC1C0D194904190062DF38 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCC1C0C194904190062DF38 /* StoreKit.framework */; };
-		7BF55303193F8A7500183F09 /* LocalizationTranslateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */; };
-		7BF55307193F912200183F09 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
+		7BDECCD1196CBA2400F3EB11 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
+		7BDECCD4196CBA6100F3EB11 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */; };
 		80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E97F6318370F400052647D /* WarningCell.m */; };
 		8045F136183ADA900082BD94 /* seq-visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12C183AD6D30082BD94 /* seq-visible.png */; };
@@ -1289,10 +1287,9 @@
 		77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StageSizeWindow.m; sourceTree = "<group>"; };
 		7B3EF5D9195885F20023C169 /* LocalizationTranslateWindowHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindowHandler.h; sourceTree = "<group>"; };
 		7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindowHandler.m; sourceTree = "<group>"; };
-		7B5135C11947CC2500DE177D /* LocalizationInAppPurchasesPIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = LocalizationInAppPurchasesPIDs.plist; path = ../ccBuilder/LocalizationInAppPurchasesPIDs.plist; sourceTree = "<group>"; };
 		7B88AD45195A4846001BF73C /* LocalizationEditorTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorTextFieldCell.h; sourceTree = "<group>"; };
 		7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTextFieldCell.m; sourceTree = "<group>"; };
-		7BCC1C0C194904190062DF38 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationTranslateWindow.xib; sourceTree = "<group>"; };
 		7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindow.h; sourceTree = "<group>"; };
 		7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindow.m; sourceTree = "<group>"; };
@@ -2330,6 +2327,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BDECCD4196CBA6100F3EB11 /* StoreKit.framework in Frameworks */,
 				D35E589E18E391DA008571EC /* GLKit.framework in Frameworks */,
 				80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */,
 				B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */,
@@ -3139,6 +3137,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */,
 				830F4EB019347032002B832D /* OCMock.framework */,
 				D35E589D18E391DA008571EC /* GLKit.framework */,
 				D2E0168418D783C900927430 /* AppleScriptKit.framework */,
@@ -6182,6 +6181,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BDECCD1196CBA2400F3EB11 /* LocalizationTranslateWindow.m in Sources */,
 				92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */,
 				92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */,
 				9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */,

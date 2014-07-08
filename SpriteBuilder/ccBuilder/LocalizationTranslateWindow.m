@@ -971,7 +971,7 @@ static int numTimedOutIntervals = 0;
     if(error)
     {
         JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",
-                                _latestRequestID,@"id",error,@"server_error",SBTranslationDownloadCancelledError,@"SB_error",nil];
+                                _latestRequestID,@"id",error,@"server_error",nil];
     }
     else
     {
