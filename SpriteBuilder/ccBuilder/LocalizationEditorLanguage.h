@@ -15,5 +15,5 @@
 @property (nonatomic,readwrite) BOOL quickEdit;
 
 - (id) initWithIsoLangCode:(NSString*)code;
-
++ (NSString*) nameFromCode:(NSString*)code;
 @end

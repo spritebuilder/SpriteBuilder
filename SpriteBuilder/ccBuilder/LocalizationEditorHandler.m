@@ -10,7 +10,7 @@
 #import "LocalizationEditorWindow.h"
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorTranslation.h"
-
+#import "ProjectSettings.h"
 #import "AppDelegate.h"
 #import "CocosScene.h"
 #import "StringPropertySetter.h"
@@ -280,6 +280,10 @@
     [self setCurrentLanguage:currentLanguage];
 }
 
+/*
+ * In addition to its normal functionality, now sets the 'downloading' state of the window
+ * according to project settings.
+ */
 - (IBAction)openEditor:(id)sender
 {
     if (!windowController)
@@ -288,6 +292,14 @@
     }
     [windowController.window makeKeyAndOrderFront:sender];
     windowController.hasOpenFile = (managedFile != NULL);
+    if(((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations)
+    {
+        [windowController setDownloadingTranslations];
+    }
+    else
+    {
+        [windowController finishDownloadingTranslations];
+    }
 }
 
 - (NSString*) translationForKey:(NSString*)key

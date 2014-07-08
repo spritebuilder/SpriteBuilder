@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
+        <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LocalizationEditorWindow">
             <connections>
+                <outlet property="_addTranslation" destination="23" id="d5X-0M-IEM"/>
+                <outlet property="_translationProgress" destination="F8M-hz-w6i" id="dHl-Z3-AYH"/>
+                <outlet property="_translationProgressText" destination="Lc3-7O-qiH" id="swn-en-YBK"/>
+                <outlet property="_translationsButton" destination="7jT-cI-9YC" id="pmx-0r-1kr"/>
                 <outlet property="popCurrentLanguage" destination="54" id="84"/>
                 <outlet property="popLanguageAdd" destination="72" id="78"/>
                 <outlet property="tableLanguages" destination="39" id="81"/>
@@ -81,7 +85,6 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="146"/>
                                         <outlet property="dataSource" destination="-2" id="96"/>
                                         <outlet property="delegate" destination="-2" id="97"/>
                                     </connections>
@@ -326,7 +329,6 @@
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
-                                                        <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="149"/>
                                                         <outlet property="dataSource" destination="-2" id="83"/>
                                                     </connections>
                                                 </tableView>
@@ -360,7 +362,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button id="23">
-                        <rect key="frame" x="366" y="-1" width="109" height="22"/>
+                        <rect key="frame" x="332" y="-1" width="109" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" title="Add Translation" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="24">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -368,7 +370,6 @@
                         </buttonCell>
                         <connections>
                             <action selector="pressedAdd:" target="-2" id="30"/>
-                            <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="140"/>
                         </connections>
                     </button>
                     <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="29">
@@ -392,13 +393,12 @@
                         </popUpButtonCell>
                         <connections>
                             <action selector="selectedAddLanguage:" target="-2" id="79"/>
-                            <binding destination="-2" name="enabled" keyPath="hasOpenFile" id="143"/>
                         </connections>
                     </popUpButton>
                     <button id="7jT-cI-9YC">
-                        <rect key="frame" x="474" y="-1" width="92" height="22"/>
+                        <rect key="frame" x="440" y="-1" width="126" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="square" title="Translate!" bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PVp-0O-jL0">
+                        <buttonCell key="cell" type="square" title="Buy Translations..." bezelStyle="shadowlessSquare" imagePosition="left" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PVp-0O-jL0">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
@@ -406,6 +406,19 @@
                             <action selector="pressedTranslate:" target="-2" id="mJO-Mr-Tc1"/>
                         </connections>
                     </button>
+                    <progressIndicator hidden="YES" maxValue="100" controlSize="small" style="bar" id="F8M-hz-w6i">
+                        <rect key="frame" x="126" y="4" width="96" height="12"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </progressIndicator>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Lc3-7O-qiH">
+                        <rect key="frame" x="8" y="3" width="113" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Translation progress" id="QMh-0A-k0y">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
         </window>

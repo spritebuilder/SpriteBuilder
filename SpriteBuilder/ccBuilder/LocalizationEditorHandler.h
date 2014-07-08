@@ -12,7 +12,6 @@
 @class LocalizationEditorWindow;
 @class LocalizationEditorLanguage;
 @class LocalizationEditorTranslation;
-
 @interface LocalizationEditorHandler : NSObject
 {
     NSMutableArray* languages;

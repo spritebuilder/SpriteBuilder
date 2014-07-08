@@ -43,6 +43,36 @@
 }
 
 /*
+ * Returns the name of a language from the iso code.
+ */
++ (NSString*) nameFromCode:(NSString*)code
+{
+    NSString* name = NULL;
+    
+    if ([code isEqualToString:@"vn"])
+    {
+        name = @"Vietnamese";
+    }
+    else if ([code isEqualToString:@"zh-Hans"])
+    {
+        name = @"Simplified Chinese";
+    }
+    else if ([code isEqualToString:@"zh-Hant"])
+    {
+        name = @"Traditional Chinese";
+    }
+    else
+    {
+        NSLocale* enLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en"];
+        name = [enLocale displayNameForKey:NSLocaleLanguageCode value:code];
+    }
+    
+    name = [NSString stringWithFormat:@"%@ (%@)", name, code];
+    
+    return name;
+}
+
+/*
  * Implemented in order to allow these languages to populate a mutable dictionary with
  * the setObject:forKey: method
  */

@@ -93,6 +93,12 @@ typedef enum
     BOOL deviceOrientationLandscapeRight;
     int resourceAutoScaleFactor;
 
+    //Translations
+    BOOL isDownloadingTranslations;
+    double numToDownload;
+    double numDownloaded;
+    NSString* latestRequestID;
+    
     NSString* versionStr;
     BOOL needRepublish;
     
@@ -144,7 +150,13 @@ typedef enum
 @property (nonatomic, assign) int resourceAutoScaleFactor;
 @property (nonatomic, assign) NSInteger publishEnvironment;
 
-// *** Temporary property, do not persist ***
+//TranslationDownloads
+@property (nonatomic,assign) BOOL isDownloadingTranslations;
+@property (nonatomic,readwrite) double numToDownload;
+@property (nonatomic,assign) double numDownloaded;
+@property (nonatomic,strong) NSString* latestRequestID;
+
+// Temporary property, do not persist
 @property (nonatomic) BOOL canUpdateCocos2D;
 @property (nonatomic) NSMutableArray *cocos2dUpdateIgnoredVersions;
 

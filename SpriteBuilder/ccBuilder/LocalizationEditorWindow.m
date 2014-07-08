@@ -12,12 +12,13 @@
 #import "LocalizationEditorHandler.h"
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorLanguageTableView.h"
+#import "LocalizationTranslateWindowHandler.h"
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
+#import "ProjectSettings.h"
 @implementation LocalizationEditorWindow
-
-#pragma mark Init and Updating stuff
+@synthesize ltw =  _ltw;
 
 - (void) awakeFromNib
 {
@@ -27,7 +28,7 @@
     [self updateLanguageSelectionMenu];
     [self addLanguageColumns];
     [self updateQuickEditLangs];
-    
+    [self addObserver:self forKeyPath:@"hasOpenFile" options:0 context:nil];
 }
 
 - (void) populateLanguageAddMenu
@@ -199,19 +200,6 @@
 - (IBAction)pressedAddGroup:(id)sender
 {}
 
-/*
- * Just displays a translate window.
- * TODO Make the window key and main
- */
-- (IBAction)pressedTranslate:(id)sender {
-    _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
-    [[_ltw window] makeKeyAndOrderFront:nil];
-}
-
-/*
- * If a language is added, do what is shown here but also reload the langauge menu on the
- * language translation window if there is one open.
- */
 - (IBAction)selectedAddLanguage:(id)sender
 {
     NSString* name = popLanguageAdd.selectedItem.title;
@@ -223,10 +211,118 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
-    if(_ltw)
-        [_ltw reloadLanguageMenu];
     
     [handler setEdited];
+}
+
+/*
+ * If you are opening a new window and one doesn't exist, open it and make it modal.
+ * If you are cancelling a download, show a cancel alert, and if the user 'okays' the cancel,
+ * stop the download.
+ */
+- (IBAction)pressedTranslate:(id)sender {
+    
+    if([_translationsButton.title isEqualToString:@"Buy Translations..."])
+    {
+        if(!_ltw || !_ltw.window)
+        {
+            _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+        }
+        [_ltw setParentWindow:self];
+        [_ltw.window makeKeyAndOrderFront:sender];
+        [NSApp runModalForWindow:_ltw.window];
+    }
+    else
+    {
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Stop Download" defaultButton:@"Cancel" alternateButton:@"Stop Download" otherButton:NULL informativeTextWithFormat:@"If you stop your download now, SpriteBuilder will not refund your purchase."];
+        NSInteger result = [alert runModal];
+        if(result == NSAlertAlternateReturn)
+        {
+            [self finishDownloadingTranslations];
+            [_ltw cancelDownloadWithError:nil];
+            [tableLanguages reloadData];
+        }
+    }
+}
+
+/*
+ * Add languages to the language table (called when a translation request includes 'translate to' languages
+ * that aren't already in the table.
+ */
+- (void)addLanguages:(NSArray*)langs
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    for(NSString* iso in langs)
+    {
+        if([iso isEqualToString:@"zh"])
+        {
+            [handler addActiveLanguage:[handler getLanguageByIsoLangCode:@"zh-Hans"]];
+        }
+        else
+        {
+            [handler addActiveLanguage:[handler getLanguageByIsoLangCode:iso]];
+        }
+    }
+    [tableLanguages reloadData];
+    [self updateLanguageSelectionMenu];
+    [self updateQuickEditLangs];
+    [self updateInspector];
+}
+
+/*
+ * Turn the window into a 'dowloading' one by setting the 'isDownloading' variable in the 
+ * project settings and disabling everything except translation progress and the cancel button.
+ */
+
+-(void)setDownloadingTranslations{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.isDownloadingTranslations = 1;
+    [_translationProgress setMaxValue:ps.numToDownload];
+    [_translationProgress setDoubleValue:ps.numDownloaded];
+    [_translationProgress setHidden:0];
+    [_translationProgressText setHidden:0];
+    [tableTranslations setEnabled:0];
+    [tableLanguages setEnabled:0];
+    [popLanguageAdd setEnabled:0];
+    [_addTranslation setEnabled:0];
+    [popCurrentLanguage setEnabled:0];
+    _translationsButton.title = @"Stop Download...";
+}
+
+/*
+ * Make the translation progress bar increase by one
+ */
+-(void)incrementTransByOne{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.numDownloaded++;
+    [_translationProgress incrementBy:1.0];
+}
+
+/*
+ * Retrieve translation progress information.
+ */
+- (double)translationProgress{
+    return _translationProgress.doubleValue;
+}
+
+/*
+ * Turn the window into a normal, non-dowloading one by setting the 'isDownloading'
+ * in the project settings to 0 and enabling everything and hiding the translation
+ * progress information.
+ */
+-(void)finishDownloadingTranslations{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.isDownloadingTranslations = 0;
+    ps.numDownloaded = 0;
+    ps.numToDownload = 0;
+    [_translationProgress setHidden:1];
+    [_translationProgressText setHidden:1];
+    [tableTranslations setEnabled:1];
+    [tableLanguages setEnabled:1];
+    [popLanguageAdd setEnabled:1];
+    [popCurrentLanguage setEnabled:1];
+    [_addTranslation setEnabled:1];
+    _translationsButton.title = @"Buy Translations...";
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
@@ -244,7 +340,6 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
-    
     [handler setEdited];
 }
 
@@ -432,10 +527,15 @@
         }
         else
         {
-            if([translation.languagesDownloading containsObject:aTableColumn.identifier]){
+            if(translation.languagesDownloading &&
+               ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations &&
+               [translation.languagesDownloading containsObject:aTableColumn.identifier])
+            {
                 [[aTableColumn dataCellForRow:rowIndex] setEnabled:0];
                 return @"Downloading...";
-            }else{
+            }
+            else
+            {
                 [[aTableColumn dataCellForRow:rowIndex] setEnabled:1];
                 return [translation.translations objectForKey:aTableColumn.identifier];
             }
@@ -512,8 +612,6 @@
                 [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
                 [handler setEdited];
             }
-            if(_ltw)
-                [_ltw reloadCost];
         }
         
         [self updateInspector];
@@ -653,4 +751,24 @@
     else return proposedMaximumPosition;
 }
 
+/*
+ * This replaces the bindings of before. If 'has open file' changes, change the language window according to the 'isDownloading' status of the
+ * new project. 
+ */
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    if([keyPath isEqualToString:@"hasOpenFile"]){
+        if(ps.isDownloadingTranslations)
+        {
+            _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps.latestRequestID parentWindow:self numToDownload:ps.numToDownload];
+            [_ltw restartDownload];
+            [self setDownloadingTranslations];
+        }else{
+            [_ltw pauseDownload];
+            [self finishDownloadingTranslations];
+            _ltw = nil;
+        }
+    }
+    
+}
 @end
