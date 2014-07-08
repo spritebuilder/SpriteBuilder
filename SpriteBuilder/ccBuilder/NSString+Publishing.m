@@ -1,6 +1,7 @@
 #import "NSString+Publishing.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
+#import "MiscConstants.h"
 
 
 @implementation NSString (Publishing)
@@ -33,14 +34,16 @@
     return [extension isEqualToString:@"png"] || [extension isEqualToString:@"psd"];
 }
 
-- (NSDate *)latestModifiedDateOfPath
+- (NSDate *)latestModifiedDateOfPathIgnoringDirs:(BOOL)ignoreDirs
 {
-    return [self latestModifiedDateForDirectory:self];
+    return [self latestModifiedDateForDirectory:self ignoreDirs:ignoreDirs];
 }
 
-- (NSDate *)latestModifiedDateForDirectory:(NSString *)dir
+- (NSDate *)latestModifiedDateForDirectory:(NSString *)dir ignoreDirs:(BOOL)ignoreDirs
 {
-	NSDate* latestDate = [CCBFileUtil modificationDateForFile:dir];
+	NSDate* latestDate = ignoreDirs
+        ? [NSDate distantPast]
+        : [CCBFileUtil modificationDateForFile:dir];
 
     NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
     for (NSString* file in files)
@@ -54,7 +57,7 @@
 
             if (isDir)
             {
-				fileDate = [self latestModifiedDateForDirectory:absFile];
+				fileDate = [self latestModifiedDateForDirectory:absFile ignoreDirs:ignoreDirs];
 			}
             else
             {
@@ -166,7 +169,7 @@
 
 - (BOOL)isIntermediateFileLookup
 {
-    return [self isEqualToString:@"intermediateFileLookup.plist"];
+    return [self isEqualToString:INTERMEDIATE_FILE_LOOKUP_NAME];
 }
 
 @end
