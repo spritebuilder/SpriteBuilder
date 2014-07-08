@@ -19,6 +19,7 @@
     IBOutlet NSView* _noActiveLangsView;
     IBOutlet NSView* _standardLangsView;
     IBOutlet NSView* _downloadingLangsView;
+    IBOutlet NSView* _validatingPaymentView;
     IBOutlet NSView* _downloadingLangsErrorView;
     IBOutlet NSView* _downloadingCostsErrorView;
     IBOutlet NSView* _paymentErrorView;
@@ -30,6 +31,7 @@
     IBOutlet NSTextField* _noActiveLangsError;
     IBOutlet NSProgressIndicator* _languagesDownloading;
     IBOutlet NSProgressIndicator* _costDownloading;
+    IBOutlet NSProgressIndicator* _paymentValidating;
     IBOutlet NSTextField* _costDownloadingText;
     IBOutlet NSButton* _ignoreText;
     
@@ -57,6 +59,7 @@
     NSMutableDictionary* _receipts;
     NSString* _latestRequestID;
     LocalizationEditorWindow* _parentWindow;
+    NSAlert* _buyAlert;
     
 }
 
@@ -75,4 +78,5 @@
 @property (nonatomic,strong) NSString* guid;
 @property (nonatomic,strong) NSMutableDictionary* languages;
 @property (nonatomic,strong) NSMutableDictionary* receipts;
+@property (nonatomic,strong) NSAlert* buyAlert;
 @end

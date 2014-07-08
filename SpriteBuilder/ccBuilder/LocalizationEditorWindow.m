@@ -224,7 +224,7 @@
     
     if([_translationsButton.title isEqualToString:@"Buy Translations..."])
     {
-        if(!_ltw)
+        if(!_ltw || !_ltw.window)
         {
             _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
         }
@@ -234,7 +234,7 @@
     }
     else
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Stop Download" defaultButton:@"Cancel" alternateButton:@"OK" otherButton:NULL informativeTextWithFormat:@"If you stop your translations download, you will not get a refund."];
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Stop Download" defaultButton:@"Cancel" alternateButton:@"Stop Download" otherButton:NULL informativeTextWithFormat:@"If you stop your download now, SpriteBuilder will not refund your purchase."];
         NSInteger result = [alert runModal];
         if(result == NSAlertAlternateReturn)
         {

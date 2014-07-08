@@ -19,17 +19,19 @@
 @synthesize guid = _guid;
 @synthesize languages = _languages;
 @synthesize receipts = _receipts;
+@synthesize buyAlert = _buyAlert;
 
 //Standards for the tab view
 static int downloadLangsIndex = 0;
 static int noActiveLangsIndex = 1;
 static int standardLangsIndex = 2;
-static int downloadCostErrorIndex = 3;
-static int downloadLangsErrorIndex = 4;
-static int paymentErrorIndex = 5;
+static int validatingPaymentIndex = 3;
+static int downloadCostErrorIndex = 4;
+static int downloadLangsErrorIndex = 5;
+static int paymentErrorIndex = 6;
 
 //URLs
-static NSString* baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
+static NSString* const baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
 static NSString* languageURL;
 static NSString* estimateURL;
 static NSString* receiptTranslationsURL;
@@ -41,10 +43,16 @@ static NSString* const noActiveLangsString = @"No Valid Languages";
 static NSString* const downloadingLangsString = @"Downloading...";
 static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%@.";
 
-//Download time
+//Interval for repeating a downlaod request, in seconds
 //TODO use realistic interval
-//static double downloadRepeatInterval = 300;
+//static double downloadRepeatInterval = 900;
 static double downloadRepeatInterval = 5;
+
+//Amount of server downtime allowed until download cancelled, in seconds
+static double serverTimeOut = 86400;
+
+//Number of intervals where the server has been unavailabel
+static int numTimedOutIntervals = 0;
 
 #pragma mark Initializing
 /*
@@ -72,6 +80,7 @@ static double downloadRepeatInterval = 5;
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
     [[_translateFromTabView tabViewItemAtIndex:noActiveLangsIndex] setView:_noActiveLangsView];
     [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
+    [[_translateFromTabView tabViewItemAtIndex:validatingPaymentIndex] setView:_validatingPaymentView];
     [[_translateFromTabView tabViewItemAtIndex:downloadCostErrorIndex] setView:_downloadingCostsErrorView];
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsErrorIndex] setView:_downloadingLangsErrorView];
     [[_translateFromTabView tabViewItemAtIndex:paymentErrorIndex] setView:_paymentErrorView];
@@ -93,6 +102,8 @@ static double downloadRepeatInterval = 5;
     self.guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     self.languages = [[NSMutableDictionary alloc] init];
     self.receipts = [[NSMutableDictionary alloc] init];
+    self.buyAlert = [NSAlert alertWithMessageText:@"Long Translation Download Time" defaultButton:@"Continue Download..." alternateButton:@"Cancel Download" otherButton:NULL informativeTextWithFormat:@"The average wait is 30 minutes, but translation downloads can sometimes take days. These downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified. However, projects can be closed, opened and modified, and SpriteBuilder can be quit and reopened without cancelling your download."];
+    [self.buyAlert setShowsSuppressionButton:1];
 }
 
 #pragma mark Downloading and Updating Languages
@@ -117,13 +128,13 @@ static double downloadRepeatInterval = 5;
                                       if (!error)
                                       {
                                           [self parseJSONLanguages:data];
-                                          NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                          NSLog(@"Languages Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
                                       {
                                           [_languagesDownloading stopAnimation:self];
                                           [_translateFromTabView selectTabViewItemAtIndex:downloadLangsErrorIndex];
-                                          NSLog(@"Error: %@", error.localizedDescription);
+                                          NSLog(@"Languages Error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
@@ -142,8 +153,8 @@ static double downloadRepeatInterval = 5;
                                                                                   options:NSJSONReadingMutableContainers error:&JSONerror];
     if(JSONerror || [[[availableLanguagesDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"JSONError: %@", JSONerror.localizedDescription] :
-              [NSString stringWithFormat:@"Error: %@", [availableLanguagesDict objectForKey:@"Error"]]);
+        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"Languages JSONError: %@", JSONerror.localizedDescription] :
+              [NSString stringWithFormat:@"Languages Error: %@", [availableLanguagesDict objectForKey:@"Error"]]);
         [_languagesDownloading stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:downloadLangsErrorIndex];
         return;
@@ -318,13 +329,13 @@ static double downloadRepeatInterval = 5;
                                                [_costDownloading stopAnimation:self];
                                                [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
                                            }
-                                           NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                           NSLog(@"Estimate Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                        }
                                        else
                                        {
                                            [_costDownloading stopAnimation:self];
                                            [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
-                                           NSLog(@"Error: %@", error.localizedDescription);
+                                           NSLog(@"Estimate Error: %@", error.localizedDescription);
                                        }
                                    }];
      [task resume];
@@ -380,7 +391,6 @@ static double downloadRepeatInterval = 5;
         if(t.comment && ![t.comment isEqualToString:@""])
         {
             phrase = [[NSDictionary alloc] initWithObjectsAndKeys:
-                      t.key, @"key",
                       [t.translations objectForKey:_currLang.isoLangCode], @"text",
                       t.comment, @"context",
                       _currLang.isoLangCode,@"source_language",
@@ -390,7 +400,6 @@ static double downloadRepeatInterval = 5;
         else
         {
             phrase = [[NSDictionary alloc] initWithObjectsAndKeys:
-                      t.key, @"key",
                       [t.translations objectForKey:_currLang.isoLangCode], @"text",
                       _currLang.isoLangCode,@"source_language",
                       langsToTranslate,@"target_languages",
@@ -445,13 +454,29 @@ static double downloadRepeatInterval = 5;
  * Solicit a payment and set the cancel button to say 'Finish'.
  */
 - (IBAction)buy:(id)sender {
-    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
-    SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
-    [[SKPaymentQueue defaultQueue] addPayment:payment];
-    [self disableAll];
-    [_buy setEnabled:0];
-    [_cancel setEnabled:0];
+    NSInteger continueDownload;
+    if(![[AppDelegate appDelegate] showHelpDialog:@"longDownloadTime"])
+	{
+        return;
+    }
+    continueDownload = [_buyAlert runModal];
+    if ([[_buyAlert suppressionButton] state] == NSOnState)
+    {
+        [[AppDelegate appDelegate] disableHelpDialog:@"longDownloadTime"];
+    }
+    if((continueDownload == NSAlertDefaultReturn) && [SKPaymentQueue canMakePayments]){
+        SKPaymentQueue* defaultQueue = [SKPaymentQueue defaultQueue];
+        [defaultQueue removeTransactionObserver:self];
+        [defaultQueue addTransactionObserver:self];
+        NSLog(@"+1 TO");
+        SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
+        [defaultQueue addPayment:payment];
+        [_paymentValidating startAnimation:self];
+        [_translateFromTabView selectTabViewItemAtIndex:validatingPaymentIndex];
+        [self disableAll];
+        [_buy setEnabled:0];
+        [_cancel setEnabled:0];
+    }
 }
 
 /*
@@ -655,32 +680,35 @@ static double downloadRepeatInterval = 5;
  * validate the receipt with the server.
  */
 -(void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions{
-    
+
     for (SKPaymentTransaction* transaction in transactions)
     {
         switch(transaction.transactionState)
         {
             case SKPaymentTransactionStateFailed:
             {
+                NSLog(@"Failed");
                 [self enableAll];
                 [_buy setEnabled:1];
                 [_cancel setEnabled:1];
-                NSLog(@"Failed");
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                [_paymentValidating stopAnimation:self];
                 [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
+                [queue finishTransaction:transaction];
                 break;
             }
             case SKPaymentTransactionStatePurchased:
             {
-                [self enableAll];
-                [_buy setEnabled:1];
-                [_cancel setEnabled:1];
                 NSLog(@"Purchased");
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 NSURL* receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
                 NSData* receipt = [NSData dataWithContentsOfURL:receiptURL];
                 [_receipts setObject:receipt forKey:transaction.transactionIdentifier];
-                [self validateReceipt:[receipt base64EncodedStringWithOptions:0] transaction:transaction];
+                [self validateReceipt:[receipt base64EncodedStringWithOptions:0]];
+                [queue finishTransaction:transaction];
+                break;
+            }
+            case SKPaymentTransactionStateRestored:
+            {
+                [queue finishTransaction:transaction];
                 break;
             }
         }
@@ -694,13 +722,12 @@ static double downloadRepeatInterval = 5;
  * 'get translation' events, and close the translation window. Also, set up the main editor
  * window for its 'downloading translations' phase.
  */
--(void)validateReceipt:(NSString *)receipt transaction:(SKPaymentTransaction*)transaction{
+-(void)validateReceipt:(NSString *)receipt{
     NSDictionary *JSONObject = [[NSDictionary alloc] initWithObjectsAndKeys: _guid,@"key",receipt,@"receipt",_phrasesToTranslate,@"phrases",nil];
     NSError *error;
     if(![NSJSONSerialization isValidJSONObject:JSONObject])
     {
         NSLog(@"Invalid JSON");
-        [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
         return;
     }
     NSData *postdata2 = [NSJSONSerialization dataWithJSONObject:JSONObject options:0 error:&error];
@@ -716,21 +743,31 @@ static double downloadRepeatInterval = 5;
                                   {
                                       if (!error)
                                       {
-                                          [self parseJSONConfirmation:data];
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
-                                              [self.window close];
-                                              [self setLanguageWindowDownloading];
-                                              LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
-                                              [handler setEdited];
-                                          });
-                                          NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                          if(![self parseJSONConfirmation:data])
+                                          {
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+                                                  [NSApp endSheet:self.window];
+                                                  [self.window close];
+                                                  [self setLanguageWindowDownloading];
+                                                  LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+                                                  [handler setEdited];
+                                              });
+                                              [self enableAll];
+                                              [_buy setEnabled:1];
+                                              [_cancel setEnabled:1];
+                                              [_paymentValidating stopAnimation:self];
+                                              [_translateFromTabView selectTabViewItemAtIndex:standardLangsIndex];
+                                          }
+                                          NSLog(@"Receipt Validation status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
                                       {
-                                          [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                                          [self enableAll];
+                                          [_buy setEnabled:1];
+                                          [_cancel setEnabled:1];
                                           [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
-                                          NSLog(@"Error: %@", error.localizedDescription);
+                                          NSLog(@"Receipt Validation error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
@@ -738,20 +775,26 @@ static double downloadRepeatInterval = 5;
 
 /*
  * JSON confirmation just gives latest request ID. Put that in the project settings.
- * TODO handle failure
  */
--(void)parseJSONConfirmation:(NSData *)data{
-    NSError *JSONerror;
+-(int)parseJSONConfirmation:(NSData *)data{
+    NSError *JSONerror;;
+    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
-                                                                    options:NSJSONReadingMutableContainers error:&JSONerror];
-    if(JSONerror)
+                                                                    options:kNilOptions error:&JSONerror];
+    if(JSONerror || [[[initialTransDict allKeys] firstObject] isEqualToString:@"Error"])
     {
+        NSLog(@"%@", JSONerror ? [NSString stringWithFormat:@"Receipt Validation JSONError: %@", JSONerror.localizedDescription] :
+              [NSString stringWithFormat:@"Receipt Validation Error: %@", [initialTransDict objectForKey:@"Error"]]);
+        [self enableAll];
+        [_buy setEnabled:1];
+        [_cancel setEnabled:1];
+        [_paymentValidating stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
-        NSLog(@"JSONError: %@", JSONerror.localizedDescription);
-        return;
+        return -1;
     }
     _latestRequestID = [initialTransDict objectForKey:@"request_id"];
     ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).latestRequestID = _latestRequestID;
+    return 0;
 }
 
 /*
@@ -792,21 +835,25 @@ static double downloadRepeatInterval = 5;
                                   {
                                       if (!error)
                                       {
-                                          [self parseJSONTranslations:data];
-                                          NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                          if(![self parseJSONTranslations:data])
+                                          {
+                                              numTimedOutIntervals = 0;
+                                          }
+                                          NSLog(@"Translations Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
                                       {
-                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                              NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. You will not be charged. Please try again in a few minutes."];
-                                              NSInteger result = [alert runModal];
-                                              if(result == NSAlertDefaultReturn)
-                                              {
+                                          numTimedOutIntervals++;
+                                          if(numTimedOutIntervals*downloadRepeatInterval >= serverTimeOut)
+                                          {
+                                              dispatch_async(dispatch_get_main_queue(), ^{
                                                   [_parentWindow finishDownloadingTranslations];
-                                                  [self cancelDownloadWithError:[[NSError alloc] init]];
-                                              }
-                                          });
-                                          NSLog(@"Error: %@", error.localizedDescription);
+                                                  [self cancelDownloadWithError:error];
+                                                  NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. Please contact customer service for a full refund."];
+                                                  [alert runModal];
+                                              });
+                                          }
+                                          NSLog(@"Translations Error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
@@ -817,25 +864,25 @@ static double downloadRepeatInterval = 5;
  * from the phrases and put them into the handler's translation objects. Then increment
  * the parent's download progress indicator by one, and, when the download is done,
  * end it here and finish it in the window.
- * TODO use actual text
  */
--(void)parseJSONTranslations:(NSData *)data{
+-(int)parseJSONTranslations:(NSData *)data{
     NSError *JSONerror;
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
                                                                                   options:NSJSONReadingMutableContainers error:&JSONerror];
     if(JSONerror)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. You will not be charged. Please try again in a few minutes."];
-            NSInteger result = [alert runModal];
-            if(result == NSAlertDefaultReturn)
-            {
+        numTimedOutIntervals++;
+        if(numTimedOutIntervals*downloadRepeatInterval >= serverTimeOut)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [_parentWindow finishDownloadingTranslations];
-                [self cancelDownloadWithError:[[NSError alloc] init]];
-            }
-        });
-        NSLog(@"JSONError: %@", JSONerror.localizedDescription);
-        return;
+                [self cancelDownloadWithError:JSONerror];
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. Please contact customer service for a full refund."];
+                [alert runModal];
+            });
+        }
+        NSLog(@"Translations JSONError: %@", JSONerror.localizedDescription);
+        return -1;
     }
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSArray* handlerTranslations = handler.translations;
@@ -883,6 +930,7 @@ static double downloadRepeatInterval = 5;
             [_parentWindow finishDownloadingTranslations];
         });
     }
+    return 0;
 }
 
 /*
@@ -899,6 +947,7 @@ static double downloadRepeatInterval = 5;
  * Restarts the timer for the download function.
  */
 -(void)restartDownload{
+    [self getTranslations];
     _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
 }
 
@@ -916,21 +965,20 @@ static double downloadRepeatInterval = 5;
 
 /*
  * Stops the download after a cancellation request has been sent.
- * TODO handle the error
  */
 - (void)cancelDownloadWithError:(NSError*)error{
     _numTransToDownload = 0;
     _latestRequestID = nil;
     [_timerTransDownload invalidate];
     _timerTransDownload = nil;
-    [self sendCancelRequestWithError:error];
+    [self sendCancelNotificationWithError:error];
 }
 
 /*
  * Sends cancel request to the server with an error if there was one
  * TODO actually make this do something and handle errors
  */
--(void)sendCancelRequestWithError:(NSError*)error{
+-(void)sendCancelNotificationWithError:(NSError*)error{
     NSDictionary *JSONObject;
     if(error)
     {
@@ -961,11 +1009,11 @@ static double downloadRepeatInterval = 5;
                                   {
                                       if (!error)
                                       {
-                                          NSLog(@"Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
+                                          NSLog(@"Cancel Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
                                       }
                                       else
                                       {
-                                          NSLog(@"Error: %@", error.localizedDescription);
+                                          NSLog(@"Cancel Error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
