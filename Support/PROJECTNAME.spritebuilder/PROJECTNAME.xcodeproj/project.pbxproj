@@ -8,6 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8392007918EE8E3300B6C429 /* GLKit.framework */; };
+		927F619D196C771E000F43EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
+		927F619E196C771E000F43EF /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
+		927F619F196C771E000F43EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B73789851807631A0076A88C /* main.m */; };
+		927F61A1196C771E000F43EF /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8392007918EE8E3300B6C429 /* GLKit.framework */; };
+		927F61A2196C771E000F43EF /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B737894B180761A90076A88C /* libcocos2d.a */; };
+		927F61A3196C771E000F43EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3117B978D7009739AE /* QuartzCore.framework */; };
+		927F61A4196C771E000F43EF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3317B978D7009739AE /* OpenGLES.framework */; };
+		927F61A5196C771E000F43EF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3517B978D7009739AE /* OpenAL.framework */; };
+		927F61A6196C771E000F43EF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3717B978D7009739AE /* AudioToolbox.framework */; };
+		927F61A7196C771E000F43EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3917B978D7009739AE /* AVFoundation.framework */; };
+		927F61A8196C771E000F43EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3B17B978D7009739AE /* UIKit.framework */; };
+		927F61A9196C771E000F43EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3D17B978D7009739AE /* Foundation.framework */; };
+		927F61AA196C771E000F43EF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B3F17B978D7009739AE /* CoreGraphics.framework */; };
+		927F61AB196C771E000F43EF /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77F1B4117B978D7009739AE /* CoreText.framework */; };
+		927F61AD196C771E000F43EF /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F590F188484E7003F4D28 /* Settings.png */; };
+		927F61AE196C771E000F43EF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896E180762440076A88C /* Default@2x.png */; };
+		927F61AF196C771E000F43EF /* iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F590A188484E7003F4D28 /* iPad@2x.png */; };
+		927F61B0196C771E000F43EF /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5909188484E7003F4D28 /* iPad.png */; };
+		927F61B1196C771E000F43EF /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
+		927F61B2196C771E000F43EF /* iPhone-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F590C188484E7003F4D28 /* iPhone-old@2x.png */; };
+		927F61B3196C771E000F43EF /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = B737893A180761570076A88C /* Published-iOS */; };
+		927F61B4196C771E000F43EF /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5910188484E7003F4D28 /* Settings@2x.png */; };
+		927F61B5196C771E000F43EF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896C180762440076A88C /* Default-Landscape~ipad.png */; };
+		927F61B6196C771E000F43EF /* iPhone-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F590B188484E7003F4D28 /* iPhone-old.png */; };
+		927F61B7196C771E000F43EF /* iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F590D188484E7003F4D28 /* iPhone.png */; };
+		927F61B8196C771E000F43EF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896B180762440076A88C /* Default-568h@2x.png */; };
+		927F61B9196C771E000F43EF /* iPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F590E188484E7003F4D28 /* iPhone@2x.png */; };
+		927F61BA196C771E000F43EF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B737896D180762440076A88C /* Default.png */; };
+		927F61BB196C771E000F43EF /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
 		B71F5913188484E7003F4D28 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5909188484E7003F4D28 /* iPad.png */; };
@@ -39,6 +68,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		927F619A196C771E000F43EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		B737894A180761A90076A88C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7378940180761A80076A88C /* cocos2d-ios.xcodeproj */;
@@ -57,6 +93,8 @@
 
 /* Begin PBXFileReference section */
 		8392007918EE8E3300B6C429 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		927F61BF196C771E000F43EF /* PROJECTNAMEAndroid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROJECTNAMEAndroid.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		927F61C0196C7720000F43EF /* PROJECTNAMEAndroid-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PROJECTNAMEAndroid-Info.plist"; path = "/development/SpriteBuilder/Support/PROJECTNAME.spritebuilder/PROJECTNAMEAndroid-Info.plist"; sourceTree = "<absolute>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
 		B71F5909188484E7003F4D28 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPad.png; path = Icons/iPad.png; sourceTree = "<group>"; };
@@ -93,6 +131,24 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		927F61A0196C771E000F43EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				927F61A1196C771E000F43EF /* GLKit.framework in Frameworks */,
+				927F61A2196C771E000F43EF /* libcocos2d.a in Frameworks */,
+				927F61A3196C771E000F43EF /* QuartzCore.framework in Frameworks */,
+				927F61A4196C771E000F43EF /* OpenGLES.framework in Frameworks */,
+				927F61A5196C771E000F43EF /* OpenAL.framework in Frameworks */,
+				927F61A6196C771E000F43EF /* AudioToolbox.framework in Frameworks */,
+				927F61A7196C771E000F43EF /* AVFoundation.framework in Frameworks */,
+				927F61A8196C771E000F43EF /* UIKit.framework in Frameworks */,
+				927F61A9196C771E000F43EF /* Foundation.framework in Frameworks */,
+				927F61AA196C771E000F43EF /* CoreGraphics.framework in Frameworks */,
+				927F61AB196C771E000F43EF /* CoreText.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B77F1B2B17B978D7009739AE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -171,6 +227,7 @@
 				B77F1CCF17B978D8009739AE /* Supporting Files */,
 				B77F1B3017B978D7009739AE /* Frameworks */,
 				B77F1B2F17B978D7009739AE /* Products */,
+				927F61C0196C7720000F43EF /* PROJECTNAMEAndroid-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -178,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				B77F1B2E17B978D7009739AE /* PROJECTNAME.app */,
+				927F61BF196C771E000F43EF /* PROJECTNAMEAndroid.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,6 +280,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		927F6198196C771E000F43EF /* PROJECTNAMEAndroid */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 927F61BC196C771E000F43EF /* Build configuration list for PBXNativeTarget "PROJECTNAMEAndroid" */;
+			buildPhases = (
+				927F619B196C771E000F43EF /* Run Script */,
+				927F619C196C771E000F43EF /* Sources */,
+				927F61A0196C771E000F43EF /* Frameworks */,
+				927F61AC196C771E000F43EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				927F6199196C771E000F43EF /* PBXTargetDependency */,
+			);
+			name = PROJECTNAMEAndroid;
+			productName = Example;
+			productReference = 927F61BF196C771E000F43EF /* PROJECTNAMEAndroid.app */;
+			productType = "com.apple.product-type.application";
+		};
 		B77F1B2D17B978D7009739AE /* PROJECTNAME */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B77F1CDE17B978D8009739AE /* Build configuration list for PBXNativeTarget "PROJECTNAME" */;
@@ -279,6 +356,7 @@
 			projectRoot = "";
 			targets = (
 				B77F1B2D17B978D7009739AE /* PROJECTNAME */,
+				927F6198196C771E000F43EF /* PROJECTNAMEAndroid */,
 			);
 		};
 /* End PBXProject section */
@@ -294,6 +372,28 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		927F61AC196C771E000F43EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				927F61AD196C771E000F43EF /* Settings.png in Resources */,
+				927F61AE196C771E000F43EF /* Default@2x.png in Resources */,
+				927F61AF196C771E000F43EF /* iPad@2x.png in Resources */,
+				927F61B0196C771E000F43EF /* iPad.png in Resources */,
+				927F61B1196C771E000F43EF /* iPad-old@2x.png in Resources */,
+				927F61B2196C771E000F43EF /* iPhone-old@2x.png in Resources */,
+				927F61B3196C771E000F43EF /* Published-iOS in Resources */,
+				927F61B4196C771E000F43EF /* Settings@2x.png in Resources */,
+				927F61B5196C771E000F43EF /* Default-Landscape~ipad.png in Resources */,
+				927F61B6196C771E000F43EF /* iPhone-old.png in Resources */,
+				927F61B7196C771E000F43EF /* iPhone.png in Resources */,
+				927F61B8196C771E000F43EF /* Default-568h@2x.png in Resources */,
+				927F61B9196C771E000F43EF /* iPhone@2x.png in Resources */,
+				927F61BA196C771E000F43EF /* Default.png in Resources */,
+				927F61BB196C771E000F43EF /* iPad-old.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B77F1B2C17B978D7009739AE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,6 +419,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		927F619B196C771E000F43EF /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "osascript -e 'tell application \"System Events\"' -e 'set ProcessList to name of every process' -e 'if \"SpriteBuilder\" is in ProcessList then' -e 'tell application \"SpriteBuilder\" to publish' -e 'end if' -e 'end tell'";
+		};
 		D2E0167A18D782EC00927430 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -336,6 +450,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		927F619C196C771E000F43EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				927F619D196C771E000F43EF /* AppDelegate.m in Sources */,
+				927F619E196C771E000F43EF /* MainScene.m in Sources */,
+				927F619F196C771E000F43EF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B77F1B2A17B978D7009739AE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,6 +473,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		927F6199196C771E000F43EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2d;
+			targetProxy = 927F619A196C771E000F43EF /* PBXContainerItemProxy */;
+		};
 		B7378989180764180076A88C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2d;
@@ -357,6 +486,77 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		927F61BD196C771E000F43EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Source/Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"\"Source/libs/cocos2d-iphone/external/kazmath/include\"/**",
+					"\"Source/libs/cocos2d-iphone/cocos2d\"/**",
+					"Source/libs/cocos2d-iphone/external/Chipmunk/objectivec/include",
+					"Source/libs/cocos2d-iphone/external/Chipmunk/include",
+					"\"Source/libs/cocos2d-iphone/cocos2d-ui\"/**",
+					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
+				);
+				INFOPLIST_FILE = "PROJECTNAMEAndroid-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+				);
+				PRODUCT_NAME = PROJECTNAMEAndroid;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = apportablesdk1.0;
+				WRAPPER_EXTENSION = app;
+				opengles2 = YES;
+			};
+			name = Debug;
+		};
+		927F61BE196C771E000F43EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Source/Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"\"Source/libs/cocos2d-iphone/external/kazmath/include\"/**",
+					"\"Source/libs/cocos2d-iphone/cocos2d\"/**",
+					"Source/libs/cocos2d-iphone/external/Chipmunk/objectivec/include",
+					"Source/libs/cocos2d-iphone/external/Chipmunk/include",
+					"\"Source/libs/cocos2d-iphone/cocos2d-ui\"/**",
+					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
+				);
+				INFOPLIST_FILE = "PROJECTNAMEAndroid-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+				);
+				PRODUCT_NAME = PROJECTNAMEAndroid;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = apportablesdk1.0;
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+				opengles2 = YES;
+			};
+			name = Release;
+		};
 		B77F1CDC17B978D8009739AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -467,6 +667,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		927F61BC196C771E000F43EF /* Build configuration list for PBXNativeTarget "PROJECTNAMEAndroid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				927F61BD196C771E000F43EF /* Debug */,
+				927F61BE196C771E000F43EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B77F1B2917B978D7009739AE /* Build configuration list for PBXProject "PROJECTNAME" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
