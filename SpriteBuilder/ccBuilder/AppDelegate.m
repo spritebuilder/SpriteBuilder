@@ -680,11 +680,7 @@ typedef enum
 
 - (void)toggleFeatures
 {
-    if (![FeatureToggle sharedFeatures].arePackagesEnabled)
-    {
-        [menuPlusButtonNewPackage setHidden:YES];
-        [menuFileNewPackage setHidden:YES];
-    }
+    // Empty at the moment, but if there is something you'd like to toggle in the scope of the AppDelegate, add it here
 }
 
 - (void)setupFeatureToggle
