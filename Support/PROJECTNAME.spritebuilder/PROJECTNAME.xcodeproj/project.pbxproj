@@ -94,7 +94,6 @@
 /* Begin PBXFileReference section */
 		8392007918EE8E3300B6C429 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		927F61BF196C771E000F43EF /* PROJECTNAMEAndroid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROJECTNAMEAndroid.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		927F61C0196C7720000F43EF /* PROJECTNAMEAndroid-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PROJECTNAMEAndroid-Info.plist"; path = "/development/SpriteBuilder/Support/PROJECTNAME.spritebuilder/PROJECTNAMEAndroid-Info.plist"; sourceTree = "<absolute>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
 		B71F5909188484E7003F4D28 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPad.png; path = Icons/iPad.png; sourceTree = "<group>"; };
@@ -227,7 +226,6 @@
 				B77F1CCF17B978D8009739AE /* Supporting Files */,
 				B77F1B3017B978D7009739AE /* Frameworks */,
 				B77F1B2F17B978D7009739AE /* Products */,
-				927F61C0196C7720000F43EF /* PROJECTNAMEAndroid-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -506,7 +504,7 @@
 					"\"Source/libs/cocos2d-iphone/cocos2d-ui\"/**",
 					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
 				);
-				INFOPLIST_FILE = "PROJECTNAMEAndroid-Info.plist";
+				INFOPLIST_FILE = Source/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -541,7 +539,7 @@
 					"\"Source/libs/cocos2d-iphone/cocos2d-ui\"/**",
 					"\"Source/libs/cocos2d-iphone/external/ObjectAL\"/**",
 				);
-				INFOPLIST_FILE = "PROJECTNAMEAndroid-Info.plist";
+				INFOPLIST_FILE = Source/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-lz",
