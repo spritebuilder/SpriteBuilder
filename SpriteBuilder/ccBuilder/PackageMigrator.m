@@ -399,9 +399,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     va_list args;
     va_start(args, format);
-    // #if TEST_TARGET != 0
+    #ifndef TESTING
     NSLogv([NSString stringWithFormat:@"%@ %@", PACKAGES_LOG_HASHTAG, format], args);
-    // #endif
+    #endif
     va_end(args);
 }
 

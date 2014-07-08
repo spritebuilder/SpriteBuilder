@@ -108,8 +108,6 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     {
         NSString *fullFilePath = [self fullPathForFile:filePath];
 
-        NSLog(@"%@", fullFilePath);
-
         NSDictionary *attr = @{NSFileModificationDate : date};
         [[NSFileManager defaultManager] setAttributes:attr ofItemAtPath:fullFilePath error:NULL];
     }
