@@ -645,7 +645,7 @@ typedef enum
     }
     else
     {
-        #if TEST_TARGET != 0
+        #ifndef TESTING
         [self openLastOpenProject];
         #endif
     }
