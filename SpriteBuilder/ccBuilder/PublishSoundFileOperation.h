@@ -3,7 +3,7 @@
 
 @class CCBWarnings;
 @class FCFormatConverter;
-@class PublishRenamedFilesLookup;
+@protocol PublishFileLookupProtocol;
 
 @interface PublishSoundFileOperation : PublishBaseOperation
 
@@ -11,6 +11,6 @@
 @property (nonatomic, copy) NSString *dstFilePath;
 @property (nonatomic) int format;
 @property (nonatomic) int quality;
-@property (nonatomic, strong) PublishRenamedFilesLookup *fileLookup;
+@property (nonatomic, strong) id<PublishFileLookupProtocol>  fileLookup;
 
 @end
