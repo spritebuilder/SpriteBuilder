@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <OCMock/OCMock.h>
 
 #import "ProjectSettings.h"
 #import "SBErrors.h"
@@ -16,6 +15,7 @@
 #import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "FileSystemTestCase.h"
+#import "CCBPublisher.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 
@@ -324,6 +324,7 @@
 
     XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
 
+
     [self assertFileExists:projectSettings.projectPath];
 
     NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fullPath];
@@ -365,6 +366,48 @@
     XCTAssertFalse(projectSettings.excludedFromPackageMigration);
 }
 
+- (void)testResourcePathsAndPersistency
+{
+    NSString *fullPath = [self fullPathForFile:@"project.ccbproj"];;
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    projectSettings.projectPath = fullPath;
+
+    NSString *resPath1 = [self fullPathForFile:@"1234567/890"];
+    NSString *resPath2 = [self fullPathForFile:@"foo/baa/yeehaaa"];
+
+    [projectSettings addResourcePath:resPath1 error:nil];
+    [projectSettings addResourcePath:resPath2 error:nil];
+
+    XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
+
+
+    NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fullPath];
+    projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
+    projectSettings.projectPath = fullPath;
+
+    [self assertResourcePaths:@[resPath1, resPath2] inProject:projectSettings];
+}
+
+- (void)testResourcePropertiesAndPersistency
+{
+    NSString *fullPath = [self fullPathForFile:@"project.ccbproj"];;
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    projectSettings.projectPath = fullPath;
+
+    [projectSettings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+
+    XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
+
+
+    NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fullPath];
+    projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
+    projectSettings.projectPath = fullPath;
+
+    NSNumber *value = [projectSettings valueForRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    XCTAssertEqual([value integerValue], (NSInteger)kCCBPublishFormatSound_ios_mp4);
+}
+
+
 // This test exists to ensure noone changes enum values by mistake that are persisted and have to
 // be migrated with more effort to fix this change later on
 - (void)testEnums
@@ -389,7 +432,7 @@
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertTrue([project isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Found in settings: %@", resourcePath, _projectSettings.resourcePaths);
+        XCTAssertTrue([project isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Present in settings: %@", resourcePath, project.resourcePaths);
     }
 }
 
