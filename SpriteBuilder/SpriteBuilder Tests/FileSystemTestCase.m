@@ -124,21 +124,23 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 
 - (void)assertFileExists:(NSString *)filePath
 {
-    NSString *fullPath = [_testDirecotoryPath stringByAppendingPathComponent:filePath];
-
+    NSString *fullPath = [self fullPathForFile:filePath];
     XCTAssertTrue([_fileManager fileExistsAtPath:fullPath], @"File does not exist at \"%@\"", fullPath);
 }
 
 - (void)assertFileDoesNotExists:(NSString *)filePath
 {
-    NSString *fullPath = [_testDirecotoryPath stringByAppendingPathComponent:filePath];
-
+    NSString *fullPath = [self fullPathForFile:filePath];
     XCTAssertFalse([_fileManager fileExistsAtPath:fullPath], @"File exists at \"%@\"", fullPath);
 }
 
 - (NSString *)fullPathForFile:(NSString *)filePath
 {
-    return [_testDirecotoryPath stringByAppendingPathComponent:filePath];
+    if (![filePath hasPrefix:_testDirecotoryPath])
+    {
+        return [_testDirecotoryPath stringByAppendingPathComponent:filePath];
+    }
+    return filePath;
 }
 
 @end
