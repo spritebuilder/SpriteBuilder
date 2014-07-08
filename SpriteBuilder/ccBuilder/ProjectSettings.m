@@ -92,9 +92,11 @@
     self.resourcePaths = [[NSMutableArray alloc] init];
     self.publishDirectory = @"Published-iOS";
     self.publishDirectoryAndroid = @"Published-Android";
+
     self.onlyPublishCCBs = NO;
     self.flattenPaths = NO;
     self.publishToZipFile = NO;
+
     self.deviceOrientationLandscapeLeft = YES;
     self.deviceOrientationLandscapeRight = YES;
     self.resourceAutoScaleFactor = 4;
@@ -244,7 +246,10 @@
 
 - (NSString*) exporter
 {
-    if (exporter) return exporter;
+    if (exporter)
+    {
+        return exporter;
+    }
     return kCCBDefaultExportPlugIn;
 }
 

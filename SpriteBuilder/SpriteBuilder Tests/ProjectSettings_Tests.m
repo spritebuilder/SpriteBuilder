@@ -15,8 +15,9 @@
 #import "NSString+Packages.h"
 #import "SBAssserts.h"
 #import "MiscConstants.h"
+#import "FileSystemTestCase.h"
 
-@interface ProjectSettings_Tests : XCTestCase
+@interface ProjectSettings_Tests : FileSystemTestCase
 
 @end
 
@@ -313,6 +314,55 @@
     SBAssertStringsEqual(project.publishDirectory, @"");
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"");
     XCTAssertFalse(project.excludedFromPackageMigration);
+}
+
+- (void)testStandardInitializerAndPersistency
+{
+    NSString *fullPath = [self fullPathForFile:@"project.ccbproj"];;
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    projectSettings.projectPath = fullPath;
+
+    XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
+
+    [self assertFileExists:projectSettings.projectPath];
+
+    NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fullPath];
+    projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
+
+    XCTAssertNotNil(projectSettings.resourcePaths);
+    XCTAssertEqual(projectSettings.resourcePaths.count, 0);
+    XCTAssertEqual(projectSettings.engine, CCBTargetEngineCocos2d);
+    SBAssertStringsEqual(projectSettings.publishDirectory, @"Published-iOS");
+    SBAssertStringsEqual(projectSettings.publishDirectoryAndroid, @"Published-Android");
+
+    XCTAssertFalse(projectSettings.onlyPublishCCBs);
+    XCTAssertFalse(projectSettings.flattenPaths);
+    XCTAssertFalse(projectSettings.publishToZipFile);
+
+    XCTAssertTrue(projectSettings.deviceOrientationLandscapeLeft);
+    XCTAssertTrue(projectSettings.deviceOrientationLandscapeRight);
+
+    XCTAssertEqual(projectSettings.resourceAutoScaleFactor, 4);
+    XCTAssertTrue(projectSettings.publishEnablediPhone);
+    XCTAssertTrue(projectSettings.publishEnabledAndroid);
+
+    XCTAssertTrue(projectSettings.publishResolution_ios_phone);
+    XCTAssertTrue(projectSettings.publishResolution_ios_phonehd);
+    XCTAssertTrue(projectSettings.publishResolution_ios_tablet);
+    XCTAssertTrue(projectSettings.publishResolution_ios_tablethd);
+
+    XCTAssertTrue(projectSettings.publishResolution_android_phone);
+    XCTAssertTrue(projectSettings.publishResolution_android_phonehd);
+    XCTAssertTrue(projectSettings.publishResolution_android_tablet);
+    XCTAssertTrue(projectSettings.publishResolution_android_tablethd);
+
+    XCTAssertEqual(projectSettings.publishEnvironment, PublishEnvironmentDevelop);
+    XCTAssertEqual(projectSettings.publishAudioQuality_ios, 4);
+    XCTAssertEqual(projectSettings.publishAudioQuality_android, 4);
+
+    XCTAssertEqual(projectSettings.tabletPositionScaleFactor, 2.0f);
+
+    XCTAssertFalse(projectSettings.excludedFromPackageMigration);
 }
 
 // This test exists to ensure noone changes enum values by mistake that are persisted and have to
