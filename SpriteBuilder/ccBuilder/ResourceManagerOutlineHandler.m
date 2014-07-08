@@ -33,8 +33,6 @@
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
 #import "MiscConstants.h"
-#import "PackageCreateDelegateProtocol.h"
-#import "PackageController.h"
 #import "SBErrors.h"
 #import "FeatureToggle.h"
 #import "RMResource.h"
@@ -45,6 +43,8 @@
 #import "RMPackage.h"
 #import "AppDelegate.h"
 #import "NSString+Packages.h"
+#import "PackageRenamer.h"
+#import "PackageImporter.h"
 
 @implementation ResourceManagerOutlineHandler
 
@@ -414,7 +414,7 @@
     if ([FeatureToggle sharedFeatures].arePackagesEnabled)
     {
         // Have packages been imported?
-        movedOrImportedFiles |= [self importPackagesWithPaths:pbFilenames];
+        movedOrImportedFiles |= [self importPackagesWithMixedPaths:pbFilenames];
         // NOTE: after importing packages, the array is reduced by these paths to allow
         // further importing of other resources
         pbFilenames = [self removePackagesFromPaths:pbFilenames];
@@ -435,12 +435,12 @@
 
 #pragma mark Importing Packages
 
-- (BOOL)importPackagesWithPaths:(NSArray *)paths
+- (BOOL)importPackagesWithMixedPaths:(NSArray *)paths
 {
     NSError *error;
-    PackageController *packageController = [[PackageController alloc] init];
-    packageController.projectSettings = _projectSettings;
-    if (![packageController importPackagesWithPaths:paths error:&error])
+    PackageImporter *packageImporter = [[PackageImporter alloc] init];
+    packageImporter.projectSettings = _projectSettings;
+    if (![packageImporter importPackagesWithPaths:paths error:&error])
     {
         [self handleImportErrors:error];
         return NO;
@@ -532,10 +532,10 @@
 
     if ([item isKindOfClass:[RMPackage class]])
     {
-        PackageController *packageController = [[PackageController alloc] init];
-        packageController.projectSettings = _projectSettings;
+        PackageRenamer *packageRenamer = [[PackageRenamer alloc] init];
+        packageRenamer.projectSettings = _projectSettings;
         NSError *error;
-        if (![packageController canRenamePackage:item toName:fieldEditor.string error:&error])
+        if (![packageRenamer canRenamePackage:item toName:fieldEditor.string error:&error])
         {
             [[NSAlert alertWithMessageText:@"Error"
                              defaultButton:@"OK"
@@ -577,12 +577,12 @@
     }
     else if ([item isKindOfClass:[RMPackage class]])
     {
-        PackageController *packageController = [[PackageController alloc] init];
-        packageController.projectSettings = _projectSettings;
-        packageController.resourceManager = [ResourceManager sharedManager];
+        PackageRenamer *packageRenamer = [[PackageRenamer alloc] init];
+        packageRenamer.projectSettings = _projectSettings;
+        packageRenamer.resourceManager = [ResourceManager sharedManager];
         NSString *newName = object;
         NSError *error;
-        if (![packageController renamePackage:item toName:newName error:&error])
+        if (![packageRenamer renamePackage:item toName:newName error:&error])
         {
             [[NSAlert alertWithMessageText:@"Error"
                              defaultButton:@"OK"

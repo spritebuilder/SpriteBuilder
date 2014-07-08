@@ -7,6 +7,7 @@
 #import "ResourceManagerUtil.h"
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
+#import "PublishFileLookupProtocol.h"
 
 
 @interface PublishSoundFileOperation ()

@@ -25,7 +25,7 @@
 - (NSArray *)resolutionDependantFilesInDirWithResolutions:(NSArray *)resolutions;
 
 // Traverses recursively the directory and returns the latest date of all files found. Quite expensive operation.
-- (NSDate *)latestModifiedDateOfPath;
+- (NSDate *)latestModifiedDateOfPathIgnoringDirs:(BOOL)ignoreDirs;
 
 // Shallow search for all files with the .png suffix and returns them
 - (NSArray *)allPNGFilesInPath;
@@ -33,4 +33,5 @@
 // Recursively tests if the path contains a file with a .ccb suffix
 - (BOOL)containsCCBFile;
 
+- (BOOL)isIntermediateFileLookup;
 @end

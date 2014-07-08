@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="5056"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="3338"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -801,9 +801,9 @@ CA
                                             <connections>
                                                 <binding destination="494" name="enabled2" keyPath="showExtras" previousBinding="ns4-Ku-GvA" id="mrm-E9-Hsy">
                                                     <dictionary key="options">
-                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                         <integer key="NSNullPlaceholder" value="-1"/>
                                                     </dictionary>
                                                 </binding>
@@ -816,9 +816,9 @@ CA
                                             <connections>
                                                 <binding destination="494" name="enabled2" keyPath="showExtras" previousBinding="y6p-d5-LWn" id="w1S-n2-mLx">
                                                     <dictionary key="options">
-                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                         <integer key="NSNullPlaceholder" value="-1"/>
                                                     </dictionary>
                                                 </binding>
@@ -1108,9 +1108,6 @@ CA
                                                                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                                     </tableColumn>
                                                                                 </tableColumns>
-                                                                                <connections>
-                                                                                    <outlet property="menu" destination="1696" id="9j6-tR-0KV"/>
-                                                                                </connections>
                                                                             </outlineView>
                                                                         </subviews>
                                                                     </clipView>
@@ -1968,9 +1965,13 @@ CA
                                                                         <rect key="frame" x="90" y="570" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="yYP-03-s7p">
-                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" usesGroupingSeparator="NO" paddingCharacter="*" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" nilSymbol="           " notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="frf-Ux-3PH">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#,##0.###" negativeFormat="#,##0.###" numberStyle="decimal" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="frf-Ux-3PH">
+                                                                                <real key="roundingIncrement" value="0.0"/>
                                                                                 <real key="minimum" value="0.0"/>
                                                                                 <real key="maximum" value="255"/>
+                                                                                <metadata>
+                                                                                    <bool key="localizesFormat" value="YES"/>
+                                                                                </metadata>
                                                                             </numberFormatter>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -1985,9 +1986,13 @@ CA
                                                                         <rect key="frame" x="90" y="493" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="AIF-qZ-QWA">
-                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" paddingCharacter="*" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" nilSymbol="           " notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="s8k-Fr-05d">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="s8k-Fr-05d">
+                                                                                <real key="roundingIncrement" value="0.0"/>
                                                                                 <real key="minimum" value="0.0"/>
                                                                                 <real key="maximum" value="255"/>
+                                                                                <metadata>
+                                                                                    <bool key="localizesFormat" value="YES"/>
+                                                                                </metadata>
                                                                             </numberFormatter>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -2014,9 +2019,13 @@ CA
                                                                         <rect key="frame" x="90" y="471" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ngd-b1-YHU">
-                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" paddingCharacter="*" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" nilSymbol="           " notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="urP-Pl-E0K">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="urP-Pl-E0K">
+                                                                                <real key="roundingIncrement" value="0.0"/>
                                                                                 <real key="minimum" value="0.0"/>
                                                                                 <real key="maximum" value="1"/>
+                                                                                <metadata>
+                                                                                    <bool key="localizesFormat" value="YES"/>
+                                                                                </metadata>
                                                                             </numberFormatter>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -2043,9 +2052,13 @@ CA
                                                                         <rect key="frame" x="90" y="449" width="64" height="19"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="kIE-o5-om9">
-                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" paddingCharacter="*" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" decimalSeparator="." groupingSeparator="," currencyDecimalSeparator="." plusSign="+" minusSign="-" nilSymbol="           " notANumberSymbol="NaN" perMillSymbol="‰" percentSymbol="%" exponentSymbol="E" positivePrefix="" positiveSuffix="" negativePrefix="-" negativeSuffix="" id="W6b-Ic-ph1">
+                                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0.00" negativeFormat="#0.00" numberStyle="decimal" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" nilSymbol="           " id="W6b-Ic-ph1">
+                                                                                <real key="roundingIncrement" value="0.0"/>
                                                                                 <real key="minimum" value="0.0"/>
                                                                                 <real key="maximum" value="1"/>
+                                                                                <metadata>
+                                                                                    <bool key="localizesFormat" value="YES"/>
+                                                                                </metadata>
                                                                             </numberFormatter>
                                                                             <font key="font" metaFont="smallSystem"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -2081,10 +2094,10 @@ CA
                                                                         <connections>
                                                                             <binding destination="494" name="enabled2" keyPath="physicsHandler.selectedNodeHasKeyframes" previousBinding="kRr-5C-6Jq" id="8Vv-1S-3N1">
                                                                                 <dictionary key="options">
-                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                                                                     <integer key="NSNullPlaceholder" value="-1"/>
+                                                                                    <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                                 </dictionary>
                                                                             </binding>
@@ -2103,9 +2116,9 @@ CA
                                                                             <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.affectedByGravity" id="9Dw-9K-nL9"/>
                                                                             <binding destination="494" name="enabled2" keyPath="physicsHandler.selectedNodePhysicsBody.dynamic" previousBinding="X8c-Ah-VO6" id="c0v-BC-eDp">
                                                                                 <dictionary key="options">
-                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                                                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                                                     <integer key="NSNullPlaceholder" value="-1"/>
                                                                                 </dictionary>
                                                                             </binding>
@@ -2123,9 +2136,9 @@ CA
                                                                             <binding destination="494" name="value" keyPath="physicsHandler.selectedNodePhysicsBody.allowsRotation" id="CMv-Ag-5if"/>
                                                                             <binding destination="494" name="enabled2" keyPath="physicsHandler.selectedNodePhysicsBody.dynamic" previousBinding="9hf-40-9Yz" id="eD2-Ov-Z9Z">
                                                                                 <dictionary key="options">
-                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                                                                     <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                                    <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                                    <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                                                     <integer key="NSNullPlaceholder" value="-1"/>
                                                                                 </dictionary>
                                                                             </binding>
@@ -2207,10 +2220,10 @@ CA
                                                                     </binding>
                                                                     <binding destination="494" name="hidden2" keyPath="self.selectedNodeCanHavePhysics" previousBinding="SbN-x8-4tb" id="DrW-pi-MAh">
                                                                         <dictionary key="options">
-                                                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                                                             <integer key="NSNullPlaceholder" value="-1"/>
+                                                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                         </dictionary>
                                                                     </binding>
@@ -2386,6 +2399,7 @@ CA
                 </defaultToolbarItems>
             </toolbar>
             <connections>
+                <binding destination="494" name="title" keyPath="self.applicationTitle" id="5pU-Id-LpI"/>
                 <outlet property="leftPanel" destination="1491" id="hB7-u0-2qx"/>
                 <outlet property="panelVisibilityControl" destination="1786" id="bY7-Ju-J1z"/>
                 <outlet property="rightPanel" destination="1795" id="T8V-be-6fP"/>
@@ -2413,7 +2427,6 @@ CA
                 <outlet property="menuContextKeyframe" destination="1600" id="1612"/>
                 <outlet property="menuContextKeyframeInterpol" destination="1604" id="1613"/>
                 <outlet property="menuContextKeyframeNoselection" destination="o0p-0U-Ks5" id="H9k-Jz-Iau"/>
-                <outlet property="menuContextResManager" destination="1696" id="1703"/>
                 <outlet property="menuFileNewPackage" destination="g6Z-Mh-Dls" id="D5e-wF-NCl"/>
                 <outlet property="menuItemSnapGrid" destination="zA6-4S-M8f" id="UZF-mG-oQZ"/>
                 <outlet property="menuItemStageColor" destination="KQF-gw-sgJ" id="cG7-Q4-aYh"/>
@@ -2576,90 +2589,6 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="menuPasteKeyframes:" target="494" id="nRT-bW-3MQ"/>
-                    </connections>
-                </menuItem>
-            </items>
-        </menu>
-        <menu title="ResourceManager" autoenablesItems="NO" id="1696">
-            <items>
-                <menuItem title="Show in Finder" id="IRc-Ms-zaf">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuShowInFinder:" target="494" id="GRa-By-GNK"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="QAj-XD-yJX">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem title="Open with External Editor" id="1837">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuOpenExternal:" target="494" id="1839"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="tgM-fJ-aI6">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="1836"/>
-                <menuItem title="Make Smart Sprite Sheet" id="1801">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuCreateSmartSpriteSheet:" target="494" id="1803"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="0dH-cw-ISx">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="1802"/>
-                <menuItem title="Create Keyframes from Selection" id="1702">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuCreateKeyframesFromSelection:" target="494" id="1704"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="a51-Ij-Ite">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="7hy-dA-Awn"/>
-                <menuItem title="New Interface File..." id="ON2-nH-8h4">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuActionInterfaceFile:" target="494" id="uq1-bu-kIq"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="EZ1-IO-EqH">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem title="New Folder" id="ZnY-Uc-6ar">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuActionNewFolder:" target="494" id="jqi-Pb-64m"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="ERd-Sg-SIM">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </menuItem>
-                <menuItem title="Delete" id="dCr-Uf-VbD">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="menuActionDelete:" target="494" id="5g5-MT-Dbi"/>
-                        <binding destination="494" name="enabled" keyPath="projectSettings" id="uGX-nZ-twF">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
             </items>

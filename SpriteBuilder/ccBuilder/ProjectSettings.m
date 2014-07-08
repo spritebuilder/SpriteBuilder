@@ -34,6 +34,7 @@
 #import "SBErrors.h"
 #import "ResourceTypes.h"
 #import "NSError+SBErrors.h"
+#import "MiscConstants.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -392,10 +393,26 @@
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
     
     [self removeObjectForResource:res andKey:@"isSmartSpriteSheet"];
-    
+
+    [self removeIntermediateFileLookupFile:res];
+
     [self store];
     [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
     [[AppDelegate appDelegate].projectOutlineHandler updateSelectionPreview];
+}
+
+- (void)removeIntermediateFileLookupFile:(RMResource *)res
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *intermediateFileLookup = [res.filePath stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
+    if ([fileManager fileExistsAtPath:intermediateFileLookup])
+    {
+        NSError *error;
+        if (![fileManager removeItemAtPath:intermediateFileLookup error:&error])
+        {
+            NSLog(@"Error removing intermediate filelookup file %@ - %@", intermediateFileLookup, error);
+        }
+    }
 }
 
 - (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key

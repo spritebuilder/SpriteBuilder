@@ -24,6 +24,12 @@
 
 #import "CCBOutlineView.h"
 
+@class ResourceCommandController;
+
 @interface ResourceManagerOutlineView : CCBOutlineView
-- (void)deleteSelectedResourcesWithRightClickedRow:(NSInteger)rightClickedRowIndex;
+
+@property (nonatomic, weak) id actionTarget;
+
+- (NSArray *)selectedResources;
+
 @end

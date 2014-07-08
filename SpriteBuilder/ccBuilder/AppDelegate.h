@@ -119,6 +119,7 @@ enum {
 @class WarningTableViewHandler;
 @class AnimationPlaybackManager;
 @class RegistrationWindow;
+@class ResourceManagerOutlineView;
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
@@ -244,7 +245,7 @@ enum {
     ProjectSettings* projectSettings;
     
     // Project display
-    IBOutlet NSOutlineView* __weak outlineProject;
+    IBOutlet ResourceManagerOutlineView* __weak outlineProject;
     ResourceManagerOutlineHandler* projectOutlineHandler;
     
     // Project Warnings.
@@ -303,7 +304,7 @@ enum {
 
 @property (weak) IBOutlet MainWindow *window;
 
-@property (weak, nonatomic,readonly) IBOutlet NSOutlineView* outlineProject;
+@property (weak, nonatomic,readonly) IBOutlet ResourceManagerOutlineView *outlineProject;
 
 
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
@@ -343,11 +344,11 @@ enum {
 
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
-@property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextResManager;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;
 @property (weak, nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
 
 @property (nonatomic,strong) ProjectSettings* projectSettings;
+@property (nonatomic,strong,readonly) NSString * applicationTitle;
 
 @property (nonatomic,copy) NSString* errorDescription;
 
@@ -378,6 +379,8 @@ enum {
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
 - (void) openFile:(NSString*) fileName;
+
+- (void)newFile:(NSString *)fileName type:(int)type resolutions:(NSMutableArray *)resolutions;
 
 // Publish commands
 - (void)checkForDirtyDocumentAndPublishAsync:(BOOL)async;
@@ -420,10 +423,7 @@ enum {
 - (IBAction) menuZoomIn:(id)sender;
 - (IBAction) menuZoomOut:(id)sender;
 
-- (IBAction)menuCreateSmartSpriteSheet:(id)sender;
-- (IBAction)menuShowInFinder:(id)sender;
 - (IBAction) pressedToolSelection:(id)sender;
-- (IBAction) pressedPanelVisibility:(id)sender;
 
 - (IBAction) menuOpenResourceManager:(id)sender;
 - (void) reloadResources;
@@ -434,11 +434,6 @@ enum {
 
 // selectors exposed to suppress 'undeclared selector' warnings
 - (IBAction)menuPasteKeyframes:(id)sender;
-- (IBAction)menuEditSmartSpriteSheet:(id)sender;
-- (IBAction)menuActionDelete:(id)sender;
-- (IBAction)menuActionInterfaceFile:(NSMenuItem*)sender;
-- (IBAction)menuActionNewFolder:(NSMenuItem*)sender;
-- (IBAction)menuOpenExternal:(id)sender;
 
 // Undo / Redo
 - (void) updateDirtyMark;
@@ -473,6 +468,8 @@ enum {
 -(void)disableHelpDialog:(NSString*)type;
 
 @property (weak) IBOutlet NSTableView *warningTableView;
+
+- (void)renamedResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath;
 
 @property (weak) IBOutlet NSView *inspectorPhysics;
 

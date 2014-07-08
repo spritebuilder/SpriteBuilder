@@ -11,6 +11,10 @@
 
 #import "ProjectSettings.h"
 #import "SBErrors.h"
+#import "ProjectSettings+Packages.h"
+#import "NSString+Packages.h"
+#import "SBAssserts.h"
+#import "MiscConstants.h"
 
 @interface ProjectSettings_Tests : XCTestCase
 
@@ -27,16 +31,12 @@
     [super setUp];
 
     _projectSettings = [[ProjectSettings alloc] init];
-}
-
-- (void)tearDown
-{
-    [super tearDown];
+    _projectSettings.projectPath = @"/project/abc.ccbproj";
 }
 
 - (void)testStandardInitialization
 {
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
     id firstResourcePath = _projectSettings.resourcePaths[0];
     XCTAssertEqualObjects([firstResourcePath objectForKey:@"path"], @"Resources");
 }
@@ -47,7 +47,7 @@
     XCTAssertTrue([_projectSettings addResourcePath:@"/project/resourcepath1" error:&error]);
     XCTAssertNil(error);
     // Default init will add a default value to resourcePaths, see testStandardInitialization
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 2);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 2);
 }
 
 - (void)testAddResourcePathTwice
@@ -63,7 +63,7 @@
     XCTAssertNotNil(error2);
     XCTAssertEqual(error2.code, SBDuplicateResourcePathError);
 
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 2);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 2);
 }
 
 - (void)testIsResourcePathAlreadyInProject
@@ -85,7 +85,7 @@
     NSError *error;
     XCTAssertTrue([_projectSettings removeResourcePath:@"/project/test" error:&error]);
     // Default init will add a default value to resourcePaths, see testStandardInitialization
-    XCTAssertEqual(_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
     XCTAssertNil(error);
 }
 
@@ -126,6 +126,31 @@
     XCTAssertFalse([_projectSettings moveResourcePathFrom:path1 toPath:path2 error:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBDuplicateResourcePathError);
+}
+
+- (void)testFullPathForPackageName
+{
+    NSString *packageName = @"foo";
+    NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+
+    NSString *fullPathForPackageName = [_projectSettings fullPathForPackageName:packageName];
+    NSString *supposedFullPath = [fullPackagesPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
+
+    SBAssertStringsEqual(fullPathForPackageName,supposedFullPath);
+}
+
+- (void)testIsPathWithinPackagesFolder
+{
+    NSString *pathWithinPackagesFolder = [_projectSettings.packagesFolderPath stringByAppendingPathComponent:@"foo"];
+
+    XCTAssertTrue([_projectSettings isPathInPackagesFolder:pathWithinPackagesFolder]);
+}
+
+- (void)testPackagesFolderPath
+{
+    NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
+
+    SBAssertStringsEqual(fullPackagesPath, _projectSettings.packagesFolderPath);
 }
 
 @end

@@ -5,7 +5,7 @@
 @class DateCache;
 @class CCBPublisher;
 @class FCFormatConverter;
-@class PublishRenamedFilesLookup;
+@protocol PublishFileLookupProtocol;
 
 @interface PublishImageOperation : PublishBaseOperation
 
@@ -15,11 +15,13 @@
 @property (nonatomic, copy) NSString *resolution;
 
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
-@property (nonatomic, strong) PublishRenamedFilesLookup *fileLookup;
+@property (nonatomic, strong) id<PublishFileLookupProtocol> fileLookup;
 
 @property (nonatomic) BOOL isSpriteSheet;
 @property (nonatomic) CCBPublisherTargetType targetType;
 
 @property (nonatomic, strong) DateCache *modifiedFileDateCache;
+
+@property (nonatomic) BOOL intermediateProduct;
 
 @end

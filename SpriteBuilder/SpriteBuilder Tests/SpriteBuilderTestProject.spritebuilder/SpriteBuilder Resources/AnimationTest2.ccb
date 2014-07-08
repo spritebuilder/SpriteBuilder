@@ -317,8 +317,6 @@
 						<real>1</real>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 				<key>seqExpanded</key>
 				<true/>
 			</dict>
@@ -393,9 +391,27 @@
 				</array>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
-	<array/>
+	<array>
+		<dict>
+			<key>height</key>
+			<real>150</real>
+			<key>text</key>
+			<string>Tests 
+a) Callbacks
+b) Tweens between T1 &amp; T2 animation
+</string>
+			<key>width</key>
+			<real>150</real>
+			<key>xPos</key>
+			<real>359</real>
+			<key>yPos</key>
+			<real>248</real>
+		</dict>
+	</array>
 	<key>resolutions</key>
 	<array>
 		<dict>

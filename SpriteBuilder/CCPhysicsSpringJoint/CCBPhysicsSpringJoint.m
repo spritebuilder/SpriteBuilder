@@ -335,6 +335,18 @@ const int kSpringHeightHalf = kSpringHeight/2;
 	
 }
 
+-(void)setStiffness:(float)stiffness
+{
+	if(stiffness < 0)
+	{
+		[[AppDelegate appDelegate] modalDialogTitle:@"Stiffness Restrictions" message:@"The spring stiffness must be greater than Zero"];
+		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"stiffness" afterDelay:0];
+		return;
+	}
+	
+	_stiffness = stiffness;
+}
+
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	

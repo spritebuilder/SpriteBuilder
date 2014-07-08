@@ -11,6 +11,7 @@
 
 #import "RMPackage.h"
 #import "MiscConstants.h"
+#import "NSString+Packages.h"
 
 @interface RMPackage_Tests : XCTestCase
 
@@ -21,7 +22,7 @@
 - (void)testNameProperty
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = [NSString stringWithFormat:@"/project/packages/foo.%@", PACKAGE_NAME_SUFFIX];
+    package.dirPath = [@"/project/packages/foo" stringByAppendingPackageSuffix];
 
     SBAssertStringsEqual(package.name, @"foo");
 }
@@ -29,10 +30,9 @@
 - (void)testNamePropertyWithDoubleSuffix
 {
     RMPackage *package = [[RMPackage alloc] init];
-    package.dirPath = [NSString stringWithFormat:@"/project/packages/foo.%@.%@", PACKAGE_NAME_SUFFIX, PACKAGE_NAME_SUFFIX];
+    package.dirPath = [[@"/project/packages/foo" stringByAppendingPackageSuffix] stringByAppendingPackageSuffix];
 
-    // XCTAssertTrue([package.name isEqualToString:@"foo.sbpack"], @"Package name is %@", package.name);
-    SBAssertStringsEqual(package.name, @"foo.sbpack");
+    SBAssertStringsEqual(package.name, [@"foo" stringByAppendingPackageSuffix]);
 }
 
 @end
