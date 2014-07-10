@@ -3253,8 +3253,14 @@ static BOOL hideAllToNextSeparator;
     CCBWarnings* warnings = [[CCBWarnings alloc] init];
     warnings.warningsDescription = @"Publisher Warnings";
 
-    // Setup publisher, publisher is released in publisher:finishedWithWarnings:
-    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
+    id __weak selfWeak = self;
+    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
+                                                                   warnings:warnings
+                                                              finishedBlock:^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
+    {
+        [selfWeak publisher:aPublisher finishedWithWarnings:someWarnings];
+    }];
+
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     publisher.taskStatusUpdater = modalTaskStatusWindow;
 

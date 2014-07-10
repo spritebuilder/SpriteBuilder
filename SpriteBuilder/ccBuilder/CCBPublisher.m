@@ -28,7 +28,6 @@
 #import "NSString+RelativePath.h"
 #import "PlugInManager.h"
 #import "CCBGlobals.h"
-#import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "CCBFileUtil.h"
 #import "ResourceManagerUtil.h"
@@ -64,13 +63,14 @@
 @property (nonatomic) CCBPublisherTargetType targetType;
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
+@property (nonatomic, copy) PublisherFinishBlock finishBlock;
 
 @end
 
 
 @implementation CCBPublisher
 
-- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings finishedBlock:(PublisherFinishBlock)finishBlock;
 {
     NSAssert(someProjectSettings != nil, @"project settings should never be nil! Publisher won't work without.");
     NSAssert(someWarnings != nil, @"warnings are nil. Are you sure you don't need them?");
@@ -83,6 +83,7 @@
 
     self.projectSettings = someProjectSettings;
     self.warnings = someWarnings;
+    self.finishBlock = finishBlock;
 
     self.modifiedDatesCache = [[DateCache alloc] init];
 
@@ -756,13 +757,13 @@
 
     if ([[NSThread currentThread] isMainThread])
     {
-        [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
+        _finishBlock(self, _warnings);
     }
     else
     {
         dispatch_sync(dispatch_get_main_queue(), ^
         {
-            [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
+            _finishBlock(self, _warnings);
         });
     }
 }

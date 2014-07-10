@@ -28,6 +28,7 @@
 @class ProjectSettings;
 @class CCBWarnings;
 @protocol TaskStatusUpdaterProtocol;
+@class CCBPublisher;
 
 
 enum {
@@ -40,11 +41,16 @@ enum {
 };
 
 
+typedef void (^PublisherFinishBlock)(CCBPublisher *publisher, CCBWarnings *warnings);
+
+
 @interface CCBPublisher : NSObject
 
 @property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
-- (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
+                     warnings:(CCBWarnings *)someWarnings
+                finishedBlock:(PublisherFinishBlock)finishBlock;
 
 - (void)start;
 - (void)startAsync;
