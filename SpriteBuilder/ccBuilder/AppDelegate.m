@@ -3263,6 +3263,7 @@ static BOOL hideAllToNextSeparator;
 
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     publisher.taskStatusUpdater = modalTaskStatusWindow;
+    publisher.publishInputDirectories = projectSettings.absoluteResourcePaths;
 
     // Open progress window and publish
     if (async)

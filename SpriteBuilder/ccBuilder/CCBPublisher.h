@@ -48,6 +48,14 @@ typedef void (^PublisherFinishBlock)(CCBPublisher *publisher, CCBWarnings *warni
 
 @property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
+// Where should published files go
+// This is optional, if not set dirs will be take from project settings
+@property (nonatomic, copy) NSString *publishOutputDirectory;
+
+// Which directories should be published
+@property (nonatomic, copy) NSArray *publishInputDirectories;
+
+
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
                      warnings:(CCBWarnings *)someWarnings
                 finishedBlock:(PublisherFinishBlock)finishBlock;

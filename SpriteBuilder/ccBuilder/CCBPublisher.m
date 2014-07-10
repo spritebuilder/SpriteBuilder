@@ -609,13 +609,12 @@
     [_publishingQueue addOperation:operation];
 }
 
-- (BOOL)publishAllToDirectory:(NSString*)outputDir
+- (BOOL)publishAllInputDirsToOutputDirectory:(NSString*)outputDir
 {
     self.outputDir = outputDir;
     self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
-    // Publish resources and ccb-files
-    for (NSString* aDir in _projectSettings.absoluteResourcePaths)
+    for (NSString* aDir in _publishInputDirectories)
     {
 		if (![self publishDirectory:aDir subPath:NULL])
 		{
@@ -666,10 +665,24 @@
 
     self.publishForResolutions = [self.projectSettings publishingResolutionsForTargetType:targetType];
 
-    NSString *publishDir = [[_projectSettings publishDirForTargetType:targetType]
-                                              absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
+    NSString *outputDir = [self outputDirectoryForTargetType:targetType];
 
-    return [self publishAllToDirectory:publishDir];
+    return [self publishAllInputDirsToOutputDirectory:outputDir];
+}
+
+- (NSString *)outputDirectoryForTargetType:(CCBPublisherTargetType)targetType
+{
+    NSString *publishDir;
+    if (_publishOutputDirectory)
+    {
+        publishDir = _publishOutputDirectory;
+    }
+    else
+    {
+        publishDir = [[_projectSettings publishDirForTargetType:targetType]
+                                        absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
+    }
+    return publishDir;
 }
 
 - (void)resetNeedRepublish
@@ -687,7 +700,13 @@
         && !_projectSettings.onlyPublishCCBs)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
+
         NSArray *publishDirs = @[_projectSettings.publishDirectory, _projectSettings.publishDirectoryAndroid];
+        if (_publishOutputDirectory)
+        {
+            publishDirs = @[_publishOutputDirectory];
+        }
+
         for (NSString * dir in publishDirs)
         {
             NSString *publishDir = [dir absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
