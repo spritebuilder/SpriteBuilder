@@ -25,5 +25,6 @@
 - (void)deleteResource:(id)sender;
 
 - (void)exportPackage:(id)sender;
+- (void)publishPackage:(id)sender;
 
 @end

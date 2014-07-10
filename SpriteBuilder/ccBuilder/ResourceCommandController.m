@@ -11,6 +11,7 @@
 #import "ResourceManager.h"
 #import "ResourceNewFolderCommand.h"
 #import "ResourceNewPackageCommand.h"
+#import "ResourcePublishPackageCommand.h"
 
 @implementation ResourceCommandController
 
@@ -90,6 +91,15 @@
 {
     ResourceExportPackageCommand *command = [[ResourceExportPackageCommand alloc] init];
     command.resources = [self selectedResources];
+    command.windowForModals = _window;
+    [command execute];
+}
+
+- (void)publishPackage:(id)sender
+{
+    ResourcePublishPackageCommand *command = [[ResourcePublishPackageCommand alloc] init];
+    command.resources = [self selectedResources];
+    command.projectSettings = _projectSettings;
     command.windowForModals = _window;
     [command execute];
 }
