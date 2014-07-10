@@ -86,12 +86,27 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 
 - (void)createEmptyFiles:(NSArray *)files
 {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     for (NSString *relFilePath in files)
     {
+        NSData *emptyStringData = [@"" dataUsingEncoding:NSUTF8StringEncoding];
+
+        [dictionary setObject:emptyStringData forKey:relFilePath];
+    }
+
+    [self createFilesWithContents:dictionary];
+}
+
+- (void)createFilesWithContents:(NSDictionary *)filesWithContents
+{
+    for (NSString *relFilePath in filesWithContents)
+    {
+        NSData *content = filesWithContents[relFilePath];
         NSString *fullPathForFile = [_testDirecotoryPath stringByAppendingPathComponent:relFilePath];
         NSError *error;
-        XCTAssertTrue([@"" writeToFile:fullPathForFile atomically:YES encoding:NSUTF8StringEncoding error:&error],
-                      @"Could not create file \"%@\", error: %@", fullPathForFile, error);
+
+        XCTAssertTrue([content writeToFile:fullPathForFile options:NSDataWritingAtomic error:&error],
+                              @"Could not create file \"%@\", error: %@", fullPathForFile, error);
     }
 }
 

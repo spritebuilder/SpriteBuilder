@@ -7,7 +7,17 @@
 @property (nonatomic, strong) NSFileManager *fileManager;
 
 - (void)createFolders:(NSArray *)folders;
+
+// Will create empty text files at the given relativePaths in the array
+// Containing folders have to exist
 - (void)createEmptyFiles:(NSArray *)files;
+
+// create files, dictionary structure: key: relativeFilePath
+// value has to be of type NSData *
+// Example for parameter:
+// NSDictionary *foo = @{@"path/to/file.txt": [NSDate data]};
+- (void)createFilesWithContents:(NSDictionary *)filesWithContents;
+
 - (void)createProjectSettingsFileWithName:(NSString *)name;
 
 - (NSDate *)modificationDateOfFile:(NSString *)filePath;
