@@ -86,24 +86,24 @@
 
 - (void)testMigrationWithExistingPackagesFolderAsResourcePath
 {
-    [self createFolders:@[@"packages"]];
+    [self createFolders:@[@"Packages"]];
 
     [self createEmptyFiles:@[
-            @"packages/asset.png",
-            @"packages/scene.ccb"]];
+            @"Packages/asset.png",
+            @"Packages/scene.ccb"]];
 
-    [self setProjectsResourcePaths:@[@"packages"]];
+    [self setProjectsResourcePaths:@[@"Packages"]];
 
     NSError *error;
     XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
-    [self assertFileExists:@"packages"];
-    [self assertFileExists:[@"packages/packages" stringByAppendingPackageSuffix]];
-    [self assertFileExists:[[@"packages/packages" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
+    [self assertFileExists:@"Packages"];
+    [self assertFileExists:[@"Packages/Packages" stringByAppendingPackageSuffix]];
+    [self assertFileExists:[[@"Packages/Packages" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
 
-    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"packages"]]];
-    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"packages"]]];
+    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"Packages"]]];
+    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"Packages"]]];
 }
 
 
@@ -112,8 +112,8 @@
     [self createFolders:@[@"sprites"]];
     [self createEmptyFiles:@[@"sprites/asset.png"]];
 
-    [self createFolders:@[@"packages/sprites.sbpack"]];
-    [self createEmptyFiles:@[@"packages/sprites.sbpack/smiley.png"]];
+    [self createFolders:@[@"Packages/sprites.sbpack"]];
+    [self createEmptyFiles:@[@"Packages/sprites.sbpack/smiley.png"]];
 
     [self setProjectsResourcePaths:@[@"sprites"]];
 
@@ -121,12 +121,12 @@
     XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
-    [self assertFileExists:[@"packages/sprites" stringByAppendingPackageSuffix]];
-    [self assertFileExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
-    [self assertFileDoesNotExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"smiley.png"]];
+    [self assertFileExists:[@"Packages/sprites" stringByAppendingPackageSuffix]];
+    [self assertFileExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
+    [self assertFileDoesNotExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"smiley.png"]];
 
     // This is a bit brittle, but should be easily fixed if renaming rules change
-    [self assertFileExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingString:@".renamed"]];
+    [self assertFileExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingString:@".renamed"]];
     [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"sprites"]]];
 }
 
