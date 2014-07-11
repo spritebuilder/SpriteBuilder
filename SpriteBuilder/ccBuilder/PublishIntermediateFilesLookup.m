@@ -23,6 +23,9 @@
 
 - (void)addRenamingRuleFrom:(NSString *)src to:(NSString *)dst
 {
+    NSAssert(src != nil, @"src must not be nil");
+    NSAssert(dst != nil, @"dst must not be nil");
+
     if (_flattenPaths)
     {
         src = [src lastPathComponent];

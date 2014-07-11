@@ -141,13 +141,18 @@
 
 - (void)publishSoundFile:(NSString *)srcFilePath to:(NSString *)dstFilePath
 {
-    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcFilePath];
+    NSString *relPath = [_projectSettings findRelativePathInPackagesForAbsolutePath:srcFilePath];
+    if (!relPath)
+    {
+        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not find relative path for Sound file: \"%@\"", srcFilePath] isFatal:YES];
+        return;
+    }
 
     int format = [_projectSettings soundFormatForRelPath:relPath targetType:_targetType];
     int quality = [_projectSettings soundQualityForRelPath:relPath targetType:_targetType];
     if (format == -1)
     {
-        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
+        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for \"%@\"", relPath] isFatal:YES];
         return;
     }
 
@@ -776,13 +781,19 @@
 
     if ([[NSThread currentThread] isMainThread])
     {
-        _finishBlock(self, _warnings);
+        if (_finishBlock)
+        {
+            _finishBlock(self, _warnings);
+        }
     }
     else
     {
         dispatch_sync(dispatch_get_main_queue(), ^
         {
-            _finishBlock(self, _warnings);
+            if (_finishBlock)
+            {
+                _finishBlock(self, _warnings);
+            }
         });
     }
 }

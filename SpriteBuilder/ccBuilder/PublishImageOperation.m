@@ -3,7 +3,6 @@
 #import "FCFormatConverter.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
-#import "ResourceManagerUtil.h"
 #import "DateCache.h"
 #import "NSString+Publishing.h"
 #import "PublishRenamedFilesLookup.h"
@@ -48,7 +47,13 @@
 // TODO: this is a long method -> split up!
 - (void)publishImage
 {
-    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
+    NSString *relPath = [_projectSettings findRelativePathInPackagesForAbsolutePath:_srcFilePath];
+    if (!relPath)
+    {
+        NSString *warningText = [NSString stringWithFormat:@"Image could not be published, relative path could not be determined for \"%@\"", _srcFilePath];
+        [_warnings addWarningWithDescription:warningText];
+        return;
+    }
 
     [self setFormatDitherAndCompress:relPath];
 
@@ -163,8 +168,11 @@
             return;
         }
 
+        #ifndef TESTING
+        // Exclude from tests, not working at the moment
         // Copy file and resize
         [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:_dstFilePath forResolution:_resolution];
+        #endif
 
         // Convert it
         NSString *dstPathConverted = nil;
@@ -242,7 +250,7 @@
 - (BOOL)isSpriteSheetAlreadyPublished:(NSString *)srcPath outDir:(NSString *)outDir resolution:(NSString *)resolution
 {
     NSString *ssDir = [srcPath stringByDeletingLastPathComponent];
-    NSString *ssDirRel = [ResourceManagerUtil relativePathFromAbsolutePath:ssDir];
+    NSString *ssDirRel = [_projectSettings findRelativePathInPackagesForAbsolutePath:ssDir];
     NSString *ssName = [ssDir lastPathComponent];
 
     NSDate *srcDate = [self modifiedDateOfSpriteSheetDirectory:ssDir];
