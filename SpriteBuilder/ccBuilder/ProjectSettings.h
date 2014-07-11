@@ -218,4 +218,10 @@ typedef enum
 // *** Misc ***
 - (NSString* ) getVersion;
 
+// Tries to find the relative path among all packages for a given absolute path
+// Example: "/foo/Packages/baa.sbpack" as available packages and absolutePath given is
+// "/foo/Packages/baa.sbpack/level1/sprites/fighter.png" will result in "level1/sprites/fighter.png"
+// If no package include the given absolutePath nil is returned
+- (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath;
+
 @end

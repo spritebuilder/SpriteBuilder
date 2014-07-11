@@ -412,17 +412,29 @@
 // be migrated with more effort to fix this change later on
 - (void)testEnums
 {
-    XCTAssertEqual(PublishEnvironmentDevelop, 0);
-    XCTAssertEqual(PublishEnvironmentRelease, 1);
+    XCTAssertEqual(PublishEnvironmentDevelop, 0, @"Enum value PublishEnvironmentDevelop  must not change");
+    XCTAssertEqual(PublishEnvironmentRelease, 1, @"Enum value PublishEnvironmentRelease  must not change");
 
-    XCTAssertEqual(CCBTargetEngineCocos2d, 0);
-    XCTAssertEqual(CCBTargetEngineSpriteKit, 1);
+    XCTAssertEqual(CCBTargetEngineCocos2d, 0, @"Enum value CCBTargetEngineCocos2d  must not change");
+    XCTAssertEqual(CCBTargetEngineSpriteKit, 1, @"Enum value CCBTargetEngineSpriteKit  must not change");
 
-    XCTAssertEqual(kCCBOrientationLandscape, 0);
-    XCTAssertEqual(kCCBOrientationPortrait, 1);
+    XCTAssertEqual(kCCBOrientationLandscape, 0, @"Enum value kCCBOrientationLandscape  must not change");
+    XCTAssertEqual(kCCBOrientationPortrait, 1, @"Enum value kCCBOrientationPortrait  must not change");
 
-    XCTAssertEqual(kCCBDesignTargetFlexible, 0);
-    XCTAssertEqual(kCCBDesignTargetFixed, 1);
+    XCTAssertEqual(kCCBDesignTargetFlexible, 0, @"Enum value kCCBDesignTargetFlexible  must not change");
+    XCTAssertEqual(kCCBDesignTargetFixed, 1, @"Enum value kCCBDesignTargetFixed  must not change");
+}
+
+- (void)testRelativePathFromAbsolutePath
+{
+    [_projectSettings addResourcePath:[self fullPathForFile:@"Packages/foo.sbpack"] error:nil];
+    [_projectSettings addResourcePath:[self fullPathForFile:@"Packages/baa.sbpack"] error:nil];
+
+    NSString *fullPath = [self fullPathForFile:@"Packages/foo.sbpack/sprites/fighter.png"];
+    SBAssertStringsEqual([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath], @"sprites/fighter.png");
+
+    NSString *fullPath2 = [self fullPathForFile:@"Packages/level1.sbpack/sprites/fighter.png"];
+    XCTAssertNil([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath2]);
 }
 
 

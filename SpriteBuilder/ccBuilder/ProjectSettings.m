@@ -695,4 +695,17 @@
     return [projectPath stringByDeletingLastPathComponent];
 }
 
+- (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath
+{
+    for (NSString *absoluteResourcePath in self.absoluteResourcePaths)
+    {
+        if ([absolutePath hasPrefix:absoluteResourcePath])
+        {
+            return [absolutePath substringFromIndex:[absoluteResourcePath length] + 1];
+        }
+    }
+
+    return nil;
+}
+
 @end
