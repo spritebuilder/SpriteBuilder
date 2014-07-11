@@ -109,7 +109,7 @@
  
 }
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
 {
     [self updateRenderBody];
     [super visit:renderer parentTransform:parentTransform];

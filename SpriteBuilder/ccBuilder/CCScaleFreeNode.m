@@ -11,7 +11,7 @@
 
 @implementation CCScaleFreeNode
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
 {
     CCNode * parent = self.parent;
     float scale = 1.0f;

@@ -55,7 +55,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     return NO;
 }
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
 {
     
     CGPoint nodeSpace = ccp(0.0f,kSegmentHandleDefaultRadius * [CCDirector sharedDirector].UIScaleFactor);
@@ -204,7 +204,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
 }
 
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
 {
     [self updateRenderBody];
     [super visit:renderer parentTransform:parentTransform];

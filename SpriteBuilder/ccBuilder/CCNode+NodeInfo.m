@@ -239,7 +239,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 }
 
 
--(void)customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void)customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
 {
     if([self.userObject isKindOfClass:[NodeInfo class]] &&  self.hidden)
         return;
