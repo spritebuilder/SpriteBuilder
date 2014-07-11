@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "PublishImageOperation.h"
 
 #import "FCFormatConverter.h"
@@ -168,11 +169,11 @@
             return;
         }
 
-        #ifndef TESTING
-        // Exclude from tests, not working at the moment
         // Copy file and resize
-        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:_dstFilePath forResolution:_resolution];
-        #endif
+        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath
+                                                            saveAs:_dstFilePath
+                                                     forResolution:_resolution
+                                                   projectSettings:_projectSettings];
 
         // Convert it
         NSString *dstPathConverted = nil;

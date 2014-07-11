@@ -461,7 +461,7 @@
 
 - (id) valueForResource:(RMResource*) res andKey:(id) key
 {
-    NSString* relPath = res.relativePath;
+    NSString* relPath = [self findRelativePathInPackagesForAbsolutePath:res.filePath];
     return [self valueForRelPath:relPath andKey:key];
 }
 

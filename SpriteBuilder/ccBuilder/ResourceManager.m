@@ -34,6 +34,7 @@
 #import "CCBFileUtil.h"
 #import <CoreGraphics/CGImage.h>
 #import <QTKit/QTKit.h>
+#import <MacTypes.h>
 #import "CCBPublisher.h"
 #import "SoundFileImageController.h"
 #import "MiscConstants.h"
@@ -644,24 +645,41 @@
     return dir.dirPath;
 }
 
-- (void) createCachedImageFromAuto:(NSString*)autoFile saveAs:(NSString*)dstFile forResolution:(NSString*)res
+- (void)createCachedImageFromAuto:(NSString *)autoFile
+                           saveAs:(NSString *)dstFile
+                    forResolution:(NSString *)res
+                  projectSettings:(ProjectSettings *)projectSettings
 {
+    NSAssert(projectSettings != nil, @"ProjectSettings must not be nil.");
+
     // Find settings for the file
     NSString* fileName = [autoFile lastPathComponent];
     RMResource* resource = [[RMResource alloc] init];
     resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
     resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
-    int tabletScale = [[[AppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
+    int tabletScale = [[projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
     if (!tabletScale) tabletScale = 2;
     
-    int srcScaleSetting = [[[AppDelegate appDelegate].projectSettings valueForResource:resource andKey:@"scaleFrom"] intValue];
+    int srcScaleSetting = [[projectSettings valueForResource:resource andKey:@"scaleFrom"] intValue];
     
     // Calculate the dst scale factor
     float dstScale = 1;
-    if ([res isEqualToString:@"phone"]) dstScale = 1;
-    if ([res isEqualToString:@"phonehd"]) dstScale = 2;
-    else if ([res isEqualToString:@"tablet"]) dstScale = 1 * tabletScale;
-    else if ([res isEqualToString:@"tablethd"]) dstScale = 2 * tabletScale;
+    if ([res isEqualToString:@"phone"])
+    {
+        dstScale = 1;
+    }
+    if ([res isEqualToString:@"phonehd"])
+    {
+        dstScale = 2;
+    }
+    else if ([res isEqualToString:@"tablet"])
+    {
+        dstScale = 1 * tabletScale;
+    }
+    else if ([res isEqualToString:@"tablethd"])
+    {
+        dstScale = 2 * tabletScale;
+    }
 
     // Calculate src scale factor
     float srcScale = 1;
@@ -673,7 +691,7 @@
     else
     {
         // Use project default
-        srcScale = [AppDelegate appDelegate].projectSettings.resourceAutoScaleFactor;
+        srcScale = projectSettings.resourceAutoScaleFactor;
     }
     
     // Calculate the actual factor
@@ -719,7 +737,11 @@
     CGImageRef imageDst = CGBitmapContextCreateImage(newContext);
     
     // Create destination directory
-    [[NSFileManager defaultManager] createDirectoryAtPath:[dstFile stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:NULL error:NULL];
+    NSError *error;
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:[dstFile stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:NULL error:&error])
+    {
+        NSLog(@"Error creating directory \"%@\" - %@", [dstFile stringByDeletingLastPathComponent], error);
+    }
     
     // Save the image
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:dstFile];
@@ -841,7 +863,7 @@
                 if (!cachedFileExists || !datesMatch)
                 {
                     // Not yet cached, create file
-                    [self createCachedImageFromAuto:autoFile saveAs:cachedFile forResolution:ext];
+                    [self createCachedImageFromAuto:autoFile saveAs:cachedFile forResolution:ext projectSettings:[AppDelegate appDelegate].projectSettings];
                 }
                 return cachedFile;
             }
