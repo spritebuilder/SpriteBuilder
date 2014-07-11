@@ -277,6 +277,7 @@
 -(void)setDownloadingTranslations{
     ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
     ps.isDownloadingTranslations = 1;
+    [ps store];
     [_translationProgress setMaxValue:ps.numToDownload];
     [_translationProgress setDoubleValue:ps.numDownloaded];
     [_translationProgress setHidden:0];
@@ -293,8 +294,6 @@
  * Make the translation progress bar increase by one
  */
 -(void)incrementTransByOne{
-    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
-    ps.numDownloaded++;
     [_translationProgress incrementBy:1.0];
 }
 
@@ -311,10 +310,6 @@
  * progress information.
  */
 -(void)finishDownloadingTranslations{
-    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
-    ps.isDownloadingTranslations = 0;
-    ps.numDownloaded = 0;
-    ps.numToDownload = 0;
     [_translationProgress setHidden:1];
     [_translationProgressText setHidden:1];
     [tableTranslations setEnabled:1];
@@ -531,12 +526,10 @@
                ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations &&
                [translation.languagesDownloading containsObject:aTableColumn.identifier])
             {
-                [[aTableColumn dataCellForRow:rowIndex] setEnabled:0];
                 return @"Downloading...";
             }
             else
             {
-                [[aTableColumn dataCellForRow:rowIndex] setEnabled:1];
                 return [translation.translations objectForKey:aTableColumn.identifier];
             }
         }
@@ -764,7 +757,6 @@
             [_ltw restartDownload];
             [self setDownloadingTranslations];
         }else{
-            [_ltw pauseDownload];
             [self finishDownloadingTranslations];
             _ltw = nil;
         }

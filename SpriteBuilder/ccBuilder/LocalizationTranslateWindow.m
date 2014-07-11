@@ -13,6 +13,9 @@
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorWindow.h"
 #import "SBErrors.h"
+#import "ProjectSettings.h"
+#import "CocosScene.h"
+#import "StringPropertySetter.h"
 
 @implementation LocalizationTranslateWindow
 
@@ -21,6 +24,8 @@
 @synthesize languages = _languages;
 @synthesize receipts = _receipts;
 @synthesize buyAlert = _buyAlert;
+@synthesize projectPathDir = _projectPathDir;
+@synthesize projectPath = _projectPath;
 
 //Standards for the tab view
 static int downloadLangsIndex = 0;
@@ -32,9 +37,7 @@ static int downloadLangsErrorIndex = 5;
 static int paymentErrorIndex = 6;
 
 //URLs
-//TODO switch back to non test URL
-//static NSString* const baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
-static NSString* const baseURL = @"http://10.0.3.28/api/v1";
+static NSString* const baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
 static NSString* languageURL;
 static NSString* estimateURL;
 static NSString* receiptTranslationsURL;
@@ -47,9 +50,7 @@ static NSString* const downloadingLangsString = @"Downloading...";
 static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%@.";
 
 //Interval for repeating a downlaod request, in seconds
-//TODO use realistic interval
-//static double downloadRepeatInterval = 900;
-static double downloadRepeatInterval = 5;
+static double downloadRepeatInterval = 60;
 
 //Amount of server downtime allowed until download cancelled, in seconds
 static double serverTimeOut = 86400; //86400 = 24 hours
@@ -107,6 +108,9 @@ static int numTimedOutIntervals = 0;
     self.receipts = [[NSMutableDictionary alloc] init];
     self.buyAlert = [NSAlert alertWithMessageText:@"Long Translation Download Time" defaultButton:@"Continue Download..." alternateButton:@"Cancel Download" otherButton:NULL informativeTextWithFormat:@"The average translation download wait is 30 minutes, but translation downloads can sometimes take days. These downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified. However, projects can be closed, opened and modified, and SpriteBuilder can be quit and reopened without affecting your download."];
     [self.buyAlert setShowsSuppressionButton:YES];
+    self.projectPathDir = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPathDir;
+    self.projectPath = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPath;
+    
 }
 
 #pragma mark Downloading and Updating Languages
@@ -363,6 +367,7 @@ static int numTimedOutIntervals = 0;
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     NSMutableArray* trans = handler.translations;
     _phrasesToTranslate = [[NSMutableArray alloc] init];
+    _numTransToDownload = 0;
     for(LocalizationEditorTranslation* t in trans)
     {
         NSString* toTranslate = [t.translations objectForKey:_currLang.isoLangCode];
@@ -467,9 +472,8 @@ static int numTimedOutIntervals = 0;
         [[AppDelegate appDelegate] disableHelpDialog:@"longDownloadTime"];
     }
     if((continueDownload == NSAlertDefaultReturn) && [SKPaymentQueue canMakePayments]){
+        [[AppDelegate appDelegate].lto setLtw:self];
         SKPaymentQueue* defaultQueue = [SKPaymentQueue defaultQueue];
-        [defaultQueue removeTransactionObserver:self];
-        [defaultQueue addTransactionObserver:self];
         SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
         [defaultQueue addPayment:payment];
         [_paymentValidating startAnimation:self];
@@ -674,47 +678,6 @@ static int numTimedOutIntervals = 0;
     [self displayPrice];
 }
 
-#pragma mark Payment Transaction Observer
-
-/*
- * Ask for a receipt for any updated paymnent transactions. If it succeeds,
- * validate the receipt with the server.
- */
--(void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions{
-
-    for (SKPaymentTransaction* transaction in transactions)
-    {
-        switch(transaction.transactionState)
-        {
-            case SKPaymentTransactionStateFailed:
-            {
-                NSLog(@"Failed");
-                [self enableAll];
-                [_paymentValidating stopAnimation:self];
-                [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
-                [queue finishTransaction:transaction];
-                break;
-            }
-            case SKPaymentTransactionStatePurchased:
-            {
-                NSLog(@"Purchased");
-                NSURL* receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
-                NSData* receipt = [NSData dataWithContentsOfURL:receiptURL];
-                [_receipts setObject:receipt forKey:transaction.transactionIdentifier];
-                [self validateReceipt:[receipt base64EncodedStringWithOptions:0]];
-                [queue finishTransaction:transaction];
-                break;
-            }
-            case SKPaymentTransactionStateRestored:
-            {
-                NSLog(@"Restored - Shouldn't happen");
-                [queue finishTransaction:transaction];
-                break;
-            }
-        }
-    }
-}
-
 #pragma mark Validate Receipt and Set Up Downloading Translations
 
 /*
@@ -740,6 +703,11 @@ static int numTimedOutIntervals = 0;
                                       {
                                           if(![self parseJSONConfirmation:data])
                                           {
+                                              
+                                                  ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+                                                  ps.numToDownload = _numTransToDownload;
+                                                  [ps store];
+                                                  [self getTranslations];
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
                                                   [NSApp endSheet:self.window];
@@ -769,7 +737,6 @@ static int numTimedOutIntervals = 0;
  */
 -(int)parseJSONConfirmation:(NSData *)data{
     NSError *JSONError;;
-    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
                                                                     options:kNilOptions error:&JSONError];
     if(JSONError || [[[initialTransDict allKeys] firstObject] isEqualToString:@"Error"])
@@ -781,7 +748,9 @@ static int numTimedOutIntervals = 0;
         return -1;
     }
     _latestRequestID = [initialTransDict objectForKey:@"request_id"];
-    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).latestRequestID = _latestRequestID;
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.latestRequestID = _latestRequestID;
+    [ps store];
     return 0;
 }
 
@@ -796,15 +765,14 @@ static int numTimedOutIntervals = 0;
     {
         for(NSDictionary* d in _phrasesToTranslate)
         {
-            if([t.key isEqualToString:[d objectForKey:@"key"]])
+            NSString* sourceText = [t.translations objectForKey:[d objectForKey:@"source_language"]];
+            if([sourceText isEqualToString:[d objectForKey:@"text"]] && [t.comment isEqualToString:[d objectForKey:@"context"]])
             {
                 t.languagesDownloading = [NSMutableArray arrayWithArray:[d objectForKey:@"target_languages"]];
                 [_parentWindow addLanguages:[d objectForKey:@"target_languages"]];
-                break;
             }
         }
     }
-    ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).numToDownload = _numTransToDownload;
     [_parentWindow setDownloadingTranslations];
 }
 
@@ -855,6 +823,7 @@ static int numTimedOutIntervals = 0;
  */
 -(int)parseJSONTranslations:(NSData *)data{
     NSError *JSONerror;
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
     NSDictionary* initialTransDict  = [NSJSONSerialization JSONObjectWithData:data
                                                                                   options:NSJSONReadingMutableContainers error:&JSONerror];
     if(JSONerror || [[[initialTransDict allKeys] firstObject] isEqualToString:@"Error"])
@@ -872,7 +841,24 @@ static int numTimedOutIntervals = 0;
         NSLog(@"Translations JSONError: %@", JSONerror.localizedDescription);
         return -1;
     }
-    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    BOOL isCurrentProjectOpen = [ps.projectPathDir isEqualToString:_projectPathDir];
+    LocalizationEditorHandler* handler;
+    if(isCurrentProjectOpen)
+    {
+        handler = [AppDelegate appDelegate].localizationEditorHandler;
+    }
+    else
+    {
+        handler = [[LocalizationEditorHandler alloc] init];
+        NSString* langFile = [[_projectPathDir stringByAppendingPathComponent:@"SpriteBuilder Resources"] stringByAppendingPathComponent:@"Strings.ccbLang"];
+        [handler setManagedFileForBackgroundTranslationDownload:langFile];
+        NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:_projectPath];
+        ps = [[ProjectSettings alloc] initWithSerialization:projectDict];
+        ps.projectPath = _projectPath;
+        [ps store];
+        
+    }
+    
     NSArray* handlerTranslations = handler.translations;
     NSArray* requests = [initialTransDict objectForKey:@"requests"];
     NSDictionary* request = NULL;
@@ -905,17 +891,47 @@ static int numTimedOutIntervals = 0;
                     {
                         [t.translations setObject:translationText forKey:translationIso];
                         [t.languagesDownloading removeObject:translationIso];
-                        [_parentWindow incrementTransByOne];
+                        ps.numDownloaded++;
+                        [ps store];
+                        if(isCurrentProjectOpen)
+                        {
+                            [_parentWindow incrementTransByOne];
+                        }
                     }
+                }
+                if(!isCurrentProjectOpen)
+                {
+                    [handler storeFileForBackgroundTranslationDownload];
                 }
             }
         }
     }
-    if([_parentWindow translationProgress] == _numTransToDownload)
+    if(ps.numDownloaded == ps.numToDownload)
     {
         [self endDownload];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_parentWindow finishDownloadingTranslations];
+            
+            if(isCurrentProjectOpen)
+            {
+                [_parentWindow finishDownloadingTranslations];
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", _projectPathDir];
+                [alert runModal];
+                if([[AppDelegate appDelegate] hasOpenedDocument])
+                {
+                    [StringPropertySetter refreshAllStringProps];
+                    [[CocosScene cocosScene] forceRedraw];
+                }
+            }
+            else
+            {
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:@"Go to Project" otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", _projectPathDir];
+                NSInteger response = [alert runModal];
+                if(response == NSAlertAlternateReturn)
+                {
+                    [[AppDelegate appDelegate] openProject:_projectPathDir];
+                }
+                
+            }
         });
     }
     return 0;
@@ -928,13 +944,16 @@ static int numTimedOutIntervals = 0;
  */
 - (void)pauseDownload{
     [_timerTransDownload invalidate];
-    _timerTransDownload = nil;
 }
 
 /*
  * Restarts the timer for the download function.
  */
 -(void)restartDownload{
+    if(_timerTransDownload)
+    {
+        [_timerTransDownload invalidate];
+    }
     [self getTranslations];
     _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
 }
@@ -946,7 +965,11 @@ static int numTimedOutIntervals = 0;
     _numTransToDownload = 0;
     _latestRequestID = nil;
     [_timerTransDownload invalidate];
-    _timerTransDownload = nil;
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.isDownloadingTranslations = 0;
+    ps.numDownloaded = 0;
+    ps.numToDownload = 0;
+    [ps store];
 }
 
 #pragma mark Cancel Download
@@ -958,7 +981,11 @@ static int numTimedOutIntervals = 0;
     _numTransToDownload = 0;
     _latestRequestID = nil;
     [_timerTransDownload invalidate];
-    _timerTransDownload = nil;
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.isDownloadingTranslations = 0;
+    ps.numDownloaded = 0;
+    ps.numToDownload = 0;
+    [ps store];
     [self sendCancelNotificationWithError:error];
 }
 
@@ -1003,6 +1030,16 @@ static int numTimedOutIntervals = 0;
     
 }
 
+#pragma mark Small functions for transaction observer
+
+-(void)saveReceipt:(NSData*)receipt transaction:(SKPaymentTransaction*)transaction{
+    [_receipts setObject:receipt forKey:transaction.transactionIdentifier];
+}
+
+-(void)setPaymentError{
+    [_paymentValidating stopAnimation:self];
+    [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
+}
 
 #pragma mark Misc. helper funcs
 

@@ -13,7 +13,7 @@
 @class LocalizationEditorWindow;
 @class LocalizationTranslateWindowHandler;
 
-@interface LocalizationTranslateWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver, NSWindowDelegate>
+@interface LocalizationTranslateWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate, SKProductsRequestDelegate, NSWindowDelegate>//SKPaymentTransactionObserver, 
 {
     //tab views
     IBOutlet NSView* _noActiveLangsView;
@@ -60,6 +60,8 @@
     NSString* _latestRequestID;
     LocalizationEditorWindow* _parentWindow;
     NSAlert* _buyAlert;
+    NSString* _projectPathDir;
+    NSString* _projectPath;
     
 }
 
@@ -74,9 +76,18 @@
 - (void)cancelDownloadWithError:(NSError*)error;
 - (void)pauseDownload;
 - (void)restartDownload;
+
+//Needed for Transaction Observer
+-(void)enableAll;
+-(void)validateReceipt:(NSString *)receipt;
+-(void)saveReceipt:(NSData*)receipt transaction:(SKPaymentTransaction*)transaction;
+-(void)setPaymentError;
+
 @property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
 @property (nonatomic,strong) NSString* guid;
 @property (nonatomic,strong) NSMutableDictionary* languages;
 @property (nonatomic,strong) NSMutableDictionary* receipts;
 @property (nonatomic,strong) NSAlert* buyAlert;
+@property (nonatomic,strong) NSString* projectPathDir;
+@property (nonatomic,strong) NSString* projectPath;
 @end

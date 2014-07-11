@@ -103,6 +103,7 @@
 		7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */; };
 		7BDECCD1196CBA2400F3EB11 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
 		7BDECCD4196CBA6100F3EB11 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */; };
+		7BDECCE1197047EE00F3EB11 /* LocalizationTransactionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */; };
 		80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E97F6318370F400052647D /* WarningCell.m */; };
 		8045F136183ADA900082BD94 /* seq-visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12C183AD6D30082BD94 /* seq-visible.png */; };
@@ -1326,6 +1327,8 @@
 		7B88AD45195A4846001BF73C /* LocalizationEditorTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorTextFieldCell.h; sourceTree = "<group>"; };
 		7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTextFieldCell.m; sourceTree = "<group>"; };
 		7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7BDECCDF197047EE00F3EB11 /* LocalizationTransactionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTransactionObserver.h; sourceTree = "<group>"; };
+		7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTransactionObserver.m; sourceTree = "<group>"; };
 		7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationTranslateWindow.xib; sourceTree = "<group>"; };
 		7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindow.h; sourceTree = "<group>"; };
 		7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindow.m; sourceTree = "<group>"; };
@@ -3756,6 +3759,8 @@
 				7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */,
 				7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */,
 				7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */,
+				7BDECCDF197047EE00F3EB11 /* LocalizationTransactionObserver.h */,
+				7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */,
 				B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */,
 				B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */,
 				B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */,
@@ -6535,6 +6540,7 @@
 				E3B7BCA015E3BCFE00CF95EF /* MainToolbarDelegate.m in Sources */,
 				E3AF6CDB15F0A9BC0048DB2A /* HelpWindow.m in Sources */,
 				E3AF6CE415F0DBA90048DB2A /* HelpPage.m in Sources */,
+				7BDECCE1197047EE00F3EB11 /* LocalizationTransactionObserver.m in Sources */,
 				E3C9CCBB161D0BBF008A3784 /* InspectorCodeConnectionsJS.m in Sources */,
 				E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */,
 				581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */,

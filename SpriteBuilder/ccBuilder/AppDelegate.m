@@ -179,6 +179,7 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize itemTabView;
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
+@synthesize lto;
 @dynamic	showJoints;
 
 static AppDelegate* sharedAppDelegate;
@@ -636,6 +637,10 @@ typedef enum
 
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
+    
+    //Transaction Observer for Translation Downloads
+    lto = [[LocalizationTransactionObserver alloc] init];
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:lto];
     
     if (delayOpenFiles)
     {

@@ -156,6 +156,72 @@
     return managedFile;
 }
 
+- (void) setManagedFileForBackgroundTranslationDownload:(NSString*) file
+{
+    managedFile = [file copy];
+    
+    [translations removeAllObjects];
+    [activeLanguages removeAllObjects];
+    
+    if (file)
+    {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:managedFile])
+        {
+            NSDictionary* ser = [NSDictionary dictionaryWithContentsOfFile:managedFile];
+            
+            // Read data
+            
+            // Languages
+            NSArray* serLangs = [ser objectForKey:@"activeLanguages"];
+            for (NSString* isoCode in serLangs)
+            {
+                // Find language for code and add active language
+                LocalizationEditorLanguage* lang = [self getLanguageByIsoLangCode:isoCode];
+                if (lang) [activeLanguages addObject:lang];
+            }
+            
+            // Translations
+            NSArray* serTranslations = [ser objectForKey:@"translations"];
+            for (id serTransl in serTranslations)
+            {
+                // Decode a translation and add it
+                LocalizationEditorTranslation* transl = [[LocalizationEditorTranslation alloc] initWithSerialization:serTransl];
+                if (transl) [translations addObject:transl];
+            }
+        }
+    }
+}
+
+- (void) storeFileForBackgroundTranslationDownload
+{
+    if (!managedFile) return;
+    
+    NSMutableDictionary* ser = [NSMutableDictionary dictionary];
+    
+    // Write header
+    [ser setObject:@"SpriteBuilderTranslations" forKey:@"fileType"];
+    [ser setObject:[NSNumber numberWithInt:kCCBTranslationFileFormatVersion] forKey:@"fileVersion"];
+    
+    // Languages
+    NSMutableArray* serLangs = [NSMutableArray array];
+    for (LocalizationEditorLanguage* lang in activeLanguages)
+    {
+        [serLangs addObject:lang.isoLangCode];
+    }
+    [ser setObject:serLangs forKey:@"activeLanguages"];
+    
+    // Translations
+    NSMutableArray* serTransls = [NSMutableArray array];
+    for (LocalizationEditorTranslation* transl in translations)
+    {
+        [serTransls addObject:[transl serialization]];
+    }
+    [ser setObject:serTransls forKey:@"translations"];
+    
+    // Store
+    [ser writeToFile:managedFile atomically:YES];
+}
+
 - (void) setManagedFile:(NSString*) file
 {
     if (file == managedFile) return;
@@ -312,7 +378,7 @@
         if ([transl.key isEqualToString:key])
         {
             NSString* val = [transl.translations objectForKey:currentLanguage.isoLangCode];
-            if (val)
+            if (val && ![val isEqualToString:@""])
             {
                 return val;
             }

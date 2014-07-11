@@ -31,6 +31,7 @@
 #import <HockeySDK/HockeySDK.h>
 #import "ProjectSettings.h"
 #import "CCNode+NodeInfo.h"
+#import "LocalizationTransactionObserver.h"
 
 #define kCCBNumCanvasDevices 14
 
@@ -296,6 +297,9 @@ enum {
     // Physics editor
     IBOutlet PhysicsHandler* __weak physicsHandler;
     
+    // Transaction Observer for Translation Downloads
+    LocalizationTransactionObserver* lto;
+    
 @private
     MainWindow *__weak window;
 	BOOL _applicationLaunchComplete;
@@ -369,6 +373,8 @@ enum {
 // Sequencer
 @property (nonatomic, readonly) BOOL playingBack;
 
+//Transaction Observer for Translation Observer
+@property (nonatomic,strong) LocalizationTransactionObserver* lto;
 
 // Methods
 + (AppDelegate*) appDelegate;
@@ -398,6 +404,7 @@ enum {
 - (IBAction) menuSelectBehind:(id)sender;
 - (IBAction) menuDeselect:(id)sender;
 
+- (BOOL) openProject:(NSString*) fileName;
 - (void) closeProject;
 - (IBAction) performClose:(id)sender;
 - (void) removedDocumentWithPath:(NSString*)path;

@@ -45,4 +45,8 @@
 - (IBAction)openEditor:(id)sender;
 - (void) createOrEditTranslationForKey:(NSString*)key;
 
+//Translation Download
+- (void) setManagedFileForBackgroundTranslationDownload:(NSString*) file;
+- (void) storeFileForBackgroundTranslationDownload;
+
 @end
