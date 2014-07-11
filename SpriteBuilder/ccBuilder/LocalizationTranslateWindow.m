@@ -899,7 +899,14 @@ static int numTimedOutIntervals = 0;
                         }
                     }
                 }
-                if(!isCurrentProjectOpen)
+                if(isCurrentProjectOpen)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [_parentWindow reload];
+                        [handler setEdited];
+                    });
+                }
+                else
                 {
                     [handler storeFileForBackgroundTranslationDownload];
                 }
@@ -914,13 +921,9 @@ static int numTimedOutIntervals = 0;
             if(isCurrentProjectOpen)
             {
                 [_parentWindow finishDownloadingTranslations];
+                
                 NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", _projectPathDir];
                 [alert runModal];
-                if([[AppDelegate appDelegate] hasOpenedDocument])
-                {
-                    [StringPropertySetter refreshAllStringProps];
-                    [[CocosScene cocosScene] forceRedraw];
-                }
             }
             else
             {

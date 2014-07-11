@@ -56,7 +56,7 @@
     if (self.key) [ser setObject:self.key forKey:@"key"];
     if (self.comment) [ser setObject:self.comment forKey:@"comment"];
     [ser setObject:self.translations forKey:@"translations"];
-    if (self.languagesDownloading) [ser setObject:self.languagesDownloading forKey:@"languagesDownloading"];
+    [ser setObject:self.languagesDownloading forKey:@"languagesDownloading"];
     return ser;
 }
 
