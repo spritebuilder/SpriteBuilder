@@ -160,7 +160,7 @@ static int numTimedOutIntervals = 0;
                                                                                   options:NSJSONReadingMutableContainers error:&JSONError];
     if(JSONError || [[[availableLanguagesDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        [self printJSONOrNormalError:JSONError Error:[availableLanguagesDict objectForKey:@"Error"]];
+        [self printJSONOrNormalErrorForFunction:@"Languages" JSONError:JSONError Error:[availableLanguagesDict objectForKey:@"Error"]];
         [_languagesDownloading stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:downloadLangsErrorIndex];
         return;
@@ -428,7 +428,7 @@ static int numTimedOutIntervals = 0;
     NSDictionary* dataDict  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&JSONerror];
     if(JSONerror || [[[dataDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        [self printJSONOrNormalError:JSONerror Error:[dataDict objectForKey:@"Error"]];
+        [self printJSONOrNormalErrorForFunction:@"Estimate" JSONError:JSONerror Error:[dataDict objectForKey:@"Error"]];
         [self enableAllExceptButtons];
         [_costDownloading stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
@@ -741,7 +741,7 @@ static int numTimedOutIntervals = 0;
                                                                     options:kNilOptions error:&JSONError];
     if(JSONError || [[[initialTransDict allKeys] firstObject] isEqualToString:@"Error"])
     {
-        [self printJSONOrNormalError:JSONError Error:[initialTransDict objectForKey:@"Error"]];
+        [self printJSONOrNormalErrorForFunction:@"Request Confirmation" JSONError:JSONError Error:[initialTransDict objectForKey:@"Error"]];
         [self enableAll];
         [_paymentValidating stopAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:paymentErrorIndex];
@@ -1049,9 +1049,9 @@ static int numTimedOutIntervals = 0;
 /*
  * This function uses a ternary operator! Thank you high school computer science!!
  */
-- (void)printJSONOrNormalError:(NSError*)JSONError Error:(NSError*)error{
-    NSLog(@"%@", JSONError ? [NSString stringWithFormat:@"Languages JSONError: %@", JSONError.localizedDescription] :
-          [NSString stringWithFormat:@"Languages Error: %@", error]);
+- (void)printJSONOrNormalErrorForFunction:(NSString*)functionName JSONError:(NSError*)JSONError Error:(NSError*)error{
+    NSLog(@"%@", JSONError ? [NSString stringWithFormat:@"%@ JSONError: %@", functionName, JSONError.localizedDescription] :
+          [NSString stringWithFormat:@"%@ Error: %@", functionName, error]);
 }
 
 /*
