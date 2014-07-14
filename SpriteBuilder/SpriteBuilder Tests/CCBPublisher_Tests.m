@@ -46,10 +46,8 @@
     projectSettings.projectPath = [self fullPathForFile:@"project.spritebuilder/publishtest.ccbproj"];
     projectSettings.publishEnablediPhone = YES;
     projectSettings.publishEnabledAndroid = NO;
-    projectSettings.publishResolution_ios_tablethd = YES;
-    projectSettings.publishResolution_ios_tablet = NO;
-    projectSettings.publishResolution_ios_phone = NO;
-    projectSettings.publishResolution_ios_phonehd = NO;
+    projectSettings.designTarget = kCCBDesignTargetFixed;
+    projectSettings.defaultOrientation = kCCBOrientationPortrait;
 
     [projectSettings addResourcePath:[self fullPathForFile:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"] error:nil];
 
@@ -57,30 +55,42 @@
 
     CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
                                                                    warnings:warnings
-                                                              finishedBlock:^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
-    {
-        NSLog(@"Publishing finished");
-    }];
+                                                              finishedBlock:nil];
 
     publisher.publishInputDirectories = @[[self fullPathForFile:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"]];
     publisher.publishOutputDirectory = [self fullPathForFile:@"Published"];
 
     [publisher start];
 
+    [self assertFileExists:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted.png"];
+    [self assertFileExists:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted2.png"];
     [self assertFileExists:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted.png"];
     [self assertFileExists:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted2.png"];
+    [self assertFileExists:@"Published/ccbResources/resources-phone/ccbButtonHighlighted.png"];
+    [self assertFileExists:@"Published/ccbResources/resources-phone/ccbButtonHighlighted2.png"];
+    [self assertFileExists:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted.png"];
+    [self assertFileExists:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted2.png"];
     [self assertFileExists:@"Published/blank.caf"];
     [self assertFileExists:@"Published/configCocos2d.plist"];
     [self assertFileExists:@"Published/fileLookup.plist"];
     [self assertFileExists:@"Published/spriteFrameFileList.plist"];
 
+    [self assertConfigCocos2d:@"Published/configCocos2d.plist" isEqualToDictionary:
+            @{
+                @"CCSetupScreenMode": @"CCScreenModeFixed",
+                @"CCSetupScreenOrientation": @"CCScreenOrientationPortrait",
+                @"CCSetupTabletScale2X": @(YES)
+            }];
+
     [self assertRenamingRuleInfFileLookup:@"Published/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.caf"];
 
-/*
     NSLog(@"%@", [self fullPathForFile:@""]);
     NSLog(@"%@", publisher.publishOutputDirectory);
-*/
+    NSLog(@"---");
 }
+
+
+#pragma mark - assert helpers
 
 - (void)assertRenamingRuleInfFileLookup:(NSString *)fileLookupName originalName:(NSString *)originalName renamedName:(NSString *)expectedRenamedName
 {
@@ -91,6 +101,12 @@
                   rules[originalName], originalName, expectedRenamedName);
 }
 
+- (void)assertConfigCocos2d:(NSString *)fileName isEqualToDictionary:(NSDictionary *)expectedDict;
+{
+    NSDictionary *config = [NSDictionary dictionaryWithContentsOfFile:[self fullPathForFile:fileName]];
 
+    XCTAssertNotNil(config, @"Config is nil for given filename \"%@\"", [self fullPathForFile:fileName]);
+    XCTAssertTrue([config isEqualToDictionary:expectedDict], @"Dictionary %@ does not match %@", config, expectedDict);
+}
 
 @end
