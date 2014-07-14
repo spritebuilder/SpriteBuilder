@@ -41,8 +41,12 @@ rm -Rf SpriteBuilder/build/
 
 sh ./scripts/CreateAllGeneratedFiles.sh $CCB_VERSION $SB_SKU
 
-
-
+if [ "$SB_SKU" = "pro" ]; then
+	if [ ! -e Generated/AndroidXcodePlugin.zip ]; then
+		echo "Generated/AndroidXcodePlugin.zip doesn't exist."
+	exit 1
+	fi	
+fi
 
 
 # Clean and build CocosBuilder

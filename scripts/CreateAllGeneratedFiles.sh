@@ -7,6 +7,8 @@ if [ ! -d "SpriteBuilder" ]; then
     exit 1
 fi
 
+mkdir -p Generated
+
 # Update version for about box
 echo "Version: $1" > Generated/Version.txt
 echo "Sku: $2" >> Generated/Version.txt

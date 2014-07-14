@@ -30,11 +30,11 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 	
 	NSString *scriptPath = [[NSBundle mainBundle] pathForResource:@"plugin_installer" ofType:@"py"];
 	
-	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidPlugin" ofType:@"zip" inDirectory:@"Generated"];
+	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidXcodePlugin" ofType:@"zip" inDirectory:@"Generated"];
 	NSFileManager * fm =[[NSFileManager alloc] init];
 	if(![fm fileExistsAtPath:pluginBundlePath])
 	{
-		*result = [NSString stringWithFormat:@"AndroidPlugin.zip is not in Generated Folder. Android Xcode plugin will not be installed properly."];
+		*result = [NSString stringWithFormat:@"AndroidXcodePlugin is not in Generated Folder. Android Xcode plugin will not be installed properly."];
 		return false;
 	}
 	
