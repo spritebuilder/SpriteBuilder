@@ -8,7 +8,7 @@
 
 #import "CCBPEffectBrightness.h"
 
-#ifdef SB_EFFECTS_ENABLED
+
 @implementation CCBPEffectBrightness 
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
@@ -32,4 +32,3 @@
 }
 
 @end
-#endif

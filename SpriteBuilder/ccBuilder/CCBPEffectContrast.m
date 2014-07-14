@@ -9,7 +9,7 @@
 #import "CCBPEffectContrast.h"
 #import "EffectsManager.h"
 
-#ifdef SB_EFFECTS_ENABLED
+
 @implementation CCBPEffectContrast
 
 
@@ -35,4 +35,3 @@
 
 @end
 
-#endif

@@ -9,7 +9,7 @@
 #import "CCEffectGlow.h"
 #import "EffectsManager.h"
 
-#ifdef SB_EFFECTS_ENABLED
+
 
 @interface CCBPEffectGlow : CCEffectGlow  <EffectProtocol>
 

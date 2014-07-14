@@ -13,6 +13,7 @@
 #import "CCBPEffectPixelate.h"
 #import "CCBPEffectSaturation.h"
 #import "CCBPEffectBloom.h"
+#import "CCBPEffectRefraction.h"
 #import "NSArray+Query.h"
 #import "EffectBrightnessControl.h"
 #import "EffectContrastControl.h"
@@ -20,6 +21,8 @@
 #import "EffectSaturationControl.h"
 #import "EffectBloomControl.h"
 //#import "EffectGlowControl.h"
+#import "EffectRefractionControl.h"
+
 
 @implementation EffectDescription
 
@@ -42,7 +45,7 @@
 	
 	NSMutableArray * effectDescriptions = [NSMutableArray new];
 
-#ifdef SB_EFFECTS_ENABLED
+
 		
 	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
@@ -101,6 +104,17 @@
 	}
 	
 
+	{
+		EffectDescription * effectDescription = [[EffectDescription alloc] init];
+		effectDescription.title = @"Refraction";
+		effectDescription.description = @"Makes things refract";
+		effectDescription.imageName = @"effect-refraction";
+		effectDescription.className = NSStringFromClass([CCBPEffectRefraction class]);
+		effectDescription.baseClass = @"CCEffectRefraction";
+		effectDescription.viewController = NSStringFromClass([EffectRefractionControl class]);
+		[effectDescriptions addObject:effectDescription];
+		
+	}
 	/*
 	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
@@ -114,7 +128,6 @@
 	}
 	 */
 	
-#endif
 
 	return effectDescriptions;
 }

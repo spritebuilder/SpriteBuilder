@@ -225,6 +225,10 @@
 		926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		926D13F418B57E1600582959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
 		926D13F518B57E1600582959 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
+		926FDC84196C8ECC008C0132 /* EffectRefractionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FDC82196C8ECC008C0132 /* EffectRefractionControl.m */; };
+		926FDC85196C8ECC008C0132 /* EffectRefractionControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 926FDC83196C8ECC008C0132 /* EffectRefractionControl.xib */; };
+		926FDC88196C8EEC008C0132 /* CCBPEffectRefraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FDC87196C8EEC008C0132 /* CCBPEffectRefraction.m */; };
+		926FDC8A196C902D008C0132 /* effect-refraction.png in Resources */ = {isa = PBXBuildFile; fileRef = 926FDC89196C902D008C0132 /* effect-refraction.png */; };
 		9276C1321959F71C00A1D4DC /* EffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9276C1311959F71C00A1D4DC /* EffectViewController.m */; };
 		928696201958950100402DD8 /* InspectorEffectControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9286961F1958950100402DD8 /* InspectorEffectControl.m */; };
 		928696231958952100402DD8 /* InspectorEffectControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 928696221958952100402DD8 /* InspectorEffectControl.xib */; };
@@ -1540,6 +1544,12 @@
 		926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJoint.m; sourceTree = "<group>"; };
 		926D13FD18B57FEA00582959 /* CCPhysicsPinJoint-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CCPhysicsPinJoint-Info.plist"; sourceTree = "<group>"; };
 		926D13FE18B57FEA00582959 /* CCPhysicsPinJoint-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsPinJoint-Prefix.pch"; sourceTree = "<group>"; };
+		926FDC81196C8ECC008C0132 /* EffectRefractionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectRefractionControl.h; path = ccBuilder/EffectRefractionControl.h; sourceTree = "<group>"; };
+		926FDC82196C8ECC008C0132 /* EffectRefractionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectRefractionControl.m; path = ccBuilder/EffectRefractionControl.m; sourceTree = "<group>"; };
+		926FDC83196C8ECC008C0132 /* EffectRefractionControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectRefractionControl.xib; path = ccBuilder/EffectRefractionControl.xib; sourceTree = "<group>"; };
+		926FDC86196C8EEC008C0132 /* CCBPEffectRefraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectRefraction.h; path = ccBuilder/CCBPEffectRefraction.h; sourceTree = "<group>"; };
+		926FDC87196C8EEC008C0132 /* CCBPEffectRefraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectRefraction.m; path = ccBuilder/CCBPEffectRefraction.m; sourceTree = "<group>"; };
+		926FDC89196C902D008C0132 /* effect-refraction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-refraction.png"; path = "Resources/effect-refraction.png"; sourceTree = "<group>"; };
 		9276C1301959F71C00A1D4DC /* EffectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectViewController.h; path = ccBuilder/EffectViewController.h; sourceTree = "<group>"; };
 		9276C1311959F71C00A1D4DC /* EffectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectViewController.m; path = ccBuilder/EffectViewController.m; sourceTree = "<group>"; };
 		9286961E1958950100402DD8 /* InspectorEffectControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEffectControl.h; sourceTree = "<group>"; };
@@ -3871,9 +3881,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		926FDC7F196C8DCA008C0132 /* Refraction */ = {
+			isa = PBXGroup;
+			children = (
+				926FDC89196C902D008C0132 /* effect-refraction.png */,
+				926FDC81196C8ECC008C0132 /* EffectRefractionControl.h */,
+				926FDC82196C8ECC008C0132 /* EffectRefractionControl.m */,
+				926FDC83196C8ECC008C0132 /* EffectRefractionControl.xib */,
+				926FDC86196C8EEC008C0132 /* CCBPEffectRefraction.h */,
+				926FDC87196C8EEC008C0132 /* CCBPEffectRefraction.m */,
+			);
+			name = Refraction;
+			sourceTree = "<group>";
+		};
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				926FDC7F196C8DCA008C0132 /* Refraction */,
 				92CD1C0E1965D703002BF2DE /* Bloom */,
 				92CAC1C2195A4C310035EA39 /* Glow */,
 				9266EE3A195A17AE006CBE81 /* Pixelate */,
@@ -6043,6 +6067,7 @@
 				E32D8CC514EC257000F4BD5E /* InspectorCodeConnections.xib in Resources */,
 				928696231958952100402DD8 /* InspectorEffectControl.xib in Resources */,
 				E35DBBBF14F29E9D0070A6E4 /* InspectorFntFile.xib in Resources */,
+				926FDC85196C8ECC008C0132 /* EffectRefractionControl.xib in Resources */,
 				E35DBBC414F2A2900070A6E4 /* InspectorText.xib in Resources */,
 				9218DF2C1919B04D0033851E /* joint-pivot-handle-ref.png in Resources */,
 				E35DBBDF14F3D1B60070A6E4 /* FontListTTF.plist in Resources */,
@@ -6237,6 +6262,7 @@
 				921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */,
 				E334A4E6170D0020001604F7 /* debugger-bug.png in Resources */,
 				E3D839DC171356EC004F6127 /* pngquant in Resources */,
+				926FDC8A196C902D008C0132 /* effect-refraction.png in Resources */,
 				E3D839DD171356EC004F6127 /* pngquant-COPYING in Resources */,
 				E38F79361715FD8D00E299E4 /* editor-warning.png in Resources */,
 				E3C12B1F171E0DE7001EEDDB /* editor-check.png in Resources */,
@@ -6769,6 +6795,7 @@
 				E3E8B4871578F8F800373983 /* SequencerTimelineView.m in Sources */,
 				E3E8B4A1157CC57E00373983 /* SequencerScrubberSelectionView.m in Sources */,
 				E3E8B4A8157CD67000373983 /* SequencerSequence.m in Sources */,
+				926FDC84196C8ECC008C0132 /* EffectRefractionControl.m in Sources */,
 				926D13D318B57A4900582959 /* CCScaleFreeNode.m in Sources */,
 				E36ECCE5158648EE003C177E /* SequencerNodeProperty.m in Sources */,
 				E36ECD0D15868F57003C177E /* SequencerKeyframe.m in Sources */,
@@ -6781,6 +6808,7 @@
 				B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */,
 				92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */,
 				E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */,
+				926FDC88196C8EEC008C0132 /* CCBPEffectRefraction.m in Sources */,
 				E35A136015B038D700C9AA15 /* ThoMoNetworkStub.m in Sources */,
 				E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */,
 				E35A136215B038D700C9AA15 /* ThoMoTCPConnection.m in Sources */,

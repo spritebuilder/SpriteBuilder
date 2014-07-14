@@ -122,6 +122,11 @@
 
 @dynamic reference;
 
+-(void)awakeFromNib
+{
+	[super awakeFromNib];
+	self.dragType = DragTypeJoint;
+}
 
 -(void)setReference:(CCNode *)reference
 {
@@ -177,7 +182,13 @@
         
         
         NSPasteboardItem *pbItem = [NSPasteboardItem new];
-        [pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.jointBody", nil]];
+		
+
+		if(self.dragType == DragTypeJoint)
+			[pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.jointBody", nil]];
+		else
+			[pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.effectSprite", nil]];
+		
 
         //create a new NSDraggingItem with our pasteboard item.
         NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
@@ -237,15 +248,31 @@
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
 
-        
-    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
     
-    NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
-                                                              format:NSPropertyListBinaryFormat_v1_0
-                                                             options:0
-                                                               error:NULL];
-    
-    [pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
+	if(self.dragType == DragTypeJoint)
+	{
+		NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
+		
+		NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
+																  format:NSPropertyListBinaryFormat_v1_0
+																 options:0
+																   error:NULL];
+		
+		[pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
+	}
+	
+	if(self.dragType == DragTypeEffectSprite)
+	{
+		
+		NSDictionary * pasteData = @{@"effect":@(1)};
+		
+		NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
+																  format:NSPropertyListBinaryFormat_v1_0
+																 options:0
+																   error:NULL];
+		
+		[pasteboard setData:data forType:@"com.cocosbuilder.effectSprite"];
+	}
 
 }
 

@@ -9,7 +9,6 @@
 #import "EffectViewController.h"
 #import "CCBPEffectBloom.h"
 
-@class CCBPEffectBloom;
 @interface EffectBloomControl : EffectViewController
 @property (nonatomic) CCBPEffectBloom * effect;
 @end

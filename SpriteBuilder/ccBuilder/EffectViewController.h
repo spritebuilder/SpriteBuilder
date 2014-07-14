@@ -13,4 +13,5 @@
 @interface EffectViewController : NSViewController
 
 @property (nonatomic) id<EffectProtocol> effect;
+@property (nonatomic) BOOL highlight;
 @end

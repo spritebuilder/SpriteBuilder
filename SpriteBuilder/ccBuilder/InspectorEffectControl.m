@@ -103,6 +103,18 @@
 }
 
 #pragma mark View Delegate
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+	int row = self.tableView.selectedRow;
+	
+	for (int i=0; i < viewControllers.count; i++) {
+		EffectViewController * viewController = viewControllers[i];
+		viewController.highlight = i == row;
+	}
+}
+
+
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	

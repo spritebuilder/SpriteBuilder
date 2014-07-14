@@ -9,12 +9,12 @@
 #import "CCBPEffectSaturation.h"
 #import "EffectsManager.h"
 
-#ifdef SB_EFFECTS_ENABLED
+
 @implementation CCBPEffectSaturation
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-	return [self effectWithSaturation:5.0f];
+	return [self effectWithSaturation:0.5f];
 }
 
 -(id)serialize
@@ -35,4 +35,3 @@
 
 
 @end
-#endif

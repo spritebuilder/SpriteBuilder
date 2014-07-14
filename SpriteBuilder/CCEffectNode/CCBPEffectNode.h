@@ -22,7 +22,7 @@
 
 @end
 
-#ifdef SB_EFFECTS_ENABLED
+
 
 @interface CCBPEffectNode : CCEffectNode <CCEffectNodeProtocol>
 {
@@ -35,4 +35,3 @@
 
 @end
 
-#endif

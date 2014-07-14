@@ -9,7 +9,7 @@
 #import "CCBPEffectBloom.h"
 #import "EffectsManager.h"
 
-#ifdef SB_EFFECTS_ENABLED
+
 
 @implementation CCBPEffectBloom
 
@@ -40,4 +40,3 @@
 }
 
 @end
-#endif
