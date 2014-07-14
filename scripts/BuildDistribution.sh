@@ -3,26 +3,13 @@
 echo ""
 
 CCB_VERSION=$1
-SB_SKU=$2
 XCCONFIG="SpriteBuilder.xcconfig"
 PRODUCT_NAME=SpriteBuilder
 
-if [ "$#" -ne 2 ]; then
-    echo "uasge: ./BuildDistribution.sh <version eg:0.9> <sku eg:[default|pro]>"
-    echo "eg  ./BuildDistribution.sh 0.9 default"
+if [ "$#" -ne 1 ]; then
+    echo "uasge: ./BuildDistribution.sh <version eg:0.9>"
+    echo "eg  ./BuildDistribution.sh 0.9"
     exit 1
-fi
-
-if [ "$SB_SKU" != "pro" ] && [ "$SB_SKU" != "default" ]; then
-	echo "Sku must be 'default' or 'pro'"
-	exit 1
-fi
-
-
-
-if [ "$SB_SKU" = "pro" ]; then
-	XCCONFIG="SpriteBuilderPro.xcconfig"
-	PRODUCT_NAME=SpriteBuilderPro
 fi
 
 
@@ -39,10 +26,7 @@ CCB_DIR=$(pwd)
 rm -Rf build/
 rm -Rf SpriteBuilder/build/
 
-sh ./scripts/CreateAllGeneratedFiles.sh $CCB_VERSION $SB_SKU
-
-
-
+sh ./scripts/CreateAllGeneratedFiles.sh $CCB_VERSION
 
 
 # Clean and build CocosBuilder
