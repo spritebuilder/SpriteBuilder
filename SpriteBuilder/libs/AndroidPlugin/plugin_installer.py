@@ -20,20 +20,17 @@ class UserError (Exception):
 
 def main():
     try:
-        parser = argparse.ArgumentParser(description='create or install an xcode plugin bundle')
-        parser.add_argument('action', choices=('package','clean','install','validate'), help='the action to perform')
+        parser = argparse.ArgumentParser(description='install an xcode plugin bundle')
+        parser.add_argument('action', choices=('clean','install','validate'), help='the action to perform')
         parser.add_argument('file', help='the file to be used for package or install')
         args = parser.parse_args()
 
-		
-        if args.action == "package":
-            package_plugin(args.file)
-        elif args.action == "clean":
+        if args.action == "clean":
             clean_plugin()
         elif args.action == "validate":
             validate_bundle(args.file)
         elif args.action == "install":
-			install_plugin(args.file)
+            install_plugin(args.file)
     except UserError, e:
         print ("FATAL ERROR: %s" % e)
         return 1
@@ -68,53 +65,6 @@ def get_defaults(include_legacy=False):
     ]
     return [(app, name, value) for app, name, value, type in defaults if include_legacy or type != 'LEGACY']
 
-
-def package_plugin(bundle):
-    bundle = os.path.expanduser(bundle)
-    if os.path.isfile(bundle):
-        raise UserError("Bundle file already exists: " + bundle)
-    if os.path.isdir(bundle):
-        bundle = os.path.join(bundle, "android_xcode_bundle_"+time.strftime("%Y_%m_%d-%H_%M_%S")+".zip")
-    component_roots = get_component_roots()
-    for name, path in component_roots:
-        if not os.path.exists(path):
-            raise UserError("Component not found: " + path)
-    with zipfile.ZipFile(bundle, 'w', zipfile.ZIP_DEFLATED) as zip:
-        links = []
-        modes = {}
-        for name, path in component_roots:
-            print ("Packaging: "+name)
-            for dirpath, dirnames, filenames in os.walk(path):
-                dirlinks = [dirname for dirname in dirnames if os.path.islink(os.path.join(path, dirpath, dirname))]
-                for filename in filenames+dirlinks:
-                    if filename in [".DS_Store"]:
-                        continue
-                    arcname = os.path.join(name, os.path.relpath(dirpath, path), filename)
-                    filepath = os.path.join(path, dirpath, filename)
-                    if os.path.islink(filepath):
-                        linkpath = os.readlink(filepath)
-                        abslinkpath = os.path.normpath(os.path.join(os.path.dirname(filepath),linkpath))
-                        arclink = os.path.join(name, os.path.relpath(abslinkpath, path))
-                        links.append({
-                            # 'rawpath': filepath, # debug
-                            # 'rawlink': linkpath, # debug
-                            'arcname': arcname,
-                            'arclink': arclink,
-                            })
-                    else:
-                        zip.write(filepath, arcname)
-                        modes[arcname] = os.stat(filepath).st_mode
-        metadata = {
-            'bundle_type': 'android_xcode_bundle',
-            'version': BUNDLE_VERSION,
-            'symlinks': links,
-            'modes': modes
-        }
-        zip.writestr("metadata.json", json.dumps(metadata, sort_keys=True))
-        #print (json.dumps(metadata, sort_keys=True, indent=2))
-    validate_bundle(bundle)
-
-
 def validate_bundle(bundle):
     if not os.path.exists(bundle):
         raise UserError("Bundle file does not exist: %s" % bundle)
@@ -127,14 +77,13 @@ def validate_bundle(bundle):
             raise UserError("Bundle format unknown - can't find metadata.json")
         metadata = json.loads(zip.read('metadata.json'))
         bundle_version = (metadata.get('bundle_type', None), metadata.get('version', None))
-        expected = ('android_xcode_bundle', BUNDLE_VERSION)
+        expected = ('apportable_xcode_bundle', BUNDLE_VERSION)
         if bundle_version != expected:
             raise UserError("Version mismatch!  Expected %s but was %s" % (expected, bundle_version))
     # print some stats so we can verify the bundle later
     size = round(os.stat(bundle).st_size / 1024.0 / 1024.0, 2)
     md5 = subprocess.check_output(['md5', '-q', bundle]).strip()
     print ("Bundle is valid! (%s MB, md5: %s)" % (size, md5))
-
 
 def clean_plugin():
     print ("Cleaning . . . ")

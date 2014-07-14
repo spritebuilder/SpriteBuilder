@@ -4536,7 +4536,7 @@ static BOOL hideAllToNextSeparator;
 - (IBAction) openRegistrationWindow:(id)sender
 {
 	
-    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
+    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
     {
         // Email already registered or skipped
         return;
