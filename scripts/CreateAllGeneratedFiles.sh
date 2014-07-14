@@ -18,9 +18,7 @@ if [ "$2" = "pro" ]; then
 	echo "=== GENERATING Android Plugin ==="
 	rm "Generated/AndroidPlugin.zip";
 	python "SpriteBuilder/libs/AndroidPlugin/plugin_installer.py" package "Generated/AndroidPlugin.zip";
-	exit 1
 fi
-
 
 
 # Update version for about box
