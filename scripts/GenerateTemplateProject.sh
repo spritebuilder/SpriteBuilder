@@ -6,6 +6,7 @@ PROJECTNAME=$1
 # Solution from: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
+mkdir -p ../Generated
 cd ../Support/$PROJECTNAME.spritebuilder/
 
 # Generate template project
