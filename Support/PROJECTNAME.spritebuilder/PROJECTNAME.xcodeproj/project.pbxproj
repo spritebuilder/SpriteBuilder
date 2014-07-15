@@ -135,7 +135,7 @@
 		5B12102F197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PROJECTIDENTIFIERActivity.m; path = Source/PROJECTIDENTIFIERActivity.m; sourceTree = "<group>"; };
 		5B121033197485FE004C1E1D /* Android-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Android-Info.plist"; sourceTree = "<group>"; };
 		5B121034197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = ../../../../../../../Users/phausler/Documents/YetAnotherTest.spritebuilder/Source/Resources/AndroidManifest.xml; sourceTree = "<group>"; };
+		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AndroidManifest.xml; sourceTree = "<group>"; };
 		8392007918EE8E3300B6C429 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		927F61BF196C771E000F43EF /* PROJECTNAMEAndroid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROJECTNAMEAndroid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
