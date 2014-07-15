@@ -15,6 +15,7 @@
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
+
 @end
 
 @implementation CCBPublisher_Tests
@@ -33,12 +34,15 @@
 
 - (void)testPublishingTemplateProject
 {
-    [self createFolders:@[
-            @"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto",
-            @"Published"]];
+    [self createFolders:@[@"Published"]];
 
-    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png" width:4 height:12];
-    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted2.png" width:20 height:8];
+    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png"
+                    width:4
+                   height:12];
+    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted2.png"
+                    width:20
+                   height:8];
+
     [self copyTestingResource:@"blank.wav" toFolder:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"];
 
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
@@ -96,6 +100,47 @@
     NSLog(@"%@", [self fullPathForFile:@""]);
     NSLog(@"%@", publisher.publishOutputDirectory);
     NSLog(@"---");
+}
+
+- (void)testCustomScalingFactors
+{
+    [self createFolders:@[@"Published"]];
+
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/rocket.png"
+                    width:4
+                   height:20];
+
+    // Overriden resolution for tablet hd
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png"
+                    width:3
+                   height:17];
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
+    projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/test.ccbproj"];
+    projectSettings.publishEnablediPhone = YES;
+    projectSettings.publishEnabledAndroid = NO;
+    projectSettings.resourceAutoScaleFactor = 4;
+
+    [projectSettings setValue:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
+
+    [projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
+
+    CCBWarnings *warnings = [[CCBWarnings alloc] init];
+    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
+                                                                   warnings:warnings
+                                                              finishedBlock:nil];
+
+    publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    publisher.publishOutputDirectory = [self fullPathForFile:@"Published"];
+
+    [publisher start];
+
+    // The overridden case
+    [self assertPNGAtPath:@"Published/resources-tablethd/rocket.png" hasWidth:3 hasHeight:17];
+
+    [self assertPNGAtPath:@"Published/resources-tablet/rocket.png" hasWidth:8 hasHeight:40];
+    [self assertPNGAtPath:@"Published/resources-phone/rocket.png" hasWidth:4 hasHeight:20];
+    [self assertPNGAtPath:@"Published/resources-phonehd/rocket.png" hasWidth:8 hasHeight:40];
 }
 
 
