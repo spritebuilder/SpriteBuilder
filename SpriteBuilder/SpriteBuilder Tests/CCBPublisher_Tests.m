@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
+@property (nonatomic, strong) CCBPublisher *publisher;
 
 @end
 
@@ -26,8 +27,6 @@
 {
     [super setUp];
 
-    [self createFolders:@[@"Published"]];
-
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
     _projectSettings.publishEnablediPhone = YES;
@@ -36,6 +35,15 @@
     [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
     self.warnings = [[CCBWarnings alloc] init];
+
+    self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+                                                          warnings:_warnings
+                                                     finishedBlock:nil];
+
+    _publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    _publisher.publishOutputDirectory = [self fullPathForFile:@"Published"];
+
+    [self createFolders:@[@"Published"]];
 }
 
 - (void)tearDown
@@ -60,14 +68,7 @@
     _projectSettings.defaultOrientation = kCCBOrientationPortrait;
     _projectSettings.resourceAutoScaleFactor = 4;
 
-    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
-                                                                   warnings:_warnings
-                                                              finishedBlock:nil];
-
-    publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
-    publisher.publishOutputDirectory = [self fullPathForFile:@"Published"];
-
-    [publisher start];
+    [_publisher start];
 
     [self assertFileExists:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted.png"];
     [self assertFileExists:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted2.png"];
@@ -107,7 +108,7 @@
     [self assertPNGAtPath:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted2.png" hasWidth:20 hasHeight:8];
 
     NSLog(@"%@", [self fullPathForFile:@""]);
-    NSLog(@"%@", publisher.publishOutputDirectory);
+    NSLog(@"%@", _publisher.publishOutputDirectory);
     NSLog(@"---");
 }
 
@@ -118,19 +119,11 @@
     // Overriden resolution for tablet hd
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
-    _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/test.ccbproj"];
     _projectSettings.resourceAutoScaleFactor = 4;
 
     [_projectSettings setValue:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
 
-    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
-                                                                   warnings:_warnings
-                                                              finishedBlock:nil];
-
-    publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
-    publisher.publishOutputDirectory = [self fullPathForFile:@"Published"];
-
-    [publisher start];
+    [_publisher start];
 
     // The overridden case
     [self assertPNGAtPath:@"Published/resources-tablethd/rocket.png" hasWidth:3 hasHeight:17];
