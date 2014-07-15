@@ -15,6 +15,8 @@
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
+@property (nonatomic, strong) ProjectSettings *projectSettings;
+@property (nonatomic, strong) CCBWarnings *warnings;
 
 @end
 
@@ -23,7 +25,17 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+
+    [self createFolders:@[@"Published"]];
+
+    self.projectSettings = [[ProjectSettings alloc] init];
+    _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
+    _projectSettings.publishEnablediPhone = YES;
+    _projectSettings.publishEnabledAndroid = NO;
+
+    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
+
+    self.warnings = [[CCBWarnings alloc] init];
 }
 
 - (void)tearDown
@@ -32,37 +44,27 @@
     [super tearDown];
 }
 
-- (void)testPublishingTemplateProject
+- (void)testPublishingProject
 {
-    [self createFolders:@[@"Published"]];
-
-    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png"
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png"
                     width:4
                    height:12];
-    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted2.png"
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/ccbResources/resources-auto/ccbButtonHighlighted2.png"
                     width:20
                    height:8];
 
-    [self copyTestingResource:@"blank.wav" toFolder:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"];
-    [self copyTestingResource:@"photoshop.psd" toFolder:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/resources-auto"];
+    [self copyTestingResource:@"blank.wav" toFolder:@"baa.spritebuilder/Packages/foo.sbpack"];
+    [self copyTestingResource:@"photoshop.psd" toFolder:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto"];
 
-    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
-    projectSettings.projectPath = [self fullPathForFile:@"project.spritebuilder/publishtest.ccbproj"];
-    projectSettings.publishEnablediPhone = YES;
-    projectSettings.publishEnabledAndroid = NO;
-    projectSettings.designTarget = kCCBDesignTargetFixed;
-    projectSettings.defaultOrientation = kCCBOrientationPortrait;
-    projectSettings.resourceAutoScaleFactor = 4;
+    _projectSettings.designTarget = kCCBDesignTargetFixed;
+    _projectSettings.defaultOrientation = kCCBOrientationPortrait;
+    _projectSettings.resourceAutoScaleFactor = 4;
 
-    [projectSettings addResourcePath:[self fullPathForFile:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"] error:nil];
-
-    CCBWarnings *warnings = [[CCBWarnings alloc] init];
-
-    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
-                                                                   warnings:warnings
+    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+                                                                   warnings:_warnings
                                                               finishedBlock:nil];
 
-    publisher.publishInputDirectories = @[[self fullPathForFile:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"]];
+    publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     publisher.publishOutputDirectory = [self fullPathForFile:@"Published"];
 
     [publisher start];
@@ -109,32 +111,20 @@
     NSLog(@"---");
 }
 
-- (void)testCustomScalingFactors
+- (void)testCustomScalingFactorsForImages
 {
-    [self createFolders:@[@"Published"]];
-
-    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/rocket.png"
-                    width:4
-                   height:20];
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/rocket.png" width:4 height:20];
 
     // Overriden resolution for tablet hd
-    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png"
-                    width:3
-                   height:17];
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
-    ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
-    projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/test.ccbproj"];
-    projectSettings.publishEnablediPhone = YES;
-    projectSettings.publishEnabledAndroid = NO;
-    projectSettings.resourceAutoScaleFactor = 4;
+    _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/test.ccbproj"];
+    _projectSettings.resourceAutoScaleFactor = 4;
 
-    [projectSettings setValue:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
+    [_projectSettings setValue:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
 
-    [projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
-
-    CCBWarnings *warnings = [[CCBWarnings alloc] init];
-    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
-                                                                   warnings:warnings
+    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+                                                                   warnings:_warnings
                                                               finishedBlock:nil];
 
     publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
