@@ -1,3 +1,4 @@
+#import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "ProjectSettings.h"
 
@@ -101,12 +102,27 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 {
     for (NSString *relFilePath in filesWithContents)
     {
-        NSData *content = filesWithContents[relFilePath];
-        NSString *fullPathForFile = [_testDirecotoryPath stringByAppendingPathComponent:relFilePath];
-        NSError *error;
+        [self createIntermediateDirectoriesForFilPath:relFilePath];
 
+        NSData *content = filesWithContents[relFilePath];
+        NSString *fullPathForFile = [self fullPathForFile:relFilePath];
+
+        NSError *error;
         XCTAssertTrue([content writeToFile:fullPathForFile options:NSDataWritingAtomic error:&error],
                               @"Could not create file \"%@\", error: %@", fullPathForFile, error);
+    }
+}
+
+- (void)createIntermediateDirectoriesForFilPath:(NSString *)relPath
+{
+    NSString *fullPathForFile = [self fullPathForFile:relPath];
+
+    NSString *dirPath = [fullPathForFile stringByDeletingLastPathComponent];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *errorCreateDir;
+    if (![fileManager createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:&errorCreateDir])
+    {
+        XCTFail(@"Could not create intermediate directories for file \"%@\" with error %@", fullPathForFile, errorCreateDir);
     }
 }
 

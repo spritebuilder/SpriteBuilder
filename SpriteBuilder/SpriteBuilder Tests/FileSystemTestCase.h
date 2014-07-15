@@ -8,6 +8,9 @@
 
 - (void)createFolders:(NSArray *)folders;
 
+// Will XCTFail if there was an error, just to keep code short
+- (void)createIntermediateDirectoriesForFilPath:(NSString *)relPath;
+
 // Will create empty text files at the given relativePaths in the array
 // Containing folders have to exist
 - (void)createEmptyFiles:(NSArray *)files;
@@ -17,6 +20,7 @@
 // Example for parameter:
 // NSDictionary *foo = @{@"path/to/file.txt": [NSDate data]};
 - (void)createFilesWithContents:(NSDictionary *)filesWithContents;
+
 
 - (void)createProjectSettingsFileWithName:(NSString *)name;
 

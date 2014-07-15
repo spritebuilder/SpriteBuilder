@@ -65,7 +65,6 @@
 
 - (void)testMigrationStandardCaseNoPackageFolderNoPackages
 {
-    [self createFolders:@[@"SpriteBuilder Resources"]];
     [self createEmptyFiles:@[
             @"SpriteBuilder Resources/asset.png",
             @"SpriteBuilder Resources/scene.ccb"]];
@@ -86,8 +85,6 @@
 
 - (void)testMigrationWithExistingPackagesFolderAsResourcePath
 {
-    [self createFolders:@[@"Packages"]];
-
     [self createEmptyFiles:@[
             @"Packages/asset.png",
             @"Packages/scene.ccb"]];
@@ -109,10 +106,7 @@
 
 - (void)testWithExistingPackagesFolderAndANotInProjectPackageFolderInside
 {
-    [self createFolders:@[@"sprites"]];
     [self createEmptyFiles:@[@"sprites/asset.png"]];
-
-    [self createFolders:@[@"Packages/sprites.sbpack"]];
     [self createEmptyFiles:@[@"Packages/sprites.sbpack/smiley.png"]];
 
     [self setProjectsResourcePaths:@[@"sprites"]];
@@ -148,7 +142,6 @@
 
 - (void)testRollback
 {
-    [self createFolders:@[@"SpriteBuilder Resources"]];
     [self createEmptyFiles:@[
             @"SpriteBuilder Resources/asset.png",
             @"SpriteBuilder Resources/scene.ccb"]];

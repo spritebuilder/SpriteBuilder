@@ -18,7 +18,6 @@
 
 - (void)testRemoveFile
 {
-    [self createFolders:@[@"foo"]];
     [self createEmptyFiles:@[@"foo/baa.txt"]];
 
     RemoveFileCommand *removeFileCommand = [[RemoveFileCommand alloc] initWithFilePath:[self fullPathForFile:@"foo"]];
@@ -32,7 +31,6 @@
 
 - (void)testRemoveFileUndo
 {
-    [self createFolders:@[@"foo"]];
     [self createEmptyFiles:@[@"foo/baa.txt"]];
 
     RemoveFileCommand *removeFileCommand = [[RemoveFileCommand alloc] initWithFilePath:[self fullPathForFile:@"foo"]];

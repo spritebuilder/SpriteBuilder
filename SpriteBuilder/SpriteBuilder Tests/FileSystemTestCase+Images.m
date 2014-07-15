@@ -4,8 +4,9 @@
 
 - (void)createPNGAtPath:(NSString *)relFilePath width:(NSUInteger)width height:(NSUInteger)height;
 {
-    NSString *pngFilename = [self fullPathForFile:relFilePath];
+    [self createIntermediateDirectoriesForFilPath:relFilePath];
 
+    NSString *pngFullPath = [self fullPathForFile:relFilePath];
     CGContextRef context = CGBitmapContextCreate(NULL,
                                                     width,
                                                     height,
@@ -22,7 +23,7 @@
 
     CGContextDrawImage(context, CGRectMake (0, 0, width, height), myImage);
 
-    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:pngFilename];
+    CFURLRef url = (__bridge CFURLRef) [NSURL fileURLWithPath:pngFullPath];
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
     CGImageDestinationAddImage(destination, myImage, nil);
 

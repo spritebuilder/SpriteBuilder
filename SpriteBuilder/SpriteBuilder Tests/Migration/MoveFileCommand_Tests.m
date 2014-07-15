@@ -20,10 +20,7 @@
 
 - (void)testMoveFileCommand
 {
-    [self createFolders:@[
-            @"oneplace",
-            @"anotherplace"]];
-
+    [self createFolders:@[@"anotherplace"]];
     [self createEmptyFiles:@[@"oneplace/important.txt"]];
 
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:[self fullPathForFile:@"oneplace/important.txt"]
@@ -39,10 +36,7 @@
 
 - (void)testMoveFileAndUndo
 {
-    [self createFolders:@[
-            @"oneplace",
-            @"anotherplace"]];
-
+    [self createFolders:@[@"anotherplace"]];
     [self createEmptyFiles:@[@"oneplace/important.txt"]];
 
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:[self fullPathForFile:@"oneplace/important.txt"]
