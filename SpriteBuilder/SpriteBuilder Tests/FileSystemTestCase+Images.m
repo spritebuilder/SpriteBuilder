@@ -56,4 +56,24 @@
     XCTAssertEqual(imgHeight, expectedHeight, @"Image's height of %lu does not match %lu at path %@", imgHeight, expectedHeight, fullPath);
 }
 
+- (void)assertJPGAtPath:(NSString *)relFilePath hasWidth:(NSUInteger)expectedWidth hasHeight:(NSUInteger)expectedHeight
+{
+    NSString *fullPath = [self fullPathForFile:relFilePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:fullPath])
+    {
+        XCTFail(@"JPG file does not exist, cannot test dimensions at path \"%@\"", fullPath);
+        return;
+    }
+
+    CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename(fullPath.UTF8String);
+    CGImageRef image = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
+
+    NSUInteger imgHeight = CGImageGetHeight(image);
+    NSUInteger imgWidth = CGImageGetWidth(image);
+
+    XCTAssertEqual(imgWidth, expectedWidth, @"Image's width of %lu does not match %lu at path %@", imgWidth, expectedWidth, fullPath);
+    XCTAssertEqual(imgHeight, expectedHeight, @"Image's height of %lu does not match %lu at path %@", imgHeight, expectedHeight, fullPath);
+}
+
 @end
