@@ -45,8 +45,8 @@
     NSUInteger imgHeight = CGImageGetHeight(image);
     NSUInteger imgWidth = CGImageGetWidth(image);
 
-    XCTAssertEqual(imgHeight, expectedHeight, @"Image's height does match. File's height %lu, expected %lu at path %@", imgHeight, expectedHeight, fullPath);
-    XCTAssertEqual(imgWidth, expectedWidth, @"Image's width does match. File's width %lu, expected %lu at path %@", imgWidth, expectedWidth, fullPath);
+    XCTAssertEqual(imgWidth, expectedWidth, @"Image's width of %lu does not match %lu at path %@", imgWidth, expectedWidth, fullPath);
+    XCTAssertEqual(imgHeight, expectedHeight, @"Image's height of %lu does not match %lu at path %@", imgHeight, expectedHeight, fullPath);
 }
 
 @end

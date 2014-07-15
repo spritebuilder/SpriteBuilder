@@ -12,7 +12,6 @@
 #import "CCBPublisher.h"
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
-#import "SBAssserts.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -32,14 +31,14 @@
     [super tearDown];
 }
 
-- (void)testPublishingSimilarTemplateProject
+- (void)testPublishingTemplateProject
 {
     [self createFolders:@[
             @"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto",
             @"Published"]];
 
     [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png" width:4 height:12];
-    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted2.png" width:20 height:4];
+    [self createPNGAtPath:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/ccbResources/resources-auto/ccbButtonHighlighted2.png" width:20 height:8];
     [self copyTestingResource:@"blank.wav" toFolder:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"];
 
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
@@ -48,6 +47,7 @@
     projectSettings.publishEnabledAndroid = NO;
     projectSettings.designTarget = kCCBDesignTargetFixed;
     projectSettings.defaultOrientation = kCCBOrientationPortrait;
+    projectSettings.resourceAutoScaleFactor = 4;
 
     [projectSettings addResourcePath:[self fullPathForFile:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"] error:nil];
 
@@ -83,6 +83,15 @@
             }];
 
     [self assertRenamingRuleInfFileLookup:@"Published/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.caf"];
+
+    [self assertPNGAtPath:@"Published/ccbResources/resources-phone/ccbButtonHighlighted.png" hasWidth:1 hasHeight:3];
+    [self assertPNGAtPath:@"Published/ccbResources/resources-phone/ccbButtonHighlighted2.png" hasWidth:5 hasHeight:2];
+    [self assertPNGAtPath:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
+    [self assertPNGAtPath:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
+    [self assertPNGAtPath:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
+    [self assertPNGAtPath:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
+    [self assertPNGAtPath:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted.png" hasWidth:4 hasHeight:12];
+    [self assertPNGAtPath:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted2.png" hasWidth:20 hasHeight:8];
 
     NSLog(@"%@", [self fullPathForFile:@""]);
     NSLog(@"%@", publisher.publishOutputDirectory);
