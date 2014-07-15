@@ -122,6 +122,10 @@
         NSString* manifestFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Source/Resources/AndroidManifest.xml"];
         [self setName:identifier inFile:manifestFileName search:substitutableProjectIdentifier];
         [self setName:projName inFile:manifestFileName search:substitutableProjectName];
+        
+        NSString* androidPlistFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Source/Resources/Android-Info.plist"];
+        [self setName:identifier inFile:androidPlistFileName search:substitutableProjectIdentifier];
+        [self setName:projName inFile:androidPlistFileName search:substitutableProjectName];
     }
     
     
