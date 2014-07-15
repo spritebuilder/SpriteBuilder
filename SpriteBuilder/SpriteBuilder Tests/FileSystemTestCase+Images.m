@@ -28,7 +28,7 @@
 
     if (!CGImageDestinationFinalize(destination))
     {
-        NSLog(@"Failed to write image to %@", pngFilename);
+        XCTFail(@"Failed to write image to %@", pngFullPath);
     }
 
     CGContextRelease (context);
@@ -38,6 +38,12 @@
 - (void)assertPNGAtPath:(NSString *)relFilePath hasWidth:(NSUInteger)expectedWidth hasHeight:(NSUInteger)expectedHeight
 {
     NSString *fullPath = [self fullPathForFile:relFilePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:fullPath])
+    {
+        XCTFail(@"PNG file does not exist, cannot test dimensions at path \"%@\"", fullPath);
+        return;
+    }
 
     CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename(fullPath.UTF8String);
     CGImageRef image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
