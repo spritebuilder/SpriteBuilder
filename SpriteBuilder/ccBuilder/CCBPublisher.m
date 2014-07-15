@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+#import <MacTypes.h>
 #import "CCBPublisher.h"
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
@@ -64,11 +65,32 @@
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 @property (nonatomic, copy) PublisherFinishBlock finishBlock;
+@property (nonatomic, strong) NSMutableDictionary *publishingOutputDirectories;
 
 @end
 
 
 @implementation CCBPublisher
+
+- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherTargetType)targetType
+{
+    NSNumber *key = @(targetType);
+    if (!outputDirectory)
+    {
+        [_publishingOutputDirectories removeObjectForKey:key];
+    }
+    else
+    {
+        _publishingOutputDirectories[key] = [outputDirectory copy];
+    }
+}
+
+- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherTargetType)targetType
+{
+    NSNumber *key = @(targetType);
+
+    return _publishingOutputDirectories[key];
+}
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings finishedBlock:(PublisherFinishBlock)finishBlock;
 {
@@ -94,6 +116,8 @@
 
     self.publishedPNGFiles = [NSMutableSet set];
     self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
+
+    self.publishingOutputDirectories = [[NSMutableDictionary alloc] init];
 
     return self;
 }
@@ -670,24 +694,9 @@
 
     self.publishForResolutions = [self.projectSettings publishingResolutionsForTargetType:targetType];
 
-    NSString *outputDir = [self outputDirectoryForTargetType:targetType];
+    NSString *outputDir = [self publishOutputDirectoryForTargetType:targetType];
 
     return [self publishAllInputDirsToOutputDirectory:outputDir];
-}
-
-- (NSString *)outputDirectoryForTargetType:(CCBPublisherTargetType)targetType
-{
-    NSString *publishDir;
-    if (_publishOutputDirectory)
-    {
-        publishDir = _publishOutputDirectory;
-    }
-    else
-    {
-        publishDir = [[_projectSettings publishDirForTargetType:targetType]
-                                        absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
-    }
-    return publishDir;
 }
 
 - (void)resetNeedRepublish
@@ -705,17 +714,14 @@
         && !_projectSettings.onlyPublishCCBs)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-
-        NSArray *publishDirs = @[_projectSettings.publishDirectory, _projectSettings.publishDirectoryAndroid];
-        if (_publishOutputDirectory)
+        for (NSString *key in _publishingOutputDirectories)
         {
-            publishDirs = @[_publishOutputDirectory];
-        }
-
-        for (NSString * dir in publishDirs)
-        {
-            NSString *publishDir = [dir absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
-            [fileManager removeItemAtPath:publishDir error:NULL];
+            NSString *oldPublishingDir = _publishingOutputDirectories[key];
+            NSError *error;
+            if (![fileManager removeItemAtPath:oldPublishingDir error:&error])
+            {
+                NSLog(@"Error removing old publishing directory at path \"%@\" with error %@", oldPublishingDir, error);
+            }
         }
     }
 }

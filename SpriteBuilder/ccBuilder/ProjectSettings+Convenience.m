@@ -1,6 +1,7 @@
 #import "ProjectSettings+Convenience.h"
 #import "FCFormatConverter.h"
 #import "CCBWarnings.h"
+#import "NSString+RelativePath.h"
 
 
 @implementation ProjectSettings (Convenience)
@@ -121,17 +122,24 @@
 
 - (NSString *)publishDirForTargetType:(CCBPublisherTargetType)targetType
 {
+    NSString *result;
     if (targetType == kCCBPublisherTargetTypeAndroid)
     {
-        return [self publishDirectoryAndroid];
+        result = [self publishDirectoryAndroid];
     }
 
     if (targetType == kCCBPublisherTargetTypeIPhone)
     {
-        return [self publishDirectory];
+        result = [self publishDirectory];
     }
 
-    return nil;
+    if (!result)
+    {
+        NSLog(@"Error: unknown target type: %d", targetType);
+        return nil;
+    }
+
+    return [result absolutePathFromBaseDirPath:[self.projectPath stringByDeletingLastPathComponent]];
 }
 
 - (BOOL)publishEnabledForTargetType:(CCBPublisherTargetType)targetType

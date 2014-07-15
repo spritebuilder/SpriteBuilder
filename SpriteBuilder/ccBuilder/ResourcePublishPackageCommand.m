@@ -31,7 +31,12 @@
 
     self.modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     publisher.taskStatusUpdater = _modalTaskStatusWindow;
-    publisher.publishOutputDirectory = @"/Users/nickyweber/dev/Apportable/SBProjects/Misc/Untitled2.spritebuilder/Foo";
+
+    NSAssert(0, @"setPublishOutputDirectory undefined!");
+
+    // TODO!!
+    [publisher setPublishOutputDirectory:@"" forTargetType:kCCBPublisherTargetTypeIPhone];
+    [publisher setPublishOutputDirectory:@"" forTargetType:kCCBPublisherTargetTypeAndroid];
 
     NSString *pathToBePublished = ((RMPackage *)_resources.firstObject).fullPath;
     publisher.publishInputDirectories = @[pathToBePublished];

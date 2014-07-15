@@ -24,6 +24,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CCBPublishDelegate.h"
+#import "CCBWarnings.h"
 
 @class ProjectSettings;
 @class CCBWarnings;
@@ -48,13 +49,12 @@ typedef void (^PublisherFinishBlock)(CCBPublisher *publisher, CCBWarnings *warni
 
 @property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
-// Where should published files go
-// This is optional, if not set dirs will be take from project settings
-@property (nonatomic, copy) NSString *publishOutputDirectory;
-
 // Which directories should be published
 @property (nonatomic, copy) NSArray *publishInputDirectories;
 
+// Where should published files go
+- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherTargetType)targetType;
+- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherTargetType)targetType;
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
                      warnings:(CCBWarnings *)someWarnings

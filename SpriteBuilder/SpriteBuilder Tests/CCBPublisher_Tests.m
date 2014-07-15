@@ -42,9 +42,10 @@
                                                      finishedBlock:nil];
 
     _publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
-    _publisher.publishOutputDirectory = [self fullPathForFile:@"Published"];
+    [_publisher setPublishOutputDirectory:[self fullPathForFile:@"Published-iOS"] forTargetType:kCCBPublisherTargetTypeIPhone];
+    [_publisher setPublishOutputDirectory:[self fullPathForFile:@"Published-Android"] forTargetType:kCCBPublisherTargetTypeAndroid];
 
-    [self createFolders:@[@"Published"]];
+    [self createFolders:@[@"Published-iOS", @"Published-Android"]];
 }
 
 - (void)tearDown
@@ -71,42 +72,42 @@
 
     [_publisher start];
 
-    [self assertFileExists:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published/ccbResources/resources-phone/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published/ccbResources/resources-phone/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published/resources-tablet/photoshop.png"];
-    [self assertFileExists:@"Published/resources-tablethd/photoshop.png"];
-    [self assertFileExists:@"Published/resources-phone/photoshop.png"];
-    [self assertFileExists:@"Published/resources-phonehd/photoshop.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted2.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted2.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted2.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted.png"];
+    [self assertFileExists:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted2.png"];
+    [self assertFileExists:@"Published-iOS/resources-tablet/photoshop.png"];
+    [self assertFileExists:@"Published-iOS/resources-tablethd/photoshop.png"];
+    [self assertFileExists:@"Published-iOS/resources-phone/photoshop.png"];
+    [self assertFileExists:@"Published-iOS/resources-phonehd/photoshop.png"];
 
-    [self assertFileExists:@"Published/blank.caf"];
-    [self assertFileExists:@"Published/configCocos2d.plist"];
-    [self assertFileExists:@"Published/fileLookup.plist"];
-    [self assertFileExists:@"Published/spriteFrameFileList.plist"];
+    [self assertFileExists:@"Published-iOS/blank.caf"];
+    [self assertFileExists:@"Published-iOS/configCocos2d.plist"];
+    [self assertFileExists:@"Published-iOS/fileLookup.plist"];
+    [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
 
-    [self assertConfigCocos2d:@"Published/configCocos2d.plist" isEqualToDictionary:
+    [self assertConfigCocos2d:@"Published-iOS/configCocos2d.plist" isEqualToDictionary:
             @{
                 @"CCSetupScreenMode": @"CCScreenModeFixed",
                 @"CCSetupScreenOrientation": @"CCScreenOrientationPortrait",
                 @"CCSetupTabletScale2X": @(YES)
             }];
 
-    [self assertRenamingRuleInfFileLookup:@"Published/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.caf"];
-    [self assertRenamingRuleInfFileLookup:@"Published/fileLookup.plist" originalName:@"photoshop.psd" renamedName:@"photoshop.png"];
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.caf"];
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"photoshop.psd" renamedName:@"photoshop.png"];
 
-    [self assertPNGAtPath:@"Published/ccbResources/resources-phone/ccbButtonHighlighted.png" hasWidth:1 hasHeight:3];
-    [self assertPNGAtPath:@"Published/ccbResources/resources-phone/ccbButtonHighlighted2.png" hasWidth:5 hasHeight:2];
-    [self assertPNGAtPath:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
-    [self assertPNGAtPath:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
-    [self assertPNGAtPath:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
-    [self assertPNGAtPath:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
-    [self assertPNGAtPath:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted.png" hasWidth:4 hasHeight:12];
-    [self assertPNGAtPath:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted2.png" hasWidth:20 hasHeight:8];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted.png" hasWidth:1 hasHeight:3];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted2.png" hasWidth:5 hasHeight:2];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted.png" hasWidth:4 hasHeight:12];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted2.png" hasWidth:20 hasHeight:8];
 }
 
 - (void)testCustomScalingFactorsForImages
@@ -122,25 +123,19 @@
     [_publisher start];
 
     // The overridden case
-    [self assertPNGAtPath:@"Published/resources-tablethd/rocket.png" hasWidth:3 hasHeight:17];
+    [self assertPNGAtPath:@"Published-iOS/resources-tablethd/rocket.png" hasWidth:3 hasHeight:17];
 
-    [self assertPNGAtPath:@"Published/resources-tablet/rocket.png" hasWidth:8 hasHeight:40];
-    [self assertPNGAtPath:@"Published/resources-phone/rocket.png" hasWidth:4 hasHeight:20];
-    [self assertPNGAtPath:@"Published/resources-phonehd/rocket.png" hasWidth:8 hasHeight:40];
+    [self assertPNGAtPath:@"Published-iOS/resources-tablet/rocket.png" hasWidth:8 hasHeight:40];
+    [self assertPNGAtPath:@"Published-iOS/resources-phone/rocket.png" hasWidth:4 hasHeight:20];
+    [self assertPNGAtPath:@"Published-iOS/resources-phonehd/rocket.png" hasWidth:8 hasHeight:40];
 }
 
 - (void)testDifferentOutputFormatsForIOSAndAndroid
 {
-    [self createFolders:@[@"Published-iOS", @"Published-Android"]];
-    _publisher.publishOutputDirectory = nil;
-
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/rocket.png" width:4 height:20];
     [self copyTestingResource:@"blank.wav" toFolder:@"baa.spritebuilder/Packages/foo.sbpack"];
 
     _projectSettings.publishEnabledAndroid = YES;
-    // Dirs have to be relative to project dir
-    _projectSettings.publishDirectory = @"../Published-iOS";
-    _projectSettings.publishDirectoryAndroid = @"../Published-Android";
     _projectSettings.resourceAutoScaleFactor = 4;
 
     [_projectSettings setValue:[NSNumber numberWithInt:kFCImageFormatJPG_High] forRelPath:@"rocket.png" andKey:@"format_ios"];

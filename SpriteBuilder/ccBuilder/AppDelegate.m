@@ -133,6 +133,7 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
+#import "ProjectSettings+Convenience.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3264,6 +3265,12 @@ static BOOL hideAllToNextSeparator;
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     publisher.taskStatusUpdater = modalTaskStatusWindow;
     publisher.publishInputDirectories = projectSettings.absoluteResourcePaths;
+
+    [publisher setPublishOutputDirectory:[projectSettings publishDirForTargetType:kCCBPublisherTargetTypeIPhone]
+                           forTargetType:kCCBPublisherTargetTypeIPhone];
+
+    [publisher setPublishOutputDirectory:[projectSettings publishDirForTargetType:kCCBPublisherTargetTypeAndroid]
+                           forTargetType:kCCBPublisherTargetTypeAndroid];
 
     // Open progress window and publish
     if (async)
