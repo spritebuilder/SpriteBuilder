@@ -137,7 +137,12 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     NSString *path = [bundle pathForResource:resourceName ofType:nil];
-    [[NSFileManager defaultManager] copyItemAtPath:path toPath:[[self fullPathForFile:folder] stringByAppendingPathComponent:resourceName] error:nil];
+
+    NSString *fullTargetPath = [[self fullPathForFile:folder] stringByAppendingPathComponent:resourceName];
+
+    [self createIntermediateDirectoriesForFilPath:fullTargetPath];
+
+    [[NSFileManager defaultManager] copyItemAtPath:path toPath:fullTargetPath error:nil];
 }
 
 - (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files

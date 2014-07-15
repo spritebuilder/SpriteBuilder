@@ -44,6 +44,7 @@
                    height:8];
 
     [self copyTestingResource:@"blank.wav" toFolder:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack"];
+    [self copyTestingResource:@"photoshop.psd" toFolder:@"project.spritebuilder/Packages/SpriteBuilder Resources.sbpack/resources-auto"];
 
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = [self fullPathForFile:@"project.spritebuilder/publishtest.ccbproj"];
@@ -74,6 +75,11 @@
     [self assertFileExists:@"Published/ccbResources/resources-phone/ccbButtonHighlighted2.png"];
     [self assertFileExists:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted.png"];
     [self assertFileExists:@"Published/ccbResources/resources-phonehd/ccbButtonHighlighted2.png"];
+    [self assertFileExists:@"Published/resources-tablet/photoshop.png"];
+    [self assertFileExists:@"Published/resources-tablethd/photoshop.png"];
+    [self assertFileExists:@"Published/resources-phone/photoshop.png"];
+    [self assertFileExists:@"Published/resources-phonehd/photoshop.png"];
+
     [self assertFileExists:@"Published/blank.caf"];
     [self assertFileExists:@"Published/configCocos2d.plist"];
     [self assertFileExists:@"Published/fileLookup.plist"];
@@ -87,6 +93,7 @@
             }];
 
     [self assertRenamingRuleInfFileLookup:@"Published/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.caf"];
+    [self assertRenamingRuleInfFileLookup:@"Published/fileLookup.plist" originalName:@"photoshop.psd" renamedName:@"photoshop.png"];
 
     [self assertPNGAtPath:@"Published/ccbResources/resources-phone/ccbButtonHighlighted.png" hasWidth:1 hasHeight:3];
     [self assertPNGAtPath:@"Published/ccbResources/resources-phone/ccbButtonHighlighted2.png" hasWidth:5 hasHeight:2];
