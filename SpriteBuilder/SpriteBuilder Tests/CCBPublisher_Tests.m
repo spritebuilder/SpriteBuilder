@@ -12,6 +12,7 @@
 #import "CCBPublisher.h"
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
+#import "FCFormatConverter.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -106,10 +107,6 @@
     [self assertPNGAtPath:@"Published/ccbResources/resources-tablet/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
     [self assertPNGAtPath:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted.png" hasWidth:4 hasHeight:12];
     [self assertPNGAtPath:@"Published/ccbResources/resources-tablethd/ccbButtonHighlighted2.png" hasWidth:20 hasHeight:8];
-
-    NSLog(@"%@", [self fullPathForFile:@""]);
-    NSLog(@"%@", _publisher.publishOutputDirectory);
-    NSLog(@"---");
 }
 
 - (void)testCustomScalingFactorsForImages
@@ -120,7 +117,6 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-
     [_projectSettings setValue:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
 
     [_publisher start];
@@ -131,6 +127,52 @@
     [self assertPNGAtPath:@"Published/resources-tablet/rocket.png" hasWidth:8 hasHeight:40];
     [self assertPNGAtPath:@"Published/resources-phone/rocket.png" hasWidth:4 hasHeight:20];
     [self assertPNGAtPath:@"Published/resources-phonehd/rocket.png" hasWidth:8 hasHeight:40];
+}
+
+- (void)testDifferentOutputFormatsForIOSAndAndroid
+{
+    [self createFolders:@[@"Published-iOS", @"Published-Android"]];
+    _publisher.publishOutputDirectory = nil;
+
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/rocket.png" width:4 height:20];
+    [self copyTestingResource:@"blank.wav" toFolder:@"baa.spritebuilder/Packages/foo.sbpack"];
+
+    _projectSettings.publishEnabledAndroid = YES;
+    // Dirs have to be relative to project dir
+    _projectSettings.publishDirectory = @"../Published-iOS";
+    _projectSettings.publishDirectoryAndroid = @"../Published-Android";
+    _projectSettings.resourceAutoScaleFactor = 4;
+
+    [_projectSettings setValue:[NSNumber numberWithInt:kFCImageFormatJPG_High] forRelPath:@"rocket.png" andKey:@"format_ios"];
+    [_projectSettings setValue:[NSNumber numberWithInt:kFCImageFormatJPG_High] forRelPath:@"rocket.png" andKey:@"format_android"];
+    [_projectSettings setValue:[NSNumber numberWithInt:kFCSoundFormatMP4] forRelPath:@"blank.wav" andKey:@"format_ios_sound"];
+
+    [_publisher start];
+
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"rocket.png" renamedName:@"rocket.jpg"];
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.m4a"];
+
+    [self assertRenamingRuleInfFileLookup:@"Published-Android/fileLookup.plist" originalName:@"rocket.png" renamedName:@"rocket.jpg"];
+    [self assertRenamingRuleInfFileLookup:@"Published-Android/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.ogg"];
+
+    [self assertJPGAtPath:@"Published-iOS/resources-tablet/rocket.jpg" hasWidth:2 hasHeight:10];
+    [self assertJPGAtPath:@"Published-iOS/resources-tablethd/rocket.jpg" hasWidth:4 hasHeight:20];
+    [self assertJPGAtPath:@"Published-iOS/resources-phone/rocket.jpg" hasWidth:1 hasHeight:5];
+    [self assertJPGAtPath:@"Published-iOS/resources-phonehd/rocket.jpg" hasWidth:2 hasHeight:10];
+
+    [self assertJPGAtPath:@"Published-Android/resources-tablet/rocket.jpg" hasWidth:2 hasHeight:10];
+    [self assertJPGAtPath:@"Published-Android/resources-tablethd/rocket.jpg" hasWidth:4 hasHeight:20];
+    [self assertJPGAtPath:@"Published-Android/resources-phone/rocket.jpg" hasWidth:1 hasHeight:5];
+    [self assertJPGAtPath:@"Published-Android/resources-phonehd/rocket.jpg" hasWidth:2 hasHeight:10];
+
+    [self assertFileExists:@"Published-iOS/blank.m4a"];
+    [self assertFileExists:@"Published-Android/blank.ogg"];
+
+/*
+    NSLog(@"%@", [self fullPathForFile:@""]);
+    NSLog(@"%@", _publisher.publishOutputDirectory);
+    NSLog(@"---");
+*/
 }
 
 

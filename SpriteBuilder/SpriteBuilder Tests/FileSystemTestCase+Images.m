@@ -39,41 +39,49 @@
 - (void)assertPNGAtPath:(NSString *)relFilePath hasWidth:(NSUInteger)expectedWidth hasHeight:(NSUInteger)expectedHeight
 {
     NSString *fullPath = [self fullPathForFile:relFilePath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:fullPath])
-    {
-        XCTFail(@"PNG file does not exist, cannot test dimensions at path \"%@\"", fullPath);
-        return;
-    }
 
     CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename(fullPath.UTF8String);
     CGImageRef image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
 
-    NSUInteger imgHeight = CGImageGetHeight(image);
-    NSUInteger imgWidth = CGImageGetWidth(image);
-
-    XCTAssertEqual(imgWidth, expectedWidth, @"Image's width of %lu does not match %lu at path %@", imgWidth, expectedWidth, fullPath);
-    XCTAssertEqual(imgHeight, expectedHeight, @"Image's height of %lu does not match %lu at path %@", imgHeight, expectedHeight, fullPath);
+    [self assertImageAtPath:fullPath
+                   hasWidth:expectedWidth
+                  hasHeight:expectedHeight
+                  extension:@"PNG"
+                   imageRef:image];
 }
 
 - (void)assertJPGAtPath:(NSString *)relFilePath hasWidth:(NSUInteger)expectedWidth hasHeight:(NSUInteger)expectedHeight
 {
     NSString *fullPath = [self fullPathForFile:relFilePath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:fullPath])
-    {
-        XCTFail(@"JPG file does not exist, cannot test dimensions at path \"%@\"", fullPath);
-        return;
-    }
 
     CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename(fullPath.UTF8String);
     CGImageRef image = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
 
-    NSUInteger imgHeight = CGImageGetHeight(image);
-    NSUInteger imgWidth = CGImageGetWidth(image);
+    [self assertImageAtPath:fullPath
+                   hasWidth:expectedWidth
+                  hasHeight:expectedHeight
+                  extension:@"JPG"
+                   imageRef:image];
+}
 
-    XCTAssertEqual(imgWidth, expectedWidth, @"Image's width of %lu does not match %lu at path %@", imgWidth, expectedWidth, fullPath);
-    XCTAssertEqual(imgHeight, expectedHeight, @"Image's height of %lu does not match %lu at path %@", imgHeight, expectedHeight, fullPath);
+- (void)assertImageAtPath:(NSString *)fullPath
+                 hasWidth:(NSUInteger)expectedWidth
+                hasHeight:(NSUInteger)expectedHeight
+                extension:(NSString *)extension
+                 imageRef:(CGImageRef)imageRef
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:fullPath])
+    {
+        XCTFail(@"%@ file does not exist, cannot test dimensions at path \"%@\"", extension, fullPath);
+        return;
+    }
+
+    NSUInteger imgHeight = CGImageGetHeight(imageRef);
+    NSUInteger imgWidth = CGImageGetWidth(imageRef);
+
+    XCTAssertEqual(imgWidth, expectedWidth, @"%@'s width of %lu does not match %lu at path %@", extension, imgWidth, expectedWidth, fullPath);
+    XCTAssertEqual(imgHeight, expectedHeight, @"%@'s height of %lu does not match %lu at path %@", extension, imgHeight, expectedHeight, fullPath);
 }
 
 @end
