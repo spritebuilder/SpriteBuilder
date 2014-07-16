@@ -76,7 +76,7 @@
     XCTAssertNil(error);
 
     [self assertFileExists:@"packages"];
-    [self assertFileDoesNotExists:@"SpriteBuilder Resources"];
+    [self assertFileDoesNotExist:@"SpriteBuilder Resources"];
     [self assertFileExists:[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
     [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"SpriteBuilder Resources"]]];
@@ -117,7 +117,7 @@
 
     [self assertFileExists:[@"Packages/sprites" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
-    [self assertFileDoesNotExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"smiley.png"]];
+    [self assertFileDoesNotExist:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"smiley.png"]];
 
     // This is a bit brittle, but should be easily fixed if renaming rules change
     [self assertFileExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingString:@".renamed"]];
@@ -134,8 +134,8 @@
     XCTAssertNil(error);
 
     [self assertFileExists:[@"packages/sprites" stringByAppendingPackageSuffix]];
-    [self assertFileDoesNotExists:[@"sprites" stringByAppendingPackageSuffix]];
-    [self assertFileDoesNotExists:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPackageSuffix]];
+    [self assertFileDoesNotExist:[@"sprites" stringByAppendingPackageSuffix]];
+    [self assertFileDoesNotExist:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPackageSuffix]];
 
     [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"sprites"]]];
 }
@@ -156,7 +156,7 @@
 
     [self assertFileExists:@"SpriteBuilder Resources/asset.png"];
     [self assertFileExists:@"SpriteBuilder Resources/scene.ccb"];
-    [self assertFileDoesNotExists:@"packages"];
+    [self assertFileDoesNotExist:@"packages"];
     [self assertResourcePathsInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]]];
     XCTAssertTrue(_projectSettings.resourcePaths.count == 1, @"There should be only 1 resourcepath but %lu found: %@", _projectSettings.resourcePaths.count, _projectSettings.resourcePaths);
 }

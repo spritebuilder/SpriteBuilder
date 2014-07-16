@@ -28,7 +28,7 @@
 - (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files;
 
 - (void)assertFileExists:(NSString *)filePath;
-- (void)assertFileDoesNotExists:(NSString *)filePath;
+- (void)assertFileDoesNotExist:(NSString *)filePath;
 
 // Will prepend the test directory's path if it's not already in the filePath.
 // So anything that is not within the test directory is treated as a relative path to it.

@@ -26,7 +26,7 @@
     XCTAssertTrue([removeFileCommand execute:&error], @"Removing the file failed with error %@", error);
     XCTAssertNil(error);
 
-    [self assertFileDoesNotExists:@"foo"];
+    [self assertFileDoesNotExist:@"foo"];
 }
 
 - (void)testRemoveFileUndo

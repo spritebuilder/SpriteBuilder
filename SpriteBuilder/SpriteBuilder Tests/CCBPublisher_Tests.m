@@ -135,13 +135,13 @@
 
     [self assertFileExists:@"Published-iOS/resources-phonehd/picture.png"];
     [self assertFileExists:@"Published-iOS/resources-tablet/picture.png"];
-    [self assertFileDoesNotExists:@"Published-iOS/resources-phone/picture.png"];
-    [self assertFileDoesNotExists:@"Published-iOS/resources-tablethd/picture.png"];
+    [self assertFileDoesNotExist:@"Published-iOS/resources-phone/picture.png"];
+    [self assertFileDoesNotExist:@"Published-iOS/resources-tablethd/picture.png"];
 
     [self assertFileExists:@"Published-Android/resources-phone/picture.png"];
     [self assertFileExists:@"Published-Android/resources-tablethd/picture.png"];
-    [self assertFileDoesNotExists:@"Published-Android/resources-phonehd/picture.png"];
-    [self assertFileDoesNotExists:@"Published-Android/resources-tablet/picture.png"];
+    [self assertFileDoesNotExist:@"Published-Android/resources-phonehd/picture.png"];
+    [self assertFileDoesNotExist:@"Published-Android/resources-tablet/picture.png"];
 }
 
 - (void)testCustomScalingFactorsForImages
