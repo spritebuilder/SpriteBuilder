@@ -758,7 +758,9 @@
 
 - (void)start
 {
+    #ifndef TESTING
     NSLog(@"[PUBLISH] Start...");
+    #endif
 
     [_publishingQueue setSuspended:YES];
 
@@ -783,7 +785,9 @@
 	
     [_projectSettings flagFilesDirtyWithWarnings:_warnings];
 
+    #ifndef TESTING
     NSLog(@"[PUBLISH] Done in %.2f seconds.", [[NSDate date] timeIntervalSince1970] - startTime);
+    #endif
 
     if ([[NSThread currentThread] isMainThread])
     {

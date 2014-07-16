@@ -539,7 +539,8 @@ typedef struct _PVRTexHeader
     if (self.previewFile)
     {
         NSError *error;
-        if (![[NSFileManager defaultManager] removeItemAtPath:self.previewFile error:&error])
+        if (![[NSFileManager defaultManager] removeItemAtPath:self.previewFile error:&error]
+            && error.code != NSFileNoSuchFileError)
         {
             NSLog(@"[TEXTUREPACKER] Error removing preview image %@: %@", self.previewFile, error);
         }
