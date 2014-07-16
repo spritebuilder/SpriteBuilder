@@ -1,8 +1,9 @@
 #import "FileSystemTestCase+Images.h"
+#import "NSColor+BFColorPickerPopover.h"
 
 @implementation FileSystemTestCase (Images)
 
-- (void)createPNGAtPath:(NSString *)relFilePath width:(NSUInteger)width height:(NSUInteger)height;
+- (void)createPNGAtPath:(NSString *)relFilePath width:(NSUInteger)width height:(NSUInteger)height color:(NSColor *)color;
 {
     [self createIntermediateDirectoriesForFilPath:relFilePath];
 
@@ -15,8 +16,8 @@
                                                     CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),
                                                     kCGImageAlphaNoneSkipLast);
 
-    // red
-    CGContextSetRGBFillColor (context, 1.0, 0.0, 0.0, 1.0);
+    NSColor *calbrated = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+    CGContextSetRGBFillColor (context, calbrated.redComponent, calbrated.greenComponent, calbrated.blueComponent, calbrated.alphaComponent);
 
     CGContextFillRect (context, CGRectMake (0, 0, width, height));
     CGImageRef myImage = CGBitmapContextCreateImage (context);
@@ -34,6 +35,11 @@
 
     CGContextRelease (context);
     CGImageRelease(myImage);
+}
+
+- (void)createPNGAtPath:(NSString *)relFilePath width:(NSUInteger)width height:(NSUInteger)height;
+{
+    [self createPNGAtPath:relFilePath width:width height:height color:[NSColor randomColor]];
 }
 
 - (void)assertPNGAtPath:(NSString *)relFilePath hasWidth:(NSUInteger)expectedWidth hasHeight:(NSUInteger)expectedHeight
