@@ -144,6 +144,40 @@
     [self assertFileDoesNotExist:@"Published-Android/resources-tablet/picture.png"];
 }
 
+- (void)testPublishBMFont
+{
+    [self createEmptyFilesRelativeToDirectory:@"baa.spritebuilder/Packages/foo.sbpack/test.bmfont" files:@[
+            @"resources-phone/din.fnt",
+            @"resources-phone/din.png",
+            @"resources-phonehd/din.fnt",
+            @"resources-phonehd/din.png",
+            @"resources-tablet/din.fnt",
+            @"resources-tablet/din.png",
+            @"resources-tablethd/din.fnt",
+            @"resources-tablethd/din.png",
+    ]];
+
+    [_publisher start];
+
+    [self assertFilesExistRelativeToDirectory:@"Published-iOS/test.bmfont" filesPaths:@[
+            @"resources-phone/din.fnt",
+            @"resources-phone/din.png",
+            @"resources-phonehd/din.fnt",
+            @"resources-phonehd/din.png",
+            @"resources-tablet/din.fnt",
+            @"resources-tablet/din.png",
+            @"resources-tablethd/din.fnt",
+            @"resources-tablethd/din.png",
+    ]];
+}
+
+/*
+- (void)testPublishOnlyCCBs
+{
+
+}
+*/
+
 - (void)testCustomScalingFactorsForImages
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/rocket.png" width:4 height:20];

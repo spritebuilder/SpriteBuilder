@@ -98,6 +98,19 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     [self createFilesWithContents:dictionary];
 }
 
+- (void)createEmptyFilesRelativeToDirectory:(NSString *)relativeDirectory files:(NSArray *)files;
+{
+    NSMutableArray *filesWithRelPathPrepended = [NSMutableArray array];
+
+    for (NSString *filePath in files)
+    {
+        NSString *filePathExtended = [relativeDirectory stringByAppendingPathComponent:filePath];
+        [filesWithRelPathPrepended addObject:filePathExtended];
+    }
+
+    [self createEmptyFiles:filesWithRelPathPrepended];
+}
+
 - (void)createFilesWithContents:(NSDictionary *)filesWithContents
 {
     for (NSString *relFilePath in filesWithContents)
@@ -169,10 +182,26 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     XCTAssertTrue([_fileManager fileExistsAtPath:fullPath], @"File does not exist at \"%@\"", fullPath);
 }
 
+- (void)assertFilesExistRelativeToDirectory:(NSString *)relativeDirectoy filesPaths:(NSArray *)filePaths
+{
+    for (NSString *filePath in filePaths)
+    {
+        [self assertFileExists:[relativeDirectoy stringByAppendingPathComponent:filePath]];
+    }
+}
+
 - (void)assertFileDoesNotExist:(NSString *)filePath
 {
     NSString *fullPath = [self fullPathForFile:filePath];
     XCTAssertFalse([_fileManager fileExistsAtPath:fullPath], @"File exists at \"%@\"", fullPath);
+}
+
+- (void)assertFilesDoNotExistRelativeToDirectory:(NSString *)relativeDirectoy filesPaths:(NSArray *)filePaths;
+{
+    for (NSString *filePath in filePaths)
+    {
+        [self assertFileDoesNotExist:[relativeDirectoy stringByAppendingPathComponent:filePath]];
+    }
 }
 
 - (NSString *)fullPathForFile:(NSString *)filePath

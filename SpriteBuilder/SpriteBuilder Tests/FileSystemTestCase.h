@@ -15,20 +15,28 @@
 // Containing folders have to exist
 - (void)createEmptyFiles:(NSArray *)files;
 
+// Creates files in bulk relative to a directory
+// Example: relativeDir is foo/baa, and files are a/text.png and manual.txt
+// file will be created at foo/baa/a/text.png and foo/baa/manual.txt
+- (void)createEmptyFilesRelativeToDirectory:(NSString *)relativeDirectory files:(NSArray *)files;
+
 // create files, dictionary structure: key: relativeFilePath
 // value has to be of type NSData *
 // Example for parameter:
 // NSDictionary *foo = @{@"path/to/file.txt": [NSDate data]};
 - (void)createFilesWithContents:(NSDictionary *)filesWithContents;
 
-
+// Creates a .ccbproj file with default initialized values in testDirecotoryPath
 - (void)createProjectSettingsFileWithName:(NSString *)name;
 
 - (NSDate *)modificationDateOfFile:(NSString *)filePath;
 - (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files;
 
 - (void)assertFileExists:(NSString *)filePath;
+- (void)assertFilesExistRelativeToDirectory:(NSString *)relativeDirectoy filesPaths:(NSArray *)filePaths;
+
 - (void)assertFileDoesNotExist:(NSString *)filePath;
+- (void)assertFilesDoNotExistRelativeToDirectory:(NSString *)relativeDirectoy filesPaths:(NSArray *)filePaths;
 
 // Will prepend the test directory's path if it's not already in the filePath.
 // So anything that is not within the test directory is treated as a relative path to it.
