@@ -134,7 +134,7 @@
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
-#import "CCBDocumentCreator.h"
+#import "CCBDocumentDataCreator.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1467,12 +1467,12 @@ static BOOL hideAllToNextSeparator;
 
 - (NSMutableDictionary*) docDataFromCurrentNodeGraph
 {
-    CCBDocumentCreator *sceneDocCreator =
-            [[CCBDocumentCreator alloc] initWithSceneGraph:[SceneGraph instance]
+    CCBDocumentDataCreator *dataCreator =
+            [[CCBDocumentDataCreator alloc] initWithSceneGraph:[SceneGraph instance]
                                                       document:currentDocument
                                                projectSettings:projectSettings
                                                     sequenceId:sequenceHandler.currentSequence.sequenceId];
-    return [sceneDocCreator createDocument];
+    return [dataCreator createData];
 }
 
 - (void) prepareForDocumentSwitch
@@ -1481,7 +1481,7 @@ static BOOL hideAllToNextSeparator;
     CocosScene* cs = [CocosScene cocosScene];
 		
     if (![self hasOpenedDocument]) return;
-    currentDocument.docData = [self docDataFromCurrentNodeGraph];
+    currentDocument.data = [self docDataFromCurrentNodeGraph];
     currentDocument.stageZoom = [cs stageZoom];
     currentDocument.stageScrollOffset = [cs scrollOffset];
 }
@@ -1778,7 +1778,7 @@ static BOOL hideAllToNextSeparator;
     
     self.currentDocument = document;
     
-    NSMutableDictionary* doc = document.docData;
+    NSMutableDictionary* doc = document.data;
     
     [self replaceDocumentData:doc];
     
@@ -2070,12 +2070,9 @@ static BOOL hideAllToNextSeparator;
 
 - (void) saveFile:(NSString*) fileName
 {
-    NSMutableDictionary* doc = [self docDataFromCurrentNodeGraph];
-     
-    [doc writeToFile:fileName atomically:YES];
-    
     currentDocument.filePath = fileName;
-    currentDocument.docData = doc;
+    currentDocument.data = [self docDataFromCurrentNodeGraph];
+    [currentDocument store];
     
     currentDocument.isDirty = NO;
     NSTabViewItem* item = [self tabViewItemFromDoc:currentDocument];
@@ -2112,24 +2109,6 @@ static BOOL hideAllToNextSeparator;
     sequenceHandler.currentSequence.timelinePosition = currentTime;
     
     [projectOutlineHandler updateSelectionPreview];
-}
-
-- (void) exportFile:(NSString*) fileName withPlugIn:(NSString*) ext
-{
-    PlugInExport* plugIn = [[PlugInManager sharedManager] plugInExportForExtension:ext];
-    if (!plugIn)
-    {
-        [self modalDialogTitle:@"Plug-in missing" message:[NSString stringWithFormat:@"There is no extension available for publishing to %@-files. Please use the Publish As... option.",ext]];
-        return;
-    }
-    
-    NSMutableDictionary* doc = [self docDataFromCurrentNodeGraph];
-    NSData* data = [plugIn exportDocument:doc];
-    BOOL success = [data writeToFile:fileName atomically:YES];
-    if (!success)
-    {
-        [self modalDialogTitle:@"Publish failed" message:@"Failed to publish the document, please try to publish to another location."];
-    }
 }
 
 - (void) newFile:(NSString*) fileName type:(int)type resolutions: (NSMutableArray*) resolutions;

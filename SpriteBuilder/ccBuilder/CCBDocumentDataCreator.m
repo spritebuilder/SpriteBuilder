@@ -1,4 +1,4 @@
-#import "CCBDocumentCreator.h"
+#import "CCBDocumentDataCreator.h"
 #import "CCNode.h"
 #import "SceneGraph.h"
 #import "CCBDocument.h"
@@ -11,7 +11,7 @@
 #import "ResolutionSetting.h"
 #import "SequencerSequence.h"
 
-@interface CCBDocumentCreator ()
+@interface CCBDocumentDataCreator ()
 
 @property (nonatomic, strong) SceneGraph *sceneGraph;
 @property (nonatomic, strong) CCBDocument *document;
@@ -21,7 +21,7 @@
 @end
 
 
-@implementation CCBDocumentCreator
+@implementation CCBDocumentDataCreator
 
 - (instancetype)init
 {
@@ -51,7 +51,7 @@
     return self;
 }
 
-- (NSMutableDictionary *)createDocument;
+- (NSMutableDictionary *)createData;
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
 

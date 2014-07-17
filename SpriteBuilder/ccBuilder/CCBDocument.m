@@ -52,7 +52,7 @@
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
 
         self.filePath = filePath;
-        self.docData = dictionary;
+        self.data = dictionary;
         self.exportPath = [dictionary objectForKey:@"exportPath"];
         self.exportPlugIn = [dictionary objectForKey:@"exportPlugIn"];
         self.exportFlattenPaths = [dictionary[@"exportFlattenPaths"] boolValue];
@@ -64,18 +64,13 @@
     return self;
 }
 
-- (BOOL)writeToFile
-{
-    return NO;
-}
-
 - (void)fixupUUID
 {
     //If UUID is unset, it means the doc is out of date. Fixup.
     if (_UUID == 0x0)
     {
         self.UUID = 0x1;
-        [self fixupUUIDWithDict:_docData[@"nodeGraph"]];
+        [self fixupUUIDWithDict:_data[@"nodeGraph"]];
     }
 }
 
@@ -117,6 +112,11 @@
 - (BOOL)isWithinPath:(NSString *)path
 {
     return [_filePath hasPrefix:path];
+}
+
+- (BOOL)store
+{
+    return [_data writeToFile:_filePath atomically:YES];
 }
 
 @end

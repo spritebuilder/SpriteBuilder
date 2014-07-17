@@ -5,7 +5,7 @@
 @class ProjectSettings;
 
 
-@interface CCBDocumentCreator : NSObject
+@interface CCBDocumentDataCreator : NSObject
 
 - (instancetype)initWithSceneGraph:(SceneGraph *)sceneGraph
                           document:(CCBDocument *)document
@@ -13,6 +13,6 @@
                         sequenceId:(int)sequenceId;
 
 // It actually should return a CCBDocument however there is some inconsequence around SB
-- (NSMutableDictionary *)createDocument;
+- (NSMutableDictionary *)createData;
 
 @end

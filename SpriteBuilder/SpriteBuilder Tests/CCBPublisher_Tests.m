@@ -14,7 +14,7 @@
 #import "CCBWarnings.h"
 #import "FCFormatConverter.h"
 #import "SceneGraph.h"
-#import "CCBDocumentCreator.h"
+#import "CCBDocumentDataCreator.h"
 #import "CCBDocument.h"
 #import "PlugInManager.h"
 
@@ -182,12 +182,12 @@
     sceneGraph.rootNode = root;
 
     CCBDocument *document = [[CCBDocument alloc] init];
-    CCBDocumentCreator *documentCreator = [[CCBDocumentCreator alloc] initWithSceneGraph:sceneGraph
+    CCBDocumentDataCreator *documentCreator = [[CCBDocumentDataCreator alloc] initWithSceneGraph:sceneGraph
                                                                                 document:document
                                                                          projectSettings:_projectSettings
                                                                               sequenceId:0];
 
-    NSMutableDictionary *doc = [documentCreator createDocument];
+    NSMutableDictionary *doc = [documentCreator createData];
     [doc writeToFile:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack/mainScene.ccb"] atomically:YES];
 
     [_publisher start];
