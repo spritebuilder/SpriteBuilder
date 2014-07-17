@@ -134,6 +134,7 @@
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
+#import "SceneDocumentCreator.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1466,87 +1467,12 @@ static BOOL hideAllToNextSeparator;
 
 - (NSMutableDictionary*) docDataFromCurrentNodeGraph
 {
-    SceneGraph* g = [SceneGraph instance];
-    
-    
-    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    CCBDocument* doc = [self currentDocument];
-    
-    // Add node graph
-    NSMutableDictionary* nodeGraph = [CCBWriterInternal dictionaryFromCCObject:g.rootNode];
-    [dict setObject:nodeGraph forKey:@"nodeGraph"];
-    
-    // Add meta data
-    [dict setObject:@"CocosBuilder" forKey:@"fileType"];
-    [dict setObject:[NSNumber numberWithInt:kCCBFileFormatVersion] forKey:@"fileVersion"];
-    
-    [dict setObject:[NSNumber numberWithBool:jsControlled] forKey:@"jsControlled"];
-    
-    [dict setObject:[NSNumber numberWithBool:[[CocosScene cocosScene] centeredOrigin]] forKey:@"centeredOrigin"];
-    
-    [dict setObject:[NSNumber numberWithInt:[[CocosScene cocosScene] stageBorder]] forKey:@"stageBorder"];
-    [dict setObject:[NSNumber numberWithInt:doc.stageColor] forKey:@"stageColor"];
-    
-    // Guides & notes
-    [dict setObject:[[CocosScene cocosScene].guideLayer serializeGuides] forKey:@"guides"];
-    [dict setObject:[[CocosScene cocosScene].notesLayer serializeNotes] forKey:@"notes"];
-    
-    [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
-    
-    // Save Grid Spacing
-    //[dict setObject:[NSValue valueWithSize:(NSSize)[[CocosScene cocosScene].guideLayer gridSize]] forKey:@"gridspace"];
-    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.width] forKey:@"gridspaceWidth"];
-    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.height] forKey:@"gridspaceHeight"];
-    
-    //////////////    //////////////    //////////////    //////////////    //////////////
-    //Joints
-    NSMutableArray * joints = [NSMutableArray array];
-    for (CCNode * joint in g.joints.all)
-    {
-        [joints addObject:[CCBWriterInternal dictionaryFromCCObject:joint]];
-    }
-    
-    [dict setObject:joints forKey:@"joints"];
-
-	if ([AppDelegate appDelegate].projectSettings.engine != CCBTargetEngineSpriteKit)
-		[dict setObject:[g.joints serialize] forKey:@"SequencerJoints"];
-    
-    
-    //////////////    //////////////    //////////////    //////////////    //////////////
-    [dict setObject:@(doc.UUID) forKey:@"UUID"];
-    
-    // Resolutions
-    if (doc.resolutions)
-    {
-        NSMutableArray* resolutions = [NSMutableArray array];
-        for (ResolutionSetting* r in doc.resolutions)
-        {
-            [resolutions addObject:[r serialize]];
-        }
-        [dict setObject:resolutions forKey:@"resolutions"];
-        [dict setObject:[NSNumber numberWithInt:doc.currentResolution] forKey:@"currentResolution"];
-    }
-    
-    // Sequencer timelines
-    if (doc.sequences)
-    {
-        NSMutableArray* sequences = [NSMutableArray array];
-        for (SequencerSequence* seq in doc.sequences)
-        {
-            [sequences addObject:[seq serialize]];
-        }
-        [dict setObject:sequences forKey:@"sequences"];
-        [dict setObject:[NSNumber numberWithInt:sequenceHandler.currentSequence.sequenceId] forKey:@"currentSequenceId"];
-    }
-    
-    if (doc.exportPath && doc.exportPlugIn)
-    {
-        [dict setObject:doc.exportPlugIn forKey:@"exportPlugIn"];
-        [dict setObject:doc.exportPath forKey:@"exportPath"];
-        [dict setObject:[NSNumber numberWithBool:doc.exportFlattenPaths] forKey:@"exportFlattenPaths"];
-    }
-    
-    return dict;
+    SceneDocumentCreator *sceneDocCreator =
+            [[SceneDocumentCreator alloc] initWithSceneGraph:[SceneGraph instance]
+                                                      document:currentDocument
+                                               projectSettings:projectSettings
+                                                    sequenceId:sequenceHandler.currentSequence.sequenceId];
+    return [sceneDocCreator createDocument];
 }
 
 - (void) prepareForDocumentSwitch
