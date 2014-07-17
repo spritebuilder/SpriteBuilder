@@ -62,7 +62,6 @@
     NSAlert* _buyAlert;
     NSString* _projectPathDir;
     NSString* _projectPath;
-    
 }
 
 - (id)initWithDownload:(NSString*)requestID parentWindow:(LocalizationEditorWindow*)pw numToDownload:(double)numTrans;
@@ -76,6 +75,7 @@
 - (void)cancelDownloadWithError:(NSError*)error;
 - (void)pauseDownload;
 - (void)restartDownload;
+- (void)refresh;
 
 //Needed for Transaction Observer
 -(void)enableAll;

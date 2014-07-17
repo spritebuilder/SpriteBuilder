@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+
 @class LocalizationTranslateWindow;
 @class LocalizationCancelTranslationsWindow;
 @interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate>

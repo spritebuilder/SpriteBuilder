@@ -37,7 +37,8 @@ static int downloadLangsErrorIndex = 5;
 static int paymentErrorIndex = 6;
 
 //URLs
-static NSString* const baseURL = @"http://spritebuilder-meteor.herokuapp.com/api/v1";
+//TODO Change the URL back
+static NSString* const baseURL = @"http://www.spritebuilder.com/api/v1";
 static NSString* languageURL;
 static NSString* estimateURL;
 static NSString* receiptTranslationsURL;
@@ -110,7 +111,6 @@ static int numTimedOutIntervals = 0;
     [self.buyAlert setShowsSuppressionButton:YES];
     self.projectPathDir = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPathDir;
     self.projectPath = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPath;
-    
 }
 
 #pragma mark Downloading and Updating Languages
@@ -273,6 +273,16 @@ static int numTimedOutIntervals = 0;
     
 }
 
+/*
+ * Called when window reopened, just incase things were changed on the editor window
+ */
+-(void)refresh{
+    [self updateActiveLanguages];
+    [self finishLanguageSetUp];
+    [_languageTable reloadData];
+    [self getCostEstimate];
+}
+
 #pragma mark Downloading Cost Estimate and Word Count
 
 /*
@@ -332,6 +342,8 @@ static int numTimedOutIntervals = 0;
                                            {
                                                [self enableAllExceptButtons];
                                                [_costDownloading stopAnimation:self];
+                                               [_costDownloading setHidden:1];
+                                               [_costDownloadingText setHidden:1];
                                                [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
                                            }
                                            NSLog(@"Estimate Status code: %li", ((NSHTTPURLResponse *)response).statusCode);
@@ -340,6 +352,8 @@ static int numTimedOutIntervals = 0;
                                        {
                                            [self enableAllExceptButtons];
                                            [_costDownloading stopAnimation:self];
+                                           [_costDownloading setHidden:1];
+                                           [_costDownloadingText setHidden:1];
                                            [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
                                            NSLog(@"Estimate Error: %@", error.localizedDescription);
                                        }
@@ -431,6 +445,8 @@ static int numTimedOutIntervals = 0;
         [self printJSONOrNormalErrorForFunction:@"Estimate" JSONError:JSONerror Error:[dataDict objectForKey:@"Error"]];
         [self enableAllExceptButtons];
         [_costDownloading stopAnimation:self];
+        [_costDownloading setHidden:1];
+        [_costDownloadingText setHidden:1];
         [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
         return;
     }
@@ -471,7 +487,8 @@ static int numTimedOutIntervals = 0;
     {
         [[AppDelegate appDelegate] disableHelpDialog:@"longDownloadTime"];
     }
-    if((continueDownload == NSAlertDefaultReturn) && [SKPaymentQueue canMakePayments]){
+    if((continueDownload == NSAlertDefaultReturn) && [SKPaymentQueue canMakePayments])
+    {
         [[AppDelegate appDelegate].lto setLtw:self];
         SKPaymentQueue* defaultQueue = [SKPaymentQueue defaultQueue];
         SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
@@ -657,6 +674,8 @@ static int numTimedOutIntervals = 0;
 -(void) request:(SKRequest *)request didFailWithError:(NSError *)error{
     [self enableAllExceptButtons];
     [_costDownloading stopAnimation:self];
+    [_costDownloading setHidden:1];
+    [_costDownloadingText setHidden:1];
     [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
     NSLog(@"Product Request Failed: %@", error.localizedDescription);
 }
@@ -672,6 +691,8 @@ static int numTimedOutIntervals = 0;
         [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
         [self enableAllExceptButtons];
         [_costDownloading stopAnimation:self];
+        [_costDownloading setHidden:1];
+        [_costDownloadingText setHidden:1];
         NSLog(@"Invalid Identifier: %@",invalidIdentifier);
         return;
     }
@@ -851,14 +872,24 @@ static int numTimedOutIntervals = 0;
     {
         handler = [[LocalizationEditorHandler alloc] init];
         NSString* langFile = [[_projectPathDir stringByAppendingPathComponent:@"SpriteBuilder Resources"] stringByAppendingPathComponent:@"Strings.ccbLang"];
+        if(!langFile)
+        {
+            [self cannotFindProjectAlert:_projectPath];
+        }
         [handler setManagedFileForBackgroundTranslationDownload:langFile];
         NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:_projectPath];
+        if(!projectDict)
+        {
+            [self cannotFindProjectAlert:_projectPath];
+        }
         ps = [[ProjectSettings alloc] initWithSerialization:projectDict];
+        if(!ps)
+        {
+            [self cannotFindProjectAlert:_projectPath];
+        }
         ps.projectPath = _projectPath;
         [ps store];
-        
     }
-    
     NSArray* handlerTranslations = handler.translations;
     NSArray* requests = [initialTransDict objectForKey:@"requests"];
     NSDictionary* request = NULL;
@@ -1046,6 +1077,10 @@ static int numTimedOutIntervals = 0;
 
 #pragma mark Misc. helper funcs
 
+-(void)cannotFindProjectAlert:(NSString*)projectPath{
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Project Does Not Exist" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"We cannot find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
+    [alert runModal];
+}
 /*
  * This function uses a ternary operator! Thank you high school computer science!!
  */

@@ -29,6 +29,7 @@
     [self addLanguageColumns];
     [self updateQuickEditLangs];
     [self addObserver:self forKeyPath:@"hasOpenFile" options:0 context:nil];
+    [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
 }
 
 - (void) populateLanguageAddMenu
@@ -228,6 +229,9 @@
         {
             _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
         }
+        else{
+            [_ltw refresh];
+        }
         [_ltw setParentWindow:self];
         [_ltw.window makeKeyAndOrderFront:sender];
         [NSApp runModalForWindow:_ltw.window];
@@ -288,6 +292,7 @@
     [_addTranslation setEnabled:0];
     [popCurrentLanguage setEnabled:0];
     _translationsButton.title = @"Stop Download...";
+    [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
 }
 
 /*
@@ -295,6 +300,7 @@
  */
 -(void)incrementTransByOne{
     [_translationProgress incrementBy:1.0];
+    [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
 }
 
 /*
@@ -318,6 +324,7 @@
     [popCurrentLanguage setEnabled:1];
     [_addTranslation setEnabled:1];
     _translationsButton.title = @"Buy Translations...";
+    [_translationProgress setToolTip:@""];
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
@@ -744,6 +751,7 @@
     else return proposedMaximumPosition;
 }
 
+#pragma mark KVO for hasOpenFile
 /*
  * This replaces the bindings of before. If 'has open file' changes, change the language window according to the 'isDownloading' status of the
  * new project. 
@@ -763,4 +771,5 @@
     }
     
 }
+
 @end
