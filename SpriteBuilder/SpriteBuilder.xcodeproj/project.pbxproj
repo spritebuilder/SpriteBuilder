@@ -344,7 +344,7 @@
 		B75CB48B184D31270036259F /* UsageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B75CB48A184D31270036259F /* UsageManager.m */; };
 		B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = B7737D4D17CC102D005F775A /* InspectorColor4.m */; };
 		B7737D5017CC102D005F775A /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7737D4E17CC102D005F775A /* InspectorColor4.xib */; };
-		B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EC96518087011004C09FF /* CCBProjCreator.m */; };
+		B77EC96618087011004C09FF /* CCBProjectCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = B77EC96518087011004C09FF /* CCBProjectCreator.m */; };
 		B78AE44B17E263B20028BE0B /* CCBPNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44A17E263B20028BE0B /* CCBPNodeColor.m */; };
 		B78AE44E17E263FC0028BE0B /* CCBPNodeGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE44D17E263FC0028BE0B /* CCBPNodeGradient.m */; };
 		B78AE45217E3B1600028BE0B /* scale-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B78AE44F17E3B1600028BE0B /* scale-2.png */; };
@@ -1646,8 +1646,8 @@
 		B7737D4C17CC102D005F775A /* InspectorColor4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorColor4.h; sourceTree = "<group>"; };
 		B7737D4D17CC102D005F775A /* InspectorColor4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor4.m; sourceTree = "<group>"; };
 		B7737D4E17CC102D005F775A /* InspectorColor4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorColor4.xib; sourceTree = "<group>"; };
-		B77EC96418087011004C09FF /* CCBProjCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProjCreator.h; sourceTree = "<group>"; };
-		B77EC96518087011004C09FF /* CCBProjCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBProjCreator.m; sourceTree = "<group>"; };
+		B77EC96418087011004C09FF /* CCBProjectCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBProjectCreator.h; sourceTree = "<group>"; };
+		B77EC96518087011004C09FF /* CCBProjectCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBProjectCreator.m; sourceTree = "<group>"; };
 		B78AE44917E263B20028BE0B /* CCBPNodeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPNodeColor.h; sourceTree = "<group>"; };
 		B78AE44A17E263B20028BE0B /* CCBPNodeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPNodeColor.m; sourceTree = "<group>"; };
 		B78AE44C17E263FC0028BE0B /* CCBPNodeGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPNodeGradient.h; sourceTree = "<group>"; };
@@ -2735,8 +2735,8 @@
 				E3C3660214EB2C1B007CD5FF /* CCBReaderInternal.h */,
 				E3C3660314EB2C1B007CD5FF /* CCBReaderInternal.m */,
 				E312EDC516AF71FE000778C8 /* CCBReaderInternalRenamedProps.plist */,
-				B77EC96418087011004C09FF /* CCBProjCreator.h */,
-				B77EC96518087011004C09FF /* CCBProjCreator.m */,
+				B77EC96418087011004C09FF /* CCBProjectCreator.h */,
+				B77EC96518087011004C09FF /* CCBProjectCreator.m */,
 				E525FA7CCCE20F5956560452 /* CCBDocumentCreator.m */,
 				E525FD3A63A749E29885DE3C /* CCBDocumentCreator.h */,
 			);
@@ -6553,7 +6553,7 @@
 				E3FEA8AA14E45F1000119FBE /* InspectorSize.m in Sources */,
 				E3FEA8AF14E47C7500119FBE /* InspectorPoint.m in Sources */,
 				E3FEA8B414E4874C00119FBE /* InspectorPointLock.m in Sources */,
-				B77EC96618087011004C09FF /* CCBProjCreator.m in Sources */,
+				B77EC96618087011004C09FF /* CCBProjectCreator.m in Sources */,
 				E3FEA8B914E492DA00119FBE /* InspectorScaleLock.m in Sources */,
 				E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */,
 				E3B4221114E49DEB004547D6 /* InspectorInteger.m in Sources */,

@@ -101,7 +101,7 @@
 #import "PropertyInspectorHandler.h"
 #import "LocalizationEditorHandler.h"
 #import "PhysicsHandler.h"
-#import "CCBProjCreator.h"
+#import "CCBProjectCreator.h"
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
 #import "WarningTableViewHandler.h"
@@ -1931,7 +1931,7 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) createProject:(NSString*)fileName engine:(CCBTargetEngine)engine
 {
-    CCBProjCreator* creator = [[CCBProjCreator alloc] init];
+    CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
     return [creator createDefaultProjectAtPath:fileName engine:engine];
 }
 
