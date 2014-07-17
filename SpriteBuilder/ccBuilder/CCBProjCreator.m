@@ -9,6 +9,36 @@
 #import "CCBProjCreator.h"
 #import "AppDelegate.h"
 
+
+@implementation NSString (IdentifierSanitizer)
+
+- (NSString *)sanitizedIdentifier
+{
+    NSString* identifier = [self stringByTrimmingCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]];
+    NSMutableString* sanitized = [NSMutableString new];
+    
+    for (int idx = 0; idx < [identifier length]; idx++)
+    {
+        unichar ch = [identifier characterAtIndex:idx];
+        if (!isalpha(ch))
+        {
+            ch = '_';
+        }
+        [sanitized appendString:[NSString stringWithCharacters:&ch length:1]];
+    }
+    
+    NSString *trimmed = [sanitized stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_"]];
+    if ([trimmed length] == 0)
+    {
+        trimmed = @"identifier";
+    }
+    
+    return trimmed;
+}
+
+@end
+
+
 @implementation CCBProjCreator
 
 -(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine
@@ -51,9 +81,7 @@
 	NSString* xcodeproj = [NSString stringWithFormat:@"%@.xcodeproj", substitutableProjectName];
     NSString* xcodeFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:xcodeproj];
     NSString* projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-    NSString* identifier = [projName stringByTrimmingCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]];
-    identifier = [identifier stringByReplacingOccurrencesOfString:@"." withString:@"_"];
-    identifier = [identifier stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
+    NSString* identifier = [projName sanitizedIdentifier];
     
     // Update the project
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"] search:substitutableProjectName];
