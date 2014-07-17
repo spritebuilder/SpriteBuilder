@@ -26,34 +26,15 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface CCBDocument : NSObject {
-    NSString* fileName;
-    NSString* exportPath;
-    NSString* exportPlugIn;
-    BOOL exportFlattenPaths;
-    NSMutableDictionary* docData;
-    NSUndoManager* undoManager;
-    NSString* lastEditedProperty;
-    BOOL isDirty;
-    CGPoint stageScrollOffset;
-    float stageZoom;
-    int stageColor;
-    
-    NSMutableArray* resolutions;
-    int currentResolution;
-    int docDimensionsType;
-    
-    NSMutableArray* sequences;
-    int currentSequenceId;
-}
+@interface CCBDocument : NSObject
 
-@property (nonatomic,strong) NSString* fileName;
-@property (nonatomic,strong) NSString* exportPath;
-@property (nonatomic,strong) NSString* exportPlugIn;
+@property (nonatomic,copy) NSString* fileName;
+@property (nonatomic,copy) NSString* exportPath;
+@property (nonatomic,copy) NSString* exportPlugIn;
 @property (nonatomic,assign) BOOL exportFlattenPaths;
 @property (nonatomic,strong) NSMutableDictionary* docData;
 @property (nonatomic,strong) NSUndoManager* undoManager;
-@property (nonatomic,strong) NSString* lastEditedProperty;
+@property (nonatomic,copy) NSString* lastEditedProperty;
 @property (nonatomic,assign) BOOL isDirty;
 @property (nonatomic,assign) CGPoint stageScrollOffset;
 @property (nonatomic,assign) float stageZoom;

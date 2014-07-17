@@ -24,68 +24,46 @@
  */
 
 #import "CCBDocument.h"
-#import "ResolutionSetting.h"
 #import "CocosScene.h"
 
 @implementation CCBDocument
 
-@synthesize fileName;
-@synthesize docData;
-@synthesize undoManager;
-@synthesize lastEditedProperty;
-@synthesize isDirty;
-@synthesize stageScrollOffset;
-@synthesize stageZoom;
-@synthesize stageColor;
-@synthesize exportPath;
-@synthesize exportPlugIn;
-@synthesize exportFlattenPaths;
-@synthesize resolutions;
-@synthesize currentResolution;
-@synthesize docDimensionsType;
-@synthesize sequences;
-@synthesize currentSequenceId;
-
 - (id)init
 {
     self = [super init];
-    if (self) {
-        // Initialization code here.
+    if (self)
+    {
         self.undoManager = [[NSUndoManager alloc] init];
+        self.stageZoom = 1;
+        self.stageScrollOffset = ccp(0, 0);
+        self.stageColor = kCCBCanvasColorBlack;
+        self.UUID = 0x1;
     }
-    
-    self.stageZoom = 1;
-    self.stageScrollOffset = ccp(0,0);
-    self.stageColor = kCCBCanvasColorBlack;
-    self.UUID = 0x1;
-    
+
     return self;
 }
 
-
-- (NSString*) formattedName
+- (NSString *)formattedName
 {
     return [[self.fileName lastPathComponent] stringByDeletingPathExtension];
 }
 
-@dynamic rootPath;
-- (NSString*) rootPath
+- (NSString *)rootPath
 {
-    return [fileName stringByDeletingLastPathComponent];
+    return [_fileName stringByDeletingLastPathComponent];
 }
 
-- (void) setFileName:(NSString *)fn
+- (void)setFileName:(NSString *)newFileName
 {
-    // Set new filename
-    if (fn != fileName)
+    if (![newFileName isEqualToString:_fileName])
     {
-        fileName = fn;
+        self.fileName = newFileName;
     }
 }
 
 - (BOOL)isWithinPath:(NSString *)path
 {
-	return [self.fileName hasPrefix:path];
+    return [_fileName hasPrefix:path];
 }
 
 @end
