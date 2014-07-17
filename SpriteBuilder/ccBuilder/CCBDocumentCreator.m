@@ -1,4 +1,4 @@
-#import "SceneDocumentCreator.h"
+#import "CCBDocumentCreator.h"
 #import "CCNode.h"
 #import "SceneGraph.h"
 #import "CCBDocument.h"
@@ -11,7 +11,7 @@
 #import "ResolutionSetting.h"
 #import "SequencerSequence.h"
 
-@interface SceneDocumentCreator ()
+@interface CCBDocumentCreator ()
 
 @property (nonatomic, strong) SceneGraph *sceneGraph;
 @property (nonatomic, strong) CCBDocument *document;
@@ -21,7 +21,7 @@
 @end
 
 
-@implementation SceneDocumentCreator
+@implementation CCBDocumentCreator
 
 - (instancetype)initWithSceneGraph:(SceneGraph *)sceneGraph
                           document:(CCBDocument *)document

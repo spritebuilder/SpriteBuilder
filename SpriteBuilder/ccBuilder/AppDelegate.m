@@ -134,7 +134,7 @@
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
-#import "SceneDocumentCreator.h"
+#import "CCBDocumentCreator.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1467,8 +1467,8 @@ static BOOL hideAllToNextSeparator;
 
 - (NSMutableDictionary*) docDataFromCurrentNodeGraph
 {
-    SceneDocumentCreator *sceneDocCreator =
-            [[SceneDocumentCreator alloc] initWithSceneGraph:[SceneGraph instance]
+    CCBDocumentCreator *sceneDocCreator =
+            [[CCBDocumentCreator alloc] initWithSceneGraph:[SceneGraph instance]
                                                       document:currentDocument
                                                projectSettings:projectSettings
                                                     sequenceId:sequenceHandler.currentSequence.sequenceId];
