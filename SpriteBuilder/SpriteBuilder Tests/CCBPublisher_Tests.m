@@ -13,6 +13,10 @@
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
 #import "FCFormatConverter.h"
+#import "SceneGraph.h"
+#import "CCBDocumentCreator.h"
+#import "CCBDocument.h"
+#import "PlugInManager.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -45,7 +49,7 @@
     [_publisher setPublishOutputDirectory:[self fullPathForFile:@"Published-iOS"] forTargetType:kCCBPublisherTargetTypeIPhone];
     [_publisher setPublishOutputDirectory:[self fullPathForFile:@"Published-Android"] forTargetType:kCCBPublisherTargetTypeAndroid];
 
-    [self createFolders:@[@"Published-iOS", @"Published-Android"]];
+    [self createFolders:@[@"Published-iOS", @"Published-Android", @"baa.spritebuilder/Packages/foo.sbpack"]];
 }
 
 - (void)tearDown
@@ -171,12 +175,25 @@
     ]];
 }
 
-/*
 - (void)testPublishOnlyCCBs
 {
+    SceneGraph *sceneGraph = [[SceneGraph alloc] initWithProjectSettings:_projectSettings];
+    CCNode *root = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCNode"];
+    sceneGraph.rootNode = root;
 
+    CCBDocument *document = [[CCBDocument alloc] init];
+    CCBDocumentCreator *documentCreator = [[CCBDocumentCreator alloc] initWithSceneGraph:sceneGraph
+                                                                                document:document
+                                                                         projectSettings:_projectSettings
+                                                                              sequenceId:0];
+
+    NSMutableDictionary *doc = [documentCreator createDocument];
+    [doc writeToFile:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack/mainScene.ccb"] atomically:YES];
+
+    [_publisher start];
+
+    [self assertFileExists:@"Published-iOS/mainScene.ccbi"];
 }
-*/
 
 - (void)testCustomScalingFactorsForImages
 {
@@ -245,6 +262,8 @@
 
     [_publisher start];
 
+    // The resolutions tests may be a bit too much here, but there are no
+    // Tupac tests at the moment
     [self assertFileExists:@"Published-iOS/resources-tablet/sheet.plist"];
     [self assertPNGAtPath:@"Published-iOS/resources-tablet/sheet.png" hasWidth:16 hasHeight:16];
     [self assertFileExists:@"Published-iOS/resources-tablethd/sheet.plist"];

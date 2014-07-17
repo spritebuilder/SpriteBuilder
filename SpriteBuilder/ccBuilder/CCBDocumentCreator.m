@@ -23,6 +23,13 @@
 
 @implementation CCBDocumentCreator
 
+- (instancetype)init
+{
+    NSLog(@"Use designated initializer");
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 - (instancetype)initWithSceneGraph:(SceneGraph *)sceneGraph
                           document:(CCBDocument *)document
                    projectSettings:(ProjectSettings *)projectSettings
