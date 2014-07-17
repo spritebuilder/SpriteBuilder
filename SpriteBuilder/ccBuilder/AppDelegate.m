@@ -1714,7 +1714,7 @@ static BOOL hideAllToNextSeparator;
     // Replace open document
     [self deselectAll];
     
-    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    SceneGraph * g = [SceneGraph setInstance:[[SceneGraph alloc] initWithProjectSettings:projectSettings]];
     [g.joints deserialize:doc[@"SequencerJoints"]];
     g.rootNode = loadedRoot;
     
@@ -1838,7 +1838,7 @@ static BOOL hideAllToNextSeparator;
 {
     [self deselectAll];
     
-    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    SceneGraph * g = [SceneGraph setInstance:[[SceneGraph alloc] initWithProjectSettings:projectSettings]];
     [[CocosScene cocosScene] replaceSceneNodes: g];
     [[CocosScene cocosScene] setStageSize:CGSizeMake(0, 0) centeredOrigin:YES];
     [[CocosScene cocosScene].guideLayer removeAllGuides];
@@ -2219,7 +2219,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Create new node
-    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    SceneGraph * g = [SceneGraph setInstance:[[SceneGraph alloc] initWithProjectSettings:projectSettings]];
     g.rootNode = [[PlugInManager sharedManager] createDefaultNodeOfType:class];
     g.joints.node = [CCNode node];
     [[CocosScene cocosScene] replaceSceneNodes:g];
