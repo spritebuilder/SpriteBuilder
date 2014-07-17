@@ -334,7 +334,7 @@
                 res.touched = YES;
                 continue;
             }
-            else if ([[AppDelegate appDelegate].currentDocument.fileName isEqualToString: file])
+            else if ([[AppDelegate appDelegate].currentDocument.filePath isEqualToString:file])
             {
                 // Skip the current document
                 res.touched = YES;

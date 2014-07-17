@@ -28,7 +28,7 @@
 
 @implementation CCBDocument
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self)
@@ -43,27 +43,80 @@
     return self;
 }
 
+- (instancetype)initWithContentsOfFile:(NSString *)filePath
+{
+    self = [self init];
+
+    if (self)
+    {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+
+        self.filePath = filePath;
+        self.docData = dictionary;
+        self.exportPath = [dictionary objectForKey:@"exportPath"];
+        self.exportPlugIn = [dictionary objectForKey:@"exportPlugIn"];
+        self.exportFlattenPaths = [dictionary[@"exportFlattenPaths"] boolValue];
+        self.UUID = [dictionary[@"UUID"] unsignedIntegerValue];
+
+        [self fixupUUID];
+    }
+
+    return self;
+}
+
+- (BOOL)writeToFile
+{
+    return NO;
+}
+
+- (void)fixupUUID
+{
+    //If UUID is unset, it means the doc is out of date. Fixup.
+    if (_UUID == 0x0)
+    {
+        self.UUID = 0x1;
+        [self fixupUUIDWithDict:_docData[@"nodeGraph"]];
+    }
+}
+
+-(void)fixupUUIDWithDict:(NSMutableDictionary*)dict
+{
+    if(!dict[@"UUID"])
+    {
+        dict[@"UUID"] = @(_UUID);
+        self.UUID = _UUID + 1;
+    }
+
+    if(dict[@"children"])
+    {
+        for (NSMutableDictionary * child in dict[@"children"])
+        {
+            [self fixupUUIDWithDict:child];
+        }
+    }
+}
+
 - (NSString *)formattedName
 {
-    return [[self.fileName lastPathComponent] stringByDeletingPathExtension];
+    return [[_filePath lastPathComponent] stringByDeletingPathExtension];
 }
 
 - (NSString *)rootPath
 {
-    return [_fileName stringByDeletingLastPathComponent];
+    return [_filePath stringByDeletingLastPathComponent];
 }
 
-- (void)setFileName:(NSString *)newFileName
+- (void)setPath:(NSString *)newPath
 {
-    if (![newFileName isEqualToString:_fileName])
+    if (![newPath isEqualToString:_filePath])
     {
-        self.fileName = newFileName;
+        _filePath = newPath;
     }
 }
 
 - (BOOL)isWithinPath:(NSString *)path
 {
-    return [_fileName hasPrefix:path];
+    return [_filePath hasPrefix:path];
 }
 
 @end

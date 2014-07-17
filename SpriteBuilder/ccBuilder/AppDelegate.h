@@ -378,7 +378,7 @@ enum {
 - (void) updateInspectorFromSelection;
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
-- (void) openFile:(NSString*) fileName;
+- (void) openFile:(NSString*)filePath;
 
 - (void)newFile:(NSString *)fileName type:(int)type resolutions:(NSMutableArray *)resolutions;
 

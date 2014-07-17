@@ -835,7 +835,7 @@ typedef enum
     
     if (doc.isDirty)
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:[NSString stringWithFormat: @"Do you want to save the changes you made in the document “%@”?", [doc.fileName lastPathComponent]] defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
+        NSAlert* alert = [NSAlert alertWithMessageText:[NSString stringWithFormat: @"Do you want to save the changes you made in the document “%@”?", [doc.filePath lastPathComponent]] defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
         NSInteger result = [alert runModal];
         
         if (result == NSAlertDefaultReturn)
@@ -1770,7 +1770,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
 {
-    if (!forceReload && [document.fileName isEqualToString:currentDocument.fileName]) return;
+    if (!forceReload && [document.filePath isEqualToString:currentDocument.filePath]) return;
 
     [animationPlaybackManager stop];
 
@@ -1792,36 +1792,6 @@ static BOOL hideAllToNextSeparator;
     
     // Make sure timeline is up to date
     [sequenceHandler updatePropertiesToTimelinePosition];
-}
-
--(void)fixupUUID:(CCBDocument*)doc dict:(NSMutableDictionary*)dict
-{
-    if(!dict[@"UUID"])
-    {
-        dict[@"UUID"] = @(doc.UUID);
-        doc.UUID = doc.UUID + 1;
-    }
-    
-    if(dict[@"children"])
-    {
-        for (NSMutableDictionary * child in dict[@"children"])
-        {
-            [self fixupUUID:doc dict:child];
-        }
-        
-    }
-}
-
-
--(void)fixupDoc:(CCBDocument*) doc
-{
-    //If UUID is unset, it means the doc is out of date. Fixup.
-    if(doc.UUID == 0x0)
-    {
-        doc.UUID = 0x1;
-        [self fixupUUID:doc dict: doc.docData[@"nodeGraph"]];
-
-    }
 }
 
 - (void) switchToDocument:(CCBDocument*) document
@@ -1862,7 +1832,7 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < [items count]; i++)
     {
         CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if ([doc.fileName isEqualToString:file]) return doc;
+        if ([doc.filePath isEqualToString:file]) return doc;
     }
     return NULL;
 }
@@ -1886,7 +1856,7 @@ static BOOL hideAllToNextSeparator;
 	for (NSUInteger i = 0; i < [items count]; i++)
 	{
 		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
-		if ([doc.fileName isEqualToString:path]
+		if ([doc.filePath isEqualToString:path]
 			|| (includeViewWithinFolderPath && [doc isWithinPath:path]))
 		{
 			return [items objectAtIndex:i];
@@ -2068,12 +2038,12 @@ static BOOL hideAllToNextSeparator;
     return YES;
 }
 
-- (void) openFile:(NSString*) fileName
+- (void) openFile:(NSString*)filePath
 {
 	[[[CCDirector sharedDirector] view] lockOpenGLContext];
     
     // Check if file is already open
-    CCBDocument* openDoc = [self findDocumentFromFile:fileName];
+    CCBDocument* openDoc = [self findDocumentFromFile:filePath];
     if (openDoc)
     {
         [tabView selectTabViewItem:[self tabViewItemFromDoc:openDoc]];
@@ -2082,17 +2052,8 @@ static BOOL hideAllToNextSeparator;
     
     [self prepareForDocumentSwitch];
     
-    NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithContentsOfFile:fileName];
-    
-    CCBDocument* newDoc = [[CCBDocument alloc] init];
-    newDoc.fileName = fileName;
-    newDoc.docData = doc;
-    newDoc.exportPath = [doc objectForKey:@"exportPath"];
-    newDoc.exportPlugIn = [doc objectForKey:@"exportPlugIn"];
-    newDoc.exportFlattenPaths = [doc[@"exportFlattenPaths"] boolValue];
-    newDoc.UUID = [doc[@"UUID"] unsignedIntegerValue];
-    
-    [self fixupDoc:newDoc];
+    CCBDocument *newDoc = [[CCBDocument alloc] initWithContentsOfFile:filePath];
+
     [self switchToDocument:newDoc];
      
     [self addDocument:newDoc];
@@ -2113,7 +2074,7 @@ static BOOL hideAllToNextSeparator;
      
     [doc writeToFile:fileName atomically:YES];
     
-    currentDocument.fileName = fileName;
+    currentDocument.filePath = fileName;
     currentDocument.docData = doc;
     
     currentDocument.isDirty = NO;
@@ -3096,9 +3057,9 @@ static BOOL hideAllToNextSeparator;
         return;
     }
     
-    if (currentDocument && currentDocument.fileName)
+    if (currentDocument && currentDocument.filePath)
     {
-        [self saveFile:currentDocument.fileName];
+        [self saveFile:currentDocument.filePath];
     }
     else
     {
@@ -3473,7 +3434,7 @@ static BOOL hideAllToNextSeparator;
 {
     NSTabViewItem* item = [self tabViewItemFromPath:oldPath includeViewWithinFolderPath:NO];
     CCBDocument* doc = [item identifier];
-    doc.fileName = newPath;
+    doc.filePath = newPath;
     [item setLabel:doc.formattedName];
 }
 
@@ -3483,10 +3444,10 @@ static BOOL hideAllToNextSeparator;
    	for (NSUInteger i = 0; i < [items count]; i++)
    	{
    		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
-        if ([doc.fileName rangeOfString:fromPath].location != NSNotFound)
+        if ([doc.filePath rangeOfString:fromPath].location != NSNotFound)
         {
-            NSString *newFileName = [doc.fileName stringByReplacingOccurrencesOfString:fromPath withString:toPath];
-            doc.fileName = newFileName;
+            NSString *newFileName = [doc.filePath stringByReplacingOccurrencesOfString:fromPath withString:toPath];
+            doc. filePath = newFileName;
         }
    	}
 }
