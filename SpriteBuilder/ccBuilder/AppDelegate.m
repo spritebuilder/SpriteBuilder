@@ -2051,9 +2051,18 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) openProject:(NSString*) fileName
 {
-    // Close currently open project
+    if (![fileName hasSuffix:@".spritebuilder"] && ![fileName hasSuffix:@".ccbproj"])
+    {
+        return NO;
+    }
+
     [self closeProject];
-    
+
+    if ([fileName hasSuffix:@".ccbproj"])
+    {
+        fileName = [fileName stringByDeletingLastPathComponent];
+    }
+
     // Add to recent list of opened documents
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
     
@@ -2352,12 +2361,6 @@ static BOOL hideAllToNextSeparator;
     [[ResourceManager sharedManager] updateForNewFile:fileName];
 }
 
-/*
-- (BOOL) application:(NSApplication *)sender openFile:(NSString *)filename
-{
-    [self openProject:filename];
-    return YES;
-}*/
 
 - (NSString*) findProject:(NSString*) path
 {
@@ -2380,21 +2383,7 @@ static BOOL hideAllToNextSeparator;
 {
 	for( NSString* filename in filenames )
 	{
-        /*
-		if( [filename hasSuffix:@".ccb"] )
-		{
-			NSString* folderPathToSearch = [filename stringByDeletingLastPathComponent];
-			NSString* projectFile = [self findProject:folderPathToSearch];
-			if( projectFile )
-			{
-				[self openProject:projectFile];
-				[self openFile:filename];
-			}
-		}*/
-        if ([filename hasSuffix:@".spritebuilder"])
-		{
-			[self openProject:filename];		
-		}
+        [self openProject:filename];
 	}
 }
 
