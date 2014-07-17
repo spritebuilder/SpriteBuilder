@@ -167,12 +167,16 @@ NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
     {
         version = @"";
     }
+	
+	NSString * serialNumber = [self serialNumber];
+	if(!serialNumber)
+		serialNumber = @"";
     
     // URL encode email
     email = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)email, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
     
     // Create URL
-    NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/track?event=%@&id=%@&version=%@&email=%@", evt, _userID, version,email];
+    NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/track?event=%@&id=%@&version=%@&email=%@&serial_number=%@", evt, _userID, version,email,serialNumber];
     NSURL* url = [NSURL URLWithString:urlStr];
     
     // Create the request
@@ -181,6 +185,29 @@ NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
     // Create url connection and fire request
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:NULL];
 	connection = nil; // make the compiler violently happy
+}
+
+- (NSString *)serialNumber
+{
+    io_service_t    platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault,
+																 
+																 IOServiceMatching("IOPlatformExpertDevice"));
+    CFStringRef serialNumberAsCFString = NULL;
+	
+    if (platformExpert) {
+        serialNumberAsCFString = IORegistryEntryCreateCFProperty(platformExpert,
+																 CFSTR(kIOPlatformSerialNumberKey),
+																 kCFAllocatorDefault, 0);
+        IOObjectRelease(platformExpert);
+    }
+	
+    NSString *serialNumberAsNSString = nil;
+    if (serialNumberAsCFString) {
+        serialNumberAsNSString = [NSString stringWithString:(__bridge NSString *)serialNumberAsCFString];
+        CFRelease(serialNumberAsCFString);
+    }
+	
+    return serialNumberAsNSString;
 }
 
 @end
