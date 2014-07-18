@@ -30,10 +30,10 @@
 @class ProjectSettings;
 @class CCBWarnings;
 @protocol TaskStatusUpdaterProtocol;
-@class CCBPublisher;
+@class CCBDirectoryPublisher;
 
 
-@interface CCBPublisher : NSObject
+@interface CCBDirectoryPublisher : NSObject
 
 @property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 

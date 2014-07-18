@@ -15,7 +15,7 @@
 #import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "FileSystemTestCase.h"
-#import "CCBPublisher.h"
+#import "CCBDirectoryPublisher.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 

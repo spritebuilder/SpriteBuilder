@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "FileSystemTestCase+Images.h"
-#import "CCBPublisher.h"
+#import "CCBDirectoryPublisher.h"
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
 #import "FCFormatConverter.h"
@@ -22,7 +22,7 @@
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
-@property (nonatomic, strong) CCBPublisher *publisher;
+@property (nonatomic, strong) CCBDirectoryPublisher *publisher;
 
 @end
 
@@ -41,7 +41,7 @@
 
     self.warnings = [[CCBWarnings alloc] init];
 
-    self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+    self.publisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
                                                           warnings:_warnings
                                                      finishedBlock:nil];
 

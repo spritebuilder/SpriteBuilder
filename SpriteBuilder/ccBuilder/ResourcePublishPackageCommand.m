@@ -4,7 +4,7 @@
 #import "ProjectSettings.h"
 #import "RMPackage.h"
 #import "TaskStatusWindow.h"
-#import "CCBPublisher.h"
+#import "CCBDirectoryPublisher.h"
 #import "CCBWarnings.h"
 
 @interface ResourcePublishPackageCommand()
@@ -22,9 +22,9 @@
     warnings.warningsDescription = @"Package Publisher Warnings";
 
     id __weak weakSelf = self;
-    CCBPublisher *publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+    CCBDirectoryPublisher *publisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
                                                                    warnings:warnings
-                                                              finishedBlock:^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
+                                                              finishedBlock:^(CCBDirectoryPublisher *aPublisher, CCBWarnings *someWarnings)
     {
         [weakSelf closeStatusWindow];
     }];

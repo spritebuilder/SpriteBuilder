@@ -542,7 +542,7 @@
 		E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E34039BD1624BF610067C7B8 /* CCBDocumentController.m */; };
 		E3462867155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E3462866155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m */; };
 		E346286B155C18D80043EAB1 /* SavePanelLimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = E346286A155C18D80043EAB1 /* SavePanelLimiter.m */; };
-		E3462870155D22290043EAB1 /* CCBPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = E346286F155D22290043EAB1 /* CCBPublisher.m */; };
+		E3462870155D22290043EAB1 /* CCBDirectoryPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = E346286F155D22290043EAB1 /* CCBDirectoryPublisher.m */; };
 		E3462873155D22FC0043EAB1 /* CCBWarnings.m in Sources */ = {isa = PBXBuildFile; fileRef = E3462872155D22FC0043EAB1 /* CCBWarnings.m */; };
 		E34E5D6615357CF2000201FB /* RulersLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E34E5D6515357CF2000201FB /* RulersLayer.m */; };
 		E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = E34E5D68153585EC000201FB /* ruler-bg-horizontal.png */; };
@@ -1919,8 +1919,8 @@
 		E3462866155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerOutlineHandler.m; sourceTree = "<group>"; };
 		E3462869155C18D80043EAB1 /* SavePanelLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavePanelLimiter.h; sourceTree = "<group>"; };
 		E346286A155C18D80043EAB1 /* SavePanelLimiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavePanelLimiter.m; sourceTree = "<group>"; };
-		E346286E155D22290043EAB1 /* CCBPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublisher.h; sourceTree = "<group>"; };
-		E346286F155D22290043EAB1 /* CCBPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisher.m; sourceTree = "<group>"; };
+		E346286E155D22290043EAB1 /* CCBDirectoryPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDirectoryPublisher.h; sourceTree = "<group>"; };
+		E346286F155D22290043EAB1 /* CCBDirectoryPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDirectoryPublisher.m; sourceTree = "<group>"; };
 		E3462871155D22FC0043EAB1 /* CCBWarnings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBWarnings.h; sourceTree = "<group>"; };
 		E3462872155D22FC0043EAB1 /* CCBWarnings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBWarnings.m; sourceTree = "<group>"; };
 		E34E5D6415357CF2000201FB /* RulersLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RulersLayer.h; sourceTree = "<group>"; };
@@ -4371,8 +4371,8 @@
 			isa = PBXGroup;
 			children = (
 				8319539318FECDF800ED4BA0 /* PublishingOperations */,
-				E346286E155D22290043EAB1 /* CCBPublisher.h */,
-				E346286F155D22290043EAB1 /* CCBPublisher.m */,
+				E346286E155D22290043EAB1 /* CCBDirectoryPublisher.h */,
+				E346286F155D22290043EAB1 /* CCBDirectoryPublisher.m */,
 				E3618D5416655041009F5805 /* CCBPublisherTemplate.h */,
 				E3618D5516655041009F5805 /* CCBPublisherTemplate.m */,
 				E525FD2D849749BB67455943 /* DateCache.m */,
@@ -6622,7 +6622,7 @@
 				E3462867155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m in Sources */,
 				E346286B155C18D80043EAB1 /* SavePanelLimiter.m in Sources */,
 				8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */,
-				E3462870155D22290043EAB1 /* CCBPublisher.m in Sources */,
+				E3462870155D22290043EAB1 /* CCBDirectoryPublisher.m in Sources */,
 				E3462873155D22FC0043EAB1 /* CCBWarnings.m in Sources */,
 				E32BBCB11561361200C58395 /* HashValue.m in Sources */,
 				E3DCFD9F1562A3AD00BD7D7F /* TaskStatusWindow.m in Sources */,

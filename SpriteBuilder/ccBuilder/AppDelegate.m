@@ -61,7 +61,7 @@
 #import "ResourceManagerOutlineHandler.h"
 #import "ResourceManagerOutlineView.h"
 #import "SavePanelLimiter.h"
-#import "CCBPublisher.h"
+#import "CCBDirectoryPublisher.h"
 #import "CCBWarnings.h"
 #import "TaskStatusWindow.h"
 #import "SequencerHandler.h"
@@ -3121,9 +3121,9 @@ static BOOL hideAllToNextSeparator;
     warnings.warningsDescription = @"Publisher Warnings";
 
     id __weak selfWeak = self;
-    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
+    CCBDirectoryPublisher * publisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:projectSettings
                                                                    warnings:warnings
-                                                              finishedBlock:^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
+                                                              finishedBlock:^(CCBDirectoryPublisher *aPublisher, CCBWarnings *someWarnings)
     {
         [selfWeak publisher:aPublisher finishedWithWarnings:someWarnings];
     }];
@@ -3156,7 +3156,7 @@ static BOOL hideAllToNextSeparator;
     [animationPlaybackManager stop];
 }
 
-- (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings
+- (void) publisher:(CCBDirectoryPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings
 {
     [self modalStatusWindowFinish];
     
@@ -3180,7 +3180,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuCleanCacheDirectories:(id)sender
 {
-    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBDirectoryPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
 }
 
 // Temporary utility function until new publish system is in place
@@ -3243,7 +3243,7 @@ static BOOL hideAllToNextSeparator;
 {
     [self.projectSettings store];
     [self updateResourcePathsFromProjectSettings];
-    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBDirectoryPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
     [self reloadResources];
     [self setResolution:0];
 }

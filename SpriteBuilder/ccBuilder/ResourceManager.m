@@ -35,7 +35,7 @@
 #import <CoreGraphics/CGImage.h>
 #import <QTKit/QTKit.h>
 #import <MacTypes.h>
-#import "CCBPublisher.h"
+#import "CCBDirectoryPublisher.h"
 #import "SoundFileImageController.h"
 #import "MiscConstants.h"
 #import "RMResource.h"

@@ -98,7 +98,7 @@ enum {
 @class CCBTransparentWindow;
 @class CCBTransparentView;
 @class TaskStatusWindow;
-@class CCBPublisher;
+@class CCBDirectoryPublisher;
 @class CCBWarnings;
 @class SequencerHandler;
 @class SequencerScrubberSelectionView;
@@ -447,7 +447,7 @@ enum {
 - (IBAction) debug:(id)sender;
 
 // Publishing & running
-- (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings;
+- (void) publisher:(CCBDirectoryPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings;
 
 // For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;

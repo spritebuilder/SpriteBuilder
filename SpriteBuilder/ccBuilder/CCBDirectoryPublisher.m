@@ -23,7 +23,7 @@
  */
 
 #import <MacTypes.h>
-#import "CCBPublisher.h"
+#import "CCBDirectoryPublisher.h"
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
 #import "NSString+RelativePath.h"
@@ -50,7 +50,7 @@
 #import "MiscConstants.h"
 #import "PublishIntermediateFilesLookup.h"
 
-@interface CCBPublisher ()
+@interface CCBDirectoryPublisher ()
 
 @property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 @property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;
@@ -70,7 +70,7 @@
 @end
 
 
-@implementation CCBPublisher
+@implementation CCBDirectoryPublisher
 
 - (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherTargetType)targetType
 {
@@ -768,7 +768,7 @@
 
     if (_projectSettings.publishEnvironment == PublishEnvironmentRelease)
     {
-        [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:_projectSettings];
+        [CCBDirectoryPublisher cleanAllCacheDirectoriesWithProjectSettings:_projectSettings];
     }
 
     [self doPublish];

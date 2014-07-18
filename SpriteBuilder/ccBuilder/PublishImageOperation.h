@@ -3,7 +3,7 @@
 #import "CCBWarnings.h"
 
 @class DateCache;
-@class CCBPublisher;
+@class CCBDirectoryPublisher;
 @class FCFormatConverter;
 @protocol PublishFileLookupProtocol;
 
