@@ -101,7 +101,7 @@ def install_plugin(bundle):
     print ("Installing from " + bundle)
     component_roots = get_component_roots()
     component_roots_dict = dict(component_roots)
-    tempdir = os.path.expanduser("~/Library/Application\ Support/Developer/Shared/Installer.temp")
+    tempdir = os.path.expanduser("~/Library/Application Support/Developer/Shared/Installer.temp")
     with zipfile.ZipFile(bundle) as zip:
         for arcname in zip.namelist():
             if arcname == "metadata.json":
