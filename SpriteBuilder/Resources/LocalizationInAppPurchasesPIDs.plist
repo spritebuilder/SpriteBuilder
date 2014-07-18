@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>com.spritebuilder.translationstier1</string>
+	<string>com.spritebuilder.translationstier2</string>
+	<string>com.spritebuilder.translationstier3</string>
+	<string>com.spritebuilder.translationstier4</string>
+	<string>com.spritebuilder.translationstier5</string>
+	<string>com.spritebuilder.translationstier6</string>
+	<string>com.spritebuilder.translationstier7</string>
+	<string>com.spritebuilder.translationstier8</string>
+	<string>com.spritebuilder.translationstier9</string>
+	<string>com.spritebuilder.translationstier10</string>
+</array>
+</plist>

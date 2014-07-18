@@ -101,6 +101,7 @@
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
 		7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */; };
 		7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */; };
+		7BD26ED31979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */; };
 		7BDECCD1196CBA2400F3EB11 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
 		7BDECCD4196CBA6100F3EB11 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */; };
 		7BDECCE1197047EE00F3EB11 /* LocalizationTransactionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */; };
@@ -1324,6 +1325,7 @@
 		7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindowHandler.m; sourceTree = "<group>"; };
 		7B88AD45195A4846001BF73C /* LocalizationEditorTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorTextFieldCell.h; sourceTree = "<group>"; };
 		7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTextFieldCell.m; sourceTree = "<group>"; };
+		7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LocalizationInAppPurchasesPIDs.plist; sourceTree = "<group>"; };
 		7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7BDECCDF197047EE00F3EB11 /* LocalizationTransactionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTransactionObserver.h; sourceTree = "<group>"; };
 		7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTransactionObserver.m; sourceTree = "<group>"; };
@@ -3363,6 +3365,7 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */,
 				DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */,
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
@@ -5982,6 +5985,7 @@
 				B7096E2A180CD98E00164A8A /* doc-particlesystem.png in Resources */,
 				E334A4DE170CF475001604F7 /* seq-btn-end.png in Resources */,
 				E334A4DF170CF475001604F7 /* toolbar-bottom-noborder.png in Resources */,
+				7BD26ED31979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist in Resources */,
 				921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */,
 				E334A4E6170D0020001604F7 /* debugger-bug.png in Resources */,
 				E3D839DC171356EC004F6127 /* pngquant in Resources */,
