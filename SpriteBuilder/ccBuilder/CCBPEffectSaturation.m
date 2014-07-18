@@ -11,6 +11,7 @@
 
 
 @implementation CCBPEffectSaturation
+@synthesize UUID;
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {

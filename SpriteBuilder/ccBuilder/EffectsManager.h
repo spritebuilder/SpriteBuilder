@@ -11,16 +11,41 @@
 
 @class EffectDescription;
 
+////////////////////////////////////////////////////////////
+//Effects should implement this protocol,
+
 @protocol EffectProtocol <NSObject>
 @required
 @property (nonatomic,readonly) EffectDescription * effectDescription;
-+(CCEffect<CCEffectProtocol>*)defaultConstruct;
+@property (nonatomic) NSUInteger UUID;
++(CCEffect<EffectProtocol>*)defaultConstruct;
 -(id)serialize;
 -(void)deserialize:(NSDictionary*)dict;
 
 @end
 
+////////////////////////////////////////////////////////////
+//Effect nodes (like CCsprite and CCEffectNode) should implement this.
+@protocol CCEffectNodeProtocol <NSObject>
+@required
+@property (nonatomic,readonly) NSArray * effectDescriptors;
+@property (nonatomic) NSArray * effects;
 
+-(void)addEffect:(CCEffect<EffectProtocol>*)effect;
+-(void)removeEffect:(CCEffect<EffectProtocol>*)effect;
+
+@end
+
+
+
+////////////////////////////////////////////////////////////
+//Helper
+@interface CCNode (Effects)
+-(CCEffect<EffectProtocol>*)findEffect:(NSUInteger)uuid;
+@end
+
+////////////////////////////////////////////////////////////
+//Effect type descriptor.
 @interface EffectDescription : NSObject
 {
 
@@ -35,8 +60,8 @@
 
 @end
 
-
-
+////////////////////////////////////////////////////////////
+//Effects Manager.
 @interface EffectsManager : NSObject
 +(NSArray*)effects;
 +(EffectDescription*)effectByClassName:(NSString*)className;

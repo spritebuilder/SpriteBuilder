@@ -22,11 +22,38 @@
 #import "EffectBloomControl.h"
 //#import "EffectGlowControl.h"
 #import "EffectRefractionControl.h"
+#import "AppDelegate.h"
+#import "CCBDocument.h"
 
+
+@implementation CCNode(Effects)
+
+-(CCEffect<EffectProtocol>*)findEffect:(NSUInteger)uuid
+{
+	if([self conformsToProtocol:@protocol(CCEffectNodeProtocol)])
+	{
+		CCNode<CCEffectNodeProtocol>* effectNode =(CCNode<CCEffectNodeProtocol>*) self;
+		
+		for (CCEffect<EffectProtocol>*effect in effectNode.effects) {
+			if(effect.UUID == uuid)
+				return effect;
+		}
+	}
+
+	for (CCNode * child in self.children) {
+		CCEffect<EffectProtocol>* childEffect = [child findEffect:uuid];
+		if(childEffect)
+			return childEffect;
+	}
+	
+	return nil;
+}
+
+@end
 
 @implementation EffectDescription
 
--(CCEffect<CCEffectProtocol>*)constructDefault
+-(CCEffect<EffectProtocol>*)constructDefault
 {
 
 	Class classType = NSClassFromString(self.className);
@@ -34,7 +61,12 @@
 
 	Class<EffectProtocol> protocolClass = (Class<EffectProtocol>)classType;
 	
-	return [protocolClass defaultConstruct];;
+	CCEffect<EffectProtocol> *effect = [protocolClass defaultConstruct];
+
+	effect.UUID = [AppDelegate appDelegate].currentDocument.UUID;
+	[AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+
+	return effect;
 }
 @end
 

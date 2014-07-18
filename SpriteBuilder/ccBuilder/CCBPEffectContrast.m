@@ -11,7 +11,7 @@
 
 
 @implementation CCBPEffectContrast
-
+@synthesize UUID;
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {

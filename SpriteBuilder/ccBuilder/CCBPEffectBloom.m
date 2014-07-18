@@ -12,7 +12,7 @@
 
 
 @implementation CCBPEffectBloom
-
+@synthesize UUID;
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {

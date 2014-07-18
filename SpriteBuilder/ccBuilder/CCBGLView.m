@@ -32,6 +32,8 @@
 #import "SceneGraph.h"
 #import "NSArray+Query.h"
 #import "CCNode+NodeInfo.h"
+#import "EffectsManager.h"
+#import "CCEffect.h"
 
 @implementation CCBGLView
 
@@ -55,7 +57,7 @@
     
     trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
     
-    [self registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", @"com.cocosbuilder.jointBody", NULL]];
+    [self registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", @"com.cocosbuilder.jointBody", @"com.cocosbuilder.effectSprite", NULL]];
 }
 
 
@@ -161,6 +163,34 @@
         [appDelegate.physicsHandler assignBodyToJoint:body toJoint:joint withIdx:type pos:point];
         
     }
+	
+	NSArray* pbSprites = [pb propertyListsForType:@"com.cocosbuilder.effectSprite"];
+    for (NSDictionary* dict in pbSprites)
+    {
+
+        CGPoint point = ccp(pt.x, pt.y);
+		
+		NSArray * classTypes = @[NSStringFromClass([CCSprite class])];
+		
+		CCNode * node = [[CocosScene cocosScene] findObjectAtPoint:point ofTypes:classTypes];
+        		  
+        if(!node)
+            return NO;
+	
+		NSUInteger effectUUID = [dict[@"effect"] unsignedIntegerValue];
+		
+		CCEffect<EffectProtocol>*effect = [[SceneGraph instance].rootNode findEffect:effectUUID];
+		if(!effect)
+		{
+			NSLog(@"Failed to find effect instance in scene graph.");
+			return NO;
+		}
+		
+		NSString* propertyName = dict[@"propertyName"];
+		
+		[effect setValue:node forKey:propertyName];
+		[[AppDelegate appDelegate] refreshProperty:@"effects"];
+	}
 
 
     return YES;

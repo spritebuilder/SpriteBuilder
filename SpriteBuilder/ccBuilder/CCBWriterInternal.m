@@ -421,10 +421,11 @@
 			NSDictionary * effectProperties = [effect serialize];
 			NSDictionary * effectDescription = @{@"className": NSStringFromClass([effect class]),
 												 @"baseClass" : [effect effectDescription].baseClass,
+												 @"UUID": @([effect UUID]),
 												 @"properties":effectProperties
 												 };
 			
-				[serializedEffectsData addObject:effectDescription];
+			[serializedEffectsData addObject:effectDescription];
 		
 		}
 		serializedValue = serializedEffectsData;

@@ -57,7 +57,7 @@
     self.stageZoom = 1;
     self.stageScrollOffset = ccp(0,0);
     self.stageColor = kCCBCanvasColorBlack;
-    self.UUID = 0x1;
+    self.UUID = 0x1; //Starts at One!
     
     return self;
 }

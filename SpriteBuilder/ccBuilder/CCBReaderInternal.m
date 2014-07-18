@@ -435,9 +435,9 @@ __strong NSDictionary* renamedProperties = nil;
 			
 			NSObject<EffectProtocol> *effect = (id<EffectProtocol>)[effectDescription constructDefault];
 			
-			for (NSString * propKey in serializedProperties.allKeys) {
-				[effect setValue:serializedProperties[propKey] forKey:propKey];
-			}
+			[effect deserialize:serializedProperties];
+			effect.UUID = [serializedEffect[@"UUID"] unsignedIntegerValue];
+			
 			
 			[effects addObject:effect];
 		}

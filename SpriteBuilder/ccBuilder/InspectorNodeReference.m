@@ -11,7 +11,8 @@
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
 #import "MainWindow.h"
-
+#import "EffectsManager.h"
+#import "CCEffect.h"
 
 @implementation OutletButton
 {
@@ -263,8 +264,9 @@
 	
 	if(self.dragType == DragTypeEffectSprite)
 	{
+		CCEffect<EffectProtocol> *effect = (CCEffect<EffectProtocol>*)selection;
 		
-		NSDictionary * pasteData = @{@"effect":@(1)};
+		NSDictionary * pasteData = @{@"effect":@(effect.UUID),@"propertyName" : propertyName};
 		
 		NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
 																  format:NSPropertyListBinaryFormat_v1_0

@@ -848,10 +848,9 @@ static SequencerHandler* sharedSequencerHandler;
 - (BOOL)acceptDropForEffectSprite:(id)item pasteboard:(NSPasteboard *)pasteboard
 {
 	BOOL addedObject = NO;
-	NSArray* pbEffectSprite = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
+	NSArray* pbEffectSprite = [pasteboard propertyListsForType:PASTEBOARD_TYPE_EFFECTSPRITE];
 	for (NSDictionary* dict in pbEffectSprite)
     {
-        
         
 		addedObject = YES;
     }
