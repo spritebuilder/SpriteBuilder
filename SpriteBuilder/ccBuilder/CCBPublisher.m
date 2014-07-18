@@ -8,6 +8,7 @@
 #import "ProjectSettings+Convenience.h"
 #import "CCBDirectoryPublisher.h"
 #import "PublishGeneratedFilesOperation.h"
+#import "CCBPublishingTarget.h"
 
 
 @interface CCBPublisher ()
@@ -16,6 +17,7 @@
 
 @property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 @property (nonatomic, strong) NSOperationQueue *publishingQueue;
+@property (nonatomic, strong) NSMutableArray *publishingTargets;
 
 // Configurables
 @property (nonatomic, strong) NSMutableDictionary *publishingOutputDirectories;
@@ -58,6 +60,8 @@
     self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
 
     self.publishingOutputDirectories = [[NSMutableDictionary alloc] init];
+
+    self.publishingTargets = [NSMutableArray array];
 
     return self;
 }
@@ -138,12 +142,22 @@
 {
     [self removeOldPublishDirIfCacheCleaned];
 
-    if (![self publishForTargetType:kCCBPublisherTargetTypeIPhone])
-    {
-        return NO;
-    }
+    CCBPublishingTarget *targetIOS = [[CCBPublishingTarget alloc] init];
+    targetIOS.platform = kCCBPublisherTargetTypeIPhone;
+    targetIOS.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherTargetTypeIPhone];
+    targetIOS.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+    targetIOS.inputDirectories = self.publishInputDirectories;
 
-    if (![self publishForTargetType:kCCBPublisherTargetTypeAndroid])
+    CCBPublishingTarget *targetAndroid = [[CCBPublishingTarget alloc] init];
+    targetAndroid.platform = kCCBPublisherTargetTypeAndroid;
+    targetAndroid.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherTargetTypeAndroid];
+    targetAndroid.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeAndroid];
+    targetAndroid.inputDirectories = self.publishInputDirectories;
+
+    [self addPublishingTarget:targetIOS];
+    [self addPublishingTarget:targetAndroid];
+
+    if (![self publishTargets])
     {
         return NO;
     }
@@ -155,37 +169,34 @@
     return YES;
 }
 
-- (BOOL)publishForTargetType:(CCBPublisherTargetType)targetType
+- (BOOL)publishTargets
 {
-    BOOL publishEnabled = [_projectSettings publishEnabledForTargetType:targetType];
-    if (!publishEnabled)
+    for (CCBPublishingTarget *target in _publishingTargets)
     {
-        return YES;
+        if (![self publishTarget:target])
+        {
+             return NO;
+        }
     }
-
-    _targetType = targetType;
-    _warnings.currentTargetType = targetType;
-
-    self.publishForResolutions = [self.projectSettings publishingResolutionsForTargetType:targetType];
-
-    NSString *outputDir = [self publishOutputDirectoryForTargetType:targetType];
-
-    return [self publishAllInputDirsToOutputDirectory:outputDir];
+    return YES;
 }
 
-- (BOOL)publishAllInputDirsToOutputDirectory:(NSString*)outputDir
+- (BOOL)publishTarget:(CCBPublishingTarget *)target
 {
+    _targetType = target.platform;
+    _warnings.currentTargetType = target.platform;
+
     self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
-    for (NSString* aDir in _publishInputDirectories)
+    for (NSString* aDir in target.inputDirectories)
     {
         CCBDirectoryPublisher *dirPublisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
                                                                                             warnings:_warnings
                                                                                                queue:_publishingQueue];
         dirPublisher.inputDir = aDir;
-        dirPublisher.outputDir = outputDir;
-        dirPublisher.targetType = _targetType;
-        dirPublisher.resolutions = _publishForResolutions;
+        dirPublisher.outputDir = target.outputDirectory;
+        dirPublisher.targetType = target.platform;
+        dirPublisher.resolutions = target.resolutions;
         dirPublisher.modifiedDatesCache = _modifiedDatesCache;
         dirPublisher.publishedPNGFiles = _publishedPNGFiles;
         dirPublisher.renamedFilesLookup = _renamedFilesLookup;
@@ -200,11 +211,24 @@
 
     if(!_projectSettings.onlyPublishCCBs)
     {
-        [self publishGeneratedFilesWithOutputDir:outputDir];
+        [self publishGeneratedFilesWithTarget:target];
     }
 
     // Yiee Haa!
     return YES;
+}
+
+- (void)publishGeneratedFilesWithTarget:(CCBPublishingTarget *)target
+{
+    PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                                       warnings:_warnings
+                                                                                                 statusProgress:_publishingTaskStatusProgress];
+    operation.targetType = target.platform;
+    operation.outputDir = target.outputDirectory;
+    operation.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
+    operation.fileLookup = _renamedFilesLookup;
+
+    [_publishingQueue addOperation:operation];
 }
 
 - (void)publishGeneratedFilesWithOutputDir:(NSString *)outputDir
@@ -303,6 +327,16 @@
 {
     _taskStatusUpdater = taskStatusUpdater;
     self.publishingTaskStatusProgress = [[PublishingTaskStatusProgress alloc] initWithTaskStatus:taskStatusUpdater];
+}
+
+- (void)addPublishingTarget:(CCBPublishingTarget *)target
+{
+    if (!target)
+    {
+        return;
+    }
+
+    [_publishingTargets addObject:target];
 }
 
 @end

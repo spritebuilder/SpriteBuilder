@@ -6,8 +6,12 @@
 
 @property (nonatomic) CCBPublisherTargetType platform;
 
-@property (nonatomic, copy) NSString *resolution;
 @property (nonatomic, copy) NSString *outputDirectory;
 @property (nonatomic, copy) NSString *inputDirectory;
+
+@property (nonatomic, strong) NSArray *resolutions;
+@property (nonatomic, strong) NSArray *inputDirectories;
+
+@property (nonatomic, copy) NSString *resolution;
 
 @end

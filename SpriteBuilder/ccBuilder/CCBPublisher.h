@@ -4,6 +4,7 @@
 
 @class ProjectSettings;
 @protocol TaskStatusUpdaterProtocol;
+@class CCBPublishingTarget;
 
 
 @interface CCBPublisher : NSObject
@@ -26,7 +27,8 @@
 
 - (void)cancel;
 
-+ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
+- (void)addPublishingTarget:(CCBPublishingTarget *)target;
 
++ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
 
 @end
