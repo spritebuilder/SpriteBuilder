@@ -25,24 +25,12 @@
 #import <Foundation/Foundation.h>
 #import "CCBPublishDelegate.h"
 #import "CCBWarnings.h"
+#import "CCBPublisherTypes.h"
 
 @class ProjectSettings;
 @class CCBWarnings;
 @protocol TaskStatusUpdaterProtocol;
 @class CCBPublisher;
-
-
-enum {
-    kCCBPublishFormatSound_ios_caf,
-    kCCBPublishFormatSound_ios_mp4,
-};
-
-enum {
-    kCCBPublishFormatSound_android_ogg,
-};
-
-
-typedef void (^PublisherFinishBlock)(CCBPublisher *publisher, CCBWarnings *warnings);
 
 
 @interface CCBPublisher : NSObject
