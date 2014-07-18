@@ -120,6 +120,7 @@ enum {
 @class AnimationPlaybackManager;
 @class RegistrationWindow;
 @class ResourceManagerOutlineView;
+@class CCBPublisher;
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
@@ -447,7 +448,7 @@ enum {
 - (IBAction) debug:(id)sender;
 
 // Publishing & running
-- (void) publisher:(CCBDirectoryPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings;
+- (void) publisher:(CCBPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings;
 
 // For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;

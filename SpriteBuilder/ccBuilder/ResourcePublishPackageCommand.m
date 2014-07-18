@@ -18,16 +18,12 @@
 
 - (void)execute
 {
+/*
     CCBWarnings* warnings = [[CCBWarnings alloc] init];
     warnings.warningsDescription = @"Package Publisher Warnings";
 
     id __weak weakSelf = self;
-    CCBDirectoryPublisher *publisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
-                                                                   warnings:warnings
-                                                              finishedBlock:^(CCBDirectoryPublisher *aPublisher, CCBWarnings *someWarnings)
-    {
-        [weakSelf closeStatusWindow];
-    }];
+    CCBDirectoryPublisher *publisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings warnings:warnings];
 
     self.modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     publisher.taskStatusUpdater = _modalTaskStatusWindow;
@@ -47,6 +43,7 @@
         [publisher cancel];
     }];
     [self modalStatusWindowUpdateStatusText:@"Starting up..."];
+*/
 }
 
 - (void)closeStatusWindow

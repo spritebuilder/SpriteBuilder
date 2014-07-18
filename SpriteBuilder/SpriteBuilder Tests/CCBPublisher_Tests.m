@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "FileSystemTestCase+Images.h"
-#import "CCBDirectoryPublisher.h"
+#import "CCBPublisher.h"
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
 #import "FCFormatConverter.h"
@@ -22,7 +22,7 @@
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
-@property (nonatomic, strong) CCBDirectoryPublisher *publisher;
+@property (nonatomic, strong) CCBPublisher *publisher;
 
 @end
 
@@ -41,9 +41,7 @@
 
     self.warnings = [[CCBWarnings alloc] init];
 
-    self.publisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
-                                                          warnings:_warnings
-                                                     finishedBlock:nil];
+    self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings warnings:_warnings finishedBlock:nil];
 
     _publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     [_publisher setPublishOutputDirectory:[self fullPathForFile:@"Published-iOS"] forTargetType:kCCBPublisherTargetTypeIPhone];

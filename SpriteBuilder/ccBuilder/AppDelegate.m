@@ -61,7 +61,6 @@
 #import "ResourceManagerOutlineHandler.h"
 #import "ResourceManagerOutlineView.h"
 #import "SavePanelLimiter.h"
-#import "CCBDirectoryPublisher.h"
 #import "CCBWarnings.h"
 #import "TaskStatusWindow.h"
 #import "SequencerHandler.h"
@@ -135,6 +134,7 @@
 #import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
+#import "CCBPublisher.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3121,9 +3121,9 @@ static BOOL hideAllToNextSeparator;
     warnings.warningsDescription = @"Publisher Warnings";
 
     id __weak selfWeak = self;
-    CCBDirectoryPublisher * publisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:projectSettings
-                                                                   warnings:warnings
-                                                              finishedBlock:^(CCBDirectoryPublisher *aPublisher, CCBWarnings *someWarnings)
+    CCBPublisher * publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
+                                                                    warnings:warnings
+                                                               finishedBlock:^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
     {
         [selfWeak publisher:aPublisher finishedWithWarnings:someWarnings];
     }];
@@ -3156,7 +3156,7 @@ static BOOL hideAllToNextSeparator;
     [animationPlaybackManager stop];
 }
 
-- (void) publisher:(CCBDirectoryPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings
+- (void) publisher:(CCBPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings
 {
     [self modalStatusWindowFinish];
     
@@ -3180,7 +3180,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuCleanCacheDirectories:(id)sender
 {
-    [CCBDirectoryPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
 }
 
 // Temporary utility function until new publish system is in place
@@ -3243,7 +3243,7 @@ static BOOL hideAllToNextSeparator;
 {
     [self.projectSettings store];
     [self updateResourcePathsFromProjectSettings];
-    [CCBDirectoryPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
     [self reloadResources];
     [self setResolution:0];
 }

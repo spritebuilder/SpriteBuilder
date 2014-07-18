@@ -1,8 +1,8 @@
-@class CCBDirectoryPublisher;
 @class ProjectSettings;
 @class CCBWarnings;
+@class CCBPublisher;
 
-typedef void (^PublisherFinishBlock)(CCBDirectoryPublisher *publisher, CCBWarnings *warnings);
+typedef void (^PublisherFinishBlock)(CCBPublisher *publisher, CCBWarnings *warnings);
 
 enum {
     kCCBPublishFormatSound_ios_caf = 0,

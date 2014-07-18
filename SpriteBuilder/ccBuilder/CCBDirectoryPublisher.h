@@ -31,28 +31,25 @@
 @class CCBWarnings;
 @protocol TaskStatusUpdaterProtocol;
 @class CCBDirectoryPublisher;
+@class PublishRenamedFilesLookup;
+@class DateCache;
+@class PublishingTaskStatusProgress;
 
 
 @interface CCBDirectoryPublisher : NSObject
 
-@property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
+@property (nonatomic, copy) NSString *inputDir;
+@property (nonatomic, copy) NSString *outputDir;
+@property (nonatomic) CCBPublisherTargetType targetType;
+@property (nonatomic, weak) NSArray *resolutions;
+@property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
+@property (nonatomic, weak) NSMutableSet *publishedSpriteSheetFiles;
+@property (nonatomic, weak) PublishRenamedFilesLookup *renamedFilesLookup;
+@property (nonatomic, strong) DateCache *modifiedDatesCache;
+@property (nonatomic, weak) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 
-// Which directories should be published
-@property (nonatomic, copy) NSArray *publishInputDirectories;
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings queue:(NSOperationQueue *)queue;
 
-// Where should published files go
-- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherTargetType)targetType;
-- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherTargetType)targetType;
-
-- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
-                     warnings:(CCBWarnings *)someWarnings
-                finishedBlock:(PublisherFinishBlock)finishBlock;
-
-- (void)start;
-- (void)startAsync;
-
-- (void)cancel;
-
-+ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
+- (BOOL)generateAndEnqueuePublishingTasks;
 
 @end
