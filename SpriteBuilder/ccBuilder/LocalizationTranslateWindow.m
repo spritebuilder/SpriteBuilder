@@ -37,7 +37,6 @@ static int downloadLangsErrorIndex = 5;
 static int paymentErrorIndex = 6;
 
 //URLs
-//TODO Change the URL back
 static NSString* const baseURL = @"http://www.spritebuilder.com/api/v1";
 static NSString* languageURL;
 static NSString* estimateURL;
@@ -451,10 +450,9 @@ static int numTimedOutIntervals = 0;
         return;
     }
     _tierForTranslations  = [[dataDict objectForKey:@"iap_price_tier"] intValue];
-    if(_tierForTranslations != 1)
+    if(_tierForTranslations > 10)
     {
         NSLog(@"Time to create a new IAP!!! Level: %ld", _tierForTranslations);
-        _tierForTranslations = 1;
     }
     _numWords.stringValue = [[dataDict objectForKey:@"wordcount"] stringValue];
 }
@@ -464,8 +462,7 @@ static int numTimedOutIntervals = 0;
  */
 -(void)requestIAPProducts{
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"LocalizationInAppPurchasesPIDs" withExtension:@".plist"];
-    NSArray *productIdentifiers = [NSArray arrayWithContentsOfURL:url];
-    NSSet* identifierSet = [NSSet setWithArray:productIdentifiers];
+    NSSet* identifierSet = [NSSet setWithObject:[[NSArray arrayWithContentsOfURL:url] objectAtIndex:(_tierForTranslations-1)]];
     SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:identifierSet];
     [request setDelegate:self];
     [request start];
@@ -491,7 +488,7 @@ static int numTimedOutIntervals = 0;
     {
         [[AppDelegate appDelegate].lto setLtw:self];
         SKPaymentQueue* defaultQueue = [SKPaymentQueue defaultQueue];
-        SKPayment* payment = [SKPayment paymentWithProduct:[_products objectAtIndex:(_tierForTranslations -1)]];
+        SKPayment* payment = [SKPayment paymentWithProduct:_product];
         [defaultQueue addPayment:payment];
         [_paymentValidating startAnimation:self];
         [_translateFromTabView selectTabViewItemAtIndex:validatingPaymentIndex];
@@ -685,7 +682,7 @@ static int numTimedOutIntervals = 0;
  * the price of those products.
  */
 -(void) productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response{
-    _products = response.products;
+    _product = response.products[0];
     for(NSString *invalidIdentifier in response.invalidProductIdentifiers)
     {
         [_translateFromTabView selectTabViewItemAtIndex:downloadCostErrorIndex];
@@ -1161,11 +1158,10 @@ static int numTimedOutIntervals = 0;
  * and hide the cost downloading message and spinning icon.
  */
 -(void)displayPrice{
-    SKProduct* p = [_products objectAtIndex:(_tierForTranslations - 1)];
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [numberFormatter setLocale:p.priceLocale];
-    NSString *formattedString = [numberFormatter stringFromNumber:p.price];
+    [numberFormatter setLocale:_product.priceLocale];
+    NSString *formattedString = [numberFormatter stringFromNumber:_product.price];
     _cost.stringValue = formattedString;
     [self enableAllExceptButtons];
     [_costDownloading setHidden:1];

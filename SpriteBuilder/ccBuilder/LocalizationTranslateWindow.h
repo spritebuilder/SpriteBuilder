@@ -54,7 +54,7 @@
     NSMutableArray* _activeLanguages;
     NSMutableArray* _phrasesToTranslate;
     NSInteger _tierForTranslations;
-    NSArray* _products;
+    SKProduct* _product;
     NSString* _guid;
     NSMutableDictionary* _receipts;
     NSString* _latestRequestID;
