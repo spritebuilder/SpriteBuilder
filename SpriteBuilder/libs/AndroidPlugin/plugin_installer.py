@@ -24,7 +24,7 @@ def main():
         parser.add_argument('action', choices=('clean','install','validate'), help='the action to perform')
         parser.add_argument('file', help='the file to be used for package or install')
         args = parser.parse_args()
-
+		
         if args.action == "clean":
             clean_plugin()
         elif args.action == "validate":
@@ -39,30 +39,29 @@ def get_component_roots(include_legacy=False):
     xcshared_dir="~/Library/Application Support/Developer/Shared/Xcode"
     library_dir="~/Library"
     user_xcode_dir="~/Library/Developer/Xcode"
-
+	
     components = [
-        (xcshared_dir, "Platforms/Android.platform", 'CURRENT'),
-        (xcshared_dir, "PlatformPlugIns/IDEAndroidSupportCore.ideplugin", 'CURRENT'),
-        (xcshared_dir, "Plug-ins/APPPlatformBuildSystem.xcplugin", 'CURRENT'),
-        (xcshared_dir, "Plug-ins/ConsolePlugin.xcplugin", 'CURRENT'),
-        (xcshared_dir, "Plug-ins/IDEAndroidSupportCore.xcplugin", 'LEGACY'),
-        (xcshared_dir, "Plug-ins/IDEJavaSupportCore.xcplugin", 'CURRENT'),
-        (xcshared_dir, "Plug-ins/LinkageDependencies.xcplugin", 'CURRENT'),
-        (xcshared_dir, "Toolchains/Android.xctoolchain", 'CURRENT'),
-        (library_dir, "Frameworks/XCPluginKit.framework", 'CURRENT'),
-        (user_xcode_dir, "Templates/Project Templates/Java", 'CURRENT'),
-        (user_xcode_dir, "Templates/Project Templates/Android", 'CURRENT'),
-    ]
+				  (xcshared_dir, "Platforms/Android.platform", 'CURRENT'),
+				  (xcshared_dir, "PlatformPlugIns/IDEAndroidSupportCore.ideplugin", 'CURRENT'),
+				  (xcshared_dir, "Plug-ins/APPPlatformBuildSystem.xcplugin", 'CURRENT'),
+				  (xcshared_dir, "Plug-ins/IDEAndroidSupportCore.xcplugin", 'LEGACY'),
+				  (xcshared_dir, "Plug-ins/IDEJavaSupportCore.xcplugin", 'CURRENT'),
+				  (xcshared_dir, "Plug-ins/LinkageDependencies.xcplugin", 'CURRENT'),
+				  (xcshared_dir, "Toolchains/Android.xctoolchain", 'CURRENT'),
+				  (library_dir, "Frameworks/XCPluginKit.framework", 'CURRENT'),
+				  (user_xcode_dir, "Templates/Project Templates/Java", 'CURRENT'),
+				  (user_xcode_dir, "Templates/Project Templates/Android", 'CURRENT'),
+				  ]
     return [(c, os.path.expanduser(os.path.join(path, c))) for path, c, type in components if include_legacy or type != 'LEGACY']
 
 
 def get_defaults(include_legacy=False):
     xcshared_dir = os.path.expanduser("~/Library/Application Support/Developer/Shared/Xcode")
-
+	
     defaults = [
-        ('com.apple.dt.Xcode', 'DVTExtraPlugInPaths', os.path.join(xcshared_dir, 'PlatformPlugIns'), 'CURRENT'),
-        ('com.apple.dt.Xcode', 'DVTExtraPlatformFolders', os.path.join(xcshared_dir, 'Platforms'), 'CURRENT'),
-    ]
+				('com.apple.dt.Xcode', 'DVTExtraPlugInPaths', os.path.join(xcshared_dir, 'PlatformPlugIns'), 'CURRENT'),
+				('com.apple.dt.Xcode', 'DVTExtraPlatformFolders', os.path.join(xcshared_dir, 'Platforms'), 'CURRENT'),
+				]
     return [(app, name, value) for app, name, value, type in defaults if include_legacy or type != 'LEGACY']
 
 def validate_bundle(bundle):
