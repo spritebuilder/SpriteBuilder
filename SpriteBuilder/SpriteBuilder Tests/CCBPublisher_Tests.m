@@ -17,6 +17,8 @@
 #import "CCBDocumentDataCreator.h"
 #import "CCBDocument.h"
 #import "PlugInManager.h"
+#import "CCBPublishingTarget.h"
+#import "ProjectSettings+Convenience.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -24,6 +26,11 @@
 @property (nonatomic, strong) CCBWarnings *warnings;
 @property (nonatomic, strong) CCBPublisher *publisher;
 
+@end
+
+@interface CCBPublisher_Tests ()
+@property (nonatomic, strong) CCBPublishingTarget *targetIOS;
+@property (nonatomic, strong) CCBPublishingTarget *targetAndroid;
 @end
 
 @implementation CCBPublisher_Tests
@@ -36,16 +43,22 @@
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
     _projectSettings.publishEnablediPhone = YES;
     _projectSettings.publishEnabledAndroid = NO;
-
     [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
     self.warnings = [[CCBWarnings alloc] init];
-
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings warnings:_warnings finishedBlock:nil];
 
-    _publisher.publishInputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
-    [_publisher setPublishOutputDirectory:[self fullPathForFile:@"Published-iOS"] forTargetType:kCCBPublisherTargetTypeIPhone];
-    [_publisher setPublishOutputDirectory:[self fullPathForFile:@"Published-Android"] forTargetType:kCCBPublisherTargetTypeAndroid];
+    self.targetIOS = [[CCBPublishingTarget alloc] init];
+    _targetIOS.platform = kCCBPublisherTargetTypeIPhone;
+    _targetIOS.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    _targetIOS.outputDirectory = [self fullPathForFile:@"Published-iOS"];
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+
+    self.targetAndroid = [[CCBPublishingTarget alloc] init];
+    _targetAndroid.platform = kCCBPublisherTargetTypeAndroid;
+    _targetAndroid.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    _targetAndroid.outputDirectory = [self fullPathForFile:@"Published-Android"];
+    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeAndroid];
 
     [self createFolders:@[@"Published-iOS", @"Published-Android", @"baa.spritebuilder/Packages/foo.sbpack"]];
 }
@@ -75,6 +88,7 @@
     _projectSettings.defaultOrientation = kCCBOrientationPortrait;
     _projectSettings.resourceAutoScaleFactor = 4;
 
+    [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     [self assertFileExists:@"Published-iOS/Strings.ccbLang"];
@@ -133,6 +147,10 @@
     _projectSettings.publishResolution_android_phone = YES;
     _projectSettings.publishResolution_android_phonehd = NO;
 
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+    [_publisher addPublishingTarget:_targetIOS];
+    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeAndroid];
+    [_publisher addPublishingTarget:_targetAndroid];
     [_publisher start];
 
     [self assertFileExists:@"Published-iOS/resources-phonehd/picture.png"];
@@ -159,6 +177,7 @@
             @"resources-tablethd/din.png",
     ]];
 
+    [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     [self assertFilesExistRelativeToDirectory:@"Published-iOS/test.bmfont" filesPaths:@[
@@ -173,7 +192,7 @@
     ]];
 }
 
-- (void)testPublishOnlyCCBs
+- (void)testPublishCCBs
 {
     SceneGraph *sceneGraph = [[SceneGraph alloc] initWithProjectSettings:_projectSettings];
     CCNode *root = [[PlugInManager sharedManager] createDefaultNodeOfType:@"CCNode"];
@@ -188,6 +207,7 @@
     NSMutableDictionary *doc = [documentCreator createData];
     [doc writeToFile:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack/mainScene.ccb"] atomically:YES];
 
+    [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     [self assertFileExists:@"Published-iOS/mainScene.ccbi"];
@@ -203,6 +223,7 @@
     _projectSettings.resourceAutoScaleFactor = 4;
     [_projectSettings setValue:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
 
+    [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     // The overridden case
@@ -225,6 +246,8 @@
     [_projectSettings setValue:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_android"];
     [_projectSettings setValue:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:@"format_ios_sound"];
 
+    [_publisher addPublishingTarget:_targetIOS];
+    [_publisher addPublishingTarget:_targetAndroid];
     [_publisher start];
 
     [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"rocket.png" renamedName:@"rocket.jpg"];
@@ -258,6 +281,7 @@
     _projectSettings.resourceAutoScaleFactor = 4;
     [_projectSettings setValue:[NSNumber numberWithBool:YES] forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
 
+    [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     // The resolutions tests may be a bit too much here, but there are no
@@ -298,6 +322,8 @@
     [_projectSettings setValue:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
     [_projectSettings setValue:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:@"format_ios"];
 
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+    [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     [self assertFileExists:@"Published-iOS/resources-phonehd/pvr.plist"];

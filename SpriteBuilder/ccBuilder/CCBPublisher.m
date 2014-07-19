@@ -141,7 +141,7 @@
 - (BOOL)doPublish
 {
     [self removeOldPublishDirIfCacheCleaned];
-
+/*
     CCBPublishingTarget *targetIOS = [[CCBPublishingTarget alloc] init];
     targetIOS.platform = kCCBPublisherTargetTypeIPhone;
     targetIOS.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherTargetTypeIPhone];
@@ -156,6 +156,7 @@
 
     [self addPublishingTarget:targetIOS];
     [self addPublishingTarget:targetAndroid];
+*/
 
     if (![self publishTargets])
     {
@@ -231,19 +232,6 @@
     [_publishingQueue addOperation:operation];
 }
 
-- (void)publishGeneratedFilesWithOutputDir:(NSString *)outputDir
-{
-    PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                       warnings:_warnings
-                                                                                                 statusProgress:_publishingTaskStatusProgress];
-    operation.targetType = _targetType;
-    operation.outputDir = outputDir;
-    operation.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
-    operation.fileLookup = _renamedFilesLookup;
-
-    [_publishingQueue addOperation:operation];
-}
-
 - (void)resetNeedRepublish
 {
     if (_projectSettings.needRepublish)
@@ -259,13 +247,12 @@
         && !_projectSettings.onlyPublishCCBs)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        for (NSString *key in _publishingOutputDirectories)
+        for (CCBPublishingTarget *target in _publishingTargets)
         {
-            NSString *oldPublishingDir = _publishingOutputDirectories[key];
             NSError *error;
-            if (![fileManager removeItemAtPath:oldPublishingDir error:&error])
+            if (![fileManager removeItemAtPath:target.outputDirectory error:&error])
             {
-                NSLog(@"Error removing old publishing directory at path \"%@\" with error %@", oldPublishingDir, error);
+                NSLog(@"Error removing old publishing directory at path \"%@\" with error %@", target.outputDirectory, error);
             }
         }
     }

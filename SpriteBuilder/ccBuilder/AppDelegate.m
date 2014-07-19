@@ -135,6 +135,7 @@
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisher.h"
+#import "CCBPublishingTarget.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3130,13 +3131,28 @@ static BOOL hideAllToNextSeparator;
 
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     publisher.taskStatusUpdater = modalTaskStatusWindow;
-    publisher.publishInputDirectories = projectSettings.absoluteResourcePaths;
 
-    [publisher setPublishOutputDirectory:[projectSettings publishDirForTargetType:kCCBPublisherTargetTypeIPhone]
-                           forTargetType:kCCBPublisherTargetTypeIPhone];
+    if (projectSettings.publishEnablediPhone)
+    {
+        CCBPublishingTarget *targetIOS = [[CCBPublishingTarget alloc] init];
+        targetIOS.platform = kCCBPublisherTargetTypeIPhone;
+        targetIOS.outputDirectory = [projectSettings publishDirForTargetType:kCCBPublisherTargetTypeIPhone];
+        targetIOS.resolutions = [projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+        targetIOS.inputDirectories = projectSettings.absoluteResourcePaths;
 
-    [publisher setPublishOutputDirectory:[projectSettings publishDirForTargetType:kCCBPublisherTargetTypeAndroid]
-                           forTargetType:kCCBPublisherTargetTypeAndroid];
+        [publisher addPublishingTarget:targetIOS];
+    }
+
+    if (projectSettings.publishEnabledAndroid)
+    {
+        CCBPublishingTarget *targetAndroid = [[CCBPublishingTarget alloc] init];
+        targetAndroid.platform = kCCBPublisherTargetTypeAndroid;
+        targetAndroid.outputDirectory = [projectSettings publishDirForTargetType:kCCBPublisherTargetTypeAndroid];
+        targetAndroid.resolutions = [projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeAndroid];
+        targetAndroid.inputDirectories = projectSettings.absoluteResourcePaths;
+
+        [publisher addPublishingTarget:targetAndroid];
+    }
 
     // Open progress window and publish
     if (async)
