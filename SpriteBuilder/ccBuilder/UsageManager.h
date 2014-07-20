@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * kSbRegisteredEmail;
+extern NSString * kSbUserID;
+
 @interface UsageManager : NSObject
 {
     NSString* _userID;
@@ -16,5 +19,7 @@
 - (void) registerUsage;
 
 - (void) registerEmail:(NSString*)email;
+
+-(void)setRegisterdEmailFlag;
 
 @end

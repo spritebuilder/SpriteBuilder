@@ -129,6 +129,9 @@
 #import "PackageCreator.h"
 #import "NewPackageWindowController.h"
 #import "ResourceCommandController.h"
+#import "AndroidPluginInstallerWindow.h"
+#import "AndroidPluginInstaller.h"
+#import "UsageManager.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -604,6 +607,8 @@ typedef enum
     defaultCanvasSizes[kCCBCanvasSizeAndroidMediumPortrait] = CGSizeMake(480, 800);
     
     [window setDelegate:self];
+	
+
     
     [self setupTabBar];
     [self setupInspectorPane];
@@ -619,7 +624,6 @@ typedef enum
     [self updateCanvasBorderMenu];
     //[self updateJSControlledMenu];
     //[self updateDefaultBrowser];
-    
     // Load plug-ins
     [[PlugInManager sharedManager] loadPlugIns];
     
@@ -629,11 +633,13 @@ typedef enum
     [self updateSmallTabBarsEnabled];
 
     [self setupResourceManager];
+
+
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
     [self setupExtras];
     [self setupResourceCommandController];
-
+	
     [window restorePreviousOpenedPanels];
 
     [self.window makeKeyWindow];
@@ -659,6 +665,9 @@ typedef enum
     }
 
     [self toggleFeatures];
+
+	
+	[self setupSpriteBuilderPro];
 
     // Open registration window
     [self openRegistrationWindow:NULL];
@@ -4534,7 +4543,8 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) openRegistrationWindow:(id)sender
 {
-    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:@"sbRegisteredEmail"])
+	
+    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
     {
         // Email already registered or skipped
         return;
@@ -4551,6 +4561,49 @@ static BOOL hideAllToNextSeparator;
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window
 {
     return currentDocument.undoManager;
+}
+
+#pragma mark Spritebuilder Pro
+
+-(NSString*)applicationTitle
+{
+#ifdef SPRITEBUILDER_PRO
+	return @"SpriteBuilder Pro";
+#else
+	return @"SpriteBuilder";
+#endif
+}
+
+
+-(void)setupSpriteBuilderPro
+{
+
+#ifdef SPRITEBUILDER_PRO
+	if(![AndroidPluginInstaller needsInstallation])
+	{
+		return;
+	}
+	
+	AndroidPluginInstallerWindow *installerWindow = [[AndroidPluginInstallerWindow alloc] initWithWindowNibName:@"AndroidPluginInstallerWindow"];
+	
+    // Show new document sheet
+    [NSApp beginSheet:[installerWindow window]
+       modalForWindow:window
+        modalDelegate:NULL
+       didEndSelector:NULL
+          contextInfo:NULL];
+	
+	CGRect parentFrame = self.window.frame;
+	CGRect windowFrame = [installerWindow window].frame;
+	windowFrame.origin = CGPointMake(parentFrame.origin.x + parentFrame.size.width/2 - windowFrame.size.width/2, parentFrame.origin.y + parentFrame.size.height - windowFrame.size.height - 100 );
+	
+	[[installerWindow window] setFrame:windowFrame display:YES];
+ 
+	[NSApp runModalForWindow:[installerWindow window]];
+    [NSApp endSheet:[installerWindow window]];
+    [[installerWindow window] close];
+	
+#endif
 }
 
 #pragma mark Extras / Snap

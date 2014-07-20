@@ -1,8 +1,3 @@
-if [ "$#" -ne 1 ]; then
-    echo "Please provide the SpriteBuilder version"
-    exit 1
-fi
-
 if [ "$(basename "$(pwd)")" == "scripts" ]; then
     cd ..
 fi
@@ -14,7 +9,8 @@ fi
 
 # Update version for about box
 echo "Version: $1" > Generated/Version.txt
-echo -n "GitHub: " >> Generated/Version.txt
+echo "Sku: $2" >> Generated/Version.txt
+echo "GitHub: " >> Generated/Version.txt
 git rev-parse --short=10 HEAD >> Generated/Version.txt
 echo "=== GENERATING SpriteBuilder version file ==="
 touch Generated/Version.txt

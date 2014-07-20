@@ -187,6 +187,7 @@
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
+		9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */; };
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
 		9254805A18D913C500236DED /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */; };
@@ -272,6 +273,13 @@
 		92F0961E18F891A900D47A94 /* InspectorEnabledFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961C18F891A900D47A94 /* InspectorEnabledFloat.xib */; };
 		92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		92F12E4F18847BC800AB8F32 /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
+		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
+		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
+		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
+		92FFB84F195DEA0300E9C96F /* AndroidPluginInstallerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB84D195DEA0300E9C96F /* AndroidPluginInstallerWindow.m */; };
+		92FFB850195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */; };
+		92FFB854195DEA2800E9C96F /* AndroidPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */; };
+		92FFB856195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -811,6 +819,7 @@
 		E525F17044E58B6DFE7A2248 /* RMPackage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A4E3F488FCF4347F62 /* RMPackage_Tests.m */; };
 		E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
+		E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */; };
 		E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */; };
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F310D9DF45E96DCBAA31 /* ResourceShowInFinderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDDD5A720D91B11798A4 /* ResourceShowInFinderCommand.m */; };
@@ -1434,6 +1443,7 @@
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
+		9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpriteBuilder.xcconfig; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
 		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
@@ -1524,6 +1534,15 @@
 		92F0961A18F891A900D47A94 /* InspectorEnabledFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEnabledFloat.h; sourceTree = "<group>"; };
 		92F0961B18F891A900D47A94 /* InspectorEnabledFloat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEnabledFloat.m; sourceTree = "<group>"; };
 		92F0961C18F891A900D47A94 /* InspectorEnabledFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorEnabledFloat.xib; sourceTree = "<group>"; };
+		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
+		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
+		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
+		92FFB84C195DEA0300E9C96F /* AndroidPluginInstallerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndroidPluginInstallerWindow.h; sourceTree = "<group>"; };
+		92FFB84D195DEA0300E9C96F /* AndroidPluginInstallerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstallerWindow.m; sourceTree = "<group>"; };
+		92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AndroidPluginInstallerWindow.xib; sourceTree = "<group>"; };
+		92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndroidPluginInstaller.h; sourceTree = "<group>"; };
+		92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstaller.m; sourceTree = "<group>"; };
+		92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstall_Tests.m; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -2283,7 +2302,9 @@
 		E525F0F30379667FD6285EA3 /* ResourceCommandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCommandController.h; sourceTree = "<group>"; };
 		E525F12E427752EA9AA4EB37 /* ResourceNewFolderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewFolderCommand.h; sourceTree = "<group>"; };
 		E525F14190B50F98308504B5 /* ResourceContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu.m; sourceTree = "<group>"; };
+		E525F197E108D243FE4D1FB1 /* PublishFileLookupProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishFileLookupProtocol.h; sourceTree = "<group>"; };
 		E525F19851B99B6926435235 /* NSString+Packages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Packages.h"; sourceTree = "<group>"; };
+		E525F1EF70664A8689877329 /* PublishIntermediateFilesLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishIntermediateFilesLookup.h; sourceTree = "<group>"; };
 		E525F20B1403AD6F5FCAD713 /* PackageExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageExporter.h; sourceTree = "<group>"; };
 		E525F213547BCB1BBA54EC87 /* SBAssserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAssserts.h; sourceTree = "<group>"; };
 		E525F215F31637B52F646A82 /* PackageRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageRenamer.h; sourceTree = "<group>"; };
@@ -2306,7 +2327,6 @@
 		E525F616AAA64620A9528730 /* ObserverTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObserverTestHelper.h; sourceTree = "<group>"; };
 		E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer_Tests.m; sourceTree = "<group>"; };
 		E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceNewFileCommand.m; sourceTree = "<group>"; };
-		E525F6C644CA9F78DAE45A13 /* PackageCreateDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreateDelegateProtocol.h; sourceTree = "<group>"; };
 		E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPlaybackManager.m; sourceTree = "<group>"; };
 		E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishingTaskStatusProgress.m; sourceTree = "<group>"; };
 		E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSoundFileOperation.m; sourceTree = "<group>"; };
@@ -2372,6 +2392,7 @@
 		E525FEBFE86C6D193DBB8D1E /* ResourceDeleteCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceDeleteCommand.h; sourceTree = "<group>"; };
 		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FF18D2784BB119B2882A /* RMResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource.m; sourceTree = "<group>"; };
+		E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishIntermediateFilesLookup.m; sourceTree = "<group>"; };
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
 		E525FF96D86C4DDC63B9BF63 /* PackageImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageImporter.m; sourceTree = "<group>"; };
 		E525FFA89CA744B94C708834 /* AnimationPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationPlaybackManager.h; sourceTree = "<group>"; };
@@ -2688,6 +2709,11 @@
 				E525FCD604B9708D96E9EE11 /* ProjectSettings+Convenience.m */,
 				E525FA61F7480E7C1152B7B5 /* ProjectSettings+Packages.m */,
 				E525F3A67926C2386CC09571 /* ProjectSettings+Packages.h */,
+				92FFB84C195DEA0300E9C96F /* AndroidPluginInstallerWindow.h */,
+				92FFB84D195DEA0300E9C96F /* AndroidPluginInstallerWindow.m */,
+				92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */,
+				92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */,
+				92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */,
 			);
 			name = "Application Settings & Globals";
 			sourceTree = "<group>";
@@ -3141,6 +3167,7 @@
 		7789ABB3133AA82000CEFCC7 = {
 			isa = PBXGroup;
 			children = (
+				9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */,
 				E3D08A321524581100E55891 /* README.md */,
 				E3D59118150F50D1004180CA /* AUTHORS */,
 				E395DC7D1511FDF70075979E /* CHANGELOG */,
@@ -3528,6 +3555,7 @@
 			isa = PBXGroup;
 			children = (
 				83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */,
+				92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */,
 				83993DB419361305001C228B /* FeatureToggle_Tests.m */,
 			);
 			name = "Application Settings & Globals";
@@ -3639,6 +3667,9 @@
 		922CC3941946769B00B34854 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */,
+				92F85F36194F70CA0076B343 /* AnimationTest4.ccb */,
+				92F85F33194F6AD80076B343 /* AnimationTest3.ccb */,
 				922CC3971946873A00B34854 /* AnimationTest2.ccb */,
 				922CC395194676B600B34854 /* AnimationTest1.ccb */,
 			);
@@ -4274,6 +4305,9 @@
 				E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */,
 				E525F876D70C7C45655B870F /* PublishingTaskStatusProgress.h */,
 				E525F0A6B228717C246675C0 /* PublishLogging.h */,
+				E525F197E108D243FE4D1FB1 /* PublishFileLookupProtocol.h */,
+				E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */,
+				E525F1EF70664A8689877329 /* PublishIntermediateFilesLookup.h */,
 			);
 			name = Publishing;
 			sourceTree = "<group>";
@@ -5655,6 +5689,7 @@
 				774E4EC4136D98AB0025D0A8 /* select-pt.png in Resources */,
 				774E4EC5136D98AB0025D0A8 /* select-tl.png in Resources */,
 				774E4EC6136D98AB0025D0A8 /* select-tr.png in Resources */,
+				92FFB850195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib in Resources */,
 				774E4ECE136DFFB70025D0A8 /* btn-move-hi.png in Resources */,
 				774E4ECF136DFFB70025D0A8 /* btn-move.png in Resources */,
 				774E4ED0136DFFB70025D0A8 /* btn-rotate-hi.png in Resources */,
@@ -5849,6 +5884,7 @@
 				922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */,
 				E3DFA7CF15ACA0CD005D3B6F /* frame-android-xsmall.png in Resources */,
 				E3E2704815B18CF500287470 /* TB_play.png in Resources */,
+				9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */,
 				E3E2704915B18CF500287470 /* TB_stop.png in Resources */,
 				E3E2704B15B1904400287470 /* toolbar-bottom.png in Resources */,
 				E326EFB615C84123006D6CE6 /* seq-endmarker.png in Resources */,
@@ -5989,6 +6025,9 @@
 				922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */,
 				833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */,
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
+				92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */,
+				92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */,
+				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6342,6 +6381,7 @@
 				776C68451385D37E00153214 /* CCBTableView.m in Sources */,
 				77D33EAB138EA4F900012A88 /* CCBUtil.m in Sources */,
 				77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */,
+				92FFB854195DEA2800E9C96F /* AndroidPluginInstaller.m in Sources */,
 				77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */,
 				776A37B61398D6BF00960E94 /* CCBGLView.m in Sources */,
 				4DB7C95719083B9C00ECE19F /* NotificationNames.m in Sources */,
@@ -6372,6 +6412,7 @@
 				E32D8CC814EC25D800F4BD5E /* InspectorCodeConnections.m in Sources */,
 				E35DBBC214F29EF80070A6E4 /* InspectorFntFile.m in Sources */,
 				E35DBBC714F2A2A50070A6E4 /* InspectorText.m in Sources */,
+				92FFB84F195DEA0300E9C96F /* AndroidPluginInstallerWindow.m in Sources */,
 				E35DBBE414F3DD0B0070A6E4 /* InspectorFontTTF.m in Sources */,
 				E35DBBFE14F3EE410070A6E4 /* InspectorFloat.m in Sources */,
 				E35DBC1E14F4DF050070A6E4 /* InspectorStartStop.m in Sources */,
@@ -6563,6 +6604,7 @@
 				E525F47301A5C8C234262F36 /* PackageRemover.m in Sources */,
 				E525FC5DE242A8EB373D882A /* PackageExporter.m in Sources */,
 				E525F413EBF9FE7A802A283C /* PackageCreator.m in Sources */,
+				E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6581,6 +6623,7 @@
 				83CD449A193F35C50086E9E7 /* ResourceContextMenu_Tests.m in Sources */,
 				E525F17044E58B6DFE7A2248 /* RMPackage_Tests.m in Sources */,
 				E525F09EC8AF83CADB163700 /* CCBReader_Tests.m in Sources */,
+				92FFB856195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m in Sources */,
 				E525F4F04F018D82F3251813 /* CCAnimation_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7236,6 +7279,7 @@
 		};
 		7789ABDD133AA82000CEFCC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -7245,12 +7289,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ccBuilder/SpriteBuilder-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"CC_DIRECTOR_MAC_THREAD=2",
-					"COCOS2D_DEBUG=1",
-					"CC_ENABLE_GL_STATE_CACHE=1",
-					DEBUG,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(SB_DEBUG_PREPROCESSOR_DEFINES)";
 				HEADER_SEARCH_PATHS = (
 					libs/Fragaria,
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
@@ -7269,13 +7308,14 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = SpriteBuilder;
+				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		7789ABDE133AA82000CEFCC7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -7285,12 +7325,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ccBuilder/SpriteBuilder-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"CC_DIRECTOR_MAC_THREAD=2",
-					NDEBUG,
-					NS_BLOCK_ASSERTIONS,
-					"CC_ENABLE_GL_STATE_CACHE=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(SB_RELEASE_PREPROCESSOR_DEFINES)";
 				HEADER_SEARCH_PATHS = (
 					libs/Fragaria,
 					"../Examples/CocosBuilderExample/libs/CCBReader/**",
@@ -7309,7 +7344,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = SpriteBuilder;
+				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
