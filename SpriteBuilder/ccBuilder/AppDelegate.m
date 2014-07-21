@@ -134,17 +134,19 @@
 #import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
-#import "CCBPublisher.h"
-#import "CCBPublishingTarget.h"
 #import "CCBPublisherCacheCleaner.h"
+#import "CCBPublisherController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
 @interface AppDelegate()
 
+@property (nonatomic, strong) CCBPublisherController *publisherController;
+
 - (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
 
 @end
+
 
 @implementation AppDelegate
 {
@@ -665,11 +667,12 @@ typedef enum
 
     [self toggleFeatures];
 
-	
 	[self setupSpriteBuilderPro];
 
     // Open registration window
     [self openRegistrationWindow:NULL];
+
+    self.publisherController = [[CCBPublisherController alloc] init];
 }
 
 - (void)setupResourceCommandController
@@ -3119,63 +3122,36 @@ static BOOL hideAllToNextSeparator;
 
 - (void)publishStartAsync:(BOOL)async
 {
-    CCBWarnings* warnings = [[CCBWarnings alloc] init];
-    warnings.warningsDescription = @"Publisher Warnings";
+    _publisherController.projectSettings = projectSettings;
 
     id __weak selfWeak = self;
-    CCBPublisher * publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings
-                                                                    warnings:warnings
-                                                               finishedBlock:^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
+    _publisherController.finishBlock = ^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
     {
-        [selfWeak publisher:aPublisher finishedWithWarnings:someWarnings];
-    }];
+        [selfWeak publisherFinishedWithWarnings:someWarnings];
+    };
 
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
-    publisher.taskStatusUpdater = modalTaskStatusWindow;
-
-    if (projectSettings.publishEnablediPhone)
-    {
-        CCBPublishingTarget *targetIOS = [[CCBPublishingTarget alloc] init];
-        targetIOS.osType = kCCBPublisherOSTypeIOS;
-        targetIOS.outputDirectory = [projectSettings publishDirForOSType:kCCBPublisherOSTypeIOS];
-        targetIOS.resolutions = [projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
-        targetIOS.inputDirectories = projectSettings.absoluteResourcePaths;
-        targetIOS.publishEnvironment = projectSettings.publishEnvironment;
-
-        [publisher addPublishingTarget:targetIOS];
-    }
-
-    if (projectSettings.publishEnabledAndroid)
-    {
-        CCBPublishingTarget *targetAndroid = [[CCBPublishingTarget alloc] init];
-        targetAndroid.osType = kCCBPublisherOSTypeAndroid;
-        targetAndroid.outputDirectory = [projectSettings publishDirForOSType:kCCBPublisherOSTypeAndroid];
-        targetAndroid.resolutions = [projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
-        targetAndroid.inputDirectories = projectSettings.absoluteResourcePaths;
-        targetAndroid.publishEnvironment = projectSettings.publishEnvironment;
-
-        [publisher addPublishingTarget:targetAndroid];
-    }
+    _publisherController.taskStatusUpdater = modalTaskStatusWindow;
 
     // Open progress window and publish
     if (async)
     {
-        [publisher startAsync];
+        [_publisherController startAsync:YES];
         [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
         {
-            [publisher cancel];
+            [_publisherController cancel];
         }];
         [self modalStatusWindowUpdateStatusText:@"Starting up..."];
     }
     else
     {
-        [publisher start];
+        [_publisherController startAsync:NO];
     }
 
     [animationPlaybackManager stop];
 }
 
-- (void) publisher:(CCBPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings
+- (void)publisherFinishedWithWarnings:(CCBWarnings *)warnings
 {
     [self modalStatusWindowFinish];
     

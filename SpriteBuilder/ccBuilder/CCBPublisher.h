@@ -9,7 +9,7 @@
 
 @interface CCBPublisher : NSObject
 
-@property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
+@property (nonatomic, weak) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
                      warnings:(CCBWarnings *)someWarnings

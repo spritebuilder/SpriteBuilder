@@ -5,7 +5,6 @@
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
 #import "OptimizeImageWithOptiPNGOperation.h"
-#import "ProjectSettings+Convenience.h"
 #import "CCBDirectoryPublisher.h"
 #import "PublishGeneratedFilesOperation.h"
 #import "CCBPublishingTarget.h"
@@ -19,9 +18,9 @@
 @property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 @property (nonatomic, strong) NSOperationQueue *publishingQueue;
 @property (nonatomic, strong) NSMutableArray *publishingTargets;
-
-// Shared
 @property (nonatomic, strong) ProjectSettings *projectSettings;
+
+// Shared for targets
 @property (nonatomic, strong) CCBWarnings *warnings;
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
 
@@ -82,7 +81,7 @@
     [_publishingQueue setSuspended:NO];
     [_publishingQueue waitUntilAllOperationsAreFinished];
 
-    [self postProcessPublishedPNGFilesWithOptiPNGForAllTargets];
+    [self enqueuePostPublishingOperationsForAllTargets];
 
 	[_publishingQueue setSuspended:NO];
     [_publishingQueue waitUntilAllOperationsAreFinished];
@@ -116,7 +115,7 @@
 {
     [self removeOldPublishDirIfCacheCleaned];
 
-    if (![self publishTargets])
+    if (![self enqueuePublishOperationsForAllTargets])
     {
         return NO;
     }
@@ -128,11 +127,11 @@
     return YES;
 }
 
-- (BOOL)publishTargets
+- (BOOL)enqueuePublishOperationsForAllTargets
 {
     for (CCBPublishingTarget *target in _publishingTargets)
     {
-        if (![self publishTarget:target])
+        if (![self enqueuePublishingOperationsForTarget:target])
         {
              return NO;
         }
@@ -140,7 +139,7 @@
     return YES;
 }
 
-- (BOOL)publishTarget:(CCBPublishingTarget *)target
+- (BOOL)enqueuePublishingOperationsForTarget:(CCBPublishingTarget *)target
 {
     _warnings.currentOSType = target.osType;
 
@@ -155,11 +154,11 @@
         dirPublisher.outputDir = target.outputDirectory;
         dirPublisher.osType = target.osType;
         dirPublisher.resolutions = target.resolutions;
-        dirPublisher.modifiedDatesCache = _modifiedDatesCache;
         dirPublisher.publishedPNGFiles = target.publishedPNGFiles;
         dirPublisher.renamedFilesLookup = target.renamedFilesLookup;
         dirPublisher.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;
         dirPublisher.publishingTaskStatusProgress = _publishingTaskStatusProgress;
+        dirPublisher.modifiedDatesCache = _modifiedDatesCache;
 
         if (![dirPublisher generateAndEnqueuePublishingTasks])
         {
@@ -169,14 +168,14 @@
 
     if(!_projectSettings.onlyPublishCCBs)
     {
-        [self publishGeneratedFilesWithTarget:target];
+        [self enqueueGenerateFilesOperationWithTarget:target];
     }
 
     // Yiee Haa!
     return YES;
 }
 
-- (void)publishGeneratedFilesWithTarget:(CCBPublishingTarget *)target
+- (void)enqueueGenerateFilesOperationWithTarget:(CCBPublishingTarget *)target
 {
     PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                        warnings:_warnings
@@ -215,7 +214,7 @@
     }
 }
 
-- (void)postProcessPublishedPNGFilesWithOptiPNGForAllTargets
+- (void)enqueuePostPublishingOperationsForAllTargets
 {
     for (CCBPublishingTarget *target in _publishingTargets)
     {

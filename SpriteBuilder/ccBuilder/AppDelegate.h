@@ -448,7 +448,7 @@ enum {
 - (IBAction) debug:(id)sender;
 
 // Publishing & running
-- (void) publisher:(CCBPublisher *)publisher finishedWithWarnings:(CCBWarnings*)warnings;
+- (void)publisherFinishedWithWarnings:(CCBWarnings *)warnings;
 
 // For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;
