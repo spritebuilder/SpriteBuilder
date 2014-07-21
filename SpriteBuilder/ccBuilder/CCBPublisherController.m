@@ -72,27 +72,42 @@
         target.resolutions = @[resolution];
         target.inputDirectories = @[packageSettings.package.fullPath];
         target.publishEnvironment = packageSettings.publishEnvironment;
+        target.zipOutputFolder = YES;
 
+        NSError *error;
         NSString *outputDirectory = [self createOutputDirectoryForPackageWithPackageSetting:packageSettings
                                                                                      osType:osType
-                                                                                 resolution:resolution];
+                                                                                 resolution:resolution
+                                                                                      error:&error];
+        if (!outputDirectory)
+        {
+            NSString *warning = [NSString stringWithFormat:@"Package export failed: Could not create directory at \"%@\", error: %@",
+                                          outputDirectory,
+                                          error.localizedDescription];
+
+            [_warnings addWarningWithDescription:warning];
+            continue;
+        }
+
         target.outputDirectory = outputDirectory;
 
         [_publisher addPublishingTarget:target];
     }
 }
 
-- (NSString *)createOutputDirectoryForPackageWithPackageSetting:(PackageSettings *)settings osType:(CCBPublisherOSType)osType resolution:(NSString *)resolution
+- (NSString *)createOutputDirectoryForPackageWithPackageSetting:(PackageSettings *)settings
+                                                         osType:(CCBPublisherOSType)osType
+                                                     resolution:(NSString *)resolution
+                                                          error:(NSError **)error
 {
     NSString *packageDirName = [NSString stringWithFormat:@"%@-%@-%@", settings.package.name, [self osTypeToString:osType], resolution];
     NSString *fullPath = [settings.outputDirectory stringByAppendingPathComponent:packageDirName];
 
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    if (![fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:&error])
+    if (![fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:error])
     {
-        NSLog(@"Error creating package output dir \"%@\" with error %@", fullPath, error);
+        NSLog(@"Error creating package output dir \"%@\" with error %@", fullPath, *error);
         return nil;
     }
 

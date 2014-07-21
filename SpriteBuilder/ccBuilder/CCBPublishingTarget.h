@@ -12,6 +12,8 @@
 @property (nonatomic, strong) NSArray *resolutions;
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
 
+@property (nonatomic) BOOL zipOutputFolder;
+
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;
 @property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;

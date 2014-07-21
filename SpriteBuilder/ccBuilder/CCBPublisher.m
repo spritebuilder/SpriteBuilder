@@ -9,6 +9,7 @@
 #import "PublishGeneratedFilesOperation.h"
 #import "CCBPublishingTarget.h"
 #import "CCBPublisherCacheCleaner.h"
+#import "ZipDirectoryOperation.h"
 
 
 @interface CCBPublisher ()
@@ -145,7 +146,7 @@
 
     target.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
-    for (NSString* aDir in target.inputDirectories)
+    for (NSString *aDir in target.inputDirectories)
     {
         CCBDirectoryPublisher *dirPublisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
                                                                                             warnings:_warnings
@@ -164,9 +165,9 @@
         {
             return NO;
         }
-	}
+    }
 
-    if(!_projectSettings.onlyPublishCCBs)
+    if (!_projectSettings.onlyPublishCCBs)
     {
         [self enqueueGenerateFilesOperationWithTarget:target];
     }
@@ -220,7 +221,29 @@
     for (CCBPublishingTarget *target in _publishingTargets)
     {
         [self postProcessPublishedPNGFilesWithOptiPNGWithTarget:target];
+        [self zipFolderWithTarget:target];
     }
+}
+
+- (void)zipFolderWithTarget:(CCBPublishingTarget *)target
+{
+    if (!target.zipOutputFolder)
+    {
+        return;
+    }
+
+    ZipDirectoryOperation *operation = [[ZipDirectoryOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                     warnings:_warnings
+                                                                               statusProgress:_publishingTaskStatusProgress];
+
+    operation.inputPath = target.outputDirectory;
+
+    if (target.publishEnvironment == kCCBPublishEnvironmentRelease)
+    {
+        operation.compression = 10;
+    }
+
+    [_publishingQueue addOperation:operation];
 }
 
 - (void)postProcessPublishedPNGFilesWithOptiPNGWithTarget:(CCBPublishingTarget *)target

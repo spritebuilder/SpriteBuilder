@@ -51,7 +51,7 @@
     XCTAssertTrue([[_packageSettings publishResolutionsForOSType:kCCBPublisherOSTypeIOS] isEqualToArray:arr1]);
 
     NSArray *arr2 = @[@"tablet", @"phonehd"];
-    XCTAssertTrue([[_packageSettings publishResolutionsForOSType:kCCBPublisherOSTypeIOS] isEqualToArray:arr2]);
+    XCTAssertTrue([[_packageSettings publishResolutionsForOSType:kCCBPublisherOSTypeAndroid] isEqualToArray:arr2]);
 }
 
 @end

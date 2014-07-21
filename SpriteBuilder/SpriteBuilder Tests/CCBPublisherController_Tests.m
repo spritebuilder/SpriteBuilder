@@ -87,6 +87,13 @@
             @"fileLookup.plist",
             @"spriteFrameFileList.plist"
     ]];
+
+    [self assertFilesExistRelativeToDirectory:@"Published-Packages" filesPaths:@[
+            @"foo-iOS-tablethd.zip",
+            @"foo-iOS-phone.zip",
+            @"foo-Android-tablet.zip",
+            @"foo-Android-phonehd.zip"
+    ]];
 }
 
 @end
