@@ -65,6 +65,10 @@ enum
 
 __strong NSDictionary* renamedProperties = nil;
 
+@interface CCNode (Private)
+-(void)postDeserializationFixup;
+@end
+
 @implementation CCBReaderInternal
 
 + (NSPoint) deserializePoint:(id) val
@@ -653,6 +657,20 @@ __strong NSDictionary* renamedProperties = nil;
     }
     
     return [CCBReaderInternal nodeGraphFromDictionary:nodeGraph parentSize:parentSize];
+}
+
+
++(void)postDeserializationFixup:(CCNode*)node
+{
+	if([node respondsToSelector:@selector(postDeserializationFixup)])
+	{
+		[node performSelector:@selector(postDeserializationFixup) withObject:nil];
+	}
+	
+	for(CCNode * child in node.children)
+	{
+		[self postDeserializationFixup:child];
+	}
 }
 
 @end

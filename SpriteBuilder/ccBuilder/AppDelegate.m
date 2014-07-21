@@ -1795,6 +1795,8 @@ static BOOL hideAllToNextSeparator;
     [loadedJoints forEach:^(CCBPhysicsJoint * child, int idx) {
         [g.joints addJoint:child];
     }];
+	
+	[CCBReaderInternal postDeserializationFixup:g.rootNode];
 
     
     [[CocosScene cocosScene] replaceSceneNodes:g];

@@ -83,5 +83,16 @@
 	
 }
 
+-(void)postDeserializationFixup
+{
+	for(CCEffect * effect in  self.effects)
+	{
+		if([effect respondsToSelector:@selector(postDeserializationFixup)])
+		{
+			[effect performSelector:@selector(postDeserializationFixup) withObject:nil];
+		}
+	}
+}
+
 @end
 
