@@ -220,6 +220,11 @@
 		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
+		92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8361979D33D00B50F74 /* LicenseWindow.m */; };
+		92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92AEE8371979D33D00B50F74 /* LicenseWindow.xib */; };
+		92AEE83D1979D55000B50F74 /* LicenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE83C1979D55000B50F74 /* LicenceManager.m */; };
+		92AEE8401979D5F700B50F74 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE83F1979D5F700B50F74 /* CocoaSecurity.m */; };
+		92AEE8431979D62B00B50F74 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8421979D62B00B50F74 /* Base64.m */; };
 		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
 		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
 		92B6D0DA193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */; };
@@ -1250,7 +1255,7 @@
 		776C688F1388107400153214 /* missing-font.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "missing-font.fnt"; sourceTree = "<group>"; };
 		776C68901388107400153214 /* missing-font.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "missing-font.png"; sourceTree = "<group>"; };
 		776C6895138874C200153214 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7789ABBE133AA82000CEFCC7 /* SpriteBuilderPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteBuilderPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7789ABC2133AA82000CEFCC7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7789ABC5133AA82000CEFCC7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		7789ABC6133AA82000CEFCC7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -1487,6 +1492,15 @@
 		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
 		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
+		92AEE8351979D33D00B50F74 /* LicenseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseWindow.h; sourceTree = "<group>"; };
+		92AEE8361979D33D00B50F74 /* LicenseWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseWindow.m; sourceTree = "<group>"; };
+		92AEE8371979D33D00B50F74 /* LicenseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LicenseWindow.xib; sourceTree = "<group>"; };
+		92AEE83B1979D55000B50F74 /* LicenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenceManager.h; sourceTree = "<group>"; };
+		92AEE83C1979D55000B50F74 /* LicenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenceManager.m; sourceTree = "<group>"; };
+		92AEE83E1979D5F700B50F74 /* CocoaSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocoaSecurity.h; path = ../../../../SpriteBuilder/SpriteBuilder/ccBuilder/CocoaSecurity.h; sourceTree = "<group>"; };
+		92AEE83F1979D5F700B50F74 /* CocoaSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CocoaSecurity.m; path = ../../../../SpriteBuilder/SpriteBuilder/ccBuilder/CocoaSecurity.m; sourceTree = "<group>"; };
+		92AEE8411979D62B00B50F74 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		92AEE8421979D62B00B50F74 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range.png"; sourceTree = "<group>"; };
 		92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range@2x.png"; sourceTree = "<group>"; };
 		92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPhysicsUnavailable.xib; sourceTree = "<group>"; };
@@ -3195,7 +3209,7 @@
 		7789ABBF133AA82000CEFCC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */,
+				7789ABBE133AA82000CEFCC7 /* SpriteBuilderPro.app */,
 				E3B7AEC514E3193500DFD402 /* CCNode.ccbPlugNode */,
 				E3C365EB14E9E4D1007CD5FF /* CCSprite.ccbPlugNode */,
 				E35DBB8014F225D30070A6E4 /* CCNodeColor.ccbPlugNode */,
@@ -4543,12 +4557,21 @@
 		E390C77A170A2C20003E9E92 /* About Box & Email list */ = {
 			isa = PBXGroup;
 			children = (
+				92AEE8411979D62B00B50F74 /* Base64.h */,
+				92AEE8421979D62B00B50F74 /* Base64.m */,
+				92AEE83E1979D5F700B50F74 /* CocoaSecurity.h */,
+				92AEE83F1979D5F700B50F74 /* CocoaSecurity.m */,
 				E390C77B170A2C9B003E9E92 /* AboutWindow.h */,
 				E390C77C170A2C9B003E9E92 /* AboutWindow.m */,
 				E390C77D170A2C9B003E9E92 /* AboutWindow.xib */,
 				B7DE848E1937A8390039FB72 /* RegistrationWindow.h */,
 				B7DE848F1937A8390039FB72 /* RegistrationWindow.m */,
 				B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */,
+				92AEE8351979D33D00B50F74 /* LicenseWindow.h */,
+				92AEE8361979D33D00B50F74 /* LicenseWindow.m */,
+				92AEE8371979D33D00B50F74 /* LicenseWindow.xib */,
+				92AEE83B1979D55000B50F74 /* LicenceManager.h */,
+				92AEE83C1979D55000B50F74 /* LicenceManager.m */,
 			);
 			name = "About Box & Email list";
 			sourceTree = "<group>";
@@ -5064,7 +5087,7 @@
 			);
 			name = SpriteBuilder;
 			productName = ccBuilder;
-			productReference = 7789ABBE133AA82000CEFCC7 /* SpriteBuilder.app */;
+			productReference = 7789ABBE133AA82000CEFCC7 /* SpriteBuilderPro.app */;
 			productType = "com.apple.product-type.application";
 		};
 		833A5C49192B48CA001837B3 /* SpriteBuilder Tests */ = {
@@ -5712,6 +5735,7 @@
 				774E4ED2136DFFB70025D0A8 /* btn-scale-hi.png in Resources */,
 				774E4ED3136DFFB70025D0A8 /* btn-scale.png in Resources */,
 				77E1995213858DE0006C361B /* overflowImage.png in Resources */,
+				92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */,
 				83EDACF9193DC99100327B86 /* Features.plist in Resources */,
 				77E1995313858DE0006C361B /* overflowImagePressed.png in Resources */,
 				77E1995413858DE0006C361B /* pi.png in Resources */,
@@ -6398,6 +6422,7 @@
 				77D33EAB138EA4F900012A88 /* CCBUtil.m in Sources */,
 				77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */,
 				92FFB854195DEA2800E9C96F /* AndroidPluginInstaller.m in Sources */,
+				92AEE8401979D5F700B50F74 /* CocoaSecurity.m in Sources */,
 				77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */,
 				776A37B61398D6BF00960E94 /* CCBGLView.m in Sources */,
 				4DB7C95719083B9C00ECE19F /* NotificationNames.m in Sources */,
@@ -6440,6 +6465,7 @@
 				E325F64D14F53FF100D29BCF /* InspectorColor4FVar.m in Sources */,
 				E325F65214F5669600D29BCF /* InspectorSeparatorSub.m in Sources */,
 				E385A42314F6A01900DFB12D /* InspectorBlock.m in Sources */,
+				92AEE83D1979D55000B50F74 /* LicenceManager.m in Sources */,
 				E398C03314FB86D20078E771 /* PlugInExport.m in Sources */,
 				E398C03814FB8A430078E771 /* CCBX.m in Sources */,
 				E398C04314FBCA620078E771 /* PublishTypeAccessoryView.m in Sources */,
@@ -6447,6 +6473,7 @@
 				9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */,
 				E3C5C1AC1504D30C000CF6F3 /* SCEvent.m in Sources */,
 				E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */,
+				92AEE8431979D62B00B50F74 /* Base64.m in Sources */,
 				E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */,
 				E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */,
 				E3850809150AA9AE007E162A /* ImageAndTextCell.m in Sources */,
@@ -6518,6 +6545,7 @@
 				E3808DB71641CB6400398456 /* PublishSettingsWindow.m in Sources */,
 				E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */,
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
+				92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
 				B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */,
 				E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */,
@@ -7295,7 +7323,7 @@
 		};
 		7789ABDD133AA82000CEFCC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
+			baseConfigurationReference = 92520731196238D000BFC071 /* SpriteBuilderPro.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -7331,7 +7359,7 @@
 		};
 		7789ABDE133AA82000CEFCC7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
+			baseConfigurationReference = 92520731196238D000BFC071 /* SpriteBuilderPro.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";

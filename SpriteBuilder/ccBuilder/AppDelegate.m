@@ -132,6 +132,7 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
+#import "LicenceManager.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -660,7 +661,7 @@ typedef enum
 
 	
 	[self setupSpriteBuilderPro];
-
+	
     // Open registration window
     [self openRegistrationWindow:NULL];
 }
