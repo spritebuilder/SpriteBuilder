@@ -23,9 +23,6 @@
 // Shared
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
-@property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
-@property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;
-@property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
 
 @end
@@ -52,9 +49,6 @@
     _publishingQueue.maxConcurrentOperationCount = 1;
 
     self.modifiedDatesCache = [[DateCache alloc] init];
-    self.publishedPNGFiles = [NSMutableSet set];
-    self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
-
     self.publishingTargets = [NSMutableArray array];
 
     return self;
@@ -88,7 +82,7 @@
     [_publishingQueue setSuspended:NO];
     [_publishingQueue waitUntilAllOperationsAreFinished];
 
-	[self postProcessPublishedPNGFilesWithOptiPNG];
+    [self postProcessPublishedPNGFilesWithOptiPNGForAllTargets];
 
 	[_publishingQueue setSuspended:NO];
     [_publishingQueue waitUntilAllOperationsAreFinished];
@@ -150,7 +144,7 @@
 {
     _warnings.currentOSType = target.osType;
 
-    self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
+    target.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
     for (NSString* aDir in target.inputDirectories)
     {
@@ -162,9 +156,9 @@
         dirPublisher.osType = target.osType;
         dirPublisher.resolutions = target.resolutions;
         dirPublisher.modifiedDatesCache = _modifiedDatesCache;
-        dirPublisher.publishedPNGFiles = _publishedPNGFiles;
-        dirPublisher.renamedFilesLookup = _renamedFilesLookup;
-        dirPublisher.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
+        dirPublisher.publishedPNGFiles = target.publishedPNGFiles;
+        dirPublisher.renamedFilesLookup = target.renamedFilesLookup;
+        dirPublisher.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;
         dirPublisher.publishingTaskStatusProgress = _publishingTaskStatusProgress;
 
         if (![dirPublisher generateAndEnqueuePublishingTasks])
@@ -189,8 +183,8 @@
                                                                                                  statusProgress:_publishingTaskStatusProgress];
     operation.osType = target.osType;
     operation.outputDir = target.outputDirectory;
-    operation.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
-    operation.fileLookup = _renamedFilesLookup;
+    operation.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;
+    operation.fileLookup = target.renamedFilesLookup;
 
     [_publishingQueue addOperation:operation];
 }
@@ -221,9 +215,17 @@
     }
 }
 
-- (void)postProcessPublishedPNGFilesWithOptiPNG
+- (void)postProcessPublishedPNGFilesWithOptiPNGForAllTargets
 {
-    if ([_projectSettings isPublishEnvironmentDebug])
+    for (CCBPublishingTarget *target in _publishingTargets)
+    {
+        [self postProcessPublishedPNGFilesWithOptiPNGWithTarget:target];
+    }
+}
+
+- (void)postProcessPublishedPNGFilesWithOptiPNGWithTarget:(CCBPublishingTarget *)target
+{
+    if (target.publishEnvironment == kCCBPublishEnvironmentDevelop)
     {
         return;
     }
@@ -236,7 +238,7 @@
         return;
     }
 
-    for (NSString *pngFile in _publishedPNGFiles)
+    for (NSString *pngFile in target.publishedPNGFiles)
     {
         OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                            warnings:_warnings

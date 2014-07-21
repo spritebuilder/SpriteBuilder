@@ -3140,6 +3140,7 @@ static BOOL hideAllToNextSeparator;
         targetIOS.outputDirectory = [projectSettings publishDirForOSType:kCCBPublisherOSTypeIOS];
         targetIOS.resolutions = [projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
         targetIOS.inputDirectories = projectSettings.absoluteResourcePaths;
+        targetIOS.publishEnvironment = projectSettings.publishEnvironment;
 
         [publisher addPublishingTarget:targetIOS];
     }
@@ -3151,6 +3152,7 @@ static BOOL hideAllToNextSeparator;
         targetAndroid.outputDirectory = [projectSettings publishDirForOSType:kCCBPublisherOSTypeAndroid];
         targetAndroid.resolutions = [projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
         targetAndroid.inputDirectories = projectSettings.absoluteResourcePaths;
+        targetAndroid.publishEnvironment = projectSettings.publishEnvironment;
 
         [publisher addPublishingTarget:targetAndroid];
     }

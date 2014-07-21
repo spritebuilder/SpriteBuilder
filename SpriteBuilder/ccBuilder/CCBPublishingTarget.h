@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "CCBWarnings.h"
 
+@class PublishRenamedFilesLookup;
+
 
 @interface CCBPublishingTarget : NSObject
 
@@ -8,5 +10,10 @@
 @property (nonatomic, copy) NSString *outputDirectory;
 @property (nonatomic) CCBPublisherOSType osType;
 @property (nonatomic, strong) NSArray *resolutions;
+@property (nonatomic) CCBPublishEnvironment publishEnvironment;
+
+@property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
+@property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;
+@property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 
 @end

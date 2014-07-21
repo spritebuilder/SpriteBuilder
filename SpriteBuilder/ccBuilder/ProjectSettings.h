@@ -23,6 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "CCBPublisherTypes.h"
 
 #define kCCBProjectSettingsVersion 1
 #define kCCBDefaultExportPlugIn @"ccbi"
@@ -137,7 +138,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
-@property (nonatomic, assign) NSInteger publishEnvironment;
+@property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
 
 // *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
