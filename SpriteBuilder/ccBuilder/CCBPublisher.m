@@ -20,11 +20,6 @@
 @property (nonatomic, strong) NSOperationQueue *publishingQueue;
 @property (nonatomic, strong) NSMutableArray *publishingTargets;
 
-// Configurables
-@property (nonatomic, strong) NSMutableDictionary *publishingOutputDirectories;
-@property (nonatomic) CCBPublisherOSType targetType;
-@property (nonatomic, strong) NSArray *publishForResolutions;
-
 // Shared
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
@@ -60,31 +55,9 @@
     self.publishedPNGFiles = [NSMutableSet set];
     self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
 
-    self.publishingOutputDirectories = [[NSMutableDictionary alloc] init];
-
     self.publishingTargets = [NSMutableArray array];
 
     return self;
-}
-
-- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherOSType)targetType
-{
-    NSNumber *key = @(targetType);
-    if (!outputDirectory)
-    {
-        [_publishingOutputDirectories removeObjectForKey:key];
-    }
-    else
-    {
-        _publishingOutputDirectories[key] = [outputDirectory copy];
-    }
-}
-
-- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherOSType)targetType
-{
-    NSNumber *key = @(targetType);
-
-    return _publishingOutputDirectories[key];
 }
 
 - (void)start
@@ -148,22 +121,6 @@
 - (BOOL)doPublish
 {
     [self removeOldPublishDirIfCacheCleaned];
-/*
-    CCBPublishingTarget *targetIOS = [[CCBPublishingTarget alloc] init];
-    targetIOS.platform = kCCBPublisherOSTypeIOS;
-    targetIOS.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherOSTypeIOS];
-    targetIOS.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
-    targetIOS.inputDirectories = self.publishInputDirectories;
-
-    CCBPublishingTarget *targetAndroid = [[CCBPublishingTarget alloc] init];
-    targetAndroid.platform = kCCBPublisherOSTypeAndroid;
-    targetAndroid.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherOSTypeAndroid];
-    targetAndroid.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeAndroid];
-    targetAndroid.inputDirectories = self.publishInputDirectories;
-
-    [self addPublishingTarget:targetIOS];
-    [self addPublishingTarget:targetAndroid];
-*/
 
     if (![self publishTargets])
     {
@@ -191,8 +148,7 @@
 
 - (BOOL)publishTarget:(CCBPublishingTarget *)target
 {
-    _targetType = target.platform;
-    _warnings.currentTargetType = target.platform;
+    _warnings.currentOSType = target.osType;
 
     self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
 
@@ -203,7 +159,7 @@
                                                                                                queue:_publishingQueue];
         dirPublisher.inputDir = aDir;
         dirPublisher.outputDir = target.outputDirectory;
-        dirPublisher.targetType = target.platform;
+        dirPublisher.osType = target.osType;
         dirPublisher.resolutions = target.resolutions;
         dirPublisher.modifiedDatesCache = _modifiedDatesCache;
         dirPublisher.publishedPNGFiles = _publishedPNGFiles;
@@ -231,7 +187,7 @@
     PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                        warnings:_warnings
                                                                                                  statusProgress:_publishingTaskStatusProgress];
-    operation.targetType = target.platform;
+    operation.osType = target.osType;
     operation.outputDir = target.outputDirectory;
     operation.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
     operation.fileLookup = _renamedFilesLookup;

@@ -47,16 +47,16 @@
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings warnings:_warnings finishedBlock:nil];
 
     self.targetIOS = [[CCBPublishingTarget alloc] init];
-    _targetIOS.platform = kCCBPublisherOSTypeIOS;
+    _targetIOS.osType = kCCBPublisherOSTypeIOS;
     _targetIOS.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     _targetIOS.outputDirectory = [self fullPathForFile:@"Published-iOS"];
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
 
     self.targetAndroid = [[CCBPublishingTarget alloc] init];
-    _targetAndroid.platform = kCCBPublisherOSTypeAndroid;
+    _targetAndroid.osType = kCCBPublisherOSTypeAndroid;
     _targetAndroid.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     _targetAndroid.outputDirectory = [self fullPathForFile:@"Published-Android"];
-    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeAndroid];
+    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
 
     [self createFolders:@[@"Published-iOS", @"Published-Android", @"baa.spritebuilder/Packages/foo.sbpack"]];
 }
@@ -145,9 +145,9 @@
     _projectSettings.publishResolution_android_phone = YES;
     _projectSettings.publishResolution_android_phonehd = NO;
 
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
     [_publisher addPublishingTarget:_targetIOS];
-    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeAndroid];
+    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
     [_publisher addPublishingTarget:_targetAndroid];
     [_publisher start];
 
@@ -320,7 +320,7 @@
     [_projectSettings setValue:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
     [_projectSettings setValue:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:@"format_ios"];
 
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 

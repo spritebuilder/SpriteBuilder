@@ -29,14 +29,14 @@
 {
     NSString* message;
     NSString* relatedFile;
-    CCBPublisherOSType targetType;
+    CCBPublisherOSType osType;
     NSString* resolution;
     
     BOOL fatal;
 }
 @property (nonatomic,copy) NSString* message;
 @property (nonatomic,copy) NSString* relatedFile;
-@property (nonatomic,assign) CCBPublisherOSType targetType;
+@property (nonatomic,assign) CCBPublisherOSType osType;
 @property (nonatomic,copy) NSString* resolution;
 @property (nonatomic,readonly) NSString* description;
 
@@ -49,11 +49,11 @@
     NSString* warningsDescription;
     NSMutableDictionary* warningsFiles;
     
-    CCBPublisherOSType currentTargetType;
+    CCBPublisherOSType currentOSType;
 }
 @property (nonatomic,readonly) NSMutableArray* warnings;
 @property (nonatomic,copy) NSString* warningsDescription;
-@property (nonatomic,assign) CCBPublisherOSType currentTargetType;
+@property (nonatomic,assign) CCBPublisherOSType currentOSType;
 
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution;
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile;

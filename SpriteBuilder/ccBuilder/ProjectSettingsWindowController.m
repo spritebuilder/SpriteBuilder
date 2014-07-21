@@ -61,7 +61,7 @@
     [self selectPublishDirForType:kCCBPublisherOSTypeAndroid];
 }
 
-- (void)selectPublishDirForType:(CCBPublisherOSType)publishType
+- (void)selectPublishDirForType:(CCBPublisherOSType)osType
 {
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:NO];
@@ -80,11 +80,11 @@
                 NSString* projectDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
                 NSString* relDirName = [dirName relativePathFromBaseDirPath:projectDir];
                 
-                if (publishType == kCCBPublisherOSTypeIOS)
+                if (osType == kCCBPublisherOSTypeIOS)
                 {
                     _projectSettings.publishDirectory = relDirName;
                 }
-                else if (publishType == kCCBPublisherOSTypeAndroid)
+                else if (osType == kCCBPublisherOSTypeAndroid)
                 {
                     _projectSettings.publishDirectoryAndroid = relDirName;
                 }

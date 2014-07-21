@@ -104,7 +104,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"target: %i, outputdir: %@, ", _targetType, _outputDir];
+    return [NSString stringWithFormat:@"target: %i, outputdir: %@, ", _osType, _outputDir];
 }
 
 @end

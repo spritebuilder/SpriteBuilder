@@ -3136,9 +3136,9 @@ static BOOL hideAllToNextSeparator;
     if (projectSettings.publishEnablediPhone)
     {
         CCBPublishingTarget *targetIOS = [[CCBPublishingTarget alloc] init];
-        targetIOS.platform = kCCBPublisherOSTypeIOS;
-        targetIOS.outputDirectory = [projectSettings publishDirForTargetType:kCCBPublisherOSTypeIOS];
-        targetIOS.resolutions = [projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
+        targetIOS.osType = kCCBPublisherOSTypeIOS;
+        targetIOS.outputDirectory = [projectSettings publishDirForOSType:kCCBPublisherOSTypeIOS];
+        targetIOS.resolutions = [projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
         targetIOS.inputDirectories = projectSettings.absoluteResourcePaths;
 
         [publisher addPublishingTarget:targetIOS];
@@ -3147,9 +3147,9 @@ static BOOL hideAllToNextSeparator;
     if (projectSettings.publishEnabledAndroid)
     {
         CCBPublishingTarget *targetAndroid = [[CCBPublishingTarget alloc] init];
-        targetAndroid.platform = kCCBPublisherOSTypeAndroid;
-        targetAndroid.outputDirectory = [projectSettings publishDirForTargetType:kCCBPublisherOSTypeAndroid];
-        targetAndroid.resolutions = [projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeAndroid];
+        targetAndroid.osType = kCCBPublisherOSTypeAndroid;
+        targetAndroid.outputDirectory = [projectSettings publishDirForOSType:kCCBPublisherOSTypeAndroid];
+        targetAndroid.resolutions = [projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
         targetAndroid.inputDirectories = projectSettings.absoluteResourcePaths;
 
         [publisher addPublishingTarget:targetAndroid];

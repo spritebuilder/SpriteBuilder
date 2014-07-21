@@ -25,9 +25,9 @@
 #import "CCBWarnings.h"
 
 @implementation CCBWarning
+
 @synthesize message;
 @synthesize relatedFile;
-@synthesize targetType;
 @synthesize resolution;
 @synthesize fatal;
 
@@ -49,7 +49,7 @@
     if(self.relatedFile) relaventFile = [NSString stringWithFormat:@" (%@)", self.relatedFile];
     
     
-    return [NSString stringWithFormat:@"%@%@%@: %@", [CCBWarning formatTargetType:self.targetType], resString, relaventFile, self.message];
+    return [NSString stringWithFormat:@"%@%@%@: %@", [CCBWarning formatTargetType:self.osType], resString, relaventFile, self.message];
 }
 
 @end
@@ -58,7 +58,7 @@
 @implementation CCBWarnings
 
 @synthesize warningsDescription;
-@synthesize currentTargetType;
+@synthesize currentOSType;
 
 - (id) init
 {
@@ -101,7 +101,7 @@
 
 - (void) addWarning:(CCBWarning*)warning
 {
-    warning.targetType = currentTargetType;
+    warning.osType = currentOSType;
     
     [_warnings addObject:warning];
     NSLog(@"CCB WARNING: %@", warning.description);

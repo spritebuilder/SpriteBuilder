@@ -16,9 +16,9 @@
     return self.publishEnvironment == PublishEnvironmentDevelop;
 }
 
-- (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherOSType)targetType
+- (int)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
-    NSString *key = targetType == kCCBPublisherOSTypeIOS
+    NSString *key = osType == kCCBPublisherOSTypeIOS
         ? @"format_ios_sound_quality"
         : @"format_android_sound_quality";
 
@@ -30,17 +30,17 @@
     return result;
 }
 
-- (int)soundFormatForRelPath:(NSString *)relPath targetType:(CCBPublisherOSType)targetType
+- (int)soundFormatForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
     NSString *key;
     NSDictionary *map;
-    if (targetType == kCCBPublisherOSTypeIOS)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
         key = @"format_ios_sound";
         map = @{@(0):@(kFCSoundFormatCAF),
                 @(1):@(kFCSoundFormatMP4)};
     }
-    else if (targetType == kCCBPublisherOSTypeAndroid)
+    else if (osType == kCCBPublisherOSTypeAndroid)
     {
         key = @"format_android_sound";
         map = @{@(0):@(kFCSoundFormatOGG)};
@@ -59,14 +59,14 @@
            : -1;
 }
 
-- (NSArray *)publishingResolutionsForTargetType:(CCBPublisherOSType)targetType;
+- (NSArray *)publishingResolutionsForOSType:(CCBPublisherOSType)osType;
 {
-    if (targetType == kCCBPublisherOSTypeAndroid)
+    if (osType == kCCBPublisherOSTypeAndroid)
     {
         return [self publishingResolutionsForAndroid];
     }
 
-    if (targetType == kCCBPublisherOSTypeIOS)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
         return [self publishingResolutionsForIOS];
     }
@@ -120,36 +120,36 @@
     return result;
 }
 
-- (NSString *)publishDirForTargetType:(CCBPublisherOSType)targetType
+- (NSString *)publishDirForOSType:(CCBPublisherOSType)osType
 {
     NSString *result;
-    if (targetType == kCCBPublisherOSTypeAndroid)
+    if (osType == kCCBPublisherOSTypeAndroid)
     {
         result = [self publishDirectoryAndroid];
     }
 
-    if (targetType == kCCBPublisherOSTypeIOS)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
         result = [self publishDirectory];
     }
 
     if (!result)
     {
-        NSLog(@"Error: unknown target type: %d", targetType);
+        NSLog(@"Error: unknown target type: %d", osType);
         return nil;
     }
 
     return [result absolutePathFromBaseDirPath:[self.projectPath stringByDeletingLastPathComponent]];
 }
 
-- (BOOL)publishEnabledForTargetType:(CCBPublisherOSType)targetType
+- (BOOL)publishEnabledForOSType:(CCBPublisherOSType)osType
 {
-    if (targetType == kCCBPublisherOSTypeAndroid)
+    if (osType == kCCBPublisherOSTypeAndroid)
     {
         return self.publishEnabledAndroid;
     }
 
-    if (targetType == kCCBPublisherOSTypeIOS)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
         return self.publishEnablediPhone;
     }

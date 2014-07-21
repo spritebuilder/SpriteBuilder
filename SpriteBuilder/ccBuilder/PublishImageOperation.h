@@ -18,7 +18,7 @@
 @property (nonatomic, strong) id<PublishFileLookupProtocol> fileLookup;
 
 @property (nonatomic) BOOL isSpriteSheet;
-@property (nonatomic) CCBPublisherOSType targetType;
+@property (nonatomic) CCBPublisherOSType osType;
 
 @property (nonatomic, strong) DateCache *modifiedFileDateCache;
 

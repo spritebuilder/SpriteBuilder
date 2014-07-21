@@ -11,13 +11,6 @@
 
 @property (nonatomic, strong) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
-// Which directories should be published
-@property (nonatomic, copy) NSArray *publishInputDirectories;
-
-// Where should published files go
-- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherOSType)targetType;
-- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherOSType)targetType;
-
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
                      warnings:(CCBWarnings *)someWarnings
                 finishedBlock:(PublisherFinishBlock)finishBlock;

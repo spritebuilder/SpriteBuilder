@@ -115,7 +115,7 @@
     operation.isSpriteSheet = isSpriteSheet;
     operation.outputDir = outputDir;
     operation.resolution = resolution;
-    operation.targetType = _targetType;
+    operation.osType = _osType;
     operation.modifiedFileDateCache = _modifiedDatesCache;
     operation.intermediateProduct = intermediateProduct;
     operation.publishedPNGFiles = _publishedPNGFiles;
@@ -134,8 +134,8 @@
         return;
     }
 
-    int format = [_projectSettings soundFormatForRelPath:relPath targetType:_targetType];
-    int quality = [_projectSettings soundQualityForRelPath:relPath targetType:_targetType];
+    int format = [_projectSettings soundFormatForRelPath:relPath osType:_osType];
+    int quality = [_projectSettings soundQualityForRelPath:relPath osType:_osType];
     if (format == -1)
     {
         [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for \"%@\"", relPath] isFatal:YES];
@@ -487,7 +487,7 @@
             _projectSettings.tempSpriteSheetCacheDirectory];
     operation.spriteSheetFile = spriteSheetFile;
     operation.subPath = subPath;
-    operation.targetType = _targetType;
+    operation.osType = _osType;
     return operation;
 }
 
