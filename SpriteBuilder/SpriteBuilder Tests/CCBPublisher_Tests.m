@@ -25,13 +25,11 @@
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) CCBWarnings *warnings;
 @property (nonatomic, strong) CCBPublisher *publisher;
-
-@end
-
-@interface CCBPublisher_Tests ()
 @property (nonatomic, strong) CCBPublishingTarget *targetIOS;
 @property (nonatomic, strong) CCBPublishingTarget *targetAndroid;
+
 @end
+
 
 @implementation CCBPublisher_Tests
 
@@ -49,16 +47,16 @@
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings warnings:_warnings finishedBlock:nil];
 
     self.targetIOS = [[CCBPublishingTarget alloc] init];
-    _targetIOS.platform = kCCBPublisherTargetTypeIPhone;
+    _targetIOS.platform = kCCBPublisherOSTypeIOS;
     _targetIOS.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     _targetIOS.outputDirectory = [self fullPathForFile:@"Published-iOS"];
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
 
     self.targetAndroid = [[CCBPublishingTarget alloc] init];
-    _targetAndroid.platform = kCCBPublisherTargetTypeAndroid;
+    _targetAndroid.platform = kCCBPublisherOSTypeAndroid;
     _targetAndroid.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     _targetAndroid.outputDirectory = [self fullPathForFile:@"Published-Android"];
-    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeAndroid];
+    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeAndroid];
 
     [self createFolders:@[@"Published-iOS", @"Published-Android", @"baa.spritebuilder/Packages/foo.sbpack"]];
 }
@@ -147,9 +145,9 @@
     _projectSettings.publishResolution_android_phone = YES;
     _projectSettings.publishResolution_android_phonehd = NO;
 
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
     [_publisher addPublishingTarget:_targetIOS];
-    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeAndroid];
+    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeAndroid];
     [_publisher addPublishingTarget:_targetAndroid];
     [_publisher start];
 
@@ -322,7 +320,7 @@
     [_projectSettings setValue:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
     [_projectSettings setValue:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:@"format_ios"];
 
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
@@ -340,6 +338,17 @@
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvrtc.plist"];
 }
 
+- (void)testEnums
+{
+    XCTAssertEqual(kCCBPublisherOSTypeHTML5, 0, @"Enum value kCCBPublisherOSTypeHTML5  must not change");
+    XCTAssertEqual(kCCBPublisherOSTypeIOS, 1, @"Enum value kCCBPublisherOSTypeIOS  must not change");
+    XCTAssertEqual(kCCBPublisherOSTypeAndroid, 2, @"Enum value kCCBPublisherOSTypeAndroid  must not change");
+
+    XCTAssertEqual(kCCBPublishFormatSound_ios_caf, 0, @"Enum value kCCBPublishFormatSound_ios_caf  must not change");
+    XCTAssertEqual(kCCBPublishFormatSound_ios_mp4, 1, @"Enum value kCCBPublishFormatSound_ios_mp4  must not change");
+
+    XCTAssertEqual(kCCBPublishFormatSound_android_ogg, 0, @"Enum value kCCBPublishFormatSound_android_ogg  must not change");
+}
 
 #pragma mark - assert helpers
 

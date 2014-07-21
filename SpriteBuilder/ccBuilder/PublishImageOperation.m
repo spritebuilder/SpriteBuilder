@@ -227,13 +227,13 @@
     // TODO: Move to data object: format, dither, compress
     if (!_isSpriteSheet)
     {
-        if (_targetType == kCCBPublisherTargetTypeIPhone)
+        if (_targetType == kCCBPublisherOSTypeIOS)
         {
             self.format = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios"] intValue];
             self.dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_dither"] boolValue];
             self.compress = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_compress"] boolValue];
         }
-        else if (_targetType == kCCBPublisherTargetTypeAndroid)
+        else if (_targetType == kCCBPublisherOSTypeAndroid)
         {
             self.format = [[_projectSettings valueForRelPath:relPath andKey:@"format_android"] intValue];
             self.dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_dither"] boolValue];

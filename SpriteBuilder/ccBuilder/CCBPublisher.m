@@ -22,7 +22,7 @@
 
 // Configurables
 @property (nonatomic, strong) NSMutableDictionary *publishingOutputDirectories;
-@property (nonatomic) CCBPublisherTargetType targetType;
+@property (nonatomic) CCBPublisherOSType targetType;
 @property (nonatomic, strong) NSArray *publishForResolutions;
 
 // Shared
@@ -67,7 +67,7 @@
     return self;
 }
 
-- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherTargetType)targetType
+- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherOSType)targetType
 {
     NSNumber *key = @(targetType);
     if (!outputDirectory)
@@ -80,7 +80,7 @@
     }
 }
 
-- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherTargetType)targetType
+- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherOSType)targetType
 {
     NSNumber *key = @(targetType);
 
@@ -150,15 +150,15 @@
     [self removeOldPublishDirIfCacheCleaned];
 /*
     CCBPublishingTarget *targetIOS = [[CCBPublishingTarget alloc] init];
-    targetIOS.platform = kCCBPublisherTargetTypeIPhone;
-    targetIOS.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherTargetTypeIPhone];
-    targetIOS.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeIPhone];
+    targetIOS.platform = kCCBPublisherOSTypeIOS;
+    targetIOS.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherOSTypeIOS];
+    targetIOS.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeIOS];
     targetIOS.inputDirectories = self.publishInputDirectories;
 
     CCBPublishingTarget *targetAndroid = [[CCBPublishingTarget alloc] init];
-    targetAndroid.platform = kCCBPublisherTargetTypeAndroid;
-    targetAndroid.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherTargetTypeAndroid];
-    targetAndroid.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherTargetTypeAndroid];
+    targetAndroid.platform = kCCBPublisherOSTypeAndroid;
+    targetAndroid.outputDirectory = [self publishOutputDirectoryForTargetType:kCCBPublisherOSTypeAndroid];
+    targetAndroid.resolutions = [self.projectSettings publishingResolutionsForTargetType:kCCBPublisherOSTypeAndroid];
     targetAndroid.inputDirectories = self.publishInputDirectories;
 
     [self addPublishingTarget:targetIOS];

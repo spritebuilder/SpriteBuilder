@@ -16,9 +16,9 @@
     return self.publishEnvironment == PublishEnvironmentDevelop;
 }
 
-- (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
+- (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherOSType)targetType
 {
-    NSString *key = targetType == kCCBPublisherTargetTypeIPhone
+    NSString *key = targetType == kCCBPublisherOSTypeIOS
         ? @"format_ios_sound_quality"
         : @"format_android_sound_quality";
 
@@ -30,17 +30,17 @@
     return result;
 }
 
-- (int)soundFormatForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
+- (int)soundFormatForRelPath:(NSString *)relPath targetType:(CCBPublisherOSType)targetType
 {
     NSString *key;
     NSDictionary *map;
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (targetType == kCCBPublisherOSTypeIOS)
     {
         key = @"format_ios_sound";
         map = @{@(0):@(kFCSoundFormatCAF),
                 @(1):@(kFCSoundFormatMP4)};
     }
-    else if (targetType == kCCBPublisherTargetTypeAndroid)
+    else if (targetType == kCCBPublisherOSTypeAndroid)
     {
         key = @"format_android_sound";
         map = @{@(0):@(kFCSoundFormatOGG)};
@@ -59,14 +59,14 @@
            : -1;
 }
 
-- (NSArray *)publishingResolutionsForTargetType:(CCBPublisherTargetType)targetType;
+- (NSArray *)publishingResolutionsForTargetType:(CCBPublisherOSType)targetType;
 {
-    if (targetType == kCCBPublisherTargetTypeAndroid)
+    if (targetType == kCCBPublisherOSTypeAndroid)
     {
         return [self publishingResolutionsForAndroid];
     }
 
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (targetType == kCCBPublisherOSTypeIOS)
     {
         return [self publishingResolutionsForIOS];
     }
@@ -120,15 +120,15 @@
     return result;
 }
 
-- (NSString *)publishDirForTargetType:(CCBPublisherTargetType)targetType
+- (NSString *)publishDirForTargetType:(CCBPublisherOSType)targetType
 {
     NSString *result;
-    if (targetType == kCCBPublisherTargetTypeAndroid)
+    if (targetType == kCCBPublisherOSTypeAndroid)
     {
         result = [self publishDirectoryAndroid];
     }
 
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (targetType == kCCBPublisherOSTypeIOS)
     {
         result = [self publishDirectory];
     }
@@ -142,14 +142,14 @@
     return [result absolutePathFromBaseDirPath:[self.projectPath stringByDeletingLastPathComponent]];
 }
 
-- (BOOL)publishEnabledForTargetType:(CCBPublisherTargetType)targetType
+- (BOOL)publishEnabledForTargetType:(CCBPublisherOSType)targetType
 {
-    if (targetType == kCCBPublisherTargetTypeAndroid)
+    if (targetType == kCCBPublisherOSTypeAndroid)
     {
         return self.publishEnabledAndroid;
     }
 
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (targetType == kCCBPublisherOSTypeIOS)
     {
         return self.publishEnablediPhone;
     }

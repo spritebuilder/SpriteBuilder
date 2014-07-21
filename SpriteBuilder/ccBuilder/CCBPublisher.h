@@ -15,8 +15,8 @@
 @property (nonatomic, copy) NSArray *publishInputDirectories;
 
 // Where should published files go
-- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherTargetType)targetType;
-- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherTargetType)targetType;
+- (void)setPublishOutputDirectory:(NSString *)outputDirectory forTargetType:(CCBPublisherOSType)targetType;
+- (NSString *)publishOutputDirectoryForTargetType:(CCBPublisherOSType)targetType;
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
                      warnings:(CCBWarnings *)someWarnings

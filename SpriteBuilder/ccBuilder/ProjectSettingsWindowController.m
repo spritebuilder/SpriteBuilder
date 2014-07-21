@@ -53,15 +53,15 @@
 
 - (IBAction)selectPublishDirectoryIOS:(id)sender
 {
-    [self selectPublishDirForType:kCCBPublisherTargetTypeIPhone];
+    [self selectPublishDirForType:kCCBPublisherOSTypeIOS];
 }
 
 - (IBAction)selectPublishDirectoryAndroid:(id)sender
 {
-    [self selectPublishDirForType:kCCBPublisherTargetTypeAndroid];
+    [self selectPublishDirForType:kCCBPublisherOSTypeAndroid];
 }
 
-- (void)selectPublishDirForType:(CCBPublisherTargetType)publishType
+- (void)selectPublishDirForType:(CCBPublisherOSType)publishType
 {
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:NO];
@@ -80,11 +80,11 @@
                 NSString* projectDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
                 NSString* relDirName = [dirName relativePathFromBaseDirPath:projectDir];
                 
-                if (publishType == kCCBPublisherTargetTypeIPhone)
+                if (publishType == kCCBPublisherOSTypeIOS)
                 {
                     _projectSettings.publishDirectory = relDirName;
                 }
-                else if (publishType == kCCBPublisherTargetTypeAndroid)
+                else if (publishType == kCCBPublisherOSTypeAndroid)
                 {
                     _projectSettings.publishDirectoryAndroid = relDirName;
                 }

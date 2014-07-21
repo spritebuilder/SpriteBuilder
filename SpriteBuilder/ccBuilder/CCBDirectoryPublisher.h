@@ -40,7 +40,7 @@
 
 @property (nonatomic, copy) NSString *inputDir;
 @property (nonatomic, copy) NSString *outputDir;
-@property (nonatomic) CCBPublisherTargetType targetType;
+@property (nonatomic) CCBPublisherOSType targetType;
 @property (nonatomic, weak) NSArray *resolutions;
 @property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, weak) NSMutableSet *publishedSpriteSheetFiles;

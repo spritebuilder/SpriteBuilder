@@ -134,13 +134,13 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)setImageFormatDependingOnTarget
 {
-    if (_targetType == kCCBPublisherTargetTypeIPhone)
+    if (_targetType == kCCBPublisherOSTypeIOS)
     {
         _packer.imageFormat = self.format_ios;
         _packer.compress = self.format_ios_compress;
         _packer.dither = self.format_ios_dither;
     }
-    else if (_targetType == kCCBPublisherTargetTypeAndroid)
+    else if (_targetType == kCCBPublisherOSTypeAndroid)
     {
         _packer.imageFormat = self.format_android;
         _packer.compress = self.format_android_compress;

@@ -33,9 +33,9 @@
 
 + (NSString*) formatTargetType:(int)tt
 {
-    if (tt == kCCBPublisherTargetTypeHTML5) return @"HTML5";
-    if (tt == kCCBPublisherTargetTypeIPhone) return @"iOS";
-    if (tt == kCCBPublisherTargetTypeAndroid) return @"Android";
+    if (tt == kCCBPublisherOSTypeHTML5) return @"HTML5";
+    if (tt == kCCBPublisherOSTypeIOS) return @"iOS";
+    if (tt == kCCBPublisherOSTypeAndroid) return @"Android";
     return @"Undefined";
 }
 

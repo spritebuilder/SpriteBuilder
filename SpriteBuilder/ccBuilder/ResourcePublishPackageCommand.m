@@ -31,8 +31,8 @@
     NSAssert(0, @"setPublishOutputDirectory undefined!");
 
     // TODO!!
-    [publisher setPublishOutputDirectory:@"" forTargetType:kCCBPublisherTargetTypeIPhone];
-    [publisher setPublishOutputDirectory:@"" forTargetType:kCCBPublisherTargetTypeAndroid];
+    [publisher setPublishOutputDirectory:@"" forTargetType:kCCBPublisherOSTypeIOS];
+    [publisher setPublishOutputDirectory:@"" forTargetType:kCCBPublisherOSTypeAndroid];
 
     NSString *pathToBePublished = ((RMPackage *)_resources.firstObject).fullPath;
     publisher.publishInputDirectories = @[pathToBePublished];

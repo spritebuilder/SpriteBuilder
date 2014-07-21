@@ -4,7 +4,7 @@
 
 @interface CCBPublishingTarget : NSObject
 
-@property (nonatomic) CCBPublisherTargetType platform;
+@property (nonatomic) CCBPublisherOSType platform;
 
 @property (nonatomic, copy) NSString *outputDirectory;
 @property (nonatomic, copy) NSString *inputDirectory;
