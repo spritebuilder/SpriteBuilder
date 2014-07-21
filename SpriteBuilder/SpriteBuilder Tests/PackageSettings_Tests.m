@@ -42,4 +42,16 @@
     XCTAssertFalse([_packageSettings isPublishEnabledForOSType:kCCBPublisherOSTypeAndroid]);
 }
 
+- (void)testPublishResolutions
+{
+    [_packageSettings setPublishResolutions:@[@"tablethd", @"phone"] forOSType:kCCBPublisherOSTypeIOS];
+    [_packageSettings setPublishResolutions:@[@"tablet", @"phonehd"] forOSType:kCCBPublisherOSTypeAndroid];
+
+    NSArray *arr1 = @[@"tablethd", @"phone"];
+    XCTAssertTrue([[_packageSettings publishResolutionsForOSType:kCCBPublisherOSTypeIOS] isEqualToArray:arr1]);
+
+    NSArray *arr2 = @[@"tablet", @"phonehd"];
+    XCTAssertTrue([[_packageSettings publishResolutionsForOSType:kCCBPublisherOSTypeIOS] isEqualToArray:arr2]);
+}
+
 @end
