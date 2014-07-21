@@ -9,6 +9,7 @@
 #import "CCBDirectoryPublisher.h"
 #import "PublishGeneratedFilesOperation.h"
 #import "CCBPublishingTarget.h"
+#import "CCBPublisherCacheCleaner.h"
 
 
 @interface CCBPublisher ()
@@ -88,6 +89,12 @@
 
 - (void)start
 {
+    if (_publishingTargets.count == 0)
+    {
+        NSLog(@"[PUBLISH] Nothing to do: no publishing targets added.");
+        return;
+    }
+
     #ifndef TESTING
     NSLog(@"[PUBLISH] Start...");
     #endif
@@ -98,7 +105,7 @@
 
     if (_projectSettings.publishEnvironment == PublishEnvironmentRelease)
     {
-        [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:_projectSettings];
+        [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
     }
 
     [self doPublish];
@@ -292,16 +299,6 @@
     {
         [self start];
     });
-}
-
-+ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings
-{
-    projectSettings.needRepublish = YES;
-    [projectSettings store];
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* ccbChacheDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"];
-    [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
 }
 
 - (void)cancel

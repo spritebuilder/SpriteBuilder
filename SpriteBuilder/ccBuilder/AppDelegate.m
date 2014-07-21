@@ -136,6 +136,7 @@
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisher.h"
 #import "CCBPublishingTarget.h"
+#import "CCBPublisherCacheCleaner.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3196,7 +3197,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuCleanCacheDirectories:(id)sender
 {
-    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
 }
 
 // Temporary utility function until new publish system is in place
@@ -3259,7 +3260,7 @@ static BOOL hideAllToNextSeparator;
 {
     [self.projectSettings store];
     [self updateResourcePathsFromProjectSettings];
-    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
     [self reloadResources];
     [self setResolution:0];
 }

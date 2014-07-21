@@ -29,6 +29,4 @@
 
 - (void)addPublishingTarget:(CCBPublishingTarget *)target;
 
-+ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings;
-
 @end
