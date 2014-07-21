@@ -18,7 +18,7 @@ extern NSString * kSbUserID;
 
 - (void) registerUsage;
 
-- (void) registerEmail:(NSString*)email;
+- (void) registerEmail:(NSString*)email reveiveNewsLetter:(BOOL)receiveNewsLetter;
 
 -(void)setRegisterdEmailFlag;
 

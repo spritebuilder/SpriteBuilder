@@ -636,33 +636,39 @@ typedef enum
 
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
-    
-    if (delayOpenFiles)
-    {
-        [self openFiles:delayOpenFiles];
-        delayOpenFiles = nil;
-    }
-    else
-    {
-        [self openLastOpenProject];
-    }
-    
-    // Check for first run
-    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"completedFirstRun"] boolValue])
-    {
-        //[self showHelp:self];
-        
-        // First run completed
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
-    }
-
-    [self toggleFeatures];
-
 	
 	[self setupSpriteBuilderPro];
 
     // Open registration window
-    [self openRegistrationWindow:NULL];
+    if(![self openRegistration])
+	{
+		    [[NSApplication sharedApplication] terminate:self];
+	}
+	
+	
+	
+	if (delayOpenFiles)
+	{
+		[self openFiles:delayOpenFiles];
+		delayOpenFiles = nil;
+	}
+	else
+	{
+		[self openLastOpenProject];
+	}
+	
+	// Check for first run
+	if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"completedFirstRun"] boolValue])
+	{
+		//[self showHelp:self];
+		
+		// First run completed
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"completedFirstRun"];
+	}
+	
+	[self toggleFeatures];
+
+
 }
 
 - (void)setupResourceCommandController
@@ -4524,20 +4530,37 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) openRegistrationWindow:(id)sender
 {
-	
-    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
+	[self openRegistration];
+}
+
+
+-(BOOL)openRegistration
+{
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
     {
         // Email already registered or skipped
-        return;
+        return YES;
     }
     
     if (!registrationWindow)
     {
         registrationWindow = [[RegistrationWindow alloc] initWithWindowNibName:@"RegistrationWindow"];
     }
-    
-    [[registrationWindow window] makeKeyAndOrderFront:window];
+	
+	NSInteger result = [NSApp runModalForWindow: registrationWindow.window];
+	[NSApp endSheet:registrationWindow.window];
+	[registrationWindow.window close];
+	
+	if(result == NSModalResponseStop)
+	{
+		return YES;
+	}
+	
+	return NO;
 }
+
+
+
 
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window
 {

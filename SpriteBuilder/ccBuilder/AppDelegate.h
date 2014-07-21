@@ -121,6 +121,8 @@ enum {
 @class RegistrationWindow;
 @class ResourceManagerOutlineView;
 
+typedef void (^CompletionCallback) (BOOL success);
+
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
 - (void) customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform;

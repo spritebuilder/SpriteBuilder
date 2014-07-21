@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <deployment defaultVersion="1090" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RegistrationWindow">
             <connections>
                 <outlet property="_checkBox" destination="fzI-dA-VsJ" id="Bmk-13-Z4L"/>
                 <outlet property="_email" destination="9YX-b9-bkQ" id="m6S-Lc-C1B"/>
+                <outlet property="cancelButton" destination="bSM-UT-fHg" id="jpu-wm-YL8"/>
+                <outlet property="continueButton" destination="TY9-Vi-0VB" id="5sC-HU-ntE"/>
+                <outlet property="signUpLaterButton" destination="bvW-06-xWQ" id="2S9-iI-PE9"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="ExE-6z-GW8"/>
             </connections>
         </customObject>
@@ -17,10 +20,10 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" animationBehavior="alertPanel" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="196" y="240" width="443" height="262"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" appearanceType="aqua" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="443" height="262"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <imageView appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bhn-cX-gUB">
                         <rect key="frame" x="0.0" y="0.0" width="455" height="262"/>
@@ -113,6 +116,17 @@
                         </buttonCell>
                         <connections>
                             <action selector="pressedPrivacyPolicy:" target="-2" id="sIq-a5-Fsd"/>
+                        </connections>
+                    </button>
+                    <button appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bSM-UT-fHg">
+                        <rect key="frame" x="263" y="10" width="73" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="roundTextured" title="Cancel" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uqX-Vl-9bD">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="pressedCancel:" target="-2" id="xeD-hY-H2x"/>
                         </connections>
                     </button>
                 </subviews>

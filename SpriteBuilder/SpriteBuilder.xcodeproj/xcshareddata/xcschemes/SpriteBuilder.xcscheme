@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-               BuildableName = "SpriteBuilder.app"
+               BuildableName = "SpriteBuilderPro.app"
                BlueprintName = "SpriteBuilder"
                ReferencedContainer = "container:SpriteBuilder.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "SpriteBuilder.app"
+            BuildableName = "SpriteBuilderPro.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "SpriteBuilder.app"
+            BuildableName = "SpriteBuilderPro.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "SpriteBuilder.app"
+            BuildableName = "SpriteBuilderPro.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>

@@ -13,6 +13,36 @@
 NSString * kSbUserID = @"sbUserID";
 NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
 
+@interface NSDictionary (UrlEncoding)
+-(NSString*) urlEncodedString;
+@end
+
+
+// helper function: get the string form of any object
+static NSString *toString(id object) {
+	return [NSString stringWithFormat: @"%@", object];
+}
+
+// helper function: get the url encoded string form of any object
+static NSString *urlEncode(id object) {
+	NSString *string = toString(object);
+	return [string stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+}
+
+@implementation NSDictionary (UrlEncoding)
+
+-(NSString*) urlEncodedString {
+	NSMutableArray *parts = [NSMutableArray array];
+	for (id key in self) {
+		id value = [self objectForKey: key];
+		NSString *part = [NSString stringWithFormat: @"%@=%@", urlEncode(key), urlEncode(value)];
+		[parts addObject: part];
+	}
+	return [parts componentsJoinedByString: @"&"];
+}
+
+@end
+
 @implementation UsageManager
 
 -(id)init
@@ -50,10 +80,6 @@ NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
 			_userID = sandBoxedPrefs[kSbUserID];
 			[[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
 			
-			if(sandBoxedPrefs[kSbRegisteredEmail])
-			{
-				[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kSbRegisteredEmail];
-			}
 			[self sendEvent:@"migrate"];
 		}
 	}
@@ -139,23 +165,28 @@ NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
     }
 }
 
-- (void) registerEmail:(NSString*)email
+- (void) registerEmail:(NSString*)email reveiveNewsLetter:(BOOL)receiveNewsLetter
 {
     // Get user ID
-    if (!_userID) return;
+    if (!_userID)
+		return;
     
-    [self sendEvent:@"register" email:email];
+    [self sendEvent:@"register" data:@{@"email":email, @"receive_newsletter": @(receiveNewsLetter)}];
 }
 
 - (void) sendEvent:(NSString*)evt
 {
-    [self sendEvent:evt email:@""];
+    [self sendEvent:evt data:nil];
 }
 
-- (void) sendEvent:(NSString*)evt email:(NSString*)email
+- (void) sendEvent:(NSString*)evt data:(NSDictionary*)data;
 {
     ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
-    
+	
+	NSMutableDictionary * mutableData = [NSMutableDictionary dictionaryWithDictionary:data];
+	
+	
+	   
     // Version
     NSString* version = [projectSettings getVersion];
     if (version)
@@ -168,15 +199,39 @@ NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
         version = @"";
     }
 	
+	mutableData[@"version"] = version;
+	
+	
 	NSString * serialNumber = [self serialNumber];
 	if(!serialNumber)
 		serialNumber = @"";
-    
+	mutableData[@"serial_number"] = serialNumber;
+	
+	NSString * email = @"";
+	if(mutableData[@"email"])
+	{
+		email = mutableData[@"email"];
+		email = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)email, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
+
+		mutableData[@"email"] = email;
+		
+	}
     // URL encode email
-    email = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)email, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
+
+	mutableData[@"id"] = _userID;
+	
+#ifdef SPRITEBUILDER_PRO
+	mutableData[@"sku"] = @"pro";
+#endif
+	
+	
+	NSString * params = [mutableData urlEncodedString];
+	
     
     // Create URL
-    NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/track?event=%@&id=%@&version=%@&email=%@&serial_number=%@", evt, _userID, version,email,serialNumber];
+    NSString* urlStr = [NSString stringWithFormat:@"http://app.spritebuilder.com/spritebuilder/track?event=%@&%@", evt,params];
+	
+	
     NSURL* url = [NSURL URLWithString:urlStr];
     
     // Create the request
