@@ -58,23 +58,57 @@
     }
 }
 
-- (void)addPublishingTargetsForPackageSetting:(PackageSettings *)packageSetting osType:(CCBPublisherOSType)osType
+- (void)addPublishingTargetsForPackageSetting:(PackageSettings *)packageSettings osType:(CCBPublisherOSType)osType
 {
-    if (![packageSetting isPublishEnabledForOSType:osType])
+    if (![packageSettings isPublishEnabledForOSType:osType])
     {
         return;
     }
 
-    for (NSString *resolution in packageSetting.resolutions)
+    for (NSString *resolution in [packageSettings publishResolutionsForOSType:osType])
     {
         CCBPublishingTarget *target = [[CCBPublishingTarget alloc] init];
         target.osType = osType;
-        target.outputDirectory = packageSetting.outputDirectory;
         target.resolutions = @[resolution];
-        target.inputDirectories = @[packageSetting.package.fullPath];
-        target.publishEnvironment = packageSetting.publishEnvironment;
+        target.inputDirectories = @[packageSettings.package.fullPath];
+        target.publishEnvironment = packageSettings.publishEnvironment;
+
+        NSString *outputDirectory = [self createOutputDirectoryForPackageWithPackageSetting:packageSettings
+                                                                                     osType:osType
+                                                                                 resolution:resolution];
+        target.outputDirectory = outputDirectory;
 
         [_publisher addPublishingTarget:target];
+    }
+}
+
+- (NSString *)createOutputDirectoryForPackageWithPackageSetting:(PackageSettings *)settings osType:(CCBPublisherOSType)osType resolution:(NSString *)resolution
+{
+    NSString *packageDirName = [NSString stringWithFormat:@"%@-%@-%@", settings.package.name, [self osTypeToString:osType], resolution];
+    NSString *fullPath = [settings.outputDirectory stringByAppendingPathComponent:packageDirName];
+
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    if (![fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:&error])
+    {
+        NSLog(@"Error creating package output dir \"%@\" with error %@", fullPath, error);
+        return nil;
+    }
+
+    return fullPath;
+}
+
+- (NSString *)osTypeToString:(CCBPublisherOSType)osType
+{
+    switch (osType)
+    {
+        case
+            kCCBPublisherOSTypeIOS : return @"iOS";
+        case
+            kCCBPublisherOSTypeAndroid : return @"Android";
+        default:
+            return @"";
     }
 }
 

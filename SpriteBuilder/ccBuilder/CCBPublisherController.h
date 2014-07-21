@@ -9,7 +9,7 @@
 @property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, copy) PublisherFinishBlock finishBlock;
 @property (nonatomic, weak) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
-@property (nonatomic, weak) NSArray *packageSettings;
+@property (nonatomic, strong) NSArray *packageSettings;
 
 @property (nonatomic, strong, readonly) CCBWarnings *warnings;
 
