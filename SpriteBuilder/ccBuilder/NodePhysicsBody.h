@@ -48,7 +48,7 @@ typedef enum
 @property (nonatomic,assign) float friction;
 @property (nonatomic,assign) float elasticity;
 
-@property (nonatomic) NSString * collisionType;
+@property (nonatomic,copy) NSString * collisionType;
 @property (nonatomic) NSArray * collisionCategories;
 @property (nonatomic) NSArray * collisionMask;
 
