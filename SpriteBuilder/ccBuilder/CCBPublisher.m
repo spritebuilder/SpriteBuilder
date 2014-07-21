@@ -206,7 +206,8 @@
         for (CCBPublishingTarget *target in _publishingTargets)
         {
             NSError *error;
-            if (![fileManager removeItemAtPath:target.outputDirectory error:&error])
+            if (![fileManager removeItemAtPath:target.outputDirectory error:&error]
+                && error.code != NSFileNoSuchFileError)
             {
                 NSLog(@"Error removing old publishing directory at path \"%@\" with error %@", target.outputDirectory, error);
             }
