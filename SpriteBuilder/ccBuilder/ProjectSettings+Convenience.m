@@ -8,12 +8,12 @@
 
 - (BOOL)isPublishEnvironmentRelease
 {
-    return self.publishEnvironment == PublishEnvironmentRelease;
+    return self.publishEnvironment == kCCBPublishEnvironmentRelease;
 }
 
 - (BOOL)isPublishEnvironmentDebug
 {
-    return self.publishEnvironment == PublishEnvironmentDevelop;
+    return self.publishEnvironment == kCCBPublishEnvironmentDevelop;
 }
 
 - (int)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType

@@ -10,11 +10,17 @@ typedef enum {
     kCCBPublisherOSTypeAndroid = 2,
 } CCBPublisherOSType;
 
+typedef enum
+{
+    kCCBPublishEnvironmentDevelop = 0,
+    kCCBPublishEnvironmentRelease = 1,
+} CCBPublishEnvironment;
+
 enum {
     kCCBPublishFormatSound_ios_caf = 0,
     kCCBPublishFormatSound_ios_mp4 = 1,
-} typedef kCCBPublishFormatSound_ios;
+} typedef CCBPublishFormatSound_ios;
 
 enum {
     kCCBPublishFormatSound_android_ogg = 0,
-} typedef kCCBPublishFormatSound_android;
+} typedef CCBPublishFormatSound_android;

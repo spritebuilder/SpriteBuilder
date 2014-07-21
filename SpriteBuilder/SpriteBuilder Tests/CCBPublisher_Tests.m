@@ -344,6 +344,9 @@
     XCTAssertEqual(kCCBPublisherOSTypeIOS, 1, @"Enum value kCCBPublisherOSTypeIOS  must not change");
     XCTAssertEqual(kCCBPublisherOSTypeAndroid, 2, @"Enum value kCCBPublisherOSTypeAndroid  must not change");
 
+    XCTAssertEqual(kCCBPublishEnvironmentDevelop, 0, @"Enum value kCCBPublishEnvironmentDevelop  must not change");
+    XCTAssertEqual(kCCBPublishEnvironmentRelease, 1, @"Enum value kCCBPublishEnvironmentRelease  must not change");
+
     XCTAssertEqual(kCCBPublishFormatSound_ios_caf, 0, @"Enum value kCCBPublishFormatSound_ios_caf  must not change");
     XCTAssertEqual(kCCBPublishFormatSound_ios_mp4, 1, @"Enum value kCCBPublishFormatSound_ios_mp4  must not change");
 

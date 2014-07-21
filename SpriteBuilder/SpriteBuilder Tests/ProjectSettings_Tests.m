@@ -281,7 +281,7 @@
     SBAssertStringsEqual(project.exporter, @"ccbi");
 
     XCTAssertFalse(project.publishToZipFile);
-    XCTAssertEqual(project.publishEnvironment, PublishEnvironmentDevelop);
+    XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);
 
     XCTAssertTrue(project.excludedFromPackageMigration);
 
@@ -357,7 +357,7 @@
     XCTAssertTrue(projectSettings.publishResolution_android_tablet);
     XCTAssertTrue(projectSettings.publishResolution_android_tablethd);
 
-    XCTAssertEqual(projectSettings.publishEnvironment, PublishEnvironmentDevelop);
+    XCTAssertEqual(projectSettings.publishEnvironment, kCCBPublishEnvironmentDevelop);
     XCTAssertEqual(projectSettings.publishAudioQuality_ios, 4);
     XCTAssertEqual(projectSettings.publishAudioQuality_android, 4);
 
@@ -412,8 +412,8 @@
 // be migrated with more effort to fix this change later on
 - (void)testEnums
 {
-    XCTAssertEqual(PublishEnvironmentDevelop, 0, @"Enum value PublishEnvironmentDevelop  must not change");
-    XCTAssertEqual(PublishEnvironmentRelease, 1, @"Enum value PublishEnvironmentRelease  must not change");
+    XCTAssertEqual(kCCBPublishEnvironmentDevelop, 0, @"Enum value kCCBPublishEnvironmentDevelop  must not change");
+    XCTAssertEqual(kCCBPublishEnvironmentRelease, 1, @"Enum value kCCBPublishEnvironmentRelease  must not change");
 
     XCTAssertEqual(CCBTargetEngineCocos2d, 0, @"Enum value CCBTargetEngineCocos2d  must not change");
     XCTAssertEqual(CCBTargetEngineSpriteKit, 1, @"Enum value CCBTargetEngineSpriteKit  must not change");

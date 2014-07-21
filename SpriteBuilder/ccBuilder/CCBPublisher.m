@@ -76,7 +76,7 @@
 
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
 
-    if (_projectSettings.publishEnvironment == PublishEnvironmentRelease)
+    if (_projectSettings.publishEnvironment == kCCBPublishEnvironmentRelease)
     {
         [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
     }

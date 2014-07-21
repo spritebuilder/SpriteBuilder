@@ -113,7 +113,7 @@
     self.publishResolution_android_tablet = YES;
     self.publishResolution_android_tablethd = YES;
     
-    self.publishEnvironment = PublishEnvironmentDevelop;
+    self.publishEnvironment = kCCBPublishEnvironmentDevelop;
 
     self.publishAudioQuality_ios = 4;
     self.publishAudioQuality_android = 4;

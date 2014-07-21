@@ -45,12 +45,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 	CCBTargetEngineSpriteKit = 1,
 };
 
-typedef enum
-{
-    PublishEnvironmentDevelop = 0,
-    PublishEnvironmentRelease = 1,
-} SBPublishEnvironment;
-
 @class RMResource;
 @class CCBWarnings;
 
