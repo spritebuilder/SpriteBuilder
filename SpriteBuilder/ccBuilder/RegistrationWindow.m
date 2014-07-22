@@ -109,9 +109,8 @@
 	[usageManager setRegisterdEmailFlag];
 #else //SB Pro
 	
-	BOOL receiveNewsLetter = (_checkBox.state == NSOnState);
-	
-	[usageManager registerEmail:email reveiveNewsLetter:receiveNewsLetter];
+
+	[usageManager registerEmail:email reveiveNewsLetter:YES];
 	[usageManager setRegisterdEmailFlag];
 	
 #endif
