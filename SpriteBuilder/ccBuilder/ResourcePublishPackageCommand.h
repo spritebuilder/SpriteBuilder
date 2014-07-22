@@ -1,10 +1,13 @@
 #import <Foundation/Foundation.h>
 
+#import "ResourceCommandContextMenuProtocol.h"
 #import "ResourceCommandProtocol.h"
 #import "CCBPublisherTypes.h"
 
 @class ProjectSettings;
 @class CCBPublisherController;
+@class PublishOSSettings;
+@class PackagePublishSettings;
 
 typedef void (^PublisherCancelBlock)();
 
@@ -19,5 +22,9 @@ typedef void (^PublisherCancelBlock)();
 
 @property (nonatomic, copy) PublisherFinishBlock finishBlock;
 @property (nonatomic, copy) PublisherCancelBlock cancelBlock;
+
+// For accessory view bindings only
+@property (nonatomic, strong) PackagePublishSettings *settings;
+
 
 @end

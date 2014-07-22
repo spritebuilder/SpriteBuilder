@@ -7,14 +7,17 @@
 #import "CCBDirectoryPublisher.h"
 #import "CCBWarnings.h"
 #import "CCBPublisherController.h"
-#import "PackageSettings.h"
+#import "PackagePublishSettings.h"
+#import "PublishOSSettings.h"
 #import "ProjectSettings+Convenience.h"
+#import "PackageExportAccessoryView.h"
 
 
 @interface ResourcePublishPackageCommand()
 
 @property (nonatomic, strong) TaskStatusWindow *modalTaskStatusWindow;
 @property (nonatomic, strong) CCBPublisherController *publisherController;
+@property (nonatomic, strong) PackageExportAccessoryView *accessoryView;
 
 @end
 
@@ -25,6 +28,9 @@
 {
     NSAssert(_projectSettings != nil, @"projectSettings must not be nil");
     NSAssert(_windowForModals != nil, @"windowForModals must not be nil");
+
+    // Note: this is temporary as long an accessory view is used
+    self.settings = [[PackagePublishSettings alloc] init];
 
     NSArray *filteredPackages = [self selectedPackages];
     if (filteredPackages.count == 0)
@@ -86,16 +92,11 @@
 
     for (RMPackage *package in filteredPackages)
     {
-        PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
+        _settings.package = package;
+        _settings.outputDirectory = _publishDirectory;
+        _settings.publishEnvironment = _projectSettings.publishEnvironment;
 
-        [packageSettings setPublishResolutions:[_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS] forOSType:kCCBPublisherOSTypeIOS];
-        [packageSettings setPublishResolutions:[_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid] forOSType:kCCBPublisherOSTypeAndroid];
-        packageSettings.outputDirectory = _publishDirectory;
-        [packageSettings setPublishEnabled:_projectSettings.publishEnablediPhone forOSType:kCCBPublisherOSTypeIOS];
-        [packageSettings setPublishEnabled:_projectSettings.publishEnabledAndroid forOSType:kCCBPublisherOSTypeAndroid];
-        packageSettings.publishEnvironment = _projectSettings.publishEnvironment;
-
-        [packageSettingsToPublish addObject:packageSettings];
+        [packageSettingsToPublish addObject:_settings];
     }
     return packageSettingsToPublish;
 }
@@ -104,12 +105,29 @@
 {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 
+    [self addAccessoryViewToPanel:openPanel];
+
     [openPanel setCanCreateDirectories:YES];
     [openPanel setCanChooseDirectories:YES];
     [openPanel setCanChooseFiles:NO];
     [openPanel setPrompt:@"Publish"];
 
     return openPanel;
+}
+
+- (void)addAccessoryViewToPanel:(NSOpenPanel *)openPanel
+{
+    NSArray *topObjects;
+    [[NSBundle mainBundle] loadNibNamed:@"PackageExportAccessoryView" owner:self topLevelObjects:&topObjects];
+    for (id object in topObjects)
+    {
+        if ([object isKindOfClass:[PackageExportAccessoryView class]])
+        {
+            self.accessoryView = object;
+            openPanel.accessoryView = _accessoryView;
+            break;
+        }
+    }
 }
 
 - (NSArray *)selectedPackages
