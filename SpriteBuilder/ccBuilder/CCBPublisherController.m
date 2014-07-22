@@ -6,7 +6,8 @@
 #import "ProjectSettings+Convenience.h"
 #import "CCBPublisher.h"
 #import "RMPackage.h"
-#import "PackageSettings.h"
+#import "PackagePublishSettings.h"
+#import "PublishOSSettings.h"
 
 @interface CCBPublisherController()
 
@@ -51,21 +52,21 @@
 
 - (void)addPublishingTargetsForPackages
 {
-    for (PackageSettings *packageSetting in _packageSettings)
+    for (PackagePublishSettings *packageSetting in _packageSettings)
     {
         [self addPublishingTargetsForPackageSetting:packageSetting osType:(kCCBPublisherOSTypeIOS)];
         [self addPublishingTargetsForPackageSetting:packageSetting osType:(kCCBPublisherOSTypeAndroid)];
     }
 }
 
-- (void)addPublishingTargetsForPackageSetting:(PackageSettings *)packageSettings osType:(CCBPublisherOSType)osType
+- (void)addPublishingTargetsForPackageSetting:(PackagePublishSettings *)packageSettings osType:(CCBPublisherOSType)osType
 {
-    if (![packageSettings isPublishEnabledForOSType:osType])
+    if (![packageSettings settingsForOsType:osType].enabled)
     {
         return;
     }
 
-    for (NSString *resolution in [packageSettings publishResolutionsForOSType:osType])
+    for (NSString *resolution in [packageSettings settingsForOsType:osType].resolutions)
     {
         CCBPublishingTarget *target = [[CCBPublishingTarget alloc] init];
         target.osType = osType;
@@ -95,7 +96,7 @@
     }
 }
 
-- (NSString *)createOutputDirectoryForPackageWithPackageSetting:(PackageSettings *)settings
+- (NSString *)createOutputDirectoryForPackageWithPackageSetting:(PackagePublishSettings *)settings
                                                          osType:(CCBPublisherOSType)osType
                                                      resolution:(NSString *)resolution
                                                           error:(NSError **)error

@@ -9,16 +9,17 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "CCBPublisherController.h"
-#import "PackageSettings.h"
+#import "PackagePublishSettings.h"
 #import "ProjectSettings.h"
 #import "RMPackage.h"
 #import "FileSystemTestCase+Images.h"
+#import "PublishOSSettings.h"
 
 @interface CCBPublisherController_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) PackageSettings *packageSettings;
+@property (nonatomic, strong) PackagePublishSettings *packageSettings;
 @property (nonatomic, strong) RMPackage *package;
 
 @end
@@ -37,12 +38,18 @@
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
 
-    self.packageSettings = [[PackageSettings alloc] initWithPackage:_package];
-    [_packageSettings setPublishResolutions:@[@"tablethd", @"phone"] forOSType:kCCBPublisherOSTypeIOS];
-    [_packageSettings setPublishResolutions:@[@"tablet", @"phonehd"] forOSType:kCCBPublisherOSTypeAndroid];
+    self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
     _packageSettings.outputDirectory = [self fullPathForFile:@"Published-Packages"];
-    [_packageSettings setPublishEnabled:YES forOSType:kCCBPublisherOSTypeIOS];
-    [_packageSettings setPublishEnabled:YES forOSType:kCCBPublisherOSTypeAndroid];
+
+    PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    iosSettings.resolution_tablethd = YES;
+    iosSettings.resolution_phone = YES;
+    iosSettings.enabled = YES;
+
+    PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    androidSettings.resolution_tablet = YES;
+    androidSettings.resolution_phonehd = YES;
+    androidSettings.enabled = YES;
 
     [self createFolders:@[@"Published-Packages", @"baa.spritebuilder/Packages/foo.sbpack"]];
 
