@@ -30,16 +30,17 @@
 
 - (void)zipDirectory
 {
-    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Zipping %@...", [_zipOutputPath lastPathComponent]]];
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Zipping %@...", [[self resolvedZipOutputPath] lastPathComponent]]];
     self.task = [[NSTask alloc] init];
 
+    [_task setCurrentDirectoryPath:[_inputPath stringByDeletingLastPathComponent]];
     [_task setLaunchPath:@"/usr/bin/zip"];
     [_task setArguments:@[
             @"-dc",
             @"-r",
-            [NSString stringWithFormat:@"-%d", _compression],
+            [NSString stringWithFormat:@"-%lu", _compression],
             [self resolvedZipOutputPath],
-            _inputPath
+            [_inputPath lastPathComponent]
     ]];
 
     NSPipe *pipe = [NSPipe pipe];
