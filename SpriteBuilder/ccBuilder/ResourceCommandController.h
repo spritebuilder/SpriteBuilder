@@ -3,6 +3,9 @@
 @class ProjectSettings;
 @class ResourceManagerOutlineView;
 @class ResourceManager;
+@class CCBPublisherController;
+@protocol PublishingFinishedDelegate;
+@class ResourcePublishPackageCommand;
 
 @interface ResourceCommandController : NSObject
 
@@ -10,7 +13,7 @@
 @property (nonatomic, weak) ResourceManagerOutlineView *resourceManagerOutlineView;
 @property (nonatomic, weak) NSWindow *window;
 @property (nonatomic, weak) ResourceManager *resourceManager;
-
+@property (nonatomic, weak) id<PublishingFinishedDelegate> publishDelegate;
 
 - (void)showResourceInFinder:(id)sender;
 - (void)openResourceWithExternalEditor:(id)sender;

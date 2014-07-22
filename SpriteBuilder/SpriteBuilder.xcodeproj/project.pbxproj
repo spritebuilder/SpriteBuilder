@@ -2411,6 +2411,7 @@
 		E525F8A64BC1B591FE3A2C5D /* CCBReader_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader_Tests.m; sourceTree = "<group>"; };
 		E525F8B87EB6ADFF08BE032A /* ZipDirectoryOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipDirectoryOperation.h; sourceTree = "<group>"; };
 		E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptimizeImageWithOptiPNGOperation.m; sourceTree = "<group>"; };
+		E525F8D24C0C5FA581D7E9B8 /* PublishingFinishedDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishingFinishedDelegate.h; sourceTree = "<group>"; };
 		E525F90876BE1677B68F8373 /* NSError+SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+SBErrors.m"; sourceTree = "<group>"; };
 		E525F9334A3FD8D629B2F871 /* RMDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDirectory.h; sourceTree = "<group>"; };
 		E525F9495AD93524CF0F48F9 /* PublishImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishImageOperation.h; sourceTree = "<group>"; };
@@ -4420,6 +4421,7 @@
 				E525F25FB682AC78F068A57C /* CCBPublisherCacheCleaner.h */,
 				E525F7FF46AF3A6A44E16D69 /* CCBPublisherController.m */,
 				E525F3100A5F52133B82A32B /* CCBPublisherController.h */,
+				E525F8D24C0C5FA581D7E9B8 /* PublishingFinishedDelegate.h */,
 			);
 			name = Publishing;
 			sourceTree = "<group>";

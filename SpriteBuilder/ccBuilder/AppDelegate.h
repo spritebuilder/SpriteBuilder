@@ -31,6 +31,7 @@
 #import <HockeySDK/HockeySDK.h>
 #import "ProjectSettings.h"
 #import "CCNode+NodeInfo.h"
+#import "PublishingFinishedDelegate.h"
 
 #define kCCBNumCanvasDevices 14
 
@@ -128,7 +129,7 @@ enum {
 - (void) oldVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 @end
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate, PublishingFinishedDelegate>
 {
     
     // Panel Views
@@ -446,9 +447,6 @@ enum {
 - (IBAction) delete:(id) sender;
 
 - (IBAction) debug:(id)sender;
-
-// Publishing & running
-- (void)publisherFinishedWithWarnings:(CCBWarnings *)warnings;
 
 // For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;

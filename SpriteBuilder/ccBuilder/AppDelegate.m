@@ -110,6 +110,7 @@
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
+#import <MacTypes.h>
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
 #import "NSArray+Query.h"
@@ -136,22 +137,19 @@
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
+#import "CCBPublisher.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
 @interface AppDelegate()
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
-
-- (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
+@property (nonatomic, strong) ResourceCommandController *resourceCommandController;
 
 @end
 
 
 @implementation AppDelegate
-{
-    ResourceCommandController *_resourceCommandController;
-}
 
 @synthesize window;
 @synthesize projectSettings;
@@ -630,10 +628,7 @@ typedef enum
     [self setupProjectViewTabBar];
     [self setupItemViewTabBar];
     [self updateSmallTabBarsEnabled];
-
     [self setupResourceManager];
-
-
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
     [self setupExtras];
@@ -671,8 +666,6 @@ typedef enum
 
     // Open registration window
     [self openRegistrationWindow:NULL];
-
-    self.publisherController = [[CCBPublisherController alloc] init];
 }
 
 - (void)setupResourceCommandController
@@ -681,6 +674,7 @@ typedef enum
     _resourceCommandController.resourceManagerOutlineView = outlineProject;
     _resourceCommandController.window = window;
     _resourceCommandController.resourceManager = [ResourceManager sharedManager];
+    _resourceCommandController.publishDelegate = self;
 
     outlineProject.actionTarget = _resourceCommandController;
 }
@@ -3122,12 +3116,15 @@ static BOOL hideAllToNextSeparator;
 
 - (void)publishStartAsync:(BOOL)async
 {
+    self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = projectSettings;
+    _publisherController.publishMainProject = YES;
+    _publisherController.packageSettings = nil;
 
     id __weak selfWeak = self;
     _publisherController.finishBlock = ^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
     {
-        [selfWeak publisherFinishedWithWarnings:someWarnings];
+        [selfWeak publisher:aPublisher finishedWithWarnings:someWarnings];
     };
 
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
@@ -3151,7 +3148,7 @@ static BOOL hideAllToNextSeparator;
     [animationPlaybackManager stop];
 }
 
-- (void)publisherFinishedWithWarnings:(CCBWarnings *)warnings
+- (void)publisher:(CCBPublisher *)publisher finishedWithWarnings:(CCBWarnings *)warnings
 {
     [self modalStatusWindowFinish];
     

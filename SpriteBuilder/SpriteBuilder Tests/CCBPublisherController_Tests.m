@@ -32,8 +32,6 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
-    _projectSettings.publishEnablediPhone = NO;
-    _projectSettings.publishEnabledAndroid = NO;
     [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
     self.package = [[RMPackage alloc] init];
@@ -42,7 +40,6 @@
     self.packageSettings = [[PackageSettings alloc] initWithPackage:_package];
     [_packageSettings setPublishResolutions:@[@"tablethd", @"phone"] forOSType:kCCBPublisherOSTypeIOS];
     [_packageSettings setPublishResolutions:@[@"tablet", @"phonehd"] forOSType:kCCBPublisherOSTypeAndroid];
-
     _packageSettings.outputDirectory = [self fullPathForFile:@"Published-Packages"];
     [_packageSettings setPublishEnabled:YES forOSType:kCCBPublisherOSTypeIOS];
     [_packageSettings setPublishEnabled:YES forOSType:kCCBPublisherOSTypeAndroid];
@@ -52,6 +49,7 @@
     self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = _projectSettings;
     _publisherController.packageSettings = @[_packageSettings];
+    _publisherController.publishMainProject = NO;
 }
 
 - (void)testPackageExport

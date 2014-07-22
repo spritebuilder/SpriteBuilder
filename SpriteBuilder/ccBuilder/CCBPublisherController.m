@@ -129,6 +129,11 @@
 
 - (void)addPublishingTargetsForMainProject
 {
+    if (!_publishMainProject)
+    {
+        return;
+    }
+
     if (_projectSettings.publishEnablediPhone)
     {
         [self addMainProjectPublishingTargetToPublisherForOSType:kCCBPublisherOSTypeIOS];
