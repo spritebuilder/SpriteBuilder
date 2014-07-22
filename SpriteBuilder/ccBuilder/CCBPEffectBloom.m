@@ -16,7 +16,7 @@
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-	return [self effectWithPixelBlurRadius:4 intensity:0.5f luminanceThreshold:0.5f];
+	return [self effectWithPixelBlurRadius:4 intensity:0.0f luminanceThreshold:0.0f];
 }
 
 -(id)serialize
@@ -28,9 +28,9 @@
 
 -(void)deserialize:(NSDictionary*)dict
 {
-	self.blurRadius = [dict[@"blurRadius"] integerValue];
-	self.intensity = [dict[@"intensity"] integerValue];
-	self.luminanceThreshold = [dict[@"luminanceThreshold"] integerValue];
+	self.blurRadius = [dict[@"blurRadius"] floatValue];
+	self.intensity = [dict[@"intensity"] floatValue];
+	self.luminanceThreshold = [dict[@"luminanceThreshold"] floatValue];
 }
 
 

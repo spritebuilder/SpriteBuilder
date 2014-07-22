@@ -88,4 +88,11 @@
 	return [self.fileName hasPrefix:path];
 }
 
+- (NSUInteger)getAndIncrementUUID
+{
+	NSUInteger current = self.UUID;
+	self.UUID = self.UUID + 1;
+	return current;
+}
+
 @end

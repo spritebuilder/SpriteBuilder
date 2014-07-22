@@ -10,6 +10,7 @@
 
 
 @implementation CCBPEffectBrightness 
+@synthesize UUID;
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {

@@ -63,8 +63,7 @@
 	
 	CCEffect<EffectProtocol> *effect = [protocolClass defaultConstruct];
 
-	effect.UUID = [AppDelegate appDelegate].currentDocument.UUID;
-	[AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+	effect.UUID = [[AppDelegate appDelegate].currentDocument getAndIncrementUUID];
 
 	return effect;
 }

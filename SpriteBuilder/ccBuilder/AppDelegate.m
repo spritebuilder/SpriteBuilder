@@ -132,6 +132,7 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
+#import "CCNode+NodeInfo.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1875,7 +1876,7 @@ static BOOL hideAllToNextSeparator;
     if(!dict[@"UUID"])
     {
         dict[@"UUID"] = @(doc.UUID);
-        doc.UUID = doc.UUID + 1;
+        [doc getAndIncrementUUID];
     }
     
     if(dict[@"children"])
@@ -2509,8 +2510,8 @@ static BOOL hideAllToNextSeparator;
     if(child.UUID == 0x0)
     {
 
-		child.UUID = currentDocument.UUID;
-        currentDocument.UUID = currentDocument.UUID + 1;
+		child.UUID = [currentDocument getAndIncrementUUID];
+
     }
     
     [outlineHierarchy reloadData];
@@ -2714,8 +2715,8 @@ static BOOL hideAllToNextSeparator;
     SceneGraph* g = [SceneGraph instance];
     
     CCNode* addedNode = [[PlugInManager sharedManager] createDefaultNodeOfType:jointName];
-    addedNode.UUID = [AppDelegate appDelegate].currentDocument.UUID;
-    [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    addedNode.UUID = [[AppDelegate appDelegate].currentDocument getAndIncrementUUID];
+
     
     [g.joints addJoint:(CCBPhysicsJoint*)addedNode];
     
@@ -2899,9 +2900,9 @@ static BOOL hideAllToNextSeparator;
 
 -(void)updateUUIDs:(CCNode*)node
 {
-    node.UUID = currentDocument.UUID;
-    currentDocument.UUID = currentDocument.UUID + 1;
-    
+    node.UUID = [currentDocument getAndIncrementUUID];
+	[node postCopyFixup];
+	
     for (CCNode * child in node.children) {
         [self updateUUIDs:child];
     }
@@ -2924,8 +2925,9 @@ static BOOL hideAllToNextSeparator;
         else parentSize = self.selectedNode.parent.contentSize;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
+		[CCBReaderInternal postDeserializationFixup:clipNode];
         [self updateUUIDs:clipNode];
-        
+
         
         [self addCCObject:clipNode asChild:asChild];
         

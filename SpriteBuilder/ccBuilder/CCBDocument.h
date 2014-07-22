@@ -69,5 +69,6 @@
 - (NSString*) formattedName;
 
 - (BOOL)isWithinPath:(NSString *)path;
+- (NSUInteger)getAndIncrementUUID;
 
 @end

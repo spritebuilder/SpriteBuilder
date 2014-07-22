@@ -9,7 +9,8 @@
 #import "CCBPEffectNode.h"
 #import "CCEffectStack.h"
 #import "NSArray+Query.h"
-
+#import "AppDelegate.h"
+#import "CCBDocument.h"
 
 
 @interface CCBPEffectNode()
@@ -93,6 +94,16 @@
 		}
 	}
 }
+
+-(void)postCopyFixup
+{
+	for(CCEffect<EffectProtocol> * effect in  self.effects)
+	{
+		effect.UUID = [[AppDelegate appDelegate].currentDocument getAndIncrementUUID];
+	}
+	
+}
+
 
 @end
 

@@ -949,4 +949,9 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 	
 }
 
+-(void)postCopyFixup
+{
+	
+}
+
 @end
