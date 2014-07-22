@@ -14,7 +14,7 @@
 //#define SBPRO_TEST_INSTALLER
 #endif
 
-static const float kSBProPluginVersion = 3.0;
+static const float kSBProPluginVersion = 4.0;
 
 
 NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
