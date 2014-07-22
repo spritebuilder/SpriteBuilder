@@ -187,21 +187,13 @@ static NSString *urlEncode(id object) {
 	
 	
 	   
-    // Version
-    NSString* version = [projectSettings getVersion];
-    if (version)
-    {
-        // URL encode version
-        version = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)version, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
-    }
-    else
-    {
-        version = @"";
-    }
+    // Version.txt information
+    NSData* versionData = [[projectSettings getVersion] dataUsingEncoding:NSUTF8StringEncoding];
+	NSError * error;
+	NSDictionary * versionDict = [NSJSONSerialization JSONObjectWithData:versionData options:0x0 error:&error];
+	[mutableData addEntriesFromDictionary:versionDict];
 	
-	mutableData[@"version"] = version;
-	
-	
+		
 	NSString * serialNumber = [self serialNumber];
 	if(!serialNumber)
 		serialNumber = @"";
@@ -219,11 +211,7 @@ static NSString *urlEncode(id object) {
     // URL encode email
 
 	mutableData[@"id"] = _userID;
-	
-#ifdef SPRITEBUILDER_PRO
-	mutableData[@"sku"] = @"pro";
-#endif
-	
+
 	
 	NSString * params = [mutableData urlEncodedString];
 	

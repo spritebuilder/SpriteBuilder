@@ -10,10 +10,11 @@ fi
 mkdir -p Generated
 
 # Update version for about box
-echo "Version: $1" > Generated/Version.txt
-echo "Sku: $2" >> Generated/Version.txt
-echo "GitHub: " >> Generated/Version.txt
-git rev-parse --short=10 HEAD >> Generated/Version.txt
+echo "{" > Generated/Version.txt
+echo "\"version\": $1 , ">> Generated/Version.txt
+echo "\"sku\": \"$2\" ," >> Generated/Version.txt
+git rev-parse --short=10 HEAD | tr '\n' '\0' | xargs -0 -I % echo "\"github\" : \"%\"" >> Generated/Version.txt
+echo "}" >> Generated/Version.txt
 echo "=== GENERATING SpriteBuilder version file ==="
 touch Generated/Version.txt
 
