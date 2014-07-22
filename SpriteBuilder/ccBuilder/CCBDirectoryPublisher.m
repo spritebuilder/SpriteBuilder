@@ -136,6 +136,11 @@
 
     int format = [_projectSettings soundFormatForRelPath:relPath osType:_osType];
     int quality = [_projectSettings soundQualityForRelPath:relPath osType:_osType];
+    if (quality == NSNotFound)
+    {
+        quality = _audioQuality;
+    }
+
     if (format == -1)
     {
         [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for \"%@\"", relPath] isFatal:YES];

@@ -11,6 +11,7 @@
 @property (nonatomic) CCBPublisherOSType osType;
 @property (nonatomic, strong) NSArray *resolutions;
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
+@property (nonatomic) NSInteger audioQuality;
 
 @property (nonatomic) BOOL zipOutputFolder;
 

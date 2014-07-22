@@ -27,9 +27,9 @@
 #import "CCBWarnings.h"
 #import "CCBPublisherTypes.h"
 
+@protocol TaskStatusUpdaterProtocol;
 @class ProjectSettings;
 @class CCBWarnings;
-@protocol TaskStatusUpdaterProtocol;
 @class CCBDirectoryPublisher;
 @class PublishRenamedFilesLookup;
 @class DateCache;
@@ -41,6 +41,7 @@
 @property (nonatomic, copy) NSString *inputDir;
 @property (nonatomic, copy) NSString *outputDir;
 @property (nonatomic) CCBPublisherOSType osType;
+@property (nonatomic) NSInteger audioQuality;
 @property (nonatomic, weak) NSArray *resolutions;
 @property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, weak) NSMutableSet *publishedSpriteSheetFiles;

@@ -16,6 +16,7 @@
 #import "MiscConstants.h"
 #import "FileSystemTestCase.h"
 #import "CCBDirectoryPublisher.h"
+#import "ProjectSettings+Convenience.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 
@@ -437,6 +438,24 @@
     XCTAssertNil([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath2]);
 }
 
+- (void)testConvenienceMethodForAudioQualityOfResources
+{
+    NSInteger quality = [_projectSettings soundQualityForRelPath:@"foo" osType:kCCBPublisherOSTypeAndroid];
+    XCTAssertEqual(quality, NSNotFound);
+
+    [_projectSettings setValue:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
+    int quality2 = [_projectSettings soundQualityForRelPath:@"baa" osType:kCCBPublisherOSTypeAndroid];
+    XCTAssertEqual(quality2, 7);
+}
+
+- (void)testConvenienceMethodForAudioQuality
+{
+    _projectSettings.publishAudioQuality_android = 8;
+    _projectSettings.publishAudioQuality_ios = 6;
+
+    XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeAndroid], 8);
+    XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeIOS], 6);
+}
 
 #pragma mark - test helper
 

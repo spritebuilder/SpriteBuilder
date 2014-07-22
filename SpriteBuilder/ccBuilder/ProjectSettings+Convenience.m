@@ -2,6 +2,7 @@
 #import "FCFormatConverter.h"
 #import "CCBWarnings.h"
 #import "NSString+RelativePath.h"
+#import "MiscConstants.h"
 
 
 @implementation ProjectSettings (Convenience)
@@ -16,7 +17,7 @@
     return self.publishEnvironment == kCCBPublishEnvironmentDevelop;
 }
 
-- (int)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
+- (NSInteger)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
     NSString *key = osType == kCCBPublisherOSTypeIOS
         ? @"format_ios_sound_quality"
@@ -25,7 +26,7 @@
     int result = [[self valueForRelPath:relPath andKey:key] intValue];
     if (!result)
     {
-        return self.publishAudioQuality_ios;
+        return NSNotFound;
     }
     return result;
 }
@@ -157,5 +158,20 @@
     return NO;
 }
 
+
+- (NSInteger)audioQualityForOsType:(CCBPublisherOSType)osType
+{
+    if (osType == kCCBPublisherOSTypeAndroid)
+    {
+        return self.publishAudioQuality_android;
+    }
+
+    if (osType == kCCBPublisherOSTypeIOS)
+    {
+        return self.publishAudioQuality_ios;
+    }
+
+    return DEFAULT_AUDIO_QUALITY;
+}
 
 @end

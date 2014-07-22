@@ -74,6 +74,7 @@
         target.inputDirectories = @[packageSettings.package.fullPath];
         target.publishEnvironment = packageSettings.publishEnvironment;
         target.zipOutputFolder = YES;
+        target.audioQuality = [packageSettings settingsForOsType:osType].audio_quality;
 
         NSError *error;
         NSString *outputDirectory = [self createOutputDirectoryForPackageWithPackageSetting:packageSettings
@@ -154,6 +155,7 @@
     target.resolutions = [_projectSettings publishingResolutionsForOSType:osType];
     target.inputDirectories = _projectSettings.absoluteResourcePaths;
     target.publishEnvironment = _projectSettings.publishEnvironment;
+    target.audioQuality = [_projectSettings audioQualityForOsType:osType];
 
     [_publisher addPublishingTarget:target];
 }

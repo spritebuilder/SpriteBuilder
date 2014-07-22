@@ -156,6 +156,7 @@
         dirPublisher.outputDir = target.outputDirectory;
         dirPublisher.osType = target.osType;
         dirPublisher.resolutions = target.resolutions;
+        dirPublisher.audioQuality = target.audioQuality;
         dirPublisher.publishedPNGFiles = target.publishedPNGFiles;
         dirPublisher.renamedFilesLookup = target.renamedFilesLookup;
         dirPublisher.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;
