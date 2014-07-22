@@ -602,7 +602,6 @@
 		E35DBC2814F4FF410070A6E4 /* InspectorTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E35DBC2714F4FF3F0070A6E4 /* InspectorTexture.m */; };
 		E360789015EBA5420040A172 /* sel-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = E360788F15EBA5420040A172 /* sel-frame.png */; };
 		E36078BC15EE0B2C0040A172 /* sel-round.png in Resources */ = {isa = PBXBuildFile; fileRef = E36078BB15EE0B2C0040A172 /* sel-round.png */; };
-		E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3618D5516655041009F5805 /* CCBPublisherTemplate.m */; };
 		E367E32016384F0C00247F12 /* orientation-landscapeleft.png in Resources */ = {isa = PBXBuildFile; fileRef = E367E31C16384F0C00247F12 /* orientation-landscapeleft.png */; };
 		E367E32116384F0C00247F12 /* orientation-landscaperight.png in Resources */ = {isa = PBXBuildFile; fileRef = E367E31D16384F0C00247F12 /* orientation-landscaperight.png */; };
 		E367E32316384F0C00247F12 /* orientation-upsidedown.png in Resources */ = {isa = PBXBuildFile; fileRef = E367E31F16384F0C00247F12 /* orientation-upsidedown.png */; };
@@ -2019,8 +2018,6 @@
 		E35DBC2714F4FF3F0070A6E4 /* InspectorTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorTexture.m; sourceTree = "<group>"; };
 		E360788F15EBA5420040A172 /* sel-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sel-frame.png"; sourceTree = "<group>"; };
 		E36078BB15EE0B2C0040A172 /* sel-round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sel-round.png"; sourceTree = "<group>"; };
-		E3618D5416655041009F5805 /* CCBPublisherTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublisherTemplate.h; sourceTree = "<group>"; };
-		E3618D5516655041009F5805 /* CCBPublisherTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisherTemplate.m; sourceTree = "<group>"; };
 		E367E31C16384F0C00247F12 /* orientation-landscapeleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orientation-landscapeleft.png"; sourceTree = "<group>"; };
 		E367E31D16384F0C00247F12 /* orientation-landscaperight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orientation-landscaperight.png"; sourceTree = "<group>"; };
 		E367E31F16384F0C00247F12 /* orientation-upsidedown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orientation-upsidedown.png"; sourceTree = "<group>"; };
@@ -4416,8 +4413,6 @@
 				8319539318FECDF800ED4BA0 /* PublishingOperations */,
 				E346286E155D22290043EAB1 /* CCBDirectoryPublisher.h */,
 				E346286F155D22290043EAB1 /* CCBDirectoryPublisher.m */,
-				E3618D5416655041009F5805 /* CCBPublisherTemplate.h */,
-				E3618D5516655041009F5805 /* CCBPublisherTemplate.m */,
 				E525FD2D849749BB67455943 /* DateCache.m */,
 				E525FDB29C5EE936AB40BE96 /* DateCache.h */,
 				E525F7EE37BDD5941E6C0AC9 /* PublishRenamedFilesLookup.m */,
@@ -6725,7 +6720,6 @@
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
 				B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */,
-				E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */,
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
 				8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */,
