@@ -425,5 +425,12 @@
     }
 }
 
+- (void)restartTranslationDownload:(ProjectSettings *)ps{
+    if (!windowController)
+    {
+        windowController = [[LocalizationEditorWindow alloc] initWithWindowNibName:@"LocalizationEditorWindow"];
+    }
+    [windowController restartTranslationDownload:ps];
+}
 
 @end

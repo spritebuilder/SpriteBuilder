@@ -27,8 +27,20 @@
 #import "AppDelegate.h"
 #import "CocosScene.h"
 #import "LocalizationEditorHandler.h"
+#import "TranslationSettings.h"
 
 @implementation InspectorString
+
+- (id)initWithSelection:(CCNode *)s andPropertyName:(NSString *)pn andDisplayName:(NSString *)dn andExtra:(NSString *)e
+{
+    
+    self = [super initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e];
+    TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+    [translationSettings addObserver:self forKeyPath:@"projectsDownloadingTranslations" options:0 context:nil];
+    self.localizeButtonEnabled = ![AppDelegate appDelegate].projectSettings.isDownloadingTranslations;
+    [[AppDelegate appDelegate].localizationEditorHandler setEdited];
+    return self;
+}
 
 - (void) setText:(NSString *)text
 {
@@ -87,7 +99,8 @@
     [self didChangeValueForKey:@"hasTranslation"];
     
     [StringPropertySetter refreshStringProp:propertyName forNode:selection];
-    [super refresh];    
+    [super refresh];
+    [self.localizeButton setEnabled:self.localizeButtonEnabled];
 }
 
 - (IBAction)pressedEditTranslation:(id)sender
@@ -95,6 +108,27 @@
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
     [handler openEditor:sender];
     [handler createOrEditTranslationForKey:[self text]];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    if([keyPath isEqualToString:@"projectsDownloadingTranslations"])
+    {
+        if(ps.isDownloadingTranslations)
+        {
+            self.localizeButtonEnabled = NO;
+        }
+        else
+        {
+            self.localizeButtonEnabled = YES;
+        }
+        [[AppDelegate appDelegate].localizationEditorHandler setEdited];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+    
 }
 
 @end

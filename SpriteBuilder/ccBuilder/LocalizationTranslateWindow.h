@@ -12,6 +12,7 @@
 @class LocalizationEditorLanguage;
 @class LocalizationEditorWindow;
 @class LocalizationTranslateWindowHandler;
+@class ProjectSettings;
 
 @interface LocalizationTranslateWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate, SKProductsRequestDelegate, NSWindowDelegate>//SKPaymentTransactionObserver, 
 {
@@ -62,9 +63,10 @@
     NSAlert* _buyAlert;
     NSString* _projectPathDir;
     NSString* _projectPath;
+    NSURLSessionTask *_currTask;
 }
 
-- (id)initWithDownload:(NSString*)requestID parentWindow:(LocalizationEditorWindow*)pw numToDownload:(double)numTrans;
+- (id)initWithDownload:(ProjectSettings *)ps parentWindow:(LocalizationEditorWindow*)pw;
 - (IBAction)buy:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)toggleIgnore:(id)sender;
@@ -90,4 +92,5 @@
 @property (nonatomic,strong) NSAlert* buyAlert;
 @property (nonatomic,strong) NSString* projectPathDir;
 @property (nonatomic,strong) NSString* projectPath;
+@property (nonatomic,strong) NSURLSessionTask* currTask;
 @end

@@ -102,6 +102,7 @@
 		7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */; };
 		7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */; };
 		7BD26ED31979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */; };
+		7BD26EF1197E1D640003FEF4 /* TranslationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD26EF0197E1D640003FEF4 /* TranslationSettings.m */; };
 		7BDECCD1196CBA2400F3EB11 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
 		7BDECCD4196CBA6100F3EB11 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */; };
 		7BDECCE1197047EE00F3EB11 /* LocalizationTransactionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */; };
@@ -1326,6 +1327,8 @@
 		7B88AD45195A4846001BF73C /* LocalizationEditorTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorTextFieldCell.h; sourceTree = "<group>"; };
 		7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTextFieldCell.m; sourceTree = "<group>"; };
 		7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LocalizationInAppPurchasesPIDs.plist; sourceTree = "<group>"; };
+		7BD26EEF197E1D640003FEF4 /* TranslationSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationSettings.h; sourceTree = "<group>"; };
+		7BD26EF0197E1D640003FEF4 /* TranslationSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranslationSettings.m; sourceTree = "<group>"; };
 		7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7BDECCDF197047EE00F3EB11 /* LocalizationTransactionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTransactionObserver.h; sourceTree = "<group>"; };
 		7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTransactionObserver.m; sourceTree = "<group>"; };
@@ -2732,6 +2735,8 @@
 				92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */,
 				92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */,
 				92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */,
+				7BD26EEF197E1D640003FEF4 /* TranslationSettings.h */,
+				7BD26EF0197E1D640003FEF4 /* TranslationSettings.m */,
 			);
 			name = "Application Settings & Globals";
 			sourceTree = "<group>";
@@ -6603,6 +6608,7 @@
 				E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */,
 				E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */,
 				E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */,
+				7BD26EF1197E1D640003FEF4 /* TranslationSettings.m in Sources */,
 				E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */,
 				E525FA5D4791EB730859BF2C /* ProjectSettings+Convenience.m in Sources */,
 				E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */,

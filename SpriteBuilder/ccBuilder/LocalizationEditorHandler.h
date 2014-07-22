@@ -12,6 +12,7 @@
 @class LocalizationEditorWindow;
 @class LocalizationEditorLanguage;
 @class LocalizationEditorTranslation;
+@class ProjectSettings;
 @interface LocalizationEditorHandler : NSObject
 {
     NSMutableArray* languages;
@@ -49,4 +50,5 @@
 - (void) setManagedFileForBackgroundTranslationDownload:(NSString*) file;
 - (void) storeFileForBackgroundTranslationDownload;
 
+- (void)restartTranslationDownload:(ProjectSettings *)ps;
 @end

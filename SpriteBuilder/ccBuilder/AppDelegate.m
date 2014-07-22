@@ -132,6 +132,8 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
+#import "TranslationSettings.h"
+#import "LocalizationEditorWindow.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -641,6 +643,8 @@ typedef enum
     //Transaction Observer for Translation Downloads
     lto = [[LocalizationTransactionObserver alloc] init];
     [[SKPaymentQueue defaultQueue] addTransactionObserver:lto];
+    
+    [self restartProjectDownloads];
     
     if (delayOpenFiles)
     {
@@ -2138,6 +2142,17 @@ static BOOL hideAllToNextSeparator;
 
     self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
 
+    if(project.isDownloadingTranslations)
+    {
+        TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+        NSMutableArray *projectsDownloadingTranslations = translationSettings.projectsDownloadingTranslations;
+        if(![projectsDownloadingTranslations containsObject:project.projectPath])
+        {
+            [projectsDownloadingTranslations addObject:project.projectPath];
+            [translationSettings writeTranslationSettings];
+        }
+        [localizationEditorHandler restartTranslationDownload:project];
+    }
     return YES;
 }
 
@@ -4824,5 +4839,61 @@ static BOOL hideAllToNextSeparator;
     return fullpath;
 }
 
-
+- (void)restartProjectDownloads
+{
+    TranslationSettings* translationSettings = [TranslationSettings translationSettings];
+    NSMutableArray *projectsDownloadingTranslations = translationSettings.projectsDownloadingTranslations;
+    [projectsDownloadingTranslations removeAllObjects];
+    [translationSettings.projectsDownloadingTranslations removeAllObjects];
+    [translationSettings writeTranslationSettings];
+    for(NSString *projectPath in projectsDownloadingTranslations)
+    {
+        NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
+         if(projectDict)
+         {
+             
+             ProjectSettings* ps = [[ProjectSettings alloc] initWithSerialization:projectDict];
+             if(ps)
+             {
+                 ps.projectPath = projectPath;
+                 [ps store];
+                 if(ps.isDownloadingTranslations)
+                 {
+                     NSString* langFile = [[[projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"SpriteBuilder Resources"] stringByAppendingPathComponent:@"Strings.ccbLang"];
+                     if(langFile)
+                     {
+                         if([ps isEqualTo:self.projectSettings])
+                         {
+                             [localizationEditorHandler setManagedFile:langFile];
+                             [localizationEditorHandler restartTranslationDownload:self.projectSettings];
+                         }
+                         else
+                         {
+                             LocalizationEditorHandler* handler = [[LocalizationEditorHandler alloc] init];
+                             [handler setManagedFileForBackgroundTranslationDownload:langFile];
+                             [handler restartTranslationDownload:ps];
+                         }
+                         
+                     }
+                     else
+                     {
+                         NSLog(@"No language file!");
+                     }
+                 }
+                 else
+                 {
+                     NSLog(@"Shouldn't have gotten here!");
+                 }
+             }
+             else
+             {
+                 NSLog(@"Project not at path");
+             }
+         }
+         else
+         {
+                NSLog(@"Project not at path");
+         }
+    }
+}
 @end

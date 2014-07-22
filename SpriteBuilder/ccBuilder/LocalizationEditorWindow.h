@@ -11,6 +11,7 @@
 
 @class LocalizationTranslateWindow;
 @class LocalizationCancelTranslationsWindow;
+@class ProjectSettings;
 @interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate>
 {
     IBOutlet NSTableView* tableTranslations;
@@ -46,6 +47,7 @@
 - (void)incrementTransByOne;
 - (double)translationProgress;
 - (void)finishDownloadingTranslations;
+- (void)restartTranslationDownload:(ProjectSettings *)ps;
 
 - (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs;
 

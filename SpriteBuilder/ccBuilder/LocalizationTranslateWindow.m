@@ -16,6 +16,7 @@
 #import "ProjectSettings.h"
 #import "CocosScene.h"
 #import "StringPropertySetter.h"
+#import "TranslationSettings.h"
 
 @implementation LocalizationTranslateWindow
 
@@ -26,6 +27,7 @@
 @synthesize buyAlert = _buyAlert;
 @synthesize projectPathDir = _projectPathDir;
 @synthesize projectPath = _projectPath;
+@synthesize currTask = _currTask;
 
 //Standards for the tab view
 static int downloadLangsIndex = 0;
@@ -63,13 +65,15 @@ static int numTimedOutIntervals = 0;
  * Set up URLs and global variables and initialize with the information to restart a download request.
  * Used when restarting a download request without showing the window
  */
--(id)initWithDownload:(NSString*)requestID parentWindow:(LocalizationEditorWindow*)pw numToDownload:(double)numTrans{
+-(id)initWithDownload:(ProjectSettings *)ps parentWindow:(LocalizationEditorWindow*)pw{
     self = [super init];
     if (!self) return NULL;
     [self setUpURLsAndGlobals];
-    _latestRequestID = requestID;
+    self.projectPathDir = ps.projectPathDir;
+    self.projectPath = ps.projectPath;
+    _latestRequestID = ps.latestRequestID;
     _parentWindow = pw;
-    _numTransToDownload = numTrans;
+    _numTransToDownload = ps.numToDownload;
     return self;
 }
 
@@ -81,6 +85,8 @@ static int numTimedOutIntervals = 0;
 -(void) awakeFromNib
 {
     [self setUpURLsAndGlobals];
+    self.projectPathDir = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPathDir;
+    self.projectPath = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPath;
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
     [[_translateFromTabView tabViewItemAtIndex:noActiveLangsIndex] setView:_noActiveLangsView];
     [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
@@ -106,10 +112,9 @@ static int numTimedOutIntervals = 0;
     self.guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     self.languages = [[NSMutableDictionary alloc] init];
     self.receipts = [[NSMutableDictionary alloc] init];
-    self.buyAlert = [NSAlert alertWithMessageText:@"Long Translation Download Time" defaultButton:@"Continue Download..." alternateButton:@"Cancel Download" otherButton:NULL informativeTextWithFormat:@"The average translation download wait is 30 minutes, but translation downloads can sometimes take days. These downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified. However, projects can be closed, opened and modified, and SpriteBuilder can be quit and reopened without affecting your download."];
+    self.buyAlert = [NSAlert alertWithMessageText:@"You Are Starting A Download" defaultButton:@"Continue" alternateButton:@"Cancel" otherButton:NULL informativeTextWithFormat:@"The average translation download wait is 30 minutes, but translation downloads can sometimes take days. These downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified. However, projects can be closed, opened and modified, and SpriteBuilder can be quit and reopened without affecting your download."];
     [self.buyAlert setShowsSuppressionButton:YES];
-    self.projectPathDir = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPathDir;
-    self.projectPath = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPath;
+    
 }
 
 #pragma mark Downloading and Updating Languages
@@ -144,6 +149,7 @@ static int numTimedOutIntervals = 0;
                                       }
                                   }];
     [task resume];
+    _currTask = task;
 }
 
 
@@ -358,6 +364,7 @@ static int numTimedOutIntervals = 0;
                                        }
                                    }];
      [task resume];
+    _currTask = task;
 }
 
 /*
@@ -748,6 +755,7 @@ static int numTimedOutIntervals = 0;
                                       }
                                   }];
     [task resume];
+    _currTask = task;
 }
 
 /*
@@ -830,7 +838,9 @@ static int numTimedOutIntervals = 0;
                                           NSLog(@"Translations Error: %@", error.localizedDescription);
                                       }
                                   }];
+    [task setTaskDescription:@"translations"];
     [task resume];
+    _currTask = task;
 }
 
 /*
@@ -872,17 +882,23 @@ static int numTimedOutIntervals = 0;
         if(!langFile)
         {
             [self cannotFindProjectAlert:_projectPath];
+            [self pauseDownload];
+            return -1;
         }
         [handler setManagedFileForBackgroundTranslationDownload:langFile];
         NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:_projectPath];
         if(!projectDict)
         {
             [self cannotFindProjectAlert:_projectPath];
+            [self pauseDownload];
+            return -1;
         }
         ps = [[ProjectSettings alloc] initWithSerialization:projectDict];
         if(!ps)
         {
             [self cannotFindProjectAlert:_projectPath];
+            [self pauseDownload];
+            return -1;
         }
         ps.projectPath = _projectPath;
         [ps store];
@@ -941,7 +957,7 @@ static int numTimedOutIntervals = 0;
             }
         }
     }
-    if(ps.numDownloaded == ps.numToDownload)
+    if((ps.numDownloaded == ps.numToDownload) && ps.isDownloadingTranslations)
     {
         [self endDownload];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -950,12 +966,12 @@ static int numTimedOutIntervals = 0;
             {
                 [_parentWindow finishDownloadingTranslations];
                 
-                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", _projectPathDir];
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", [_projectPathDir lastPathComponent]];
                 [alert runModal];
             }
             else
             {
-                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:@"Go to Project" otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", _projectPathDir];
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:@"Go to Project" otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", [_projectPathDir lastPathComponent]];
                 NSInteger response = [alert runModal];
                 if(response == NSAlertAlternateReturn)
                 {
@@ -974,19 +990,25 @@ static int numTimedOutIntervals = 0;
  * Used when a language window changes to a different project.
  */
 - (void)pauseDownload{
-    [_timerTransDownload invalidate];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_timerTransDownload invalidate];
+    });
 }
 
 /*
  * Restarts the timer for the download function.
  */
 -(void)restartDownload{
-    if(_timerTransDownload)
-    {
-        [_timerTransDownload invalidate];
-    }
-    [self getTranslations];
-    _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(_timerTransDownload)
+        {
+            
+                [_timerTransDownload invalidate];
+            
+        }
+        [self getTranslations];
+        _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
+    });
 }
 
 /*
@@ -995,12 +1017,42 @@ static int numTimedOutIntervals = 0;
 - (void)endDownload{
     _numTransToDownload = 0;
     _latestRequestID = nil;
-    [_timerTransDownload invalidate];
-    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_timerTransDownload invalidate];
+    });
+    ProjectSettings* ps;
+    if(![[AppDelegate appDelegate].projectSettings.projectPath isEqualToString:_projectPath])
+    {
+        NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:_projectPath];
+        if(projectDict)
+        {
+            ps = [[ProjectSettings alloc] initWithSerialization:projectDict];
+            if(ps)
+            {
+                ps.projectPath = _projectPath;
+                [ps store];
+            }
+            else
+            {
+                ps = [[ProjectSettings alloc] init];
+            }
+        }
+        else
+        {
+            ps = [[ProjectSettings alloc] init];
+        }
+    }
+    else
+    {
+        ps = [AppDelegate appDelegate].projectSettings;
+    }
     ps.isDownloadingTranslations = 0;
     ps.numDownloaded = 0;
     ps.numToDownload = 0;
     [ps store];
+    TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+    [[translationSettings projectsDownloadingTranslations] removeObject:ps.projectPath];
+    [translationSettings updateTranslationSettings];
 }
 
 #pragma mark Cancel Download
@@ -1017,6 +1069,9 @@ static int numTimedOutIntervals = 0;
     ps.numDownloaded = 0;
     ps.numToDownload = 0;
     [ps store];
+    TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+    [[translationSettings projectsDownloadingTranslations] removeObject:ps.projectPath];
+    [translationSettings writeTranslationSettings];
     [self sendCancelNotificationWithError:error];
 }
 
@@ -1058,6 +1113,7 @@ static int numTimedOutIntervals = 0;
                                       }
                                   }];
     [task resume];
+    _currTask = task;
     
 }
 
@@ -1122,6 +1178,8 @@ static int numTimedOutIntervals = 0;
     [_ignoreText setEnabled:0];
     [_cancel setEnabled:0];
     [_buy setEnabled:0];
+    NSButton* closeButton = [self.window standardWindowButton:NSWindowCloseButton];
+    [closeButton setEnabled:NO];
 }
 
 /*
@@ -1131,10 +1189,10 @@ static int numTimedOutIntervals = 0;
  */
 -(void)enableAllExceptButtons{
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_popTranslateFrom setEnabled:1];
-        [_languageTable setEnabled:1];
-        [_checkAll setEnabled:1];
-        [_ignoreText setEnabled:1];
+        [_popTranslateFrom setEnabled:YES];
+        [_languageTable setEnabled:YES];
+        [_checkAll setEnabled:YES];
+        [_ignoreText setEnabled:YES];
     });
 }
 
@@ -1144,12 +1202,14 @@ static int numTimedOutIntervals = 0;
  */
 -(void)enableAll{
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_popTranslateFrom setEnabled:1];
-        [_languageTable setEnabled:1];
-        [_checkAll setEnabled:1];
-        [_ignoreText setEnabled:1];
-        [_cancel setEnabled:1];
-        [_buy setEnabled:1];
+        [_popTranslateFrom setEnabled:YES];
+        [_languageTable setEnabled:YES];
+        [_checkAll setEnabled:YES];
+        [_ignoreText setEnabled:YES];
+        [_cancel setEnabled:YES];
+        [_buy setEnabled:YES];
+        NSButton* closeButton = [self.window standardWindowButton:NSWindowCloseButton];
+        [closeButton setEnabled:YES];
     });
 }
 

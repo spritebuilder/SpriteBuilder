@@ -17,6 +17,8 @@
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
 #import "ProjectSettings.h"
+#import "TranslationSettings.h"
+
 @implementation LocalizationEditorWindow
 @synthesize ltw =  _ltw;
 
@@ -132,8 +134,16 @@
     {
         self.inspectorEnabled = YES;
         
-        LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+        LocalizationEditorTranslation* translation;
         
+        if(handler.translations.count)
+        {
+            translation = [handler.translations objectAtIndex:row];
+        }
+        else
+        {
+            translation = [[LocalizationEditorTranslation alloc] init];
+        }
         if (translation.key)
         {
             self.inspectorTextKey = [[NSAttributedString alloc] initWithString:translation.key];
@@ -282,6 +292,12 @@
     ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
     ps.isDownloadingTranslations = 1;
     [ps store];
+    TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+    if(![translationSettings.projectsDownloadingTranslations containsObject:ps.projectPath])
+    {
+        [[translationSettings projectsDownloadingTranslations] addObject:ps.projectPath];
+        [translationSettings updateTranslationSettings];
+    }
     [_translationProgress setMaxValue:ps.numToDownload];
     [_translationProgress setDoubleValue:ps.numDownloaded];
     [_translationProgress setHidden:0];
@@ -291,7 +307,7 @@
     [popLanguageAdd setEnabled:0];
     [_addTranslation setEnabled:0];
     [popCurrentLanguage setEnabled:0];
-    _translationsButton.title = @"Stop Download...";
+    _translationsButton.title = @"Stop Download";
     [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
 }
 
@@ -381,7 +397,15 @@
     
     if (row == -1) return;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     translation.key = [inspectorTextKey string];
     
     [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:1]];
@@ -407,7 +431,15 @@
     
     if (row == -1) return;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     translation.comment = [inspectorTextComment string];
     
     [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:2]];
@@ -420,7 +452,15 @@
     
     if (row == -1) return NULL;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     
     if (!translation.comment) return NULL;
     return [[NSAttributedString alloc] initWithString:translation.comment];
@@ -433,7 +473,15 @@
     
     if (row == -1) return;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     LocalizationEditorLanguage* lang = [self selectedLanguage];
     
     if (!lang) return;
@@ -761,7 +809,7 @@
     if([keyPath isEqualToString:@"hasOpenFile"]){
         if(ps.isDownloadingTranslations)
         {
-            _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps.latestRequestID parentWindow:self numToDownload:ps.numToDownload];
+            _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps parentWindow:self];
             [_ltw restartDownload];
             [self setDownloadingTranslations];
         }else{
@@ -772,4 +820,8 @@
     
 }
 
+- (void)restartTranslationDownload:(ProjectSettings *)ps{
+    _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps parentWindow:self];
+    [_ltw restartDownload];
+}
 @end
