@@ -10,6 +10,7 @@
 #import "CCBPublishingTarget.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "ZipDirectoryOperation.h"
+#import "MiscConstants.h"
 
 
 @interface CCBPublisher ()
@@ -237,11 +238,9 @@
                                                                                statusProgress:_publishingTaskStatusProgress];
 
     operation.inputPath = target.outputDirectory;
-
-    if (target.publishEnvironment == kCCBPublishEnvironmentRelease)
-    {
-        operation.compression = 10;
-    }
+    operation.compression = target.publishEnvironment == kCCBPublishEnvironmentRelease
+        ? PUBLISHING_PACKAGES_ZIP_RELEASE_COMPRESSION
+        : PUBLISHING_PACKAGES_ZIP_DEBUG_COMPRESSION;
 
     [_publishingQueue addOperation:operation];
 }
