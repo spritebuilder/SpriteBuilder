@@ -1,3 +1,5 @@
+NSInteger const DEFAULT_AUDIO_QUALITY = 4;
+
 NSString *const PACKAGE_NAME_SUFFIX = @"sbpack";
 
 NSString *const PACKAGES_FOLDER_NAME = @"Packages";

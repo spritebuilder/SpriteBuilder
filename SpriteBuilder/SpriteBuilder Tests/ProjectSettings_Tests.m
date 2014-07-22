@@ -309,8 +309,8 @@
 
     ProjectSettings *project = [[ProjectSettings alloc] initWithSerialization:projectDict];
     XCTAssertNotNil(project);
-    XCTAssertEqual(project.publishAudioQuality_android, 1);
-    XCTAssertEqual(project.publishAudioQuality_ios, 1);
+    XCTAssertEqual(project.publishAudioQuality_android, DEFAULT_AUDIO_QUALITY);
+    XCTAssertEqual(project.publishAudioQuality_ios, DEFAULT_AUDIO_QUALITY);
     SBAssertStringsEqual(project.publishDirectory, @"");
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"");
     XCTAssertFalse(project.excludedFromPackageMigration);

@@ -115,8 +115,8 @@
     
     self.publishEnvironment = kCCBPublishEnvironmentDevelop;
 
-    self.publishAudioQuality_ios = 4;
-    self.publishAudioQuality_android = 4;
+    self.publishAudioQuality_ios = DEFAULT_AUDIO_QUALITY;
+    self.publishAudioQuality_android = DEFAULT_AUDIO_QUALITY;
     
     self.tabletPositionScaleFactor = 2.0f;
 
@@ -178,13 +178,13 @@
     self.publishAudioQuality_ios = [[dict objectForKey:@"publishAudioQuality_ios"]intValue];
     if (!self.publishAudioQuality_ios)
     {
-        self.publishAudioQuality_ios = 1;
+        self.publishAudioQuality_ios = DEFAULT_AUDIO_QUALITY;
     }
 
     self.publishAudioQuality_android = [[dict objectForKey:@"publishAudioQuality_android"]intValue];
     if (!self.publishAudioQuality_android)
     {
-        self.publishAudioQuality_android = 1;
+        self.publishAudioQuality_android = DEFAULT_AUDIO_QUALITY;
     }
 
     self.flattenPaths = [[dict objectForKey:@"flattenPaths"] boolValue];
