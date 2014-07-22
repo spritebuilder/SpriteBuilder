@@ -10,7 +10,7 @@
 
 
 @implementation CCBPEffectPixelate
-
+@synthesize UUID;
 
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
