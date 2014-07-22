@@ -21,6 +21,8 @@
 
 @end
 
+NSString *const KEY_USERDEFAULTS_ACCESSORYSETTINGS = @"package.publish.accessorySettings";
+
 
 @implementation ResourcePublishPackageCommand
 
@@ -31,6 +33,7 @@
 
     // Note: this is temporary as long an accessory view is used
     self.settings = [[PackagePublishSettings alloc] init];
+    [self loadPublishOSSettingsFromUserDefaults];
 
     NSArray *filteredPackages = [self selectedPackages];
     if (filteredPackages.count == 0)
@@ -45,9 +48,29 @@
         if (result == NSFileHandlingPanelOKButton)
         {
             self.publishDirectory = publishPanel.directoryURL.path;
+
+            [self writePublishOSSettingsToUserDefaults];
+
             [self publishPackages:filteredPackages];
         }
     }];
+}
+
+- (void)writePublishOSSettingsToUserDefaults
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"ios"] = [[_settings settingsForOsType:kCCBPublisherOSTypeIOS] toDictionary];
+    dict[@"android"] = [[_settings settingsForOsType:kCCBPublisherOSTypeAndroid] toDictionary];
+
+    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:KEY_USERDEFAULTS_ACCESSORYSETTINGS];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)loadPublishOSSettingsFromUserDefaults
+{
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USERDEFAULTS_ACCESSORYSETTINGS];
+    [_settings setOSSettings:[[PublishOSSettings alloc] initWithDictionary:dict[@"ios"]] forOsType:kCCBPublisherOSTypeIOS];
+    [_settings setOSSettings:[[PublishOSSettings alloc] initWithDictionary:dict[@"android"]] forOsType:kCCBPublisherOSTypeAndroid];
 }
 
 - (void)publishPackages:(NSArray *)filteredPackages

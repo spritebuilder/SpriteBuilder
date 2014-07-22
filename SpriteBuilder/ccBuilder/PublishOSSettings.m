@@ -1,9 +1,14 @@
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
+
+NSString *const KEY_ENABLED = @"enabled";
+NSString *const KEY_RESOLUTIONS = @"resolutions";
+NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
+
 @implementation PublishOSSettings
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
 
@@ -13,6 +18,31 @@
     }
 
     return self;
+}
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    self = [self init];
+
+    if (self && dictionary)
+    {
+        self.enabled = [dictionary[KEY_ENABLED] boolValue];
+        self.audio_quality = [dictionary[KEY_AUDIO_QUALITY] integerValue];
+        self.resolutions = dictionary[KEY_RESOLUTIONS];
+    }
+
+    return self;
+}
+
+- (NSDictionary *)toDictionary
+{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+
+    result[KEY_AUDIO_QUALITY] = @(_audio_quality);
+    result[KEY_ENABLED] = @(_enabled);
+    result[KEY_RESOLUTIONS] = self.resolutions;
+
+    return result;
 }
 
 - (NSArray *)resolutions

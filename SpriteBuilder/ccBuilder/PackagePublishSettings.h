@@ -14,5 +14,6 @@
 
 @property (nonatomic, strong, readonly) NSDictionary *osSettings;
 - (PublishOSSettings *)settingsForOsType:(CCBPublisherOSType)type;
+- (void)setOSSettings:(PublishOSSettings *)osSettings forOsType:(CCBPublisherOSType)type;
 
 @end

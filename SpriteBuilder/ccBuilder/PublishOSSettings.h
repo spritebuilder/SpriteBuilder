@@ -11,4 +11,8 @@
 
 @property (nonatomic, strong) NSArray *resolutions;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
+- (NSDictionary *)toDictionary;
+
 @end

@@ -26,5 +26,4 @@ typedef void (^PublisherCancelBlock)();
 // For accessory view bindings only
 @property (nonatomic, strong) PackagePublishSettings *settings;
 
-
 @end

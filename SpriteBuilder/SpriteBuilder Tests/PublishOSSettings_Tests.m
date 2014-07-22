@@ -39,4 +39,23 @@
     XCTAssertFalse(_settings.resolution_phone);
 }
 
+- (void)testDictionaryInitializerAndExport
+{
+    _settings.resolution_tablethd = YES;
+    _settings.resolution_phone = YES;
+    _settings.enabled = YES;
+    _settings.audio_quality = 7;
+
+    NSDictionary *dict = [_settings toDictionary];
+
+    PublishOSSettings *publishOSSettings = [[PublishOSSettings alloc] initWithDictionary:dict];
+    XCTAssertTrue([publishOSSettings.resolutions containsObject:@"tablethd"]);
+    XCTAssertTrue([publishOSSettings.resolutions containsObject:@"phone"]);
+    XCTAssertFalse([publishOSSettings.resolutions containsObject:@"tablet"]);
+    XCTAssertFalse([publishOSSettings.resolutions containsObject:@"phonehd"]);
+
+    XCTAssertEqual(publishOSSettings.audio_quality, 7);
+    XCTAssertTrue(publishOSSettings.enabled);
+}
+
 @end

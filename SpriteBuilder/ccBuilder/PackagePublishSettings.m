@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "PackagePublishSettings.h"
 #import "RMPackage.h"
 #import "CCBPublisherTypes.h"
@@ -7,8 +6,6 @@
 
 @interface PackagePublishSettings ()
 
-@property (nonatomic, strong) NSMutableDictionary *publishEnabledForOsType;
-@property (nonatomic, strong) NSMutableDictionary *publishResolutionsForOsType;
 @property (nonatomic, strong) NSMutableDictionary *publishSettingsForOsType;
 
 @end
@@ -28,8 +25,6 @@
     if (self)
     {
         self.package = package;
-        self.publishEnabledForOsType = [NSMutableDictionary dictionary];
-        self.publishResolutionsForOsType = [NSMutableDictionary dictionary];
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
 
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeIOS]] = [[PublishOSSettings alloc] init];
@@ -54,35 +49,20 @@
     return _publishSettingsForOsType;
 }
 
-- (BOOL)isPublishEnabledForOSType:(CCBPublisherOSType)osType
-{
-    return [_publishEnabledForOsType[@(osType)] boolValue];
-}
-
-- (void)setPublishEnabled:(BOOL)enabled forOSType:(CCBPublisherOSType)osType
-{
-    _publishEnabledForOsType[@(osType)] = @(enabled);
-}
-
-- (NSArray *)publishResolutionsForOSType:(CCBPublisherOSType)osType
-{
-   PublishOSSettings *publishOSSettings = [self settingsForOsType:osType];
-   return publishOSSettings.resolutions;
-}
-
-- (void)setPublishResolutions:(NSArray *)resolutions forOSType:(CCBPublisherOSType)osType
-{
-    if (!resolutions)
-    {
-        return;
-    }
-
-    _publishResolutionsForOsType[@(osType)] = resolutions;
-}
-
 - (PublishOSSettings *)settingsForOsType:(CCBPublisherOSType)type;
 {
     return _publishSettingsForOsType[[self osTypeToString:type]];
 }
+
+- (void)setOSSettings:(PublishOSSettings *)osSettings forOsType:(CCBPublisherOSType)type
+{
+    if (!osSettings)
+    {
+        return;
+    }
+
+    _publishSettingsForOsType[[self osTypeToString:type]] = osSettings;
+}
+
 
 @end
