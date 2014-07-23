@@ -65,33 +65,10 @@
 
     [_publisherController startAsync:NO];
 
-    [self assertFilesExistRelativeToDirectory:@"Published-Packages/foo-iOS-tablethd" filesPaths:@[
-            @"resources-tablethd/plane.png",
-            @"configCocos2d.plist",
-            @"fileLookup.plist",
-            @"spriteFrameFileList.plist"
-    ]];
-
-    [self assertFilesExistRelativeToDirectory:@"Published-Packages/foo-iOS-phone" filesPaths:@[
-            @"resources-phone/plane.png",
-            @"configCocos2d.plist",
-            @"fileLookup.plist",
-            @"spriteFrameFileList.plist"
-    ]];
-
-    [self assertFilesExistRelativeToDirectory:@"Published-Packages/foo-Android-tablet" filesPaths:@[
-            @"resources-tablet/plane.png",
-            @"configCocos2d.plist",
-            @"fileLookup.plist",
-            @"spriteFrameFileList.plist"
-    ]];
-
-    [self assertFilesExistRelativeToDirectory:@"Published-Packages/foo-Android-phonehd" filesPaths:@[
-            @"resources-phonehd/plane.png",
-            @"configCocos2d.plist",
-            @"fileLookup.plist",
-            @"spriteFrameFileList.plist"
-    ]];
+    [self assertFileDoesNotExist:@"Published-Packages/foo-iOS-tablethd"];
+    [self assertFileDoesNotExist:@"Published-Packages/foo-iOS-phone"];
+    [self assertFileDoesNotExist:@"Published-Packages/foo-Android-tablet"];
+    [self assertFileDoesNotExist:@"Published-Packages/foo-Android-phonehd"];
 
     [self assertFilesExistRelativeToDirectory:@"Published-Packages" filesPaths:@[
             @"foo-iOS-tablethd.zip",

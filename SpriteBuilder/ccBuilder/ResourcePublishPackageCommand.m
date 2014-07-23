@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "ResourceCommandContextMenuProtocol.h"
 
 #import "ResourcePublishPackageCommand.h"

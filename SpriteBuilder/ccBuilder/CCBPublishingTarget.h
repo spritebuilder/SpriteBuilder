@@ -13,7 +13,7 @@
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
 @property (nonatomic) NSInteger audioQuality;
 
-@property (nonatomic) BOOL zipOutputFolder;
+@property (nonatomic, copy) NSString *zipOutputPath;
 
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;

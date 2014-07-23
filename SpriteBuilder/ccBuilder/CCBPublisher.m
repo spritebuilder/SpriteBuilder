@@ -229,7 +229,7 @@
 
 - (void)zipFolderWithTarget:(CCBPublishingTarget *)target
 {
-    if (!target.zipOutputFolder)
+    if (!target.zipOutputPath)
     {
         return;
     }
@@ -239,6 +239,7 @@
                                                                                statusProgress:_publishingTaskStatusProgress];
 
     operation.inputPath = target.outputDirectory;
+    operation.zipOutputPath = target.zipOutputPath;
     operation.compression = target.publishEnvironment == kCCBPublishEnvironmentRelease
         ? PUBLISHING_PACKAGES_ZIP_RELEASE_COMPRESSION
         : PUBLISHING_PACKAGES_ZIP_DEBUG_COMPRESSION;

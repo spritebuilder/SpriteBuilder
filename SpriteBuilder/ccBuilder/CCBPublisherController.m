@@ -69,49 +69,63 @@
 
     for (NSString *resolution in [packageSettings settingsForOsType:osType].resolutions)
     {
+        NSString *packagePublishName = [self generatePublishedPackageName:packageSettings.package.name osType:osType resolution:resolution];
+
         CCBPublishingTarget *target = [[CCBPublishingTarget alloc] init];
         target.osType = osType;
         target.resolutions = @[resolution];
         target.inputDirectories = @[packageSettings.package.fullPath];
         target.publishEnvironment = packageSettings.publishEnvironment;
-        target.zipOutputFolder = YES;
         target.audioQuality = [packageSettings settingsForOsType:osType].audio_quality;
-
-        NSError *error;
-        NSString *outputDirectory = [self createOutputDirectoryForPackageWithPackageSetting:packageSettings
-                                                                                     osType:osType
-                                                                                 resolution:resolution
-                                                                                      error:&error];
-        if (!outputDirectory)
-        {
-            NSString *warning = [NSString stringWithFormat:@"Package export failed: Could not create directory at \"%@\", error: %@",
-                                          outputDirectory,
-                                          error.localizedDescription];
-
-            [_warnings addWarningWithDescription:warning];
-            continue;
-        }
-
-        target.outputDirectory = outputDirectory;
+        target.zipOutputPath = [self zipOutputPath:packagePublishName baseDir:packageSettings.outputDirectory];
+        target.outputDirectory = [self cachesPath:packagePublishName];
 
         [_publisher addPublishingTarget:target];
     }
 }
 
-- (NSString *)createOutputDirectoryForPackageWithPackageSetting:(PackagePublishSettings *)settings
-                                                         osType:(CCBPublisherOSType)osType
-                                                     resolution:(NSString *)resolution
-                                                          error:(NSError **)error
+- (NSString *)generatePublishedPackageName:(NSString *)packageName osType:(CCBPublisherOSType)osType resolution:(NSString *)resolution
 {
-    NSString *packageDirName = [NSString stringWithFormat:@"%@-%@-%@", settings.package.name, [self osTypeToString:osType], resolution];
-    NSString *fullPathToOutputDir = [settings.outputDirectory absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
-    NSString *fullPath = [fullPathToOutputDir stringByAppendingPathComponent:packageDirName];
+    return [NSString stringWithFormat:@"%@-%@-%@", packageName, [self osTypeToString:osType], resolution];
+}
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:error])
+- (NSString *)zipOutputPath:(NSString *)PublishedPackageName baseDir:(NSString *)baseDir
+{
+    NSString *result = [self createOutputDirectoryWithPackageName:PublishedPackageName
+                                                          baseDir:baseDir
+                                                       createDirs:NO];
+
+    return [result stringByAppendingPathExtension:@"zip"];
+}
+
+- (NSString *)cachesPath:(NSString *)PublishedPackageName
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachesPath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"packages"];
+
+    NSString *result = [self createOutputDirectoryWithPackageName:PublishedPackageName
+                                                          baseDir:cachesPath
+                                                       createDirs:NO];
+
+    return result;
+}
+
+- (NSString *)createOutputDirectoryWithPackageName:(NSString *)publishedPackageName
+                                           baseDir:(NSString *)baseDir
+                                        createDirs:(BOOL)createDirs
+{
+    NSString *fullPathToOutputDir = [baseDir absolutePathFromBaseDirPath:_projectSettings.projectPathDir];
+    NSString *fullPath = [fullPathToOutputDir stringByAppendingPathComponent:publishedPackageName];
+
+    if (createDirs)
     {
-        NSLog(@"Error creating package output dir \"%@\" with error %@", fullPath, *error);
-        return nil;
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *error;
+        if (![fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:&error])
+        {
+            NSLog(@"Error creating package output dir \"%@\" with error %@", fullPath, error);
+            return nil;
+        }
     }
 
     return fullPath;
