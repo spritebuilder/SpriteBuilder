@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "ResourceCommandContextMenuProtocol.h"
 
 #import "ResourcePublishPackageCommand.h"
@@ -21,8 +22,6 @@
 
 @end
 
-NSString *const KEY_USERDEFAULTS_ACCESSORYSETTINGS = @"package.publish.accessorySettings";
-
 
 @implementation ResourcePublishPackageCommand
 
@@ -31,16 +30,19 @@ NSString *const KEY_USERDEFAULTS_ACCESSORYSETTINGS = @"package.publish.accessory
     NSAssert(_projectSettings != nil, @"projectSettings must not be nil");
     NSAssert(_windowForModals != nil, @"windowForModals must not be nil");
 
-    // Note: this is temporary as long an accessory view is used
-    self.settings = [[PackagePublishSettings alloc] init];
-    [self loadPublishOSSettingsFromUserDefaults];
-
-    NSArray *filteredPackages = [self selectedPackages];
-    if (filteredPackages.count == 0)
+    RMPackage *package = _resources.firstObject;
+    self.settings = [[PackagePublishSettings alloc] initWithPackage:package];
+    if (![_settings load])
     {
+        [self callFinishBlockWithPublishError:package];
         return;
     }
 
+    [self showPublishPanel];
+}
+
+- (void)showPublishPanel
+{
     NSOpenPanel *publishPanel = [self publishPanel];
     [publishPanel beginSheetModalForWindow:_windowForModals
                          completionHandler:^(NSInteger result)
@@ -48,38 +50,31 @@ NSString *const KEY_USERDEFAULTS_ACCESSORYSETTINGS = @"package.publish.accessory
         if (result == NSFileHandlingPanelOKButton)
         {
             self.publishDirectory = publishPanel.directoryURL.path;
-
-            [self writePublishOSSettingsToUserDefaults];
-
-            [self publishPackages:filteredPackages];
+            [_settings store];
+            [self publishPackage];
         }
     }];
 }
 
-- (void)writePublishOSSettingsToUserDefaults
+- (void)callFinishBlockWithPublishError:(RMPackage *)package
 {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"ios"] = [[_settings settingsForOsType:kCCBPublisherOSTypeIOS] toDictionary];
-    dict[@"android"] = [[_settings settingsForOsType:kCCBPublisherOSTypeAndroid] toDictionary];
-
-    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:KEY_USERDEFAULTS_ACCESSORYSETTINGS];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (_finishBlock)
+    {
+        CCBWarnings *warnings = [[CCBWarnings alloc] init];
+        warnings.currentOSType = kCCBPublisherOSTypeNone;
+        NSString *warningText = [NSString stringWithFormat:@"Error publishing package \"%@\". Could not load Package.plist for package.", package.name];
+        [warnings addWarningWithDescription:warningText isFatal:YES];
+        _finishBlock(nil, warnings);
+    }
 }
 
-- (void)loadPublishOSSettingsFromUserDefaults
-{
-    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USERDEFAULTS_ACCESSORYSETTINGS];
-    [_settings setOSSettings:[[PublishOSSettings alloc] initWithDictionary:dict[@"ios"]] forOsType:kCCBPublisherOSTypeIOS];
-    [_settings setOSSettings:[[PublishOSSettings alloc] initWithDictionary:dict[@"android"]] forOsType:kCCBPublisherOSTypeAndroid];
-}
-
-- (void)publishPackages:(NSArray *)filteredPackages
+- (void)publishPackage
 {
     self.publisherController = [[CCBPublisherController alloc] init];
 
     _publisherController.publishMainProject = NO;
     _publisherController.projectSettings = _projectSettings;
-    _publisherController.packageSettings = [self packageSettingsForPackages:filteredPackages];
+    _publisherController.packageSettings = @[_settings];
 
     self.modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
     _publisherController.taskStatusUpdater = _modalTaskStatusWindow;
@@ -107,21 +102,6 @@ NSString *const KEY_USERDEFAULTS_ACCESSORYSETTINGS = @"package.publish.accessory
     }];
 
     [self modalStatusWindowUpdateStatusText:@"Starting up..."];
-}
-
-- (NSMutableArray *)packageSettingsForPackages:(NSArray *)filteredPackages
-{
-    NSMutableArray *packageSettingsToPublish = [NSMutableArray array];
-
-    for (RMPackage *package in filteredPackages)
-    {
-        _settings.package = package;
-        _settings.outputDirectory = _publishDirectory;
-        _settings.publishEnvironment = _projectSettings.publishEnvironment;
-
-        [packageSettingsToPublish addObject:_settings];
-    }
-    return packageSettingsToPublish;
 }
 
 - (NSOpenPanel *)publishPanel
@@ -155,21 +135,6 @@ NSString *const KEY_USERDEFAULTS_ACCESSORYSETTINGS = @"package.publish.accessory
             return;
         }
     }
-}
-
-- (NSArray *)selectedPackages
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    for (id resource in _resources)
-    {
-        if ([resource isKindOfClass:[RMPackage class]])
-        {
-            [result addObject:resource];
-        }
-    }
-
-    return result;
 }
 
 - (void)closeStatusWindow
