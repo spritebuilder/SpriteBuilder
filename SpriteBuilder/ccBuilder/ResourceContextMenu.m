@@ -58,10 +58,7 @@
     [self appendItemToMenuWithClass:[ResourceNewPackageCommand class] addSeparator:NO action:@selector(newPackage:)];
     [self appendItemToMenuWithClass:[ResourceDeleteCommand class] addSeparator:YES action:@selector(deleteResource:)];
 
-    if ([FeatureToggle sharedFeatures].arePackagesEnabled)
-    {
-        [self appendItemToMenuWithClass:[ResourceExportPackageCommand class] addSeparator:NO action:@selector(exportPackage:)];
-    }
+    [self appendItemToMenuWithClass:[ResourceExportPackageCommand class] addSeparator:NO action:@selector(exportPackage:)];
 
     [self removeLastItemIfSeparator];
 }

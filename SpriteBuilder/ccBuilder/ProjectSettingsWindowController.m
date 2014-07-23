@@ -22,15 +22,23 @@
  * THE SOFTWARE.
  */
 
-#import "PublishSettingsWindow.h"
+#import "ProjectSettingsWindowController.h"
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "NSString+RelativePath.h"
 #import "CCBWarnings.h"
 
-@implementation PublishSettingsWindow
+@implementation ProjectSettingsWindowController
 
-@synthesize projectSettings;
+- (instancetype)init
+{
+    self = [self initWithWindowNibName:@"ProjectSettingsWindow"];
+    if (self)
+    {
+
+    }
+    return self;
+}
 
 -(void) windowDidLoad
 {
@@ -66,58 +74,19 @@
             [[[CCDirector sharedDirector] view] lockOpenGLContext];
 
             NSArray* files = [openDlg URLs];
-
-            for (int i = 0; i < [files count]; i++)
+            for (NSUInteger i = 0; i < [files count]; i++)
             {
                 NSString* dirName = [[files objectAtIndex:i] path];
-                NSString* projectDir = [projectSettings.projectPath stringByDeletingLastPathComponent];
+                NSString* projectDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
                 NSString* relDirName = [dirName relativePathFromBaseDirPath:projectDir];
-
+                
                 if (publishType == kCCBPublisherTargetTypeIPhone)
                 {
-                    projectSettings.publishDirectory = relDirName;
+                    _projectSettings.publishDirectory = relDirName;
                 }
                 else if (publishType == kCCBPublisherTargetTypeAndroid)
                 {
-                    projectSettings.publishDirectoryAndroid = relDirName;
-                }
-            }
-
-            [[[CCDirector sharedDirector] view] unlockOpenGLContext];
-        }
-    }];
-}
-
-- (IBAction)addResourceDirectory:(id)sender
-{
-    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
-    [openDlg setCanChooseFiles:NO];
-    [openDlg setCanChooseDirectories:YES];
-    
-    [openDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result){
-        if (result == NSOKButton)
-        {
-            [[[CCDirector sharedDirector] view] lockOpenGLContext];
-            
-            NSArray* files = [openDlg URLs];
-            
-            for (int i = 0; i < [files count]; i++)
-            {
-                NSString* dirName = [[files objectAtIndex:i] path];
-                NSString* projectDir = [projectSettings.projectPath stringByDeletingLastPathComponent];
-                NSString* relDirName = [dirName relativePathFromBaseDirPath:projectDir];
-                
-                // Check for duplicate
-                BOOL isDuplicate = NO;
-                for (NSDictionary* row in projectSettings.resourcePaths)
-                {
-                    NSString* path = [row objectForKey:@"path"];
-                    if ([path isEqualToString:relDirName]) isDuplicate = YES;
-                }
-                
-                if (!isDuplicate)
-                {
-                    [resDirArrayController addObject:[NSMutableDictionary dictionaryWithObject:relDirName forKey:@"path"]];
+                    _projectSettings.publishDirectoryAndroid = relDirName;
                 }
             }
             

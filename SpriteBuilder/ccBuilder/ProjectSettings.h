@@ -27,28 +27,28 @@
 #define kCCBProjectSettingsVersion 1
 #define kCCBDefaultExportPlugIn @"ccbi"
 
-enum
+typedef enum
 {
-    kCCBDesignTargetFlexible,
-    kCCBDesignTargetFixed,
-};
+    kCCBDesignTargetFlexible = 0,
+    kCCBDesignTargetFixed = 1,
+} CCBDesignTarget;
 
-enum
+typedef enum
 {
-    kCCBOrientationLandscape,
-    kCCBOrientationPortrait,
-};
+    kCCBOrientationLandscape = 0,
+    kCCBOrientationPortrait = 1,
+} CCBOrientation;
 
 typedef NS_ENUM(int8_t, CCBTargetEngine)
 {
 	CCBTargetEngineCocos2d = 0,
-	CCBTargetEngineSpriteKit,
+	CCBTargetEngineSpriteKit = 1,
 };
 
 typedef enum
 {
     PublishEnvironmentDevelop = 0,
-    PublishEnvironmentRelease,
+    PublishEnvironmentRelease = 1,
 } SBPublishEnvironment;
 
 @class RMResource;
@@ -57,9 +57,7 @@ typedef enum
 @interface ProjectSettings : NSObject
 {
     NSString* projectPath;
-    NSMutableArray* resourcePaths;
-    NSMutableDictionary* resourceProperties;
-    
+
     NSString* publishDirectory;
     NSString* publishDirectoryAndroid;
 
@@ -149,7 +147,9 @@ typedef enum
 
 // *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
-@property (nonatomic) NSMutableArray *cocos2dUpdateIgnoredVersions;
+
+@property (nonatomic, strong) NSMutableArray *cocos2dUpdateIgnoredVersions;
+@property (nonatomic) BOOL excludedFromPackageMigration;
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
@@ -162,6 +162,7 @@ typedef enum
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
+
 
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;
@@ -211,6 +212,8 @@ typedef enum
 // Returns NO if resource path could not be moved.
 // Returns SBDuplicateResourcePathError if resource path toPath already exists
 - (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
+
+- (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict;
 
 // *** Misc ***
 - (NSString* ) getVersion;

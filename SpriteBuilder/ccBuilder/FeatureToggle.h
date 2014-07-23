@@ -26,7 +26,7 @@
 //
 // @property (nonatomic, getter=isMyFeatureEnabled) BOOL myFeature;
 
-@property (nonatomic, getter=arePackagesEnabled) BOOL packages;
+// @property (nonatomic, getter=arePackagesEnabled) BOOL packages;
 
 + (FeatureToggle *)sharedFeatures;
 

@@ -56,7 +56,7 @@
 #import "CCBTransparentView.h"
 #import "NotesLayer.h"
 #import "ResolutionSetting.h"
-#import "PublishSettingsWindow.h"
+#import "ProjectSettingsWindowController.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "ResourceManagerOutlineView.h"
@@ -129,6 +129,7 @@
 #import "PackageCreator.h"
 #import "NewPackageWindowController.h"
 #import "ResourceCommandController.h"
+#import "ProjectMigrator.h"
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
@@ -542,7 +543,7 @@ typedef enum
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-#if TEST_TARGET
+#ifndef TESTING
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"138b7cc7454016e05dbbc512f38082b7" companyName:@"Apportable" crashReportManagerDelegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
 #endif
@@ -644,7 +645,9 @@ typedef enum
     }
     else
     {
+        #ifndef TESTING
         [self openLastOpenProject];
+        #endif
     }
     
     // Check for first run
@@ -677,11 +680,7 @@ typedef enum
 
 - (void)toggleFeatures
 {
-    if (![FeatureToggle sharedFeatures].arePackagesEnabled)
-    {
-        [menuPlusButtonNewPackage setHidden:YES];
-        [menuFileNewPackage setHidden:YES];
-    }
+    // Empty at the moment, but if there is something you'd like to toggle in the scope of the AppDelegate, add it here
 }
 
 - (void)setupFeatureToggle
@@ -2069,15 +2068,15 @@ static BOOL hideAllToNextSeparator;
         return NO;
     }
     
-    ProjectSettings* project = [[ProjectSettings alloc] initWithSerialization:projectDict];
-    if (!project)
+    ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
+    if (!prjctSettings)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
         return NO;
     }
-    project.projectPath = fileName;
-    [project store];
-    self.projectSettings = project;
+    prjctSettings.projectPath = fileName;
+    [prjctSettings store];
+    self.projectSettings = prjctSettings;
     _resourceCommandController.projectSettings = self.projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     
@@ -2085,11 +2084,17 @@ static BOOL hideAllToNextSeparator;
     [self updateResourcePathsFromProjectSettings];
 
     // Update Node Plugins list
-	[plugInNodeViewHandler showNodePluginsForEngine:project.engine];
+	[plugInNodeViewHandler showNodePluginsForEngine:prjctSettings.engine];
 	
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
-    if (!success) return NO;
-    
+    if (!success)
+    {
+        return NO;
+    }
+
+    ProjectMigrator *migrator = [[ProjectMigrator alloc] initWithProjectSettings:projectSettings];
+    [migrator migrate];
+
     // Load or create language file
     NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
@@ -2098,7 +2103,7 @@ static BOOL hideAllToNextSeparator;
     [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[fileName stringByDeletingLastPathComponent] lastPathComponent]]];
     
     // Open ccb file for project if there is only one
-    NSArray* resPaths = project.absoluteResourcePaths;
+    NSArray* resPaths = prjctSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
         NSString* resPath = [resPaths objectAtIndex:0];
@@ -3340,13 +3345,15 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuPublishSettings:(id)sender
 {
-    if (!projectSettings) return;
-    
-    PublishSettingsWindow* wc = [[PublishSettingsWindow alloc] initWithWindowNibName:@"PublishSettingsWindow"];
-    wc.projectSettings = self.projectSettings;
-    
-    int success = [wc runModalSheetForWindow:window];
-    if (success)
+    if (!projectSettings)
+    {
+        return;
+    }
+
+    ProjectSettingsWindowController *settingsWindowController = [[ProjectSettingsWindowController alloc] init];
+    settingsWindowController.projectSettings = self.projectSettings;
+
+    if ([settingsWindowController runModalSheetForWindow:window])
     {
         [self updateEverythingAfterSettingsChanged];
     }
