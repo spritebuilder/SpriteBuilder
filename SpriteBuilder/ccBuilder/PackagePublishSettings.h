@@ -8,6 +8,7 @@
 
 @property (nonatomic, weak) RMPackage *package;
 
+@property (nonatomic) BOOL inMainProject;
 // If this path  not starting with a / it will be treated as relative to the project dir
 @property (nonatomic, copy) NSString *outputDirectory;
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
@@ -18,4 +19,5 @@
 - (PublishOSSettings *)settingsForOsType:(CCBPublisherOSType)type;
 - (void)setOSSettings:(PublishOSSettings *)osSettings forOsType:(CCBPublisherOSType)type;
 
+- (void)store;
 @end

@@ -24,13 +24,13 @@
     self.settings = [[PublishOSSettings alloc] init];
 }
 
-- (void)testExample
+- (void)testDefaultValuesAndSettingSome
 {
-    _settings.resolution_tablethd = YES;
-    XCTAssertTrue([_settings.resolutions containsObject:@"tablethd"]);
-    XCTAssertFalse([_settings.resolutions containsObject:@"tablet"]);
-    XCTAssertFalse([_settings.resolutions containsObject:@"phone"]);
-    XCTAssertFalse([_settings.resolutions containsObject:@"phonehd"]);
+    _settings.resolution_tablethd = NO;
+    XCTAssertFalse([_settings.resolutions containsObject:@"tablethd"]);
+    XCTAssertTrue([_settings.resolutions containsObject:@"tablet"]);
+    XCTAssertTrue([_settings.resolutions containsObject:@"phone"]);
+    XCTAssertTrue([_settings.resolutions containsObject:@"phonehd"]);
 
     _settings.resolutions = @[@"tablethd", @"phonehd"];
     XCTAssertTrue(_settings.resolution_tablethd);
@@ -41,6 +41,8 @@
 
 - (void)testDictionaryInitializerAndExport
 {
+    _settings.resolution_tablet = NO;
+    _settings.resolution_phonehd = NO;
     _settings.resolution_tablethd = YES;
     _settings.resolution_phone = YES;
     _settings.enabled = YES;

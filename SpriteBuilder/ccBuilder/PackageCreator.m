@@ -4,6 +4,8 @@
 #import "SBErrors.h"
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
+#import "RMPackage.h"
+#import "PackagePublishSettings.h"
 
 
 @implementation PackageCreator
@@ -55,12 +57,23 @@
     {
         [self addIconToPackageFile:fullPath];
 
+        [self createPackageSettings:fullPath];
+
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
         return YES;
     }
 
     [NSError setError:error withError:underlyingErrorAddResPath];
     return NO;
+}
+
+- (void)createPackageSettings:(NSString *)fullPath
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = fullPath;
+
+    PackagePublishSettings *packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:package];
+    [packagePublishSettings store];
 }
 
 @end

@@ -13,7 +13,9 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
     if (self)
     {
+        self.enabled = YES;
         self.audio_quality = DEFAULT_AUDIO_QUALITY;
+        self.resolutions = @[@"tablet", @"tablethd", @"phone", @"phonehd"];
     }
 
     return self;
