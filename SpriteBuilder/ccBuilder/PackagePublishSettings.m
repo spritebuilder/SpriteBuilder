@@ -3,6 +3,7 @@
 #import "CCBPublisherTypes.h"
 #import "ResourcePublishPackageCommand.h"
 #import "PublishOSSettings.h"
+#import "MiscConstants.h"
 
 NSString *const KEY_IN_MAIN_PROJECT = @"inMainProject";
 NSString *const KEY_OS_SETTINGS = @"osSettings";
@@ -32,7 +33,7 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
         self.package = package;
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
         self.inMainProject = YES;
-        self.outputDirectory = @"Published-Packages";
+        self.outputDirectory = DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeIOS]] = [[PublishOSSettings alloc] init];
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeAndroid]] = [[PublishOSSettings alloc] init];

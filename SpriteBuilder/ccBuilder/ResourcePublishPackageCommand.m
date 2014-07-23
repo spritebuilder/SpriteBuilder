@@ -71,6 +71,7 @@
 - (void)publishPackage
 {
     self.publisherController = [[CCBPublisherController alloc] init];
+    _settings.outputDirectory = _publishDirectory;
 
     _publisherController.publishMainProject = NO;
     _publisherController.projectSettings = _projectSettings;
