@@ -47,7 +47,6 @@
 #import "PlugInExport.h"
 #import "TexturePropertySetter.h"
 #import "PositionPropertySetter.h"
-#import "PublishTypeAccessoryView.h"
 #import "ResourceManager.h"
 #import "GuidesLayer.h"
 #import "RulersLayer.h"
