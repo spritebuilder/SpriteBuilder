@@ -76,20 +76,44 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
     _publishSettingsForOsType[[self osTypeToString:type]] = osSettings;
 }
 
-- (void)store
+- (BOOL)load
+{
+    NSString *fullPath = [_package.dirPath stringByAppendingPathComponent:@"Package.plist"];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:fullPath];
+
+    if (!dict)
+    {
+        return NO;
+    }
+
+    self.outputDirectory = dict[KEY_OUTPUTDIR];
+    self.inMainProject = [dict[KEY_IN_MAIN_PROJECT] boolValue];
+    self.publishEnvironment = (CCBPublishEnvironment) [dict[KEY_PUBLISH_ENV] integerValue];
+
+    for (NSString *osType in dict[KEY_OS_SETTINGS])
+    {
+        NSDictionary *dictOsSettings = dict[KEY_OS_SETTINGS][osType];
+        PublishOSSettings *publishOSSettings = [[PublishOSSettings alloc] initWithDictionary:dictOsSettings];
+        _publishSettingsForOsType[osType] = publishOSSettings;
+    }
+
+    return YES;
+}
+
+- (BOOL)store
 {
     NSAssert(_package != nil, @"package must not be nil");
 
     NSDictionary *dict = [self toDictionary];
-    NSString *fullPath = [[_package fullPath] stringByAppendingPathComponent:@"Package.plist"];
-    [dict writeToFile:fullPath atomically:YES];
+    NSString *fullPath = [_package.dirPath stringByAppendingPathComponent:@"Package.plist"];
+    return [dict writeToFile:fullPath atomically:YES];
 }
 
 - (NSDictionary *)toDictionary
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
-    result[KEY_IN_MAIN_PROJECT] = @(YES);
+    result[KEY_IN_MAIN_PROJECT] = @(_inMainProject);
     result[KEY_OUTPUTDIR] = _outputDirectory;
     result[KEY_PUBLISH_ENV] = @(_publishEnvironment);
     result[KEY_OS_SETTINGS] = [NSMutableDictionary dictionary];

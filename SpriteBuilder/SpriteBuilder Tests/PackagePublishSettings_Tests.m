@@ -10,11 +10,13 @@
 #import "PackagePublishSettings.h"
 #import "RMPackage.h"
 #import "PublishOSSettings.h"
+#import "FileSystemTestCase.h"
+#import "SBAssserts.h"
 
-@interface PackagePublishSettings_Tests : XCTestCase
+@interface PackagePublishSettings_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) RMPackage *package;
-@property (nonatomic, strong) PackagePublishSettings *packageSettings;
+@property (nonatomic, strong) PackagePublishSettings *packagePublishSettings;
 
 @end
 
@@ -25,24 +27,70 @@
     [super setUp];
 
     self.package = [[RMPackage alloc] init];
-    _package.dirPath = @"/foo/project.spritebuilder/Packages/mypackage.sbpack";
+    _package.dirPath = [self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack"];
 
-    self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
+    self.packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
+
+    [self createFolders:@[@"/foo/project.spritebuilder/Packages/mypackage.sbpack"]];
 }
 
-- (void)testInitialValues
+- (void)testInitialValuesKVCPaths
 {
-    PublishOSSettings *osSettingsIOS = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     XCTAssertNotNil(osSettingsIOS);
 
-    PublishOSSettings *osSettingsIOSKVC = [_packageSettings valueForKeyPath:@"osSettings.ios"];
+    PublishOSSettings *osSettingsIOSKVC = [_packagePublishSettings valueForKeyPath:@"osSettings.ios"];
     XCTAssertNotNil(osSettingsIOSKVC);
 
-    PublishOSSettings *osSettingsAndroid = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    PublishOSSettings *osSettingsAndroid = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertNotNil(osSettingsAndroid);
 
-    PublishOSSettings *osSettingsAndroidKVC = [_packageSettings valueForKeyPath:@"osSettings.android"];
+    PublishOSSettings *osSettingsAndroidKVC = [_packagePublishSettings valueForKeyPath:@"osSettings.android"];
     XCTAssertNotNil(osSettingsAndroidKVC);
 }
+
+- (void)testPersistency
+{
+    _packagePublishSettings.outputDirectory = @"foo";
+    _packagePublishSettings.inMainProject = NO;
+    _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
+
+    PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    osSettingsIOS.enabled = NO;
+    osSettingsIOS.audio_quality = 8;
+    osSettingsIOS.resolutions = @[@"phone"];
+    [_packagePublishSettings setOSSettings:osSettingsIOS forOsType:kCCBPublisherOSTypeIOS];
+
+    PublishOSSettings *osSettingsAndroid = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    osSettingsAndroid.enabled = YES;
+    osSettingsAndroid.audio_quality = 2;
+    osSettingsAndroid.resolutions = @[@"tablethd"];
+    [_packagePublishSettings setOSSettings:osSettingsAndroid forOsType:kCCBPublisherOSTypeAndroid];
+
+    [_packagePublishSettings store];
+
+    [self assertFileExists:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"];
+
+
+    PackagePublishSettings *settingsLoaded = [[PackagePublishSettings alloc] initWithPackage:_package];
+    [settingsLoaded load];
+
+    XCTAssertEqual(_packagePublishSettings.inMainProject, settingsLoaded.inMainProject);
+    SBAssertStringsEqual(_packagePublishSettings.outputDirectory, settingsLoaded.outputDirectory);
+    XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
+
+    PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
+    XCTAssertEqual(osSettingsAndroidLoaded.enabled, osSettingsAndroid.enabled);
+    XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
+    XCTAssertTrue([osSettingsAndroidLoaded.resolutions containsObject:@"tablethd"]);
+    XCTAssertFalse([osSettingsAndroidLoaded.resolutions containsObject:@"tablet"]);
+
+    PublishOSSettings *osSettingsIOSLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeIOS];
+    XCTAssertEqual(osSettingsIOSLoaded.enabled, osSettingsIOS.enabled);
+    XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
+    XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:@"phone"]);
+    XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:@"tablethd"]);
+}
+
 
 @end

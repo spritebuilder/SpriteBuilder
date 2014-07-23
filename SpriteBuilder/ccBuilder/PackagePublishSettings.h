@@ -19,5 +19,7 @@
 - (PublishOSSettings *)settingsForOsType:(CCBPublisherOSType)type;
 - (void)setOSSettings:(PublishOSSettings *)osSettings forOsType:(CCBPublisherOSType)type;
 
-- (void)store;
+- (BOOL)load;
+- (BOOL)store;
+
 @end
