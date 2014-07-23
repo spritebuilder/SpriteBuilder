@@ -127,8 +127,8 @@
 		8341326B18DADF9E0088FFAB /* optipng in Resources */ = {isa = PBXBuildFile; fileRef = 8341326A18DADF9E0088FFAB /* optipng */; };
 		83599E9A1975470D008283EC /* photoshop.psd in Resources */ = {isa = PBXBuildFile; fileRef = 83599E991975470D008283EC /* photoshop.psd */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
-		836EA850197E6D0800D3084A /* PackageExportAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836EA84F197E6D0800D3084A /* PackageExportAccessoryView.xib */; };
-		836EA853197E6D2800D3084A /* PackageExportAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836EA852197E6D2800D3084A /* PackageExportAccessoryView.m */; };
+		836EA850197E6D0800D3084A /* PackagePublishAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836EA84F197E6D0800D3084A /* PackagePublishAccessoryView.xib */; };
+		836EA853197E6D2800D3084A /* PackagePublishAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836EA852197E6D2800D3084A /* PackagePublishAccessoryView.m */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		8392007018ED91BC00B6C429 /* Cocos2dUpdater+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006E18ED91BC00B6C429 /* Cocos2dUpdater+Errors.m */; };
 		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
@@ -1404,9 +1404,9 @@
 		8341326A18DADF9E0088FFAB /* optipng */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = optipng; sourceTree = "<group>"; };
 		83599E991975470D008283EC /* photoshop.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = photoshop.psd; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		836EA84F197E6D0800D3084A /* PackageExportAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PackageExportAccessoryView.xib; sourceTree = "<group>"; };
-		836EA851197E6D2800D3084A /* PackageExportAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PackageExportAccessoryView.h; path = ../../../../../Documents/PackageExportAccessoryView.h; sourceTree = "<group>"; };
-		836EA852197E6D2800D3084A /* PackageExportAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PackageExportAccessoryView.m; path = ../../../../../Documents/PackageExportAccessoryView.m; sourceTree = "<group>"; };
+		836EA84F197E6D0800D3084A /* PackagePublishAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PackagePublishAccessoryView.xib; sourceTree = "<group>"; };
+		836EA851197E6D2800D3084A /* PackagePublishAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PackagePublishAccessoryView.h; path = ../../../../../Documents/PackagePublishAccessoryView.h; sourceTree = "<group>"; };
+		836EA852197E6D2800D3084A /* PackagePublishAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PackagePublishAccessoryView.m; path = ../../../../../Documents/PackagePublishAccessoryView.m; sourceTree = "<group>"; };
 		8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdater.h; sourceTree = "<group>"; };
 		8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocos2dUpdater.m; sourceTree = "<group>"; };
 		8392006D18ED91BC00B6C429 /* Cocos2dUpdater+Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Cocos2dUpdater+Errors.h"; sourceTree = "<group>"; };
@@ -3550,9 +3550,9 @@
 				E525F743A9F069A88BFDCE66 /* PackageCreator.h */,
 				E525F5FEC6B4AEDEC9E53CBC /* PackagePublishSettings.h */,
 				E525FBEA7BBBE5081391D9E0 /* PackagePublishSettings.m */,
-				836EA84F197E6D0800D3084A /* PackageExportAccessoryView.xib */,
-				836EA851197E6D2800D3084A /* PackageExportAccessoryView.h */,
-				836EA852197E6D2800D3084A /* PackageExportAccessoryView.m */,
+				836EA84F197E6D0800D3084A /* PackagePublishAccessoryView.xib */,
+				836EA851197E6D2800D3084A /* PackagePublishAccessoryView.h */,
+				836EA852197E6D2800D3084A /* PackagePublishAccessoryView.m */,
 				E525F3CFE241FFCE80D11336 /* PublishOSSettings.m */,
 				E525FDFA61800BFD2178571A /* PublishOSSettings.h */,
 			);
@@ -6068,7 +6068,7 @@
 				E36ECD6515869779003C177E /* seq-keyframe-sel.png in Resources */,
 				E36ECD6615869779003C177E /* seq-keyframe.png in Resources */,
 				E39B63A11587E56D009BDE38 /* seq-row-0-bg.png in Resources */,
-				836EA850197E6D0800D3084A /* PackageExportAccessoryView.xib in Resources */,
+				836EA850197E6D0800D3084A /* PackagePublishAccessoryView.xib in Resources */,
 				E39B63A21587E56D009BDE38 /* seq-row-1-bg.png in Resources */,
 				E39B63A31587E56D009BDE38 /* seq-row-n-bg.png in Resources */,
 				E3A0ED52158FE3AB000BDF4B /* btn-dropdown.png in Resources */,
@@ -6818,7 +6818,7 @@
 				E525FACCFCFDC3FE00EB9A6B /* PackageUtil.m in Sources */,
 				E525F47301A5C8C234262F36 /* PackageRemover.m in Sources */,
 				E525FC5DE242A8EB373D882A /* PackageExporter.m in Sources */,
-				836EA853197E6D2800D3084A /* PackageExportAccessoryView.m in Sources */,
+				836EA853197E6D2800D3084A /* PackagePublishAccessoryView.m in Sources */,
 				E525F413EBF9FE7A802A283C /* PackageCreator.m in Sources */,
 				E525F308447A45DFEE6C23EE /* ProjectMigrator.m in Sources */,
 				E525F39657967047967120FC /* PackageMigrator.m in Sources */,

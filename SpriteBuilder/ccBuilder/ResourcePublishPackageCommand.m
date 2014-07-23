@@ -10,14 +10,14 @@
 #import "PackagePublishSettings.h"
 #import "PublishOSSettings.h"
 #import "ProjectSettings+Convenience.h"
-#import "PackageExportAccessoryView.h"
+#import "PackagePublishAccessoryView.h"
 
 
 @interface ResourcePublishPackageCommand()
 
 @property (nonatomic, strong) TaskStatusWindow *modalTaskStatusWindow;
 @property (nonatomic, strong) CCBPublisherController *publisherController;
-@property (nonatomic, strong) PackageExportAccessoryView *accessoryView;
+@property (nonatomic, strong) PackagePublishAccessoryView *accessoryView;
 
 @end
 
@@ -141,14 +141,18 @@ NSString *const KEY_USERDEFAULTS_ACCESSORYSETTINGS = @"package.publish.accessory
 - (void)addAccessoryViewToPanel:(NSOpenPanel *)openPanel
 {
     NSArray *topObjects;
-    [[NSBundle mainBundle] loadNibNamed:@"PackageExportAccessoryView" owner:self topLevelObjects:&topObjects];
+    [[NSBundle mainBundle] loadNibNamed:@"PackagePublishAccessoryView" owner:self topLevelObjects:&topObjects];
     for (id object in topObjects)
     {
-        if ([object isKindOfClass:[PackageExportAccessoryView class]])
+        if ([object isKindOfClass:[PackagePublishAccessoryView class]])
         {
             self.accessoryView = object;
             openPanel.accessoryView = _accessoryView;
-            break;
+
+            // TODO: Bind this to a #define or whatever will be used for SBPro
+            _accessoryView.showAndroidSettings = YES;
+
+            return;
         }
     }
 }
