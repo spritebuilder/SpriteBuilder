@@ -1,7 +1,6 @@
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
-
 NSString *const KEY_ENABLED = @"enabled";
 NSString *const KEY_RESOLUTIONS = @"resolutions";
 NSString *const KEY_AUDIO_QUALITY = @"audio_quality";

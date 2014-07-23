@@ -8,6 +8,7 @@
 #import "RMPackage.h"
 #import "PackagePublishSettings.h"
 #import "PublishOSSettings.h"
+#import "NSString+RelativePath.h"
 
 @interface CCBPublisherController()
 
@@ -103,8 +104,8 @@
                                                           error:(NSError **)error
 {
     NSString *packageDirName = [NSString stringWithFormat:@"%@-%@-%@", settings.package.name, [self osTypeToString:osType], resolution];
-    NSString *fullPath = [settings.outputDirectory stringByAppendingPathComponent:packageDirName];
-
+    NSString *fullPathToOutputDir = [settings.outputDirectory absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
+    NSString *fullPath = [fullPathToOutputDir stringByAppendingPathComponent:packageDirName];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager createDirectoryAtPath:fullPath withIntermediateDirectories:YES attributes:nil error:error])

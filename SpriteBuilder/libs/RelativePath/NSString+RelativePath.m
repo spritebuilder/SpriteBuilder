@@ -12,6 +12,11 @@
 
 - (NSString *)absolutePathFromBaseDirPath:(NSString *)baseDirPath
 {
+    if ([self hasPrefix:@"/"])
+    {
+        return self;
+    }
+
     if ([self hasPrefix:@"~"]) {
         return [self stringByExpandingTildeInPath];
     }

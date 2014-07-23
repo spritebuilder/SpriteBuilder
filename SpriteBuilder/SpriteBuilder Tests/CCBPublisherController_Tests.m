@@ -39,7 +39,7 @@
     _package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
 
     self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
-    _packageSettings.outputDirectory = [self fullPathForFile:@"Published-Packages"];
+    _packageSettings.outputDirectory = @"../Published-Packages";
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     iosSettings.resolution_tablethd = YES;
