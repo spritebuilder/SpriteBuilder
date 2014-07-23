@@ -31,12 +31,16 @@
 @synthesize resolution;
 @synthesize fatal;
 
-+ (NSString*) formatTargetType:(int)tt
++ (NSString*)formatOsType:(int)osType
 {
-    if (tt == kCCBPublisherOSTypeHTML5) return @"HTML5";
-    if (tt == kCCBPublisherOSTypeIOS) return @"iOS";
-    if (tt == kCCBPublisherOSTypeAndroid) return @"Android";
-    return @"Undefined";
+    switch (osType)
+    {
+        case kCCBPublisherOSTypeHTML5: return @"HTML5";
+        case kCCBPublisherOSTypeIOS: return @"iOS";
+        case kCCBPublisherOSTypeAndroid: return @"Android";
+        case kCCBPublisherOSTypeNone: return @"General";
+        default: return @"undefined";
+    }
 }
 
 @dynamic description;
@@ -49,7 +53,7 @@
     if(self.relatedFile) relaventFile = [NSString stringWithFormat:@" (%@)", self.relatedFile];
     
     
-    return [NSString stringWithFormat:@"%@%@%@: %@", [CCBWarning formatTargetType:self.osType], resString, relaventFile, self.message];
+    return [NSString stringWithFormat:@"%@%@%@: %@", [CCBWarning formatOsType:self.osType], resString, relaventFile, self.message];
 }
 
 @end

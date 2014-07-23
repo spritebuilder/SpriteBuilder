@@ -29,14 +29,13 @@
 {
     NSString* message;
     NSString* relatedFile;
-    CCBPublisherOSType osType;
     NSString* resolution;
     
     BOOL fatal;
 }
 @property (nonatomic,copy) NSString* message;
 @property (nonatomic,copy) NSString* relatedFile;
-@property (nonatomic,assign) CCBPublisherOSType osType;
+@property (nonatomic) CCBPublisherOSType osType;
 @property (nonatomic,copy) NSString* resolution;
 @property (nonatomic,readonly) NSString* description;
 

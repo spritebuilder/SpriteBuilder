@@ -8,6 +8,7 @@ typedef enum {
     kCCBPublisherOSTypeHTML5 = 0,
     kCCBPublisherOSTypeIOS = 1,
     kCCBPublisherOSTypeAndroid = 2,
+    kCCBPublisherOSTypeNone = 1000,
 } CCBPublisherOSType;
 
 typedef enum
