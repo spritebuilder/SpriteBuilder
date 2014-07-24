@@ -78,4 +78,32 @@
     XCTAssertTrue([referenceMDate isEqualToDate:mdateOfFile]);
 }
 
+- (void)testCreateDirectories
+{
+    _operation.createDirectories = YES;
+
+    [self createEmptyFiles:@[@"in.zip"]];
+
+    _operation.zipOutputPath  = [self fullPathForFile:@"foo/baa/out.zip"];
+
+    [_operation start];
+
+
+    [self assertFileExists:@"foo/baa/out.zip"];
+}
+
+- (void)testWthoutCreateDirectories
+{
+    _operation.createDirectories = NO;
+
+    [self createEmptyFiles:@[@"in.zip"]];
+
+    _operation.zipOutputPath  = [self fullPathForFile:@"foo/baa/out.zip"];
+
+    [_operation start];
+
+
+    [self assertFileDoesNotExist:@"foo/baa/out.zip"];
+}
+
 @end

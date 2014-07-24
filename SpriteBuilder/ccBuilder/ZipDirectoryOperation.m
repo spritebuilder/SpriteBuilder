@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "ZipDirectoryOperation.h"
 #import "PublishingTaskStatusProgress.h"
 #import "CCBWarnings.h"
@@ -30,8 +31,12 @@
 
 - (void)zipDirectory
 {
-    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Zipping %@...", [[self resolvedZipOutputPath] lastPathComponent]]];
+    NSString *resolvedOutputPath = [self resolvedZipOutputPath];
+
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Zipping %@...", [resolvedOutputPath lastPathComponent]]];
     self.task = [[NSTask alloc] init];
+
+    [self createDirectoriesIfNeeded:resolvedOutputPath];
 
     [_task setCurrentDirectoryPath:[_inputPath stringByDeletingLastPathComponent]];
     [_task setLaunchPath:@"/usr/bin/zip"];
@@ -39,7 +44,7 @@
             @"-dc",
             @"-r",
             [NSString stringWithFormat:@"-%lu", _compression],
-            [self resolvedZipOutputPath],
+            resolvedOutputPath,
             [_inputPath lastPathComponent]
     ]];
 
@@ -73,6 +78,24 @@
         NSString *stdErrOutput = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSString *warningDescription = [NSString stringWithFormat:@"zip exited with code %d, error: %@", status, stdErrOutput];
         [_warnings addWarningWithDescription:warningDescription];
+    }
+
+    NSLog(@"Zipping done: %@", [self resolvedZipOutputPath]);
+}
+
+- (void)createDirectoriesIfNeeded:(NSString *)resolvedOutputPath
+{
+    if (_createDirectories)
+    {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *error;
+        if (![fileManager createDirectoryAtPath:[resolvedOutputPath stringByDeletingLastPathComponent]
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:&error])
+        {
+            NSLog(@"[ZIPOPERATION] failed to create directories: \"%@\" with error %@", [resolvedOutputPath stringByDeletingLastPathComponent], error);
+        }
     }
 }
 
