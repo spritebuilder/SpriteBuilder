@@ -129,8 +129,11 @@
             self.accessoryView = object;
             openPanel.accessoryView = _accessoryView;
 
-            // TODO: Bind this to a #define or whatever will be used for SBPro
+            #ifdef SPRITEBUILDER_PRO
             _accessoryView.showAndroidSettings = YES;
+            #else
+            _accessoryView.showAndroidSettings = NO;
+            #endif
 
             return;
         }
