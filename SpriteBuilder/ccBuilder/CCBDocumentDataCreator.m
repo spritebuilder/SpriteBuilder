@@ -140,7 +140,6 @@
     {
         [dict setObject:_document.exportPlugIn forKey:@"exportPlugIn"];
         [dict setObject:_document.exportPath forKey:@"exportPath"];
-        [dict setObject:@(_document.exportFlattenPaths) forKey:@"exportFlattenPaths"];
     }
 }
 

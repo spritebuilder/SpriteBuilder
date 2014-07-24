@@ -55,7 +55,6 @@
         self.data = dictionary;
         self.exportPath = [dictionary objectForKey:@"exportPath"];
         self.exportPlugIn = [dictionary objectForKey:@"exportPlugIn"];
-        self.exportFlattenPaths = [dictionary[@"exportFlattenPaths"] boolValue];
         self.UUID = [dictionary[@"UUID"] unsignedIntegerValue];
 
         [self fixupUUID];

@@ -31,7 +31,6 @@
 @property (nonatomic, copy) NSString *filePath;
 @property (nonatomic, copy) NSString *exportPath;
 @property (nonatomic, copy) NSString *exportPlugIn;
-@property (nonatomic, assign) BOOL exportFlattenPaths;
 @property (nonatomic, strong) NSMutableDictionary *data;
 @property (nonatomic, strong) NSUndoManager *undoManager;
 @property (nonatomic, copy) NSString *lastEditedProperty;

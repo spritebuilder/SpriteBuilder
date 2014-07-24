@@ -65,7 +65,6 @@
 @synthesize isSafariExist;
 @synthesize isChromeExist;
 @synthesize isFirefoxExist;
-@synthesize flattenPaths;
 @synthesize publishToZipFile;
 @synthesize onlyPublishCCBs;
 @synthesize exporter;
@@ -94,7 +93,6 @@
     self.publishDirectoryAndroid = @"Published-Android";
 
     self.onlyPublishCCBs = NO;
-    self.flattenPaths = NO;
     self.publishToZipFile = NO;
 
     self.deviceOrientationLandscapeLeft = YES;
@@ -187,7 +185,6 @@
         self.publishAudioQuality_android = DEFAULT_AUDIO_QUALITY;
     }
 
-    self.flattenPaths = [[dict objectForKey:@"flattenPaths"] boolValue];
     self.publishToZipFile = [[dict objectForKey:@"publishToZipFile"] boolValue];
     self.onlyPublishCCBs = [[dict objectForKey:@"onlyPublishCCBs"] boolValue];
     self.exporter = [dict objectForKey:@"exporter"];
@@ -280,8 +277,7 @@
     
     [dict setObject:[NSNumber numberWithInt:publishAudioQuality_ios] forKey:@"publishAudioQuality_ios"];
     [dict setObject:[NSNumber numberWithInt:publishAudioQuality_android] forKey:@"publishAudioQuality_android"];
-    
-    [dict setObject:[NSNumber numberWithBool:flattenPaths] forKey:@"flattenPaths"];
+
     [dict setObject:[NSNumber numberWithBool:publishToZipFile] forKey:@"publishToZipFile"];
     [dict setObject:[NSNumber numberWithBool:onlyPublishCCBs] forKey:@"onlyPublishCCBs"];
     [dict setObject:self.exporter forKey:@"exporter"];

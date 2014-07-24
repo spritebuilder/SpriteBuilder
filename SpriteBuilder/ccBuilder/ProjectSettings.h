@@ -74,8 +74,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
     BOOL isSafariExist;
     BOOL isChromeExist;
     BOOL isFirefoxExist;
-    
-    BOOL flattenPaths;
+
     BOOL publishToZipFile;
     BOOL onlyPublishCCBs;
     NSString* exporter;
@@ -125,7 +124,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic,assign) BOOL isChromeExist;
 @property (nonatomic,assign) BOOL isFirefoxExist;
 
-@property (nonatomic, assign) BOOL flattenPaths;
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
 @property (nonatomic, readonly) NSArray* absoluteResourcePaths;

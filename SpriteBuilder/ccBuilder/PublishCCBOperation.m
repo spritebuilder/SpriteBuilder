@@ -88,7 +88,6 @@
     [self validateJointsInDocument:doc];
 
     // Export file
-    plugIn.flattenPaths = _projectSettings.flattenPaths;
     plugIn.projectSettings = _projectSettings;
     plugIn.delegate = self;
     NSData *data = [plugIn exportDocument:doc];

@@ -33,7 +33,7 @@
     return NULL;
 }
 
-- (NSData*) exportDocument:(NSDictionary *)doc flattenPaths:(BOOL) flattenPaths
+- (NSData *)exportDocument:(NSDictionary *)doc
 {
     return NULL;
 }

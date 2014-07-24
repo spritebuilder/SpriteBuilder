@@ -152,7 +152,7 @@
 {
     _warnings.currentOSType = target.osType;
 
-    target.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
+    target.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] init];
 
     for (NSString *aDir in target.inputDirectories)
     {

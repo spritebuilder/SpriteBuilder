@@ -153,7 +153,6 @@
       @"deviceOrientationPortrait":@(NO),
       @"publishDirectory":@"Source/Resources/Published-iOS",
       @"resourceAutoScaleFactor":@(0),
-      @"flattenPaths":@(NO),
       @"resourceProperties":@{
          @"":@{
             @"previewFolderHidden":@(YES)
@@ -252,7 +251,6 @@
     // This a convention, if it's read as 0 has to become 4
     XCTAssertEqual(project.resourceAutoScaleFactor, 4);
     SBAssertStringsEqual(project.publishDirectory, @"Source/Resources/Published-iOS");
-    XCTAssertFalse(project.flattenPaths);
 
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"Source/Resources/Published-Android");
     XCTAssertEqual(project.defaultOrientation, 0);
@@ -338,7 +336,6 @@
     SBAssertStringsEqual(projectSettings.publishDirectoryAndroid, @"Published-Android");
 
     XCTAssertFalse(projectSettings.onlyPublishCCBs);
-    XCTAssertFalse(projectSettings.flattenPaths);
     XCTAssertFalse(projectSettings.publishToZipFile);
 
     XCTAssertTrue(projectSettings.deviceOrientationLandscapeLeft);

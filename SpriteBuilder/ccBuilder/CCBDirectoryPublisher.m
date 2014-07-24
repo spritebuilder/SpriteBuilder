@@ -172,7 +172,7 @@
 
 - (BOOL)publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath
 {
-	NSString *outDir = [self outputDirectory:subPath];
+	NSString *outDir = [_outputDir stringByAppendingPathComponent:subPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     BOOL isGeneratedSpriteSheet = [[_projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
@@ -400,21 +400,6 @@
     return;
 }
 
-- (NSString *)outputDirectory:(NSString *)subPath
-{
-	NSString *outDir;
-	if (_projectSettings.flattenPaths
-        && _projectSettings.publishToZipFile)
-    {
-        outDir = _outputDir;
-    }
-    else
-    {
-        outDir = [_outputDir stringByAppendingPathComponent:subPath];
-    }
-	return outDir;
-}
-
 - (void)publishSpriteSheetDir:(NSString *)spriteSheetDir
                     sheetName:(NSString *)spriteSheetName
              publishDirectory:(NSString *)publishDirectory
@@ -449,7 +434,7 @@
 		}
 
         // Note: these lookups are written as intermediate products to generate the final fileLookup.plist
-        PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
+        PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] init];
 
         [self prepareImagesForSpriteSheetPublishing:publishDirectory
                                           outputDir:outputDir
@@ -560,7 +545,7 @@
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
         // Note: these lookups are written as intermediate products to generate the final fileLookup.plist
-        PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
+        PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] init];
 
         [self prepareImagesForSpriteSheetPublishing:publishDirectory
                                           outputDir:outputDir

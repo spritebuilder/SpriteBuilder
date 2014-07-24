@@ -14,7 +14,7 @@
         self.publishEnvironment = kCCBPublishEnvironmentDevelop;
         self.publishedPNGFiles = [NSMutableSet set];
         self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
-        self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:NO];
+        self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] init];
         self.audioQuality = DEFAULT_AUDIO_QUALITY;
     }
 

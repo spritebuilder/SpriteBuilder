@@ -3,18 +3,17 @@
 @interface PublishIntermediateFilesLookup()
 
 @property (nonatomic, strong) NSMutableDictionary *lookup;
-@property (nonatomic) BOOL flattenPaths;
 
 @end
 
+
 @implementation PublishIntermediateFilesLookup
 
-- (instancetype)initWithFlattenPaths:(BOOL)flattenPaths
+- (instancetype)init
 {
     self = [super init];
     if (self)
     {
-        self.flattenPaths = flattenPaths;
         self.lookup = [NSMutableDictionary dictionary];
     }
 
@@ -25,12 +24,6 @@
 {
     NSAssert(src != nil, @"src must not be nil");
     NSAssert(dst != nil, @"dst must not be nil");
-
-    if (_flattenPaths)
-    {
-        src = [src lastPathComponent];
-        dst = [dst lastPathComponent];
-    }
 
     if ([src isEqualToString:dst])
     {

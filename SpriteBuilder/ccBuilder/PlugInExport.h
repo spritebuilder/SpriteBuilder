@@ -32,12 +32,10 @@
     NSString* __weak extension;
     NSString* pluginName;
     ProjectSettings* projectSettings;
-    BOOL flattenPaths;
 }
 
 @property (nonatomic,readonly)NSString* extension;
 @property (nonatomic,strong) NSString* pluginName;
-@property (nonatomic,assign) BOOL flattenPaths;
 @property (nonatomic,strong) ProjectSettings* projectSettings;
 @property (nonatomic,strong) id<CCBPublishDelegate> delegate;
 
