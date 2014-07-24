@@ -40,6 +40,8 @@
     // Fetch email
     NSString* email = _email.stringValue;
     
+	UsageManager * usageManager = [[UsageManager alloc] init];
+	 
     if (!email || [email isEqualToString:@""])
     {
         // The user choose not to sign up
@@ -55,10 +57,11 @@
         }
         
         // Send it to the server
-        [[[UsageManager alloc] init] registerEmail:email];
+        [usageManager registerEmail:email];
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"sbRegisteredEmail"];
+	[usageManager setRegisterdEmailFlag];
+
     [self close];
 }
 

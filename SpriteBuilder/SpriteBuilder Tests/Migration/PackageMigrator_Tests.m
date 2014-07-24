@@ -107,6 +107,7 @@
 - (void)testWithExistingPackagesFolderAndANotInProjectPackageFolderInside
 {
     [self createEmptyFiles:@[@"sprites/asset.png"]];
+
     [self createEmptyFiles:@[@"Packages/sprites.sbpack/smiley.png"]];
 
     [self setProjectsResourcePaths:@[@"sprites"]];
@@ -117,6 +118,7 @@
 
     [self assertFileExists:[@"Packages/sprites" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
+
     [self assertFileDoesNotExist:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"smiley.png"]];
 
     // This is a bit brittle, but should be easily fixed if renaming rules change

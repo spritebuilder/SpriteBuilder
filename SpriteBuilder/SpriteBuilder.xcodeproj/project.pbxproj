@@ -284,8 +284,6 @@
 		92FFB850195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */; };
 		92FFB854195DEA2800E9C96F /* AndroidPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */; };
 		92FFB856195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */; };
-		92FFB859195DEC1100E9C96F /* plugin_installer.py in Resources */ = {isa = PBXBuildFile; fileRef = 92FFB858195DEC1100E9C96F /* plugin_installer.py */; };
-		92FFB85A195DEC7B00E9C96F /* plugin_installer.py in Resources */ = {isa = PBXBuildFile; fileRef = 92FFB858195DEC1100E9C96F /* plugin_installer.py */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -1479,7 +1477,6 @@
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
-		92520731196238D000BFC071 /* SpriteBuilderPro.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SpriteBuilderPro.xcconfig; sourceTree = "<group>"; };
 		9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpriteBuilder.xcconfig; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
@@ -1580,7 +1577,6 @@
 		92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndroidPluginInstaller.h; sourceTree = "<group>"; };
 		92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstaller.m; sourceTree = "<group>"; };
 		92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstall_Tests.m; sourceTree = "<group>"; };
-		92FFB858195DEC1100E9C96F /* plugin_installer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = plugin_installer.py; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -3248,7 +3244,6 @@
 			isa = PBXGroup;
 			children = (
 				9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */,
-				92520731196238D000BFC071 /* SpriteBuilderPro.xcconfig */,
 				E3D08A321524581100E55891 /* README.md */,
 				E3D59118150F50D1004180CA /* AUTHORS */,
 				E395DC7D1511FDF70075979E /* CHANGELOG */,
@@ -3403,7 +3398,6 @@
 		7789ABEF133AB17100CEFCC7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				92FFB857195DEC1100E9C96F /* AndroidPlugin */,
 				8341326918DADF8C0088FFAB /* optipng */,
 				80AD79911863871200B653B7 /* PVRTexTool */,
 				B7D0918717C2C1310007FE7F /* Cocos2d */,
@@ -3817,14 +3811,6 @@
 				92B792C618C92C60007DF895 /* Icon@2x.png */,
 			);
 			path = CCPhysicsSpringJoint;
-			sourceTree = "<group>";
-		};
-		92FFB857195DEC1100E9C96F /* AndroidPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				92FFB858195DEC1100E9C96F /* plugin_installer.py */,
-			);
-			path = AndroidPlugin;
 			sourceTree = "<group>";
 		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
@@ -5890,7 +5876,6 @@
 				9218DF3C1919B04D0033851E /* joint-pivot-mode-bg@2x.png in Resources */,
 				774E4EC3136D98AB0025D0A8 /* select-br.png in Resources */,
 				774E4EC4136D98AB0025D0A8 /* select-pt.png in Resources */,
-				92FFB859195DEC1100E9C96F /* plugin_installer.py in Resources */,
 				774E4EC5136D98AB0025D0A8 /* select-tl.png in Resources */,
 				774E4EC6136D98AB0025D0A8 /* select-tr.png in Resources */,
 				92FFB850195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib in Resources */,
@@ -6226,7 +6211,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92FFB85A195DEC7B00E9C96F /* plugin_installer.py in Resources */,
 				922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */,
 				833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */,
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
