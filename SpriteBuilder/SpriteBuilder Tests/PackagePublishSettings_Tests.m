@@ -20,6 +20,7 @@
 
 @end
 
+
 @implementation PackagePublishSettings_Tests
 
 - (void)setUp
@@ -52,17 +53,16 @@
 - (void)testPersistency
 {
     _packagePublishSettings.outputDirectory = @"foo";
-    _packagePublishSettings.inMainProject = NO;
+    _packagePublishSettings.publishToMainProject = NO;
+    _packagePublishSettings.publishToZip = NO;
     _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
 
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
-    osSettingsIOS.enabled = NO;
     osSettingsIOS.audio_quality = 8;
     osSettingsIOS.resolutions = @[@"phone"];
     [_packagePublishSettings setOSSettings:osSettingsIOS forOsType:kCCBPublisherOSTypeIOS];
 
     PublishOSSettings *osSettingsAndroid = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
-    osSettingsAndroid.enabled = YES;
     osSettingsAndroid.audio_quality = 2;
     osSettingsAndroid.resolutions = @[@"tablethd"];
     [_packagePublishSettings setOSSettings:osSettingsAndroid forOsType:kCCBPublisherOSTypeAndroid];
@@ -75,18 +75,17 @@
     PackagePublishSettings *settingsLoaded = [[PackagePublishSettings alloc] initWithPackage:_package];
     [settingsLoaded load];
 
-    XCTAssertEqual(_packagePublishSettings.inMainProject, settingsLoaded.inMainProject);
+    XCTAssertEqual(_packagePublishSettings.publishToMainProject, settingsLoaded.publishToMainProject);
     SBAssertStringsEqual(_packagePublishSettings.outputDirectory, settingsLoaded.outputDirectory);
     XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
+    XCTAssertEqual(_packagePublishSettings.publishToZip, settingsLoaded.publishToZip);
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
-    XCTAssertEqual(osSettingsAndroidLoaded.enabled, osSettingsAndroid.enabled);
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
     XCTAssertTrue([osSettingsAndroidLoaded.resolutions containsObject:@"tablethd"]);
     XCTAssertFalse([osSettingsAndroidLoaded.resolutions containsObject:@"tablet"]);
 
     PublishOSSettings *osSettingsIOSLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeIOS];
-    XCTAssertEqual(osSettingsIOSLoaded.enabled, osSettingsIOS.enabled);
     XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
     XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:@"phone"]);
     XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:@"tablethd"]);

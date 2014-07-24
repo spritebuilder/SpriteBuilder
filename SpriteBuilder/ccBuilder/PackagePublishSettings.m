@@ -5,7 +5,8 @@
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
-NSString *const KEY_IN_MAIN_PROJECT = @"inMainProject";
+NSString *const KEY_PUBLISH_TO_ZIP = @"publishToZip";
+NSString *const KEY_PUBLISH_TO_MAINPROJECT = @"publishToMainProject";
 NSString *const KEY_OS_SETTINGS = @"osSettings";
 NSString *const KEY_OUTPUTDIR = @"outputDir";
 NSString *const KEY_PUBLISH_ENV = @"publishEnv";
@@ -30,9 +31,11 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 
     if (self)
     {
+        self.publishToZip = YES;
+        self.publishToMainProject = YES;
+
         self.package = package;
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
-        self.inMainProject = YES;
         self.outputDirectory = DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeIOS]] = [[PublishOSSettings alloc] init];
@@ -87,8 +90,9 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
         return NO;
     }
 
+    self.publishToZip = [dict[KEY_PUBLISH_TO_ZIP] boolValue];
+    self.publishToMainProject = [dict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
     self.outputDirectory = dict[KEY_OUTPUTDIR];
-    self.inMainProject = [dict[KEY_IN_MAIN_PROJECT] boolValue];
     self.publishEnvironment = (CCBPublishEnvironment) [dict[KEY_PUBLISH_ENV] integerValue];
 
     for (NSString *osType in dict[KEY_OS_SETTINGS])
@@ -114,7 +118,8 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
-    result[KEY_IN_MAIN_PROJECT] = @(_inMainProject);
+    result[KEY_PUBLISH_TO_ZIP] = @(_publishToZip);
+    result[KEY_PUBLISH_TO_MAINPROJECT] = @(_publishToMainProject);
     result[KEY_OUTPUTDIR] = _outputDirectory;
     result[KEY_PUBLISH_ENV] = @(_publishEnvironment);
     result[KEY_OS_SETTINGS] = [NSMutableDictionary dictionary];

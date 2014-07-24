@@ -44,12 +44,10 @@
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     iosSettings.resolution_tablethd = YES;
     iosSettings.resolution_phone = YES;
-    iosSettings.enabled = YES;
 
     PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
     androidSettings.resolution_tablet = YES;
     androidSettings.resolution_phonehd = YES;
-    androidSettings.enabled = YES;
 
     [self createFolders:@[@"Published-Packages", @"baa.spritebuilder/Packages/foo.sbpack"]];
 

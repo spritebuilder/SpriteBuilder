@@ -45,7 +45,6 @@
     _settings.resolution_phonehd = NO;
     _settings.resolution_tablethd = YES;
     _settings.resolution_phone = YES;
-    _settings.enabled = YES;
     _settings.audio_quality = 7;
 
     NSDictionary *dict = [_settings toDictionary];
@@ -57,7 +56,6 @@
     XCTAssertFalse([publishOSSettings.resolutions containsObject:@"phonehd"]);
 
     XCTAssertEqual(publishOSSettings.audio_quality, 7);
-    XCTAssertTrue(publishOSSettings.enabled);
 }
 
 @end

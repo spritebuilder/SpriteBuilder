@@ -63,7 +63,7 @@
 
 - (void)addPublishingTargetsForPackageSetting:(PackagePublishSettings *)packageSettings osType:(CCBPublisherOSType)osType
 {
-    if (![packageSettings settingsForOsType:osType].enabled)
+    if (!packageSettings.publishToZip)
     {
         return;
     }

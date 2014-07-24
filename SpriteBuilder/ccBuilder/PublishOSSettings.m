@@ -1,7 +1,6 @@
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
-NSString *const KEY_ENABLED = @"enabled";
 NSString *const KEY_RESOLUTIONS = @"resolutions";
 NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
@@ -13,7 +12,6 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
     if (self)
     {
-        self.enabled = YES;
         self.audio_quality = DEFAULT_AUDIO_QUALITY;
         self.resolutions = @[@"tablet", @"tablethd", @"phone", @"phonehd"];
     }
@@ -27,7 +25,6 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
     if (self && dictionary)
     {
-        self.enabled = [dictionary[KEY_ENABLED] boolValue];
         self.audio_quality = [dictionary[KEY_AUDIO_QUALITY] integerValue];
         self.resolutions = dictionary[KEY_RESOLUTIONS];
     }
@@ -40,7 +37,6 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
 
     result[KEY_AUDIO_QUALITY] = @(_audio_quality);
-    result[KEY_ENABLED] = @(_enabled);
     result[KEY_RESOLUTIONS] = self.resolutions;
 
     return result;

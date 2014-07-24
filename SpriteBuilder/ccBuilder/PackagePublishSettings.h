@@ -8,7 +8,9 @@
 
 @property (nonatomic, weak) RMPackage *package;
 
-@property (nonatomic) BOOL inMainProject;
+@property (nonatomic) BOOL publishToZip;
+@property (nonatomic) BOOL publishToMainProject;
+
 // If this path  not starting with a / it will be treated as relative to the project dir
 @property (nonatomic, copy) NSString *outputDirectory;
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
