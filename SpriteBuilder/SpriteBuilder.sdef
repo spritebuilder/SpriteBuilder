@@ -10,10 +10,37 @@
     <!-- specific suite(s) for the application follow... -->
     <suite name="SpriteBuilder Commads" code="SBcm" description="SpriteBuilder commands">
         
+		<enumeration name="configuration" code="SiLv">
+			<cocoa name="Configuration"/>
+			<enumerator name="Release" code="CfgR" description="Release">
+				<cocoa name="Release"/>
+			</enumerator>
+			<enumerator name="Debug" code="CfgD" description="Debug">
+				<cocoa name="Debug"/>
+			</enumerator>
+		</enumeration>
+        
 		<command name="publish" code="SVrbSimp" description="publish currently open project">
 			<cocoa class="SpriteBuilderCommand"/>
 			<result type="boolean" description="always returns YES"/>
 		</command>
+        
+        <class name="application" code="capp"
+            description="SpriteBuilder" inherits="application">
+            
+			<!-- the following names the Objective-C class where Cocoa will look for
+             the property accessor methods for the properties we define for
+             this AppleScript class. -->
+			<cocoa class="NSApplication"/>
+			
+			<!-- properties defined on the main application container -->
+			
+			<property name="configuration" code="Cfgr" description="configuration" type="configuration" access="rw">
+				<cocoa key="configuration"/>
+			</property>
+            
+		</class>
+        
 		
 	</suite>
     

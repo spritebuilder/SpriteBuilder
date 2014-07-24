@@ -9,6 +9,35 @@
 #import "SpriteBuilderCommand.h"
 #import "AppDelegate.h"
 
+enum {
+	kCRelease = 'CfgR',
+	kCDebug = 'CfgD',
+};
+
+@interface NSApplication (SpriteBuilderCommand)
+@property (copy) NSNumber *configuration;
+
+@end
+
+@implementation NSApplication (SpriteBuilderCommand)
+
+- (NSNumber*) configuration {
+    switch ([AppDelegate appDelegate].projectSettings.publishEnvironment) {
+		case PublishEnvironmentDevelop: return [NSNumber numberWithLong:kCDebug];
+        default:
+            return [NSNumber numberWithLong:kCRelease];
+	}
+}
+
+- (void) setConfiguration:(NSNumber*)value {
+    switch ([value longValue]) {
+		case kCRelease: [AppDelegate appDelegate].projectSettings.publishEnvironment = PublishEnvironmentRelease; break;
+		case kCDebug: [AppDelegate appDelegate].projectSettings.publishEnvironment = PublishEnvironmentDevelop; break;
+	}
+}
+
+@end
+
 @implementation SpriteBuilderCommand
 
 - (id)initWithCommandDescription:(NSScriptCommandDescription *)commandDef
