@@ -115,16 +115,23 @@
 
 - (BOOL)doPublish
 {
-    [self removeOldPublishDirIfCacheCleaned];
+    __weak id weakSelf = self;
+    [_publishingQueue addOperationWithBlock:^
+    {
+        [weakSelf removeOldPublishDirIfCacheCleaned];
+    }];
 
     if (![self enqueuePublishOperationsForAllTargets])
     {
         return NO;
     }
 
-    [_projectSettings clearAllDirtyMarkers];
+    [_publishingQueue addOperationWithBlock:^
+    {
+        [_projectSettings clearAllDirtyMarkers];
 
-    [self resetNeedRepublish];
+        [weakSelf resetNeedRepublish];
+    }];
 
     return YES;
 }
@@ -208,11 +215,20 @@
         NSFileManager *fileManager = [NSFileManager defaultManager];
         for (CCBPublishingTarget *target in _publishingTargets)
         {
+            if (!target.directoryToClean)
+            {
+                continue;
+            }
+
             NSError *error;
-            if (![fileManager removeItemAtPath:target.outputDirectory error:&error]
+            if (![fileManager removeItemAtPath:target.directoryToClean error:&error]
                 && error.code != NSFileNoSuchFileError)
             {
                 NSLog(@"Error removing old publishing directory at path \"%@\" with error %@", target.outputDirectory, error);
+            }
+            else
+            {
+                NSLog(@"Removed: %@", target.directoryToClean);
             }
         }
     }
@@ -243,6 +259,7 @@
     operation.compression = target.publishEnvironment == kCCBPublishEnvironmentRelease
         ? PUBLISHING_PACKAGES_ZIP_RELEASE_COMPRESSION
         : PUBLISHING_PACKAGES_ZIP_DEBUG_COMPRESSION;
+    operation.createDirectories = YES;
 
     [_publishingQueue addOperation:operation];
 }

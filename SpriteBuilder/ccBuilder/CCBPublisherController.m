@@ -9,6 +9,7 @@
 #import "PackagePublishSettings.h"
 #import "PublishOSSettings.h"
 #import "NSString+RelativePath.h"
+#import "MiscConstants.h"
 
 @interface CCBPublisherController()
 
@@ -79,6 +80,7 @@
         target.audioQuality = [packageSettings settingsForOsType:osType].audio_quality;
         target.zipOutputPath = [self zipOutputPath:packagePublishName baseDir:packageSettings.outputDirectory];
         target.outputDirectory = [self cachesPath:packagePublishName];
+        target.directoryToClean = packageSettings.outputDirectory;
 
         [_publisher addPublishingTarget:target];
     }
@@ -101,7 +103,7 @@
 - (NSString *)cachesPath:(NSString *)PublishedPackageName
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachesPath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"packages"];
+    NSString *cachesPath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME] stringByAppendingPathComponent:@"packages"];
 
     NSString *result = [self createOutputDirectoryWithPackageName:PublishedPackageName
                                                           baseDir:cachesPath
@@ -171,6 +173,7 @@
     target.inputDirectories = _projectSettings.absoluteResourcePaths;
     target.publishEnvironment = _projectSettings.publishEnvironment;
     target.audioQuality = [_projectSettings audioQualityForOsType:osType];
+    target.directoryToClean = [_projectSettings publishDirForOSType:osType];
 
     [_publisher addPublishingTarget:target];
 }
