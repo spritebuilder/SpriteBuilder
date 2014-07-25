@@ -71,6 +71,7 @@
 {
     self.publisherController = [[CCBPublisherController alloc] init];
     _settings.customOutputDirectory = _publishDirectory;
+    _settings.publishToCustomOutputDirectory = YES;
 
     _publisherController.publishMainProject = NO;
     _publisherController.projectSettings = _projectSettings;
