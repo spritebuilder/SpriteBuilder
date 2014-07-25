@@ -7457,6 +7457,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
+				SBPRO_PRIVATE_KEY = "fake_private_key___________________________=";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -7493,6 +7494,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
+				SBPRO_PRIVATE_KEY = "fake_private_key___________________________=";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -7640,6 +7642,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
+				SBPRO_PRIVATE_KEY = "fake_private_key___________________________=";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Testing;

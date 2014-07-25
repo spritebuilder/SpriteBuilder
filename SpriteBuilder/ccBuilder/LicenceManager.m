@@ -9,10 +9,10 @@
 #import "LicenceManager.h"
 #import "CocoaSecurity.h"
 
-NSString * kPrivateKey = @"M9LDDVAKHiEueQLcaGkPq+SOBJPllzwhGTkLPsaDrjM=";
+//NSString * kPrivateKey = @"M9LDDVAKHiEueQLcaGkPq+SOBJPllzwhGTkLPsaDrjM=";
 
 static NSString * kLicenseUserSettingsKey = @"licenseUserSettings";
-
+static NSString * kSBProPrivateKey = @"SBProPrivateKey";
 @implementation LicenceManager
 {
 	SuccessCallback successCallback;
@@ -52,13 +52,16 @@ static NSString * kLicenseUserSettingsKey = @"licenseUserSettings";
 
 +(NSDictionary*)getLicenseDetails
 {
+ 
+	NSString * privateKey = [NSString stringWithUTF8String:SBPRO_PRIVATE_KEY];
+	
 	NSDictionary * licenseSettings = [self licenseUserSettings];
 	if(licenseSettings == nil)
 		return nil;
 	
 	NSString * registrationKey = licenseSettings[@"licenseKey"];
 	
-	CocoaSecurityResult * result = [CocoaSecurity aesDecryptWithBase64:registrationKey key:kPrivateKey];
+	CocoaSecurityResult * result = [CocoaSecurity aesDecryptWithBase64:registrationKey key:privateKey];
 
 	NSError * error;
 	
@@ -83,14 +86,16 @@ static NSString * kLicenseUserSettingsKey = @"licenseUserSettings";
 	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:licenseDetails options:NSJSONWritingPrettyPrinted error:&error];
 	NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 	
-	CocoaSecurityResult * result = [CocoaSecurity aesEncrypt:jsonString key:kPrivateKey];
+	NSString * privateKey = [NSString stringWithUTF8String:SBPRO_PRIVATE_KEY];
+	
+	CocoaSecurityResult * result = [CocoaSecurity aesEncrypt:jsonString key:privateKey];
 	NSLog(@"StringKey : %@", result.base64);
 	
 	[[NSUserDefaults standardUserDefaults] setObject:@{@"licenseKey" : result.base64} forKey:kLicenseUserSettingsKey];
 
 }
 
-#ifdef DEBUG
+
 
 +(void)encodeTestData
 {
@@ -158,8 +163,6 @@ static NSString * kLicenseUserSettingsKey = @"licenseUserSettings";
 
 
 
-#endif
-												 
 												 
 												 
 @end

@@ -9,6 +9,7 @@
 #import "LicenseWindow.h"
 
 @interface LicenseWindow ()
+@property (weak) IBOutlet NSButton *continueButton;
 
 @end
 
@@ -26,8 +27,19 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+	
+	[self.continueButton setEnabled:NO];
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+
+}
+- (IBAction)onHandleLoginToSBSite:(id)sender {
+	
+}
+
+- (IBAction)onHandleContinue:(id)sender {
+	
+}
+- (IBAction)onHandleQuit:(id)sender {
 }
 
 @end

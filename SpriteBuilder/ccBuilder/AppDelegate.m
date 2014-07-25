@@ -644,8 +644,10 @@ typedef enum
     // Open registration window
     if(![self openRegistration])
 	{
-		    [[NSApplication sharedApplication] terminate:self];
+		[[NSApplication sharedApplication] terminate:self];
 	}
+	
+	[LicenceManager test];
 	
 	
 	
