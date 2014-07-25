@@ -214,5 +214,6 @@ typedef enum
 
 // *** Misc ***
 - (NSString* ) getVersion;
+- (NSDictionary *)getVersionDictionary;
 
 @end

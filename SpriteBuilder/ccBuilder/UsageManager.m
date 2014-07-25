@@ -186,12 +186,8 @@ static NSString *urlEncode(id object) {
 	NSMutableDictionary * mutableData = [NSMutableDictionary dictionaryWithDictionary:data];
 	
 	
-	   
     // Version.txt information
-    NSData* versionData = [[projectSettings getVersion] dataUsingEncoding:NSUTF8StringEncoding];
-	NSError * error;
-	NSDictionary * versionDict = [NSJSONSerialization JSONObjectWithData:versionData options:0x0 error:&error];
-	[mutableData addEntriesFromDictionary:versionDict];
+	[mutableData addEntriesFromDictionary:[projectSettings getVersionDictionary]];
 	
 		
 	NSString * serialNumber = [self serialNumber];
