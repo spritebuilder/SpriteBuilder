@@ -27,11 +27,7 @@
 
 @class ProjectSettings;
 
-@interface PublishSettingsWindow : CCBModalSheetController
-{
-    ProjectSettings* projectSettings;
-    IBOutlet NSArrayController* resDirArrayController;
-}
+@interface ProjectSettingsWindowController : CCBModalSheetController
 
 @property (nonatomic,strong) ProjectSettings* projectSettings;
 @property (weak) IBOutlet NSButton *publishiPhoneCheckbox;

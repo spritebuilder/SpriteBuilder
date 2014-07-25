@@ -25,3 +25,4 @@ extern NSInteger const SBRenamePackageGenericError;
 extern NSInteger const SBPathWithoutPackageSuffix;
 extern NSInteger const SBNoPackagePathsToImport;
 extern NSInteger const SBPackageAlreayInProject;
+extern NSInteger const SBMigrationError;

@@ -23,11 +23,6 @@
 
 @implementation ResourceContextMenu_Tests
 
-- (void)setUp
-{
-    [FeatureToggle sharedFeatures].packages = YES;
-}
-
 - (void)testContextWithEmptySelection
 {
     ResourceContextMenu *resourceContextMenu = [[ResourceContextMenu alloc] initWithActionTarget:nil resources:@[]];

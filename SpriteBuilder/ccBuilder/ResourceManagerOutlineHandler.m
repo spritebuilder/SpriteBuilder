@@ -411,14 +411,11 @@
     // Import files & Packages
     NSArray* pbFilenames = [pasteboard propertyListForType:NSFilenamesPboardType];
 
-    if ([FeatureToggle sharedFeatures].arePackagesEnabled)
-    {
-        // Have packages been imported?
-        movedOrImportedFiles |= [self importPackagesWithMixedPaths:pbFilenames];
-        // NOTE: after importing packages, the array is reduced by these paths to allow
-        // further importing of other resources
-        pbFilenames = [self removePackagesFromPaths:pbFilenames];
-    }
+    // Have packages been imported?
+    movedOrImportedFiles |= [self importPackagesWithMixedPaths:pbFilenames];
+    // NOTE: after importing packages, the array is reduced by these paths to allow
+    // further importing of other resources
+    pbFilenames = [self removePackagesFromPaths:pbFilenames];
 
     movedOrImportedFiles |= [ResourceManager importResources:pbFilenames intoDir:dstDir];
     

@@ -617,8 +617,8 @@
 		E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37FCAED175D2704009F81D6 /* ui-cogs@2x.png */; };
 		E37FCAF4175D68FF009F81D6 /* ResourceManagerPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */; };
 		E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37FCAF8175FF70F009F81D6 /* CCBImageView.m */; };
-		E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3808DB31641C45B00398456 /* PublishSettingsWindow.xib */; };
-		E3808DB71641CB6400398456 /* PublishSettingsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3808DB61641CB6400398456 /* PublishSettingsWindow.m */; };
+		E3808DB41641C45B00398456 /* ProjectSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3808DB31641C45B00398456 /* ProjectSettingsWindow.xib */; };
+		E3808DB71641CB6400398456 /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3808DB61641CB6400398456 /* ProjectSettingsWindowController.m */; };
 		E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3808DB91641D4B800398456 /* CCBTextFieldLabel.m */; };
 		E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E380B24D1642FC3C0006D31C /* TexturePacker.cpp */; };
 		E380B2531642FC3C0006D31C /* Tupac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E380B2501642FC3C0006D31C /* Tupac.mm */; };
@@ -817,16 +817,21 @@
 		E525F041845D2D5ABB99D990 /* ResourceToggleSmartSpriteSheetCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD3EA53480310EC675E1 /* ResourceToggleSmartSpriteSheetCommand.m */; };
 		E525F07CCBACEC15F8A13EC7 /* AnimationPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */; };
 		E525F09EC8AF83CADB163700 /* CCBReader_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A64BC1B591FE3A2C5D /* CCBReader_Tests.m */; };
+		E525F0B45E1523153C200B71 /* FileSystemTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */; };
 		E525F0EA925087B3D2ABE8D3 /* ResourceNewPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDFD10EE6761E4E94BED /* ResourceNewPackageCommand.m */; };
+		E525F12B1E4605EB494FA44C /* PackageMigrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7254C3A84AA7585A1F8 /* PackageMigrationController.m */; };
 		E525F17044E58B6DFE7A2248 /* RMPackage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A4E3F488FCF4347F62 /* RMPackage_Tests.m */; };
 		E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
 		E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */; };
 		E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */; };
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
+		E525F308447A45DFEE6C23EE /* ProjectMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9C63E463EE451384EBB /* ProjectMigrator.m */; };
 		E525F310D9DF45E96DCBAA31 /* ResourceShowInFinderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDDD5A720D91B11798A4 /* ResourceShowInFinderCommand.m */; };
 		E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F48CD0F42A2D56A68444 /* NSAlert+Convenience.m */; };
+		E525F32A0B8495A50314A1BD /* CreateDirectoryFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F849059B8F5243C1C0C3 /* CreateDirectoryFileCommand.m */; };
 		E525F354B165DA655818733B /* RMResource.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF18D2784BB119B2882A /* RMResource.m */; };
+		E525F39657967047967120FC /* PackageMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6ECDF843A612C330560 /* PackageMigrator.m */; };
 		E525F3B1589D3D602844043A /* ResourceNewFolderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F85BE0A7E542701EB9F5 /* ResourceNewFolderCommand.m */; };
 		E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD2D849749BB67455943 /* DateCache.m */; };
 		E525F413EBF9FE7A802A283C /* PackageCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8763FF7B0C58E25B128 /* PackageCreator.m */; };
@@ -838,10 +843,12 @@
 		E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F74ADF149FB8398AE965 /* NSString+Publishing.m */; };
 		E525F4F04F018D82F3251813 /* CCAnimation_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA8328B2749A80A9BB95 /* CCAnimation_Tests.m */; };
 		E525F50C89C6296C9FE062F9 /* ruler-numbers.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */; };
+		E525F519BAA5EC36A4DE0C7C /* MoveFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F3482D555C2E5CDC4A6F /* MoveFileCommand.m */; };
 		E525F5E7563958DE71C9B4AE /* ResourceExportPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0424E2063AF911B0692 /* ResourceExportPackageCommand.m */; };
 		E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */; };
 		E525F710D92CDE366BCEE575 /* ResourceContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F14190B50F98308504B5 /* ResourceContextMenu.m */; };
 		E525F737F211D45673D7BC62 /* PackageImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF96D86C4DDC63B9BF63 /* PackageImporter.m */; };
+		E525F7513FF82EDDF9B829B4 /* PackageMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0C2A2BC9A53AFD04862 /* PackageMigrator_Tests.m */; };
 		E525F7AC155C1C4502F6A34A /* PackageImporter_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */; };
 		E525F7D63B68B99ADD44F94C /* PackageCreator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */; };
 		E525F8431AD20B10AD62EB80 /* ResourceCreateKeyframesCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0AC0A8F3C176BCA08DF /* ResourceCreateKeyframesCommand.m */; };
@@ -852,17 +859,22 @@
 		E525FA398CC2E279B3D65D16 /* PublishingTaskStatusProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */; };
 		E525FA5D4791EB730859BF2C /* ProjectSettings+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCD604B9708D96E9EE11 /* ProjectSettings+Convenience.m */; };
 		E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */; };
+		E525FAC90C0458232F35C64C /* RemoveFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5A87B18967058D36E9D /* RemoveFileCommand.m */; };
 		E525FACB3FFF18C4D4AC13FF /* RMSpriteFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7D66E8C3826418D67AE /* RMSpriteFrame.m */; };
 		E525FACCFCFDC3FE00EB9A6B /* PackageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F86B6E089F4C7ED63ADD /* PackageUtil.m */; };
 		E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */; };
 		E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A438244586206C9177 /* PublishCCBOperation.m */; };
 		E525FBB73A012AC88E99B21B /* PublishRenamedFilesLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7EE37BDD5941E6C0AC9 /* PublishRenamedFilesLookup.m */; };
+		E525FC14DDEC8AE4F82C7C5C /* CreateDirectoryFileCommand_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF675D6E6F5D2E0EE7D0 /* CreateDirectoryFileCommand_Tests.m */; };
 		E525FC3487265AE7715CE955 /* ObserverTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F3F446FE40F0B87D829F /* ObserverTestHelper.m */; };
 		E525FC5DE242A8EB373D882A /* PackageExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FACAFF47151E5CC2C512 /* PackageExporter.m */; };
+		E525FCC3365B47BE3B784009 /* RemoveFileCommand_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F1FAD431AB78175F8B37 /* RemoveFileCommand_Tests.m */; };
 		E525FCCB0F98F23FF4F4A83B /* MiscConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F60141EECA8FC9DF3034 /* MiscConstants.m */; };
 		E525FCD21C3519D61A86ACEF /* PackageRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB678B5AF8D31E5EA1C1 /* PackageRenamer.m */; };
+		E525FCE3F78C45137345C537 /* NSString+Publishing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */; };
 		E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */; };
 		E525FD71DA9970A211540812 /* RMDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDE1E2157A624E4395A5 /* RMDirectory.m */; };
+		E525FE3B75E80B59F39CB8D6 /* MoveFileCommand_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F4078FE3071DE4F0213B /* MoveFileCommand_Tests.m */; };
 		E525FF15523F47E23FC1A6AB /* ResourceNewFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */; };
 		E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */; };
 		E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */; };
@@ -2008,9 +2020,9 @@
 		E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewView.m; sourceTree = "<group>"; };
 		E37FCAF7175FF70F009F81D6 /* CCBImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBImageView.h; sourceTree = "<group>"; };
 		E37FCAF8175FF70F009F81D6 /* CCBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBImageView.m; sourceTree = "<group>"; };
-		E3808DB31641C45B00398456 /* PublishSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishSettingsWindow.xib; sourceTree = "<group>"; };
-		E3808DB51641CB6300398456 /* PublishSettingsWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSettingsWindow.h; sourceTree = "<group>"; };
-		E3808DB61641CB6400398456 /* PublishSettingsWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSettingsWindow.m; sourceTree = "<group>"; };
+		E3808DB31641C45B00398456 /* ProjectSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsWindow.xib; sourceTree = "<group>"; };
+		E3808DB51641CB6300398456 /* ProjectSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsWindowController.h; sourceTree = "<group>"; };
+		E3808DB61641CB6400398456 /* ProjectSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindowController.m; sourceTree = "<group>"; };
 		E3808DB81641D4B800398456 /* CCBTextFieldLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTextFieldLabel.h; sourceTree = "<group>"; };
 		E3808DB91641D4B800398456 /* CCBTextFieldLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTextFieldLabel.m; sourceTree = "<group>"; };
 		E380B24C1642FC3C0006D31C /* pvrtc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvrtc.h; path = Tupac/pvrtc.h; sourceTree = "<group>"; };
@@ -2300,8 +2312,10 @@
 		E525F0A6B228717C246675C0 /* PublishLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishLogging.h; sourceTree = "<group>"; };
 		E525F0AC0A8F3C176BCA08DF /* ResourceCreateKeyframesCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceCreateKeyframesCommand.m; sourceTree = "<group>"; };
 		E525F0BC44FE0FDD5840BDC8 /* ResourceTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceTypes.h; sourceTree = "<group>"; };
+		E525F0C2A2BC9A53AFD04862 /* PackageMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrator_Tests.m; sourceTree = "<group>"; };
 		E525F0DCE4278ED8AE6D7491 /* PackageRemover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRemover.m; sourceTree = "<group>"; };
 		E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceDeleteCommand.m; sourceTree = "<group>"; };
+		E525F0EC7A806514BD048AEB /* FileCommandProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileCommandProtocol.h; sourceTree = "<group>"; };
 		E525F0ED6F868B09686F38DF /* PublishRegularFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishRegularFileOperation.h; sourceTree = "<group>"; };
 		E525F0F30379667FD6285EA3 /* ResourceCommandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCommandController.h; sourceTree = "<group>"; };
 		E525F12E427752EA9AA4EB37 /* ResourceNewFolderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewFolderCommand.h; sourceTree = "<group>"; };
@@ -2309,31 +2323,42 @@
 		E525F197E108D243FE4D1FB1 /* PublishFileLookupProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishFileLookupProtocol.h; sourceTree = "<group>"; };
 		E525F19851B99B6926435235 /* NSString+Packages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Packages.h"; sourceTree = "<group>"; };
 		E525F1EF70664A8689877329 /* PublishIntermediateFilesLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishIntermediateFilesLookup.h; sourceTree = "<group>"; };
+		E525F1FAD431AB78175F8B37 /* RemoveFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand_Tests.m; sourceTree = "<group>"; };
 		E525F20B1403AD6F5FCAD713 /* PackageExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageExporter.h; sourceTree = "<group>"; };
 		E525F213547BCB1BBA54EC87 /* SBAssserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAssserts.h; sourceTree = "<group>"; };
 		E525F215F31637B52F646A82 /* PackageRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageRenamer.h; sourceTree = "<group>"; };
+		E525F293EA6B75042C82A01F /* RemoveFileCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveFileCommand.h; sourceTree = "<group>"; };
 		E525F2ADCDB6F6933CAD7A97 /* RMAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMAnimation.m; sourceTree = "<group>"; };
+		E525F2BA53C07A15A1BD7384 /* PackageMigrationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageMigrationController.h; sourceTree = "<group>"; };
 		E525F2BAB63B7076A97C24A2 /* RMResourceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMResourceBase.h; sourceTree = "<group>"; };
 		E525F2C2FFE7D99666A5EB20 /* ResourceNewFileCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewFileCommand.h; sourceTree = "<group>"; };
 		E525F2D169097487A2FA72EF /* ResourceShowInFinderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceShowInFinderCommand.h; sourceTree = "<group>"; };
+		E525F2DA8EEB4FDC788E5E41 /* MoveFileCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveFileCommand.h; sourceTree = "<group>"; };
 		E525F31A72346871646C218C /* ProjectSettings+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProjectSettings+Convenience.h"; sourceTree = "<group>"; };
 		E525F31D5A311C0DBE9C1CD6 /* PublishCCBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishCCBOperation.h; sourceTree = "<group>"; };
+		E525F3482D555C2E5CDC4A6F /* MoveFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveFileCommand.m; sourceTree = "<group>"; };
 		E525F36CDB1707FF7B018D16 /* NSError+SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+SBErrors.h"; sourceTree = "<group>"; };
 		E525F3A67926C2386CC09571 /* ProjectSettings+Packages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProjectSettings+Packages.h"; sourceTree = "<group>"; };
 		E525F3F446FE40F0B87D829F /* ObserverTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObserverTestHelper.m; sourceTree = "<group>"; };
+		E525F4078FE3071DE4F0213B /* MoveFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveFileCommand_Tests.m; sourceTree = "<group>"; };
 		E525F45D92A0B7605C0F0FB0 /* ResourceNewPackageCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewPackageCommand.h; sourceTree = "<group>"; };
 		E525F48CD0F42A2D56A68444 /* NSAlert+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+Convenience.m"; sourceTree = "<group>"; };
 		E525F49BD7988117B20F261D /* RMPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPackage.m; sourceTree = "<group>"; };
+		E525F510AE325C5A3DF41DA3 /* FileSystemTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemTestCase.h; sourceTree = "<group>"; };
 		E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteKitSpriteSheetOperation.m; sourceTree = "<group>"; };
+		E525F5A87B18967058D36E9D /* RemoveFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand.m; sourceTree = "<group>"; };
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
 		E525F60141EECA8FC9DF3034 /* MiscConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscConstants.m; sourceTree = "<group>"; };
 		E525F6023279D13A2334AB33 /* ResourceContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceContextMenu.h; sourceTree = "<group>"; };
 		E525F616AAA64620A9528730 /* ObserverTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObserverTestHelper.h; sourceTree = "<group>"; };
 		E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer_Tests.m; sourceTree = "<group>"; };
 		E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceNewFileCommand.m; sourceTree = "<group>"; };
+		E525F6BD9A7979086156B659 /* ProjectMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectMigrator.h; sourceTree = "<group>"; };
 		E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPlaybackManager.m; sourceTree = "<group>"; };
+		E525F6ECDF843A612C330560 /* PackageMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrator.m; sourceTree = "<group>"; };
 		E525F6FADF087E6FE3765DC9 /* PublishingTaskStatusProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishingTaskStatusProgress.m; sourceTree = "<group>"; };
 		E525F6FD3B484B1762858AEB /* PublishSoundFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSoundFileOperation.m; sourceTree = "<group>"; };
+		E525F7254C3A84AA7585A1F8 /* PackageMigrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrationController.m; sourceTree = "<group>"; };
 		E525F743A9F069A88BFDCE66 /* PackageCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreator.h; sourceTree = "<group>"; };
 		E525F74ADF149FB8398AE965 /* NSString+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing.m"; sourceTree = "<group>"; };
 		E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageImporter_Tests.m; sourceTree = "<group>"; };
@@ -2343,12 +2368,14 @@
 		E525F7FDEB6E06727F3674DC /* OptimizeImageWithOptiPNGOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptimizeImageWithOptiPNGOperation.h; sourceTree = "<group>"; };
 		E525F809973E06E6C7BE0A7E /* PackageRemover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageRemover.h; sourceTree = "<group>"; };
 		E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishBaseOperation.m; sourceTree = "<group>"; };
+		E525F849059B8F5243C1C0C3 /* CreateDirectoryFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDirectoryFileCommand.m; sourceTree = "<group>"; };
 		E525F85AE82110FF3A50E129 /* PublishGeneratedFilesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishGeneratedFilesOperation.h; sourceTree = "<group>"; };
 		E525F85BE0A7E542701EB9F5 /* ResourceNewFolderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceNewFolderCommand.m; sourceTree = "<group>"; };
 		E525F86B6E089F4C7ED63ADD /* PackageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageUtil.m; sourceTree = "<group>"; };
 		E525F8763FF7B0C58E25B128 /* PackageCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCreator.m; sourceTree = "<group>"; };
 		E525F876D70C7C45655B870F /* PublishingTaskStatusProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishingTaskStatusProgress.h; sourceTree = "<group>"; };
 		E525F8924029BDE31AAE8FA2 /* PublishSoundFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSoundFileOperation.h; sourceTree = "<group>"; };
+		E525F89DF8C03EEC4800D11A /* PackageMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageMigrator.h; sourceTree = "<group>"; };
 		E525F8A438244586206C9177 /* PublishCCBOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishCCBOperation.m; sourceTree = "<group>"; };
 		E525F8A4E3F488FCF4347F62 /* RMPackage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPackage_Tests.m; sourceTree = "<group>"; };
 		E525F8A64BC1B591FE3A2C5D /* CCBReader_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader_Tests.m; sourceTree = "<group>"; };
@@ -2361,6 +2388,7 @@
 		E525F9BDAEF872AB23D84977 /* TaskStatusUpdaterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskStatusUpdaterProtocol.h; sourceTree = "<group>"; };
 		E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishGeneratedFilesOperation.m; sourceTree = "<group>"; };
 		E525F9C14C875B0656796AE2 /* ResourceExportPackageCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceExportPackageCommand.h; sourceTree = "<group>"; };
+		E525F9C63E463EE451384EBB /* ProjectMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectMigrator.m; sourceTree = "<group>"; };
 		E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceCommandController.m; sourceTree = "<group>"; };
 		E525FA122097E3A343BA0A68 /* RMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMResource.h; sourceTree = "<group>"; };
 		E525FA15437B8CAB27509534 /* NSString+Packages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Packages.m"; sourceTree = "<group>"; };
@@ -2373,9 +2401,11 @@
 		E525FB10982384F8E0C0E079 /* PublishSpriteSheetOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSpriteSheetOperation.h; sourceTree = "<group>"; };
 		E525FB122597817578F84A85 /* MiscConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiscConstants.h; sourceTree = "<group>"; };
 		E525FB678B5AF8D31E5EA1C1 /* PackageRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer.m; sourceTree = "<group>"; };
+		E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing_Tests.m"; sourceTree = "<group>"; };
 		E525FBEDE030873F8A1A3A0B /* RMSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSpriteFrame.h; sourceTree = "<group>"; };
 		E525FBFAF37ED551810B58A5 /* PackageImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageImporter.h; sourceTree = "<group>"; };
 		E525FC2C6864DF91BA1712E2 /* NSAlert+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAlert+Convenience.h"; sourceTree = "<group>"; };
+		E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemTestCase.m; sourceTree = "<group>"; };
 		E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishImageOperation.m; sourceTree = "<group>"; };
 		E525FCC7B2A33EFBD178B87D /* NSString+Publishing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Publishing.h"; sourceTree = "<group>"; };
 		E525FCD604B9708D96E9EE11 /* ProjectSettings+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ProjectSettings+Convenience.m"; sourceTree = "<group>"; };
@@ -2389,6 +2419,7 @@
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
 		E525FDDD5A720D91B11798A4 /* ResourceShowInFinderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceShowInFinderCommand.m; sourceTree = "<group>"; };
 		E525FDE1E2157A624E4395A5 /* RMDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDirectory.m; sourceTree = "<group>"; };
+		E525FDE656748CD559D2D16F /* CreateDirectoryFileCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateDirectoryFileCommand.h; sourceTree = "<group>"; };
 		E525FDFD10EE6761E4E94BED /* ResourceNewPackageCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceNewPackageCommand.m; sourceTree = "<group>"; };
 		E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRemover_Tests.m; sourceTree = "<group>"; };
 		E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCreator_Tests.m; sourceTree = "<group>"; };
@@ -2398,6 +2429,7 @@
 		E525FF18D2784BB119B2882A /* RMResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource.m; sourceTree = "<group>"; };
 		E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishIntermediateFilesLookup.m; sourceTree = "<group>"; };
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
+		E525FF675D6E6F5D2E0EE7D0 /* CreateDirectoryFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDirectoryFileCommand_Tests.m; sourceTree = "<group>"; };
 		E525FF96D86C4DDC63B9BF63 /* PackageImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageImporter.m; sourceTree = "<group>"; };
 		E525FFA89CA744B94C708834 /* AnimationPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationPlaybackManager.h; sourceTree = "<group>"; };
 		FA98CFC1154E7D1C006E58C5 /* ccbpublish */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ccbpublish; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2702,9 +2734,9 @@
 				E3EDBC0F1546D23000EEF1F3 /* ResolutionSetting.m */,
 				E3799EAB155979BF00196B4A /* ProjectSettings.h */,
 				E3799EAC155979BF00196B4A /* ProjectSettings.m */,
-				E3808DB31641C45B00398456 /* PublishSettingsWindow.xib */,
-				E3808DB51641CB6300398456 /* PublishSettingsWindow.h */,
-				E3808DB61641CB6400398456 /* PublishSettingsWindow.m */,
+				E3808DB31641C45B00398456 /* ProjectSettingsWindow.xib */,
+				E3808DB51641CB6300398456 /* ProjectSettingsWindowController.h */,
+				E3808DB61641CB6400398456 /* ProjectSettingsWindowController.m */,
 				E34039BC1624BF610067C7B8 /* CCBDocumentController.h */,
 				E34039BD1624BF610067C7B8 /* CCBDocumentController.m */,
 				9249983018B7E1F500DE9ADA /* SceneGraph.h */,
@@ -3305,6 +3337,7 @@
 				776041E21498F5A70078095D /* Util */,
 				776041EE1498FC320078095D /* GUI Util */,
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
+				E525F2B7F0804D971A7E55E9 /* Migration */,
 			);
 			name = SpriteBuilder;
 			path = ccBuilder;
@@ -3524,6 +3557,8 @@
 				833A5C4E192B48CB001837B3 /* Supporting Files */,
 				E525FEFDDEEEFB64CD4DB972 /* Resource Manager */,
 				E525F4E8DC228E3C24BAE4D6 /* TestHelpers */,
+				E525FD9B54A033D4302FE47F /* Migration */,
+				E525F840928F68FE43F22636 /* Util */,
 			);
 			path = "SpriteBuilder Tests";
 			sourceTree = "<group>";
@@ -4964,12 +4999,42 @@
 			name = "CCZ compression";
 			sourceTree = "<group>";
 		};
+		E525F10E3DAD50C019D1ABB9 /* FileCommands */ = {
+			isa = PBXGroup;
+			children = (
+				E525F3482D555C2E5CDC4A6F /* MoveFileCommand.m */,
+				E525F2DA8EEB4FDC788E5E41 /* MoveFileCommand.h */,
+				E525F849059B8F5243C1C0C3 /* CreateDirectoryFileCommand.m */,
+				E525FDE656748CD559D2D16F /* CreateDirectoryFileCommand.h */,
+				E525F0EC7A806514BD048AEB /* FileCommandProtocol.h */,
+				E525F5A87B18967058D36E9D /* RemoveFileCommand.m */,
+				E525F293EA6B75042C82A01F /* RemoveFileCommand.h */,
+			);
+			name = FileCommands;
+			sourceTree = "<group>";
+		};
+		E525F2B7F0804D971A7E55E9 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				E525F9C63E463EE451384EBB /* ProjectMigrator.m */,
+				E525F6BD9A7979086156B659 /* ProjectMigrator.h */,
+				E525F6ECDF843A612C330560 /* PackageMigrator.m */,
+				E525F89DF8C03EEC4800D11A /* PackageMigrator.h */,
+				E525F10E3DAD50C019D1ABB9 /* FileCommands */,
+				E525F7254C3A84AA7585A1F8 /* PackageMigrationController.m */,
+				E525F2BA53C07A15A1BD7384 /* PackageMigrationController.h */,
+			);
+			name = Migration;
+			sourceTree = "<group>";
+		};
 		E525F4E8DC228E3C24BAE4D6 /* TestHelpers */ = {
 			isa = PBXGroup;
 			children = (
 				E525F213547BCB1BBA54EC87 /* SBAssserts.h */,
 				E525F3F446FE40F0B87D829F /* ObserverTestHelper.m */,
 				E525F616AAA64620A9528730 /* ObserverTestHelper.h */,
+				E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */,
+				E525F510AE325C5A3DF41DA3 /* FileSystemTestCase.h */,
 			);
 			name = TestHelpers;
 			sourceTree = "<group>";
@@ -4988,6 +5053,33 @@
 				E525FA8328B2749A80A9BB95 /* CCAnimation_Tests.m */,
 			);
 			name = Cocos2D;
+			sourceTree = "<group>";
+		};
+		E525F840928F68FE43F22636 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		E525FAF5B6FE29F6C11775FB /* FileCommands */ = {
+			isa = PBXGroup;
+			children = (
+				E525F4078FE3071DE4F0213B /* MoveFileCommand_Tests.m */,
+				E525FF675D6E6F5D2E0EE7D0 /* CreateDirectoryFileCommand_Tests.m */,
+				E525F1FAD431AB78175F8B37 /* RemoveFileCommand_Tests.m */,
+			);
+			name = FileCommands;
+			sourceTree = "<group>";
+		};
+		E525FD9B54A033D4302FE47F /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				E525F0C2A2BC9A53AFD04862 /* PackageMigrator_Tests.m */,
+				E525FAF5B6FE29F6C11775FB /* FileCommands */,
+			);
+			path = Migration;
 			sourceTree = "<group>";
 		};
 		E525FEFDDEEEFB64CD4DB972 /* Resource Manager */ = {
@@ -5937,7 +6029,7 @@
 				E367E32516384F3600247F12 /* orientation-portrait.png in Resources */,
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
 				92F0960E18F8851300D47A94 /* inspector-body-connected@2x.png in Resources */,
-				E3808DB41641C45B00398456 /* PublishSettingsWindow.xib in Resources */,
+				E3808DB41641C45B00398456 /* ProjectSettingsWindow.xib in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
 				B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */,
 				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
@@ -6515,7 +6607,7 @@
 				E3C9CCBB161D0BBF008A3784 /* InspectorCodeConnectionsJS.m in Sources */,
 				E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */,
 				581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */,
-				E3808DB71641CB6400398456 /* PublishSettingsWindow.m in Sources */,
+				E3808DB71641CB6400398456 /* ProjectSettingsWindowController.m in Sources */,
 				E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */,
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
@@ -6620,7 +6712,13 @@
 				E525F47301A5C8C234262F36 /* PackageRemover.m in Sources */,
 				E525FC5DE242A8EB373D882A /* PackageExporter.m in Sources */,
 				E525F413EBF9FE7A802A283C /* PackageCreator.m in Sources */,
+				E525F308447A45DFEE6C23EE /* ProjectMigrator.m in Sources */,
+				E525F39657967047967120FC /* PackageMigrator.m in Sources */,
+				E525F519BAA5EC36A4DE0C7C /* MoveFileCommand.m in Sources */,
+				E525F32A0B8495A50314A1BD /* CreateDirectoryFileCommand.m in Sources */,
+				E525FAC90C0458232F35C64C /* RemoveFileCommand.m in Sources */,
 				E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */,
+				E525F12B1E4605EB494FA44C /* PackageMigrationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6641,6 +6739,12 @@
 				E525F09EC8AF83CADB163700 /* CCBReader_Tests.m in Sources */,
 				92FFB856195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m in Sources */,
 				E525F4F04F018D82F3251813 /* CCAnimation_Tests.m in Sources */,
+				E525F7513FF82EDDF9B829B4 /* PackageMigrator_Tests.m in Sources */,
+				E525F0B45E1523153C200B71 /* FileSystemTestCase.m in Sources */,
+				E525FE3B75E80B59F39CB8D6 /* MoveFileCommand_Tests.m in Sources */,
+				E525FC14DDEC8AE4F82C7C5C /* CreateDirectoryFileCommand_Tests.m in Sources */,
+				E525FCC3365B47BE3B784009 /* RemoveFileCommand_Tests.m in Sources */,
+				E525FCE3F78C45137345C537 /* NSString+Publishing_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7385,11 +7489,6 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpriteBuilder Tests/SpriteBuilder Tests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-					"TEST_TARGET=1",
-				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -7428,7 +7527,6 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpriteBuilder Tests/SpriteBuilder Tests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "TEST_TARGET=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -7445,6 +7543,1134 @@
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
+		};
+		8383315C196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				FRAMEWORK_SEARCH_PATHS = libs;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/**";
+			};
+			name = Testing;
+		};
+		8383315D196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ccBuilder/SpriteBuilder-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(SB_DEBUG_PREPROCESSOR_DEFINES)",
+					"TESTING=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					libs/Fragaria,
+					"../Examples/CocosBuilderExample/libs/CCBReader/**",
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/Chipmunk/include/chipmunk",
+					"libs/cocos2d-iphone/external/Chipmunk/objectivec/include/",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "ccBuilder/SpriteBuilder-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/libs/MMMarkdown\"",
+					"\"$(SRCROOT)/libs/Tupac\"",
+					"\"$(SRCROOT)/libs/PVRTexTool\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = "-all_load";
+				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Testing;
+		};
+		8383315E196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SpriteBuilder.app/Contents/MacOS/SpriteBuilder";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SpriteBuilder Tests/SpriteBuilder Tests-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "SpriteBuilder Tests/SpriteBuilder Tests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Testing;
+		};
+		8383315F196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Cocos2D iPhone/Cocos2D iPhone-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COCOS2D_DEBUG=1",
+					DEBUG,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				INFOPLIST_FILE = "Cocos2D iPhone/Cocos2D iPhone-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugExport;
+			};
+			name = Testing;
+		};
+		83833160196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCNode/CCNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCNode/CCNode-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833161196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCLayoutBox/CCLayoutBox-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCLayoutBox/CCLayoutBox-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833162196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCSprite/CCSprite-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCSprite/CCSprite-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833163196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCSprite9Slice/CCSprite9Slice-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "CCSprite9Slice/CCSprite9Slice-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833164196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCLayerColor/CCLayerColor-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCLayerColor/CCLayerColor-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833165196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCLayerGradient/CCLayerGradient-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCLayerGradient/CCLayerGradient-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833166196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCLabelBMFont/CCLabelBMFont-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCLabelBMFont/CCLabelBMFont-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833167196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCLabelTTF/CCLabelTTF-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "CCLabelTTF/CCLabelTTF-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833168196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCParticleSystem/CCParticleSystem-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "CCParticleSystem/CCParticleSystem-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833169196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCBFile/CCBFile-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "CCBFile/CCBFile-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		8383316A196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCButton/CCButton-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCButton/CCButton-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		8383316B196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCControl/CCControl-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCControl/CCControl-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		8383316C196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCTextField/CCTextField-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "CCTextField/CCTextField-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		8383316D196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCScrollView/CCScrollView-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCScrollView/CCScrollView-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		8383316E196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCSlider/CCSlider-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "CCSlider/CCSlider-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		8383316F196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsNode/CCPhysicsNode-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833170196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsPivotJoint/CCPhysicsPivotJoint-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCPhysicsPivotJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833171196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsPinJoint/CCPhysicsPinJoint-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCPhysicsPinJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833172196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsNode/CCPhysicsNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCPhysicsSpringJoint/CCPhysicsSpringJoint-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCPhysicsSpringJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833173196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/libs\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ccbpublish/ccbpublish-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_DIRECTOR_MAC_THREAD=2",
+					NDEBUG,
+					NS_BLOCK_ASSERTIONS,
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"CCB_BUILDING_COMMANDLINE=1",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Testing;
+		};
+		83833174196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833175196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKSpriteNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833176196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKLabelNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833177196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKColorSpriteNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833178196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SBControlNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		83833179196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SBButtonNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		8383317A196578F500E6EFB1 /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = SKFile;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
 		};
 		92154AD918A5560B00BD215C /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -9394,6 +10620,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7789ABDA133AA82000CEFCC7 /* Debug */,
+				8383315C196578F500E6EFB1 /* Testing */,
 				7789ABDB133AA82000CEFCC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9403,6 +10630,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7789ABDD133AA82000CEFCC7 /* Debug */,
+				8383315D196578F500E6EFB1 /* Testing */,
 				7789ABDE133AA82000CEFCC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9412,6 +10640,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				833A5C59192B48CB001837B3 /* Debug */,
+				8383315E196578F500E6EFB1 /* Testing */,
 				833A5C5A192B48CB001837B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9421,6 +10650,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				92154AD918A5560B00BD215C /* Debug */,
+				83833170196578F500E6EFB1 /* Testing */,
 				92154ADA18A5560B00BD215C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9430,6 +10660,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				926D13E118B57B9500582959 /* Debug */,
+				83833171196578F500E6EFB1 /* Testing */,
 				926D13E218B57B9500582959 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9439,6 +10670,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				92B7900B18C808B7007DF895 /* Debug */,
+				83833172196578F500E6EFB1 /* Testing */,
 				92B7900C18C808B7007DF895 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9448,6 +10680,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B729AC5B181F091800BA0D9C /* Debug */,
+				8383316E196578F500E6EFB1 /* Testing */,
 				B729AC5C181F091800BA0D9C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9457,6 +10690,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B73788E21804AC5E0076A88C /* Debug */,
+				8383316D196578F500E6EFB1 /* Testing */,
 				B73788E31804AC5E0076A88C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9466,6 +10700,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B79F90E217FF30DC00908504 /* Debug */,
+				8383316F196578F500E6EFB1 /* Testing */,
 				B79F90E317FF30DC00908504 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9475,6 +10710,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7C3532C17F65548005697C1 /* Debug */,
+				83833163196578F500E6EFB1 /* Testing */,
 				B7C3532D17F65548005697C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9484,6 +10720,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7C623BC17F383CE00928F91 /* Debug */,
+				8383316A196578F500E6EFB1 /* Testing */,
 				B7C623BD17F383CE00928F91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9493,6 +10730,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7C623D717F38B7800928F91 /* Debug */,
+				8383316B196578F500E6EFB1 /* Testing */,
 				B7C623D817F38B7800928F91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9502,6 +10740,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7EE699E18188E0900B983FE /* Debug */,
+				8383316C196578F500E6EFB1 /* Testing */,
 				B7EE699F18188E0900B983FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9511,6 +10750,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B7EE6A011819EE0D00B983FE /* Debug */,
+				83833161196578F500E6EFB1 /* Testing */,
 				B7EE6A021819EE0D00B983FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9520,6 +10760,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC05E78118D0ACCB00592A1E /* Debug */,
+				83833178196578F500E6EFB1 /* Testing */,
 				DC05E78218D0ACCB00592A1E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9529,6 +10770,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC05E78E18D0ACE000592A1E /* Debug */,
+				83833179196578F500E6EFB1 /* Testing */,
 				DC05E78F18D0ACE000592A1E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9538,6 +10780,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC5129C71891450D0091873D /* Debug */,
+				83833175196578F500E6EFB1 /* Testing */,
 				DC5129C81891450D0091873D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9547,6 +10790,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC6803061891466C0060BE39 /* Debug */,
+				83833176196578F500E6EFB1 /* Testing */,
 				DC6803071891466C0060BE39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9556,6 +10800,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC680327189156310060BE39 /* Debug */,
+				83833177196578F500E6EFB1 /* Testing */,
 				DC680328189156310060BE39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9565,6 +10810,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCB9F1561890600D00128D78 /* Debug */,
+				83833174196578F500E6EFB1 /* Testing */,
 				DCB9F1571890600D00128D78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9574,6 +10820,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCFB063D18E32B7500DF02A0 /* Debug */,
+				8383317A196578F500E6EFB1 /* Testing */,
 				DCFB063E18E32B7500DF02A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9583,6 +10830,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E35DBB8A14F225D30070A6E4 /* Debug */,
+				83833164196578F500E6EFB1 /* Testing */,
 				E35DBB8B14F225D30070A6E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9592,6 +10840,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E35DBBA214F244BC0070A6E4 /* Debug */,
+				83833165196578F500E6EFB1 /* Testing */,
 				E35DBBA314F244BC0070A6E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9601,6 +10850,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E35DBBD614F2AA360070A6E4 /* Debug */,
+				83833166196578F500E6EFB1 /* Testing */,
 				E35DBBD714F2AA360070A6E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9610,6 +10860,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E35DBBF314F3E2390070A6E4 /* Debug */,
+				83833167196578F500E6EFB1 /* Testing */,
 				E35DBBF414F3E2390070A6E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9619,6 +10870,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E35DBC1314F4D72C0070A6E4 /* Debug */,
+				83833168196578F500E6EFB1 /* Testing */,
 				E35DBC1414F4D72C0070A6E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9628,6 +10880,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E398C02C14FB81A30078E771 /* Debug */,
+				8383315F196578F500E6EFB1 /* Testing */,
 				E398C02D14FB81A30078E771 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9637,6 +10890,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3B7AECF14E3193500DFD402 /* Debug */,
+				83833160196578F500E6EFB1 /* Testing */,
 				E3B7AED014E3193500DFD402 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9646,6 +10900,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3C365F514E9E4D1007CD5FF /* Debug */,
+				83833162196578F500E6EFB1 /* Testing */,
 				E3C365F614E9E4D1007CD5FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9655,6 +10910,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3D5912B150F5367004180CA /* Debug */,
+				83833169196578F500E6EFB1 /* Testing */,
 				E3D5912C150F5367004180CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -9664,6 +10920,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FA98CFCC154E7D1C006E58C5 /* Debug */,
+				83833173196578F500E6EFB1 /* Testing */,
 				FA98CFCD154E7D1C006E58C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
