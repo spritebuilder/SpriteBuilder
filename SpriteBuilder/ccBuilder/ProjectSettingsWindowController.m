@@ -123,14 +123,20 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 - (void)loadMainProjectSettingsView
 {
     MainProjectSettingsDetailView *view = [self loadViewWithNibName:@"MainProjectSettingsDetailView" viewClass:[MainProjectSettingsDetailView class]];
+
+    #ifndef SPRITEBUILDER_PRO
     view.showAndroidSettings = NO;
+    #endif
 }
 
 - (void)loadDetailViewForPackage:(PackagePublishSettings *)settings
 {
     self.currentPackageSettings = settings;
     PackageSettingsDetailView *view = [self loadViewWithNibName:@"PackageSettingsDetailView" viewClass:[PackageSettingsDetailView class]];
+
+    #ifndef SPRITEBUILDER_PRO
     view.showAndroidSettings = NO;
+    #endif
 }
 
 - (id)loadViewWithNibName:(NSString *)nibName viewClass:(Class)viewClass
