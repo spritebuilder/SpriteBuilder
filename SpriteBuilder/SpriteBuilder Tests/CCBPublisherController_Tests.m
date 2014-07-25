@@ -14,6 +14,7 @@
 #import "RMPackage.h"
 #import "FileSystemTestCase+Images.h"
 #import "PublishOSSettings.h"
+#import "MiscConstants.h"
 
 @interface CCBPublisherController_Tests : FileSystemTestCase
 
@@ -39,7 +40,9 @@
     _package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
 
     self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
-    _packageSettings.outputDirectory = @"../Published-Packages";
+    _packageSettings.publishToCustomOutputDirectory = NO;
+
+    // _packageSettings.customOutputDirectory = @"../Published-Packages";
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     iosSettings.resolution_tablethd = YES;
@@ -57,7 +60,7 @@
     _publisherController.publishMainProject = NO;
 }
 
-- (void)testPackageExport
+- (void)testPackageExportToDefaultDirectory
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/plane.png" width:10 height:2];
 
@@ -68,11 +71,32 @@
     [self assertFileDoesNotExist:@"Published-Packages/foo-Android-tablet"];
     [self assertFileDoesNotExist:@"Published-Packages/foo-Android-phonehd"];
 
-    [self assertFilesExistRelativeToDirectory:@"Published-Packages" filesPaths:@[
+    [self assertFilesExistRelativeToDirectory:[@"baa.spritebuilder" stringByAppendingPathComponent:DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES] filesPaths:@[
             @"foo-iOS-tablethd.zip",
             @"foo-iOS-phone.zip",
             @"foo-Android-tablet.zip",
             @"foo-Android-phonehd.zip"
+    ]];
+}
+
+- (void)testPackageExportToCustomDirectory
+{
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/plane.png" width:10 height:2];
+
+    _packageSettings.publishToCustomOutputDirectory = YES;
+    _packageSettings.customOutputDirectory = @"../custom";
+
+    PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    iosSettings.resolutions = @[];
+
+    PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    androidSettings.resolutions = @[];
+    androidSettings.resolution_phone = YES;
+
+    [_publisherController startAsync:NO];
+
+    [self assertFilesExistRelativeToDirectory:@"custom" filesPaths:@[
+          @"foo-Android-phone.zip"
     ]];
 }
 

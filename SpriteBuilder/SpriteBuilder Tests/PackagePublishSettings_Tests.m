@@ -12,6 +12,7 @@
 #import "PublishOSSettings.h"
 #import "FileSystemTestCase.h"
 #import "SBAssserts.h"
+#import "MiscConstants.h"
 
 @interface PackagePublishSettings_Tests : FileSystemTestCase
 
@@ -52,9 +53,10 @@
 
 - (void)testPersistency
 {
-    _packagePublishSettings.outputDirectory = @"foo";
+    _packagePublishSettings.customOutputDirectory = @"foo";
     _packagePublishSettings.publishToMainProject = NO;
     _packagePublishSettings.publishToZip = NO;
+    _packagePublishSettings.publishToCustomOutputDirectory = YES;
     _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
 
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
@@ -76,9 +78,10 @@
     [settingsLoaded load];
 
     XCTAssertEqual(_packagePublishSettings.publishToMainProject, settingsLoaded.publishToMainProject);
-    SBAssertStringsEqual(_packagePublishSettings.outputDirectory, settingsLoaded.outputDirectory);
+    SBAssertStringsEqual(_packagePublishSettings.customOutputDirectory, settingsLoaded.customOutputDirectory);
     XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
     XCTAssertEqual(_packagePublishSettings.publishToZip, settingsLoaded.publishToZip);
+    XCTAssertEqual(_packagePublishSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
@@ -89,6 +92,18 @@
     XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
     XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:@"phone"]);
     XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:@"tablethd"]);
+}
+
+- (void)testEffectiveOutputDir
+{
+    _packagePublishSettings.customOutputDirectory = @"foo";
+    _packagePublishSettings.publishToCustomOutputDirectory = YES;
+
+    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, @"foo");
+
+    _packagePublishSettings.publishToCustomOutputDirectory = NO;
+
+    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
 }
 
 

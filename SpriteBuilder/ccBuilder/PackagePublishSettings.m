@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "PackagePublishSettings.h"
 #import "RMPackage.h"
 #import "CCBPublisherTypes.h"
@@ -5,6 +6,7 @@
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
+NSString *const KEY_PUBLISH_TO_CUSTOM_DIRECTORY = @"publishToCustomDirectory";
 NSString *const KEY_PUBLISH_TO_ZIP = @"publishToZip";
 NSString *const KEY_PUBLISH_TO_MAINPROJECT = @"publishToMainProject";
 NSString *const KEY_OS_SETTINGS = @"osSettings";
@@ -33,10 +35,11 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
     {
         self.publishToZip = YES;
         self.publishToMainProject = YES;
+        self.publishToCustomOutputDirectory = NO;
 
         self.package = package;
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
-        self.outputDirectory = DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
+        // self.customOutputDirectory = DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeIOS]] = [[PublishOSSettings alloc] init];
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeAndroid]] = [[PublishOSSettings alloc] init];
@@ -90,9 +93,10 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
         return NO;
     }
 
+    self.publishToCustomOutputDirectory = [dict[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] boolValue];
     self.publishToZip = [dict[KEY_PUBLISH_TO_ZIP] boolValue];
     self.publishToMainProject = [dict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
-    self.outputDirectory = dict[KEY_OUTPUTDIR];
+    self.customOutputDirectory = dict[KEY_OUTPUTDIR];
     self.publishEnvironment = (CCBPublishEnvironment) [dict[KEY_PUBLISH_ENV] integerValue];
 
     for (NSString *osType in dict[KEY_OS_SETTINGS])
@@ -118,10 +122,14 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
+    result[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] = @(_publishToCustomOutputDirectory);
     result[KEY_PUBLISH_TO_ZIP] = @(_publishToZip);
     result[KEY_PUBLISH_TO_MAINPROJECT] = @(_publishToMainProject);
-    result[KEY_OUTPUTDIR] = _outputDirectory;
     result[KEY_PUBLISH_ENV] = @(_publishEnvironment);
+    result[KEY_OUTPUTDIR] = _customOutputDirectory
+        ? _customOutputDirectory
+        : @"";
+
     result[KEY_OS_SETTINGS] = [NSMutableDictionary dictionary];
 
     for (NSString *osType in _publishSettingsForOsType)
@@ -132,6 +140,13 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
     }
 
     return result;
+}
+
+- (NSString *)effectiveOutputDirectory
+{
+    return _publishToCustomOutputDirectory
+        ? _customOutputDirectory
+        : DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 }
 
 @end
