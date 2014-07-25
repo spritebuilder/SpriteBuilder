@@ -314,7 +314,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="309"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="309"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="309" id="327">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -369,7 +369,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="312"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="312"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="312" id="313">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -389,7 +389,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="317"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="317"/>
                         <binding destination="-2" name="enabled3" keyPath="enabled" previousBinding="318" id="319">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -417,7 +417,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="323"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="323"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="323" id="324">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -920,7 +920,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="827"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="827"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="827" id="907">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -965,7 +965,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="891"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="891"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="891" id="892">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -985,7 +985,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="877"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="877"/>
                         <binding destination="-2" name="enabled3" keyPath="enabled" previousBinding="878" id="879">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1013,7 +1013,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="874"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="874"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="874" id="875">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1329,7 +1329,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1040"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1040"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1040" id="1041">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1349,7 +1349,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1056"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1056"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1056" id="1057">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1374,7 +1374,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1021"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1021"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1021" id="1022">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1407,7 +1407,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1068"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1068"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1068" id="1069">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1531,7 +1531,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnablediPhone" id="1093"/>
+                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1093"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1093" id="1094">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>

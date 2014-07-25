@@ -24,7 +24,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="Qpe-gx-dsr"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="Qpe-gx-dsr"/>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uFc-9t-bwg">
@@ -36,7 +36,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="FGi-lu-Rl9"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="FGi-lu-Rl9"/>
                                 <binding destination="-2" name="value" keyPath="projectSettings.publishDirectory" id="ssK-xo-tSE"/>
                             </connections>
                         </textField>
@@ -49,7 +49,7 @@
                             </buttonCell>
                             <connections>
                                 <action selector="selectPublishDirectoryIOS:" target="-2" id="Gn6-KG-7Mv"/>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="3cK-ma-dOX"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="3cK-ma-dOX"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bbf-pT-Dzx">
@@ -60,7 +60,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="projectSettings.publishEnablediPhone" id="pUB-de-P1Q"/>
+                                <binding destination="-2" name="value" keyPath="projectSettings.publishEnabledIOS" id="pUB-de-P1Q"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6br-6o-1Hg">
@@ -71,7 +71,7 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="XXz-oc-rbi"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="XXz-oc-rbi"/>
                                 <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_ios_phone" id="M0J-cU-pqW"/>
                             </connections>
                         </button>
@@ -83,7 +83,7 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="Gg0-R3-4eb"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="Gg0-R3-4eb"/>
                                 <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_ios_phonehd" id="BGP-0P-asG"/>
                             </connections>
                         </button>
@@ -95,7 +95,7 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="XeO-QG-Xis"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="XeO-QG-Xis"/>
                                 <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_ios_tablethd" id="145-up-ziH"/>
                             </connections>
                         </button>
@@ -107,7 +107,7 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="DmM-ca-nxa"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="DmM-ca-nxa"/>
                                 <binding destination="-2" name="value" keyPath="projectSettings.publishResolution_ios_tablet" id="SeP-Pn-ccr"/>
                             </connections>
                         </button>
@@ -145,7 +145,7 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="lCi-St-gTb"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="lCi-St-gTb"/>
                                 <binding destination="-2" name="selectedTag" keyPath="projectSettings.publishAudioQuality_ios" id="5TD-it-1bu"/>
                             </connections>
                         </popUpButton>
@@ -158,7 +158,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnablediPhone" id="mWm-yG-vVe"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="mWm-yG-vVe"/>
                             </connections>
                         </textField>
                     </subviews>

@@ -3076,7 +3076,7 @@ static BOOL hideAllToNextSeparator;
 - (void)checkForDirtyDocumentAndPublishAsync:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
-        && !projectSettings.publishEnablediPhone)
+        && !projectSettings.publishEnabledIOS)
     {
         if(async)
             [self modalDialogTitle:@"Published Failed" message:@"There are no configured publish target platforms. Please check your Publish Settings."];

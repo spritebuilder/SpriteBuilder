@@ -261,7 +261,7 @@
     XCTAssertTrue(project.publishResolution_android_tablet);
     XCTAssertTrue(project.publishResolution_android_tablethd);
 
-    XCTAssertTrue(project.publishEnablediPhone);
+    XCTAssertTrue(project.publishEnabledIOS);
     XCTAssertTrue(project.publishResolution_ios_phone);
     XCTAssertTrue(project.publishResolution_ios_phonehd);
     XCTAssertTrue(project.publishResolution_ios_tablet);
@@ -342,7 +342,7 @@
     XCTAssertTrue(projectSettings.deviceOrientationLandscapeRight);
 
     XCTAssertEqual(projectSettings.resourceAutoScaleFactor, 4);
-    XCTAssertTrue(projectSettings.publishEnablediPhone);
+    XCTAssertTrue(projectSettings.publishEnabledIOS);
     XCTAssertTrue(projectSettings.publishEnabledAndroid);
 
     XCTAssertTrue(projectSettings.publishResolution_ios_phone);

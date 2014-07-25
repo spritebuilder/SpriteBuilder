@@ -39,7 +39,7 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
-    _projectSettings.publishEnablediPhone = YES;
+    _projectSettings.publishEnabledIOS = YES;
     _projectSettings.publishEnabledAndroid = NO;
     [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
@@ -133,7 +133,7 @@
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/picture.png" width:4 height:12];
 
-    _projectSettings.publishEnablediPhone = YES;
+    _projectSettings.publishEnabledIOS = YES;
     _projectSettings.publishResolution_ios_tablet = YES;
     _projectSettings.publishResolution_ios_tablethd = NO;
     _projectSettings.publishResolution_ios_phone = NO;

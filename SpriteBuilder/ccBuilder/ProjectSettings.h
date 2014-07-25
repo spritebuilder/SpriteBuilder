@@ -56,7 +56,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
     NSString* publishDirectory;
     NSString* publishDirectoryAndroid;
 
-    BOOL publishEnablediPhone;
+    BOOL publishEnabledIOS;
     BOOL publishEnabledAndroid;
 
     BOOL publishResolution_ios_phone;
@@ -102,7 +102,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 
-@property (nonatomic,assign) BOOL publishEnablediPhone;
+@property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
 
 @property (nonatomic, copy) NSString* publishDirectory;

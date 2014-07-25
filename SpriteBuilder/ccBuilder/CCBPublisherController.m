@@ -156,7 +156,7 @@
         return;
     }
 
-    if (_projectSettings.publishEnablediPhone)
+    if (_projectSettings.publishEnabledIOS)
     {
         [self addMainProjectPublishingTargetToPublisherForOSType:kCCBPublisherOSTypeIOS];
     }

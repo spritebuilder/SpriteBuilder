@@ -152,7 +152,7 @@
 
     if (osType == kCCBPublisherOSTypeIOS)
     {
-        return self.publishEnablediPhone;
+        return self.publishEnabledIOS;
     }
 
     return NO;

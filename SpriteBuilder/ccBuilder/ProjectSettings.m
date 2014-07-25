@@ -50,7 +50,7 @@
 @synthesize projectPath;
 @synthesize publishDirectory;
 @synthesize publishDirectoryAndroid;
-@synthesize publishEnablediPhone;
+@synthesize publishEnabledIOS;
 @synthesize publishEnabledAndroid;
 @synthesize publishResolution_ios_phone;
 @synthesize publishResolution_ios_phonehd;
@@ -99,7 +99,7 @@
     self.deviceOrientationLandscapeRight = YES;
     self.resourceAutoScaleFactor = 4;
     
-    self.publishEnablediPhone = YES;
+    self.publishEnabledIOS = YES;
     self.publishEnabledAndroid = YES;
 
     self.publishResolution_ios_phone = YES;
@@ -161,7 +161,7 @@
         self.publishDirectoryAndroid = @"";
     }
 
-    self.publishEnablediPhone = [[dict objectForKey:@"publishEnablediPhone"] boolValue];
+    self.publishEnabledIOS = [[dict objectForKey:@"publishEnablediPhone"] boolValue];
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
 
     self.publishResolution_ios_phone = [[dict objectForKey:@"publishResolution_ios_phone"] boolValue];
@@ -263,7 +263,7 @@
     [dict setObject:publishDirectory forKey:@"publishDirectory"];
     [dict setObject:publishDirectoryAndroid forKey:@"publishDirectoryAndroid"];
 
-    [dict setObject:[NSNumber numberWithBool:publishEnablediPhone] forKey:@"publishEnablediPhone"];
+    [dict setObject:[NSNumber numberWithBool:publishEnabledIOS] forKey:@"publishEnablediPhone"];
     [dict setObject:[NSNumber numberWithBool:publishEnabledAndroid] forKey:@"publishEnabledAndroid"];
 
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phone] forKey:@"publishResolution_ios_phone"];
