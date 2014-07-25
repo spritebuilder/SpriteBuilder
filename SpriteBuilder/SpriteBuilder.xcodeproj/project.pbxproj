@@ -209,6 +209,7 @@
 		926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		926D13F418B57E1600582959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
 		926D13F518B57E1600582959 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
+		928104471982F7F900A8B7F4 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 928104461982F7F900A8B7F4 /* CocoaSecurity.m */; };
 		9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
 		9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
 		9294EC9018C65EC10059014C /* CCBPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13D518B57A8100582959 /* CCBPhysicsJoint.m */; };
@@ -220,6 +221,10 @@
 		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
+		92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8361979D33D00B50F74 /* LicenseWindow.m */; };
+		92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92AEE8371979D33D00B50F74 /* LicenseWindow.xib */; };
+		92AEE83D1979D55000B50F74 /* LicenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE83C1979D55000B50F74 /* LicenceManager.m */; };
+		92AEE8431979D62B00B50F74 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8421979D62B00B50F74 /* Base64.m */; };
 		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
 		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
 		92B6D0DA193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */; };
@@ -1487,6 +1492,8 @@
 		926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJoint.m; sourceTree = "<group>"; };
 		926D13FD18B57FEA00582959 /* CCPhysicsPinJoint-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CCPhysicsPinJoint-Info.plist"; sourceTree = "<group>"; };
 		926D13FE18B57FEA00582959 /* CCPhysicsPinJoint-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsPinJoint-Prefix.pch"; sourceTree = "<group>"; };
+		928104451982F7F900A8B7F4 /* CocoaSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSecurity.h; sourceTree = "<group>"; };
+		928104461982F7F900A8B7F4 /* CocoaSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaSecurity.m; sourceTree = "<group>"; };
 		9294EC9118C660480059014C /* CCBPhyicsPivotJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsPivotJointPlaceholder.h; sourceTree = "<group>"; };
 		9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsPivotJointPlaceholder.m; sourceTree = "<group>"; };
 		9294EC9418C6606F0059014C /* CCBPhysicsPinJointPlacefolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPinJointPlacefolder.h; sourceTree = "<group>"; };
@@ -1499,6 +1506,13 @@
 		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
 		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
+		92AEE8351979D33D00B50F74 /* LicenseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseWindow.h; sourceTree = "<group>"; };
+		92AEE8361979D33D00B50F74 /* LicenseWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseWindow.m; sourceTree = "<group>"; };
+		92AEE8371979D33D00B50F74 /* LicenseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LicenseWindow.xib; sourceTree = "<group>"; };
+		92AEE83B1979D55000B50F74 /* LicenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenceManager.h; sourceTree = "<group>"; };
+		92AEE83C1979D55000B50F74 /* LicenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenceManager.m; sourceTree = "<group>"; };
+		92AEE8411979D62B00B50F74 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		92AEE8421979D62B00B50F74 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range.png"; sourceTree = "<group>"; };
 		92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range@2x.png"; sourceTree = "<group>"; };
 		92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPhysicsUnavailable.xib; sourceTree = "<group>"; };
@@ -4578,12 +4592,21 @@
 		E390C77A170A2C20003E9E92 /* About Box & Email list */ = {
 			isa = PBXGroup;
 			children = (
+				928104451982F7F900A8B7F4 /* CocoaSecurity.h */,
+				928104461982F7F900A8B7F4 /* CocoaSecurity.m */,
+				92AEE8411979D62B00B50F74 /* Base64.h */,
+				92AEE8421979D62B00B50F74 /* Base64.m */,
 				E390C77B170A2C9B003E9E92 /* AboutWindow.h */,
 				E390C77C170A2C9B003E9E92 /* AboutWindow.m */,
 				E390C77D170A2C9B003E9E92 /* AboutWindow.xib */,
 				B7DE848E1937A8390039FB72 /* RegistrationWindow.h */,
 				B7DE848F1937A8390039FB72 /* RegistrationWindow.m */,
 				B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */,
+				92AEE8351979D33D00B50F74 /* LicenseWindow.h */,
+				92AEE8361979D33D00B50F74 /* LicenseWindow.m */,
+				92AEE8371979D33D00B50F74 /* LicenseWindow.xib */,
+				92AEE83B1979D55000B50F74 /* LicenceManager.h */,
+				92AEE83C1979D55000B50F74 /* LicenceManager.m */,
 			);
 			name = "About Box & Email list";
 			sourceTree = "<group>";
@@ -5804,6 +5827,7 @@
 				774E4ED2136DFFB70025D0A8 /* btn-scale-hi.png in Resources */,
 				774E4ED3136DFFB70025D0A8 /* btn-scale.png in Resources */,
 				77E1995213858DE0006C361B /* overflowImage.png in Resources */,
+				92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */,
 				83EDACF9193DC99100327B86 /* Features.plist in Resources */,
 				77E1995313858DE0006C361B /* overflowImagePressed.png in Resources */,
 				77E1995413858DE0006C361B /* pi.png in Resources */,
@@ -6532,6 +6556,7 @@
 				E325F64D14F53FF100D29BCF /* InspectorColor4FVar.m in Sources */,
 				E325F65214F5669600D29BCF /* InspectorSeparatorSub.m in Sources */,
 				E385A42314F6A01900DFB12D /* InspectorBlock.m in Sources */,
+				92AEE83D1979D55000B50F74 /* LicenceManager.m in Sources */,
 				E398C03314FB86D20078E771 /* PlugInExport.m in Sources */,
 				E398C03814FB8A430078E771 /* CCBX.m in Sources */,
 				E398C04314FBCA620078E771 /* PublishTypeAccessoryView.m in Sources */,
@@ -6539,6 +6564,7 @@
 				9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */,
 				E3C5C1AC1504D30C000CF6F3 /* SCEvent.m in Sources */,
 				E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */,
+				92AEE8431979D62B00B50F74 /* Base64.m in Sources */,
 				E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */,
 				E3C5C1C91508F35E000CF6F3 /* CCBAnimationParser.m in Sources */,
 				E3850809150AA9AE007E162A /* ImageAndTextCell.m in Sources */,
@@ -6604,12 +6630,14 @@
 				E3B7BCA015E3BCFE00CF95EF /* MainToolbarDelegate.m in Sources */,
 				E3AF6CDB15F0A9BC0048DB2A /* HelpWindow.m in Sources */,
 				E3AF6CE415F0DBA90048DB2A /* HelpPage.m in Sources */,
+				928104471982F7F900A8B7F4 /* CocoaSecurity.m in Sources */,
 				E3C9CCBB161D0BBF008A3784 /* InspectorCodeConnectionsJS.m in Sources */,
 				E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */,
 				581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */,
 				E3808DB71641CB6400398456 /* ProjectSettingsWindowController.m in Sources */,
 				E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */,
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
+				92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
 				B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */,
 				E3618D5616655041009F5805 /* CCBPublisherTemplate.m in Sources */,

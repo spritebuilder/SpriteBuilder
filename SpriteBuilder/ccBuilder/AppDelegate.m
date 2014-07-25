@@ -133,6 +133,7 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
+#import "LicenceManager.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -2062,7 +2063,7 @@ static BOOL hideAllToNextSeparator;
     }
 
     [self closeProject];
-    
+
     if ([fileName hasSuffix:@".ccbproj"])
     {
         fileName = [fileName stringByDeletingLastPathComponent];
@@ -2394,9 +2395,9 @@ static BOOL hideAllToNextSeparator;
 {
 	for( NSString* filename in filenames )
 	{
-			[self openProject:filename];		
-		}
+        [self openProject:filename];
 	}
+}
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
@@ -4540,7 +4541,7 @@ static BOOL hideAllToNextSeparator;
 	[self openRegistration];
 }
 	
-
+	
 -(BOOL)openRegistration
 {
 	if ([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
