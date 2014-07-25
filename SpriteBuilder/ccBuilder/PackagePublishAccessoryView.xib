@@ -15,17 +15,6 @@
                     <rect key="frame" x="291" y="0.0" width="292" height="98"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CVw-7D-YCc">
-                            <rect key="frame" x="17" y="63" width="68" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Android" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="e0i-Up-JVy">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystemBold"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="settings.osSettings.android.enabled" id="c0o-Pn-0ak"/>
-                            </connections>
-                        </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5VV-gy-or9">
                             <rect key="frame" x="17" y="40" width="56" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -34,7 +23,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.android.enabled" id="zXh-x6-3e2"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.android.resolution_phone" id="bGi-FW-16s"/>
                             </connections>
                         </button>
@@ -46,7 +34,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.android.enabled" id="HHd-Sa-0BO"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.android.resolution_phonehd" id="zg2-FM-MH9"/>
                             </connections>
                         </button>
@@ -58,7 +45,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.android.enabled" id="fnI-Jd-Jn4"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.android.resolution_tablethd" id="FNc-7K-yVV"/>
                             </connections>
                         </button>
@@ -70,7 +56,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.android.enabled" id="RMF-Eo-TLc"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.android.resolution_tablet" id="2fq-mU-7Zr"/>
                             </connections>
                         </button>
@@ -109,7 +94,6 @@
                             </popUpButtonCell>
                             <connections>
                                 <binding destination="-2" name="selectedTag" keyPath="settings.osSettings.android.audio_quality" id="NEv-cH-Yz0"/>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.android.enabled" id="j92-On-5Im"/>
                             </connections>
                         </popUpButton>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4o9-NC-Cd0" customClass="CCBTextFieldLabel">
@@ -128,23 +112,21 @@
                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <font key="titleFont" metaFont="system"/>
                         </box>
+                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="opZ-fJ-HRr">
+                            <rect key="frame" x="18" y="70" width="47" height="14"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Android" id="gjb-Ka-NbC">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                     </subviews>
                 </customView>
                 <customView appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqb-J2-R55" userLabel="iOS Settings">
                     <rect key="frame" x="0.0" y="0.0" width="292" height="98"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S8u-cd-BSM">
-                            <rect key="frame" x="17" y="63" width="61" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="iOS" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="7Jk-mt-lWx">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystemBold"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="settings.osSettings.ios.enabled" id="P5G-Su-gZY"/>
-                            </connections>
-                        </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="StC-Af-ZRG">
                             <rect key="frame" x="17" y="40" width="56" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -153,7 +135,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.ios.enabled" id="48v-yr-aj3"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.ios.resolution_phone" id="5wf-Is-TqA"/>
                             </connections>
                         </button>
@@ -165,7 +146,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.ios.enabled" id="7GS-ne-aQW"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.ios.resolution_phonehd" id="DKg-zU-SI8"/>
                             </connections>
                         </button>
@@ -177,7 +157,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.ios.enabled" id="aJo-eS-Cj9"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.ios.resolution_tablethd" id="mW1-Ky-nm3"/>
                             </connections>
                         </button>
@@ -189,7 +168,6 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.ios.enabled" id="ayo-Kh-4ze"/>
                                 <binding destination="-2" name="value" keyPath="settings.osSettings.ios.resolution_tablet" id="jdD-dX-hC0"/>
                             </connections>
                         </button>
@@ -227,14 +205,22 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="selectedTag" keyPath="settings.osSettings.ios.audio_quality" id="n9g-pk-lQe"/>
-                                <binding destination="-2" name="enabled" keyPath="settings.osSettings.ios.enabled" id="Ylu-yq-KKr"/>
+                                <binding destination="-2" name="selectedTag" keyPath="settings.osSettings.ios.audio_quality" id="HfJ-lg-mU4"/>
                             </connections>
                         </popUpButton>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bc6-Cb-v8I" customClass="CCBTextFieldLabel">
                             <rect key="frame" x="18" y="19" width="75" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Audio quality" id="01M-n4-6aM">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vPS-sI-4yD">
+                            <rect key="frame" x="18" y="70" width="22" height="14"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iOS" id="IZv-Dy-bJU">
                                 <font key="font" metaFont="smallSystem"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

@@ -31,6 +31,7 @@
 
     RMPackage *package = _resources.firstObject;
     self.settings = [[PackagePublishSettings alloc] initWithPackage:package];
+
     if (![_settings load])
     {
         [self callFinishBlockWithPublishError:package];
@@ -49,7 +50,6 @@
         if (result == NSFileHandlingPanelOKButton)
         {
             self.publishDirectory = publishPanel.directoryURL.path;
-            [_settings store];
             [self publishPackage];
         }
     }];
@@ -70,7 +70,7 @@
 - (void)publishPackage
 {
     self.publisherController = [[CCBPublisherController alloc] init];
-    _settings.outputDirectory = _publishDirectory;
+    _settings.customOutputDirectory = _publishDirectory;
 
     _publisherController.publishMainProject = NO;
     _publisherController.projectSettings = _projectSettings;
