@@ -4449,6 +4449,10 @@ static BOOL hideAllToNextSeparator;
 {
 
 #ifdef SPRITEBUILDER_PRO
+#ifdef TESTING
+    return;
+#endif
+
 	if(![AndroidPluginInstaller needsInstallation])
 	{
 		return;
