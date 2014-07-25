@@ -374,21 +374,23 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     {
         // Convert to OGG
         self.sndTask = [[NSTask alloc] init];
-        [_sndTask setCurrentDirectoryPath:[srcPath stringByDeletingLastPathComponent]];
+        NSString *temp = [NSString stringWithFormat:@"%@.temp",dstPath];
         [_sndTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"oggenc"]];
         NSMutableArray* args = [NSMutableArray arrayWithObjects:
                                 [NSString stringWithFormat:@"-q%d", quality],
-                                @"-o", dstPath, srcPath,
+                                @"-o", temp, srcPath,
                                 nil];
         [_sndTask setArguments:args];
         [_sndTask launch];
         [_sndTask waitUntilExit];
 
         // Remove old file
-        if (![srcPath isEqualToString:dstPath])
+        if (![srcPath isEqualToString:temp])
         {
             [fm removeItemAtPath:srcPath error:NULL];
         }
+        
+        [fm moveItemAtPath:temp toPath:dstPath error:nil];
 
         self.sndTask = nil;
         return dstPath;
