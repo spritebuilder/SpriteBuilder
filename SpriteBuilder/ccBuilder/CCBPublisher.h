@@ -46,7 +46,7 @@ enum {
 
 - (id) initWithProjectSettings:(ProjectSettings*)someProjectSettings warnings:(CCBWarnings*)someWarnings;
 
-- (void)start;
+- (bool)start;
 - (void)startAsync;
 
 - (void)cancel;

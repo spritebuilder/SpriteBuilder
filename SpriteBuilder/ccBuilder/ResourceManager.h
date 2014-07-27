@@ -28,6 +28,8 @@
 
 #define kCCBMaxTrackedDirectories 50
 
+@class ProjectSettings;
+
 enum
 {
     kCCBResTypeNone,
@@ -137,6 +139,8 @@ enum
 }
 
 + (ResourceManager*) sharedManager;
+
+@property (nonatomic,strong) ProjectSettings* projectSettings;
 
 @property (nonatomic,readonly) NSMutableDictionary* directories;
 @property (nonatomic,strong) NSArray* activeDirectories;

@@ -167,7 +167,7 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize playingBack;
 @dynamic	showJoints;
 
-static AppDelegate* sharedAppDelegate;
+static AppDelegate* sharedAppDelegate = nil;
 
 #pragma mark Setup functions
 
@@ -482,7 +482,7 @@ typedef enum
     NSLog(@"R:%f G:%f B:%f A:%f",calibratedColor.redComponent, calibratedColor.greenComponent, calibratedColor.blueComponent, calibratedColor.alphaComponent);
     
     // Load resource manager
-	[ResourceManager sharedManager];
+	[ResourceManager sharedManager].projectSettings = projectSettings;
     
     // Setup preview
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
