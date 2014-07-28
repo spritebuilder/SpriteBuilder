@@ -82,7 +82,6 @@
 
 + (ResourceManager *)sharedManager
 {
-
 	static ResourceManager *rm = NULL;
 	if (!rm)
 	{
@@ -494,7 +493,7 @@
 
     for (NSString* dir in newActiveDirectories)
     {
-        [[ResourceManager sharedManager] addDirectory:dir];
+        [self addDirectory:dir];
     }
 
     [self setActiveDirectories:newActiveDirectories];
@@ -1218,7 +1217,7 @@
     NSString *dirPath = [self dirPathForResource:resource];
 
     // Find directory
-    NSArray *dirs = [ResourceManager sharedManager].activeDirectories;
+    NSArray *dirs = self.activeDirectories;
     if (dirs.count == 0)
     {
         return nil;
