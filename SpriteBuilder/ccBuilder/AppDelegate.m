@@ -1820,7 +1820,7 @@ static BOOL hideAllToNextSeparator;
     if(doc.UUID == 0x0)
     {
         doc.UUID = 0x1;
-        [self fixupUUID:doc dict: doc.docData[@"nodeGraph"]];
+        [self fixupUUID:doc dict: doc.data[@"nodeGraph"]];
 
     }
 }
