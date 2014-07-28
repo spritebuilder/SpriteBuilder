@@ -20,7 +20,9 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */#import "CCBPublisher.h"
+ */
+
+#import "CCBPublisher.h"
 
 #import "CCBDirectoryPublisher.h"
 #import "ProjectSettings.h"
@@ -178,12 +180,14 @@
     BOOL isGeneratedSpriteSheet = [[_projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
     if (!isGeneratedSpriteSheet)
 	{
-        BOOL createdDirs = [fileManager createDirectoryAtPath:outDir withIntermediateDirectories:YES attributes:NULL error:NULL];
-        if (!createdDirs)
+        [_queue addOperationWithBlock:^
         {
-            [_warnings addWarningWithDescription:@"Failed to create output directory %@" isFatal:YES];
-            return NO;
-        }
+            BOOL createdDirs = [fileManager createDirectoryAtPath:outDir withIntermediateDirectories:YES attributes:NULL error:NULL];
+            if (!createdDirs)
+            {
+                [_warnings addWarningWithDescription:@"Failed to create output directory \"%@\"" isFatal:YES];
+            }
+        }];
 	}
 
     if (![self processAllFilesWithinPublishDir:publishDirectory
