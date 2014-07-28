@@ -44,6 +44,7 @@ static NSString *urlEncode(id object) {
 @end
 
 @implementation UsageManager
+@dynamic userID;
 
 -(id)init
 {
@@ -177,6 +178,11 @@ static NSString *urlEncode(id object) {
 - (void) sendEvent:(NSString*)evt
 {
     [self sendEvent:evt data:nil];
+}
+
+-(NSString*)userID
+{
+	return _userID;
 }
 
 -(NSDictionary*)usageDetails

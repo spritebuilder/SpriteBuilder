@@ -15,6 +15,8 @@ typedef enum
 	eLicenseState_VerififcationComplete,
 }eLicenseState;
 
+
+
 @interface LicenseWindow : NSWindowController
 
 -(void)setState:(eLicenseState)state;

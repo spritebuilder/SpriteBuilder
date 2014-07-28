@@ -11,7 +11,7 @@
 typedef void (^SuccessCallback) (NSDictionary * licenseInfo);
 typedef void (^ErrorCallback) (NSString * errorMessage);
 
-
+NSString * kLicenseDetailsUpdated;
 
 @interface LicenseManager : NSObject <NSURLConnectionDataDelegate>
 

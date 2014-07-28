@@ -8,6 +8,9 @@
 
 #import "LicenseWindow.h"
 #import "LicenseManager.h"
+#import "UsageManager.h"
+
+static NSString * kRegisterEndpoint = @"http://www.spritebuilder.com/register";
 
 @interface LicenseWindow ()
 {
@@ -52,7 +55,6 @@
 		[weakSelf displayError:errorMessage];
 		[weakSelf setState:eLicenseState_PollingServer];
 		
-		
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
 			[weakSelf sendPoll];
 		});
@@ -61,10 +63,34 @@
 		
 	};
 	
-	self.expiryDate.stringValue = @"";
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onLicenseDetailsUpdated:) name:kLicenseDetailsUpdated object:nil];
+	[self onLicenseDetailsUpdated:nil];
+	
 	[self.busyIndicator startAnimation:self];
 	[self sendPoll];
 	
+}
+
+-(void)close
+{
+	[super close];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)onLicenseDetailsUpdated:(NSNotification*)notice
+{
+	NSDictionary * licenseDetails = [LicenseManager getLicenseDetails];
+	if(licenseDetails[@"expireDate"])
+	{
+		NSDate * expireDate = [NSDate dateWithTimeIntervalSince1970:[licenseDetails[@"expireDate"] doubleValue]];
+		self.expiryDate.stringValue = [NSDateFormatter localizedStringFromDate:expireDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
+	}
+	else
+	{
+		self.expiryDate.stringValue = @"";
+	}
+
 }
 
 -(void)sendPoll
@@ -86,11 +112,13 @@
 		
 		[self setState:eLicenseState_VerififcationComplete];
 	} error:errorCallback];
-
 }
 
 - (IBAction)onHandleLoginToSBSite:(id)sender {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://forum.spritebuilder.com"]];
+	UsageManager * usageManager = [[UsageManager alloc] init];
+	
+	NSString * urlEndpoint = [NSString stringWithFormat:@"%@/%@", kRegisterEndpoint,usageManager.userID];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlEndpoint]];
 }
 
 - (IBAction)onHandleContinue:(id)sender {

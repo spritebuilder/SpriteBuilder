@@ -16,6 +16,8 @@ extern NSString * kSbUserID;
     NSString* _userID;
 }
 
+@property (readonly) NSString * userID;
+
 - (void) registerUsage;
 
 - (void) registerEmail:(NSString*)email reveiveNewsLetter:(BOOL)receiveNewsLetter;

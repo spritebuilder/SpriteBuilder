@@ -9,9 +9,16 @@
 #import "LicenseManager.h"
 #import "CocoaSecurity.h"
 #import "ProjectSettings.h"
+#import "UsageManager.h"
 
 static NSString * kLicenseUserSettingsKey = @"licenseUserSettings";
-static NSString * kAuthorizationURL = @"";
+static NSString * kAuthorizationURL = @"http://www.spritebuilder.com/api/v1/authorization";
+NSString * kLicenseDetailsUpdated = @"kLicenseDetailsUpdated";
+
+@interface NSDictionary (UrlEncoding)
+-(NSString*) urlEncodedString ;
+@end
+
 @implementation LicenseManager
 {
 	SuccessCallback successCallback;
@@ -85,6 +92,8 @@ static NSString * kAuthorizationURL = @"";
 	NSLog(@"StringKey : %@", result.base64);
 	
 	[[NSUserDefaults standardUserDefaults] setObject:@{@"licenseKey" : result.base64} forKey:kLicenseUserSettingsKey];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:kLicenseDetailsUpdated object:licenseDetails];
 
 }
 
@@ -111,9 +120,9 @@ static NSString * kAuthorizationURL = @"";
 	BOOL result = [self requiresLicensing];
 }
 
--(void)completeValidateUserId:(NSDictionary*)validationInfo
+-(void)updateAuthorizeInfo:(NSDictionary*)authorizationResult
 {
-	NSTimeInterval days = [validationInfo[@"license_expires_at"] doubleValue];
+	NSTimeInterval days = [authorizationResult[@"license_expires_at"] doubleValue];
 	NSDate * futureDate = [NSDate dateWithTimeIntervalSince1970:days];
 	
 	
@@ -129,43 +138,69 @@ static NSString * kAuthorizationURL = @"";
 	successCallback = [_successCallback copy];
 	errorCallback   = [_errorCallback copy];
 	
-	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
-	NSMutableDictionary * mutableData = [NSMutableDictionary dictionary];
-	[mutableData addEntriesFromDictionary:[projectSettings getVersionDictionary]];
+	UsageManager * usageManager = [[UsageManager alloc] init];
+	
+
+	NSDictionary * usagedetails = [usageManager usageDetails];
+
+	
+	NSString * params = [usagedetails urlEncodedString];
+	// Create URL
+    NSString* urlStr = [NSString stringWithFormat:@"%@?%@", kAuthorizationURL, params];
 	
 		
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:kAuthorizationURL]];
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]];
 //    NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+	
 	
 	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 	[NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *licenseData, NSError *error) {
 		
-		{ //Test code!
-			NSDictionary * testDict = @{@"license_expires_at" : @([[NSDate dateWithTimeIntervalSinceNow:60.0 * 60.0 * 24.0 * 5.0f] timeIntervalSince1970])};
-			[self completeValidateUserId:testDict];
-			successCallback(testDict);
-			return;
-		}
+
 		
 		if ([licenseData length] > 0 && error == nil)
 		{
 			NSError *jsonParsingError = nil;
 			
-			NSDictionary * resultDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:&jsonParsingError];
+			NSDictionary * authorizationResult = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:&jsonParsingError];
 			
 			if (jsonParsingError) {
 				errorCallback([jsonParsingError localizedDescription]);
 				return;
 			}
 			
-			if(resultDict[@"error"])
+			if(authorizationResult[@"error"])
 			{
-				errorCallback(resultDict[@"message"]);
+				errorCallback(authorizationResult[@"message"]);
 				return;
 			}
 			
-			[self completeValidateUserId:(NSDictionary*)resultDict];
-			successCallback(resultDict);
+			[self updateAuthorizeInfo:(NSDictionary*)authorizationResult];
+			
+			
+			if([LicenseManager requiresLicensing])
+			{
+				NSDictionary * licenseDetails = [LicenseManager getLicenseDetails];
+				
+				NSTimeInterval expireDateInterval = [licenseDetails[@"expireDate"] doubleValue];
+				
+				NSDate * expireDate = [NSDate dateWithTimeIntervalSince1970:expireDateInterval];
+				NSDate * todayDate = [NSDate date];
+				
+				if([todayDate compare:expireDate] == NSOrderedDescending)
+				{
+					errorCallback(@"You're license has expired. Please login to renew it.");
+				}
+				else
+				{
+					errorCallback(@"You're license is invalid. Please login to refresh it.");
+				}
+				
+				return;
+			}
+			
+			
+			successCallback(authorizationResult);
 		}
 		else if ([licenseData length] == 0 && error == nil)
 		{
