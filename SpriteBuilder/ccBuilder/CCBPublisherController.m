@@ -190,11 +190,12 @@
 - (NSArray *)inputDirsOfResourcePaths
 {
     NSMutableArray *result = [NSMutableArray array];
-    for (RMDirectory *resourcePath in _oldResourcePaths)
+    for (RMDirectory *oldResourcePath in _oldResourcePaths)
     {
-        [result addObject:resourcePath.dirPath];
+        [result addObject:oldResourcePath.dirPath];
     }
     return result;
+
 }
 
 - (NSArray *)inputDirsOfPackagePublishSettingsEnabledForMainProject

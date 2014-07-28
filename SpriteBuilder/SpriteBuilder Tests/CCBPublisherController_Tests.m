@@ -60,8 +60,6 @@
 
     self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
     _packageSettings.publishToCustomOutputDirectory = NO;
-    _packageSettings.publishToZip = YES;
-    _packageSettings.publishToMainProject = NO;
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     iosSettings.resolution_tablethd = YES;
@@ -76,7 +74,7 @@
     _publisherController.packageSettings = @[_packageSettings];
 }
 
-- (void)testPackageExportToDefaultDirectoryAndOldResourcePath
+- (void)testPackageExportToDefaultDirectory
 {
     [self configureSinglePackagePublishSettingCase];
 
