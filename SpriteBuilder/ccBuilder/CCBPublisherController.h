@@ -7,10 +7,10 @@
 @interface CCBPublisherController : NSObject
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
-@property (nonatomic, copy) PublisherFinishBlock finishBlock;
-@property (nonatomic, weak) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 @property (nonatomic, strong) NSArray *packageSettings;
-@property (nonatomic) BOOL publishMainProject;
+@property (nonatomic, weak) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
+@property (nonatomic, copy) PublisherFinishBlock finishBlock;
+
 @property (nonatomic, strong, readonly) CCBWarnings *warnings;
 
 - (void)startAsync:(BOOL)async;
