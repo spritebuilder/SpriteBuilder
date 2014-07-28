@@ -276,12 +276,17 @@
 - (BOOL)processFile:(NSString *)fileName
             subPath:(NSString *)subPath
            filePath:(NSString *)filePath
-          outputDir:(NSString *)outputDir isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
+          outputDir:(NSString *)outputDir
+        isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
 {
+    if ([self isIgnorableFile:fileName])
+    {
+        return YES;
+    }
+
     // Skip non png files for generated sprite sheets
     if (isGeneratedSpriteSheet
-        && ![fileName isSmartSpriteSheetCompatibleFile]
-        && ![fileName isIntermediateFileLookup])
+        && ![fileName isSmartSpriteSheetCompatibleFile])
     {
         [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png|psd file in smart sprite sheet found (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
         return YES;
@@ -312,6 +317,12 @@
         [self publishCCB:fileName filePath:filePath outputDir:outputDir];
     }
     return YES;
+}
+
+- (BOOL)isIgnorableFile:(NSString *)fileName
+{
+    return [fileName isIntermediateFileLookup]
+           || [fileName isPackagePublishSettingsFile];
 }
 
 - (BOOL)isFileSupportedByPublishing:(NSString *)fileName

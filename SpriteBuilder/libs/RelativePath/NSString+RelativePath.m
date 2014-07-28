@@ -6,6 +6,7 @@
 //
 
 #import "NSString+RelativePath.h"
+#import "MiscConstants.h"
 
 
 @implementation NSString (RelativePath)
@@ -77,6 +78,11 @@
         return @".";
     }
     return [NSString pathWithComponents:pathComponents1];
+}
+
+- (BOOL)isPackagePublishSettingsFile
+{
+    return [self isEqualToString:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
 }
 
 @end

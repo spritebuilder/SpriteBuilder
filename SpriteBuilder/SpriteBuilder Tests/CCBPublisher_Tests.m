@@ -71,6 +71,7 @@
 {
     // Language files are just copied
     [self createEmptyFiles:@[@"baa.spritebuilder/Packages/foo.sbpack/Strings.ccbLang"]];
+    [self createEmptyFiles:@[@"baa.spritebuilder/Packages/foo.sbpack/Package.plist"]];
 
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png"
                     width:4
@@ -127,6 +128,8 @@
     [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
     [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted.png" hasWidth:4 hasHeight:12];
     [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted2.png" hasWidth:20 hasHeight:8];
+
+    [self assertFileDoesNotExist:@"Published-iOS/Package.plist"];
 }
 
 - (void)testPublishingOfResolutions
