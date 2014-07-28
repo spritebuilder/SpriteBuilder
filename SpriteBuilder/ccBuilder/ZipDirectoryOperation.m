@@ -79,8 +79,6 @@
         NSString *warningDescription = [NSString stringWithFormat:@"zip exited with code %d, error: %@", status, stdErrOutput];
         [_warnings addWarningWithDescription:warningDescription];
     }
-
-    NSLog(@"Zipping done: %@", [self resolvedZipOutputPath]);
 }
 
 - (void)createDirectoriesIfNeeded:(NSString *)resolvedOutputPath

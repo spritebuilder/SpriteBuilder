@@ -114,7 +114,7 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
     NSAssert(_package != nil, @"package must not be nil");
 
     NSDictionary *dict = [self toDictionary];
-    NSString *fullPath = [_package.dirPath stringByAppendingPathComponent:@"Package.plist"];
+    NSString *fullPath = [_package.dirPath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
     return [dict writeToFile:fullPath atomically:YES];
 }
 

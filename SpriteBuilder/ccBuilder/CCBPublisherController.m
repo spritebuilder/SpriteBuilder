@@ -56,10 +56,10 @@
 {
     for (PackagePublishSettings *packageSetting in _packageSettings)
     {
-        [self addPublishingTargetsForPackageSetting:packageSetting osType:(kCCBPublisherOSTypeIOS)];
+        [self addPublishingTargetsForPackageSetting:packageSetting osType:kCCBPublisherOSTypeIOS];
 
         #ifdef SPRITEBUILDER_PRO
-        [self addPublishingTargetsForPackageSetting:packageSetting osType:(kCCBPublisherOSTypeAndroid)];
+        [self addPublishingTargetsForPackageSetting:packageSetting osType:kCCBPublisherOSTypeAndroid];
         #endif
     }
 }
