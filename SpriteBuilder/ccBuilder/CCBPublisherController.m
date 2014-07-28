@@ -18,6 +18,7 @@
 
 @end
 
+
 @implementation CCBPublisherController
 
 - (void)startAsync:(BOOL)async;
@@ -151,11 +152,6 @@
 
 - (void)addPublishingTargetsForMainProject
 {
-    if (!_publishMainProject)
-    {
-        return;
-    }
-
     if (_projectSettings.publishEnabledIOS)
     {
         [self addMainProjectPublishingTargetToPublisherForOSType:kCCBPublisherOSTypeIOS];
@@ -171,16 +167,37 @@
 
 - (void)addMainProjectPublishingTargetToPublisherForOSType:(CCBPublisherOSType)osType
 {
+    NSArray *inputDirs = [self packagePublishSettingsEnabledForMainProject];
+
+    if ([inputDirs count] == 0)
+    {
+        return;
+    }
+
     CCBPublishingTarget *target = [[CCBPublishingTarget alloc] init];
     target.osType = osType;
     target.outputDirectory = [_projectSettings publishDirForOSType:osType];
     target.resolutions = [_projectSettings publishingResolutionsForOSType:osType];
-    target.inputDirectories = _projectSettings.absoluteResourcePaths;
+    target.inputDirectories = inputDirs;
     target.publishEnvironment = _projectSettings.publishEnvironment;
     target.audioQuality = [_projectSettings audioQualityForOsType:osType];
     target.directoryToClean = [_projectSettings publishDirForOSType:osType];
 
     [_publisher addPublishingTarget:target];
+}
+
+- (NSArray *)packagePublishSettingsEnabledForMainProject
+{
+    NSMutableArray *inputDirs = [NSMutableArray array];
+    for (PackagePublishSettings *somePackageSettings in _packageSettings)
+    {
+        if (!somePackageSettings.publishToMainProject)
+        {
+            continue;
+        }
+        [inputDirs addObject:somePackageSettings.package.dirPath];
+    }
+    return inputDirs;
 }
 
 - (void)cancel

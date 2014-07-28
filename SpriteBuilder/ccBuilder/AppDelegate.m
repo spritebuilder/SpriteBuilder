@@ -136,7 +136,7 @@
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
-#import "CCBPublisher.h"
+#import "ResourceManager+Publishing.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3117,8 +3117,7 @@ static BOOL hideAllToNextSeparator;
 {
     self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = projectSettings;
-    _publisherController.publishMainProject = YES;
-    _publisherController.packageSettings = nil;
+    _publisherController.packageSettings = [[ResourceManager sharedManager] loadAllPackageSettings];
 
     id __weak selfWeak = self;
     _publisherController.finishBlock = ^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)

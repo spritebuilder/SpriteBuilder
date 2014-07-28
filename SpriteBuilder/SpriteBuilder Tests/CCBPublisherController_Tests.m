@@ -34,6 +34,25 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
+    _projectSettings.publishDirectory = @"../Published-iOS";
+    _projectSettings.publishDirectoryAndroid = @"../Published-Android";
+
+    self.publisherController = [[CCBPublisherController alloc] init];
+    _publisherController.projectSettings = _projectSettings;
+}
+
+- (void)tearDown
+{
+    self.projectSettings = nil;
+    self.package = nil;
+    self.packageSettings = nil;
+    self.publisherController = nil;
+
+    [super tearDown];
+}
+
+- (void)configureSinglePackagePublishSettingCase
+{
     [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
     self.package = [[RMPackage alloc] init];
@@ -41,8 +60,6 @@
 
     self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
     _packageSettings.publishToCustomOutputDirectory = NO;
-
-    // _packageSettings.customOutputDirectory = @"../Published-Packages";
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     iosSettings.resolution_tablethd = YES;
@@ -54,14 +71,13 @@
 
     [self createFolders:@[@"Published-Packages", @"baa.spritebuilder/Packages/foo.sbpack"]];
 
-    self.publisherController = [[CCBPublisherController alloc] init];
-    _publisherController.projectSettings = _projectSettings;
     _publisherController.packageSettings = @[_packageSettings];
-    _publisherController.publishMainProject = NO;
 }
 
 - (void)testPackageExportToDefaultDirectory
 {
+    [self configureSinglePackagePublishSettingCase];
+
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/plane.png" width:10 height:2];
 
     [_publisherController startAsync:NO];
@@ -81,6 +97,8 @@
 
 - (void)testPackageExportToCustomDirectory
 {
+    [self configureSinglePackagePublishSettingCase];
+
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/plane.png" width:10 height:2];
 
     _packageSettings.publishToCustomOutputDirectory = YES;
@@ -98,6 +116,81 @@
     [self assertFilesExistRelativeToDirectory:@"custom" filesPaths:@[
           @"foo-Android-phone.zip"
     ]];
+}
+
+- (void)testPublishMainProjectWithSomePackagesNotIncluded
+{
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/Menus.sbpack/resources-auto/button.png" width:4 height:4];
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/Characters.sbpack/resources-auto/hero.png" width:4 height:4];
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack/resources-auto/desert.png" width:4 height:4];
+
+    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Menus.sbpack"] error:nil];
+    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Characters.sbpack"] error:nil];
+    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Backgrounds.sbpack"] error:nil];
+    _projectSettings.publishEnabledIOS = YES;
+    _projectSettings.publishEnabledAndroid = YES;
+
+    PackagePublishSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
+    packageSettingsMenus.publishToMainProject = NO;
+    packageSettingsMenus.publishToZip = NO;
+
+    PackagePublishSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
+    packageSettingsCharacters.publishToMainProject = YES;
+    packageSettingsCharacters.publishToZip = NO;
+
+    PackagePublishSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
+    packageSettingsBackgrounds.publishToMainProject = YES;
+    packageSettingsBackgrounds.publishToZip = NO;
+
+    _publisherController.packageSettings = @[packageSettingsMenus, packageSettingsCharacters, packageSettingsBackgrounds];
+
+    [_publisherController startAsync:NO];
+
+    NSArray *resolutions = @[@"tablet", @"tablethd", @"phone", @"phonehd"];
+    NSArray *osSuffixes = @[@"iOS", @"Android"];
+
+    for (NSString *osSuffix in osSuffixes)
+    {
+        for (NSString *resolution in resolutions)
+        {
+            NSString *outputFolder = [NSString stringWithFormat:@"Published-%@", osSuffix];
+            [self assertFilesExistRelativeToDirectory:outputFolder filesPaths:@[
+                    [NSString stringWithFormat:@"resources-%@/hero.png", resolution],
+                    [NSString stringWithFormat:@"resources-%@/desert.png", resolution]
+            ]];
+
+            [self assertFilesDoNotExistRelativeToDirectory:outputFolder filesPaths:@[
+                    [NSString stringWithFormat:@"resources-%@/button.png", resolution]
+            ]];
+        }
+    }
+
+    for (NSString *osSuffix in osSuffixes)
+    {
+        for (NSString *resolution in resolutions)
+        {
+            [self assertFilesDoNotExistRelativeToDirectory:packageSettingsMenus.effectiveOutputDirectory filesPaths:@[
+                    [NSString stringWithFormat:@"Menus-%@-%@.zip", osSuffix, resolution]
+            ]];
+            [self assertFilesDoNotExistRelativeToDirectory:packageSettingsCharacters.effectiveOutputDirectory filesPaths:@[
+                    [NSString stringWithFormat:@"Characters-%@-%@.zip", osSuffix, resolution]
+            ]];
+            [self assertFilesDoNotExistRelativeToDirectory:packageSettingsBackgrounds.effectiveOutputDirectory filesPaths:@[
+                    [NSString stringWithFormat:@"Backgrounds-%@-%@.zip", osSuffix, resolution]
+            ]];
+        }
+    }
+}
+
+
+#pragma mark - helpers
+
+- (PackagePublishSettings *)createSettingsWithPath:(NSString *)path
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [self fullPathForFile:path];
+
+    return [[PackagePublishSettings alloc] initWithPackage:package];
 }
 
 @end
