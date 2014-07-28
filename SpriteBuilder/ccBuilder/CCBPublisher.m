@@ -60,6 +60,7 @@
     if (_publishingTargets.count == 0)
     {
         NSLog(@"[PUBLISH] Nothing to do: no publishing targets added.");
+        [self callFinishedBlock];
         return;
     }
 
@@ -94,6 +95,11 @@
     NSLog(@"[PUBLISH] Done in %.2f seconds.", [[NSDate date] timeIntervalSince1970] - startTime);
     #endif
 
+    [self callFinishedBlock];
+}
+
+- (void)callFinishedBlock
+{
     if ([[NSThread currentThread] isMainThread])
     {
         if (_finishBlock)
@@ -225,10 +231,6 @@
                 && error.code != NSFileNoSuchFileError)
             {
                 NSLog(@"Error removing old publishing directory at path \"%@\" with error %@", target.outputDirectory, error);
-            }
-            else
-            {
-                NSLog(@"Removed: %@", target.directoryToClean);
             }
         }
     }
