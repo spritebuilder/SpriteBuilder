@@ -24,36 +24,16 @@
  */
 
 #import "CCBDocument.h"
-#import "ResolutionSetting.h"
 #import "CocosScene.h"
 
 @implementation CCBDocument
 
-@synthesize fileName;
-@synthesize docData;
-@synthesize undoManager;
-@synthesize lastEditedProperty;
-@synthesize isDirty;
-@synthesize stageScrollOffset;
-@synthesize stageZoom;
-@synthesize stageColor;
-@synthesize exportPath;
-@synthesize exportPlugIn;
-@synthesize exportFlattenPaths;
-@synthesize resolutions;
-@synthesize currentResolution;
-@synthesize docDimensionsType;
-@synthesize sequences;
-@synthesize currentSequenceId;
-
-- (id)init
+- (instancetype)init
 {
     self = [super init];
-    if (self) {
-        // Initialization code here.
+    if (self)
+    {
         self.undoManager = [[NSUndoManager alloc] init];
-    }
-    
     self.stageZoom = 1;
     self.stageScrollOffset = ccp(0,0);
     self.stageColor = kCCBCanvasColorBlack;
@@ -62,30 +42,79 @@
     return self;
 }
 
+- (instancetype)initWithContentsOfFile:(NSString *)filePath
+{
+    self = [self init];
+
+    if (self)
+    {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+
+        self.filePath = filePath;
+        self.data = dictionary;
+        self.exportPath = [dictionary objectForKey:@"exportPath"];
+        self.exportPlugIn = [dictionary objectForKey:@"exportPlugIn"];
+        self.UUID = [dictionary[@"UUID"] unsignedIntegerValue];
+
+        [self fixupUUID];
+    }
+
+    return self;
+}
+
+- (void)fixupUUID
+{
+    //If UUID is unset, it means the doc is out of date. Fixup.
+    if (_UUID == 0x0)
+    {
+        self.UUID = 0x1;
+        [self fixupUUIDWithDict:_data[@"nodeGraph"]];
+    }
+}
+
+-(void)fixupUUIDWithDict:(NSMutableDictionary*)dict
+{
+    if(!dict[@"UUID"])
+    {
+        dict[@"UUID"] = @(_UUID);
+        self.UUID = _UUID + 1;
+    }
+
+    if(dict[@"children"])
+    {
+        for (NSMutableDictionary * child in dict[@"children"])
+        {
+            [self fixupUUIDWithDict:child];
+        }
+    }
+}
 
 - (NSString*) formattedName
 {
-    return [[self.fileName lastPathComponent] stringByDeletingPathExtension];
+    return [[_filePath lastPathComponent] stringByDeletingPathExtension];
 }
 
-@dynamic rootPath;
 - (NSString*) rootPath
 {
-    return [fileName stringByDeletingLastPathComponent];
+    return [_filePath stringByDeletingLastPathComponent];
 }
 
-- (void) setFileName:(NSString *)fn
+- (void)setPath:(NSString *)newPath
 {
-    // Set new filename
-    if (fn != fileName)
+    if (![newPath isEqualToString:_filePath])
     {
-        fileName = fn;
+        _filePath = newPath;
     }
 }
 
 - (BOOL)isWithinPath:(NSString *)path
 {
-	return [self.fileName hasPrefix:path];
+    return [_filePath hasPrefix:path];
+}
+
+- (BOOL)store
+{
+    return [_data writeToFile:_filePath atomically:YES];
 }
 
 - (NSUInteger)getAndIncrementUUID

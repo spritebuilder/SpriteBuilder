@@ -23,11 +23,6 @@
 
 @implementation ResourceContextMenu_Tests
 
-- (void)setUp
-{
-    [FeatureToggle sharedFeatures].packages = YES;
-}
-
 - (void)testContextWithEmptySelection
 {
     ResourceContextMenu *resourceContextMenu = [[ResourceContextMenu alloc] initWithActionTarget:nil resources:@[]];
@@ -72,7 +67,8 @@
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
             @"deleteResource:",
-            @"exportPackage:"];
+            @"exportPackage:",
+            @"publishPackage:"];
 
     [self assertMenu:resourceContextMenu containsEnabledItemsWithSelectorNames:selectors];
     [self assertMenuItemsEnabledCount:resourceContextMenu withExpectedSelectors:selectors];

@@ -1,45 +1,47 @@
 #import "ProjectSettings+Convenience.h"
 #import "FCFormatConverter.h"
 #import "CCBWarnings.h"
+#import "NSString+RelativePath.h"
+#import "MiscConstants.h"
 
 
 @implementation ProjectSettings (Convenience)
 
 - (BOOL)isPublishEnvironmentRelease
 {
-    return self.publishEnvironment == PublishEnvironmentRelease;
+    return self.publishEnvironment == kCCBPublishEnvironmentRelease;
 }
 
 - (BOOL)isPublishEnvironmentDebug
 {
-    return self.publishEnvironment == PublishEnvironmentDevelop;
+    return self.publishEnvironment == kCCBPublishEnvironmentDevelop;
 }
 
-- (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
+- (NSInteger)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
-    NSString *key = targetType == kCCBPublisherTargetTypeIPhone
+    NSString *key = osType == kCCBPublisherOSTypeIOS
         ? @"format_ios_sound_quality"
         : @"format_android_sound_quality";
 
     int result = [[self valueForRelPath:relPath andKey:key] intValue];
     if (!result)
     {
-        return self.publishAudioQuality_ios;
+        return NSNotFound;
     }
     return result;
 }
 
-- (int)soundFormatForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType
+- (int)soundFormatForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
     NSString *key;
     NSDictionary *map;
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
         key = @"format_ios_sound";
         map = @{@(0):@(kFCSoundFormatCAF),
                 @(1):@(kFCSoundFormatMP4)};
     }
-    else if (targetType == kCCBPublisherTargetTypeAndroid)
+    else if (osType == kCCBPublisherOSTypeAndroid)
     {
         key = @"format_android_sound";
         map = @{@(0):@(kFCSoundFormatOGG)};
@@ -58,14 +60,14 @@
            : -1;
 }
 
-- (NSArray *)publishingResolutionsForTargetType:(CCBPublisherTargetType)targetType;
+- (NSArray *)publishingResolutionsForOSType:(CCBPublisherOSType)osType;
 {
-    if (targetType == kCCBPublisherTargetTypeAndroid)
+    if (osType == kCCBPublisherOSTypeAndroid)
     {
         return [self publishingResolutionsForAndroid];
     }
 
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
         return [self publishingResolutionsForIOS];
     }
@@ -119,35 +121,57 @@
     return result;
 }
 
-- (NSString *)publishDirForTargetType:(CCBPublisherTargetType)targetType
+- (NSString *)publishDirForOSType:(CCBPublisherOSType)osType
 {
-    if (targetType == kCCBPublisherTargetTypeAndroid)
+    NSString *result;
+    if (osType == kCCBPublisherOSTypeAndroid)
     {
-        return [self publishDirectoryAndroid];
+        result = [self publishDirectoryAndroid];
     }
 
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
-        return [self publishDirectory];
+        result = [self publishDirectory];
     }
 
-    return nil;
+    if (!result)
+    {
+        NSLog(@"Error: unknown target type: %d", osType);
+        return nil;
+    }
+
+    return [result absolutePathFromBaseDirPath:[self.projectPath stringByDeletingLastPathComponent]];
 }
 
-- (BOOL)publishEnabledForTargetType:(CCBPublisherTargetType)targetType
+- (BOOL)publishEnabledForOSType:(CCBPublisherOSType)osType
 {
-    if (targetType == kCCBPublisherTargetTypeAndroid)
+    if (osType == kCCBPublisherOSTypeAndroid)
     {
         return self.publishEnabledAndroid;
     }
 
-    if (targetType == kCCBPublisherTargetTypeIPhone)
+    if (osType == kCCBPublisherOSTypeIOS)
     {
-        return self.publishEnablediPhone;
+        return self.publishEnabledIOS;
     }
 
     return NO;
 }
 
+
+- (NSInteger)audioQualityForOsType:(CCBPublisherOSType)osType
+{
+    if (osType == kCCBPublisherOSTypeAndroid)
+    {
+        return self.publishAudioQuality_android;
+    }
+
+    if (osType == kCCBPublisherOSTypeIOS)
+    {
+        return self.publishAudioQuality_ios;
+    }
+
+    return DEFAULT_AUDIO_QUALITY;
+}
 
 @end

@@ -14,7 +14,9 @@
 
 - (BOOL)isPathInPackagesFolder:(NSString *)path
 {
-    return [path rangeOfString:self.packagesFolderPath].location != NSNotFound;
+    NSString *packagesPathWihTrailingSlash = [self.packagesFolderPath stringByAppendingString:@"/"];
+    BOOL success = [path rangeOfString:packagesPathWihTrailingSlash].location != NSNotFound;
+    return success;
 }
 
 - (NSString *)packagesFolderPath

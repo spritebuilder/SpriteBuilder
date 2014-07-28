@@ -23,33 +23,28 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "CCBPublisherTypes.h"
 
 #define kCCBProjectSettingsVersion 1
 #define kCCBDefaultExportPlugIn @"ccbi"
 
-enum
+typedef enum
 {
-    kCCBDesignTargetFlexible,
-    kCCBDesignTargetFixed,
-};
+    kCCBDesignTargetFlexible = 0,
+    kCCBDesignTargetFixed = 1,
+} CCBDesignTarget;
 
-enum
+typedef enum
 {
-    kCCBOrientationLandscape,
-    kCCBOrientationPortrait,
-};
+    kCCBOrientationLandscape = 0,
+    kCCBOrientationPortrait = 1,
+} CCBOrientation;
 
 typedef NS_ENUM(int8_t, CCBTargetEngine)
 {
 	CCBTargetEngineCocos2d = 0,
-	CCBTargetEngineSpriteKit,
+	CCBTargetEngineSpriteKit = 1,
 };
-
-typedef enum
-{
-    PublishEnvironmentDevelop = 0,
-    PublishEnvironmentRelease,
-} SBPublishEnvironment;
 
 @class RMResource;
 @class CCBWarnings;
@@ -57,13 +52,11 @@ typedef enum
 @interface ProjectSettings : NSObject
 {
     NSString* projectPath;
-    NSMutableArray* resourcePaths;
-    NSMutableDictionary* resourceProperties;
-    
+
     NSString* publishDirectory;
     NSString* publishDirectoryAndroid;
 
-    BOOL publishEnablediPhone;
+    BOOL publishEnabledIOS;
     BOOL publishEnabledAndroid;
 
     BOOL publishResolution_ios_phone;
@@ -81,8 +74,7 @@ typedef enum
     BOOL isSafariExist;
     BOOL isChromeExist;
     BOOL isFirefoxExist;
-    
-    BOOL flattenPaths;
+
     BOOL publishToZipFile;
     BOOL onlyPublishCCBs;
     NSString* exporter;
@@ -110,7 +102,7 @@ typedef enum
 @property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 
-@property (nonatomic,assign) BOOL publishEnablediPhone;
+@property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
 
 @property (nonatomic, copy) NSString* publishDirectory;
@@ -132,7 +124,6 @@ typedef enum
 @property (nonatomic,assign) BOOL isChromeExist;
 @property (nonatomic,assign) BOOL isFirefoxExist;
 
-@property (nonatomic, assign) BOOL flattenPaths;
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
 @property (nonatomic, readonly) NSArray* absoluteResourcePaths;
@@ -145,11 +136,13 @@ typedef enum
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
-@property (nonatomic, assign) NSInteger publishEnvironment;
+@property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
 
 // *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
-@property (nonatomic) NSMutableArray *cocos2dUpdateIgnoredVersions;
+
+@property (nonatomic, strong) NSMutableArray *cocos2dUpdateIgnoredVersions;
+@property (nonatomic) BOOL excludedFromPackageMigration;
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
@@ -162,6 +155,7 @@ typedef enum
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
+
 
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;
@@ -212,7 +206,15 @@ typedef enum
 // Returns SBDuplicateResourcePathError if resource path toPath already exists
 - (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
 
+- (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict;
+
 // *** Misc ***
 - (NSString* ) getVersion;
+
+// Tries to find the relative path among all packages for a given absolute path
+// Example: "/foo/Packages/baa.sbpack" as available packages and absolutePath given is
+// "/foo/Packages/baa.sbpack/level1/sprites/fighter.png" will result in "level1/sprites/fighter.png"
+// If no package include the given absolutePath nil is returned
+- (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath;
 
 @end

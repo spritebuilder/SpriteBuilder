@@ -1,15 +1,15 @@
 //
-//  CCBProjCreator.m
+//  CCBProjectCreator.m
 //  SpriteBuilder
 //
 //  Created by Viktor on 10/11/13.
 //
 //
 
-#import "CCBProjCreator.h"
+#import "CCBProjectCreator.h"
 #import "AppDelegate.h"
 
-@implementation CCBProjCreator
+@implementation CCBProjectCreator
 
 -(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine
 {

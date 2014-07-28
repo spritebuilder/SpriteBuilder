@@ -76,8 +76,7 @@
                 [resourcesToDelete addObject:resource];
             }
         }
-        else if ([resource isKindOfClass:[RMPackage class]]
-                 && [FeatureToggle sharedFeatures].arePackagesEnabled)
+        else if ([resource isKindOfClass:[RMPackage class]])
         {
             RMPackage *rmDirectory = (RMPackage *) resource;
             [packagesPathsToDelete addObject:rmDirectory.dirPath];

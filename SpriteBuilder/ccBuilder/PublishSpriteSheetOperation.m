@@ -134,13 +134,13 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)setImageFormatDependingOnTarget
 {
-    if (_targetType == kCCBPublisherTargetTypeIPhone)
+    if (_osType == kCCBPublisherOSTypeIOS)
     {
         _packer.imageFormat = self.format_ios;
         _packer.compress = self.format_ios_compress;
         _packer.dither = self.format_ios_dither;
     }
-    else if (_targetType == kCCBPublisherTargetTypeAndroid)
+    else if (_osType == kCCBPublisherOSTypeAndroid)
     {
         _packer.imageFormat = self.format_android;
         _packer.compress = self.format_android_compress;
@@ -186,8 +186,8 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"file: %@, res: %@, targetType: %i, filefull: %@, srcdirs: %@, publishDirectory: %@, date: %@",
-                     [_spriteSheetFile lastPathComponent], _resolution, _targetType, _spriteSheetFile, _srcDirs, _publishDirectory, _srcSpriteSheetDate];
+    return [NSString stringWithFormat:@"file: %@, res: %@, osType: %i, filefull: %@, srcdirs: %@, publishDirectory: %@, date: %@",
+                                      [_spriteSheetFile lastPathComponent], _resolution, _osType, _spriteSheetFile, _srcDirs, _publishDirectory, _srcSpriteSheetDate];
 }
 
 

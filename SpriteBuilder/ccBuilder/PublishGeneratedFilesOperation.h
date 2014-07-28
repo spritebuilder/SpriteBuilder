@@ -6,7 +6,7 @@
 
 @interface PublishGeneratedFilesOperation : PublishBaseOperation
 
-@property (nonatomic) CCBPublisherTargetType targetType;
+@property (nonatomic) CCBPublisherOSType osType;
 @property (nonatomic, copy) NSString *outputDir;
 @property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
 @property (nonatomic, strong) PublishRenamedFilesLookup *fileLookup;

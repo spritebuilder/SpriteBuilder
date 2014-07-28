@@ -26,49 +26,33 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface CCBDocument : NSObject {
-    NSString* fileName;
-    NSString* exportPath;
-    NSString* exportPlugIn;
-    BOOL exportFlattenPaths;
-    NSMutableDictionary* docData;
-    NSUndoManager* undoManager;
-    NSString* lastEditedProperty;
-    BOOL isDirty;
-    CGPoint stageScrollOffset;
-    float stageZoom;
-    int stageColor;
-    
-    NSMutableArray* resolutions;
-    int currentResolution;
-    int docDimensionsType;
-    
-    NSMutableArray* sequences;
-    int currentSequenceId;
-}
+@interface CCBDocument : NSObject
 
-@property (nonatomic,strong) NSString* fileName;
-@property (nonatomic,strong) NSString* exportPath;
-@property (nonatomic,strong) NSString* exportPlugIn;
-@property (nonatomic,assign) BOOL exportFlattenPaths;
-@property (nonatomic,strong) NSMutableDictionary* docData;
-@property (nonatomic,strong) NSUndoManager* undoManager;
-@property (nonatomic,strong) NSString* lastEditedProperty;
-@property (nonatomic,assign) BOOL isDirty;
-@property (nonatomic,assign) CGPoint stageScrollOffset;
-@property (nonatomic,assign) float stageZoom;
-@property (nonatomic,assign) int stageColor;
-@property (nonatomic,readonly) NSString* rootPath;
-@property (nonatomic,strong) NSMutableArray* resolutions;
-@property (nonatomic,assign) int currentResolution;
-@property (nonatomic,strong) NSMutableArray* sequences;
-@property (nonatomic,assign) int currentSequenceId;
-@property (nonatomic,assign) int docDimensionsType;
-@property (nonatomic,assign) NSUInteger UUID;
+@property (nonatomic, copy) NSString *filePath;
+@property (nonatomic, copy) NSString *exportPath;
+@property (nonatomic, copy) NSString *exportPlugIn;
+@property (nonatomic, strong) NSMutableDictionary *data;
+@property (nonatomic, strong) NSUndoManager *undoManager;
+@property (nonatomic, copy) NSString *lastEditedProperty;
+@property (nonatomic, assign) BOOL isDirty;
+@property (nonatomic, assign) CGPoint stageScrollOffset;
+@property (nonatomic, assign) float stageZoom;
+@property (nonatomic, assign) int stageColor;
+@property (nonatomic, readonly) NSString *rootPath;
+@property (nonatomic, strong) NSMutableArray *resolutions;
+@property (nonatomic, assign) int currentResolution;
+@property (nonatomic, strong) NSMutableArray *sequences;
+@property (nonatomic, assign) int currentSequenceId;
+@property (nonatomic, assign) int docDimensionsType;
+@property (nonatomic, assign) NSUInteger UUID;
 
-- (NSString*) formattedName;
+
+- (instancetype)initWithContentsOfFile:(NSString *)filePath;
+
+- (NSString *)formattedName;
 
 - (BOOL)isWithinPath:(NSString *)path;
 - (NSUInteger)getAndIncrementUUID;
 
+- (BOOL)store;
 @end
