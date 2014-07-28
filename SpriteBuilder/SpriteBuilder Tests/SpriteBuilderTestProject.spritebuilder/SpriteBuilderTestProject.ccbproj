@@ -20,16 +20,14 @@
 	<integer>0</integer>
 	<key>engine</key>
 	<integer>0</integer>
+	<key>excludedFromPackageMigration</key>
+	<integer>1</integer>
 	<key>exporter</key>
 	<string>ccbi</string>
 	<key>fileType</key>
 	<string>CocosBuilderProject</string>
 	<key>fileVersion</key>
 	<integer>1</integer>
-	<key>flattenPaths</key>
-	<false/>
-	<key>needRepublish</key>
-	<false/>
 	<key>onlyPublishCCBs</key>
 	<false/>
 	<key>publishAudioQuality_android</key>
@@ -90,7 +88,9 @@
 	</dict>
 	<key>versionStr</key>
 	<string>Version: 0.9
-GitHub: 551c4795b8
+Sku: pro
+GitHub: 
+59c650bc32
 </string>
 </dict>
 </plist>

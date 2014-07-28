@@ -37,6 +37,83 @@
                BlueprintName = "SpriteBuilder Tests"
                ReferencedContainer = "container:SpriteBuilder.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AndroidPluginInstall_Tests">
+               </Test>
+               <Test
+                  Identifier = "CCAnimation_Tests">
+               </Test>
+               <Test
+                  Identifier = "CCBPublisher_Tests">
+               </Test>
+               <Test
+                  Identifier = "CCBPublisherController_Tests">
+               </Test>
+               <Test
+                  Identifier = "CCBReader_Tests">
+               </Test>
+               <Test
+                  Identifier = "CreateDirectoryFileCommand_Tests">
+               </Test>
+               <Test
+                  Identifier = "FeatureToggle_Tests">
+               </Test>
+               <Test
+                  Identifier = "FileSystemTestCase">
+               </Test>
+               <Test
+                  Identifier = "FormatConvert_Tests">
+               </Test>
+               <Test
+                  Identifier = "MoveFileCommand_Tests">
+               </Test>
+               <Test
+                  Identifier = "NSString_Publishing_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageCreator_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageExporter_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageImporter_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageMigrator_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackagePublishSettings_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageRemover_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageRenamer_Tests">
+               </Test>
+               <Test
+                  Identifier = "ProjectSettings_Tests">
+               </Test>
+               <Test
+                  Identifier = "PublishOSSettings_Tests">
+               </Test>
+               <Test
+                  Identifier = "RemoveFileCommand_Tests">
+               </Test>
+               <Test
+                  Identifier = "ResourceContextMenu_Tests">
+               </Test>
+               <Test
+                  Identifier = "ResourceManager_Publishing_Tests">
+               </Test>
+               <Test
+                  Identifier = "RMPackage_Tests">
+               </Test>
+               <Test
+                  Identifier = "ZipDirectoryOperation_Tests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

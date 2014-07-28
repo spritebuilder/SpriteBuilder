@@ -146,6 +146,15 @@
 		92053DB5197F096000AA93AD /* CCBPEffectBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = 92053DB0197F096000AA93AD /* CCBPEffectBloom.m */; };
 		92053DB6197F096000AA93AD /* EffectBloomControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92053DB3197F096000AA93AD /* EffectBloomControl.m */; };
 		92053DB8197F097F00AA93AD /* effect-bloom.png in Resources */ = {isa = PBXBuildFile; fileRef = 92053DB7197F097F00AA93AD /* effect-bloom.png */; };
+		920994BB19870EC40006F38D /* CCBReader_EffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994BA19870EC40006F38D /* CCBReader_EffectsTest.m */; };
+		920994C119870EF90006F38D /* EffectTest1.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 920994BD19870EF90006F38D /* EffectTest1.ccb */; };
+		920994C219870EF90006F38D /* cartoon_house.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 920994BE19870EF90006F38D /* cartoon_house.jpg */; };
+		920994C319870EF90006F38D /* ShinyBallColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994BF19870EF90006F38D /* ShinyBallColor.png */; };
+		920994C419870EF90006F38D /* ShinyBallNormals.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994C019870EF90006F38D /* ShinyBallNormals.png */; };
+		920994C719870F3D0006F38D /* Cocos2dTestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994C619870F3D0006F38D /* Cocos2dTestHelpers.m */; };
+		920994CC198717910006F38D /* CCBPEffectGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994CB198717910006F38D /* CCBPEffectGlass.m */; };
+		920994D0198717D20006F38D /* EffectGlassControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994CE198717D20006F38D /* EffectGlassControl.m */; };
+		920994D1198717D20006F38D /* EffectGlassControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 920994CF198717D20006F38D /* EffectGlassControl.xib */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
@@ -1484,6 +1493,18 @@
 		92053DB2197F096000AA93AD /* EffectBloomControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectBloomControl.h; path = ccBuilder/EffectBloomControl.h; sourceTree = "<group>"; };
 		92053DB3197F096000AA93AD /* EffectBloomControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectBloomControl.m; path = ccBuilder/EffectBloomControl.m; sourceTree = "<group>"; };
 		92053DB7197F097F00AA93AD /* effect-bloom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-bloom.png"; path = "Resources/effect-bloom.png"; sourceTree = "<group>"; };
+		920994BA19870EC40006F38D /* CCBReader_EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader_EffectsTest.m; sourceTree = "<group>"; };
+		920994BD19870EF90006F38D /* EffectTest1.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = EffectTest1.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/EffectTest1.ccb"; sourceTree = "<group>"; };
+		920994BE19870EF90006F38D /* cartoon_house.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cartoon_house.jpg; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/ccbResources/resources-auto/cartoon_house.jpg"; sourceTree = "<group>"; };
+		920994BF19870EF90006F38D /* ShinyBallColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShinyBallColor.png; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/ccbResources/resources-auto/ShinyBallColor.png"; sourceTree = "<group>"; };
+		920994C019870EF90006F38D /* ShinyBallNormals.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShinyBallNormals.png; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/ccbResources/resources-auto/ShinyBallNormals.png"; sourceTree = "<group>"; };
+		920994C519870F3D0006F38D /* Cocos2dTestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cocos2dTestHelpers.h; path = SpriteBuilderTestProject.spritebuilder/Cocos2dTestHelpers.h; sourceTree = "<group>"; };
+		920994C619870F3D0006F38D /* Cocos2dTestHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Cocos2dTestHelpers.m; path = SpriteBuilderTestProject.spritebuilder/Cocos2dTestHelpers.m; sourceTree = "<group>"; };
+		920994CA198717910006F38D /* CCBPEffectGlass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectGlass.h; path = ccBuilder/CCBPEffectGlass.h; sourceTree = "<group>"; };
+		920994CB198717910006F38D /* CCBPEffectGlass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectGlass.m; path = ccBuilder/CCBPEffectGlass.m; sourceTree = "<group>"; };
+		920994CD198717D20006F38D /* EffectGlassControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectGlassControl.h; path = ccBuilder/EffectGlassControl.h; sourceTree = "<group>"; };
+		920994CE198717D20006F38D /* EffectGlassControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectGlassControl.m; path = ccBuilder/EffectGlassControl.m; sourceTree = "<group>"; };
+		920994CF198717D20006F38D /* EffectGlassControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectGlassControl.xib; path = ccBuilder/EffectGlassControl.xib; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
 		92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPivotJoint.h; sourceTree = "<group>"; };
 		92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPivotJoint.m; sourceTree = "<group>"; };
@@ -3476,7 +3497,7 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
-	E390C77A170A2C20003E9E92 /* About Box & Email list */,
+				E390C77A170A2C20003E9E92 /* About Box & Email list */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				776041E11498F56D0078095D /* Application Settings & Globals */,
 				8392006918ED91AD00B6C429 /* Cocos2dUpdater */,
@@ -3505,7 +3526,7 @@
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
 				E3B7BC9D15E3B97900CF95EF /* Toolbar */,
 				776041E21498F5A70078095D /* Util */,
-				928696311958CAC100402DD8 /* Effects */,				
+				928696311958CAC100402DD8 /* Effects */,
 			);
 			name = SpriteBuilder;
 			path = ccBuilder;
@@ -3691,7 +3712,11 @@
 		830F4EA419336962002B832D /* Cocos2DIntegration */ = {
 			isa = PBXGroup;
 			children = (
+				E525FA8328B2749A80A9BB95 /* CCAnimation_Tests.m */,
+				920994BA19870EC40006F38D /* CCBReader_EffectsTest.m */,
 				E525F8A64BC1B591FE3A2C5D /* CCBReader_Tests.m */,
+				920994C519870F3D0006F38D /* Cocos2dTestHelpers.h */,
+				920994C619870F3D0006F38D /* Cocos2dTestHelpers.m */,
 			);
 			name = Cocos2DIntegration;
 			sourceTree = "<group>";
@@ -3728,7 +3753,6 @@
 			children = (
 				83CD4497193F35A90086E9E7 /* Resource Manager */,
 				83993DA61935D6D2001C228B /* Application Settings & Globals */,
-				E525F793AF97A3AAAFE199A9 /* Cocos2D */,
 				830F4EA419336962002B832D /* Cocos2DIntegration */,
 				830F4EA219336959002B832D /* Packages */,
 				922CC3941946769B00B34854 /* Resources */,
@@ -3894,19 +3918,31 @@
 			name = "Project Settings";
 			sourceTree = "<group>";
 		};
-	92053DAD197F093700AA93AD /* Bloom */ = {
+		92053DAD197F093700AA93AD /* Bloom */ = {
 			isa = PBXGroup;
 			children = (
 				92053DB7197F097F00AA93AD /* effect-bloom.png */,
-				92053DAF197F096000AA93AD /* EffectBloomControl.xib */,
 				92053DB0197F096000AA93AD /* CCBPEffectBloom.m */,
 				92053DB1197F096000AA93AD /* CCBPEffectBloom.h */,
 				92053DB2197F096000AA93AD /* EffectBloomControl.h */,
 				92053DB3197F096000AA93AD /* EffectBloomControl.m */,
+				92053DAF197F096000AA93AD /* EffectBloomControl.xib */,
 			);
 			name = Bloom;
 			sourceTree = "<group>";
-		};		
+		};
+		920994C9198717710006F38D /* Glass */ = {
+			isa = PBXGroup;
+			children = (
+				920994CA198717910006F38D /* CCBPEffectGlass.h */,
+				920994CB198717910006F38D /* CCBPEffectGlass.m */,
+				920994CD198717D20006F38D /* EffectGlassControl.h */,
+				920994CE198717D20006F38D /* EffectGlassControl.m */,
+				920994CF198717D20006F38D /* EffectGlassControl.xib */,
+			);
+			name = Glass;
+			sourceTree = "<group>";
+		};
 		92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -3935,6 +3971,10 @@
 		922CC3941946769B00B34854 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				920994BE19870EF90006F38D /* cartoon_house.jpg */,
+				920994BF19870EF90006F38D /* ShinyBallColor.png */,
+				920994C019870EF90006F38D /* ShinyBallNormals.png */,
+				920994BD19870EF90006F38D /* EffectTest1.ccb */,
 				92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */,
 				92F85F36194F70CA0076B343 /* AnimationTest4.ccb */,
 				92F85F33194F6AD80076B343 /* AnimationTest3.ccb */,
@@ -4037,6 +4077,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				920994C9198717710006F38D /* Glass */,
 				92053DAD197F093700AA93AD /* Bloom */,
 				926FDC7F196C8DCA008C0132 /* Refraction */,
 				9266EE3A195A17AE006CBE81 /* Pixelate */,
@@ -5395,14 +5436,6 @@
 			name = PublishingOperations;
 			sourceTree = "<group>";
 		};
-		E525F793AF97A3AAAFE199A9 /* Cocos2D */ = {
-			isa = PBXGroup;
-			children = (
-				E525FA8328B2749A80A9BB95 /* CCAnimation_Tests.m */,
-			);
-			name = Cocos2D;
-			sourceTree = "<group>";
-		};
 		E525F7C3E5916138FF0FFFBD /* ValueObjects */ = {
 			isa = PBXGroup;
 			children = (
@@ -6479,6 +6512,7 @@
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
 				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
 				92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */,
+				920994D1198717D20006F38D /* EffectGlassControl.xib in Resources */,
 				B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */,
 				9218DF3F1919B04D0033851E /* joint-pivot-handle-min@2x.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
@@ -6539,7 +6573,11 @@
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
 				83599E9A1975470D008283EC /* photoshop.psd in Resources */,
 				92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */,
+				920994C419870EF90006F38D /* ShinyBallNormals.png in Resources */,
+				920994C319870EF90006F38D /* ShinyBallColor.png in Resources */,
+				920994C219870EF90006F38D /* cartoon_house.jpg in Resources */,
 				830B39B0197032F400218021 /* blank.wav in Resources */,
+				920994C119870EF90006F38D /* EffectTest1.ccb in Resources */,
 				92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */,
 				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
 			);
@@ -7044,6 +7082,7 @@
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
 				D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */,
+				920994CC198717910006F38D /* CCBPEffectGlass.m in Sources */,
 				E3D6BA2316C46E41006AFE0A /* SequencerCallbackChannel.m in Sources */,
 				92053DB5197F096000AA93AD /* CCBPEffectBloom.m in Sources */,
 				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
@@ -7083,6 +7122,7 @@
 				B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */,
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
 				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
+				920994D0198717D20006F38D /* EffectGlassControl.m in Sources */,
 				B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */,
 				B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */,
 				B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */,
@@ -7170,10 +7210,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				920994BB19870EC40006F38D /* CCBReader_EffectsTest.m in Sources */,
 				83EDACF5193DB70200327B86 /* ProjectSettings_Tests.m in Sources */,
 				83993DB519361305001C228B /* FeatureToggle_Tests.m in Sources */,
 				E525FC3487265AE7715CE955 /* ObserverTestHelper.m in Sources */,
 				E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */,
+				920994C719870F3D0006F38D /* Cocos2dTestHelpers.m in Sources */,
 				E525F7D63B68B99ADD44F94C /* PackageCreator_Tests.m in Sources */,
 				E525F46FC0F80AEC8AA43D48 /* PackageRemover_Tests.m in Sources */,
 				E525FA2BAA3D669C41F83FA2 /* PackageExporter_Tests.m in Sources */,
@@ -9326,6 +9368,13 @@
 			};
 			name = Release;
 		};
+		928B2B34198703B700C0F0BD /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = CCLayerColor;
+			};
+			name = Testing;
+		};
 		929D1BA11954D16C00B27340 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */;
@@ -11203,6 +11252,7 @@
 			buildConfigurations = (
 				929D1BA11954D16C00B27340 /* Debug */,
 				929D1BA21954D16C00B27340 /* Release */,
+				928B2B34198703B700C0F0BD /* Testing */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

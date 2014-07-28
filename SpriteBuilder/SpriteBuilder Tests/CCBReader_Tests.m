@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "CCBXCocos2diPhoneWriter.h"
 #import "CCBReader_Private.h"
+#import "Cocos2dTestHelpers.h"
 
 @interface CCBReader_Tests : XCTestCase
 
