@@ -98,28 +98,6 @@ NSString * kLicenseDetailsUpdated = @"kLicenseDetailsUpdated";
 }
 
 
-
-+(void)encodeTestData
-{
-	NSTimeInterval days5 = -5.0 * 60.0 * 60.0 * 24.0;
-	NSDate * futureDate = [NSDate dateWithTimeIntervalSinceNow:days5];
-
-	
-	NSDictionary * licenseDetails = @{@"expireDate":@([futureDate timeIntervalSince1970])};
-	
-	[self setLicenseDetails:licenseDetails];
-	
-}
-
-+(void)test
-{
-	[self encodeTestData];
-	
-	NSDictionary * licenseDetails = [self getLicenseDetails];
-	
-	BOOL result = [self requiresLicensing];
-}
-
 -(void)updateAuthorizeInfo:(NSDictionary*)authorizationResult
 {
 	NSTimeInterval days = [authorizationResult[@"license_expires_at"] doubleValue];

@@ -13,10 +13,9 @@ typedef void (^ErrorCallback) (NSString * errorMessage);
 
 NSString * kLicenseDetailsUpdated;
 
-@interface LicenseManager : NSObject <NSURLConnectionDataDelegate>
+@interface LicenseManager : NSObject
 
 +(BOOL)requiresLicensing;
-+(void)test;
 
 -(void)validateUserId:(SuccessCallback)_successCallback error:(ErrorCallback)_errorCallback;
 

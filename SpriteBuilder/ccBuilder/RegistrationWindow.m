@@ -8,8 +8,6 @@
 
 #import "RegistrationWindow.h"
 #import "UsageManager.h"
-#import "MainWindow.h"
-#import "AppDelegate.h"
 
 @interface RegistrationWindow ()
 
@@ -35,58 +33,12 @@
     NSMutableAttributedString* title = [_checkBox.attributedTitle mutableCopy];
     [title addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:NSMakeRange(0, title.length)];
     _checkBox.attributedTitle = title;
-	
-#ifdef SPRITEBUILDER_PRO
-
-	[self.signUpLaterButton setHidden:YES];
-	[self.continueButton setHidden:NO];
-	[self.continueButton setEnabled:NO];
-	[self.cancelButton setHidden:NO];
-	[self setCancelButton:self.cancelButton];
-
-#endif
-	
-	_email.delegate = self;
-	
-}
-
-- (void)controlTextDidChange:(NSNotification *)notification {
-    NSTextField *textField = [notification object];
-
-	if(textField == _email)
-	{
-		[self.continueButton setEnabled:NO];
-		NSString* email = _email.stringValue;
-		
-		if (!email || [email isEqualToString:@""])
-		{
-			return;
-		}
-		
-		if(![self isValidEmail])
-		{
-			return;
-		}
-		
-		[self.continueButton setEnabled:YES];
-	}
-	
-}
-
-
-- (IBAction) pressedCancel:(id)sender
-{
-
-	[NSApp abortModal];
-	
 }
 
 - (IBAction) pressedContinue:(id)sender
 {
-
-	NSString* email = _email.stringValue;
+   	NSString* email = _email.stringValue;
 	UsageManager * usageManager = [[UsageManager alloc] init];
-#ifndef SPRITEBUILDER_PRO
 	
     if (!email || [email isEqualToString:@""])
     {
@@ -107,19 +59,8 @@
     }
     
 	[usageManager setRegisterdEmailFlag];
-#else //SB Pro
 	
-
-	[usageManager registerEmail:email reveiveNewsLetter:YES];
-	[usageManager setRegisterdEmailFlag];
-	
-#endif
-
-	
-	[NSApp stopModal];
-   
-
-}
+	[NSApp stopModal];}
 
 - (IBAction) pressedLater:(id)sender
 {
