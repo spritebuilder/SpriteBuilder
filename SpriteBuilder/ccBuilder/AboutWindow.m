@@ -46,8 +46,10 @@
     [super windowDidLoad];
     
     // Load version file into version text field
+	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
 
-    NSString* version = [[AppDelegate appDelegate].projectSettings getVersion];
+
+    NSString* version = [projectSettings getVersion];
     
     if (version)
     {
@@ -65,6 +67,11 @@
     [closeButton setFrameOrigin:NSMakePoint(21, 317)];
     NSView* contentView = self.window.contentView;
     [contentView addSubview:closeButton];
+	
+
+#ifndef SPRITEBUILDER_PRO
+	self.proSuffix.stringValue = @"";
+#endif
 }
 
 - (IBAction)btnViewOnGithub:(id)sender
