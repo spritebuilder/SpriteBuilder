@@ -60,6 +60,8 @@
     if (_publishingTargets.count == 0)
     {
         NSLog(@"[PUBLISH] Nothing to do: no publishing targets added.");
+        [_warnings setCurrentOSType:kCCBPublisherOSTypeNone];
+        [_warnings addWarningWithDescription:@"Nothing to publish. Check Project Settings. Common cause: No package is set to publish \"in Main Project\" or \"as Zip file\"" isFatal:YES];
         [self callFinishedBlock];
         return;
     }
