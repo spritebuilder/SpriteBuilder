@@ -24,6 +24,7 @@ static NSString * kRegisterEndpoint = @"http://www.spritebuilder.com/register";
 @property (weak) IBOutlet NSButton *connectToServerButton;
 @property (weak) IBOutlet NSTextField *displayText;
 @property (weak) IBOutlet NSTextField *expiryDate;
+@property (weak) IBOutlet NSButton *quitButton;
 
 @end
 
@@ -150,6 +151,8 @@ static NSString * kRegisterEndpoint = @"http://www.spritebuilder.com/register";
 			break;
 		case eLicenseState_VerififcationComplete:
 			[self.continueButton setEnabled:YES];
+			[self.connectToServerButton setEnabled:NO];
+			[self.quitButton setEnabled: NO];
 			break;
 		case eLicenseState_PollingServer:
 			[self.continueButton setEnabled:NO];
