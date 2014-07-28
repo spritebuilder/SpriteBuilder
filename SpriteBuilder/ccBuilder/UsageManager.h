@@ -20,6 +20,9 @@ extern NSString * kSbUserID;
 
 - (void) registerEmail:(NSString*)email reveiveNewsLetter:(BOOL)receiveNewsLetter;
 
--(void)setRegisterdEmailFlag;
+- (void) setRegisterdEmailFlag;
+
+//Returns a dictionary of information thats useful for tracking usage.
+- (NSDictionary*)usageDetails;
 
 @end

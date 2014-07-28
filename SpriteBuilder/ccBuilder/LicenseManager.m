@@ -6,14 +6,13 @@
 //
 //
 
-#import "LicenceManager.h"
+#import "LicenseManager.h"
 #import "CocoaSecurity.h"
-
-//NSString * kPrivateKey = @"M9LDDVAKHiEueQLcaGkPq+SOBJPllzwhGTkLPsaDrjM=";
+#import "ProjectSettings.h"
 
 static NSString * kLicenseUserSettingsKey = @"licenseUserSettings";
-static NSString * kSBProPrivateKey = @"SBProPrivateKey";
-@implementation LicenceManager
+static NSString * kAuthorizationURL = @"";
+@implementation LicenseManager
 {
 	SuccessCallback successCallback;
 	ErrorCallback   errorCallback;
@@ -44,18 +43,12 @@ static NSString * kSBProPrivateKey = @"SBProPrivateKey";
 }
 
 
-+(NSDictionary*)licenseUserSettings
-{
-	return [[NSUserDefaults standardUserDefaults] dictionaryForKey:kLicenseUserSettingsKey];
-}
-												 
-
 +(NSDictionary*)getLicenseDetails
 {
  
 	NSString * privateKey = [NSString stringWithUTF8String:SBPRO_PRIVATE_KEY];
 	
-	NSDictionary * licenseSettings = [self licenseUserSettings];
+	NSDictionary * licenseSettings = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kLicenseUserSettingsKey];
 	if(licenseSettings == nil)
 		return nil;
 	
@@ -116,34 +109,63 @@ static NSString * kSBProPrivateKey = @"SBProPrivateKey";
 	NSDictionary * licenseDetails = [self getLicenseDetails];
 	
 	BOOL result = [self requiresLicensing];
-	
+}
 
+-(void)completeValidateUserId:(NSDictionary*)validationInfo
+{
+	NSTimeInterval days = [validationInfo[@"license_expires_at"] doubleValue];
+	NSDate * futureDate = [NSDate dateWithTimeIntervalSince1970:days];
+	
+	
+	NSDictionary * licenseDetails = @{@"expireDate":@([futureDate timeIntervalSince1970])};
+	
+	[LicenseManager setLicenseDetails:licenseDetails];
 }
 
 
 
--(void)validateLicenseKey:(NSString*)registrationKey success:(SuccessCallback)_successCallback error:(ErrorCallback)_errorCallback
+-(void)validateUserId:(SuccessCallback)_successCallback error:(ErrorCallback)_errorCallback
 {
 	successCallback = [_successCallback copy];
 	errorCallback   = [_errorCallback copy];
+	
+	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
+	NSMutableDictionary * mutableData = [NSMutableDictionary dictionary];
+	[mutableData addEntriesFromDictionary:[projectSettings getVersionDictionary]];
+	
 		
-	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@""]];
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:kAuthorizationURL]];
 //    NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+	
 	NSOperationQueue *queue = [[NSOperationQueue alloc] init];
 	[NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *licenseData, NSError *error) {
+		
+		{ //Test code!
+			NSDictionary * testDict = @{@"license_expires_at" : @([[NSDate dateWithTimeIntervalSinceNow:60.0 * 60.0 * 24.0 * 5.0f] timeIntervalSince1970])};
+			[self completeValidateUserId:testDict];
+			successCallback(testDict);
+			return;
+		}
 		
 		if ([licenseData length] > 0 && error == nil)
 		{
 			NSError *jsonParsingError = nil;
 			
-			id object = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:&jsonParsingError];
+			NSDictionary * resultDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:&jsonParsingError];
 			
 			if (jsonParsingError) {
 				errorCallback([jsonParsingError localizedDescription]);
 				return;
 			}
 			
-			successCallback(object);
+			if(resultDict[@"error"])
+			{
+				errorCallback(resultDict[@"message"]);
+				return;
+			}
+			
+			[self completeValidateUserId:(NSDictionary*)resultDict];
+			successCallback(resultDict);
 		}
 		else if ([licenseData length] == 0 && error == nil)
 		{
@@ -155,9 +177,8 @@ static NSString * kSBProPrivateKey = @"SBProPrivateKey";
 		}
 		else if (error != nil)
 		{
-			errorCallback(@"Download error.");
+			errorCallback(error.localizedDescription);
 		}
-		
 	}];
 }
 

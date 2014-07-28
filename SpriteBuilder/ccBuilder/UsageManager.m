@@ -179,17 +179,16 @@ static NSString *urlEncode(id object) {
     [self sendEvent:evt data:nil];
 }
 
-- (void) sendEvent:(NSString*)evt data:(NSDictionary*)data;
+-(NSDictionary*)usageDetails
 {
-    ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
-	
-	NSMutableDictionary * mutableData = [NSMutableDictionary dictionaryWithDictionary:data];
-	
+	NSMutableDictionary * mutableData = [NSMutableDictionary dictionary];
+		
+	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
 	
     // Version.txt information
 	[mutableData addEntriesFromDictionary:[projectSettings getVersionDictionary]];
 	
-		
+	
 	NSString * serialNumber = [self serialNumber];
 	if(!serialNumber)
 		serialNumber = @"";
@@ -200,14 +199,21 @@ static NSString *urlEncode(id object) {
 	{
 		email = mutableData[@"email"];
 		email = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)email, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
-
+		
 		mutableData[@"email"] = email;
 		
 	}
     // URL encode email
-
+	
 	mutableData[@"id"] = _userID;
 
+	return mutableData;
+}
+
+- (void) sendEvent:(NSString*)evt data:(NSDictionary*)data;
+{
+	NSMutableDictionary * mutableData = [NSMutableDictionary dictionaryWithDictionary:[self usageDetails]];
+	[mutableData addEntriesFromDictionary:data];
 	
 	NSString * params = [mutableData urlEncodedString];
 	

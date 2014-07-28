@@ -133,7 +133,8 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
-#import "LicenceManager.h"
+#import "LicenseManager.h"
+#import "LicenseWindow.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -639,15 +640,25 @@ typedef enum
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
-	[self setupSpriteBuilderPro];
 
+
+#ifndef SPRITEBUILDER_PRO
     // Open registration window
     if(![self openRegistration])
 	{
 		[[NSApplication sharedApplication] terminate:self];
 	}
-	
-	[LicenceManager test];
+#else
+	if([LicenseManager requiresLicensing])
+	{
+		if(![self openLicensingWindow])
+		{
+			[[NSApplication sharedApplication] terminate:self];
+		}
+	}
+
+	[self setupSpriteBuilderPro];
+#endif
 	
 	
 	
@@ -4564,12 +4575,27 @@ static BOOL hideAllToNextSeparator;
 	if(result == NSModalResponseStop)
 	{
 		return YES;
-}
+	}
 
 	return NO;
 }
 
+-(BOOL)openLicensingWindow
+{
+	LicenseWindow * licenseWindow = [[LicenseWindow alloc] initWithWindowNibName:@"LicenseWindow"];
+	
+	NSInteger result = [NSApp runModalForWindow: licenseWindow.window];
+	[NSApp endSheet:licenseWindow.window];
+	[licenseWindow.window close];
+	
+	if(result == NSModalResponseStop)
+	{
+		return YES;
+	}
+	
+	return NO;
 
+}
 
 
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window

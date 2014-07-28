@@ -13,8 +13,12 @@ typedef void (^ErrorCallback) (NSString * errorMessage);
 
 
 
-@interface LicenceManager : NSObject <NSURLConnectionDataDelegate>
+@interface LicenseManager : NSObject <NSURLConnectionDataDelegate>
 
 +(BOOL)requiresLicensing;
 +(void)test;
+
+-(void)validateUserId:(SuccessCallback)_successCallback error:(ErrorCallback)_errorCallback;
+
++(NSDictionary*)getLicenseDetails;
 @end

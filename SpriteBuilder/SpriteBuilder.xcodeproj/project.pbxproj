@@ -223,7 +223,7 @@
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8361979D33D00B50F74 /* LicenseWindow.m */; };
 		92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92AEE8371979D33D00B50F74 /* LicenseWindow.xib */; };
-		92AEE83D1979D55000B50F74 /* LicenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE83C1979D55000B50F74 /* LicenceManager.m */; };
+		92AEE83D1979D55000B50F74 /* LicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE83C1979D55000B50F74 /* LicenseManager.m */; };
 		92AEE8431979D62B00B50F74 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8421979D62B00B50F74 /* Base64.m */; };
 		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
 		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
@@ -1509,8 +1509,8 @@
 		92AEE8351979D33D00B50F74 /* LicenseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseWindow.h; sourceTree = "<group>"; };
 		92AEE8361979D33D00B50F74 /* LicenseWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseWindow.m; sourceTree = "<group>"; };
 		92AEE8371979D33D00B50F74 /* LicenseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LicenseWindow.xib; sourceTree = "<group>"; };
-		92AEE83B1979D55000B50F74 /* LicenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenceManager.h; sourceTree = "<group>"; };
-		92AEE83C1979D55000B50F74 /* LicenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenceManager.m; sourceTree = "<group>"; };
+		92AEE83B1979D55000B50F74 /* LicenseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseManager.h; sourceTree = "<group>"; };
+		92AEE83C1979D55000B50F74 /* LicenseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseManager.m; sourceTree = "<group>"; };
 		92AEE8411979D62B00B50F74 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		92AEE8421979D62B00B50F74 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range.png"; sourceTree = "<group>"; };
@@ -4605,8 +4605,8 @@
 				92AEE8351979D33D00B50F74 /* LicenseWindow.h */,
 				92AEE8361979D33D00B50F74 /* LicenseWindow.m */,
 				92AEE8371979D33D00B50F74 /* LicenseWindow.xib */,
-				92AEE83B1979D55000B50F74 /* LicenceManager.h */,
-				92AEE83C1979D55000B50F74 /* LicenceManager.m */,
+				92AEE83B1979D55000B50F74 /* LicenseManager.h */,
+				92AEE83C1979D55000B50F74 /* LicenseManager.m */,
 			);
 			name = "About Box & Email list";
 			sourceTree = "<group>";
@@ -6556,7 +6556,7 @@
 				E325F64D14F53FF100D29BCF /* InspectorColor4FVar.m in Sources */,
 				E325F65214F5669600D29BCF /* InspectorSeparatorSub.m in Sources */,
 				E385A42314F6A01900DFB12D /* InspectorBlock.m in Sources */,
-				92AEE83D1979D55000B50F74 /* LicenceManager.m in Sources */,
+				92AEE83D1979D55000B50F74 /* LicenseManager.m in Sources */,
 				E398C03314FB86D20078E771 /* PlugInExport.m in Sources */,
 				E398C03814FB8A430078E771 /* CCBX.m in Sources */,
 				E398C04314FBCA620078E771 /* PublishTypeAccessoryView.m in Sources */,
