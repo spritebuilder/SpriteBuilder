@@ -83,7 +83,7 @@
         target.audioQuality = [packageSettings settingsForOsType:osType].audio_quality;
         target.zipOutputPath = [self zipOutputPath:packagePublishName baseDir:packageSettings.effectiveOutputDirectory];
         target.outputDirectory = [self cachesPath:packagePublishName];
-        target.directoryToClean = packageSettings.effectiveOutputDirectory;
+        target.directoryToClean = [packageSettings.effectiveOutputDirectory absolutePathFromBaseDirPath:_projectSettings.projectPathDir];
 
         [_publisher addPublishingTarget:target];
     }
