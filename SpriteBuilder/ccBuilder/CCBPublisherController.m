@@ -161,10 +161,12 @@
         [self addMainProjectPublishingTargetToPublisherForOSType:kCCBPublisherOSTypeIOS];
     }
 
+    #ifdef SPRITEBUILDER_PRO
     if (_projectSettings.publishEnabledAndroid)
     {
         [self addMainProjectPublishingTargetToPublisherForOSType:kCCBPublisherOSTypeAndroid];
     }
+    #endif
 }
 
 - (void)addMainProjectPublishingTargetToPublisherForOSType:(CCBPublisherOSType)osType
