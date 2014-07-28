@@ -28,6 +28,7 @@
 
 @class RMResource;
 @class RMDirectory;
+@class ProjectSettings;
 
 #define kCCBMaxTrackedDirectories 50
 
@@ -80,7 +81,7 @@
 + (NSArray*) resIndependentExts;
 + (NSArray*) resIndependentDirs;
 
-- (void) createCachedImageFromAuto:(NSString*)autoFile saveAs:(NSString*)dstFile forResolution:(NSString*)res;
+- (void)createCachedImageFromAuto:(NSString *)autoFile saveAs:(NSString *)dstFile forResolution:(NSString *)res projectSettings:(ProjectSettings *)projectSettings;
 
 - (void) notifyResourceObserversResourceListUpdated;
 

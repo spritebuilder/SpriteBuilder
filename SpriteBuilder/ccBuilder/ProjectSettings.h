@@ -23,6 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "CCBPublisherTypes.h"
 
 #define kCCBProjectSettingsVersion 1
 #define kCCBDefaultExportPlugIn @"ccbi"
@@ -45,12 +46,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 	CCBTargetEngineSpriteKit = 1,
 };
 
-typedef enum
-{
-    PublishEnvironmentDevelop = 0,
-    PublishEnvironmentRelease = 1,
-} SBPublishEnvironment;
-
 @class RMResource;
 @class CCBWarnings;
 
@@ -61,7 +56,7 @@ typedef enum
     NSString* publishDirectory;
     NSString* publishDirectoryAndroid;
 
-    BOOL publishEnablediPhone;
+    BOOL publishEnabledIOS;
     BOOL publishEnabledAndroid;
 
     BOOL publishResolution_ios_phone;
@@ -79,8 +74,7 @@ typedef enum
     BOOL isSafariExist;
     BOOL isChromeExist;
     BOOL isFirefoxExist;
-    
-    BOOL flattenPaths;
+
     BOOL publishToZipFile;
     BOOL onlyPublishCCBs;
     NSString* exporter;
@@ -108,7 +102,7 @@ typedef enum
 @property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 
-@property (nonatomic,assign) BOOL publishEnablediPhone;
+@property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
 
 @property (nonatomic, copy) NSString* publishDirectory;
@@ -130,7 +124,6 @@ typedef enum
 @property (nonatomic,assign) BOOL isChromeExist;
 @property (nonatomic,assign) BOOL isFirefoxExist;
 
-@property (nonatomic, assign) BOOL flattenPaths;
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
 @property (nonatomic, readonly) NSArray* absoluteResourcePaths;
@@ -143,7 +136,7 @@ typedef enum
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
 @property (nonatomic, assign) int resourceAutoScaleFactor;
-@property (nonatomic, assign) NSInteger publishEnvironment;
+@property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
 
 // *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
@@ -217,5 +210,11 @@ typedef enum
 
 // *** Misc ***
 - (NSString* ) getVersion;
+
+// Tries to find the relative path among all packages for a given absolute path
+// Example: "/foo/Packages/baa.sbpack" as available packages and absolutePath given is
+// "/foo/Packages/baa.sbpack/level1/sprites/fighter.png" will result in "level1/sprites/fighter.png"
+// If no package include the given absolutePath nil is returned
+- (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath;
 
 @end

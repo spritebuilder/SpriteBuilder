@@ -13,6 +13,8 @@
 - (NSString *)absolutePathFromBaseDirPath:(NSString *)baseDirPath;
 - (NSString *)relativePathFromBaseDirPath:(NSString *)baseDirPath;
 
+
+- (BOOL)isPackagePublishSettingsFile;
 @end
 
 

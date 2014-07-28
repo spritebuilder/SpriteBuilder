@@ -15,7 +15,8 @@
 #import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "FileSystemTestCase.h"
-#import "CCBPublisher.h"
+#import "CCBDirectoryPublisher.h"
+#import "ProjectSettings+Convenience.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 
@@ -152,7 +153,6 @@
       @"deviceOrientationPortrait":@(NO),
       @"publishDirectory":@"Source/Resources/Published-iOS",
       @"resourceAutoScaleFactor":@(0),
-      @"flattenPaths":@(NO),
       @"resourceProperties":@{
          @"":@{
             @"previewFolderHidden":@(YES)
@@ -251,7 +251,6 @@
     // This a convention, if it's read as 0 has to become 4
     XCTAssertEqual(project.resourceAutoScaleFactor, 4);
     SBAssertStringsEqual(project.publishDirectory, @"Source/Resources/Published-iOS");
-    XCTAssertFalse(project.flattenPaths);
 
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"Source/Resources/Published-Android");
     XCTAssertEqual(project.defaultOrientation, 0);
@@ -262,7 +261,7 @@
     XCTAssertTrue(project.publishResolution_android_tablet);
     XCTAssertTrue(project.publishResolution_android_tablethd);
 
-    XCTAssertTrue(project.publishEnablediPhone);
+    XCTAssertTrue(project.publishEnabledIOS);
     XCTAssertTrue(project.publishResolution_ios_phone);
     XCTAssertTrue(project.publishResolution_ios_phonehd);
     XCTAssertTrue(project.publishResolution_ios_tablet);
@@ -281,7 +280,7 @@
     SBAssertStringsEqual(project.exporter, @"ccbi");
 
     XCTAssertFalse(project.publishToZipFile);
-    XCTAssertEqual(project.publishEnvironment, PublishEnvironmentDevelop);
+    XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);
 
     XCTAssertTrue(project.excludedFromPackageMigration);
 
@@ -309,8 +308,8 @@
 
     ProjectSettings *project = [[ProjectSettings alloc] initWithSerialization:projectDict];
     XCTAssertNotNil(project);
-    XCTAssertEqual(project.publishAudioQuality_android, 1);
-    XCTAssertEqual(project.publishAudioQuality_ios, 1);
+    XCTAssertEqual(project.publishAudioQuality_android, DEFAULT_AUDIO_QUALITY);
+    XCTAssertEqual(project.publishAudioQuality_ios, DEFAULT_AUDIO_QUALITY);
     SBAssertStringsEqual(project.publishDirectory, @"");
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"");
     XCTAssertFalse(project.excludedFromPackageMigration);
@@ -337,14 +336,13 @@
     SBAssertStringsEqual(projectSettings.publishDirectoryAndroid, @"Published-Android");
 
     XCTAssertFalse(projectSettings.onlyPublishCCBs);
-    XCTAssertFalse(projectSettings.flattenPaths);
     XCTAssertFalse(projectSettings.publishToZipFile);
 
     XCTAssertTrue(projectSettings.deviceOrientationLandscapeLeft);
     XCTAssertTrue(projectSettings.deviceOrientationLandscapeRight);
 
     XCTAssertEqual(projectSettings.resourceAutoScaleFactor, 4);
-    XCTAssertTrue(projectSettings.publishEnablediPhone);
+    XCTAssertTrue(projectSettings.publishEnabledIOS);
     XCTAssertTrue(projectSettings.publishEnabledAndroid);
 
     XCTAssertTrue(projectSettings.publishResolution_ios_phone);
@@ -357,7 +355,7 @@
     XCTAssertTrue(projectSettings.publishResolution_android_tablet);
     XCTAssertTrue(projectSettings.publishResolution_android_tablethd);
 
-    XCTAssertEqual(projectSettings.publishEnvironment, PublishEnvironmentDevelop);
+    XCTAssertEqual(projectSettings.publishEnvironment, kCCBPublishEnvironmentDevelop);
     XCTAssertEqual(projectSettings.publishAudioQuality_ios, 4);
     XCTAssertEqual(projectSettings.publishAudioQuality_android, 4);
 
@@ -412,19 +410,49 @@
 // be migrated with more effort to fix this change later on
 - (void)testEnums
 {
-    XCTAssertEqual(PublishEnvironmentDevelop, 0);
-    XCTAssertEqual(PublishEnvironmentRelease, 1);
+    XCTAssertEqual(kCCBPublishEnvironmentDevelop, 0, @"Enum value kCCBPublishEnvironmentDevelop  must not change");
+    XCTAssertEqual(kCCBPublishEnvironmentRelease, 1, @"Enum value kCCBPublishEnvironmentRelease  must not change");
 
-    XCTAssertEqual(CCBTargetEngineCocos2d, 0);
-    XCTAssertEqual(CCBTargetEngineSpriteKit, 1);
+    XCTAssertEqual(CCBTargetEngineCocos2d, 0, @"Enum value CCBTargetEngineCocos2d  must not change");
+    XCTAssertEqual(CCBTargetEngineSpriteKit, 1, @"Enum value CCBTargetEngineSpriteKit  must not change");
 
-    XCTAssertEqual(kCCBOrientationLandscape, 0);
-    XCTAssertEqual(kCCBOrientationPortrait, 1);
+    XCTAssertEqual(kCCBOrientationLandscape, 0, @"Enum value kCCBOrientationLandscape  must not change");
+    XCTAssertEqual(kCCBOrientationPortrait, 1, @"Enum value kCCBOrientationPortrait  must not change");
 
-    XCTAssertEqual(kCCBDesignTargetFlexible, 0);
-    XCTAssertEqual(kCCBDesignTargetFixed, 1);
+    XCTAssertEqual(kCCBDesignTargetFlexible, 0, @"Enum value kCCBDesignTargetFlexible  must not change");
+    XCTAssertEqual(kCCBDesignTargetFixed, 1, @"Enum value kCCBDesignTargetFixed  must not change");
 }
 
+- (void)testRelativePathFromAbsolutePath
+{
+    [_projectSettings addResourcePath:[self fullPathForFile:@"Packages/foo.sbpack"] error:nil];
+    [_projectSettings addResourcePath:[self fullPathForFile:@"Packages/baa.sbpack"] error:nil];
+
+    NSString *fullPath = [self fullPathForFile:@"Packages/foo.sbpack/sprites/fighter.png"];
+    SBAssertStringsEqual([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath], @"sprites/fighter.png");
+
+    NSString *fullPath2 = [self fullPathForFile:@"Packages/level1.sbpack/sprites/fighter.png"];
+    XCTAssertNil([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath2]);
+}
+
+- (void)testConvenienceMethodForAudioQualityOfResources
+{
+    NSInteger quality = [_projectSettings soundQualityForRelPath:@"foo" osType:kCCBPublisherOSTypeAndroid];
+    XCTAssertEqual(quality, NSNotFound);
+
+    [_projectSettings setValue:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
+    int quality2 = [_projectSettings soundQualityForRelPath:@"baa" osType:kCCBPublisherOSTypeAndroid];
+    XCTAssertEqual(quality2, 7);
+}
+
+- (void)testConvenienceMethodForAudioQuality
+{
+    _projectSettings.publishAudioQuality_android = 8;
+    _projectSettings.publishAudioQuality_ios = 6;
+
+    XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeAndroid], 8);
+    XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeIOS], 6);
+}
 
 #pragma mark - test helper
 

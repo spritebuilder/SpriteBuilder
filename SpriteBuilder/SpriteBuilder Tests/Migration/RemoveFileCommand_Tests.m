@@ -18,7 +18,6 @@
 
 - (void)testRemoveFile
 {
-    [self createFolders:@[@"foo"]];
     [self createEmptyFiles:@[@"foo/baa.txt"]];
 
     RemoveFileCommand *removeFileCommand = [[RemoveFileCommand alloc] initWithFilePath:[self fullPathForFile:@"foo"]];
@@ -27,12 +26,11 @@
     XCTAssertTrue([removeFileCommand execute:&error], @"Removing the file failed with error %@", error);
     XCTAssertNil(error);
 
-    [self assertFileDoesNotExists:@"foo"];
+    [self assertFileDoesNotExist:@"foo"];
 }
 
 - (void)testRemoveFileUndo
 {
-    [self createFolders:@[@"foo"]];
     [self createEmptyFiles:@[@"foo/baa.txt"]];
 
     RemoveFileCommand *removeFileCommand = [[RemoveFileCommand alloc] initWithFilePath:[self fullPathForFile:@"foo"]];

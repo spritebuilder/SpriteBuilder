@@ -30,7 +30,6 @@
 @implementation CCBXCocos2diPhoneWriter
 
 @synthesize data;
-@synthesize flattenPaths;
 @synthesize serializedProjectSettings;
 
 - (void) setupPropTypes
@@ -99,11 +98,6 @@
 
 - (void) addToStringCache:(NSString*) str isPath:(BOOL) isPath
 {
-    if (isPath && flattenPaths)
-    {
-        str = [str lastPathComponent];
-    }
-    
     // Check if it is already in the chache, if so add to it's count
     NSNumber* num = [stringCacheLookup objectForKey:str];
     if (num)
@@ -320,11 +314,6 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 
 - (void) writeCachedString:(NSString*) str isPath:(BOOL) isPath
 {
-    if (isPath && flattenPaths)
-    {
-        str = [str lastPathComponent];
-    }
-    
     NSNumber* num = [stringCacheLookup objectForKey:str];
     
     NSAssert(num, @"ccbi export: Trying to write string not added to cache (%@)", str);

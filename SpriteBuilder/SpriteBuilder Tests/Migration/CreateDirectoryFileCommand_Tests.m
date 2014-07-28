@@ -43,7 +43,7 @@
     XCTAssertTrue([createDirectoryFileCommand undo:&error], @"Creation of directory failed with error %@", error2);
     XCTAssertNil(error2);
 
-    [self assertFileDoesNotExists:@"new"];
+    [self assertFileDoesNotExist:@"new"];
 }
 
 @end

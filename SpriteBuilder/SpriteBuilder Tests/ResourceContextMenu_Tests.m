@@ -67,7 +67,8 @@
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
             @"deleteResource:",
-            @"exportPackage:"];
+            @"exportPackage:",
+            @"publishPackage:"];
 
     [self assertMenu:resourceContextMenu containsEnabledItemsWithSelectorNames:selectors];
     [self assertMenuItemsEnabledCount:resourceContextMenu withExpectedSelectors:selectors];

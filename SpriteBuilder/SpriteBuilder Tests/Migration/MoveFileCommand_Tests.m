@@ -20,10 +20,7 @@
 
 - (void)testMoveFileCommand
 {
-    [self createFolders:@[
-            @"oneplace",
-            @"anotherplace"]];
-
+    [self createFolders:@[@"anotherplace"]];
     [self createEmptyFiles:@[@"oneplace/important.txt"]];
 
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:[self fullPathForFile:@"oneplace/important.txt"]
@@ -34,15 +31,12 @@
     XCTAssertNil(error);
 
     [self assertFileExists:@"anotherplace/important.txt"];
-    [self assertFileDoesNotExists:@"oneplace/important.txt"];
+    [self assertFileDoesNotExist:@"oneplace/important.txt"];
 }
 
 - (void)testMoveFileAndUndo
 {
-    [self createFolders:@[
-            @"oneplace",
-            @"anotherplace"]];
-
+    [self createFolders:@[@"anotherplace"]];
     [self createEmptyFiles:@[@"oneplace/important.txt"]];
 
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:[self fullPathForFile:@"oneplace/important.txt"]
@@ -57,7 +51,7 @@
     XCTAssertNil(error2);
 
     [self assertFileExists:@"oneplace/important.txt"];
-    [self assertFileDoesNotExists:@"anotherplace/important.txt"];
+    [self assertFileDoesNotExist:@"anotherplace/important.txt"];
 }
 
 - (void)testMoveFileFailsNoFile

@@ -6,12 +6,18 @@
 //
 
 #import "NSString+RelativePath.h"
+#import "MiscConstants.h"
 
 
 @implementation NSString (RelativePath)
 
 - (NSString *)absolutePathFromBaseDirPath:(NSString *)baseDirPath
 {
+    if ([self hasPrefix:@"/"])
+    {
+        return self;
+    }
+
     if ([self hasPrefix:@"~"]) {
         return [self stringByExpandingTildeInPath];
     }
@@ -72,6 +78,11 @@
         return @".";
     }
     return [NSString pathWithComponents:pathComponents1];
+}
+
+- (BOOL)isPackagePublishSettingsFile
+{
+    return [self isEqualToString:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
 }
 
 @end

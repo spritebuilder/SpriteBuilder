@@ -8,7 +8,6 @@
 
 #import "SceneGraph.h"
 #import "CCNode+NodeInfo.h"
-#import "AppDelegate.h"
 #import "ProjectSettings.h"
 
 SceneGraph * gSceneGraph;
@@ -26,16 +25,15 @@ SceneGraph * gSceneGraph;
     return gSceneGraph;
 }
 
-
--(id)init
+-(instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings
 {
     self = [super init];
     if (self)
     {
 		// no joints in Sprite Kit projects
-		if ([AppDelegate appDelegate].projectSettings.engine != CCBTargetEngineSpriteKit)
+		if (projectSettings.engine != CCBTargetEngineSpriteKit)
 		{
-			_joints = [[SequencerJoints alloc] init];
+			self.joints = [[SequencerJoints alloc] init];
 		}
     }
     return self;

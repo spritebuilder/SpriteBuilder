@@ -29,7 +29,6 @@
 
 - (void)testLatestModifiedDateOfPath
 {
-    [self createFolders:@[@"abc/123", @"abc/456/baa"]];
     [self createEmptyFiles:@[@"abc/123/text.txt", @"abc/456/baa/translation.txt"]];
 
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
@@ -58,7 +57,6 @@
 
 - (void)testLatestModifiedDateOfPathIgnoringDirectories
 {
-    [self createFolders:@[@"abc/123/456"]];
     [self createEmptyFiles:@[@"abc/123/456/text.txt"]];
 
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
