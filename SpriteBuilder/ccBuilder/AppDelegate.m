@@ -3118,6 +3118,7 @@ static BOOL hideAllToNextSeparator;
     self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = projectSettings;
     _publisherController.packageSettings = [[ResourceManager sharedManager] loadAllPackageSettings];
+    _publisherController.oldResourcePaths = [[ResourceManager sharedManager] oldResourcePaths];
 
     id __weak selfWeak = self;
     _publisherController.finishBlock = ^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)

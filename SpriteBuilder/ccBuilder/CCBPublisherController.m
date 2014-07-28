@@ -167,7 +167,8 @@
 
 - (void)addMainProjectPublishingTargetToPublisherForOSType:(CCBPublisherOSType)osType
 {
-    NSArray *inputDirs = [self packagePublishSettingsEnabledForMainProject];
+    NSMutableArray *inputDirs = [[self inputDirsOfPackagePublishSettingsEnabledForMainProject] mutableCopy];
+    [inputDirs addObjectsFromArray:[self inputDirsOfResourcePaths]];
 
     if ([inputDirs count] == 0)
     {
@@ -186,7 +187,17 @@
     [_publisher addPublishingTarget:target];
 }
 
-- (NSArray *)packagePublishSettingsEnabledForMainProject
+- (NSArray *)inputDirsOfResourcePaths
+{
+    NSMutableArray *result = [NSMutableArray array];
+    for (RMDirectory *resourcePath in _oldResourcePaths)
+    {
+        [result addObject:resourcePath.dirPath];
+    }
+    return result;
+}
+
+- (NSArray *)inputDirsOfPackagePublishSettingsEnabledForMainProject
 {
     NSMutableArray *inputDirs = [NSMutableArray array];
     for (PackagePublishSettings *somePackageSettings in _packageSettings)

@@ -60,6 +60,8 @@
 
     self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
     _packageSettings.publishToCustomOutputDirectory = NO;
+    _packageSettings.publishToZip = YES;
+    _packageSettings.publishToMainProject = NO;
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     iosSettings.resolution_tablethd = YES;
@@ -74,7 +76,7 @@
     _publisherController.packageSettings = @[_packageSettings];
 }
 
-- (void)testPackageExportToDefaultDirectory
+- (void)testPackageExportToDefaultDirectoryAndOldResourcePath
 {
     [self configureSinglePackagePublishSettingCase];
 
@@ -92,6 +94,40 @@
             @"foo-iOS-phone.zip",
             @"foo-Android-tablet.zip",
             @"foo-Android-phonehd.zip"
+    ]];
+}
+
+- (void)testMainProjectPublishWithOldResourcePath
+{
+    [self configureSinglePackagePublishSettingCase];
+
+    _projectSettings.publishEnabledIOS = NO;
+    _projectSettings.publishEnabledAndroid = YES;
+
+    _packageSettings.publishToZip = NO;
+    _packageSettings.publishToMainProject = YES;
+
+    [self createPNGAtPath:@"baa.spritebuilder/OldResourcePath/resources-auto/sun.png" width:4 height:4];
+    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/OldResourcePath"] error:nil];
+
+    RMDirectory *oldResourcePath = [[RMDirectory alloc] init];
+    oldResourcePath.dirPath = [self fullPathForFile:@"baa.spritebuilder/OldResourcePath"];
+    _publisherController.oldResourcePaths = @[oldResourcePath];
+
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/plane.png" width:10 height:2];
+
+
+    [_publisherController startAsync:NO];
+
+    [self assertFilesExistRelativeToDirectory:@"Published-Android" filesPaths:@[
+            @"resources-phone/sun.png",
+            @"resources-phonehd/sun.png",
+            @"resources-tablet/sun.png",
+            @"resources-tablethd/sun.png",
+            @"resources-phone/plane.png",
+            @"resources-phonehd/plane.png",
+            @"resources-tablet/plane.png",
+            @"resources-tablethd/plane.png"
     ]];
 }
 

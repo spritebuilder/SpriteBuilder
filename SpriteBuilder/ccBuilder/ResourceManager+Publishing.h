@@ -5,4 +5,5 @@
 
 - (NSArray *)loadAllPackageSettings;
 
+- (NSArray *)oldResourcePaths;
 @end

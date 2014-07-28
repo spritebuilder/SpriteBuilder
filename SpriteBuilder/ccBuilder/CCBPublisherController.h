@@ -8,6 +8,7 @@
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, strong) NSArray *packageSettings;
+@property (nonatomic, strong) NSArray *oldResourcePaths;
 @property (nonatomic, weak) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 @property (nonatomic, copy) PublisherFinishBlock finishBlock;
 

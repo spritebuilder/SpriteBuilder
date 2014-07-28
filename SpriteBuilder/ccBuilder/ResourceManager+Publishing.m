@@ -23,4 +23,17 @@
     return result;
 }
 
+- (NSArray *)oldResourcePaths
+{
+    NSMutableArray *result = [NSMutableArray array];
+    for (RMDirectory *directory in self.activeDirectories)
+    {
+        if ([directory isMemberOfClass:[RMDirectory class]])
+        {
+            [result addObject:directory];
+        }
+    }
+    return result;
+}
+
 @end
