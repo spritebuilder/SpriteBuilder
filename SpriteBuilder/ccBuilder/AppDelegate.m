@@ -133,6 +133,8 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
+#import "LicenseManager.h"
+#import "LicenseWindow.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -638,13 +640,25 @@ typedef enum
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
-	[self setupSpriteBuilderPro];
 
+
+#ifndef SPRITEBUILDER_PRO
     // Open registration window
     if(![self openRegistration])
 	{
-		    [[NSApplication sharedApplication] terminate:self];
+		[[NSApplication sharedApplication] terminate:self];
 	}
+#else
+	if([LicenseManager requiresLicensing])
+	{
+		if(![self openLicensingWindow])
+		{
+			[[NSApplication sharedApplication] terminate:self];
+		}
+	}
+
+	[self setupSpriteBuilderPro];
+#endif
 	
 	
 	
@@ -2062,7 +2076,7 @@ static BOOL hideAllToNextSeparator;
     }
 
     [self closeProject];
-    
+
     if ([fileName hasSuffix:@".ccbproj"])
     {
         fileName = [fileName stringByDeletingLastPathComponent];
@@ -2394,9 +2408,9 @@ static BOOL hideAllToNextSeparator;
 {
 	for( NSString* filename in filenames )
 	{
-			[self openProject:filename];		
-		}
+        [self openProject:filename];
 	}
+}
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
@@ -4540,7 +4554,7 @@ static BOOL hideAllToNextSeparator;
 	[self openRegistration];
 }
 	
-
+	
 -(BOOL)openRegistration
 {
 	if ([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
@@ -4561,12 +4575,27 @@ static BOOL hideAllToNextSeparator;
 	if(result == NSModalResponseStop)
 	{
 		return YES;
-}
+	}
 
 	return NO;
 }
 
+-(BOOL)openLicensingWindow
+{
+	LicenseWindow * licenseWindow = [[LicenseWindow alloc] initWithWindowNibName:@"LicenseWindow"];
+	
+	NSInteger result = [NSApp runModalForWindow: licenseWindow.window];
+	[NSApp endSheet:licenseWindow.window];
+	[licenseWindow.window close];
+	
+	if(result == NSModalResponseStop)
+	{
+		return YES;
+	}
+	
+	return NO;
 
+}
 
 
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window

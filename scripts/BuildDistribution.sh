@@ -6,9 +6,10 @@ CCB_VERSION=$1
 SB_SKU=$2
 XCCONFIG="SpriteBuilder.xcconfig"
 PRODUCT_NAME=SpriteBuilder
+SBPRO_PRIVATE_KEY=fake_private_key
 
-if [ "$#" -ne 2 ]; then
-    echo "uasge: ./BuildDistribution.sh <version eg:0.9> <sku eg:[default|pro]>"
+if [ "$#" -lt 2 ]; then
+    echo "uasge: ./BuildDistribution.sh <version eg:0.9> <sku eg:[default|pro]> <privateKey (optional)>"
     echo "eg  ./BuildDistribution.sh 0.9 default"
     exit 1
 fi
@@ -21,8 +22,14 @@ fi
 
 
 if [ "$SB_SKU" = "pro" ]; then
+	if [ "$#" -lt 3 ]; then
+		echo "pro version needs to specify a privateKey"
+    	exit 1
+	fi
+
 	XCCONFIG="SpriteBuilderPro.xcconfig"
 	PRODUCT_NAME=SpriteBuilderPro
+	SBPRO_PRIVATE_KEY=$3
 fi
 
 
@@ -59,7 +66,7 @@ echo "=== BUILDING SPRITEBUILDER === (please be patient)"
 
 
 #| egrep -A 5 "(error):|(SUCCEEDED \*\*)|(FAILED \*\*)"
-xcodebuild -target SpriteBuilder -configuration Release -xcconfig $XCCONFIG build 
+xcodebuild -target SpriteBuilder -configuration Release -xcconfig $XCCONFIG SBPRO_PRIVATE_KEY=\"$SBPRO_PRIVATE_KEY\" build 
 
 
 # Create archives
