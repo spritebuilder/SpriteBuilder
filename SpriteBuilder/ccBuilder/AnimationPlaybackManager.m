@@ -55,6 +55,9 @@
 
         // Call this method again in a little while
         [self performSelector:@selector(updatePlayback) withObject:nil afterDelay:frameDelta];
+        
+        // Enable/Resume Sound
+        [[OALSimpleAudio sharedInstance] setPaused:NO];
     }
 }
 
@@ -100,6 +103,7 @@
 - (IBAction)stop
 {
     self.playingBack = NO;
+    [[OALSimpleAudio sharedInstance] setPaused:YES];
 }
 
 - (IBAction)jumpToStart:(id)sender
@@ -112,6 +116,7 @@
     _playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
     _sequencerHandler.currentSequence.timelinePosition = 0;
     [[SequencerHandler sharedHandler] updateScrollerToShowCurrentTime];
+    [[OALSimpleAudio sharedInstance] stopAllEffects];
 }
 
 - (IBAction)stepOneFrameBack:(id)sender
@@ -122,6 +127,7 @@
     }
 
     [_sequencerHandler.currentSequence stepBack:1];
+    [[OALSimpleAudio sharedInstance] stopAllEffects];
 }
 
 - (IBAction)stepOneFrameForward:(id)sender
@@ -132,6 +138,7 @@
     }
 
     [_sequencerHandler.currentSequence stepForward:1];
+    [[OALSimpleAudio sharedInstance] stopAllEffects];
 }
 
 - (IBAction)pressedPlaybackControl:(id)sender
