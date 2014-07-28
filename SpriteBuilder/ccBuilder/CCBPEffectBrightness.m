@@ -19,13 +19,13 @@
 
 -(id)serialize
 {
-	return @{@"brightness" : @(self.brightness)};
-}
--(void)deserialize:(NSDictionary*)dict
-{
-	self.brightness = [dict[@"brightness"] floatValue];
+	return @[SERIALIZE_PROPERTY(brightness,Float)];
 }
 
+-(void)deserialize:(NSArray*)properties
+{
+	DESERIALIZE_PROPERTY(brightness, floatValue);
+}
 
 -(EffectDescription*)effectDescription
 {

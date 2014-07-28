@@ -18,13 +18,16 @@
 	return [self effectWithSaturation:0.5f];
 }
 
+
 -(id)serialize
 {
-	return @{@"saturation" : @(self.saturation)};
+	return @[SERIALIZE_PROPERTY(saturation,Float)];
 }
--(void)deserialize:(NSDictionary*)dict
+
+-(void)deserialize:(NSArray*)properties
 {
-	self.saturation = [dict[@"saturation"] floatValue];
+	DESERIALIZE_PROPERTY(saturation, floatValue);
+	
 }
 
 

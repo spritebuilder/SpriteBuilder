@@ -35,5 +35,6 @@
 + (NSMutableDictionary*) dictionaryFromCCObject: (CCNode*) node;
 
 + (id) serializeColor4:(CCColor*)c;
++ (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
 
 @end

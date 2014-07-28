@@ -10,6 +10,7 @@
 #import "EffectsManager.h"
 
 
+
 @implementation CCBPEffectContrast
 @synthesize UUID;
 
@@ -18,14 +19,19 @@
 	return [self effectWithContrast:0.6f];
 }
 
+
 -(id)serialize
 {
-	return @{@"contrast" : @(self.contrast)};
+	return @[SERIALIZE_PROPERTY(contrast,Float)];
 }
--(void)deserialize:(NSDictionary*)dict
+
+
+-(void)deserialize:(NSArray*)properties
 {
-	self.contrast = [dict[@"contrast"] floatValue];
+	DESERIALIZE_PROPERTY(contrast, floatValue);
 }
+
+
 
 
 -(EffectDescription*)effectDescription

@@ -21,16 +21,15 @@
 
 -(id)serialize
 {
-	return @{@"blurRadius" : @(self.blurRadius),
-			 @"intensity" : @(self.intensity),
-			 @"luminanceThreshold" : @(self.luminanceThreshold) };
+	return @[SERIALIZE_PROPERTY(blurRadius,Float), SERIALIZE_PROPERTY(intensity,Float),SERIALIZE_PROPERTY(luminanceThreshold,Float)];
 }
 
--(void)deserialize:(NSDictionary*)dict
+-(void)deserialize:(NSArray*)properties
 {
-	self.blurRadius = [dict[@"blurRadius"] floatValue];
-	self.intensity = [dict[@"intensity"] floatValue];
-	self.luminanceThreshold = [dict[@"luminanceThreshold"] floatValue];
+	DESERIALIZE_PROPERTY(blurRadius, floatValue);
+	DESERIALIZE_PROPERTY(intensity, floatValue);
+	DESERIALIZE_PROPERTY(luminanceThreshold, floatValue);
+	
 }
 
 

@@ -15,6 +15,7 @@
 #import "CocosScene.h"
 #import "SceneGraph.h"
 
+
 @interface CCBWriterInternal(Private)
 + (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
 @end
@@ -31,37 +32,45 @@
 	return [[self alloc] init];
 }
 
+
+
 -(id)serialize
 {
-	return @{@"refraction" : @(self.refraction),
-			 @"environment" : @(self.environment.UUID),
-			 @"normalMap" : (normalMapImageName ? normalMapImageName : @""),
-			 @"normalMapSheet" : (normalMapSheet ? normalMapSheet : @"")};
+	return @[SERIALIZE_PROPERTY(refraction,Float),
+			 @{@"name" : @"environment", @"type" : @"NodeReference", @"value": @(self.environment.UUID)},
+			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBWriterInternal serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
+			 ];
 }
-
--(void)deserialize:(NSDictionary*)dict
+-(void)deserialize:(NSArray *)properties
 {
-	self.refraction = [dict[@"refraction"] floatValue];
 	
-	environmentUUID = [dict[@"environment"] integerValue];
-	
-	
-	normalMapImageName = dict[@"normalMap"];
-	if([normalMapImageName isEqualToString:@""])
-	{
-		normalMapImageName = nil;
-	}
+	DESERIALIZE_PROPERTY(refraction, floatValue);
 
-	normalMapSheet = dict[@"normalMapSheet"];
-	if([normalMapSheet isEqualToString:@""])
-	{
-		normalMapSheet = nil;
-	}
+	[properties findFirst:^BOOL(NSDictionary * dict, int idx) {\
+		return [dict[@"name"] isEqualToString:@"environment"];\
+	} complete:^(NSDictionary * dict, int idx) {
+		environmentUUID =  [dict[@"value"] integerValue];
+	}];
 	
-	if(normalMapImageName && normalMapSheet)
-		[TexturePropertySetter setSpriteFrameForNode:(CCNode*)self andProperty:@"normalMap" withFile:normalMapImageName andSheetFile:normalMapSheet];
-	
-	//self.normalMap = [CCBReaderInternal  //de[dict[@"normalMap"] ];
+	[properties findFirst:^BOOL(NSDictionary * dict, int idx) {\
+		return [dict[@"name"] isEqualToString:@"normalMap"];\
+	} complete:^(NSDictionary * dict, int idx) {
+
+			NSArray * serializedValue = dict[@"value"];
+		
+			NSString* spriteSheetFile = [serializedValue objectAtIndex:0];
+			NSString* spriteFile = [serializedValue objectAtIndex:1];
+			if (!spriteSheetFile || [spriteSheetFile isEqualToString:@""])
+			{
+				spriteSheetFile = kCCBUseRegularFile;
+			}
+		
+			normalMapImageName = spriteFile;
+			normalMapSheet = spriteSheetFile;
+			
+			[TexturePropertySetter setSpriteFrameForNode:(CCNode*)self andProperty:@"normalMap" withFile:spriteFile andSheetFile:spriteSheetFile];
+			
+	}];
 	
 }
 

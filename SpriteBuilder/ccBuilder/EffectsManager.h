@@ -14,13 +14,27 @@
 ////////////////////////////////////////////////////////////
 //Effects should implement this protocol,
 
+#import "NSArray+Query.h"
+
+#define DESERIALIZE_PROPERTY(name, numberValue)\
+[properties findFirst:^BOOL(NSDictionary * dict, int idx) {\
+return [dict[@"name"] isEqualToString:[NSString stringWithUTF8String:#name]];\
+} complete:^(NSDictionary * dict, int idx) {\
+self.name = [dict[@"value"] numberValue];\
+}];
+
+#define SERIALIZE_PROPERTY(name, type)\
+	@{@"name" : [NSString stringWithUTF8String: #name], @"type" : [NSString stringWithUTF8String: #type], @"value": @(self.name)}
+
+
+
 @protocol EffectProtocol <NSObject>
 @required
 @property (nonatomic,readonly) EffectDescription * effectDescription;
 @property (nonatomic) NSUInteger UUID;
 +(CCEffect<EffectProtocol>*)defaultConstruct;
 -(id)serialize;
--(void)deserialize:(NSDictionary*)dict;
+-(void)deserialize:(NSArray*)properties;
 
 @end
 

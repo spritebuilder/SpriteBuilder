@@ -7,6 +7,7 @@
 //
 
 #import "CCBPEffectPixelate.h"
+#import "NSArray+Query.h"
 
 
 @implementation CCBPEffectPixelate
@@ -20,11 +21,14 @@
 
 -(id)serialize
 {
-	return @{@"blockSize" : @(self.blockSize)};
+	return @[SERIALIZE_PROPERTY(blockSize,Float)];
 }
--(void)deserialize:(NSDictionary*)dict
+-(void)deserialize:(NSArray *)properties
 {
-	self.blockSize = [dict[@"blockSize"] floatValue];
+
+	DESERIALIZE_PROPERTY(blockSize, floatValue);
+
+
 }
 
 
