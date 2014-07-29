@@ -14,6 +14,7 @@
 #import "ResourceManager.h"
 #import "MainProjectSettingsDetailView.h"
 #import "NSString+RelativePath.h"
+#import "MiscConstants.h"
 
 typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
@@ -60,7 +61,6 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     
     if (self)
     {
-        self.currentPackageSettings = [[PackagePublishSettings alloc] init];
         self.settingsList = [NSMutableArray array];
 
         [self populateSettingsList];
@@ -124,19 +124,17 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 {
     MainProjectSettingsDetailView *view = [self loadViewWithNibName:@"MainProjectSettingsDetailView" viewClass:[MainProjectSettingsDetailView class]];
 
-    #ifndef SPRITEBUILDER_PRO
-    view.showAndroidSettings = NO;
-    #endif
+    view.showAndroidSettings = IS_SPRITEBUILDER_PRO;
 }
 
 - (void)loadDetailViewForPackage:(PackagePublishSettings *)settings
 {
+    NSAssert(settings != nil, @"packagePublishSettings must not be nil");
     self.currentPackageSettings = settings;
+
     PackageSettingsDetailView *view = [self loadViewWithNibName:@"PackageSettingsDetailView" viewClass:[PackageSettingsDetailView class]];
 
-    #ifndef SPRITEBUILDER_PRO
-    view.showAndroidSettings = NO;
-    #endif
+    view.showAndroidSettings = IS_SPRITEBUILDER_PRO;
 }
 
 - (id)loadViewWithNibName:(NSString *)nibName viewClass:(Class)viewClass

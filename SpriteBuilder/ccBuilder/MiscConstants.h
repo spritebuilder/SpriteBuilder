@@ -1,3 +1,5 @@
+extern BOOL const IS_SPRITEBUILDER_PRO;
+
 extern NSInteger const DEFAULT_AUDIO_QUALITY;
 
 extern NSString *const PACKAGE_NAME_SUFFIX;

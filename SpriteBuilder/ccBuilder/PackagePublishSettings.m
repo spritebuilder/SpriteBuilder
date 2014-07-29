@@ -2,7 +2,6 @@
 #import "PackagePublishSettings.h"
 #import "RMPackage.h"
 #import "CCBPublisherTypes.h"
-#import "ResourcePublishPackageCommand.h"
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
@@ -24,7 +23,9 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 
 - (instancetype)init
 {
-    return [self initWithPackage:nil];
+    NSLog(@"Error initializing PackagePublishSettings, use initWithPackage:");
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 - (instancetype)initWithPackage:(RMPackage *)package
@@ -33,13 +34,12 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 
     if (self)
     {
-        self.publishToZip = YES;
+        self.publishToZip = NO;
         self.publishToMainProject = YES;
         self.publishToCustomOutputDirectory = NO;
 
         self.package = package;
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
-        // self.customOutputDirectory = DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeIOS]] = [[PublishOSSettings alloc] init];
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeAndroid]] = [[PublishOSSettings alloc] init];
