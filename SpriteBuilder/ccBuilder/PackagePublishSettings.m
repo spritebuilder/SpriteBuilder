@@ -33,13 +33,12 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 
     if (self)
     {
-        self.publishToZip = YES;
+        self.publishToZip = NO;
         self.publishToMainProject = YES;
         self.publishToCustomOutputDirectory = NO;
 
         self.package = package;
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
-        // self.customOutputDirectory = DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeIOS]] = [[PublishOSSettings alloc] init];
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeAndroid]] = [[PublishOSSettings alloc] init];
