@@ -7,7 +7,8 @@
 //
 
 #import "EffectViewController.h"
+#import "CCBPEffectGlass.h"
 
 @interface EffectGlassControl : EffectViewController
-
+@property (nonatomic) CCBPEffectGlass * effect;
 @end
