@@ -7,7 +7,9 @@
 //
 
 #import "CCEffectGlass.h"
+#import "EffectsManager.h"
 
-@interface CCBPEffectGlass : CCEffectGlass
+
+@interface CCBPEffectGlass : CCEffectGlass <EffectProtocol>
 
 @end

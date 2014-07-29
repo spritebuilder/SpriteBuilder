@@ -24,6 +24,10 @@
 #import "EffectRefractionControl.h"
 #import "AppDelegate.h"
 #import "CCBDocument.h"
+#import "CCBPEffectReflection.h"
+#import "CCBPEffectGlass.h"
+#import "EffectGlassControl.h"
+#import "EffectReflectionControl.h"
 
 
 @implementation CCNode(Effects)
@@ -145,6 +149,30 @@
 		effectDescription.viewController = NSStringFromClass([EffectRefractionControl class]);
 		[effectDescriptions addObject:effectDescription];
 		
+	}
+	
+	
+	{
+		EffectDescription * effectDescription = [[EffectDescription alloc] init];
+		effectDescription.title = @"Reflection";
+		effectDescription.description = @"Makes things reflect";
+		effectDescription.imageName = @"effect-reflection";
+		effectDescription.className = NSStringFromClass([CCBPEffectReflection class]);
+		effectDescription.baseClass = @"CCEffectReflection";
+		effectDescription.viewController = NSStringFromClass([EffectReflectionControl class]);
+		[effectDescriptions addObject:effectDescription];
+		
+	}
+	
+	{
+		EffectDescription * effectDescription = [[EffectDescription alloc] init];
+		effectDescription.title = @"Glass";
+		effectDescription.description = @"Makes things look like glass";
+		effectDescription.imageName = @"effect-glass";
+		effectDescription.className = NSStringFromClass([CCBPEffectGlass class]);
+		effectDescription.baseClass = @"CCEffectGlass";
+		effectDescription.viewController = NSStringFromClass([EffectGlassControl class]);
+		[effectDescriptions addObject:effectDescription];
 	}
 	/*
 	{

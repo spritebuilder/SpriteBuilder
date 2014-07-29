@@ -155,6 +155,11 @@
 		920994CC198717910006F38D /* CCBPEffectGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994CB198717910006F38D /* CCBPEffectGlass.m */; };
 		920994D0198717D20006F38D /* EffectGlassControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994CE198717D20006F38D /* EffectGlassControl.m */; };
 		920994D1198717D20006F38D /* EffectGlassControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 920994CF198717D20006F38D /* EffectGlassControl.xib */; };
+		920994D3198718F10006F38D /* effect-glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994D2198718F10006F38D /* effect-glass.png */; };
+		920994D7198719CD0006F38D /* CCBPEffectReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994D6198719CD0006F38D /* CCBPEffectReflection.m */; };
+		920994DB198719F10006F38D /* EffectReflectionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994D9198719F10006F38D /* EffectReflectionControl.m */; };
+		920994DC198719F10006F38D /* EffectReflectionControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 920994DA198719F10006F38D /* EffectReflectionControl.xib */; };
+		920994DE19871A0A0006F38D /* effect-reflection.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994DD19871A0A0006F38D /* effect-reflection.png */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
@@ -1505,6 +1510,13 @@
 		920994CD198717D20006F38D /* EffectGlassControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectGlassControl.h; path = ccBuilder/EffectGlassControl.h; sourceTree = "<group>"; };
 		920994CE198717D20006F38D /* EffectGlassControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectGlassControl.m; path = ccBuilder/EffectGlassControl.m; sourceTree = "<group>"; };
 		920994CF198717D20006F38D /* EffectGlassControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectGlassControl.xib; path = ccBuilder/EffectGlassControl.xib; sourceTree = "<group>"; };
+		920994D2198718F10006F38D /* effect-glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-glass.png"; path = "Resources/effect-glass.png"; sourceTree = "<group>"; };
+		920994D5198719CD0006F38D /* CCBPEffectReflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectReflection.h; path = ccBuilder/CCBPEffectReflection.h; sourceTree = "<group>"; };
+		920994D6198719CD0006F38D /* CCBPEffectReflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectReflection.m; path = ccBuilder/CCBPEffectReflection.m; sourceTree = "<group>"; };
+		920994D8198719F10006F38D /* EffectReflectionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectReflectionControl.h; path = ccBuilder/EffectReflectionControl.h; sourceTree = "<group>"; };
+		920994D9198719F10006F38D /* EffectReflectionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectReflectionControl.m; path = ccBuilder/EffectReflectionControl.m; sourceTree = "<group>"; };
+		920994DA198719F10006F38D /* EffectReflectionControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectReflectionControl.xib; path = ccBuilder/EffectReflectionControl.xib; sourceTree = "<group>"; };
+		920994DD19871A0A0006F38D /* effect-reflection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-reflection.png"; path = "Resources/effect-reflection.png"; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
 		92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPivotJoint.h; sourceTree = "<group>"; };
 		92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPivotJoint.m; sourceTree = "<group>"; };
@@ -3934,6 +3946,7 @@
 		920994C9198717710006F38D /* Glass */ = {
 			isa = PBXGroup;
 			children = (
+				920994D2198718F10006F38D /* effect-glass.png */,
 				920994CA198717910006F38D /* CCBPEffectGlass.h */,
 				920994CB198717910006F38D /* CCBPEffectGlass.m */,
 				920994CD198717D20006F38D /* EffectGlassControl.h */,
@@ -3941,6 +3954,19 @@
 				920994CF198717D20006F38D /* EffectGlassControl.xib */,
 			);
 			name = Glass;
+			sourceTree = "<group>";
+		};
+		920994D4198719120006F38D /* Reflection */ = {
+			isa = PBXGroup;
+			children = (
+				920994DD19871A0A0006F38D /* effect-reflection.png */,
+				920994D5198719CD0006F38D /* CCBPEffectReflection.h */,
+				920994D6198719CD0006F38D /* CCBPEffectReflection.m */,
+				920994D8198719F10006F38D /* EffectReflectionControl.h */,
+				920994D9198719F10006F38D /* EffectReflectionControl.m */,
+				920994DA198719F10006F38D /* EffectReflectionControl.xib */,
+			);
+			name = Reflection;
 			sourceTree = "<group>";
 		};
 		92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */ = {
@@ -4077,6 +4103,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				920994D4198719120006F38D /* Reflection */,
 				920994C9198717710006F38D /* Glass */,
 				92053DAD197F093700AA93AD /* Bloom */,
 				926FDC7F196C8DCA008C0132 /* Refraction */,
@@ -6335,6 +6362,7 @@
 				92F0960618F8851300D47A94 /* inspector-body-disconnected.png in Resources */,
 				E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */,
 				E3A16AF01536C885004B528A /* ruler-guide.png in Resources */,
+				920994DE19871A0A0006F38D /* effect-reflection.png in Resources */,
 				E3B9AF431538612200489438 /* ruler-xy.png in Resources */,
 				E3F3F845153C7772005443EE /* notes-bg.png in Resources */,
 				E3F3F847153D9126005443EE /* StickyNoteEditView.xib in Resources */,
@@ -6398,6 +6426,7 @@
 				E3A0ED57159118F3000BDF4B /* SequencerSettingsWindow.xib in Resources */,
 				E3F73DB81593916E00D74084 /* SequencerDurationWindow.xib in Resources */,
 				E3E0557D159B8466001066C5 /* seq-keyframe-easein.png in Resources */,
+				920994DC198719F10006F38D /* EffectReflectionControl.xib in Resources */,
 				E3E0557E159B8466001066C5 /* seq-keyframe-easeout.png in Resources */,
 				E3E0557F159B8466001066C5 /* seq-keyframe-interpol.png in Resources */,
 				E392618F159CAAA10034FF1D /* seq-keyframe-interpol-vis.png in Resources */,
@@ -6435,6 +6464,7 @@
 				E3B7BC9C15E3B7F100CF95EF /* NodePlugInsList.plist in Resources */,
 				E3B7BCBE15E505CC00CF95EF /* TB_plugins.png in Resources */,
 				830F4E9B192F5263002B832D /* Package.icns in Resources */,
+				920994D3198718F10006F38D /* effect-glass.png in Resources */,
 				9218DF3E1919B04D0033851E /* joint-pivot-handle-ratchet@2x.png in Resources */,
 				E3B19F6D15E65229000B023E /* DefaultResourcesList.plist in Resources */,
 				E360789015EBA5420040A172 /* sel-frame.png in Resources */,
@@ -7110,6 +7140,7 @@
 				B7AC6985179F50850041B8BD /* NSColorWell+BFColorPickerPopover.m in Sources */,
 				B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */,
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
+				920994D7198719CD0006F38D /* CCBPEffectReflection.m in Sources */,
 				B7AC6988179F50850041B8BD /* BFIconTabBar.m in Sources */,
 				B7AC699C17A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m in Sources */,
 				9266EE38195A17A4006CBE81 /* EffectSaturationControl.m in Sources */,
@@ -7135,6 +7166,7 @@
 				B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */,
 				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,
+				920994DB198719F10006F38D /* EffectReflectionControl.m in Sources */,
 				83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
