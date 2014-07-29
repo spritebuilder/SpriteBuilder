@@ -13,7 +13,6 @@
 #import "ResourceNewFolderCommand.h"
 #import "ResourceNewPackageCommand.h"
 #import "CCBPublisherController.h"
-#import "ResourcePublishPackageCommand.h"
 #import "PublishingFinishedDelegate.h"
 
 @interface ResourceCommandController ()
@@ -102,27 +101,5 @@
     [command execute];
 }
 
-- (void)publishPackage:(id)sender
-{
-    self.publishCommand = [[ResourcePublishPackageCommand alloc] init];
-    _publishCommand.resources = [self selectedResources];
-    _publishCommand.projectSettings = _projectSettings;
-    _publishCommand.windowForModals = _window;
-
-    id __weak weakDelegate = _publishDelegate;
-    ResourceCommandController *__weak weakSelf = self;
-    _publishCommand.finishBlock = ^(CCBPublisher *publisher, CCBWarnings *warnings)
-    {
-        [weakDelegate publisher:publisher finishedWithWarnings:warnings];
-        weakSelf.publishCommand = nil;
-    };
-
-    _publishCommand.cancelBlock = ^()
-    {
-        weakSelf.publishCommand = nil;
-    };
-
-    [_publishCommand execute];
-}
 
 @end

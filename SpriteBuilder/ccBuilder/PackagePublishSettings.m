@@ -2,7 +2,6 @@
 #import "PackagePublishSettings.h"
 #import "RMPackage.h"
 #import "CCBPublisherTypes.h"
-#import "ResourcePublishPackageCommand.h"
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
