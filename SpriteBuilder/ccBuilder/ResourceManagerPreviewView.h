@@ -67,6 +67,10 @@
 }
 @property (weak, nonatomic,readonly) AppDelegate* appDelegate;
 
+@property (weak, nonatomic) IBOutlet NSView *androidContainerImage;
+@property (weak, nonatomic) IBOutlet NSView *androidContainerSpriteSheet;
+@property (weak, nonatomic) IBOutlet NSView *androidContainerSound;
+
 @property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewMain;
 @property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewPhone;
 @property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewPhonehd;
