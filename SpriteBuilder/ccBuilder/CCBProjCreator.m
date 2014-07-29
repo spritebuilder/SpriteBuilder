@@ -91,17 +91,28 @@
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace/contents.xcworkspacedata"] search:substitutableProjectName];
     
     // Update scheme
-	NSString* xcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@.xcscheme", substitutableProjectName];
-    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:xcscheme] search:substitutableProjectName];
-    
+	NSString* xcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@ iOS.xcscheme", substitutableProjectName];
+	[self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:xcscheme] search:substitutableProjectName];
+	
+	
     NSString* androidXcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@ Android.xcscheme", substitutableProjectName];
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:androidXcscheme] search:substitutableProjectName];
     
     // Rename scheme file
-    NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
-    NSString* newSchemeFile = [[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcscheme"];
-    [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
-    
+	//iOS
+	{
+		NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
+		NSString* newSchemeFile = [[[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingString:@" iOS" ] stringByAppendingPathExtension:@"xcscheme"];
+		[fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
+    }
+	
+	//Android
+	{
+		NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:androidXcscheme];
+		NSString* newSchemeFile = [[[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingString:@" Android" ] stringByAppendingPathExtension:@"xcscheme"];
+		[fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
+    }
+	
     // Rename Xcode project file
     NSString* newXcodeFileName = [[[xcodeFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcodeproj"];
     
