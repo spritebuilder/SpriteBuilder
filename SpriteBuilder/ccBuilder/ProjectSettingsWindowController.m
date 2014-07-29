@@ -60,7 +60,6 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     
     if (self)
     {
-        self.currentPackageSettings = [[PackagePublishSettings alloc] init];
         self.settingsList = [NSMutableArray array];
 
         [self populateSettingsList];
@@ -131,7 +130,9 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (void)loadDetailViewForPackage:(PackagePublishSettings *)settings
 {
+    NSAssert(settings != nil, @"packagePublishSettings must not be nil");
     self.currentPackageSettings = settings;
+
     PackageSettingsDetailView *view = [self loadViewWithNibName:@"PackageSettingsDetailView" viewClass:[PackageSettingsDetailView class]];
 
     #ifndef SPRITEBUILDER_PRO

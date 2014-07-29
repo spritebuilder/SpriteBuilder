@@ -24,7 +24,9 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 
 - (instancetype)init
 {
-    return [self initWithPackage:nil];
+    NSLog(@"Error initializing PackagePublishSettings, use initWithPackage:");
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 - (instancetype)initWithPackage:(RMPackage *)package
