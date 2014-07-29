@@ -47,7 +47,7 @@
         NSString* ccbFileNameAbs = [[ResourceManager sharedManager] toAbsolutePath:ccbFileName];
     
         // Check that it's not the current document (or we get an inifnite loop)
-        if (![ad.currentDocument.fileName isEqualToString:ccbFileNameAbs])
+        if (![ad.currentDocument.filePath isEqualToString:ccbFileNameAbs])
         {
             // Load document dictionary
             NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithContentsOfFile:ccbFileNameAbs];

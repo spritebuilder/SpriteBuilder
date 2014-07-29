@@ -4,20 +4,19 @@
 @interface PublishRenamedFilesLookup ()
 
 @property (nonatomic, strong) NSMutableDictionary *lookup;
-@property (nonatomic) BOOL flattenPaths;
 @property (nonatomic, strong) NSMutableSet *intermediateLookupPaths;
 
 @end
 
+
 @implementation PublishRenamedFilesLookup
 
-- (id)initWithFlattenPaths:(BOOL)flattenPaths
+- (instancetype)init
 {
     self = [super init];
 
     if (self)
     {
-        self.flattenPaths = flattenPaths; 
         self.lookup = [NSMutableDictionary dictionary];
         self.intermediateLookupPaths = [NSMutableSet set];
     }
@@ -27,12 +26,6 @@
 
 - (void)addRenamingRuleFrom:(NSString *)src to:(NSString *)dst
 {
-    if (_flattenPaths)
-    {
-        src = [src lastPathComponent];
-        dst = [dst lastPathComponent];
-    }
-
     if ([src isEqualToString:dst])
     {
         return;

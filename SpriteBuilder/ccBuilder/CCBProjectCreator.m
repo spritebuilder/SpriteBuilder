@@ -1,12 +1,12 @@
 //
-//  CCBProjCreator.m
+//  CCBProjectCreator.m
 //  SpriteBuilder
 //
 //  Created by Viktor on 10/11/13.
 //
 //
 
-#import "CCBProjCreator.h"
+#import "CCBProjectCreator.h"
 #import "AppDelegate.h"
 
 
@@ -38,8 +38,7 @@
 
 @end
 
-
-@implementation CCBProjCreator
+@implementation CCBProjectCreator
 
 -(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine
 {
@@ -101,7 +100,7 @@
     // Rename scheme file
 	//iOS
 	{
-		NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
+    NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
 		NSString* newSchemeFile = [[[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingString:@" iOS" ] stringByAppendingPathExtension:@"xcscheme"];
 		[fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
     }
@@ -110,9 +109,9 @@
 	{
 		NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:androidXcscheme];
 		NSString* newSchemeFile = [[[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingString:@" Android" ] stringByAppendingPathExtension:@"xcscheme"];
-		[fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
+    [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
     }
-	
+    
     // Rename Xcode project file
     NSString* newXcodeFileName = [[[xcodeFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcodeproj"];
     
@@ -188,9 +187,9 @@
     do {
         found = [fileData rangeOfData:search options:0 range:NSMakeRange(0, [fileData length])];
         if (found.location != NSNotFound)
-        {
+{
             [fileData replaceBytesInRange:found withBytes:[replacement bytes] length:[replacement length]];
-        }
+	}
     } while (found.location != NSNotFound && found.length > 0);
     [fileData writeToFile:fileName atomically:YES];
 }

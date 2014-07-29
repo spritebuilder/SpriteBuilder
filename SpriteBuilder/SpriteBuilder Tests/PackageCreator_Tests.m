@@ -13,8 +13,9 @@
 #import "NSString+Packages.h"
 #import "MiscConstants.h"
 #import "PackageCreator.h"
+#import "FileSystemTestCase.h"
 
-@interface PackageCreator_Tests : XCTestCase
+@interface PackageCreator_Tests : FileSystemTestCase
 
 @end
 
@@ -32,38 +33,29 @@
     _packageCreator = [[PackageCreator alloc] init];
 
     _projectSettings = [[ProjectSettings alloc] init];
-    _projectSettings.projectPath = @"/packagestests.ccbproj";
+    _projectSettings.projectPath = [self fullPathForFile:@"foo.spritebuilder/packagestests.ccbproj"];
     _packageCreator.projectSettings = _projectSettings;
 
-    _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
-    _packageCreator.fileManager = _fileManagerMock;
+    [self createFolders:@[@"foo.spritebuilder/Packages"]];
 }
 
 - (void)testCreatePackageWithName
 {
-    NSString *fullPackagePath = [[@"/" stringByAppendingPathComponent:PACKAGES_FOLDER_NAME] stringByAppendingPathComponent:[@"NewPackage" stringByAppendingPackageSuffix]];
-
-    [[[_fileManagerMock expect] andReturnValue:@(YES)] createDirectoryAtPath:fullPackagePath
-                                                 withIntermediateDirectories:YES
-                                                                  attributes:nil
-                                                                       error:[OCMArg anyObjectRef]];
     NSError *error;
-    XCTAssertTrue([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return YES.");
+    XCTAssertTrue([_packageCreator createPackageWithName:@"NewPackage" error:&error]);
     XCTAssertNil(error, @"Error object should nil");
 
-    [_fileManagerMock verify];
+    [self assertFileExists:@"foo.spritebuilder/Packages/NewPackage.sbpack"];
+    [self assertFileExists:@"foo.spritebuilder/Packages/NewPackage.sbpack/Package.plist"];
+
+    XCTAssertTrue([_projectSettings isResourcePathInProject:[self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"]]);
 }
 
 - (void)testCreatePackageFailsWithPackageAlreadyInProject
 {
-    NSString *fullPackagePath = [[@"/" stringByAppendingPathComponent:PACKAGES_FOLDER_NAME] stringByAppendingPathComponent:[@"NewPackage" stringByAppendingPackageSuffix]];
+    NSString *fullPackagePath = [self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"];
 
     [_projectSettings addResourcePath:fullPackagePath error:nil];
-
-    [[[_fileManagerMock expect] andReturnValue:@(YES)] createDirectoryAtPath:fullPackagePath
-                                                 withIntermediateDirectories:YES
-                                                                  attributes:nil
-                                                                       error:[OCMArg anyObjectRef]];
 
     NSError *error;
     XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
@@ -73,7 +65,10 @@
 
 - (void)testCreatePackageFailsWithExistingPackageButNotInProject
 {
-    NSString *fullPackagePath = [[@"/" stringByAppendingPathComponent:PACKAGES_FOLDER_NAME] stringByAppendingPathComponent:[@"NewPackage" stringByAppendingPackageSuffix]];
+    _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
+    _packageCreator.fileManager = _fileManagerMock;
+
+    NSString *fullPackagePath = [self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"];
 
     NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteFileExistsError userInfo:nil];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:fullPackagePath
@@ -91,7 +86,10 @@
 
 - (void)testCreatePackageFailsBecauseOfOtherDiskErrorThanFileExists
 {
-    NSString *fullPackagePath = [[@"/" stringByAppendingPathComponent:PACKAGES_FOLDER_NAME] stringByAppendingPathComponent:[@"NewPackage" stringByAppendingPackageSuffix]];
+    _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
+    _packageCreator.fileManager = _fileManagerMock;
+
+    NSString *fullPackagePath = [self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"];
 
     NSError *underlyingFileError = [NSError errorWithDomain:SBErrorDomain code:NSFileWriteNoPermissionError userInfo:nil];
     [[[_fileManagerMock expect] andReturnValue:@(NO)] createDirectoryAtPath:fullPackagePath

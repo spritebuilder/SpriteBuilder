@@ -34,7 +34,8 @@
 @property (nonatomic,strong) id<CCBPublishDelegate> delegate;
 
 - (NSString*) extension;
-- (NSData*) exportDocument:(NSDictionary *)doc flattenPaths:(BOOL) flattenPaths;
+
+- (NSData *)exportDocument:(NSDictionary *)doc;
 
 
 @end

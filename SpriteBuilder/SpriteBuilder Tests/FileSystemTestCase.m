@@ -1,3 +1,4 @@
+#import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "ProjectSettings.h"
 
@@ -86,12 +87,55 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 
 - (void)createEmptyFiles:(NSArray *)files
 {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     for (NSString *relFilePath in files)
     {
-        NSString *fullPathForFile = [_testDirecotoryPath stringByAppendingPathComponent:relFilePath];
+        NSData *emptyStringData = [@"" dataUsingEncoding:NSUTF8StringEncoding];
+
+        [dictionary setObject:emptyStringData forKey:relFilePath];
+    }
+
+    [self createFilesWithContents:dictionary];
+}
+
+- (void)createEmptyFilesRelativeToDirectory:(NSString *)relativeDirectory files:(NSArray *)files;
+{
+    NSMutableArray *filesWithRelPathPrepended = [NSMutableArray array];
+
+    for (NSString *filePath in files)
+    {
+        NSString *filePathExtended = [relativeDirectory stringByAppendingPathComponent:filePath];
+        [filesWithRelPathPrepended addObject:filePathExtended];
+    }
+
+    [self createEmptyFiles:filesWithRelPathPrepended];
+}
+
+- (void)createFilesWithContents:(NSDictionary *)filesWithContents
+{
+    for (NSString *relFilePath in filesWithContents)
+    {
+        [self createIntermediateDirectoriesForFilPath:relFilePath];
+
+        NSData *content = filesWithContents[relFilePath];
+        NSString *fullPathForFile = [self fullPathForFile:relFilePath];
+
         NSError *error;
-        XCTAssertTrue([@"" writeToFile:fullPathForFile atomically:YES encoding:NSUTF8StringEncoding error:&error],
-                      @"Could not create file \"%@\", error: %@", fullPathForFile, error);
+        XCTAssertTrue([content writeToFile:fullPathForFile options:NSDataWritingAtomic error:&error],
+                              @"Could not create file \"%@\", error: %@", fullPathForFile, error);
+    }
+}
+
+- (void)createIntermediateDirectoriesForFilPath:(NSString *)relPath
+{
+    NSString *fullPathForFile = [self fullPathForFile:relPath];
+
+    NSString *dirPath = [fullPathForFile stringByDeletingLastPathComponent];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *errorCreateDir;
+    if (![fileManager createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:&errorCreateDir])
+    {
+        XCTFail(@"Could not create intermediate directories for file \"%@\" with error %@", fullPathForFile, errorCreateDir);
     }
 }
 
@@ -100,6 +144,18 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = [_testDirecotoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.ccbproj", name]];
     XCTAssertTrue([projectSettings store], @"Could not create project file at \"%@\"", projectSettings.projectPath);
+}
+
+- (void)copyTestingResource:(NSString *)resourceName toFolder:(NSString *)folder
+{
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *path = [bundle pathForResource:resourceName ofType:nil];
+
+    NSString *fullTargetPath = [[self fullPathForFile:folder] stringByAppendingPathComponent:resourceName];
+
+    [self createIntermediateDirectoriesForFilPath:fullTargetPath];
+
+    [[NSFileManager defaultManager] copyItemAtPath:path toPath:fullTargetPath error:nil];
 }
 
 - (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files
@@ -126,10 +182,26 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     XCTAssertTrue([_fileManager fileExistsAtPath:fullPath], @"File does not exist at \"%@\"", fullPath);
 }
 
-- (void)assertFileDoesNotExists:(NSString *)filePath
+- (void)assertFilesExistRelativeToDirectory:(NSString *)relativeDirectoy filesPaths:(NSArray *)filePaths
+{
+    for (NSString *filePath in filePaths)
+    {
+        [self assertFileExists:[relativeDirectoy stringByAppendingPathComponent:filePath]];
+    }
+}
+
+- (void)assertFileDoesNotExist:(NSString *)filePath
 {
     NSString *fullPath = [self fullPathForFile:filePath];
     XCTAssertFalse([_fileManager fileExistsAtPath:fullPath], @"File exists at \"%@\"", fullPath);
+}
+
+- (void)assertFilesDoNotExistRelativeToDirectory:(NSString *)relativeDirectoy filesPaths:(NSArray *)filePaths;
+{
+    for (NSString *filePath in filePaths)
+    {
+        [self assertFileDoesNotExist:[relativeDirectoy stringByAppendingPathComponent:filePath]];
+    }
 }
 
 - (NSString *)fullPathForFile:(NSString *)filePath

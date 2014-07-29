@@ -1,76 +1,37 @@
-/*
- * CocosBuilder: http://www.cocosbuilder.com
- *
- * Copyright (c) 2012 Zynga Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 #import "CCBPublisher.h"
 #import "ProjectSettings.h"
-#import "CCBWarnings.h"
-#import "NSString+RelativePath.h"
-#import "PlugInManager.h"
-#import "CCBGlobals.h"
-#import "AppDelegate.h"
-#import "ResourceManager.h"
-#import "CCBFileUtil.h"
-#import "ResourceManagerUtil.h"
-#import "OptimizeImageWithOptiPNGOperation.h"
-#import "PublishSpriteSheetOperation.h"
-#import "PublishRegularFileOperation.h"
 #import "TaskStatusUpdaterProtocol.h"
-#import "PublishSoundFileOperation.h"
-#import "ProjectSettings+Convenience.h"
-#import "PublishCCBOperation.h"
-#import "PublishImageOperation.h"
 #import "DateCache.h"
-#import "NSString+Publishing.h"
-#import "PublishGeneratedFilesOperation.h"
 #import "PublishRenamedFilesLookup.h"
-#import "PublishSpriteKitSpriteSheetOperation.h"
 #import "PublishingTaskStatusProgress.h"
-#import "PublishLogging.h"
+#import "OptimizeImageWithOptiPNGOperation.h"
+#import "CCBDirectoryPublisher.h"
+#import "PublishGeneratedFilesOperation.h"
+#import "CCBPublishingTarget.h"
+#import "CCBPublisherCacheCleaner.h"
+#import "ZipDirectoryOperation.h"
 #import "MiscConstants.h"
-#import "PublishIntermediateFilesLookup.h"
+
 
 @interface CCBPublisher ()
 
+@property (nonatomic, copy) PublisherFinishBlock finishBlock;
+
 @property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
-@property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;
-@property (nonatomic, strong) NSArray *publishForResolutions;
-@property (nonatomic, strong) NSArray *supportedFileExtensions;
-@property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) CCBWarnings *warnings;
-@property (nonatomic, copy) NSString *outputDir;
-@property (nonatomic, strong) DateCache *modifiedDatesCache;
 @property (nonatomic, strong) NSOperationQueue *publishingQueue;
-@property (nonatomic) CCBPublisherTargetType targetType;
-@property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
-@property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
+@property (nonatomic, strong) NSMutableArray *publishingTargets;
+@property (nonatomic, strong) ProjectSettings *projectSettings;
+
+// Shared for targets
+@property (nonatomic, strong) CCBWarnings *warnings;
+@property (nonatomic, strong) DateCache *modifiedDatesCache;
 
 @end
 
 
 @implementation CCBPublisher
 
-- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings finishedBlock:(PublisherFinishBlock)finishBlock;
 {
     NSAssert(someProjectSettings != nil, @"project settings should never be nil! Publisher won't work without.");
     NSAssert(someWarnings != nil, @"warnings are nil. Are you sure you don't need them?");
@@ -83,592 +44,166 @@
 
     self.projectSettings = someProjectSettings;
     self.warnings = someWarnings;
-
-    self.modifiedDatesCache = [[DateCache alloc] init];
+    self.finishBlock = finishBlock;
 
     self.publishingQueue = [[NSOperationQueue alloc] init];
     _publishingQueue.maxConcurrentOperationCount = 1;
 
-    self.supportedFileExtensions = @[@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang"];
-
-    self.publishedPNGFiles = [NSMutableSet set];
-    self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
+    self.modifiedDatesCache = [[DateCache alloc] init];
+    self.publishingTargets = [NSMutableArray array];
 
     return self;
 }
 
-- (BOOL)publishImageForResolutions:(NSString *)srcFile
-                                to:(NSString *)dstFile
-                     isSpriteSheet:(BOOL)isSpriteSheet
-                            outDir:(NSString *)outDir
-                        fileLookup:(id <PublishFileLookupProtocol>)fileLookup
+- (void)start
 {
-    for (NSString* resolution in _publishForResolutions)
+    if (_publishingTargets.count == 0)
     {
-        [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution intermediateProduct:NO fileLookup:fileLookup];
-	}
-
-    return YES;
-}
-
-- (BOOL)publishImageFile:(NSString *)srcFilePath
-                      to:(NSString *)dstFilePath
-           isSpriteSheet:(BOOL)isSpriteSheet
-               outputDir:(NSString *)outputDir
-              resolution:(NSString *)resolution
-     intermediateProduct:(BOOL)intermediateProduct
-              fileLookup:(id<PublishFileLookupProtocol>)fileLookup
-{
-    PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                     warnings:_warnings
-                                                                               statusProgress:_publishingTaskStatusProgress];
-
-    operation.srcFilePath = srcFilePath;
-    operation.dstFilePath = dstFilePath;
-    operation.isSpriteSheet = isSpriteSheet;
-    operation.outputDir = outputDir;
-    operation.resolution = resolution;
-    operation.targetType = _targetType;
-    operation.modifiedFileDateCache = _modifiedDatesCache;
-    operation.intermediateProduct = intermediateProduct;
-    operation.publishedPNGFiles = _publishedPNGFiles;
-    operation.fileLookup = fileLookup;
-
-    [_publishingQueue addOperation:operation];
-    return YES;
-}
-
-- (void)publishSoundFile:(NSString *)srcFilePath to:(NSString *)dstFilePath
-{
-    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:srcFilePath];
-
-    int format = [_projectSettings soundFormatForRelPath:relPath targetType:_targetType];
-    int quality = [_projectSettings soundQualityForRelPath:relPath targetType:_targetType];
-    if (format == -1)
-    {
-        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Invalid sound conversion format for %@", relPath] isFatal:YES];
+        NSLog(@"[PUBLISH] Nothing to do: no publishing targets added.");
+        [_warnings setCurrentOSType:kCCBPublisherOSTypeNone];
+        [_warnings addWarningWithDescription:@"Nothing to publish. Check Project Settings. Common cause: No package is set to publish \"in Main Project\" or \"as Zip file\"" isFatal:YES];
+        [self callFinishedBlock];
         return;
     }
 
-    PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                             warnings:_warnings
-                                                                                       statusProgress:_publishingTaskStatusProgress];
-    operation.srcFilePath = srcFilePath;
-    operation.dstFilePath = dstFilePath;
-    operation.format = format;
-    operation.quality = quality;
-    operation.fileLookup = _renamedFilesLookup;
+    #ifndef TESTING
+    NSLog(@"[PUBLISH] Start...");
+    #endif
 
-    [_publishingQueue addOperation:operation];
+    [_publishingQueue setSuspended:YES];
+
+    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+
+    if (_projectSettings.publishEnvironment == kCCBPublishEnvironmentRelease)
+    {
+        [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
+    }
+
+    [self doPublish];
+
+    _publishingTaskStatusProgress.totalTasks = [_publishingQueue operationCount];
+
+    [_publishingQueue setSuspended:NO];
+    [_publishingQueue waitUntilAllOperationsAreFinished];
+
+    [self enqueuePostPublishingOperationsForAllTargets];
+
+	[_publishingQueue setSuspended:NO];
+    [_publishingQueue waitUntilAllOperationsAreFinished];
+
+    [_projectSettings flagFilesDirtyWithWarnings:_warnings];
+
+    #ifndef TESTING
+    NSLog(@"[PUBLISH] Done in %.2f seconds.", [[NSDate date] timeIntervalSince1970] - startTime);
+    #endif
+
+    [self callFinishedBlock];
 }
 
-- (void)publishRegularFile:(NSString *)srcFilePath to:(NSString*)dstFilePath
+- (void)callFinishedBlock
 {
-    PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                 warnings:_warnings
-                                                                                           statusProgress:_publishingTaskStatusProgress];
-    operation.srcFilePath = srcFilePath;
-    operation.dstFilePath = dstFilePath;
-
-    [_publishingQueue addOperation:operation];
-}
-
-- (BOOL)publishDirectory:(NSString *)publishDirectory subPath:(NSString *)subPath
-{
-	NSString *outDir = [self outputDirectory:subPath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    BOOL isGeneratedSpriteSheet = [[_projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
-    if (!isGeneratedSpriteSheet)
-	{
-        BOOL createdDirs = [fileManager createDirectoryAtPath:outDir withIntermediateDirectories:YES attributes:NULL error:NULL];
-        if (!createdDirs)
+    if ([[NSThread currentThread] isMainThread])
+    {
+        if (_finishBlock)
         {
-            [_warnings addWarningWithDescription:@"Failed to create output directory %@" isFatal:YES];
-            return NO;
+            _finishBlock(self, _warnings);
         }
-	}
-
-    if (![self processAllFilesWithinPublishDir:publishDirectory
-                                       subPath:subPath
-                                     outputDir:outDir
-                        isGeneratedSpriteSheet:isGeneratedSpriteSheet])
-    {
-        return NO;
-    }
-
-    if (isGeneratedSpriteSheet)
-    {
-        [self publishSpriteSheetDir:publishDirectory subPath:subPath outputDir:outDir];
-    }
-    
-    return YES;
-}
-
-- (void)publishSpriteSheetDir:(NSString *)publishDirectory subPath:(NSString *)subPath outputDir:(NSString *)outputDir
-{
-    BOOL publishForSpriteKit = _projectSettings.engine == CCBTargetEngineSpriteKit;
-    if (publishForSpriteKit)
-    {
-        [self publishSpriteKitAtlasDir:[outputDir stringByDeletingLastPathComponent]
-                             sheetName:[outputDir lastPathComponent]
-                               subPath:subPath
-                      publishDirectory:publishDirectory
-                             outputDir:outputDir];
     }
     else
     {
-        // Sprite files should have been saved to the temp cache directory, now actually generate the sprite sheets
-        [self publishSpriteSheetDir:[outputDir stringByDeletingLastPathComponent]
-                          sheetName:[outputDir lastPathComponent]
-                   publishDirectory:publishDirectory
-                            subPath:subPath
-                          outputDir:outputDir];
-    }
-}
-
-- (BOOL)processAllFilesWithinPublishDir:(NSString *)publishDirectory
-                                subPath:(NSString *)subPath
-                              outputDir:(NSString *)outputDir
-                 isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray* resIndependentDirs = [ResourceManager resIndependentDirs];
-
-    NSMutableSet* files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
-	[files addObjectsFromArray:[publishDirectory resolutionDependantFilesInDirWithResolutions:_publishForResolutions]];
-    [files addObjectsFromArray:[publishDirectory filesInAutoDirectory]];
-
-    for (NSString* fileName in files)
-    {
-		if ([fileName hasPrefix:@"."])
-		{
-			continue;
-		}
-
-		NSString* filePath = [publishDirectory stringByAppendingPathComponent:fileName];
-
-        BOOL isDirectory;
-        BOOL fileExists = [fileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
-
-        if (fileExists && isDirectory)
+        dispatch_sync(dispatch_get_main_queue(), ^
         {
-            [self processDirectory:fileName
-                           subPath:subPath
-                           dirPath:filePath
-                resIndependentDirs:resIndependentDirs
-                         outputDir:outputDir
-            isGeneratedSpriteSheet:isGeneratedSpriteSheet];
-        }
-        else
-        {
-            BOOL success = [self processFile:fileName
-                                     subPath:subPath
-                                    filePath:filePath
-                                   outputDir:outputDir
-                      isGeneratedSpriteSheet:isGeneratedSpriteSheet];
-            if (!success)
+            if (_finishBlock)
             {
-                return NO;
+                _finishBlock(self, _warnings);
             }
-        }
+        });
     }
-    return YES;
-}
-
-- (BOOL)processFile:(NSString *)fileName
-            subPath:(NSString *)subPath
-           filePath:(NSString *)filePath
-          outputDir:(NSString *)outputDir isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
-{
-    // Skip non png files for generated sprite sheets
-    if (isGeneratedSpriteSheet
-        && ![fileName isSmartSpriteSheetCompatibleFile]
-        && ![fileName isIntermediateFileLookup])
-    {
-        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Non-png|psd file in smart sprite sheet found (%@)", [fileName lastPathComponent]] isFatal:NO relatedFile:subPath];
-        return YES;
-    }
-
-    if ([self isFileSupportedByPublishing:fileName]
-        && !_projectSettings.onlyPublishCCBs)
-    {
-        NSString *dstFilePath = [outputDir stringByAppendingPathComponent:fileName];
-
-        if (!isGeneratedSpriteSheet
-            && ([fileName isSmartSpriteSheetCompatibleFile]))
-        {
-            [self publishImageForResolutions:filePath to:dstFilePath isSpriteSheet:isGeneratedSpriteSheet outDir:outputDir fileLookup:_renamedFilesLookup];
-        }
-        else if ([fileName isWaveSoundFile])
-        {
-            [self publishSoundFile:filePath to:dstFilePath];
-        }
-        else
-        {
-            [self publishRegularFile:filePath to:dstFilePath];
-        }
-    }
-    else if (!isGeneratedSpriteSheet
-             && [[fileName lowercaseString] hasSuffix:@"ccb"])
-    {
-        [self publishCCB:fileName filePath:filePath outputDir:outputDir];
-    }
-    return YES;
-}
-
-- (BOOL)isFileSupportedByPublishing:(NSString *)fileName
-{
-    NSString *extension = [[fileName pathExtension] lowercaseString];
-
-    return [_supportedFileExtensions containsObject:extension];
-}
-
-- (void)processDirectory:(NSString *)directoryName
-                 subPath:(NSString *)subPath
-                 dirPath:(NSString *)dirPath
-      resIndependentDirs:(NSArray *)resIndependentDirs
-               outputDir:(NSString *)outputDir
-  isGeneratedSpriteSheet:(BOOL)isGeneratedSpriteSheet
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    if ([[dirPath pathExtension] isEqualToString:@"bmfont"])
-    {
-        [self publishBMFont:directoryName dirPath:dirPath outputDir:outputDir];
-        return;
-    }
-
-    // Skip resource independent directories
-    if ([resIndependentDirs containsObject:directoryName])
-    {
-        return;
-    }
-
-    // Skip directories in generated sprite sheets
-    if (isGeneratedSpriteSheet)
-    {
-        [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Generated sprite sheets do not support directories (%@)", [directoryName lastPathComponent]] isFatal:NO relatedFile:subPath];
-        return;
-    }
-
-    // Skip the empty folder
-    if ([[fileManager contentsOfDirectoryAtPath:dirPath error:NULL] count] == 0)
-    {
-        return;
-    }
-
-    // Skip the fold no .ccb files when onlyPublishCCBs is true
-    if (_projectSettings.onlyPublishCCBs
-        && ![dirPath containsCCBFile])
-    {
-        return;
-    }
-
-    // This is a directory
-    NSString *childPath = subPath
-        ? [NSString stringWithFormat:@"%@/%@", subPath, directoryName]
-        : directoryName;
-
-    [self publishDirectory:dirPath subPath:childPath];
-}
-
-- (void)publishCCB:(NSString *)fileName filePath:(NSString *)filePath outputDir:(NSString *)outputDir
-{
-    NSString *dstFile = [[outputDir stringByAppendingPathComponent:[fileName stringByDeletingPathExtension]]
-                                 stringByAppendingPathExtension:_projectSettings.exporter];
-
-    PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                 warnings:_warnings
-                                                                           statusProgress:_publishingTaskStatusProgress];
-    operation.fileName = fileName;
-    operation.filePath = filePath;
-    operation.dstFilePath = dstFile;
-
-    [_publishingQueue addOperation:operation];
-}
-
-
-- (void)publishBMFont:(NSString *)directoryName dirPath:(NSString *)dirPath outputDir:(NSString *)outputDir
-{
-    NSString *bmFontOutDir = [outputDir stringByAppendingPathComponent:directoryName];
-    [self publishRegularFile:dirPath to:bmFontOutDir];
-
-    // Run after regular file has been copied, else png files cannot be found
-    [_publishingQueue addOperationWithBlock:^
-    {
-        [_publishedPNGFiles addObjectsFromArray:[bmFontOutDir allPNGFilesInPath]];
-    }];
-
-    return;
-}
-
-- (NSString *)outputDirectory:(NSString *)subPath
-{
-	NSString *outDir;
-	if (_projectSettings.flattenPaths
-        && _projectSettings.publishToZipFile)
-    {
-        outDir = _outputDir;
-    }
-    else
-    {
-        outDir = [_outputDir stringByAppendingPathComponent:subPath];
-    }
-	return outDir;
-}
-
-- (void)publishSpriteSheetDir:(NSString *)spriteSheetDir
-                    sheetName:(NSString *)spriteSheetName
-             publishDirectory:(NSString *)publishDirectory
-                      subPath:(NSString *)subPath
-                    outputDir:(NSString *)outputDir
-{
-    // NOTE: For every spritesheet one shared dir is used, so we have to remove it on the
-    // queue to ensure that later spritesheets don't add more sprites from previous passes
-    [_publishingQueue addOperationWithBlock:^
-    {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        [fileManager removeItemAtPath:[_projectSettings tempSpriteSheetCacheDirectory] error:NULL];
-    }];
-
-    NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPathIgnoringDirs:YES];
-
-	[_publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
-
-    [PublishSpriteSheetOperation resetSpriteSheetPreviewsGeneration];
-
-	for (NSString *resolution in _publishForResolutions)
-	{
-		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
-
-        NSString *intermediateFileLookupPath = [publishDirectory  stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
-        [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
-
-		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
-		{
-            LocalLog(@"[SPRITESHEET] SKIPPING exists and up to date - file name: %@, subpath: %@, resolution: %@, file path: %@", [spriteSheetFile lastPathComponent], subPath, resolution, spriteSheetFile);
-			continue;
-		}
-
-        // Note: these lookups are written as intermediate products to generate the final fileLookup.plist
-        PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
-
-        [self prepareImagesForSpriteSheetPublishing:publishDirectory
-                                          outputDir:outputDir
-                                         resolution:resolution
-                                         fileLookup:publishIntermediateFilesLookup];
-
-        PublishSpriteSheetOperation *operation = [self createSpriteSheetOperation:publishDirectory
-                                                                          subPath:subPath
-                                                               srcSpriteSheetDate:srcSpriteSheetDate
-                                                                       resolution:resolution
-                                                                  spriteSheetFile:spriteSheetFile];
-
-        [_publishingQueue addOperation:operation];
-
-        [_publishingQueue addOperationWithBlock:^{
-            if (![publishIntermediateFilesLookup writeToFile:intermediateFileLookupPath])
-            {
-                [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@", spriteSheetName, resolution]];
-            }
-            [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:intermediateFileLookupPath];
-        }];
-	}
-}
-
-- (PublishSpriteSheetOperation *)createSpriteSheetOperation:(NSString *)publishDirectory subPath:(NSString *)subPath srcSpriteSheetDate:(NSDate *)srcSpriteSheetDate resolution:(NSString *)resolution spriteSheetFile:(NSString *)spriteSheetFile
-{
-    PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                 warnings:_warnings
-                                                                                           statusProgress:_publishingTaskStatusProgress];
-    operation.publishDirectory = publishDirectory;
-    operation.publishedPNGFiles = _publishedPNGFiles;
-    operation.srcSpriteSheetDate = srcSpriteSheetDate;
-    operation.resolution = resolution;
-    operation.srcDirs = @[
-            [_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
-            _projectSettings.tempSpriteSheetCacheDirectory];
-    operation.spriteSheetFile = spriteSheetFile;
-    operation.subPath = subPath;
-    operation.targetType = _targetType;
-    return operation;
-}
-
-- (BOOL)spriteSheetExistsAndUpToDate:(NSDate *)srcSpriteSheetDate spriteSheetFile:(NSString *)spriteSheetFile subPath:(NSString *)subPath
-{
-    NSDate* dstDate = [CCBFileUtil modificationDateForFile:[spriteSheetFile stringByAppendingPathExtension:@"plist"]];
-    BOOL isDirty = [_projectSettings isDirtyRelPath:subPath];
-    return dstDate
-            && [dstDate isEqualToDate:srcSpriteSheetDate]
-            && !isDirty;
-}
-
-- (void)prepareImagesForSpriteSheetPublishing:(NSString *)publishDirectory
-                                    outputDir:(NSString *)outputDir
-                                   resolution:(NSString *)resolution
-                                   fileLookup:(id<PublishFileLookupProtocol>)fileLookup
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    NSMutableSet *files = [NSMutableSet setWithArray:[fileManager contentsOfDirectoryAtPath:publishDirectory error:NULL]];
-	[files addObjectsFromArray:[publishDirectory resolutionDependantFilesInDirWithResolutions:nil]];
-    [files addObjectsFromArray:[publishDirectory filesInAutoDirectory]];
-
-    for (NSString *fileName in files)
-    {
-        NSString *filePath = [publishDirectory stringByAppendingPathComponent:fileName];
-
-        if ([filePath isResourceAutoFile]
-            && ([fileName isSmartSpriteSheetCompatibleFile]))
-        {
-            NSString *dstFile = [[_projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
-            [self publishImageFile:filePath
-                                to:dstFile
-                     isSpriteSheet:NO
-                         outputDir:outputDir
-                        resolution:resolution
-               intermediateProduct:YES
-                        fileLookup:fileLookup];
-        }
-    }
-}
-
-- (void)publishSpriteKitAtlasDir:(NSString *)spriteSheetDir
-                       sheetName:(NSString *)spriteSheetName
-                         subPath:(NSString *)subPath
-                publishDirectory:(NSString *)publishDirectory
-                       outputDir:(NSString *)outputDir
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    NSString *textureAtlasPath = [[NSBundle mainBundle] pathForResource:@"SpriteKitTextureAtlasToolPath" ofType:@"txt"];
-    NSAssert(textureAtlasPath, @"Missing bundle file: SpriteKitTextureAtlasToolPath.txt");
-    NSString *textureAtlasToolLocation = [NSString stringWithContentsOfFile:textureAtlasPath encoding:NSUTF8StringEncoding error:nil];
-    LocalLog(@"Using Sprite Kit Texture Atlas tool: %@", textureAtlasToolLocation);
-
-    if ([fileManager fileExistsAtPath:textureAtlasToolLocation] == NO)
-    {
-        [_warnings addWarningWithDescription:@"<-- file not found! Install a public (non-beta) Xcode version to generate sprite sheets. Xcode beta users may edit 'SpriteKitTextureAtlasToolPath.txt' inside SpriteBuilder.app bundle." isFatal:YES relatedFile:textureAtlasToolLocation];
-        return;
-    }
-	
-	for (NSString* resolution in _publishForResolutions)
-	{
-        NSString *intermediateFileLookupPath = [publishDirectory stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
-        [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
-
-        // Note: these lookups are written as intermediate products to generate the final fileLookup.plist
-        PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
-
-        [self prepareImagesForSpriteSheetPublishing:publishDirectory
-                                          outputDir:outputDir
-                                         resolution:resolution
-                                         fileLookup:publishIntermediateFilesLookup];
-
-        PublishSpriteKitSpriteSheetOperation *operation = [self createSpriteKitSheetOperation:spriteSheetDir
-                                                                              spriteSheetName:spriteSheetName
-                                                                                      subPath:subPath
-                                                                     textureAtlasToolLocation:textureAtlasToolLocation
-                                                                                   resolution:resolution];
-        [_publishingQueue addOperation:operation];
-
-        [_publishingQueue addOperationWithBlock:^{
-            if (![publishIntermediateFilesLookup writeToFile:intermediateFileLookupPath])
-            {
-                [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@", spriteSheetName, resolution]];
-            }
-        }];
-    }
-}
-
-- (PublishSpriteKitSpriteSheetOperation *)createSpriteKitSheetOperation:(NSString *)spriteSheetDir spriteSheetName:(NSString *)spriteSheetName subPath:(NSString *)subPath textureAtlasToolLocation:(NSString *)textureAtlasToolLocation resolution:(NSString *)resolution
-{
-    PublishSpriteKitSpriteSheetOperation *operation = [[PublishSpriteKitSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                                   warnings:_warnings
-                                                                                                             statusProgress:_publishingTaskStatusProgress];
-    operation.resolution = resolution;
-    operation.spriteSheetDir = spriteSheetDir;
-    operation.spriteSheetName = spriteSheetName;
-    operation.subPath = subPath;
-    operation.textureAtlasToolFilePath = textureAtlasToolLocation;
-    return operation;
-}
-
-- (void)publishGeneratedFiles
-{
-    PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                       warnings:_warnings
-                                                                                                 statusProgress:_publishingTaskStatusProgress];
-    operation.targetType = _targetType;
-    operation.outputDir = _outputDir;
-    operation.publishedSpriteSheetFiles = _publishedSpriteSheetFiles;
-    operation.fileLookup = _renamedFilesLookup;
-
-    [_publishingQueue addOperation:operation];
-}
-
-- (BOOL)publishAllToDirectory:(NSString*)outputDir
-{
-    self.outputDir = outputDir;
-    self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] initWithFlattenPaths:_projectSettings.flattenPaths];
-
-    // Publish resources and ccb-files
-    for (NSString* aDir in _projectSettings.absoluteResourcePaths)
-    {
-		if (![self publishDirectory:aDir subPath:NULL])
-		{
-			return NO;
-		}
-	}
-
-    if(!_projectSettings.onlyPublishCCBs)
-    {
-        [self publishGeneratedFiles];
-    }
-    
-    // Yiee Haa!
-    return YES;
 }
 
 - (BOOL)doPublish
 {
-    [self removeOldPublishDirIfCacheCleaned];
+    __weak id weakSelf = self;
+    [_publishingQueue addOperationWithBlock:^
+    {
+        [weakSelf removeOldPublishDirIfCacheCleaned];
+    }];
 
-    if (![self publishForTargetType:kCCBPublisherTargetTypeIPhone])
+    if (![self enqueuePublishOperationsForAllTargets])
     {
         return NO;
     }
 
-    if (![self publishForTargetType:kCCBPublisherTargetTypeAndroid])
+    [_publishingQueue addOperationWithBlock:^
     {
-        return NO;
-    }
+        [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings clearAllDirtyMarkers];
-
-    [self resetNeedRepublish];
+        [weakSelf resetNeedRepublish];
+    }];
 
     return YES;
 }
 
-- (BOOL)publishForTargetType:(CCBPublisherTargetType)targetType
+- (BOOL)enqueuePublishOperationsForAllTargets
 {
-    BOOL publishEnabled = [_projectSettings publishEnabledForTargetType:targetType];
-    if (!publishEnabled)
+    for (CCBPublishingTarget *target in _publishingTargets)
     {
-        return YES;
+        if (![self enqueuePublishingOperationsForTarget:target])
+        {
+             return NO;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)enqueuePublishingOperationsForTarget:(CCBPublishingTarget *)target
+{
+    _warnings.currentOSType = target.osType;
+
+    target.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] init];
+
+    for (NSString *aDir in target.inputDirectories)
+    {
+        CCBDirectoryPublisher *dirPublisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
+                                                                                            warnings:_warnings
+                                                                                               queue:_publishingQueue];
+        dirPublisher.inputDir = aDir;
+        dirPublisher.outputDir = target.outputDirectory;
+        dirPublisher.osType = target.osType;
+        dirPublisher.resolutions = target.resolutions;
+        dirPublisher.audioQuality = target.audioQuality;
+        dirPublisher.publishedPNGFiles = target.publishedPNGFiles;
+        dirPublisher.renamedFilesLookup = target.renamedFilesLookup;
+        dirPublisher.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;
+        dirPublisher.publishingTaskStatusProgress = _publishingTaskStatusProgress;
+        dirPublisher.modifiedDatesCache = _modifiedDatesCache;
+
+        if (![dirPublisher generateAndEnqueuePublishingTasks])
+        {
+            return NO;
+        }
     }
 
-    _targetType = targetType;
-    _warnings.currentTargetType = targetType;
+    if (!_projectSettings.onlyPublishCCBs)
+    {
+        [self enqueueGenerateFilesOperationWithTarget:target];
+    }
 
-    self.publishForResolutions = [self.projectSettings publishingResolutionsForTargetType:targetType];
+    // Yiee Haa!
+    return YES;
+}
 
-    NSString *publishDir = [[_projectSettings publishDirForTargetType:targetType]
-                                              absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
+- (void)enqueueGenerateFilesOperationWithTarget:(CCBPublishingTarget *)target
+{
+    PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                                       warnings:_warnings
+                                                                                                 statusProgress:_publishingTaskStatusProgress];
+    operation.osType = target.osType;
+    operation.outputDir = target.outputDirectory;
+    operation.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;
+    operation.fileLookup = target.renamedFilesLookup;
 
-    return [self publishAllToDirectory:publishDir];
+    [_publishingQueue addOperation:operation];
 }
 
 - (void)resetNeedRepublish
@@ -686,18 +221,56 @@
         && !_projectSettings.onlyPublishCCBs)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSArray *publishDirs = @[_projectSettings.publishDirectory, _projectSettings.publishDirectoryAndroid];
-        for (NSString * dir in publishDirs)
+        for (CCBPublishingTarget *target in _publishingTargets)
         {
-            NSString *publishDir = [dir absolutePathFromBaseDirPath:[_projectSettings.projectPath stringByDeletingLastPathComponent]];
-            [fileManager removeItemAtPath:publishDir error:NULL];
+            if (!target.directoryToClean)
+            {
+                continue;
+            }
+
+            NSError *error;
+            if (![fileManager removeItemAtPath:target.directoryToClean error:&error]
+                && error.code != NSFileNoSuchFileError)
+            {
+                NSLog(@"Error removing old publishing directory at path \"%@\" with error %@", target.outputDirectory, error);
+            }
         }
     }
 }
 
-- (void)postProcessPublishedPNGFilesWithOptiPNG
+- (void)enqueuePostPublishingOperationsForAllTargets
 {
-    if ([_projectSettings isPublishEnvironmentDebug])
+    for (CCBPublishingTarget *target in _publishingTargets)
+    {
+        [self postProcessPublishedPNGFilesWithOptiPNGWithTarget:target];
+        [self zipFolderWithTarget:target];
+    }
+}
+
+- (void)zipFolderWithTarget:(CCBPublishingTarget *)target
+{
+    if (!target.zipOutputPath)
+    {
+        return;
+    }
+
+    ZipDirectoryOperation *operation = [[ZipDirectoryOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                     warnings:_warnings
+                                                                               statusProgress:_publishingTaskStatusProgress];
+
+    operation.inputPath = target.outputDirectory;
+    operation.zipOutputPath = target.zipOutputPath;
+    operation.compression = target.publishEnvironment == kCCBPublishEnvironmentRelease
+        ? PUBLISHING_PACKAGES_ZIP_RELEASE_COMPRESSION
+        : PUBLISHING_PACKAGES_ZIP_DEBUG_COMPRESSION;
+    operation.createDirectories = YES;
+
+    [_publishingQueue addOperation:operation];
+}
+
+- (void)postProcessPublishedPNGFilesWithOptiPNGWithTarget:(CCBPublishingTarget *)target
+{
+    if (target.publishEnvironment == kCCBPublishEnvironmentDevelop)
     {
         return;
     }
@@ -710,7 +283,7 @@
         return;
     }
 
-    for (NSString *pngFile in _publishedPNGFiles)
+    for (NSString *pngFile in target.publishedPNGFiles)
     {
         OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc] initWithProjectSettings:_projectSettings
                                                                                                            warnings:_warnings
@@ -719,51 +292,6 @@
         operation.optiPngPath = pathToOptiPNG;
 
         [_publishingQueue addOperation:operation];
-    }
-}
-
-
-#pragma mark - public methods
-
-- (void)start
-{
-    NSLog(@"[PUBLISH] Start...");
-
-    [_publishingQueue setSuspended:YES];
-
-    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-
-    if (_projectSettings.publishEnvironment == PublishEnvironmentRelease)
-    {
-        [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:_projectSettings];
-    }
-
-    [self doPublish];
-
-    _publishingTaskStatusProgress.totalTasks = [_publishingQueue operationCount];
-
-    [_publishingQueue setSuspended:NO];
-    [_publishingQueue waitUntilAllOperationsAreFinished];
-	
-	[self postProcessPublishedPNGFilesWithOptiPNG];
-
-	[_publishingQueue setSuspended:NO];
-    [_publishingQueue waitUntilAllOperationsAreFinished];
-	
-    [_projectSettings flagFilesDirtyWithWarnings:_warnings];
-
-    NSLog(@"[PUBLISH] Done in %.2f seconds.", [[NSDate date] timeIntervalSince1970] - startTime);
-
-    if ([[NSThread currentThread] isMainThread])
-    {
-        [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
-    }
-    else
-    {
-        dispatch_sync(dispatch_get_main_queue(), ^
-        {
-            [[AppDelegate appDelegate] publisher:self finishedWithWarnings:_warnings];
-        });
     }
 }
 
@@ -776,16 +304,6 @@
     });
 }
 
-+ (void)cleanAllCacheDirectoriesWithProjectSettings:(ProjectSettings *)projectSettings
-{
-    projectSettings.needRepublish = YES;
-    [projectSettings store];
-
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* ccbChacheDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"];
-    [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
-}
-
 - (void)cancel
 {
     NSLog(@"[PUBLISH] cancelled by user");
@@ -796,6 +314,16 @@
 {
     _taskStatusUpdater = taskStatusUpdater;
     self.publishingTaskStatusProgress = [[PublishingTaskStatusProgress alloc] initWithTaskStatus:taskStatusUpdater];
+}
+
+- (void)addPublishingTarget:(CCBPublishingTarget *)target
+{
+    if (!target)
+    {
+        return;
+    }
+
+    [_publishingTargets addObject:target];
 }
 
 @end

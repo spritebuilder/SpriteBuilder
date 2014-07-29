@@ -31,6 +31,7 @@
 #import <HockeySDK/HockeySDK.h>
 #import "ProjectSettings.h"
 #import "CCNode+NodeInfo.h"
+#import "PublishingFinishedDelegate.h"
 
 #define kCCBNumCanvasDevices 14
 
@@ -98,7 +99,7 @@ enum {
 @class CCBTransparentWindow;
 @class CCBTransparentView;
 @class TaskStatusWindow;
-@class CCBPublisher;
+@class CCBDirectoryPublisher;
 @class CCBWarnings;
 @class SequencerHandler;
 @class SequencerScrubberSelectionView;
@@ -120,6 +121,7 @@ enum {
 @class AnimationPlaybackManager;
 @class RegistrationWindow;
 @class ResourceManagerOutlineView;
+@class CCBPublisher;
 
 typedef void (^CompletionCallback) (BOOL success);
 
@@ -129,7 +131,7 @@ typedef void (^CompletionCallback) (BOOL success);
 - (void) oldVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 @end
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate, PublishingFinishedDelegate>
 {
     
     // Panel Views
@@ -380,7 +382,7 @@ typedef void (^CompletionCallback) (BOOL success);
 - (void) updateInspectorFromSelection;
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
-- (void) openFile:(NSString*) fileName;
+- (void) openFile:(NSString*)filePath;
 
 - (void)newFile:(NSString *)fileName type:(int)type resolutions:(NSMutableArray *)resolutions;
 
@@ -447,9 +449,6 @@ typedef void (^CompletionCallback) (BOOL success);
 - (IBAction) delete:(id) sender;
 
 - (IBAction) debug:(id)sender;
-
-// Publishing & running
-- (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings;
 
 // For warning messages. Returns result.
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg;

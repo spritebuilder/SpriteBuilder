@@ -50,7 +50,7 @@
 @synthesize projectPath;
 @synthesize publishDirectory;
 @synthesize publishDirectoryAndroid;
-@synthesize publishEnablediPhone;
+@synthesize publishEnabledIOS;
 @synthesize publishEnabledAndroid;
 @synthesize publishResolution_ios_phone;
 @synthesize publishResolution_ios_phonehd;
@@ -65,7 +65,6 @@
 @synthesize isSafariExist;
 @synthesize isChromeExist;
 @synthesize isFirefoxExist;
-@synthesize flattenPaths;
 @synthesize publishToZipFile;
 @synthesize onlyPublishCCBs;
 @synthesize exporter;
@@ -94,14 +93,13 @@
     self.publishDirectoryAndroid = @"Published-Android";
 
     self.onlyPublishCCBs = NO;
-    self.flattenPaths = NO;
     self.publishToZipFile = NO;
 
     self.deviceOrientationLandscapeLeft = YES;
     self.deviceOrientationLandscapeRight = YES;
     self.resourceAutoScaleFactor = 4;
     
-    self.publishEnablediPhone = YES;
+    self.publishEnabledIOS = YES;
     self.publishEnabledAndroid = YES;
 
     self.publishResolution_ios_phone = YES;
@@ -113,10 +111,10 @@
     self.publishResolution_android_tablet = YES;
     self.publishResolution_android_tablethd = YES;
     
-    self.publishEnvironment = PublishEnvironmentDevelop;
+    self.publishEnvironment = kCCBPublishEnvironmentDevelop;
 
-    self.publishAudioQuality_ios = 4;
-    self.publishAudioQuality_android = 4;
+    self.publishAudioQuality_ios = DEFAULT_AUDIO_QUALITY;
+    self.publishAudioQuality_android = DEFAULT_AUDIO_QUALITY;
     
     self.tabletPositionScaleFactor = 2.0f;
 
@@ -163,7 +161,7 @@
         self.publishDirectoryAndroid = @"";
     }
 
-    self.publishEnablediPhone = [[dict objectForKey:@"publishEnablediPhone"] boolValue];
+    self.publishEnabledIOS = [[dict objectForKey:@"publishEnablediPhone"] boolValue];
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
 
     self.publishResolution_ios_phone = [[dict objectForKey:@"publishResolution_ios_phone"] boolValue];
@@ -178,16 +176,15 @@
     self.publishAudioQuality_ios = [[dict objectForKey:@"publishAudioQuality_ios"]intValue];
     if (!self.publishAudioQuality_ios)
     {
-        self.publishAudioQuality_ios = 1;
+        self.publishAudioQuality_ios = DEFAULT_AUDIO_QUALITY;
     }
 
     self.publishAudioQuality_android = [[dict objectForKey:@"publishAudioQuality_android"]intValue];
     if (!self.publishAudioQuality_android)
     {
-        self.publishAudioQuality_android = 1;
+        self.publishAudioQuality_android = DEFAULT_AUDIO_QUALITY;
     }
 
-    self.flattenPaths = [[dict objectForKey:@"flattenPaths"] boolValue];
     self.publishToZipFile = [[dict objectForKey:@"publishToZipFile"] boolValue];
     self.onlyPublishCCBs = [[dict objectForKey:@"onlyPublishCCBs"] boolValue];
     self.exporter = [dict objectForKey:@"exporter"];
@@ -266,7 +263,7 @@
     [dict setObject:publishDirectory forKey:@"publishDirectory"];
     [dict setObject:publishDirectoryAndroid forKey:@"publishDirectoryAndroid"];
 
-    [dict setObject:[NSNumber numberWithBool:publishEnablediPhone] forKey:@"publishEnablediPhone"];
+    [dict setObject:[NSNumber numberWithBool:publishEnabledIOS] forKey:@"publishEnablediPhone"];
     [dict setObject:[NSNumber numberWithBool:publishEnabledAndroid] forKey:@"publishEnabledAndroid"];
 
     [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phone] forKey:@"publishResolution_ios_phone"];
@@ -280,8 +277,7 @@
     
     [dict setObject:[NSNumber numberWithInt:publishAudioQuality_ios] forKey:@"publishAudioQuality_ios"];
     [dict setObject:[NSNumber numberWithInt:publishAudioQuality_android] forKey:@"publishAudioQuality_android"];
-    
-    [dict setObject:[NSNumber numberWithBool:flattenPaths] forKey:@"flattenPaths"];
+
     [dict setObject:[NSNumber numberWithBool:publishToZipFile] forKey:@"publishToZipFile"];
     [dict setObject:[NSNumber numberWithBool:onlyPublishCCBs] forKey:@"onlyPublishCCBs"];
     [dict setObject:self.exporter forKey:@"exporter"];
@@ -461,7 +457,7 @@
 
 - (id) valueForResource:(RMResource*) res andKey:(id) key
 {
-    NSString* relPath = res.relativePath;
+    NSString* relPath = [self findRelativePathInPackagesForAbsolutePath:res.filePath];
     return [self valueForRelPath:relPath andKey:key];
 }
 
@@ -713,6 +709,19 @@
 - (NSString *)projectPathDir
 {
     return [projectPath stringByDeletingLastPathComponent];
+}
+
+- (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath
+{
+    for (NSString *absoluteResourcePath in self.absoluteResourcePaths)
+    {
+        if ([absolutePath hasPrefix:absoluteResourcePath])
+        {
+            return [absolutePath substringFromIndex:[absoluteResourcePath length] + 1];
+        }
+    }
+
+    return nil;
 }
 
 @end

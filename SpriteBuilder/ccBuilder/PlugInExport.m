@@ -30,7 +30,6 @@
 
 @synthesize extension;
 @synthesize pluginName;
-@synthesize flattenPaths;
 @synthesize projectSettings;
 
 - (id) initWithBundle:(NSBundle*) b
@@ -55,7 +54,7 @@
     exporter.serializedProjectSettings = [projectSettings serialize];
     exporter.delegate = self.delegate;
     
-    return [exporter exportDocument:doc flattenPaths:flattenPaths];
+    return [exporter exportDocument:doc];
 }
 
 

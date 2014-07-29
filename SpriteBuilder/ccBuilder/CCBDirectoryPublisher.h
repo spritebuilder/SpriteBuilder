@@ -23,22 +23,34 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "CCBPublishDelegate.h"
+#import "CCBWarnings.h"
+#import "CCBPublisherTypes.h"
 
-@interface CCBPublisherTemplate : NSObject
-{
-    NSString* contents;
-}
+@protocol TaskStatusUpdaterProtocol;
+@class ProjectSettings;
+@class CCBWarnings;
+@class CCBDirectoryPublisher;
+@class PublishRenamedFilesLookup;
+@class DateCache;
+@class PublishingTaskStatusProgress;
 
-@property (nonatomic,strong) NSString* contents;
 
-- (id) initWithTemplateFile:(NSString*)fileName;
+@interface CCBDirectoryPublisher : NSObject
 
-+ (id) templateWithFile:(NSString*)fileName;
+@property (nonatomic, copy) NSString *inputDir;
+@property (nonatomic, copy) NSString *outputDir;
+@property (nonatomic) CCBPublisherOSType osType;
+@property (nonatomic) NSInteger audioQuality;
+@property (nonatomic, weak) NSArray *resolutions;
+@property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
+@property (nonatomic, weak) NSMutableSet *publishedSpriteSheetFiles;
+@property (nonatomic, weak) PublishRenamedFilesLookup *renamedFilesLookup;
+@property (nonatomic, strong) DateCache *modifiedDatesCache;
+@property (nonatomic, weak) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 
-- (void) setString:(NSString*)str forMarker:(NSString*)marker;
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings queue:(NSOperationQueue *)queue;
 
-- (void) setStrings:(NSArray*)strs forMarker:(NSString*)marker prefix:(NSString*)prefix suffix:(NSString*)suffix;
-
-- (void) writeToFile:(NSString*)fileName;
+- (BOOL)generateAndEnqueuePublishingTasks;
 
 @end
