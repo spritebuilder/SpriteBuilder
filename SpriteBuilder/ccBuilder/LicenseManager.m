@@ -182,11 +182,11 @@ NSString * kLicenseDetailsUpdated = @"kLicenseDetailsUpdated";
 		}
 		else if ([licenseData length] == 0 && error == nil)
 		{
-			errorCallback(@"Empy response from server");
+			errorCallback(@"No response from the server");
 		}
 		else if (error != nil && error.code == NSURLErrorTimedOut)
 		{
-			errorCallback(@"Server Times out.");
+			errorCallback(@"Server timed out.");
 		}
 		else if (error != nil)
 		{
