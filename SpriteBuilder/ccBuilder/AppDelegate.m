@@ -2832,7 +2832,8 @@ static BOOL hideAllToNextSeparator;
         [self addCCObject:clipNode asChild:asChild];
         
         //We might have copy/cut/pasted and body. Fix it up.
-        [[SceneGraph instance].joints fixupReferences];//
+		
+        [SceneGraph fixupReferences];//
     }
 }
 

@@ -17,21 +17,21 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="38" horizontalPageScroll="10" verticalLineScroll="38" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="vgz-SY-y37">
-                    <rect key="frame" x="4" y="28" width="287" height="126"/>
+                    <rect key="frame" x="4" y="28" width="281" height="126"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES" heightSizable="YES"/>
                     <clipView key="contentView" id="2IK-h0-HaC">
-                        <rect key="frame" x="1" y="1" width="285" height="124"/>
+                        <rect key="frame" x="1" y="1" width="279" height="124"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="36" id="bkc-CZ-P78">
-                                <rect key="frame" x="0.0" y="0.0" width="285" height="124"/>
+                                <rect key="frame" x="0.0" y="0.0" width="279" height="124"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="282" minWidth="40" maxWidth="1000" id="5Ke-el-G8v">
+                                    <tableColumn width="276" minWidth="40" maxWidth="1000" id="5Ke-el-G8v">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

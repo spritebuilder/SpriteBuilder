@@ -976,8 +976,8 @@ static SequencerHandler* sharedSequencerHandler;
 		}
 
 	[appDelegate setSelectedNodes:[self extractDroppedNodes:nodes withKey:COPY_NODE_KEY]];
-	SceneGraph *sceneGraph = [SceneGraph instance];
-	[sceneGraph.joints fixupReferences];
+
+	[SceneGraph fixupReferences];
 
 	return YES;
 }
