@@ -451,9 +451,9 @@
 			productReference = 927F61BF196C771E000F43EF /* PROJECTNAMEAndroid.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B77F1B2D17B978D7009739AE /* PROJECTNAME */ = {
+		B77F1B2D17B978D7009739AE /* PROJECTNAME iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B77F1CDE17B978D8009739AE /* Build configuration list for PBXNativeTarget "PROJECTNAME" */;
+			buildConfigurationList = B77F1CDE17B978D8009739AE /* Build configuration list for PBXNativeTarget "PROJECTNAME iOS" */;
 			buildPhases = (
 				D2E0167A18D782EC00927430 /* Run Script */,
 				B77F1B2A17B978D7009739AE /* Sources */,
@@ -465,7 +465,7 @@
 			dependencies = (
 				B7378989180764180076A88C /* PBXTargetDependency */,
 			);
-			name = PROJECTNAME;
+			name = "PROJECTNAME iOS";
 			productName = Example;
 			productReference = B77F1B2E17B978D7009739AE /* PROJECTNAME.app */;
 			productType = "com.apple.product-type.application";
@@ -507,7 +507,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				B77F1B2D17B978D7009739AE /* PROJECTNAME */,
+				B77F1B2D17B978D7009739AE /* PROJECTNAME iOS */,
 				927F6198196C771E000F43EF /* PROJECTNAME Android */,
 				5B121020197484A3004C1E1D /* PROJECTNAME Java */,
 			);
@@ -973,7 +973,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B77F1CDE17B978D8009739AE /* Build configuration list for PBXNativeTarget "PROJECTNAME" */ = {
+		B77F1CDE17B978D8009739AE /* Build configuration list for PBXNativeTarget "PROJECTNAME iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B77F1CDF17B978D8009739AE /* Debug */,
