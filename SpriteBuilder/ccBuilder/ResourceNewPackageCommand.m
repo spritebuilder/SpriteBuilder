@@ -39,7 +39,7 @@
 
 + (BOOL)isValidForSelectedResources:(NSArray *)resources
 {
-    return resources.count == 0;
+    return YES;
 }
 
 
