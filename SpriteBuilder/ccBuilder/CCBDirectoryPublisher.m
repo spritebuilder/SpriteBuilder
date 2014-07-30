@@ -137,7 +137,7 @@
     }
 
     int format = [_projectSettings soundFormatForRelPath:relPath osType:_osType];
-    int quality = [_projectSettings soundQualityForRelPath:relPath osType:_osType];
+    NSInteger quality = [_projectSettings soundQualityForRelPath:relPath osType:_osType];
     if (quality == NSNotFound)
     {
         quality = _audioQuality;

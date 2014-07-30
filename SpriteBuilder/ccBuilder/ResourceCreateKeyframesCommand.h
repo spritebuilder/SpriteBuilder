@@ -5,5 +5,6 @@
 
 @interface ResourceCreateKeyframesCommand : NSObject <ResourceCommandProtocol, ResourceCommandContextMenuProtocol>
 
+@property (nonatomic, strong) NSArray *resources;
 
 @end

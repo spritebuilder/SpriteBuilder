@@ -95,6 +95,7 @@
 // *** Locating resources ***
 - (RMResource*) resourceForPath:(NSString*) path;
 - (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir;
+- (RMDirectory *)directoryForPath:(NSString *)fullPath;
 
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;
 - (NSString *)dirPathForResource:(id)resource;

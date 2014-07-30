@@ -215,10 +215,7 @@
     {
         [settingsWindow disableAutoPlayForAllItems];
     }
-    
 
-    
-    NSLog(@"setAutoPlay: %d", ap);
     autoPlay = ap;
 }
 

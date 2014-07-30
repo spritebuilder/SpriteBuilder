@@ -41,7 +41,6 @@
         if (clickedResource.type == kCCBResTypeDirectory)
         {
             RMDirectory *dir = clickedResource.data;
-            NSString *title;
             if (dir.isDynamicSpriteSheet)
             {
                 return @"Remove Smart Sprite Sheet";
