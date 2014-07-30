@@ -3004,7 +3004,7 @@ static BOOL hideAllToNextSeparator;
         {
             NSString *filename = [[saveDlg URL] path];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+                           dispatch_get_main_queue(), ^{
                 [[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 // Save file to new path
@@ -3186,7 +3186,7 @@ static BOOL hideAllToNextSeparator;
             NSArray* files = [openDlg URLs];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+                           dispatch_get_main_queue(), ^{
                 [[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 for (int i = 0; i < [files count]; i++)
@@ -3254,7 +3254,7 @@ static BOOL hideAllToNextSeparator;
         if (result == NSOKButton)
         {
             NSArray* files = [openDlg URLs];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_current_queue(), ^
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_main_queue(), ^
             {
                 for (int i = 0; i < [files count]; i++)
                 {
@@ -3315,7 +3315,7 @@ static BOOL hideAllToNextSeparator;
                 fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                               dispatch_get_current_queue(), ^{
+                               dispatch_get_main_queue(), ^{
                                    if ([self createProject:fileName engine:engine])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];

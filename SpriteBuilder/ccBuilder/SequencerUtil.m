@@ -44,7 +44,7 @@
 {
     NSMutableArray* selRes = [NSMutableArray array];
     
-    NSOutlineView* outlineView = [AppDelegate appDelegate].outlineProject;
+    NSOutlineView *outlineView = (NSOutlineView *)[AppDelegate appDelegate].outlineProject;
     NSIndexSet* idxSet = [outlineView selectedRowIndexes];
     
     NSUInteger idx = [idxSet firstIndex];
