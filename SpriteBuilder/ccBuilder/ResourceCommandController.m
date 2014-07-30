@@ -79,7 +79,9 @@
 - (void)newPackage:(id)sender
 {
     ResourceNewPackageCommand *command = [[ResourceNewPackageCommand alloc] init];
+    command.outlineView = _resourceManagerOutlineView;
     command.projectSettings = _projectSettings;
+    command.resourceManager = _resourceManager;
     command.windowForModals = _window;
     [command execute];
 }
