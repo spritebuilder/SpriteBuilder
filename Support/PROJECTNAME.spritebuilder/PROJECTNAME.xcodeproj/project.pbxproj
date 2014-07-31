@@ -123,7 +123,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5B12100919748273004C1E1D /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "../../../../../Users/phausler/Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armv7a/libEGL.so"; sourceTree = "<group>"; };
+		5B12100919748273004C1E1D /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "/usr/lib/armv7a/libEGL.so"; sourceTree = SDKROOT; };
 		5B12100B19748281004C1E1D /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = System/Library/Frameworks/BridgeKitV3.framework; sourceTree = SDKDIR; };
 		5B12100F197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
 		5B121011197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
@@ -706,7 +706,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 			};
 			name = Debug;
 		};
@@ -737,7 +737,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 			};
 			name = Release;
 		};
@@ -784,7 +784,7 @@
 				);
 				PRODUCT_NAME = PROJECTNAMEAndroid;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 				WRAPPER_EXTENSION = app;
 				opengles2 = YES;
 			};
@@ -831,7 +831,7 @@
 				);
 				PRODUCT_NAME = PROJECTNAMEAndroid;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 				opengles2 = YES;
