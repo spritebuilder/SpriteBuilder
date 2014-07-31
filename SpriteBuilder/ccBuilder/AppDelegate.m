@@ -2027,8 +2027,10 @@ static BOOL hideAllToNextSeparator;
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
+    #ifndef SPRITEBUILDER_PRO
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
+    #endif
 
     self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
 
@@ -3282,8 +3284,10 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)updateCocos2d:(id)sender
 {
+    #ifndef SPRITEBUILDER_PRO
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:YES];
+    #endif
 }
 
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine

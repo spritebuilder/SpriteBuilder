@@ -267,10 +267,12 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
     if (![_fileManager fileExistsAtPath:zipFile])
     {
+        LocalLog(@"[COCO2D-UPDATER] [ERROR] template file does not exist at path \"%@\"", zipFile);
         *error = [self errorForNonExistentTemplateFile:zipFile];
         return NO;
     }
 
+    LocalLog(@"[COCO2D-UPDATER] [INFO] cleaning temp folder just in case before update does anything");
     if (![self tidyUpTempFolder:error])
     {
         return NO;
@@ -278,6 +280,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
     if (![_fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
     {
+        LocalLog(@"[COCO2D-UPDATER] [ERROR] could not create directory at path \"%@\" with error %@", tmpDir, error);
         return NO;
     }
 
@@ -286,6 +289,8 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (BOOL)unzipZipFile:(NSString *)zipFile inTmpDir:(NSString *)tmpDir error:(NSError **)error
 {
+    LocalLog(@"[COCO2D-UPDATER] [INFO] unzipping template project archive to temp folder \"%@\"", tmpDir);
+
     NSTask *task = [[NSTask alloc] init];
     [task setCurrentDirectoryPath:tmpDir];
     [task setLaunchPath:@"/usr/bin/unzip"];
@@ -343,6 +348,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 - (BOOL)tidyUpTempFolder:(NSError **)error
 {
     NSString *tmpDir = [self tempFolderPathForUnzipping];
+    LocalLog(@"[COCO2D-UPDATER] [INFO] tidying up temp folder: %@", tmpDir);
 
     if ([_fileManager fileExistsAtPath:tmpDir]
         && ![_fileManager removeItemAtPath:tmpDir error:error])
@@ -386,16 +392,36 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (BOOL)copySpriteBuildersCocos2dFolderToProjectFolder:(NSError **)error
 {
+    LocalLog(@"[COCO2D-UPDATER] [INFO] copying unzipped cocos2d folder from temp to project");
+
     NSString *unzippedCocos2dFolder = [[self tempFolderPathForUnzipping] stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
 
-    return [_fileManager copyItemAtPath:unzippedCocos2dFolder
-                                 toPath:[self defaultProjectsCocos2DFolderPath] error:error];
+    BOOL result = [_fileManager copyItemAtPath:unzippedCocos2dFolder
+                                        toPath:[self defaultProjectsCocos2DFolderPath]
+                                         error:error];
+
+    if (!result)
+    {
+        LocalLog(@"[COCO2D-UPDATER] [ERROR] could not copy cocos2d folder from \"%@\" to \"%@\" with error %@",
+                 unzippedCocos2dFolder, [self defaultProjectsCocos2DFolderPath], *error);
+    }
+
+    return result;
 }
 
 - (BOOL)renameCocos2dFolderToBackupFolder:(NSError **)error
 {
-    return [_fileManager moveItemAtPath:[self defaultProjectsCocos2DFolderPath]
-                                 toPath:_backupFolderPath error:error];
+    LocalLog(@"[COCO2D-UPDATER] [INFO] renaming project's cocos2d folder to backup name \"%@\"", _backupFolderPath);
+
+    BOOL result = [_fileManager moveItemAtPath:[self defaultProjectsCocos2DFolderPath]
+                                        toPath:_backupFolderPath
+                                         error:error];
+    if (!result)
+    {
+        LocalLog(@"[COCO2D-UPDATER] [ERROR] could not renamed cocos2d folder to backup folder name: from \"%@\" to \"%@\" with error %@",
+                 [self defaultProjectsCocos2DFolderPath], _backupFolderPath, *error);
+    }
+    return result;
 }
 
 - (NSString *)cocos2dBackupFolderPath:(NSString *)defaultCocos2DFolderPath
