@@ -117,8 +117,6 @@
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
 		830B39B0197032F400218021 /* blank.wav in Resources */ = {isa = PBXBuildFile; fileRef = 830B39AF197032F400218021 /* blank.wav */; };
-		830F4E7E192DF937002B832D /* NewPackageWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E7D192DF937002B832D /* NewPackageWindow.xib */; };
-		830F4E81192DF9D1002B832D /* NewPackageWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830F4E80192DF9D1002B832D /* NewPackageWindowController.m */; };
 		830F4E9B192F5263002B832D /* Package.icns in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E9A192F5263002B832D /* Package.icns */; };
 		830F4EB21934706C002B832D /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
 		830F4ECB193486E5002B832D /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
@@ -1397,9 +1395,6 @@
 		80FBACCA183422BD00C4BB69 /* inspector-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning.png"; sourceTree = "<group>"; };
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
 		830B39AF197032F400218021 /* blank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blank.wav; sourceTree = "<group>"; };
-		830F4E7D192DF937002B832D /* NewPackageWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPackageWindow.xib; sourceTree = "<group>"; };
-		830F4E7F192DF9D1002B832D /* NewPackageWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPackageWindowController.h; sourceTree = "<group>"; };
-		830F4E80192DF9D1002B832D /* NewPackageWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPackageWindowController.m; sourceTree = "<group>"; };
 		830F4E9A192F5263002B832D /* Package.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Package.icns; sourceTree = "<group>"; };
 		830F4EB019347032002B832D /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = libs/OCMock.framework; sourceTree = "<group>"; };
 		833A5C4A192B48CB001837B3 /* SpriteBuilder Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpriteBuilder Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2950,9 +2945,6 @@
 				E35D78D216826C0100A53BEF /* SpriteSheetSettingsWindow.h */,
 				E35D78D316826C0100A53BEF /* SpriteSheetSettingsWindow.m */,
 				E35D78D416826C0100A53BEF /* SpriteSheetSettingsWindow.xib */,
-				830F4E7D192DF937002B832D /* NewPackageWindow.xib */,
-				830F4E7F192DF9D1002B832D /* NewPackageWindowController.h */,
-				830F4E80192DF9D1002B832D /* NewPackageWindowController.m */,
 			);
 			name = Dialogs;
 			sourceTree = "<group>";
@@ -6035,7 +6027,6 @@
 				E35DBC2014F4ED0E0070A6E4 /* InspectorIntegerLabeled.xib in Resources */,
 				E35DBC2514F4FEF90070A6E4 /* InspectorTexture.xib in Resources */,
 				926D13C218B5778300582959 /* joint-distance-handle-short.png in Resources */,
-				830F4E7E192DF937002B832D /* NewPackageWindow.xib in Resources */,
 				E325F64514F531F500D29BCF /* InspectorFloatVar.xib in Resources */,
 				9218DF411919B04D0033851E /* joint-pivot-handle-ref@2x.png in Resources */,
 				E325F64A14F53FD000D29BCF /* InspectorColor4FVar.xib in Resources */,
@@ -6605,7 +6596,6 @@
 				80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */,
 				80FBACC31833FAE000C4BB69 /* WarningTableView.m in Sources */,
 				80FBACC41833FAE000C4BB69 /* WarningTableViewHandler.m in Sources */,
-				830F4E81192DF9D1002B832D /* NewPackageWindowController.m in Sources */,
 				921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */,
 				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
 				7789ABD0133AA82000CEFCC7 /* main.m in Sources */,

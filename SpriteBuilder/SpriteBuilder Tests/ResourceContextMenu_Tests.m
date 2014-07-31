@@ -46,6 +46,7 @@
     NSArray *selectors = @[
             @"newFile:",
             @"newFolder:",
+            @"newPackage:",
             @"openResourceWithExternalEditor:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
@@ -64,6 +65,7 @@
     NSArray *selectors = @[
             @"newFile:",
             @"newFolder:",
+            @"newPackage:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
             @"deleteResource:",
@@ -83,6 +85,7 @@
     NSArray *selectors = @[
             @"newFile:",
             @"newFolder:",
+            @"newPackage:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
             @"deleteResource:",

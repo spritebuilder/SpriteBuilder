@@ -126,7 +126,6 @@
 #import "RMResource.h"
 #import "PackageImporter.h"
 #import "PackageCreator.h"
-#import "NewPackageWindowController.h"
 #import "ResourceCommandController.h"
 #import "ProjectMigrator.h"
 #import "AndroidPluginInstallerWindow.h"
@@ -2057,8 +2056,10 @@ static BOOL hideAllToNextSeparator;
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
+    #ifndef SPRITEBUILDER_PRO
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
+    #endif
 
     self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
 
@@ -3014,7 +3015,7 @@ static BOOL hideAllToNextSeparator;
         {
             NSString *filename = [[saveDlg URL] path];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+                           dispatch_get_main_queue(), ^{
                 [[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 // Save file to new path
@@ -3196,7 +3197,7 @@ static BOOL hideAllToNextSeparator;
             NSArray* files = [openDlg URLs];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+                           dispatch_get_main_queue(), ^{
                 [[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 for (int i = 0; i < [files count]; i++)
@@ -3264,7 +3265,7 @@ static BOOL hideAllToNextSeparator;
         if (result == NSOKButton)
         {
             NSArray* files = [openDlg URLs];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_current_queue(), ^
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_main_queue(), ^
             {
                 for (int i = 0; i < [files count]; i++)
                 {
@@ -3292,8 +3293,10 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)updateCocos2d:(id)sender
 {
+    #ifndef SPRITEBUILDER_PRO
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:YES];
+    #endif
 }
 
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine
@@ -3325,7 +3328,7 @@ static BOOL hideAllToNextSeparator;
                 fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                               dispatch_get_current_queue(), ^{
+                               dispatch_get_main_queue(), ^{
                                    if ([self createProject:fileName engine:engine])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
@@ -3356,26 +3359,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuNewPackage:(id)sender
 {
-    [[[CCDirector sharedDirector] view] lockOpenGLContext];
-    
-    PackageCreator *packageCreator = [[PackageCreator alloc] init];
-    packageCreator.projectSettings = projectSettings;
-    
-    NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
-    packageWindowController.packageCreator = packageCreator;
-
-    // Show new document sheet
-    [NSApp beginSheet:[packageWindowController window]
-       modalForWindow:window
-        modalDelegate:NULL
-       didEndSelector:NULL
-          contextInfo:NULL];
-
-    [NSApp runModalForWindow:[packageWindowController window]];
-    [NSApp endSheet:[packageWindowController window]];
-    [[packageWindowController window] close];
-
-    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+    [_resourceCommandController newPackage:sender];
 }
 
 - (IBAction) newFolder:(id)sender

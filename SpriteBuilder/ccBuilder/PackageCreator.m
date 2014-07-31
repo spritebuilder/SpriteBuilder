@@ -27,14 +27,14 @@
     [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:packagePath options:0];
 }
 
-- (BOOL)createPackageWithName:(NSString *)packageName error:(NSError **)error
+- (NSString *)createPackageWithName:(NSString *)packageName error:(NSError **)error
 {
     NSString *fullPath = [_projectSettings fullPathForPackageName:packageName];
 
     if ([_projectSettings isResourcePathInProject:fullPath])
     {
         [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
-        return NO;
+        return nil;
     }
 
     NSError *underlyingErrorCreate;
@@ -42,13 +42,13 @@
     if (!createDirSuccess
         && underlyingErrorCreate.code == NSFileWriteFileExistsError)
     {
-        [NSError setNewErrorWithCode:error code:SBResourcePathExistsButNotInProjectError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
-        return NO;
+        [NSError setNewErrorWithCode:error code:SBResourcePathExistsButNotInProjectError message:[NSString stringWithFormat:@"Package %@ already exists on disk but is not in project", packageName]];
+        return nil;
     }
     else if (!createDirSuccess)
     {
         [NSError setError:error withError:underlyingErrorCreate];
-        return NO;
+        return nil;
     }
 
     NSError *underlyingErrorAddResPath;
@@ -60,11 +60,33 @@
         [self createPackageSettings:fullPath];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
-        return YES;
+        return fullPath;
     }
 
     [NSError setError:error withError:underlyingErrorAddResPath];
-    return NO;
+    return nil;
+}
+
+- (NSString *)creatablePackageNameWithBaseName:(NSString *)baseName
+{
+    NSString *currentBaseName = baseName;
+    NSUInteger counter = 1;
+    while([self isBaseNameInProjectOrExistsOnFilesystem:currentBaseName])
+    {
+        currentBaseName = [NSString stringWithFormat:@"%@ %lu", baseName, counter];
+        counter++;
+    }
+
+    return currentBaseName;
+}
+
+- (BOOL)isBaseNameInProjectOrExistsOnFilesystem:(NSString *)baseName
+{
+    NSString *fullPath = [_projectSettings fullPathForPackageName:baseName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    return [_projectSettings isResourcePathInProject:fullPath]
+                    || [fileManager fileExistsAtPath:fullPath];
 }
 
 - (void)createPackageSettings:(NSString *)fullPath
