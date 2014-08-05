@@ -50,7 +50,7 @@ def get_component_roots(include_legacy=False):
 				  (xcshared_dir, "Toolchains/Android.xctoolchain", 'CURRENT'),
 				  (library_dir, "Frameworks/XCPluginKit.framework", 'CURRENT'),
 				  (user_xcode_dir, "Templates/Project Templates/Java", 'CURRENT'),
-				  (user_xcode_dir, "Templates/Project Templates/Android", 'CURRENT'),
+				  (user_xcode_dir, "Templates/Project Templates/Framework & Library", 'CURRENT'),
 				  ]
     return [(c, os.path.expanduser(os.path.join(path, c))) for path, c, type in components if include_legacy or type != 'LEGACY']
 
