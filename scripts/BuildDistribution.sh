@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo ""
+echo "This script has been depricated and should be replaced with build_distribution.py"
+echo "ex: python build_distribution.py -h"
+echo "ex: python build_distribution.py --version 1.2"
+exit 1
+
 
 CCB_VERSION=$1
 SB_SKU=$2

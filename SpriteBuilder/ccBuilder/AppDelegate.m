@@ -4470,6 +4470,20 @@ static BOOL hideAllToNextSeparator;
 }
 
 
+- (NSString *)feedURLStringForUpdater:(id)updater
+{
+	//Local Host testing.
+//	return @"http://localhost/sites/version";
+	
+#ifdef SPRITEBUILDER_PRO
+	return @"http://update.spritebuilder.com/pro/";
+#else
+	return @"http://update.spritebuilder.com";
+#endif
+
+	
+}
+
 -(void)setupSpriteBuilderPro
 {
 

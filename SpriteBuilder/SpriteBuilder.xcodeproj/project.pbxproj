@@ -196,6 +196,8 @@
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
 		9254805A18D913C500236DED /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */; };
+		9269C2FF199057EA00884F59 /* SBUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 9269C2FE199057EA00884F59 /* SBUpdater.m */; };
+		9269C30819917EAA00884F59 /* Sparkle.framework in Copy Files (Sparkle framework) */ = {isa = PBXBuildFile; fileRef = 924EE96D19902D810029CCD1 /* Sparkle.framework */; };
 		926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D139418B2DC2E00582959 /* NSDictionary+Query.m */; };
 		926D13C018B5778300582959 /* joint-distance-handle-long.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B418B5778300582959 /* joint-distance-handle-long.png */; };
 		926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B518B5778300582959 /* joint-distance-handle-long@2x.png */; };
@@ -253,6 +255,7 @@
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */; };
 		92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */; };
+		92C97ACB199033290048FC37 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924EE96D19902D810029CCD1 /* Sparkle.framework */; };
 		92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */; };
 		92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */; };
 		92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */; };
@@ -940,6 +943,48 @@
 			remoteGlobalIDString = 92154ACF18A5560B00BD215C;
 			remoteInfo = CCPhysicsPivotJoint;
 		};
+		924EE96C19902D810029CCD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924EE96119902D800029CCD1 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
+		924EE96E19902D810029CCD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924EE96119902D800029CCD1 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
+			remoteInfo = "Sparkle Test App";
+		};
+		924EE97019902D810029CCD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924EE96119902D800029CCD1 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 612279D90DB5470200AB99EA;
+			remoteInfo = "Sparkle Unit Tests";
+		};
+		924EE97219902D810029CCD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924EE96119902D800029CCD1 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D06E8D00FD68C7C005AE3F6;
+			remoteInfo = BinaryDelta;
+		};
+		924EE97419902D810029CCD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924EE96119902D800029CCD1 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55C14BB7136EEF1500649790;
+			remoteInfo = Autoupdate;
+		};
+		924EE97719902DAF0029CCD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 924EE96119902D800029CCD1 /* Sparkle.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
 		926D13E518B57C4200582959 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -1152,6 +1197,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9269C30819917EAA00884F59 /* Sparkle.framework in Copy Files (Sparkle framework) */,
 				B72D1DEC186393C80091252F /* HockeySDK.framework in Copy Files (Sparkle framework) */,
 			);
 			name = "Copy Files (Sparkle framework)";
@@ -1486,9 +1532,12 @@
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
+		924EE96119902D800029CCD1 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		92520731196238D000BFC071 /* SpriteBuilderPro.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SpriteBuilderPro.xcconfig; sourceTree = "<group>"; };
 		9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpriteBuilder.xcconfig; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
+		9269C2FD199057EA00884F59 /* SBUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUpdater.h; sourceTree = "<group>"; };
+		9269C2FE199057EA00884F59 /* SBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUpdater.m; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
 		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
 		926D13B418B5778300582959 /* joint-distance-handle-long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-distance-handle-long.png"; sourceTree = "<group>"; };
@@ -2505,6 +2554,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92C97ACB199033290048FC37 /* Sparkle.framework in Frameworks */,
 				D35E589E18E391DA008571EC /* GLKit.framework in Frameworks */,
 				80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */,
 				B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */,
@@ -2805,6 +2855,8 @@
 				92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */,
 				92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */,
 				92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */,
+				9269C2FD199057EA00884F59 /* SBUpdater.h */,
+				9269C2FE199057EA00884F59 /* SBUpdater.m */,
 			);
 			name = "Application Settings & Globals";
 			sourceTree = "<group>";
@@ -3408,6 +3460,7 @@
 		7789ABEF133AB17100CEFCC7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				924EE96019902D5A0029CCD1 /* Sparkle */,
 				92FFB857195DEC1100E9C96F /* AndroidPlugin */,
 				8341326918DADF8C0088FFAB /* optipng */,
 				80AD79911863871200B653B7 /* PVRTexTool */,
@@ -3806,6 +3859,26 @@
 				922CC395194676B600B34854 /* AnimationTest1.ccb */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		924EE96019902D5A0029CCD1 /* Sparkle */ = {
+			isa = PBXGroup;
+			children = (
+				924EE96119902D800029CCD1 /* Sparkle.xcodeproj */,
+			);
+			name = Sparkle;
+			sourceTree = "<group>";
+		};
+		924EE96219902D800029CCD1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				924EE96D19902D810029CCD1 /* Sparkle.framework */,
+				924EE96F19902D810029CCD1 /* Sparkle Test App.app */,
+				924EE97119902D810029CCD1 /* Sparkle Unit Tests.xctest */,
+				924EE97319902D810029CCD1 /* BinaryDelta */,
+				924EE97519902D810029CCD1 /* Autoupdate.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		926D13E718B57E1500582959 /* CCPhysicsPinJoint */ = {
@@ -5264,6 +5337,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				924EE97819902DAF0029CCD1 /* PBXTargetDependency */,
 				DCFB065018E32C2D00DF02A0 /* PBXTargetDependency */,
 				DC05E79818D0ADDC00592A1E /* PBXTargetDependency */,
 				DC05E79A18D0ADDC00592A1E /* PBXTargetDependency */,
@@ -5831,6 +5905,10 @@
 					ProductGroup = B7D0917E17C2C12A0007FE7F /* Products */;
 					ProjectRef = B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */;
 				},
+				{
+					ProductGroup = 924EE96219902D800029CCD1 /* Products */;
+					ProjectRef = 924EE96119902D800029CCD1 /* Sparkle.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -5869,6 +5947,41 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		924EE96D19902D810029CCD1 /* Sparkle.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Sparkle.framework;
+			remoteRef = 924EE96C19902D810029CCD1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		924EE96F19902D810029CCD1 /* Sparkle Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Sparkle Test App.app";
+			remoteRef = 924EE96E19902D810029CCD1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		924EE97119902D810029CCD1 /* Sparkle Unit Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Sparkle Unit Tests.xctest";
+			remoteRef = 924EE97019902D810029CCD1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		924EE97319902D810029CCD1 /* BinaryDelta */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = BinaryDelta;
+			remoteRef = 924EE97219902D810029CCD1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		924EE97519902D810029CCD1 /* Autoupdate.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Autoupdate.app;
+			remoteRef = 924EE97419902D810029CCD1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B7C048EF18A4653B0038C53E /* libObjectiveChipmunk.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -6573,7 +6686,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n# This script updates the generated Xcode projects...\n# Uncomment the lines as needed. Avoid committing comment changes.\n\n# Updates Cocos2D Project ....\n#\"$SRCROOT/../scripts/GenerateTemplateProject.sh\" PROJECTNAME\n# Updates Sprite Kit Project ....\n\"$SRCROOT/../scripts/GenerateTemplateProject.sh\" SPRITEKITPROJECTNAME\n";
+			shellScript = "#!/bin/bash\n# This script updates the generated Xcode projects...\n# Uncomment the lines as needed. Avoid committing comment changes.\n\n# Updates Cocos2D Project ....\n#\"$SRCROOT/../scripts/GenerateTemplateProject.sh\" PROJECTNAME\n# Updates Sprite Kit Project ....\n#\"$SRCROOT/../scripts/GenerateTemplateProject.sh\" SPRITEKITPROJECTNAME\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -6813,6 +6926,7 @@
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
 				E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */,
 				E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */,
+				9269C2FF199057EA00884F59 /* SBUpdater.m in Sources */,
 				E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */,
 				E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */,
 				E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */,
@@ -7161,6 +7275,11 @@
 			isa = PBXTargetDependency;
 			target = 92154ACF18A5560B00BD215C /* CCPhysicsPivotJoint */;
 			targetProxy = 92154AE118A5567400BD215C /* PBXContainerItemProxy */;
+		};
+		924EE97819902DAF0029CCD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Sparkle;
+			targetProxy = 924EE97719902DAF0029CCD1 /* PBXContainerItemProxy */;
 		};
 		926D13E618B57C4200582959 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7567,6 +7686,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7580,6 +7700,7 @@
 					"libs/cocos2d-iphone/external/Chipmunk/include/chipmunk",
 					"libs/cocos2d-iphone/external/Chipmunk/objectivec/include/",
 					"libs/cocos2d-iphone/external/ObjectAL/**",
+					"libs/Sparkle/**",
 				);
 				INFOPLIST_FILE = "ccBuilder/SpriteBuilder-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -7605,6 +7726,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ccBuilder/SpriteBuilder-Prefix.pch";
@@ -7617,6 +7739,7 @@
 					"libs/cocos2d-iphone/external/Chipmunk/include/chipmunk",
 					"libs/cocos2d-iphone/external/Chipmunk/objectivec/include/",
 					"libs/cocos2d-iphone/external/ObjectAL/**",
+					"libs/Sparkle/**",
 				);
 				INFOPLIST_FILE = "ccBuilder/SpriteBuilder-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -7749,6 +7872,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7766,6 +7890,7 @@
 					"libs/cocos2d-iphone/external/Chipmunk/include/chipmunk",
 					"libs/cocos2d-iphone/external/Chipmunk/objectivec/include/",
 					"libs/cocos2d-iphone/external/ObjectAL/**",
+					"libs/Sparkle/**",
 				);
 				INFOPLIST_FILE = "ccBuilder/SpriteBuilder-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
