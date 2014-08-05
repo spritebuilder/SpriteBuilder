@@ -112,7 +112,7 @@ static int numTimedOutIntervals = 0;
     self.guid = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] objectForKey:@"sbUserID"];
     self.languages = [[NSMutableDictionary alloc] init];
     self.receipts = [[NSMutableDictionary alloc] init];
-    self.buyAlert = [NSAlert alertWithMessageText:@"You Are Starting A Download" defaultButton:@"Continue" alternateButton:@"Cancel" otherButton:NULL informativeTextWithFormat:@"The average translation download wait is 30 minutes, but translation downloads can sometimes take days. These downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified. However, projects can be closed, opened and modified, and SpriteBuilder can be quit and reopened without affecting your download."];
+    self.buyAlert = [NSAlert alertWithMessageText:@"Starting Translation Download" defaultButton:@"Continue" alternateButton:@"Cancel" otherButton:NULL informativeTextWithFormat:@"The average translation download wait is 30 minutes, but translation downloads can sometimes take days. Downloads are nonrefundable, and during a translation download the contents of the Language Editor window can't be modified."];
     [self.buyAlert setShowsSuppressionButton:YES];
     
 }
@@ -831,7 +831,7 @@ static int numTimedOutIntervals = 0;
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   [_parentWindow finishDownloadingTranslations];
                                                   [self cancelDownloadWithError:error];
-                                                  NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. Please contact customer service for a full refund."];
+                                                  NSAlert* alert = [NSAlert alertWithMessageText:@"Translation Download Failed" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. Please contact customer service for a full refund."];
                                                   [alert runModal];
                                               });
                                           }
@@ -862,7 +862,7 @@ static int numTimedOutIntervals = 0;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_parentWindow finishDownloadingTranslations];
                 [self cancelDownloadWithError:JSONerror];
-                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Failed" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. Please contact customer service for a full refund."];
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Translation Download Failed" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Your download has failed due to an error on our servers. Please contact customer service for a full refund."];
                 [alert runModal];
             });
         }
@@ -966,12 +966,12 @@ static int numTimedOutIntervals = 0;
             {
                 [_parentWindow finishDownloadingTranslations];
                 
-                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", [_projectPathDir lastPathComponent]];
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Translation Download Complete" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the project: %@.", [_projectPathDir lastPathComponent]];
                 [alert runModal];
             }
             else
             {
-                NSAlert* alert = [NSAlert alertWithMessageText:@"Download Complete" defaultButton:@"Okay" alternateButton:@"Go to Project" otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the Project: %@.", [_projectPathDir lastPathComponent]];
+                NSAlert* alert = [NSAlert alertWithMessageText:@"Translation Download Complete" defaultButton:@"OK" alternateButton:@"Open Project" otherButton:NULL informativeTextWithFormat:@"You have successfully translated phrases for the project: %@.", [_projectPathDir lastPathComponent]];
                 NSInteger response = [alert runModal];
                 if(response == NSAlertAlternateReturn)
                 {
@@ -1131,7 +1131,7 @@ static int numTimedOutIntervals = 0;
 #pragma mark Misc. helper funcs
 
 -(void)cannotFindProjectAlert:(NSString*)projectPath{
-    NSAlert* alert = [NSAlert alertWithMessageText:@"Project Does Not Exist" defaultButton:@"Okay" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"We cannot find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Cannot Find Project" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"We cannot find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
     [alert runModal];
 }
 /*

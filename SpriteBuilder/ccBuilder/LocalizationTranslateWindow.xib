@@ -25,11 +25,8 @@
                 <outlet property="_paymentValidating" destination="H51-ob-wPV" id="jNE-Y1-xt3"/>
                 <outlet property="_popTranslateFrom" destination="I6b-JE-8U4" id="F0c-9k-7Fr"/>
                 <outlet property="_standardLangsView" destination="Urd-Xj-CU6" id="uXS-VI-nOc"/>
-                <outlet property="_translateFromInfo" destination="2Lu-mC-tJx" id="XMi-JF-ufN"/>
                 <outlet property="_translateFromTabView" destination="xXK-m4-1Rg" id="vx8-Zw-Owg"/>
-                <outlet property="_translatePopOver" destination="eDT-x7-XT2" id="ndd-Hk-Uyu"/>
                 <outlet property="_validatingPaymentView" destination="RxO-1h-Gzv" id="1dl-r9-cw0"/>
-                <outlet property="buy" destination="p70-UZ-TuU" id="mDP-KQ-KA0"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="XdH-kp-wnk"/>
             </connections>
         </customObject>
@@ -102,9 +99,9 @@
                         </scroller>
                     </scrollView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="peu-QW-Ezk">
-                        <rect key="frame" x="18" y="254" width="59" height="15"/>
+                        <rect key="frame" x="18" y="241" width="89" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Translate:" id="num-p7-uCB">
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Translate from:" id="num-p7-uCB">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -139,7 +136,7 @@ Gw
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" id="I6b-JE-8U4">
-                        <rect key="frame" x="80" y="251" width="163" height="22"/>
+                        <rect key="frame" x="116" y="251" width="127" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Language" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="RsZ-0G-SEB" id="Vgo-sI-QxX">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -224,9 +221,9 @@ Gw
                         </tabViewItems>
                     </tabView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="XX1-uv-gg5">
-                        <rect key="frame" x="116" y="232" width="29" height="14"/>
+                        <rect key="frame" x="18" y="231" width="99" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Into" id="fhn-IL-uyg">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Target languages:" id="fhn-IL-uyg">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -235,12 +232,6 @@ Gw
                 </subviews>
             </view>
         </window>
-        <viewController id="eTF-dF-sjx" userLabel="Popover View Controller"/>
-        <popover id="eDT-x7-XT2">
-            <connections>
-                <outlet property="contentViewController" destination="eTF-dF-sjx" id="dy8-ZM-JWl"/>
-            </connections>
-        </popover>
         <customView id="bJK-vy-SPe">
             <rect key="frame" x="0.0" y="0.0" width="205" height="159"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -305,7 +296,7 @@ Gw
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ilM-kB-kIY">
                     <rect key="frame" x="65" y="52" width="119" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Number of Words:" id="1h2-iV-i2e">
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Number of words:" id="1h2-iV-i2e">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -327,13 +318,13 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="1vV-Ub-65Y">
-                    <rect key="frame" x="9" y="33" width="16" height="16"/>
+                    <rect key="frame" x="55" y="39" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="82X-ew-FgW">
-                    <rect key="frame" x="36" y="20" width="171" height="42"/>
+                    <rect key="frame" x="77" y="33" width="128" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" title="Please wait as we download the available languages from the server..." id="nGj-dt-W7J">
+                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" title="Downloading available languages..." id="nGj-dt-W7J">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -348,7 +339,7 @@ Gw
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="KqL-fs-YCh">
                     <rect key="frame" x="21" y="77" width="186" height="47"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="There was an issue retrieving languages from the server. Please press &quot;Retry&quot; below to try again." id="fAb-dJ-JGN">
+                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="Couldn't retrieve languages from the server. Please press &quot;Retry&quot; below to try again." id="fAb-dJ-JGN">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -374,7 +365,7 @@ Gw
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="bb3-u7-RLQ">
                     <rect key="frame" x="-2" y="97" width="208" height="58"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" state="on" title="There was an issue retrieving the cost estimate from the server. Please press &quot;Retry&quot; below to try again." id="JQQ-SO-8UM">
+                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" state="on" title="Couldn't retrieve a cost estimate from the translation server. Please press &quot;Retry&quot; below to try again." id="JQQ-SO-8UM">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -400,7 +391,7 @@ Gw
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="KdK-Bb-2HA">
                     <rect key="frame" x="-2" y="140" width="208" height="43"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="The was an issue processing your payment information. Please press the &quot;Buy...&quot; button below to try again." id="1Fv-Eo-TzK">
+                    <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" title="Couldn't process your payment information. Please press the &quot;Buy&quot; button below to try again." id="1Fv-Eo-TzK">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -413,13 +404,13 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" id="H51-ob-wPV">
-                    <rect key="frame" x="20" y="40" width="16" height="16"/>
+                    <rect key="frame" x="26" y="47" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="8do-6D-1DS">
-                    <rect key="frame" x="45" y="27" width="162" height="42"/>
+                    <rect key="frame" x="48" y="41" width="154" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" title="Please wait as we upload and validate your payment information..." id="5bw-XE-BV9">
+                    <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" title="Uploading and validating your payment information..." id="5bw-XE-BV9">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

@@ -99,6 +99,7 @@
 		77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 77E1995113858DE0006C361B /* TabNewMetalRollover.png */; };
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
+		7B300A971990570F00AFF762 /* LocalizationTranslateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */; };
 		7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */; };
 		7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */; };
 		7BD26ED31979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */; };
@@ -5830,6 +5831,7 @@
 				E3C65128151C7B9000D639C0 /* InspectorBlockCCControl.xib in Resources */,
 				E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */,
 				E34E5D6B153585EC000201FB /* ruler-bg-vertical.png in Resources */,
+				7B300A971990570F00AFF762 /* LocalizationTranslateWindow.xib in Resources */,
 				B7096E2B180CD98E00164A8A /* doc-scene.png in Resources */,
 				E34E5D6E1535AA78000201FB /* ruler-mark-major.png in Resources */,
 				E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */,

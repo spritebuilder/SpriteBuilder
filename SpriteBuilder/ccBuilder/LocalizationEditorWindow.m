@@ -248,9 +248,12 @@
     }
     else
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:@"Stop Download" defaultButton:@"Cancel" alternateButton:@"Stop Download" otherButton:NULL informativeTextWithFormat:@"If you stop your download now, SpriteBuilder will not refund your purchase."];
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Stop Download" defaultButton:@"Stop Download" alternateButton:@"Cancel" otherButton:NULL informativeTextWithFormat:@"If you stop your download now, SpriteBuilder will not refund your purchase."];
+        NSArray *buttons = [alert buttons];
+        [(NSButton*)[buttons objectAtIndex:0] setKeyEquivalent:@""];
+        [(NSButton*)[buttons objectAtIndex:1] setKeyEquivalent:@"\r"];
         NSInteger result = [alert runModal];
-        if(result == NSAlertAlternateReturn)
+        if(result == NSAlertDefaultReturn)
         {
             [self finishDownloadingTranslations];
             [_ltw cancelDownloadWithError:nil];

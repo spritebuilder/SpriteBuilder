@@ -14,7 +14,7 @@
 @class LocalizationTranslateWindowHandler;
 @class ProjectSettings;
 
-@interface LocalizationTranslateWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate, SKProductsRequestDelegate, NSWindowDelegate>//SKPaymentTransactionObserver, 
+@interface LocalizationTranslateWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate, SKProductsRequestDelegate, NSWindowDelegate>
 {
     //tab views
     IBOutlet NSView* _noActiveLangsView;
