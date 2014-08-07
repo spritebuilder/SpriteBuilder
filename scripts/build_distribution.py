@@ -21,7 +21,8 @@ def main():
     parser = argparse.ArgumentParser(description='Build distribution build')
     parser.add_argument('--version',required=True)
     parser.add_argument('-sku', choices=('pro','default'), default='defualt', help='The build sku (default:default)')
-    parser.add_argument('-private_key', default=None, help='The private_key to secure the pro version. ')
+    parser.add_argument('-private_key', default=None, help='The private_key to secure the pro version. Pro version only ')
+    parser.add_argument('-dcf_hash', default=None, help='The githash that dcf was taken from. Pro version only. Optional ')
     parser.add_argument('-mode', choices=('sandboxed','non_sandboxed'), default='non_sandboxed',help='Is the app built to run in sandboxed mode (App store) or non sandboxed (direct download). (default:non_sandboxed)')
     args = parser.parse_args()
     
@@ -31,10 +32,10 @@ def main():
 
     os.chdir('../');
     
-    build_distribution(args.version, args.sku, args.mode, args.private_key)
+    build_distribution(args.version, args.sku, args.mode, args.private_key, args.dcf_hash)
     
 
-def build_distribution(version,sku, mode, private_key=None):
+def build_distribution(version,sku, mode, private_key=None, dcf_hash=None):
 
     if sku == 'pro':
         if not os.path.isfile('Generated/AndroidXcodePlugin.zip'):
@@ -51,7 +52,7 @@ def build_distribution(version,sku, mode, private_key=None):
     else:
         product_name = 'SpriteBuilder'
         
-    create_all_generated_files(version, sku)
+    create_all_generated_files(version, sku,dcf_hash)
     compile_project(version, product_name, mode, private_key)
     zip_archive(product_name)
     
@@ -104,7 +105,7 @@ def clean_build_folders():
     shutil.rmtree('build',True)
     shutil.rmtree('SpriteBuilder/build/',True)    
 
-def create_all_generated_files(version, sku):
+def create_all_generated_files(version, sku, dcf_hash):
     
     #create generated folder.
     if not os.path.exists('Generated'):
@@ -118,6 +119,9 @@ def create_all_generated_files(version, sku):
     if err == None:
         out = out.strip()
         version_info['github'] = out
+        
+    if dcf_hash is not None:
+        version_info['dcf_hash'] = dcf_hash
         
     json.dump(version_info, open("Generated/Version.txt",'w'))
     

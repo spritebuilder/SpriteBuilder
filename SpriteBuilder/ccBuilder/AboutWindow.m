@@ -26,6 +26,7 @@
 #import "AppDelegate.h"
 
 @interface AboutWindow ()
+@property (weak) IBOutlet NSButton *buttonViewOnGithub;
 
 @end
 
@@ -70,8 +71,14 @@
 	
 
 #ifndef SPRITEBUILDER_PRO
+	//Not pro version.
 	self.proSuffix.stringValue = @"";
+#else
+	//If is Pro version
+	[self.buttonViewOnGithub setHidden:YES];
 #endif
+
+
 }
 
 - (IBAction)btnViewOnGithub:(id)sender
