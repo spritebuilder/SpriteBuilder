@@ -95,15 +95,10 @@ def zip_archive(product_name):
         'build/{product_name}.app.dSYM'.format(product_name=product_name))
 
     os.chdir('build/');
+    
+    zip_command = 'zip -q -r "{product_name}.app.dSYM.zip" {product_name}.app.dSYM'.format(product_name=product_name)
+    subprocess.check_call(zip_command, shell=True)
 
-    with zipfile.ZipFile("{product_name}.app.dSYM.zip".format(product_name=product_name), 'w') as zip:
-        zipdir('{product_name}.app.dSYM'.format(product_name=product_name),zip)
-
-
-def zipdir(path, zip):
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            zip.write(os.path.join(root, file))
 
 def clean_build_folders():
     shutil.rmtree('build',True)
@@ -161,11 +156,13 @@ def generate_template_project(project_name):
         os.remove(project_zip_filename)
 
 
-    with zipfile.ZipFile("../../Generated/{project_name}.zip".format(project_name=project_name), 'w') as zip:
-        zipdir('.',zip)
-        shutil.copy('../default_projects.gitignore','./.gitignore')
-        zip.write('.gitignore')
-        os.remove('.gitignore')
+    
+    zip_project_command = 'zip -q -r ../../Generated/{project_name}.zip .* -x "../*" "*.git*" "*/tests/*" "*.DS_Store"'.format(project_name=project_name)
+    subprocess.check_call(zip_project_command, shell=True)
+    shutil.copy('../default_projects.gitignore','./.gitignore')
+    zip_project_command = "zip -q ../../Generated/{project_name}.zip .gitignore".format(project_name=project_name)
+    subprocess.check_call(zip_project_command, shell=True)
+    os.remove('.gitignore')
 
     os.chdir('../..')    
 
