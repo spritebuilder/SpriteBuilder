@@ -4430,7 +4430,7 @@ static BOOL hideAllToNextSeparator;
 	if(result == NSModalResponseStop)
 	{
 		return YES;
-}
+	}
 
 	return NO;
 }

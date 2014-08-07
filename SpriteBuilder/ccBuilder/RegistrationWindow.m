@@ -60,11 +60,13 @@
     
 	[usageManager setRegisterdEmailFlag];
 	
-	[NSApp stopModal];}
+	[NSApp stopModal];
+}
 
 - (IBAction) pressedLater:(id)sender
 {
-    [self close];
+	[NSApp stopModal];
+
 }
 
 - (IBAction) pressedPrivacyPolicy:(id)sender
