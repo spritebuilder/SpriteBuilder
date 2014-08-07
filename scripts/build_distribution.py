@@ -48,7 +48,7 @@ def build_distribution(version,sku, mode, private_key=None, dcf_hash=None):
     clean_build_folders()
     
     if sku=='pro':
-        product_name = 'SpriteBuilderPro'
+        product_name = 'SpriteBuilder Pro'
     else:
         product_name = 'SpriteBuilder'
         
@@ -72,7 +72,7 @@ def compile_project(version,product_name, mode, private_key):
     build_command = '/usr/bin/xcodebuild \
         -target SpriteBuilder \
         -configuration Release \
-        -xcconfig {xcconfig}.xcconfig \
+        -xcconfig \"{xcconfig}.xcconfig\" \
         SBPRO_PRIVATE_KEY=\"{private_key}\" \
         SB_SANDBOXED_MODE={sandboxed_mode_define}\
         build'
@@ -97,7 +97,7 @@ def zip_archive(product_name):
 
     os.chdir('build/');
     
-    zip_command = 'zip -q -r "{product_name}.app.dSYM.zip" {product_name}.app.dSYM'.format(product_name=product_name)
+    zip_command = 'zip -q -r "{product_name}.app.dSYM.zip" "{product_name}.app.dSYM"'.format(product_name=product_name)
     subprocess.check_call(zip_command, shell=True)
 
 
@@ -161,10 +161,10 @@ def generate_template_project(project_name):
 
 
     
-    zip_project_command = 'zip -q -r ../../Generated/{project_name}.zip .* -x "../*" "*.git*" "*/tests/*" "*.DS_Store"'.format(project_name=project_name)
+    zip_project_command = 'zip -q -r \"../../Generated/{project_name}.zip\" .* -x "../*" "*.git*" "*/tests/*" "*.DS_Store"'.format(project_name=project_name)
     subprocess.check_call(zip_project_command, shell=True)
     shutil.copy('../default_projects.gitignore','./.gitignore')
-    zip_project_command = "zip -q ../../Generated/{project_name}.zip .gitignore".format(project_name=project_name)
+    zip_project_command = "zip -q \"../../Generated/{project_name}.zip\" .gitignore".format(project_name=project_name)
     subprocess.check_call(zip_project_command, shell=True)
     os.remove('.gitignore')
 
