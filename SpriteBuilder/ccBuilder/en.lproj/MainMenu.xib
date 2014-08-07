@@ -18,7 +18,7 @@
                 <menuItem title="SpriteBuilder" id="56">
                     <menu key="submenu" title="SpriteBuilder" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About SpriteBuilder" id="58">
+                            <menuItem title="About SpriteBuilder" id="58" customClass="SBMenuItem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuAbout:" target="494" id="1840"/>
@@ -29,7 +29,7 @@
                             </menuItem>
                             <menuItem title="Preferences…" keyEquivalent="," id="129"/>
                             <menuItem isSeparatorItem="YES" id="2091"/>
-                            <menuItem title="Reset SpriteBuilder..." id="2092">
+                            <menuItem title="Reset SpriteBuilder..." id="2092" customClass="SBMenuItem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuResetSpriteBuilder:" target="494" id="2093"/>
@@ -51,7 +51,7 @@
                             <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134">
+                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134" customClass="SBMenuItem">
                                 <connections>
                                     <action selector="hide:" target="-1" id="367"/>
                                 </connections>
@@ -70,13 +70,16 @@
                             <menuItem isSeparatorItem="YES" id="149">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136">
+                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136" customClass="SBMenuItem">
                                 <connections>
                                     <action selector="menuQuit:" target="494" id="1252"/>
                                 </connections>
                             </menuItem>
                         </items>
                     </menu>
+                    <connections>
+                        <binding destination="494" name="title" keyPath="self.applicationTitle" id="WDv-K6-czU"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="File" id="83">
                     <menu key="submenu" title="File" id="81">
@@ -1015,7 +1018,7 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="491">
                         <items>
-                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492">
+                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492" customClass="SBMenuItem">
                                 <connections>
                                     <action selector="showHelp:" target="494" id="1806"/>
                                 </connections>
