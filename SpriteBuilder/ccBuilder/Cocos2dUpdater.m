@@ -10,7 +10,10 @@
 
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
-#import "Cocos2dUpdater+Errors.h"
+#import "copyfile.h"
+#import "SBErrors.h"
+#import "NSError+SBErrors.h"
+#import "NSAlert+Convenience.h"
 
 
 // Debug option: Some verbosity on the console, 1 to enable 0 to turn off
@@ -43,6 +46,12 @@ typedef enum {
 
 static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-iphone/";
 static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
+
+@interface Cocos2dUpdater ()
+@property (nonatomic, strong) NSTask *task;
+@property (nonatomic, strong) NSFileHandle *outFile;
+@property (nonatomic, getter=isCancelled) BOOL cancelled;
+@end
 
 @implementation Cocos2dUpdater
 {
@@ -168,7 +177,11 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
         [self finishWithUpdateResult:updateResult error:error];
     });
 
-    [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..."];
+    __weak id weakSelf = self;
+    [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..." isIndeterminate:YES onCancelBlock:^
+    {
+        [weakSelf cancel];
+    }];
 }
 
 - (void)setBackupFolderPath
@@ -207,13 +220,14 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)showUpdateErrorDialog:(NSError *)error
 {
-    NSAssert(error != nil, @"An error object is needed to show the error message.");
-
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"Ok"];
-    alert.messageText = @"Error updating Cocos2D";
-    alert.informativeText = [NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@\n\nBackup folder restored.", error.localizedDescription];
-    [alert runModal];
+    if (!self.isCancelled)
+    {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"Ok"];
+        alert.messageText = @"Error updating Cocos2D";
+        alert.informativeText = [NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@\n\nBackup folder restored.", error.localizedDescription];
+        [alert runModal];
+    }
 }
 
 - (void)rollBack
@@ -291,37 +305,35 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 {
     LocalLog(@"[COCO2D-UPDATER] [INFO] unzipping template project archive to temp folder \"%@\"", tmpDir);
 
-    NSTask *task = [[NSTask alloc] init];
-    [task setCurrentDirectoryPath:tmpDir];
-    [task setLaunchPath:@"/usr/bin/unzip"];
+    self.task = [[NSTask alloc] init];
+    [_task setCurrentDirectoryPath:tmpDir];
+    [_task setLaunchPath:@"/usr/bin/unzip"];
 
     NSArray *args = @[@"-d", tmpDir, @"-o", zipFile];
-    [task setArguments:args];
-
-    NSPipe *pipeStdOut = [NSPipe pipe];
-    [task setStandardOutput:pipeStdOut];
-    NSFileHandle *file = [pipeStdOut fileHandleForReading];
-    NSData *dataStdOut;
+    [_task setArguments:args];
 
     NSPipe *pipeStdErr = [NSPipe pipe];
-    [task setStandardError:pipeStdErr];
+    [_task setStandardError:pipeStdErr];
     NSFileHandle *fileErr = [pipeStdErr fileHandleForReading];
-    NSData *dataStdErr;
+
+    NSPipe *pipeStdOut = [NSPipe pipe];
+    [_task setStandardOutput:pipeStdOut];
+    self.outFile = [pipeStdOut fileHandleForReading];
+    [_outFile waitForDataInBackgroundAndNotify];    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dataAvailaCallback:)
+                                                 name:NSFileHandleDataAvailableNotification
+                                               object:nil];
 
     int status = 0;
     @try
     {
-        [task launch];
+        [_task launch];
+        [_task waitUntilExit];
 
-        // Not using waitUntilExit, see https://www.mikeash.com/pyblog/friday-qa-2009-11-13-dangerous-cocoa-calls.html
-        while([task isRunning])
-        {
-            // Do this or the whole task may get locked, at least on my computer, without pipe for stdOut everything was
-            // fine, some undrained buffer?
-            dataStdOut = [file readDataToEndOfFile];
-            dataStdErr = [fileErr readDataToEndOfFile];
-        };
-        status = [task terminationStatus];
+        status = [_task terminationStatus];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
     @catch (NSException *exception)
     {
@@ -332,12 +344,35 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
     if (status)
     {
-        *error = [self errorForFailedUnzipTask:zipFile dataStdOut:dataStdOut dataStdErr:dataStdErr status:status];
+        NSData *dataStdErr = [fileErr readDataToEndOfFile];
+        *error = [self errorForFailedUnzipTask:zipFile dataStdErr:dataStdErr status:status];
         NSLog(@"[COCO2D-UPDATER] [ERROR] unzipping failed: %@", *error);
         return NO;
     }
 
     return YES;
+}
+
+- (void)dataAvailaCallback:(NSNotification *)notification
+{
+    NSFileHandle *fileHandle = notification.object;
+
+    NSData *data = nil;
+    while ((data = [fileHandle availableData]) && [data length])
+    {
+        NSString *output = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
+        [self updateProgressOfCurrentUnzippedFilePath:output];
+    }
+}
+
+- (void)updateProgressOfCurrentUnzippedFilePath:(NSString *)output
+{
+    NSRange tempPathRange = [output rangeOfString:[[self tempFolderPathForUnzipping] stringByAppendingString:@"/"]];
+    if (tempPathRange.location != NSNotFound)
+    {
+        NSString *shortenedFilePath = [output stringByReplacingCharactersInRange:NSMakeRange(0, tempPathRange.location + tempPathRange.length)                                              withString:@""];
+        [self updateModalDialogStatusText:[NSString stringWithFormat:@"Unzipping: %@", shortenedFilePath]];
+    }
 }
 
 - (NSString *)tempFolderPathForUnzipping
@@ -349,6 +384,8 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 {
     NSString *tmpDir = [self tempFolderPathForUnzipping];
     LocalLog(@"[COCO2D-UPDATER] [INFO] tidying up temp folder: %@", tmpDir);
+
+    [self updateModalDialogStatusText:@"Tidying up..."];
 
     if ([_fileManager fileExistsAtPath:tmpDir]
         && ![_fileManager removeItemAtPath:tmpDir error:error])
@@ -390,23 +427,74 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
     return result;
 }
 
+static int copyFileCallback(int currentState, int stage, copyfile_state_t state, const char *fromPath, const char *toPath, void *context)
+{
+    Cocos2dUpdater *self = (__bridge Cocos2dUpdater *) context;
+    if (self.isCancelled)
+    {
+        return COPYFILE_QUIT;
+    }
+
+    if (currentState == COPYFILE_COPY_DATA
+        && stage == COPYFILE_PROGRESS)
+    {
+        off_t copiedBytes;
+        const int returnCode = copyfile_state_get(state, COPYFILE_STATE_COPIED, &copiedBytes);
+        if (returnCode == 0)
+        {
+            NSString *text = [NSString stringWithFormat:@"Copying: %s (%@)", fromPath, [NSByteCountFormatter stringFromByteCount:copiedBytes countStyle:NSByteCountFormatterCountStyleFile]];
+            [self updateModalDialogStatusText:text];
+            // NSLog(@"%@", text);
+        }
+    }
+    else
+    {
+        NSString *text = [NSString stringWithFormat:@"Copying: %@", [NSString stringWithCString:toPath encoding:NSUTF8StringEncoding]] ;
+        [self updateModalDialogStatusText:text];
+        // NSLog(@"%@", text);
+    }
+
+    return COPYFILE_CONTINUE;
+}
+
 - (BOOL)copySpriteBuildersCocos2dFolderToProjectFolder:(NSError **)error
 {
     LocalLog(@"[COCO2D-UPDATER] [INFO] copying unzipped cocos2d folder from temp to project");
+    [self updateModalDialogStatusText:@"Copying files..."];
 
     NSString *unzippedCocos2dFolder = [[self tempFolderPathForUnzipping] stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
 
-    BOOL result = [_fileManager copyItemAtPath:unzippedCocos2dFolder
-                                        toPath:[self defaultProjectsCocos2DFolderPath]
-                                         error:error];
+    const char *fromPath = [unzippedCocos2dFolder fileSystemRepresentation];
+    const char *toPath = [[self defaultProjectsCocos2DFolderPath] fileSystemRepresentation];
 
-    if (!result)
+    copyfile_state_t copyfileState = copyfile_state_alloc();
+    copyfile_state_set(copyfileState, COPYFILE_STATE_STATUS_CB, &copyFileCallback);
+    copyfile_state_set(copyfileState, COPYFILE_STATE_STATUS_CTX, (__bridge void *)self);
+
+    int result = copyfile(fromPath, toPath, copyfileState, COPYFILE_ALL | COPYFILE_RECURSIVE);
+
+    copyfile_state_free(copyfileState);
+
+    if (result)
     {
-        LocalLog(@"[COCO2D-UPDATER] [ERROR] could not copy cocos2d folder from \"%@\" to \"%@\" with error %@",
-                 unzippedCocos2dFolder, [self defaultProjectsCocos2DFolderPath], *error);
+        if (!self.isCancelled)
+        {
+            [NSError setNewErrorWithCode:error
+                                    code:SBCocos2dUpdateCopyFilesError
+                                 message:@"An error occured copying the cocos2d folder to the project directory."];
+
+            LocalLog(@"[COCO2D-UPDATER] [ERROR] could not copy cocos2d folder from \"%@\" to \"%@\" with error %@",
+                     unzippedCocos2dFolder, [self defaultProjectsCocos2DFolderPath], *error);
+        }
+        else
+        {
+            [NSError setNewErrorWithCode:error
+                                    code:SBCocos2dUpdateUserCancelledError
+                                 message:@"Update cancelled."];
+        }
     }
 
-    return result;
+    return result == 0;
 }
 
 - (BOOL)renameCocos2dFolderToBackupFolder:(NSError **)error
@@ -445,12 +533,12 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
     for (NSString *directoryName in dirContents)
     {
-        maxCounter = [self highestBackupDirCounterPostfix:cocos2dBackupName currentCount:maxCounter directoryName:directoryName];
+        maxCounter = [self highestBackupDirCounterPostfixCurrentCount:maxCounter directoryName:directoryName];
     }
     return [cocos2dBackupName stringByAppendingString:[NSString stringWithFormat:@".%lu", maxCounter]];
 }
 
-- (NSUInteger)highestBackupDirCounterPostfix:(NSString *)cocos2dBackupName currentCount:(NSUInteger)currentCounter directoryName:(NSString *)directoryName
+- (NSUInteger)highestBackupDirCounterPostfixCurrentCount:(NSUInteger)currentCounter directoryName:(NSString *)directoryName
 {
     NSNumber *number = [self parseNumberPostfixInBackupDir:directoryName];
 
@@ -578,6 +666,13 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 {
     NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
     return [rootDir stringByAppendingPathComponent:REL_DEFAULT_COCOS2D_FOLDER_PATH];
+}
+
+- (void)cancel
+{
+    LocalLog(@"[COCO2D-UPDATER] [INFO] USER CANCELLED UPDATE");
+    [_task terminate];
+    self.cancelled = YES;
 }
 
 @end
