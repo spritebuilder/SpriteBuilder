@@ -47,10 +47,9 @@
     [super windowDidLoad];
     
     // Load version file into version text field
-	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
+	
 
-
-    NSString* version = [projectSettings getVersion];
+    NSString* version = [self versionAboutInfo];
     
     if (version)
     {
@@ -79,6 +78,46 @@
 #endif
 
 
+}
+
+-(NSString*)versionAboutInfo
+{
+	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
+	NSDictionary * versionDictionary = [projectSettings getVersionDictionary];
+
+#ifdef SPRITEBUILDER_PRO
+	
+	
+	
+	NSString * aboutInfo = @"";
+	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Pro Version: %@\n", versionDictionary[@"sb_version"]]];
+	
+
+	//Compiler version.
+	NSString * compilerVersion = nil;
+	if([versionDictionary[@"dcf_tag"] isEqualToString:@"undefined"])
+	{
+		compilerVersion = versionDictionary[@"dcf_hash"];
+	}
+	else
+	{
+		compilerVersion = versionDictionary[@"dcf_tag"];
+		compilerVersion = [compilerVersion stringByReplacingOccurrencesOfString:@"release_" withString:@""];
+	}
+
+	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"Compiler Version: %@\n", compilerVersion]];
+
+	if([versionDictionary[@"sb_tag"] isEqualToString:@"undefined"])
+	{
+		aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Hash: %@\n", versionDictionary[@"sb_hash"]]];
+	}
+	
+	
+#else
+	NSString * aboutInfo = [NSString stringWithFormat:@"Version:%@",versionDictionary[@"sb_version"]];
+#endif
+	
+	return aboutInfo;
 }
 
 - (IBAction)btnViewOnGithub:(id)sender
