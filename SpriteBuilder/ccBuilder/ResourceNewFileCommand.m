@@ -59,7 +59,7 @@
             int type = newFileWindowController.rootObjectType;
             NSMutableArray *resolutions = newFileWindowController.availableResolutions;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^
+                           dispatch_get_main_queue(), ^
                     {
                         [[AppDelegate appDelegate] newFile:filePath type:type resolutions:resolutions];
 

@@ -1,9 +1,9 @@
+#import <MacTypes.h>
 #import "PublishImageOperation.h"
 
 #import "FCFormatConverter.h"
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
-#import "ResourceManagerUtil.h"
 #import "DateCache.h"
 #import "NSString+Publishing.h"
 #import "PublishRenamedFilesLookup.h"
@@ -48,7 +48,13 @@
 // TODO: this is a long method -> split up!
 - (void)publishImage
 {
-    NSString *relPath = [ResourceManagerUtil relativePathFromAbsolutePath:_srcFilePath];
+    NSString *relPath = [_projectSettings findRelativePathInPackagesForAbsolutePath:_srcFilePath];
+    if (!relPath)
+    {
+        NSString *warningText = [NSString stringWithFormat:@"Image could not be published, relative path could not be determined for \"%@\"", _srcFilePath];
+        [_warnings addWarningWithDescription:warningText];
+        return;
+    }
 
     [self setFormatDitherAndCompress:relPath];
 
@@ -164,7 +170,10 @@
         }
 
         // Copy file and resize
-        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath saveAs:_dstFilePath forResolution:_resolution];
+        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath
+                                                            saveAs:_dstFilePath
+                                                     forResolution:_resolution
+                                                   projectSettings:_projectSettings];
 
         // Convert it
         NSString *dstPathConverted = nil;
@@ -218,13 +227,13 @@
     // TODO: Move to data object: format, dither, compress
     if (!_isSpriteSheet)
     {
-        if (_targetType == kCCBPublisherTargetTypeIPhone)
+        if (_osType == kCCBPublisherOSTypeIOS)
         {
             self.format = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios"] intValue];
             self.dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_dither"] boolValue];
             self.compress = [[_projectSettings valueForRelPath:relPath andKey:@"format_ios_compress"] boolValue];
         }
-        else if (_targetType == kCCBPublisherTargetTypeAndroid)
+        else if (_osType == kCCBPublisherOSTypeAndroid)
         {
             self.format = [[_projectSettings valueForRelPath:relPath andKey:@"format_android"] intValue];
             self.dither = [[_projectSettings valueForRelPath:relPath andKey:@"format_android_dither"] boolValue];
@@ -242,7 +251,7 @@
 - (BOOL)isSpriteSheetAlreadyPublished:(NSString *)srcPath outDir:(NSString *)outDir resolution:(NSString *)resolution
 {
     NSString *ssDir = [srcPath stringByDeletingLastPathComponent];
-    NSString *ssDirRel = [ResourceManagerUtil relativePathFromAbsolutePath:ssDir];
+    NSString *ssDirRel = [_projectSettings findRelativePathInPackagesForAbsolutePath:ssDir];
     NSString *ssName = [ssDir lastPathComponent];
 
     NSDate *srcDate = [self modifiedDateOfSpriteSheetDirectory:ssDir];
@@ -355,7 +364,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"src: %@, dst: %@, target: %i, resolution: %@, srcfull: %@, dstfull: %@", [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent], _targetType, _resolution, _srcFilePath, _dstFilePath];
+    return [NSString stringWithFormat:@"src: %@, dst: %@, target: %i, resolution: %@, srcfull: %@, dstfull: %@", [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent], _osType, _resolution, _srcFilePath, _dstFilePath];
 }
 
 @end

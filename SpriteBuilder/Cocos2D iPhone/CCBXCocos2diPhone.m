@@ -32,10 +32,9 @@
     return @"ccbi";
 }
 
-- (NSData*) exportDocument:(NSDictionary *)doc flattenPaths:(BOOL) flattenPaths
+- (NSData *)exportDocument:(NSDictionary *)doc
 {
     CCBXCocos2diPhoneWriter* writer = [[CCBXCocos2diPhoneWriter alloc] init];
-    writer.flattenPaths = flattenPaths;
     writer.serializedProjectSettings = serializedProjectSettings;
     writer.delegate = self.delegate;
     [writer writeDocument:doc];

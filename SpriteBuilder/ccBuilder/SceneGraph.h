@@ -10,11 +10,15 @@
 #import "cocos2d.h"
 #import "SequencerJoints.h"
 
+@class ProjectSettings;
+
 @interface SceneGraph : NSObject
 {
     CCNode* rootNode;
     
 }
+
+-(id)initWithProjectSettings:(ProjectSettings *)projectSettings;
 
 +(instancetype) instance;
 +(instancetype)setInstance:(SceneGraph*)instance;

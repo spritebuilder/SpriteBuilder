@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "ResourceCommandController.h"
 
 #import "ResourceManagerOutlineView.h"
@@ -11,6 +12,12 @@
 #import "ResourceManager.h"
 #import "ResourceNewFolderCommand.h"
 #import "ResourceNewPackageCommand.h"
+#import "CCBPublisherController.h"
+#import "PublishingFinishedDelegate.h"
+
+@interface ResourceCommandController ()
+@property (nonatomic, strong) ResourcePublishPackageCommand *publishCommand;
+@end
 
 @implementation ResourceCommandController
 
@@ -72,7 +79,9 @@
 - (void)newPackage:(id)sender
 {
     ResourceNewPackageCommand *command = [[ResourceNewPackageCommand alloc] init];
+    command.outlineView = _resourceManagerOutlineView;
     command.projectSettings = _projectSettings;
+    command.resourceManager = _resourceManager;
     command.windowForModals = _window;
     [command execute];
 }
@@ -93,5 +102,6 @@
     command.windowForModals = _window;
     [command execute];
 }
+
 
 @end

@@ -22,7 +22,7 @@ if [ -f ../../Generated/$PROJECTNAME.zip ]; then
 	rm ../../Generated/$PROJECTNAME.zip
 fi
 
-zip -q -r ../../Generated/$PROJECTNAME.zip * -x *.git* */tests/*
+zip -q -r ../../Generated/$PROJECTNAME.zip .* -x "../*" "*.git*" "*/tests/*" "*.DS_Store"
 
 # Adds default project .gitignore file to archive
 cp ../default_projects.gitignore ./.gitignore

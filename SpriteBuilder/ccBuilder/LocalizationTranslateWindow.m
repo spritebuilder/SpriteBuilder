@@ -20,10 +20,18 @@
 
 @implementation LocalizationTranslateWindow
 
-@synthesize parentWindow = _parentWindow;
-@synthesize guid = _guid;
+@synthesize numTransToDownload = _numTransToDownload;
+@synthesize timerTransDownload = _timerTransDownload;
+@synthesize currLang = _currLang;
 @synthesize languages = _languages;
+@synthesize activeLanguages = _activeLanguages;
+@synthesize phrasesToTranslate = _phrasesToTranslate;
+@synthesize tierForTranslations = _tierForTranslations;
+@synthesize product = _product;
+@synthesize guid = _guid;
 @synthesize receipts = _receipts;
+@synthesize latestRequestID = _latestRequestID;
+@synthesize parentWindow = _parentWindow;
 @synthesize buyAlert = _buyAlert;
 @synthesize projectPathDir = _projectPathDir;
 @synthesize projectPath = _projectPath;
@@ -46,7 +54,7 @@ static NSString* receiptTranslationsURL;
 static NSString* translationsURL;
 static NSString* cancelURL;
 
-//Messages for the user
+//Repeated messages for the user
 static NSString* const noActiveLangsString = @"No Valid Languages";
 static NSString* const downloadingLangsString = @"Downloading...";
 static NSString* noActiveLangsErrorString = @"We support translations from:\r\r%@.";
@@ -67,13 +75,16 @@ static int numTimedOutIntervals = 0;
  */
 -(id)initWithDownload:(ProjectSettings *)ps parentWindow:(LocalizationEditorWindow*)pw{
     self = [super init];
-    if (!self) return NULL;
+    if (!self)
+    {
+      return NULL;
+    }
     [self setUpURLsAndGlobals];
     self.projectPathDir = ps.projectPathDir;
     self.projectPath = ps.projectPath;
-    _latestRequestID = ps.latestRequestID;
-    _parentWindow = pw;
-    _numTransToDownload = ps.numToDownload;
+    self.latestRequestID = ps.latestRequestID;
+    self.parentWindow = pw;
+    self.numTransToDownload = ps.numToDownload;
     return self;
 }
 
@@ -85,8 +96,9 @@ static int numTimedOutIntervals = 0;
 -(void) awakeFromNib
 {
     [self setUpURLsAndGlobals];
-    self.projectPathDir = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPathDir;
-    self.projectPath = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]).projectPath;
+    ProjectSettings *ps = ((ProjectSettings*)[[AppDelegate appDelegate] projectSettings]);
+    self.projectPathDir = ps.projectPathDir;
+    self.projectPath = ps.projectPath;
     [[_translateFromTabView tabViewItemAtIndex:downloadLangsIndex] setView:_downloadingLangsView];
     [[_translateFromTabView tabViewItemAtIndex:noActiveLangsIndex] setView:_noActiveLangsView];
     [[_translateFromTabView tabViewItemAtIndex:standardLangsIndex] setView:_standardLangsView];
@@ -156,8 +168,7 @@ static int numTimedOutIntervals = 0;
 /*
  * Turns the JSON response into a dictionary and fill the _languages global accordingly.
  * Then update the active languages array, the pop-up menu and the table. This is
- * only done once in the beginning of the session. Errors handled and
- * displayed.
+ * only done once in the beginning of the session. Errors handled and displayed.
  */
 -(void)parseJSONLanguages:(NSData *)data{
     NSError *JSONError;
@@ -206,7 +217,7 @@ static int numTimedOutIntervals = 0;
  * 'translate from' menu is set up and, in that function, the language table's
  * data is reloaded.
  * If there are no active languages that we can translate from
- * then a the pop-up menu is disabled, an error message with instructions is shown.
+ * then a the pop-up menu is disabled, an error message is shown.
  */
 -(void)finishLanguageSetUp{
     
@@ -238,7 +249,7 @@ static int numTimedOutIntervals = 0;
  *
  * Otherwise, remove all items from the menu, then put all the active langauges back into it.
  * Set the global currLang to the newly selected language and then update the main language 
- * table and the check all box accordingly. Dispatch get main queue is used because it makes this work.
+ * table and the check-all box accordingly. Dispatch get main queue is used because it makes this work.
  */
 - (void) updateLanguageSelectionMenu:(int)userSelection
 {
@@ -371,14 +382,14 @@ static int numTimedOutIntervals = 0;
  * Goes through every LocalizationEditorTranslation, first seeing if there is a
  * version of the phrase in the 'translate from' language that isn't null or just 
  * whitespace.
- * Then populating an array of the isoCodes for every language the phrase should be
+ * Then it populates an array of the isoCodes for every language the phrase should be
  * translated to. (If we are ignoring already translated text, this is every language
  * with 'quick edit' enable. If we aren't, this is only those translations that don't
  * have a translation string already.)
  * If that array remains unpopulated, then we ignore this translation. Else we then add the
  * count of the array to the number of tranlsations to download (for the progress bar later). 
  * Then we create a dictionary of the 'translate from' text, the context (if it exists), the
- * source language, the languages to translate to and add that dictionary to an array
+ * source language (currLang), the languages to translate to and add that dictionary to an array
  * of phrases.
  *
  * Return the number of phrases to translate.
@@ -441,7 +452,6 @@ static int numTimedOutIntervals = 0;
  * Parses the JSON response from a request for a cost estimate. Sets the tier for
  * translations, and the number of words we asked to translate as determined by
  * the server. Handles error and sets the translation tier and number of words.
- * TODO add all the translation tiers.
  */
 -(void)parseJSONEstimate:(NSData*)data{
     NSError *JSONerror;
@@ -457,10 +467,6 @@ static int numTimedOutIntervals = 0;
         return;
     }
     _tierForTranslations  = [[dataDict objectForKey:@"iap_price_tier"] intValue];
-    if(_tierForTranslations > 10)
-    {
-        NSLog(@"Time to create a new IAP!!! Level: %ld", _tierForTranslations);
-    }
     _numWords.stringValue = [[dataDict objectForKey:@"wordcount"] stringValue];
 }
 

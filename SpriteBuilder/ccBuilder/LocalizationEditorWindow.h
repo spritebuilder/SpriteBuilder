@@ -10,7 +10,6 @@
 #import <AppKit/AppKit.h>
 
 @class LocalizationTranslateWindow;
-@class LocalizationCancelTranslationsWindow;
 @class ProjectSettings;
 @interface LocalizationEditorWindow : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTextViewDelegate, NSSplitViewDelegate>
 {
@@ -24,7 +23,6 @@
     IBOutlet NSProgressIndicator* _translationProgress;
     IBOutlet NSButton* _translationsButton;
     LocalizationTranslateWindow* _ltw;
-    LocalizationCancelTranslationsWindow* _lctw;
 }
 
 @property (nonatomic,assign) BOOL inspectorEnabled;

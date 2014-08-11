@@ -22,21 +22,35 @@
  * THE SOFTWARE.
  */
 
-#import "CCBModalSheetController.h"
-#import "cocos2d.h"
+#import <Foundation/Foundation.h>
+#import "CCBPublishDelegate.h"
+#import "CCBWarnings.h"
+#import "CCBPublisherTypes.h"
 
+@protocol TaskStatusUpdaterProtocol;
 @class ProjectSettings;
+@class CCBWarnings;
+@class CCBDirectoryPublisher;
+@class PublishRenamedFilesLookup;
+@class DateCache;
+@class PublishingTaskStatusProgress;
 
-@interface PublishSettingsWindow : CCBModalSheetController
-{
-    ProjectSettings* projectSettings;
-    IBOutlet NSArrayController* resDirArrayController;
-}
 
-@property (nonatomic,strong) ProjectSettings* projectSettings;
-@property (weak) IBOutlet NSButton *publishiPhoneCheckbox;
+@interface CCBDirectoryPublisher : NSObject
 
-- (IBAction)selectPublishDirectoryIOS:(id)sender;
-- (IBAction)selectPublishDirectoryAndroid:(id)sender;
+@property (nonatomic, copy) NSString *inputDir;
+@property (nonatomic, copy) NSString *outputDir;
+@property (nonatomic) CCBPublisherOSType osType;
+@property (nonatomic) NSInteger audioQuality;
+@property (nonatomic, weak) NSArray *resolutions;
+@property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
+@property (nonatomic, weak) NSMutableSet *publishedSpriteSheetFiles;
+@property (nonatomic, weak) PublishRenamedFilesLookup *renamedFilesLookup;
+@property (nonatomic, strong) DateCache *modifiedDatesCache;
+@property (nonatomic, weak) PublishingTaskStatusProgress *publishingTaskStatusProgress;
+
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings queue:(NSOperationQueue *)queue;
+
+- (BOOL)generateAndEnqueuePublishingTasks;
 
 @end

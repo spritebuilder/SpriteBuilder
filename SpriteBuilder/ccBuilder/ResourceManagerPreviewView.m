@@ -34,6 +34,7 @@
 #import "ResourceTypes.h"
 #import "RMResource.h"
 #import "RMDirectory.h"
+#import "MiscConstants.h"
 
 @implementation ResourceManagerPreviewView
 
@@ -65,6 +66,10 @@
     [previewSound addSubview:previewAudioViewController.view];
     
     [previewAudioViewController setupPlayer];
+
+    [_androidContainerImage setHidden:!IS_SPRITEBUILDER_PRO];
+    [_androidContainerSound setHidden:!IS_SPRITEBUILDER_PRO];
+    [_androidContainerSpriteSheet setHidden:!IS_SPRITEBUILDER_PRO];
 }
 
 - (AppDelegate*) appDelegate
@@ -113,108 +118,23 @@
     if ([selection isKindOfClass:[RMResource class]])
     {
         RMResource* res = (RMResource*) selection;
-        
         _previewedResource = res;
         
         if (res.type == kCCBResTypeImage)
         {
-            // Setup preview for image resource
-            self.imgMain = [selection previewForResolution:@"auto"];
-            self.imgPhone = [selection previewForResolution:@"phone"];
-            self.imgPhonehd = [selection previewForResolution:@"phonehd"];
-            self.imgTablet = [selection previewForResolution:@"tablet"];
-            self.imgTablethd = [selection previewForResolution:@"tablethd"];
-            
-            [previewMain setImage: self.imgMain];
-            [previewPhone setImage:self.imgPhone];
-            [previewPhonehd setImage:self.imgPhonehd];
-            [previewTablet setImage:self.imgTablet];
-            [previewTablethd setImage:self.imgTablethd];
-            
-            // Load settings
-            self.scaleFrom = [[settings valueForResource:res andKey:@"scaleFrom"] intValue];
-            
-            self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
-            self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
-            self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
-            
-            self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
-            self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
-            self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
-            
-            int tabletScale = [[settings valueForResource:res andKey:@"tabletScale"] intValue];
-            if (!tabletScale) tabletScale = 2;
-            self.tabletScale = tabletScale;
-            
-            self.enabled = YES;
-            
-            [viewImage setHidden:NO];
+            [self updateImagePreview:selection settings:settings res:res];
         }
         else if (res.type == kCCBResTypeDirectory && [res.data isDynamicSpriteSheet])
         {
-            // Setup preview for smart sprite sheet
-            self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
-            self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
-            self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
-            
-            self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
-            self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
-            self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
-            
-            NSString* imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
-            NSImage* img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
-            if (!img)
-            {
-                img = [NSImage imageNamed:@"ui-nopreview.png"];
-            }
-            
-            [previewSpriteSheet setImage:img];
-            
-            self.enabled = YES;
-            
-            [viewSpriteSheet setHidden:NO];
+            [self updateSpriteSheetPreview:settings res:res];
         }
         else if (res.type == kCCBResTypeAudio)
         {
-            // Setup preview for sounds
-            self.format_ios_sound =[[settings valueForResource:res andKey:@"format_ios_sound"] intValue];
-            self.format_ios_sound_quality =[[settings valueForResource:res andKey:@"format_ios_sound_quality"] intValue];
-            
-            self.format_android_sound =[[settings valueForResource:res andKey:@"format_android_sound"] intValue];
-            self.format_android_sound_quality =[[settings valueForResource:res andKey:@"format_android_sound_quality"] intValue];
-            
-            // Update icon
-            NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"wav"];
-            [icon setScalesWhenResized:YES];
-            icon.size = NSMakeSize(128, 128);
-            [previewSoundImage setImage:icon];
-            
-            
-//            AVPlayerItem * playerItem = [[[AVPlayerItem alloc] initWithURL:[NSURL URLWithString:res.filePath]] autorelease];
-            //[previewSound.player replaceCurrentItemWithPlayerItem:playerItem];
-            
-          
-            [previewAudioViewController loadAudioFile:res.filePath];
-           
-            
-            self.enabled = YES;
-            
-            [viewSound setHidden:NO];
-          
-            
+            [self updateSoundPreview:settings res:res];
         }
         else if (res.type == kCCBResTypeCCBFile)
         {
-            NSString* imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
-            NSImage* img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
-            if (!img)
-            {
-                img = [NSImage imageNamed:@"ui-nopreview.png"];
-            }
-            
-            [previewCCB setImage:img];
-            
-            [viewCCB setHidden:NO];
+            [self updateCCBFilePreview:res];
         }
         else
         {
@@ -225,6 +145,102 @@
     {
         [viewGeneric setHidden:NO];
     }
+}
+
+- (void)updateCCBFilePreview:(RMResource *)res
+{
+    NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
+    NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
+    if (!img)
+    {
+        img = [NSImage imageNamed:@"ui-nopreview.png"];
+    }
+
+    [previewCCB setImage:img];
+
+    [viewCCB setHidden:NO];
+}
+
+- (void)updateSoundPreview:(ProjectSettings *)settings res:(RMResource *)res
+{
+    self.format_ios_sound = [[settings valueForResource:res andKey:@"format_ios_sound"] intValue];
+    self.format_ios_sound_quality = [[settings valueForResource:res andKey:@"format_ios_sound_quality"] intValue];
+
+    self.format_android_sound = [[settings valueForResource:res andKey:@"format_android_sound"] intValue];
+    self.format_android_sound_quality = [[settings valueForResource:res andKey:@"format_android_sound_quality"] intValue];
+
+    // Update icon
+    NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"wav"];
+    [icon setScalesWhenResized:YES];
+    icon.size = NSMakeSize(128, 128);
+    [previewSoundImage setImage:icon];
+
+    [previewAudioViewController loadAudioFile:res.filePath];
+
+    self.enabled = YES;
+
+    [viewSound setHidden:NO];
+}
+
+- (void)updateSpriteSheetPreview:(ProjectSettings *)settings res:(RMResource *)res
+{
+    self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
+    self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
+    self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
+
+    self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
+    self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
+    self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
+
+    NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
+    NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
+    if (!img)
+    {
+        img = [NSImage imageNamed:@"ui-nopreview.png"];
+    }
+
+    [previewSpriteSheet setImage:img];
+
+    self.enabled = YES;
+
+    [viewSpriteSheet setHidden:NO];
+}
+
+- (void)updateImagePreview:(id)selection settings:(ProjectSettings *)settings res:(RMResource *)res
+{
+    self.imgMain = [selection previewForResolution:@"auto"];
+    self.imgPhone = [selection previewForResolution:@"phone"];
+    self.imgPhonehd = [selection previewForResolution:@"phonehd"];
+    self.imgTablet = [selection previewForResolution:@"tablet"];
+    self.imgTablethd = [selection previewForResolution:@"tablethd"];
+
+    [previewMain setImage:self.imgMain];
+    [previewPhone setImage:self.imgPhone];
+    [previewPhonehd setImage:self.imgPhonehd];
+    [previewTablet setImage:self.imgTablet];
+    [previewTablethd setImage:self.imgTablethd];
+
+    // Load settings
+    self.scaleFrom = [[settings valueForResource:res andKey:@"scaleFrom"] intValue];
+
+    self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
+    self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
+    self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
+
+    self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
+    self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
+    self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
+
+    int tabletScale = [[settings valueForResource:res andKey:@"tabletScale"] intValue];
+    if (!tabletScale)
+    {
+        tabletScale = 2;
+    }
+    self.tabletScale = tabletScale;
+
+    self.enabled = YES;
+
+    [viewImage setHidden:NO];
 }
 
 #pragma mark Callbacks

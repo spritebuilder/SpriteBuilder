@@ -1,7 +1,5 @@
 #import "PublishGeneratedFilesOperation.h"
 
-#import "CCBPublisherTemplate.h"
-#import "CCBFileUtil.h"
 #import "ProjectSettings.h"
 #import "PublishRenamedFilesLookup.h"
 #import "PublishingTaskStatusProgress.h"
@@ -104,7 +102,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"target: %i, outputdir: %@, ", _targetType, _outputDir];
+    return [NSString stringWithFormat:@"target: %i, outputdir: %@, ", _osType, _outputDir];
 }
 
 @end

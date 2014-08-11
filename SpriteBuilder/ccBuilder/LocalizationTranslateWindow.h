@@ -49,20 +49,28 @@
     NSInteger _numTransToDownload;
     NSTimer* _timerTransDownload;
     
-    //Global variables
+    //Language Info
     LocalizationEditorLanguage* _currLang;
     NSMutableDictionary* _languages;
     NSMutableArray* _activeLanguages;
+    
+    //Phrase Translation
     NSMutableArray* _phrasesToTranslate;
     NSInteger _tierForTranslations;
+    
+    //Product and URL interaction
     SKProduct* _product;
     NSString* _guid;
     NSMutableDictionary* _receipts;
     NSString* _latestRequestID;
+    
+    //Interaction with EditorWindow
     LocalizationEditorWindow* _parentWindow;
     NSAlert* _buyAlert;
     NSString* _projectPathDir;
     NSString* _projectPath;
+    
+    //Used when closing
     NSURLSessionTask *_currTask;
 }
 
@@ -85,10 +93,19 @@
 -(void)saveReceipt:(NSData*)receipt transaction:(SKPaymentTransaction*)transaction;
 -(void)setPaymentError;
 
-@property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
-@property (nonatomic,strong) NSString* guid;
+@property (nonatomic,readwrite) NSInteger numTransToDownload;
+@property (nonatomic,strong) NSTimer* timerTransDownload;
+@property (nonatomic,strong) LocalizationEditorLanguage* currLang;
 @property (nonatomic,strong) NSMutableDictionary* languages;
+@property (nonatomic,strong) NSMutableArray* activeLanguages;
+@property (nonatomic,strong) NSMutableArray* phrasesToTranslate;
+@property (nonatomic,readwrite) NSInteger tierForTranslations;
+@property (nonatomic,strong) SKProduct* product;
+@property (nonatomic,strong) NSString* guid;
 @property (nonatomic,strong) NSMutableDictionary* receipts;
+@property (nonatomic,strong) NSString* latestRequestID;
+
+@property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
 @property (nonatomic,strong) NSAlert* buyAlert;
 @property (nonatomic,strong) NSString* projectPathDir;
 @property (nonatomic,strong) NSString* projectPath;

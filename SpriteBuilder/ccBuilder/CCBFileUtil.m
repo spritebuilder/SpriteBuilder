@@ -85,14 +85,12 @@
 
 + (void) addFilesWithExtension:(NSString*)ext inDirectory:(NSString*)dir toArray:(NSMutableArray*)array subPath:(NSString*)subPath
 {
-    ProjectSettings* projectSettings = [AppDelegate appDelegate].projectSettings;
-    
     NSArray* files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
     for (NSString* file in files)
     {
         if ([[file pathExtension] isEqualToString:ext])
         {
-            if (projectSettings.flattenPaths || [subPath isEqualToString:@""])
+            if ([subPath isEqualToString:@""])
             {
                 [array addObject:file];
             }

@@ -47,7 +47,6 @@
 #import "PlugInExport.h"
 #import "TexturePropertySetter.h"
 #import "PositionPropertySetter.h"
-#import "PublishTypeAccessoryView.h"
 #import "ResourceManager.h"
 #import "GuidesLayer.h"
 #import "RulersLayer.h"
@@ -56,12 +55,11 @@
 #import "CCBTransparentView.h"
 #import "NotesLayer.h"
 #import "ResolutionSetting.h"
-#import "PublishSettingsWindow.h"
+#import "ProjectSettingsWindowController.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "ResourceManagerOutlineView.h"
 #import "SavePanelLimiter.h"
-#import "CCBPublisher.h"
 #import "CCBWarnings.h"
 #import "TaskStatusWindow.h"
 #import "SequencerHandler.h"
@@ -101,7 +99,7 @@
 #import "PropertyInspectorHandler.h"
 #import "LocalizationEditorHandler.h"
 #import "PhysicsHandler.h"
-#import "CCBProjCreator.h"
+#import "CCBProjectCreator.h"
 #import "CCTextureCache.h"
 #import "CCLabelBMFont_Private.h"
 #import "WarningTableViewHandler.h"
@@ -111,6 +109,7 @@
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
+#import <MacTypes.h>
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
 #import "NSArray+Query.h"
@@ -127,26 +126,30 @@
 #import "RMResource.h"
 #import "PackageImporter.h"
 #import "PackageCreator.h"
-#import "NewPackageWindowController.h"
 #import "ResourceCommandController.h"
+#import "ProjectMigrator.h"
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
 #import "TranslationSettings.h"
 #import "LocalizationEditorWindow.h"
+#import "ProjectSettings+Convenience.h"
+#import "CCBDocumentDataCreator.h"
+#import "CCBPublisherCacheCleaner.h"
+#import "CCBPublisherController.h"
+#import "ResourceManager+Publishing.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
 @interface AppDelegate()
 
-- (NSString*)getPathOfMenuItem:(NSMenuItem*)item;
+@property (nonatomic, strong) CCBPublisherController *publisherController;
+@property (nonatomic, strong) ResourceCommandController *resourceCommandController;
 
 @end
 
+
 @implementation AppDelegate
-{
-    ResourceCommandController *_resourceCommandController;
-}
 
 @synthesize window;
 @synthesize projectSettings;
@@ -545,7 +548,7 @@ typedef enum
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-#if TEST_TARGET
+#ifndef TESTING
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"138b7cc7454016e05dbbc512f38082b7" companyName:@"Apportable" crashReportManagerDelegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
 #endif
@@ -626,10 +629,7 @@ typedef enum
     [self setupProjectViewTabBar];
     [self setupItemViewTabBar];
     [self updateSmallTabBarsEnabled];
-
     [self setupResourceManager];
-
-
     [self setupGUIWindow];
     [self setupProjectTilelessEditor];
     [self setupExtras];
@@ -653,7 +653,9 @@ typedef enum
     }
     else
     {
+        #ifndef TESTING
         [self openLastOpenProject];
+        #endif
     }
     
     // Check for first run
@@ -667,7 +669,6 @@ typedef enum
 
     [self toggleFeatures];
 
-	
 	[self setupSpriteBuilderPro];
 
     // Open registration window
@@ -680,17 +681,14 @@ typedef enum
     _resourceCommandController.resourceManagerOutlineView = outlineProject;
     _resourceCommandController.window = window;
     _resourceCommandController.resourceManager = [ResourceManager sharedManager];
+    _resourceCommandController.publishDelegate = self;
 
     outlineProject.actionTarget = _resourceCommandController;
 }
 
 - (void)toggleFeatures
 {
-    if (![FeatureToggle sharedFeatures].arePackagesEnabled)
-    {
-        [menuPlusButtonNewPackage setHidden:YES];
-        [menuFileNewPackage setHidden:YES];
-    }
+    // Empty at the moment, but if there is something you'd like to toggle in the scope of the AppDelegate, add it here
 }
 
 - (void)setupFeatureToggle
@@ -843,7 +841,7 @@ typedef enum
     
     if (doc.isDirty)
     {
-        NSAlert* alert = [NSAlert alertWithMessageText:[NSString stringWithFormat: @"Do you want to save the changes you made in the document “%@”?", [doc.fileName lastPathComponent]] defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
+        NSAlert* alert = [NSAlert alertWithMessageText:[NSString stringWithFormat: @"Do you want to save the changes you made in the document “%@”?", [doc.filePath lastPathComponent]] defaultButton:@"Save" alternateButton:@"Cancel" otherButton:@"Don’t Save" informativeTextWithFormat:@"Your changes will be lost if you don’t save them."];
         NSInteger result = [alert runModal];
         
         if (result == NSAlertDefaultReturn)
@@ -1475,87 +1473,12 @@ static BOOL hideAllToNextSeparator;
 
 - (NSMutableDictionary*) docDataFromCurrentNodeGraph
 {
-    SceneGraph* g = [SceneGraph instance];
-    
-    
-    NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    CCBDocument* doc = [self currentDocument];
-    
-    // Add node graph
-    NSMutableDictionary* nodeGraph = [CCBWriterInternal dictionaryFromCCObject:g.rootNode];
-    [dict setObject:nodeGraph forKey:@"nodeGraph"];
-    
-    // Add meta data
-    [dict setObject:@"CocosBuilder" forKey:@"fileType"];
-    [dict setObject:[NSNumber numberWithInt:kCCBFileFormatVersion] forKey:@"fileVersion"];
-    
-    [dict setObject:[NSNumber numberWithBool:jsControlled] forKey:@"jsControlled"];
-    
-    [dict setObject:[NSNumber numberWithBool:[[CocosScene cocosScene] centeredOrigin]] forKey:@"centeredOrigin"];
-    
-    [dict setObject:[NSNumber numberWithInt:[[CocosScene cocosScene] stageBorder]] forKey:@"stageBorder"];
-    [dict setObject:[NSNumber numberWithInt:doc.stageColor] forKey:@"stageColor"];
-    
-    // Guides & notes
-    [dict setObject:[[CocosScene cocosScene].guideLayer serializeGuides] forKey:@"guides"];
-    [dict setObject:[[CocosScene cocosScene].notesLayer serializeNotes] forKey:@"notes"];
-    
-    [dict setObject:[NSNumber numberWithInt:doc.docDimensionsType] forKey:@"docDimensionsType"];
-    
-    // Save Grid Spacing
-    //[dict setObject:[NSValue valueWithSize:(NSSize)[[CocosScene cocosScene].guideLayer gridSize]] forKey:@"gridspace"];
-    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.width] forKey:@"gridspaceWidth"];
-    [dict setObject:[NSNumber numberWithInt:[CocosScene cocosScene].guideLayer.gridSize.height] forKey:@"gridspaceHeight"];
-    
-    //////////////    //////////////    //////////////    //////////////    //////////////
-    //Joints
-    NSMutableArray * joints = [NSMutableArray array];
-    for (CCNode * joint in g.joints.all)
-    {
-        [joints addObject:[CCBWriterInternal dictionaryFromCCObject:joint]];
-    }
-    
-    [dict setObject:joints forKey:@"joints"];
-
-	if ([AppDelegate appDelegate].projectSettings.engine != CCBTargetEngineSpriteKit)
-		[dict setObject:[g.joints serialize] forKey:@"SequencerJoints"];
-    
-    
-    //////////////    //////////////    //////////////    //////////////    //////////////
-    [dict setObject:@(doc.UUID) forKey:@"UUID"];
-    
-    // Resolutions
-    if (doc.resolutions)
-    {
-        NSMutableArray* resolutions = [NSMutableArray array];
-        for (ResolutionSetting* r in doc.resolutions)
-        {
-            [resolutions addObject:[r serialize]];
-        }
-        [dict setObject:resolutions forKey:@"resolutions"];
-        [dict setObject:[NSNumber numberWithInt:doc.currentResolution] forKey:@"currentResolution"];
-    }
-    
-    // Sequencer timelines
-    if (doc.sequences)
-    {
-        NSMutableArray* sequences = [NSMutableArray array];
-        for (SequencerSequence* seq in doc.sequences)
-        {
-            [sequences addObject:[seq serialize]];
-        }
-        [dict setObject:sequences forKey:@"sequences"];
-        [dict setObject:[NSNumber numberWithInt:sequenceHandler.currentSequence.sequenceId] forKey:@"currentSequenceId"];
-    }
-    
-    if (doc.exportPath && doc.exportPlugIn)
-    {
-        [dict setObject:doc.exportPlugIn forKey:@"exportPlugIn"];
-        [dict setObject:doc.exportPath forKey:@"exportPath"];
-        [dict setObject:[NSNumber numberWithBool:doc.exportFlattenPaths] forKey:@"exportFlattenPaths"];
-    }
-    
-    return dict;
+    CCBDocumentDataCreator *dataCreator =
+            [[CCBDocumentDataCreator alloc] initWithSceneGraph:[SceneGraph instance]
+                                                      document:currentDocument
+                                               projectSettings:projectSettings
+                                                    sequenceId:sequenceHandler.currentSequence.sequenceId];
+    return [dataCreator createData];
 }
 
 - (void) prepareForDocumentSwitch
@@ -1564,7 +1487,7 @@ static BOOL hideAllToNextSeparator;
     CocosScene* cs = [CocosScene cocosScene];
 		
     if (![self hasOpenedDocument]) return;
-    currentDocument.docData = [self docDataFromCurrentNodeGraph];
+    currentDocument.data = [self docDataFromCurrentNodeGraph];
     currentDocument.stageZoom = [cs stageZoom];
     currentDocument.stageScrollOffset = [cs scrollOffset];
 }
@@ -1797,7 +1720,7 @@ static BOOL hideAllToNextSeparator;
     // Replace open document
     [self deselectAll];
     
-    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    SceneGraph * g = [SceneGraph setInstance:[[SceneGraph alloc] initWithProjectSettings:projectSettings]];
     [g.joints deserialize:doc[@"SequencerJoints"]];
     g.rootNode = loadedRoot;
     
@@ -1853,7 +1776,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
 {
-    if (!forceReload && [document.fileName isEqualToString:currentDocument.fileName]) return;
+    if (!forceReload && [document.filePath isEqualToString:currentDocument.filePath]) return;
 
     [animationPlaybackManager stop];
 
@@ -1861,7 +1784,7 @@ static BOOL hideAllToNextSeparator;
     
     self.currentDocument = document;
     
-    NSMutableDictionary* doc = document.docData;
+    NSMutableDictionary* doc = document.data;
     
     [self replaceDocumentData:doc];
     
@@ -1875,36 +1798,6 @@ static BOOL hideAllToNextSeparator;
     
     // Make sure timeline is up to date
     [sequenceHandler updatePropertiesToTimelinePosition];
-}
-
--(void)fixupUUID:(CCBDocument*)doc dict:(NSMutableDictionary*)dict
-{
-    if(!dict[@"UUID"])
-    {
-        dict[@"UUID"] = @(doc.UUID);
-        doc.UUID = doc.UUID + 1;
-    }
-    
-    if(dict[@"children"])
-    {
-        for (NSMutableDictionary * child in dict[@"children"])
-        {
-            [self fixupUUID:doc dict:child];
-        }
-        
-    }
-}
-
-
--(void)fixupDoc:(CCBDocument*) doc
-{
-    //If UUID is unset, it means the doc is out of date. Fixup.
-    if(doc.UUID == 0x0)
-    {
-        doc.UUID = 0x1;
-        [self fixupUUID:doc dict: doc.docData[@"nodeGraph"]];
-
-    }
 }
 
 - (void) switchToDocument:(CCBDocument*) document
@@ -1921,7 +1814,7 @@ static BOOL hideAllToNextSeparator;
 {
     [self deselectAll];
     
-    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    SceneGraph * g = [SceneGraph setInstance:[[SceneGraph alloc] initWithProjectSettings:projectSettings]];
     [[CocosScene cocosScene] replaceSceneNodes: g];
     [[CocosScene cocosScene] setStageSize:CGSizeMake(0, 0) centeredOrigin:YES];
     [[CocosScene cocosScene].guideLayer removeAllGuides];
@@ -1945,7 +1838,7 @@ static BOOL hideAllToNextSeparator;
     for (int i = 0; i < [items count]; i++)
     {
         CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if ([doc.fileName isEqualToString:file]) return doc;
+        if ([doc.filePath isEqualToString:file]) return doc;
     }
     return NULL;
 }
@@ -1969,7 +1862,7 @@ static BOOL hideAllToNextSeparator;
 	for (NSUInteger i = 0; i < [items count]; i++)
 	{
 		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
-		if ([doc.fileName isEqualToString:path]
+		if ([doc.filePath isEqualToString:path]
 			|| (includeViewWithinFolderPath && [doc isWithinPath:path]))
 		{
 			return [items objectAtIndex:i];
@@ -2014,7 +1907,7 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) createProject:(NSString*)fileName engine:(CCBTargetEngine)engine
 {
-    CCBProjCreator* creator = [[CCBProjCreator alloc] init];
+    CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
     return [creator createDefaultProjectAtPath:fileName engine:engine];
 }
 
@@ -2078,15 +1971,15 @@ static BOOL hideAllToNextSeparator;
         return NO;
     }
     
-    ProjectSettings* project = [[ProjectSettings alloc] initWithSerialization:projectDict];
-    if (!project)
+    ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
+    if (!prjctSettings)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
         return NO;
     }
-    project.projectPath = fileName;
-    [project store];
-    self.projectSettings = project;
+    prjctSettings.projectPath = fileName;
+    [prjctSettings store];
+    self.projectSettings = prjctSettings;
     _resourceCommandController.projectSettings = self.projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     
@@ -2094,11 +1987,17 @@ static BOOL hideAllToNextSeparator;
     [self updateResourcePathsFromProjectSettings];
 
     // Update Node Plugins list
-	[plugInNodeViewHandler showNodePluginsForEngine:project.engine];
+	[plugInNodeViewHandler showNodePluginsForEngine:prjctSettings.engine];
 	
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
-    if (!success) return NO;
-    
+    if (!success)
+    {
+        return NO;
+    }
+
+    ProjectMigrator *migrator = [[ProjectMigrator alloc] initWithProjectSettings:projectSettings];
+    [migrator migrate];
+
     // Load or create language file
     NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
@@ -2107,7 +2006,7 @@ static BOOL hideAllToNextSeparator;
     [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[fileName stringByDeletingLastPathComponent] lastPathComponent]]];
     
     // Open ccb file for project if there is only one
-    NSArray* resPaths = project.absoluteResourcePaths;
+    NSArray* resPaths = prjctSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
         NSString* resPath = [resPaths objectAtIndex:0];
@@ -2137,8 +2036,10 @@ static BOOL hideAllToNextSeparator;
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
+    #ifndef SPRITEBUILDER_PRO
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
+    #endif
 
     self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
 
@@ -2156,12 +2057,12 @@ static BOOL hideAllToNextSeparator;
     return YES;
 }
 
-- (void) openFile:(NSString*) fileName
+- (void) openFile:(NSString*)filePath
 {
 	[[[CCDirector sharedDirector] view] lockOpenGLContext];
     
     // Check if file is already open
-    CCBDocument* openDoc = [self findDocumentFromFile:fileName];
+    CCBDocument* openDoc = [self findDocumentFromFile:filePath];
     if (openDoc)
     {
         [tabView selectTabViewItem:[self tabViewItemFromDoc:openDoc]];
@@ -2170,17 +2071,8 @@ static BOOL hideAllToNextSeparator;
     
     [self prepareForDocumentSwitch];
     
-    NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithContentsOfFile:fileName];
-    
-    CCBDocument* newDoc = [[CCBDocument alloc] init];
-    newDoc.fileName = fileName;
-    newDoc.docData = doc;
-    newDoc.exportPath = [doc objectForKey:@"exportPath"];
-    newDoc.exportPlugIn = [doc objectForKey:@"exportPlugIn"];
-    newDoc.exportFlattenPaths = [doc[@"exportFlattenPaths"] boolValue];
-    newDoc.UUID = [doc[@"UUID"] unsignedIntegerValue];
-    
-    [self fixupDoc:newDoc];
+    CCBDocument *newDoc = [[CCBDocument alloc] initWithContentsOfFile:filePath];
+
     [self switchToDocument:newDoc];
      
     [self addDocument:newDoc];
@@ -2197,12 +2089,9 @@ static BOOL hideAllToNextSeparator;
 
 - (void) saveFile:(NSString*) fileName
 {
-    NSMutableDictionary* doc = [self docDataFromCurrentNodeGraph];
-     
-    [doc writeToFile:fileName atomically:YES];
-    
-    currentDocument.fileName = fileName;
-    currentDocument.docData = doc;
+    currentDocument.filePath = fileName;
+    currentDocument.data = [self docDataFromCurrentNodeGraph];
+    [currentDocument store];
     
     currentDocument.isDirty = NO;
     NSTabViewItem* item = [self tabViewItemFromDoc:currentDocument];
@@ -2239,24 +2128,6 @@ static BOOL hideAllToNextSeparator;
     sequenceHandler.currentSequence.timelinePosition = currentTime;
     
     [projectOutlineHandler updateSelectionPreview];
-}
-
-- (void) exportFile:(NSString*) fileName withPlugIn:(NSString*) ext
-{
-    PlugInExport* plugIn = [[PlugInManager sharedManager] plugInExportForExtension:ext];
-    if (!plugIn)
-    {
-        [self modalDialogTitle:@"Plug-in missing" message:[NSString stringWithFormat:@"There is no extension available for publishing to %@-files. Please use the Publish As... option.",ext]];
-        return;
-    }
-    
-    NSMutableDictionary* doc = [self docDataFromCurrentNodeGraph];
-    NSData* data = [plugIn exportDocument:doc];
-    BOOL success = [data writeToFile:fileName atomically:YES];
-    if (!success)
-    {
-        [self modalDialogTitle:@"Publish failed" message:@"Failed to publish the document, please try to publish to another location."];
-    }
 }
 
 - (void) newFile:(NSString*) fileName type:(int)type resolutions: (NSMutableArray*) resolutions;
@@ -2307,7 +2178,7 @@ static BOOL hideAllToNextSeparator;
     }
     
     // Create new node
-    SceneGraph * g = [SceneGraph setInstance:[SceneGraph new]];
+    SceneGraph * g = [SceneGraph setInstance:[[SceneGraph alloc] initWithProjectSettings:projectSettings]];
     g.rootNode = [[PlugInManager sharedManager] createDefaultNodeOfType:class];
     g.joints.node = [CCNode node];
     [[CocosScene cocosScene] replaceSceneNodes:g];
@@ -3155,7 +3026,7 @@ static BOOL hideAllToNextSeparator;
         {
             NSString *filename = [[saveDlg URL] path];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+                           dispatch_get_main_queue(), ^{
                 [[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 // Save file to new path
@@ -3184,9 +3055,9 @@ static BOOL hideAllToNextSeparator;
         return;
     }
     
-    if (currentDocument && currentDocument.fileName)
+    if (currentDocument && currentDocument.filePath)
     {
-        [self saveFile:currentDocument.fileName];
+        [self saveFile:currentDocument.filePath];
     }
     else
     {
@@ -3226,7 +3097,7 @@ static BOOL hideAllToNextSeparator;
 - (void)checkForDirtyDocumentAndPublishAsync:(BOOL)async
 {
     if (!projectSettings.publishEnabledAndroid
-        && !projectSettings.publishEnablediPhone)
+        && !projectSettings.publishEnabledIOS)
     {
         if(async)
             [self modalDialogTitle:@"Published Failed" message:@"There are no configured publish target platforms. Please check your Publish Settings."];
@@ -3265,33 +3136,39 @@ static BOOL hideAllToNextSeparator;
 
 - (void)publishStartAsync:(BOOL)async
 {
-    CCBWarnings* warnings = [[CCBWarnings alloc] init];
-    warnings.warningsDescription = @"Publisher Warnings";
+    self.publisherController = [[CCBPublisherController alloc] init];
+    _publisherController.projectSettings = projectSettings;
+    _publisherController.packageSettings = [[ResourceManager sharedManager] loadAllPackageSettings];
+    _publisherController.oldResourcePaths = [[ResourceManager sharedManager] oldResourcePaths];
 
-    // Setup publisher, publisher is released in publisher:finishedWithWarnings:
-    CCBPublisher* publisher = [[CCBPublisher alloc] initWithProjectSettings:projectSettings warnings:warnings];
+    id __weak selfWeak = self;
+    _publisherController.finishBlock = ^(CCBPublisher *aPublisher, CCBWarnings *someWarnings)
+    {
+        [selfWeak publisher:aPublisher finishedWithWarnings:someWarnings];
+    };
+
     modalTaskStatusWindow = [[TaskStatusWindow alloc] initWithWindowNibName:@"TaskStatusWindow"];
-    publisher.taskStatusUpdater = modalTaskStatusWindow;
+    _publisherController.taskStatusUpdater = modalTaskStatusWindow;
 
     // Open progress window and publish
     if (async)
     {
-        [publisher startAsync];
+        [_publisherController startAsync:YES];
         [self modalStatusWindowStartWithTitle:@"Publishing" isIndeterminate:NO onCancelBlock:^
         {
-            [publisher cancel];
+            [_publisherController cancel];
         }];
         [self modalStatusWindowUpdateStatusText:@"Starting up..."];
     }
     else
     {
-        [publisher start];
+        [_publisherController startAsync:NO];
     }
 
     [animationPlaybackManager stop];
 }
 
-- (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings
+- (void)publisher:(CCBPublisher *)publisher finishedWithWarnings:(CCBWarnings *)warnings
 {
     [self modalStatusWindowFinish];
     
@@ -3315,7 +3192,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuCleanCacheDirectories:(id)sender
 {
-    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
 }
 
 // Temporary utility function until new publish system is in place
@@ -3331,7 +3208,7 @@ static BOOL hideAllToNextSeparator;
             NSArray* files = [openDlg URLs];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_current_queue(), ^{
+                           dispatch_get_main_queue(), ^{
                 [[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 for (int i = 0; i < [files count]; i++)
@@ -3360,13 +3237,15 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuPublishSettings:(id)sender
 {
-    if (!projectSettings) return;
-    
-    PublishSettingsWindow* wc = [[PublishSettingsWindow alloc] initWithWindowNibName:@"PublishSettingsWindow"];
-    wc.projectSettings = self.projectSettings;
-    
-    int success = [wc runModalSheetForWindow:window];
-    if (success)
+    if (!projectSettings)
+    {
+        return;
+    }
+
+    ProjectSettingsWindowController *settingsWindowController = [[ProjectSettingsWindowController alloc] init];
+    settingsWindowController.projectSettings = self.projectSettings;
+
+    if ([settingsWindowController runModalSheetForWindow:window])
     {
         [self updateEverythingAfterSettingsChanged];
     }
@@ -3376,7 +3255,7 @@ static BOOL hideAllToNextSeparator;
 {
     [self.projectSettings store];
     [self updateResourcePathsFromProjectSettings];
-    [CCBPublisher cleanAllCacheDirectoriesWithProjectSettings:projectSettings];
+    [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
     [self reloadResources];
     [self setResolution:0];
 }
@@ -3397,7 +3276,7 @@ static BOOL hideAllToNextSeparator;
         if (result == NSOKButton)
         {
             NSArray* files = [openDlg URLs];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_current_queue(), ^
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_main_queue(), ^
             {
                 for (int i = 0; i < [files count]; i++)
                 {
@@ -3425,8 +3304,10 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction)updateCocos2d:(id)sender
 {
+    #ifndef SPRITEBUILDER_PRO
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:YES];
+    #endif
 }
 
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine
@@ -3458,7 +3339,7 @@ static BOOL hideAllToNextSeparator;
                 fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                               dispatch_get_current_queue(), ^{
+                               dispatch_get_main_queue(), ^{
                                    if ([self createProject:fileName engine:engine])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
@@ -3489,26 +3370,7 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) menuNewPackage:(id)sender
 {
-    [[[CCDirector sharedDirector] view] lockOpenGLContext];
-    
-    PackageCreator *packageCreator = [[PackageCreator alloc] init];
-    packageCreator.projectSettings = projectSettings;
-    
-    NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
-    packageWindowController.packageCreator = packageCreator;
-
-    // Show new document sheet
-    [NSApp beginSheet:[packageWindowController window]
-       modalForWindow:window
-        modalDelegate:NULL
-       didEndSelector:NULL
-          contextInfo:NULL];
-
-    [NSApp runModalForWindow:[packageWindowController window]];
-    [NSApp endSheet:[packageWindowController window]];
-    [[packageWindowController window] close];
-
-    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+    [_resourceCommandController newPackage:sender];
 }
 
 - (IBAction) newFolder:(id)sender
@@ -3546,7 +3408,7 @@ static BOOL hideAllToNextSeparator;
 {
     NSTabViewItem* item = [self tabViewItemFromPath:oldPath includeViewWithinFolderPath:NO];
     CCBDocument* doc = [item identifier];
-    doc.fileName = newPath;
+    doc.filePath = newPath;
     [item setLabel:doc.formattedName];
 }
 
@@ -3556,10 +3418,10 @@ static BOOL hideAllToNextSeparator;
    	for (NSUInteger i = 0; i < [items count]; i++)
    	{
    		CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
-        if ([doc.fileName rangeOfString:fromPath].location != NSNotFound)
+        if ([doc.filePath rangeOfString:fromPath].location != NSNotFound)
         {
-            NSString *newFileName = [doc.fileName stringByReplacingOccurrencesOfString:fromPath withString:toPath];
-            doc.fileName = newFileName;
+            NSString *newFileName = [doc.filePath stringByReplacingOccurrencesOfString:fromPath withString:toPath];
+            doc. filePath = newFileName;
         }
    	}
 }
@@ -4591,6 +4453,10 @@ static BOOL hideAllToNextSeparator;
 {
 
 #ifdef SPRITEBUILDER_PRO
+#ifdef TESTING
+    return;
+#endif
+
 	if(![AndroidPluginInstaller needsInstallation])
 	{
 		return;

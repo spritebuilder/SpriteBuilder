@@ -8,14 +8,15 @@
 - (BOOL)isPublishEnvironmentRelease;
 - (BOOL)isPublishEnvironmentDebug;
 
-- (int)soundQualityForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType;
-- (int)soundFormatForRelPath:(NSString *)relPath targetType:(CCBPublisherTargetType)targetType;
+- (NSInteger)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType;
+- (int)soundFormatForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType;
 
-- (NSArray *)publishingResolutionsForTargetType:(CCBPublisherTargetType)targetType;
+- (NSArray *)publishingResolutionsForOSType:(CCBPublisherOSType)osType;
 
-- (NSString *)publishDirForTargetType:(CCBPublisherTargetType)targetType;
+- (NSString *)publishDirForOSType:(CCBPublisherOSType)osType;
 
-- (BOOL)publishEnabledForTargetType:(CCBPublisherTargetType)targetType;
+- (BOOL)publishEnabledForOSType:(CCBPublisherOSType)osType;
 
 
+- (NSInteger)audioQualityForOsType:(CCBPublisherOSType)osType;
 @end

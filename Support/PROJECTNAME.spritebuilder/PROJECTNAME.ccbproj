@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>cocos2dUpdateIgnoredVersions</key>
+	<array/>
 	<key>defaultOrientation</key>
 	<integer>0</integer>
 	<key>designTarget</key>
@@ -16,20 +18,16 @@
 	<false/>
 	<key>deviceScaling</key>
 	<integer>0</integer>
+	<key>engine</key>
+	<integer>0</integer>
+	<key>excludedFromPackageMigration</key>
+	<integer>0</integer>
 	<key>exporter</key>
 	<string>ccbi</string>
 	<key>fileType</key>
 	<string>CocosBuilderProject</string>
 	<key>fileVersion</key>
 	<integer>1</integer>
-	<key>flattenPaths</key>
-	<false/>
-	<key>javascriptBased</key>
-	<true/>
-	<key>javascriptMainCCB</key>
-	<string>MainScene</string>
-	<key>needRepublish</key>
-	<false/>
 	<key>onlyPublishCCBs</key>
 	<false/>
 	<key>publishAudioQuality_android</key>
@@ -40,20 +38,12 @@
 	<string>Source/Resources/Published-iOS</string>
 	<key>publishDirectoryAndroid</key>
 	<string>Source/Resources/Published-Android</string>
-	<key>publishDirectoryHTML5</key>
-	<string>Published-HTML5</string>
 	<key>publishEnabledAndroid</key>
 	<true/>
-	<key>publishEnabledHTML5</key>
-	<false/>
 	<key>publishEnablediPhone</key>
 	<true/>
-	<key>publishResolutionHTML5_height</key>
-	<integer>320</integer>
-	<key>publishResolutionHTML5_scale</key>
-	<integer>1</integer>
-	<key>publishResolutionHTML5_width</key>
-	<integer>480</integer>
+	<key>publishEnvironment</key>
+	<integer>0</integer>
 	<key>publishResolution_android_phone</key>
 	<true/>
 	<key>publishResolution_android_phonehd</key>
@@ -78,7 +68,7 @@
 	<array>
 		<dict>
 			<key>path</key>
-			<string>SpriteBuilder Resources</string>
+			<string>Packages/SpriteBuilder Resources.sbpack</string>
 		</dict>
 	</array>
 	<key>resourceProperties</key>
@@ -174,8 +164,10 @@
 		</dict>
 	</dict>
 	<key>versionStr</key>
-	<string>Version: 1.0.0
-GitHub: c5052d6e72
+	<string>Version: 1.2.0-beta
+Sku: 
+GitHub: 
+8b724d6c13
 </string>
 </dict>
 </plist>

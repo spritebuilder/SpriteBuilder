@@ -23,11 +23,6 @@
 
 @implementation ResourceContextMenu_Tests
 
-- (void)setUp
-{
-    [FeatureToggle sharedFeatures].packages = YES;
-}
-
 - (void)testContextWithEmptySelection
 {
     ResourceContextMenu *resourceContextMenu = [[ResourceContextMenu alloc] initWithActionTarget:nil resources:@[]];
@@ -51,6 +46,7 @@
     NSArray *selectors = @[
             @"newFile:",
             @"newFolder:",
+            @"newPackage:",
             @"openResourceWithExternalEditor:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
@@ -69,6 +65,7 @@
     NSArray *selectors = @[
             @"newFile:",
             @"newFolder:",
+            @"newPackage:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
             @"deleteResource:",
@@ -88,6 +85,7 @@
     NSArray *selectors = @[
             @"newFile:",
             @"newFolder:",
+            @"newPackage:",
             @"showResourceInFinder:",
             @"createKeyFrameFromSelection:",
             @"deleteResource:",

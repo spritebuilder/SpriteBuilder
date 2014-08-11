@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "ResourceExportPackageCommand.h"
 
 #import "RMPackage.h"
@@ -29,20 +30,68 @@
     }
 }
 
-- (void)tryToExportPackage:(RMPackage *)package toPath:(NSString *)exportPath
+- (void)tryToExportPackage:(RMPackage *)package toPath:(NSString *)path
 {
     PackageExporter *packageExporter = [[PackageExporter alloc] init];
+    NSString *fullExportPath = [packageExporter exportPathForPackage:package toDirectoryPath:path];
+
+    if (![self shouldExportPackageIfExistsAtPath:fullExportPath])
+    {
+        return;
+    }
 
     NSError *error;
-    if (![packageExporter exportPackage:package toPath:exportPath error:&error])
+    if (![packageExporter exportPackage:package toDirectoryPath:path error:&error])
     {
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+        [self showAlertWithError:error];
+    }
+}
+
+- (BOOL)shouldExportPackageIfExistsAtPath:(NSString *)fullExportPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    if ([fileManager fileExistsAtPath:fullExportPath])
+    {
+        if ([self askUserToOverwritePackageIfExistAtPath:fullExportPath])
+        {
+            if (![fileManager removeItemAtPath:fullExportPath error:&error])
+            {
+                [self showAlertWithError:error];
+                return NO;
+            }
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)showAlertWithError:(NSError *)error
+{
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
                                          defaultButton:@"OK"
                                        alternateButton:nil
                                            otherButton:nil
                              informativeTextWithFormat:@"%@", error.localizedDescription];
-        [alert runModal];
-    }
+    [alert runModal];
+}
+
+- (BOOL)askUserToOverwritePackageIfExistAtPath:(NSString *)fullPath
+{
+
+    NSAlert *overwriteAlert = [NSAlert alertWithMessageText:@"Package Export"
+                                              defaultButton:@"No"
+                                            alternateButton:@"Yes"
+                                                otherButton:nil
+                                  informativeTextWithFormat:@"Package already exists at path, overwrite?"];
+
+    NSInteger result = [overwriteAlert runModal];
+
+    return result == NSAlertAlternateReturn;
 }
 
 - (NSOpenPanel *)exportPanel
