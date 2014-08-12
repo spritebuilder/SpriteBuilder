@@ -111,7 +111,7 @@
 
 + (NSString *)nameForResources:(NSArray *)resources
 {
-    return @"Export to...";
+    return @"Export Package...";
 }
 
 + (BOOL)isValidForSelectedResources:(NSArray *)resources
