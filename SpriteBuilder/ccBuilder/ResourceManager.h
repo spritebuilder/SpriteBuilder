@@ -30,7 +30,7 @@
 @class RMDirectory;
 @class ProjectSettings;
 
-#define kCCBMaxTrackedDirectories 50
+#define kCCBMaxTrackedDirectories 500
 
 
 @interface ResourceManager : NSObject <SCEventListenerProtocol>
