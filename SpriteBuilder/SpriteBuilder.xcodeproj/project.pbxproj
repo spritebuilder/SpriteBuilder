@@ -190,6 +190,7 @@
 		922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */; };
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
+		9248BD20199A8BB2009C154F /* SemanticVersioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9248BD1E199A8BB2009C154F /* SemanticVersioning.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
 		9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */; };
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
@@ -1474,6 +1475,9 @@
 		922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorFloatCheck.xib; sourceTree = "<group>"; };
 		922E8EFC18C13666008E1764 /* OutletDrawWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OutletDrawWindow.h; path = ccBuilder/OutletDrawWindow.h; sourceTree = SOURCE_ROOT; };
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
+		9248BD1D199A8BB2009C154F /* SemanticVersioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemanticVersioning.h; sourceTree = "<group>"; };
+		9248BD1E199A8BB2009C154F /* SemanticVersioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemanticVersioning.m; sourceTree = "<group>"; };
+		9248BD1F199A8BB2009C154F /* SequencerTimelineDrawDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerTimelineDrawDelegate.h; sourceTree = "<group>"; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
 		9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpriteBuilder.xcconfig; sourceTree = "<group>"; };
@@ -2769,6 +2773,8 @@
 		776041E11498F56D0078095D /* Application Settings & Globals */ = {
 			isa = PBXGroup;
 			children = (
+				9248BD1D199A8BB2009C154F /* SemanticVersioning.h */,
+				9248BD1E199A8BB2009C154F /* SemanticVersioning.m */,
 				83FC4109198138E900799B6C /* Project Settings */,
 				83993DAB1935F6A0001C228B /* Feature Toggle */,
 				772BE570133E48340009B5B9 /* CCBGlobals.h */,
@@ -3336,6 +3342,7 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				9248BD1F199A8BB2009C154F /* SequencerTimelineDrawDelegate.h */,
 				E390C77A170A2C20003E9E92 /* About Box & Email list */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				776041E11498F56D0078095D /* Application Settings & Globals */,
@@ -6771,6 +6778,7 @@
 				E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */,
 				E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */,
 				E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */,
+				9248BD20199A8BB2009C154F /* SemanticVersioning.m in Sources */,
 				E525FA5D4791EB730859BF2C /* ProjectSettings+Convenience.m in Sources */,
 				E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */,
 				E525FBB73A012AC88E99B21B /* PublishRenamedFilesLookup.m in Sources */,
