@@ -44,7 +44,7 @@
 					<object class="NSTextField" id="20192115">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{120, 9}, {50, 22}}</string>
+						<string key="NSFrame">{{120, 7}, {50, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -126,7 +126,7 @@
 					<object class="NSTextField" id="284661005">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{36, 10}, {152, 17}}</string>
+						<string key="NSFrame">{{36, 8}, {152, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="20192115"/>
@@ -170,7 +170,7 @@
 							<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 							<string>NeXT TIFF v4.0 pasteboard type</string>
 						</set>
-						<string key="NSFrame">{{2, 4}, {32, 32}}</string>
+						<string key="NSFrame">{{2, 3}, {32, 32}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="284661005"/>
@@ -194,7 +194,7 @@
 						<bool key="NSEditable">YES</bool>
 					</object>
 				</array>
-				<string key="NSFrameSize">{237, 40}</string>
+				<string key="NSFrameSize">{237, 38}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="649833042"/>
