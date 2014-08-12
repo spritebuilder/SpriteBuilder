@@ -60,6 +60,8 @@
 
     self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
     _packageSettings.publishToCustomOutputDirectory = NO;
+    _packageSettings.publishToMainProject = NO;
+    _packageSettings.publishToZip = YES;
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     iosSettings.resolution_tablethd = YES;
@@ -214,6 +216,19 @@
             ]];
         }
     }
+}
+
+- (void)testNothingToPublish
+{
+    _packageSettings.publishToZip = NO;
+    _packageSettings.publishToMainProject = NO;
+    _packageSettings.publishToCustomOutputDirectory = NO;
+
+    [_publisherController startAsync:NO];
+
+    [self assertFileDoesNotExist:@"Published-iOS"];
+    [self assertFileDoesNotExist:@"Published-Android"];
+    [self assertFileDoesNotExist:DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES];
 }
 
 

@@ -1,3 +1,9 @@
+#ifdef SPRITEBUILDER_PRO
+BOOL const IS_SPRITEBUILDER_PRO = YES;
+#else
+BOOL const IS_SPRITEBUILDER_PRO = NO;
+#endif
+
 NSInteger const DEFAULT_AUDIO_QUALITY = 4;
 
 NSString *const PACKAGE_NAME_SUFFIX = @"sbpack";

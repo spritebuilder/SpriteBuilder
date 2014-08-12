@@ -16,7 +16,12 @@
     return self;
 }
 
-- (BOOL)exportPackage:(RMPackage *)package toPath:(NSString *)toPath error:(NSError **)error
+- (NSString *)exportPathForPackage:(RMPackage *)package toDirectoryPath:(NSString *)toDirectoryPath
+{
+    return [toDirectoryPath stringByAppendingPathComponent:[package.dirPath lastPathComponent]];
+}
+
+- (BOOL)exportPackage:(RMPackage *)package toDirectoryPath:(NSString *)toDirectoryPath error:(NSError **)error
 {
     if ([self isPackageValid:package])
     {
@@ -24,13 +29,13 @@
         return NO;
     }
 
-    NSString *copyToPath = [toPath stringByAppendingPathComponent:[package.dirPath lastPathComponent]];
+    NSString *copyToPath = [self exportPathForPackage:package toDirectoryPath:toDirectoryPath];
 
     if ([_fileManager fileExistsAtPath:copyToPath])
     {
         *error = [NSError errorWithDomain:SBErrorDomain
                                      code:SBPackageAlreadyExistsAtPathError
-                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already exists at path %@.", package, toPath]}];
+                                 userInfo:@{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Package %@ already exists at path %@.", package, toDirectoryPath]}];
         return NO;
     }
 

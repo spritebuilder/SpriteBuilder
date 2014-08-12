@@ -36,8 +36,12 @@
     [self createFolders:@[@"/foo/project.spritebuilder/Packages/mypackage.sbpack"]];
 }
 
-- (void)testInitialValuesKVCPaths
+- (void)testInitialValuesAndKVCPaths
 {
+    XCTAssertTrue(_packagePublishSettings.publishToMainProject);
+    XCTAssertFalse(_packagePublishSettings.publishToZip);
+    XCTAssertFalse(_packagePublishSettings.publishToCustomOutputDirectory);
+
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     XCTAssertNotNil(osSettingsIOS);
 

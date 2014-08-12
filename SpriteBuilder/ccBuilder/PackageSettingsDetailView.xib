@@ -22,23 +22,12 @@
                         <binding destination="-2" name="value" keyPath="currentPackageSettings.publishToMainProject" id="EaA-AW-19v"/>
                     </connections>
                 </button>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pb6-SZ-IAR">
-                    <rect key="frame" x="149" y="257" width="83" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="as Zip file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="C6z-0M-uYf">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="currentPackageSettings.publishToZip" id="S5G-Ii-BPF"/>
-                    </connections>
-                </button>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qD5-uT-hCU">
-                    <rect key="frame" x="1" y="79" width="479" height="80"/>
+                    <rect key="frame" x="0.0" y="97" width="480" height="62"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mta-LG-UN1">
-                            <rect key="frame" x="17" y="24" width="55" height="17"/>
+                            <rect key="frame" x="17" y="16" width="56" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="phone" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="LKF-qO-Ded">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -46,10 +35,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_phone" id="p8C-ff-KzF"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Eki-sQ-RAw"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zI5-OW-zsa">
-                            <rect key="frame" x="74" y="24" width="70" height="18"/>
+                            <rect key="frame" x="75" y="16" width="70" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="phonehd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="znf-cY-ieS">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -57,10 +47,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_phonehd" id="Yjl-9h-JMv"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1I7-be-AXQ"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ayO-jh-Yut">
-                            <rect key="frame" x="206" y="24" width="67" height="18"/>
+                            <rect key="frame" x="208" y="16" width="67" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="tablethd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="TUd-2z-DSD">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -68,10 +59,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_tablethd" id="Qp7-QO-jS0"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="MF8-Rc-QpE"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eUk-Kd-kPa">
-                            <rect key="frame" x="147" y="24" width="53" height="18"/>
+                            <rect key="frame" x="149" y="16" width="53" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="tablet" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="RZa-Qg-LbB">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -79,10 +71,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_tablet" id="Fap-Pw-RGU"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="GIe-bO-fyQ"/>
                             </connections>
                         </button>
                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uhy-uo-i21">
-                            <rect key="frame" x="366" y="22" width="96" height="22"/>
+                            <rect key="frame" x="366" y="14" width="96" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <popUpButtonCell key="cell" type="push" title="8 - Best" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="8" imageScaling="proportionallyDown" inset="2" selectedItem="cyO-nd-GeR" id="kSR-LF-xMf">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -116,10 +109,11 @@
                             </popUpButtonCell>
                             <connections>
                                 <binding destination="-2" name="selectedTag" keyPath="currentPackageSettings.osSettings.android.audio_quality" id="Zsl-bd-Xtu"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="XWv-oa-AVj"/>
                             </connections>
                         </popUpButton>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ax1-ef-RFq" customClass="CCBTextFieldLabel">
-                            <rect key="frame" x="289" y="27" width="75" height="14"/>
+                            <rect key="frame" x="289" y="19" width="75" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Audio quality" id="smK-q7-aKK">
                                 <font key="font" metaFont="smallSystem"/>
@@ -128,7 +122,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mb3-q3-NuR">
-                            <rect key="frame" x="18" y="52" width="59" height="17"/>
+                            <rect key="frame" x="18" y="36" width="59" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Android:" id="nel-rE-xuz">
                                 <font key="font" metaFont="system"/>
@@ -136,28 +130,21 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="GL7-eY-xgP">
-                            <rect key="frame" x="20" y="77" width="440" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
                     </subviews>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2gS-9J-jr5">
-                    <rect key="frame" x="1" y="158" width="479" height="80"/>
+                    <rect key="frame" x="0.0" y="158" width="480" height="87"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <box autoresizesSubviews="NO" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7xr-RR-uJ8">
-                            <rect key="frame" x="20" y="77" width="440" height="5"/>
+                            <rect key="frame" x="20" y="84" width="440" height="5"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <font key="titleFont" metaFont="system"/>
                         </box>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X4i-P9-OgD">
-                            <rect key="frame" x="16" y="21" width="56" height="17"/>
+                            <rect key="frame" x="17" y="5" width="56" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="phone" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1Ip-fI-oGa">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -165,10 +152,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_phone" id="nlN-il-lwy"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="KNC-rd-iaZ"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20Q-SB-q8R">
-                            <rect key="frame" x="74" y="19" width="70" height="18"/>
+                            <rect key="frame" x="75" y="3" width="70" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="phonehd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="5rR-xK-KM3">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -176,10 +164,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_phonehd" id="Mwr-n0-skP"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1W9-V3-ZCt"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KXz-MI-UbZ">
-                            <rect key="frame" x="207" y="19" width="67" height="18"/>
+                            <rect key="frame" x="208" y="3" width="67" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="tablethd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Guq-Pp-56I">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -187,10 +176,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_tablethd" id="DBc-F6-QFR"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="DTy-xH-awX"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8A-Da-Pp0">
-                            <rect key="frame" x="148" y="19" width="53" height="18"/>
+                            <rect key="frame" x="149" y="3" width="53" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="tablet" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Rfu-7q-xKM">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -198,10 +188,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_tablet" id="yVc-hh-uoh"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Ltp-Xh-8sr"/>
                             </connections>
                         </button>
                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9uk-fp-0pI">
-                            <rect key="frame" x="367" y="17" width="96" height="22"/>
+                            <rect key="frame" x="366" y="1" width="96" height="22"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <popUpButtonCell key="cell" type="push" title="8 - Best" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="8" imageScaling="proportionallyDown" inset="2" selectedItem="ouN-mi-llf" id="Fb6-Gg-Qbf">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -235,10 +226,11 @@
                             </popUpButtonCell>
                             <connections>
                                 <binding destination="-2" name="selectedTag" keyPath="currentPackageSettings.osSettings.ios.audio_quality" id="6Hs-MQ-g6w"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="gs7-KN-Fdm"/>
                             </connections>
                         </popUpButton>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-aa-Nid" customClass="CCBTextFieldLabel">
-                            <rect key="frame" x="290" y="22" width="75" height="14"/>
+                            <rect key="frame" x="289" y="6" width="75" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Audio quality" id="LzD-24-wYA">
                                 <font key="font" metaFont="smallSystem"/>
@@ -247,7 +239,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JJD-Zo-2ke">
-                            <rect key="frame" x="18" y="47" width="29" height="17"/>
+                            <rect key="frame" x="18" y="26" width="29" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iOS:" id="iTQ-nZ-waH">
                                 <font key="font" metaFont="system"/>
@@ -255,21 +247,25 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
+                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pb6-SZ-IAR">
+                            <rect key="frame" x="18" y="59" width="83" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="check" title="as Zip file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="C6z-0M-uYf">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.publishToZip" id="S5G-Ii-BPF"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fo6-Ul-j5T">
-                    <rect key="frame" x="0.0" y="2" width="480" height="78"/>
+                    <rect key="frame" x="0.0" y="33" width="480" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <box autoresizesSubviews="NO" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="LV3-Yf-cku">
-                            <rect key="frame" x="20" y="75" width="440" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aoI-VY-cJY">
-                            <rect key="frame" x="18" y="42" width="206" height="18"/>
+                            <rect key="frame" x="18" y="40" width="206" height="18"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="check" title="Custom directory for Zip files" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8tl-2q-2yA">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -277,10 +273,11 @@
                             </buttonCell>
                             <connections>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.publishToCustomOutputDirectory" id="WPE-aq-9q8"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Lst-ml-Urs"/>
                             </connections>
                         </button>
                         <button identifier=" " verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-zb-gM5">
-                            <rect key="frame" x="412" y="19" width="48" height="21"/>
+                            <rect key="frame" x="412" y="17" width="48" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="smallSquare" title="Select" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RsQ-4R-yom">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -292,7 +289,7 @@
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DmF-MD-VA9">
-                            <rect key="frame" x="20" y="20" width="389" height="19"/>
+                            <rect key="frame" x="20" y="18" width="389" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="p1j-hg-a42">
                                 <font key="font" metaFont="smallSystem"/>

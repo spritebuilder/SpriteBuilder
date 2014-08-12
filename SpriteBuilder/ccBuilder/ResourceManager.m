@@ -1209,6 +1209,18 @@
     return NULL;
 }
 
+- (RMDirectory *)directoryForPath:(NSString *)fullPath
+{
+    for (RMDirectory*directory in activeDirectories)
+    {
+        if ([directory.dirPath isEqualToString:fullPath])
+        {
+            return directory;
+        }
+    }
+    return nil;
+}
+
 
 #pragma mark - Locating resources
 

@@ -14,6 +14,7 @@
 #import "MiscConstants.h"
 #import "PackageCreator.h"
 #import "FileSystemTestCase.h"
+#import "SBAssserts.h"
 
 @interface PackageCreator_Tests : FileSystemTestCase
 
@@ -42,7 +43,7 @@
 - (void)testCreatePackageWithName
 {
     NSError *error;
-    XCTAssertTrue([_packageCreator createPackageWithName:@"NewPackage" error:&error]);
+    SBAssertStringsEqual([_packageCreator createPackageWithName:@"NewPackage" error:&error], [self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"]);
     XCTAssertNil(error, @"Error object should nil");
 
     [self assertFileExists:@"foo.spritebuilder/Packages/NewPackage.sbpack"];
@@ -58,7 +59,7 @@
     [_projectSettings addResourcePath:fullPackagePath error:nil];
 
     NSError *error;
-    XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertNil([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
     XCTAssertNotNil(error, @"Error object should be set");
     XCTAssertEqual(error.code, SBDuplicateResourcePathError, @"Error code should equal constant SBDuplicateResourcePathError");
 }
@@ -77,7 +78,7 @@
                                                                        error:[OCMArg setTo:underlyingFileError]];
 
     NSError *error;
-    XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertNil([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
     XCTAssertNotNil(error, @"Error object should be set");
     XCTAssertEqual(error.code, SBResourcePathExistsButNotInProjectError, @"Error code should equal constant SBResourcePathExistsButNotInProjectError");
 
@@ -98,11 +99,20 @@
                                                                        error:[OCMArg setTo:underlyingFileError]];
 
     NSError *error;
-    XCTAssertFalse([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
+    XCTAssertNil([_packageCreator createPackageWithName:@"NewPackage" error:&error], @"Creation of package should return NO.");
     XCTAssertNotNil(error, @"Error object should be set");
     XCTAssertEqual((int)error.code, NSFileWriteNoPermissionError, @"Error code should equal constant NSFileWriteNoPermissionError");
 
     [_fileManagerMock verify];
+}
+
+- (void)testCreatablePackageNameWithBaseName
+{
+    [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"] error:nil];
+    [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage 1.sbpack"] error:nil];
+    [self createFolders:@[@"foo.spritebuilder/Packages/NewPackage 2.sbpack"]];
+
+    SBAssertStringsEqual(@"NewPackage 3", [_packageCreator creatablePackageNameWithBaseName:@"NewPackage"]);
 }
 
 @end

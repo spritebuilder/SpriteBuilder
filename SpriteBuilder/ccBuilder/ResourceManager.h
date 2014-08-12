@@ -30,7 +30,7 @@
 @class RMDirectory;
 @class ProjectSettings;
 
-#define kCCBMaxTrackedDirectories 50
+#define kCCBMaxTrackedDirectories 500
 
 
 @interface ResourceManager : NSObject <SCEventListenerProtocol>
@@ -95,6 +95,7 @@
 // *** Locating resources ***
 - (RMResource*) resourceForPath:(NSString*) path;
 - (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir;
+- (RMDirectory *)directoryForPath:(NSString *)fullPath;
 
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;
 - (NSString *)dirPathForResource:(id)resource;

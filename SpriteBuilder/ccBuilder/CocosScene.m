@@ -2185,7 +2185,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         renderedScene.visible = YES;
         renderedScene.scale = stageZoom;
         [renderedScene beginWithClear:0 g:0 b:0 a:1];
-        [contentLayer visit];
+        [anchorPointCompensationLayer visit];
         [renderedScene end];
         [borderDevice texture].antialiased = NO;
     }
@@ -2292,7 +2292,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Render the root node
     [render beginWithClear:0 g:0 b:0 a:0];
-    [rootNode visit];
+    [anchorPointCompensationLayer visit];
     [render end];
     
     // Reset old position

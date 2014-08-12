@@ -13,6 +13,7 @@
 #import "NSString+Packages.h"
 #import "RMPackage.h"
 #import "PackageExporter.h"
+#import "SBAssserts.h"
 
 @interface PackageExporter_Tests : XCTestCase
 
@@ -45,7 +46,7 @@
     package.dirPath = [@"/baa/foo" stringByAppendingPackageSuffix];
 
     NSError *error;
-    XCTAssertFalse([_packageExporter exportPackage:package toPath:@"/foo" error:&error]);
+    XCTAssertFalse([_packageExporter exportPackage:package toDirectoryPath:@"/foo" error:&error]);
     XCTAssertNotNil(error, @"Error object should be set");
     XCTAssertEqual(error.code, SBPackageAlreadyExistsAtPathError);
 
@@ -66,7 +67,7 @@
     [[[mockFileManager expect] andReturnValue:@(YES)] copyItemAtPath:package.dirPath toPath:expectedCopyToPath error:[OCMArg anyObjectRef]];
 
     NSError *error;
-    XCTAssertTrue([_packageExporter exportPackage:package toPath:toPath error:&error]);
+    XCTAssertTrue([_packageExporter exportPackage:package toDirectoryPath:toPath error:&error]);
     XCTAssertNil(error);
 }
 
@@ -75,7 +76,7 @@
     id wrongPackage = @"I'm a package for sure!";
     NSError *error;
 
-    XCTAssertFalse([_packageExporter exportPackage:wrongPackage toPath:@"/foo" error:&error]);
+    XCTAssertFalse([_packageExporter exportPackage:wrongPackage toDirectoryPath:@"/foo" error:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBPackageExportInvalidPackageError);
 }
@@ -85,9 +86,17 @@
     RMPackage *package = [[RMPackage alloc] init];
     NSError *error;
 
-    XCTAssertFalse([_packageExporter exportPackage:package toPath:@"/foo" error:&error]);
+    XCTAssertFalse([_packageExporter exportPackage:package toDirectoryPath:@"/foo" error:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBPackageExportInvalidPackageError);
+}
+
+- (void)testExportPath
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = @"/baa/superpackage.sbpack";
+
+    SBAssertStringsEqual([_packageExporter exportPathForPackage:package toDirectoryPath:@"/foo/exporthere"], @"/foo/exporthere/superpackage.sbpack");
 }
 
 @end

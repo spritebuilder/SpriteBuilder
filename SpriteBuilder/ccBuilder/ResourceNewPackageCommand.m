@@ -3,7 +3,8 @@
 #import "ResourceNewPackageCommand.h"
 #import "ProjectSettings.h"
 #import "PackageCreator.h"
-#import "NewPackageWindowController.h"
+#import "ResourceManager.h"
+#import "RMPackage.h"
 
 @implementation ResourceNewPackageCommand
 
@@ -14,19 +15,34 @@
     PackageCreator *packageCreator = [[PackageCreator alloc] init];
     packageCreator.projectSettings = _projectSettings;
 
-    NewPackageWindowController *packageWindowController = [[NewPackageWindowController alloc] init];
-    packageWindowController.packageCreator = packageCreator;
+    NSError *error;
+    NSString *newPackageName = [packageCreator creatablePackageNameWithBaseName:@"Untitled Package"];
+    NSString *fullPath = [packageCreator createPackageWithName:newPackageName error:&error];
+    if (!fullPath)
+    {
+        [self showCannotCreatePackageWarningWithError:error];
+        return;
+    }
 
-    // Show new document sheet
-    [NSApp beginSheet:[packageWindowController window]
-       modalForWindow:_windowForModals
-        modalDelegate:NULL
-       didEndSelector:NULL
-          contextInfo:NULL];
+    [self selectAndMakePackageNameEditableWithNewPath:fullPath];
+}
 
-    [NSApp runModalForWindow:[packageWindowController window]];
-    [NSApp endSheet:[packageWindowController window]];
-    [[packageWindowController window] close];
+- (void)selectAndMakePackageNameEditableWithNewPath:(NSString *)newPackagePath
+{
+    RMDirectory *newPackage = [_resourceManager directoryForPath:newPackagePath];
+
+    [_outlineView editColumn:0 row:[_outlineView rowForItem:newPackage] withEvent:nil select:YES];
+}
+
+- (void)showCannotCreatePackageWarningWithError:(NSError *)error
+{
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Error"
+                                     defaultButton:@"Ok"
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:@"%@", error.localizedDescription];
+
+    [alert runModal];
 }
 
 
@@ -39,7 +55,7 @@
 
 + (BOOL)isValidForSelectedResources:(NSArray *)resources
 {
-    return resources.count == 0;
+    return YES;
 }
 
 
