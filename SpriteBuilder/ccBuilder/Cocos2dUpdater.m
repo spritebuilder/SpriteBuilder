@@ -14,7 +14,7 @@
 #import "SBErrors.h"
 #import "NSError+SBErrors.h"
 #import "NSAlert+Convenience.h"
-
+#import "SemanticVersioning.h"
 
 // Debug option: Some verbosity on the console, 1 to enable 0 to turn off
 #define Cocos2UpdateLogging 0
@@ -603,8 +603,11 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     {
         return Cocos2dVersionProjectVersionUnknown;
     }
-
-    NSComparisonResult result = [_spritebuildersCocos2dVersion compare:_projectsCocos2dVersion options:NSNumericSearch];
+	
+	SemanticVersioning * sbVersion = [[SemanticVersioning alloc] initWithString:_spritebuildersCocos2dVersion];
+	SemanticVersioning * projectVersion = [[SemanticVersioning alloc] initWithString:_projectsCocos2dVersion];
+	
+	NSComparisonResult result = [sbVersion compare:projectVersion];
 
     return result == NSOrderedAscending || result == NSOrderedSame
         ? Cocos2dVersionUpToDate
