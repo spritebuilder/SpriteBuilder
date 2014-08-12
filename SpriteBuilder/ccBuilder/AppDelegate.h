@@ -32,6 +32,7 @@
 #import "ProjectSettings.h"
 #import "CCNode+NodeInfo.h"
 #import "PublishingFinishedDelegate.h"
+#import "TaskStatusWindow.h"
 
 #define kCCBNumCanvasDevices 14
 
@@ -453,7 +454,7 @@ enum {
 - (void) modalDialogTitle: (NSString*)title message:(NSString*)msg disableKey:(NSString*)key; //Allow show once behavior.
 
 // Modal status messages (progress)
-- (void) modalStatusWindowStartWithTitle:(NSString*)title;
+- (void) modalStatusWindowStartWithTitle:(NSString *)title isIndeterminate:(BOOL)isIndeterminate onCancelBlock:(OnCancelBlock)onCancelBlock;
 - (void) modalStatusWindowFinish;
 - (void) modalStatusWindowUpdateStatusText:(NSString*) text;
 
