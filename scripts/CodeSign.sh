@@ -4,7 +4,14 @@
 ID="Developer ID Application: Apportable Inc. (U2K5E32W7G)"
 PKGID="3rd Party Mac Developer Installer: Apportable Inc. (U2K5E32W7G)"
 ENT="../SpriteBuilder/PlugIns.entitlements"
-APP="SpriteBuilder.app"
+
+if [ "$1" = "" ]; then
+    APP="SpriteBuilder.app"
+else
+    APP=$1
+fi
+
+echo signing $APP
 
 cd ../build
 
