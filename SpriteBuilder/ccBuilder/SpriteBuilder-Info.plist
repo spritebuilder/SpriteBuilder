@@ -78,7 +78,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>SpriteBuilder</string>
+	<string>${PRODUCT_NAME}.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
