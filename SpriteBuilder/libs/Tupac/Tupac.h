@@ -43,6 +43,7 @@
 @property(nonatomic,assign) int padding;
 @property(nonatomic,assign) BOOL dither;
 @property(nonatomic,assign) BOOL compress;
+@property(nonatomic,assign) BOOL trim;
 @property(nonatomic,readonly) NSString* errorMessage;
 
 + (Tupac*) tupac;

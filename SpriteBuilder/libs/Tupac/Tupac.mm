@@ -92,6 +92,7 @@ typedef struct _PVRTexHeader
         self.outputFormat = TupacOutputFormatCocos2D;
         self.maxTextureSize = 2048;
         self.padding = 1;
+        self.trim = YES;
     }
     return self;
 }
@@ -225,7 +226,15 @@ typedef struct _PVRTexHeader
         int w = (int)CGImageGetWidth(srcImage);
         int h = (int)CGImageGetHeight(srcImage);
         
-        NSRect trimRect = [Tupac trimmedRectForImage:srcImage];
+        NSRect trimRect;
+        if (_trim)
+        {
+            trimRect = [Tupac trimmedRectForImage:srcImage];
+        }
+        else
+        {
+            trimRect = CGRectMake(0, 0, w, h);
+        }
         
         if (!colorSpace)
         {

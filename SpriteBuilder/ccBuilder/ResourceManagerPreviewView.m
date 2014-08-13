@@ -100,6 +100,8 @@
     self.format_ios_dither_enabled = NO;
     self.format_ios_compress = NO;
     self.format_ios_dither = NO;
+    
+    self.trimSprites = NO;
 }
 
 - (void) setPreviewFile:(id) selection
@@ -191,6 +193,7 @@
     self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
     self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
     self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
+    self.trimSprites = ![[settings valueForResource:res andKey:@"keepSpritesUntrimmed"] boolValue];
 
     NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
@@ -533,6 +536,29 @@
         else
         {
             [settings removeObjectForResource:_previewedResource andKey:@"format_android_compress"];
+        }
+    }
+}
+
+- (void) setTrimSprites:(BOOL) trimSprites
+{
+    if (_trimSprites == trimSprites)
+    {
+        return;
+    }
+    _trimSprites = trimSprites;
+    
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+    
+    if (_previewedResource)
+    {
+        if (!trimSprites)
+        {
+            [settings setValue:[NSNumber numberWithBool:!trimSprites] forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
+        }
+        else
+        {
+            [settings removeObjectForResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
         }
     }
 }

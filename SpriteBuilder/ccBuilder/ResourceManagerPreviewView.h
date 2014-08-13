@@ -107,6 +107,8 @@
 @property (nonatomic,readwrite) int format_android_sound_quality;
 @property (nonatomic,readwrite) int format_android_sound_quality_enabled;
 
+@property (nonatomic,readwrite) BOOL trimSprites;
+
 @property (nonatomic, assign) int tabletScale;
 
 - (void) setPreviewFile:(NSString*) file;
