@@ -27,7 +27,6 @@ NSString * kLicenseDetailsUpdated = @"kLicenseDetailsUpdated";
 
 +(BOOL)requiresLicensing
 {
-	return NO;
 	NSDictionary * licenseDetails = [self getLicenseDetails];
 	if(licenseDetails == nil)
 		return YES;
