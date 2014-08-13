@@ -24,7 +24,8 @@ def main():
     parser.add_argument('-private_key', default=None, help='The private_key to secure the pro version. Pro version only ')
     parser.add_argument('-dcf_hash', default=None, help='The githash that dcf was taken from. Pro version only. Optional ')
     parser.add_argument('-dcf_tag', default=None, help='The git tag that dcf was taken from. Pro version only. Optional ')
-    parser.add_argument('-sb_tag', default=None, help='The git tag that SB was taken from. Optional ')    
+    parser.add_argument('-sb_hash', default=None, help='The git hash that SB was taken from. Optional ')
+    
     
     parser.add_argument('-mode', choices=('sandboxed','non_sandboxed'), default='non_sandboxed',help='Is the app built to run in sandboxed mode (App store) or non sandboxed (direct download). (default:non_sandboxed)')
     args = parser.parse_args()
@@ -35,7 +36,7 @@ def main():
 
     os.chdir('../');
     
-    version_info = {'dcf_hash' : args.dcf_hash, 'dcf_tag' : args.dcf_tag, 'sb_tag' : args.sb_tag}
+    version_info = {'dcf_hash' : args.dcf_hash, 'dcf_tag' : args.dcf_tag, 'sb_hash' : args.sb_hash}
     
     build_distribution(args.version, args.sku, args.mode,  version_info, args.private_key)
     

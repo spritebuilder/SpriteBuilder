@@ -91,7 +91,7 @@
 	
 	NSString * aboutInfo = @"";
 	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Pro Version: %@\n", versionDictionary[@"sb_version"]]];
-	
+	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Hash: %@\n", versionDictionary[@"sb_hash"]]];
 
 	//Compiler version.
 	NSString * compilerVersion = nil;
@@ -107,11 +107,6 @@
 
 	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"Compiler Version: %@\n", compilerVersion]];
 
-	if([versionDictionary[@"sb_tag"] isEqualToString:@"undefined"])
-	{
-		aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Hash: %@\n", versionDictionary[@"sb_hash"]]];
-	}
-	
 	
 #else
 	NSString * aboutInfo = [NSString stringWithFormat:@"Version:%@",versionDictionary[@"sb_version"]];
