@@ -50,7 +50,7 @@
 
 + (NSString *)nameForResources:(NSArray *)resources
 {
-    return @"New Package...";
+    return @"New Package";
 }
 
 + (BOOL)isValidForSelectedResources:(NSArray *)resources

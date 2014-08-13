@@ -174,7 +174,8 @@ def generate_template_project(project_name):
     os.chdir('../..')    
 
 try:
-    sys.exit(main())
+    if __name__ == '__main__':
+        sys.exit(main())
 except UserError, e:
     print ("FATAL ERROR: %s" % e)
     sys.exit(1)

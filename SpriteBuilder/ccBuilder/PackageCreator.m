@@ -23,8 +23,8 @@
 
 - (void)addIconToPackageFile:(NSString *)packagePath
 {
-    NSImage* folderIcon = [NSImage imageNamed:@"Package.icns"];
-    [[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:packagePath options:0];
+    //NSImage* folderIcon = [NSImage imageNamed:@"Package.icns"];
+    //[[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:packagePath options:0];
 }
 
 - (NSString *)createPackageWithName:(NSString *)packageName error:(NSError **)error

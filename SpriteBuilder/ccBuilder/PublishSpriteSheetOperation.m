@@ -16,6 +16,7 @@
 @property (nonatomic) int format_android;
 @property (nonatomic) BOOL format_android_dither;
 @property (nonatomic) BOOL format_android_compress;
+@property (nonatomic) BOOL trim;
 
 @end
 
@@ -126,6 +127,7 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
     _packer.previewFile = _previewFilePath;
     _packer.directoryPrefix = _subPath;
     _packer.border = YES;
+    _packer.trim = _trim;
 
     [self setImageFormatDependingOnTarget];
 
@@ -176,6 +178,7 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
     self.format_android = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android"] intValue];
     self.format_android_dither = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android_dither"] boolValue];
     self.format_android_compress = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android_compress"] boolValue];
+    self.trim = ![[_projectSettings valueForRelPath:_subPath andKey:@"keepSpritesUntrimmed"] boolValue];
 }
 
 - (void)cancel
