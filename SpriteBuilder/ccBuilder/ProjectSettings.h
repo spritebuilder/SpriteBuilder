@@ -148,7 +148,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic,assign) BOOL isDownloadingTranslations;
 @property (nonatomic,readwrite) double numToDownload;
 @property (nonatomic,assign) double numDownloaded;
-@property (nonatomic,strong) NSString* latestRequestID;
+@property (nonatomic,copy) NSString* latestRequestID;
 
 // Temporary property, do not persist
 @property (nonatomic) BOOL canUpdateCocos2D;

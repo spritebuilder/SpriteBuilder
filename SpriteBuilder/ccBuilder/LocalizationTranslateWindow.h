@@ -65,7 +65,7 @@
     NSString* _latestRequestID;
     
     //Interaction with EditorWindow
-    LocalizationEditorWindow* _parentWindow;
+    LocalizationEditorWindow* __weak _parentWindow;
     NSAlert* _buyAlert;
     NSString* _projectPathDir;
     NSString* _projectPath;
@@ -101,11 +101,11 @@
 @property (nonatomic,strong) NSMutableArray* phrasesToTranslate;
 @property (nonatomic,readwrite) NSInteger tierForTranslations;
 @property (nonatomic,strong) SKProduct* product;
-@property (nonatomic,strong) NSString* guid;
+@property (nonatomic,copy) NSString* guid;
 @property (nonatomic,strong) NSMutableDictionary* receipts;
-@property (nonatomic,strong) NSString* latestRequestID;
+@property (nonatomic,copy) NSString* latestRequestID;
 
-@property (nonatomic,strong) LocalizationEditorWindow* parentWindow;
+@property (nonatomic,weak) LocalizationEditorWindow* parentWindow;
 @property (nonatomic,strong) NSAlert* buyAlert;
 @property (nonatomic,strong) NSString* projectPathDir;
 @property (nonatomic,strong) NSString* projectPath;
