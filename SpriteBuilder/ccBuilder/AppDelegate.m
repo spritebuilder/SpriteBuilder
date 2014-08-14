@@ -4696,6 +4696,7 @@ static BOOL hideAllToNextSeparator;
     return fullpath;
 }
 
+#pragma mark restart project translation downloads
 /*
  * Restarts project downloads
  */
