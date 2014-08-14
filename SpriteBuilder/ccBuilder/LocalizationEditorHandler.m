@@ -156,6 +156,11 @@
     return managedFile;
 }
 
+/*
+ * Allows background translations downloads to set the managed file, without
+ * using or interfering with currently displayed attributes in the
+ * editor window.
+ */
 - (void) setManagedFileForBackgroundTranslationDownload:(NSString*) file
 {
     managedFile = [file copy];
@@ -192,6 +197,11 @@
     }
 }
 
+/*
+ * Allows background translations downloads to store the managed file, without
+ * using or interfering with currently displayed attributes in the
+ * editor window.
+ */
 - (void) storeFileForBackgroundTranslationDownload
 {
     if (!managedFile) return;
@@ -359,7 +369,7 @@
     [windowController.window makeKeyAndOrderFront:sender];
     windowController.hasOpenFile = (managedFile != NULL);
     if(((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations)
-    {
+    { 
         [windowController setDownloadingTranslations];
     }
     else
@@ -425,6 +435,9 @@
     }
 }
 
+/*
+ * Restart translation download
+ */
 - (void)restartTranslationDownload:(ProjectSettings *)ps{
     if (!windowController)
     {

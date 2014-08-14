@@ -227,7 +227,8 @@
 }
 
 /*
- * If you are opening a new window and one doesn't exist, open it and make it modal.
+ * If you are opening a new window and one doesn't exist, open it and make it modal. Else
+ * refresh and open.
  * If you are cancelling a download, show a cancel alert, and if the user 'okays' the cancel,
  * stop the download.
  */
@@ -596,10 +597,6 @@
     return NULL;
 }
 
-/*
- * If a translation is updated, update the tableView in the translation window if there
- * is one open.
- */
 - (void) tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
@@ -823,6 +820,10 @@
     
 }
 
+#pragma mark Restart Translation Download
+/*
+ * Restarts Translation Download
+ */
 - (void)restartTranslationDownload:(ProjectSettings *)ps{
     _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps parentWindow:self];
     [_ltw restartDownload];

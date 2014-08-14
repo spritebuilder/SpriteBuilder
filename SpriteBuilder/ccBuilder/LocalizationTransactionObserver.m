@@ -12,6 +12,9 @@
 @implementation LocalizationTransactionObserver
 @synthesize ltw = _ltw;
 
+/*
+ * Observes and handles responses from the paymentQueue
+ */
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions{
         
     for (SKPaymentTransaction* transaction in transactions)

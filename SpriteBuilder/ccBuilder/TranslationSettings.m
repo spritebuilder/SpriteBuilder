@@ -17,6 +17,9 @@
 
 static TranslationSettings *singleton;
 
+/*
+ * Creates singleton translation settings
+ */
 + (TranslationSettings*) translationSettings
 {
     @synchronized([TranslationSettings class])
@@ -31,7 +34,9 @@ static TranslationSettings *singleton;
     return nil;
 }
 
-
+/*
+ * Initializes, loads and then writes the translation settings
+ */
 - (id)init
 {
     self = [super init];
@@ -50,11 +55,18 @@ static TranslationSettings *singleton;
     
 }
 
+/*
+ * Writes and loads translation settings
+ */
 - (void)updateTranslationSettings
 {
     [self writeTranslationSettings];
     [self loadTranslationSettings];
 }
+
+/*
+ * Loads translation settings
+ */
 - (void)loadTranslationSettings
 {
     self.projectsDownloadingTranslations = [[[NSUserDefaults standardUserDefaults] objectForKey:@"projectsDownloadingTranslations"] mutableCopy];
@@ -66,11 +78,17 @@ static TranslationSettings *singleton;
     }
 }
 
+/*
+ * Writes translation settings
+ */
 - (void) writeTranslationSettings
 {
     [[NSUserDefaults standardUserDefaults] setObject:self.projectsDownloadingTranslations forKey:@"projectsDownloadingTranslations"];
 }
 
+/*
+ * Adds an observer for a keyPath
+ */
 -(void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context{
     
     if(self.observer)
@@ -81,6 +99,9 @@ static TranslationSettings *singleton;
     self.observer = observer;
 }
 
+/*
+ * Removes an observer for a keyPath
+ */
 -(void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath{
     
     [super removeObserver:observer forKeyPath:keyPath];

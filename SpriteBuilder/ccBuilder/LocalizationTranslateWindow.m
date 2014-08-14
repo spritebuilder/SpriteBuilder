@@ -290,7 +290,7 @@ static int numTimedOutIntervals = 0;
 }
 
 /*
- * Called when window reopened, just incase things were changed on the editor window
+ * Called when window reopened, just in case things were changed on the editor window
  */
 -(void)refresh{
     [self updateActiveLanguages];
@@ -484,7 +484,7 @@ static int numTimedOutIntervals = 0;
 #pragma mark Toggling/Clicking Button Events
 
 /*
- * Solicit a payment and set the cancel button to say 'Finish'.
+ * Solicit a payment after showing a warning about long download times.
  */
 - (IBAction)buy:(id)sender {
     NSInteger continueDownload;
@@ -1008,9 +1008,7 @@ static int numTimedOutIntervals = 0;
     dispatch_async(dispatch_get_main_queue(), ^{
         if(_timerTransDownload)
         {
-            
-                [_timerTransDownload invalidate];
-            
+            [_timerTransDownload invalidate];
         }
         [self getTranslations];
         _timerTransDownload = [NSTimer scheduledTimerWithTimeInterval:downloadRepeatInterval target:self selector:@selector(getTranslations) userInfo:nil repeats:YES];
@@ -1082,8 +1080,7 @@ static int numTimedOutIntervals = 0;
 }
 
 /*
- * Sends cancel request to the server with an error if there was one
- * TODO actually make this do something and handle errors
+ * Sends cancel notification to the server with an error if there was one
  */
 -(void)sendCancelNotificationWithError:(NSError*)error{
     NSDictionary *JSONObject;
@@ -1137,7 +1134,7 @@ static int numTimedOutIntervals = 0;
 #pragma mark Misc. helper funcs
 
 -(void)cannotFindProjectAlert:(NSString*)projectPath{
-    NSAlert* alert = [NSAlert alertWithMessageText:@"Cannot Find Project" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"We cannot find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
+    NSAlert* alert = [NSAlert alertWithMessageText:@"Cannot Find Project" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Could not find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
     [alert runModal];
 }
 /*

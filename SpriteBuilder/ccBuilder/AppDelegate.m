@@ -2043,16 +2043,16 @@ static BOOL hideAllToNextSeparator;
 
     self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
 
-    if(project.isDownloadingTranslations)
+    if(prjctSettings.isDownloadingTranslations)
     {
         TranslationSettings *translationSettings = [TranslationSettings translationSettings];
         NSMutableArray *projectsDownloadingTranslations = translationSettings.projectsDownloadingTranslations;
-        if(![projectsDownloadingTranslations containsObject:project.projectPath])
+        if(![projectsDownloadingTranslations containsObject:prjctSettings.projectPath])
         {
-            [projectsDownloadingTranslations addObject:project.projectPath];
+            [projectsDownloadingTranslations addObject:prjctSettings.projectPath];
             [translationSettings writeTranslationSettings];
         }
-        [localizationEditorHandler restartTranslationDownload:project];
+        [localizationEditorHandler restartTranslationDownload:prjctSettings];
     }
     return YES;
 }
@@ -4705,6 +4705,9 @@ static BOOL hideAllToNextSeparator;
     return fullpath;
 }
 
+/*
+ * Restarts project downloads
+ */
 - (void)restartProjectDownloads
 {
     TranslationSettings* translationSettings = [TranslationSettings translationSettings];
@@ -4743,22 +4746,24 @@ static BOOL hideAllToNextSeparator;
                      }
                      else
                      {
-                         NSLog(@"No language file!");
+                         NSLog(@"No language file! Project Path: %@", ps.projectPath);
                      }
                  }
                  else
                  {
-                     NSLog(@"Shouldn't have gotten here!");
+                     NSLog(@"Restarting a download in a project that isn't currently downloading translations! Project Path: %@", ps.projectPath);
                  }
              }
              else
              {
-                 NSLog(@"Project not at path");
+                 NSAlert* alert = [NSAlert alertWithMessageText:@"Cannot Find Project" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Could not find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
+                 [alert runModal];
              }
          }
          else
          {
-                NSLog(@"Project not at path");
+             NSAlert* alert = [NSAlert alertWithMessageText:@"Cannot Find Project" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"We cannot find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
+             [alert runModal];
          }
     }
 }

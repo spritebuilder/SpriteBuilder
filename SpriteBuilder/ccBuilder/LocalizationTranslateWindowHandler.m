@@ -1,5 +1,5 @@
 //
-//  LocalizationTranslateWindowView.m
+//  LocalizationTranslateWindowHandler.m
 //  SpriteBuilder
 //
 //  Created by Benjamin Koatz on 6/23/14.
@@ -11,6 +11,10 @@
 
 @implementation LocalizationTranslateWindowHandler
 
+/*
+ * Allows translate window to cancel the current URL task (unless its going to be a background
+ * translation download) and close itself from a modal state
+ */
 -(void)close{
     LocalizationTranslateWindow *wc = [self windowController];
     NSURLSessionTask *ct = [wc currTask];
