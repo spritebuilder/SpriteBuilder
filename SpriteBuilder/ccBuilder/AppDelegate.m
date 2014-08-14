@@ -643,9 +643,9 @@ typedef enum
     //Transaction Observer for Translation Downloads
     lto = [[LocalizationTransactionObserver alloc] init];
     [[SKPaymentQueue defaultQueue] addTransactionObserver:lto];
-    
+    #ifndef SPRITEBUILDER_PRO
     [self restartProjectDownloads];
-    
+    #endif
     if (delayOpenFiles)
     {
         [self openFiles:delayOpenFiles];
@@ -2035,7 +2035,7 @@ static BOOL hideAllToNextSeparator;
     [cocos2dUpdater updateAndBypassIgnore:NO];
 
     self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
-
+    #ifndef SPRITEBUILDER_PRO
     if(prjctSettings.isDownloadingTranslations)
     {
         TranslationSettings *translationSettings = [TranslationSettings translationSettings];
@@ -2047,6 +2047,7 @@ static BOOL hideAllToNextSeparator;
         }
         [localizationEditorHandler restartTranslationDownload:prjctSettings];
     }
+    #endif
     return YES;
 }
 

@@ -24,6 +24,10 @@
 
 - (void) awakeFromNib
 {
+    #ifdef SPRITEBUILDER_PRO
+    [_translationsButton setHidden:YES];
+    [_addTranslation setFrame:_translationsButton.frame];
+    #endif
     [tableTranslations registerForDraggedTypes:[NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"]];
     [self populateLanguageAddMenu];
     [tableLanguages reloadData];
