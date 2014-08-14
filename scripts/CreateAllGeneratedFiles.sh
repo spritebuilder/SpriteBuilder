@@ -9,9 +9,9 @@ fi
 
 # Update version for about box
 echo "Version: $1" > Generated/Version.txt
-echo "Sku: $2" >> Generated/Version.txt
-echo "GitHub: " >> Generated/Version.txt
-git rev-parse --short=10 HEAD >> Generated/Version.txt
+GITHUB_SKU=$(git rev-parse --short=10 HEAD)
+echo "GitHub: $GITHUB_SKU" >> Generated/Version.txt
+
 echo "=== GENERATING SpriteBuilder version file ==="
 touch Generated/Version.txt
 
