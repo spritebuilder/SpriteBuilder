@@ -41,6 +41,7 @@ function createKeychain() {
 
 function deleteKeychain() {
     security delete-keychain  spritebuilder.keychain
+    security default-keychain -s login.keychain
 }
 
 function codeSign() {
