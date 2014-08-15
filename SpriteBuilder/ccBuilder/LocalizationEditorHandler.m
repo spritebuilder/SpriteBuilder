@@ -368,14 +368,6 @@
     }
     [windowController.window makeKeyAndOrderFront:sender];
     windowController.hasOpenFile = (managedFile != NULL);
-    if(((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations)
-    { 
-        [windowController setDownloadingTranslations];
-    }
-    else
-    {
-        [windowController finishDownloadingTranslations];
-    }
 }
 
 - (NSString*) translationForKey:(NSString*)key

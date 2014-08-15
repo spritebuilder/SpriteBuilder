@@ -315,6 +315,7 @@
     [popLanguageAdd setEnabled:0];
     [_addTranslation setEnabled:0];
     [popCurrentLanguage setEnabled:0];
+    [_translationsButton setEnabled:1];
     _translationsButton.title = @"Stop Download";
     [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
 }
@@ -347,8 +348,39 @@
     [popLanguageAdd setEnabled:1];
     [popCurrentLanguage setEnabled:1];
     [_addTranslation setEnabled:1];
+    [_translationsButton setEnabled:1];
     _translationsButton.title = @"Buy Translations...";
     [_translationProgress setToolTip:@""];
+}
+
+/*
+ * For when there is no open file
+ */
+-(void)displayForNoOpenFile{
+    
+    [tableTranslations setEnabled:0];
+    [tableLanguages setEnabled:0];
+    [popLanguageAdd setEnabled:0];
+    [popCurrentLanguage setEnabled:0];
+    [_addTranslation setEnabled:0];
+    #ifndef SPRITEBUILDER_PRO
+    [_translationProgress setHidden:1];
+    [_translationProgressText setHidden:1];
+    [_translationsButton setEnabled:0];
+    _translationsButton.title = @"Buy Translations...";
+    [_translationProgress setToolTip:@""];
+    #endif
+}
+
+/*
+ * Used in spritebuilder pro, since there's no support for buying translations yet.
+ */
+-(void)displayForOpenFile{
+    [tableTranslations setEnabled:1];
+    [tableLanguages setEnabled:1];
+    [popLanguageAdd setEnabled:1];
+    [_addTranslation setEnabled:1];
+    [popCurrentLanguage setEnabled:1];
 }
 
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
@@ -810,8 +842,22 @@
  */
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    #ifdef SPRITEBUILDER_PRO
     if([keyPath isEqualToString:@"hasOpenFile"]){
-        if(ps.isDownloadingTranslations)
+        if(ps)
+        {
+            [self displayForOpenFile];
+        }else{
+            [self displayForNoOpenFile];
+        }
+    }
+    #else
+    if([keyPath isEqualToString:@"hasOpenFile"]){
+        if(!ps)
+        {
+            [self displayForNoOpenFile];
+        }
+        else if(ps.isDownloadingTranslations)
         {
             _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps parentWindow:self];
             [_ltw restartDownload];
@@ -821,6 +867,7 @@
             _ltw = nil;
         }
     }
+    #endif
     
 }
 
