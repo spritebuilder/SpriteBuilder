@@ -18,55 +18,95 @@ cd ../build
 # Remove signature from PVR tool (as it is already signed)
 # rm "$APP/Contents/Resources/PVRTexToolCL"
 # codesign --remove-signature "$APP/Contents/Resources/PVRTexToolCL"
-
 # Sign command line tools
 
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/lame"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/ccz"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/oggenc"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/pngquant"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/optipng"
-# codesign --entitlements $ENT -s "$ID" "$APP/Contents/Resources/PVRTexToolCL"
+function createKeychain() {
+    echo Creating spritebuilder.keychain
+    security delete-keychain  spritebuilder.keychain
+    security create-keychain -p spritebuilder spritebuilder.keychain
+    if [ $? != 0 ]; then
+        echo Failed to create keychain.
+        exit 1
+    fi
+    
+    echo $KEYSTORE/sb.keystore
+    security import $KEYSTORE/sb.keystore -k spritebuilder.keychain -f pkcs12 -P spritebuilder -A
+    if [ $? != 0 ]; then
+        echo Failed to import keystore.
+        exit 1
+    fi
+    security default-keychain -s spritebuilder.keychain
+    security unlock-keychain -p spritebuilder spritebuilder.keychain
+}
+
+function deleteKeychain() {
+    security delete-keychain  spritebuilder.keychain
+}
+
+function codeSign() {
+    echo CodeSign Func: "$APP/$1"
+    codesign --entitlements $ENT  -f --keychain spritebuilder.keychain -s "$ID" "$APP/""$1"
+ 
+    if [ $? != 0 ]; then
+        echo Codesign faild. $1
+        fail
+    fi
+}
+
+function fail(){
+    deleteKeychain
+    exit 1
+}
+
+createKeychain
+codeSign Contents/Resources/lame
+codeSign Contents/Resources/ccz
+codeSign Contents/Resources/oggenc
+codeSign Contents/Resources/pngquant
+codeSign Contents/Resources/optipng
+# codeSign Contents/Resources/PVRTexToolCL"
 
 # Sign plug-ins
 
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCBFile.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCButton.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCControl.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCLabelBMFont.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCLabelTTF.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCLayoutBox.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCNodeColor.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCNodeGradient.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCParticleSystem.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCScrollView.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCSlider.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCSprite.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCSprite9Slice.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCTextField.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsPinJoint.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsPivotJoint.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsSpringJoint.ccbPlugNode"
+codeSign Contents/PlugIns/CCBFile.ccbPlugNode
+codeSign Contents/PlugIns/CCButton.ccbPlugNode
+codeSign Contents/PlugIns/CCControl.ccbPlugNode
+codeSign Contents/PlugIns/CCLabelBMFont.ccbPlugNode
+codeSign Contents/PlugIns/CCLabelTTF.ccbPlugNode
+codeSign Contents/PlugIns/CCLayoutBox.ccbPlugNode
+codeSign Contents/PlugIns/CCNode.ccbPlugNode
+codeSign Contents/PlugIns/CCNodeColor.ccbPlugNode
+codeSign Contents/PlugIns/CCNodeGradient.ccbPlugNode
+codeSign Contents/PlugIns/CCParticleSystem.ccbPlugNode
+codeSign Contents/PlugIns/CCPhysicsNode.ccbPlugNode
+codeSign Contents/PlugIns/CCScrollView.ccbPlugNode
+codeSign Contents/PlugIns/CCSlider.ccbPlugNode
+codeSign Contents/PlugIns/CCSprite.ccbPlugNode
+codeSign Contents/PlugIns/CCSprite9Slice.ccbPlugNode
+codeSign Contents/PlugIns/CCTextField.ccbPlugNode
+codeSign Contents/PlugIns/CCPhysicsPinJoint.ccbPlugNode
+codeSign Contents/PlugIns/CCPhysicsPivotJoint.ccbPlugNode
+codeSign Contents/PlugIns/CCPhysicsSpringJoint.ccbPlugNode
 
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SBButtonNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SBControlNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKColorSpriteNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKFile.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKLabelNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKSpriteNode.ccbPlugNode"
+codeSign Contents/PlugIns/SBButtonNode.ccbPlugNode
+codeSign Contents/PlugIns/SBControlNode.ccbPlugNode
+codeSign Contents/PlugIns/SKColorSpriteNode.ccbPlugNode
+codeSign Contents/PlugIns/SKFile.ccbPlugNode
+codeSign Contents/PlugIns/SKLabelNode.ccbPlugNode
+codeSign Contents/PlugIns/SKNode.ccbPlugNode
+codeSign Contents/PlugIns/SKSpriteNode.ccbPlugNode
 
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
+codeSign "Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
 
 # Sign Frameworks
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework"
+codeSign Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework
+codeSign Contents/Frameworks/HockeySDK.framework
+codeSign Contents/Frameworks/Sparkle.framework
 
 # Sign App
-codesign --entitlements ../SpriteBuilder/SpriteBuilder.entitlements -s "$ID" "$APP"
+echo codeSign "$APP"
+codeSign
 
 # Archive App
-productbuild --component "$APP" /Applications --sign "$PKGID" --product ../SpriteBuilder/Requirements.plist "$APP.pkg"
-
+productbuild --component "$APP" /Applications --sign "$PKGID" --keychain spritebuilder.keychain --product ../SpriteBuilder/Requirements.plist "$APP.pkg"
+deleteKeychain
