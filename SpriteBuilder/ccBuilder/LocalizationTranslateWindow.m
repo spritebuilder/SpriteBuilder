@@ -883,15 +883,7 @@ static int numTimedOutIntervals = 0;
     }
     else
     {
-        handler = [[LocalizationEditorHandler alloc] init];
-        NSString* langFile = [[_projectPathDir stringByAppendingPathComponent:@"SpriteBuilder Resources"] stringByAppendingPathComponent:@"Strings.ccbLang"];
-        if(!langFile)
-        {
-            [self cannotFindProjectAlert:_projectPath];
-            [self pauseDownload];
-            return -1;
-        }
-        [handler setManagedFileForBackgroundTranslationDownload:langFile];
+        
         NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:_projectPath];
         if(!projectDict)
         {
@@ -908,6 +900,23 @@ static int numTimedOutIntervals = 0;
         }
         ps.projectPath = _projectPath;
         [ps store];
+        handler = [[LocalizationEditorHandler alloc] init];
+        NSString* langFile = nil;
+        for(NSDictionary *rp in ps.resourcePaths)
+        {
+            NSString *tempLangFile = [_projectPathDir stringByAppendingPathComponent:[[rp objectForKey:@"path"] stringByAppendingPathComponent:@"Strings.ccbLang"]];
+            if([[NSFileManager defaultManager] fileExistsAtPath:tempLangFile])
+            {
+                langFile = tempLangFile;
+            }
+        }
+        if(!langFile)
+        {
+            [self cannotFindProjectAlert:_projectPath];
+            [self pauseDownload];
+            return -1;
+        }
+        [handler setManagedFileForBackgroundTranslationDownload:langFile];
     }
     NSArray* handlerTranslations = handler.translations;
     NSArray* requests = [initialTransDict objectForKey:@"requests"];
