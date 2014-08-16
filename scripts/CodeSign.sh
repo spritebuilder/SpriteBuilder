@@ -1,14 +1,19 @@
 #!/bin/bash
 
-# ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
+#ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
 ID="Developer ID Application: Apportable Inc. (U2K5E32W7G)"
 PKGID="3rd Party Mac Developer Installer: Apportable Inc. (U2K5E32W7G)"
-ENT="../SpriteBuilder/PlugIns.entitlements"
+ENT="../SpriteBuilder/NonSandboxed.entitlements"
 
 if [ "$1" = "" ]; then
     APP="SpriteBuilder.app"
 else
     APP=$1
+fi
+
+if [ "$KEYSTORE" = ""]; then
+    echo Failed to find KEYSTORE for sb.keystore keychain. Specify one with: 'export KEYSTORE=<path>'
+    exit 1
 fi
 
 echo signing $APP
@@ -46,7 +51,7 @@ function deleteKeychain() {
 
 function codeSign() {
     echo CodeSign Func: "$APP/$1"
-    codesign --entitlements $ENT  -f --keychain spritebuilder.keychain -s "$ID" "$APP/""$1"
+    codesign --entitlements $ENT  -f --deep --keychain spritebuilder.keychain -s "$ID" "$APP/""$1"
  
     if [ $? != 0 ]; then
         echo Codesign faild. $1
