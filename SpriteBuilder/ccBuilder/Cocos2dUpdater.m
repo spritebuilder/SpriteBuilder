@@ -191,7 +191,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)finishWithUpdateResult:(BOOL)status error:(NSError *)error
 {
-    dispatch_sync(dispatch_get_main_queue(), ^
+    [self runOnMainThread:^
     {
         [_appDelegate modalStatusWindowFinish];
 
@@ -209,7 +209,23 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
             [self showUpdateErrorDialog:error];
             [self rollBack];
         }
-    });
+
+    }];
+}
+
+- (void)runOnMainThread:(dispatch_block_t)block
+{
+    if ([NSThread isMainThread])
+    {
+        block();
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^
+        {
+            block();
+        });
+    }
 }
 
 - (void)openBrowserWithCocos2dUpdateInformation
@@ -253,11 +269,10 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)updateModalDialogStatusText:(NSString *)text
 {
-    NSAssert(![NSThread isMainThread], @"Should only be called from non main queue.");
-    dispatch_sync(dispatch_get_main_queue(), ^
+    [self runOnMainThread:^
     {
         [_appDelegate modalStatusWindowUpdateStatusText:text];
-    });
+    }];
 }
 
 - (void)setIgnoreThisVersion
