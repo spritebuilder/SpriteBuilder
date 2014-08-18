@@ -312,10 +312,6 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
     NSArray *args = @[@"-d", tmpDir, @"-o", zipFile];
     [_task setArguments:args];
 
-    NSPipe *pipeStdErr = [NSPipe pipe];
-    [_task setStandardError:pipeStdErr];
-    NSFileHandle *fileErr = [pipeStdErr fileHandleForReading];
-
     NSPipe *pipeStdOut = [NSPipe pipe];
     [_task setStandardOutput:pipeStdOut];
     self.outFile = [pipeStdOut fileHandleForReading];
@@ -344,8 +340,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
     if (status)
     {
-        NSData *dataStdErr = [fileErr readDataToEndOfFile];
-        *error = [self errorForFailedUnzipTask:zipFile dataStdErr:dataStdErr status:status];
+        *error = [self errorForFailedUnzipTaskWithstatus:status];
         NSLog(@"[COCO2D-UPDATER] [ERROR] unzipping failed: %@", *error);
         return NO;
     }
@@ -678,14 +673,11 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     self.cancelled = YES;
 }
 
-- (NSError *)errorForFailedUnzipTask:(NSString *)zipFile dataStdErr:(NSData *)dataStdErr status:(int)status
+- (NSError *)errorForFailedUnzipTaskWithstatus:(int)status
 {
-    NSString *stdErr = [[NSString alloc] initWithData: dataStdErr encoding: NSUTF8StringEncoding];
-
     NSDictionary *userInfo = @{
-            @"zipFile" : zipFile,
-            @"stdErr" : stdErr,
-            NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unzip task exited with status code %d. See stdErr key in userInfo.", status]};
+            NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Unzip task exited with status code %d. See console app.", status]
+    };
 
     return [NSError errorWithDomain:SBErrorDomain
                                code:SBCocos2dUpdateUnzipTemplateFailedError
