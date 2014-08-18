@@ -238,11 +238,8 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 {
     if (!self.isCancelled)
     {
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"Ok"];
-        alert.messageText = @"Error updating Cocos2D";
-        alert.informativeText = [NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@\n\nBackup folder restored.", error.localizedDescription];
-        [alert runModal];
+        [NSAlert showModalDialogWithTitle:@"Error updating Cocos2D"
+                                  message:[NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@\n\nBackup folder restored.", error.localizedDescription]];
     }
 }
 
@@ -408,11 +405,8 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)showUpdateSuccessDialog
 {
-    NSAlert *alert = [[NSAlert alloc] init];
-    alert.informativeText = @"Your project has been updated to use the latest version of Cocos2D.\n\nPlease test your Xcode project. If you encounter any issues check spritebuilder.com for more information.";
-    [alert addButtonWithTitle:@"OK"];
-    alert.messageText = @"Cocos2D Update Complete";
-    [alert runModal];
+    [NSAlert showModalDialogWithTitle:@"Cocos2D Update Complete"
+                              message:@"Your project has been updated to use the latest version of Cocos2D.\n\nPlease test your Xcode project. If you encounter any issues check spritebuilder.com for more information."];
 }
 
 - (NSString *)readSpriteBuildersCocos2dVersionFile
