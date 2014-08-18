@@ -46,20 +46,25 @@ typedef enum {
 
 static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-iphone/";
 static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
+static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuilder.com/update/";
+
 
 @interface Cocos2dUpdater ()
+
+@property (nonatomic, weak, readwrite) AppDelegate *appDelegate;
+@property (nonatomic, weak, readwrite) ProjectSettings *projectSettings;
+
 @property (nonatomic, strong) NSTask *task;
 @property (nonatomic, strong) NSFileHandle *outFile;
 @property (nonatomic, getter=isCancelled) BOOL cancelled;
+@property (nonatomic, copy) NSString *projectsCocos2dVersion;
+@property (nonatomic, copy) NSString *spritebuildersCocos2dVersion;
+@property (nonatomic, copy) NSString *backupFolderPath;
+
 @end
 
+
 @implementation Cocos2dUpdater
-{
-    NSString *_projectsCocos2dVersion;
-    NSString *_spritebuildersCocos2dVersion;
-    NSString *_backupFolderPath;
-    NSFileManager *_fileManager;
-}
 
 - (instancetype)init
 {
@@ -75,23 +80,24 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
     self = [super init];
     if (self)
     {
-        _appDelegate = appDelegate;
-        _projectSettings = projectSettings;
+        self.appDelegate = appDelegate;
+        self.projectSettings = projectSettings;
 
-        _spritebuildersCocos2dVersion = [self readSpriteBuildersCocos2dVersionFile];
-        _projectsCocos2dVersion = [self readProjectsCocos2dVersionFile];
-        _fileManager = [NSFileManager defaultManager];
+        self.spritebuildersCocos2dVersion = [self readSpriteBuildersCocos2dVersionFile];
+        self.projectsCocos2dVersion = [self readProjectsCocos2dVersionFile];
     }
     return self;
 }
 
 - (void)updateAndBypassIgnore:(BOOL)bypassIgnore
 {
+    NSAssert(_projectSettings != nil, @"Project settings needed to instantiate the updater.");
+
     [self updateProjectSettingsIfUserCanUpdate];
 
     if ([self shouldIgnoreThisVersion] && !bypassIgnore)
     {
-        LocalLog(@"[COCO2D-UPDATER] [INFO] Ignoring this version %@.", _spritebuildersCocos2dVersion);
+        LocalLog(@"[COCO2D-UPDATER] [INFO] Ignoring this version %@.", self.spritebuildersCocos2dVersion);
         return;
     }
 
@@ -111,7 +117,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
     if (updateAction == UpdateActionIgnoreVersion)
     {
-        LocalLog(@"[COCO2D-UPDATER] [INFO] Now ignoring this version %@.", _spritebuildersCocos2dVersion);
+        LocalLog(@"[COCO2D-UPDATER] [INFO] Now ignoring this version %@.", self.spritebuildersCocos2dVersion);
         [self setIgnoreThisVersion];
         return;
     }
@@ -186,7 +192,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)setBackupFolderPath
 {
-    _backupFolderPath = [self cocos2dBackupFolderPath:[self defaultProjectsCocos2DFolderPath]];
+    self.backupFolderPath = [self cocos2dBackupFolderPath:[self defaultProjectsCocos2DFolderPath]];
 }
 
 - (void)finishWithUpdateResult:(BOOL)status error:(NSError *)error
@@ -199,7 +205,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
         {
             LocalLog(@"[COCO2D-UPDATER] [INFO] Success!");
             _projectSettings.canUpdateCocos2D = NO;
-            [_projectSettings.cocos2dUpdateIgnoredVersions removeObject:_spritebuildersCocos2dVersion];
+            [_projectSettings.cocos2dUpdateIgnoredVersions removeObject:self.spritebuildersCocos2dVersion];
             [self openBrowserWithCocos2dUpdateInformation];
             [self showUpdateSuccessDialog];
         }
@@ -231,7 +237,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 - (void)openBrowserWithCocos2dUpdateInformation
 {
     NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
-    [workspace openURL:[NSURL URLWithString:@"http://www.spritebuilder.com/update/"]];
+    [workspace openURL:[NSURL URLWithString:URL_COCOS2D_UPDATE_INFORMATION]];
 }
 
 - (void)showUpdateErrorDialog:(NSError *)error
@@ -246,22 +252,23 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 - (void)rollBack
 {
     LocalLog(@"[COCO2D-UPDATER] [INFO] Rolling back.");
+    NSFileManager *fileManager = [NSFileManager defaultManager];
 
     NSString *defaultCocos2DFolderPath = [self defaultProjectsCocos2DFolderPath];
 
     // Without the backup folder we can't say what went wrong but
     // it is safe to not do anything
-    if (![_fileManager fileExistsAtPath:_backupFolderPath])
+    if (![fileManager fileExistsAtPath:self.backupFolderPath])
     {
         return;
     }
 
-    if ([_fileManager fileExistsAtPath:defaultCocos2DFolderPath])
+    if ([fileManager fileExistsAtPath:defaultCocos2DFolderPath])
     {
-        [_fileManager removeItemAtPath:defaultCocos2DFolderPath error:nil];
+        [fileManager removeItemAtPath:defaultCocos2DFolderPath error:nil];
     }
 
-    [_fileManager moveItemAtPath:_backupFolderPath toPath:defaultCocos2DFolderPath error:nil];
+    [fileManager moveItemAtPath:self.backupFolderPath toPath:defaultCocos2DFolderPath error:nil];
 }
 
 - (void)updateModalDialogStatusText:(NSString *)text
@@ -275,23 +282,26 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 - (void)setIgnoreThisVersion
 {
 	// SI: added check for _spritebuildersCocos2dVersion being nil - happens if you click "Ignore this version" (at least in dev builds)
-    if (_spritebuildersCocos2dVersion && ![_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_spritebuildersCocos2dVersion])
+    if (self.spritebuildersCocos2dVersion
+        && ![_projectSettings.cocos2dUpdateIgnoredVersions containsObject:self.spritebuildersCocos2dVersion])
     {
-        [_projectSettings.cocos2dUpdateIgnoredVersions addObject:_spritebuildersCocos2dVersion];
+        [_projectSettings.cocos2dUpdateIgnoredVersions addObject:self.spritebuildersCocos2dVersion];
     }
 }
 
 - (BOOL)shouldIgnoreThisVersion
 {
-    return [_projectSettings.cocos2dUpdateIgnoredVersions containsObject:_spritebuildersCocos2dVersion];
+    return [_projectSettings.cocos2dUpdateIgnoredVersions containsObject:self.spritebuildersCocos2dVersion];
 }
 
 - (BOOL)unzipProjectTemplateZip:(NSError **)error
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
     NSString *zipFile = [[NSBundle mainBundle] pathForResource:@"PROJECTNAME" ofType:@"zip" inDirectory:@"Generated"];
     NSString *tmpDir = [self tempFolderPathForUnzipping];
 
-    if (![_fileManager fileExistsAtPath:zipFile])
+    if (![fileManager fileExistsAtPath:zipFile])
     {
         LocalLog(@"[COCO2D-UPDATER] [ERROR] template file does not exist at path \"%@\"", zipFile);
         *error = [self errorForNonExistentTemplateFile:zipFile];
@@ -304,7 +314,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
         return NO;
     }
 
-    if (![_fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
+    if (![fileManager createDirectoryAtPath:tmpDir withIntermediateDirectories:NO attributes:nil error:error])
     {
         LocalLog(@"[COCO2D-UPDATER] [ERROR] could not create directory at path \"%@\" with error %@", tmpDir, error);
         return NO;
@@ -389,13 +399,15 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (BOOL)tidyUpTempFolder:(NSError **)error
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+
     NSString *tmpDir = [self tempFolderPathForUnzipping];
     LocalLog(@"[COCO2D-UPDATER] [INFO] tidying up temp folder: %@", tmpDir);
 
     [self updateModalDialogStatusText:@"Tidying up..."];
 
-    if ([_fileManager fileExistsAtPath:tmpDir]
-        && ![_fileManager removeItemAtPath:tmpDir error:error])
+    if ([fileManager fileExistsAtPath:tmpDir]
+        && ![fileManager removeItemAtPath:tmpDir error:error])
     {
         LocalLog(@"[COCO2D-UPDATER] [ERROR] tidying up unzip folder: %@", *error);
         return NO;
@@ -503,25 +515,26 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
 
 - (BOOL)renameCocos2dFolderToBackupFolder:(NSError **)error
 {
-    LocalLog(@"[COCO2D-UPDATER] [INFO] renaming project's cocos2d folder to backup name \"%@\"", _backupFolderPath);
-
-    BOOL result = [_fileManager moveItemAtPath:[self defaultProjectsCocos2DFolderPath]
-                                        toPath:_backupFolderPath
-                                         error:error];
+    LocalLog(@"[COCO2D-UPDATER] [INFO] renaming project's cocos2d folder to backup name \"%@\"", self.backupFolderPath);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL result = [fileManager moveItemAtPath:[self defaultProjectsCocos2DFolderPath]
+                                            toPath:self.backupFolderPath
+                                             error:error];
     if (!result)
     {
         LocalLog(@"[COCO2D-UPDATER] [ERROR] could not renamed cocos2d folder to backup folder name: from \"%@\" to \"%@\" with error %@",
-                 [self defaultProjectsCocos2DFolderPath], _backupFolderPath, *error);
+                 [self defaultProjectsCocos2DFolderPath], self.backupFolderPath, *error);
     }
     return result;
 }
 
 - (NSString *)cocos2dBackupFolderPath:(NSString *)defaultCocos2DFolderPath
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *result = [[defaultCocos2DFolderPath stringByDeletingLastPathComponent]
                                                   stringByAppendingPathComponent:BASE_COCOS2D_BACKUP_NAME];
 
-    if ([_fileManager fileExistsAtPath:result])
+    if ([fileManager fileExistsAtPath:result])
     {
         return [self cocos2dBackupFolderNameWithCounterPostfix:defaultCocos2DFolderPath cocos2dBackupFolderPath:result];
     }
@@ -530,10 +543,11 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
 
 - (NSString *)cocos2dBackupFolderNameWithCounterPostfix:(NSString *)defaultCocos2DFolderPath cocos2dBackupFolderPath:(NSString *)cocos2dBackupName
 {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSUInteger maxCounter = 0;
 
     NSString *libsFolder = [defaultCocos2DFolderPath stringByAppendingPathComponent:@".."];
-    NSArray *dirContents = [_fileManager contentsOfDirectoryAtPath:libsFolder error:nil];
+    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:libsFolder error:nil];
 
     for (NSString *directoryName in dirContents)
     {
@@ -569,15 +583,15 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
 {
     NSMutableString *informativeText = [NSMutableString string];
     [informativeText appendString:text];
-    [informativeText appendFormat:@"\n\nBefore updating we will make a backup of your old Cocos2D folder and rename it to \"%@\".", [_backupFolderPath lastPathComponent]];
+    [informativeText appendFormat:@"\n\nBefore updating we will make a backup of your old Cocos2D folder and rename it to \"%@\".", [self.backupFolderPath lastPathComponent]];
 
-    if (_projectsCocos2dVersion)
+    if (self.projectsCocos2dVersion)
     {
-        [informativeText appendFormat:@"\n\nUpdate from version %@ to %@?", _projectsCocos2dVersion, _spritebuildersCocos2dVersion];
+        [informativeText appendFormat:@"\n\nUpdate from version %@ to %@?", self.projectsCocos2dVersion, self.spritebuildersCocos2dVersion];
     }
     else
     {
-        [informativeText appendFormat:@"\n\nUpdate to version %@?", _spritebuildersCocos2dVersion];
+        [informativeText appendFormat:@"\n\nUpdate to version %@?", self.spritebuildersCocos2dVersion];
     }
 
     NSAlert *alert = [[NSAlert alloc] init];
@@ -601,15 +615,15 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
 
 - (Cocos2dVersionComparisonResult)compareProjectsCocos2dVersionWithSpriteBuildersVersion
 {
-    LocalLog(@"[COCO2D-UPDATER] [INFO] Comparing version - SB: %@ with project: %@ ...", _spritebuildersCocos2dVersion, _projectsCocos2dVersion);
+    LocalLog(@"[COCO2D-UPDATER] [INFO] Comparing version - SB: %@ with project: %@ ...", self.spritebuildersCocos2dVersion, self.projectsCocos2dVersion);
 
-    if (!_projectsCocos2dVersion)
+    if (!self.projectsCocos2dVersion)
     {
         return Cocos2dVersionProjectVersionUnknown;
     }
 	
-	SemanticVersioning * sbVersion = [[SemanticVersioning alloc] initWithString:_spritebuildersCocos2dVersion];
-	SemanticVersioning * projectVersion = [[SemanticVersioning alloc] initWithString:_projectsCocos2dVersion];
+	SemanticVersioning * sbVersion = [[SemanticVersioning alloc] initWithString:self.spritebuildersCocos2dVersion];
+	SemanticVersioning * projectVersion = [[SemanticVersioning alloc] initWithString:self.projectsCocos2dVersion];
 	
 	NSComparisonResult result = [sbVersion compare:projectVersion];
 
@@ -620,7 +634,8 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
 
 - (BOOL)defaultProjectsCocos2dFolderExists
 {
-    return [_fileManager fileExistsAtPath:[self defaultProjectsCocos2DFolderPath]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [fileManager fileExistsAtPath:[self defaultProjectsCocos2DFolderPath]];
 }
 
 - (BOOL)isCoco2dAGitSubmodule
@@ -629,8 +644,9 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
 
     NSString *rootDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
     NSString *gitmodulesPath = [rootDir stringByAppendingPathComponent:@".gitmodules"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    if (![_fileManager fileExistsAtPath:gitmodulesPath])
+    if (![fileManager fileExistsAtPath:gitmodulesPath])
     {
         return NO;
     }
