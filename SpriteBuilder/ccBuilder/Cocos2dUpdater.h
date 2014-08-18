@@ -11,8 +11,8 @@
 
 @interface Cocos2dUpdater : NSObject
 
-@property (nonatomic, readonly) AppDelegate *appDelegate;
-@property (nonatomic, readonly) ProjectSettings *projectSettings;
+@property (nonatomic, weak, readonly) AppDelegate *appDelegate;
+@property (nonatomic, weak, readonly) ProjectSettings *projectSettings;
 
 - (instancetype)initWithAppDelegate:(AppDelegate *)appDelegate projectSettings:(ProjectSettings *)projectSettings;
 
