@@ -425,7 +425,6 @@
     // queue to ensure that later spritesheets don't add more sprites from previous passes
     [_queue addOperationWithBlock:^
     {
-        NSLog(@"** Removing sprite cache dir %@", [_projectSettings tempSpriteSheetCacheDirectory]);
         NSFileManager *fileManager = [NSFileManager defaultManager];
         [fileManager removeItemAtPath:[_projectSettings tempSpriteSheetCacheDirectory] error:NULL];
     }];
@@ -467,7 +466,6 @@
 
         [_queue addOperationWithBlock:^
         {
-            NSLog(@"** Creating intermediate filelookup %@", intermediateFileLookupPath);
             if (![publishIntermediateFilesLookup writeToFile:intermediateFileLookupPath])
             {
                 [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@", spriteSheetName, resolution]];
