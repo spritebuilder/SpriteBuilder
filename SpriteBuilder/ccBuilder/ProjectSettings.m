@@ -77,6 +77,10 @@
 @synthesize versionStr;
 @synthesize needRepublish;
 @synthesize lastWarnings;
+@synthesize isDownloadingTranslations;
+@synthesize numDownloaded;
+@synthesize numToDownload;
+@synthesize latestRequestID;
 
 - (id) init
 {
@@ -123,6 +127,12 @@
     
     self.resourceProperties = [NSMutableDictionary dictionary];
     
+    //Translation
+    self.isDownloadingTranslations = NO;
+    self.numDownloaded =  0;
+    self.numToDownload =  0;
+    self.latestRequestID = @"";
+    
     // Load available exporters
     self.availableExporters = [NSMutableArray array];
     for (PlugInExport* plugIn in [[PlugInManager sharedManager] plugInsExporters])
@@ -163,7 +173,6 @@
 
     self.publishEnabledIOS = [[dict objectForKey:@"publishEnablediPhone"] boolValue];
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
-
     self.publishResolution_ios_phone = [[dict objectForKey:@"publishResolution_ios_phone"] boolValue];
     self.publishResolution_ios_phonehd = [[dict objectForKey:@"publishResolution_ios_phonehd"] boolValue];
     self.publishResolution_ios_tablet = [[dict objectForKey:@"publishResolution_ios_tablet"] boolValue];
@@ -218,6 +227,13 @@
     }
 
     [self detectBrowserPresence];
+    
+    //Translations
+    self.isDownloadingTranslations = [[dict objectForKey:@"isDownloadingTranslations"] boolValue];
+    self.numDownloaded =  [[dict objectForKey:@"numDownloaded"] doubleValue];
+    self.numToDownload =  [[dict objectForKey:@"numToDownload"] doubleValue];
+    self.latestRequestID = [dict objectForKey:@"latestRequestID"];
+    
 
     [self initializeVersionStringWithProjectDict:dict];
 
@@ -293,7 +309,17 @@
     [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
     [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
     [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
-
+    
+    //Translations
+    [dict setObject:[NSNumber numberWithBool:self.isDownloadingTranslations]
+             forKey:@"isDownloadingTranslations"];
+    [dict setObject:[NSNumber numberWithDouble:self.numDownloaded] forKey:@"numDownloaded"];
+    [dict setObject:[NSNumber numberWithDouble:self.numToDownload] forKey:@"numToDownload"];
+    if(self.latestRequestID)
+    {
+        [dict setObject:self.latestRequestID forKey:@"latestRequestID"];
+    }
+    
     [dict setObject:[NSNumber numberWithInt:self.publishEnvironment] forKey:@"publishEnvironment"];
 
     [dict setObject:[NSNumber numberWithInt:self.excludedFromPackageMigration] forKey:@"excludedFromPackageMigration"];

@@ -27,9 +27,22 @@
 #import "AppDelegate.h"
 #import "CocosScene.h"
 #import "LocalizationEditorHandler.h"
+#import "TranslationSettings.h"
 
 @implementation InspectorText
 
+- (id)initWithSelection:(CCNode *)s andPropertyName:(NSString *)pn andDisplayName:(NSString *)dn andExtra:(NSString *)e
+{
+    
+    self = [super initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e];
+    TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+    [translationSettings addObserver:self forKeyPath:@"projectsDownloadingTranslations" options:0 context:nil];
+    self.localizeButtonEnabled = ![AppDelegate appDelegate].projectSettings.isDownloadingTranslations;
+    dispatch_async(dispatch_get_main_queue(), ^{
+    [[AppDelegate appDelegate].localizationEditorHandler setEdited];
+    });
+    return self;
+}
 - (void) setText:(NSAttributedString *)text
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:propertyName];
@@ -87,7 +100,9 @@
     [self didChangeValueForKey:@"hasTranslation"];
     
     [StringPropertySetter refreshStringProp:propertyName forNode:selection];
-    [super refresh];    
+    [super refresh];
+    [self.localizeButton setEnabled:self.localizeButtonEnabled];
+    
 }
 
 - (IBAction)pressedEditTranslation:(id)sender
@@ -97,4 +112,26 @@
     [handler createOrEditTranslationForKey:[[self text] string]];
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    if([keyPath isEqualToString:@"projectsDownloadingTranslations"])
+    {
+        if(ps.isDownloadingTranslations)
+        {
+            self.localizeButtonEnabled = NO;
+        }
+        else
+        {
+            self.localizeButtonEnabled = YES;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+        [[AppDelegate appDelegate].localizationEditorHandler setEdited];
+        });
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+    
+}
 @end

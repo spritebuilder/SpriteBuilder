@@ -29,6 +29,8 @@
 @property (nonatomic) NSAttributedString* text;
 @property (nonatomic,assign) BOOL localize;
 @property (nonatomic,assign) BOOL hasTranslation;
+@property (nonatomic,strong) IBOutlet NSButton *localizeButton;
+@property (nonatomic,assign) BOOL localizeButtonEnabled;
 
 - (IBAction)pressedEditTranslation:(id)sender;
 

@@ -99,6 +99,14 @@
 		77E1995D13858DE0006C361B /* TabNewMetalRollover.png in Resources */ = {isa = PBXBuildFile; fileRef = 77E1995113858DE0006C361B /* TabNewMetalRollover.png */; };
 		77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */; };
 		77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */; };
+		7B300A971990570F00AFF762 /* LocalizationTranslateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */; };
+		7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */; };
+		7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */; };
+		7BD26ED31979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */; };
+		7BD26EF1197E1D640003FEF4 /* TranslationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD26EF0197E1D640003FEF4 /* TranslationSettings.m */; };
+		7BDECCD1196CBA2400F3EB11 /* LocalizationTranslateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */; };
+		7BDECCD4196CBA6100F3EB11 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */; };
+		7BDECCE1197047EE00F3EB11 /* LocalizationTransactionObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */; };
 		80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = 8076F94D18624318003C4153 /* InspectorStringSimple.m */; };
 		80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E97F6318370F400052647D /* WarningCell.m */; };
 		8045F136183ADA900082BD94 /* seq-visible.png in Resources */ = {isa = PBXBuildFile; fileRef = 8045F12C183AD6D30082BD94 /* seq-visible.png */; };
@@ -1345,6 +1353,19 @@
 		77E7D04A138F777A00E8EE67 /* CCBModalSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBModalSheetController.m; sourceTree = "<group>"; };
 		77E7D04D138F78F600E8EE67 /* StageSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StageSizeWindow.h; sourceTree = "<group>"; };
 		77E7D04E138F78F600E8EE67 /* StageSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StageSizeWindow.m; sourceTree = "<group>"; };
+		7B3EF5D9195885F20023C169 /* LocalizationTranslateWindowHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindowHandler.h; sourceTree = "<group>"; };
+		7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindowHandler.m; sourceTree = "<group>"; };
+		7B88AD45195A4846001BF73C /* LocalizationEditorTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorTextFieldCell.h; sourceTree = "<group>"; };
+		7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationEditorTextFieldCell.m; sourceTree = "<group>"; };
+		7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LocalizationInAppPurchasesPIDs.plist; sourceTree = "<group>"; };
+		7BD26EEF197E1D640003FEF4 /* TranslationSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationSettings.h; sourceTree = "<group>"; };
+		7BD26EF0197E1D640003FEF4 /* TranslationSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranslationSettings.m; sourceTree = "<group>"; };
+		7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7BDECCDF197047EE00F3EB11 /* LocalizationTransactionObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTransactionObserver.h; sourceTree = "<group>"; };
+		7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTransactionObserver.m; sourceTree = "<group>"; };
+		7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationTranslateWindow.xib; sourceTree = "<group>"; };
+		7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationTranslateWindow.h; sourceTree = "<group>"; };
+		7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalizationTranslateWindow.m; sourceTree = "<group>"; };
 		800C005E1846A40D00544BD2 /* select-scale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-scale.png"; sourceTree = "<group>"; };
 		800C006F1848178D00544BD2 /* select-crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-crosshair.png"; sourceTree = "<group>"; };
 		8045F12C183AD6D30082BD94 /* seq-visible.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-visible.png"; sourceTree = "<group>"; };
@@ -2488,6 +2509,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BDECCD4196CBA6100F3EB11 /* StoreKit.framework in Frameworks */,
 				D35E589E18E391DA008571EC /* GLKit.framework in Frameworks */,
 				80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */,
 				B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */,
@@ -2788,6 +2810,8 @@
 				92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */,
 				92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */,
 				92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */,
+				7BD26EEF197E1D640003FEF4 /* TranslationSettings.h */,
+				7BD26EF0197E1D640003FEF4 /* TranslationSettings.m */,
 			);
 			name = "Application Settings & Globals";
 			sourceTree = "<group>";
@@ -3295,6 +3319,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BDECCD3196CBA6100F3EB11 /* StoreKit.framework */,
 				830F4EB019347032002B832D /* OCMock.framework */,
 				D35E589D18E391DA008571EC /* GLKit.framework */,
 				D2E0168418D783C900927430 /* AppleScriptKit.framework */,
@@ -3416,6 +3441,7 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7BD26ED21979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist */,
 				DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */,
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
@@ -3837,6 +3863,13 @@
 			children = (
 				B7083DF717B1CBC8006628C7 /* LocalizationEditorHandler.h */,
 				B7083DF817B1CBC8006628C7 /* LocalizationEditorHandler.m */,
+				7B3EF5D9195885F20023C169 /* LocalizationTranslateWindowHandler.h */,
+				7B3EF5DA195885F20023C169 /* LocalizationTranslateWindowHandler.m */,
+				7BF55302193F8A7500183F09 /* LocalizationTranslateWindow.xib */,
+				7BF55305193F912100183F09 /* LocalizationTranslateWindow.h */,
+				7BF55306193F912200183F09 /* LocalizationTranslateWindow.m */,
+				7BDECCDF197047EE00F3EB11 /* LocalizationTransactionObserver.h */,
+				7BDECCE0197047EE00F3EB11 /* LocalizationTransactionObserver.m */,
 				B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */,
 				B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */,
 				B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */,
@@ -3849,6 +3882,8 @@
 				B7083E0317B32623006628C7 /* LocalizationEditorLanguageTableView.m */,
 				B7083E0517B32DAD006628C7 /* LocalizationEditorTranslationTableView.h */,
 				B7083E0617B32DAD006628C7 /* LocalizationEditorTranslationTableView.m */,
+				7B88AD45195A4846001BF73C /* LocalizationEditorTextFieldCell.h */,
+				7B88AD46195A4846001BF73C /* LocalizationEditorTextFieldCell.m */,
 			);
 			name = "Localization Editor";
 			sourceTree = "<group>";
@@ -6004,6 +6039,7 @@
 				E3C65128151C7B9000D639C0 /* InspectorBlockCCControl.xib in Resources */,
 				E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */,
 				E34E5D6B153585EC000201FB /* ruler-bg-vertical.png in Resources */,
+				7B300A971990570F00AFF762 /* LocalizationTranslateWindow.xib in Resources */,
 				B7096E2B180CD98E00164A8A /* doc-scene.png in Resources */,
 				E34E5D6E1535AA78000201FB /* ruler-mark-major.png in Resources */,
 				E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */,
@@ -6165,6 +6201,7 @@
 				B7096E2A180CD98E00164A8A /* doc-particlesystem.png in Resources */,
 				E334A4DE170CF475001604F7 /* seq-btn-end.png in Resources */,
 				E334A4DF170CF475001604F7 /* toolbar-bottom-noborder.png in Resources */,
+				7BD26ED31979C1320003FEF4 /* LocalizationInAppPurchasesPIDs.plist in Resources */,
 				921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */,
 				E334A4E6170D0020001604F7 /* debugger-bug.png in Resources */,
 				E3D839DC171356EC004F6127 /* pngquant in Resources */,
@@ -6545,6 +6582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BDECCD1196CBA2400F3EB11 /* LocalizationTranslateWindow.m in Sources */,
 				92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */,
 				92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */,
 				9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */,
@@ -6615,6 +6653,7 @@
 				E3B4222A14E59F5D004547D6 /* InspectorFlip.m in Sources */,
 				5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */,
 				E3B4222F14E5A849004547D6 /* InspectorBlendmode.m in Sources */,
+				7B88AD47195A4846001BF73C /* LocalizationEditorTextFieldCell.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
 				E3B4223714E5E6AD004547D6 /* InspectorSeparator.m in Sources */,
 				83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */,
@@ -6707,6 +6746,7 @@
 				E3B7BCA015E3BCFE00CF95EF /* MainToolbarDelegate.m in Sources */,
 				E3AF6CDB15F0A9BC0048DB2A /* HelpWindow.m in Sources */,
 				E3AF6CE415F0DBA90048DB2A /* HelpPage.m in Sources */,
+				7BDECCE1197047EE00F3EB11 /* LocalizationTransactionObserver.m in Sources */,
 				E3C9CCBB161D0BBF008A3784 /* InspectorCodeConnectionsJS.m in Sources */,
 				E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */,
 				581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */,
@@ -6741,6 +6781,7 @@
 				B7AC6982179F50850041B8BD /* BFPopoverColorWell.m in Sources */,
 				B7AC6983179F50850041B8BD /* NSColor+BFColorPickerPopover.m in Sources */,
 				B7AC6984179F50850041B8BD /* NSColorPanel+BFColorPickerPopover.m in Sources */,
+				7B3EF5DB195885F20023C169 /* LocalizationTranslateWindowHandler.m in Sources */,
 				B7AC6985179F50850041B8BD /* NSColorWell+BFColorPickerPopover.m in Sources */,
 				B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */,
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
@@ -6777,6 +6818,7 @@
 				E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */,
 				E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */,
 				E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */,
+				7BD26EF1197E1D640003FEF4 /* TranslationSettings.m in Sources */,
 				E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */,
 				E525FA5D4791EB730859BF2C /* ProjectSettings+Convenience.m in Sources */,
 				E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */,

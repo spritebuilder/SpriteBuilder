@@ -12,7 +12,7 @@
 @class LocalizationEditorWindow;
 @class LocalizationEditorLanguage;
 @class LocalizationEditorTranslation;
-
+@class ProjectSettings;
 @interface LocalizationEditorHandler : NSObject
 {
     NSMutableArray* languages;
@@ -29,6 +29,7 @@
 @property (nonatomic,readonly) NSMutableArray* languages;
 @property (nonatomic,readonly) NSMutableArray* activeLanguages;
 @property (nonatomic,readonly) NSMutableArray* translations;
+@property (nonatomic,readonly) LocalizationEditorLanguage* currentLanguage;
 @property (nonatomic,readonly) LocalizationEditorWindow* windowController;
 @property (nonatomic,copy) NSString* managedFile;
 
@@ -45,4 +46,9 @@
 - (IBAction)openEditor:(id)sender;
 - (void) createOrEditTranslationForKey:(NSString*)key;
 
+//Translation Download
+- (void) setManagedFileForBackgroundTranslationDownload:(NSString*) file;
+- (void) storeFileForBackgroundTranslationDownload;
+
+- (void)restartTranslationDownload:(ProjectSettings *)ps;
 @end

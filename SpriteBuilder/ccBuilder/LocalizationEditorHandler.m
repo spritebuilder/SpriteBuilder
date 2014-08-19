@@ -10,13 +10,14 @@
 #import "LocalizationEditorWindow.h"
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorTranslation.h"
-
+#import "ProjectSettings.h"
 #import "AppDelegate.h"
 #import "CocosScene.h"
 #import "StringPropertySetter.h"
 
 @implementation LocalizationEditorHandler
 
+@synthesize currentLanguage;
 @synthesize languages;
 @synthesize activeLanguages;
 @synthesize translations;
@@ -155,6 +156,82 @@
     return managedFile;
 }
 
+/*
+ * Allows background translations downloads to set the managed file, without
+ * using or interfering with currently displayed attributes in the
+ * editor window.
+ */
+- (void) setManagedFileForBackgroundTranslationDownload:(NSString*) file
+{
+    managedFile = [file copy];
+    
+    [translations removeAllObjects];
+    [activeLanguages removeAllObjects];
+    
+    if (file)
+    {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:managedFile])
+        {
+            NSDictionary* ser = [NSDictionary dictionaryWithContentsOfFile:managedFile];
+            
+            // Read data
+            
+            // Languages
+            NSArray* serLangs = [ser objectForKey:@"activeLanguages"];
+            for (NSString* isoCode in serLangs)
+            {
+                // Find language for code and add active language
+                LocalizationEditorLanguage* lang = [self getLanguageByIsoLangCode:isoCode];
+                if (lang) [activeLanguages addObject:lang];
+            }
+            
+            // Translations
+            NSArray* serTranslations = [ser objectForKey:@"translations"];
+            for (id serTransl in serTranslations)
+            {
+                // Decode a translation and add it
+                LocalizationEditorTranslation* transl = [[LocalizationEditorTranslation alloc] initWithSerialization:serTransl];
+                if (transl) [translations addObject:transl];
+            }
+        }
+    }
+}
+
+/*
+ * Allows background translations downloads to store the managed file, without
+ * using or interfering with currently displayed attributes in the
+ * editor window.
+ */
+- (void) storeFileForBackgroundTranslationDownload
+{
+    if (!managedFile) return;
+    
+    NSMutableDictionary* ser = [NSMutableDictionary dictionary];
+    
+    // Write header
+    [ser setObject:@"SpriteBuilderTranslations" forKey:@"fileType"];
+    [ser setObject:[NSNumber numberWithInt:kCCBTranslationFileFormatVersion] forKey:@"fileVersion"];
+    
+    // Languages
+    NSMutableArray* serLangs = [NSMutableArray array];
+    for (LocalizationEditorLanguage* lang in activeLanguages)
+    {
+        [serLangs addObject:lang.isoLangCode];
+    }
+    [ser setObject:serLangs forKey:@"activeLanguages"];
+    
+    // Translations
+    NSMutableArray* serTransls = [NSMutableArray array];
+    for (LocalizationEditorTranslation* transl in translations)
+    {
+        [serTransls addObject:[transl serialization]];
+    }
+    [ser setObject:serTransls forKey:@"translations"];
+    
+    // Store
+    [ser writeToFile:managedFile atomically:YES];
+}
+
 - (void) setManagedFile:(NSString*) file
 {
     if (file == managedFile) return;
@@ -279,6 +356,10 @@
     [self setCurrentLanguage:currentLanguage];
 }
 
+/*
+ * In addition to its normal functionality, now sets the 'downloading' state of the window
+ * according to project settings.
+ */
 - (IBAction)openEditor:(id)sender
 {
     if (!windowController)
@@ -299,7 +380,7 @@
         if ([transl.key isEqualToString:key])
         {
             NSString* val = [transl.translations objectForKey:currentLanguage.isoLangCode];
-            if (val)
+            if (val && ![val isEqualToString:@""])
             {
                 return val;
             }
@@ -346,5 +427,15 @@
     }
 }
 
+/*
+ * Restart translation download
+ */
+- (void)restartTranslationDownload:(ProjectSettings *)ps{
+    if (!windowController)
+    {
+        windowController = [[LocalizationEditorWindow alloc] initWithWindowNibName:@"LocalizationEditorWindow"];
+    }
+    [windowController restartTranslationDownload:ps];
+}
 
 @end

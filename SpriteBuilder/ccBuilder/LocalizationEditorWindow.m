@@ -6,26 +6,36 @@
 //
 //
 
+#import "LocalizationTranslateWindow.h"
 #import "LocalizationEditorWindow.h"
 #import "LocalizationEditorLanguage.h"
 #import "LocalizationEditorHandler.h"
 #import "LocalizationEditorTranslation.h"
+#import "LocalizationEditorLanguageTableView.h"
+#import "LocalizationTranslateWindowHandler.h"
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
+#import "ProjectSettings.h"
+#import "TranslationSettings.h"
 
 @implementation LocalizationEditorWindow
-
-#pragma mark Init and Updating stuff
+@synthesize ltw =  _ltw;
 
 - (void) awakeFromNib
 {
+    #ifdef SPRITEBUILDER_PRO
+    [_translationsButton setHidden:YES];
+    [_addTranslation setFrame:_translationsButton.frame];
+    #endif
     [tableTranslations registerForDraggedTypes:[NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"]];
     [self populateLanguageAddMenu];
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
     [self addLanguageColumns];
     [self updateQuickEditLangs];
+    [self addObserver:self forKeyPath:@"hasOpenFile" options:0 context:nil];
+    [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
 }
 
 - (void) populateLanguageAddMenu
@@ -128,8 +138,16 @@
     {
         self.inspectorEnabled = YES;
         
-        LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+        LocalizationEditorTranslation* translation;
         
+        if(handler.translations.count)
+        {
+            translation = [handler.translations objectAtIndex:row];
+        }
+        else
+        {
+            translation = [[LocalizationEditorTranslation alloc] init];
+        }
         if (translation.key)
         {
             self.inspectorTextKey = [[NSAttributedString alloc] initWithString:translation.key];
@@ -212,6 +230,159 @@
     [handler setEdited];
 }
 
+/*
+ * If you are opening a new window and one doesn't exist, open it and make it modal. Else
+ * refresh and open.
+ * If you are cancelling a download, show a cancel alert, and if the user 'okays' the cancel,
+ * stop the download.
+ */
+- (IBAction)pressedTranslate:(id)sender {
+    
+    if([_translationsButton.title isEqualToString:@"Buy Translations..."])
+    {
+        if(!_ltw || !_ltw.window)
+        {
+            _ltw = [[LocalizationTranslateWindow alloc] initWithWindowNibName:@"LocalizationTranslateWindow"];
+        }
+        else{
+            [_ltw refresh];
+        }
+        [_ltw setParentWindow:self];
+        [_ltw.window makeKeyAndOrderFront:sender];
+        [NSApp runModalForWindow:_ltw.window];
+    }
+    else
+    {
+        NSAlert* alert = [NSAlert alertWithMessageText:@"Stop Download" defaultButton:@"Stop Download" alternateButton:@"Cancel" otherButton:NULL informativeTextWithFormat:@"If you stop your download now, SpriteBuilder will not refund your purchase."];
+        NSArray *buttons = [alert buttons];
+        [(NSButton*)[buttons objectAtIndex:0] setKeyEquivalent:@""];
+        [(NSButton*)[buttons objectAtIndex:1] setKeyEquivalent:@"\r"];
+        NSInteger result = [alert runModal];
+        if(result == NSAlertDefaultReturn)
+        {
+            [self finishDownloadingTranslations];
+            [_ltw cancelDownloadWithError:nil];
+            [tableLanguages reloadData];
+        }
+    }
+}
+
+/*
+ * Add languages to the language table (called when a translation request includes 'translate to' languages
+ * that aren't already in the table.
+ */
+- (void)addLanguages:(NSArray*)langs
+{
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    for(NSString* iso in langs)
+    {
+        if([iso isEqualToString:@"zh"])
+        {
+            [handler addActiveLanguage:[handler getLanguageByIsoLangCode:@"zh-Hans"]];
+        }
+        else
+        {
+            [handler addActiveLanguage:[handler getLanguageByIsoLangCode:iso]];
+        }
+    }
+    [tableLanguages reloadData];
+    [self updateLanguageSelectionMenu];
+    [self updateQuickEditLangs];
+    [self updateInspector];
+}
+
+/*
+ * Turn the window into a 'dowloading' one by setting the 'isDownloading' variable in the 
+ * project settings and disabling everything except translation progress and the cancel button.
+ */
+
+-(void)setDownloadingTranslations{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    ps.isDownloadingTranslations = 1;
+    [ps store];
+    TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+    if(![translationSettings.projectsDownloadingTranslations containsObject:ps.projectPath])
+    {
+        [[translationSettings projectsDownloadingTranslations] addObject:ps.projectPath];
+        [translationSettings updateTranslationSettings];
+    }
+    [_translationProgress setMaxValue:ps.numToDownload];
+    [_translationProgress setDoubleValue:ps.numDownloaded];
+    [_translationProgress setHidden:0];
+    [_translationProgressText setHidden:0];
+    [tableTranslations setEnabled:0];
+    [tableLanguages setEnabled:0];
+    [popLanguageAdd setEnabled:0];
+    [_addTranslation setEnabled:0];
+    [popCurrentLanguage setEnabled:0];
+    [_translationsButton setEnabled:1];
+    _translationsButton.title = @"Stop Download";
+    [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
+}
+
+/*
+ * Make the translation progress bar increase by one
+ */
+-(void)incrementTransByOne{
+    [_translationProgress incrementBy:1.0];
+    [_translationProgress setToolTip:[NSString stringWithFormat:@"%.0f/%.0f", _translationProgress.doubleValue, _translationProgress.maxValue]];
+}
+
+/*
+ * Retrieve translation progress information.
+ */
+- (double)translationProgress{
+    return _translationProgress.doubleValue;
+}
+
+/*
+ * Turn the window into a normal, non-dowloading one by setting the 'isDownloading'
+ * in the project settings to 0 and enabling everything and hiding the translation
+ * progress information.
+ */
+-(void)finishDownloadingTranslations{
+    [_translationProgress setHidden:1];
+    [_translationProgressText setHidden:1];
+    [tableTranslations setEnabled:1];
+    [tableLanguages setEnabled:1];
+    [popLanguageAdd setEnabled:1];
+    [popCurrentLanguage setEnabled:1];
+    [_addTranslation setEnabled:1];
+    [_translationsButton setEnabled:1];
+    _translationsButton.title = @"Buy Translations...";
+    [_translationProgress setToolTip:@""];
+}
+
+/*
+ * For when there is no open file
+ */
+-(void)displayForNoOpenFile{
+    
+    [tableTranslations setEnabled:0];
+    [tableLanguages setEnabled:0];
+    [popLanguageAdd setEnabled:0];
+    [popCurrentLanguage setEnabled:0];
+    [_addTranslation setEnabled:0];
+    #ifndef SPRITEBUILDER_PRO
+    [_translationProgress setHidden:1];
+    [_translationProgressText setHidden:1];
+    [_translationsButton setEnabled:0];
+    _translationsButton.title = @"Buy Translations...";
+    [_translationProgress setToolTip:@""];
+    #endif
+}
+
+/*
+ * Used in spritebuilder pro, since there's no support for buying translations yet.
+ */
+-(void)displayForOpenFile{
+    [tableTranslations setEnabled:1];
+    [tableLanguages setEnabled:1];
+    [popLanguageAdd setEnabled:1];
+    [_addTranslation setEnabled:1];
+    [popCurrentLanguage setEnabled:1];
+}
+
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs
 {
     LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
@@ -227,13 +398,16 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
-    
     [handler setEdited];
 }
 
 - (IBAction)selectedCurrentLanguage:(id)sender
 {
     [self updateInspector];
+}
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    
+
 }
 
 - (void)removeTranslationsAtIndexes:(NSIndexSet*)idxs
@@ -263,7 +437,15 @@
     
     if (row == -1) return;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     translation.key = [inspectorTextKey string];
     
     [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:1]];
@@ -289,7 +471,15 @@
     
     if (row == -1) return;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     translation.comment = [inspectorTextComment string];
     
     [tableTranslations reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndex:2]];
@@ -302,7 +492,15 @@
     
     if (row == -1) return NULL;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     
     if (!translation.comment) return NULL;
     return [[NSAttributedString alloc] initWithString:translation.comment];
@@ -315,7 +513,15 @@
     
     if (row == -1) return;
     
-    LocalizationEditorTranslation* translation = [handler.translations objectAtIndex:row];
+    LocalizationEditorTranslation* translation;
+    if(handler.translations.count)
+    {
+        translation = [handler.translations objectAtIndex:row];
+    }
+    else
+    {
+        translation = [[LocalizationEditorTranslation alloc] init];
+    }
     LocalizationEditorLanguage* lang = [self selectedLanguage];
     
     if (!lang) return;
@@ -411,7 +617,16 @@
         }
         else
         {
-            return [translation.translations objectForKey:aTableColumn.identifier];
+            if(translation.languagesDownloading &&
+               ((ProjectSettings*)[AppDelegate appDelegate].projectSettings).isDownloadingTranslations &&
+               [translation.languagesDownloading containsObject:aTableColumn.identifier])
+            {
+                return @"Downloading...";
+            }
+            else
+            {
+                return [translation.translations objectForKey:aTableColumn.identifier];
+            }
         }
     }
     
@@ -602,6 +817,7 @@
     {
         [handler setEdited];
     }
+    
 }
 
 #pragma mark Split view delegate
@@ -619,4 +835,48 @@
     else return proposedMaximumPosition;
 }
 
+#pragma mark KVO for hasOpenFile
+/*
+ * This replaces the bindings of before. If 'has open file' changes, change the language window according to the 'isDownloading' status of the
+ * new project. 
+ */
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    ProjectSettings* ps = [AppDelegate appDelegate].projectSettings;
+    #ifdef SPRITEBUILDER_PRO
+    if([keyPath isEqualToString:@"hasOpenFile"]){
+        if(ps)
+        {
+            [self displayForOpenFile];
+        }else{
+            [self displayForNoOpenFile];
+        }
+    }
+    #else
+    if([keyPath isEqualToString:@"hasOpenFile"]){
+        if(!ps)
+        {
+            [self displayForNoOpenFile];
+        }
+        else if(ps.isDownloadingTranslations)
+        {
+            _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps parentWindow:self];
+            [_ltw restartDownload];
+            [self setDownloadingTranslations];
+        }else{
+            [self finishDownloadingTranslations];
+            _ltw = nil;
+        }
+    }
+    #endif
+    
+}
+
+#pragma mark Restart Translation Download
+/*
+ * Restarts Translation Download
+ */
+- (void)restartTranslationDownload:(ProjectSettings *)ps{
+    _ltw = [[LocalizationTranslateWindow alloc] initWithDownload:ps parentWindow:self];
+    [_ltw restartDownload];
+}
 @end

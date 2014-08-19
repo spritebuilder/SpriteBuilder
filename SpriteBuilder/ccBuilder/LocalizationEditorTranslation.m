@@ -12,14 +12,14 @@
 @implementation LocalizationEditorTranslation
 
 @synthesize translations = _translations;
-
+@synthesize languagesDownloading = _languagesDownloading;
 - (id) init
 {
     self = [super init];
     if (!self) return NULL;
     
     _translations = [[NSMutableDictionary alloc] init];
-    
+    _languagesDownloading = [[NSMutableArray alloc] init];
     return self;
 }
 
@@ -33,7 +33,7 @@
     self.key = [dict objectForKey:@"key"];
     self.comment = [dict objectForKey:@"comment"];
     _translations = [[dict objectForKey:@"translations"] mutableCopy];
-    
+    self.languagesDownloading = [[dict objectForKey:@"languagesDownloading"] mutableCopy];
     return self;
 }
 
@@ -56,7 +56,7 @@
     if (self.key) [ser setObject:self.key forKey:@"key"];
     if (self.comment) [ser setObject:self.comment forKey:@"comment"];
     [ser setObject:self.translations forKey:@"translations"];
-    
+    [ser setObject:self.languagesDownloading forKey:@"languagesDownloading"];
     return ser;
 }
 

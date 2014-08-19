@@ -131,6 +131,8 @@
 #import "AndroidPluginInstallerWindow.h"
 #import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
+#import "TranslationSettings.h"
+#import "LocalizationEditorWindow.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
@@ -182,6 +184,7 @@ static const int CCNODE_INDEX_LAST = -1;
 @synthesize itemTabView;
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
+@synthesize lto;
 @dynamic	showJoints;
 
 static AppDelegate* sharedAppDelegate;
@@ -637,6 +640,12 @@ typedef enum
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
+    //Transaction Observer for Translation Downloads
+    lto = [[LocalizationTransactionObserver alloc] init];
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:lto];
+    #ifndef SPRITEBUILDER_PRO
+    [self restartProjectDownloads];
+    #endif
     if (delayOpenFiles)
     {
         [self openFiles:delayOpenFiles];
@@ -2026,7 +2035,19 @@ static BOOL hideAllToNextSeparator;
     [cocos2dUpdater updateAndBypassIgnore:NO];
 
     self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
-
+    #ifndef SPRITEBUILDER_PRO
+    if(prjctSettings.isDownloadingTranslations)
+    {
+        TranslationSettings *translationSettings = [TranslationSettings translationSettings];
+        NSMutableArray *projectsDownloadingTranslations = translationSettings.projectsDownloadingTranslations;
+        if(![projectsDownloadingTranslations containsObject:prjctSettings.projectPath])
+        {
+            [projectsDownloadingTranslations addObject:prjctSettings.projectPath];
+            [translationSettings writeTranslationSettings];
+        }
+        [localizationEditorHandler restartTranslationDownload:prjctSettings];
+    }
+    #endif
     return YES;
 }
 
@@ -4676,5 +4697,67 @@ static BOOL hideAllToNextSeparator;
     return fullpath;
 }
 
-
+#pragma mark restart project translation downloads
+/*
+ * Restarts project downloads
+ */
+- (void)restartProjectDownloads
+{
+    TranslationSettings* translationSettings = [TranslationSettings translationSettings];
+    NSMutableArray *projectsDownloadingTranslations = translationSettings.projectsDownloadingTranslations;
+    [projectsDownloadingTranslations removeAllObjects];
+    [translationSettings.projectsDownloadingTranslations removeAllObjects];
+    [translationSettings writeTranslationSettings];
+    for(NSString *projectPath in projectsDownloadingTranslations)
+    {
+        NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
+         if(projectDict)
+         {
+             
+             ProjectSettings* ps = [[ProjectSettings alloc] initWithSerialization:projectDict];
+             if(ps)
+             {
+                 ps.projectPath = projectPath;
+                 [ps store];
+                 if(ps.isDownloadingTranslations)
+                 {
+                     NSString* langFile = [[[projectPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"SpriteBuilder Resources"] stringByAppendingPathComponent:@"Strings.ccbLang"];
+                     if(langFile)
+                     {
+                         if([ps isEqualTo:self.projectSettings])
+                         {
+                             [localizationEditorHandler setManagedFile:langFile];
+                             [localizationEditorHandler restartTranslationDownload:self.projectSettings];
+                         }
+                         else
+                         {
+                             LocalizationEditorHandler* handler = [[LocalizationEditorHandler alloc] init];
+                             [handler setManagedFileForBackgroundTranslationDownload:langFile];
+                             [handler restartTranslationDownload:ps];
+                         }
+                         
+                     }
+                     else
+                     {
+                         NSLog(@"No language file! Project Path: %@", ps.projectPath);
+                     }
+                 }
+                 else
+                 {
+                     NSLog(@"Restarting a download in a project that isn't currently downloading translations! Project Path: %@", ps.projectPath);
+                 }
+             }
+             else
+             {
+                 NSAlert* alert = [NSAlert alertWithMessageText:@"Cannot Find Project" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"Could not find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
+                 [alert runModal];
+             }
+         }
+         else
+         {
+             NSAlert* alert = [NSAlert alertWithMessageText:@"Cannot Find Project" defaultButton:@"OK" alternateButton:NULL otherButton:NULL informativeTextWithFormat:@"We cannot find the project at %@, which had a pending translation download. If you moved the project, please reopen it and its Language Editor Window and the translation download will begin again. If you deleted it and would like to restart your download, please contact customer support.", projectPath];
+             [alert runModal];
+         }
+    }
+}
 @end
