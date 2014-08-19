@@ -9,6 +9,7 @@
 #import "UsageManager.h"
 #import "HashValue.h"
 #import "ProjectSettings.h"
+#import "LicenseManager.h"
 
 NSString * kSbUserID = @"sbUserID";
 NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
@@ -194,6 +195,9 @@ static NSString *urlEncode(id object) {
     // Version.txt information
 	[mutableData addEntriesFromDictionary:[projectSettings getVersionDictionary]];
 	
+/// License manager.
+	[mutableData addEntriesFromDictionary:[LicenseManager getLicenseDetails]];
+	
 	
 	NSString * serialNumber = [self serialNumber];
 	if(!serialNumber)
@@ -207,7 +211,6 @@ static NSString *urlEncode(id object) {
 		email = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)email, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
 		
 		mutableData[@"email"] = email;
-		
 	}
     // URL encode email
 	
@@ -233,6 +236,7 @@ static NSString *urlEncode(id object) {
     // Create the request
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
+	NSLog(@"Sending event: %@", urlStr);
     // Create url connection and fire request
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:NULL];
 	connection = nil; // make the compiler violently happy

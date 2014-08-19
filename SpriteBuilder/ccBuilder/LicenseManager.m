@@ -103,9 +103,15 @@ NSString * kLicenseDetailsUpdated = @"kLicenseDetailsUpdated";
 	NSTimeInterval days = [authorizationResult[@"license_expires_at"] doubleValue];
 	NSDate * futureDate = [NSDate dateWithTimeIntervalSince1970:days];
 	
+	NSString * email = @"";
+	if(authorizationResult[@"email"])
+	{
+		email = authorizationResult[@"email"];
+	}
+
 	
-	NSDictionary * licenseDetails = @{@"expireDate":@([futureDate timeIntervalSince1970])};
-	
+	NSDictionary * licenseDetails = @{@"expireDate":@([futureDate timeIntervalSince1970]), @"email" : email};
+
 	[LicenseManager setLicenseDetails:licenseDetails];
 }
 
@@ -177,6 +183,8 @@ NSString * kLicenseDetailsUpdated = @"kLicenseDetailsUpdated";
 				return;
 			}
 			
+			//Sucess
+			[usageManager sendEvent:@"register"];
 			
 			successCallback(authorizationResult);
 		}
