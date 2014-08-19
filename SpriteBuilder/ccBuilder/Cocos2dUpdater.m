@@ -191,7 +191,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)finishWithUpdateResult:(BOOL)status error:(NSError *)error
 {
-    dispatch_sync(dispatch_get_main_queue(), ^
+    dispatch_async(dispatch_get_main_queue(), ^
     {
         [_appDelegate modalStatusWindowFinish];
 
@@ -254,7 +254,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 - (void)updateModalDialogStatusText:(NSString *)text
 {
     NSAssert(![NSThread isMainThread], @"Should only be called from non main queue.");
-    dispatch_sync(dispatch_get_main_queue(), ^
+    dispatch_async(dispatch_get_main_queue(), ^
     {
         [_appDelegate modalStatusWindowUpdateStatusText:text];
     });
