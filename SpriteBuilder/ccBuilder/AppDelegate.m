@@ -138,6 +138,8 @@
 #import "ResourceManager+Publishing.h"
 #import "LicenseManager.h"
 #import "LicenseWindow.h"
+#import "SUVersionComparisonProtocol.h"
+#import "SBUpdater.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -4461,6 +4463,14 @@ static BOOL hideAllToNextSeparator;
 }
 
 
+#pragma mark Sparkle
+
+- (id<SUVersionComparison>)versionComparatorForUpdater:(SUUpdater *)updater
+{
+	return [SBVersionComparitor new];
+}
+
+
 - (NSString *)feedURLStringForUpdater:(id)updater
 {
 	//Local Host testing.
@@ -4474,6 +4484,8 @@ static BOOL hideAllToNextSeparator;
 
 	
 }
+
+#pragma mark -
 
 -(void)setupSpriteBuilderPro
 {

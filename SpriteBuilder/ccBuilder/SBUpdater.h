@@ -8,6 +8,11 @@
 
 #import <Sparkle/Sparkle.h>
 
+
+@interface SBVersionComparitor : NSObject <SUVersionComparison>
+
+@end
+
 @interface SBUpdater : SUUpdater
 
 @end

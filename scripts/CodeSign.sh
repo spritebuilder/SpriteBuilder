@@ -1,9 +1,11 @@
 #!/bin/bash
 
+#sandboxed / Appstore
 #ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
-ID="Developer ID Application: Apportable Inc. (U2K5E32W7G)"
+
+#Non-sandboxed, non-appstore
 PKGID="3rd Party Mac Developer Installer: Apportable Inc. (U2K5E32W7G)"
-ENT="../SpriteBuilder/NonSandboxed.entitlements"
+
 
 if [ "$1" = "" ]; then
     APP="SpriteBuilder.app"
@@ -11,10 +13,43 @@ else
     APP=$1
 fi
 
-if [ "$KEYSTORE" = ""]; then
+if [ -a "$APP" ]; then
+    echo APP=$APP
+else
+    echo $APP does not exists. 
+    exit 1
+fi
+
+if [ "$KEYSTORE" = "" ]; then
     echo Failed to find KEYSTORE for sb.keystore keychain. Specify one with: 'export KEYSTORE=<path>'
     exit 1
 fi
+
+
+if [ "$KEYSTORE_ID" = "" ]; then
+    echo Failed to find KEYSTORE_ID. Specify one with: 'export KEYSTORE_ID=<ID>'
+    echo Ex: export KEYSTORE_ID="\""Developer ID Application: Apportable Inc. \(U2K5E32W7G\)"\""
+    exit 1
+fi
+
+if [ "$ENTTITLEMENTS" = "" ]; then
+    echo Failed to find ENTTITLEMENTS. Specify one with: export ENTTITLEMENTS=\<entitlements type \(sandboxed,nonsandboxed\)\>
+    exit 1
+fi
+
+if [ "$ENTTITLEMENTS" = "sandboxed" ]; then
+    ENT="../SpriteBuilder/Sandboxed.entitlements"
+fi
+
+if [ "$ENTTITLEMENTS" = "nonsandboxed" ]; then
+    ENT="../SpriteBuilder/NonSandboxed.entitlements"
+fi
+
+
+
+echo KEYSTORE=$KEYSTORE
+echo ENT=$ENT
+echo KEYSTORE_ID=$KEYSTORE_ID
 
 echo signing $APP
 
@@ -51,7 +86,7 @@ function deleteKeychain() {
 
 function codeSign() {
     echo CodeSign Func: "$APP/$1"
-    codesign --entitlements $ENT  -f --deep --keychain spritebuilder.keychain -s "$ID" "$APP/""$1"
+    codesign --entitlements $ENT  -f --deep --keychain spritebuilder.keychain -s "$KEYSTORE_ID" "$APP/""$1"
  
     if [ $? != 0 ]; then
         echo Codesign faild. $1
@@ -65,49 +100,26 @@ function fail(){
 }
 
 createKeychain
-codeSign Contents/Resources/lame
+
+#Use RB App Checker Lite to find things that aren't code signed.
+
+codeSign Contents/Frameworks/HockeySDK.framework/Frameworks/CrashReporter.framework/
+codeSign Contents/Frameworks/HockeySDK.framework/Frameworks/CrashReporter.framework/Versions/A/CrashReporter
+codeSign Contents/Frameworks/HockeySDK.framework/Frameworks/CrashReporter.framework/Versions/Current/CrashReporter
+codeSign Contents/Frameworks/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework/
+codeSign Contents/Frameworks/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework/Versions/A/CrashReporter
+codeSign Contents/Frameworks/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework/Versions/Current/CrashReporter
+codeSign Contents/Frameworks/HockeySDK.framework/Versions/A/HockeySDK
+codeSign Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework/Versions/A/CrashReporter
+codeSign Contents/Frameworks/Sparkle.framework/Resources/Autoupdate.app/
+codeSign Contents/Frameworks/Sparkle.framework/Versions/A/Resources/Autoupdate.app/
+codeSign Contents/Frameworks/Sparkle.framework/Versions/A/Sparkle
+codeSign Contents/Frameworks/Sparkle.framework/Versions/Current/Resources/Autoupdate.app/
 codeSign Contents/Resources/ccz
+codeSign Contents/Resources/lame
 codeSign Contents/Resources/oggenc
-codeSign Contents/Resources/pngquant
 codeSign Contents/Resources/optipng
-# codeSign Contents/Resources/PVRTexToolCL"
-
-# Sign plug-ins
-
-codeSign Contents/PlugIns/CCBFile.ccbPlugNode
-codeSign Contents/PlugIns/CCButton.ccbPlugNode
-codeSign Contents/PlugIns/CCControl.ccbPlugNode
-codeSign Contents/PlugIns/CCLabelBMFont.ccbPlugNode
-codeSign Contents/PlugIns/CCLabelTTF.ccbPlugNode
-codeSign Contents/PlugIns/CCLayoutBox.ccbPlugNode
-codeSign Contents/PlugIns/CCNode.ccbPlugNode
-codeSign Contents/PlugIns/CCNodeColor.ccbPlugNode
-codeSign Contents/PlugIns/CCNodeGradient.ccbPlugNode
-codeSign Contents/PlugIns/CCParticleSystem.ccbPlugNode
-codeSign Contents/PlugIns/CCPhysicsNode.ccbPlugNode
-codeSign Contents/PlugIns/CCScrollView.ccbPlugNode
-codeSign Contents/PlugIns/CCSlider.ccbPlugNode
-codeSign Contents/PlugIns/CCSprite.ccbPlugNode
-codeSign Contents/PlugIns/CCSprite9Slice.ccbPlugNode
-codeSign Contents/PlugIns/CCTextField.ccbPlugNode
-codeSign Contents/PlugIns/CCPhysicsPinJoint.ccbPlugNode
-codeSign Contents/PlugIns/CCPhysicsPivotJoint.ccbPlugNode
-codeSign Contents/PlugIns/CCPhysicsSpringJoint.ccbPlugNode
-
-codeSign Contents/PlugIns/SBButtonNode.ccbPlugNode
-codeSign Contents/PlugIns/SBControlNode.ccbPlugNode
-codeSign Contents/PlugIns/SKColorSpriteNode.ccbPlugNode
-codeSign Contents/PlugIns/SKFile.ccbPlugNode
-codeSign Contents/PlugIns/SKLabelNode.ccbPlugNode
-codeSign Contents/PlugIns/SKNode.ccbPlugNode
-codeSign Contents/PlugIns/SKSpriteNode.ccbPlugNode
-
-codeSign "Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
-
-# Sign Frameworks
-codeSign Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework
-codeSign Contents/Frameworks/HockeySDK.framework
-codeSign Contents/Frameworks/Sparkle.framework
+codeSign Contents/Resources/pngquant
 
 # Sign App
 echo codeSign "$APP"

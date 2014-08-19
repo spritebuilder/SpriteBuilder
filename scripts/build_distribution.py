@@ -81,9 +81,10 @@ def compile_project(version,product_name, mode, private_key):
         -xcconfig \"{xcconfig}.xcconfig\" \
         SBPRO_PRIVATE_KEY=\"{private_key}\" \
         SB_SANDBOXED_MODE={sandboxed_mode_define}\
+        SB_VERSION={version}\
         build'
 
-    subprocess.check_call(build_command.format(xcconfig=product_name, private_key=private_key, sandboxed_mode_define=sandboxed_mode_define), shell=True)
+    subprocess.check_call(build_command.format(xcconfig=product_name, private_key=private_key, sandboxed_mode_define=sandboxed_mode_define, version=version), shell=True)
 
     os.chdir('../');
 
@@ -120,12 +121,18 @@ def create_all_generated_files(version, sku, version_info):
     #create version.txt
     version_info['sb_version'] = version
     version_info['sku'] = sku
+    
+    
         
     p = subprocess.Popen(['/usr/bin/git', 'rev-parse' ,'--short=10' ,'HEAD'],stdout=subprocess.PIPE)
     out, err = p.communicate()
     if err == None:
         out = out.strip()
         version_info['sb_hash'] = out
+    
+    for i, j in version_info.items():       # use iteritems in py2k
+        if j == None:
+            version_info[i] = 'undefined'
         
     json.dump(version_info, open("Generated/Version.txt",'w'),sort_keys=True, indent=4)
     
