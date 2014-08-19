@@ -470,6 +470,7 @@
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key
 {
     NSString* relPath = res.relativePath;
+    [self markAsDirtyResource:res];
     [self removeObjectForRelPath:relPath andKey:key];
     
 }
