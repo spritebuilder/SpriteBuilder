@@ -26,5 +26,5 @@ extern NSString * kSbUserID;
 
 //Returns a dictionary of information thats useful for tracking usage.
 - (NSDictionary*)usageDetails;
-
+- (NSString *)serialNumber;
 @end

@@ -117,8 +117,12 @@ static NSString * kRegisterEndpoint = @"http://www.spritebuilder.com/register";
 
 - (IBAction)onHandleLoginToSBSite:(id)sender {
 	UsageManager * usageManager = [[UsageManager alloc] init];
+
+	NSString * serialNumber = [usageManager serialNumber];
+	if(!serialNumber)
+		serialNumber = @"";
 	
-	NSString * urlEndpoint = [NSString stringWithFormat:@"%@/%@", kRegisterEndpoint,usageManager.userID];
+	NSString * urlEndpoint = [NSString stringWithFormat:@"%@/%@?machine_id=%@", kRegisterEndpoint,usageManager.userID,serialNumber];
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlEndpoint]];
 }
 
