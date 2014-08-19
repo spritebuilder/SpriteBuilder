@@ -167,7 +167,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^
     {
-        [self updateModalDialogStatusText:@"Unzipping sources"];
+		[self updateModalDialogStatusText:@"Unzipping sources"];
 
         BOOL updateResult = [self unzipProjectTemplateZip:&error]
             && [self renameCocos2dFolderToBackupFolder:&error]
@@ -176,6 +176,7 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
         [self finishWithUpdateResult:updateResult error:error];
     });
+	
 
     __weak id weakSelf = self;
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..." isIndeterminate:YES onCancelBlock:^
@@ -191,10 +192,11 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 
 - (void)finishWithUpdateResult:(BOOL)status error:(NSError *)error
 {
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-        [_appDelegate modalStatusWindowFinish];
-
+	NSAssert(![NSThread isMainThread], @"Should only be called from non main queue.");
+	
+	CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
+	    [_appDelegate modalStatusWindowFinish];
+		
         if (status)
         {
             LocalLog(@"[COCO2D-UPDATER] [INFO] Success!");
@@ -209,7 +211,8 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
             [self showUpdateErrorDialog:error];
             [self rollBack];
         }
-    });
+	});
+	
 }
 
 - (void)openBrowserWithCocos2dUpdateInformation
@@ -254,10 +257,9 @@ static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
 - (void)updateModalDialogStatusText:(NSString *)text
 {
     NSAssert(![NSThread isMainThread], @"Should only be called from non main queue.");
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-        [_appDelegate modalStatusWindowUpdateStatusText:text];
-    });
+	CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
+		[_appDelegate modalStatusWindowUpdateStatusText:text];
+	});
 }
 
 - (void)setIgnoreThisVersion
