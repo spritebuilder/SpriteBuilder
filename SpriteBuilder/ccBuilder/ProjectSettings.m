@@ -207,7 +207,7 @@
     
     self.tabletPositionScaleFactor = 2.0f;
 
-    self.publishEnvironment = [[dict objectForKey:@"publishEnvironment"] integerValue];
+    self.publishEnvironment = (CCBPublishEnvironment) [[dict objectForKey:@"publishEnvironment"] integerValue];
 
     self.resourceProperties = [[dict objectForKey:@"resourceProperties"] mutableCopy];
 
@@ -228,7 +228,7 @@
 {
     // Check if we are running a new version of CocosBuilder
     // in which case the project needs to be republished
-    NSString* oldVersionHash = [projectDict objectForKey:@"versionStr"];
+    NSString* oldVersionHash = projectDict[@"versionStr"];
     NSString* newVersionHash = [self getVersion];
     if (newVersionHash && ![newVersionHash isEqual:oldVersionHash])
     {
@@ -254,62 +254,62 @@
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
 
-	[dict setObject:[NSNumber numberWithInt:_engine] forKey:@"engine"];
+    dict[@"engine"] = @(_engine);
 
-    [dict setObject:@"CocosBuilderProject" forKey:@"fileType"];
-    [dict setObject:[NSNumber numberWithInt:kCCBProjectSettingsVersion] forKey:@"fileVersion"];
-    [dict setObject:_resourcePaths forKey:@"resourcePaths"];
+    dict[@"fileType"] = @"CocosBuilderProject";
+    dict[@"fileVersion"] = @kCCBProjectSettingsVersion;
+    dict[@"resourcePaths"] = _resourcePaths;
     
-    [dict setObject:publishDirectory forKey:@"publishDirectory"];
-    [dict setObject:publishDirectoryAndroid forKey:@"publishDirectoryAndroid"];
+    dict[@"publishDirectory"] = publishDirectory;
+    dict[@"publishDirectoryAndroid"] = publishDirectoryAndroid;
 
-    [dict setObject:[NSNumber numberWithBool:publishEnabledIOS] forKey:@"publishEnablediPhone"];
-    [dict setObject:[NSNumber numberWithBool:publishEnabledAndroid] forKey:@"publishEnabledAndroid"];
+    dict[@"publishEnablediPhone"] = @(publishEnabledIOS);
+    dict[@"publishEnabledAndroid"] = @(publishEnabledAndroid);
 
-    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phone] forKey:@"publishResolution_ios_phone"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_phonehd] forKey:@"publishResolution_ios_phonehd"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_tablet] forKey:@"publishResolution_ios_tablet"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_ios_tablethd] forKey:@"publishResolution_ios_tablethd"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_android_phone] forKey:@"publishResolution_android_phone"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_android_phonehd] forKey:@"publishResolution_android_phonehd"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_android_tablet] forKey:@"publishResolution_android_tablet"];
-    [dict setObject:[NSNumber numberWithBool:publishResolution_android_tablethd] forKey:@"publishResolution_android_tablethd"];
+    dict[@"publishResolution_ios_phone"] = @(publishResolution_ios_phone);
+    dict[@"publishResolution_ios_phonehd"] = @(publishResolution_ios_phonehd);
+    dict[@"publishResolution_ios_tablet"] = @(publishResolution_ios_tablet);
+    dict[@"publishResolution_ios_tablethd"] = @(publishResolution_ios_tablethd);
+    dict[@"publishResolution_android_phone"] = @(publishResolution_android_phone);
+    dict[@"publishResolution_android_phonehd"] = @(publishResolution_android_phonehd);
+    dict[@"publishResolution_android_tablet"] = @(publishResolution_android_tablet);
+    dict[@"publishResolution_android_tablethd"] = @(publishResolution_android_tablethd);
     
-    [dict setObject:[NSNumber numberWithInt:publishAudioQuality_ios] forKey:@"publishAudioQuality_ios"];
-    [dict setObject:[NSNumber numberWithInt:publishAudioQuality_android] forKey:@"publishAudioQuality_android"];
+    dict[@"publishAudioQuality_ios"] = @(publishAudioQuality_ios);
+    dict[@"publishAudioQuality_android"] = @(publishAudioQuality_android);
 
-    [dict setObject:[NSNumber numberWithBool:publishToZipFile] forKey:@"publishToZipFile"];
-    [dict setObject:[NSNumber numberWithBool:onlyPublishCCBs] forKey:@"onlyPublishCCBs"];
-    [dict setObject:self.exporter forKey:@"exporter"];
+    dict[@"publishToZipFile"] = @(publishToZipFile);
+    dict[@"onlyPublishCCBs"] = @(onlyPublishCCBs);
+    dict[@"exporter"] = self.exporter;
     
-    [dict setObject:[NSNumber numberWithBool:deviceOrientationPortrait] forKey:@"deviceOrientationPortrait"];
-    [dict setObject:[NSNumber numberWithBool:deviceOrientationUpsideDown] forKey:@"deviceOrientationUpsideDown"];
-    [dict setObject:[NSNumber numberWithBool:deviceOrientationLandscapeLeft] forKey:@"deviceOrientationLandscapeLeft"];
-    [dict setObject:[NSNumber numberWithBool:deviceOrientationLandscapeRight] forKey:@"deviceOrientationLandscapeRight"];
-    [dict setObject:[NSNumber numberWithInt:resourceAutoScaleFactor] forKey:@"resourceAutoScaleFactor"];
+    dict[@"deviceOrientationPortrait"] = @(deviceOrientationPortrait);
+    dict[@"deviceOrientationUpsideDown"] = @(deviceOrientationUpsideDown);
+    dict[@"deviceOrientationLandscapeLeft"] = @(deviceOrientationLandscapeLeft);
+    dict[@"deviceOrientationLandscapeRight"] = @(deviceOrientationLandscapeRight);
+    dict[@"resourceAutoScaleFactor"] = @(resourceAutoScaleFactor);
 
-    [dict setObject:_cocos2dUpdateIgnoredVersions forKey:@"cocos2dUpdateIgnoredVersions"];
+    dict[@"cocos2dUpdateIgnoredVersions"] = _cocos2dUpdateIgnoredVersions;
 
-    [dict setObject:[NSNumber numberWithInt:self.designTarget] forKey:@"designTarget"];
-    [dict setObject:[NSNumber numberWithInt:self.defaultOrientation] forKey:@"defaultOrientation"];
-    [dict setObject:[NSNumber numberWithInt:self.deviceScaling] forKey:@"deviceScaling"];
+    dict[@"designTarget"] = @(self.designTarget);
+    dict[@"defaultOrientation"] = @(self.defaultOrientation);
+    dict[@"deviceScaling"] = @(self.deviceScaling);
 
-    [dict setObject:[NSNumber numberWithInt:self.publishEnvironment] forKey:@"publishEnvironment"];
+    dict[@"publishEnvironment"] = @(self.publishEnvironment);
 
-    [dict setObject:[NSNumber numberWithInt:self.excludedFromPackageMigration] forKey:@"excludedFromPackageMigration"];
+    dict[@"excludedFromPackageMigration"] = @(self.excludedFromPackageMigration);
 
     if (_resourceProperties)
     {
-        [dict setObject:_resourceProperties forKey:@"resourceProperties"];
+        dict[@"resourceProperties"] = _resourceProperties;
     }
     else
     {
-        [dict setObject:[NSDictionary dictionary] forKey:@"resourceProperties"];
+        dict[@"resourceProperties"] = [NSDictionary dictionary];
     }
 
     if (versionStr)
     {
-        [dict setObject:versionStr forKey:@"versionStr"];
+        dict[@"versionStr"] = versionStr;
     }
 
     return dict;
@@ -324,7 +324,7 @@
     
     for (NSDictionary* dict in _resourcePaths)
     {
-        NSString* path = [dict objectForKey:@"path"];
+        NSString* path = dict[@"path"];
         NSString* absPath = [path absolutePathFromBaseDirPath:projectDirectory];
         [paths addObject:absPath];
     }
@@ -355,14 +355,14 @@
 - (NSString*) displayCacheDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [[[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"display"]stringByAppendingPathComponent:self.projectPathHashed];
+    return [[[paths[0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"display"]stringByAppendingPathComponent:self.projectPathHashed];
 }
 
 @dynamic tempSpriteSheetCacheDirectory;
 - (NSString*) tempSpriteSheetCacheDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"spritesheet"];
+    return [[paths[0] stringByAppendingPathComponent:@"com.cocosbuilder.CocosBuilder"] stringByAppendingPathComponent:@"spritesheet"];
 }
 
 - (void) _storeDelayed
@@ -389,8 +389,8 @@
 - (void) makeSmartSpriteSheet:(RMResource*) res
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
-    
-    [self setValue:[NSNumber numberWithBool:YES] forResource:res andKey:@"isSmartSpriteSheet"];
+
+    [self setValue:@YES forResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
     [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
@@ -442,14 +442,14 @@
     }
     
     // Compare to old value
-    id oldValue = [props objectForKey:key];
+    id oldValue = props[key];
     if (!(oldValue && [oldValue isEqual:val]))
     {
         // Set the value if it has changed
         [props setValue:val forKey:key];
         
         // Also mark as dirty
-        [props setValue:[NSNumber numberWithBool:YES] forKey:@"isDirty"];
+        [props setValue:@YES forKey:@"isDirty"];
         
         [self storeDelayed];
     }
@@ -470,6 +470,7 @@
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key
 {
     NSString* relPath = res.relativePath;
+    [self markAsDirtyResource:res];
     [self removeObjectForRelPath:relPath andKey:key];
     
 }
@@ -499,7 +500,7 @@
 
 - (void) markAsDirtyRelPath:(NSString*) relPath
 {
-    [self setValue:[NSNumber numberWithBool:YES] forRelPath:relPath andKey:@"isDirty"];
+    [self setValue:@YES forRelPath:relPath andKey:@"isDirty"];
 }
 
 - (void) clearAllDirtyMarkers
@@ -517,7 +518,7 @@
     NSMutableArray* dirs = [NSMutableArray array];
     for (NSString* relPath in _resourceProperties)
     {
-        if ([[[_resourceProperties objectForKey:relPath] objectForKey:@"isSmartSpriteSheet"] boolValue])
+        if ([[_resourceProperties[relPath] objectForKey:@"isSmartSpriteSheet"] boolValue])
         {
             [dirs addObject:relPath];
         }
@@ -533,10 +534,10 @@
 
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew
 {
-    id props = [_resourceProperties objectForKey:relPathOld];
+    id props = _resourceProperties[relPathOld];
     if (props)
     {
-        [_resourceProperties setObject:props forKey:relPathNew];
+        _resourceProperties[relPathNew] = props;
     }
     [_resourceProperties removeObjectForKey:relPathOld];
 }
@@ -568,7 +569,7 @@
     {
         NSString *relResourcePath = [path relativePathFromBaseDirPath:self.projectPathDir];
 
-        [_resourcePaths addObject:[NSMutableDictionary dictionaryWithObject:relResourcePath forKey:@"path"]];
+        [_resourcePaths addObject:[@{@"path" : relResourcePath} mutableCopy]];
         return YES;
     }
     else
@@ -589,7 +590,7 @@
 {
     for (NSMutableDictionary *resourcePath in _resourcePaths)
     {
-        NSString *aResourcePath = [resourcePath objectForKey:@"path"];
+        NSString *aResourcePath = resourcePath[@"path"];
         if ([aResourcePath isEqualToString:path])
         {
             return resourcePath;
