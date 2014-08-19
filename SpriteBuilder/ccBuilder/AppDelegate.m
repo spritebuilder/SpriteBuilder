@@ -4502,22 +4502,12 @@ static BOOL hideAllToNextSeparator;
 	
 	AndroidPluginInstallerWindow *installerWindow = [[AndroidPluginInstallerWindow alloc] initWithWindowNibName:@"AndroidPluginInstallerWindow"];
 	
-    // Show new document sheet
-    [NSApp beginSheet:[installerWindow window]
-       modalForWindow:window
-        modalDelegate:NULL
-       didEndSelector:NULL
-          contextInfo:NULL];
+    
+	[[installerWindow window] center];
+    [[installerWindow window] makeKeyAndOrderFront:self];
 	
-	CGRect parentFrame = self.window.frame;
-	CGRect windowFrame = [installerWindow window].frame;
-	windowFrame.origin = CGPointMake(parentFrame.origin.x + parentFrame.size.width/2 - windowFrame.size.width/2, parentFrame.origin.y + parentFrame.size.height - windowFrame.size.height - 100 );
-	
-	[[installerWindow window] setFrame:windowFrame display:YES];
  
-	[NSApp runModalForWindow:[installerWindow window]];
-    [NSApp endSheet:[installerWindow window]];
-    [[installerWindow window] close];
+	[[NSApplication sharedApplication] runModalForWindow:[installerWindow window]];
 	
 #endif
 }
