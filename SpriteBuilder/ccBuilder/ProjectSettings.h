@@ -70,10 +70,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
     
     int publishAudioQuality_ios;
     int publishAudioQuality_android;
-    
-    BOOL isSafariExist;
-    BOOL isChromeExist;
-    BOOL isFirefoxExist;
 
     BOOL publishToZipFile;
     BOOL onlyPublishCCBs;
@@ -120,10 +116,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @property (nonatomic,assign) int publishAudioQuality_ios;
 @property (nonatomic,assign) int publishAudioQuality_android;
 
-@property (nonatomic,assign) BOOL isSafariExist;
-@property (nonatomic,assign) BOOL isChromeExist;
-@property (nonatomic,assign) BOOL isFirefoxExist;
-
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
 @property (nonatomic, readonly) NSArray* absoluteResourcePaths;
@@ -161,6 +153,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 - (BOOL) store;
 - (id) serialize;
 
+
 // *** Smart Sprite Sheets ***
 - (void) makeSmartSpriteSheet:(RMResource*) res;
 - (void) removeSmartSpriteSheet:(RMResource*) res;
@@ -168,24 +161,23 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 
 // *** Setting and reading file properties ***
 // Will mark the resource as dirty if old value is not equal to new value
-- (void) setValue:(id)newValue forResource:(RMResource*) res andKey:(id) key;
+- (void)setProperty:(id)newValue forResource:(RMResource *)res andKey:(id <NSCopying>)key;
 // Will mark the resource as dirty if old value is not equal to new value
-- (void) setValue:(id)newValue forRelPath:(NSString *)relPath andKey:(id)key;
-- (id) valueForResource:(RMResource*) res andKey:(id) key;
-- (id) valueForRelPath:(NSString*) relPath andKey:(id) key;
+- (void)setProperty:(id)newValue forRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
+- (id)propertyForResource:(RMResource *)res andKey:(id <NSCopying>)key;
+- (id)propertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
 // Will mark the resource as dirty
-- (void) removeObjectForResource:(RMResource*) res andKey:(id) key;
+- (void)removePropertyForResource:(RMResource *)res andKey:(id <NSCopying>)key;
 // Will mark the resource as dirty
-- (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key;
-- (BOOL) isDirtyResource:(RMResource*) res;
-- (BOOL) isDirtyRelPath:(NSString*) relPath;
+- (void)removePropertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
 
 // *** Dirty markers ***
+- (BOOL) isDirtyResource:(RMResource*) res;
+- (BOOL) isDirtyRelPath:(NSString*) relPath;
 - (void) markAsDirtyResource:(RMResource*) res;
 - (void) markAsDirtyRelPath:(NSString*) relPath;
 - (void) clearAllDirtyMarkers;
 - (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
-
 
 // *** Handling moved and deleted resources ***
 - (void) removedResourceAt:(NSString*) relPath;

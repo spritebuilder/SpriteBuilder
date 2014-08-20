@@ -177,7 +177,7 @@
 	NSString *outDir = [_outputDir stringByAppendingPathComponent:subPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    BOOL isGeneratedSpriteSheet = [[_projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
+    BOOL isGeneratedSpriteSheet = [[_projectSettings propertyForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
     if (!isGeneratedSpriteSheet)
 	{
         [_queue addOperationWithBlock:^

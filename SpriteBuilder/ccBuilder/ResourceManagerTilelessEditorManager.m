@@ -118,7 +118,7 @@
                 relDirPath = @"";
             }
             
-            BOOL isActiveDir = ![[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
+            BOOL isActiveDir = ![[settings propertyForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
             
             
             int numImagesInDir = 0;
@@ -179,7 +179,7 @@
                 // Remember this image group
                 [imageGroups addObject:group];
                 
-                if (![[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue])
+                if (![[settings propertyForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue])
                 {
                     [imageGroupsActive addObject:group];
                 }
@@ -219,7 +219,7 @@
         ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
         NSString* relDirPath = [[imageGroups objectAtIndex:rowIndex] objectForKey:@"relDirPath"];
         
-        BOOL previewFolderHidden = [[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
+        BOOL previewFolderHidden = [[settings propertyForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
         
         return [NSNumber numberWithBool:!previewFolderHidden];
     }
@@ -237,7 +237,7 @@
         // Update the value
         ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
         NSString* relDirPath = [[imageGroups objectAtIndex:row] objectForKey:@"relDirPath"];
-        [settings setValue:[NSNumber numberWithBool:![value boolValue]] forRelPath:relDirPath andKey:@"previewFolderHidden"];
+        [settings setProperty:[NSNumber numberWithBool:![value boolValue]] forRelPath:relDirPath andKey:@"previewFolderHidden"];
         
         // Deselect the table view to prevent toggle to fire twice
         [tableView deselectAll:self];
@@ -257,8 +257,8 @@
         ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
         NSString* relDirPath = [[imageGroups objectAtIndex:tableView.selectedRow] objectForKey:@"relDirPath"];
         
-        BOOL previewFolderHidden = [[settings valueForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
-        [settings setValue:[NSNumber numberWithBool:!previewFolderHidden] forRelPath:relDirPath andKey:@"previewFolderHidden"];
+        BOOL previewFolderHidden = [[settings propertyForRelPath:relDirPath andKey:@"previewFolderHidden"] boolValue];
+        [settings setProperty:[NSNumber numberWithBool:!previewFolderHidden] forRelPath:relDirPath andKey:@"previewFolderHidden"];
         
         [tableView deselectAll:self];
         [tableView reloadData];

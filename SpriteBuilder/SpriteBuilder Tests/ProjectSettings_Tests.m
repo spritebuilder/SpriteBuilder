@@ -285,7 +285,7 @@
 
     XCTAssertTrue(project.excludedFromPackageMigration);
 
-    NSNumber *scaleFrom = [project valueForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:@"scaleFrom"];
+    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:@"scaleFrom"];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
 }
 
@@ -393,7 +393,7 @@
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
-    [projectSettings setValue:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    [projectSettings setProperty:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
 
     XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
 
@@ -402,7 +402,7 @@
     projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     projectSettings.projectPath = fullPath;
 
-    NSNumber *value = [projectSettings valueForRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    NSNumber *value = [projectSettings propertyForRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
     XCTAssertEqual([value integerValue], (NSInteger)kCCBPublishFormatSound_ios_mp4);
 }
 
@@ -441,7 +441,7 @@
     NSInteger quality = [_projectSettings soundQualityForRelPath:@"foo" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality, NSNotFound);
 
-    [_projectSettings setValue:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
+    [_projectSettings setProperty:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
     int quality2 = [_projectSettings soundQualityForRelPath:@"baa" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality2, 7);
 }
@@ -485,7 +485,7 @@
     // Setting a new value should mark the resource as dirty
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
-    [_projectSettings setValue:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
 
     XCTAssertTrue([_projectSettings isDirtyResource:res1]);
 
@@ -493,7 +493,7 @@
     // Removing a property should mark the resource as dirty
     [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings removeObjectForResource:res1 andKey:@"format_ios"];
+    [_projectSettings removePropertyForResource:res1 andKey:@"format_ios"];
 
     XCTAssertTrue([_projectSettings isDirtyResource:res1]);
 
@@ -501,13 +501,13 @@
     // Setting same value twice should not mark resource as dirty
     [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings setValue:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
 
     [_projectSettings clearAllDirtyMarkers];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
-    [_projectSettings setValue:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 }

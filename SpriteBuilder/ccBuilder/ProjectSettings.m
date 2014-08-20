@@ -62,9 +62,6 @@
 @synthesize publishResolution_android_tablethd;
 @synthesize publishAudioQuality_ios;
 @synthesize publishAudioQuality_android;
-@synthesize isSafariExist;
-@synthesize isChromeExist;
-@synthesize isFirefoxExist;
 @synthesize publishToZipFile;
 @synthesize onlyPublishCCBs;
 @synthesize exporter;
@@ -129,8 +126,7 @@
     {
         [availableExporters addObject: plugIn.extension];
     }
-    
-    [self detectBrowserPresence];
+
     self.versionStr = [self getVersion];
     self.needRepublish = NO;
 
@@ -216,8 +212,6 @@
     {
         self.excludedFromPackageMigration = NO;
     }
-
-    [self detectBrowserPresence];
 
     [self initializeVersionStringWithProjectDict:dict];
 
@@ -390,7 +384,7 @@
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
 
-    [self setValue:@YES forResource:res andKey:@"isSmartSpriteSheet"];
+    [self setProperty:@YES forResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
     [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
@@ -400,8 +394,8 @@
 - (void) removeSmartSpriteSheet:(RMResource*) res
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
-    
-    [self removeObjectForResource:res andKey:@"isSmartSpriteSheet"];
+
+    [self removePropertyForResource:res andKey:@"isSmartSpriteSheet"];
 
     [self removeIntermediateFileLookupFile:res];
 
@@ -424,13 +418,13 @@
     }
 }
 
-- (void) setValue:(id)newValue forResource:(RMResource*) res andKey:(id) key
+- (void)setProperty:(id)newValue forResource:(RMResource *)res andKey:(id <NSCopying>) key
 {
     NSString* relPath = res.relativePath;
-    [self setValue:newValue forRelPath:relPath andKey:key];
+    [self setProperty:newValue forRelPath:relPath andKey:key];
 }
 
-- (void) setValue:(id)newValue forRelPath:(NSString *)relPath andKey:(id)key
+- (void)setProperty:(id)newValue forRelPath:(NSString *)relPath andKey:(id <NSCopying>)key
 {
     NSMutableDictionary *props = [self resourcePropertiesForRelPath:relPath];
 
@@ -456,25 +450,25 @@
     return props;
 }
 
-- (id) valueForResource:(RMResource*) res andKey:(id) key
+- (id)propertyForResource:(RMResource *)res andKey:(id <NSCopying>) key
 {
     NSString* relPath = [self findRelativePathInPackagesForAbsolutePath:res.filePath];
-    return [self valueForRelPath:relPath andKey:key];
+    return [self propertyForRelPath:relPath andKey:key];
 }
 
-- (id) valueForRelPath:(NSString*) relPath andKey:(id) key
+- (id)propertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>) key
 {
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
     return [props valueForKey:key];
 }
 
-- (void) removeObjectForResource:(RMResource*) res andKey:(id) key
+- (void)removePropertyForResource:(RMResource *)res andKey:(id <NSCopying>) key
 {
     NSString* relPath = res.relativePath;
-    [self removeObjectForRelPath:relPath andKey:key];
+    [self removePropertyForRelPath:relPath andKey:key];
 }
 
-- (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key
+- (void)removePropertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>) key
 {
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
     [props removeObjectForKey:key];
@@ -491,7 +485,7 @@
 
 - (BOOL) isDirtyRelPath:(NSString*) relPath
 {
-    return [[self valueForRelPath:relPath andKey:@"isDirty"] boolValue];
+    return [[self propertyForRelPath:relPath andKey:@"isDirty"] boolValue];
 }
 
 - (void) markAsDirtyResource:(RMResource*) res
@@ -501,7 +495,7 @@
 
 - (void) markAsDirtyRelPath:(NSString*) relPath
 {
-    [self setValue:@YES forRelPath:relPath andKey:@"isDirty"];
+    [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
     NSLog(@"Marking as dirty: %@", relPath);
 }
 
@@ -618,31 +612,6 @@
 
     [self movedResourceFrom:relResourcePathOld to:relResourcePathNew];
     return YES;
-}
-
-- (void) detectBrowserPresence
-{
-    isSafariExist = FALSE;
-    isChromeExist = FALSE;
-    isFirefoxExist = FALSE;
-    
-    OSStatus result = LSFindApplicationForInfo (kLSUnknownCreator, CFSTR("com.apple.Safari"), NULL, NULL, NULL);
-    if (result == noErr)
-    {
-        isSafariExist = TRUE;
-    }
-    
-    result = LSFindApplicationForInfo (kLSUnknownCreator, CFSTR("com.google.Chrome"), NULL, NULL, NULL);
-    if (result == noErr)
-    {
-        isChromeExist = TRUE;
-    }
-
-    result = LSFindApplicationForInfo (kLSUnknownCreator, CFSTR("org.mozilla.firefox"), NULL, NULL, NULL);
-    if (result == noErr)
-    {
-        isFirefoxExist = TRUE;
-    }
 }
 
 // TODO: remove after transition state to ResourcePath class

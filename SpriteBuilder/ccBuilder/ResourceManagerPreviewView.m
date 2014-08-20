@@ -165,11 +165,11 @@
 
 - (void)updateSoundPreview:(ProjectSettings *)settings res:(RMResource *)res
 {
-    self.format_ios_sound = [[settings valueForResource:res andKey:@"format_ios_sound"] intValue];
-    self.format_ios_sound_quality = [[settings valueForResource:res andKey:@"format_ios_sound_quality"] intValue];
+    self.format_ios_sound = [[settings propertyForResource:res andKey:@"format_ios_sound"] intValue];
+    self.format_ios_sound_quality = [[settings propertyForResource:res andKey:@"format_ios_sound_quality"] intValue];
 
-    self.format_android_sound = [[settings valueForResource:res andKey:@"format_android_sound"] intValue];
-    self.format_android_sound_quality = [[settings valueForResource:res andKey:@"format_android_sound_quality"] intValue];
+    self.format_android_sound = [[settings propertyForResource:res andKey:@"format_android_sound"] intValue];
+    self.format_android_sound_quality = [[settings propertyForResource:res andKey:@"format_android_sound_quality"] intValue];
 
     // Update icon
     NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"wav"];
@@ -186,14 +186,14 @@
 
 - (void)updateSpriteSheetPreview:(ProjectSettings *)settings res:(RMResource *)res
 {
-    self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
-    self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
-    self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
+    self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
+    self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
+    self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
 
-    self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
-    self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
-    self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
-    self.trimSprites = ![[settings valueForResource:res andKey:@"keepSpritesUntrimmed"] boolValue];
+    self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
+    self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
+    self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
+    self.trimSprites = ![[settings propertyForResource:res andKey:@"keepSpritesUntrimmed"] boolValue];
 
     NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
@@ -224,17 +224,17 @@
     [previewTablethd setImage:self.imgTablethd];
 
     // Load settings
-    self.scaleFrom = [[settings valueForResource:res andKey:@"scaleFrom"] intValue];
+    self.scaleFrom = [[settings propertyForResource:res andKey:@"scaleFrom"] intValue];
 
-    self.format_ios = [[settings valueForResource:res andKey:@"format_ios"] intValue];
-    self.format_ios_dither = [[settings valueForResource:res andKey:@"format_ios_dither"] boolValue];
-    self.format_ios_compress = [[settings valueForResource:res andKey:@"format_ios_compress"] boolValue];
+    self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
+    self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
+    self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
 
-    self.format_android = [[settings valueForResource:res andKey:@"format_android"] intValue];
-    self.format_android_dither = [[settings valueForResource:res andKey:@"format_android_dither"] boolValue];
-    self.format_android_compress = [[settings valueForResource:res andKey:@"format_android_compress"] boolValue];
+    self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
+    self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
+    self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
 
-    int tabletScale = [[settings valueForResource:res andKey:@"tabletScale"] intValue];
+    int tabletScale = [[settings propertyForResource:res andKey:@"tabletScale"] intValue];
     if (!tabletScale)
     {
         tabletScale = 2;
@@ -371,16 +371,16 @@
     if (_previewedResource)
     {
         // Return if the value hasn't changed
-        int oldScaleFrom = [[settings valueForResource:_previewedResource andKey:@"scaleFrom"] intValue];
+        int oldScaleFrom = [[settings propertyForResource:_previewedResource andKey:@"scaleFrom"] intValue];
         if (oldScaleFrom == scaleFrom) return;
         
         if (scaleFrom)
         {
-            [settings setValue:[NSNumber numberWithInt:scaleFrom] forResource:_previewedResource andKey:@"scaleFrom"];
+            [settings setProperty:[NSNumber numberWithInt:scaleFrom] forResource:_previewedResource andKey:@"scaleFrom"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"scaleFrom"];
+            [settings removePropertyForResource:_previewedResource andKey:@"scaleFrom"];
         }
         
         // Reload the resource
@@ -430,11 +430,11 @@
     {
         if (format_ios)
         {
-            [settings setValue:[NSNumber numberWithInt:format_ios] forResource:_previewedResource andKey:@"format_ios"];
+            [settings setProperty:[NSNumber numberWithInt:format_ios] forResource:_previewedResource andKey:@"format_ios"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"format_ios"];
+            [settings removePropertyForResource:_previewedResource andKey:@"format_ios"];
         }
         
         self.format_ios_dither_enabled = [self supportsDither_ios:format_ios];
@@ -452,11 +452,11 @@
     {
         if (format_android)
         {
-            [settings setValue:[NSNumber numberWithInt:format_android] forResource:_previewedResource andKey:@"format_android"];
+            [settings setProperty:[NSNumber numberWithInt:format_android] forResource:_previewedResource andKey:@"format_android"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"format_android"];
+            [settings removePropertyForResource:_previewedResource andKey:@"format_android"];
         }
         
         self.format_android_dither_enabled = [self supportsDither_android:format_android];
@@ -474,11 +474,11 @@
     {
         if (format_ios_dither)
         {
-            [settings setValue:[NSNumber numberWithBool:format_ios_dither] forResource:_previewedResource andKey:@"format_ios_dither"];
+            [settings setProperty:[NSNumber numberWithBool:format_ios_dither] forResource:_previewedResource andKey:@"format_ios_dither"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"format_ios_dither"];
+            [settings removePropertyForResource:_previewedResource andKey:@"format_ios_dither"];
         }
     }
 }
@@ -493,11 +493,11 @@
     {
         if (format_android_dither)
         {
-            [settings setValue:[NSNumber numberWithBool:format_android_dither] forResource:_previewedResource andKey:@"format_android_dither"];
+            [settings setProperty:[NSNumber numberWithBool:format_android_dither] forResource:_previewedResource andKey:@"format_android_dither"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"format_android_dither"];
+            [settings removePropertyForResource:_previewedResource andKey:@"format_android_dither"];
         }
     }
 }
@@ -512,11 +512,11 @@
     {
         if (format_ios_compress)
         {
-            [settings setValue:[NSNumber numberWithBool:format_ios_compress] forResource:_previewedResource andKey:@"format_ios_compress"];
+            [settings setProperty:[NSNumber numberWithBool:format_ios_compress] forResource:_previewedResource andKey:@"format_ios_compress"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"format_ios_compress"];
+            [settings removePropertyForResource:_previewedResource andKey:@"format_ios_compress"];
         }
     }
 }
@@ -531,11 +531,11 @@
     {
         if (format_android_compress)
         {
-            [settings setValue:[NSNumber numberWithBool:format_android_compress] forResource:_previewedResource andKey:@"format_android_compress"];
+            [settings setProperty:[NSNumber numberWithBool:format_android_compress] forResource:_previewedResource andKey:@"format_android_compress"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"format_android_compress"];
+            [settings removePropertyForResource:_previewedResource andKey:@"format_android_compress"];
         }
     }
 }
@@ -554,11 +554,11 @@
     {
         if (!trimSprites)
         {
-            [settings setValue:[NSNumber numberWithBool:!trimSprites] forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
+            [settings setProperty:[NSNumber numberWithBool:!trimSprites] forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
         }
         else
         {
-            [settings removeObjectForResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
+            [settings removePropertyForResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
         }
     }
 }
@@ -575,18 +575,18 @@
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     // Return if tabletScale hasn't changed
-    int oldTabletScale = [[settings valueForResource:_previewedResource andKey:@"tabletScale"] intValue];
+    int oldTabletScale = [[settings propertyForResource:_previewedResource andKey:@"tabletScale"] intValue];
     if (tabletScale == oldTabletScale) return;
     if (tabletScale == 2 && !oldTabletScale) return;
     
     // Update value and reload assets
     if (tabletScale != 2)
     {
-        [settings setValue:[NSNumber numberWithInt:tabletScale] forResource:_previewedResource andKey:@"tabletScale"];
+        [settings setProperty:[NSNumber numberWithInt:tabletScale] forResource:_previewedResource andKey:@"tabletScale"];
     }
     else
     {
-        [settings removeObjectForResource:_previewedResource andKey:@"tabletScale"];
+        [settings removePropertyForResource:_previewedResource andKey:@"tabletScale"];
     }
     
     [ResourceManager touchResource:_previewedResource];
@@ -601,7 +601,7 @@
     
     if (_previewedResource)
     {
-        [settings setValue:[NSNumber numberWithInt:format_ios_sound] forResource:_previewedResource andKey:@"format_ios_sound"];
+        [settings setProperty:[NSNumber numberWithInt:format_ios_sound] forResource:_previewedResource andKey:@"format_ios_sound"];
         
         if (format_ios_sound) self.format_ios_sound_quality_enabled = YES;
         else self.format_ios_sound_quality_enabled = NO;
@@ -616,7 +616,7 @@
     
     if (_previewedResource)
     {
-        [settings setValue:[NSNumber numberWithInt:format_android_sound] forResource:_previewedResource andKey:@"format_android_sound"];
+        [settings setProperty:[NSNumber numberWithInt:format_android_sound] forResource:_previewedResource andKey:@"format_android_sound"];
         self.format_android_sound_quality_enabled = YES;
     }
 }
@@ -629,7 +629,7 @@
     
     if (_previewedResource)
     {
-        [settings setValue:[NSNumber numberWithInt:format_ios_sound_quality] forResource:_previewedResource andKey:@"format_ios_sound_quality"];
+        [settings setProperty:[NSNumber numberWithInt:format_ios_sound_quality] forResource:_previewedResource andKey:@"format_ios_sound_quality"];
     }
 }
 
@@ -641,7 +641,7 @@
     
     if (_previewedResource)
     {
-        [settings setValue:[NSNumber numberWithInt:format_android_sound_quality] forResource:_previewedResource andKey:@"format_android_sound_quality"];
+        [settings setProperty:[NSNumber numberWithInt:format_android_sound_quality] forResource:_previewedResource andKey:@"format_android_sound_quality"];
     }
 }
 
