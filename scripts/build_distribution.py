@@ -60,7 +60,7 @@ def build_distribution(version,sku, mode, version_info,  private_key=None, ):
         
     create_all_generated_files(version, sku, version_info)
     compile_project(version, product_name, mode, private_key)
-    zip_archive(product_name)
+    zip_archive(product_name,version)
     
 def compile_project(version,product_name, mode, private_key):
     # Clean and build CocosBuilder
@@ -88,7 +88,7 @@ def compile_project(version,product_name, mode, private_key):
 
     os.chdir('../');
 
-def zip_archive(product_name):
+def zip_archive(product_name,version):
 
     # Create archives
     print "=== ZIPPING UP FILES ==="
@@ -103,6 +103,11 @@ def zip_archive(product_name):
         'build/{product_name}.app.dSYM'.format(product_name=product_name))
 
     os.chdir('build/');
+    
+    #Zip app.
+    zip_command = 'zip -q -r "{product_name}-{version}.zip" "{product_name}.app"'.format(product_name=product_name,version=version)
+    subprocess.check_call(zip_command, shell=True)
+
     
     zip_command = 'zip -q -r "{product_name}.app.dSYM.zip" "{product_name}.app.dSYM"'.format(product_name=product_name)
     subprocess.check_call(zip_command, shell=True)
