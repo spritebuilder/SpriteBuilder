@@ -457,8 +457,9 @@
 
 - (void)testMarkAsDirty
 {
-    RMResource *resource = [[RMResource alloc] init];
-    resource.filePath = [self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"];
+    RMResource *res1 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"]];
+    RMResource *res2 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/baa.png"]];
+    RMResource *res3 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/123.png"]];
 
     ResourceManager *resourceManager = [ResourceManager sharedManager];
     [resourceManager setActiveDirectoriesWithFullReset:@[
@@ -468,18 +469,47 @@
     [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
     [_projectSettings clearAllDirtyMarkers];
 
-    XCTAssertFalse([_projectSettings isDirtyResource:resource]);
 
-    [_projectSettings setValue:@(1) forResource:resource andKey:@"format_ios"];
-
-    XCTAssertTrue([_projectSettings isDirtyResource:resource]);
-
+    // Test clear all dirty markers
+    [_projectSettings markAsDirtyResource:res1];
+    [_projectSettings markAsDirtyResource:res2];
+    [_projectSettings markAsDirtyResource:res3];
 
     [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings removeObjectForResource:resource andKey:@"format_ios"];
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+    XCTAssertFalse([_projectSettings isDirtyResource:res2]);
+    XCTAssertFalse([_projectSettings isDirtyResource:res3]);
 
-    XCTAssertTrue([_projectSettings isDirtyResource:resource]);
+
+    // Setting a new value should mark the resource as dirty
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+
+    [_projectSettings setValue:@(1) forResource:res1 andKey:@"format_ios"];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:res1]);
+
+
+    // Removing a property should mark the resource as dirty
+    [_projectSettings clearAllDirtyMarkers];
+
+    [_projectSettings removeObjectForResource:res1 andKey:@"format_ios"];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:res1]);
+
+
+    // Setting same value twice should not mark resource as dirty
+    [_projectSettings clearAllDirtyMarkers];
+
+    [_projectSettings setValue:@(1) forResource:res1 andKey:@"format_ios"];
+
+    [_projectSettings clearAllDirtyMarkers];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+
+    [_projectSettings setValue:@(1) forResource:res1 andKey:@"format_ios"];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 }
 
 

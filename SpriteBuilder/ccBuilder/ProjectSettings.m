@@ -424,35 +424,36 @@
     }
 }
 
-- (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key
+- (void) setValue:(id)newValue forResource:(RMResource*) res andKey:(id) key
 {
     NSString* relPath = res.relativePath;
-    [self setValue:val forRelPath:relPath andKey:key];
-    [self markAsDirtyResource:res];
+    [self setValue:newValue forRelPath:relPath andKey:key];
 }
 
-- (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key
+- (void) setValue:(id)newValue forRelPath:(NSString *)relPath andKey:(id)key
 {
-    // Create value if it doesn't exist
+    NSMutableDictionary *props = [self resourcePropertiesForRelPath:relPath];
+
+    id oldValue = props[key];
+    if ([oldValue isEqual:newValue])
+    {
+        return;
+    }
+
+    [props setValue:newValue forKey:key];
+    [self markAsDirtyRelPath:relPath];
+    [self storeDelayed];
+}
+
+- (NSMutableDictionary *)resourcePropertiesForRelPath:(NSString *)relPath
+{
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
     if (!props)
     {
         props = [NSMutableDictionary dictionary];
         [_resourceProperties setValue:props forKey:relPath];
     }
-    
-    // Compare to old value
-    id oldValue = props[key];
-    if (!(oldValue && [oldValue isEqual:val]))
-    {
-        // Set the value if it has changed
-        [props setValue:val forKey:key];
-        
-        // Also mark as dirty
-        [props setValue:@YES forKey:@"isDirty"];
-        
-        [self storeDelayed];
-    }
+    return props;
 }
 
 - (id) valueForResource:(RMResource*) res andKey:(id) key
@@ -470,16 +471,16 @@
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key
 {
     NSString* relPath = res.relativePath;
-    [self markAsDirtyResource:res];
     [self removeObjectForRelPath:relPath andKey:key];
-    
 }
 
 - (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key
 {
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
     [props removeObjectForKey:key];
-    
+
+    [self markAsDirtyRelPath:relPath];
+
     [self storeDelayed];
 }
 
@@ -501,13 +502,15 @@
 - (void) markAsDirtyRelPath:(NSString*) relPath
 {
     [self setValue:@YES forRelPath:relPath andKey:@"isDirty"];
+    NSLog(@"Marking as dirty: %@", relPath);
 }
 
 - (void) clearAllDirtyMarkers
 {
     for (NSString* relPath in _resourceProperties)
     {
-        [self removeObjectForRelPath:relPath andKey:@"isDirty"];
+        NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
+        [props removeObjectForKey:@"isDirty"];
     }
     
     [self storeDelayed];

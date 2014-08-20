@@ -167,11 +167,15 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 - (NSArray*) smartSpriteSheetDirectories;
 
 // *** Setting and reading file properties ***
-- (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key;
-- (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key;
+// Will mark the resource as dirty if old value is not equal to new value
+- (void) setValue:(id)newValue forResource:(RMResource*) res andKey:(id) key;
+// Will mark the resource as dirty if old value is not equal to new value
+- (void) setValue:(id)newValue forRelPath:(NSString *)relPath andKey:(id)key;
 - (id) valueForResource:(RMResource*) res andKey:(id) key;
 - (id) valueForRelPath:(NSString*) relPath andKey:(id) key;
+// Will mark the resource as dirty
 - (void) removeObjectForResource:(RMResource*) res andKey:(id) key;
+// Will mark the resource as dirty
 - (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key;
 - (BOOL) isDirtyResource:(RMResource*) res;
 - (BOOL) isDirtyRelPath:(NSString*) relPath;
