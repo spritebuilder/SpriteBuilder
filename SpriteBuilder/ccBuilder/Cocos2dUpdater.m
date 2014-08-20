@@ -227,10 +227,10 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     }
     else
     {
-        dispatch_sync(dispatch_get_main_queue(), ^
-        {
-            block();
-        });
+		
+		CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
+	        block();
+	    });
     }
 }
 
