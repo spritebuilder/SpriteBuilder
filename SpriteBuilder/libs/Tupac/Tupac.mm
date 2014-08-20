@@ -183,6 +183,20 @@ typedef struct _PVRTexHeader
     
     CFRelease(imageData);
     
+    // HACK to fix jitter
+    if (wTrimmed % 2 == 1) wTrimmed += 1;
+    if (hTrimmed % 2 == 1) hTrimmed += 1;
+    if (wTrimmed + x > w)
+    {
+        x = 0;
+        wTrimmed = w;
+    }
+    if (hTrimmed + y > h)
+    {
+        y = 0;
+        hTrimmed = h;
+    }
+    
     return NSMakeRect(x, y, wTrimmed, hTrimmed);
 }
 

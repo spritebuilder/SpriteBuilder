@@ -15,8 +15,9 @@
 #import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "FileSystemTestCase.h"
-#import "CCBDirectoryPublisher.h"
 #import "ProjectSettings+Convenience.h"
+#import "RMResource.h"
+#import "ResourceManager.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 
@@ -392,7 +393,7 @@
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
-    [projectSettings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    [projectSettings setValue:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
 
     XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
 
@@ -453,6 +454,34 @@
     XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeAndroid], 8);
     XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeIOS], 6);
 }
+
+- (void)testMarkAsDirty
+{
+    RMResource *resource = [[RMResource alloc] init];
+    resource.filePath = [self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"];
+
+    ResourceManager *resourceManager = [ResourceManager sharedManager];
+    [resourceManager setActiveDirectoriesWithFullReset:@[
+            [self fullPathForFile:@"project/Packages/package1.sbpack"],
+    ]];
+
+    [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
+    [_projectSettings clearAllDirtyMarkers];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:resource]);
+
+    [_projectSettings setValue:@(1) forResource:resource andKey:@"format_ios"];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:resource]);
+
+
+    [_projectSettings clearAllDirtyMarkers];
+
+    [_projectSettings removeObjectForResource:resource andKey:@"format_ios"];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:resource]);
+}
+
 
 #pragma mark - test helper
 

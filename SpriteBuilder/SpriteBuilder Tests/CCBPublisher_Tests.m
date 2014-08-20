@@ -280,7 +280,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/sword.png" width:4 height:12 color:[NSColor yellowColor]];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setValue:[NSNumber numberWithBool:YES] forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setValue:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -339,6 +339,27 @@
     [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvr.plist"];
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvrtc.plist"];
+}
+
+- (void)testRepublishingWithoutCleaningCache
+{
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
+    [_projectSettings setValue:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
+    _targetIOS.resolutions = @[@"tablet"];
+
+    [_publisher addPublishingTarget:_targetIOS];
+    // Yes that's correct, publishing twice
+    [_publisher start];
+    [_publisher start];
+
+    [self assertFilesExistRelativeToDirectory:@"Published-iOS/resources-tablet" filesPaths:@[
+            @"sheet.plist",
+            @"sheet.png"
+    ]];
+
+    [self assertFileExists:@"baa.spritebuilder/Packages/foo.sbpack/sheet.ppng"];
+    [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet.plist"];
 }
 
 - (void)testEnums
