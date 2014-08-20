@@ -50,44 +50,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @class CCBWarnings;
 
 @interface ProjectSettings : NSObject
-{
-    NSString* projectPath;
-
-    NSString* publishDirectory;
-    NSString* publishDirectoryAndroid;
-
-    BOOL publishEnabledIOS;
-    BOOL publishEnabledAndroid;
-
-    BOOL publishResolution_ios_phone;
-    BOOL publishResolution_ios_phonehd;
-    BOOL publishResolution_ios_tablet;
-    BOOL publishResolution_ios_tablethd;
-    BOOL publishResolution_android_phone;
-    BOOL publishResolution_android_phonehd;
-    BOOL publishResolution_android_tablet;
-    BOOL publishResolution_android_tablethd;
-    
-    int publishAudioQuality_ios;
-    int publishAudioQuality_android;
-
-    BOOL publishToZipFile;
-    BOOL onlyPublishCCBs;
-    NSString* exporter;
-    NSMutableArray* availableExporters;
-    BOOL deviceOrientationPortrait;
-    BOOL deviceOrientationUpsideDown;
-    BOOL deviceOrientationLandscapeLeft;
-    BOOL deviceOrientationLandscapeRight;
-    int resourceAutoScaleFactor;
-
-    NSString* versionStr;
-    BOOL needRepublish;
-    
-    CCBWarnings* lastWarnings;
-    
-    BOOL storing;
-}
 
 // Full path to the project file, e.g. /foo/baa.spritebuilder/baa.ccbproj
 @property (nonatomic, copy) NSString* projectPath;
