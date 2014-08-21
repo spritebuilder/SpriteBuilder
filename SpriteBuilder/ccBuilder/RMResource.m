@@ -11,27 +11,36 @@
 
 @implementation RMResource
 
-@synthesize type, modifiedTime, touched, data, filePath;
+- (instancetype)initWithFilePath:(NSString *)filePath
+{
+    self = [super init];
+    if (self)
+    {
+        self.filePath = filePath;
+    }
+
+    return self;
+}
 
 - (void) loadData
 {
-    if (type == kCCBResTypeSpriteSheet)
+    if (_type == kCCBResTypeSpriteSheet)
     {
-        NSArray* spriteFrameNames = [CCBSpriteSheetParser listFramesInSheet:filePath];
+        NSArray* spriteFrameNames = [CCBSpriteSheetParser listFramesInSheet:_filePath];
         NSMutableArray* spriteFrames = [NSMutableArray arrayWithCapacity:[spriteFrameNames count]];
         for (NSString* frameName in spriteFrameNames)
         {
             RMSpriteFrame* frame = [[RMSpriteFrame alloc] init];
             frame.spriteFrameName = frameName;
-            frame.spriteSheetFile = self.filePath;
+            frame.spriteSheetFile = _filePath;
 
             [spriteFrames addObject:frame];
         }
         self.data = spriteFrames;
     }
-    else if (type == kCCBResTypeAnimation)
+    else if (_type == kCCBResTypeAnimation)
     {
-        NSArray* animationNames = [CCBAnimationParser listAnimationsInFile:filePath];
+        NSArray* animationNames = [CCBAnimationParser listAnimationsInFile:_filePath];
         NSMutableArray* animations = [NSMutableArray arrayWithCapacity:[animationNames count]];
         for (NSString* animationName in animationNames)
         {
@@ -43,7 +52,7 @@
         }
         self.data = animations;
     }
-    else if (type == kCCBResTypeDirectory)
+    else if (_type == kCCBResTypeDirectory)
     {
         // Ignore changed directories
     }
@@ -56,17 +65,17 @@
 @dynamic relativePath;
 - (NSString*) relativePath
 {
-    return [ResourceManagerUtil relativePathFromAbsolutePath: self.filePath];
+    return [ResourceManagerUtil relativePathFromAbsolutePath:_filePath];
 }
 
 - (NSImage*) previewForResolution:(NSString *)res
 {
     if (!res) res = @"auto";
 
-    if (type == kCCBResTypeImage)
+    if (_type == kCCBResTypeImage)
     {
-        NSString* fileName = [filePath lastPathComponent];
-        NSString* dirPath = [filePath stringByDeletingLastPathComponent];
+        NSString* fileName = [_filePath lastPathComponent];
+        NSString* dirPath = [_filePath stringByDeletingLastPathComponent];
         NSString* resDirName = [@"resources-" stringByAppendingString:res];
 
         NSString* autoPath = [[dirPath stringByAppendingPathComponent:resDirName] stringByAppendingPathComponent:fileName];
@@ -96,7 +105,8 @@
     }
 }
 
-// Paste board
+
+#pragma mark - pasteboard
 
 - (id) pasteboardPropertyListForType:(NSString *)pbType
 {
@@ -104,23 +114,23 @@
 
     if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"])
     {
-        [dict setObject:[NSNumber numberWithInt:type] forKey:@"type"];
-        [dict setObject:filePath forKey:@"filePath"];
+        dict[@"type"] = @(_type);
+        dict[@"filePath"] = _filePath;
         return dict;
     }
     else if ([pbType isEqualToString:@"com.cocosbuilder.texture"])
     {
-        [dict setObject:self.relativePath forKey:@"spriteFile"];
+        dict[@"spriteFile"] = self.relativePath;
         return dict;
     }
     else if ([pbType isEqualToString:@"com.cocosbuilder.ccb"])
     {
-        [dict setObject:self.relativePath forKey:@"ccbFile"];
+        dict[@"ccbFile"] = self.relativePath;
         return dict;
     }
     else if ([pbType isEqualToString:@"com.cocosbuilder.wav"])
     {
-        [dict setObject:self.relativePath forKey:@"wavFile"];
+        dict[@"wavFile"] = self.relativePath;
         return dict;
     }
     return NULL;
@@ -128,16 +138,16 @@
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.RMResource"];
-    if (type == kCCBResTypeImage)
+    NSMutableArray* pbTypes = [@[@"com.cocosbuilder.RMResource"] mutableCopy];
+    if (_type == kCCBResTypeImage)
     {
         [pbTypes addObject:@"com.cocosbuilder.texture"];
     }
-    else if (type == kCCBResTypeCCBFile)
+    else if (_type == kCCBResTypeCCBFile)
     {
         [pbTypes addObject:@"com.cocosbuilder.ccb"];
     }
-    else if(type == kCCBResTypeAudio)
+    else if(_type == kCCBResTypeAudio)
     {
         [pbTypes addObject:@"com.cocosbuilder.wav"];
     }
@@ -147,14 +157,27 @@
 
 - (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)pbType pasteboard:(NSPasteboard *)pasteboard
 {
-    if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"]) return NSPasteboardWritingPromised;
-    if ([pbType isEqualToString:@"com.cocosbuilder.texture"] && type == kCCBResTypeImage) return NSPasteboardWritingPromised;
-    if ([pbType isEqualToString:@"com.cocosbuilder.ccb"] && type == kCCBResTypeCCBFile) return NSPasteboardWritingPromised;
-    if ([pbType isEqualToString:@"com.cocosbuilder.wav"] && type == kCCBResTypeAudio) return NSPasteboardWritingPromised;
+    if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"])
+    {
+        return NSPasteboardWritingPromised;
+    }
+    if ([pbType isEqualToString:@"com.cocosbuilder.texture"] && _type == kCCBResTypeImage)
+    {
+        return NSPasteboardWritingPromised;
+    }
+    if ([pbType isEqualToString:@"com.cocosbuilder.ccb"] && _type == kCCBResTypeCCBFile)
+    {
+        return NSPasteboardWritingPromised;
+    }
+    if ([pbType isEqualToString:@"com.cocosbuilder.wav"] && _type == kCCBResTypeAudio)
+    {
+        return NSPasteboardWritingPromised;
+    }
     return 0;
 }
 
-// ImageKit representation
+
+#pragma mark - ImageKit
 
 - (NSString *) imageUID
 {
@@ -237,8 +260,5 @@
 {
     return YES;
 }
-
-// Deallocation
-
 
 @end
