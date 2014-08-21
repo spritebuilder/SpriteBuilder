@@ -167,6 +167,7 @@
 {
     self.format_ios_sound = [[settings propertyForResource:res andKey:@"format_ios_sound"] intValue];
     self.format_ios_sound_quality = [[settings propertyForResource:res andKey:@"format_ios_sound_quality"] intValue];
+    self.format_ios_sound_quality_enabled = _format_ios_sound != 0;
 
     self.format_android_sound = [[settings propertyForResource:res andKey:@"format_android_sound"] intValue];
     self.format_android_sound_quality = [[settings propertyForResource:res andKey:@"format_android_sound_quality"] intValue];
@@ -356,11 +357,6 @@
     
     //Is power of 2?
     double result = log((double)bitmapRep.pixelsHigh)/log(2.0);
-    if((1 << (int)result) != bitmapRep.pixelsHigh)
-        return NO;
-    
-    return YES;
-}
 
 - (void) setScaleFrom:(int)scaleFrom
 {
@@ -387,6 +383,7 @@
         [ResourceManager touchResource:_previewedResource];
         [[AppDelegate appDelegate] reloadResources];
     }
+    return 1 << (int)result == bitmapRep.pixelsHigh;
 }
 
 - (BOOL) supportsCompress_ios:(int)format
@@ -396,11 +393,6 @@
     if (format == kFCImageFormatPVR_RGB565) return YES;
     if (format == kFCImageFormatPVRTC_2BPP) return YES;
     if (format == kFCImageFormatPVRTC_4BPP) return YES;
-    return NO;
-}
-
-- (BOOL) supportsCompress_android:(int)format
-{
     return NO;
 }
 
@@ -430,7 +422,7 @@
     {
         if (format_ios)
         {
-            [settings setProperty:[NSNumber numberWithInt:format_ios] forResource:_previewedResource andKey:@"format_ios"];
+            [settings setProperty:@(format_ios) forResource:_previewedResource andKey:@"format_ios"];
         }
         else
         {
@@ -452,7 +444,7 @@
     {
         if (format_android)
         {
-            [settings setProperty:[NSNumber numberWithInt:format_android] forResource:_previewedResource andKey:@"format_android"];
+            [settings setProperty:@(format_android) forResource:_previewedResource andKey:@"format_android"];
         }
         else
         {
@@ -460,7 +452,7 @@
         }
         
         self.format_android_dither_enabled = [self supportsDither_android:format_android];
-        self.format_android_compress_enabled = [self supportsCompress_android:format_android];
+        self.format_android_compress_enabled = NO;
     }
 }
 
@@ -474,7 +466,7 @@
     {
         if (format_ios_dither)
         {
-            [settings setProperty:[NSNumber numberWithBool:format_ios_dither] forResource:_previewedResource andKey:@"format_ios_dither"];
+            [settings setProperty:@(format_ios_dither) forResource:_previewedResource andKey:@"format_ios_dither"];
         }
         else
         {
@@ -493,7 +485,7 @@
     {
         if (format_android_dither)
         {
-            [settings setProperty:[NSNumber numberWithBool:format_android_dither] forResource:_previewedResource andKey:@"format_android_dither"];
+            [settings setProperty:@(format_android_dither) forResource:_previewedResource andKey:@"format_android_dither"];
         }
         else
         {
@@ -512,7 +504,7 @@
     {
         if (format_ios_compress)
         {
-            [settings setProperty:[NSNumber numberWithBool:format_ios_compress] forResource:_previewedResource andKey:@"format_ios_compress"];
+            [settings setProperty:@(format_ios_compress) forResource:_previewedResource andKey:@"format_ios_compress"];
         }
         else
         {
@@ -531,7 +523,7 @@
     {
         if (format_android_compress)
         {
-            [settings setProperty:[NSNumber numberWithBool:format_android_compress] forResource:_previewedResource andKey:@"format_android_compress"];
+            [settings setProperty:@(format_android_compress) forResource:_previewedResource andKey:@"format_android_compress"];
         }
         else
         {
@@ -554,7 +546,7 @@
     {
         if (!trimSprites)
         {
-            [settings setProperty:[NSNumber numberWithBool:!trimSprites] forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
+            [settings setProperty:@(!trimSprites) forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
         }
         else
         {
@@ -582,7 +574,7 @@
     // Update value and reload assets
     if (tabletScale != 2)
     {
-        [settings setProperty:[NSNumber numberWithInt:tabletScale] forResource:_previewedResource andKey:@"tabletScale"];
+        [settings setProperty:@(tabletScale) forResource:_previewedResource andKey:@"tabletScale"];
     }
     else
     {
@@ -601,10 +593,9 @@
     
     if (_previewedResource)
     {
-        [settings setProperty:[NSNumber numberWithInt:format_ios_sound] forResource:_previewedResource andKey:@"format_ios_sound"];
-        
-        if (format_ios_sound) self.format_ios_sound_quality_enabled = YES;
-        else self.format_ios_sound_quality_enabled = NO;
+        [settings setProperty:@(format_ios_sound) forResource:_previewedResource andKey:@"format_ios_sound"];
+
+        self.format_ios_sound_quality_enabled = format_ios_sound != 0;
     }
 }
 
@@ -616,7 +607,7 @@
     
     if (_previewedResource)
     {
-        [settings setProperty:[NSNumber numberWithInt:format_android_sound] forResource:_previewedResource andKey:@"format_android_sound"];
+        [settings setProperty:@(format_android_sound) forResource:_previewedResource andKey:@"format_android_sound"];
         self.format_android_sound_quality_enabled = YES;
     }
 }
@@ -629,7 +620,7 @@
     
     if (_previewedResource)
     {
-        [settings setProperty:[NSNumber numberWithInt:format_ios_sound_quality] forResource:_previewedResource andKey:@"format_ios_sound_quality"];
+        [settings setProperty:@(format_ios_sound_quality) forResource:_previewedResource andKey:@"format_ios_sound_quality"];
     }
 }
 
@@ -641,7 +632,7 @@
     
     if (_previewedResource)
     {
-        [settings setProperty:[NSNumber numberWithInt:format_android_sound_quality] forResource:_previewedResource andKey:@"format_android_sound_quality"];
+        [settings setProperty:@(format_android_sound_quality) forResource:_previewedResource andKey:@"format_android_sound_quality"];
     }
 }
 
@@ -655,7 +646,7 @@
 
 - (CGFloat) splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMaximumPosition ofSubviewAt:(NSInteger)dividerIndex
 {
-    float max = splitView.frame.size.height - 100;
+    float max = (float) (splitView.frame.size.height - 100);
     if (proposedMaximumPosition > max) return max;
     else return proposedMaximumPosition;
 }
