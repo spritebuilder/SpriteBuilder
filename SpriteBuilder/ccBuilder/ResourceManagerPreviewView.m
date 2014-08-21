@@ -36,6 +36,13 @@
 #import "RMDirectory.h"
 #import "MiscConstants.h"
 
+@interface ResourceManagerPreviewView()
+
+@property (nonatomic) BOOL initialUpdate;
+
+@end
+
+
 @implementation ResourceManagerPreviewView
 
 #pragma mark Properties
@@ -113,7 +120,9 @@
     [viewSpriteSheet setHidden:YES];
     [viewSound setHidden:YES];
     [viewCCB setHidden:YES];
-    
+
+    self.initialUpdate = YES;
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     // Update previews for different resolutions
@@ -147,6 +156,8 @@
     {
         [viewGeneric setHidden:NO];
     }
+
+    self.initialUpdate = NO;
 }
 
 - (void)updateCCBFilePreview:(RMResource *)res
@@ -171,6 +182,7 @@
 
     self.format_android_sound = [[settings propertyForResource:res andKey:@"format_android_sound"] intValue];
     self.format_android_sound_quality = [[settings propertyForResource:res andKey:@"format_android_sound_quality"] intValue];
+    self.format_android_sound_quality_enabled = YES;
 
     // Update icon
     NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"wav"];
@@ -190,10 +202,15 @@
     self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
     self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
     self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
+    self.format_ios_dither_enabled = [self supportsDither_ios:_format_ios];
+    self.format_ios_compress_enabled = [self supportsCompress_ios:_format_ios];
 
     self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
     self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
     self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
+    self.format_android_dither_enabled = [self supportsDither_android:_format_android];
+    self.format_android_compress_enabled = NO;
+
     self.trimSprites = ![[settings propertyForResource:res andKey:@"keepSpritesUntrimmed"] boolValue];
 
     NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
@@ -230,10 +247,14 @@
     self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
     self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
     self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
+    self.format_ios_dither_enabled = [self supportsDither_ios:_format_ios];
+    self.format_ios_compress_enabled = [self supportsCompress_ios:_format_ios];
 
     self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
     self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
     self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
+    self.format_android_dither_enabled = [self supportsDither_android:_format_android];
+    self.format_android_compress_enabled = NO;
 
     int tabletScale = [[settings propertyForResource:res andKey:@"tabletScale"] intValue];
     if (!tabletScale)
@@ -358,31 +379,6 @@
     //Is power of 2?
     double result = log((double)bitmapRep.pixelsHigh)/log(2.0);
 
-- (void) setScaleFrom:(int)scaleFrom
-{
-    _scaleFrom = scaleFrom;
-    
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
-    if (_previewedResource)
-    {
-        // Return if the value hasn't changed
-        int oldScaleFrom = [[settings propertyForResource:_previewedResource andKey:@"scaleFrom"] intValue];
-        if (oldScaleFrom == scaleFrom) return;
-        
-        if (scaleFrom)
-        {
-            [settings setProperty:[NSNumber numberWithInt:scaleFrom] forResource:_previewedResource andKey:@"scaleFrom"];
-        }
-        else
-        {
-            [settings removePropertyForResource:_previewedResource andKey:@"scaleFrom"];
-        }
-        
-        // Reload the resource
-        [ResourceManager touchResource:_previewedResource];
-        [[AppDelegate appDelegate] reloadResources];
-    }
     return 1 << (int)result == bitmapRep.pixelsHigh;
 }
 
@@ -412,10 +408,47 @@
     return NO;
 }
 
+- (void) setScaleFrom:(int)scaleFrom
+{
+    _scaleFrom = scaleFrom;
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
+    ProjectSettings* settings = [self appDelegate].projectSettings;
+
+    if (_previewedResource)
+    {
+        // Return if the value hasn't changed
+        int oldScaleFrom = [[settings propertyForResource:_previewedResource andKey:@"scaleFrom"] intValue];
+        if (oldScaleFrom == scaleFrom) return;
+
+        if (scaleFrom)
+        {
+            [settings setProperty:@(scaleFrom) forResource:_previewedResource andKey:@"scaleFrom"];
+        }
+        else
+        {
+            [settings removePropertyForResource:_previewedResource andKey:@"scaleFrom"];
+        }
+
+        // Reload the resource
+        [ResourceManager touchResource:_previewedResource];
+        [[AppDelegate appDelegate] reloadResources];
+    }
+}
+
 - (void) setFormat_ios:(int)format_ios
 {
     _format_ios = format_ios;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -437,7 +470,12 @@
 - (void) setFormat_android:(int)format_android
 {
     _format_android = format_android;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -459,7 +497,12 @@
 - (void) setFormat_ios_dither:(BOOL)format_ios_dither
 {
     _format_ios_dither = format_ios_dither;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -478,7 +521,12 @@
 - (void) setFormat_android_dither:(BOOL)format_android_dither
 {
     _format_android_dither = format_android_dither;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -497,7 +545,12 @@
 - (void) setFormat_ios_compress:(BOOL)format_ios_compress
 {
     _format_ios_compress = format_ios_compress;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -516,7 +569,12 @@
 - (void) setFormat_android_compress:(BOOL)format_android_compress
 {
     _format_android_compress = format_android_compress;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -538,7 +596,13 @@
     {
         return;
     }
+
     _trimSprites = trimSprites;
+
+    if (_initialUpdate)
+    {
+        return;
+    }
     
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
@@ -563,7 +627,12 @@
     }
     
     _tabletScale = tabletScale;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     // Return if tabletScale hasn't changed
@@ -588,7 +657,12 @@
 - (void) setFormat_ios_sound:(int)format_ios_sound
 {
     _format_ios_sound = format_ios_sound;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -602,7 +676,12 @@
 - (void) setFormat_android_sound:(int)format_android_sound
 {
     _format_android_sound = format_android_sound;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -615,7 +694,12 @@
 - (void) setFormat_ios_sound_quality:(int)format_ios_sound_quality
 {
     _format_ios_sound_quality = format_ios_sound_quality;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
@@ -627,7 +711,12 @@
 - (void) setFormat_android_sound_quality:(int)format_android_sound_quality
 {
     _format_android_sound_quality = format_android_sound_quality;
-    
+
+    if (_initialUpdate)
+    {
+        return;
+    }
+
     ProjectSettings* settings = [self appDelegate].projectSettings;
     
     if (_previewedResource)
