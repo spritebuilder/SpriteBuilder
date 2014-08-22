@@ -63,8 +63,6 @@
     
     // CCB preivew
     IBOutlet NSImageView* previewCCB;
-    
-    RMResource* _previewedResource;
 }
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
@@ -114,6 +112,8 @@
 
 @property (nonatomic, assign) int tabletScale;
 
-- (void) setPreviewFile:(NSString*) file;
+
+
+- (void)setPreviewResource:(id)resource;
 
 @end

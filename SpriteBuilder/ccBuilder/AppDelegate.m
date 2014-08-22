@@ -514,8 +514,8 @@ typedef enum
     projectOutlineHandler.projectSettings = projectSettings;
     
     resourceManagerSplitView.delegate = previewViewOwner;
-    
-    [previewViewOwner setPreviewFile:NULL];
+
+    [previewViewOwner setPreviewResource:NULL];
     
     //Setup warnings outline
     warningHandler = [[WarningTableViewHandler alloc] init];

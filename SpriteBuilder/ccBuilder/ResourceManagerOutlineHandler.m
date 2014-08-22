@@ -497,7 +497,7 @@
 - (void) updateSelectionPreview
 {
     id selection = [resourceList itemAtRow:[resourceList selectedRow]];
-    [imagePreview setPreviewFile:selection];
+    [imagePreview setPreviewResource:selection];
     [resourceList setNeedsDisplay];
 }
 

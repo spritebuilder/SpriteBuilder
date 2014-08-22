@@ -40,6 +40,7 @@
 @interface ResourceManagerPreviewView()
 
 @property (nonatomic) BOOL initialUpdate;
+@property (nonatomic, strong) RMResource *previewedResource;
 
 @end
 
@@ -99,7 +100,7 @@
     self.imgTablet = NULL;
     self.imgTablethd = NULL;
     
-    _previewedResource = NULL;
+    self.previewedResource = NULL;
     
     self.enabled = NO;
     self.scaleFrom = 0;
@@ -112,7 +113,7 @@
     self.trimSprites = NO;
 }
 
-- (void) setPreviewFile:(id)resource
+- (void)setPreviewResource:(id)resource
 {
     [self resetView];
     
@@ -126,8 +127,8 @@
 
     if ([resource isKindOfClass:[RMResource class]])
     {
-        _previewedResource = res;
         RMResource* res = (RMResource*) resource;
+        self.previewedResource = res;
         
         if (res.type == kCCBResTypeImage)
         {
