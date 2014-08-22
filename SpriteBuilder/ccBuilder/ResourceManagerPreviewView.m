@@ -35,6 +35,7 @@
 #import "RMResource.h"
 #import "RMDirectory.h"
 #import "MiscConstants.h"
+#import "NSAlert+Convenience.h"
 
 @interface ResourceManagerPreviewView()
 
@@ -300,8 +301,8 @@
     
     if (![[[srcImagePath pathExtension] lowercaseString] isEqualToString:@"png"])
     {
-        // Only png is supported
-        [self.appDelegate modalDialogTitle:@"Unsupported Format" message:@"Sorry, only png images are supported as source images."];
+        [NSAlert showModalDialogWithTitle:@"Unsupported Format"
+                                  message:@"Sorry, only png images are supported as source images."];
         return;
     }
     
