@@ -15,6 +15,7 @@
 #import "FileSystemTestCase.h"
 #import "ResourceManager.h"
 #import "RMDirectory.h"
+#import "FCFormatConverter.h"
 
 @interface ResourceManagerPreviewView_Tests : FileSystemTestCase
 
@@ -72,5 +73,53 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
     XCTAssertFalse([_projectSettings isDirtyResource:_resource]);
 }
+
+- (void)testSettingValueShouldMarkResourceAsDiryForImages
+{
+    _resource.type = kCCBResTypeImage;
+    [self setResourceProperties:@{
+            @"format_ios":@(kFCImageFormatPVR_RGBA8888),
+            @"format_ios_dither":@(YES),
+            @"format_ios_compress":@(YES),
+            @"format_android":@(kFCImageFormatPVR_RGBA8888),
+            @"format_android_dither":@(YES),
+            @"format_android_compress":@(YES)
+    }];
+
+    [_resourceManagerPreviewView setPreviewResource:_resource];
+
+    [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
+            @"format_ios":@(kFCImageFormatPVRTC_4BPP),
+            @"format_ios_dither":@(NO),
+            @"format_ios_compress":@(NO),
+            @"format_android":@(kFCImageFormatPVRTC_4BPP),
+            @"format_android_dither":@(NO),
+            @"format_android_compress":@(NO)
+    }];
+}
+
+- (void)setResourceProperties:(NSDictionary *)properties
+{
+    for (NSString *key in properties)
+    {
+        id value = properties[key];
+
+        [_projectSettings setProperty:value forResource:_resource andKey:key];
+    }
+    [_projectSettings clearAllDirtyMarkers];
+}
+
+- (void)setPropertiesIndividuallyAndAssertResourceIsDirty:(NSDictionary *)properties
+{
+    for (NSString *key in properties)
+    {
+        id value = properties[key];
+
+        [_projectSettings clearAllDirtyMarkers];
+        [_resourceManagerPreviewView setValue:value forKey:key];
+        XCTAssertTrue([_projectSettings isDirtyResource:_resource], @"Resource not dirty for key \"%@\", value \"%@\"", key, value);
+    }
+}
+
 
 @end
