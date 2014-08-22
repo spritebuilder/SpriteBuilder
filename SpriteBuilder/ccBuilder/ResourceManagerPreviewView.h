@@ -30,6 +30,7 @@
 @class AppDelegate;
 @class RMResource;
 @class ResourceManagerPreviewAudio;
+@class ProjectSettings;
 
 @interface ResourceManagerPreviewView : NSObject <NSSplitViewDelegate>
 {
@@ -65,6 +66,8 @@
     
     RMResource* _previewedResource;
 }
+
+@property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (weak, nonatomic,readonly) AppDelegate* appDelegate;
 
 @property (weak, nonatomic) IBOutlet NSView *androidContainerImage;

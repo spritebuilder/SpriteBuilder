@@ -493,6 +493,7 @@ typedef enum
     
     // Setup preview
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
+    previewViewOwner.projectSettings = projectSettings;
     
     NSArray* topLevelObjs = NULL;
     [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
@@ -1965,9 +1966,11 @@ static BOOL hideAllToNextSeparator;
     }
     prjctSettings.projectPath = fileName;
     [prjctSettings store];
+
     self.projectSettings = prjctSettings;
-    _resourceCommandController.projectSettings = self.projectSettings;
+    _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
+    previewViewOwner.projectSettings = projectSettings;
     
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];

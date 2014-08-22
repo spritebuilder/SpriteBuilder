@@ -111,7 +111,7 @@
     self.trimSprites = NO;
 }
 
-- (void) setPreviewFile:(id) selection
+- (void) setPreviewFile:(id)resource
 {
     [self resetView];
     
@@ -123,25 +123,22 @@
 
     self.initialUpdate = YES;
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
-    // Update previews for different resolutions
-    if ([selection isKindOfClass:[RMResource class]])
+    if ([resource isKindOfClass:[RMResource class]])
     {
-        RMResource* res = (RMResource*) selection;
         _previewedResource = res;
+        RMResource* res = (RMResource*) resource;
         
         if (res.type == kCCBResTypeImage)
         {
-            [self updateImagePreview:selection settings:settings res:res];
+            [self updateImagePreview:resource settings:_projectSettings res:res];
         }
         else if (res.type == kCCBResTypeDirectory && [res.data isDynamicSpriteSheet])
         {
-            [self updateSpriteSheetPreview:settings res:res];
+            [self updateSpriteSheetPreview:_projectSettings res:res];
         }
         else if (res.type == kCCBResTypeAudio)
         {
-            [self updateSoundPreview:settings res:res];
+            [self updateSoundPreview:_projectSettings res:res];
         }
         else if (res.type == kCCBResTypeCCBFile)
         {
@@ -286,7 +283,7 @@
 
 - (IBAction)droppedFile:(id)sender
 {
-    if (![AppDelegate appDelegate].projectSettings)
+    if (_projectSettings)
     {
         [self resetView];
         return;
@@ -417,21 +414,19 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-
     if (_previewedResource)
     {
         // Return if the value hasn't changed
-        int oldScaleFrom = [[settings propertyForResource:_previewedResource andKey:@"scaleFrom"] intValue];
+        int oldScaleFrom = [[_projectSettings propertyForResource:_previewedResource andKey:@"scaleFrom"] intValue];
         if (oldScaleFrom == scaleFrom) return;
 
         if (scaleFrom)
         {
-            [settings setProperty:@(scaleFrom) forResource:_previewedResource andKey:@"scaleFrom"];
+            [_projectSettings setProperty:@(scaleFrom) forResource:_previewedResource andKey:@"scaleFrom"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"scaleFrom"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"scaleFrom"];
         }
 
         // Reload the resource
@@ -449,17 +444,15 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
         if (format_ios)
         {
-            [settings setProperty:@(format_ios) forResource:_previewedResource andKey:@"format_ios"];
+            [_projectSettings setProperty:@(format_ios) forResource:_previewedResource andKey:@"format_ios"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"format_ios"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_ios"];
         }
         
         self.format_ios_dither_enabled = [self supportsDither_ios:format_ios];
@@ -476,17 +469,15 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
         if (format_android)
         {
-            [settings setProperty:@(format_android) forResource:_previewedResource andKey:@"format_android"];
+            [_projectSettings setProperty:@(format_android) forResource:_previewedResource andKey:@"format_android"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"format_android"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_android"];
         }
         
         self.format_android_dither_enabled = [self supportsDither_android:format_android];
@@ -503,17 +494,15 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
         if (format_ios_dither)
         {
-            [settings setProperty:@(format_ios_dither) forResource:_previewedResource andKey:@"format_ios_dither"];
+            [_projectSettings setProperty:@(format_ios_dither) forResource:_previewedResource andKey:@"format_ios_dither"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"format_ios_dither"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_ios_dither"];
         }
     }
 }
@@ -527,17 +516,15 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
         if (format_android_dither)
         {
-            [settings setProperty:@(format_android_dither) forResource:_previewedResource andKey:@"format_android_dither"];
+            [_projectSettings setProperty:@(format_android_dither) forResource:_previewedResource andKey:@"format_android_dither"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"format_android_dither"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_android_dither"];
         }
     }
 }
@@ -551,17 +538,15 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
         if (format_ios_compress)
         {
-            [settings setProperty:@(format_ios_compress) forResource:_previewedResource andKey:@"format_ios_compress"];
+            [_projectSettings setProperty:@(format_ios_compress) forResource:_previewedResource andKey:@"format_ios_compress"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"format_ios_compress"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_ios_compress"];
         }
     }
 }
@@ -575,17 +560,15 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
         if (format_android_compress)
         {
-            [settings setProperty:@(format_android_compress) forResource:_previewedResource andKey:@"format_android_compress"];
+            [_projectSettings setProperty:@(format_android_compress) forResource:_previewedResource andKey:@"format_android_compress"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"format_android_compress"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_android_compress"];
         }
     }
 }
@@ -603,18 +586,16 @@
     {
         return;
     }
-    
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
+
     if (_previewedResource)
     {
         if (!trimSprites)
         {
-            [settings setProperty:@(!trimSprites) forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
+            [_projectSettings setProperty:@(!trimSprites) forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
         }
         else
         {
-            [settings removePropertyForResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
+            [_projectSettings removePropertyForResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
         }
     }
 }
@@ -633,21 +614,19 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     // Return if tabletScale hasn't changed
-    int oldTabletScale = [[settings propertyForResource:_previewedResource andKey:@"tabletScale"] intValue];
+    int oldTabletScale = [[_projectSettings propertyForResource:_previewedResource andKey:@"tabletScale"] intValue];
     if (tabletScale == oldTabletScale) return;
     if (tabletScale == 2 && !oldTabletScale) return;
     
     // Update value and reload assets
     if (tabletScale != 2)
     {
-        [settings setProperty:@(tabletScale) forResource:_previewedResource andKey:@"tabletScale"];
+        [_projectSettings setProperty:@(tabletScale) forResource:_previewedResource andKey:@"tabletScale"];
     }
     else
     {
-        [settings removePropertyForResource:_previewedResource andKey:@"tabletScale"];
+        [_projectSettings removePropertyForResource:_previewedResource andKey:@"tabletScale"];
     }
     
     [ResourceManager touchResource:_previewedResource];
@@ -663,11 +642,9 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
-        [settings setProperty:@(format_ios_sound) forResource:_previewedResource andKey:@"format_ios_sound"];
+        [_projectSettings setProperty:@(format_ios_sound) forResource:_previewedResource andKey:@"format_ios_sound"];
 
         self.format_ios_sound_quality_enabled = format_ios_sound != 0;
     }
@@ -682,11 +659,9 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
-        [settings setProperty:@(format_android_sound) forResource:_previewedResource andKey:@"format_android_sound"];
+        [_projectSettings setProperty:@(format_android_sound) forResource:_previewedResource andKey:@"format_android_sound"];
         self.format_android_sound_quality_enabled = YES;
     }
 }
@@ -700,11 +675,9 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
-        [settings setProperty:@(format_ios_sound_quality) forResource:_previewedResource andKey:@"format_ios_sound_quality"];
+        [_projectSettings setProperty:@(format_ios_sound_quality) forResource:_previewedResource andKey:@"format_ios_sound_quality"];
     }
 }
 
@@ -717,11 +690,9 @@
         return;
     }
 
-    ProjectSettings* settings = [self appDelegate].projectSettings;
-    
     if (_previewedResource)
     {
-        [settings setProperty:@(format_android_sound_quality) forResource:_previewedResource andKey:@"format_android_sound_quality"];
+        [_projectSettings setProperty:@(format_android_sound_quality) forResource:_previewedResource andKey:@"format_android_sound_quality"];
     }
 }
 
