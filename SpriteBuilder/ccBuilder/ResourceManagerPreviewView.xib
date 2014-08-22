@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -39,7 +39,7 @@
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="3"/>
                     <connections>
                         <action selector="droppedFile:" target="-2" id="129"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="134">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="134">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -60,7 +60,7 @@
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="104"/>
                     <connections>
                         <action selector="droppedFile:" target="-2" id="368"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="421">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="421">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -82,7 +82,7 @@
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="106"/>
                     <connections>
                         <action selector="droppedFile:" target="-2" id="369"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="428">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="428">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -104,7 +104,7 @@
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="108"/>
                     <connections>
                         <action selector="droppedFile:" target="-2" id="370"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="434">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="434">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -126,7 +126,7 @@
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="110"/>
                     <connections>
                         <action selector="droppedFile:" target="-2" id="371"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="441">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="441">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -151,7 +151,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="494">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="494">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -175,7 +175,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="502">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="502">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -199,7 +199,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="509">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="509">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -223,7 +223,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="515">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="515">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -252,7 +252,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="472">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="472">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -287,7 +287,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="484">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="484">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -317,7 +317,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="309"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="309"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="309" id="327">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -372,7 +372,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="312"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="312"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="312" id="313">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -392,7 +392,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="317"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="317"/>
                         <binding destination="-2" name="enabled3" keyPath="enabled" previousBinding="318" id="319">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -420,7 +420,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="323"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="323"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="323" id="324">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -448,7 +448,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="340"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="340"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="340" id="343">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -477,7 +477,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="306"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="306"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="306" id="307">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -520,7 +520,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="300"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="300"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="300" id="303">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -540,7 +540,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="332"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="332"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="332" id="335">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -568,7 +568,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="450">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="450">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -596,7 +596,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="462">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="462">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -634,7 +634,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="240">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="240">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -659,7 +659,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="234">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="234">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -683,7 +683,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="521">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="521">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -712,7 +712,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="532">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="532">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -741,7 +741,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="537">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="537">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -770,7 +770,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="542">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="542">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -802,7 +802,7 @@
                                 <font key="font" metaFont="miniSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="c8S-W6-s3X"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="c8S-W6-s3X"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="c8S-W6-s3X" id="lDo-zb-F71">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -831,7 +831,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="qUP-4W-6sq"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="qUP-4W-6sq"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="qUP-4W-6sq" id="j5y-fE-WxN">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -864,8 +864,7 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="mnY-Ld-Um5"/>
-                                <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="mnY-Ld-Um5" id="147-j6-ZAn">
+                                <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="MZo-X4-iyJ" id="xnh-d0-gPR">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -873,6 +872,7 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="MZo-X4-iyJ"/>
                                 <binding destination="-2" name="selectedTag" keyPath="format_android" id="y0e-qj-liL"/>
                             </connections>
                         </popUpButton>
@@ -884,7 +884,7 @@
                                 <font key="font" metaFont="miniSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="gZ9-Z2-Jx0"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="gZ9-Z2-Jx0"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="gZ9-Z2-Jx0" id="tLF-dX-63b">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -929,7 +929,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="827"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="827"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="827" id="907">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -974,7 +974,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="891"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="891"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="891" id="892">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -994,7 +994,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="877"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="877"/>
                         <binding destination="-2" name="enabled3" keyPath="enabled" previousBinding="878" id="879">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1022,7 +1022,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="874"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="874"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="874" id="875">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1050,7 +1050,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="838"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="838"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="838" id="839">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1079,7 +1079,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="872"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="872"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="872" id="873">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1112,7 +1112,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="893"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="893"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="893" id="894">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1132,7 +1132,7 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="824"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="824"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="824" id="825">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1164,7 +1164,7 @@
                                 <font key="font" metaFont="miniSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="PzD-VH-N2V"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="PzD-VH-N2V"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="PzD-VH-N2V" id="uMM-dt-UZa">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1193,7 +1193,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xKy-IN-Xev"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="xKy-IN-Xev"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="xKy-IN-Xev" id="mOn-Mk-0bh">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1226,7 +1226,7 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="5oG-ga-eSn"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="5oG-ga-eSn"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="5oG-ga-eSn" id="QDU-DS-2d7">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1246,7 +1246,7 @@
                                 <font key="font" metaFont="miniSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="edw-Au-3df"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="edw-Au-3df"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="edw-Au-3df" id="msi-3n-xlh">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1292,7 +1292,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" image="ui-nopreview" id="579"/>
                     <connections>
                         <action selector="droppedFile:" target="-2" id="719"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="701">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="701">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -1318,7 +1318,7 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" image="ui-nopreview" id="1107"/>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="1108">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="1108">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -1356,7 +1356,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1040"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="1040"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1040" id="1041">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1376,7 +1376,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1056"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="1056"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1056" id="1057">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1401,7 +1401,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1021"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="1021"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1021" id="1022">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1434,7 +1434,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1068"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="1068"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1068" id="1069">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1477,7 +1477,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledIOS" id="1093"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="1093"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1093" id="1094">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1506,7 +1506,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="1042"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="1042"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1042" id="1043">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1526,7 +1526,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="1060"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="1060"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1060" id="1061">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1550,7 +1550,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="1045"/>
+                        <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="1045"/>
                         <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="1045" id="1046">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1584,7 +1584,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="xZD-OO-Sp1"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="xZD-OO-Sp1"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="xZD-OO-Sp1" id="XOq-Ae-i68">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1604,7 +1604,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="QOq-Ud-6Rs"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="QOq-Ud-6Rs"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="QOq-Ud-6Rs" id="fn0-oY-Gj3">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1636,7 +1636,7 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="p4I-2B-XaQ"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="p4I-2B-XaQ"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="p4I-2B-XaQ" id="g4w-Qe-ECC">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1669,7 +1669,7 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings.publishEnabledAndroid" id="8Er-aj-Cn4"/>
+                                <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledAndroid" id="8Er-aj-Cn4"/>
                                 <binding destination="-2" name="enabled2" keyPath="enabled" previousBinding="8Er-aj-Cn4" id="WVQ-oE-Uig">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1692,7 +1692,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="actionRemoveFile:" target="-2" id="385"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="380">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="380">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -1716,7 +1716,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="actionRemoveFile:" target="-2" id="391"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="392">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="392">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -1740,7 +1740,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="actionRemoveFile:" target="-2" id="396"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="397">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="397">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -1764,7 +1764,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="actionRemoveFile:" target="-2" id="401"/>
-                        <binding destination="-2" name="enabled" keyPath="appDelegate.projectSettings" id="402">
+                        <binding destination="-2" name="enabled" keyPath="projectSettings" id="402">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>

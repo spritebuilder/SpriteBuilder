@@ -25,7 +25,6 @@
 #import "ResourceManagerPreviewView.h"
 #import "ResourceManager.h"
 #import "CCBImageView.h"
-#import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "FCFormatConverter.h"
 #import "ResourceManagerPreivewAudio.h"
@@ -34,6 +33,7 @@
 #import "RMDirectory.h"
 #import "MiscConstants.h"
 #import "NSAlert+Convenience.h"
+#import "NotificationNames.h"
 
 @interface ResourceManagerPreviewView()
 
@@ -74,11 +74,6 @@
     [_androidContainerImage setHidden:!IS_SPRITEBUILDER_PRO];
     [_androidContainerSound setHidden:!IS_SPRITEBUILDER_PRO];
     [_androidContainerSpriteSheet setHidden:!IS_SPRITEBUILDER_PRO];
-}
-
-- (AppDelegate*) appDelegate
-{
-    return [AppDelegate appDelegate];
 }
 
 - (void) resetView
@@ -326,7 +321,7 @@
     [fm copyItemAtPath:srcImagePath toPath:dstFile error:NULL];
     
     // Reload open document
-    [[AppDelegate appDelegate] reloadResources];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
 }
 
 - (IBAction)actionRemoveFile:(id)sender
@@ -358,7 +353,7 @@
     imgView.image = NULL;
     
     // Reload open document
-    [[AppDelegate appDelegate] reloadResources];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
 }
 
 #pragma mark Edit properties
@@ -434,7 +429,7 @@
 
         // Reload the resource
         [ResourceManager touchResource:_previewedResource];
-        [[AppDelegate appDelegate] reloadResources];
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
     }
 }
 
@@ -633,7 +628,7 @@
     }
     
     [ResourceManager touchResource:_previewedResource];
-    [[AppDelegate appDelegate] reloadResources];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
 }
 
 - (void) setFormat_ios_sound:(int)format_ios_sound
