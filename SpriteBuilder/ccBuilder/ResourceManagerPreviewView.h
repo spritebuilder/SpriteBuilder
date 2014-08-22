@@ -40,24 +40,16 @@
     IBOutlet NSView* viewSpriteSheet;
     IBOutlet NSView* viewSound;
     IBOutlet NSView* viewCCB;
-    
-    // Image previews
-    IBOutlet CCBImageView* __weak previewMain;
-    IBOutlet CCBImageView* __weak previewPhone;
-    IBOutlet CCBImageView* __weak previewPhonehd;
-    IBOutlet CCBImageView* __weak previewTablet;
-    IBOutlet CCBImageView* __weak previewTablethd;
-    
+
+
     // Sprite sheet previews
     IBOutlet CCBImageView* previewSpriteSheet;
     
     // Sound preview
-    //IBOutlet QTMovieView* previewSound;
-    IBOutlet NSImageView* previewSoundImage;
-    IBOutlet NSView     * previewSound;
-    ResourceManagerPreviewAudio        * previewAudioViewController;
+    IBOutlet NSImageView *previewSoundImage;
+    IBOutlet NSView *previewSound;
+    ResourceManagerPreviewAudio *previewAudioViewController;
 
-    
     // Generic fallback view
     IBOutlet NSImageView* previewGeneric;
     
@@ -66,17 +58,16 @@
 }
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
-@property (weak, nonatomic,readonly) AppDelegate* appDelegate;
 
 @property (weak, nonatomic) IBOutlet NSView *androidContainerImage;
 @property (weak, nonatomic) IBOutlet NSView *androidContainerSpriteSheet;
 @property (weak, nonatomic) IBOutlet NSView *androidContainerSound;
 
-@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewMain;
-@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewPhone;
-@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewPhonehd;
-@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewTablet;
-@property (weak, nonatomic,readonly) IBOutlet CCBImageView* previewTablethd;
+@property (weak, nonatomic) IBOutlet CCBImageView *previewMain;
+@property (weak, nonatomic) IBOutlet CCBImageView *previewPhone;
+@property (weak, nonatomic) IBOutlet CCBImageView *previewPhonehd;
+@property (weak, nonatomic) IBOutlet CCBImageView *previewTablet;
+@property (weak, nonatomic) IBOutlet CCBImageView *previewTablethd;
 
 @property (nonatomic,strong) NSImage* imgMain;
 @property (nonatomic,strong) NSImage* imgPhone;
@@ -87,8 +78,10 @@
 @property (nonatomic,readwrite) BOOL enabled;
 
 @property (nonatomic,readwrite) int scaleFrom;
+@property (nonatomic, assign) int tabletScale;
 
 @property (nonatomic,readonly) BOOL format_supportsPVRTC;
+@property (nonatomic,readwrite) BOOL trimSprites;
 
 @property (nonatomic,readwrite) int  format_ios;
 @property (nonatomic,readwrite) BOOL format_ios_dither;
@@ -107,11 +100,6 @@
 @property (nonatomic,readwrite) int format_android_sound;
 @property (nonatomic,readwrite) int format_android_sound_quality;
 @property (nonatomic,readwrite) int format_android_sound_quality_enabled;
-
-@property (nonatomic,readwrite) BOOL trimSprites;
-
-@property (nonatomic, assign) int tabletScale;
-
 
 
 - (void)setPreviewResource:(id)resource;

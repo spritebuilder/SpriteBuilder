@@ -24,12 +24,10 @@
 
 #import "ResourceManagerPreviewView.h"
 #import "ResourceManager.h"
-#import "ResourceManagerUtil.h"
 #import "CCBImageView.h"
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "FCFormatConverter.h"
-#import <AVFoundation/AVFoundation.h>
 #import "ResourceManagerPreivewAudio.h"
 #import "ResourceTypes.h"
 #import "RMResource.h"
@@ -45,15 +43,9 @@
 @end
 
 
+
 @implementation ResourceManagerPreviewView
 
-#pragma mark Properties
-
-@synthesize previewMain;
-@synthesize previewPhone;
-@synthesize previewPhonehd;
-@synthesize previewTablet;
-@synthesize previewTablethd;
 @dynamic    format_supportsPVRTC;
 
 #pragma mark Setup
@@ -62,11 +54,11 @@
 {
     [super awakeFromNib];
     
-    [previewMain setAllowsCutCopyPaste:NO];
-    [previewPhone setAllowsCutCopyPaste:NO];
-    [previewPhonehd setAllowsCutCopyPaste:NO];
-    [previewTablet setAllowsCutCopyPaste:NO];
-    [previewTablethd setAllowsCutCopyPaste:NO];
+    [_previewMain setAllowsCutCopyPaste:NO];
+    [_previewPhone setAllowsCutCopyPaste:NO];
+    [_previewPhonehd setAllowsCutCopyPaste:NO];
+    [_previewTablet setAllowsCutCopyPaste:NO];
+    [_previewTablethd setAllowsCutCopyPaste:NO];
     
     previewAudioViewController = [[ResourceManagerPreviewAudio alloc] initWithNibName:@"ResourceManagerPreviewAudio" bundle:[NSBundle mainBundle]];
     
@@ -89,11 +81,12 @@
 - (void) resetView
 {
     // Clear all previews
-    [previewMain setImage:NULL];
-    [previewPhone setImage:NULL];
-    [previewPhonehd setImage:NULL];
-    [previewTablet setImage:NULL];
-    [previewTablethd setImage:NULL];
+    [_previewMain setImage:NULL];
+    [_previewPhone setImage:NULL];
+    [_previewPhonehd setImage:NULL];
+    [_previewTablet setImage:NULL];
+    [_previewTablethd setImage:NULL];
+
     self.imgMain = NULL;
     self.imgPhone = NULL;
     self.imgPhonehd = NULL;
@@ -116,12 +109,8 @@
 - (void)setPreviewResource:(id)resource
 {
     [self resetView];
-    
-    [viewGeneric setHidden:YES];
-    [viewImage setHidden:YES];
-    [viewSpriteSheet setHidden:YES];
-    [viewSound setHidden:YES];
-    [viewCCB setHidden:YES];
+
+    [self hideAllPeviewViews];
 
     self.initialUpdate = YES;
 
@@ -157,6 +146,15 @@
     }
 
     self.initialUpdate = NO;
+}
+
+- (void)hideAllPeviewViews
+{
+    [viewGeneric setHidden:YES];
+    [viewImage setHidden:YES];
+    [viewSpriteSheet setHidden:YES];
+    [viewSound setHidden:YES];
+    [viewCCB setHidden:YES];
 }
 
 - (void)updateCCBFilePreview:(RMResource *)res
@@ -234,11 +232,11 @@
     self.imgTablet = [selection previewForResolution:@"tablet"];
     self.imgTablethd = [selection previewForResolution:@"tablethd"];
 
-    [previewMain setImage:self.imgMain];
-    [previewPhone setImage:self.imgPhone];
-    [previewPhonehd setImage:self.imgPhonehd];
-    [previewTablet setImage:self.imgTablet];
-    [previewTablethd setImage:self.imgTablethd];
+    [_previewMain setImage:self.imgMain];
+    [_previewPhone setImage:self.imgPhone];
+    [_previewPhonehd setImage:self.imgPhonehd];
+    [_previewTablet setImage:self.imgTablet];
+    [_previewTablethd setImage:self.imgTablethd];
 
     // Load settings
     self.scaleFrom = [[settings propertyForResource:res andKey:@"scaleFrom"] intValue];
@@ -272,11 +270,11 @@
 - (NSString*) resolutionDirectoryForImageView:(NSImageView*) imgView
 {
     NSString* resolution = NULL;
-    if (imgView == previewMain) resolution = @"auto";
-    else if (imgView == previewPhone) resolution = @"phone";
-    else if (imgView == previewPhonehd) resolution = @"phonehd";
-    else if (imgView == previewTablet) resolution = @"tablet";
-    else if (imgView == previewTablethd) resolution = @"tablethd";
+    if (imgView == _previewMain) resolution = @"auto";
+    else if (imgView == _previewPhone) resolution = @"phone";
+    else if (imgView == _previewPhonehd) resolution = @"phonehd";
+    else if (imgView == _previewTablet) resolution = @"tablet";
+    else if (imgView == _previewTablethd) resolution = @"tablethd";
     
     if (!resolution) return NULL;
     
@@ -334,10 +332,10 @@
     
     CCBImageView* imgView = NULL;
     int tag = [sender tag];
-    if (tag == 0) imgView = previewPhone;
-    else if (tag == 1) imgView = previewPhonehd;
-    else if (tag == 2) imgView = previewTablet;
-    else if (tag == 3) imgView = previewTablethd;
+    if (tag == 0) imgView = _previewPhone;
+    else if (tag == 1) imgView = _previewPhonehd;
+    else if (tag == 2) imgView = _previewTablet;
+    else if (tag == 3) imgView = _previewTablethd;
     
     if (!imgView) return;
     
