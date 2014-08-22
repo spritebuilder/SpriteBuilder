@@ -11,7 +11,7 @@
                 <outlet property="androidContainerSound" destination="Qm7-Yt-sDZ" id="Rlc-al-4Eo"/>
                 <outlet property="androidContainerSpriteSheet" destination="09x-4Q-2Nh" id="Det-Tw-a4D"/>
                 <outlet property="previewCCB" destination="1106" id="1112"/>
-                <outlet property="previewGeneric" destination="578" id="727"/>
+                <outlet property="previewFallback" destination="578" id="727"/>
                 <outlet property="previewMain" destination="2" id="123"/>
                 <outlet property="previewPhone" destination="103" id="124"/>
                 <outlet property="previewPhonehd" destination="105" id="125"/>

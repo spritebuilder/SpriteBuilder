@@ -39,13 +39,16 @@
 
 @property (nonatomic) BOOL initialUpdate;
 @property (nonatomic, strong) RMResource *previewedResource;
+@property (nonatomic, strong) ResourceManagerPreviewAudio *previewAudioViewController;
 
 @end
 
 
 
+
 @implementation ResourceManagerPreviewView
 
+// @synthesize previewMain, previewPhone, previewPhonehd, previewTablet, previewTablethd;
 @dynamic    format_supportsPVRTC;
 
 #pragma mark Setup
@@ -60,13 +63,13 @@
     [_previewTablet setAllowsCutCopyPaste:NO];
     [_previewTablethd setAllowsCutCopyPaste:NO];
     
-    previewAudioViewController = [[ResourceManagerPreviewAudio alloc] initWithNibName:@"ResourceManagerPreviewAudio" bundle:[NSBundle mainBundle]];
+    self.previewAudioViewController = [[ResourceManagerPreviewAudio alloc] initWithNibName:@"ResourceManagerPreviewAudio" bundle:[NSBundle mainBundle]];
     
-    previewAudioViewController.view.frame = CGRectMake(0, 0, previewSound.frame.size.width, previewSound.frame.size.height);
+    _previewAudioViewController.view.frame = CGRectMake(0, 0, _previewSound.frame.size.width, _previewSound.frame.size.height);
     
-    [previewSound addSubview:previewAudioViewController.view];
+    [_previewSound addSubview:_previewAudioViewController.view];
     
-    [previewAudioViewController setupPlayer];
+    [_previewAudioViewController setupPlayer];
 
     [_androidContainerImage setHidden:!IS_SPRITEBUILDER_PRO];
     [_androidContainerSound setHidden:!IS_SPRITEBUILDER_PRO];
@@ -137,12 +140,12 @@
         }
         else
         {
-            [viewGeneric setHidden:NO];
+            [_viewGeneric setHidden:NO];
         }
     }
     else
     {
-        [viewGeneric setHidden:NO];
+        [_viewGeneric setHidden:NO];
     }
 
     self.initialUpdate = NO;
@@ -150,11 +153,11 @@
 
 - (void)hideAllPeviewViews
 {
-    [viewGeneric setHidden:YES];
-    [viewImage setHidden:YES];
-    [viewSpriteSheet setHidden:YES];
-    [viewSound setHidden:YES];
-    [viewCCB setHidden:YES];
+    [_viewGeneric setHidden:YES];
+    [_viewImage setHidden:YES];
+    [_viewSpriteSheet setHidden:YES];
+    [_viewSound setHidden:YES];
+    [_viewCCB setHidden:YES];
 }
 
 - (void)updateCCBFilePreview:(RMResource *)res
@@ -166,9 +169,9 @@
         img = [NSImage imageNamed:@"ui-nopreview.png"];
     }
 
-    [previewCCB setImage:img];
+    [_previewCCB setImage:img];
 
-    [viewCCB setHidden:NO];
+    [_viewCCB setHidden:NO];
 }
 
 - (void)updateSoundPreview:(ProjectSettings *)settings res:(RMResource *)res
@@ -185,13 +188,13 @@
     NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFileType:@"wav"];
     [icon setScalesWhenResized:YES];
     icon.size = NSMakeSize(128, 128);
-    [previewSoundImage setImage:icon];
+    [_previewSoundImage setImage:icon];
 
-    [previewAudioViewController loadAudioFile:res.filePath];
+    [_previewAudioViewController loadAudioFile:res.filePath];
 
     self.enabled = YES;
 
-    [viewSound setHidden:NO];
+    [_viewSound setHidden:NO];
 }
 
 - (void)updateSpriteSheetPreview:(ProjectSettings *)settings res:(RMResource *)res
@@ -217,11 +220,11 @@
         img = [NSImage imageNamed:@"ui-nopreview.png"];
     }
 
-    [previewSpriteSheet setImage:img];
+    [_previewSpriteSheet setImage:img];
 
     self.enabled = YES;
 
-    [viewSpriteSheet setHidden:NO];
+    [_viewSpriteSheet setHidden:NO];
 }
 
 - (void)updateImagePreview:(id)selection settings:(ProjectSettings *)settings res:(RMResource *)res
@@ -262,7 +265,7 @@
 
     self.enabled = YES;
 
-    [viewImage setHidden:NO];
+    [_viewImage setHidden:NO];
 }
 
 #pragma mark Callbacks

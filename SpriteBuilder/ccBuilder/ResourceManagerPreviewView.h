@@ -33,31 +33,20 @@
 @class ProjectSettings;
 
 @interface ResourceManagerPreviewView : NSObject <NSSplitViewDelegate>
-{
-    // Main views
-    IBOutlet NSView* viewGeneric;
-    IBOutlet NSView* viewImage;
-    IBOutlet NSView* viewSpriteSheet;
-    IBOutlet NSView* viewSound;
-    IBOutlet NSView* viewCCB;
-
-
-    // Sprite sheet previews
-    IBOutlet CCBImageView* previewSpriteSheet;
-    
-    // Sound preview
-    IBOutlet NSImageView *previewSoundImage;
-    IBOutlet NSView *previewSound;
-    ResourceManagerPreviewAudio *previewAudioViewController;
-
-    // Generic fallback view
-    IBOutlet NSImageView* previewGeneric;
-    
-    // CCB preivew
-    IBOutlet NSImageView* previewCCB;
-}
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
+
+@property (weak, nonatomic) IBOutlet NSView* viewGeneric;
+@property (weak, nonatomic) IBOutlet NSView* viewImage;
+@property (weak, nonatomic) IBOutlet NSView* viewSpriteSheet;
+@property (weak, nonatomic) IBOutlet NSView* viewSound;
+@property (weak, nonatomic) IBOutlet NSView* viewCCB;
+
+@property (weak, nonatomic) IBOutlet NSImageView *previewCCB;
+@property (weak, nonatomic) IBOutlet NSImageView *previewFallback;
+@property (weak, nonatomic) IBOutlet NSView *previewSound;
+@property (weak, nonatomic) IBOutlet NSImageView *previewSoundImage;
+@property (weak, nonatomic) IBOutlet CCBImageView* previewSpriteSheet;
 
 @property (weak, nonatomic) IBOutlet NSView *androidContainerImage;
 @property (weak, nonatomic) IBOutlet NSView *androidContainerSpriteSheet;
