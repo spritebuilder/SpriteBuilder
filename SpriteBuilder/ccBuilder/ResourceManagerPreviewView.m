@@ -286,7 +286,7 @@
 
 - (IBAction)droppedFile:(id)sender
 {
-    if (_projectSettings)
+    if (!_projectSettings)
     {
         [self resetView];
         return;
