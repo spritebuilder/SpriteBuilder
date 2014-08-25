@@ -34,6 +34,7 @@
 #import "MiscConstants.h"
 #import "NSAlert+Convenience.h"
 #import "NotificationNames.h"
+#import "ImagePropertiesHelper.h"
 
 @interface ResourceManagerPreviewView()
 
@@ -360,21 +361,23 @@
 
 -(BOOL)format_supportsPVRTC
 {
-    //early out.
-    if(_previewedResource.type != kCCBResTypeImage)
+    if (_previewedResource.type != kCCBResTypeImage)
+    {
         return YES;
-    
-    NSBitmapImageRep * bitmapRep = self.imgMain.representations[0];
-    if(bitmapRep == nil)
-        return YES;
-    
-    if(bitmapRep.pixelsHigh != bitmapRep.pixelsWide)
-        return NO;
-    
-    //Is power of 2?
-    double result = log((double)bitmapRep.pixelsHigh)/log(2.0);
+    }
 
-    return 1 << (int)result == bitmapRep.pixelsHigh;
+    NSBitmapImageRep *bitmapRep = self.imgMain.representations[0];
+    if (bitmapRep == nil)
+    {
+        return YES;
+    }
+
+    if (bitmapRep.pixelsHigh != bitmapRep.pixelsWide)
+    {
+        return NO;
+    }
+
+    return [ImagePropertiesHelper isValueAPowerOfTwo:bitmapRep.pixelsHigh];
 }
 
 - (BOOL) supportsCompress_ios:(int)format
