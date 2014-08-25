@@ -35,6 +35,7 @@
 #import "NSAlert+Convenience.h"
 #import "NotificationNames.h"
 #import "ImageFormatAndPropertiesHelper.h"
+#import "ResourcePropertyKeys.h"
 
 @interface ResourceManagerPreviewView()
 
@@ -205,7 +206,7 @@
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
-    self.trimSprites = [[settings propertyForResource:res andKey:@"trimSprites"] boolValue];
+    self.trimSprites = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_TRIM_SPRITES] boolValue];
 
     NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
@@ -452,7 +453,7 @@
 - (void) setTrimSprites:(BOOL) trimSprites
 {
     _trimSprites = trimSprites;
-    [self setValue:@(trimSprites) withName:@"trimSprites" isAudio:NO];
+    [self setValue:@(trimSprites) withName:RESOURCE_PROPERTY_TRIM_SPRITES isAudio:NO];
 }
 
 - (void) setTabletScale:(int)tabletScale
@@ -466,7 +467,6 @@
 
     // Return if tabletScale hasn't changed
     int oldTabletScale = [[_projectSettings propertyForResource:_previewedResource andKey:@"tabletScale"] intValue];
-    if (tabletScale == oldTabletScale) return;
     if (tabletScale == 2 && !oldTabletScale) return;
     
     // Update value and reload assets

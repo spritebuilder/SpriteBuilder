@@ -4,6 +4,7 @@
 #import "Tupac.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
+#import "ResourcePropertyKeys.h"
 
 
 @interface PublishSpriteSheetOperation()
@@ -178,7 +179,7 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
     self.format_android = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android"] intValue];
     self.format_android_dither = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android_dither"] boolValue];
     self.format_android_compress = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android_compress"] boolValue];
-    self.trim = [[_projectSettings propertyForRelPath:_subPath andKey:@"trimSprites"] boolValue];
+    self.trim = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_TRIM_SPRITES] boolValue];
 }
 
 - (void)cancel

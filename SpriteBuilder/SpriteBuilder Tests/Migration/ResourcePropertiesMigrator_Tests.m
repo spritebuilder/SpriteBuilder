@@ -10,6 +10,7 @@
 #import "ProjectSettings.h"
 #import "ResourcePropertiesMigrator.h"
 #import "FileSystemTestCase.h"
+#import "ResourcePropertyKeys.h"
 
 @interface ResourcePropertiesMigrator_Tests : FileSystemTestCase
 
@@ -45,15 +46,15 @@
     [_migrator migrate];
 
     XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:@"keepSpritesUntrimmed"]);
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:@"trimSprites"]);
+    XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertTrue([_projectSettings isDirtyRelPath:@"flowers"]);
 
     XCTAssertFalse([_projectSettings propertyForRelPath:@"rocks" andKey:@"keepSpritesUntrimmed"]);
-    XCTAssertTrue([_projectSettings propertyForRelPath:@"rocks" andKey:@"trimSprites"]);
+    XCTAssertTrue([_projectSettings propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"rocks"]);
 
     XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:@"keepSpritesUntrimmed"]);
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:@"trimSprites"]);
+    XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"background.png"]);
 }
 

@@ -16,6 +16,7 @@
 #import "ResourceManager.h"
 #import "RMDirectory.h"
 #import "FCFormatConverter.h"
+#import "ResourcePropertyKeys.h"
 
 @interface ResourceManagerPreviewView_Tests : FileSystemTestCase
 
@@ -118,13 +119,13 @@
 {
     [self makeResourceASpriteSheet];
     [self setResourceProperties:@{
-            @"trimSprites":@(YES)
+            RESOURCE_PROPERTY_TRIM_SPRITES:@(YES)
     }];
 
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
-            @"trimSprites":@(NO)
+            RESOURCE_PROPERTY_TRIM_SPRITES:@(NO)
     }];
 }
 
@@ -182,13 +183,13 @@
 {
     [self makeResourceASpriteSheet];
     [self setResourceProperties:@{
-            @"trimSprites":@(NO),
+            RESOURCE_PROPERTY_TRIM_SPRITES : @(NO),
     }];
 
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
-            @"trimSprites" : @(YES),
+            RESOURCE_PROPERTY_TRIM_SPRITES : @(YES),
     }                                                      isAudio:NO];
 }
 

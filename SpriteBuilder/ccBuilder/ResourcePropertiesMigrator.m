@@ -2,6 +2,7 @@
 #import "ResourcePropertiesMigrator.h"
 #import "ProjectSettings.h"
 #import "PackageMigrator.h"
+#import "ResourcePropertyKeys.h"
 
 
 @interface ResourcePropertiesMigrator ()
@@ -59,7 +60,7 @@
     }
     else
     {
-        [_projectSettings setProperty:@YES forRelPath:relPath andKey:@"trimSprites"];
+        [_projectSettings setProperty:@YES forRelPath:relPath andKey:RESOURCE_PROPERTY_TRIM_SPRITES];
     }
 
     if (!dirtyMarked)
