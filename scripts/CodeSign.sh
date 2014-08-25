@@ -3,6 +3,7 @@
 #sandboxed / Appstore
 #ID="3rd Party Mac Developer Application: Apportable Inc. (U2K5E32W7G)"
 
+
 #Non-sandboxed, non-appstore
 PKGID="3rd Party Mac Developer Installer: Apportable Inc. (U2K5E32W7G)"
 
@@ -32,16 +33,16 @@ if [ "$KEYSTORE_ID" = "" ]; then
     exit 1
 fi
 
-if [ "$ENTTITLEMENTS" = "" ]; then
-    echo Failed to find ENTTITLEMENTS. Specify one with: export ENTTITLEMENTS=\<entitlements type \(sandboxed,nonsandboxed\)\>
+if [ "$APP_MODE" = "" ]; then
+    echo Failed to find APP_MODE. Specify one with: export APP_MODE=\<entitlements type \(sandboxed,nonsandboxed\)\>
     exit 1
 fi
 
-if [ "$ENTTITLEMENTS" = "sandboxed" ]; then
+if [ "$APP_MODE" = "sandboxed" ]; then
     ENT="../SpriteBuilder/Sandboxed.entitlements"
 fi
 
-if [ "$ENTTITLEMENTS" = "nonsandboxed" ]; then
+if [ "$APP_MODE" = "nonsandboxed" ]; then
     ENT="../SpriteBuilder/NonSandboxed.entitlements"
 fi
 
