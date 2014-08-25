@@ -471,12 +471,22 @@
     [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }
 
+- (void)clearDirtyMarkerOfRelPath:(NSString *)relPath
+{
+    NSMutableDictionary *props = [_resourceProperties valueForKey:relPath];
+    [props removeObjectForKey:@"isDirty"];
+}
+
+- (void)clearDirtyMarkerOfResource:(RMResource *)resource
+{
+    [self clearDirtyMarkerOfRelPath:resource.relativePath];
+}
+
 - (void) clearAllDirtyMarkers
 {
     for (NSString* relPath in _resourceProperties)
     {
-        NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
-        [props removeObjectForKey:@"isDirty"];
+        [self clearDirtyMarkerOfRelPath:relPath];
     }
     
     [self storeDelayed];

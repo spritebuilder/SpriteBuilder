@@ -502,14 +502,46 @@
     [_projectSettings clearAllDirtyMarkers];
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"scaleFrom"];
 
     [_projectSettings clearAllDirtyMarkers];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"scaleFrom"];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+}
+
+- (void)testClearDirtyMarker
+{
+    RMResource *res1 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"]];
+    RMResource *res2 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/baa.png"]];
+    RMResource *res3 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/123.png"]];
+
+    ResourceManager *resourceManager = [ResourceManager sharedManager];
+    [resourceManager setActiveDirectoriesWithFullReset:@[
+            [self fullPathForFile:@"project/Packages/package1.sbpack"],
+    ]];
+
+    [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
+    [_projectSettings clearAllDirtyMarkers];
+
+    [_projectSettings markAsDirtyResource:res1];
+    [_projectSettings markAsDirtyResource:res2];
+    [_projectSettings markAsDirtyResource:res3];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:res1]);
+    XCTAssertTrue([_projectSettings isDirtyResource:res2]);
+    XCTAssertTrue([_projectSettings isDirtyResource:res3]);
+
+    [_projectSettings clearDirtyMarkerOfResource:res1];
+    [_projectSettings clearDirtyMarkerOfResource:res2];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+    XCTAssertFalse([_projectSettings isDirtyResource:res2]);
+    XCTAssertTrue([_projectSettings isDirtyResource:res3]);
 }
 
 

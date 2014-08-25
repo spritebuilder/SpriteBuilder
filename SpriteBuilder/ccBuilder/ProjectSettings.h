@@ -134,11 +134,13 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 - (void)removePropertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
 
 // *** Dirty markers ***
-- (BOOL) isDirtyResource:(RMResource*) res;
-- (BOOL) isDirtyRelPath:(NSString*) relPath;
-- (void) markAsDirtyResource:(RMResource*) res;
-- (void) markAsDirtyRelPath:(NSString*) relPath;
-- (void) clearAllDirtyMarkers;
+- (BOOL)isDirtyResource:(RMResource *)res;
+- (BOOL)isDirtyRelPath:(NSString *)relPath;
+- (void)markAsDirtyResource:(RMResource *)res;
+- (void)markAsDirtyRelPath:(NSString *)relPath;
+- (void)clearAllDirtyMarkers;
+- (void)clearDirtyMarkerOfRelPath:(NSString *)relPath;
+- (void)clearDirtyMarkerOfResource:(RMResource *)resource;
 - (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
 
 // *** Handling moved and deleted resources ***
@@ -174,5 +176,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 // "/foo/Packages/baa.sbpack/level1/sprites/fighter.png" will result in "level1/sprites/fighter.png"
 // If no package include the given absolutePath nil is returned
 - (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath;
+
 
 @end
