@@ -124,7 +124,7 @@ def create_all_generated_files(version, sku, version_info):
         os.makedirs('Generated')
         
     #create version.txt
-    version_info['sb_version'] = version
+    version_info['version'] = version
     version_info['sku'] = sku
     
     
