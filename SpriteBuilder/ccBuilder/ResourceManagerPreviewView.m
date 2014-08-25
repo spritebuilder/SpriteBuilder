@@ -205,7 +205,7 @@
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
-    self.trimSprites = ![[settings propertyForResource:res andKey:@"trimSprites"] boolValue];
+    self.trimSprites = [[settings propertyForResource:res andKey:@"trimSprites"] boolValue];
 
     NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
@@ -378,7 +378,7 @@
     return [ImageFormatAndPropertiesHelper isValueAPowerOfTwo:bitmapRep.pixelsHigh];
 }
 
-- (void)setValue:(id)value withName:(NSString *)name
+- (void)setValue:(id)value withName:(NSString *)name isAudio:(BOOL)isAudio
 {
     if (!_previewedResource
         || _initialUpdate)
@@ -386,7 +386,8 @@
         return;
     }
 
-    if ([value intValue])
+    // There's a inconsistency here for audio setting, no default values assumed by a absend key
+    if ([value intValue] || isAudio)
     {
         [_projectSettings setProperty:value forResource:_previewedResource andKey:name];
     }
@@ -403,13 +404,13 @@
 - (void)setScaleFrom:(int)scaleFrom
 {
     _scaleFrom = scaleFrom;
-    [self setValue:@(scaleFrom) withName:@"scaleFrom"];
+    [self setValue:@(scaleFrom) withName:@"scaleFrom" isAudio:NO];
 }
 
 - (void) setFormat_ios:(int)format_ios
 {
     _format_ios = format_ios;
-    [self setValue:@(format_ios) withName:@"format_ios"];
+    [self setValue:@(format_ios) withName:@"format_ios" isAudio:NO];
 
     self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
     self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
@@ -418,7 +419,7 @@
 - (void) setFormat_android:(int)format_android
 {
     _format_android = format_android;
-    [self setValue:@(format_android) withName:@"format_android"];
+    [self setValue:@(format_android) withName:@"format_android" isAudio:NO];
 
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
@@ -427,31 +428,31 @@
 - (void) setFormat_ios_dither:(BOOL)format_ios_dither
 {
     _format_ios_dither = format_ios_dither;
-    [self setValue:@(format_ios_dither) withName:@"format_ios_dither"];
+    [self setValue:@(format_ios_dither) withName:@"format_ios_dither" isAudio:NO];
 }
 
 - (void) setFormat_android_dither:(BOOL)format_android_dither
 {
     _format_android_dither = format_android_dither;
-    [self setValue:@(format_android_dither) withName:@"format_android_dither"];
+    [self setValue:@(format_android_dither) withName:@"format_android_dither" isAudio:NO];
 }
 
 - (void) setFormat_ios_compress:(BOOL)format_ios_compress
 {
     _format_ios_compress = format_ios_compress;
-    [self setValue:@(format_ios_compress) withName:@"format_ios_compress"];
+    [self setValue:@(format_ios_compress) withName:@"format_ios_compress" isAudio:NO];
 }
 
 - (void) setFormat_android_compress:(BOOL)format_android_compress
 {
     _format_android_compress = format_android_compress;
-    [self setValue:@(format_android_compress) withName:@"format_android_compress"];
+    [self setValue:@(format_android_compress) withName:@"format_android_compress" isAudio:NO];
 }
 
 - (void) setTrimSprites:(BOOL) trimSprites
 {
     _trimSprites = trimSprites;
-    [self setValue:@(trimSprites) withName:@"trimSprites"];
+    [self setValue:@(trimSprites) withName:@"trimSprites" isAudio:NO];
 }
 
 - (void) setTabletScale:(int)tabletScale
@@ -485,64 +486,29 @@
 - (void) setFormat_ios_sound:(int)format_ios_sound
 {
     _format_ios_sound = format_ios_sound;
+    [self setValue:@(format_ios_sound) withName:@"format_ios_sound" isAudio:YES];
 
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        [_projectSettings setProperty:@(format_ios_sound) forResource:_previewedResource andKey:@"format_ios_sound"];
-
-        self.format_ios_sound_quality_enabled = format_ios_sound != 0;
-    }
+    self.format_ios_sound_quality_enabled = format_ios_sound != 0;
 }
 
 - (void) setFormat_android_sound:(int)format_android_sound
 {
     _format_android_sound = format_android_sound;
+    [self setValue:@(format_android_sound) withName:@"format_android_sound" isAudio:YES];
 
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        [_projectSettings setProperty:@(format_android_sound) forResource:_previewedResource andKey:@"format_android_sound"];
-        self.format_android_sound_quality_enabled = YES;
-    }
+    self.format_android_sound_quality_enabled = YES;
 }
 
 - (void) setFormat_ios_sound_quality:(int)format_ios_sound_quality
 {
     _format_ios_sound_quality = format_ios_sound_quality;
-
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        [_projectSettings setProperty:@(format_ios_sound_quality) forResource:_previewedResource andKey:@"format_ios_sound_quality"];
-    }
+    [self setValue:@(format_ios_sound_quality) withName:@"format_ios_sound_quality" isAudio:YES];
 }
 
 - (void) setFormat_android_sound_quality:(int)format_android_sound_quality
 {
     _format_android_sound_quality = format_android_sound_quality;
-
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        [_projectSettings setProperty:@(format_android_sound_quality) forResource:_previewedResource andKey:@"format_android_sound_quality"];
-    }
+    [self setValue:@(format_android_sound_quality) withName:@"format_android_sound_quality" isAudio:YES];
 }
 
 #pragma mark Split view constraints

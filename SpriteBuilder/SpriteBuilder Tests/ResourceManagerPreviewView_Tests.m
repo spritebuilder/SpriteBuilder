@@ -110,15 +110,37 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
-            @"scaleFrom":@(2),
-            @"format_ios":@(kFCImageFormatPVRTC_4BPP),
-            @"format_ios_dither":@(NO),
-            @"format_ios_compress":@(NO),
-            @"format_android":@(kFCImageFormatPVRTC_4BPP),
-            @"format_android_dither":@(NO),
-            @"format_android_compress":@(NO)
-    }];
+            @"scaleFrom" : @(2),
+            @"format_ios" : @(kFCImageFormatPVRTC_4BPP),
+            @"format_ios_dither" : @(NO),
+            @"format_ios_compress" : @(NO),
+            @"format_android" : @(kFCImageFormatPVRTC_4BPP),
+            @"format_android_dither" : @(NO),
+            @"format_android_compress" : @(NO)
+    } isAudio:NO];
 }
+
+- (void)testSettingsValuesForAudio
+{
+    _resource.type = kCCBResTypeAudio;
+    [self setResourceProperties:@{
+            @"format_ios_sound":@(kFCSoundFormatMP4),
+            @"format_ios_sound_quality":@(1),
+            // Yes this is illegal but we need a value here that will be different from the set one
+            @"format_android_sound_quality":@(kFCSoundFormatCAF),
+            @"format_android_sound_quality":@(1)
+    }];
+
+    [_resourceManagerPreviewView setPreviewResource:_resource];
+
+    [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
+            @"format_ios_sound":@(kFCSoundFormatCAF),
+            @"format_ios_sound_quality":@(4),
+            @"format_android_sound_quality":@(kFCSoundFormatOGG),
+            @"format_android_sound_quality":@(6)
+    } isAudio:YES];
+}
+
 
 - (void)testSettingsValuesForSpriteSheet
 {
@@ -130,8 +152,8 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
-            @"trimSprites":@(YES),
-    }];
+            @"trimSprites" : @(YES),
+    }                                                      isAudio:NO];
 }
 
 - (void)setResourceProperties:(NSDictionary *)properties
@@ -157,7 +179,7 @@
     }
 }
 
-- (void)setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:(NSDictionary *)properties
+- (void)setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:(NSDictionary *)properties isAudio:(BOOL)isAudio
 {
     for (NSString *key in properties)
     {
@@ -169,8 +191,9 @@
         id oldValue = [[_projectSettings propertyForResource:_resource andKey:key] copy];
 
         // Scalar values that test for false are removed from the properties, like NO or 0
+        // BUT not for sounds, there's a inconsistency here.
         // As long as NO converts to 0 everything should be fine here...
-        if ([newValue intValue])
+        if ([newValue intValue] || isAudio)
         {
             XCTAssertTrue([oldValue isEqual:newValue], @"Setting resource property \"%@\" is not equal. Old value \"%@\", new value \"%@\"", key, oldValue, newValue);
         }
