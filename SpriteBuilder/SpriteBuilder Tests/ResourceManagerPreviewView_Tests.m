@@ -35,16 +35,16 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"project.spritebuilder/abc.ccbproj"];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"project.spritebuilder/Packages/package1.sbpack"] error:nil];
+    [_projectSettings addResourcePath:[self fullPathForFile:@"project.spritebuilder/Packages/foo.sbpack"] error:nil];
     [_projectSettings clearAllDirtyMarkers];
 
     self.resourceManagerPreviewView = [[ResourceManagerPreviewView alloc] init];
     _resourceManagerPreviewView.projectSettings = _projectSettings;
 
     self.resourceManager = [ResourceManager sharedManager];
-    [_resourceManager setActiveDirectoriesWithFullReset:@[[self fullPathForFile:@"Packages/foo.sbpack"]]];
+    [_resourceManager setActiveDirectoriesWithFullReset:@[[self fullPathForFile:@"project.spritebuilder/Packages/foo.sbpack"]]];
 
-    self.resource = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"Packages/foo.sbpack/background.png"]];
+    self.resource = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project.spritebuilder/Packages/foo.sbpack/background.png"]];
 }
 
 - (void)testSettingResourceShouldNotMarkResourceAsDirty
@@ -55,11 +55,7 @@
     XCTAssertFalse([_projectSettings isDirtyResource:_resource]);
 
     // SpriteSheet
-    id mock = [OCMockObject mockForClass:[RMDirectory class]];
-    [[[mock stub] andReturnValue:@YES] isDynamicSpriteSheet];
-
-    _resource.type = kCCBResTypeDirectory;
-    _resource.data  = mock;
+    [self makeResourceASpriteSheet];
     [_resourceManagerPreviewView setPreviewResource:_resource];
     XCTAssertFalse([_projectSettings isDirtyResource:_resource]);
 
@@ -98,6 +94,46 @@
     }];
 }
 
+- (void)testSettingsValuesForImage
+{
+    _resource.type = kCCBResTypeImage;
+    [self setResourceProperties:@{
+            @"scaleFrom":@(1),
+            @"format_ios":@(kFCImageFormatPVR_RGBA8888),
+            @"format_ios_dither":@(YES),
+            @"format_ios_compress":@(YES),
+            @"format_android":@(kFCImageFormatPVR_RGBA8888),
+            @"format_android_dither":@(YES),
+            @"format_android_compress":@(YES)
+    }];
+
+    [_resourceManagerPreviewView setPreviewResource:_resource];
+
+    [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
+            @"scaleFrom":@(2),
+            @"format_ios":@(kFCImageFormatPVRTC_4BPP),
+            @"format_ios_dither":@(NO),
+            @"format_ios_compress":@(NO),
+            @"format_android":@(kFCImageFormatPVRTC_4BPP),
+            @"format_android_dither":@(NO),
+            @"format_android_compress":@(NO)
+    }];
+}
+
+- (void)testSettingsValuesForSpriteSheet
+{
+    [self makeResourceASpriteSheet];
+    [self setResourceProperties:@{
+            @"trimSprites":@(NO),
+    }];
+
+    [_resourceManagerPreviewView setPreviewResource:_resource];
+
+    [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
+            @"trimSprites":@(YES),
+    }];
+}
+
 - (void)setResourceProperties:(NSDictionary *)properties
 {
     for (NSString *key in properties)
@@ -121,5 +157,37 @@
     }
 }
 
+- (void)setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:(NSDictionary *)properties
+{
+    for (NSString *key in properties)
+    {
+        id newValue = properties[key];
+
+        [_projectSettings clearAllDirtyMarkers];
+        [_resourceManagerPreviewView setValue:newValue forKey:key];
+
+        id oldValue = [[_projectSettings propertyForResource:_resource andKey:key] copy];
+
+        // Scalar values that test for false are removed from the properties, like NO or 0
+        // As long as NO converts to 0 everything should be fine here...
+        if ([newValue intValue])
+        {
+            XCTAssertTrue([oldValue isEqual:newValue], @"Setting resource property \"%@\" is not equal. Old value \"%@\", new value \"%@\"", key, oldValue, newValue);
+        }
+        else
+        {
+            XCTAssertNil(oldValue);
+        }
+    }
+}
+
+- (void)makeResourceASpriteSheet
+{
+    id mock = [OCMockObject mockForClass:[RMDirectory class]];
+    [[[mock stub] andReturnValue:@YES] isDynamicSpriteSheet];
+
+    _resource.type = kCCBResTypeDirectory;
+    _resource.data = mock;
+}
 
 @end

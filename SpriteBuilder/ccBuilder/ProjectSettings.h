@@ -57,6 +57,8 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 // Full path to the project's root folder, according to -projectPath example: /foo/baa.spritebuilder/
 @property (nonatomic, readonly) NSString* projectPathDir;
 
+@property (nonatomic, strong, readonly) NSArray *allResourcesRelativePaths;
+
 @property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 

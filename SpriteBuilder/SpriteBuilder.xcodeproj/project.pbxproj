@@ -819,9 +819,11 @@
 		E525F0B45E1523153C200B71 /* FileSystemTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */; };
 		E525F0EA925087B3D2ABE8D3 /* ResourceNewPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDFD10EE6761E4E94BED /* ResourceNewPackageCommand.m */; };
 		E525F12B1E4605EB494FA44C /* PackageMigrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7254C3A84AA7585A1F8 /* PackageMigrationController.m */; };
+		E525F136F368EC442A998F82 /* ResourcePropertiesMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F682636334F728CA674F /* ResourcePropertiesMigrator.m */; };
 		E525F19C8E4EBB37D78A762D /* ResourceManagerPreviewView_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5E384204522F48E57A8 /* ResourceManagerPreviewView_Tests.m */; };
 		E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
+		E525F25D51565B762CCEF3CA /* ResourcePropertiesMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F07A6FC5D52232E114FC /* ResourcePropertiesMigrator_Tests.m */; };
 		E525F2938670750314B81156 /* CCBPublisher_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC042369604B80B893DB /* CCBPublisher_Tests.m */; };
 		E525F29DD85B287520335888 /* RMPackage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5002BE1A1775A702001 /* RMPackage_Tests.m */; };
 		E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */; };
@@ -2323,6 +2325,7 @@
 		E525F001371D1628D87FFF3E /* RMResourceBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResourceBase.m; sourceTree = "<group>"; };
 		E525F0424E2063AF911B0692 /* ResourceExportPackageCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceExportPackageCommand.m; sourceTree = "<group>"; };
 		E525F0662ED78DDE9C8DFFBB /* SemanticVersioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SemanticVersioning.m; sourceTree = "<group>"; };
+		E525F07A6FC5D52232E114FC /* ResourcePropertiesMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcePropertiesMigrator_Tests.m; sourceTree = "<group>"; };
 		E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteSheetOperation.m; sourceTree = "<group>"; };
 		E525F0A6B228717C246675C0 /* PublishLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishLogging.h; sourceTree = "<group>"; };
 		E525F0AC0A8F3C176BCA08DF /* ResourceCreateKeyframesCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceCreateKeyframesCommand.m; sourceTree = "<group>"; };
@@ -2357,6 +2360,7 @@
 		E525F2D169097487A2FA72EF /* ResourceShowInFinderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceShowInFinderCommand.h; sourceTree = "<group>"; };
 		E525F2DA8EEB4FDC788E5E41 /* MoveFileCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveFileCommand.h; sourceTree = "<group>"; };
 		E525F2F32EC9F70210361E7D /* FileSystemTestCase+Images.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FileSystemTestCase+Images.m"; sourceTree = "<group>"; };
+		E525F30580678AF1CA256F15 /* ResourcePropertiesMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcePropertiesMigrator.h; sourceTree = "<group>"; };
 		E525F3100A5F52133B82A32B /* CCBPublisherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublisherController.h; sourceTree = "<group>"; };
 		E525F31A72346871646C218C /* ProjectSettings+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProjectSettings+Convenience.h"; sourceTree = "<group>"; };
 		E525F31D5A311C0DBE9C1CD6 /* PublishCCBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishCCBOperation.h; sourceTree = "<group>"; };
@@ -2385,6 +2389,7 @@
 		E525F616AAA64620A9528730 /* ObserverTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObserverTestHelper.h; sourceTree = "<group>"; };
 		E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer_Tests.m; sourceTree = "<group>"; };
 		E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceNewFileCommand.m; sourceTree = "<group>"; };
+		E525F682636334F728CA674F /* ResourcePropertiesMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcePropertiesMigrator.m; sourceTree = "<group>"; };
 		E525F6BD9A7979086156B659 /* ProjectMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectMigrator.h; sourceTree = "<group>"; };
 		E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationPlaybackManager.m; sourceTree = "<group>"; };
 		E525F6ECDF843A612C330560 /* PackageMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrator.m; sourceTree = "<group>"; };
@@ -3379,6 +3384,8 @@
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
 				E3B7BC9D15E3B97900CF95EF /* Toolbar */,
 				776041E21498F5A70078095D /* Util */,
+				E525F682636334F728CA674F /* ResourcePropertiesMigrator.m */,
+				E525F30580678AF1CA256F15 /* ResourcePropertiesMigrator.h */,
 			);
 			name = SpriteBuilder;
 			path = ccBuilder;
@@ -5193,6 +5200,7 @@
 			children = (
 				E525F0C2A2BC9A53AFD04862 /* PackageMigrator_Tests.m */,
 				E525FAF5B6FE29F6C11775FB /* FileCommands */,
+				E525F07A6FC5D52232E114FC /* ResourcePropertiesMigrator_Tests.m */,
 			);
 			path = Migration;
 			sourceTree = "<group>";
@@ -6843,6 +6851,7 @@
 				E525F50E27715B344266949A /* ResourceManager+Publishing.m in Sources */,
 				E525FFEC30A90DA81B17E9F5 /* SemanticVersioning.m in Sources */,
 				E525F9C5086A1E5A34AF5379 /* ImageFormatAndPropertiesHelper.m in Sources */,
+				E525F136F368EC442A998F82 /* ResourcePropertiesMigrator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6879,6 +6888,7 @@
 				E525F0AAD83A6EC0D743511F /* ResourceManager+Publishing_Tests.m in Sources */,
 				E525F19C8E4EBB37D78A762D /* ResourceManagerPreviewView_Tests.m in Sources */,
 				E525FC0A0C9C32BEF65F349A /* ImageFormatAndPropertiesHelper_Tests.m in Sources */,
+				E525F25D51565B762CCEF3CA /* ResourcePropertiesMigrator_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

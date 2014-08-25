@@ -205,7 +205,7 @@
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
-    self.trimSprites = ![[settings propertyForResource:res andKey:@"keepSpritesUntrimmed"] boolValue];
+    self.trimSprites = ![[settings propertyForResource:res andKey:@"trimSprites"] boolValue];
 
     NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
@@ -378,208 +378,84 @@
     return [ImageFormatAndPropertiesHelper isValueAPowerOfTwo:bitmapRep.pixelsHigh];
 }
 
-- (void) setScaleFrom:(int)scaleFrom
+- (void)setValue:(id)value withName:(NSString *)name
 {
-    _scaleFrom = scaleFrom;
-
-    if (_initialUpdate)
+    if (!_previewedResource
+        || _initialUpdate)
     {
         return;
     }
 
-    if (_previewedResource)
+    if ([value intValue])
     {
-        // Return if the value hasn't changed
-        int oldScaleFrom = [[_projectSettings propertyForResource:_previewedResource andKey:@"scaleFrom"] intValue];
-        if (oldScaleFrom == scaleFrom) return;
-
-        if (scaleFrom)
-        {
-            [_projectSettings setProperty:@(scaleFrom) forResource:_previewedResource andKey:@"scaleFrom"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"scaleFrom"];
-        }
-
-        // Reload the resource
-        [ResourceManager touchResource:_previewedResource];
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
+        [_projectSettings setProperty:value forResource:_previewedResource andKey:name];
     }
+    else
+    {
+        [_projectSettings removePropertyForResource:_previewedResource andKey:name];
+    }
+
+    // Reload the resource
+    [ResourceManager touchResource:_previewedResource];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
+}
+
+- (void)setScaleFrom:(int)scaleFrom
+{
+    _scaleFrom = scaleFrom;
+    [self setValue:@(scaleFrom) withName:@"scaleFrom"];
 }
 
 - (void) setFormat_ios:(int)format_ios
 {
     _format_ios = format_ios;
+    [self setValue:@(format_ios) withName:@"format_ios"];
 
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        if (format_ios)
-        {
-            [_projectSettings setProperty:@(format_ios) forResource:_previewedResource andKey:@"format_ios"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_ios"];
-        }
-        
-        self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
-        self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
-    }
+    self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
+    self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
 }
 
 - (void) setFormat_android:(int)format_android
 {
     _format_android = format_android;
+    [self setValue:@(format_android) withName:@"format_android"];
 
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        if (format_android)
-        {
-            [_projectSettings setProperty:@(format_android) forResource:_previewedResource andKey:@"format_android"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_android"];
-        }
-        
-        self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
-        self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
-    }
+    self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
+    self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 }
 
 - (void) setFormat_ios_dither:(BOOL)format_ios_dither
 {
     _format_ios_dither = format_ios_dither;
-
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        if (format_ios_dither)
-        {
-            [_projectSettings setProperty:@(format_ios_dither) forResource:_previewedResource andKey:@"format_ios_dither"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_ios_dither"];
-        }
-    }
+    [self setValue:@(format_ios_dither) withName:@"format_ios_dither"];
 }
 
 - (void) setFormat_android_dither:(BOOL)format_android_dither
 {
     _format_android_dither = format_android_dither;
-
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        if (format_android_dither)
-        {
-            [_projectSettings setProperty:@(format_android_dither) forResource:_previewedResource andKey:@"format_android_dither"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_android_dither"];
-        }
-    }
+    [self setValue:@(format_android_dither) withName:@"format_android_dither"];
 }
 
 - (void) setFormat_ios_compress:(BOOL)format_ios_compress
 {
     _format_ios_compress = format_ios_compress;
-
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        if (format_ios_compress)
-        {
-            [_projectSettings setProperty:@(format_ios_compress) forResource:_previewedResource andKey:@"format_ios_compress"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_ios_compress"];
-        }
-    }
+    [self setValue:@(format_ios_compress) withName:@"format_ios_compress"];
 }
 
 - (void) setFormat_android_compress:(BOOL)format_android_compress
 {
     _format_android_compress = format_android_compress;
-
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        if (format_android_compress)
-        {
-            [_projectSettings setProperty:@(format_android_compress) forResource:_previewedResource andKey:@"format_android_compress"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_android_compress"];
-        }
-    }
+    [self setValue:@(format_android_compress) withName:@"format_android_compress"];
 }
 
 - (void) setTrimSprites:(BOOL) trimSprites
 {
-    if (_trimSprites == trimSprites)
-    {
-        return;
-    }
-
     _trimSprites = trimSprites;
-
-    if (_initialUpdate)
-    {
-        return;
-    }
-
-    if (_previewedResource)
-    {
-        if (!trimSprites)
-        {
-            [_projectSettings setProperty:@(!trimSprites) forResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
-        }
-        else
-        {
-            [_projectSettings removePropertyForResource:_previewedResource andKey:@"keepSpritesUntrimmed"];
-        }
-    }
+    [self setValue:@(trimSprites) withName:@"trimSprites"];
 }
 
 - (void) setTabletScale:(int)tabletScale
 {
-    if (_tabletScale == tabletScale)
-    {
-        return;
-    }
-    
     _tabletScale = tabletScale;
 
     if (_initialUpdate)
