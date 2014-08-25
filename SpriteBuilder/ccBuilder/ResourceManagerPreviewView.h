@@ -77,6 +77,7 @@
 @property (nonatomic,readwrite) BOOL format_ios_compress;
 @property (nonatomic,readwrite) BOOL format_ios_dither_enabled;
 @property (nonatomic,readwrite) BOOL format_ios_compress_enabled;
+
 @property (nonatomic,readwrite) int format_ios_sound;
 @property (nonatomic,readwrite) int format_ios_sound_quality;
 @property (nonatomic,readwrite) int format_ios_sound_quality_enabled;
@@ -86,6 +87,7 @@
 @property (nonatomic,readwrite) BOOL format_android_compress;
 @property (nonatomic,readwrite) BOOL format_android_dither_enabled;
 @property (nonatomic,readwrite) BOOL format_android_compress_enabled;
+
 @property (nonatomic,readwrite) int format_android_sound;
 @property (nonatomic,readwrite) int format_android_sound_quality;
 @property (nonatomic,readwrite) int format_android_sound_quality_enabled;

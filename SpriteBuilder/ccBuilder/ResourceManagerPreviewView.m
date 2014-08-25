@@ -198,13 +198,13 @@
     self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
     self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
     self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
-    self.format_ios_dither_enabled = [self supportsDither_ios:_format_ios];
+    self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
     self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
 
     self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
     self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
     self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
-    self.format_android_dither_enabled = [self supportsDither_android:_format_android];
+    self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
     self.trimSprites = ![[settings propertyForResource:res andKey:@"keepSpritesUntrimmed"] boolValue];
@@ -243,13 +243,13 @@
     self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
     self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
     self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
-    self.format_ios_dither_enabled = [self supportsDither_ios:_format_ios];
+    self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
     self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
 
     self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
     self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
     self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
-    self.format_android_dither_enabled = [self supportsDither_android:_format_android];
+    self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
     int tabletScale = [[settings propertyForResource:res andKey:@"tabletScale"] intValue];
@@ -380,22 +380,6 @@
     return [ImageFormatAndPropertiesHelper isValueAPowerOfTwo:bitmapRep.pixelsHigh];
 }
 
-- (BOOL) supportsDither_ios:(int)format
-{
-    if (format == kFCImageFormatPNG_8BIT) return YES;
-    if (format == kFCImageFormatPVR_RGBA4444) return YES;
-    if (format == kFCImageFormatPVR_RGB565) return YES;
-    return NO;
-}
-
-- (BOOL) supportsDither_android:(int)format
-{
-    if (format == kFCImageFormatPNG_8BIT) return YES;
-    if (format == kFCImageFormatPVR_RGBA4444) return YES;
-    if (format == kFCImageFormatPVR_RGB565) return YES;
-    return NO;
-}
-
 - (void) setScaleFrom:(int)scaleFrom
 {
     _scaleFrom = scaleFrom;
@@ -446,7 +430,7 @@
             [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_ios"];
         }
         
-        self.format_ios_dither_enabled = [self supportsDither_ios:format_ios];
+        self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
         self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
     }
 }
@@ -471,8 +455,7 @@
             [_projectSettings removePropertyForResource:_previewedResource andKey:@"format_android"];
         }
         
-        self.format_android_dither_enabled = [self supportsDither_android:format_android];
-        self.format_android_compress_enabled = NO;
+        self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
         self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     }
 }

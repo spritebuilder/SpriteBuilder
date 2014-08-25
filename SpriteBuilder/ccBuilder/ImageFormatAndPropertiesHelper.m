@@ -32,5 +32,29 @@
     return [formatsSupportingComress containsObject:@(format)];
 }
 
++ (BOOL)supportsDither:(kFCImageFormat)format osType:(CCBPublisherOSType)osType;
+{
+    NSArray *formatsSupportingDither;
+
+    if (osType ==  kCCBPublisherOSTypeIOS)
+    {
+        formatsSupportingDither = @[
+                @(kFCImageFormatPNG_8BIT),
+                @(kFCImageFormatPVR_RGBA4444),
+                @(kFCImageFormatPVR_RGB565)
+        ];
+    }
+
+    if (osType ==  kCCBPublisherOSTypeAndroid)
+    {
+        formatsSupportingDither = @[
+                @(kFCImageFormatPNG_8BIT),
+                @(kFCImageFormatPVR_RGBA4444),
+                @(kFCImageFormatPVR_RGB565)
+        ];
+    }
+
+    return [formatsSupportingDither containsObject:@(format)];
+}
 
 @end
