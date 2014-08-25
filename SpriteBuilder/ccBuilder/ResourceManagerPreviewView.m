@@ -171,11 +171,11 @@
 
 - (void)updateSoundPreview:(ProjectSettings *)settings res:(RMResource *)res
 {
-    self.format_ios_sound = [[settings propertyForResource:res andKey:@"format_ios_sound"] intValue];
+    self.format_ios_sound = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_SOUND] intValue];
     self.format_ios_sound_quality = [[settings propertyForResource:res andKey:@"format_ios_sound_quality"] intValue];
     self.format_ios_sound_quality_enabled = _format_ios_sound != 0;
 
-    self.format_android_sound = [[settings propertyForResource:res andKey:@"format_android_sound"] intValue];
+    self.format_android_sound = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_SOUND] intValue];
     self.format_android_sound_quality = [[settings propertyForResource:res andKey:@"format_android_sound_quality"] intValue];
     self.format_android_sound_quality_enabled = YES;
 
@@ -486,7 +486,7 @@
 - (void) setFormat_ios_sound:(int)format_ios_sound
 {
     _format_ios_sound = format_ios_sound;
-    [self setValue:@(format_ios_sound) withName:@"format_ios_sound" isAudio:YES];
+    [self setValue:@(format_ios_sound) withName:RESOURCE_PROPERTY_IOS_SOUND isAudio:YES];
 
     self.format_ios_sound_quality_enabled = format_ios_sound != 0;
 }
@@ -494,7 +494,7 @@
 - (void) setFormat_android_sound:(int)format_android_sound
 {
     _format_android_sound = format_android_sound;
-    [self setValue:@(format_android_sound) withName:@"format_android_sound" isAudio:YES];
+    [self setValue:@(format_android_sound) withName:RESOURCE_PROPERTY_ANDROID_SOUND isAudio:YES];
 
     self.format_android_sound_quality_enabled = YES;
 }

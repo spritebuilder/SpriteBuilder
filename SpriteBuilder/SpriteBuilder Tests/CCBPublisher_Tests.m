@@ -19,6 +19,7 @@
 #import "PlugInManager.h"
 #import "CCBPublishingTarget.h"
 #import "ProjectSettings+Convenience.h"
+#import "ResourcePropertyKeys.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -245,7 +246,7 @@
 
     [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_ios"];
     [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_android"];
-    [_projectSettings setProperty:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:@"format_ios_sound"];
+    [_projectSettings setProperty:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:RESOURCE_PROPERTY_IOS_SOUND];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher addPublishingTarget:_targetAndroid];

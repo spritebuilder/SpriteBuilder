@@ -3,6 +3,7 @@
 #import "CCBWarnings.h"
 #import "NSString+RelativePath.h"
 #import "MiscConstants.h"
+#import "ResourcePropertyKeys.h"
 
 
 @implementation ProjectSettings (Convenience)
@@ -37,13 +38,13 @@
     NSDictionary *map;
     if (osType == kCCBPublisherOSTypeIOS)
     {
-        key = @"format_ios_sound";
+        key = RESOURCE_PROPERTY_IOS_SOUND;
         map = @{@(0):@(kFCSoundFormatCAF),
                 @(1):@(kFCSoundFormatMP4)};
     }
     else if (osType == kCCBPublisherOSTypeAndroid)
     {
-        key = @"format_android_sound";
+        key = RESOURCE_PROPERTY_ANDROID_SOUND;
         map = @{@(0):@(kFCSoundFormatOGG)};
     }
     else

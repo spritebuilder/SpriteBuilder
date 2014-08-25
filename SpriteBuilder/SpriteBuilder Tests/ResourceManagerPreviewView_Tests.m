@@ -101,17 +101,17 @@
 {
     _resource.type = kCCBResTypeAudio;
     [self setResourceProperties:@{
-            @"format_ios_sound":@(kFCSoundFormatMP4),
+            RESOURCE_PROPERTY_IOS_SOUND : @(kFCSoundFormatMP4),
             @"format_ios_sound_quality":@(1),
-            @"format_android_sound_quality":@(2)
+            RESOURCE_PROPERTY_ANDROID_SOUND : @(2)
     }];
 
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
-            @"format_ios_sound":@(kFCSoundFormatCAF),
+            RESOURCE_PROPERTY_IOS_SOUND : @(kFCSoundFormatCAF),
             @"format_ios_sound_quality":@(4),
-            @"format_android_sound_quality":@(5)
+            RESOURCE_PROPERTY_ANDROID_SOUND : @(5)
     }];
 }
 
@@ -161,7 +161,7 @@
 {
     _resource.type = kCCBResTypeAudio;
     [self setResourceProperties:@{
-            @"format_ios_sound":@(kFCSoundFormatMP4),
+            RESOURCE_PROPERTY_IOS_SOUND : @(kFCSoundFormatMP4),
             @"format_ios_sound_quality":@(1),
             // Yes this is illegal but we need a value here that will be different from the set one
             @"format_android_sound":@(kFCSoundFormatCAF),
@@ -171,9 +171,9 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
-            @"format_ios_sound":@(kFCSoundFormatCAF),
+            RESOURCE_PROPERTY_IOS_SOUND : @(kFCSoundFormatCAF),
             @"format_ios_sound_quality":@(4),
-            @"format_android_sound":@(kFCSoundFormatOGG),
+            RESOURCE_PROPERTY_ANDROID_SOUND : @(kFCSoundFormatOGG),
             @"format_android_sound_quality":@(6)
     } isAudio:YES];
 }

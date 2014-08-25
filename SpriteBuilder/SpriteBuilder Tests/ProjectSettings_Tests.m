@@ -18,6 +18,7 @@
 #import "ProjectSettings+Convenience.h"
 #import "RMResource.h"
 #import "ResourceManager.h"
+#import "ResourcePropertyKeys.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 
@@ -393,7 +394,7 @@
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
-    [projectSettings setProperty:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    [projectSettings setProperty:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:RESOURCE_PROPERTY_IOS_SOUND];
 
     XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
 
@@ -402,7 +403,7 @@
     projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     projectSettings.projectPath = fullPath;
 
-    NSNumber *value = [projectSettings propertyForRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    NSNumber *value = [projectSettings propertyForRelPath:@"foo/ping.wav" andKey:RESOURCE_PROPERTY_IOS_SOUND];
     XCTAssertEqual([value integerValue], (NSInteger)kCCBPublishFormatSound_ios_mp4);
 }
 

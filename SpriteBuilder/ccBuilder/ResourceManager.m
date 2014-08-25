@@ -42,6 +42,7 @@
 #import "RMDirectory.h"
 #import "ResourceTypes.h"
 #import "RMPackage.h"
+#import "ResourcePropertyKeys.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
 
@@ -980,7 +981,7 @@
                 // Set iOS format to mp4 for long sounds
                 ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
                 NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
-                [settings setProperty:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
+                [settings setProperty:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:RESOURCE_PROPERTY_IOS_SOUND];
             }
             importedFile = YES;
         
