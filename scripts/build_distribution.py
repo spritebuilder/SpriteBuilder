@@ -24,7 +24,7 @@ def main():
     parser.add_argument('-private_key', default=None, help='The private_key to secure the pro version. Pro version only ')
     parser.add_argument('-dcf_hash', default=None, help='The githash that dcf was taken from. Pro version only. Optional ')
     parser.add_argument('-dcf_tag', default=None, help='The git tag that dcf was taken from. Pro version only. Optional ')
-    parser.add_argument('-sb_hash', default=None, help='The git hash that SB was taken from. Optional ')
+    parser.add_argument('-revision', default=None, help='The git hash that SB was taken from. Optional ')
     
     
     parser.add_argument('-mode', choices=('sandboxed','non_sandboxed'), default='non_sandboxed',help='Is the app built to run in sandboxed mode (App store) or non sandboxed (direct download). (default:non_sandboxed)')
@@ -36,7 +36,7 @@ def main():
 
     os.chdir('../');
     
-    version_info = {'dcf_hash' : args.dcf_hash, 'dcf_tag' : args.dcf_tag, 'sb_hash' : args.sb_hash}
+    version_info = {'dcf_hash' : args.dcf_hash, 'dcf_tag' : args.dcf_tag, 'revision' : args.revision}
     
     build_distribution(args.version, args.sku, args.mode,  version_info, args.private_key)
     
@@ -128,16 +128,16 @@ def create_all_generated_files(version, sku, version_info):
     version_info['sku'] = sku
     
     
-        
-    p = subprocess.Popen(['/usr/bin/git', 'rev-parse' ,'--short=10' ,'HEAD'],stdout=subprocess.PIPE)
-    out, err = p.communicate()
-    if err == None:
-        out = out.strip()
-        version_info['sb_hash'] = out
-    
     for i, j in version_info.items():       # use iteritems in py2k
         if j == None:
             version_info[i] = 'undefined'
+            
+    if version_info['revision'] == 'undefined':
+        p = subprocess.Popen(['/usr/bin/git', 'rev-parse' ,'--short=10' ,'HEAD'],stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        if err == None:
+            out = out.strip()
+            version_info['revision'] = out
         
     json.dump(version_info, open("Generated/Version.txt",'w'),sort_keys=True, indent=4)
     
