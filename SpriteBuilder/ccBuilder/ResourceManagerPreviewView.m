@@ -45,14 +45,7 @@
 @end
 
 
-
-
 @implementation ResourceManagerPreviewView
-
-// @synthesize previewMain, previewPhone, previewPhonehd, previewTablet, previewTablethd;
-@dynamic    format_supportsPVRTC;
-
-#pragma mark Setup
 
 - (void) awakeFromNib
 {
@@ -101,7 +94,12 @@
     self.format_ios_dither_enabled = NO;
     self.format_ios_compress = NO;
     self.format_ios_dither = NO;
-    
+
+    self.format_android_compress_enabled = NO;
+    self.format_android_dither_enabled = NO;
+    self.format_android_compress = NO;
+    self.format_android_dither = NO;
+
     self.trimSprites = NO;
 }
 
