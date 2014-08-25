@@ -204,14 +204,6 @@ static NSString *urlEncode(id object) {
 		serialNumber = @"";
 	mutableData[@"serial_number"] = serialNumber;
 	
-	NSString * email = @"";
-	if(mutableData[@"email"])
-	{
-		email = mutableData[@"email"];
-		email = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)email, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]\n", kCFStringEncodingUTF8));
-		
-		mutableData[@"email"] = email;
-	}
     // URL encode email
 	
 	mutableData[@"id"] = _userID;

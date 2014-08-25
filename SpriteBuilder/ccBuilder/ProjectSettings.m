@@ -663,17 +663,32 @@
 - (NSDictionary *)getVersionDictionary
 {
 	NSString* versionPath = [[NSBundle mainBundle] pathForResource:@"Version" ofType:@"txt" inDirectory:@"Generated"];
-    NSString* version = [NSString stringWithContentsOfFile:versionPath encoding:NSUTF8StringEncoding error:NULL];
 	
-	
-	NSData* versionData = [version dataUsingEncoding:NSUTF8StringEncoding];
 	NSError * error;
-	NSDictionary * versionDict = [NSJSONSerialization JSONObjectWithData:versionData options:0x0 error:&error];
+    NSString* version = [NSString stringWithContentsOfFile:versionPath encoding:NSUTF8StringEncoding error:&error];
+	
+	if(error)
+	{
+		NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+		NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
 
-	return versionDict;
-
+		NSMutableDictionary * versionDict = [NSMutableDictionary dictionaryWithDictionary:@{@"version" : version}];
+		
+#ifdef SPRITEBUILDER_PRO
+		versionDict[@"sku"] = @"pro";
+#else
+		versionDict[@"sku"] = @"default";
+#endif
+		return versionDict;
+		
+	}
+	else
+	{
+		NSData* versionData = [version dataUsingEncoding:NSUTF8StringEncoding];
+		NSDictionary * versionDict = [NSJSONSerialization JSONObjectWithData:versionData options:0x0 error:&error];
+		return versionDict;
+	}
 }
-
 
 
 - (void)setCocos2dUpdateIgnoredVersions:(NSMutableArray *)anArray

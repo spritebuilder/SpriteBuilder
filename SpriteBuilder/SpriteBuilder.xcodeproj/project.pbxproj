@@ -7729,7 +7729,7 @@
 				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
 				PROVISIONING_PROFILE = "";
 				SBPRO_PRIVATE_KEY = "fake_private_key___________________________=";
-				SB_VERSION = 1.1.0;
+				SB_VERSION = 1.2.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -7773,7 +7773,7 @@
 				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
 				PROVISIONING_PROFILE = "";
 				SBPRO_PRIVATE_KEY = "fake_private_key___________________________=";
-				SB_VERSION = 1.1.0;
+				SB_VERSION = 1.2.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -7929,7 +7929,7 @@
 				PRODUCT_NAME = "$(SB_PRODUCT_NAME)";
 				PROVISIONING_PROFILE = "";
 				SBPRO_PRIVATE_KEY = "fake_private_key___________________________=";
-				SB_VERSION = 1.1.0;
+				SB_VERSION = 1.2.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Testing;
