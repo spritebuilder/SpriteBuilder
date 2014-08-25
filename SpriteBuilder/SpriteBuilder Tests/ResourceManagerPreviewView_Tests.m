@@ -74,6 +74,7 @@
 {
     _resource.type = kCCBResTypeImage;
     [self setResourceProperties:@{
+            @"tabletScale":@(1),
             @"format_ios":@(kFCImageFormatPVR_RGBA8888),
             @"format_ios_dither":@(YES),
             @"format_ios_compress":@(YES),
@@ -85,6 +86,7 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
+            @"tabletScale":@(2),
             @"format_ios":@(kFCImageFormatPVRTC_4BPP),
             @"format_ios_dither":@(NO),
             @"format_ios_compress":@(NO),
@@ -94,10 +96,43 @@
     }];
 }
 
+- (void)testSettingValueShouldMarkResourceAsDiryForAudio
+{
+    _resource.type = kCCBResTypeAudio;
+    [self setResourceProperties:@{
+            @"format_ios_sound":@(kFCSoundFormatMP4),
+            @"format_ios_sound_quality":@(1),
+            @"format_android_sound_quality":@(2)
+    }];
+
+    [_resourceManagerPreviewView setPreviewResource:_resource];
+
+    [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
+            @"format_ios_sound":@(kFCSoundFormatCAF),
+            @"format_ios_sound_quality":@(4),
+            @"format_android_sound_quality":@(5)
+    }];
+}
+
+- (void)testSettingValueShouldMarkResourceAsDiryForSpriteSheets
+{
+    [self makeResourceASpriteSheet];
+    [self setResourceProperties:@{
+            @"trimSprites":@(YES)
+    }];
+
+    [_resourceManagerPreviewView setPreviewResource:_resource];
+
+    [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
+            @"trimSprites":@(NO)
+    }];
+}
+
 - (void)testSettingsValuesForImage
 {
     _resource.type = kCCBResTypeImage;
     [self setResourceProperties:@{
+            @"tabletScale":@(1),
             @"scaleFrom":@(1),
             @"format_ios":@(kFCImageFormatPVR_RGBA8888),
             @"format_ios_dither":@(YES),
@@ -110,6 +145,7 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
+            // @"tabletScale":@(2), // is not testable this way atm: 2 is a default value atm
             @"scaleFrom" : @(2),
             @"format_ios" : @(kFCImageFormatPVRTC_4BPP),
             @"format_ios_dither" : @(NO),
@@ -127,7 +163,7 @@
             @"format_ios_sound":@(kFCSoundFormatMP4),
             @"format_ios_sound_quality":@(1),
             // Yes this is illegal but we need a value here that will be different from the set one
-            @"format_android_sound_quality":@(kFCSoundFormatCAF),
+            @"format_android_sound":@(kFCSoundFormatCAF),
             @"format_android_sound_quality":@(1)
     }];
 
@@ -136,7 +172,7 @@
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
             @"format_ios_sound":@(kFCSoundFormatCAF),
             @"format_ios_sound_quality":@(4),
-            @"format_android_sound_quality":@(kFCSoundFormatOGG),
+            @"format_android_sound":@(kFCSoundFormatOGG),
             @"format_android_sound_quality":@(6)
     } isAudio:YES];
 }
