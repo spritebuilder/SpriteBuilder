@@ -136,6 +136,7 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
+#import "PreviewContainerViewController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -494,7 +495,8 @@ typedef enum
     // Setup preview
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
     previewViewOwner.projectSettings = projectSettings;
-    
+
+    /*
     NSArray* topLevelObjs = NULL;
     [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
     
@@ -507,13 +509,18 @@ typedef enum
             [previewViewContainer addSubview:view];
             view.frame = NSMakeRect(0.0, 0.0, previewViewContainer.frame.size.width, previewViewContainer.frame.size.height);
         }
-    }
-    
+    }*/
+
     // Setup project display
-    projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
+    // projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
+    projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject
+                                                                               resType:kCCBResTypeNone
+                                                                     previewController:_previewContainerViewController];
     projectOutlineHandler.projectSettings = projectSettings;
     
-    resourceManagerSplitView.delegate = previewViewOwner;
+    // resourceManagerSplitView.delegate = previewViewOwner;
+    resourceManagerSplitView.delegate = _previewContainerViewController;
+    [_previewContainerViewController setPreviewedResource:nil projectSettings:nil];
 
     [previewViewOwner setPreviewResource:NULL];
     

@@ -126,6 +126,11 @@
 		8354FDFC198233AB004EC272 /* MainProjectSettingsDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */; };
 		83599E9A1975470D008283EC /* photoshop.psd in Resources */ = {isa = PBXBuildFile; fileRef = 83599E991975470D008283EC /* photoshop.psd */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		8369839119AC834F00110D82 /* PreviewGenericViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369839019AC834F00110D82 /* PreviewGenericViewController.m */; };
+		8369839319AC836700110D82 /* PreviewGenericView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8369839219AC836700110D82 /* PreviewGenericView.xib */; };
+		8369839619AC872100110D82 /* PreviewContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369839519AC872100110D82 /* PreviewContainerViewController.m */; };
+		8369839B19ACB8EC00110D82 /* PreviewAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369839919ACB8EC00110D82 /* PreviewAudioViewController.m */; };
+		8369839F19ACB92200110D82 /* PreviewAudioView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8369839E19ACB92200110D82 /* PreviewAudioView.xib */; };
 		837E940019815C8D00A9F90B /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
@@ -1405,6 +1410,14 @@
 		8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainProjectSettingsDetailView.xib; sourceTree = "<group>"; };
 		83599E991975470D008283EC /* photoshop.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = photoshop.psd; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8369838F19AC834F00110D82 /* PreviewGenericViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewGenericViewController.h; sourceTree = "<group>"; };
+		8369839019AC834F00110D82 /* PreviewGenericViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewGenericViewController.m; sourceTree = "<group>"; };
+		8369839219AC836700110D82 /* PreviewGenericView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewGenericView.xib; sourceTree = "<group>"; };
+		8369839419AC872100110D82 /* PreviewContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewContainerViewController.h; sourceTree = "<group>"; };
+		8369839519AC872100110D82 /* PreviewContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewContainerViewController.m; sourceTree = "<group>"; };
+		8369839819ACB8EC00110D82 /* PreviewAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewAudioViewController.h; sourceTree = "<group>"; };
+		8369839919ACB8EC00110D82 /* PreviewAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewAudioViewController.m; sourceTree = "<group>"; };
+		8369839E19ACB92200110D82 /* PreviewAudioView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreviewAudioView.xib; path = ../../../../../Documents/PreviewAudioView.xib; sourceTree = "<group>"; };
 		837E93FE19815C8D00A9F90B /* ProjectSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsWindowController.h; sourceTree = "<group>"; };
 		837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindowController.m; sourceTree = "<group>"; };
 		8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdater.h; sourceTree = "<group>"; };
@@ -2410,6 +2423,7 @@
 		E525F7EE37BDD5941E6C0AC9 /* PublishRenamedFilesLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRenamedFilesLookup.m; sourceTree = "<group>"; };
 		E525F7FDEB6E06727F3674DC /* OptimizeImageWithOptiPNGOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptimizeImageWithOptiPNGOperation.h; sourceTree = "<group>"; };
 		E525F7FF46AF3A6A44E16D69 /* CCBPublisherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisherController.m; sourceTree = "<group>"; };
+		E525F8035A7B4E14EECD6764 /* PreviewViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewControllerProtocol.h; sourceTree = "<group>"; };
 		E525F809973E06E6C7BE0A7E /* PackageRemover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageRemover.h; sourceTree = "<group>"; };
 		E525F82263C2129471643FFD /* FileSystemTestCase+Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FileSystemTestCase+Images.h"; sourceTree = "<group>"; };
 		E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishBaseOperation.m; sourceTree = "<group>"; };
@@ -3389,6 +3403,7 @@
 				776041E21498F5A70078095D /* Util */,
 				E525F682636334F728CA674F /* ResourcePropertiesMigrator.m */,
 				E525F30580678AF1CA256F15 /* ResourcePropertiesMigrator.h */,
+				E525F8035A7B4E14EECD6764 /* PreviewViewControllerProtocol.h */,
 			);
 			name = SpriteBuilder;
 			path = ccBuilder;
@@ -3655,6 +3670,27 @@
 				E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */,
 			);
 			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		8369838819AC815F00110D82 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */,
+				92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */,
+				92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */,
+				E3583FAF1756C228002DF0B0 /* ResourceManagerPreviewView.xib */,
+				E37FCAF2175D68FF009F81D6 /* ResourceManagerPreviewView.h */,
+				E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */,
+				8369838F19AC834F00110D82 /* PreviewGenericViewController.h */,
+				8369839019AC834F00110D82 /* PreviewGenericViewController.m */,
+				8369839219AC836700110D82 /* PreviewGenericView.xib */,
+				8369839419AC872100110D82 /* PreviewContainerViewController.h */,
+				8369839519AC872100110D82 /* PreviewContainerViewController.m */,
+				8369839819ACB8EC00110D82 /* PreviewAudioViewController.h */,
+				8369839919ACB8EC00110D82 /* PreviewAudioViewController.m */,
+				8369839E19ACB92200110D82 /* PreviewAudioView.xib */,
+			);
+			name = Preview;
 			sourceTree = "<group>";
 		};
 		8392006918ED91AD00B6C429 /* Cocos2dUpdater */ = {
@@ -4970,11 +5006,9 @@
 		E3C5C1A11504D144000CF6F3 /* Resource Manager */ = {
 			isa = PBXGroup;
 			children = (
+				8369838819AC815F00110D82 /* Preview */,
 				83CD44A819409FD90086E9E7 /* Commands */,
 				83EDAD01193DFFC100327B86 /* ValueObjects */,
-				92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */,
-				92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */,
-				92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */,
 				E3C5C1A21504D17E000CF6F3 /* ResourceManager.h */,
 				E3C5C1A31504D17E000CF6F3 /* ResourceManager.m */,
 				E3C5C1B315075CDD000CF6F3 /* ResourceManagerUtil.h */,
@@ -4983,9 +5017,6 @@
 				E3462866155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m */,
 				E33C2AAA15C987EB0043EF9B /* ResourceManagerOutlineView.h */,
 				E33C2AAB15C987EB0043EF9B /* ResourceManagerOutlineView.m */,
-				E3583FAF1756C228002DF0B0 /* ResourceManagerPreviewView.xib */,
-				E37FCAF2175D68FF009F81D6 /* ResourceManagerPreviewView.h */,
-				E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */,
 				B7AC69AE17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.h */,
 				B7AC69AF17A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m */,
 				E525F0BC44FE0FDD5840BDC8 /* ResourceTypes.h */,
@@ -5902,6 +5933,7 @@
 				8045F138183ADA900082BD94 /* seq-locked.png in Resources */,
 				80FBACCD183423F800C4BB69 /* inspector-warning@2x.png in Resources */,
 				80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */,
+				8369839319AC836700110D82 /* PreviewGenericView.xib in Resources */,
 				92F0960D18F8851300D47A94 /* inspector-body-remove@2x.png in Resources */,
 				80E95C5A1836E44900D864CA /* select-locked.png in Resources */,
 				80FBACD91834553000C4BB69 /* visible-icon.png in Resources */,
@@ -6134,6 +6166,7 @@
 				830F4E9B192F5263002B832D /* Package.icns in Resources */,
 				9218DF3E1919B04D0033851E /* joint-pivot-handle-ratchet@2x.png in Resources */,
 				E3B19F6D15E65229000B023E /* DefaultResourcesList.plist in Resources */,
+				8369839F19ACB92200110D82 /* PreviewAudioView.xib in Resources */,
 				E360789015EBA5420040A172 /* sel-frame.png in Resources */,
 				B7096E29180CD98E00164A8A /* doc-node@2x.png in Resources */,
 				E36078BC15EE0B2C0040A172 /* sel-round.png in Resources */,
@@ -6604,6 +6637,7 @@
 				77E1992613858D78006C361B /* PSMTabBarCell.m in Sources */,
 				77E1992713858D78006C361B /* PSMTabBarControl.m in Sources */,
 				92B6D0DE193FE32100FD27F4 /* InspectorPhysicsUnavailable.m in Sources */,
+				8369839619AC872100110D82 /* PreviewContainerViewController.m in Sources */,
 				77E1992813858D78006C361B /* PSMTabBarController.m in Sources */,
 				77E1992913858D78006C361B /* PSMTabDragAssistant.m in Sources */,
 				77E1992A13858D78006C361B /* PSMTabDragView.m in Sources */,
@@ -6744,6 +6778,7 @@
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
 				D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */,
+				8369839119AC834F00110D82 /* PreviewGenericViewController.m in Sources */,
 				E3D6BA2316C46E41006AFE0A /* SequencerCallbackChannel.m in Sources */,
 				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
 				E3D6BA2616C46E91006AFE0A /* SequencerChannel.m in Sources */,
@@ -6837,6 +6872,7 @@
 				E525F47301A5C8C234262F36 /* PackageRemover.m in Sources */,
 				E525FC5DE242A8EB373D882A /* PackageExporter.m in Sources */,
 				E525F413EBF9FE7A802A283C /* PackageCreator.m in Sources */,
+				8369839B19ACB8EC00110D82 /* PreviewAudioViewController.m in Sources */,
 				E525F308447A45DFEE6C23EE /* ProjectMigrator.m in Sources */,
 				E525F39657967047967120FC /* PackageMigrator.m in Sources */,
 				E525F519BAA5EC36A4DE0C7C /* MoveFileCommand.m in Sources */,

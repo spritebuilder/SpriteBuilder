@@ -92,7 +92,6 @@
 @property (nonatomic,readwrite) int format_android_sound_quality;
 @property (nonatomic,readwrite) int format_android_sound_quality_enabled;
 
-
 - (void)setPreviewResource:(id)resource;
 
 @end

@@ -123,6 +123,7 @@ enum {
 @class RegistrationWindow;
 @class ResourceManagerOutlineView;
 @class CCBPublisher;
+@class PreviewContainerViewController;
 
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
@@ -315,8 +316,8 @@ enum {
 @property (nonatomic,assign) BOOL hasOpenedDocument;
 @property (weak, nonatomic,readonly) CCBGLView* cocosView;
 
-
-@property (nonatomic,strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic, strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic, strong) IBOutlet PreviewContainerViewController *previewContainerViewController;
 
 @property (nonatomic,assign) BOOL canEditContentSize;
 @property (nonatomic,assign) BOOL defaultCanvasSize;

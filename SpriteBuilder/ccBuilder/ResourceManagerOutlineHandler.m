@@ -45,6 +45,11 @@
 #import "NSString+Packages.h"
 #import "PackageRenamer.h"
 #import "PackageImporter.h"
+#import "PreviewViewControllerProtocol.h"
+
+@interface ResourceManagerOutlineHandler ()
+@property (nonatomic, strong) id <PreviewViewControllerProtocol> previewController;
+@end
 
 @implementation ResourceManagerOutlineHandler
 
@@ -77,6 +82,34 @@
     return self;
 }
 
+- (instancetype)initWithOutlineView:(NSOutlineView *)outlineView resType:(int)resourceType previewController:(id <PreviewViewControllerProtocol>)previewController
+{
+    self = [super init];
+    if (self)
+    {
+        resManager = [ResourceManager sharedManager];
+        [resManager addResourceObserver:self];
+
+        resourceList = outlineView;
+
+        self.previewController = previewController;
+        resType = resourceType;
+
+        ImageAndTextCell* imageTextCell = [[ImageAndTextCell alloc] init];
+        [imageTextCell setEditable:YES];
+        [[resourceList outlineTableColumn] setDataCell:imageTextCell];
+        [[resourceList outlineTableColumn] setEditable:YES];
+
+        [resourceList setDataSource:self];
+        [resourceList setDelegate:self];
+        [resourceList setTarget:self];
+        [resourceList setDoubleAction:@selector(doubleClicked:)];
+
+        [outlineView registerForDraggedTypes:@[@"com.cocosbuilder.RMResource", NSFilenamesPboardType]];
+    }
+    return self;
+}
+
 - (void) reload
 {
     [resourceList reloadData];
@@ -89,7 +122,7 @@
     // Do not display directories if only one directory is used
     if (item == NULL && [resManager.activeDirectories count] == 1)
     {
-        item = [resManager.activeDirectories objectAtIndex:0];
+        item = resManager.activeDirectories[0];
     }
     
     // Handle base nodes
@@ -139,13 +172,13 @@
     // Do not display directories if only one directory is used
     if (item == NULL && [resManager.activeDirectories count] == 1)
     {
-        item = [resManager.activeDirectories objectAtIndex:0];
+        item = resManager.activeDirectories[0];
     }
     
     // Return base nodes
     if (item == NULL)
     {
-        return [resManager.activeDirectories objectAtIndex:index];
+        return resManager.activeDirectories[index];
     }
     
     // Fetch the data object of directory resources and use it as the item object
@@ -163,7 +196,7 @@
     {
         RMDirectory* dir = item;
         NSArray* children = [dir resourcesForType:resType];
-        return [children objectAtIndex:index];
+        return children[index];
     }
     else if ([item isKindOfClass:[RMResource class]])
     {
@@ -171,12 +204,12 @@
         if (res.type == kCCBResTypeSpriteSheet)
         {
             NSArray* frames = res.data;
-            return [frames objectAtIndex:index];
+            return frames[index];
         }
         else if (res.type == kCCBResTypeAnimation)
         {
             NSArray* anims = res.data;
-            return [anims objectAtIndex:index];
+            return anims[index];
         }
     }
     
@@ -188,7 +221,7 @@
     // Do not display directories if only one directory is used
     if (item == NULL && [resManager.activeDirectories count] == 1)
     {
-        item = [resManager.activeDirectories objectAtIndex:0];
+        item = resManager.activeDirectories[0];
     }
     
     if ([item isKindOfClass:[RMDirectory class]])
@@ -392,7 +425,7 @@
     }
     else if (item == NULL)
     {
-        RMDirectory* dir = [[ResourceManager sharedManager].activeDirectories objectAtIndex:0];
+        RMDirectory* dir = ([ResourceManager sharedManager].activeDirectories)[0];
         dstDir = dir.dirPath;
     }
     
@@ -402,8 +435,8 @@
     NSArray* pbRes = [pasteboard propertyListsForType:@"com.cocosbuilder.RMResource"];
     for (NSDictionary* dict in pbRes)
     {
-        NSString* srcPath = [dict objectForKey:@"filePath"];
-        int type = [[dict objectForKey:@"type"] intValue];
+        NSString* srcPath = dict[@"filePath"];
+        int type = [dict[@"type"] intValue];
         
         movedOrImportedFiles |= [ResourceManager moveResourceFile:srcPath ofType:type toDirectory:dstDir];
     }
@@ -497,7 +530,8 @@
 - (void) updateSelectionPreview
 {
     id selection = [resourceList itemAtRow:[resourceList selectedRow]];
-    [imagePreview setPreviewResource:selection];
+    // [imagePreview setPreviewResource:selection];
+    [_previewController setPreviewedResource:selection projectSettings:_projectSettings];
     [resourceList setNeedsDisplay];
 }
 

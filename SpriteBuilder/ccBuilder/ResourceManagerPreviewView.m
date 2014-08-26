@@ -36,6 +36,7 @@
 #import "NotificationNames.h"
 #import "ImageFormatAndPropertiesHelper.h"
 #import "ResourcePropertyKeys.h"
+#import "PreviewGenericViewController.h"
 
 @interface ResourceManagerPreviewView()
 

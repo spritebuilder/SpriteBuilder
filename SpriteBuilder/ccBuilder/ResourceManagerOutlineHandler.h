@@ -27,6 +27,7 @@
 @class ResourceManager;
 @class ResourceManagerPreviewView;
 @class ProjectSettings;
+@protocol PreviewViewControllerProtocol;
 
 @interface ResourceManagerOutlineHandler : NSObject <NSOutlineViewDelegate, NSOutlineViewDataSource>
 {
@@ -41,6 +42,7 @@
 @property (nonatomic,weak) ProjectSettings *projectSettings;
 
 - (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)rt preview:(ResourceManagerPreviewView*)preview;
+- (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)resourceType previewController:(id<PreviewViewControllerProtocol>)previewController;
 
 - (void) reload;
 
