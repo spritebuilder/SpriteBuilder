@@ -5,6 +5,7 @@
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
 #import "ResourcePropertyKeys.h"
+#import "MiscConstants.h"
 
 
 @interface PublishSpriteSheetOperation()
@@ -113,7 +114,7 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
     self.previewFilePath = nil;
     if (![__spriteSheetPreviewsGenerated containsObject:_subPath])
     {
-        self.previewFilePath = [_publishDirectory stringByAppendingPathExtension:@"ppng"];
+        self.previewFilePath = [_publishDirectory stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
         [__spriteSheetPreviewsGenerated addObject:_subPath];
     }
 }

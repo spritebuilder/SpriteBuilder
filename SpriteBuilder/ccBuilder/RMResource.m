@@ -7,6 +7,7 @@
 #import "CCBSpriteSheetParser.h"
 #import "RMSpriteFrame.h"
 #import "ResourceManagerUtil.h"
+#import "MiscConstants.h"
 
 
 @implementation RMResource
@@ -206,7 +207,7 @@
     {
         NSFileManager* fm = [NSFileManager defaultManager];
 
-        NSString* previewPath = [self.filePath stringByAppendingPathExtension:@"ppng"];
+        NSString* previewPath = [self.filePath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
         if ([fm fileExistsAtPath:previewPath]) return previewPath;
         else return NULL;
     }
@@ -237,7 +238,7 @@
     {
         NSFileManager* fm = [NSFileManager defaultManager];
 
-        NSString* previewPath = [self.filePath stringByAppendingPathExtension:@"ppng"];
+        NSString* previewPath = [self.filePath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
         if ([fm fileExistsAtPath:previewPath])
         {
             NSDate* fileDate = [CCBFileUtil modificationDateForFile:previewPath];

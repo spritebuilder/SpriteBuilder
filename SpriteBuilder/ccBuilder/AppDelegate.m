@@ -2096,7 +2096,7 @@ static BOOL hideAllToNextSeparator;
     //[PositionPropertySetter refreshAllPositions];
     
     // Save preview
-    [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:@"ppng"]];
+    [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX]];
     
     // Restore resolution and timeline
     currentDocument.currentResolution = currentResolution;

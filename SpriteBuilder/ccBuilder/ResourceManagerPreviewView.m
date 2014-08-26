@@ -157,7 +157,7 @@
 
 - (void)updateCCBFilePreview:(RMResource *)res
 {
-    NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
+    NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
     if (!img)
     {
@@ -208,7 +208,7 @@
 
     self.trimSprites = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_TRIM_SPRITES] boolValue];
 
-    NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:@"ppng"];
+    NSString *imgPreviewPath = [res.filePath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
     if (!img)
     {
