@@ -42,7 +42,7 @@
                   Identifier = "CCAnimation_Tests/testAnimationTween1">
                </Test>
                <Test
-                  Identifier = "FileSystemTestCase">
+                  Identifier = "CCBPublisherController_Tests">
                </Test>
             </SkippedTests>
          </TestableReference>
