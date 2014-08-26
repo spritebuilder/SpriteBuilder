@@ -66,15 +66,18 @@ class BuildDistribution:
     
         if self.run_tests == True: 
             self.test_project()
-        
+            
+            
         self.compile_project(version, product_name, mode, private_key)
         self.zip_archive(product_name,version)
 
     def test_project(self):
-        # Clean and build CocosBuilder
-        print "=== CLEANING PROJECT ==="
+        
+        print "=== TESTING PROJECT ==="
         os.chdir('SpriteBuilder/');
     
+        subprocess.check_call('/usr/bin/xcodebuild -alltargets clean', shell=True)
+     
         try:
             subprocess.check_call('/usr/bin/xcodebuild -target "SpriteBuilder Tests"  -configuration Debug -scheme SpriteBuilder test', shell=True)
         except Exception,e:
