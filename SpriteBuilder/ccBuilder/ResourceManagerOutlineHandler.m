@@ -22,19 +22,15 @@
  * THE SOFTWARE.
  */
 
-#import <MacTypes.h>
 #import "ResourceManagerOutlineHandler.h"
 #import "ImageAndTextCell.h"
 #import "ResourceManager.h"
-#import "ResourceManagerUtil.h"
 #import "CCBGlobals.h"
-#import "ResourceManagerPreviewView.h"
 #import "NSPasteboard+CCB.h"
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
 #import "MiscConstants.h"
 #import "SBErrors.h"
-#import "FeatureToggle.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
@@ -54,33 +50,6 @@
 @implementation ResourceManagerOutlineHandler
 
 @synthesize resType;
-
-- (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)rt preview:(ResourceManagerPreviewView*)p
-{
-    self = [super init];
-    if (!self) return NULL;
-    
-    resManager = [ResourceManager sharedManager];
-    [resManager addResourceObserver:self];
-    
-    resourceList = outlineView;
-    imagePreview = p;
-    resType = rt;
-    
-    ImageAndTextCell* imageTextCell = [[ImageAndTextCell alloc] init];
-    [imageTextCell setEditable:YES];
-    [[resourceList outlineTableColumn] setDataCell:imageTextCell];
-    [[resourceList outlineTableColumn] setEditable:YES];
-    
-    [resourceList setDataSource:self];
-    [resourceList setDelegate:self];
-    [resourceList setTarget:self];
-    [resourceList setDoubleAction:@selector(doubleClicked:)];
-    
-    [outlineView registerForDraggedTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.RMResource", NSFilenamesPboardType, nil]];
-    
-    return self;
-}
 
 - (instancetype)initWithOutlineView:(NSOutlineView *)outlineView resType:(int)resourceType previewController:(id <PreviewViewControllerProtocol>)previewController
 {
@@ -178,7 +147,7 @@
     // Return base nodes
     if (item == NULL)
     {
-        return resManager.activeDirectories[index];
+        return resManager.activeDirectories[(NSUInteger) index];
     }
     
     // Fetch the data object of directory resources and use it as the item object
@@ -196,7 +165,7 @@
     {
         RMDirectory* dir = item;
         NSArray* children = [dir resourcesForType:resType];
-        return children[index];
+        return children[(NSUInteger) index];
     }
     else if ([item isKindOfClass:[RMResource class]])
     {
@@ -204,12 +173,12 @@
         if (res.type == kCCBResTypeSpriteSheet)
         {
             NSArray* frames = res.data;
-            return frames[index];
+            return frames[(NSUInteger) index];
         }
         else if (res.type == kCCBResTypeAnimation)
         {
             NSArray* anims = res.data;
-            return anims[index];
+            return anims[(NSUInteger) index];
         }
     }
     
@@ -530,7 +499,6 @@
 - (void) updateSelectionPreview
 {
     id selection = [resourceList itemAtRow:[resourceList selectedRow]];
-    // [imagePreview setPreviewResource:selection];
     [_previewController setPreviewedResource:selection projectSettings:_projectSettings];
     [resourceList setNeedsDisplay];
 }
@@ -630,12 +598,5 @@
 {
     [resourceList reloadData];
 }
-
-- (void) setResType:(int)rt
-{
-    resType = rt;
-    [resourceList reloadData];
-}
-
 
 @end
