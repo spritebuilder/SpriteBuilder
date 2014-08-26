@@ -496,31 +496,12 @@ typedef enum
     previewViewOwner = [[ResourceManagerPreviewView alloc] init];
     previewViewOwner.projectSettings = projectSettings;
 
-    /*
-    NSArray* topLevelObjs = NULL;
-    [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
-    
-    for (id obj in topLevelObjs)
-    {
-        if ([obj isKindOfClass:[NSView class]])
-        {
-            NSView* view = obj;
-            
-            [previewViewContainer addSubview:view];
-            view.frame = NSMakeRect(0.0, 0.0, previewViewContainer.frame.size.width, previewViewContainer.frame.size.height);
-        }
-    }*/
-
     // Setup project display
-    // projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
     projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject
                                                                                resType:kCCBResTypeNone
                                                                      previewController:_previewContainerViewController];
     projectOutlineHandler.projectSettings = projectSettings;
-    
-    // resourceManagerSplitView.delegate = previewViewOwner;
     resourceManagerSplitView.delegate = _previewContainerViewController;
-    [_previewContainerViewController setPreviewedResource:nil projectSettings:nil];
 
     [previewViewOwner setPreviewResource:NULL];
     
@@ -530,7 +511,6 @@ typedef enum
     self.warningTableView.delegate = warningHandler;
     self.warningTableView.target = warningHandler;
     self.warningTableView.dataSource = warningHandler;
-   // [self.warningTableView setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
     [self updateWarningsOutline];
 }
 
