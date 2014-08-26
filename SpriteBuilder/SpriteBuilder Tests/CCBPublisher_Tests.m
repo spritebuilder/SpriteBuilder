@@ -223,7 +223,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setProperty:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
+    [_projectSettings setProperty:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];

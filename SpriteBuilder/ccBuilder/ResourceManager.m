@@ -657,10 +657,10 @@
     RMResource* resource = [[RMResource alloc] init];
     resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
     resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
-    int tabletScale = [[projectSettings propertyForResource:resource andKey:@"tabletScale"] intValue];
+    int tabletScale = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
     if (!tabletScale) tabletScale = 2;
     
-    int srcScaleSetting = [[projectSettings propertyForResource:resource andKey:@"scaleFrom"] intValue];
+    int srcScaleSetting = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
     
     // Calculate the dst scale factor
     float dstScale = 1;

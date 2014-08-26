@@ -160,52 +160,52 @@
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbSliderBgHighlighted.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbButtonHighlighted.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"Sprites" : @{},
          @"ccbResources/ccbSliderBgNormal.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbTextField.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleFire.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources":@{
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbParticleMagic.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbButtonNormal.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleStars.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbSliderHandle.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleSmoke.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbParticleSnow.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          }
       },
       @"publishDirectoryAndroid":@"Source/Resources/Published-Android",
@@ -286,7 +286,7 @@
 
     XCTAssertTrue(project.excludedFromPackageMigration);
 
-    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:@"scaleFrom"];
+    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
 }
 
@@ -503,14 +503,14 @@
     [_projectSettings clearAllDirtyMarkers];
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"scaleFrom"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     [_projectSettings clearAllDirtyMarkers];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"scaleFrom"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 }

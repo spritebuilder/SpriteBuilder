@@ -75,7 +75,7 @@
 {
     _resource.type = kCCBResTypeImage;
     [self setResourceProperties:@{
-            @"tabletScale" : @(1),
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE : @(1),
             RESOURCE_PROPERTY_IOS_IMAGE_FORMAT : @(kFCImageFormatPVR_RGBA8888),
             RESOURCE_PROPERTY_IOS_IMAGE_DITHER : @(YES),
             RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS : @(YES),
@@ -87,7 +87,7 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
-            @"tabletScale" : @(2),
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE : @(2),
             RESOURCE_PROPERTY_IOS_IMAGE_FORMAT : @(kFCImageFormatPVRTC_4BPP),
             RESOURCE_PROPERTY_IOS_IMAGE_DITHER : @(NO),
             RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS : @(NO),
@@ -133,8 +133,8 @@
 {
     _resource.type = kCCBResTypeImage;
     [self setResourceProperties:@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1),
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1),
             RESOURCE_PROPERTY_IOS_IMAGE_FORMAT:@(kFCImageFormatPVR_RGBA8888),
             RESOURCE_PROPERTY_IOS_IMAGE_DITHER:@(YES),
             RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS:@(YES),
@@ -146,8 +146,8 @@
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
-            // @"tabletScale":@(2), // is not testable this way atm: 2 is a default value atm
-            @"scaleFrom" : @(2),
+            // RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(2), // is not testable this way atm: 2 is a default value atm
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM : @(2),
             RESOURCE_PROPERTY_IOS_IMAGE_FORMAT : @(kFCImageFormatPVRTC_4BPP),
             RESOURCE_PROPERTY_IOS_IMAGE_DITHER : @(NO),
             RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS : @(NO),

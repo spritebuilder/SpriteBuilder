@@ -237,7 +237,7 @@
     [_previewTablethd setImage:self.imgTablethd];
 
     // Load settings
-    self.scaleFrom = [[settings propertyForResource:res andKey:@"scaleFrom"] intValue];
+    self.scaleFrom = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
 
     self.format_ios = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
     self.format_ios_dither = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
@@ -251,7 +251,7 @@
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
-    int tabletScale = [[settings propertyForResource:res andKey:@"tabletScale"] intValue];
+    int tabletScale = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
     if (!tabletScale)
     {
         tabletScale = 2;
@@ -405,7 +405,7 @@
 - (void)setScaleFrom:(int)scaleFrom
 {
     _scaleFrom = scaleFrom;
-    [self setValue:@(scaleFrom) withName:@"scaleFrom" isAudio:NO];
+    [self setValue:@(scaleFrom) withName:RESOURCE_PROPERTY_IMAGE_SCALE_FROM isAudio:NO];
 }
 
 - (void) setFormat_ios:(int)format_ios
@@ -466,17 +466,17 @@
     }
 
     // Return if tabletScale hasn't changed
-    int oldTabletScale = [[_projectSettings propertyForResource:_previewedResource andKey:@"tabletScale"] intValue];
+    int oldTabletScale = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
     if (tabletScale == 2 && !oldTabletScale) return;
     
     // Update value and reload assets
     if (tabletScale != 2)
     {
-        [_projectSettings setProperty:@(tabletScale) forResource:_previewedResource andKey:@"tabletScale"];
+        [_projectSettings setProperty:@(tabletScale) forResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE];
     }
     else
     {
-        [_projectSettings removePropertyForResource:_previewedResource andKey:@"tabletScale"];
+        [_projectSettings removePropertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE];
     }
     
     [ResourceManager touchResource:_previewedResource];
@@ -508,7 +508,7 @@
 - (void) setFormat_android_sound_quality:(int)format_android_sound_quality
 {
     _format_android_sound_quality = format_android_sound_quality;
-    [self setValue:@(format_android_sound_quality) withName:@"format_android_sound_quality" isAudio:YES];
+    [self setValue:@(format_android_sound_quality) withName:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY isAudio:YES];
 }
 
 #pragma mark Split view constraints
