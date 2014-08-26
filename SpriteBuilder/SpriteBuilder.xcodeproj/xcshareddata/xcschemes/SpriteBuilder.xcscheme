@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-               BuildableName = "SpriteBuilder Pro.app"
+               BuildableName = "SpriteBuilder.app"
                BlueprintName = "SpriteBuilder"
                ReferencedContainer = "container:SpriteBuilder.xcodeproj">
             </BuildableReference>
@@ -39,9 +39,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "CCAnimation_Tests/testAnimationTween1">
-               </Test>
-               <Test
                   Identifier = "CCBPublisherController_Tests">
                </Test>
             </SkippedTests>
@@ -51,7 +48,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "SpriteBuilder Pro.app"
+            BuildableName = "SpriteBuilder.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>
@@ -70,7 +67,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "SpriteBuilder Pro.app"
+            BuildableName = "SpriteBuilder.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>
@@ -93,7 +90,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7789ABBD133AA82000CEFCC7"
-            BuildableName = "SpriteBuilder Pro.app"
+            BuildableName = "SpriteBuilder.app"
             BlueprintName = "SpriteBuilder"
             ReferencedContainer = "container:SpriteBuilder.xcodeproj">
          </BuildableReference>

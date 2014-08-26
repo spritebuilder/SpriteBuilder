@@ -72,14 +72,14 @@ class BuildDistribution:
         self.zip_archive(product_name,version)
 
     def test_project(self):
-        
+
         print "=== TESTING PROJECT ==="
         os.chdir('SpriteBuilder/');
     
         subprocess.check_call('/usr/bin/xcodebuild -alltargets clean', shell=True)
      
         try:
-            subprocess.check_call('/usr/bin/xcodebuild -target "SpriteBuilder Tests"  -configuration Debug -scheme SpriteBuilder test', shell=True)
+            subprocess.check_call('/usr/bin/xcodebuild -target "SpriteBuilder Tests" -configuration Testing -scheme SpriteBuilder test', shell=True)
         except Exception,e:
             print ("TESTS FAILED: %s" % e)
             print "Tests failed. If you'd like to ignore tests, build with '-tests false'" 
