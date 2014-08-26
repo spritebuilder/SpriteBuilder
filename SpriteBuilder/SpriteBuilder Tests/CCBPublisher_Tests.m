@@ -244,8 +244,8 @@
     _projectSettings.publishEnabledAndroid = YES;
     _projectSettings.resourceAutoScaleFactor = 4;
 
-    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_ios"];
-    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_android"];
+    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
+    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT];
     [_projectSettings setProperty:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:RESOURCE_PROPERTY_IOS_SOUND];
 
     [_publisher addPublishingTarget:_targetIOS];
@@ -319,10 +319,10 @@
     _projectSettings.publishResolution_ios_tablethd = NO;
 
     [_projectSettings setProperty:@(YES) forRelPath:@"pvr" andKey:@"isSmartSpriteSheet"];
-    [_projectSettings setProperty:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:@"format_ios"];
+    [_projectSettings setProperty:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     [_projectSettings setProperty:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
-    [_projectSettings setProperty:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:@"format_ios"];
+    [_projectSettings setProperty:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
     [_publisher addPublishingTarget:_targetIOS];

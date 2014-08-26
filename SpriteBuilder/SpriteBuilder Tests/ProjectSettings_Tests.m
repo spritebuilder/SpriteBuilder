@@ -486,7 +486,7 @@
     // Setting a new value should mark the resource as dirty
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     XCTAssertTrue([_projectSettings isDirtyResource:res1]);
 
@@ -494,7 +494,7 @@
     // Removing a property should mark the resource as dirty
     [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings removePropertyForResource:res1 andKey:@"format_ios"];
+    [_projectSettings removePropertyForResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     XCTAssertTrue([_projectSettings isDirtyResource:res1]);
 
@@ -502,14 +502,14 @@
     // Setting same value twice should not mark resource as dirty
     [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings setProperty:@(1) forResource:res1 andKey:@"scaleFrom"];
 
     [_projectSettings clearAllDirtyMarkers];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings setProperty:@(1) forResource:res1 andKey:@"scaleFrom"];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);

@@ -10,6 +10,7 @@
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
 #import "PublishLogging.h"
+#import "ResourcePropertyKeys.h"
 
 @interface PublishImageOperation ()
 
@@ -229,15 +230,15 @@
     {
         if (_osType == kCCBPublisherOSTypeIOS)
         {
-            self.format = [[_projectSettings propertyForRelPath:relPath andKey:@"format_ios"] intValue];
-            self.dither = [[_projectSettings propertyForRelPath:relPath andKey:@"format_ios_dither"] boolValue];
-            self.compress = [[_projectSettings propertyForRelPath:relPath andKey:@"format_ios_compress"] boolValue];
+            self.format = [[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
+            self.dither = [[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
+            self.compress = [[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
         }
         else if (_osType == kCCBPublisherOSTypeAndroid)
         {
-            self.format = [[_projectSettings propertyForRelPath:relPath andKey:@"format_android"] intValue];
-            self.dither = [[_projectSettings propertyForRelPath:relPath andKey:@"format_android_dither"] boolValue];
-            self.compress = [[_projectSettings propertyForRelPath:relPath andKey:@"format_android_compress"] boolValue];
+            self.format = [[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
+            self.dither = [[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
+            self.compress = [[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
         }
     }
 }

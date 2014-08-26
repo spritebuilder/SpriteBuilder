@@ -194,15 +194,15 @@
 
 - (void)updateSpriteSheetPreview:(ProjectSettings *)settings res:(RMResource *)res
 {
-    self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
-    self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
-    self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
+    self.format_ios = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
+    self.format_ios_dither = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
+    self.format_ios_compress = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
     self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
     self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
 
-    self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
-    self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
-    self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
+    self.format_android = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
+    self.format_android_dither = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
+    self.format_android_compress = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
@@ -239,15 +239,15 @@
     // Load settings
     self.scaleFrom = [[settings propertyForResource:res andKey:@"scaleFrom"] intValue];
 
-    self.format_ios = [[settings propertyForResource:res andKey:@"format_ios"] intValue];
-    self.format_ios_dither = [[settings propertyForResource:res andKey:@"format_ios_dither"] boolValue];
-    self.format_ios_compress = [[settings propertyForResource:res andKey:@"format_ios_compress"] boolValue];
+    self.format_ios = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
+    self.format_ios_dither = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
+    self.format_ios_compress = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
     self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
     self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
 
-    self.format_android = [[settings propertyForResource:res andKey:@"format_android"] intValue];
-    self.format_android_dither = [[settings propertyForResource:res andKey:@"format_android_dither"] boolValue];
-    self.format_android_compress = [[settings propertyForResource:res andKey:@"format_android_compress"] boolValue];
+    self.format_android = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
+    self.format_android_dither = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
+    self.format_android_compress = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
 
@@ -411,7 +411,7 @@
 - (void) setFormat_ios:(int)format_ios
 {
     _format_ios = format_ios;
-    [self setValue:@(format_ios) withName:@"format_ios" isAudio:NO];
+    [self setValue:@(format_ios) withName:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT isAudio:NO];
 
     self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
     self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
@@ -420,7 +420,7 @@
 - (void) setFormat_android:(int)format_android
 {
     _format_android = format_android;
-    [self setValue:@(format_android) withName:@"format_android" isAudio:NO];
+    [self setValue:@(format_android) withName:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT isAudio:NO];
 
     self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
     self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
@@ -429,25 +429,25 @@
 - (void) setFormat_ios_dither:(BOOL)format_ios_dither
 {
     _format_ios_dither = format_ios_dither;
-    [self setValue:@(format_ios_dither) withName:@"format_ios_dither" isAudio:NO];
+    [self setValue:@(format_ios_dither) withName:RESOURCE_PROPERTY_IOS_IMAGE_DITHER isAudio:NO];
 }
 
 - (void) setFormat_android_dither:(BOOL)format_android_dither
 {
     _format_android_dither = format_android_dither;
-    [self setValue:@(format_android_dither) withName:@"format_android_dither" isAudio:NO];
+    [self setValue:@(format_android_dither) withName:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER isAudio:NO];
 }
 
 - (void) setFormat_ios_compress:(BOOL)format_ios_compress
 {
     _format_ios_compress = format_ios_compress;
-    [self setValue:@(format_ios_compress) withName:@"format_ios_compress" isAudio:NO];
+    [self setValue:@(format_ios_compress) withName:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS isAudio:NO];
 }
 
 - (void) setFormat_android_compress:(BOOL)format_android_compress
 {
     _format_android_compress = format_android_compress;
-    [self setValue:@(format_android_compress) withName:@"format_android_compress" isAudio:NO];
+    [self setValue:@(format_android_compress) withName:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS isAudio:NO];
 }
 
 - (void) setTrimSprites:(BOOL) trimSprites

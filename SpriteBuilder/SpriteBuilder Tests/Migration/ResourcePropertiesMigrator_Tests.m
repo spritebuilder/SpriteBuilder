@@ -40,7 +40,7 @@
     [_projectSettings setProperty:@YES forRelPath:@"rocks" andKey:@"isSmartSpriteSheet"];
     [_projectSettings clearDirtyMarkerOfRelPath:@"rocks"];
 
-    [_projectSettings setProperty:@3 forRelPath:@"background.png" andKey:@"format_ios"];
+    [_projectSettings setProperty:@3 forRelPath:@"background.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings clearDirtyMarkerOfRelPath:@"background.png"];
 
     [_migrator migrate];

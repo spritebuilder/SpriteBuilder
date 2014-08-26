@@ -75,25 +75,25 @@
 {
     _resource.type = kCCBResTypeImage;
     [self setResourceProperties:@{
-            @"tabletScale":@(1),
-            @"format_ios":@(kFCImageFormatPVR_RGBA8888),
-            @"format_ios_dither":@(YES),
-            @"format_ios_compress":@(YES),
-            @"format_android":@(kFCImageFormatPVR_RGBA8888),
-            @"format_android_dither":@(YES),
-            @"format_android_compress":@(YES)
+            @"tabletScale" : @(1),
+            RESOURCE_PROPERTY_IOS_IMAGE_FORMAT : @(kFCImageFormatPVR_RGBA8888),
+            RESOURCE_PROPERTY_IOS_IMAGE_DITHER : @(YES),
+            RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS : @(YES),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT : @(kFCImageFormatPVR_RGBA8888),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER : @(YES),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS : @(YES)
     }];
 
     [_resourceManagerPreviewView setPreviewResource:_resource];
 
     [self setPropertiesIndividuallyAndAssertResourceIsDirty:@{
-            @"tabletScale":@(2),
-            @"format_ios":@(kFCImageFormatPVRTC_4BPP),
-            @"format_ios_dither":@(NO),
-            @"format_ios_compress":@(NO),
-            @"format_android":@(kFCImageFormatPVRTC_4BPP),
-            @"format_android_dither":@(NO),
-            @"format_android_compress":@(NO)
+            @"tabletScale" : @(2),
+            RESOURCE_PROPERTY_IOS_IMAGE_FORMAT : @(kFCImageFormatPVRTC_4BPP),
+            RESOURCE_PROPERTY_IOS_IMAGE_DITHER : @(NO),
+            RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS : @(NO),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT : @(kFCImageFormatPVRTC_4BPP),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER : @(NO),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS : @(NO)
     }];
 }
 
@@ -135,12 +135,12 @@
     [self setResourceProperties:@{
             @"tabletScale":@(1),
             @"scaleFrom":@(1),
-            @"format_ios":@(kFCImageFormatPVR_RGBA8888),
-            @"format_ios_dither":@(YES),
-            @"format_ios_compress":@(YES),
-            @"format_android":@(kFCImageFormatPVR_RGBA8888),
-            @"format_android_dither":@(YES),
-            @"format_android_compress":@(YES)
+            RESOURCE_PROPERTY_IOS_IMAGE_FORMAT:@(kFCImageFormatPVR_RGBA8888),
+            RESOURCE_PROPERTY_IOS_IMAGE_DITHER:@(YES),
+            RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS:@(YES),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT:@(kFCImageFormatPVR_RGBA8888),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER:@(YES),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS:@(YES)
     }];
 
     [_resourceManagerPreviewView setPreviewResource:_resource];
@@ -148,12 +148,12 @@
     [self setPropertiesIndividuallyAndAssertPropertyIsOfGivenValue:@{
             // @"tabletScale":@(2), // is not testable this way atm: 2 is a default value atm
             @"scaleFrom" : @(2),
-            @"format_ios" : @(kFCImageFormatPVRTC_4BPP),
-            @"format_ios_dither" : @(NO),
-            @"format_ios_compress" : @(NO),
-            @"format_android" : @(kFCImageFormatPVRTC_4BPP),
-            @"format_android_dither" : @(NO),
-            @"format_android_compress" : @(NO)
+            RESOURCE_PROPERTY_IOS_IMAGE_FORMAT : @(kFCImageFormatPVRTC_4BPP),
+            RESOURCE_PROPERTY_IOS_IMAGE_DITHER : @(NO),
+            RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS : @(NO),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT : @(kFCImageFormatPVRTC_4BPP),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER : @(NO),
+            RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS : @(NO)
     } isAudio:NO];
 }
 
