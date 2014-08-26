@@ -11,6 +11,7 @@
 #import "ProjectSettings.h"
 #import "PublishLogging.h"
 #import "ResourcePropertyKeys.h"
+#import "MiscConstants.h"
 
 @interface PublishImageOperation ()
 
@@ -314,15 +315,15 @@
 {
     NSString *extension = [path pathExtension];
 
-    if ([resolution isEqualToString:@"phonehd"])
+    if ([resolution isEqualToString:RESOLUTION_PHONE_HD])
     {
         path = [NSString stringWithFormat:@"%@@2x.%@", [path stringByDeletingPathExtension], extension];
     }
-    else if ([resolution isEqualToString:@"tablet"])
+    else if ([resolution isEqualToString:RESOLUTION_TABLET])
     {
         path = [NSString stringWithFormat:@"%@~ipad.%@", [path stringByDeletingPathExtension], extension];
     }
-    else if ([resolution isEqualToString:@"tablethd"])
+    else if ([resolution isEqualToString:RESOLUTION_TABLET_HD])
     {
         path = [NSString stringWithFormat:@"%@@2x~ipad.%@", [path stringByDeletingPathExtension], extension];
     }

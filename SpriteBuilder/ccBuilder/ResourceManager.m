@@ -664,19 +664,19 @@
     
     // Calculate the dst scale factor
     float dstScale = 1;
-    if ([res isEqualToString:@"phone"])
+    if ([res isEqualToString:RESOLUTION_PHONE])
     {
         dstScale = 1;
     }
-    if ([res isEqualToString:@"phonehd"])
+    if ([res isEqualToString:RESOLUTION_PHONE_HD])
     {
         dstScale = 2;
     }
-    else if ([res isEqualToString:@"tablet"])
+    else if ([res isEqualToString:RESOLUTION_TABLET])
     {
         dstScale = 1 * tabletScale;
     }
-    else if ([res isEqualToString:@"tablethd"])
+    else if ([res isEqualToString:RESOLUTION_TABLET_HD])
     {
         dstScale = 2 * tabletScale;
     }

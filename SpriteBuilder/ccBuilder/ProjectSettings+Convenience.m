@@ -82,19 +82,19 @@
 
     if (self.publishResolution_ios_phone)
     {
-        [result addObject:@"phone"];
+        [result addObject:RESOLUTION_PHONE];
     }
     if (self.publishResolution_ios_phonehd)
     {
-        [result addObject:@"phonehd"];
+        [result addObject:RESOLUTION_PHONE_HD];
     }
     if (self.publishResolution_ios_tablet)
     {
-        [result addObject:@"tablet"];
+        [result addObject:RESOLUTION_TABLET];
     }
     if (self.publishResolution_ios_tablethd)
     {
-        [result addObject:@"tablethd"];
+        [result addObject:RESOLUTION_TABLET_HD];
     }
     return result;
 }
@@ -105,19 +105,19 @@
 
     if (self.publishResolution_android_phone)
     {
-        [result addObject:@"phone"];
+        [result addObject:RESOLUTION_PHONE];
     }
     if (self.publishResolution_android_phonehd)
     {
-        [result addObject:@"phonehd"];
+        [result addObject:RESOLUTION_PHONE_HD];
     }
     if (self.publishResolution_android_tablet)
     {
-        [result addObject:@"tablet"];
+        [result addObject:RESOLUTION_TABLET];
     }
     if (self.publishResolution_android_tablethd)
     {
-        [result addObject:@"tablethd"];
+        [result addObject:RESOLUTION_TABLET_HD];
     }
     return result;
 }

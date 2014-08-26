@@ -20,6 +20,7 @@
 #import "CCBPublishingTarget.h"
 #import "ProjectSettings+Convenience.h"
 #import "ResourcePropertyKeys.h"
+#import "MiscConstants.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -223,7 +224,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setProperty:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    [_projectSettings setProperty:@1 forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -346,7 +347,7 @@
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
     [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
-    _targetIOS.resolutions = @[@"tablet"];
+    _targetIOS.resolutions = @[RESOLUTION_TABLET];
 
     [_publisher addPublishingTarget:_targetIOS];
     // Yes that's correct, publishing twice

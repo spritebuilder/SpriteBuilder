@@ -13,6 +13,7 @@
 #import "FileSystemTestCase.h"
 #import "SBAssserts.h"
 #import "MiscConstants.h"
+#import "CCBPublisherTypes.h"
 
 @interface PackagePublishSettings_Tests : FileSystemTestCase
 
@@ -89,13 +90,13 @@
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
-    XCTAssertTrue([osSettingsAndroidLoaded.resolutions containsObject:@"tablethd"]);
-    XCTAssertFalse([osSettingsAndroidLoaded.resolutions containsObject:@"tablet"]);
+    XCTAssertTrue([osSettingsAndroidLoaded.resolutions containsObject:RESOLUTION_TABLET_HD]);
+    XCTAssertFalse([osSettingsAndroidLoaded.resolutions containsObject:RESOLUTION_TABLET]);
 
     PublishOSSettings *osSettingsIOSLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeIOS];
     XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
-    XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:@"phone"]);
-    XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:@"tablethd"]);
+    XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_PHONE]);
+    XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_TABLET_HD]);
 }
 
 - (void)testEffectiveOutputDir

@@ -224,11 +224,11 @@
 
 - (void)updateImagePreview:(id)selection settings:(ProjectSettings *)settings res:(RMResource *)res
 {
-    self.imgMain = [selection previewForResolution:@"auto"];
-    self.imgPhone = [selection previewForResolution:@"phone"];
-    self.imgPhonehd = [selection previewForResolution:@"phonehd"];
-    self.imgTablet = [selection previewForResolution:@"tablet"];
-    self.imgTablethd = [selection previewForResolution:@"tablethd"];
+    self.imgMain = [selection previewForResolution:RESOLUTION_AUTO];
+    self.imgPhone = [selection previewForResolution:RESOLUTION_PHONE];
+    self.imgPhonehd = [selection previewForResolution:RESOLUTION_PHONE_HD];
+    self.imgTablet = [selection previewForResolution:RESOLUTION_TABLET];
+    self.imgTablethd = [selection previewForResolution:RESOLUTION_TABLET_HD];
 
     [_previewMain setImage:self.imgMain];
     [_previewPhone setImage:self.imgPhone];
@@ -268,11 +268,11 @@
 - (NSString*) resolutionDirectoryForImageView:(NSImageView*) imgView
 {
     NSString* resolution = NULL;
-    if (imgView == _previewMain) resolution = @"auto";
-    else if (imgView == _previewPhone) resolution = @"phone";
-    else if (imgView == _previewPhonehd) resolution = @"phonehd";
-    else if (imgView == _previewTablet) resolution = @"tablet";
-    else if (imgView == _previewTablethd) resolution = @"tablethd";
+    if (imgView == _previewMain) resolution = RESOLUTION_AUTO;
+    else if (imgView == _previewPhone) resolution = RESOLUTION_PHONE;
+    else if (imgView == _previewPhonehd) resolution = RESOLUTION_PHONE_HD;
+    else if (imgView == _previewTablet) resolution = RESOLUTION_TABLET;
+    else if (imgView == _previewTablethd) resolution = RESOLUTION_TABLET_HD;
     
     if (!resolution) return NULL;
     

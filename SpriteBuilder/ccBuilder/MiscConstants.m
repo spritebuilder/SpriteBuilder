@@ -21,3 +21,9 @@ NSUInteger const PUBLISHING_PACKAGES_ZIP_RELEASE_COMPRESSION = 9;
 NSString *const DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES = @"Published-Packages";
 
 NSString *const PACKAGE_PUBLISH_SETTINGS_FILE_NAME = @"Package.plist";
+
+NSString *const RESOLUTION_AUTO = @"auto";
+NSString *const RESOLUTION_PHONE = @"phone";
+NSString *const RESOLUTION_PHONE_HD = @"phonehd";
+NSString *const RESOLUTION_TABLET = @"tablet";
+NSString *const RESOLUTION_TABLET_HD = @"tablethd";
