@@ -81,8 +81,9 @@ def compile_project(version,product_name, mode, private_key):
         SBPRO_PRIVATE_KEY=\"{private_key}\" \
         SB_SANDBOXED_MODE={sandboxed_mode_define}\
         SB_VERSION={version}\
-        build'
+        build'.format(xcconfig=product_name, private_key=private_key, sandboxed_mode_define=sandboxed_mode_define, version=version)
 
+    print build_command
     subprocess.check_call(build_command.format(xcconfig=product_name, private_key=private_key, sandboxed_mode_define=sandboxed_mode_define, version=version), shell=True)
 
     os.chdir('../');
