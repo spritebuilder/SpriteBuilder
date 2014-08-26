@@ -133,6 +133,8 @@
 		8369839F19ACB92200110D82 /* PreviewAudioView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8369839E19ACB92200110D82 /* PreviewAudioView.xib */; };
 		836983A319ACC89C00110D82 /* PreviewImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836983A119ACC89C00110D82 /* PreviewImageViewController.m */; };
 		836983A419ACC89C00110D82 /* PreviewImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836983A219ACC89C00110D82 /* PreviewImageView.xib */; };
+		836983A819ACE55400110D82 /* PreviewSpriteSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836983A619ACE55400110D82 /* PreviewSpriteSheetViewController.m */; };
+		836983A919ACE55400110D82 /* PreviewSpriteSheetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836983A719ACE55400110D82 /* PreviewSpriteSheetView.xib */; };
 		837E940019815C8D00A9F90B /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
@@ -1423,6 +1425,9 @@
 		836983A019ACC89C00110D82 /* PreviewImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewImageViewController.h; sourceTree = "<group>"; };
 		836983A119ACC89C00110D82 /* PreviewImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewImageViewController.m; sourceTree = "<group>"; };
 		836983A219ACC89C00110D82 /* PreviewImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageView.xib; sourceTree = "<group>"; };
+		836983A519ACE55400110D82 /* PreviewSpriteSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewSpriteSheetViewController.h; sourceTree = "<group>"; };
+		836983A619ACE55400110D82 /* PreviewSpriteSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewSpriteSheetViewController.m; sourceTree = "<group>"; };
+		836983A719ACE55400110D82 /* PreviewSpriteSheetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewSpriteSheetView.xib; sourceTree = "<group>"; };
 		837E93FE19815C8D00A9F90B /* ProjectSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsWindowController.h; sourceTree = "<group>"; };
 		837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindowController.m; sourceTree = "<group>"; };
 		8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdater.h; sourceTree = "<group>"; };
@@ -3697,6 +3702,9 @@
 				836983A019ACC89C00110D82 /* PreviewImageViewController.h */,
 				836983A119ACC89C00110D82 /* PreviewImageViewController.m */,
 				836983A219ACC89C00110D82 /* PreviewImageView.xib */,
+				836983A519ACE55400110D82 /* PreviewSpriteSheetViewController.h */,
+				836983A619ACE55400110D82 /* PreviewSpriteSheetViewController.m */,
+				836983A719ACE55400110D82 /* PreviewSpriteSheetView.xib */,
 			);
 			name = Preview;
 			sourceTree = "<group>";
@@ -6190,6 +6198,7 @@
 				58FA2036162D73F3006B8856 /* TB_rightPanel.png in Resources */,
 				921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */,
 				E367E32016384F0C00247F12 /* orientation-landscapeleft.png in Resources */,
+				836983A919ACE55400110D82 /* PreviewSpriteSheetView.xib in Resources */,
 				E367E32116384F0C00247F12 /* orientation-landscaperight.png in Resources */,
 				92B91022193412A600E346B5 /* InspectorAnimation.xib in Resources */,
 				92D9D48418F8AB3800F167C1 /* joint-connection-bg.png in Resources */,
@@ -6777,6 +6786,7 @@
 				E3AF6CE415F0DBA90048DB2A /* HelpPage.m in Sources */,
 				E3C9CCBB161D0BBF008A3784 /* InspectorCodeConnectionsJS.m in Sources */,
 				E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */,
+				836983A819ACE55400110D82 /* PreviewSpriteSheetViewController.m in Sources */,
 				581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */,
 				E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */,
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,

@@ -186,12 +186,6 @@
     [self setValue:@(format_android_compress) withName:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS isAudio:NO];
 }
 
-- (void) setTrimSprites:(BOOL) trimSprites
-{
-    _trimSprites = trimSprites;
-    [self setValue:@(trimSprites) withName:RESOURCE_PROPERTY_TRIM_SPRITES isAudio:NO];
-}
-
 - (void) setTabletScale:(int)tabletScale
 {
     _tabletScale = tabletScale;

@@ -184,9 +184,15 @@
                                 </menuItem>
                                 <menuItem title="PVRTC 4bpp" tag="5" id="VLc-9Q-zsy">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <binding destination="-2" name="enabled" keyPath="format_supportsPVRTC" id="8ao-Ol-nZ3"/>
+                                    </connections>
                                 </menuItem>
                                 <menuItem title="PVRTC 2bpp" tag="6" id="8Y0-Wh-tf7">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <binding destination="-2" name="enabled" keyPath="format_supportsPVRTC" id="zeX-NP-no0"/>
+                                    </connections>
                                 </menuItem>
                             </items>
                         </menu>
@@ -526,5 +532,6 @@
                 </menuItem>
             </items>
         </menu>
+        <userDefaultsController representsSharedInstance="YES" id="a3k-6v-Xr0"/>
     </objects>
 </document>
