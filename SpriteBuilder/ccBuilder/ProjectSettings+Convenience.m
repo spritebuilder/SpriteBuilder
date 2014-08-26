@@ -21,8 +21,8 @@
 - (NSInteger)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
     NSString *key = osType == kCCBPublisherOSTypeIOS
-        ? @"format_ios_sound_quality"
-        : @"format_android_sound_quality";
+        ? RESOURCE_PROPERTY_IOS_SOUND_QUALITY
+        : RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY;
 
     int result = [[self propertyForRelPath:relPath andKey:key] intValue];
     if (!result)
@@ -54,7 +54,7 @@
 
     int formatRaw = [[self propertyForRelPath:relPath andKey:key] intValue];
 
-    NSNumber *result = [map objectForKey:@(formatRaw)];
+    NSNumber *result = map[@(formatRaw)];
 
     return result
            ? [result intValue]

@@ -442,7 +442,7 @@
     NSInteger quality = [_projectSettings soundQualityForRelPath:@"foo" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality, NSNotFound);
 
-    [_projectSettings setProperty:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
+    [_projectSettings setProperty:@(7) forRelPath:@"baa" andKey:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY];
     int quality2 = [_projectSettings soundQualityForRelPath:@"baa" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality2, 7);
 }

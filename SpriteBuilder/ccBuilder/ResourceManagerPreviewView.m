@@ -172,11 +172,11 @@
 - (void)updateSoundPreview:(ProjectSettings *)settings res:(RMResource *)res
 {
     self.format_ios_sound = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_SOUND] intValue];
-    self.format_ios_sound_quality = [[settings propertyForResource:res andKey:@"format_ios_sound_quality"] intValue];
+    self.format_ios_sound_quality = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_IOS_SOUND_QUALITY] intValue];
     self.format_ios_sound_quality_enabled = _format_ios_sound != 0;
 
     self.format_android_sound = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_SOUND] intValue];
-    self.format_android_sound_quality = [[settings propertyForResource:res andKey:@"format_android_sound_quality"] intValue];
+    self.format_android_sound_quality = [[settings propertyForResource:res andKey:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY] intValue];
     self.format_android_sound_quality_enabled = YES;
 
     // Update icon
@@ -502,7 +502,7 @@
 - (void) setFormat_ios_sound_quality:(int)format_ios_sound_quality
 {
     _format_ios_sound_quality = format_ios_sound_quality;
-    [self setValue:@(format_ios_sound_quality) withName:@"format_ios_sound_quality" isAudio:YES];
+    [self setValue:@(format_ios_sound_quality) withName:RESOURCE_PROPERTY_IOS_SOUND_QUALITY isAudio:YES];
 }
 
 - (void) setFormat_android_sound_quality:(int)format_android_sound_quality
