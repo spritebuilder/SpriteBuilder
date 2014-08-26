@@ -49,14 +49,14 @@
 - (void)migrateTrimSpritesPropertyOfSpriteSheetsForRelPath:(NSString *)relPath
 {
     BOOL dirtyMarked = [_projectSettings isDirtyRelPath:relPath];
-    if (![[_projectSettings propertyForRelPath:relPath andKey:@"isSmartSpriteSheet"] boolValue])
+    if (![[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_IS_SMARTSHEET] boolValue])
     {
         return;
     }
 
-    if ([[_projectSettings propertyForRelPath:relPath andKey:@"keepSpritesUntrimmed"] boolValue])
+    if ([[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED] boolValue])
     {
-        [_projectSettings removePropertyForRelPath:relPath andKey:@"keepSpritesUntrimmed"];
+        [_projectSettings removePropertyForRelPath:relPath andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
     }
     else
     {

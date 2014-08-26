@@ -35,6 +35,7 @@
 #import "ResourceTypes.h"
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"
+#import "ResourcePropertyKeys.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -357,7 +358,7 @@
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
 
-    [self setProperty:@YES forResource:res andKey:@"isSmartSpriteSheet"];
+    [self setProperty:@YES forResource:res andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     
     [self store];
     [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
@@ -368,7 +369,7 @@
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
 
-    [self removePropertyForResource:res andKey:@"isSmartSpriteSheet"];
+    [self removePropertyForResource:res andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
 
     [self removeIntermediateFileLookupFile:res];
 

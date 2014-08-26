@@ -4,6 +4,7 @@
 #import "ProjectSettings.h"
 #import "AppDelegate.h"
 #import "RMResource.h"
+#import "ResourcePropertyKeys.h"
 
 
 @implementation RMDirectory
@@ -60,7 +61,7 @@
 
         if (projectSettings)
         {
-            BOOL isSmartSpriteSheet = [[projectSettings propertyForResource:dirRes andKey:@"isSmartSpriteSheet"] boolValue];
+            BOOL isSmartSpriteSheet = [[projectSettings propertyForResource:dirRes andKey:RESOURCE_PROPERTY_IS_SMARTSHEET] boolValue];
             return isSmartSpriteSheet;
         }
     }

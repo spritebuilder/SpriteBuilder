@@ -281,7 +281,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/sword.png" width:4 height:12 color:[NSColor yellowColor]];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -318,10 +318,10 @@
     _projectSettings.publishResolution_ios_tablet = NO;
     _projectSettings.publishResolution_ios_tablethd = NO;
 
-    [_projectSettings setProperty:@(YES) forRelPath:@"pvr" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"pvr" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings setProperty:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
-    [_projectSettings setProperty:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"pvrtc" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings setProperty:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
@@ -345,7 +345,7 @@
 - (void)testRepublishingWithoutCleaningCache
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
-    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     _targetIOS.resolutions = @[@"tablet"];
 
     [_publisher addPublishingTarget:_targetIOS];

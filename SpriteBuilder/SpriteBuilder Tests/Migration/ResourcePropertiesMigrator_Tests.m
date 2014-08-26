@@ -33,11 +33,11 @@
 
 - (void)testMigration
 {
-    [_projectSettings setProperty:@1 forRelPath:@"flowers" andKey:@"keepSpritesUntrimmed"];
-    [_projectSettings setProperty:@YES forRelPath:@"flowers" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+    [_projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings markAsDirtyRelPath:@"flowers"];
 
-    [_projectSettings setProperty:@YES forRelPath:@"rocks" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@YES forRelPath:@"rocks" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings clearDirtyMarkerOfRelPath:@"rocks"];
 
     [_projectSettings setProperty:@3 forRelPath:@"background.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
@@ -45,15 +45,15 @@
 
     [_migrator migrate];
 
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:@"keepSpritesUntrimmed"]);
+    XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertTrue([_projectSettings isDirtyRelPath:@"flowers"]);
 
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"rocks" andKey:@"keepSpritesUntrimmed"]);
+    XCTAssertFalse([_projectSettings propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertTrue([_projectSettings propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"rocks"]);
 
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:@"keepSpritesUntrimmed"]);
+    XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"background.png"]);
 }

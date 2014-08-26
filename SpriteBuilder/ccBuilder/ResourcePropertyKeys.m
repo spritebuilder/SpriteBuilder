@@ -5,6 +5,9 @@ NSString *const RESOURCE_PROPERTY_TRIM_SPRITES = @"trimSprites";
 NSString *const RESOURCE_PROPERTY_IMAGE_TABLET_SCALE = @"tabletScale";
 NSString *const RESOURCE_PROPERTY_IMAGE_SCALE_FROM = @"scaleFrom";
 
+NSString *const RESOURCE_PROPERTY_IS_SMARTSHEET = @"isSmartSpriteSheet";
+NSString *const RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED = @"keepSpritesUntrimmed";
+
 NSString *const RESOURCE_PROPERTY_IOS_IMAGE_FORMAT = @"format_ios";
 NSString *const RESOURCE_PROPERTY_IOS_IMAGE_DITHER = @"format_ios_dither";
 NSString *const RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS = @"format_ios_compress";
