@@ -49,6 +49,8 @@
     [_audioControllerContainer addSubview:_previewAudioViewController.view];
 
     [_previewAudioViewController setupPlayer];
+
+    [_previewAudioViewController loadAudioFile:_previewedResource.filePath];
 }
 
 - (void)populateInitialValues
@@ -62,8 +64,6 @@
     self.format_android_sound = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_SOUND] intValue];
     self.format_android_sound_quality = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY] intValue];
     self.format_android_sound_quality_enabled = YES;
-
-    [_previewAudioViewController loadAudioFile:_previewedResource.filePath];
 
     self.initialUpdate = NO;
 }

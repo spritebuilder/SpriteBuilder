@@ -131,6 +131,8 @@
 		8369839619AC872100110D82 /* PreviewContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369839519AC872100110D82 /* PreviewContainerViewController.m */; };
 		8369839B19ACB8EC00110D82 /* PreviewAudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369839919ACB8EC00110D82 /* PreviewAudioViewController.m */; };
 		8369839F19ACB92200110D82 /* PreviewAudioView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8369839E19ACB92200110D82 /* PreviewAudioView.xib */; };
+		836983A319ACC89C00110D82 /* PreviewImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836983A119ACC89C00110D82 /* PreviewImageViewController.m */; };
+		836983A419ACC89C00110D82 /* PreviewImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836983A219ACC89C00110D82 /* PreviewImageView.xib */; };
 		837E940019815C8D00A9F90B /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
@@ -1418,6 +1420,9 @@
 		8369839819ACB8EC00110D82 /* PreviewAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewAudioViewController.h; sourceTree = "<group>"; };
 		8369839919ACB8EC00110D82 /* PreviewAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewAudioViewController.m; sourceTree = "<group>"; };
 		8369839E19ACB92200110D82 /* PreviewAudioView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreviewAudioView.xib; path = ../../../../../Documents/PreviewAudioView.xib; sourceTree = "<group>"; };
+		836983A019ACC89C00110D82 /* PreviewImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewImageViewController.h; sourceTree = "<group>"; };
+		836983A119ACC89C00110D82 /* PreviewImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewImageViewController.m; sourceTree = "<group>"; };
+		836983A219ACC89C00110D82 /* PreviewImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageView.xib; sourceTree = "<group>"; };
 		837E93FE19815C8D00A9F90B /* ProjectSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsWindowController.h; sourceTree = "<group>"; };
 		837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindowController.m; sourceTree = "<group>"; };
 		8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdater.h; sourceTree = "<group>"; };
@@ -3689,6 +3694,9 @@
 				8369839819ACB8EC00110D82 /* PreviewAudioViewController.h */,
 				8369839919ACB8EC00110D82 /* PreviewAudioViewController.m */,
 				8369839E19ACB92200110D82 /* PreviewAudioView.xib */,
+				836983A019ACC89C00110D82 /* PreviewImageViewController.h */,
+				836983A119ACC89C00110D82 /* PreviewImageViewController.m */,
+				836983A219ACC89C00110D82 /* PreviewImageView.xib */,
 			);
 			name = Preview;
 			sourceTree = "<group>";
@@ -6051,6 +6059,7 @@
 				E325F64A14F53FD000D29BCF /* InspectorColor4FVar.xib in Resources */,
 				9218DF2B1919B04D0033851E /* joint-pivot-handle-ratchetmark.png in Resources */,
 				E325F64F14F5622200D29BCF /* InspectorSeparatorSub.xib in Resources */,
+				836983A419ACC89C00110D82 /* PreviewImageView.xib in Resources */,
 				E385A42014F69FF300DFB12D /* InspectorBlock.xib in Resources */,
 				B7096E28180CD98E00164A8A /* doc-node.png in Resources */,
 				E385080B150AB232007E162A /* segmctrl-bg.png in Resources */,
@@ -6760,6 +6769,7 @@
 				E33C2AB815CAE3980043EF9B /* SequencerStretchWindow.m in Sources */,
 				E3214C4415D3C29D002413A7 /* CustomPropSettingsWindow.m in Sources */,
 				E3214C4715D3C3AF002413A7 /* CustomPropSetting.m in Sources */,
+				836983A319ACC89C00110D82 /* PreviewImageViewController.m in Sources */,
 				E3214C4B15D40F01002413A7 /* InspectorCustom.m in Sources */,
 				E3214C5D15D54356002413A7 /* InspectorCustomEdit.m in Sources */,
 				E3B7BCA015E3BCFE00CF95EF /* MainToolbarDelegate.m in Sources */,

@@ -12,6 +12,7 @@
 #import "ProjectSettings.h"
 #import "PreviewAudioViewController.h"
 #import "ResourceTypes.h"
+#import "PreviewImageViewController.h"
 
 @interface PreviewContainerViewController ()
 
@@ -24,18 +25,6 @@
 
 @implementation PreviewContainerViewController
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-
-    if (self)
-    {
-
-    }
-
-    return self;
-}
-
 - (void)setPreviewedResource:(RMResource *)previewedResource projectSettings:(ProjectSettings *)projectSettings
 {
     [self resetView];
@@ -44,17 +33,19 @@
 
     if (![previewedResource isKindOfClass:[RMResource class]])
     {
-        [self showGenericPreviewViewController];
+        [self showNoPreviewAvailable];
         return;
     }
 
     self.previewedResource = previewedResource;
-/*
-    if (res.type == kCCBResTypeImage)
+
+    if (_previewedResource.type == kCCBResTypeImage)
     {
-        [self updateImagePreview:resource settings:_projectSettings res:res];
+        [self showImagePreview];
     }
-    else if (res.type == kCCBResTypeDirectory && [res.data isDynamicSpriteSheet])
+    else
+/*
+    if (res.type == kCCBResTypeDirectory && [res.data isDynamicSpriteSheet])
     {
         [self updateSpriteSheetPreview:_projectSettings res:res];
     }
@@ -66,7 +57,7 @@
     }
     else
     {
-        [self showGenericPreviewViewController];
+        [self showNoPreviewAvailable];
     }
 
 
@@ -84,10 +75,10 @@
 {
     [super setView:newView];
 
-    [self showGenericPreviewViewController];
+    [self showNoPreviewAvailable];
 }
 
-- (void)showGenericPreviewViewController
+- (void)showNoPreviewAvailable
 {
     [self resetView];
 
@@ -102,6 +93,18 @@
     [self resetView];
 
     self.currentPreviewViewController = [[PreviewAudioViewController alloc] initWithNibName:@"PreviewAudioView"
+                                                                                     bundle:nil];
+
+    [self addCurrentViewControllersViewToContainer];
+
+    [_currentPreviewViewController setPreviewedResource:_previewedResource projectSettings:_projectSettings];
+}
+
+- (void)showImagePreview
+{
+    [self resetView];
+
+    self.currentPreviewViewController = [[PreviewImageViewController alloc] initWithNibName:@"PreviewImageView"
                                                                                      bundle:nil];
 
     [self addCurrentViewControllersViewToContainer];
