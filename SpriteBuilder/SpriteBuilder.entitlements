@@ -8,12 +8,10 @@
 	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
-	<key>com.apple.security.scripting-targets</key>
-	<dict>
-		<key>com.apple.xcode</key>
-		<array>
-			<string>com.apple.xcode.open</string>
-		</array>
-	</dict>
+	<key>com.apple.security.temporary-exception.apple-events</key>
+	<array>
+		<string>com.apple.xcode</string>
+		<string>com.apple.dt.xcode</string>
+	</array>
 </dict>
 </plist>
