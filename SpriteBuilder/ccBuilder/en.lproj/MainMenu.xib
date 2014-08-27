@@ -218,7 +218,7 @@
                             <menuItem isSeparatorItem="YES" id="mar-Cw-LBm">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Open Project in XCode" id="1797" userLabel="Menu Item - p.A.">
+                            <menuItem title="Open Project in XCode" keyEquivalent="O" id="1797" userLabel="Menu Item - p.A.">
                                 <connections>
                                     <action selector="menuOpenProjectInXCode:" target="494" id="wcV-zy-HFJ"/>
                                     <binding destination="494" name="enabled" keyPath="projectSettings" id="1799">
