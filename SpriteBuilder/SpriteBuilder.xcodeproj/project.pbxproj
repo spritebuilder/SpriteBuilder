@@ -562,7 +562,6 @@
 		E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */ = {isa = PBXBuildFile; fileRef = E34E5D6D1535AA78000201FB /* ruler-mark-minor.png */; };
 		E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */ = {isa = PBXBuildFile; fileRef = E34E5D701535B34F000201FB /* ruler-mark-origin.png */; };
 		E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */ = {isa = PBXBuildFile; fileRef = E34E5D721535BC5E000201FB /* ruler-numbers.png */; };
-		E3583FB01756C228002DF0B0 /* ResourceManagerPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3583FAF1756C228002DF0B0 /* ResourceManagerPreviewView.xib */; };
 		E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135115B038D700C9AA15 /* ThoMoClientStub.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E35A136015B038D700C9AA15 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135615B038D700C9AA15 /* ThoMoNetworkStub.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = E35A135915B038D700C9AA15 /* ThoMoServerStub.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -627,7 +626,6 @@
 		E3799EAD155979BF00196B4A /* ProjectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E3799EAC155979BF00196B4A /* ProjectSettings.m */; };
 		E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */ = {isa = PBXBuildFile; fileRef = E37FCAEC175D2704009F81D6 /* ui-cogs.png */; };
 		E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E37FCAED175D2704009F81D6 /* ui-cogs@2x.png */; };
-		E37FCAF4175D68FF009F81D6 /* ResourceManagerPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */; };
 		E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E37FCAF8175FF70F009F81D6 /* CCBImageView.m */; };
 		E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3808DB91641D4B800398456 /* CCBTextFieldLabel.m */; };
 		E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E380B24D1642FC3C0006D31C /* TexturePacker.cpp */; };
@@ -831,7 +829,7 @@
 		E525F0EA925087B3D2ABE8D3 /* ResourceNewPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDFD10EE6761E4E94BED /* ResourceNewPackageCommand.m */; };
 		E525F12B1E4605EB494FA44C /* PackageMigrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7254C3A84AA7585A1F8 /* PackageMigrationController.m */; };
 		E525F136F368EC442A998F82 /* ResourcePropertiesMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F682636334F728CA674F /* ResourcePropertiesMigrator.m */; };
-		E525F19C8E4EBB37D78A762D /* ResourceManagerPreviewView_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5E384204522F48E57A8 /* ResourceManagerPreviewView_Tests.m */; };
+		E525F19C8E4EBB37D78A762D /* PreviewView_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5E384204522F48E57A8 /* PreviewView_Tests.m */; };
 		E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */; };
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
 		E525F25D51565B762CCEF3CA /* ResourcePropertiesMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F07A6FC5D52232E114FC /* ResourcePropertiesMigrator_Tests.m */; };
@@ -1974,7 +1972,6 @@
 		E34E5D6D1535AA78000201FB /* ruler-mark-minor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ruler-mark-minor.png"; sourceTree = "<group>"; };
 		E34E5D701535B34F000201FB /* ruler-mark-origin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ruler-mark-origin.png"; sourceTree = "<group>"; };
 		E34E5D721535BC5E000201FB /* ruler-numbers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ruler-numbers.png"; sourceTree = "<group>"; };
-		E3583FAF1756C228002DF0B0 /* ResourceManagerPreviewView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewView.xib; sourceTree = "<group>"; };
 		E35A135015B038D700C9AA15 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
 		E35A135115B038D700C9AA15 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
 		E35A135215B038D700C9AA15 /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
@@ -2067,8 +2064,6 @@
 		E3799EAC155979BF00196B4A /* ProjectSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettings.m; sourceTree = "<group>"; };
 		E37FCAEC175D2704009F81D6 /* ui-cogs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ui-cogs.png"; sourceTree = "<group>"; };
 		E37FCAED175D2704009F81D6 /* ui-cogs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ui-cogs@2x.png"; sourceTree = "<group>"; };
-		E37FCAF2175D68FF009F81D6 /* ResourceManagerPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreviewView.h; sourceTree = "<group>"; };
-		E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewView.m; sourceTree = "<group>"; };
 		E37FCAF7175FF70F009F81D6 /* CCBImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBImageView.h; sourceTree = "<group>"; };
 		E37FCAF8175FF70F009F81D6 /* CCBImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBImageView.m; sourceTree = "<group>"; };
 		E3808DB81641D4B800398456 /* CCBTextFieldLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTextFieldLabel.h; sourceTree = "<group>"; };
@@ -2411,7 +2406,7 @@
 		E525F510AE325C5A3DF41DA3 /* FileSystemTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemTestCase.h; sourceTree = "<group>"; };
 		E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishSpriteKitSpriteSheetOperation.m; sourceTree = "<group>"; };
 		E525F5A87B18967058D36E9D /* RemoveFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand.m; sourceTree = "<group>"; };
-		E525F5E384204522F48E57A8 /* ResourceManagerPreviewView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewView_Tests.m; sourceTree = "<group>"; };
+		E525F5E384204522F48E57A8 /* PreviewView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewView_Tests.m; sourceTree = "<group>"; };
 		E525F5FEC6B4AEDEC9E53CBC /* PackagePublishSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackagePublishSettings.h; sourceTree = "<group>"; };
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
 		E525F60141EECA8FC9DF3034 /* MiscConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscConstants.m; sourceTree = "<group>"; };
@@ -3693,9 +3688,6 @@
 				92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */,
 				92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */,
 				92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */,
-				E3583FAF1756C228002DF0B0 /* ResourceManagerPreviewView.xib */,
-				E37FCAF2175D68FF009F81D6 /* ResourceManagerPreviewView.h */,
-				E37FCAF3175D68FF009F81D6 /* ResourceManagerPreviewView.m */,
 				8369838F19AC834F00110D82 /* PreviewGenericViewController.h */,
 				8369839019AC834F00110D82 /* PreviewGenericViewController.m */,
 				8369839219AC836700110D82 /* PreviewGenericView.xib */,
@@ -3753,7 +3745,7 @@
 				83CD4499193F35C50086E9E7 /* ResourceContextMenu_Tests.m */,
 				E525F7C3E5916138FF0FFFBD /* ValueObjects */,
 				E525F78399DADD59386B4F54 /* ResourceManager+Publishing_Tests.m */,
-				E525F5E384204522F48E57A8 /* ResourceManagerPreviewView_Tests.m */,
+				E525F5E384204522F48E57A8 /* PreviewView_Tests.m */,
 			);
 			name = "Resource Manager";
 			sourceTree = "<group>";
@@ -6261,7 +6253,6 @@
 				92F0961018F8851300D47A94 /* inspector-body-bg@2x.png in Resources */,
 				926D13C718B5778300582959 /* joint-distance-slide-sel@2x.png in Resources */,
 				E39C917B174C134C00092BD1 /* toolbar-btn-add.png in Resources */,
-				E3583FB01756C228002DF0B0 /* ResourceManagerPreviewView.xib in Resources */,
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
 				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
 				92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */,
@@ -6821,7 +6812,6 @@
 				B7C3533E17FA30BB005697C1 /* NodePhysicsBody.m in Sources */,
 				E3C12B1B171DD386001EEDDB /* NSWindow+CCBAccessoryView.m in Sources */,
 				83993DB019360A28001C228B /* FeatureToggle.m in Sources */,
-				E37FCAF4175D68FF009F81D6 /* ResourceManagerPreviewView.m in Sources */,
 				E37FCAF9175FF70F009F81D6 /* CCBImageView.m in Sources */,
 				B78DA3641773A89B00B85CC0 /* CCBButtonUnclickable.m in Sources */,
 				B78DA3691773EA0E00B85CC0 /* NSPasteboard+CCB.m in Sources */,
@@ -6958,7 +6948,7 @@
 				E525FFF21919490B3568DC1F /* ZipDirectoryOperation_Tests.m in Sources */,
 				E525FBFD616A1BE9F86C2312 /* PublishOSSettings_Tests.m in Sources */,
 				E525F0AAD83A6EC0D743511F /* ResourceManager+Publishing_Tests.m in Sources */,
-				E525F19C8E4EBB37D78A762D /* ResourceManagerPreviewView_Tests.m in Sources */,
+				E525F19C8E4EBB37D78A762D /* PreviewView_Tests.m in Sources */,
 				E525FC0A0C9C32BEF65F349A /* ImageFormatAndPropertiesHelper_Tests.m in Sources */,
 				E525F25D51565B762CCEF3CA /* ResourcePropertiesMigrator_Tests.m in Sources */,
 			);

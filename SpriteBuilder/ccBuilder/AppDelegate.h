@@ -110,7 +110,6 @@ enum {
 @class MainToolbarDelegate;
 @class CCBSplitHorizontalView;
 @class AboutWindow;
-@class ResourceManagerPreviewView;
 @class SMTabBar;
 @class ResourceManagerTilelessEditorManager;
 @class CCBImageBrowserView;
@@ -232,7 +231,6 @@ enum {
     IBOutlet NSView* previewViewContainer;
     NSView* previewViewImage;
     NSView* previewViewGeneric;
-    ResourceManagerPreviewView* previewViewOwner;
     IBOutlet NSSplitView* resourceManagerSplitView;
     
     // Tileless editor view

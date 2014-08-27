@@ -25,7 +25,6 @@
 #import <Foundation/Foundation.h>
 
 @class ResourceManager;
-@class ResourceManagerPreviewView;
 @class ProjectSettings;
 @protocol PreviewViewControllerProtocol;
 

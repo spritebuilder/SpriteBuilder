@@ -89,7 +89,6 @@
 #import "SpriteSheetSettingsWindow.h"
 #import "AboutWindow.h"
 #import "CCBFileUtil.h"
-#import "ResourceManagerPreviewView.h"
 #import "ResourceManagerUtil.h"
 #import "SMTabBar.h"
 #import "SMTabBarItem.h"
@@ -492,9 +491,6 @@ typedef enum
     // Load resource manager
 	[ResourceManager sharedManager];
     
-    // Setup preview
-    previewViewOwner = [[ResourceManagerPreviewView alloc] init];
-    previewViewOwner.projectSettings = projectSettings;
 
     // Setup project display
     projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject
@@ -503,8 +499,6 @@ typedef enum
     projectOutlineHandler.projectSettings = projectSettings;
     resourceManagerSplitView.delegate = _previewContainerViewController;
 
-    [previewViewOwner setPreviewResource:NULL];
-    
     //Setup warnings outline
     warningHandler = [[WarningTableViewHandler alloc] init];
     
@@ -1959,8 +1953,7 @@ static BOOL hideAllToNextSeparator;
     self.projectSettings = prjctSettings;
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
-    previewViewOwner.projectSettings = projectSettings;
-    
+
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
 
