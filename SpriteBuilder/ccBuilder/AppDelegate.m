@@ -136,6 +136,7 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
+#import "OpenProjectInXCode.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -3208,7 +3209,15 @@ static BOOL hideAllToNextSeparator;
     }];
 }
 
-- (IBAction) menuPublishSettings:(id)sender
+- (IBAction)menuOpenProjectInXCode:(id)sender
+{
+    OpenProjectInXCode *openProjectInXCodeCommand = [[OpenProjectInXCode alloc] init];
+    NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
+
+    [openProjectInXCodeCommand openProject:xcodePrjPath];
+}
+
+- (IBAction)menuProjectSettings:(id)sender
 {
     if (!projectSettings)
     {
