@@ -116,6 +116,8 @@
 		80FBACCD183423F800C4BB69 /* inspector-warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACC9183422BD00C4BB69 /* inspector-warning@2x.png */; };
 		80FBACCE183423F800C4BB69 /* inspector-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACCA183422BD00C4BB69 /* inspector-warning.png */; };
 		80FBACD91834553000C4BB69 /* visible-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80FBACD71834530100C4BB69 /* visible-icon.png */; };
+		8304858419AE063A00A624BB /* PreviewCCBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8304858219AE063A00A624BB /* PreviewCCBViewController.m */; };
+		8304858519AE063A00A624BB /* PreviewCCBView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8304858319AE063A00A624BB /* PreviewCCBView.xib */; };
 		830B39B0197032F400218021 /* blank.wav in Resources */ = {isa = PBXBuildFile; fileRef = 830B39AF197032F400218021 /* blank.wav */; };
 		830F4E9B192F5263002B832D /* Package.icns in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E9A192F5263002B832D /* Package.icns */; };
 		830F4EB21934706C002B832D /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
@@ -1402,6 +1404,9 @@
 		80FBACC9183422BD00C4BB69 /* inspector-warning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning@2x.png"; sourceTree = "<group>"; };
 		80FBACCA183422BD00C4BB69 /* inspector-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-warning.png"; sourceTree = "<group>"; };
 		80FBACD71834530100C4BB69 /* visible-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visible-icon.png"; sourceTree = "<group>"; };
+		8304858119AE063A00A624BB /* PreviewCCBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewCCBViewController.h; sourceTree = "<group>"; };
+		8304858219AE063A00A624BB /* PreviewCCBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewCCBViewController.m; sourceTree = "<group>"; };
+		8304858319AE063A00A624BB /* PreviewCCBView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewCCBView.xib; sourceTree = "<group>"; };
 		830B39AF197032F400218021 /* blank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blank.wav; sourceTree = "<group>"; };
 		830F4E9A192F5263002B832D /* Package.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Package.icns; sourceTree = "<group>"; };
 		830F4EB019347032002B832D /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = libs/OCMock.framework; sourceTree = "<group>"; };
@@ -3705,6 +3710,9 @@
 				836983A519ACE55400110D82 /* PreviewSpriteSheetViewController.h */,
 				836983A619ACE55400110D82 /* PreviewSpriteSheetViewController.m */,
 				836983A719ACE55400110D82 /* PreviewSpriteSheetView.xib */,
+				8304858119AE063A00A624BB /* PreviewCCBViewController.h */,
+				8304858219AE063A00A624BB /* PreviewCCBViewController.m */,
+				8304858319AE063A00A624BB /* PreviewCCBView.xib */,
 			);
 			name = Preview;
 			sourceTree = "<group>";
@@ -6105,6 +6113,7 @@
 				E3DCFD9C15629FC700BD7D7F /* TaskStatusWindow.xib in Resources */,
 				9218DF401919B04D0033851E /* joint-pivot-handle-max@2x.png in Resources */,
 				E335CAEB15751C0D00A612EE /* seq-ctrl-bg.png in Resources */,
+				8304858519AE063A00A624BB /* PreviewCCBView.xib in Resources */,
 				926D13C418B5778300582959 /* joint-distance-sel.png in Resources */,
 				E335CAF815764E6B00A612EE /* seq-btn-expand.png in Resources */,
 				E335CAFD15765BB700A612EE /* seq-vseparator.png in Resources */,
@@ -6620,6 +6629,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8304858419AE063A00A624BB /* PreviewCCBViewController.m in Sources */,
 				92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */,
 				92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */,
 				9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */,

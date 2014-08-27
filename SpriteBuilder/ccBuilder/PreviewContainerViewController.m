@@ -15,6 +15,7 @@
 #import "PreviewImageViewController.h"
 #import "PreviewSpriteSheetViewController.h"
 #import "RMDirectory.h"
+#import "PreviewCCBViewController.h"
 
 @interface PreviewContainerViewController ()
 
@@ -48,25 +49,32 @@
     else if (_previewedResource.type == kCCBResTypeDirectory && [_previewedResource.data isDynamicSpriteSheet])
     {
         [self showSpriteSheetPreview];
-    } else
-    if (_previewedResource.type == kCCBResTypeAudio)
+    }
+    else if (_previewedResource.type == kCCBResTypeAudio)
     {
         [self showAudioPreview];
+    }
+    else if (_previewedResource.type == kCCBResTypeCCBFile)
+    {
+        [self showCCBPreivew];
     }
     else
     {
         [self showNoPreviewAvailable];
     }
-
-/*
-    else if (res.type == kCCBResTypeCCBFile)
-    {
-        [self updateCCBFilePreview:res];
-    }
-    else
-*/
 }
 
+- (void)showCCBPreivew
+{
+    [self resetView];
+
+    self.currentPreviewViewController = [[PreviewCCBViewController alloc] initWithNibName:@"PreviewCCBView"
+                                                                                       bundle:nil];
+
+    [self addCurrentViewControllersViewToContainer];
+
+    [_currentPreviewViewController setPreviewedResource:_previewedResource projectSettings:_projectSettings];
+}
 
 - (void)setView:(NSView *)newView
 {
@@ -120,6 +128,7 @@
 
     [_currentPreviewViewController setPreviewedResource:_previewedResource projectSettings:_projectSettings];
 }
+
 
 - (void)addCurrentViewControllersViewToContainer
 {
