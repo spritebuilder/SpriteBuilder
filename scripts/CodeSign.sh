@@ -42,7 +42,7 @@ if [ "$APP_MODE" = "sandboxed" ]; then
     ENT="../SpriteBuilder/Sandboxed.entitlements"
 fi
 
-if [ "$APP_MODE" = "nonsandboxed" ]; then
+if [ "$APP_MODE" = "non_sandboxed" ]; then
     ENT="../SpriteBuilder/NonSandboxed.entitlements"
 fi
 
