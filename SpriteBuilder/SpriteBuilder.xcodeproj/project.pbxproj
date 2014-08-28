@@ -926,20 +926,6 @@
 			remoteGlobalIDString = 7789ABBD133AA82000CEFCC7;
 			remoteInfo = SpriteBuilder;
 		};
-		833A5C5F192B4F00001837B3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7D0917D17C2C12A0007FE7F /* cocos2d-osx.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E01E663C121CA00A001A484F;
-			remoteInfo = cocos2d;
-		};
-		9203806019465955000A8816 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E398C02114FB81A30078E771;
-			remoteInfo = "Cocos2D iPhone";
-		};
 		92154AE118A5567400BD215C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -7914,7 +7900,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(SB_DEBUG_PREPROCESSOR_DEFINES)",
 					"TESTING=1",
-					"SPRITEBUILDER_PRO=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					libs/Fragaria,

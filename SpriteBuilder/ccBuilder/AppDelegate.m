@@ -550,6 +550,8 @@ typedef enum
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	
+	
 #ifndef TESTING
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"138b7cc7454016e05dbbc512f38082b7" companyName:@"Apportable" crashReportManagerDelegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
@@ -643,6 +645,10 @@ typedef enum
 	_applicationLaunchComplete = YES;
     
 
+#ifdef TESTING
+	return;
+#endif
+	
 
 #ifndef SPRITEBUILDER_PRO
     // Open registration window
