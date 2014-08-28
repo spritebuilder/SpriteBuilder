@@ -228,13 +228,11 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     }
     else
     {
-    
-    	CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
-	        block();
-	    });
-
-	
-}
+		
+		CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
+            block();
+        });
+    }
 }
 
 - (void)openBrowserWithCocos2dUpdateInformation
@@ -522,7 +520,7 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL result = [fileManager moveItemAtPath:[self defaultProjectsCocos2DFolderPath]
                                             toPath:self.backupFolderPath
-                                         error:error];
+                                             error:error];
     if (!result)
     {
         LocalLog(@"[COCO2D-UPDATER] [ERROR] could not renamed cocos2d folder to backup folder name: from \"%@\" to \"%@\" with error %@",

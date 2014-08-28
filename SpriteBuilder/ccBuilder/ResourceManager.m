@@ -656,10 +656,10 @@
     RMResource* resource = [[RMResource alloc] init];
     resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
     resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
-    int tabletScale = [[projectSettings valueForResource:resource andKey:@"tabletScale"] intValue];
+    int tabletScale = [[projectSettings propertyForResource:resource andKey:@"tabletScale"] intValue];
     if (!tabletScale) tabletScale = 2;
     
-    int srcScaleSetting = [[projectSettings valueForResource:resource andKey:@"scaleFrom"] intValue];
+    int srcScaleSetting = [[projectSettings propertyForResource:resource andKey:@"scaleFrom"] intValue];
     
     // Calculate the dst scale factor
     float dstScale = 1;
@@ -980,7 +980,7 @@
                 // Set iOS format to mp4 for long sounds
                 ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
                 NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
-                [settings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
+                [settings setProperty:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
             }
             importedFile = YES;
         

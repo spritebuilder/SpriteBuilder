@@ -172,17 +172,18 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (IBAction)selectPublishDirectoryIOS:(id)sender
 {
-    [self selectPublish:^(NSString *directoryPath)
-    {
-        _projectSettings.publishDirectoryAndroid = directoryPath;
+    [self selectPublishCurrentPath:_projectSettings.publishDirectory
+                    dirSetterBlock:^(NSString *directoryPath) {
+        _projectSettings.publishDirectory = directoryPath;
     }];
 }
 
 - (IBAction)selectPublishDirectoryAndroid:(id)sender
 {
-    [self selectPublish:^(NSString *directoryPath)
+    [self selectPublishCurrentPath:_projectSettings.publishDirectoryAndroid
+                    dirSetterBlock:^(NSString *directoryPath)
     {
-        _projectSettings.publishDirectory = directoryPath;
+        _projectSettings.publishDirectoryAndroid = directoryPath;
     }];
 }
 
@@ -194,23 +195,27 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
         return;
     }
 
-    [self selectPublish:^(NSString *directoryPath)
+    [self selectPublishCurrentPath:listEntry.packagePublishSettings.customOutputDirectory
+                    dirSetterBlock:^(NSString *directoryPath)
     {
         listEntry.packagePublishSettings.customOutputDirectory = directoryPath;
     }];
 }
 
-- (void)selectPublish:(DirectorySetterBlock)dirSetterBlock
+- (void)selectPublishCurrentPath:(NSString *)currentPath dirSetterBlock:(DirectorySetterBlock)dirSetterBlock
 {
     if (!dirSetterBlock)
     {
         return;
     }
 
+    NSString *projectDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
+
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:NO];
     [openDlg setCanChooseDirectories:YES];
     [openDlg setCanCreateDirectories:YES];
+    [openDlg setDirectoryURL:[NSURL fileURLWithPath:[currentPath absolutePathFromBaseDirPath:projectDir]]];
 
     [openDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result)
     {
@@ -219,8 +224,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
             NSArray *files = [openDlg URLs];
             for (NSUInteger i = 0; i < [files count]; i++)
             {
-                NSString *dirName = [[files objectAtIndex:i] path];
-                NSString *projectDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
+                NSString *dirName = [files[i] path];
                 dirSetterBlock([dirName relativePathFromBaseDirPath:projectDir]);
             }
         }

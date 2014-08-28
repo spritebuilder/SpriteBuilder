@@ -42,41 +42,11 @@
 
 @property (nonatomic, strong) NSMutableDictionary* resourceProperties;
 @property (nonatomic, readwrite) CCBTargetEngine engine;
+@property (nonatomic) BOOL storing;
 
 @end
 
 @implementation ProjectSettings
-
-@synthesize projectPath;
-@synthesize publishDirectory;
-@synthesize publishDirectoryAndroid;
-@synthesize publishEnabledIOS;
-@synthesize publishEnabledAndroid;
-@synthesize publishResolution_ios_phone;
-@synthesize publishResolution_ios_phonehd;
-@synthesize publishResolution_ios_tablet;
-@synthesize publishResolution_ios_tablethd;
-@synthesize publishResolution_android_phone;
-@synthesize publishResolution_android_phonehd;
-@synthesize publishResolution_android_tablet;
-@synthesize publishResolution_android_tablethd;
-@synthesize publishAudioQuality_ios;
-@synthesize publishAudioQuality_android;
-@synthesize isSafariExist;
-@synthesize isChromeExist;
-@synthesize isFirefoxExist;
-@synthesize publishToZipFile;
-@synthesize onlyPublishCCBs;
-@synthesize exporter;
-@synthesize availableExporters;
-@synthesize deviceOrientationPortrait;
-@synthesize deviceOrientationUpsideDown;
-@synthesize deviceOrientationLandscapeLeft;
-@synthesize deviceOrientationLandscapeRight;
-@synthesize resourceAutoScaleFactor;
-@synthesize versionStr;
-@synthesize needRepublish;
-@synthesize lastWarnings;
 
 - (id) init
 {
@@ -127,10 +97,9 @@
     self.availableExporters = [NSMutableArray array];
     for (PlugInExport* plugIn in [[PlugInManager sharedManager] plugInsExporters])
     {
-        [availableExporters addObject: plugIn.extension];
+        [_availableExporters addObject: plugIn.extension];
     }
-    
-    [self detectBrowserPresence];
+
     self.versionStr = [self getVersion];
     self.needRepublish = NO;
 
@@ -150,13 +119,13 @@
     self.resourcePaths = [dict objectForKey:@"resourcePaths"];
 
     self.publishDirectory = [dict objectForKey:@"publishDirectory"];
-    if (!publishDirectory)
+    if (!_publishDirectory)
     {
         self.publishDirectory = @"";
     }
 
     self.publishDirectoryAndroid = [dict objectForKey:@"publishDirectoryAndroid"];
-    if (!publishDirectoryAndroid)
+    if (!_publishDirectoryAndroid)
     {
         self.publishDirectoryAndroid = @"";
     }
@@ -194,7 +163,7 @@
     self.deviceOrientationLandscapeRight = [[dict objectForKey:@"deviceOrientationLandscapeRight"] boolValue];
 
     self.resourceAutoScaleFactor = [[dict objectForKey:@"resourceAutoScaleFactor"]intValue];
-    if (resourceAutoScaleFactor == 0)
+    if (_resourceAutoScaleFactor == 0)
     {
         self.resourceAutoScaleFactor = 4;
     }
@@ -216,8 +185,6 @@
     {
         self.excludedFromPackageMigration = NO;
     }
-
-    [self detectBrowserPresence];
 
     [self initializeVersionStringWithProjectDict:dict];
 
@@ -243,9 +210,9 @@
 
 - (NSString*) exporter
 {
-    if (exporter)
+    if (_exporter)
     {
-        return exporter;
+        return _exporter;
     }
     return kCCBDefaultExportPlugIn;
 }
@@ -260,43 +227,43 @@
     dict[@"fileVersion"] = @kCCBProjectSettingsVersion;
     dict[@"resourcePaths"] = _resourcePaths;
     
-    dict[@"publishDirectory"] = publishDirectory;
-    dict[@"publishDirectoryAndroid"] = publishDirectoryAndroid;
+    dict[@"publishDirectory"] = _publishDirectory;
+    dict[@"publishDirectoryAndroid"] = _publishDirectoryAndroid;
 
-    dict[@"publishEnablediPhone"] = @(publishEnabledIOS);
-    dict[@"publishEnabledAndroid"] = @(publishEnabledAndroid);
+    dict[@"publishEnablediPhone"] = @(_publishEnabledIOS);
+    dict[@"publishEnabledAndroid"] = @(_publishEnabledAndroid);
 
-    dict[@"publishResolution_ios_phone"] = @(publishResolution_ios_phone);
-    dict[@"publishResolution_ios_phonehd"] = @(publishResolution_ios_phonehd);
-    dict[@"publishResolution_ios_tablet"] = @(publishResolution_ios_tablet);
-    dict[@"publishResolution_ios_tablethd"] = @(publishResolution_ios_tablethd);
-    dict[@"publishResolution_android_phone"] = @(publishResolution_android_phone);
-    dict[@"publishResolution_android_phonehd"] = @(publishResolution_android_phonehd);
-    dict[@"publishResolution_android_tablet"] = @(publishResolution_android_tablet);
-    dict[@"publishResolution_android_tablethd"] = @(publishResolution_android_tablethd);
+    dict[@"publishResolution_ios_phone"] = @(_publishResolution_ios_phone);
+    dict[@"publishResolution_ios_phonehd"] = @(_publishResolution_ios_phonehd);
+    dict[@"publishResolution_ios_tablet"] = @(_publishResolution_ios_tablet);
+    dict[@"publishResolution_ios_tablethd"] = @(_publishResolution_ios_tablethd);
+    dict[@"publishResolution_android_phone"] = @(_publishResolution_android_phone);
+    dict[@"publishResolution_android_phonehd"] = @(_publishResolution_android_phonehd);
+    dict[@"publishResolution_android_tablet"] = @(_publishResolution_android_tablet);
+    dict[@"publishResolution_android_tablethd"] = @(_publishResolution_android_tablethd);
     
-    dict[@"publishAudioQuality_ios"] = @(publishAudioQuality_ios);
-    dict[@"publishAudioQuality_android"] = @(publishAudioQuality_android);
+    dict[@"publishAudioQuality_ios"] = @(_publishAudioQuality_ios);
+    dict[@"publishAudioQuality_android"] = @(_publishAudioQuality_android);
 
-    dict[@"publishToZipFile"] = @(publishToZipFile);
-    dict[@"onlyPublishCCBs"] = @(onlyPublishCCBs);
+    dict[@"publishToZipFile"] = @(_publishToZipFile);
+    dict[@"onlyPublishCCBs"] = @(_onlyPublishCCBs);
     dict[@"exporter"] = self.exporter;
     
-    dict[@"deviceOrientationPortrait"] = @(deviceOrientationPortrait);
-    dict[@"deviceOrientationUpsideDown"] = @(deviceOrientationUpsideDown);
-    dict[@"deviceOrientationLandscapeLeft"] = @(deviceOrientationLandscapeLeft);
-    dict[@"deviceOrientationLandscapeRight"] = @(deviceOrientationLandscapeRight);
-    dict[@"resourceAutoScaleFactor"] = @(resourceAutoScaleFactor);
+    dict[@"deviceOrientationPortrait"] = @(_deviceOrientationPortrait);
+    dict[@"deviceOrientationUpsideDown"] = @(_deviceOrientationUpsideDown);
+    dict[@"deviceOrientationLandscapeLeft"] = @(_deviceOrientationLandscapeLeft);
+    dict[@"deviceOrientationLandscapeRight"] = @(_deviceOrientationLandscapeRight);
+    dict[@"resourceAutoScaleFactor"] = @(_resourceAutoScaleFactor);
 
     dict[@"cocos2dUpdateIgnoredVersions"] = _cocos2dUpdateIgnoredVersions;
 
-    dict[@"designTarget"] = @(self.designTarget);
-    dict[@"defaultOrientation"] = @(self.defaultOrientation);
-    dict[@"deviceScaling"] = @(self.deviceScaling);
+    dict[@"designTarget"] = @(_designTarget);
+    dict[@"defaultOrientation"] = @(_defaultOrientation);
+    dict[@"deviceScaling"] = @(_deviceScaling);
 
-    dict[@"publishEnvironment"] = @(self.publishEnvironment);
+    dict[@"publishEnvironment"] = @(_publishEnvironment);
 
-    dict[@"excludedFromPackageMigration"] = @(self.excludedFromPackageMigration);
+    dict[@"excludedFromPackageMigration"] = @(_excludedFromPackageMigration);
 
     if (_resourceProperties)
     {
@@ -307,9 +274,9 @@
         dict[@"resourceProperties"] = [NSDictionary dictionary];
     }
 
-    if (versionStr)
+    if (_versionStr)
     {
-        dict[@"versionStr"] = versionStr;
+        dict[@"versionStr"] = _versionStr;
     }
 
     return dict;
@@ -340,9 +307,9 @@
 @dynamic projectPathHashed;
 - (NSString*) projectPathHashed
 {
-    if (projectPath)
+    if (_projectPath)
     {
-        HashValue* hash = [HashValue md5HashWithString:projectPath];
+        HashValue* hash = [HashValue md5HashWithString:_projectPath];
         return [hash description];
     }
     else
@@ -368,7 +335,7 @@
 - (void) _storeDelayed
 {
     [self store];
-    storing = NO;
+    self.storing = NO;
 }
 
 - (BOOL) store
@@ -379,9 +346,9 @@
 - (void) storeDelayed
 {
     // Store the file after a short delay
-    if (!storing)
+    if (!_storing)
     {
-        storing = YES;
+        self.storing = YES;
         [self performSelector:@selector(_storeDelayed) withObject:NULL afterDelay:1];
     }
 }
@@ -390,7 +357,7 @@
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
 
-    [self setValue:@YES forResource:res andKey:@"isSmartSpriteSheet"];
+    [self setProperty:@YES forResource:res andKey:@"isSmartSpriteSheet"];
     
     [self store];
     [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
@@ -400,8 +367,8 @@
 - (void) removeSmartSpriteSheet:(RMResource*) res
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
-    
-    [self removeObjectForResource:res andKey:@"isSmartSpriteSheet"];
+
+    [self removePropertyForResource:res andKey:@"isSmartSpriteSheet"];
 
     [self removeIntermediateFileLookupFile:res];
 
@@ -424,62 +391,63 @@
     }
 }
 
-- (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key
+- (void)setProperty:(id)newValue forResource:(RMResource *)res andKey:(id <NSCopying>) key
 {
     NSString* relPath = res.relativePath;
-    [self setValue:val forRelPath:relPath andKey:key];
-    [self markAsDirtyResource:res];
+    [self setProperty:newValue forRelPath:relPath andKey:key];
 }
 
-- (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key
+- (void)setProperty:(id)newValue forRelPath:(NSString *)relPath andKey:(id <NSCopying>)key
 {
-    // Create value if it doesn't exist
+    NSMutableDictionary *props = [self resourcePropertiesForRelPath:relPath];
+
+    id oldValue = props[key];
+    if ([oldValue isEqual:newValue])
+    {
+        return;
+    }
+
+    [props setValue:newValue forKey:key];
+    [self markAsDirtyRelPath:relPath];
+    [self storeDelayed];
+}
+
+- (NSMutableDictionary *)resourcePropertiesForRelPath:(NSString *)relPath
+{
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
     if (!props)
     {
         props = [NSMutableDictionary dictionary];
         [_resourceProperties setValue:props forKey:relPath];
     }
-    
-    // Compare to old value
-    id oldValue = props[key];
-    if (!(oldValue && [oldValue isEqual:val]))
-    {
-        // Set the value if it has changed
-        [props setValue:val forKey:key];
-        
-        // Also mark as dirty
-        [props setValue:@YES forKey:@"isDirty"];
-        
-        [self storeDelayed];
-    }
+    return props;
 }
 
-- (id) valueForResource:(RMResource*) res andKey:(id) key
+- (id)propertyForResource:(RMResource *)res andKey:(id <NSCopying>) key
 {
     NSString* relPath = [self findRelativePathInPackagesForAbsolutePath:res.filePath];
-    return [self valueForRelPath:relPath andKey:key];
+    return [self propertyForRelPath:relPath andKey:key];
 }
 
-- (id) valueForRelPath:(NSString*) relPath andKey:(id) key
+- (id)propertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>) key
 {
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
     return [props valueForKey:key];
 }
 
-- (void) removeObjectForResource:(RMResource*) res andKey:(id) key
+- (void)removePropertyForResource:(RMResource *)res andKey:(id <NSCopying>) key
 {
     NSString* relPath = res.relativePath;
-    [self markAsDirtyResource:res];
-    [self removeObjectForRelPath:relPath andKey:key];
-    
+    [self removePropertyForRelPath:relPath andKey:key];
 }
 
-- (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key
+- (void)removePropertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>) key
 {
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
     [props removeObjectForKey:key];
-    
+
+    [self markAsDirtyRelPath:relPath];
+
     [self storeDelayed];
 }
 
@@ -490,7 +458,7 @@
 
 - (BOOL) isDirtyRelPath:(NSString*) relPath
 {
-    return [[self valueForRelPath:relPath andKey:@"isDirty"] boolValue];
+    return [[self propertyForRelPath:relPath andKey:@"isDirty"] boolValue];
 }
 
 - (void) markAsDirtyResource:(RMResource*) res
@@ -500,32 +468,19 @@
 
 - (void) markAsDirtyRelPath:(NSString*) relPath
 {
-    [self setValue:@YES forRelPath:relPath andKey:@"isDirty"];
+    [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }
 
 - (void) clearAllDirtyMarkers
 {
     for (NSString* relPath in _resourceProperties)
     {
-        [self removeObjectForRelPath:relPath andKey:@"isDirty"];
+        NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
+        [props removeObjectForKey:@"isDirty"];
     }
     
     [self storeDelayed];
 }
-
-- (NSArray*) smartSpriteSheetDirectories
-{
-    NSMutableArray* dirs = [NSMutableArray array];
-    for (NSString* relPath in _resourceProperties)
-    {
-        if ([[_resourceProperties[relPath] objectForKey:@"isSmartSpriteSheet"] boolValue])
-        {
-            [dirs addObject:relPath];
-        }
-    }
-    return dirs;
-}
-
 
 - (void) removedResourceAt:(NSString*) relPath
 {
@@ -617,31 +572,6 @@
     return YES;
 }
 
-- (void) detectBrowserPresence
-{
-    isSafariExist = FALSE;
-    isChromeExist = FALSE;
-    isFirefoxExist = FALSE;
-    
-    OSStatus result = LSFindApplicationForInfo (kLSUnknownCreator, CFSTR("com.apple.Safari"), NULL, NULL, NULL);
-    if (result == noErr)
-    {
-        isSafariExist = TRUE;
-    }
-    
-    result = LSFindApplicationForInfo (kLSUnknownCreator, CFSTR("com.google.Chrome"), NULL, NULL, NULL);
-    if (result == noErr)
-    {
-        isChromeExist = TRUE;
-    }
-
-    result = LSFindApplicationForInfo (kLSUnknownCreator, CFSTR("org.mozilla.firefox"), NULL, NULL, NULL);
-    if (result == noErr)
-    {
-        isFirefoxExist = TRUE;
-    }
-}
-
 // TODO: remove after transition state to ResourcePath class
 - (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict
 {
@@ -702,12 +632,12 @@
 {
 	if (_engine != CCBTargetEngineSpriteKit)
 	{
-		publishResolution_ios_phone = publishResolution;
+		_publishResolution_ios_phone = publishResolution;
 	}
 	else
 	{
 		// Sprite Kit doesn't run on non-Retina phones to begin with...
-		publishResolution_ios_phone = NO;
+		_publishResolution_ios_phone = NO;
 	}
 }
 
@@ -724,7 +654,7 @@
 
 - (NSString *)projectPathDir
 {
-    return [projectPath stringByDeletingLastPathComponent];
+    return [_projectPath stringByDeletingLastPathComponent];
 }
 
 - (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath

@@ -172,13 +172,13 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)loadSettings
 {
-    self.format_ios = [[_projectSettings valueForRelPath:_subPath andKey:@"format_ios"] intValue];
-    self.format_ios_dither = [[_projectSettings valueForRelPath:_subPath andKey:@"format_ios_dither"] boolValue];
-    self.format_ios_compress = [[_projectSettings valueForRelPath:_subPath andKey:@"format_ios_compress"] boolValue];
-    self.format_android = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android"] intValue];
-    self.format_android_dither = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android_dither"] boolValue];
-    self.format_android_compress = [[_projectSettings valueForRelPath:_subPath andKey:@"format_android_compress"] boolValue];
-    self.trim = ![[_projectSettings valueForRelPath:_subPath andKey:@"keepSpritesUntrimmed"] boolValue];
+    self.format_ios = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_ios"] intValue];
+    self.format_ios_dither = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_ios_dither"] boolValue];
+    self.format_ios_compress = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_ios_compress"] boolValue];
+    self.format_android = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android"] intValue];
+    self.format_android_dither = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android_dither"] boolValue];
+    self.format_android_compress = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android_compress"] boolValue];
+    self.trim = ![[_projectSettings propertyForRelPath:_subPath andKey:@"keepSpritesUntrimmed"] boolValue];
 }
 
 - (void)cancel

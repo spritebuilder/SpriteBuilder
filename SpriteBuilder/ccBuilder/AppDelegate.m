@@ -140,6 +140,7 @@
 #import "LicenseWindow.h"
 #import "SUVersionComparisonProtocol.h"
 #import "SBUpdater.h"
+#import "OpenProjectInXCode.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -2076,7 +2077,7 @@ static BOOL hideAllToNextSeparator;
     [self prepareForDocumentSwitch];
     
     CCBDocument *newDoc = [[CCBDocument alloc] initWithContentsOfFile:filePath];
-    
+
     [self switchToDocument:newDoc];
      
     [self addDocument:newDoc];
@@ -3152,7 +3153,7 @@ static BOOL hideAllToNextSeparator;
     [animationPlaybackManager stop];
 }
 
-- (void) publisher:(CCBPublisher*)publisher finishedWithWarnings:(CCBWarnings*)warnings
+- (void)publisher:(CCBPublisher *)publisher finishedWithWarnings:(CCBWarnings *)warnings
 {
     [self modalStatusWindowFinish];
     
@@ -3219,7 +3220,15 @@ static BOOL hideAllToNextSeparator;
     }];
 }
 
-- (IBAction) menuPublishSettings:(id)sender
+- (IBAction)menuOpenProjectInXCode:(id)sender
+{
+    OpenProjectInXCode *openProjectInXCodeCommand = [[OpenProjectInXCode alloc] init];
+    NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
+
+    [openProjectInXCodeCommand openProject:xcodePrjPath];
+}
+
+- (IBAction)menuProjectSettings:(id)sender
 {
     if (!projectSettings)
     {
@@ -4502,7 +4511,7 @@ static BOOL hideAllToNextSeparator;
 	
 	AndroidPluginInstallerWindow *installerWindow = [[AndroidPluginInstallerWindow alloc] initWithWindowNibName:@"AndroidPluginInstallerWindow"];
 	
-    
+	
 	[[installerWindow window] center];
     [[installerWindow window] makeKeyAndOrderFront:self];
 	
