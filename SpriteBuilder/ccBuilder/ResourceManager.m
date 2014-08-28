@@ -344,7 +344,7 @@
             {
                 // A resource has been modified, we need to reload assets
                 res.modifiedTime = modifiedTime;
-                res.type = [ResourceManager getResourceTypeForFile:file];
+                res.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:file];
                 
                 // Reload its data
                 [res loadData];
@@ -369,7 +369,7 @@
             // This is a new resource, add it!
             res = [[RMResource alloc] init];
             res.modifiedTime = modifiedTime;
-            res.type = [ResourceManager getResourceTypeForFile:file];
+            res.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:file];
             res.filePath = file;
             
             // Load basic resource data if neccessary
@@ -656,7 +656,7 @@
     NSString* fileName = [autoFile lastPathComponent];
     RMResource* resource = [[RMResource alloc] init];
     resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
-    resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
+    resource.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:resource.filePath];
     int tabletScale = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
     if (!tabletScale) tabletScale = 2;
     

@@ -46,7 +46,7 @@
     {
         [self showImagePreview];
     }
-    else if (_previewedResource.type == kCCBResTypeDirectory && [_previewedResource.data isDynamicSpriteSheet])
+    else if (_previewedResource.type == [_previewedResource isSpriteSheet])
     {
         [self showSpriteSheetPreview];
     }

@@ -8,6 +8,7 @@
 #import "RMSpriteFrame.h"
 #import "ResourceManagerUtil.h"
 #import "MiscConstants.h"
+#import "RMDirectory.h"
 
 
 @implementation RMResource
@@ -63,7 +64,6 @@
     }
 }
 
-@dynamic relativePath;
 - (NSString*) relativePath
 {
     return [ResourceManagerUtil relativePathFromAbsolutePath:_filePath];
@@ -260,6 +260,11 @@
 - (BOOL) isSelectable
 {
     return YES;
+}
+
+- (BOOL)isSpriteSheet
+{
+    return _type == kCCBResTypeDirectory && [_data isDynamicSpriteSheet];
 }
 
 @end
