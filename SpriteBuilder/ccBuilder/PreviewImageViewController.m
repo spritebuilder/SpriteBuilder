@@ -16,14 +16,9 @@
 #import "RMResource.h"
 #import "NotificationNames.h"
 #import "ResourceManager.h"
-#import "ResourceTypes.h"
 #import "NSAlert+Convenience.h"
 
 @interface PreviewImageViewController ()
-
-@property (nonatomic, strong) RMResource *previewedResource;
-@property (nonatomic, weak) ProjectSettings *projectSettings;
-@property (nonatomic) BOOL initialUpdate;
 
 @property (nonatomic,strong) NSImage* imgMain;
 @property (nonatomic,strong) NSImage* imgPhone;
@@ -41,7 +36,7 @@
     [_androidSettingsContainer setHidden:!IS_SPRITEBUILDER_PRO];
 
     self.projectSettings = projectSettings;
-    _previewedResource = previewedResource;
+    self.previewedResource = previewedResource;
 
     [_previewMain setAllowsCutCopyPaste:NO];
     [_previewPhone setAllowsCutCopyPaste:NO];
@@ -54,8 +49,6 @@
 
 - (void)populateInitialValues
 {
-    self.initialUpdate = YES;
-
     // TODO: necessary?
     self.imgMain = [_previewedResource previewForResolution:RESOLUTION_AUTO];
     self.imgPhone = [_previewedResource previewForResolution:RESOLUTION_PHONE];
@@ -69,52 +62,29 @@
     [_previewTablet setImage:self.imgTablet];
     [_previewTablethd setImage:self.imgTablethd];
 
-    // Load settings
-    self.scaleFrom = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
+    __weak PreviewImageViewController *weakSelf = self;
+    [self setInitialValues:^{
+        weakSelf.scaleFrom = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
 
-    self.format_ios = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
-    self.format_ios_dither = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
-    self.format_ios_compress = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
-    self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
-    self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
+        weakSelf.format_ios = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
+        weakSelf.format_ios_dither = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
+        weakSelf.format_ios_compress = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
+        weakSelf.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)weakSelf.format_ios osType:kCCBPublisherOSTypeIOS];
+        weakSelf.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)weakSelf.format_ios osType:kCCBPublisherOSTypeIOS];
 
-    self.format_android = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
-    self.format_android_dither = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
-    self.format_android_compress = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
-    self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
-    self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
+        weakSelf.format_android = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
+        weakSelf.format_android_dither = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
+        weakSelf.format_android_compress = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
+        weakSelf.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)weakSelf.format_android osType:kCCBPublisherOSTypeAndroid];
+        weakSelf.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)weakSelf.format_android osType:kCCBPublisherOSTypeAndroid];
 
-    int tabletScale = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
-    if (!tabletScale)
-    {
-        tabletScale = 2;
-    }
-    self.tabletScale = tabletScale;
-
-    self.initialUpdate = NO;
-}
-
-- (void)setValue:(id)value withName:(NSString *)name isAudio:(BOOL)isAudio
-{
-    if (!_previewedResource
-        || _initialUpdate)
-    {
-        return;
-    }
-
-    // There's a inconsistency here for audio settings, no default values assumed by a absent key
-    if ([value intValue] || isAudio)
-    {
-        [_projectSettings setProperty:value forResource:_previewedResource andKey:name];
-    }
-    else
-    {
-        [_projectSettings removePropertyForResource:_previewedResource andKey:name];
-    }
-
-    // Reload the resource
-    [ResourceManager touchResource:_previewedResource];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
+        int tabletScale = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
+        if (!tabletScale)
+        {
+            tabletScale = 2;
+        }
+        weakSelf.tabletScale = tabletScale;
+    }];
 }
 
 - (BOOL)format_supportsPVRTC
@@ -190,7 +160,7 @@
 {
     _tabletScale = tabletScale;
 
-    if (_initialUpdate)
+    if (self.initialUpdate)
     {
         return;
     }

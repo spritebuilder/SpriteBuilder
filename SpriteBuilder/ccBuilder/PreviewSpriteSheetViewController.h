@@ -10,8 +10,9 @@
 #import "PreviewViewControllerProtocol.h"
 
 @class CCBImageView;
+@class PreviewBaseViewController;
 
-@interface PreviewSpriteSheetViewController : NSViewController <PreviewViewControllerProtocol>
+@interface PreviewSpriteSheetViewController : PreviewBaseViewController <PreviewViewControllerProtocol>
 
 @property (nonatomic, weak) IBOutlet NSView *androidSettingsContainer;
 @property (nonatomic, weak) IBOutlet CCBImageView* previewSpriteSheet;

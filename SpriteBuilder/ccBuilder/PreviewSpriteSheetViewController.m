@@ -6,6 +6,7 @@
 //
 //
 
+#import "PreviewBaseViewController.h"
 #import "PreviewSpriteSheetViewController.h"
 #import "RMResource.h"
 #import "ProjectSettings.h"
@@ -13,16 +14,6 @@
 #import "CCBImageView.h"
 #import "ImageFormatAndPropertiesHelper.h"
 #import "ResourcePropertyKeys.h"
-#import "NotificationNames.h"
-#import "ResourceManager.h"
-
-@interface PreviewSpriteSheetViewController ()
-
-@property (nonatomic, strong) RMResource *previewedResource;
-@property (nonatomic, weak) ProjectSettings *projectSettings;
-@property (nonatomic) BOOL initialUpdate;
-
-@end
 
 
 @implementation PreviewSpriteSheetViewController
@@ -32,28 +23,31 @@
     [_androidSettingsContainer setHidden:!IS_SPRITEBUILDER_PRO];
 
     self.projectSettings = projectSettings;
-    _previewedResource = previewedResource;
+    self.previewedResource = previewedResource;
 
     [self populateInitialValues];
 }
 
 - (void)populateInitialValues
 {
-    self.initialUpdate = YES;
+    __weak PreviewSpriteSheetViewController *weakSelf = self;
+    [self setInitialValues:^{
 
-    self.format_ios = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
-    self.format_ios_dither = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
-    self.format_ios_compress = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
-    self.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
-    self.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_ios osType:kCCBPublisherOSTypeIOS];
+        weakSelf.format_ios = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
+        weakSelf.format_ios_dither = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
+        weakSelf.format_ios_compress = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
+        weakSelf.format_ios_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat) weakSelf.format_ios osType:kCCBPublisherOSTypeIOS];
+        weakSelf.format_ios_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat) weakSelf.format_ios osType:kCCBPublisherOSTypeIOS];
 
-    self.format_android = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
-    self.format_android_dither = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
-    self.format_android_compress = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
-    self.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
-    self.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)_format_android osType:kCCBPublisherOSTypeAndroid];
+        weakSelf.format_android = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
+        weakSelf.format_android_dither = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
+        weakSelf.format_android_compress = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS]
+                                                          boolValue];
+        weakSelf.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat) weakSelf.format_android osType:kCCBPublisherOSTypeAndroid];
+        weakSelf.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat) weakSelf.format_android osType:kCCBPublisherOSTypeAndroid];
 
-    self.trimSprites = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_TRIM_SPRITES] boolValue];
+        weakSelf.trimSprites = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_TRIM_SPRITES] boolValue];
+    }];
 
     NSString *imgPreviewPath = [_previewedResource.filePath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:imgPreviewPath];
@@ -63,30 +57,6 @@
     }
 
     [_previewSpriteSheet setImage:img];
-
-    self.initialUpdate = NO;
-}
-
-- (void)setValue:(id)value withName:(NSString *)name isAudio:(BOOL)isAudio
-{
-    if (!_previewedResource
-        || _initialUpdate)
-    {
-        return;
-    }
-
-    // There's a inconsistency here for audio settings, no default values assumed by a absent key
-    if ([value intValue] || isAudio)
-    {
-        [_projectSettings setProperty:value forResource:_previewedResource andKey:name];
-    }
-    else
-    {
-        [_projectSettings removePropertyForResource:_previewedResource andKey:name];
-    }
-
-    [ResourceManager touchResource:_previewedResource];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
 }
 
 - (void) setFormat_ios:(int)format_ios

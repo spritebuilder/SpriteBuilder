@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PreviewViewControllerProtocol.h"
+#import "PreviewBaseViewController.h"
 
 @class ProjectSettings;
 @class CCBImageView;
 
-@interface PreviewImageViewController : NSViewController <PreviewViewControllerProtocol>
+@interface PreviewImageViewController : PreviewBaseViewController <PreviewViewControllerProtocol>
 
 @property (nonatomic, weak) IBOutlet NSView *androidSettingsContainer;
 

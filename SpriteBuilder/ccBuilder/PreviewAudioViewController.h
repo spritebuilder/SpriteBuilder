@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PreviewViewControllerProtocol.h"
+#import "PreviewBaseViewController.h"
 
 @class ProjectSettings;
 @class AudioPlayerViewController;
 
-@interface PreviewAudioViewController : NSViewController <PreviewViewControllerProtocol>
+@interface PreviewAudioViewController : PreviewBaseViewController <PreviewViewControllerProtocol>
 
 @property (nonatomic, weak) IBOutlet NSView *androidSettingsContainer;
 @property (nonatomic, weak) IBOutlet NSView *audioControllerContainer;

@@ -10,17 +10,12 @@
 #import "RMResource.h"
 #import "MiscConstants.h"
 #import "ResourcePropertyKeys.h"
-#import "ResourceManager.h"
-#import "NotificationNames.h"
 #import "ProjectSettings.h"
 #import "AudioPlayerViewController.h"
 
 @interface PreviewAudioViewController ()
 
-@property (nonatomic, strong) RMResource *previewedResource;
-@property (nonatomic, weak) ProjectSettings *projectSettings;
 @property (nonatomic, strong) AudioPlayerViewController *audioPlayerViewController;
-@property (nonatomic) BOOL initialUpdate;
 
 @end
 
@@ -32,7 +27,7 @@
     [_androidSettingsContainer setHidden:!IS_SPRITEBUILDER_PRO];
 
     self.projectSettings = projectSettings;
-    _previewedResource = previewedResource;
+    self.previewedResource = previewedResource;
 
     [self initializeAudioController];
 
@@ -55,17 +50,16 @@
 
 - (void)populateInitialValues
 {
-    self.initialUpdate = YES;
-    
-    self.format_ios_sound = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_SOUND] intValue];
-    self.format_ios_sound_quality = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IOS_SOUND_QUALITY] intValue];
-    self.format_ios_sound_quality_enabled = _format_ios_sound != 0;
+    __weak PreviewAudioViewController *weakSelf = self;
+    [self setInitialValues:^{
+        weakSelf.format_ios_sound = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_SOUND] intValue];
+        weakSelf.format_ios_sound_quality = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_SOUND_QUALITY] intValue];
+        weakSelf.format_ios_sound_quality_enabled = weakSelf.format_ios_sound != 0;
 
-    self.format_android_sound = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_SOUND] intValue];
-    self.format_android_sound_quality = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY] intValue];
-    self.format_android_sound_quality_enabled = YES;
-
-    self.initialUpdate = NO;
+        weakSelf.format_android_sound = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_SOUND] intValue];
+        weakSelf.format_android_sound_quality = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY] intValue];
+        weakSelf.format_android_sound_quality_enabled = YES;
+    }];
 }
 
 - (void)initializeIcon
@@ -74,29 +68,6 @@
     [icon setScalesWhenResized:YES];
     icon.size = NSMakeSize(128, 128);
     [_iconImage setImage:icon];
-}
-
-- (void)setValue:(id)value withName:(NSString *)name isAudio:(BOOL)isAudio
-{
-    if (!_previewedResource
-        || _initialUpdate)
-    {
-        return;
-    }
-
-    // There's a inconsistency here for audio settings, no default values assumed by a absent key
-    if ([value intValue] || isAudio)
-    {
-        [_projectSettings setProperty:value forResource:_previewedResource andKey:name];
-    }
-    else
-    {
-        [_projectSettings removePropertyForResource:_previewedResource andKey:name];
-    }
-
-    // Reload the resource
-    [ResourceManager touchResource:_previewedResource];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
 }
 
 - (void)setFormat_ios_sound:(int)format_ios_sound
