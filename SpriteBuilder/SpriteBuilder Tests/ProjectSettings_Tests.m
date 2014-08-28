@@ -15,8 +15,9 @@
 #import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "FileSystemTestCase.h"
-#import "CCBDirectoryPublisher.h"
 #import "ProjectSettings+Convenience.h"
+#import "RMResource.h"
+#import "ResourceManager.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 
@@ -284,7 +285,7 @@
 
     XCTAssertTrue(project.excludedFromPackageMigration);
 
-    NSNumber *scaleFrom = [project valueForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:@"scaleFrom"];
+    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:@"scaleFrom"];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
 }
 
@@ -392,7 +393,7 @@
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
-    [projectSettings setValue:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    [projectSettings setProperty:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
 
     XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
 
@@ -401,7 +402,7 @@
     projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     projectSettings.projectPath = fullPath;
 
-    NSNumber *value = [projectSettings valueForRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    NSNumber *value = [projectSettings propertyForRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
     XCTAssertEqual([value integerValue], (NSInteger)kCCBPublishFormatSound_ios_mp4);
 }
 
@@ -440,7 +441,7 @@
     NSInteger quality = [_projectSettings soundQualityForRelPath:@"foo" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality, NSNotFound);
 
-    [_projectSettings setValue:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
+    [_projectSettings setProperty:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
     int quality2 = [_projectSettings soundQualityForRelPath:@"baa" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality2, 7);
 }
@@ -453,6 +454,64 @@
     XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeAndroid], 8);
     XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeIOS], 6);
 }
+
+- (void)testMarkAsDirty
+{
+    RMResource *res1 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"]];
+    RMResource *res2 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/baa.png"]];
+    RMResource *res3 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/123.png"]];
+
+    ResourceManager *resourceManager = [ResourceManager sharedManager];
+    [resourceManager setActiveDirectoriesWithFullReset:@[
+            [self fullPathForFile:@"project/Packages/package1.sbpack"],
+    ]];
+
+    [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
+    [_projectSettings clearAllDirtyMarkers];
+
+
+    // Test clear all dirty markers
+    [_projectSettings markAsDirtyResource:res1];
+    [_projectSettings markAsDirtyResource:res2];
+    [_projectSettings markAsDirtyResource:res3];
+
+    [_projectSettings clearAllDirtyMarkers];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+    XCTAssertFalse([_projectSettings isDirtyResource:res2]);
+    XCTAssertFalse([_projectSettings isDirtyResource:res3]);
+
+
+    // Setting a new value should mark the resource as dirty
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:res1]);
+
+
+    // Removing a property should mark the resource as dirty
+    [_projectSettings clearAllDirtyMarkers];
+
+    [_projectSettings removePropertyForResource:res1 andKey:@"format_ios"];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:res1]);
+
+
+    // Setting same value twice should not mark resource as dirty
+    [_projectSettings clearAllDirtyMarkers];
+
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+
+    [_projectSettings clearAllDirtyMarkers];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+}
+
 
 #pragma mark - test helper
 

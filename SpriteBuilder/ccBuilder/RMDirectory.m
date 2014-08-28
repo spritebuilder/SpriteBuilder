@@ -60,7 +60,7 @@
 
         if (projectSettings)
         {
-            BOOL isSmartSpriteSheet = [[projectSettings valueForResource:dirRes andKey:@"isSmartSpriteSheet"] boolValue];
+            BOOL isSmartSpriteSheet = [[projectSettings propertyForResource:dirRes andKey:@"isSmartSpriteSheet"] boolValue];
             return isSmartSpriteSheet;
         }
     }

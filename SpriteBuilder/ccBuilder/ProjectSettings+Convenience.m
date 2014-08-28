@@ -23,7 +23,7 @@
         ? @"format_ios_sound_quality"
         : @"format_android_sound_quality";
 
-    int result = [[self valueForRelPath:relPath andKey:key] intValue];
+    int result = [[self propertyForRelPath:relPath andKey:key] intValue];
     if (!result)
     {
         return NSNotFound;
@@ -51,7 +51,7 @@
         return 0;
     }
 
-    int formatRaw = [[self valueForRelPath:relPath andKey:key] intValue];
+    int formatRaw = [[self propertyForRelPath:relPath andKey:key] intValue];
 
     NSNumber *result = [map objectForKey:@(formatRaw)];
 

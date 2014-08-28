@@ -222,7 +222,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setValue:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
+    [_projectSettings setProperty:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -243,9 +243,9 @@
     _projectSettings.publishEnabledAndroid = YES;
     _projectSettings.resourceAutoScaleFactor = 4;
 
-    [_projectSettings setValue:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_ios"];
-    [_projectSettings setValue:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_android"];
-    [_projectSettings setValue:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:@"format_ios_sound"];
+    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_ios"];
+    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_android"];
+    [_projectSettings setProperty:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:@"format_ios_sound"];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher addPublishingTarget:_targetAndroid];
@@ -280,7 +280,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/sword.png" width:4 height:12 color:[NSColor yellowColor]];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setValue:[NSNumber numberWithBool:YES] forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -317,11 +317,11 @@
     _projectSettings.publishResolution_ios_tablet = NO;
     _projectSettings.publishResolution_ios_tablethd = NO;
 
-    [_projectSettings setValue:@(YES) forRelPath:@"pvr" andKey:@"isSmartSpriteSheet"];
-    [_projectSettings setValue:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:@"format_ios"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"pvr" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:@"format_ios"];
 
-    [_projectSettings setValue:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
-    [_projectSettings setValue:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:@"format_ios"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:@"format_ios"];
 
     _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
     [_publisher addPublishingTarget:_targetIOS];
@@ -339,6 +339,27 @@
     [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvr.plist"];
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvrtc.plist"];
+}
+
+- (void)testRepublishingWithoutCleaningCache
+{
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
+    _targetIOS.resolutions = @[@"tablet"];
+
+    [_publisher addPublishingTarget:_targetIOS];
+    // Yes that's correct, publishing twice
+    [_publisher start];
+    [_publisher start];
+
+    [self assertFilesExistRelativeToDirectory:@"Published-iOS/resources-tablet" filesPaths:@[
+            @"sheet.plist",
+            @"sheet.png"
+    ]];
+
+    [self assertFileExists:@"baa.spritebuilder/Packages/foo.sbpack/sheet.ppng"];
+    [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet.plist"];
 }
 
 - (void)testEnums

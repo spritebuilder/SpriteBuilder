@@ -177,7 +177,7 @@
 	NSString *outDir = [_outputDir stringByAppendingPathComponent:subPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    BOOL isGeneratedSpriteSheet = [[_projectSettings valueForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
+    BOOL isGeneratedSpriteSheet = [[_projectSettings propertyForRelPath:subPath andKey:@"isSmartSpriteSheet"] boolValue];
     if (!isGeneratedSpriteSheet)
 	{
         [_queue addOperationWithBlock:^
@@ -424,10 +424,10 @@
     // NOTE: For every spritesheet one shared dir is used, so we have to remove it on the
     // queue to ensure that later spritesheets don't add more sprites from previous passes
     [_queue addOperationWithBlock:^
-            {
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                [fileManager removeItemAtPath:[_projectSettings tempSpriteSheetCacheDirectory] error:NULL];
-            }];
+    {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        [fileManager removeItemAtPath:[_projectSettings tempSpriteSheetCacheDirectory] error:NULL];
+    }];
 
     NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPathIgnoringDirs:YES];
 
@@ -464,7 +464,8 @@
 
         [_queue addOperation:operation];
 
-        [_queue addOperationWithBlock:^{
+        [_queue addOperationWithBlock:^
+        {
             if (![publishIntermediateFilesLookup writeToFile:intermediateFileLookupPath])
             {
                 [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@", spriteSheetName, resolution]];

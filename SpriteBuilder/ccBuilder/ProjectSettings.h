@@ -50,48 +50,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 @class CCBWarnings;
 
 @interface ProjectSettings : NSObject
-{
-    NSString* projectPath;
-
-    NSString* publishDirectory;
-    NSString* publishDirectoryAndroid;
-
-    BOOL publishEnabledIOS;
-    BOOL publishEnabledAndroid;
-
-    BOOL publishResolution_ios_phone;
-    BOOL publishResolution_ios_phonehd;
-    BOOL publishResolution_ios_tablet;
-    BOOL publishResolution_ios_tablethd;
-    BOOL publishResolution_android_phone;
-    BOOL publishResolution_android_phonehd;
-    BOOL publishResolution_android_tablet;
-    BOOL publishResolution_android_tablethd;
-    
-    int publishAudioQuality_ios;
-    int publishAudioQuality_android;
-    
-    BOOL isSafariExist;
-    BOOL isChromeExist;
-    BOOL isFirefoxExist;
-
-    BOOL publishToZipFile;
-    BOOL onlyPublishCCBs;
-    NSString* exporter;
-    NSMutableArray* availableExporters;
-    BOOL deviceOrientationPortrait;
-    BOOL deviceOrientationUpsideDown;
-    BOOL deviceOrientationLandscapeLeft;
-    BOOL deviceOrientationLandscapeRight;
-    int resourceAutoScaleFactor;
-
-    NSString* versionStr;
-    BOOL needRepublish;
-    
-    CCBWarnings* lastWarnings;
-    
-    BOOL storing;
-}
 
 // Full path to the project file, e.g. /foo/baa.spritebuilder/baa.ccbproj
 @property (nonatomic, copy) NSString* projectPath;
@@ -119,10 +77,6 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 
 @property (nonatomic,assign) int publishAudioQuality_ios;
 @property (nonatomic,assign) int publishAudioQuality_android;
-
-@property (nonatomic,assign) BOOL isSafariExist;
-@property (nonatomic,assign) BOOL isChromeExist;
-@property (nonatomic,assign) BOOL isFirefoxExist;
 
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
@@ -161,27 +115,31 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 - (BOOL) store;
 - (id) serialize;
 
+
 // *** Smart Sprite Sheets ***
 - (void) makeSmartSpriteSheet:(RMResource*) res;
 - (void) removeSmartSpriteSheet:(RMResource*) res;
 - (NSArray*) smartSpriteSheetDirectories;
 
 // *** Setting and reading file properties ***
-- (void) setValue:(id) val forResource:(RMResource*) res andKey:(id) key;
-- (void) setValue:(id)val forRelPath:(NSString *)relPath andKey:(id)key;
-- (id) valueForResource:(RMResource*) res andKey:(id) key;
-- (id) valueForRelPath:(NSString*) relPath andKey:(id) key;
-- (void) removeObjectForResource:(RMResource*) res andKey:(id) key;
-- (void) removeObjectForRelPath:(NSString*) relPath andKey:(id) key;
-- (BOOL) isDirtyResource:(RMResource*) res;
-- (BOOL) isDirtyRelPath:(NSString*) relPath;
+// Will mark the resource as dirty if old value is not equal to new value
+- (void)setProperty:(id)newValue forResource:(RMResource *)res andKey:(id <NSCopying>)key;
+// Will mark the resource as dirty if old value is not equal to new value
+- (void)setProperty:(id)newValue forRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
+- (id)propertyForResource:(RMResource *)res andKey:(id <NSCopying>)key;
+- (id)propertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
+// Will mark the resource as dirty
+- (void)removePropertyForResource:(RMResource *)res andKey:(id <NSCopying>)key;
+// Will mark the resource as dirty
+- (void)removePropertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
 
 // *** Dirty markers ***
+- (BOOL) isDirtyResource:(RMResource*) res;
+- (BOOL) isDirtyRelPath:(NSString*) relPath;
 - (void) markAsDirtyResource:(RMResource*) res;
 - (void) markAsDirtyRelPath:(NSString*) relPath;
 - (void) clearAllDirtyMarkers;
 - (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
-
 
 // *** Handling moved and deleted resources ***
 - (void) removedResourceAt:(NSString*) relPath;
