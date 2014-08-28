@@ -218,10 +218,20 @@
                             <menuItem isSeparatorItem="YES" id="mar-Cw-LBm">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Project Settings..." keyEquivalent=";" id="1797">
+                            <menuItem title="Open Project in XCode" keyEquivalent="O" id="1797" userLabel="Menu Item - p.A.">
                                 <connections>
-                                    <action selector="menuPublishSettings:" target="494" id="1800"/>
+                                    <action selector="menuOpenProjectInXCode:" target="494" id="wcV-zy-HFJ"/>
                                     <binding destination="494" name="enabled" keyPath="projectSettings" id="1799">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSIsNotNil</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Project Settings..." keyEquivalent=";" id="ViA-1x-YYp">
+                                <connections>
+                                    <action selector="menuProjectSettings:" target="494" id="jXs-Vg-CcF"/>
+                                    <binding destination="494" name="enabled" keyPath="projectSettings" id="9Pp-pl-JeI">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSIsNotNil</string>
                                         </dictionary>
