@@ -13,13 +13,13 @@
 #import "ResourceManager.h"
 #import "NotificationNames.h"
 #import "ProjectSettings.h"
-#import "ResourceManagerPreivewAudio.h"
+#import "AudioPlayerViewController.h"
 
 @interface PreviewAudioViewController ()
 
 @property (nonatomic, strong) RMResource *previewedResource;
 @property (nonatomic, weak) ProjectSettings *projectSettings;
-@property (nonatomic, strong) ResourceManagerPreviewAudio *previewAudioViewController;
+@property (nonatomic, strong) AudioPlayerViewController *audioPlayerViewController;
 @property (nonatomic) BOOL initialUpdate;
 
 @end
@@ -43,14 +43,14 @@
 
 - (void)initializeAudioController
 {
-    self.previewAudioViewController = [[ResourceManagerPreviewAudio alloc] initWithNibName:@"ResourceManagerPreviewAudio" bundle:[NSBundle mainBundle]];
+    self.audioPlayerViewController = [[AudioPlayerViewController alloc] initWithNibName:@"AudioPlayerView" bundle:nil];
 
-    _previewAudioViewController.view.frame = CGRectMake(0, 0, _audioControllerContainer.frame.size.width, _audioControllerContainer.frame.size.height);
-    [_audioControllerContainer addSubview:_previewAudioViewController.view];
+    _audioPlayerViewController.view.frame = CGRectMake(0, 0, _audioControllerContainer.frame.size.width, _audioControllerContainer.frame.size.height);
+    [_audioControllerContainer addSubview:_audioPlayerViewController.view];
 
-    [_previewAudioViewController setupPlayer];
+    [_audioPlayerViewController setupPlayer];
 
-    [_previewAudioViewController loadAudioFile:_previewedResource.filePath];
+    [_audioPlayerViewController loadAudioFile:_previewedResource.filePath];
 }
 
 - (void)populateInitialValues
@@ -84,7 +84,7 @@
         return;
     }
 
-    // There's a inconsistency here for audio setting, no default values assumed by a absend key
+    // There's a inconsistency here for audio settings, no default values assumed by a absent key
     if ([value intValue] || isAudio)
     {
         [_projectSettings setProperty:value forResource:_previewedResource andKey:name];

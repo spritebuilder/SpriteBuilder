@@ -10,13 +10,13 @@
 #import "PreviewViewControllerProtocol.h"
 
 @class ProjectSettings;
-@class ResourceManagerPreviewAudio;
+@class AudioPlayerViewController;
 
 @interface PreviewAudioViewController : NSViewController <PreviewViewControllerProtocol>
 
 @property (nonatomic, weak) IBOutlet NSView *androidSettingsContainer;
-@property (nonatomic, weak) IBOutlet NSImageView *iconImage;
 @property (nonatomic, weak) IBOutlet NSView *audioControllerContainer;
+@property (nonatomic, weak) IBOutlet NSImageView *iconImage;
 
 // Bindings
 @property (nonatomic) int format_ios_sound;

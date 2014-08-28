@@ -229,8 +229,8 @@
 		9294EC9018C65EC10059014C /* CCBPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13D518B57A8100582959 /* CCBPhysicsJoint.m */; };
 		9294EC9318C660480059014C /* CCBPhyicsPivotJointPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */; };
 		9294EC9618C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9294EC9518C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m */; };
-		9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
-		9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */; };
+		9297636B187775A0008F997B /* AudioPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* AudioPlayerView.xib */; };
+		9297636D18777BAF008F997B /* AudioPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92976368187775A0008F997B /* AudioPlayerViewController.m */; };
 		9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */; };
 		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
@@ -254,7 +254,7 @@
 		92B8A32818E1063600EE52FC /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		92B91022193412A600E346B5 /* InspectorAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B91021193412A600E346B5 /* InspectorAnimation.xib */; };
 		92B91026193413F500E346B5 /* InspectorAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B91025193413F500E346B5 /* InspectorAnimation.m */; };
-		92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */; };
+		92BF5E5B187B43F00072C3A1 /* AudioPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92976369187775A0008F997B /* AudioPlayerView.xib */; };
 		92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8076F9521862459A003C4153 /* InspectorStringSimple.xib */; };
 		92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */; };
 		92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */; };
@@ -1543,9 +1543,9 @@
 		9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsPivotJointPlaceholder.m; sourceTree = "<group>"; };
 		9294EC9418C6606F0059014C /* CCBPhysicsPinJointPlacefolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPinJointPlacefolder.h; sourceTree = "<group>"; };
 		9294EC9518C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJointPlacefolder.m; sourceTree = "<group>"; };
-		92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManagerPreivewAudio.h; sourceTree = "<group>"; };
-		92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManagerPreviewAudio.m; sourceTree = "<group>"; };
-		92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResourceManagerPreviewAudio.xib; sourceTree = "<group>"; };
+		92976367187775A0008F997B /* AudioPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayerViewController.h; sourceTree = "<group>"; };
+		92976368187775A0008F997B /* AudioPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerViewController.m; sourceTree = "<group>"; };
+		92976369187775A0008F997B /* AudioPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioPlayerView.xib; sourceTree = "<group>"; };
 		9297AC0518A1BE94003C3705 /* PolyDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyDecomposition.h; sourceTree = "<group>"; };
 		9297AC0618A1BE94003C3705 /* PolyDecomposition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PolyDecomposition.mm; sourceTree = "<group>"; };
 		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
@@ -3685,9 +3685,9 @@
 		8369838819AC815F00110D82 /* Preview */ = {
 			isa = PBXGroup;
 			children = (
-				92976367187775A0008F997B /* ResourceManagerPreivewAudio.h */,
-				92976368187775A0008F997B /* ResourceManagerPreviewAudio.m */,
-				92976369187775A0008F997B /* ResourceManagerPreviewAudio.xib */,
+				92976367187775A0008F997B /* AudioPlayerViewController.h */,
+				92976368187775A0008F997B /* AudioPlayerViewController.m */,
+				92976369187775A0008F997B /* AudioPlayerView.xib */,
 				8369838F19AC834F00110D82 /* PreviewGenericViewController.h */,
 				8369839019AC834F00110D82 /* PreviewGenericViewController.m */,
 				8369839219AC836700110D82 /* PreviewGenericView.xib */,
@@ -5940,7 +5940,7 @@
 				B7DE84961937C6380039FB72 /* SpriteBuilder-logo.png in Resources */,
 				92BF5E5D187B658D0072C3A1 /* InspectorStringSimple.xib in Resources */,
 				92F0960918F8851300D47A94 /* inspector-body-bg.png in Resources */,
-				92BF5E5B187B43F00072C3A1 /* ResourceManagerPreviewAudio.xib in Resources */,
+				92BF5E5B187B43F00072C3A1 /* AudioPlayerView.xib in Resources */,
 				92154ACB18A5531800BD215C /* Icon@2x.png in Resources */,
 				80F90905183C188400A714FC /* seq-visible-faint.png in Resources */,
 				8045F136183ADA900082BD94 /* seq-visible.png in Resources */,
@@ -6556,7 +6556,7 @@
 				92B792CD18C92C60007DF895 /* Icon@2x.png in Resources */,
 				92B792CB18C92C60007DF895 /* InfoPlist.strings in Resources */,
 				8076F9531862459A003C4153 /* InspectorStringSimple.xib in Resources */,
-				9297636B187775A0008F997B /* ResourceManagerPreviewAudio.xib in Resources */,
+				9297636B187775A0008F997B /* AudioPlayerView.xib in Resources */,
 				92B792CC18C92C60007DF895 /* Icon.png in Resources */,
 				92B792C918C92C60007DF895 /* CCBPProperties.plist in Resources */,
 				92B792CA18C92C60007DF895 /* CCPhysicsSpringJoint-Info.plist in Resources */,
@@ -6627,7 +6627,7 @@
 				9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */,
 				9294EC9018C65EC10059014C /* CCBPhysicsJoint.m in Sources */,
 				9297AC2118A2C0D2003C3705 /* PolyDecomposition.mm in Sources */,
-				9297636D18777BAF008F997B /* ResourceManagerPreviewAudio.m in Sources */,
+				9297636D18777BAF008F997B /* AudioPlayerViewController.m in Sources */,
 				80271CCC1862478D00917BC0 /* InspectorStringSimple.m in Sources */,
 				80B149C9183D73930085935B /* SoundFileImageController.m in Sources */,
 				8045F13D183AF3FF0082BD94 /* SequencerButtonCell.m in Sources */,
