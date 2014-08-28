@@ -127,5 +127,4 @@
     [self setValue:@(format_android_sound_quality) withName:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY isAudio:YES];
 }
 
-
 @end

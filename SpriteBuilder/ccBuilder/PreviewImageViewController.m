@@ -102,7 +102,7 @@
         return;
     }
 
-    // There's a inconsistency here for audio setting, no default values assumed by a absend key
+    // There's a inconsistency here for audio settings, no default values assumed by a absent key
     if ([value intValue] || isAudio)
     {
         [_projectSettings setProperty:value forResource:_previewedResource andKey:name];

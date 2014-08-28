@@ -8,6 +8,7 @@
 
 #import "PreviewGenericViewController.h"
 #import "RMResource.h"
+#import "ProjectSettings.h"
 
 @interface PreviewGenericViewController ()
 
@@ -16,7 +17,7 @@
 
 @implementation PreviewGenericViewController
 
-- (void)setPreviewedResource:(RMResource *)previewedResource
+- (void)setPreviewedResource:(RMResource *)previewedResource projectSettings:(ProjectSettings *)projectSettings
 {
     // Nothing to show at the moment, maybe a file icon?
 }

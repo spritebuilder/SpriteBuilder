@@ -9,11 +9,9 @@
 #import "PreviewSpriteSheetViewController.h"
 #import "RMResource.h"
 #import "ProjectSettings.h"
-#import "ResourceManagerPreivewAudio.h"
 #import "MiscConstants.h"
 #import "CCBImageView.h"
 #import "ImageFormatAndPropertiesHelper.h"
-#import "ResourceTypes.h"
 #import "ResourcePropertyKeys.h"
 #import "NotificationNames.h"
 #import "ResourceManager.h"
@@ -77,7 +75,7 @@
         return;
     }
 
-    // There's a inconsistency here for audio setting, no default values assumed by a absend key
+    // There's a inconsistency here for audio settings, no default values assumed by a absent key
     if ([value intValue] || isAudio)
     {
         [_projectSettings setProperty:value forResource:_previewedResource andKey:name];
