@@ -29,7 +29,7 @@
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-	return [self effectWithEnvironment:nil normalMap:nil];
+	return [self effectWithShininess:0.0f environment:nil];
 }
 
 -(id)serialize

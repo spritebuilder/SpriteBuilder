@@ -66,7 +66,7 @@
 	if(self.effects.count == 0)
 		return;
 	
-	self.effect = [[CCEffectStack alloc] initWithEffects:self.effects];
+	self.effect = [[CCEffectStack alloc] initWithArray:self.effects];
 	
 }
 

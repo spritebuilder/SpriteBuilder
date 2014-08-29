@@ -16,7 +16,7 @@
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-	return [self effectWithPixelBlurRadius:4 intensity:0.0f luminanceThreshold:0.0f];
+	return [self effectWithBlurRadius:4 intensity:0.0f luminanceThreshold:0.0f];
 }
 
 -(id)serialize
