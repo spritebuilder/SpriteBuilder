@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B77F1B2D17B978D7009739AE"
                BuildableName = "PROJECTNAME.app"
-               BlueprintName = "PROJECTNAME"
+               BlueprintName = "PROJECTNAME iOS"
                ReferencedContainer = "container:PROJECTNAME.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B77F1B2D17B978D7009739AE"
             BuildableName = "PROJECTNAME.app"
-            BlueprintName = "PROJECTNAME"
+            BlueprintName = "PROJECTNAME iOS"
             ReferencedContainer = "container:PROJECTNAME.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -53,16 +53,11 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B77F1B2D17B978D7009739AE"
             BuildableName = "PROJECTNAME.app"
-            BlueprintName = "PROJECTNAME"
+            BlueprintName = "PROJECTNAME iOS"
             ReferencedContainer = "container:PROJECTNAME.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
-         <AdditionalOption
-            key = "OBJC_PRINT_EXCEPTIONS"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
@@ -76,7 +71,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B77F1B2D17B978D7009739AE"
             BuildableName = "PROJECTNAME.app"
-            BlueprintName = "PROJECTNAME"
+            BlueprintName = "PROJECTNAME iOS"
             ReferencedContainer = "container:PROJECTNAME.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
