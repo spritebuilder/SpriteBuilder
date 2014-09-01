@@ -4485,6 +4485,14 @@ static BOOL hideAllToNextSeparator;
 	return [SBVersionComparitor new];
 }
 
+- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater
+{
+#if TESTING
+	return NO;
+#else 
+	return YES;
+#endif
+}
 
 - (NSString *)feedURLStringForUpdater:(id)updater
 {
