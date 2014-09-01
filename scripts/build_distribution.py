@@ -21,7 +21,7 @@ class BuildDistribution:
 
         parser = argparse.ArgumentParser(description='Build distribution build')
         parser.add_argument('--version',required=True)
-        parser.add_argument('-sku', choices=('pro','default'), default='defualt', help='The build sku (default:default)')
+        parser.add_argument('-sku', choices=('pro','default'), default='default', help='The build sku (default:default)')
         parser.add_argument('-private_key', default=None, help='The private_key to secure the pro version. Pro version only ')
         parser.add_argument('-dcf_hash', default=None, help='The githash that dcf was taken from. Pro version only. Optional ')
         parser.add_argument('-dcf_tag', default=None, help='The git tag that dcf was taken from. Pro version only. Optional ')
@@ -36,6 +36,8 @@ class BuildDistribution:
             return 1
 
         os.chdir('../');
+        
+        self.rootfolder = os.getcwd()
         
         self.run_tests = args.tests
     
@@ -171,18 +173,18 @@ class BuildDistribution:
         #Copy cocos version file.
         shutil.copyfile('SpriteBuilder/libs/cocos2d-iphone/VERSION','Generated/cocos2d_version.txt')
 
-        self.generate_template_project('PROJECTNAME')
-        self.generate_template_project('SPRITEKITPROJECTNAME')    
+        self.generate_template_project('PROJECTNAME',sku_folder=sku)
+        self.generate_template_project('SPRITEKITPROJECTNAME',sku_folder='')    
 
 
-    def generate_template_project(self, project_name):
+    def generate_template_project(self, project_name,sku_folder):
         #create generated folder.
 
     
         if not os.path.exists('Generated'):
             os.makedirs('Generated')
         
-        os.chdir('Support/{project_name}.spritebuilder/'.format(project_name=project_name))
+        os.chdir('{rootfolder}/Support/{sku_folder}/{project_name}.spritebuilder/'.format(project_name=project_name,rootfolder=self.rootfolder,sku_folder=sku_folder))
 
 
         # Generate template project
@@ -197,21 +199,21 @@ class BuildDistribution:
         if os.path.exists(user_data):
             shutil.rmtree(user_data)
 
-        project_zip_filename =  '../../Generated/{project_name}.zip'.format(project_name=project_name);
+        project_zip_filename =  '{rootfolder}/Generated/{project_name}.zip'.format(project_name=project_name,rootfolder=self.rootfolder);
 
         if os.path.exists(project_zip_filename):
             os.remove(project_zip_filename)
 
 
     
-        zip_project_command = 'zip -q -r \"../../Generated/{project_name}.zip\" .* -x "../*" "*.git*" "*/tests/*" "*.DS_Store"'.format(project_name=project_name)
+        zip_project_command = 'zip -q -r \"{rootfolder}/Generated/{project_name}.zip\" .* -x "../*" "*.git*" "*/tests/*" "*.DS_Store"'.format(project_name=project_name,rootfolder=self.rootfolder)
         subprocess.check_call(zip_project_command, shell=True)
-        shutil.copy('../default_projects.gitignore','./.gitignore')
-        zip_project_command = "zip -q \"../../Generated/{project_name}.zip\" .gitignore".format(project_name=project_name)
+        shutil.copy('{rootfolder}/Support/default_projects.gitignore'.format(rootfolder=self.rootfolder),'./.gitignore')
+        zip_project_command = "zip -q \"{rootfolder}/Generated/{project_name}.zip\" .gitignore".format(project_name=project_name,rootfolder=self.rootfolder)
         subprocess.check_call(zip_project_command, shell=True)
         os.remove('.gitignore')
 
-        os.chdir('../..')    
+        os.chdir(self.rootfolder)    
 
 try:
     if __name__ == '__main__':
