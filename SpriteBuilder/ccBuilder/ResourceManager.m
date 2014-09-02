@@ -1204,7 +1204,19 @@
     return NULL;
 }
 
-- (RMDirectory *)directoryForPath:(NSString *)fullPath
+- (RMResource *)resourceForRelPath:(NSString *)relPath
+{
+    for (RMDirectory *dir in activeDirectories)
+    {
+        RMResource *resource = [self resourceForPath:[dir.dirPath stringByAppendingPathComponent:relPath] inDir:dir];
+        if (resource)
+        {
+            return resource;
+        }
+    }
+    return NULL;
+}
+
 - (RMDirectory *)activeDirectoryForPath:(NSString *)fullPath
 {
     for (RMDirectory*directory in activeDirectories)

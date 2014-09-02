@@ -93,8 +93,9 @@
 + (void) touchResource:(RMResource*) res;
 
 // *** Locating resources ***
-- (RMResource*) resourceForPath:(NSString*) path;
-- (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir;
+- (RMResource *)resourceForPath:(NSString *)path;
+- (RMResource *)resourceForPath:(NSString *)path inDir:(RMDirectory *)dir;
+- (RMResource *)resourceForRelPath:(NSString *)relPath;
 - (RMDirectory *)activeDirectoryForPath:(NSString *)fullPath;
 
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;

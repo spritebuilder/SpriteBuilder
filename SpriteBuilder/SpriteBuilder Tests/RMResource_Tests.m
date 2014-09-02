@@ -46,13 +46,4 @@
     XCTAssertFalse([_resource isSpriteSheet]);
 }
 
-- (void)testIsInSpriteSheet
-{
-    RMResource *spriteSheet;
-
-    _resource.filePath = [self fullPathForFile:@""];
-
-    XCTAssertTrue([_resource isInSpriteSheet]);
-}
-
 @end
