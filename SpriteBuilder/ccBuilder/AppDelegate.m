@@ -638,6 +638,7 @@ typedef enum
     [self setupProjectTilelessEditor];
     [self setupExtras];
     [self setupResourceCommandController];
+	[self setupSparkleGui];
 	
     [window restorePreviousOpenedPanels];
 
@@ -4480,6 +4481,14 @@ static BOOL hideAllToNextSeparator;
 
 #pragma mark Sparkle
 
+-(void)setupSparkleGui
+{
+#if SB_SANDBOXED
+	[self.menuCheckForUpdates setHidden:YES];
+#endif
+}
+
+
 - (id<SUVersionComparison>)versionComparatorForUpdater:(SUUpdater *)updater
 {
 	return [SBVersionComparitor new];
@@ -4487,7 +4496,7 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater
 {
-#if TESTING
+#if TESTING || SB_SANDBOXED
 	return NO;
 #else 
 	return YES;
@@ -4497,7 +4506,7 @@ static BOOL hideAllToNextSeparator;
 - (NSString *)feedURLStringForUpdater:(id)updater
 {
 	//Local Host testing.
-//	return @"http://localhost/sites/version";
+    //return @"http://localhost/sites/version";
 	
 #ifdef SPRITEBUILDER_PRO
 	return @"http://update.spritebuilder.com/pro/";
