@@ -168,6 +168,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 
 // *** Misc ***
 - (NSString* ) getVersion;
+- (NSDictionary *)getVersionDictionary;
 
 // Tries to find the relative path among all packages for a given absolute path
 // Example: "/foo/Packages/baa.sbpack" as available packages and absolutePath given is

@@ -136,6 +136,10 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
+#import "LicenseManager.h"
+#import "LicenseWindow.h"
+#import "SUVersionComparisonProtocol.h"
+#import "SBUpdater.h"
 #import "OpenProjectInXCode.h"
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -546,6 +550,8 @@ typedef enum
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+	
+	
 #ifndef TESTING
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"138b7cc7454016e05dbbc512f38082b7" companyName:@"Apportable" crashReportManagerDelegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
@@ -632,12 +638,39 @@ typedef enum
     [self setupProjectTilelessEditor];
     [self setupExtras];
     [self setupResourceCommandController];
+	[self setupSparkleGui];
 	
     [window restorePreviousOpenedPanels];
 
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
+
+#ifdef TESTING
+	return;
+#endif
+	
+
+#ifndef SPRITEBUILDER_PRO
+    // Open registration window
+    if(![self openRegistration])
+	{
+		[[NSApplication sharedApplication] terminate:self];
+	}
+#else
+	if([LicenseManager requiresLicensing])
+	{
+		if(![self openLicensingWindow])
+		{
+			[[NSApplication sharedApplication] terminate:self];
+		}
+	}
+
+	[self setupSpriteBuilderPro];
+#endif
+	
+	
+	
     if (delayOpenFiles)
     {
         [self openFiles:delayOpenFiles];
@@ -661,10 +694,6 @@ typedef enum
 
     [self toggleFeatures];
 
-	[self setupSpriteBuilderPro];
-
-    // Open registration window
-    [self openRegistrationWindow:NULL];
 }
 
 - (void)setupResourceCommandController
@@ -1940,9 +1969,18 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) openProject:(NSString*) fileName
 {
-    // Close currently open project
+    if (![fileName hasSuffix:@".spritebuilder"] && ![fileName hasSuffix:@".ccbproj"])
+    {
+        return NO;
+    }
+
     [self closeProject];
     
+    if ([fileName hasSuffix:@".ccbproj"])
+    {
+        fileName = [fileName stringByDeletingLastPathComponent];
+    }
+
     // Add to recent list of opened documents
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
     
@@ -2217,12 +2255,6 @@ static BOOL hideAllToNextSeparator;
     [[ResourceManager sharedManager] updateForNewFile:fileName];
 }
 
-/*
-- (BOOL) application:(NSApplication *)sender openFile:(NSString *)filename
-{
-    [self openProject:filename];
-    return YES;
-}*/
 
 - (NSString*) findProject:(NSString*) path
 {
@@ -2245,23 +2277,9 @@ static BOOL hideAllToNextSeparator;
 {
 	for( NSString* filename in filenames )
 	{
-        /*
-		if( [filename hasSuffix:@".ccb"] )
-		{
-			NSString* folderPathToSearch = [filename stringByDeletingLastPathComponent];
-			NSString* projectFile = [self findProject:folderPathToSearch];
-			if( projectFile )
-			{
-				[self openProject:projectFile];
-				[self openFile:filename];
-			}
-		}*/
-        if ([filename hasSuffix:@".spritebuilder"])
-		{
 			[self openProject:filename];		
 		}
 	}
-}
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
@@ -4397,11 +4415,16 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) openRegistrationWindow:(id)sender
 {
+	[self openRegistration];
+}
 	
-    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
+	
+-(BOOL)openRegistration
+{
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
     {
         // Email already registered or skipped
-        return;
+        return YES;
     }
     
     if (!registrationWindow)
@@ -4409,8 +4432,35 @@ static BOOL hideAllToNextSeparator;
         registrationWindow = [[RegistrationWindow alloc] initWithWindowNibName:@"RegistrationWindow"];
     }
     
-    [[registrationWindow window] makeKeyAndOrderFront:window];
+	NSInteger result = [NSApp runModalForWindow: registrationWindow.window];
+	[NSApp endSheet:registrationWindow.window];
+	[registrationWindow.window close];
+	
+	if(result == NSModalResponseStop)
+	{
+		return YES;
+	}
+
+	return NO;
 }
+
+-(BOOL)openLicensingWindow
+{
+	LicenseWindow * licenseWindow = [[LicenseWindow alloc] initWithWindowNibName:@"LicenseWindow"];
+	
+	NSInteger result = [NSApp runModalForWindow: licenseWindow.window];
+	[NSApp endSheet:licenseWindow.window];
+	[licenseWindow.window close];
+	
+	if(result == NSModalResponseStop)
+	{
+		return YES;
+	}
+	
+	return NO;
+
+}
+
 
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window
 {
@@ -4429,6 +4479,46 @@ static BOOL hideAllToNextSeparator;
 }
 
 
+#pragma mark Sparkle
+
+-(void)setupSparkleGui
+{
+#if SB_SANDBOXED
+	[self.menuCheckForUpdates setHidden:YES];
+#endif
+}
+
+
+- (id<SUVersionComparison>)versionComparatorForUpdater:(SUUpdater *)updater
+{
+	return [SBVersionComparitor new];
+}
+
+- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater
+{
+#if TESTING || SB_SANDBOXED
+	return NO;
+#else 
+	return YES;
+#endif
+}
+
+- (NSString *)feedURLStringForUpdater:(id)updater
+{
+	//Local Host testing.
+    //return @"http://localhost/sites/version";
+	
+#ifdef SPRITEBUILDER_PRO
+	return @"http://update.spritebuilder.com/pro/";
+#else
+	return @"http://update.spritebuilder.com";
+#endif
+
+	
+}
+
+#pragma mark -
+
 -(void)setupSpriteBuilderPro
 {
 
@@ -4444,22 +4534,12 @@ static BOOL hideAllToNextSeparator;
 	
 	AndroidPluginInstallerWindow *installerWindow = [[AndroidPluginInstallerWindow alloc] initWithWindowNibName:@"AndroidPluginInstallerWindow"];
 	
-    // Show new document sheet
-    [NSApp beginSheet:[installerWindow window]
-       modalForWindow:window
-        modalDelegate:NULL
-       didEndSelector:NULL
-          contextInfo:NULL];
 	
-	CGRect parentFrame = self.window.frame;
-	CGRect windowFrame = [installerWindow window].frame;
-	windowFrame.origin = CGPointMake(parentFrame.origin.x + parentFrame.size.width/2 - windowFrame.size.width/2, parentFrame.origin.y + parentFrame.size.height - windowFrame.size.height - 100 );
+	[[installerWindow window] center];
+    [[installerWindow window] makeKeyAndOrderFront:self];
 	
-	[[installerWindow window] setFrame:windowFrame display:YES];
  
-	[NSApp runModalForWindow:[installerWindow window]];
-    [NSApp endSheet:[installerWindow window]];
-    [[installerWindow window] close];
+	[[NSApplication sharedApplication] runModalForWindow:[installerWindow window]];
 	
 #endif
 }

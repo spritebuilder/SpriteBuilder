@@ -124,6 +124,8 @@ enum {
 @class ResourceManagerOutlineView;
 @class CCBPublisher;
 
+typedef void (^CompletionCallback) (BOOL success);
+
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
 - (void) customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
@@ -345,6 +347,7 @@ enum {
 @property (nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;
 
+@property (weak) IBOutlet NSMenuItem *menuCheckForUpdates;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;

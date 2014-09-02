@@ -26,6 +26,7 @@
 #import "AppDelegate.h"
 
 @interface AboutWindow ()
+@property (weak) IBOutlet NSButton *buttonViewOnGithub;
 
 @end
 
@@ -46,9 +47,9 @@
     [super windowDidLoad];
     
     // Load version file into version text field
-    NSString* versionPath = [[NSBundle mainBundle] pathForResource:@"Version" ofType:@"txt" inDirectory:@"Generated"];
-    
-    NSString* version = [NSString stringWithContentsOfFile:versionPath encoding:NSUTF8StringEncoding error:NULL];
+	
+
+    NSString* version = [self versionAboutInfo];
     
     if (version)
     {
@@ -66,6 +67,52 @@
     [closeButton setFrameOrigin:NSMakePoint(21, 317)];
     NSView* contentView = self.window.contentView;
     [contentView addSubview:closeButton];
+	
+
+#ifndef SPRITEBUILDER_PRO
+	//Not pro version.
+	self.proSuffix.stringValue = @"";
+#else
+	//If is Pro version
+	[self.buttonViewOnGithub setHidden:YES];
+#endif
+
+
+}
+
+-(NSString*)versionAboutInfo
+{
+	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
+	NSDictionary * versionDictionary = [projectSettings getVersionDictionary];
+
+#ifdef SPRITEBUILDER_PRO
+	
+	
+	
+	NSString * aboutInfo = @"";
+	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Pro Version: %@\n", versionDictionary[@"version"]]];
+	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Revision: %@\n", versionDictionary[@"revision"]]];
+
+	//Compiler version.
+	NSString * compilerVersion = nil;
+	if([versionDictionary[@"dcf_tag"] isEqualToString:@"undefined"])
+	{
+		compilerVersion = versionDictionary[@"dcf_hash"];
+	}
+	else
+	{
+		compilerVersion = versionDictionary[@"dcf_tag"];
+		compilerVersion = [compilerVersion stringByReplacingOccurrencesOfString:@"release_" withString:@""];
+	}
+
+	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"Compiler Version: %@\n", compilerVersion]];
+
+	
+#else
+	NSString * aboutInfo = [NSString stringWithFormat:@"Version:%@",versionDictionary[@"version"]];
+#endif
+	
+	return aboutInfo;
 }
 
 - (IBAction)btnViewOnGithub:(id)sender
