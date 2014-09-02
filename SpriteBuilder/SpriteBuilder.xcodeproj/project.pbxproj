@@ -907,6 +907,7 @@
 		E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */; };
 		E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */; };
 		E525FF7AD7E8BFE584A8BBDE /* NSString+Packages.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA15437B8CAB27509534 /* NSString+Packages.m */; };
+		E525FF85C570F31D1366E379 /* RMResource_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F1FBFEDEC93340707F7B /* RMResource_Tests.m */; };
 		E525FF949D54CFB8CD7B9F55 /* RMResourceBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F001371D1628D87FFF3E /* RMResourceBase.m */; };
 		E525FFEC30A90DA81B17E9F5 /* SemanticVersioning.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0662ED78DDE9C8DFFBB /* SemanticVersioning.m */; };
 		E525FFF21919490B3568DC1F /* ZipDirectoryOperation_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC007BC96FC532967575 /* ZipDirectoryOperation_Tests.m */; };
@@ -2392,6 +2393,7 @@
 		E525F1E97AEC538F15CC489E /* ZipDirectoryOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipDirectoryOperation.m; sourceTree = "<group>"; };
 		E525F1EF70664A8689877329 /* PublishIntermediateFilesLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishIntermediateFilesLookup.h; sourceTree = "<group>"; };
 		E525F1FAD431AB78175F8B37 /* RemoveFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand_Tests.m; sourceTree = "<group>"; };
+		E525F1FBFEDEC93340707F7B /* RMResource_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource_Tests.m; sourceTree = "<group>"; };
 		E525F20B1403AD6F5FCAD713 /* PackageExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageExporter.h; sourceTree = "<group>"; };
 		E525F213547BCB1BBA54EC87 /* SBAssserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAssserts.h; sourceTree = "<group>"; };
 		E525F215F31637B52F646A82 /* PackageRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageRenamer.h; sourceTree = "<group>"; };
@@ -3610,6 +3612,7 @@
 				E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */,
 				E525FC9B1AB11FC59D613AA1 /* PackagePublishSettings_Tests.m */,
 				E525FB3851A1B28013282F4C /* PublishOSSettings_Tests.m */,
+				E525F347FBAAE542AEA696F2 /* ValueObjects */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -5202,6 +5205,14 @@
 				E525F2BA53C07A15A1BD7384 /* PackageMigrationController.h */,
 			);
 			name = Migration;
+			sourceTree = "<group>";
+		};
+		E525F347FBAAE542AEA696F2 /* ValueObjects */ = {
+			isa = PBXGroup;
+			children = (
+				E525F1FBFEDEC93340707F7B /* RMResource_Tests.m */,
+			);
+			name = ValueObjects;
 			sourceTree = "<group>";
 		};
 		E525F4E8DC228E3C24BAE4D6 /* TestHelpers */ = {
@@ -7039,6 +7050,7 @@
 				E525FFF21919490B3568DC1F /* ZipDirectoryOperation_Tests.m in Sources */,
 				E525FBFD616A1BE9F86C2312 /* PublishOSSettings_Tests.m in Sources */,
 				E525F0AAD83A6EC0D743511F /* ResourceManager+Publishing_Tests.m in Sources */,
+				E525FF85C570F31D1366E379 /* RMResource_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
