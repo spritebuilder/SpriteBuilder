@@ -12,6 +12,7 @@
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "FileSystemTestCase.h"
+#import "ProjectSettings+Packages.h"
 
 @interface RMResource_Tests : FileSystemTestCase
 

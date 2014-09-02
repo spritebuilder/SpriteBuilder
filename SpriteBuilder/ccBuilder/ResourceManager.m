@@ -1230,7 +1230,6 @@
     return nil;
 }
 
-
 #pragma mark - Locating resources
 
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource
@@ -1274,6 +1273,23 @@
         }
     }
     return dirPath;
+}
+
+
+#pragma mark SpriteSheet helper
+
+- (BOOL)isResourceInSpriteSheet:(RMResource *)resource
+{
+    if (resource.type != kCCBResTypeImage)
+    {
+        return NO;
+    }
+
+    NSString *containingDir = [resource.filePath stringByDeletingLastPathComponent];
+
+    RMResource *potentialSpriteSheet = [self resourceForPath:containingDir];
+
+    return [potentialSpriteSheet isSpriteSheet];
 }
 
 

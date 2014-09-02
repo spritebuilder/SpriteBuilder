@@ -102,6 +102,9 @@
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;
 - (NSString *)dirPathForResource:(id)resource;
 
+// *** SpriteSheet helper ***
+- (BOOL)isResourceInSpriteSheet:(RMResource *)resource;
+
 // *** Debug ***
 - (void) debugPrintDirectories;
 
