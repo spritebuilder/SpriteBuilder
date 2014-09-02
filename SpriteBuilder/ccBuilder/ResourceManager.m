@@ -60,11 +60,7 @@
 #define kIgnoredExtensionsKey @"ignoredDirectoryExtensions"
 
 + (void)initialize {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [NSArray arrayWithObjects:@"git", @"svn", @"xcodeproj", nil], 
-      kIgnoredExtensionsKey,
-      nil]];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{kIgnoredExtensionsKey : @[@"git", @"svn", @"xcodeproj"]}];
 }
 
 - (BOOL)shouldPrunePath:(NSString *)dirPath {
@@ -93,7 +89,7 @@
 - (void) loadFontListTTF
 {
     NSMutableDictionary* fontInfo = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"FontListTTF" ofType:@"plist"]];
-    systemFontList = [fontInfo objectForKey:@"supportedFonts"];
+    systemFontList = fontInfo[@"supportedFonts"];
 }
 
 - (id) init
@@ -152,12 +148,12 @@
 
 + (NSArray*) resIndependentExts
 {
-    return [NSArray arrayWithObjects:@"@2x",@"-phone",@"-tablet",@"-tablethd", @"-phonehd", @"-html5", @"-auto", nil];
+    return @[@"@2x", @"-phone", @"-tablet", @"-tablethd", @"-phonehd", @"-html5", @"-auto"];
 }
 
 + (NSArray*) resIndependentDirs
 {
-    return [NSArray arrayWithObjects:@"resources-phone", @"resources-phonehd", @"resources-tablet", @"resources-tablethd", @"resources-html5", @"resources-auto", nil];
+    return @[@"resources-phone", @"resources-phonehd", @"resources-tablet", @"resources-tablethd", @"resources-html5", @"resources-auto"];
 }
 
 + (BOOL) isResolutionDependentFile: (NSString*) file
@@ -265,7 +261,7 @@
     NSDictionary* resources = dir.resources;
     for (NSString* file in resources)
     {
-        RMResource* res = [resources objectForKey:file];
+        RMResource* res = resources[file];
         res.touched = NO;
     }
 }
@@ -273,7 +269,7 @@
 - (void) updateResourcesForPath:(NSString*) path
 {
     NSFileManager* fm = [NSFileManager defaultManager];
-    RMDirectory* dir = [directories objectForKey:path];
+    RMDirectory* dir = directories[path];
     
     NSArray* resolutionDirs = [ResourceManager resIndependentDirs];
     
@@ -308,7 +304,7 @@
      
         if ([self shouldPrunePath:file]) continue;
         
-        RMResource* res = [resources objectForKey:file];
+        RMResource* res = resources[file];
         NSDictionary* attr = [fm attributesOfItemAtPath:file error:NULL];
         NSDate* modifiedTime = [attr fileModificationDate];
         
@@ -378,10 +374,10 @@
             if (res.type == kCCBResTypeDirectory)
             {
                 [self addDirectory:file];
-                res.data = [directories objectForKey:file];
+                res.data = directories[file];
             }
             
-            [resources setObject:res forKey:file];
+            resources[file] = res;
             
             if (res.type != kCCBResTypeNone) resourcesChanged = YES;
         }
@@ -394,7 +390,7 @@
     
     for (NSString* file in resources)
     {
-        RMResource* res = [resources objectForKey:file];
+        RMResource* res = resources[file];
         if (!res.touched)
         {
             [removedFiles addObject:file];
@@ -422,7 +418,7 @@
         
         for (NSString* file in resources)
         {
-            RMResource* res = [resources objectForKey:file];
+            RMResource* res = resources[file];
             if (res.type == kCCBResTypeImage
                 || res.type == kCCBResTypeSpriteSheet
                 || res.type == kCCBResTypeDirectory)
@@ -508,7 +504,7 @@
     }
     
     // Check if directory is already added (then add to its count)
-    RMDirectory* dir = [directories objectForKey:dirPath];
+    RMDirectory* dir = directories[dirPath];
     if (dir)
     {
         dir.count++;
@@ -521,7 +517,7 @@
 
         dir.count = 1;
         dir.dirPath = dirPath;
-        [directories setObject:dir forKey:dirPath];
+        directories[dirPath] = dir;
         
         [self updatedWatchedPaths];
     }
@@ -537,14 +533,14 @@
 
 - (void) removeDirectory:(NSString *)dirPath
 {
-    RMDirectory* dir = [directories objectForKey:dirPath];
+    RMDirectory* dir = directories[dirPath];
     if (dir)
     {
         // Remove sub directories
         NSDictionary* resources = dir.resources;
         for (NSString* file in resources)
         {
-            RMResource* res = [resources objectForKey:file];
+            RMResource* res = resources[file];
             if (res.type == kCCBResTypeDirectory)
             {
                 [self removeDirectory:file];
@@ -574,7 +570,7 @@
     
     for (NSString* dirPath in ad)
     {
-        RMDirectory* dir = [directories objectForKey:dirPath];
+        RMDirectory* dir = directories[dirPath];
         if (dir)
         {
             [activeDirectories addObject:dir];
@@ -586,7 +582,7 @@
 
 - (void) setActiveDirectory:(NSString *)dir
 {
-    [self setActiveDirectories:[NSArray arrayWithObject:dir]];
+    [self setActiveDirectories:@[dir]];
 }
 
 - (void) addResourceObserver:(id)observer
@@ -640,7 +636,7 @@
 - (NSString*) mainActiveDirectoryPath
 {
     if ([activeDirectories count] == 0) return NULL;
-    RMDirectory* dir = [activeDirectories objectAtIndex:0];
+    RMDirectory* dir = activeDirectories[0];
     return dir.dirPath;
 }
 
@@ -768,8 +764,7 @@
         
         NSTask* pngTask = [[NSTask alloc] init];
         [pngTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"pngquant"]];
-        NSMutableArray* args = [NSMutableArray arrayWithObjects:
-                                @"--force", @"--ext", @".png", dstFile, nil];
+        NSMutableArray* args = [@[@"--force", @"--ext", @".png", dstFile] mutableCopy];
         [pngTask setArguments:args];
         [pngTask launch];
         [pngTask waitUntilExit];
@@ -812,7 +807,7 @@
         NSArray* resolutions = ad.currentDocument.resolutions;
         if (!resolutions) return NULL;
         
-        ResolutionSetting* res = [resolutions objectAtIndex:ad.currentDocument.currentResolution];
+        ResolutionSetting* res = resolutions[ad.currentDocument.currentResolution];
         
         for (RMDirectory* dir in activeDirectories)
         {
@@ -839,7 +834,7 @@
             {
                 // Check if the file exists in cache
                 NSString* ext = @"";
-                if ([res.exts count] > 0) ext = [res.exts objectAtIndex:0];
+                if ([res.exts count] > 0) ext = (res.exts)[0];
                 
                 NSString* cachedFile = [ad.projectSettings.displayCacheDirectory stringByAppendingPathComponent:path];
                 if (![ext isEqualToString:@""])
@@ -892,7 +887,7 @@
     NSString* fileType = [file pathExtension];
     NSString* fileNoExt = [file stringByDeletingPathExtension];
     
-    ResolutionSetting* res = [resolutions objectAtIndex:ad.currentDocument.currentResolution];
+    ResolutionSetting* res = resolutions[ad.currentDocument.currentResolution];
     
     for (NSString* ext in res.exts)
     {
@@ -980,7 +975,7 @@
                 // Set iOS format to mp4 for long sounds
                 ProjectSettings* settings = [AppDelegate appDelegate].projectSettings;
                 NSString* relPath = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
-                [settings setProperty:[NSNumber numberWithInt:kCCBPublishFormatSound_ios_mp4] forRelPath:relPath andKey:@"format_ios_sound"];
+                [settings setProperty:@(kCCBPublishFormatSound_ios_mp4) forRelPath:relPath andKey:@"format_ios_sound"];
             }
             importedFile = YES;
         
@@ -1210,6 +1205,7 @@
 }
 
 - (RMDirectory *)directoryForPath:(NSString *)fullPath
+- (RMDirectory *)activeDirectoryForPath:(NSString *)fullPath
 {
     for (RMDirectory*directory in activeDirectories)
     {
@@ -1235,7 +1231,7 @@
         return nil;
     }
 
-    RMDirectory *dir = [dirs objectAtIndex:0];
+    RMDirectory *dir = dirs[0];
     if (!dirPath)
     {
         dirPath = dir.dirPath;
