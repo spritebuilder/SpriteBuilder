@@ -56,6 +56,7 @@
 @property (nonatomic,strong) NSArray* activeDirectories;
 @property (nonatomic,readonly) NSString* mainActiveDirectoryPath;
 @property (nonatomic,assign) BOOL tooManyDirectoriesAdded;
+@property (nonatomic,weak) ProjectSettings *projectSettings;
 
 @property (nonatomic,readonly) NSArray* systemFontList;
 

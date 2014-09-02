@@ -1,8 +1,6 @@
 #import "RMDirectory.h"
-#import "MiscConstants.h"
 #import "ResourceTypes.h"
 #import "ProjectSettings.h"
-#import "AppDelegate.h"
 #import "RMResource.h"
 
 
@@ -52,15 +50,13 @@
 {
     if (dirPath)
     {
-        ProjectSettings* projectSettings = [AppDelegate appDelegate].projectSettings;
-
         RMResource* dirRes = [[RMResource alloc] init];
         dirRes.type = kCCBResTypeDirectory;
         dirRes.filePath = dirPath;
 
-        if (projectSettings)
+        if (_projectSettings)
         {
-            BOOL isSmartSpriteSheet = [[projectSettings propertyForResource:dirRes andKey:@"isSmartSpriteSheet"] boolValue];
+            BOOL isSmartSpriteSheet = [[_projectSettings propertyForResource:dirRes andKey:@"isSmartSpriteSheet"] boolValue];
             return isSmartSpriteSheet;
         }
     }

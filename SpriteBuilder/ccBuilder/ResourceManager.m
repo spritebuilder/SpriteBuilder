@@ -515,6 +515,7 @@
           ? [[RMPackage alloc] init]
           : [[RMDirectory alloc] init];
 
+        dir.projectSettings = _projectSettings;
         dir.count = 1;
         dir.dirPath = dirPath;
         directories[dirPath] = dir;
