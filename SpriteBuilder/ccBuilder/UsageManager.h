@@ -16,10 +16,16 @@ extern NSString * kSbUserID;
     NSString* _userID;
 }
 
+@property (readonly) NSString * userID;
+
 - (void) registerUsage;
+- (void) registerEmail:(NSString*)email reveiveNewsLetter:(BOOL)receiveNewsLetter;
 
-- (void) registerEmail:(NSString*)email;
+- (void) sendEvent:(NSString*)evt;
 
--(void)setRegisterdEmailFlag;
+- (void) setRegisterdEmailFlag;
 
+//Returns a dictionary of information thats useful for tracking usage.
+- (NSDictionary*)usageDetails;
+- (NSString *)serialNumber;
 @end

@@ -917,11 +917,6 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 	[nodes filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CCNode * testNode, NSDictionary *bindings) {
 		
-		if([testNode isKindOfClass:[CCSprite class]])
-		{
-			int break_here = 1;
-		}
-		
 		for (NSString * classTypeName in filterClassTypes) {
 
 			Class classType = NSClassFromString(classTypeName);

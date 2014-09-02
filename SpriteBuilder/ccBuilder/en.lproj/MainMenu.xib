@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -18,7 +18,7 @@
                 <menuItem title="SpriteBuilder" id="56">
                     <menu key="submenu" title="SpriteBuilder" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About SpriteBuilder" id="58">
+                            <menuItem title="About SpriteBuilder" id="58" customClass="SBMenuItem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuAbout:" target="494" id="1840"/>
@@ -29,7 +29,7 @@
                             </menuItem>
                             <menuItem title="Preferences…" keyEquivalent="," id="129"/>
                             <menuItem isSeparatorItem="YES" id="2091"/>
-                            <menuItem title="Reset SpriteBuilder..." id="2092">
+                            <menuItem title="Reset SpriteBuilder..." id="2092" customClass="SBMenuItem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuResetSpriteBuilder:" target="494" id="2093"/>
@@ -39,6 +39,16 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="openRegistrationWindow:" target="494" id="Cga-Fu-5Rw"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Check for Updates..." id="0xb-YF-5N8">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <binding destination="yvi-fM-52L" name="target" keyPath="self" id="6Xg-R1-AKX">
+                                        <dictionary key="options">
+                                            <string key="NSSelectorName">checkForUpdates:</string>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kam-BS-41L"/>
@@ -51,7 +61,7 @@
                             <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134">
+                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134" customClass="SBMenuItem">
                                 <connections>
                                     <action selector="hide:" target="-1" id="367"/>
                                 </connections>
@@ -70,13 +80,16 @@
                             <menuItem isSeparatorItem="YES" id="149">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136">
+                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136" customClass="SBMenuItem">
                                 <connections>
                                     <action selector="menuQuit:" target="494" id="1252"/>
                                 </connections>
                             </menuItem>
                         </items>
                     </menu>
+                    <connections>
+                        <binding destination="494" name="title" keyPath="self.applicationTitle" id="WDv-K6-czU"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="File" id="83">
                     <menu key="submenu" title="File" id="81">
@@ -218,10 +231,20 @@
                             <menuItem isSeparatorItem="YES" id="mar-Cw-LBm">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Project Settings..." keyEquivalent=";" id="1797">
+                            <menuItem title="Open Project in XCode" keyEquivalent="O" id="1797" userLabel="Menu Item - p.A.">
                                 <connections>
-                                    <action selector="menuPublishSettings:" target="494" id="1800"/>
+                                    <action selector="menuOpenProjectInXCode:" target="494" id="wcV-zy-HFJ"/>
                                     <binding destination="494" name="enabled" keyPath="projectSettings" id="1799">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSIsNotNil</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Project Settings..." keyEquivalent=";" id="ViA-1x-YYp">
+                                <connections>
+                                    <action selector="menuProjectSettings:" target="494" id="jXs-Vg-CcF"/>
+                                    <binding destination="494" name="enabled" keyPath="projectSettings" id="9Pp-pl-JeI">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSIsNotNil</string>
                                         </dictionary>
@@ -1015,7 +1038,7 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="491">
                         <items>
-                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492">
+                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492" customClass="SBMenuItem">
                                 <connections>
                                     <action selector="showHelp:" target="494" id="1806"/>
                                 </connections>
@@ -2408,6 +2431,7 @@ CA
                 <outlet property="mainView" destination="372" id="1262"/>
                 <outlet property="menuCanvasBorder" destination="1276" id="1293"/>
                 <outlet property="menuCanvasSize" destination="1264" id="1281"/>
+                <outlet property="menuCheckForUpdates" destination="0xb-YF-5N8" id="LdC-wm-SBo"/>
                 <outlet property="menuContextKeyframe" destination="1600" id="1612"/>
                 <outlet property="menuContextKeyframeInterpol" destination="1604" id="1613"/>
                 <outlet property="menuContextKeyframeNoselection" destination="o0p-0U-Ks5" id="H9k-Jz-Iau"/>
@@ -2695,6 +2719,11 @@ CA
             <rect key="frame" x="0.0" y="0.0" width="248" height="27"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
         </customView>
+        <customObject id="yvi-fM-52L" customClass="SBUpdater">
+            <connections>
+                <outlet property="delegate" destination="494" id="Nqe-OT-jRB"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>

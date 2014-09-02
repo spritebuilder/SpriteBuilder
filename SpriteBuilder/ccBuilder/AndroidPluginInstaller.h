@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString*   kSBDefualtsIdentifier;
 
 @interface AndroidPluginInstaller : NSObject
 

@@ -506,11 +506,6 @@ __strong NSDictionary* renamedProperties = nil;
     {
         node.locked = YES;
     }
-	
-	if([baseClass isEqualToString:@"CCEffectNode"])
-	{
-		int break_here = 1;
-	}
     
     // Set properties for the node
     int numProps = [props count];

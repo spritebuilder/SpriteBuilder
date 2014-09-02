@@ -183,6 +183,7 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
         [self finishWithUpdateResult:updateResult error:error];
     });
 
+
     __weak id weakSelf = self;
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..." isIndeterminate:YES onCancelBlock:^
     {
@@ -229,8 +230,8 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     {
 		
 		CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
-	        block();
-	    });
+            block();
+        });
     }
 }
 

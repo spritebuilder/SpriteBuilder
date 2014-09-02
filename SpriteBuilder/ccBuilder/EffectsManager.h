@@ -43,7 +43,7 @@ self.name = [dict[@"value"] numberValue];\
 @protocol CCEffectNodeProtocol <NSObject>
 @required
 @property (nonatomic,readonly) NSArray * effectDescriptors;
-@property (nonatomic) NSArray * effects;
+@property (nonatomic, assign) NSArray * effects;
 
 -(void)addEffect:(CCEffect<EffectProtocol>*)effect;
 -(void)removeEffect:(CCEffect<EffectProtocol>*)effect;

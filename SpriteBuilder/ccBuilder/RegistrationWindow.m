@@ -37,11 +37,9 @@
 
 - (IBAction) pressedContinue:(id)sender
 {
-    // Fetch email
-    NSString* email = _email.stringValue;
-    
+   	NSString* email = _email.stringValue;
 	UsageManager * usageManager = [[UsageManager alloc] init];
-	 
+	
     if (!email || [email isEqualToString:@""])
     {
         // The user choose not to sign up
@@ -57,17 +55,18 @@
         }
         
         // Send it to the server
-        [usageManager registerEmail:email];
+        [usageManager registerEmail:email reveiveNewsLetter:_checkBox.state == NSOnState];
     }
     
 	[usageManager setRegisterdEmailFlag];
-
-    [self close];
+	
+	[NSApp stopModal];
 }
 
 - (IBAction) pressedLater:(id)sender
 {
-    [self close];
+	[NSApp stopModal];
+
 }
 
 - (IBAction) pressedPrivacyPolicy:(id)sender
