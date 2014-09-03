@@ -1052,7 +1052,7 @@
     NSString* srcRel = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
     NSString* dstRel = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
     
-    [[AppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
+    [[AppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel fromFullPath:srcPath toFullPath:dstPath];
     [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources
@@ -1114,7 +1114,7 @@
     NSString* srcRel = [ResourceManagerUtil relativePathFromAbsolutePath:srcPath];
     NSString* dstRel = [ResourceManagerUtil relativePathFromAbsolutePath:dstPath];
     
-    [[AppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel];
+    [[AppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel fromFullPath:srcPath toFullPath:dstPath];
     [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
     // Update resources

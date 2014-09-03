@@ -494,17 +494,16 @@
     [_resourceProperties removeObjectForKey:relPath];
 }
 
-- (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew
+- (void)movedResourceFrom:(NSString *)relPathOld to:(NSString *)relPathNew fromFullPath:(NSString *)fromFullPath toFullPath:(NSString *)toFullPath
 {
-
     if ([relPathOld isEqualToString:relPathNew])
     {
         return;
     }
 
     // If a resource has been removed or moved to a sprite sheet it needs to be marked as dirty
-    [self markSpriteSheetDirtyForChangedResourcePath:relPathOld];
-    [self markSpriteSheetDirtyForChangedResourcePath:relPathNew];
+    [self markSpriteSheetDirtyForOldResourceRelPath:relPathOld];
+    [self markSpriteSheetDirtyForNewResourceFullPath:toFullPath];
 
     id props = _resourceProperties[relPathOld];
     if (props)
@@ -512,15 +511,25 @@
         _resourceProperties[relPathNew] = props;
     }
     [_resourceProperties removeObjectForKey:relPathOld];
+
 }
 
-- (void)markSpriteSheetDirtyForChangedResourcePath:(NSString *)relPath
+- (void)markSpriteSheetDirtyForOldResourceRelPath:(NSString *)oldRelPath
 {
-    RMResource *resource = [[ResourceManager sharedManager] resourceForRelPath:relPath];
+    RMResource *resource = [[ResourceManager sharedManager] resourceForRelPath:oldRelPath];
     if ([[ResourceManager sharedManager] isResourceInSpriteSheet:resource])
     {
         RMResource *spriteSheet = [[ResourceManager sharedManager] spriteSheetContainingResource:resource];
         [self markAsDirtyResource:spriteSheet];
+    }
+}
+
+- (void)markSpriteSheetDirtyForNewResourceFullPath:(NSString *)newFullPath
+{
+    RMResource *resource = [[ResourceManager sharedManager] spriteSheetContainingFullPath:newFullPath];
+    if (resource)
+    {
+        [self markAsDirtyResource:resource];
     }
 }
 
@@ -595,7 +604,7 @@
     NSMutableDictionary *resourcePath = [self resourcePathForRelativePath:relResourcePathOld];
     resourcePath[@"path"] = relResourcePathNew;
 
-    [self movedResourceFrom:relResourcePathOld to:relResourcePathNew];
+    [self movedResourceFrom:relResourcePathOld to:relResourcePathNew fromFullPath:fromPath toFullPath:toPath];
     return YES;
 }
 

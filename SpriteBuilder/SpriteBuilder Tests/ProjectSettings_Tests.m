@@ -556,8 +556,12 @@
     [_projectSettings clearAllDirtyMarkers];
 
     // Move from sprite sheet to another location
+    NSString *fullPathToSomeDir = [self fullPathForFile:[REL_PACKAGE_PATH stringByAppendingPathComponent:@"foo"]];
+
     [_projectSettings movedResourceFrom:[ResourceManagerUtil relativePathFromAbsolutePath:imageInSpriteSheet.filePath]
-                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:[self fullPathForFile:[REL_PACKAGE_PATH stringByAppendingPathComponent:@"foo"]]]];
+                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:fullPathToSomeDir]
+                           fromFullPath:imageInSpriteSheet.filePath
+                             toFullPath:fullPathToSomeDir];
 
     XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
 
@@ -565,15 +569,21 @@
     [_projectSettings clearAllDirtyMarkers];
 
     // Move to sprite sheet from outside
+    NSString *fullPathToInSpriteSheet = [self fullPathForFile:REL_IMAGE_IN_SPRITESHEET_PATH];
     [_projectSettings movedResourceFrom:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]
-                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:[self fullPathForFile:REL_IMAGE_IN_SPRITESHEET_PATH]]];
+                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:fullPathToInSpriteSheet]
+                           fromFullPath:image.filePath
+                             toFullPath:fullPathToInSpriteSheet];
 
     XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
 
 
     // Move to sprite sheet from outside
+    [_projectSettings clearAllDirtyMarkers];
     [_projectSettings movedResourceFrom:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]
-                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]];
+                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]
+                           fromFullPath:image.filePath
+                             toFullPath:image.filePath];
 
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"spritesheet"]);
 }
