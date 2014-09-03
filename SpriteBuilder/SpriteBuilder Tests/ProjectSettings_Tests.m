@@ -586,6 +586,13 @@
                              toFullPath:image.filePath];
 
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"spritesheet"]);
+
+
+    // Image deleted
+    [_projectSettings clearAllDirtyMarkers];
+    [_projectSettings removedResourceAt:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]];
+
+    XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
 }
 
 

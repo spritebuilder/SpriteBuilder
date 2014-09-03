@@ -475,6 +475,8 @@
         return;
     }
 
+    NSLog(@"mark as dirty: %@", relPath);
+
     [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }
 
@@ -492,6 +494,8 @@
 - (void) removedResourceAt:(NSString*) relPath
 {
     [_resourceProperties removeObjectForKey:relPath];
+
+    [self markSpriteSheetDirtyForOldResourceRelPath:relPath];
 }
 
 - (void)movedResourceFrom:(NSString *)relPathOld to:(NSString *)relPathNew fromFullPath:(NSString *)fromFullPath toFullPath:(NSString *)toFullPath
