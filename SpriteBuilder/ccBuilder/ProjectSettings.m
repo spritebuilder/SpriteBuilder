@@ -35,6 +35,8 @@
 #import "ResourceTypes.h"
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"
+#import "ResourceManagerUtil.h"
+#import "RMDirectory.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -468,6 +470,11 @@
 
 - (void) markAsDirtyRelPath:(NSString*) relPath
 {
+    if(!relPath)
+    {
+        return;
+    }
+
     [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }
 
@@ -489,12 +496,26 @@
 
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew
 {
+    // If a resource has been removed or moved to a sprite sheet it needs to be marked as dirty
+    [self markSpriteSheetDirtyForChangedResourcePath:relPathOld];
+    [self markSpriteSheetDirtyForChangedResourcePath:relPathNew];
+
     id props = _resourceProperties[relPathOld];
     if (props)
     {
         _resourceProperties[relPathNew] = props;
     }
     [_resourceProperties removeObjectForKey:relPathOld];
+}
+
+- (void)markSpriteSheetDirtyForChangedResourcePath:(NSString *)relPath
+{
+    RMResource *resource = [[ResourceManager sharedManager] resourceForRelPath:relPath];
+    if ([[ResourceManager sharedManager] isResourceInSpriteSheet:resource])
+    {
+        RMResource *spriteSheet = [[ResourceManager sharedManager] spriteSheetContainingResource:resource];
+        [self markAsDirtyResource:spriteSheet];
+    }
 }
 
 - (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error
@@ -600,7 +621,7 @@
 	if(error)
 	{
 		NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-		NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
+		NSString* version = infoDict[@"CFBundleVersion"];
 
 		NSMutableDictionary * versionDict = [NSMutableDictionary dictionaryWithDictionary:@{@"version" : version}];
 		
