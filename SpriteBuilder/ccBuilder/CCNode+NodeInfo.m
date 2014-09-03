@@ -944,4 +944,14 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     return [self extraPropForKey:@"nodePhysicsBody"];
 }
 
+-(void)postDeserializationFixup
+{
+	
+}
+
+-(void)postCopyFixup
+{
+	
+}
+
 @end

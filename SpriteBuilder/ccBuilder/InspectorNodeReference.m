@@ -11,7 +11,8 @@
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
 #import "MainWindow.h"
-
+#import "EffectsManager.h"
+#import "CCEffect.h"
 
 @implementation OutletButton
 {
@@ -54,18 +55,20 @@
 -(void)drawRect:(NSRect)dirtyRect
 {
 	float opacity = self.enabled ? 1.0f : 0.5f;
+	NSRect frame = NSMakeRect(0,0, self.frame.size.width, self.frame.size.height);
+	
     if(self.inspector.reference)
     {
-        [imgOutletSet drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
+        [imgOutletSet drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
         return;
     }
     else if((mouseIsDown || mouseIsOver) && self.enabled)
     {
-        [imgOutletSet drawInRect:dirtyRect];
+        [imgOutletSet drawInRect:frame];
     }
     else
     {
-        [imgOutletUnSet drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
+        [imgOutletUnSet drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
     }
 }
 
@@ -122,6 +125,11 @@
 
 @dynamic reference;
 
+-(void)awakeFromNib
+{
+	[super awakeFromNib];
+	self.dragType = DragTypeJoint;
+}
 
 -(void)setReference:(CCNode *)reference
 {
@@ -177,7 +185,13 @@
         
         
         NSPasteboardItem *pbItem = [NSPasteboardItem new];
-        [pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.jointBody", nil]];
+		
+
+		if(self.dragType == DragTypeJoint)
+			[pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.jointBody", nil]];
+		else
+			[pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.effectSprite", nil]];
+		
 
         //create a new NSDraggingItem with our pasteboard item.
         NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
@@ -237,15 +251,32 @@
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
 
-        
-    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
     
-    NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
-                                                              format:NSPropertyListBinaryFormat_v1_0
-                                                             options:0
-                                                               error:NULL];
-    
-    [pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
+	if(self.dragType == DragTypeJoint)
+	{
+		NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
+		
+		NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
+																  format:NSPropertyListBinaryFormat_v1_0
+																 options:0
+																   error:NULL];
+		
+		[pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
+	}
+	
+	if(self.dragType == DragTypeEffectSprite)
+	{
+		CCEffect<EffectProtocol> *effect = (CCEffect<EffectProtocol>*)selection;
+		
+		NSDictionary * pasteData = @{@"effect":@(effect.UUID),@"propertyName" : propertyName};
+		
+		NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
+																  format:NSPropertyListBinaryFormat_v1_0
+																 options:0
+																   error:NULL];
+		
+		[pasteboard setData:data forType:@"com.cocosbuilder.effectSprite"];
+	}
 
 }
 

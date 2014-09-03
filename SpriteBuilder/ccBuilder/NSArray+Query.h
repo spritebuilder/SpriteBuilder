@@ -29,4 +29,7 @@ typedef void (^ActionBlock) (id obj, int idx); //Perform an action on obj.
 
 //perform an operation on each item in the list.
 -(void)forEach:(ActionBlock)aBlock;
+
+//Find first item in the list that conforms to the predicate, then run completion block with it.
+-(void)findFirst:(PredicateBlock)aBlock complete:(ActionBlock)completionBlock;
 @end

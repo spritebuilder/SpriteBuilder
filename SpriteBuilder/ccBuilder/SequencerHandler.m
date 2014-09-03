@@ -56,6 +56,7 @@ static NSString *const PASTEBOARD_TYPE_CCB = @"com.cocosbuilder.ccb";
 static NSString *const PASTEBOARD_TYPE_PLUGINNODE = @"com.cocosbuilder.PlugInNode";
 static NSString *const PASTEBOARD_TYPE_WAVE = @"com.cocosbuilder.wav";
 static NSString *const PASTEBOARD_TYPE_JOINTBODY = @"com.cocosbuilder.jointBody";
+static NSString *const PASTEBOARD_TYPE_EFFECTSPRITE = @"com.cocosbuilder.effectSprite";
 
 static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
 static NSString *const ORIGINAL_NODE_KEY = @"originalNode";
@@ -98,7 +99,8 @@ static SequencerHandler* sharedSequencerHandler;
 			PASTEBOARD_TYPE_CCB,
 			PASTEBOARD_TYPE_PLUGINNODE,
 			PASTEBOARD_TYPE_WAVE,
-			PASTEBOARD_TYPE_JOINTBODY]];
+			PASTEBOARD_TYPE_JOINTBODY,
+			PASTEBOARD_TYPE_EFFECTSPRITE]];
 
 	[[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
@@ -629,7 +631,15 @@ static SequencerHandler* sharedSequencerHandler;
 	{
 		return NSDragOperationNone;
 	}
+	////////////////////////////////////////////////////////
+    NSArray * effectsData = [pasteboard propertyListsForType:PASTEBOARD_TYPE_EFFECTSPRITE];
+    if(effectsData.count > 0)
+    {
+		return [self validateDropForEffectSprite:dropTarget index:index];
+	}
 
+
+	////////////////////////////////////////////////////////
     NSArray * jointsData = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
     if(jointsData.count > 0)
     {
@@ -646,12 +656,14 @@ static SequencerHandler* sharedSequencerHandler;
     {
         return NSDragOperationNone;
     }
-
+	////////////////////////////////////////////////////////
     NSArray* pbNodePlugIn = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
 	if (pbNodePlugIn.count > 0)
     {
 		return [self validateDropForPluginNodes:pbNodePlugIn[0] target:dropTarget];
 	}
+	
+	////////////////////////////////////////////////////////
     
     //Default behavior for Joints is don't accept drag and drops.
     if([dropTarget isKindOfClass:[CCNode class]])
@@ -753,6 +765,24 @@ static SequencerHandler* sharedSequencerHandler;
 	return NSDragOperationGeneric;
 }
 
+
+- (NSDragOperation)validateDropForEffectSprite:(id)dropTarget index:(NSInteger)index
+{
+	if (index != -1)
+	{
+		return NSDragOperationNone;
+	}
+	
+	if (![dropTarget isKindOfClass:[CCSprite class]])
+	{
+		return NSDragOperationNone;
+	}
+	
+	return NSDragOperationGeneric;
+}
+
+
+
 - (NSDragOperation)validateDropForNodeData:(id)item nodeData:(NSData *)nodeData
 {
 	if (![item isKindOfClass:[CCNode class]])
@@ -807,9 +837,26 @@ static SequencerHandler* sharedSequencerHandler;
 	addedObject = [self acceptDropForPluginNodes:item index:index pasteboard:pasteboard] || addedObject;
 
 	addedObject = [self acceptDropForJointBodies:item pasteboard:pasteboard] || addedObject;
-
+	
+	addedObject = [self acceptDropForEffectSprite:item pasteboard:pasteboard] || addedObject;
+	
 	return addedObject;
 }
+
+
+
+- (BOOL)acceptDropForEffectSprite:(id)item pasteboard:(NSPasteboard *)pasteboard
+{
+	BOOL addedObject = NO;
+	NSArray* pbEffectSprite = [pasteboard propertyListsForType:PASTEBOARD_TYPE_EFFECTSPRITE];
+	for (NSDictionary* dict in pbEffectSprite)
+    {
+        
+		addedObject = YES;
+    }
+	return addedObject;
+}
+
 
 - (BOOL)acceptDropForJointBodies:(id)item pasteboard:(NSPasteboard *)pasteboard
 {
@@ -929,8 +976,8 @@ static SequencerHandler* sharedSequencerHandler;
 		}
 
 	[appDelegate setSelectedNodes:[self extractDroppedNodes:nodes withKey:COPY_NODE_KEY]];
-	SceneGraph *sceneGraph = [SceneGraph instance];
-	[sceneGraph.joints fixupReferences];
+
+	[SceneGraph fixupReferences];
 
 	return YES;
 }

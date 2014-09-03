@@ -141,6 +141,7 @@
 #import "SUVersionComparisonProtocol.h"
 #import "SBUpdater.h"
 #import "OpenProjectInXCode.h"
+#import "CCNode+NodeInfo.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1744,6 +1745,8 @@ static BOOL hideAllToNextSeparator;
         [g.joints addJoint:child];
     }];
 
+	[CCBReaderInternal postDeserializationFixup:g.rootNode];
+
     
     [[CocosScene cocosScene] replaceSceneNodes:g];
     [outlineHierarchy reloadData];
@@ -1814,6 +1817,36 @@ static BOOL hideAllToNextSeparator;
     
     // Make sure timeline is up to date
     [sequenceHandler updatePropertiesToTimelinePosition];
+}
+
+-(void)fixupUUID:(CCBDocument*)doc dict:(NSMutableDictionary*)dict
+{
+    if(!dict[@"UUID"])
+    {
+        dict[@"UUID"] = @(doc.UUID);
+        [doc getAndIncrementUUID];
+    }
+    
+    if(dict[@"children"])
+    {
+        for (NSMutableDictionary * child in dict[@"children"])
+        {
+            [self fixupUUID:doc dict:child];
+        }
+        
+    }
+}
+
+
+-(void)fixupDoc:(CCBDocument*) doc
+{
+    //If UUID is unset, it means the doc is out of date. Fixup.
+    if(doc.UUID == 0x0)
+    {
+        doc.UUID = 0x1;
+        [self fixupUUID:doc dict: doc.data[@"nodeGraph"]];
+
+    }
 }
 
 - (void) switchToDocument:(CCBDocument*) document
@@ -2390,8 +2423,8 @@ static BOOL hideAllToNextSeparator;
     if(child.UUID == 0x0)
     {
 
-		child.UUID = currentDocument.UUID;
-        currentDocument.UUID = currentDocument.UUID + 1;
+		child.UUID = [currentDocument getAndIncrementUUID];
+
     }
     
     [outlineHierarchy reloadData];
@@ -2595,8 +2628,8 @@ static BOOL hideAllToNextSeparator;
     SceneGraph* g = [SceneGraph instance];
     
     CCNode* addedNode = [[PlugInManager sharedManager] createDefaultNodeOfType:jointName];
-    addedNode.UUID = [AppDelegate appDelegate].currentDocument.UUID;
-    [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    addedNode.UUID = [[AppDelegate appDelegate].currentDocument getAndIncrementUUID];
+
     
     [g.joints addJoint:(CCBPhysicsJoint*)addedNode];
     
@@ -2780,8 +2813,8 @@ static BOOL hideAllToNextSeparator;
 
 -(void)updateUUIDs:(CCNode*)node
 {
-    node.UUID = currentDocument.UUID;
-    currentDocument.UUID = currentDocument.UUID + 1;
+    node.UUID = [currentDocument getAndIncrementUUID];
+	[node postCopyFixup];
     
     for (CCNode * child in node.children) {
         [self updateUUIDs:child];
@@ -2805,13 +2838,15 @@ static BOOL hideAllToNextSeparator;
         else parentSize = self.selectedNode.parent.contentSize;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
+		[CCBReaderInternal postDeserializationFixup:clipNode];
         [self updateUUIDs:clipNode];
         
         
         [self addCCObject:clipNode asChild:asChild];
         
         //We might have copy/cut/pasted and body. Fix it up.
-        [[SceneGraph instance].joints fixupReferences];//
+		
+        [SceneGraph fixupReferences];//
     }
 }
 

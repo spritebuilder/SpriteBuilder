@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>displayName</key>
+	<string>Effect Node</string>
+	<key>ordering</key>
+	<integer>4000</integer>
+	<key>description</key>
+	<string>Performs rendering effects on all its children..</string>
+	<key>inheritsFrom</key>
+	<string>CCNode</string>
+	<key>canHaveChildren</key>
+	<true/>
+	<key>className</key>
+	<string>CCEffectNode</string>
+	<key>properties</key>
+	<array>
+		<dict>
+			<key>displayName</key>
+			<string>CCEffectNode</string>
+			<key>name</key>
+			<string>CCEffectNode</string>
+			<key>type</key>
+			<string>Separator</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Effects</string>
+			<key>name</key>
+			<string>effects</string>
+			<key>type</key>
+			<string>EffectControl</string>
+		</dict>
+	</array>
+	<key>editorClassName</key>
+	<string>CCBPEffectNode</string>
+	<key>spriteFrameDrop</key>
+	<dict>
+		<key>className</key>
+		<string>CCSprite</string>
+		<key>property</key>
+		<string>spriteFrame</string>
+	</dict>
+	<key>propertiesOverridden</key>
+	<array>
+		<dict>
+			<key>default</key>
+			<array>
+				<integer>100</integer>
+				<integer>100</integer>
+			</array>
+			<key>type</key>
+			<string>Size</string>
+			<key>name</key>
+			<string>contentSize</string>
+			<key>displayName</key>
+			<string>Content size</string>
+		</dict>
+	</array>
+</dict>
+</plist>

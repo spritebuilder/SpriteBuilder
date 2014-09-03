@@ -24,7 +24,7 @@
 		<string>spriteFrame</string>
 	</dict>
 	<key>editorClassName</key>
-	<string>CCSprite</string>
+	<string>CCBPSprite</string>
 	<key>propertiesOverridden</key>
 	<array>
 		<dict>
@@ -123,6 +123,14 @@
 			<string>Blendmode</string>
 			<key>name</key>
 			<string>blendFunc</string>
+		</dict>
+		<dict>
+			<key>displayName</key>
+			<string>Effects</string>
+			<key>name</key>
+			<string>effects</string>
+			<key>type</key>
+			<string>EffectControl</string>
 		</dict>
 	</array>
 </dict>
