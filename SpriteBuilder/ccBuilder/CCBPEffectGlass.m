@@ -37,6 +37,7 @@
 -(id)serialize
 {
 	return @[SERIALIZE_PROPERTY(refraction,Float),
+			 SERIALIZE_PROPERTY(shininess,Float),
 			 SERIALIZE_PROPERTY(fresnelBias,Float),
 			 SERIALIZE_PROPERTY(fresnelPower,Float),
 			 @{@"name" : @"reflectionEnvironment", @"type" : @"NodeReference", @"value": @(self.reflectionEnvironment.UUID)},
@@ -50,6 +51,9 @@
 {
 	
 	DESERIALIZE_PROPERTY(refraction, floatValue);
+	DESERIALIZE_PROPERTY(shininess, floatValue);
+	DESERIALIZE_PROPERTY(fresnelBias, floatValue);
+	DESERIALIZE_PROPERTY(fresnelPower, floatValue);
 	
 	//reflectionEnvironment
 	[properties findFirst:^BOOL(NSDictionary * dict, int idx) {\

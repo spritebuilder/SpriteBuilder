@@ -29,13 +29,14 @@
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-	return [self effectWithShininess:0.0f environment:nil];
+	return [self effectWithShininess:0.5f environment:nil];
 }
 
 -(id)serialize
 {
 	return @[SERIALIZE_PROPERTY(fresnelBias,Float),
 			 SERIALIZE_PROPERTY(fresnelPower,Float),
+			 SERIALIZE_PROPERTY(shininess,   Float),
 			 @{@"name" : @"environment", @"type" : @"NodeReference", @"value": @(self.environment.UUID)},
 			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBWriterInternal serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
 			 ];
@@ -45,6 +46,7 @@
 {
 	DESERIALIZE_PROPERTY(fresnelBias, floatValue);
 	DESERIALIZE_PROPERTY(fresnelPower, floatValue);
+	DESERIALIZE_PROPERTY(shininess, floatValue);
 	
 	[properties findFirst:^BOOL(NSDictionary * dict, int idx) {\
 		return [dict[@"name"] isEqualToString:@"environment"];\
