@@ -1278,11 +1278,19 @@
 
 #pragma mark SpriteSheet helper
 
+- (RMResource *)spriteSheetContainingFullPath:(NSString *)fullPath
+{
+    NSString *containingDir = [fullPath stringByDeletingLastPathComponent];
+
+    RMResource *result = [self resourceForPath:containingDir];
+    return [result isSpriteSheet]
+            ? result
+            : nil;
+}
+
 - (RMResource *)spriteSheetContainingResource:(RMResource *)resource
 {
-    NSString *containingDir = [resource.filePath stringByDeletingLastPathComponent];
-
-    return [self resourceForPath:containingDir];
+    return [self spriteSheetContainingFullPath:resource.filePath];
 }
 
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource

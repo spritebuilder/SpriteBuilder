@@ -496,6 +496,12 @@
 
 - (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew
 {
+
+    if ([relPathOld isEqualToString:relPathNew])
+    {
+        return;
+    }
+
     // If a resource has been removed or moved to a sprite sheet it needs to be marked as dirty
     [self markSpriteSheetDirtyForChangedResourcePath:relPathOld];
     [self markSpriteSheetDirtyForChangedResourcePath:relPathNew];

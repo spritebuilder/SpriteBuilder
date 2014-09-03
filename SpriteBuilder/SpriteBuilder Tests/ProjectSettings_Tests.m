@@ -569,6 +569,13 @@
                                      to:[ResourceManagerUtil relativePathFromAbsolutePath:[self fullPathForFile:REL_IMAGE_IN_SPRITESHEET_PATH]]];
 
     XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
+
+
+    // Move to sprite sheet from outside
+    [_projectSettings movedResourceFrom:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]
+                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]];
+
+    XCTAssertFalse([_projectSettings isDirtyRelPath:@"spritesheet"]);
 }
 
 
