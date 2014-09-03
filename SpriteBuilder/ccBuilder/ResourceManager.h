@@ -102,6 +102,8 @@
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;
 - (NSString *)dirPathForResource:(id)resource;
 
+- (RMResource *)spriteSheetContainingResource:(RMResource *)resource;
+
 // *** SpriteSheet helper ***
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource;
 

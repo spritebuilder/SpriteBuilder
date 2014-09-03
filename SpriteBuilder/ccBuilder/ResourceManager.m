@@ -1278,6 +1278,13 @@
 
 #pragma mark SpriteSheet helper
 
+- (RMResource *)spriteSheetContainingResource:(RMResource *)resource
+{
+    NSString *containingDir = [resource.filePath stringByDeletingLastPathComponent];
+
+    return [self resourceForPath:containingDir];
+}
+
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource
 {
     if (resource.type != kCCBResTypeImage)
@@ -1285,9 +1292,7 @@
         return NO;
     }
 
-    NSString *containingDir = [resource.filePath stringByDeletingLastPathComponent];
-
-    RMResource *potentialSpriteSheet = [self resourceForPath:containingDir];
+    RMResource *potentialSpriteSheet = [self spriteSheetContainingResource:resource];
 
     return [potentialSpriteSheet isSpriteSheet];
 }
