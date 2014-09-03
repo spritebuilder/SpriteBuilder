@@ -55,18 +55,20 @@
 -(void)drawRect:(NSRect)dirtyRect
 {
 	float opacity = self.enabled ? 1.0f : 0.5f;
+	NSRect frame = NSMakeRect(0,0, self.frame.size.width, self.frame.size.height);
+	
     if(self.inspector.reference)
     {
-        [imgOutletSet drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
+        [imgOutletSet drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
         return;
     }
     else if((mouseIsDown || mouseIsOver) && self.enabled)
     {
-        [imgOutletSet drawInRect:dirtyRect];
+        [imgOutletSet drawInRect:frame];
     }
     else
     {
-        [imgOutletUnSet drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
+        [imgOutletUnSet drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
     }
 }
 
