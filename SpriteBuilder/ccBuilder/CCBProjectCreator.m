@@ -89,28 +89,43 @@
     // Update workspace data
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace/contents.xcworkspacedata"] search:substitutableProjectName];
     
+#ifdef SPRITEBUILDER_PRO
     // Update scheme
-	NSString* xcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@ iOS.xcscheme", substitutableProjectName];
+	NSString* xcscheme = [NSString stringWithFormat:@"xcsh	areddata/xcschemes/%@ iOS.xcscheme", substitutableProjectName];
 	[self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:xcscheme] search:substitutableProjectName];
 	
-	
+
     NSString* androidXcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@ Android.xcscheme", substitutableProjectName];
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:androidXcscheme] search:substitutableProjectName];
-    
-    // Rename scheme file
+	
+	// Rename scheme file
 	//iOS
 	{
-    NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
+		NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
 		NSString* newSchemeFile = [[[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingString:@" iOS" ] stringByAppendingPathExtension:@"xcscheme"];
 		[fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
     }
+	
 	
 	//Android
 	{
 		NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:androidXcscheme];
 		NSString* newSchemeFile = [[[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingString:@" Android" ] stringByAppendingPathExtension:@"xcscheme"];
-    [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
+		[fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
     }
+
+#else
+	NSString* xcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@.xcscheme", substitutableProjectName];
+	[self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:xcscheme] search:substitutableProjectName];
+
+	// Rename scheme file
+	{
+		NSString* schemeFile = [xcodeFileName stringByAppendingPathComponent:xcscheme];
+		NSString* newSchemeFile = [[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcscheme"];
+		[fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
+    }
+
+#endif
     
     // Rename Xcode project file
     NSString* newXcodeFileName = [[[xcodeFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"xcodeproj"];
@@ -124,6 +139,8 @@
     NSString* newApprojFileName = [[[approjFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"approj"];
     [fm moveItemAtPath:approjFileName toPath:newApprojFileName error:NULL];
 
+	
+#ifdef SPRITEBUILDER_PRO
     /// SBPRO
     NSString* activityJavaFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/java/org/cocos2d/%@/%@Activity.java", substitutableProjectIdentifier, substitutableProjectIdentifier]];
     if ([fm fileExistsAtPath:activityJavaFileName])
@@ -165,7 +182,7 @@
         [self setName:identifier inFile:androidPlistFileName search:substitutableProjectIdentifier];
         [self setName:projName inFile:androidPlistFileName search:substitutableProjectName];
     }
-    
+#endif
     
     // configure default configuration.json and include opengles2 as a feature
     NSString *apportableConfigFile = [NSString stringWithFormat:@"%@%@", newApprojFileName, @"/configuration.json"];
