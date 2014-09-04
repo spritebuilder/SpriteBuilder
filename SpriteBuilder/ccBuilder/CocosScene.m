@@ -50,6 +50,8 @@
 #import "CCBUtil.h"
 #import "CCTextureCache.h"
 #import "NSArray+Query.h"
+#import "GeometryUtil.h"
+#import "NSPasteboard+CCB.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -486,6 +488,42 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return [[propInfo objectForKey:@"readOnly"] boolValue];
 }
 
+
+-(void)renderBorder:(CCNode*)node
+{
+	// Selection corners in world space
+	CGPoint points[4]; //{bl,br,tr,tl}
+
+	
+	[self getCornerPointsForNode:node withPoints:points];
+	
+	
+	CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+	CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+	CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+	CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+	
+	
+	blSprt.position = points[0];
+	brSprt.position = points[1];
+	trSprt.position = points[2];
+	tlSprt.position = points[3];
+	
+	[selectionLayer addChild:blSprt];
+	[selectionLayer addChild:brSprt];
+	[selectionLayer addChild:tlSprt];
+	[selectionLayer addChild:trSprt];
+	
+	CCDrawNode* drawing = [CCDrawNode node];
+	
+	float borderWidth = 1.0 / [CCDirector sharedDirector].contentScaleFactor;
+	
+	[drawing drawPolyWithVerts:points count:4 fillColor:[CCColor clearColor] borderWidth:borderWidth borderColor:[CCColor colorWithRed:1 green:1 blue:1 alpha:0.3]];
+	
+	[selectionLayer addChild:drawing z:-1];
+
+}
+
 - (void) updateSelection
 {
     NSArray* nodes = appDelegate.selectedNodes;
@@ -564,7 +602,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                     
                     [self getCornerPointsForZeroContentSizeNode:node withImageContentSize:sel.contentSizeInPoints withPoints:points];
                 }
-                
+				
+				
                 if(!isContentSizeZero && !(overTypeField & kCCBToolAnchor) && currentMouseTransform == kCCBTransformHandleNone)
                 {
                     if([self isOverAnchor:node withPoint:mousePos])
@@ -851,7 +890,96 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     return NO;
 }
 
+-(void)findObjectsAtPoint:(CGPoint)point node:(CCNode*)node nodes:(NSMutableArray*)nodes
+{
+	if([node hitTestWithWorldPos:point])
+	{
+		[nodes addObject:node];
+	}
+    
+    for (CCNode * child in node.children)
+	{
+        [self findObjectsAtPoint:point node:child nodes:nodes];
+    }
+}
+
+
+- (CCNode*)findObjectAtPoint:(CGPoint)point ofTypes:(NSArray*)filterClassTypes
+{
+    SceneGraph * g = [SceneGraph instance];
+    
+    NSMutableArray * nodes = [NSMutableArray array];
+	[self findObjectsAtPoint:point node:g.rootNode nodes:nodes];
+	
+	
+    //Find bodies we're inside the physics poly of.
+
+
+	[nodes filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CCNode * testNode, NSDictionary *bindings) {
+		
+		for (NSString * classTypeName in filterClassTypes) {
+
+			Class classType = NSClassFromString(classTypeName);
+			
+			if([testNode isKindOfClass:classType])
+				return YES;
+		}
+		
+		return NO;
+		
+	}]];
+	
+	
+	//Filder bodies that are children of CCBPCCBFiles
+	[nodes removeObjectsInArray:[nodes where:^BOOL(CCNode* node, int idx) {
+		CCNode * parent = node.parent;
+		while (parent) {
+			if([[[parent class] description] isEqualToString:@"CCBPCCBFile"])
+				return YES;
+			parent=parent.parent;
+		}
+		return NO;
+	}]];
+	
+    
+    //Select the one we're closest too.
+    CCNode * currentBody;
+    
+    for (CCNode * body in nodes) {
+        if(currentBody == nil)
+            currentBody = body;
+        else
+        {
+            CGPoint loc1 = [body convertToNodeSpaceAR:point];
+            CGPoint loc2 = [currentBody convertToNodeSpaceAR:point];
+            
+            if(ccpDistance(CGPointZero, loc1) < ccpDistance(CGPointZero, loc2))
+            {
+                currentBody = body;
+            }
+        }
+    }
+    
+    return currentBody;
+}
+
+
 #pragma mark Handle Drag Input
+
+-(void)updateDragging
+{
+	if(effectSpriteDragging)
+	{
+		NSArray * classTypes = @[NSStringFromClass([CCSprite class])];
+		
+		CCNode * node = [[CocosScene cocosScene] findObjectAtPoint:effectSpriteDraggingLocation ofTypes:classTypes];
+		if(node)
+		{
+			[self renderBorder:node];
+		}
+	}
+	
+}
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender pos:(CGPoint)pos
 {
@@ -860,7 +988,20 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         return operation;
     }
+	
+	NSPasteboard* pb = [sender draggingPasteboard];
+    
+    // Textures
+	
+	NSArray* pbSprites = [pb propertyListsForType:@"com.cocosbuilder.effectSprite"];
 
+	if(pbSprites.count > 0)
+	{
+		effectSpriteDragging = YES;
+		effectSpriteDraggingLocation = pos;
+		return NSDragOperationGeneric;
+	}
+	
     return NSDragOperationGeneric;
 
 }
@@ -872,6 +1013,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     {
         return operation;
     }
+	
+	effectSpriteDraggingLocation = pos;
     
     return NSDragOperationGeneric;
 }
@@ -879,11 +1022,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 - (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos
 {
     [appDelegate.physicsHandler draggingExited:sender pos:pos];
+	effectSpriteDragging = NO;
 }
 
 - (void)draggingEnded:(id <NSDraggingInfo>)sender
 {
     [appDelegate.physicsHandler draggingEnded:sender];
+	effectSpriteDragging = NO;
+	
 }
 
 #pragma mark Handle mouse input
@@ -2050,6 +2196,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     else
     {
         [self updateSelection];
+		[self updateDragging];
     }
     
     // Setup border layer

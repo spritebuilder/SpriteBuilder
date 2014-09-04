@@ -139,6 +139,24 @@
 		83FC410C1981391600799B6C /* PackageSettingsDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */; };
 		83FC4111198154CD00799B6C /* PackageSettingsDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FC4110198154CD00799B6C /* PackageSettingsDetailView.m */; };
 		83FC411319815B8600799B6C /* ProjectSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */; };
+		92053DB4197F096000AA93AD /* EffectBloomControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92053DAF197F096000AA93AD /* EffectBloomControl.xib */; };
+		92053DB5197F096000AA93AD /* CCBPEffectBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = 92053DB0197F096000AA93AD /* CCBPEffectBloom.m */; };
+		92053DB6197F096000AA93AD /* EffectBloomControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92053DB3197F096000AA93AD /* EffectBloomControl.m */; };
+		92053DB8197F097F00AA93AD /* effect-bloom.png in Resources */ = {isa = PBXBuildFile; fileRef = 92053DB7197F097F00AA93AD /* effect-bloom.png */; };
+		920994BB19870EC40006F38D /* CCBReader_EffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994BA19870EC40006F38D /* CCBReader_EffectsTest.m */; };
+		920994C119870EF90006F38D /* EffectTest1.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 920994BD19870EF90006F38D /* EffectTest1.ccb */; };
+		920994C219870EF90006F38D /* cartoon_house.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 920994BE19870EF90006F38D /* cartoon_house.jpg */; };
+		920994C319870EF90006F38D /* ShinyBallColor.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994BF19870EF90006F38D /* ShinyBallColor.png */; };
+		920994C419870EF90006F38D /* ShinyBallNormals.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994C019870EF90006F38D /* ShinyBallNormals.png */; };
+		920994C719870F3D0006F38D /* Cocos2dTestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994C619870F3D0006F38D /* Cocos2dTestHelpers.m */; };
+		920994CC198717910006F38D /* CCBPEffectGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994CB198717910006F38D /* CCBPEffectGlass.m */; };
+		920994D0198717D20006F38D /* EffectGlassControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994CE198717D20006F38D /* EffectGlassControl.m */; };
+		920994D1198717D20006F38D /* EffectGlassControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 920994CF198717D20006F38D /* EffectGlassControl.xib */; };
+		920994D3198718F10006F38D /* effect-glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994D2198718F10006F38D /* effect-glass.png */; };
+		920994D7198719CD0006F38D /* CCBPEffectReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994D6198719CD0006F38D /* CCBPEffectReflection.m */; };
+		920994DB198719F10006F38D /* EffectReflectionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 920994D9198719F10006F38D /* EffectReflectionControl.m */; };
+		920994DC198719F10006F38D /* EffectReflectionControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 920994DA198719F10006F38D /* EffectReflectionControl.xib */; };
+		920994DE19871A0A0006F38D /* effect-reflection.png in Resources */ = {isa = PBXBuildFile; fileRef = 920994DD19871A0A0006F38D /* effect-reflection.png */; };
 		92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92154ABF18A5531800BD215C /* CCBPProperties.plist */; };
 		92154AC918A5531800BD215C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC218A5531800BD215C /* InfoPlist.strings */; };
 		92154ACA18A5531800BD215C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 92154AC418A5531800BD215C /* Icon.png */; };
@@ -191,11 +209,26 @@
 		922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EF518BFE47A008E1764 /* InspectorFloatCheck.m */; };
 		922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */; };
 		922E8EFE18C13666008E1764 /* OutletDrawWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 922E8EFD18C13666008E1764 /* OutletDrawWindow.m */; };
+		922EAC3E1958E095006F2D75 /* EffectDescriptionRowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */; };
+		922EAC471958F41E006F2D75 /* CCBPEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */; };
 		9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9249983118B7E1F500DE9ADA /* SceneGraph.m */; };
 		9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */; };
 		9254805618D7706F00236DED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92B792C318C92C60007DF895 /* InfoPlist.strings */; };
 		9254805A18D913C500236DED /* seq-locked-faint.png in Resources */ = {isa = PBXBuildFile; fileRef = 9254805918D913C500236DED /* seq-locked-faint.png */; };
 		9266089118B581BC007A0A05 /* CCPhysicsPinJoint.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */; };
+		9266EE14195A1578006CBE81 /* CCBPEffectContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE13195A1578006CBE81 /* CCBPEffectContrast.m */; };
+		9266EE23195A15EE006CBE81 /* EffectContrastControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE21195A15EE006CBE81 /* EffectContrastControl.m */; };
+		9266EE24195A15EE006CBE81 /* EffectContrastControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE22195A15EE006CBE81 /* EffectContrastControl.xib */; };
+		9266EE29195A1603006CBE81 /* effect-glow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE25195A1603006CBE81 /* effect-glow.png */; };
+		9266EE2B195A1603006CBE81 /* effect-contrast.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE27195A1603006CBE81 /* effect-contrast.png */; };
+		9266EE2C195A1603006CBE81 /* effect-brightness.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE28195A1603006CBE81 /* effect-brightness.png */; };
+		9266EE2E195A1695006CBE81 /* effect-pixelate.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE2D195A1695006CBE81 /* effect-pixelate.png */; };
+		9266EE30195A171B006CBE81 /* effect-saturation.png in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE2F195A171B006CBE81 /* effect-saturation.png */; };
+		9266EE34195A1786006CBE81 /* CCBPEffectSaturation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE33195A1786006CBE81 /* CCBPEffectSaturation.m */; };
+		9266EE38195A17A4006CBE81 /* EffectSaturationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */; };
+		9266EE39195A17A4006CBE81 /* EffectSaturationControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */; };
+		9266EE41195A17EE006CBE81 /* EffectPixelateControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */; };
+		9266EE42195A17EE006CBE81 /* EffectPixelateControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */; };
 		9269C2FF199057EA00884F59 /* SBUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 9269C2FE199057EA00884F59 /* SBUpdater.m */; };
 		9269C30819917EAA00884F59 /* Sparkle.framework in Copy Files (Sparkle framework) */ = {isa = PBXBuildFile; fileRef = 924EE96D19902D810029CCD1 /* Sparkle.framework */; };
 		9269C3101991A38200884F59 /* SBMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9269C30F1991A38100884F59 /* SBMenuItem.m */; };
@@ -217,7 +250,18 @@
 		926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EA18B57E1500582959 /* CCBPProperties.plist */; };
 		926D13F418B57E1600582959 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 926D13ED18B57E1600582959 /* InfoPlist.strings */; };
 		926D13F518B57E1600582959 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13EF18B57E1600582959 /* Icon.png */; };
+		926FDC84196C8ECC008C0132 /* EffectRefractionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FDC82196C8ECC008C0132 /* EffectRefractionControl.m */; };
+		926FDC85196C8ECC008C0132 /* EffectRefractionControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 926FDC83196C8ECC008C0132 /* EffectRefractionControl.xib */; };
+		926FDC88196C8EEC008C0132 /* CCBPEffectRefraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FDC87196C8EEC008C0132 /* CCBPEffectRefraction.m */; };
+		926FDC8A196C902D008C0132 /* effect-refraction.png in Resources */ = {isa = PBXBuildFile; fileRef = 926FDC89196C902D008C0132 /* effect-refraction.png */; };
+		9276C1321959F71C00A1D4DC /* EffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9276C1311959F71C00A1D4DC /* EffectViewController.m */; };
 		928104471982F7F900A8B7F4 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 928104461982F7F900A8B7F4 /* CocoaSecurity.m */; };
+		928696201958950100402DD8 /* InspectorEffectControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9286961F1958950100402DD8 /* InspectorEffectControl.m */; };
+		928696231958952100402DD8 /* InspectorEffectControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 928696221958952100402DD8 /* InspectorEffectControl.xib */; };
+		9286962A1958A05F00402DD8 /* EffectSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696281958A05F00402DD8 /* EffectSelectViewController.m */; };
+		9286962B1958A05F00402DD8 /* EffectSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 928696291958A05F00402DD8 /* EffectSelectViewController.xib */; };
+		928696341958CC9A00402DD8 /* EffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696331958CC9A00402DD8 /* EffectsManager.m */; };
+		9286963A1958E02000402DD8 /* EffectDescriptionRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696381958E02000402DD8 /* EffectDescriptionRowViewController.m */; };
 		9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
 		9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
 		9294EC9018C65EC10059014C /* CCBPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13D518B57A8100582959 /* CCBPhysicsJoint.m */; };
@@ -229,12 +273,18 @@
 		9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9297AC2F18A43BCA003C3705 /* NSArray+Query.m */; };
 		929C9FBE187E38AC009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
 		929C9FC0187E391C009ED9DF /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */; };
+		929D1B9B1954D16C00B27340 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
+		929D1BB11954D34300B27340 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B8F1954D15400B27340 /* CCBPProperties.plist */; };
+		929D1BB21954D34300B27340 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B921954D15400B27340 /* InfoPlist.strings */; };
+		929D1BB31954D34300B27340 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B941954D15400B27340 /* Icon.png */; };
+		929D1BB51954D36200B27340 /* CCBPEffectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B8E1954D15400B27340 /* CCBPEffectNode.m */; };
 		92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8361979D33D00B50F74 /* LicenseWindow.m */; };
 		92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92AEE8371979D33D00B50F74 /* LicenseWindow.xib */; };
 		92AEE83D1979D55000B50F74 /* LicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE83C1979D55000B50F74 /* LicenseManager.m */; };
 		92AEE8431979D62B00B50F74 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8421979D62B00B50F74 /* Base64.m */; };
 		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
 		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
+		92B5885D19B679E500BAE4C1 /* CCEffectNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */; };
 		92B6D0DA193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */; };
 		92B6D0DE193FE32100FD27F4 /* InspectorPhysicsUnavailable.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B6D0DD193FE32100FD27F4 /* InspectorPhysicsUnavailable.m */; };
 		92B7900518C808B7007DF895 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
@@ -257,6 +307,12 @@
 		92BF8AB2192BCDF300C1BC28 /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */; };
 		92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */; };
 		92C97ACB199033290048FC37 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924EE96D19902D810029CCD1 /* Sparkle.framework */; };
+		92CAC1CB195A4C6C0035EA39 /* EffectGlowControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */; };
+		92CD1C161965D745002BF2DE /* EffectBloomControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C141965D745002BF2DE /* EffectBloomControl.xib */; };
+		92CD1C201965D824002BF2DE /* CCBPEffectPixelate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */; };
+		92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */; };
+		92CD1C221965D824002BF2DE /* EffectBrightnessControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */; };
+		92CD1C241965D9F9002BF2DE /* effect-bloom.png in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C231965D9F9002BF2DE /* effect-bloom.png */; };
 		92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */; };
 		92D9D48118F8AB3800F167C1 /* joint-connection-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */; };
 		92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = 92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */; };
@@ -985,6 +1041,13 @@
 			remoteGlobalIDString = 926D13D718B57B9500582959;
 			remoteInfo = CCPhysicsPinJoint;
 		};
+		929D1BB61954D37000B27340 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 929D1B971954D16C00B27340;
+			remoteInfo = CCEffectNode;
+		};
 		92A805C418D3CFAC004508E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7789ABB5133AA82000CEFCC7 /* Project object */;
@@ -1212,6 +1275,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				92B5885D19B679E500BAE4C1 /* CCEffectNode.ccbPlugNode in Copy PlugIns */,
 				DCFB065118E32C3900DF02A0 /* SKFile.ccbPlugNode in Copy PlugIns */,
 				DC05E79B18D0ADF800592A1E /* SBControlNode.ccbPlugNode in Copy PlugIns */,
 				DC05E79C18D0ADF800592A1E /* SBButtonNode.ccbPlugNode in Copy PlugIns */,
@@ -1453,6 +1517,31 @@
 		83FC410F198154CD00799B6C /* PackageSettingsDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageSettingsDetailView.h; sourceTree = "<group>"; };
 		83FC4110198154CD00799B6C /* PackageSettingsDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettingsDetailView.m; sourceTree = "<group>"; };
 		83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsWindow.xib; sourceTree = "<group>"; };
+		92053DAF197F096000AA93AD /* EffectBloomControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBloomControl.xib; path = ccBuilder/EffectBloomControl.xib; sourceTree = "<group>"; };
+		92053DB0197F096000AA93AD /* CCBPEffectBloom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBloom.m; path = ccBuilder/CCBPEffectBloom.m; sourceTree = "<group>"; };
+		92053DB1197F096000AA93AD /* CCBPEffectBloom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectBloom.h; path = ccBuilder/CCBPEffectBloom.h; sourceTree = "<group>"; };
+		92053DB2197F096000AA93AD /* EffectBloomControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectBloomControl.h; path = ccBuilder/EffectBloomControl.h; sourceTree = "<group>"; };
+		92053DB3197F096000AA93AD /* EffectBloomControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectBloomControl.m; path = ccBuilder/EffectBloomControl.m; sourceTree = "<group>"; };
+		92053DB7197F097F00AA93AD /* effect-bloom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-bloom.png"; path = "Resources/effect-bloom.png"; sourceTree = "<group>"; };
+		920994BA19870EC40006F38D /* CCBReader_EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader_EffectsTest.m; sourceTree = "<group>"; };
+		920994BD19870EF90006F38D /* EffectTest1.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = EffectTest1.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/EffectTest1.ccb"; sourceTree = "<group>"; };
+		920994BE19870EF90006F38D /* cartoon_house.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cartoon_house.jpg; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/ccbResources/resources-auto/cartoon_house.jpg"; sourceTree = "<group>"; };
+		920994BF19870EF90006F38D /* ShinyBallColor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShinyBallColor.png; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/ccbResources/resources-auto/ShinyBallColor.png"; sourceTree = "<group>"; };
+		920994C019870EF90006F38D /* ShinyBallNormals.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ShinyBallNormals.png; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/ccbResources/resources-auto/ShinyBallNormals.png"; sourceTree = "<group>"; };
+		920994C519870F3D0006F38D /* Cocos2dTestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cocos2dTestHelpers.h; path = SpriteBuilderTestProject.spritebuilder/Cocos2dTestHelpers.h; sourceTree = "<group>"; };
+		920994C619870F3D0006F38D /* Cocos2dTestHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Cocos2dTestHelpers.m; path = SpriteBuilderTestProject.spritebuilder/Cocos2dTestHelpers.m; sourceTree = "<group>"; };
+		920994CA198717910006F38D /* CCBPEffectGlass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectGlass.h; path = ccBuilder/CCBPEffectGlass.h; sourceTree = "<group>"; };
+		920994CB198717910006F38D /* CCBPEffectGlass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectGlass.m; path = ccBuilder/CCBPEffectGlass.m; sourceTree = "<group>"; };
+		920994CD198717D20006F38D /* EffectGlassControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectGlassControl.h; path = ccBuilder/EffectGlassControl.h; sourceTree = "<group>"; };
+		920994CE198717D20006F38D /* EffectGlassControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectGlassControl.m; path = ccBuilder/EffectGlassControl.m; sourceTree = "<group>"; };
+		920994CF198717D20006F38D /* EffectGlassControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectGlassControl.xib; path = ccBuilder/EffectGlassControl.xib; sourceTree = "<group>"; };
+		920994D2198718F10006F38D /* effect-glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-glass.png"; path = "Resources/effect-glass.png"; sourceTree = "<group>"; };
+		920994D5198719CD0006F38D /* CCBPEffectReflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectReflection.h; path = ccBuilder/CCBPEffectReflection.h; sourceTree = "<group>"; };
+		920994D6198719CD0006F38D /* CCBPEffectReflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectReflection.m; path = ccBuilder/CCBPEffectReflection.m; sourceTree = "<group>"; };
+		920994D8198719F10006F38D /* EffectReflectionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectReflectionControl.h; path = ccBuilder/EffectReflectionControl.h; sourceTree = "<group>"; };
+		920994D9198719F10006F38D /* EffectReflectionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectReflectionControl.m; path = ccBuilder/EffectReflectionControl.m; sourceTree = "<group>"; };
+		920994DA198719F10006F38D /* EffectReflectionControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectReflectionControl.xib; path = ccBuilder/EffectReflectionControl.xib; sourceTree = "<group>"; };
+		920994DD19871A0A0006F38D /* effect-reflection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-reflection.png"; path = "Resources/effect-reflection.png"; sourceTree = "<group>"; };
 		92101C2C1891F1BB0004F93B /* CCBPublishDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPublishDelegate.h; sourceTree = "<group>"; };
 		92154ABD18A5531800BD215C /* CCBPhysicsPivotJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPivotJoint.h; sourceTree = "<group>"; };
 		92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPivotJoint.m; sourceTree = "<group>"; };
@@ -1511,6 +1600,9 @@
 		922E8EF618BFE47A008E1764 /* InspectorFloatCheck.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorFloatCheck.xib; sourceTree = "<group>"; };
 		922E8EFC18C13666008E1764 /* OutletDrawWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OutletDrawWindow.h; path = ccBuilder/OutletDrawWindow.h; sourceTree = SOURCE_ROOT; };
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
+		922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectDescriptionRowViewController.xib; path = ccBuilder/EffectDescriptionRowViewController.xib; sourceTree = "<group>"; };
+		922EAC451958F41E006F2D75 /* CCBPEffectBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectBrightness.h; path = ccBuilder/CCBPEffectBrightness.h; sourceTree = "<group>"; };
+		922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBrightness.m; path = ccBuilder/CCBPEffectBrightness.m; sourceTree = "<group>"; };
 		9248BD1F199A8BB2009C154F /* SequencerTimelineDrawDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerTimelineDrawDelegate.h; sourceTree = "<group>"; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
@@ -1518,6 +1610,24 @@
 		92520731196238D000BFC071 /* SpriteBuilder Pro.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SpriteBuilder Pro.xcconfig"; sourceTree = "<group>"; };
 		9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpriteBuilder.xcconfig; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
+		9266EE12195A1578006CBE81 /* CCBPEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectContrast.h; path = ccBuilder/CCBPEffectContrast.h; sourceTree = "<group>"; };
+		9266EE13195A1578006CBE81 /* CCBPEffectContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectContrast.m; path = ccBuilder/CCBPEffectContrast.m; sourceTree = "<group>"; };
+		9266EE20195A15EE006CBE81 /* EffectContrastControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectContrastControl.h; path = ccBuilder/EffectContrastControl.h; sourceTree = "<group>"; };
+		9266EE21195A15EE006CBE81 /* EffectContrastControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectContrastControl.m; path = ccBuilder/EffectContrastControl.m; sourceTree = "<group>"; };
+		9266EE22195A15EE006CBE81 /* EffectContrastControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectContrastControl.xib; path = ccBuilder/EffectContrastControl.xib; sourceTree = "<group>"; };
+		9266EE25195A1603006CBE81 /* effect-glow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-glow.png"; path = "Resources/effect-glow.png"; sourceTree = "<group>"; };
+		9266EE27195A1603006CBE81 /* effect-contrast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-contrast.png"; path = "Resources/effect-contrast.png"; sourceTree = "<group>"; };
+		9266EE28195A1603006CBE81 /* effect-brightness.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-brightness.png"; path = "Resources/effect-brightness.png"; sourceTree = "<group>"; };
+		9266EE2D195A1695006CBE81 /* effect-pixelate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-pixelate.png"; path = "Resources/effect-pixelate.png"; sourceTree = "<group>"; };
+		9266EE2F195A171B006CBE81 /* effect-saturation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-saturation.png"; path = "Resources/effect-saturation.png"; sourceTree = "<group>"; };
+		9266EE32195A1786006CBE81 /* CCBPEffectSaturation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectSaturation.h; path = ccBuilder/CCBPEffectSaturation.h; sourceTree = "<group>"; };
+		9266EE33195A1786006CBE81 /* CCBPEffectSaturation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectSaturation.m; path = ccBuilder/CCBPEffectSaturation.m; sourceTree = "<group>"; };
+		9266EE35195A17A4006CBE81 /* EffectSaturationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectSaturationControl.h; path = ccBuilder/EffectSaturationControl.h; sourceTree = "<group>"; };
+		9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectSaturationControl.m; path = ccBuilder/EffectSaturationControl.m; sourceTree = "<group>"; };
+		9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectSaturationControl.xib; path = ccBuilder/EffectSaturationControl.xib; sourceTree = "<group>"; };
+		9266EE3E195A17EE006CBE81 /* EffectPixelateControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectPixelateControl.h; path = ccBuilder/EffectPixelateControl.h; sourceTree = "<group>"; };
+		9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectPixelateControl.m; path = ccBuilder/EffectPixelateControl.m; sourceTree = "<group>"; };
+		9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectPixelateControl.xib; path = ccBuilder/EffectPixelateControl.xib; sourceTree = "<group>"; };
 		9269C2FD199057EA00884F59 /* SBUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUpdater.h; sourceTree = "<group>"; };
 		9269C2FE199057EA00884F59 /* SBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUpdater.m; sourceTree = "<group>"; };
 		9269C30E1991A38100884F59 /* SBMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMenuItem.h; sourceTree = "<group>"; };
@@ -1549,8 +1659,26 @@
 		926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhysicsPinJoint.m; sourceTree = "<group>"; };
 		926D13FD18B57FEA00582959 /* CCPhysicsPinJoint-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CCPhysicsPinJoint-Info.plist"; sourceTree = "<group>"; };
 		926D13FE18B57FEA00582959 /* CCPhysicsPinJoint-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsPinJoint-Prefix.pch"; sourceTree = "<group>"; };
+		926FDC81196C8ECC008C0132 /* EffectRefractionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectRefractionControl.h; path = ccBuilder/EffectRefractionControl.h; sourceTree = "<group>"; };
+		926FDC82196C8ECC008C0132 /* EffectRefractionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectRefractionControl.m; path = ccBuilder/EffectRefractionControl.m; sourceTree = "<group>"; };
+		926FDC83196C8ECC008C0132 /* EffectRefractionControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectRefractionControl.xib; path = ccBuilder/EffectRefractionControl.xib; sourceTree = "<group>"; };
+		926FDC86196C8EEC008C0132 /* CCBPEffectRefraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectRefraction.h; path = ccBuilder/CCBPEffectRefraction.h; sourceTree = "<group>"; };
+		926FDC87196C8EEC008C0132 /* CCBPEffectRefraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectRefraction.m; path = ccBuilder/CCBPEffectRefraction.m; sourceTree = "<group>"; };
+		926FDC89196C902D008C0132 /* effect-refraction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-refraction.png"; path = "Resources/effect-refraction.png"; sourceTree = "<group>"; };
+		9276C1301959F71C00A1D4DC /* EffectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectViewController.h; path = ccBuilder/EffectViewController.h; sourceTree = "<group>"; };
+		9276C1311959F71C00A1D4DC /* EffectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectViewController.m; path = ccBuilder/EffectViewController.m; sourceTree = "<group>"; };
 		928104451982F7F900A8B7F4 /* CocoaSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSecurity.h; sourceTree = "<group>"; };
 		928104461982F7F900A8B7F4 /* CocoaSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaSecurity.m; sourceTree = "<group>"; };
+		9286961E1958950100402DD8 /* InspectorEffectControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEffectControl.h; sourceTree = "<group>"; };
+		9286961F1958950100402DD8 /* InspectorEffectControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEffectControl.m; sourceTree = "<group>"; };
+		928696221958952100402DD8 /* InspectorEffectControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorEffectControl.xib; sourceTree = "<group>"; };
+		928696271958A05F00402DD8 /* EffectSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectSelectViewController.h; path = ccBuilder/EffectSelectViewController.h; sourceTree = "<group>"; };
+		928696281958A05F00402DD8 /* EffectSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectSelectViewController.m; path = ccBuilder/EffectSelectViewController.m; sourceTree = "<group>"; };
+		928696291958A05F00402DD8 /* EffectSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectSelectViewController.xib; path = ccBuilder/EffectSelectViewController.xib; sourceTree = "<group>"; };
+		928696321958CC9A00402DD8 /* EffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsManager.h; path = ccBuilder/EffectsManager.h; sourceTree = "<group>"; };
+		928696331958CC9A00402DD8 /* EffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsManager.m; path = ccBuilder/EffectsManager.m; sourceTree = "<group>"; };
+		928696371958E02000402DD8 /* EffectDescriptionRowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectDescriptionRowViewController.h; path = ccBuilder/EffectDescriptionRowViewController.h; sourceTree = "<group>"; };
+		928696381958E02000402DD8 /* EffectDescriptionRowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectDescriptionRowViewController.m; path = ccBuilder/EffectDescriptionRowViewController.m; sourceTree = "<group>"; };
 		9294EC9118C660480059014C /* CCBPhyicsPivotJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsPivotJointPlaceholder.h; sourceTree = "<group>"; };
 		9294EC9218C660480059014C /* CCBPhyicsPivotJointPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPhyicsPivotJointPlaceholder.m; sourceTree = "<group>"; };
 		9294EC9418C6606F0059014C /* CCBPhysicsPinJointPlacefolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhysicsPinJointPlacefolder.h; sourceTree = "<group>"; };
@@ -1563,6 +1691,15 @@
 		9297AC2E18A43BCA003C3705 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
 		9297AC2F18A43BCA003C3705 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		929C9FBD187E38AC009ED9DF /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
+		929D1B8D1954D15400B27340 /* CCBPEffectNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCBPEffectNode.h; sourceTree = "<group>"; };
+		929D1B8E1954D15400B27340 /* CCBPEffectNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCBPEffectNode.m; sourceTree = "<group>"; };
+		929D1B8F1954D15400B27340 /* CCBPProperties.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
+		929D1B901954D15400B27340 /* CCEffectNode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCEffectNode-Info.plist"; sourceTree = "<group>"; };
+		929D1B911954D15400B27340 /* CCEffectNode-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCEffectNode-Prefix.pch"; sourceTree = "<group>"; };
+		929D1B931954D15400B27340 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		929D1B941954D15400B27340 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		929D1B951954D15400B27340 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCEffectNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		92AEE8351979D33D00B50F74 /* LicenseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseWindow.h; sourceTree = "<group>"; };
 		92AEE8361979D33D00B50F74 /* LicenseWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseWindow.m; sourceTree = "<group>"; };
 		92AEE8371979D33D00B50F74 /* LicenseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LicenseWindow.xib; sourceTree = "<group>"; };
@@ -1588,13 +1725,21 @@
 		92B792C618C92C60007DF895 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPhysicsTwoBodyJoint.h; path = ccBuilder/CCBPhysicsTwoBodyJoint.h; sourceTree = "<group>"; };
 		92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPhysicsTwoBodyJoint.m; path = ccBuilder/CCBPhysicsTwoBodyJoint.m; sourceTree = "<group>"; };
-		92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
 		92B91021193412A600E346B5 /* InspectorAnimation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorAnimation.xib; sourceTree = "<group>"; };
 		92B91024193413F500E346B5 /* InspectorAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorAnimation.h; sourceTree = "<group>"; };
 		92B91025193413F500E346B5 /* InspectorAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorAnimation.m; sourceTree = "<group>"; };
 		92BF8AB0192BCDF300C1BC28 /* InspectorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorButton.h; sourceTree = "<group>"; };
 		92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorButton.m; sourceTree = "<group>"; };
 		92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
+		92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectGlowControl.xib; path = ccBuilder/EffectGlowControl.xib; sourceTree = "<group>"; };
+		92CD1C141965D745002BF2DE /* EffectBloomControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBloomControl.xib; path = ccBuilder/EffectBloomControl.xib; sourceTree = "<group>"; };
+		92CD1C1A1965D824002BF2DE /* CCBPEffectPixelate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectPixelate.h; path = ccBuilder/CCBPEffectPixelate.h; sourceTree = "<group>"; };
+		92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectPixelate.m; path = ccBuilder/CCBPEffectPixelate.m; sourceTree = "<group>"; };
+		92CD1C1C1965D824002BF2DE /* EffectBrightnessControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectBrightnessControl.h; path = ccBuilder/EffectBrightnessControl.h; sourceTree = "<group>"; };
+		92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectBrightnessControl.m; path = ccBuilder/EffectBrightnessControl.m; sourceTree = "<group>"; };
+		92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBrightnessControl.xib; path = ccBuilder/EffectBrightnessControl.xib; sourceTree = "<group>"; };
+		92CD1C1F1965D824002BF2DE /* CCBPhysicsJoint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CCBPhysicsJoint+Private.h"; path = "ccBuilder/CCBPhysicsJoint+Private.h"; sourceTree = "<group>"; };
+		92CD1C231965D9F9002BF2DE /* effect-bloom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-bloom.png"; path = "Resources/effect-bloom.png"; sourceTree = "<group>"; };
 		92D9D47A18F8AB3800F167C1 /* joint-connection-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected.png"; sourceTree = "<group>"; };
 		92D9D47B18F8AB3800F167C1 /* joint-connection-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-connected@2x.png"; sourceTree = "<group>"; };
 		92D9D47C18F8AB3800F167C1 /* joint-connection-disconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-connection-disconnected.png"; sourceTree = "<group>"; };
@@ -2597,6 +2742,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		929D1B9A1954D16C00B27340 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				929D1B9B1954D16C00B27340 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		92B7900418C808B7007DF895 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3356,6 +3509,7 @@
 				DC05E79018D0ACE000592A1E /* SBButtonNode.ccbPlugNode */,
 				DCFB063F18E32B7500DF02A0 /* SKFile.ccbPlugNode */,
 				833A5C4A192B48CB001837B3 /* SpriteBuilder Tests.xctest */,
+				929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3438,6 +3592,7 @@
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
 				E3B7BC9D15E3B97900CF95EF /* Toolbar */,
 				776041E21498F5A70078095D /* Util */,
+				928696311958CAC100402DD8 /* Effects */,
 			);
 			name = SpriteBuilder;
 			path = ccBuilder;
@@ -3623,7 +3778,11 @@
 		830F4EA419336962002B832D /* Cocos2DIntegration */ = {
 			isa = PBXGroup;
 			children = (
+				E525FA8328B2749A80A9BB95 /* CCAnimation_Tests.m */,
+				920994BA19870EC40006F38D /* CCBReader_EffectsTest.m */,
 				E525F8A64BC1B591FE3A2C5D /* CCBReader_Tests.m */,
+				920994C519870F3D0006F38D /* Cocos2dTestHelpers.h */,
+				920994C619870F3D0006F38D /* Cocos2dTestHelpers.m */,
 			);
 			name = Cocos2DIntegration;
 			sourceTree = "<group>";
@@ -3660,7 +3819,6 @@
 			children = (
 				83CD4497193F35A90086E9E7 /* Resource Manager */,
 				83993DA61935D6D2001C228B /* Application Settings & Globals */,
-				E525F793AF97A3AAAFE199A9 /* Cocos2D */,
 				830F4EA419336962002B832D /* Cocos2DIntegration */,
 				830F4EA219336959002B832D /* Packages */,
 				922CC3941946769B00B34854 /* Resources */,
@@ -3825,6 +3983,45 @@
 			name = "Project Settings";
 			sourceTree = "<group>";
 		};
+		92053DAD197F093700AA93AD /* Bloom */ = {
+			isa = PBXGroup;
+			children = (
+				92053DB7197F097F00AA93AD /* effect-bloom.png */,
+				92053DB0197F096000AA93AD /* CCBPEffectBloom.m */,
+				92053DB1197F096000AA93AD /* CCBPEffectBloom.h */,
+				92053DB2197F096000AA93AD /* EffectBloomControl.h */,
+				92053DB3197F096000AA93AD /* EffectBloomControl.m */,
+				92053DAF197F096000AA93AD /* EffectBloomControl.xib */,
+			);
+			name = Bloom;
+			sourceTree = "<group>";
+		};
+		920994C9198717710006F38D /* Glass */ = {
+			isa = PBXGroup;
+			children = (
+				920994D2198718F10006F38D /* effect-glass.png */,
+				920994CA198717910006F38D /* CCBPEffectGlass.h */,
+				920994CB198717910006F38D /* CCBPEffectGlass.m */,
+				920994CD198717D20006F38D /* EffectGlassControl.h */,
+				920994CE198717D20006F38D /* EffectGlassControl.m */,
+				920994CF198717D20006F38D /* EffectGlassControl.xib */,
+			);
+			name = Glass;
+			sourceTree = "<group>";
+		};
+		920994D4198719120006F38D /* Reflection */ = {
+			isa = PBXGroup;
+			children = (
+				920994DD19871A0A0006F38D /* effect-reflection.png */,
+				920994D5198719CD0006F38D /* CCBPEffectReflection.h */,
+				920994D6198719CD0006F38D /* CCBPEffectReflection.m */,
+				920994D8198719F10006F38D /* EffectReflectionControl.h */,
+				920994D9198719F10006F38D /* EffectReflectionControl.m */,
+				920994DA198719F10006F38D /* EffectReflectionControl.xib */,
+			);
+			name = Reflection;
+			sourceTree = "<group>";
+		};
 		92154ABC18A5531800BD215C /* CCPhysicsPivotJoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -3853,6 +4050,10 @@
 		922CC3941946769B00B34854 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				920994BE19870EF90006F38D /* cartoon_house.jpg */,
+				920994BF19870EF90006F38D /* ShinyBallColor.png */,
+				920994C019870EF90006F38D /* ShinyBallNormals.png */,
+				920994BD19870EF90006F38D /* EffectTest1.ccb */,
 				92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */,
 				92F85F36194F70CA0076B343 /* AnimationTest4.ccb */,
 				92F85F33194F6AD80076B343 /* AnimationTest3.ccb */,
@@ -3860,6 +4061,32 @@
 				922CC395194676B600B34854 /* AnimationTest1.ccb */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		922EAC3F1958F2FB006F2D75 /* BrightnessEffect */ = {
+			isa = PBXGroup;
+			children = (
+				92CD1C1C1965D824002BF2DE /* EffectBrightnessControl.h */,
+				92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */,
+				92CD1C1E1965D824002BF2DE /* EffectBrightnessControl.xib */,
+				9266EE28195A1603006CBE81 /* effect-brightness.png */,
+				922EAC451958F41E006F2D75 /* CCBPEffectBrightness.h */,
+				922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */,
+			);
+			name = BrightnessEffect;
+			sourceTree = "<group>";
+		};
+		922EAC481958F700006F2D75 /* ContrastEffect */ = {
+			isa = PBXGroup;
+			children = (
+				9266EE27195A1603006CBE81 /* effect-contrast.png */,
+				9266EE12195A1578006CBE81 /* CCBPEffectContrast.h */,
+				9266EE13195A1578006CBE81 /* CCBPEffectContrast.m */,
+				9266EE20195A15EE006CBE81 /* EffectContrastControl.h */,
+				9266EE21195A15EE006CBE81 /* EffectContrastControl.m */,
+				9266EE22195A15EE006CBE81 /* EffectContrastControl.xib */,
+			);
+			name = ContrastEffect;
 			sourceTree = "<group>";
 		};
 		924EE96019902D5A0029CCD1 /* Sparkle */ = {
@@ -3880,6 +4107,32 @@
 				924EE97519902D810029CCD1 /* Autoupdate.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9266EE31195A176A006CBE81 /* Saturation */ = {
+			isa = PBXGroup;
+			children = (
+				9266EE2F195A171B006CBE81 /* effect-saturation.png */,
+				9266EE32195A1786006CBE81 /* CCBPEffectSaturation.h */,
+				9266EE33195A1786006CBE81 /* CCBPEffectSaturation.m */,
+				9266EE35195A17A4006CBE81 /* EffectSaturationControl.h */,
+				9266EE36195A17A4006CBE81 /* EffectSaturationControl.m */,
+				9266EE37195A17A4006CBE81 /* EffectSaturationControl.xib */,
+			);
+			name = Saturation;
+			sourceTree = "<group>";
+		};
+		9266EE3A195A17AE006CBE81 /* Pixelate */ = {
+			isa = PBXGroup;
+			children = (
+				92CD1C1A1965D824002BF2DE /* CCBPEffectPixelate.h */,
+				92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */,
+				9266EE2D195A1695006CBE81 /* effect-pixelate.png */,
+				9266EE3E195A17EE006CBE81 /* EffectPixelateControl.h */,
+				9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */,
+				9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */,
+			);
+			name = Pixelate;
 			sourceTree = "<group>";
 		};
 		926D13E718B57E1500582959 /* CCPhysicsPinJoint */ = {
@@ -3905,6 +4158,60 @@
 				926D13F018B57E1600582959 /* icon@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		926FDC7F196C8DCA008C0132 /* Refraction */ = {
+			isa = PBXGroup;
+			children = (
+				926FDC89196C902D008C0132 /* effect-refraction.png */,
+				926FDC81196C8ECC008C0132 /* EffectRefractionControl.h */,
+				926FDC82196C8ECC008C0132 /* EffectRefractionControl.m */,
+				926FDC83196C8ECC008C0132 /* EffectRefractionControl.xib */,
+				926FDC86196C8EEC008C0132 /* CCBPEffectRefraction.h */,
+				926FDC87196C8EEC008C0132 /* CCBPEffectRefraction.m */,
+			);
+			name = Refraction;
+			sourceTree = "<group>";
+		};
+		928696311958CAC100402DD8 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				920994D4198719120006F38D /* Reflection */,
+				920994C9198717710006F38D /* Glass */,
+				92053DAD197F093700AA93AD /* Bloom */,
+				926FDC7F196C8DCA008C0132 /* Refraction */,
+				9266EE3A195A17AE006CBE81 /* Pixelate */,
+				9266EE31195A176A006CBE81 /* Saturation */,
+				922EAC481958F700006F2D75 /* ContrastEffect */,
+				922EAC3F1958F2FB006F2D75 /* BrightnessEffect */,
+				928696271958A05F00402DD8 /* EffectSelectViewController.h */,
+				928696281958A05F00402DD8 /* EffectSelectViewController.m */,
+				928696291958A05F00402DD8 /* EffectSelectViewController.xib */,
+				928696321958CC9A00402DD8 /* EffectsManager.h */,
+				928696331958CC9A00402DD8 /* EffectsManager.m */,
+				928696371958E02000402DD8 /* EffectDescriptionRowViewController.h */,
+				928696381958E02000402DD8 /* EffectDescriptionRowViewController.m */,
+				922EAC3D1958E095006F2D75 /* EffectDescriptionRowViewController.xib */,
+				9276C1301959F71C00A1D4DC /* EffectViewController.h */,
+				9276C1311959F71C00A1D4DC /* EffectViewController.m */,
+			);
+			name = Effects;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		929D1B8C1954D15400B27340 /* CCEffectNode */ = {
+			isa = PBXGroup;
+			children = (
+				929D1B8D1954D15400B27340 /* CCBPEffectNode.h */,
+				929D1B8E1954D15400B27340 /* CCBPEffectNode.m */,
+				929D1B8F1954D15400B27340 /* CCBPProperties.plist */,
+				929D1B901954D15400B27340 /* CCEffectNode-Info.plist */,
+				929D1B911954D15400B27340 /* CCEffectNode-Prefix.pch */,
+				929D1B921954D15400B27340 /* InfoPlist.strings */,
+				929D1B941954D15400B27340 /* Icon.png */,
+				929D1B951954D15400B27340 /* Icon@2x.png */,
+			);
+			path = CCEffectNode;
 			sourceTree = "<group>";
 		};
 		92B792BB18C92C60007DF895 /* CCPhysicsSpringJoint */ = {
@@ -4044,7 +4351,7 @@
 				922E8EFD18C13666008E1764 /* OutletDrawWindow.m */,
 				92B792CF18C92D80007DF895 /* CCBPhysicsTwoBodyJoint.h */,
 				92B792D018C92D80007DF895 /* CCBPhysicsTwoBodyJoint.m */,
-				92B7930618CAA4C7007DF895 /* CCBPhysicsJoint+Private.h */,
+				92CD1C1F1965D824002BF2DE /* CCBPhysicsJoint+Private.h */,
 			);
 			name = Physics;
 			sourceTree = "<group>";
@@ -4537,6 +4844,7 @@
 		E35392461518AD0A00471721 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				929D1B8C1954D15400B27340 /* CCEffectNode */,
 				E3D59123150F5367004180CA /* CCBFile */,
 				E3B7AEC714E3193500DFD402 /* CCNode */,
 				B7EE69FA1819EE0D00B983FE /* CCLayoutBox */,
@@ -5018,6 +5326,9 @@
 				92B6D0D9193FE1DC00FD27F4 /* InspectorPhysicsUnavailable.xib */,
 				92B6D0DC193FE32100FD27F4 /* InspectorPhysicsUnavailable.h */,
 				92B6D0DD193FE32100FD27F4 /* InspectorPhysicsUnavailable.m */,
+				9286961E1958950100402DD8 /* InspectorEffectControl.h */,
+				9286961F1958950100402DD8 /* InspectorEffectControl.m */,
+				928696221958952100402DD8 /* InspectorEffectControl.xib */,
 			);
 			name = "Inspector Properties";
 			sourceTree = "<group>";
@@ -5268,6 +5579,14 @@
 			name = Cocos2D;
 			sourceTree = "<group>";
 		};
+		E525F7C3E5916138FF0FFFBD /* ValueObjects */ = {
+			isa = PBXGroup;
+			children = (
+				E525F5002BE1A1775A702001,
+			);
+			name = ValueObjects;
+			sourceTree = "<group>";
+		};
 		E525F840928F68FE43F22636 /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -5343,12 +5662,12 @@
 				7789ABBC133AA82000CEFCC7 /* Resources */,
 				776C6897138878FB00153214 /* Copy Files (Sparkle framework) */,
 				E3B7AED414E31E5D00DFD402 /* Copy PlugIns */,
-				8304857319ADEA4D00A624BB /* Code Sign Plugins and Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				924EE97819902DAF0029CCD1 /* PBXTargetDependency */,
+				929D1BB71954D37000B27340 /* PBXTargetDependency */,
 				DCFB065018E32C2D00DF02A0 /* PBXTargetDependency */,
 				DC05E79818D0ADDC00592A1E /* PBXTargetDependency */,
 				DC05E79A18D0ADDC00592A1E /* PBXTargetDependency */,
@@ -5434,6 +5753,23 @@
 			name = CCPhysicsPinJoint;
 			productName = CCPhysicsNode;
 			productReference = 926D13E318B57B9500582959 /* CCPhysicsPinJoint.ccbPlugNode */;
+			productType = "com.apple.product-type.bundle";
+		};
+		929D1B971954D16C00B27340 /* CCEffectNode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 929D1BA01954D16C00B27340 /* Build configuration list for PBXNativeTarget "CCEffectNode" */;
+			buildPhases = (
+				929D1B981954D16C00B27340 /* Sources */,
+				929D1B9A1954D16C00B27340 /* Frameworks */,
+				929D1B9C1954D16C00B27340 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CCEffectNode;
+			productName = CCLayerColor;
+			productReference = 929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */;
 			productType = "com.apple.product-type.bundle";
 		};
 		92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */ = {
@@ -5928,6 +6264,7 @@
 				B7EE69F71819EE0D00B983FE /* CCLayoutBox */,
 				E3C365EA14E9E4D1007CD5FF /* CCSprite */,
 				B7C3532117F65547005697C1 /* CCSprite9Slice */,
+				929D1B971954D16C00B27340 /* CCEffectNode */,
 				E35DBB7F14F225D30070A6E4 /* CCNodeColor */,
 				E35DBB9714F244BB0070A6E4 /* CCNodeGradient */,
 				E35DBBCB14F2AA350070A6E4 /* CCLabelBMFont */,
@@ -6092,9 +6429,11 @@
 				D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */,
 				B71706D1184ECD660081720A /* select-scale@2x.png in Resources */,
 				776C68921388107400153214 /* missing-font.png in Resources */,
+				9266EE2E195A1695006CBE81 /* effect-pixelate.png in Resources */,
 				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
 				776C6896138874C200153214 /* dsa_pub.pem in Resources */,
 				77D33EAD138EFBD800012A88 /* StageSizeWindow.xib in Resources */,
+				92CAC1CB195A4C6C0035EA39 /* EffectGlowControl.xib in Resources */,
 				7729F03A1390215400CAA44F /* frame-iphone.png in Resources */,
 				7729F03D1390600200CAA44F /* frame-ipad.png in Resources */,
 				776A370B139544A200960E94 /* TB_actualSize.png in Resources */,
@@ -6102,6 +6441,8 @@
 				9218DF3A1919B04D0033851E /* joint-pivot-mode-l-off@2x.png in Resources */,
 				92F0960718F8851300D47A94 /* inspector-body-remove-dis.png in Resources */,
 				776A370D139544A200960E94 /* TB_select.png in Resources */,
+				9266EE39195A17A4006CBE81 /* EffectSaturationControl.xib in Resources */,
+				9266EE2B195A1603006CBE81 /* effect-contrast.png in Resources */,
 				B7096E27180CD98E00164A8A /* doc-layer@2x.png in Resources */,
 				776A370E139544A200960E94 /* TB_zoomIn.png in Resources */,
 				776A370F139544A200960E94 /* TB_zoomOut.png in Resources */,
@@ -6133,16 +6474,20 @@
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
 				B7DE84931937B18B0039FB72 /* signup-bg.png in Resources */,
+				9286962B1958A05F00402DD8 /* EffectSelectViewController.xib in Resources */,
 				9218DF291919B04D0033851E /* joint-pivot-handle-min.png in Resources */,
 				DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */,
 				E3B4223414E5E68B004547D6 /* InspectorSeparator.xib in Resources */,
 				A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */,
 				B71706CE184ECD660081720A /* select-move.png in Resources */,
 				E32D8CC514EC257000F4BD5E /* InspectorCodeConnections.xib in Resources */,
+				928696231958952100402DD8 /* InspectorEffectControl.xib in Resources */,
 				E35DBBBF14F29E9D0070A6E4 /* InspectorFntFile.xib in Resources */,
+				926FDC85196C8ECC008C0132 /* EffectRefractionControl.xib in Resources */,
 				E35DBBC414F2A2900070A6E4 /* InspectorText.xib in Resources */,
 				9218DF2C1919B04D0033851E /* joint-pivot-handle-ref.png in Resources */,
 				E35DBBDF14F3D1B60070A6E4 /* FontListTTF.plist in Resources */,
+				92053DB8197F097F00AA93AD /* effect-bloom.png in Resources */,
 				E35DBBE114F3DCDF0070A6E4 /* InspectorFontTTF.xib in Resources */,
 				9218DF3B1919B04D0033851E /* joint-pivot-mode-s-off@2x.png in Resources */,
 				E35DBBFB14F3EE210070A6E4 /* InspectorFloat.xib in Resources */,
@@ -6165,12 +6510,14 @@
 				E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */,
 				E34E5D6B153585EC000201FB /* ruler-bg-vertical.png in Resources */,
 				B7096E2B180CD98E00164A8A /* doc-scene.png in Resources */,
+				9266EE24195A15EE006CBE81 /* EffectContrastControl.xib in Resources */,
 				E34E5D6E1535AA78000201FB /* ruler-mark-major.png in Resources */,
 				E34E5D6F1535AA78000201FB /* ruler-mark-minor.png in Resources */,
 				E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */,
 				92F0960618F8851300D47A94 /* inspector-body-disconnected.png in Resources */,
 				E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */,
 				E3A16AF01536C885004B528A /* ruler-guide.png in Resources */,
+				920994DE19871A0A0006F38D /* effect-reflection.png in Resources */,
 				E3B9AF431538612200489438 /* ruler-xy.png in Resources */,
 				E3F3F845153C7772005443EE /* notes-bg.png in Resources */,
 				E3F3F847153D9126005443EE /* StickyNoteEditView.xib in Resources */,
@@ -6189,6 +6536,7 @@
 				E370BA0C1549B2460048ED73 /* scale-0.png in Resources */,
 				E370BA0D1549B2460048ED73 /* scale-1.png in Resources */,
 				E334069715517225000FBD0B /* InspectorFloatScale.xib in Resources */,
+				922EAC3E1958E095006F2D75 /* EffectDescriptionRowViewController.xib in Resources */,
 				E3DCFD9C15629FC700BD7D7F /* TaskStatusWindow.xib in Resources */,
 				9218DF401919B04D0033851E /* joint-pivot-handle-max@2x.png in Resources */,
 				E335CAEB15751C0D00A612EE /* seq-ctrl-bg.png in Resources */,
@@ -6232,6 +6580,7 @@
 				E3A0ED57159118F3000BDF4B /* SequencerSettingsWindow.xib in Resources */,
 				E3F73DB81593916E00D74084 /* SequencerDurationWindow.xib in Resources */,
 				E3E0557D159B8466001066C5 /* seq-keyframe-easein.png in Resources */,
+				920994DC198719F10006F38D /* EffectReflectionControl.xib in Resources */,
 				E3E0557E159B8466001066C5 /* seq-keyframe-easeout.png in Resources */,
 				E3E0557F159B8466001066C5 /* seq-keyframe-interpol.png in Resources */,
 				E392618F159CAAA10034FF1D /* seq-keyframe-interpol-vis.png in Resources */,
@@ -6251,6 +6600,7 @@
 				E3DFA7CE15ACA0CD005D3B6F /* frame-android-small.png in Resources */,
 				922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */,
 				E3DFA7CF15ACA0CD005D3B6F /* frame-android-xsmall.png in Resources */,
+				92CD1C161965D745002BF2DE /* EffectBloomControl.xib in Resources */,
 				E3E2704815B18CF500287470 /* TB_play.png in Resources */,
 				9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */,
 				E3E2704915B18CF500287470 /* TB_stop.png in Resources */,
@@ -6269,6 +6619,7 @@
 				E3B7BC9C15E3B7F100CF95EF /* NodePlugInsList.plist in Resources */,
 				E3B7BCBE15E505CC00CF95EF /* TB_plugins.png in Resources */,
 				830F4E9B192F5263002B832D /* Package.icns in Resources */,
+				920994D3198718F10006F38D /* effect-glass.png in Resources */,
 				9218DF3E1919B04D0033851E /* joint-pivot-handle-ratchet@2x.png in Resources */,
 				E3B19F6D15E65229000B023E /* DefaultResourcesList.plist in Resources */,
 				E360789015EBA5420040A172 /* sel-frame.png in Resources */,
@@ -6287,14 +6638,17 @@
 				E367E32016384F0C00247F12 /* orientation-landscapeleft.png in Resources */,
 				E367E32116384F0C00247F12 /* orientation-landscaperight.png in Resources */,
 				92B91022193412A600E346B5 /* InspectorAnimation.xib in Resources */,
+				92053DB4197F096000AA93AD /* EffectBloomControl.xib in Resources */,
 				92D9D48418F8AB3800F167C1 /* joint-connection-bg.png in Resources */,
 				E367E32316384F0C00247F12 /* orientation-upsidedown.png in Resources */,
 				E367E32516384F3600247F12 /* orientation-portrait.png in Resources */,
+				9266EE30195A171B006CBE81 /* effect-saturation.png in Resources */,
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
 				92F0960E18F8851300D47A94 /* inspector-body-connected@2x.png in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
 				B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */,
 				B7096E2C180CD98E00164A8A /* doc-scene@2x.png in Resources */,
+				9266EE42195A17EE006CBE81 /* EffectPixelateControl.xib in Resources */,
 				E35D78D616826C0100A53BEF /* SpriteSheetSettingsWindow.xib in Resources */,
 				E3DEF5B7169B359C00B9DCF4 /* lame in Resources */,
 				E3DEF5B9169B35DF00B9DCF4 /* lame-COPYING in Resources */,
@@ -6329,6 +6683,7 @@
 				921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */,
 				E334A4E6170D0020001604F7 /* debugger-bug.png in Resources */,
 				E3D839DC171356EC004F6127 /* pngquant in Resources */,
+				926FDC8A196C902D008C0132 /* effect-refraction.png in Resources */,
 				E3D839DD171356EC004F6127 /* pngquant-COPYING in Resources */,
 				E38F79361715FD8D00E299E4 /* editor-warning.png in Resources */,
 				E3C12B1F171E0DE7001EEDDB /* editor-check.png in Resources */,
@@ -6342,6 +6697,7 @@
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
 				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
 				92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */,
+				920994D1198717D20006F38D /* EffectGlassControl.xib in Resources */,
 				B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */,
 				9218DF3F1919B04D0033851E /* joint-pivot-handle-min@2x.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
@@ -6352,6 +6708,7 @@
 				B732A1851799736500333C56 /* TB_build@2x.png in Resources */,
 				B7AC6969179E03BF0041B8BD /* select-corner.png in Resources */,
 				B7AC6981179F50850041B8BD /* BFColorPickerPopover_LICENSE.txt in Resources */,
+				9266EE2C195A1603006CBE81 /* effect-brightness.png in Resources */,
 				B7AC69A517A07DAD0041B8BD /* inspector-folder.png in Resources */,
 				B7AC69A617A07DAD0041B8BD /* inspector-objects.png in Resources */,
 				9218DF381919B04D0033851E /* joint-pivot-mode-s-on@2x.png in Resources */,
@@ -6361,6 +6718,8 @@
 				B7AC69B417A1A2040041B8BD /* header-bg2-crop.png in Resources */,
 				B72D1DC0186125E80091252F /* Requirements.plist in Resources */,
 				B7AC69C917A70A4B0041B8BD /* inspector-codeconnections.png in Resources */,
+				92CD1C241965D9F9002BF2DE /* effect-bloom.png in Resources */,
+				92CD1C221965D824002BF2DE /* EffectBrightnessControl.xib in Resources */,
 				92D9D48318F8AB3800F167C1 /* joint-connection-disconnected@2x.png in Resources */,
 				926D13C918B5778300582959 /* joint-distance-slide@2x.png in Resources */,
 				926D13CB18B5778300582959 /* joint-distance@2x.png in Resources */,
@@ -6372,6 +6731,7 @@
 				B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */,
 				92F0960B18F8851300D47A94 /* inspector-body-remove-hi@2x.png in Resources */,
 				B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */,
+				9266EE29195A1603006CBE81 /* effect-glow.png in Resources */,
 				926D13C318B5778300582959 /* joint-distance-handle-short@2x.png in Resources */,
 				B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */,
 				B7083DFB17B2CC65006628C7 /* LocaliztaionEditorLanguageList.plist in Resources */,
@@ -6399,7 +6759,11 @@
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
 				83599E9A1975470D008283EC /* photoshop.psd in Resources */,
 				92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */,
+				920994C419870EF90006F38D /* ShinyBallNormals.png in Resources */,
+				920994C319870EF90006F38D /* ShinyBallColor.png in Resources */,
+				920994C219870EF90006F38D /* cartoon_house.jpg in Resources */,
 				830B39B0197032F400218021 /* blank.wav in Resources */,
+				920994C119870EF90006F38D /* EffectTest1.ccb in Resources */,
 				92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */,
 				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
 			);
@@ -6422,6 +6786,16 @@
 				926D13F518B57E1600582959 /* Icon.png in Resources */,
 				926D13F418B57E1600582959 /* InfoPlist.strings in Resources */,
 				926D13F218B57E1600582959 /* CCBPProperties.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		929D1B9C1954D16C00B27340 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				929D1BB11954D34300B27340 /* CCBPProperties.plist in Resources */,
+				929D1BB21954D34300B27340 /* InfoPlist.strings in Resources */,
+				929D1BB31954D34300B27340 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6686,20 +7060,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8304857319ADEA4D00A624BB /* Code Sign Plugins and Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Code Sign Plugins and Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nif [ -z \"${CODE_SIGN_IDENTITY}\" ]; then\necho \"Not code signing: No code signing identity set\"\nexit 0\nfi\n\nCONTENTSDIR=\"${BUILT_PRODUCTS_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\nFRAMEWORKSLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# frameworks\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework\"\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A\"\n\n# binaries\nfor f1 in \"lame\" \"ccz\" \"oggenc\" \"pngquant\" \"optipng\"\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$CONTENTSDIR/Resources/$f1\"\ndone\n\n# plugins\nPLUGINFILES=\"$CONTENTSDIR/PlugIns/*\"\nfor f2 in $PLUGINFILES\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$f2\"\ndone";
-		};
 		DC3DD33018A948560004D2AC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -6734,6 +7094,7 @@
 				80279C7F183A8EAB005C6050 /* WarningCell.m in Sources */,
 				80FBACC31833FAE000C4BB69 /* WarningTableView.m in Sources */,
 				80FBACC41833FAE000C4BB69 /* WarningTableViewHandler.m in Sources */,
+				92CD1C201965D824002BF2DE /* CCBPEffectPixelate.m in Sources */,
 				921EEAE018A5884300D864C2 /* SequencerJoints.m in Sources */,
 				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
 				7789ABD0133AA82000CEFCC7 /* main.m in Sources */,
@@ -6752,6 +7113,7 @@
 				77E1992213858D78006C361B /* PSMMetalTabStyle.m in Sources */,
 				77E1992313858D78006C361B /* PSMOverflowPopUpButton.m in Sources */,
 				77E1992413858D78006C361B /* PSMProgressIndicator.m in Sources */,
+				928696201958950100402DD8 /* InspectorEffectControl.m in Sources */,
 				77E1992513858D78006C361B /* PSMRolloverButton.m in Sources */,
 				77E1992613858D78006C361B /* PSMTabBarCell.m in Sources */,
 				77E1992713858D78006C361B /* PSMTabBarControl.m in Sources */,
@@ -6781,6 +7143,7 @@
 				E3FEA8B414E4874C00119FBE /* InspectorPointLock.m in Sources */,
 				B77EC96618087011004C09FF /* CCBProjectCreator.m in Sources */,
 				E3FEA8B914E492DA00119FBE /* InspectorScaleLock.m in Sources */,
+				9266EE23195A15EE006CBE81 /* EffectContrastControl.m in Sources */,
 				E3FEA8BE14E498B700119FBE /* InspectorDegrees.m in Sources */,
 				E3B4221114E49DEB004547D6 /* InspectorInteger.m in Sources */,
 				92F0961D18F891A900D47A94 /* InspectorEnabledFloat.m in Sources */,
@@ -6826,6 +7189,7 @@
 				E33BC1B81510E4B6009AE29A /* NodeGraphPropertySetter.m in Sources */,
 				E3C6510A151A65ED00D639C0 /* InspectorString.m in Sources */,
 				E3C6512B151C7E3700D639C0 /* InspectorBlockCCControl.m in Sources */,
+				92053DB6197F096000AA93AD /* EffectBloomControl.m in Sources */,
 				E36F3C3D152C756D00AAD805 /* NSString+RelativePath.m in Sources */,
 				E34E5D6615357CF2000201FB /* RulersLayer.m in Sources */,
 				E3A16AF31536D096004B528A /* GuidesLayer.m in Sources */,
@@ -6855,11 +7219,13 @@
 				E335CB031577838800A612EE /* SequencerOutlineView.m in Sources */,
 				922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */,
 				E335CB061577995F00A612EE /* CCBSplitView.m in Sources */,
+				9266EE14195A1578006CBE81 /* CCBPEffectContrast.m in Sources */,
 				E335CB0A1577C5FB00A612EE /* CCNode+NodeInfo.m in Sources */,
 				E335CB0F1578C2C600A612EE /* SequencerStructureCell.m in Sources */,
 				E3E8B4871578F8F800373983 /* SequencerTimelineView.m in Sources */,
 				E3E8B4A1157CC57E00373983 /* SequencerScrubberSelectionView.m in Sources */,
 				E3E8B4A8157CD67000373983 /* SequencerSequence.m in Sources */,
+				926FDC84196C8ECC008C0132 /* EffectRefractionControl.m in Sources */,
 				926D13D318B57A4900582959 /* CCScaleFreeNode.m in Sources */,
 				E36ECCE5158648EE003C177E /* SequencerNodeProperty.m in Sources */,
 				E36ECD0D15868F57003C177E /* SequencerKeyframe.m in Sources */,
@@ -6870,11 +7236,14 @@
 				E3FD4DD315A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m in Sources */,
 				E3FD4DDF15A455B90032C2DD /* SequencerSequenceArrayController.m in Sources */,
 				B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */,
+				92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */,
 				E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */,
+				926FDC88196C8EEC008C0132 /* CCBPEffectRefraction.m in Sources */,
 				E35A136015B038D700C9AA15 /* ThoMoNetworkStub.m in Sources */,
 				E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */,
 				E35A136215B038D700C9AA15 /* ThoMoTCPConnection.m in Sources */,
 				E33C2AAC15C987EB0043EF9B /* ResourceManagerOutlineView.m in Sources */,
+				9286962A1958A05F00402DD8 /* EffectSelectViewController.m in Sources */,
 				E33C2AAF15C9A0D40043EF9B /* SequencerUtil.m in Sources */,
 				926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */,
 				E33C2AB815CAE3980043EF9B /* SequencerStretchWindow.m in Sources */,
@@ -6897,16 +7266,21 @@
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
 				E35D78D516826C0100A53BEF /* SpriteSheetSettingsWindow.m in Sources */,
+				922EAC471958F41E006F2D75 /* CCBPEffectBrightness.m in Sources */,
 				E334741C169DC5A7000737CC /* APIDocsWindow.m in Sources */,
 				E3D6BA1E16C46E11006AFE0A /* SequencerSoundChannel.m in Sources */,
 				D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */,
+				920994CC198717910006F38D /* CCBPEffectGlass.m in Sources */,
 				E3D6BA2316C46E41006AFE0A /* SequencerCallbackChannel.m in Sources */,
+				92053DB5197F096000AA93AD /* CCBPEffectBloom.m in Sources */,
 				921EEB2418ADB7EA00D864C2 /* GeometryUtil.m in Sources */,
 				E3D6BA2616C46E91006AFE0A /* SequencerChannel.m in Sources */,
 				E3DA6FEE16CAEC7800B12FFB /* SequencerPopoverHandler.m in Sources */,
+				9266EE41195A17EE006CBE81 /* EffectPixelateControl.m in Sources */,
 				E312973316CC377700A09155 /* SequencerPopoverBlock.m in Sources */,
 				E312973816CC67CB00A09155 /* SequencerPopoverSound.m in Sources */,
 				E3B5EE8916D6E0AA00C07990 /* InspectorFloatXY.m in Sources */,
+				928696341958CC9A00402DD8 /* EffectsManager.m in Sources */,
 				E390C77E170A2C9B003E9E92 /* AboutWindow.m in Sources */,
 				E334A4E4170CFDE3001604F7 /* CCBTextField.m in Sources */,
 				B7C3533E17FA30BB005697C1 /* NodePhysicsBody.m in Sources */,
@@ -6924,8 +7298,10 @@
 				B7AC6985179F50850041B8BD /* NSColorWell+BFColorPickerPopover.m in Sources */,
 				B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */,
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
+				920994D7198719CD0006F38D /* CCBPEffectReflection.m in Sources */,
 				B7AC6988179F50850041B8BD /* BFIconTabBar.m in Sources */,
 				B7AC699C17A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m in Sources */,
+				9266EE38195A17A4006CBE81 /* EffectSaturationControl.m in Sources */,
 				B7AC699D17A079C80041B8BD /* SMBar.m in Sources */,
 				B7AC699E17A079C80041B8BD /* SMTabBar.m in Sources */,
 				B7AC699F17A079C80041B8BD /* SMTabBarButtonCell.m in Sources */,
@@ -6935,16 +7311,20 @@
 				B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */,
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
 				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
+				920994D0198717D20006F38D /* EffectGlassControl.m in Sources */,
 				B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */,
 				B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */,
 				B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */,
 				B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */,
+				9276C1321959F71C00A1D4DC /* EffectViewController.m in Sources */,
 				B7083DF917B1CBC8006628C7 /* LocalizationEditorHandler.m in Sources */,
 				B7083DFE17B2CDA0006628C7 /* LocalizationEditorLanguage.m in Sources */,
 				B7083E0117B2F992006628C7 /* LocalizationEditorTranslation.m in Sources */,
+				9266EE34195A1786006CBE81 /* CCBPEffectSaturation.m in Sources */,
 				B7083E0417B32623006628C7 /* LocalizationEditorLanguageTableView.m in Sources */,
 				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,
+				920994DB198719F10006F38D /* EffectReflectionControl.m in Sources */,
 				83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */,
 				B7737D4F17CC102D005F775A /* InspectorColor4.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
@@ -6975,6 +7355,7 @@
 				9269C3101991A38200884F59 /* SBMenuItem.m in Sources */,
 				83FC4111198154CD00799B6C /* PackageSettingsDetailView.m in Sources */,
 				E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */,
+				9286963A1958E02000402DD8 /* EffectDescriptionRowViewController.m in Sources */,
 				E525F710D92CDE366BCEE575 /* ResourceContextMenu.m in Sources */,
 				E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */,
 				E525FF15523F47E23FC1A6AB /* ResourceNewFileCommand.m in Sources */,
@@ -7021,10 +7402,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				920994BB19870EC40006F38D /* CCBReader_EffectsTest.m in Sources */,
 				83EDACF5193DB70200327B86 /* ProjectSettings_Tests.m in Sources */,
 				83993DB519361305001C228B /* FeatureToggle_Tests.m in Sources */,
 				E525FC3487265AE7715CE955 /* ObserverTestHelper.m in Sources */,
 				E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */,
+				920994C719870F3D0006F38D /* Cocos2dTestHelpers.m in Sources */,
 				E525F7D63B68B99ADD44F94C /* PackageCreator_Tests.m in Sources */,
 				E525F46FC0F80AEC8AA43D48 /* PackageRemover_Tests.m in Sources */,
 				E525FA2BAA3D669C41F83FA2 /* PackageExporter_Tests.m in Sources */,
@@ -7067,6 +7450,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9294EC9618C6606F0059014C /* CCBPhysicsPinJointPlacefolder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		929D1B981954D16C00B27340 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				929D1BB51954D36200B27340 /* CCBPEffectNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7306,6 +7697,11 @@
 			target = 926D13D718B57B9500582959 /* CCPhysicsPinJoint */;
 			targetProxy = 926D13E518B57C4200582959 /* PBXContainerItemProxy */;
 		};
+		929D1BB71954D37000B27340 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 929D1B971954D16C00B27340 /* CCEffectNode */;
+			targetProxy = 929D1BB61954D37000B27340 /* PBXContainerItemProxy */;
+		};
 		92A805C518D3CFAC004508E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 92B7900118C808B7007DF895 /* CCPhysicsSpringJoint */;
@@ -7483,6 +7879,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				926D13EE18B57E1600582959 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		929D1B921954D15400B27340 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				929D1B931954D15400B27340 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -9174,6 +9578,79 @@
 					dynamic_lookup,
 				);
 				PRODUCT_NAME = CCPhysicsPinJoint;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Release;
+		};
+		928B2B34198703B700C0F0BD /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_DEPENDENCY_INFO_FILE = "$(OBJECT_FILE_DIR_$(CURRENT_VARIANT))/$(CURRENT_ARCH)/$(PRODUCT_NAME)_dependency_info.dat";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCEffectNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Testing;
+		};
+		929D1BA11954D16C00B27340 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCEffectNode/CCEffectNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(SB_DEBUG_PREPROCESSOR_DEFINES)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCEffectNode/CCEffectNode-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_DEPENDENCY_INFO_FILE = "$(OBJECT_FILE_DIR_$(CURRENT_VARIANT))/$(CURRENT_ARCH)/$(PRODUCT_NAME)_dependency_info.dat";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCEffectNode;
+				WRAPPER_EXTENSION = ccbPlugNode;
+			};
+			name = Debug;
+		};
+		929D1BA21954D16C00B27340 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCEffectNode/CCEffectNode-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(SB_RELEASE_PREPROCESSOR_DEFINES)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+				);
+				INFOPLIST_FILE = "CCEffectNode/CCEffectNode-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_DEPENDENCY_INFO_FILE = "$(OBJECT_FILE_DIR_$(CURRENT_VARIANT))/$(CURRENT_ARCH)/$(PRODUCT_NAME)_dependency_info.dat";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
+				PRODUCT_NAME = CCEffectNode;
 				WRAPPER_EXTENSION = ccbPlugNode;
 			};
 			name = Release;
@@ -10988,6 +11465,16 @@
 				926D13E118B57B9500582959 /* Debug */,
 				83833171196578F500E6EFB1 /* Testing */,
 				926D13E218B57B9500582959 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		929D1BA01954D16C00B27340 /* Build configuration list for PBXNativeTarget "CCEffectNode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				929D1BA11954D16C00B27340 /* Debug */,
+				929D1BA21954D16C00B27340 /* Release */,
+				928B2B34198703B700C0F0BD /* Testing */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

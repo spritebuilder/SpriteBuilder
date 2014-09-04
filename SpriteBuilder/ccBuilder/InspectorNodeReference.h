@@ -20,6 +20,12 @@
 @property BOOL enabled;
 @end
 
+typedef enum
+{
+	DragTypeJoint,
+	DragTypeEffectSprite,
+} eDragType;
+
 
 @interface InspectorNodeReference : InspectorValue <NSDraggingSource,NSPasteboardItemDataProvider>
 {
@@ -40,6 +46,7 @@
 
 
 @property (weak) IBOutlet OutletButton *outletButton;
+@property (nonatomic) eDragType dragType;
 
 @property CCNode * reference;
 @property (readonly) NSString * nodeName;

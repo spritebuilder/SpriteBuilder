@@ -32,6 +32,7 @@
 #import "CCNode+NodeInfo.h"
 #import "AppDelegate.h"
 #import "NodePhysicsBody.h"
+#import "CCBPEffectNode.h"
 
 @protocol CCBWriterInternal_UndeclaredSelectors <NSObject>
 - (NSArray*) ccbExcludePropertiesForSave;
@@ -408,6 +409,28 @@
              serializedValue = @(nodeRef.UUID);
          }
     }
+	else if([type isEqualToString:@"EffectControl"])
+	{
+	
+		NSAssert([node conformsToProtocol:@protocol(CCEffectNodeProtocol)], @"Node %@ shoudl conform to protocol CCEffectNodeProtocol",node);
+		id<CCEffectNodeProtocol> effectNode = (id<CCEffectNodeProtocol>)node;
+
+		NSMutableArray * serializedEffectsData = [NSMutableArray new];
+		for (id<EffectProtocol> effect in effectNode.effects) {
+
+			NSDictionary * effectProperties = [effect serialize];
+			NSDictionary * effectDescription = @{@"className": NSStringFromClass([effect class]),
+												 @"baseClass" : [effect effectDescription].baseClass,
+												 @"UUID": @([effect UUID]),
+												 @"properties":effectProperties
+												 };
+			
+			[serializedEffectsData addObject:effectDescription];
+		
+		}
+		serializedValue = serializedEffectsData;
+		
+	}
     else
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);
@@ -419,7 +442,11 @@
 + (NSMutableDictionary*) dictionaryFromCCObject:(CCNode *)node
 {
     NodeInfo* info = node.userObject;
+	NSAssert(info, @"Node does not have an NodeInfo");
     PlugInNode* plugIn = info.plugIn;
+	NSAssert(plugIn, @"Node does not have a plugin");
+
+	
     NSMutableDictionary* extraProps = info.extraProps;
     
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
@@ -444,8 +471,10 @@
         id defaultSerialization = [propInfo objectForKey:@"defaultSerialization"];
         id serializedValue = NULL;
         
+	
         serializedValue = [CCBWriterInternal serializePropertyForNode:node propInfo:propInfo excludeProps:excludeProps];
-        if (!serializedValue) continue;
+        if (!serializedValue)
+			continue;
         
         // Skip default values
         if ([serializedValue isEqual:defaultSerialization] && !hasKeyframes)
@@ -480,7 +509,13 @@
     {
         for (int i = 0; i < [[node children] count]; i++)
         {
-            [children addObject:[CCBWriterInternal dictionaryFromCCObject:[[node children] objectAtIndex:i]]];
+			CCNode * childNode = [[node children] objectAtIndex:i];
+			if(!childNode.userObject)
+			{
+				continue;
+			}
+			NSDictionary * serializedChild = [CCBWriterInternal dictionaryFromCCObject:childNode];
+            [children addObject:serializedChild];
         }
     }
     

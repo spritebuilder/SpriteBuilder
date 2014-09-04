@@ -66,4 +66,14 @@
 	
 }
 
+-(void)findFirst:(PredicateBlock)aBlock complete:(ActionBlock)completionBlock
+{
+	
+	id first = [self findFirst:aBlock];
+	if(!first)
+		return;
+	
+	completionBlock(first, [self indexOfObject:first]);
+}
+
 @end

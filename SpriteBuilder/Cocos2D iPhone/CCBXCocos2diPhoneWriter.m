@@ -67,6 +67,7 @@
     [propTypes addObject:@"Color4"];
     [propTypes addObject:@"NodeReference"];
     [propTypes addObject:@"FloatCheck"];
+	[propTypes addObject:@"EffectControl"];
 }
 
 - (id) init
@@ -271,6 +272,7 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 }
 
 
+
 - (void) writeFloat:(float)f
 {
     unsigned char type;
@@ -319,6 +321,59 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     NSAssert(num, @"ccbi export: Trying to write string not added to cache (%@)", str);
     
     [self writeInt:[num intValue] withSign:NO];
+}
+
+-(void)writePropertyFromDictionary:(NSDictionary*)prop
+{
+	id value = [prop objectForKey:@"value"];
+	NSString* type = [prop objectForKey:@"type"];
+	NSString* name = [prop objectForKey:@"name"];
+	id baseValue = [prop objectForKey:@"baseValue"];
+	
+	if (baseValue)
+	{
+		// We need to transform the base value to a normal value (base values override normal values)
+		if ([type isEqualToString:@"Position"])
+		{
+			value = [NSArray arrayWithObjects:
+					 [baseValue objectAtIndex:0],
+					 [baseValue objectAtIndex:1],
+					 [value objectAtIndex:2],
+					 [value objectAtIndex:3],
+					 [value objectAtIndex:4],
+					 nil];
+		}
+		else if ([type isEqualToString:@"ScaleLock"])
+		{
+			value = [NSArray arrayWithObjects:
+					 [baseValue objectAtIndex:0],
+					 [baseValue objectAtIndex:1],
+					 [NSNumber numberWithBool:NO],
+					 [value objectAtIndex:3],
+					 nil];
+		}
+		else if ([type isEqualToString:@"SpriteFrame"])
+		{
+			NSString* a = [baseValue objectAtIndex:0];
+			NSString* b = [baseValue objectAtIndex:1];
+			if ([b isEqualToString:@"Use regular file"]) b = @"";
+			
+			if ([self isSprite:a inGeneratedSpriteSheet:b])
+			{
+				b = [[a stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
+			}
+			
+			value = [NSArray arrayWithObjects:b, a, nil];
+		}
+		else
+		{
+			// Value needs no transformation
+			value = baseValue;
+		}
+	}
+	
+	[self writeProperty:value type:type name:name platform:[prop objectForKey:@"platform"]];
+
 }
 
 
@@ -539,10 +594,73 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
         [self writeBool:[propArray[1] boolValue]];
 
     }
+	else if([type isEqualToString:@"EffectControl"])
+	{
+		NSArray * propArray = (NSArray*)prop;
+		[self writeInt:propArray.count withSign:NO];
+
+		for (NSDictionary * effectDescription in prop) {
+
+			[self writeEffect:effectDescription];
+		}
+	}
     else
     {
         NSLog(@"WARNING: Unknown property Type:%@" , type);
     }
+}
+
+-(void)writeEffect:(NSDictionary*)effectDescription
+{
+	
+	NSString* baseClass = effectDescription[@"baseClass"];
+	[self writeCachedString:baseClass isPath:NO];
+	NSDictionary * properties = effectDescription[@"properties"];
+	[self writeInt:properties.count withSign:NO];
+	
+	for (NSDictionary * prop in properties) {
+		[self writePropertyFromDictionary:prop];
+	}
+}
+
+//Extend as you please.
+//Only handles a limited number of types so far.
+-(void)writeGenericProperty:(NSString*)propKey value:(id)value
+{
+
+	if([value isKindOfClass:[NSNumber class]])
+	{
+		NSString* type = nil;
+		if (strcmp([value objCType], @encode(BOOL)) == 0)
+		{
+			type = @"Check";
+		}
+		else if ((strcmp([value objCType], @encode(int)) == 0)||
+				 (strcmp([value objCType], @encode(long)) == 0))
+		{
+			type = @"Integer";
+
+		}
+		else if((strcmp([value objCType], @encode(double)) == 0)||
+				(strcmp([value objCType], @encode(float)) == 0))
+		{
+			type = @"Float";
+		}
+		else
+		{
+			NSAssert(false, @"Failed to write generic property type: %@", propKey);
+		}
+		[self writeProperty:value type:type name:propKey platform:nil];
+	}
+	else if([value isKindOfClass:[NSString class]])
+	{
+		NSString* type = @"String";
+		[self writeProperty:value type:type name:propKey platform:nil];
+	}
+	else
+	{
+		NSAssert(false, @"Failed to write generic property type: %@", propKey);
+	}
 }
 
 -(void)cacheStringsForJoints:(NSArray*)joints
@@ -550,6 +668,80 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     for (NSDictionary * joint in joints) {
         [self cacheStringsForNode:joint];
     }
+}
+
+-(void)cacheStringForProperty:(NSString*)type value:(id)value
+{
+	if ([type isEqualToString:@"SpriteFrame"])
+	{
+		NSString* a = [value objectAtIndex:0];
+		NSString* b = [value objectAtIndex:1];
+		
+		if ([self isSprite:b inGeneratedSpriteSheet:a])
+		{
+			a = [[b stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
+		}
+		
+		//[self addToStringCache: a isPath:YES];
+		[self addToStringCache:b isPath:[a isEqualToString:@""]];
+	}
+	else if( [type isEqualToString:@"Animation"])
+	{
+		[self addToStringCache:[value objectAtIndex:0] isPath:YES];
+		[self addToStringCache:[value objectAtIndex:1] isPath:NO];
+	}
+	else if ([type isEqualToString:@"Block"])
+	{
+		[self addToStringCache:[value objectAtIndex:0] isPath:NO];
+	}
+	else if ([type isEqualToString:@"BlockCCControl"])
+	{
+		[self addToStringCache:[value objectAtIndex:0] isPath:NO];
+	}
+	else if ([type isEqualToString:@"Texture"]
+			 || [type isEqualToString:@"CCBFile"])
+	{
+		[self addToStringCache:value isPath:YES];
+	}
+	else if ([type isEqualToString:@"FntFile"])
+	{
+		NSString* fntName = [[value lastPathComponent] stringByDeletingPathExtension];
+		NSString* path = [[value stringByAppendingPathComponent:fntName] stringByAppendingPathExtension:@"fnt"];
+		[self addToStringCache:path isPath:YES];
+	}
+	else if ([type isEqualToString:@"Text"]
+			 || [type isEqualToString:@"String"]
+			 || [type isEqualToString:@"StringSimple"] )
+	{
+		NSString* str = NULL;
+		if ([value isKindOfClass:[NSString class]])
+		{
+			str = value;
+		}
+		else
+		{
+			str = [value objectAtIndex:0];
+		}
+		[self addToStringCache:str isPath:NO];
+	}
+	else if ([type isEqualToString:@"FontTTF"])
+	{
+		[self addToStringCache:value isPath:NO];
+	}
+	else if([type isEqualToString:@"EffectControl"])
+	{
+		for (NSDictionary * effect in value) {
+			[self addToStringCache:effect[@"baseClass"] isPath:NO];
+			for (NSDictionary * prop in effect[@"properties"])
+			{
+				id value = [prop objectForKey:@"value"];
+				NSString* type = [prop objectForKey:@"type"];
+
+				[self addToStringCache:[prop objectForKey:@"name"] isPath:NO];
+				[self cacheStringForProperty:type value:value];
+			}
+		}
+	}
 }
 
 - (void) cacheStringsForNode:(NSDictionary*) node
@@ -645,63 +837,10 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
                 value = baseValue;
             }
         }
+		
+		[self cacheStringForProperty:type value:value];
         
-        if ([type isEqualToString:@"SpriteFrame"])
-        {
-            NSString* a = [value objectAtIndex:0];
-            NSString* b = [value objectAtIndex:1];
-            
-            if ([self isSprite:b inGeneratedSpriteSheet:a])
-            {
-                a = [[b stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
-            }
-            
-            //[self addToStringCache: a isPath:YES];
-            [self addToStringCache:b isPath:[a isEqualToString:@""]];
-        }
-		else if( [type isEqualToString:@"Animation"])
-		{
-            [self addToStringCache:[value objectAtIndex:0] isPath:YES];
-            [self addToStringCache:[value objectAtIndex:1] isPath:NO];			
-		}
-        else if ([type isEqualToString:@"Block"])
-        {
-            [self addToStringCache:[value objectAtIndex:0] isPath:NO];
-        }
-        else if ([type isEqualToString:@"BlockCCControl"])
-        {
-            [self addToStringCache:[value objectAtIndex:0] isPath:NO];
-        }
-        else if ([type isEqualToString:@"Texture"]
-                 || [type isEqualToString:@"CCBFile"])
-        {
-            [self addToStringCache:value isPath:YES];
-        }
-        else if ([type isEqualToString:@"FntFile"])
-        {
-            NSString* fntName = [[value lastPathComponent] stringByDeletingPathExtension];
-            NSString* path = [[value stringByAppendingPathComponent:fntName] stringByAppendingPathExtension:@"fnt"];
-            [self addToStringCache:path isPath:YES];
-        }
-        else if ([type isEqualToString:@"Text"]
-                 || [type isEqualToString:@"String"]
-                 || [type isEqualToString:@"StringSimple"] )
-        {
-            NSString* str = NULL;
-            if ([value isKindOfClass:[NSString class]])
-            {
-                str = value;
-            }
-            else
-            {
-                str = [value objectAtIndex:0];
-            }
-            [self addToStringCache:str isPath:NO];
-        }
-        else if ([type isEqualToString:@"FontTTF"])
-        {
-            [self addToStringCache:value isPath:NO];
-        }
+        
     }
     
     // Custom properties
@@ -1138,55 +1277,8 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     {
         NSDictionary* prop = [props objectAtIndex:i];
         
-        id value = [prop objectForKey:@"value"];
-        NSString* type = [prop objectForKey:@"type"];
-        NSString* name = [prop objectForKey:@"name"];
-        id baseValue = [prop objectForKey:@"baseValue"];
-        
-        if (baseValue)
-        {
-            // We need to transform the base value to a normal value (base values override normal values)
-            if ([type isEqualToString:@"Position"])
-            {
-                value = [NSArray arrayWithObjects:
-                         [baseValue objectAtIndex:0],
-                         [baseValue objectAtIndex:1],
-                         [value objectAtIndex:2],
-                         [value objectAtIndex:3],
-                         [value objectAtIndex:4],
-                         nil];
-            }
-            else if ([type isEqualToString:@"ScaleLock"])
-            {
-                value = [NSArray arrayWithObjects:
-                         [baseValue objectAtIndex:0],
-                         [baseValue objectAtIndex:1],
-                         [NSNumber numberWithBool:NO],
-                         [value objectAtIndex:3],
-                         nil];
-            }
-            else if ([type isEqualToString:@"SpriteFrame"])
-            {
-                NSString* a = [baseValue objectAtIndex:0];
-                NSString* b = [baseValue objectAtIndex:1];
-                if ([b isEqualToString:@"Use regular file"]) b = @"";
-                
-                if ([self isSprite:a inGeneratedSpriteSheet:b])
-                {
-                    b = [[a stringByDeletingLastPathComponent] stringByAppendingPathExtension:@"plist"];
-                }
-                
-                value = [NSArray arrayWithObjects:b, a, nil];
-            }
-            else
-            {
-                // Value needs no transformation
-                value = baseValue;
-            }
-        }
-        
-        [self writeProperty:value type:type name:name platform:[prop objectForKey:@"platform"]];
-    }
+		[self writePropertyFromDictionary:prop];
+	}
     
     // Write custom properties
     for (NSDictionary* customProp in customProps)
