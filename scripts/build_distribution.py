@@ -17,6 +17,11 @@ class UserError (Exception):
     pass
     
 class BuildDistribution:
+
+    def __init__(self):
+        os.chdir('../');
+        self.rootfolder = os.getcwd()
+    
     def run(self):
 
         parser = argparse.ArgumentParser(description='Build distribution build')
@@ -35,9 +40,7 @@ class BuildDistribution:
             print 'Must specify private key in pro version';
             return 1
 
-        os.chdir('../');
-        
-        self.rootfolder = os.getcwd()
+       
         
         self.run_tests = args.tests
     
@@ -161,7 +164,7 @@ class BuildDistribution:
             if j == None:
                 version_info[i] = 'undefined'
             
-        if version_info['revision'] == 'undefined':
+        if not version_info.has_key('revision') or version_info['revision'] == 'undefined':
             p = subprocess.Popen(['/usr/bin/git', 'rev-parse' ,'--short=10' ,'HEAD'],stdout=subprocess.PIPE)
             out, err = p.communicate()
             if err == None:
