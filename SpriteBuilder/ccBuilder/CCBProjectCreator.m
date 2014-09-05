@@ -9,6 +9,7 @@
 #import "CCBProjectCreator.h"
 #import "AppDelegate.h"
 
+#define ANDROID_CAPABLE_PROJECT
 
 @implementation NSString (IdentifierSanitizer)
 
@@ -89,9 +90,9 @@
     // Update workspace data
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace/contents.xcworkspacedata"] search:substitutableProjectName];
     
-#ifdef SPRITEBUILDER_PRO
+#ifdef ANDROID_CAPABLE_PROJECT
     // Update scheme
-	NSString* xcscheme = [NSString stringWithFormat:@"xcsh	areddata/xcschemes/%@ iOS.xcscheme", substitutableProjectName];
+	NSString* xcscheme = [NSString stringWithFormat:@"xcshareddata/xcschemes/%@ iOS.xcscheme", substitutableProjectName];
 	[self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:xcscheme] search:substitutableProjectName];
 	
 
@@ -140,7 +141,7 @@
     [fm moveItemAtPath:approjFileName toPath:newApprojFileName error:NULL];
 
 	
-#ifdef SPRITEBUILDER_PRO
+#ifdef ANDROID_CAPABLE_PROJECT
     /// SBPRO
     NSString* activityJavaFileName = [[fileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/java/org/cocos2d/%@/%@Activity.java", substitutableProjectIdentifier, substitutableProjectIdentifier]];
     if ([fm fileExistsAtPath:activityJavaFileName])

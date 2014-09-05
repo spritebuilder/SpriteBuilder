@@ -182,13 +182,11 @@ class BuildDistribution:
 
     def generate_template_project(self, project_name,sku_folder):
         #create generated folder.
-
     
         if not os.path.exists('Generated'):
             os.makedirs('Generated')
         
-        os.chdir('{rootfolder}/Support/{sku_folder}/{project_name}.spritebuilder/'.format(project_name=project_name,rootfolder=self.rootfolder,sku_folder=sku_folder))
-
+        os.chdir('{rootfolder}/Support/{project_name}.spritebuilder/'.format(project_name=project_name,rootfolder=self.rootfolder))
 
         # Generate template project
         print 'Generating:', project_name
