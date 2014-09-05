@@ -308,6 +308,10 @@
 		92BF8AB7192BCE8D00C1BC28 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */; };
 		92C97ACB199033290048FC37 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 924EE96D19902D810029CCD1 /* Sparkle.framework */; };
 		92CAC1CB195A4C6C0035EA39 /* EffectGlowControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */; };
+		92CB085919BA2DE800EFDCE3 /* effect-blur.png in Resources */ = {isa = PBXBuildFile; fileRef = 92CB085819BA2DE800EFDCE3 /* effect-blur.png */; };
+		92CB085B19BA2E0800EFDCE3 /* EffectBlurControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CB085A19BA2E0800EFDCE3 /* EffectBlurControl.xib */; };
+		92CB085E19BA2E4300EFDCE3 /* EffectBlurControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CB085D19BA2E4300EFDCE3 /* EffectBlurControl.m */; };
+		92CB086119BA2E5800EFDCE3 /* CCBPEffectBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CB086019BA2E5800EFDCE3 /* CCBPEffectBlur.m */; };
 		92CD1C161965D745002BF2DE /* EffectBloomControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92CD1C141965D745002BF2DE /* EffectBloomControl.xib */; };
 		92CD1C201965D824002BF2DE /* CCBPEffectPixelate.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */; };
 		92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 92CD1C1D1965D824002BF2DE /* EffectBrightnessControl.m */; };
@@ -1729,6 +1733,12 @@
 		92BF8AB1192BCDF300C1BC28 /* InspectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorButton.m; sourceTree = "<group>"; };
 		92BF8AB6192BCE8D00C1BC28 /* InspectorButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
 		92CAC1C9195A4C6C0035EA39 /* EffectGlowControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectGlowControl.xib; path = ccBuilder/EffectGlowControl.xib; sourceTree = "<group>"; };
+		92CB085819BA2DE800EFDCE3 /* effect-blur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-blur.png"; path = "Resources/effect-blur.png"; sourceTree = "<group>"; };
+		92CB085A19BA2E0800EFDCE3 /* EffectBlurControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBlurControl.xib; path = ccBuilder/EffectBlurControl.xib; sourceTree = "<group>"; };
+		92CB085C19BA2E4300EFDCE3 /* EffectBlurControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectBlurControl.h; path = ccBuilder/EffectBlurControl.h; sourceTree = "<group>"; };
+		92CB085D19BA2E4300EFDCE3 /* EffectBlurControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectBlurControl.m; path = ccBuilder/EffectBlurControl.m; sourceTree = "<group>"; };
+		92CB085F19BA2E5800EFDCE3 /* CCBPEffectBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectBlur.h; path = ccBuilder/CCBPEffectBlur.h; sourceTree = "<group>"; };
+		92CB086019BA2E5800EFDCE3 /* CCBPEffectBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBlur.m; path = ccBuilder/CCBPEffectBlur.m; sourceTree = "<group>"; };
 		92CD1C141965D745002BF2DE /* EffectBloomControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBloomControl.xib; path = ccBuilder/EffectBloomControl.xib; sourceTree = "<group>"; };
 		92CD1C1A1965D824002BF2DE /* CCBPEffectPixelate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectPixelate.h; path = ccBuilder/CCBPEffectPixelate.h; sourceTree = "<group>"; };
 		92CD1C1B1965D824002BF2DE /* CCBPEffectPixelate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectPixelate.m; path = ccBuilder/CCBPEffectPixelate.m; sourceTree = "<group>"; };
@@ -4169,6 +4179,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				92CB084F19BA2D8B00EFDCE3 /* Blur */,
 				920994D4198719120006F38D /* Reflection */,
 				920994C9198717710006F38D /* Glass */,
 				92053DAD197F093700AA93AD /* Bloom */,
@@ -4222,6 +4233,19 @@
 				92B792C618C92C60007DF895 /* Icon@2x.png */,
 			);
 			path = CCPhysicsSpringJoint;
+			sourceTree = "<group>";
+		};
+		92CB084F19BA2D8B00EFDCE3 /* Blur */ = {
+			isa = PBXGroup;
+			children = (
+				92CB085F19BA2E5800EFDCE3 /* CCBPEffectBlur.h */,
+				92CB086019BA2E5800EFDCE3 /* CCBPEffectBlur.m */,
+				92CB085C19BA2E4300EFDCE3 /* EffectBlurControl.h */,
+				92CB085D19BA2E4300EFDCE3 /* EffectBlurControl.m */,
+				92CB085819BA2DE800EFDCE3 /* effect-blur.png */,
+				92CB085A19BA2E0800EFDCE3 /* EffectBlurControl.xib */,
+			);
+			name = Blur;
 			sourceTree = "<group>";
 		};
 		92FFB857195DEC1100E9C96F /* AndroidPlugin */ = {
@@ -6575,6 +6599,7 @@
 				E3DFA7CE15ACA0CD005D3B6F /* frame-android-small.png in Resources */,
 				922E8EF818BFE47A008E1764 /* InspectorFloatCheck.xib in Resources */,
 				E3DFA7CF15ACA0CD005D3B6F /* frame-android-xsmall.png in Resources */,
+				92CB085919BA2DE800EFDCE3 /* effect-blur.png in Resources */,
 				92CD1C161965D745002BF2DE /* EffectBloomControl.xib in Resources */,
 				E3E2704815B18CF500287470 /* TB_play.png in Resources */,
 				9252073419623E2F00BFC071 /* SpriteBuilder.xcconfig in Resources */,
@@ -6670,6 +6695,7 @@
 				E39C917B174C134C00092BD1 /* toolbar-btn-add.png in Resources */,
 				E3583FB01756C228002DF0B0 /* ResourceManagerPreviewView.xib in Resources */,
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
+				92CB085B19BA2E0800EFDCE3 /* EffectBlurControl.xib in Resources */,
 				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
 				92D9D48018F8AB3800F167C1 /* joint-connection-connected.png in Resources */,
 				920994D1198717D20006F38D /* EffectGlassControl.xib in Resources */,
@@ -7074,6 +7100,7 @@
 				B75CB48B184D31270036259F /* UsageManager.m in Sources */,
 				7789ABD0133AA82000CEFCC7 /* main.m in Sources */,
 				7789ABD6133AA82000CEFCC7 /* AppDelegate.m in Sources */,
+				92CB086119BA2E5800EFDCE3 /* CCBPEffectBlur.m in Sources */,
 				7789ACEA133AB47A00CEFCC7 /* CocosScene.m in Sources */,
 				772BE565133C06320009B5B9 /* NSFlippedView.m in Sources */,
 				772BE572133E48350009B5B9 /* CCBGlobals.m in Sources */,
@@ -7133,6 +7160,7 @@
 				E3B4223714E5E6AD004547D6 /* InspectorSeparator.m in Sources */,
 				83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */,
 				E3C3660114EA0507007CD5FF /* TexturePropertySetter.m in Sources */,
+				92CB085E19BA2E4300EFDCE3 /* EffectBlurControl.m in Sources */,
 				E3C3660414EB2C1B007CD5FF /* CCBReaderInternal.m in Sources */,
 				E32D8CC814EC25D800F4BD5E /* InspectorCodeConnections.m in Sources */,
 				E35DBBC214F29EF80070A6E4 /* InspectorFntFile.m in Sources */,

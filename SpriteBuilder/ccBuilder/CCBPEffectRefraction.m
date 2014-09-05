@@ -116,13 +116,14 @@
 	return nil;
 }
 
--(void)postDeserializationFixup
+-(void)postDeserializationEffectFixup:(CCNode*)owner
 {
 	if(environmentUUID == 0)
 		self.environment = nil;
 	else
 	{
-		self.environment = (CCSprite*)[SceneGraph findUUID:environmentUUID node:[SceneGraph instance].rootNode];
+		CCNode * root = findSceneRoot(owner);
+		self.environment = (CCSprite*)[SceneGraph findUUID:environmentUUID node:root];
 	}
 
 }

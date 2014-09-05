@@ -28,6 +28,8 @@
 #import "CCBPEffectGlass.h"
 #import "EffectGlassControl.h"
 #import "EffectReflectionControl.h"
+#import "CCBPEffectBlur.h"
+#import "EffectBlurControl.h"
 
 
 @implementation CCNode(Effects)
@@ -124,6 +126,17 @@
 		effectDescription.baseClass = @"CCEffectSaturation";
 		effectDescription.className = NSStringFromClass([CCBPEffectSaturation class]);
 		effectDescription.viewController = NSStringFromClass([EffectSaturationControl class]);
+		[effectDescriptions addObject:effectDescription];
+	}
+	
+	{
+		EffectDescription * effectDescription = [[EffectDescription alloc] init];
+		effectDescription.title = @"Blur";
+		effectDescription.description = @"Makes things blur";
+		effectDescription.imageName = @"effect-blur.png";
+		effectDescription.baseClass = @"CCEffectBlur";
+		effectDescription.className = NSStringFromClass([CCBPEffectBlur class]);
+		effectDescription.viewController = NSStringFromClass([EffectBlurControl class]);
 		[effectDescriptions addObject:effectDescription];
 	}
 	

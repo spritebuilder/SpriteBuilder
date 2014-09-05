@@ -142,20 +142,23 @@
 	return nil;
 }
 
--(void)postDeserializationFixup
+-(void)postDeserializationEffectFixup:(CCNode*)owner
 {
+	
+	CCNode * root = findSceneRoot(owner);
+	
 	if(reflectionEnvironmentUUID == 0)
 		self.reflectionEnvironment = nil;
 	else
 	{
-		self.reflectionEnvironment =(CCSprite*)[SceneGraph findUUID:reflectionEnvironmentUUID node:[SceneGraph instance].rootNode];
+		self.reflectionEnvironment =(CCSprite*)[SceneGraph findUUID:reflectionEnvironmentUUID node:root];
 	}
 	
 	if(refractionEnvironmentUUID == 0)
 		self.refractionEnvironment = nil;
 	else
 	{
-		self.refractionEnvironment =(CCSprite*)[SceneGraph findUUID:refractionEnvironmentUUID node:[SceneGraph instance].rootNode];
+		self.refractionEnvironment =(CCSprite*)[SceneGraph findUUID:refractionEnvironmentUUID node:root];
 	}
 	
 }

@@ -74,9 +74,9 @@
 {
 	for(CCEffect * effect in  self.effects)
 	{
-		if([effect respondsToSelector:@selector(postDeserializationFixup)])
+		if([effect respondsToSelector:@selector(postDeserializationEffectFixup:)])
 		{
-			[effect performSelector:@selector(postDeserializationFixup) withObject:nil];
+			[effect performSelector:@selector(postDeserializationEffectFixup:) withObject:self];
 		}
 	}
 }
