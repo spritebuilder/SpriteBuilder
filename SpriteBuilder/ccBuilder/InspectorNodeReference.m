@@ -302,6 +302,7 @@
 - (IBAction)handleDeleteNode:(id)sender
 {
     self.reference = nil;
+	[self refresh];
 }
 
 - (IBAction)handleGotoNode:(id)sender
