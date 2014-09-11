@@ -35,6 +35,8 @@
 #import "ResourceTypes.h"
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"
+#import "ResourceManagerUtil.h"
+#import "RMDirectory.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -468,6 +470,13 @@
 
 - (void) markAsDirtyRelPath:(NSString*) relPath
 {
+    if(!relPath)
+    {
+        return;
+    }
+
+    NSLog(@"mark as dirty: %@", relPath);
+
     [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }
 
@@ -485,16 +494,47 @@
 - (void) removedResourceAt:(NSString*) relPath
 {
     [_resourceProperties removeObjectForKey:relPath];
+
+    [self markSpriteSheetDirtyForOldResourceRelPath:relPath];
 }
 
-- (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew
+- (void)movedResourceFrom:(NSString *)relPathOld to:(NSString *)relPathNew fromFullPath:(NSString *)fromFullPath toFullPath:(NSString *)toFullPath
 {
+    if ([relPathOld isEqualToString:relPathNew])
+    {
+        return;
+    }
+
+    // If a resource has been removed or moved to a sprite sheet it needs to be marked as dirty
+    [self markSpriteSheetDirtyForOldResourceRelPath:relPathOld];
+    [self markSpriteSheetDirtyForNewResourceFullPath:toFullPath];
+
     id props = _resourceProperties[relPathOld];
     if (props)
     {
         _resourceProperties[relPathNew] = props;
     }
     [_resourceProperties removeObjectForKey:relPathOld];
+
+}
+
+- (void)markSpriteSheetDirtyForOldResourceRelPath:(NSString *)oldRelPath
+{
+    RMResource *resource = [[ResourceManager sharedManager] resourceForRelPath:oldRelPath];
+    if ([[ResourceManager sharedManager] isResourceInSpriteSheet:resource])
+    {
+        RMResource *spriteSheet = [[ResourceManager sharedManager] spriteSheetContainingResource:resource];
+        [self markAsDirtyResource:spriteSheet];
+    }
+}
+
+- (void)markSpriteSheetDirtyForNewResourceFullPath:(NSString *)newFullPath
+{
+    RMResource *resource = [[ResourceManager sharedManager] spriteSheetContainingFullPath:newFullPath];
+    if (resource)
+    {
+        [self markAsDirtyResource:resource];
+    }
 }
 
 - (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error
@@ -568,7 +608,7 @@
     NSMutableDictionary *resourcePath = [self resourcePathForRelativePath:relResourcePathOld];
     resourcePath[@"path"] = relResourcePathNew;
 
-    [self movedResourceFrom:relResourcePathOld to:relResourcePathNew];
+    [self movedResourceFrom:relResourcePathOld to:relResourcePathNew fromFullPath:fromPath toFullPath:toPath];
     return YES;
 }
 
@@ -600,7 +640,7 @@
 	if(error)
 	{
 		NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-		NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
+		NSString* version = infoDict[@"CFBundleVersion"];
 
 		NSMutableDictionary * versionDict = [NSMutableDictionary dictionaryWithDictionary:@{@"version" : version}];
 		

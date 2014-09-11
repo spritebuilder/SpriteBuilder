@@ -37,11 +37,6 @@
                BlueprintName = "SpriteBuilder Tests"
                ReferencedContainer = "container:SpriteBuilder.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "CCBPublisherController_Tests">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

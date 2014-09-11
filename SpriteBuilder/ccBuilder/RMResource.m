@@ -7,6 +7,7 @@
 #import "CCBSpriteSheetParser.h"
 #import "RMSpriteFrame.h"
 #import "ResourceManagerUtil.h"
+#import "RMDirectory.h"
 
 
 @implementation RMResource
@@ -259,6 +260,11 @@
 - (BOOL) isSelectable
 {
     return YES;
+}
+
+- (BOOL)isSpriteSheet
+{
+    return _type == kCCBResTypeDirectory && [_data isDynamicSpriteSheet];
 }
 
 @end

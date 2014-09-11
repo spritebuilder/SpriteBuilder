@@ -29,7 +29,7 @@
 
 - (void)selectAndMakePackageNameEditableWithNewPath:(NSString *)newPackagePath
 {
-    RMDirectory *newPackage = [_resourceManager directoryForPath:newPackagePath];
+    RMDirectory *newPackage = [_resourceManager activeDirectoryForPath:newPackagePath];
 
     [_outlineView editColumn:0 row:[_outlineView rowForItem:newPackage] withEvent:nil select:YES];
 }

@@ -1989,6 +1989,7 @@ static BOOL hideAllToNextSeparator;
 
     // Remove resource paths
     self.projectSettings = NULL;
+
     [[ResourceManager sharedManager] removeAllDirectories];
     
     // Remove language file
@@ -2037,10 +2038,13 @@ static BOOL hideAllToNextSeparator;
     }
     prjctSettings.projectPath = fileName;
     [prjctSettings store];
+
+    // inject new project settings
     self.projectSettings = prjctSettings;
     _resourceCommandController.projectSettings = self.projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
-    
+    [ResourceManager sharedManager].projectSettings = projectSettings;
+
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
 

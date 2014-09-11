@@ -16,4 +16,6 @@
 
 - (NSImage *)previewForResolution:(NSString *)res;
 
+- (BOOL)isSpriteSheet;
+
 @end
