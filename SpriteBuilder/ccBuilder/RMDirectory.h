@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "RMResourceBase.h"
 
+@class ProjectSettings;
+
 
 @interface RMDirectory : RMResourceBase
 {
@@ -18,6 +20,8 @@
     NSMutableArray *audioFiles;
 }
 
+@property (nonatomic, weak) ProjectSettings *projectSettings;
+
 @property (nonatomic, assign) int count;
 @property (nonatomic, copy) NSString *dirPath;
 @property (nonatomic, readonly) NSMutableDictionary *resources;
@@ -30,6 +34,7 @@
 @property (nonatomic, readonly) NSMutableArray *ttfFonts;
 @property (nonatomic, readonly) NSMutableArray *ccbFiles;
 @property (nonatomic, readonly) NSMutableArray *audioFiles;
+
 
 - (NSArray *)resourcesForType:(int)type;
 

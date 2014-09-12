@@ -56,6 +56,7 @@
 @property (nonatomic,strong) NSArray* activeDirectories;
 @property (nonatomic,readonly) NSString* mainActiveDirectoryPath;
 @property (nonatomic,assign) BOOL tooManyDirectoriesAdded;
+@property (nonatomic,weak) ProjectSettings *projectSettings;
 
 @property (nonatomic,readonly) NSArray* systemFontList;
 
@@ -93,12 +94,19 @@
 + (void) touchResource:(RMResource*) res;
 
 // *** Locating resources ***
-- (RMResource*) resourceForPath:(NSString*) path;
-- (RMResource*) resourceForPath:(NSString*) path inDir:(RMDirectory*) dir;
-- (RMDirectory *)directoryForPath:(NSString *)fullPath;
+- (RMResource *)resourceForPath:(NSString *)path;
+- (RMResource *)resourceForPath:(NSString *)path inDir:(RMDirectory *)dir;
+- (RMResource *)resourceForRelPath:(NSString *)relPath;
+- (RMDirectory *)activeDirectoryForPath:(NSString *)fullPath;
 
 - (NSString *)dirPathWithFirstDirFallbackForResource:(id)resource;
 - (NSString *)dirPathForResource:(id)resource;
+
+- (RMResource *)spriteSheetContainingFullPath:(NSString *)fullPath;
+- (RMResource *)spriteSheetContainingResource:(RMResource *)resource;
+
+// *** SpriteSheet helper ***
+- (BOOL)isResourceInSpriteSheet:(RMResource *)resource;
 
 // *** Debug ***
 - (void) debugPrintDirectories;
