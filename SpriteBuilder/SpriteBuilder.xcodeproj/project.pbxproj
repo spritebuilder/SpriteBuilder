@@ -434,6 +434,7 @@
 		B79F90EA17FF33BB00908504 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B79F90E817FF33BB00908504 /* CCBPProperties.plist */; };
 		B79F90EB17FF33BB00908504 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B79F90E917FF33BB00908504 /* Icon.png */; };
 		B79F90EE17FF366C00908504 /* CCBPPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B79F90ED17FF366C00908504 /* CCBPPhysicsNode.m */; };
+		B7A61CD019C387E1003CCEAF /* CCBBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7A61CCF19C387E1003CCEAF /* CCBBox.m */; };
 		B7AC6969179E03BF0041B8BD /* select-corner.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC6968179E03BF0041B8BD /* select-corner.png */; };
 		B7AC6980179F50850041B8BD /* BFColorPickerPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC696E179F50850041B8BD /* BFColorPickerPopover.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B7AC6981179F50850041B8BD /* BFColorPickerPopover_LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = B7AC696F179F50850041B8BD /* BFColorPickerPopover_LICENSE.txt */; };
@@ -1890,6 +1891,8 @@
 		B79F90E917FF33BB00908504 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		B79F90EC17FF366C00908504 /* CCBPPhysicsNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPPhysicsNode.h; sourceTree = "<group>"; };
 		B79F90ED17FF366C00908504 /* CCBPPhysicsNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPPhysicsNode.m; sourceTree = "<group>"; };
+		B7A61CCE19C387E1003CCEAF /* CCBBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBBox.h; sourceTree = "<group>"; };
+		B7A61CCF19C387E1003CCEAF /* CCBBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBBox.m; sourceTree = "<group>"; };
 		B7AC6968179E03BF0041B8BD /* select-corner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-corner.png"; sourceTree = "<group>"; };
 		B7AC696D179F50850041B8BD /* BFColorPickerPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFColorPickerPopover.h; sourceTree = "<group>"; };
 		B7AC696E179F50850041B8BD /* BFColorPickerPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFColorPickerPopover.m; sourceTree = "<group>"; };
@@ -3193,6 +3196,8 @@
 				B7AC69C217A320E30041B8BD /* CCBColorView.m */,
 				B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */,
 				B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */,
+				B7A61CCE19C387E1003CCEAF /* CCBBox.h */,
+				B7A61CCF19C387E1003CCEAF /* CCBBox.m */,
 			);
 			name = "Styled Components";
 			sourceTree = "<group>";
@@ -5595,22 +5600,6 @@
 			name = PublishingOperations;
 			sourceTree = "<group>";
 		};
-		E525F793AF97A3AAAFE199A9 /* Cocos2D */ = {
-			isa = PBXGroup;
-			children = (
-				E525FA8328B2749A80A9BB95 /* CCAnimation_Tests.m */,
-			);
-			name = Cocos2D;
-			sourceTree = "<group>";
-		};
-		E525F7C3E5916138FF0FFFBD /* ValueObjects */ = {
-			isa = PBXGroup;
-			children = (
-				E525F5002BE1A1775A702001,
-			);
-			name = ValueObjects;
-			sourceTree = "<group>";
-		};
 		E525F840928F68FE43F22636 /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -7248,6 +7237,7 @@
 				922E8EF718BFE47A008E1764 /* InspectorFloatCheck.m in Sources */,
 				E335CB061577995F00A612EE /* CCBSplitView.m in Sources */,
 				9266EE14195A1578006CBE81 /* CCBPEffectContrast.m in Sources */,
+				B7A61CD019C387E1003CCEAF /* CCBBox.m in Sources */,
 				E335CB0A1577C5FB00A612EE /* CCNode+NodeInfo.m in Sources */,
 				E335CB0F1578C2C600A612EE /* SequencerStructureCell.m in Sources */,
 				E3E8B4871578F8F800373983 /* SequencerTimelineView.m in Sources */,
