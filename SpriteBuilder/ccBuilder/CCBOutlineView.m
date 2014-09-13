@@ -47,43 +47,50 @@
 
 - (void)highlightSelectionInClipRect:(NSRect)clipRect
 {
-	// FIXME: The clipping rect is a problem since the gradient spans more than one row, the hackish solution is to call setNeedsDisplay after selection has changed
-    NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
-    
-    NSRect currentRect = NSZeroRect;
-    NSUInteger lastSelectedRow = -2;
-    
-    NSUInteger selectedRow = [selectedRowIndexes firstIndex];
-    while (selectedRow != NSNotFound)
+    if (YOSEMITE_UI)
     {
-        // Skipping invisible rows causes multiple selections to look weird
-        
-        //if (selectedRow == -1 || !NSLocationInRange(selectedRow, visibleRows)) 
-        //{
-        //    selectedRow = [selectedRowIndexes indexGreaterThanIndex:selectedRow];
-        //    continue;
-        //}
-        
-        if (selectedRow == lastSelectedRow + 1)
-        {
-            // Add to current rect
-            currentRect = NSUnionRect(currentRect, [self rectOfRow:selectedRow]);
-        }
-        else
-        {
-            // Draw the last current rect
-            [CCBOutlineView gradientFillRect:currentRect];
-            
-            // Remeber the current rect
-            currentRect = [self rectOfRow:selectedRow];
-        }
-        
-        lastSelectedRow = selectedRow;
-        selectedRow = [selectedRowIndexes indexGreaterThanIndex:selectedRow];
+        [super highlightSelectionInClipRect:clipRect];
     }
-    
-    // Draw the final rect
-    [CCBOutlineView gradientFillRect:currentRect];
+    else
+    {
+        // FIXME: The clipping rect is a problem since the gradient spans more than one row, the hackish solution is to call setNeedsDisplay after selection has changed
+        NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
+        
+        NSRect currentRect = NSZeroRect;
+        NSUInteger lastSelectedRow = -2;
+        
+        NSUInteger selectedRow = [selectedRowIndexes firstIndex];
+        while (selectedRow != NSNotFound)
+        {
+            // Skipping invisible rows causes multiple selections to look weird
+            
+            //if (selectedRow == -1 || !NSLocationInRange(selectedRow, visibleRows)) 
+            //{
+            //    selectedRow = [selectedRowIndexes indexGreaterThanIndex:selectedRow];
+            //    continue;
+            //}
+            
+            if (selectedRow == lastSelectedRow + 1)
+            {
+                // Add to current rect
+                currentRect = NSUnionRect(currentRect, [self rectOfRow:selectedRow]);
+            }
+            else
+            {
+                // Draw the last current rect
+                [CCBOutlineView gradientFillRect:currentRect];
+                
+                // Remeber the current rect
+                currentRect = [self rectOfRow:selectedRow];
+            }
+            
+            lastSelectedRow = selectedRow;
+            selectedRow = [selectedRowIndexes indexGreaterThanIndex:selectedRow];
+        }
+        
+        // Draw the final rect
+        [CCBOutlineView gradientFillRect:currentRect];
+    }
 }
 
 - (NSFocusRingType) focusRingType

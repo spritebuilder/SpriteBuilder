@@ -45,25 +45,32 @@
 
 - (void)highlightSelectionInClipRect:(NSRect)clipRect
 {
-    NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
-    NSRange visibleRows = [self rowsInRect:clipRect];
-    
-    NSUInteger selectedRow = [selectedRowIndexes firstIndex];
-    while (selectedRow != NSNotFound)
+    if (YOSEMITE_UI)
     {
-        if (selectedRow == -1 || !NSLocationInRange(selectedRow, visibleRows)) 
+        [super highlightSelectionInClipRect:clipRect];
+    }
+    else
+    {
+        NSIndexSet *selectedRowIndexes = [self selectedRowIndexes];
+        NSRange visibleRows = [self rowsInRect:clipRect];
+        
+        NSUInteger selectedRow = [selectedRowIndexes firstIndex];
+        while (selectedRow != NSNotFound)
         {
+            if (selectedRow == -1 || !NSLocationInRange(selectedRow, visibleRows)) 
+            {
+                selectedRow = [selectedRowIndexes indexGreaterThanIndex:selectedRow];
+                continue;
+            }   
+            
+            [[NSColor alternateSelectedControlColor] set];
+            [[NSColor redColor] set];
+            
+            NSRectFill([self rectOfRow:selectedRow]);
+            [self gradientFillRect:[self rectOfRow:selectedRow]];
+            
             selectedRow = [selectedRowIndexes indexGreaterThanIndex:selectedRow];
-            continue;
-        }   
-        
-        [[NSColor alternateSelectedControlColor] set];
-        [[NSColor redColor] set];
-        
-        NSRectFill([self rectOfRow:selectedRow]);
-        [self gradientFillRect:[self rectOfRow:selectedRow]];
-        
-        selectedRow = [selectedRowIndexes indexGreaterThanIndex:selectedRow];
+        }
     }
 }
 
