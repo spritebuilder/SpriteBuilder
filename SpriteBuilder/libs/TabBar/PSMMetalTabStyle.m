@@ -329,8 +329,17 @@
 			aRect.size.width--;
 			aRect.size.height -= 0.5;
 			//NSDrawWindowBackground(aRect);
-            if ([[[cell controlView] window] isMainWindow]) [[NSColor colorWithCalibratedWhite:0.63 alpha:1] set];
-            else [[NSColor colorWithCalibratedWhite:0.84 alpha:1] set];
+            
+            if (YOSEMITE_UI)
+            {
+                if ([[[cell controlView] window] isMainWindow]) [[NSColor colorWithCalibratedWhite:0.79 alpha:1] set];
+                else [[NSColor colorWithCalibratedWhite:0.96 alpha:1] set];
+            }
+            else
+            {
+                if ([[[cell controlView] window] isMainWindow]) [[NSColor colorWithCalibratedWhite:0.63 alpha:1] set];
+                else [[NSColor colorWithCalibratedWhite:0.84 alpha:1] set];
+            }
             
             NSRectFill(aRect);
 			aRect.size.width++;
@@ -531,8 +540,16 @@
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 
 	//[[NSColor colorWithCalibratedWhite:0.0 alpha:0.2] set];
-    if (inFocus) [[NSColor colorWithCalibratedWhite:0.5 alpha:1.0] set];
-    else [[NSColor colorWithCalibratedWhite:0.7 alpha:1.0] set];
+    if (YOSEMITE_UI)
+    {
+        if (inFocus) [[NSColor colorWithCalibratedWhite:0.7 alpha:1.0] set];
+        else [[NSColor colorWithCalibratedWhite:0.85 alpha:1.0] set];
+    }
+    else
+    {
+        if (inFocus) [[NSColor colorWithCalibratedWhite:0.5 alpha:1.0] set];
+        else [[NSColor colorWithCalibratedWhite:0.7 alpha:1.0] set];
+    }
     
 	NSRectFillUsingOperation(rect, NSCompositeSourceAtop);
 	[[NSColor darkGrayColor] set];
