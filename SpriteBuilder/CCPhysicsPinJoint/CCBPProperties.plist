@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<real>3200</real>
+	<real>16200</real>
 	<key>displayName</key>
 	<string>Physics Distance Joint</string>
 	<key>description</key>
