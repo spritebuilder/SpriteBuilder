@@ -70,6 +70,7 @@ self.name = [dict[@"value"] numberValue];\
 @property (nonatomic) NSString * className;//Sprite builder class.
 @property (nonatomic) NSString * baseClass;//Actual runtime class.
 @property (nonatomic) NSString * viewController; //UI Control to control the values.
+@property (nonatomic,readwrite) int group; // Used to define grouping in creation menu
 -(CCEffect<EffectProtocol>*)constructDefault;
 
 @end

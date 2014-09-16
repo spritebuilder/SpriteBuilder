@@ -54,8 +54,18 @@
     menu.font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
     
     NSArray* effects = [EffectsManager effects];
+    int group = 0;
     for (EffectDescription* effect in effects)
     {
+        if (effect.group != group)
+        {
+            // Add separator
+            NSMenuItem* separator = [NSMenuItem separatorItem];
+            
+            [menu addItem:separator];
+            group = effect.group;
+        }
+        
         NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:effect.title action:@selector(handleAddEffect:) keyEquivalent:@""];
         item.target = self;
         item.representedObject = effect;

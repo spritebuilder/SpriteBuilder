@@ -92,6 +92,7 @@
 		effectDescription.className = NSStringFromClass([CCBPEffectBrightness class]);
 		effectDescription.baseClass = @"CCEffectBrightness";
 		effectDescription.viewController = NSStringFromClass([EffectBrightnessControl class]);
+        effectDescription.group = 0;
 		
 		[effectDescriptions addObject:effectDescription];
 	}
@@ -104,8 +105,23 @@
 		effectDescription.className = NSStringFromClass([CCBPEffectContrast class]);
 		effectDescription.baseClass = @"CCEffectContrast";
 		effectDescription.viewController = NSStringFromClass([EffectContrastControl class]);
+        effectDescription.group = 0;
+        
 		[effectDescriptions addObject:effectDescription];
 	}
+    
+    {
+        EffectDescription * effectDescription = [[EffectDescription alloc] init];
+        effectDescription.title = @"Saturation";
+        effectDescription.description = @"Makes things saturate";
+        effectDescription.imageName = @"effect-saturation.png";
+        effectDescription.baseClass = @"CCEffectSaturation";
+        effectDescription.className = NSStringFromClass([CCBPEffectSaturation class]);
+        effectDescription.viewController = NSStringFromClass([EffectSaturationControl class]);
+        effectDescription.group = 0;
+        
+        [effectDescriptions addObject:effectDescription];
+    }
 	
 	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
@@ -115,17 +131,8 @@
 		effectDescription.className = NSStringFromClass([CCBPEffectPixelate class]);
 		effectDescription.baseClass = @"CCEffectPixellate";
 		effectDescription.viewController = NSStringFromClass([EffectPixelateControl class]);
-		[effectDescriptions addObject:effectDescription];
-	}
-	
-	{
-		EffectDescription * effectDescription = [[EffectDescription alloc] init];
-		effectDescription.title = @"Saturation";
-		effectDescription.description = @"Makes things saturate";
-		effectDescription.imageName = @"effect-saturation.png";
-		effectDescription.baseClass = @"CCEffectSaturation";
-		effectDescription.className = NSStringFromClass([CCBPEffectSaturation class]);
-		effectDescription.viewController = NSStringFromClass([EffectSaturationControl class]);
+        effectDescription.group = 1;
+        
 		[effectDescriptions addObject:effectDescription];
 	}
 	
@@ -137,6 +144,8 @@
 		effectDescription.baseClass = @"CCEffectBlur";
 		effectDescription.className = NSStringFromClass([CCBPEffectBlur class]);
 		effectDescription.viewController = NSStringFromClass([EffectBlurControl class]);
+        effectDescription.group = 1;
+        
 		[effectDescriptions addObject:effectDescription];
 	}
 	
@@ -148,6 +157,8 @@
 		effectDescription.className = NSStringFromClass([CCBPEffectBloom class]);
 		effectDescription.baseClass = @"CCEffectBloom";
 		effectDescription.viewController = NSStringFromClass([EffectBloomControl class]);
+        effectDescription.group = 1;
+        
 		[effectDescriptions addObject:effectDescription];
 	}
 	
@@ -160,6 +171,8 @@
 		effectDescription.className = NSStringFromClass([CCBPEffectRefraction class]);
 		effectDescription.baseClass = @"CCEffectRefraction";
 		effectDescription.viewController = NSStringFromClass([EffectRefractionControl class]);
+        effectDescription.group = 2;
+        
 		[effectDescriptions addObject:effectDescription];
 		
 	}
@@ -172,7 +185,9 @@
 		effectDescription.imageName = @"effect-reflection";
 		effectDescription.className = NSStringFromClass([CCBPEffectReflection class]);
 		effectDescription.baseClass = @"CCEffectReflection";
-		effectDescription.viewController = NSStringFromClass([EffectReflectionControl class]);
+        effectDescription.viewController = NSStringFromClass([EffectReflectionControl class]);
+        effectDescription.group = 2;
+        
 		[effectDescriptions addObject:effectDescription];
 		
 	}
@@ -184,7 +199,9 @@
 		effectDescription.imageName = @"effect-glass";
 		effectDescription.className = NSStringFromClass([CCBPEffectGlass class]);
 		effectDescription.baseClass = @"CCEffectGlass";
-		effectDescription.viewController = NSStringFromClass([EffectGlassControl class]);
+        effectDescription.viewController = NSStringFromClass([EffectGlassControl class]);
+        effectDescription.group = 2;
+        
 		[effectDescriptions addObject:effectDescription];
 	}
 	/*
