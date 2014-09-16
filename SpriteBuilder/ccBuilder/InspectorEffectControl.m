@@ -7,10 +7,10 @@
 //
 
 #import "InspectorEffectControl.h"
-#import "EffectSelectViewController.h"
 #import "AppDelegate.h"
 #import "MainWindow.h"
 #import "EffectViewController.h"
+#import "EffectsManager.h"
 
 
 @interface InspectorEffectControl ()
@@ -49,17 +49,30 @@
 
 - (IBAction)handleAddButton:(id)sender
 {
+    NSMenu* menu = [[NSMenu alloc] initWithTitle:@"Effects"];
+    //menu.showsStateColumn = NO;
+    menu.font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
+    
+    NSArray* effects = [EffectsManager effects];
+    for (EffectDescription* effect in effects)
+    {
+        NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:effect.title action:@selector(handleAddEffect:) keyEquivalent:@""];
+        item.target = self;
+        item.representedObject = effect;
+        
+        [menu addItem:item];
+    }
+    
+    [menu popUpMenuPositioningItem:[menu itemAtIndex:0] atLocation:NSMakePoint(0, 15) inView:sender];
+}
 
-	EffectSelectViewController * vc =[[EffectSelectViewController alloc] initWithWindowNibName:@"EffectSelectViewController"];
-	
-	int success = [vc runModalSheetForWindow:[AppDelegate appDelegate].window];
-	if(success)
-	{
-		EffectDescription * effectDescription = vc.selectedEffect;
-		[[self effectNode] addEffect:[effectDescription constructDefault]];
-		[self refresh];
-	}
-
+- (void) handleAddEffect:(id)sender
+{
+    NSMenuItem* item = sender;
+    EffectDescription* effect = item.representedObject;
+    
+    [[self effectNode] addEffect:[effect constructDefault]];
+    [self refresh];
 }
 
 

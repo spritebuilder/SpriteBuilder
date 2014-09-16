@@ -258,8 +258,6 @@
 		928104471982F7F900A8B7F4 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 928104461982F7F900A8B7F4 /* CocoaSecurity.m */; };
 		928696201958950100402DD8 /* InspectorEffectControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9286961F1958950100402DD8 /* InspectorEffectControl.m */; };
 		928696231958952100402DD8 /* InspectorEffectControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 928696221958952100402DD8 /* InspectorEffectControl.xib */; };
-		9286962A1958A05F00402DD8 /* EffectSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696281958A05F00402DD8 /* EffectSelectViewController.m */; };
-		9286962B1958A05F00402DD8 /* EffectSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 928696291958A05F00402DD8 /* EffectSelectViewController.xib */; };
 		928696341958CC9A00402DD8 /* EffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696331958CC9A00402DD8 /* EffectsManager.m */; };
 		9286963A1958E02000402DD8 /* EffectDescriptionRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696381958E02000402DD8 /* EffectDescriptionRowViewController.m */; };
 		9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
@@ -1677,9 +1675,6 @@
 		9286961E1958950100402DD8 /* InspectorEffectControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEffectControl.h; sourceTree = "<group>"; };
 		9286961F1958950100402DD8 /* InspectorEffectControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEffectControl.m; sourceTree = "<group>"; };
 		928696221958952100402DD8 /* InspectorEffectControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorEffectControl.xib; sourceTree = "<group>"; };
-		928696271958A05F00402DD8 /* EffectSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectSelectViewController.h; path = ccBuilder/EffectSelectViewController.h; sourceTree = "<group>"; };
-		928696281958A05F00402DD8 /* EffectSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectSelectViewController.m; path = ccBuilder/EffectSelectViewController.m; sourceTree = "<group>"; };
-		928696291958A05F00402DD8 /* EffectSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectSelectViewController.xib; path = ccBuilder/EffectSelectViewController.xib; sourceTree = "<group>"; };
 		928696321958CC9A00402DD8 /* EffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsManager.h; path = ccBuilder/EffectsManager.h; sourceTree = "<group>"; };
 		928696331958CC9A00402DD8 /* EffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsManager.m; path = ccBuilder/EffectsManager.m; sourceTree = "<group>"; };
 		928696371958E02000402DD8 /* EffectDescriptionRowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectDescriptionRowViewController.h; path = ccBuilder/EffectDescriptionRowViewController.h; sourceTree = "<group>"; };
@@ -4200,9 +4195,6 @@
 				9266EE31195A176A006CBE81 /* Saturation */,
 				922EAC481958F700006F2D75 /* ContrastEffect */,
 				922EAC3F1958F2FB006F2D75 /* BrightnessEffect */,
-				928696271958A05F00402DD8 /* EffectSelectViewController.h */,
-				928696281958A05F00402DD8 /* EffectSelectViewController.m */,
-				928696291958A05F00402DD8 /* EffectSelectViewController.xib */,
 				928696321958CC9A00402DD8 /* EffectsManager.h */,
 				928696331958CC9A00402DD8 /* EffectsManager.m */,
 				928696371958E02000402DD8 /* EffectDescriptionRowViewController.h */,
@@ -6487,7 +6479,6 @@
 				E3B4222714E5992F004547D6 /* InspectorFlip.xib in Resources */,
 				E3B4222C14E5A828004547D6 /* InspectorBlendmode.xib in Resources */,
 				B7DE84931937B18B0039FB72 /* signup-bg.png in Resources */,
-				9286962B1958A05F00402DD8 /* EffectSelectViewController.xib in Resources */,
 				9218DF291919B04D0033851E /* joint-pivot-handle-min.png in Resources */,
 				DC2AF0AB18C8C38A00508967 /* SpriteKitTextureAtlasToolPath.txt in Resources */,
 				E3B4223414E5E68B004547D6 /* InspectorSeparator.xib in Resources */,
@@ -7261,7 +7252,6 @@
 				E35A136115B038D700C9AA15 /* ThoMoServerStub.m in Sources */,
 				E35A136215B038D700C9AA15 /* ThoMoTCPConnection.m in Sources */,
 				E33C2AAC15C987EB0043EF9B /* ResourceManagerOutlineView.m in Sources */,
-				9286962A1958A05F00402DD8 /* EffectSelectViewController.m in Sources */,
 				E33C2AAF15C9A0D40043EF9B /* SequencerUtil.m in Sources */,
 				926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */,
 				E33C2AB815CAE3980043EF9B /* SequencerStretchWindow.m in Sources */,
