@@ -41,21 +41,21 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="NSSlider" id="485142380">
+					<object class="NSSlider" id="389694325">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{115, 10}, {80, 16}}</string>
+						<string key="NSFrame">{{101, 9}, {94, 16}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="730142473"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSSliderCell" key="NSCell" id="963436028">
+						<object class="NSSliderCell" key="NSCell" id="226478472">
 							<int key="NSCellFlags">-2080112384</int>
 							<int key="NSCellFlags2">262144</int>
 							<string key="NSContents"/>
 							<string key="NSCellIdentifier">_NS:9</string>
-							<reference key="NSControlView" ref="485142380"/>
+							<reference key="NSControlView" ref="389694325"/>
 							<double key="NSMaxValue">1</double>
 							<double key="NSMinValue">-1</double>
 							<double key="NSValue">0.0</double>
@@ -70,7 +70,7 @@
 					<object class="NSTextField" id="730142473">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{203, 7}, {42, 22}}</string>
+						<string key="NSFrame">{{203, 9}, {42, 19}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -157,7 +157,7 @@
 						<string key="NSFrame">{{3, 9}, {152, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="485142380"/>
+						<reference key="NSNextKeyView" ref="389694325"/>
 						<string key="NSReuseIdentifierKey">_NS:397</string>
 						<string key="NSHuggingPriority">{251, 750}</string>
 						<bool key="NSEnabled">YES</bool>
@@ -227,10 +227,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: self.effect.brightness</string>
-						<reference key="source" ref="485142380"/>
+						<reference key="source" ref="389694325"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="485142380"/>
+							<reference key="NSSource" ref="389694325"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">value: self.effect.brightness</string>
 							<string key="NSBinding">value</string>
@@ -273,7 +273,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="580728377"/>
 							<reference ref="730142473"/>
-							<reference ref="485142380"/>
+							<reference ref="389694325"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -318,16 +318,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">65</int>
-						<reference key="object" ref="485142380"/>
+						<reference key="object" ref="389694325"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="963436028"/>
+							<reference ref="226478472"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">66</int>
-						<reference key="object" ref="963436028"/>
-						<reference key="parent" ref="485142380"/>
+						<reference key="object" ref="226478472"/>
+						<reference key="parent" ref="389694325"/>
 					</object>
 				</array>
 			</object>
