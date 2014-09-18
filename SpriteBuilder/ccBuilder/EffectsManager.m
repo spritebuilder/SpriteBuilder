@@ -12,6 +12,7 @@
 //#import "CCBPEffectGlow.h"
 #import "CCBPEffectPixelate.h"
 #import "CCBPEffectSaturation.h"
+#import "CCBPEffectHue.h"
 #import "CCBPEffectBloom.h"
 #import "CCBPEffectRefraction.h"
 #import "NSArray+Query.h"
@@ -22,6 +23,7 @@
 #import "EffectBloomControl.h"
 //#import "EffectGlowControl.h"
 #import "EffectRefractionControl.h"
+#import "EffectHueControl.h"
 #import "AppDelegate.h"
 #import "CCBDocument.h"
 #import "CCBPEffectReflection.h"
@@ -118,6 +120,19 @@
         effectDescription.baseClass = @"CCEffectSaturation";
         effectDescription.className = NSStringFromClass([CCBPEffectSaturation class]);
         effectDescription.viewController = NSStringFromClass([EffectSaturationControl class]);
+        effectDescription.group = 0;
+        
+        [effectDescriptions addObject:effectDescription];
+    }
+    
+    {
+        EffectDescription * effectDescription = [[EffectDescription alloc] init];
+        effectDescription.title = @"Hue";
+        effectDescription.description = @"Makes things hueier";
+        effectDescription.imageName = @"effect-hue.png";
+        effectDescription.baseClass = @"CCEffectHue";
+        effectDescription.className = NSStringFromClass([CCBPEffectHue class]);
+        effectDescription.viewController = NSStringFromClass([EffectHueControl class]);
         effectDescription.group = 0;
         
         [effectDescriptions addObject:effectDescription];

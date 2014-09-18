@@ -405,6 +405,10 @@
 		B73788F51804D80B0076A88C /* ccb.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F41804D80B0076A88C /* ccb.icns */; };
 		B73788F71804D8200076A88C /* ccbproj.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F61804D8200076A88C /* ccbproj.icns */; };
 		B73788F91804D8690076A88C /* ccbi.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F81804D8690076A88C /* ccbi.icns */; };
+		B747E60819CB3A0E00F692A2 /* CCBPEffectHue.m in Sources */ = {isa = PBXBuildFile; fileRef = B747E60719CB3A0E00F692A2 /* CCBPEffectHue.m */; };
+		B747E60A19CB3BF700F692A2 /* effect-hue.png in Resources */ = {isa = PBXBuildFile; fileRef = B747E60919CB3BF700F692A2 /* effect-hue.png */; };
+		B747E60E19CB3C0F00F692A2 /* EffectHueControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B747E60C19CB3C0F00F692A2 /* EffectHueControl.m */; };
+		B747E60F19CB3C0F00F692A2 /* EffectHueControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = B747E60D19CB3C0F00F692A2 /* EffectHueControl.xib */; };
 		B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B41880B4D000E8166C /* help-logo@2x.png */; };
 		B759E4B81880B60B00E8166C /* logo-white.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B61880B60B00E8166C /* logo-white.png */; };
 		B759E4B91880B60B00E8166C /* logo-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B71880B60B00E8166C /* logo-white@2x.png */; };
@@ -1845,6 +1849,12 @@
 		B73788F41804D80B0076A88C /* ccb.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccb.icns; path = ../ccb.icns; sourceTree = "<group>"; };
 		B73788F61804D8200076A88C /* ccbproj.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccbproj.icns; path = ../ccbproj.icns; sourceTree = "<group>"; };
 		B73788F81804D8690076A88C /* ccbi.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccbi.icns; path = ../ccbi.icns; sourceTree = "<group>"; };
+		B747E60619CB3A0E00F692A2 /* CCBPEffectHue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectHue.h; path = ccBuilder/CCBPEffectHue.h; sourceTree = "<group>"; };
+		B747E60719CB3A0E00F692A2 /* CCBPEffectHue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectHue.m; path = ccBuilder/CCBPEffectHue.m; sourceTree = "<group>"; };
+		B747E60919CB3BF700F692A2 /* effect-hue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-hue.png"; path = "Resources/effect-hue.png"; sourceTree = "<group>"; };
+		B747E60B19CB3C0F00F692A2 /* EffectHueControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectHueControl.h; path = ccBuilder/EffectHueControl.h; sourceTree = "<group>"; };
+		B747E60C19CB3C0F00F692A2 /* EffectHueControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectHueControl.m; path = ccBuilder/EffectHueControl.m; sourceTree = "<group>"; };
+		B747E60D19CB3C0F00F692A2 /* EffectHueControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectHueControl.xib; path = ccBuilder/EffectHueControl.xib; sourceTree = "<group>"; };
 		B759E4B41880B4D000E8166C /* help-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help-logo@2x.png"; sourceTree = "<group>"; };
 		B759E4B61880B60B00E8166C /* logo-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white.png"; sourceTree = "<group>"; };
 		B759E4B71880B60B00E8166C /* logo-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white@2x.png"; sourceTree = "<group>"; };
@@ -4181,6 +4191,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				B747E5FD19CB39AA00F692A2 /* Hue */,
 				92CB084F19BA2D8B00EFDCE3 /* Blur */,
 				920994D4198719120006F38D /* Reflection */,
 				920994C9198717710006F38D /* Glass */,
@@ -4316,6 +4327,19 @@
 				B73788E11804AC5E0076A88C /* CCScrollView-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B747E5FD19CB39AA00F692A2 /* Hue */ = {
+			isa = PBXGroup;
+			children = (
+				B747E60919CB3BF700F692A2 /* effect-hue.png */,
+				B747E60619CB3A0E00F692A2 /* CCBPEffectHue.h */,
+				B747E60719CB3A0E00F692A2 /* CCBPEffectHue.m */,
+				B747E60B19CB3C0F00F692A2 /* EffectHueControl.h */,
+				B747E60C19CB3C0F00F692A2 /* EffectHueControl.m */,
+				B747E60D19CB3C0F00F692A2 /* EffectHueControl.xib */,
+			);
+			name = Hue;
 			sourceTree = "<group>";
 		};
 		B794AB96177CDFF7004FF493 /* FormatConverter */ = {
@@ -6435,6 +6459,7 @@
 				7729F03D1390600200CAA44F /* frame-ipad.png in Resources */,
 				776A370B139544A200960E94 /* TB_actualSize.png in Resources */,
 				776A370C139544A200960E94 /* TB_grab.png in Resources */,
+				B747E60A19CB3BF700F692A2 /* effect-hue.png in Resources */,
 				9218DF3A1919B04D0033851E /* joint-pivot-mode-l-off@2x.png in Resources */,
 				92F0960718F8851300D47A94 /* inspector-body-remove-dis.png in Resources */,
 				776A370D139544A200960E94 /* TB_select.png in Resources */,
@@ -6490,6 +6515,7 @@
 				E35DBC1B14F4DED00070A6E4 /* InspectorStartStop.xib in Resources */,
 				E35DBC2014F4ED0E0070A6E4 /* InspectorIntegerLabeled.xib in Resources */,
 				E35DBC2514F4FEF90070A6E4 /* InspectorTexture.xib in Resources */,
+				B747E60F19CB3C0F00F692A2 /* EffectHueControl.xib in Resources */,
 				926D13C218B5778300582959 /* joint-distance-handle-short.png in Resources */,
 				E325F64514F531F500D29BCF /* InspectorFloatVar.xib in Resources */,
 				9218DF411919B04D0033851E /* joint-pivot-handle-ref@2x.png in Resources */,
@@ -7147,6 +7173,7 @@
 				92F0961D18F891A900D47A94 /* InspectorEnabledFloat.m in Sources */,
 				E3B4221614E4A381004547D6 /* InspectorCheck.m in Sources */,
 				E3B4221B14E4BE87004547D6 /* InspectorSpriteFrame.m in Sources */,
+				B747E60819CB3A0E00F692A2 /* CCBPEffectHue.m in Sources */,
 				E3B4222014E58C75004547D6 /* InspectorByte.m in Sources */,
 				E3B4222514E59035004547D6 /* InspectorColor3.m in Sources */,
 				E3B4222A14E59F5D004547D6 /* InspectorFlip.m in Sources */,
@@ -7307,6 +7334,7 @@
 				B7AC69A017A079C80041B8BD /* SMTabBarItem.m in Sources */,
 				B7AC69B017A0A10E0041B8BD /* ResourceManagerTilelessEditorManager.m in Sources */,
 				B7AC69B717A1B9930041B8BD /* CCBImageBrowserView.m in Sources */,
+				B747E60E19CB3C0F00F692A2 /* EffectHueControl.m in Sources */,
 				B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */,
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
 				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
