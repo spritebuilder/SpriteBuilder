@@ -77,7 +77,14 @@
 - (NSArray *)allPNGFilesInPath
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[NSURL URLWithString:self]
+    NSURL *searchURL = [NSURL fileURLWithPath:self];
+
+    if (!searchURL)
+    {
+        return nil;
+    }
+
+    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:searchURL
                                           includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
                                                              options:NSDirectoryEnumerationSkipsHiddenFiles
                                                         errorHandler:^BOOL(NSURL *url, NSError *error)
