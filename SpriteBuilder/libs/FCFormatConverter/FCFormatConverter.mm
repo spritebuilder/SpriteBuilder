@@ -373,6 +373,15 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
     else if (format == kFCSoundFormatOGG)
     {
         // Convert to OGG
+
+        if ([srcPath isEqualToString:dstPath])
+        {
+            // oggenc can't convert things in place, so make a copy that will get deleted at the end
+            NSString *newSrcPath = [srcPath stringByAppendingPathExtension:@"orig"];
+            [fm copyItemAtPath:srcPath toPath:newSrcPath error:NULL];
+            srcPath = newSrcPath;
+        }
+
         self.sndTask = [[NSTask alloc] init];
         [_sndTask setCurrentDirectoryPath:[srcPath stringByDeletingLastPathComponent]];
         [_sndTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"oggenc"]];
