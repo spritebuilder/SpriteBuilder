@@ -14,7 +14,7 @@
 {
 #ifdef SPRITEBUILDER_PRO
 	NSString * localTitle = [super title];
-	localTitle = [localTitle stringByReplacingOccurrencesOfString:@"SpriteBuilder" withString:@"SpriteBuilder Pro"];
+	localTitle = [localTitle stringByReplacingOccurrencesOfString:@"SpriteBuilder" withString:@"SpriteBuilder 1.3 Beta"];
 	return localTitle;
 #else 
 	return [super title];

@@ -343,7 +343,7 @@
 		92F0961E18F891A900D47A94 /* InspectorEnabledFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961C18F891A900D47A94 /* InspectorEnabledFloat.xib */; };
 		92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
 		92F12E4F18847BC800AB8F32 /* seq-keyframe-x4.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BD183D4D280085935B /* seq-keyframe-x4.png */; };
-		92F64B78199C14E300769BB5 /* SpriteBuilder Pro.icns in Resources */ = {isa = PBXBuildFile; fileRef = 92F64B77199C14E300769BB5 /* SpriteBuilder Pro.icns */; };
+		92F64B78199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns in Resources */ = {isa = PBXBuildFile; fileRef = 92F64B77199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns */; };
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
@@ -1607,7 +1607,7 @@
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
 		924EE96119902D800029CCD1 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
-		92520731196238D000BFC071 /* SpriteBuilder Pro.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SpriteBuilder Pro.xcconfig"; sourceTree = "<group>"; };
+		92520731196238D000BFC071 /* SpriteBuilder 1.3 Beta.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SpriteBuilder 1.3 Beta.xcconfig"; sourceTree = "<group>"; };
 		9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpriteBuilder.xcconfig; sourceTree = "<group>"; };
 		9254805918D913C500236DED /* seq-locked-faint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-locked-faint.png"; sourceTree = "<group>"; };
 		9266EE12195A1578006CBE81 /* CCBPEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectContrast.h; path = ccBuilder/CCBPEffectContrast.h; sourceTree = "<group>"; };
@@ -1766,7 +1766,7 @@
 		92F0961A18F891A900D47A94 /* InspectorEnabledFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEnabledFloat.h; sourceTree = "<group>"; };
 		92F0961B18F891A900D47A94 /* InspectorEnabledFloat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEnabledFloat.m; sourceTree = "<group>"; };
 		92F0961C18F891A900D47A94 /* InspectorEnabledFloat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorEnabledFloat.xib; sourceTree = "<group>"; };
-		92F64B77199C14E300769BB5 /* SpriteBuilder Pro.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "SpriteBuilder Pro.icns"; sourceTree = SOURCE_ROOT; };
+		92F64B77199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "SpriteBuilder 1.3 Beta.icns"; sourceTree = SOURCE_ROOT; };
 		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
 		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
 		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
@@ -3110,7 +3110,7 @@
 		776041E61498F7980078095D /* Icons & Logos */ = {
 			isa = PBXGroup;
 			children = (
-				92F64B77199C14E300769BB5 /* SpriteBuilder Pro.icns */,
+				92F64B77199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns */,
 				830F4E9A192F5263002B832D /* Package.icns */,
 				B78B8B0F185FF982006ADBBE /* Folder.icns */,
 				B73788F81804D8690076A88C /* ccbi.icns */,
@@ -3461,7 +3461,7 @@
 			isa = PBXGroup;
 			children = (
 				9252073319623E2F00BFC071 /* SpriteBuilder.xcconfig */,
-				92520731196238D000BFC071 /* SpriteBuilder Pro.xcconfig */,
+				92520731196238D000BFC071 /* SpriteBuilder 1.3 Beta.xcconfig */,
 				E3D08A321524581100E55891 /* README.md */,
 				E3D59118150F50D1004180CA /* AUTHORS */,
 				E395DC7D1511FDF70075979E /* CHANGELOG */,
@@ -6609,7 +6609,7 @@
 				E3214C4115D3BF4D002413A7 /* CustomPropSettingsWindow.xib in Resources */,
 				E3214C4C15D40F01002413A7 /* InspectorCustom.xib in Resources */,
 				E3214C5E15D54356002413A7 /* InspectorCustomEdit.xib in Resources */,
-				92F64B78199C14E300769BB5 /* SpriteBuilder Pro.icns in Resources */,
+				92F64B78199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns in Resources */,
 				B71706CF184ECD660081720A /* select-move@2x.png in Resources */,
 				B759E4B91880B60B00E8166C /* logo-white@2x.png in Resources */,
 				E3B7BC9C15E3B7F100CF95EF /* NodePlugInsList.plist in Resources */,

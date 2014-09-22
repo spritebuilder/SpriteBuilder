@@ -98,7 +98,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="223297108">
 								<int key="NSCellFlags">68157504</int>
 								<int key="NSCellFlags2">272630784</int>
-								<string key="NSContents">Welcome to SpriteBuilder Pro</string>
+								<string key="NSContents">SpriteBuilder 1.3 Beta</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">15</double>
