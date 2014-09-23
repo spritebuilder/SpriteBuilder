@@ -40,7 +40,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {378, 109}}</string>
 				<int key="NSWTFlags">1618477056</int>
-				<string key="NSWindowTitle">Spritebuilder Pro</string>
+				<string key="NSWindowTitle">SpriteBuilder 1.3 Beta</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -61,7 +61,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="679405167">
 								<int key="NSCellFlags">68157504</int>
 								<int key="NSCellFlags2">138413056</int>
-								<string key="NSContents">Setting up Spritebuilder Pro</string>
+								<string key="NSContents">Installing Android Support</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">.LucidaGrandeUI</string>
 									<double key="NSSize">16</double>
