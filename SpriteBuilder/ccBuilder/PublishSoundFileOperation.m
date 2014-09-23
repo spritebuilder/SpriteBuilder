@@ -38,7 +38,7 @@
 
 - (void)publishSoundFileOperation
 {
-    [_publishingTaskStatusProgress updateStatusText:@"Converting sound file"];
+    [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Publishing %@...", [_dstFilePath lastPathComponent]]];
 
     NSString *relPath = [_projectSettings findRelativePathInPackagesForAbsolutePath:_srcFilePath];
     if (!relPath)

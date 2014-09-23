@@ -269,6 +269,15 @@
 
     [self assertFileExists:@"Published-iOS/blank.m4a"];
     [self assertFileExists:@"Published-Android/blank.ogg"];
+
+    NSData *wavData = [[NSFileManager defaultManager] contentsAtPath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack/blank.wav"]];
+    NSData *m4aData = [[NSFileManager defaultManager] contentsAtPath:[self fullPathForFile:@"Published-iOS/blank.m4a"]];
+    NSData *oggData = [[NSFileManager defaultManager] contentsAtPath:[self fullPathForFile:@"Published-Android/blank.ogg"]];
+    XCTAssertNotNil(wavData, @"wav data must not be nil");
+    XCTAssertNotNil(m4aData, @"m4a data must not be nil");
+    XCTAssertNotNil(oggData, @"ogg data must not be nil");
+    XCTAssertTrue(![m4aData isEqualToData:wavData], @"m4a data must be different than wav data");
+    XCTAssertTrue(![oggData isEqualToData:wavData], @"ogg data must be different than wav data");
 }
 
 - (void)testSpriteSheets
