@@ -108,7 +108,7 @@ static NSString * kRegisterEndpoint = @"http://www.spritebuilder.com/register";
 		NSDate * expireDate = [NSDate dateWithTimeIntervalSince1970: expireDateTime];
 		NSString  * formattedDate = [NSDateFormatter localizedStringFromDate:expireDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
 		
-		weakSelf.displayText.stringValue = @"SpriteBuilder Pro was successfully licensed!";
+		weakSelf.displayText.stringValue = @"SpriteBuilder is now ready to use!";
 		weakSelf.expiryDate.stringValue = formattedDate;
 		
 		[self setState:eLicenseState_VerififcationComplete];

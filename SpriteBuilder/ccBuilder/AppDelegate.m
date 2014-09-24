@@ -4511,7 +4511,7 @@ static BOOL hideAllToNextSeparator;
 -(NSString*)applicationTitle
 {
 #ifdef SPRITEBUILDER_PRO
-	return @"SpriteBuilder Pro";
+	return @"SpriteBuilder 1.3 Beta";
 #else
 	return @"SpriteBuilder";
 #endif

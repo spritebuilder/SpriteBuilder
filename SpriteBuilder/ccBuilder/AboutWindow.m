@@ -90,7 +90,7 @@
 	
 	
 	NSString * aboutInfo = @"";
-	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Pro Version: %@\n", versionDictionary[@"version"]]];
+	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Version: %@\n", versionDictionary[@"version"]]];
 	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Revision: %@\n", versionDictionary[@"revision"]]];
 
 	//Compiler version.
