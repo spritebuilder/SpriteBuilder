@@ -598,14 +598,14 @@
 
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
-    [[[CCDirector sharedDirector] view] lockOpenGLContext];
+    [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
     [self updateResourcesForPath:event.eventPath];
-    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+    [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (void) reloadAllResources
 {
-    [[[CCDirector sharedDirector] view] lockOpenGLContext];
+    [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
     
     for (id obj in activeDirectories)
     {
@@ -615,7 +615,7 @@
         [self updateResourcesForPath:dirPath];
     }
     
-    [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+    [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (void)updateForNewFile:(NSString *)newFile

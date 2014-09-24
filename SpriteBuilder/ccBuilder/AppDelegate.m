@@ -2108,7 +2108,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) openFile:(NSString*)filePath
 {
-	[[[CCDirector sharedDirector] view] lockOpenGLContext];
+	[(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
     
     // Check if file is already open
     CCBDocument* openDoc = [self findDocumentFromFile:filePath];
@@ -2133,7 +2133,7 @@ static BOOL hideAllToNextSeparator;
     physicsHandler.selectedNodePhysicsBody = NULL;
     [self setSelectedNodes:NULL];
     
-	[[[CCDirector sharedDirector] view] unlockOpenGLContext];
+	[(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (void) saveFile:(NSString*) fileName
@@ -3058,7 +3058,7 @@ static BOOL hideAllToNextSeparator;
             NSString *filename = [[saveDlg URL] path];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_main_queue(), ^{
-                [[[CCDirector sharedDirector] view] lockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 // Save file to new path
                 [self saveFile:filename];
@@ -3069,7 +3069,7 @@ static BOOL hideAllToNextSeparator;
                 // Open newly created document
                 [self openFile:filename];
                 
-                [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
 		
@@ -3240,7 +3240,7 @@ static BOOL hideAllToNextSeparator;
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_main_queue(), ^{
-                [[[CCDirector sharedDirector] view] lockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 for (int i = 0; i < [files count]; i++)
                 {
@@ -3260,7 +3260,7 @@ static BOOL hideAllToNextSeparator;
                     }
                 }
                 
-                [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
     }];
