@@ -11,14 +11,14 @@
 
 
 #ifdef DEBUG
-//#define SBPRO_TEST_INSTALLER
+//#define SBANDROID_TEST_INSTALLER
 #endif
 
-static const float kSBProPluginVersion = 4.01;
+static const float kSBAndroidPluginVersion = 5.00;
 
 
-NSString*   kSBDefualtsVersionIdentifier = @"SBProPluginVersion";
-NSString*   kSBDefualtsMD5Identifier = @"SBProPluginMD5";
+NSString*   kSBDefualtsVersionIdentifier = @"SBAndroidPluginVersion";
+NSString*   kSBDefualtsMD5Identifier = @"SBAndroidPluginMD5";
 
 
 @implementation AndroidPluginInstaller
@@ -137,7 +137,7 @@ NSString * getVersionFile()
 {
 	NSArray *domains = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask,YES);
 	NSString *baseDir= [domains objectAtIndex:0];
-	NSString *versionFilePath = [baseDir stringByAppendingPathComponent:@"Application Support/Developer/Shared/Xcode/Plug-ins/AndroidPluginFile.plist"];
+	NSString *versionFilePath = [baseDir stringByAppendingPathComponent:@"Application Support/Developer/Shared/Xcode/Plug-ins/SBAndroidPluginFile.plist"];
 	return versionFilePath;
 }
 
@@ -145,7 +145,7 @@ NSString * getVersionFile()
 
 +(BOOL)needsInstallation
 {
-#ifdef SBPRO_TEST_INSTALLER
+#ifdef SBANDROID_TEST_INSTALLER
 	return YES;
 #endif
 	
@@ -161,7 +161,7 @@ NSString * getVersionFile()
 		return YES;
 		
 	NSNumber * currentVersion = versionInfo[kSBDefualtsVersionIdentifier];
-	if(currentVersion == nil || [currentVersion floatValue] < kSBProPluginVersion)
+	if(currentVersion == nil || [currentVersion floatValue] < kSBAndroidPluginVersion)
 	{
 		return YES;
 	}
@@ -189,7 +189,7 @@ NSString * getVersionFile()
 	NSString *versionFilePath = getVersionFile();
 	NSString * shippedPluginMD5 = [self getPluginMD5];
 	
-	NSDictionary * versionInfo = @{kSBDefualtsVersionIdentifier : @(kSBProPluginVersion),kSBDefualtsMD5Identifier : shippedPluginMD5 };
+	NSDictionary * versionInfo = @{kSBDefualtsVersionIdentifier : @(kSBAndroidPluginVersion),kSBDefualtsMD5Identifier : shippedPluginMD5 };
 	[versionInfo writeToFile:versionFilePath atomically:YES];
 }
 
