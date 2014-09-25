@@ -17,7 +17,7 @@
 #import "SemanticVersioning.h"
 
 // Debug option: Some verbosity on the console, 1 to enable 0 to turn off
-#define Cocos2UpdateLogging 0
+#define Cocos2UpdateLogging 1
 
 #ifdef DEBUG
 	#define LocalLog( s, ... ) NSLog( @"<%@:%d> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__,  [NSString stringWithFormat:(s), ##__VA_ARGS__] )
@@ -434,6 +434,7 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
 
     NSError *error;
     NSString *result = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:&error];
+    result = [result stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (!result)
     {
         LocalLog(@"[COCO2D-UPDATER] [ERROR] reading SB's cocos2d version file: %@", error);
