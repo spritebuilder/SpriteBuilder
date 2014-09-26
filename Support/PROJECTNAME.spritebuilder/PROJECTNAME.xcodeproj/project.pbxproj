@@ -708,7 +708,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = sbp;
+				SDKROOT = sbandroid;
 			};
 			name = Debug;
 		};
@@ -739,7 +739,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = sbp;
+				SDKROOT = sbandroid;
 			};
 			name = Release;
 		};
@@ -785,7 +785,7 @@
 				);
 				PRODUCT_NAME = PROJECTNAMEAndroid;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = sbp;
+				SDKROOT = sbandroid;
 				WRAPPER_EXTENSION = app;
 				opengles2 = YES;
 			};
@@ -831,7 +831,7 @@
 				);
 				PRODUCT_NAME = PROJECTNAMEAndroid;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = sbp;
+				SDKROOT = sbandroid;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 				opengles2 = YES;
