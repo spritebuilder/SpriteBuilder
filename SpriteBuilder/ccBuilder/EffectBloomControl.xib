@@ -165,7 +165,6 @@
 						<string key="NSFrame">{{203, 6}, {42, 19}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="86335401">
@@ -317,17 +316,17 @@
 									<integer value="1040" key="formatterBehavior"/>
 									<reference key="locale" ref="96880867"/>
 									<real value="20" key="maximum"/>
-									<integer value="2" key="maximumFractionDigits"/>
+									<integer value="0" key="maximumFractionDigits"/>
 									<real value="0.0" key="minimum"/>
-									<integer value="2" key="minimumFractionDigits"/>
+									<integer value="0" key="minimumFractionDigits"/>
 									<integer value="1" key="minimumIntegerDigits"/>
 									<string key="negativeInfinitySymbol">-∞</string>
 									<string key="nilSymbol"/>
 									<integer value="1" key="numberStyle"/>
 									<string key="positiveInfinitySymbol">+∞</string>
 								</dictionary>
-								<string key="NS.positiveformat">#,##0.00</string>
-								<string key="NS.negativeformat">#,##0.00</string>
+								<string key="NS.positiveformat">#,##0</string>
+								<string key="NS.negativeformat">#,##0</string>
 								<nil key="NS.positiveattrs"/>
 								<nil key="NS.negativeattrs"/>
 								<nil key="NS.zero"/>
@@ -666,20 +665,20 @@
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="1.IBNSViewMetadataConstraints"/>
+				<reference key="1.IBNSViewMetadataConstraints" ref="0"/>
 				<reference key="1.IBNSViewMetadataGestureRecognizers" ref="0"/>
 				<string key="1.IBPersistedLastKnownCanvasPosition">{139.5, 148.5}</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="114.IBNSViewMetadataConstraints"/>
+				<reference key="114.IBNSViewMetadataConstraints" ref="0"/>
 				<string key="114.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="116.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="142.IBNSViewMetadataConstraints"/>
+				<reference key="142.IBNSViewMetadataConstraints" ref="0"/>
 				<string key="142.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="1040" key="146.IBNumberFormatterBehaviorMetadataKey"/>
 				<boolean value="YES" key="146.IBNumberFormatterLocalizesFormatMetadataKey"/>
 				<string key="146.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="16.IBNSViewMetadataConstraints"/>
+				<reference key="16.IBNSViewMetadataConstraints" ref="0"/>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<reference key="165.IBNSViewMetadataConstraints" ref="0"/>
 				<string key="165.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -687,10 +686,10 @@
 				<integer value="1040" key="168.IBNumberFormatterBehaviorMetadataKey"/>
 				<boolean value="YES" key="168.IBNumberFormatterLocalizesFormatMetadataKey"/>
 				<string key="168.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="175.IBNSViewMetadataConstraints"/>
+				<reference key="175.IBNSViewMetadataConstraints" ref="0"/>
 				<string key="175.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="176.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="18.IBNSViewMetadataConstraints"/>
+				<reference key="18.IBNSViewMetadataConstraints" ref="0"/>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="186.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

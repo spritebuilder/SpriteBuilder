@@ -21,12 +21,12 @@
 
 -(id)serialize
 {
-	return @[SERIALIZE_PROPERTY(blurRadius,Float), SERIALIZE_PROPERTY(intensity,Float),SERIALIZE_PROPERTY(luminanceThreshold,Float)];
+	return @[SERIALIZE_PROPERTY(blurRadius,Integer), SERIALIZE_PROPERTY(intensity,Float),SERIALIZE_PROPERTY(luminanceThreshold,Float)];
 }
 
 -(void)deserialize:(NSArray*)properties
 {
-	DESERIALIZE_PROPERTY(blurRadius, floatValue);
+	DESERIALIZE_PROPERTY(blurRadius, intValue);
 	DESERIALIZE_PROPERTY(intensity, floatValue);
 	DESERIALIZE_PROPERTY(luminanceThreshold, floatValue);
 	

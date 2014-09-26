@@ -20,7 +20,7 @@
 
 -(id)serialize
 {
-	return @[SERIALIZE_PROPERTY(blurRadius,Int)];
+	return @[SERIALIZE_PROPERTY(blurRadius,Integer)];
 }
 
 -(void)deserialize:(NSArray*)properties
