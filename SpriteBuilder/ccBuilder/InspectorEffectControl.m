@@ -42,7 +42,10 @@
 	{
 		NSInteger row = [self.tableView selectedRow];
 		CCEffect<EffectProtocol> *effect = [self.effectNode effects][row];
+        
+        [[AppDelegate appDelegate] saveUndoState];
 		[self.effectNode removeEffect:effect];
+        
 		[self refresh];
 	}
 }
@@ -81,6 +84,7 @@
     NSMenuItem* item = sender;
     EffectDescription* effect = item.representedObject;
     
+    [[AppDelegate appDelegate] saveUndoState];
     [[self effectNode] addEffect:[effect constructDefault]];
     [self refresh];
 }
