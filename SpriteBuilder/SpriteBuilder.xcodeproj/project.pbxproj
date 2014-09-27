@@ -497,6 +497,7 @@
 		B7DE84941937B18B0039FB72 /* signup-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84921937B18B0039FB72 /* signup-bottom.png */; };
 		B7DE84961937C6380039FB72 /* SpriteBuilder-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */; };
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
+		B7E08C9F19D63CF400383412 /* EffectsUndoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E08C9E19D63CF400383412 /* EffectsUndoHelper.m */; };
 		B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */; };
 		B7E775E218563F8C004221AA /* frame-fixed.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E775E118563F8C004221AA /* frame-fixed.png */; };
 		B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
@@ -1984,6 +1985,8 @@
 		B7DE84921937B18B0039FB72 /* signup-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup-bottom.png"; sourceTree = "<group>"; };
 		B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpriteBuilder-logo.png"; sourceTree = "<group>"; };
 		B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = SpriteBuilder.icns; path = ../SpriteBuilder.icns; sourceTree = "<group>"; };
+		B7E08C9D19D63CF400383412 /* EffectsUndoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsUndoHelper.h; path = ccBuilder/EffectsUndoHelper.h; sourceTree = "<group>"; };
+		B7E08C9E19D63CF400383412 /* EffectsUndoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsUndoHelper.m; path = ccBuilder/EffectsUndoHelper.m; sourceTree = "<group>"; };
 		B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		B7E775E118563F8C004221AA /* frame-fixed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-fixed.png"; sourceTree = "<group>"; };
 		B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCTextField.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4205,6 +4208,8 @@
 				928696331958CC9A00402DD8 /* EffectsManager.m */,
 				9276C1301959F71C00A1D4DC /* EffectViewController.h */,
 				9276C1311959F71C00A1D4DC /* EffectViewController.m */,
+				B7E08C9D19D63CF400383412 /* EffectsUndoHelper.h */,
+				B7E08C9E19D63CF400383412 /* EffectsUndoHelper.m */,
 			);
 			name = Effects;
 			path = ..;
@@ -7324,6 +7329,7 @@
 				B7AC6985179F50850041B8BD /* NSColorWell+BFColorPickerPopover.m in Sources */,
 				B7AC6986179F50850041B8BD /* BFColorPickerPopoverView.m in Sources */,
 				B7AC6987179F50850041B8BD /* BFColorPickerViewController.m in Sources */,
+				B7E08C9F19D63CF400383412 /* EffectsUndoHelper.m in Sources */,
 				920994D7198719CD0006F38D /* CCBPEffectReflection.m in Sources */,
 				B7AC6988179F50850041B8BD /* BFIconTabBar.m in Sources */,
 				B7AC699C17A079C80041B8BD /* NSDictionary+SMKeyValueObserving.m in Sources */,

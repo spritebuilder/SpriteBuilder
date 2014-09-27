@@ -8,7 +8,7 @@
 
 #import "CCBPEffectBloom.h"
 #import "EffectsManager.h"
-
+#import "EffectsUndoHelper.h"
 
 
 @implementation CCBPEffectBloom
@@ -36,6 +36,12 @@
 -(EffectDescription*)effectDescription
 {
 	return [EffectsManager effectByClassName: NSStringFromClass([self class])];
+}
+
+- (void) willChangeValueForKey:(NSString *)key
+{
+    [EffectsUndoHelper handleUndoForKey:key effect:self];
+    [super willChangeValueForKey:key];
 }
 
 @end

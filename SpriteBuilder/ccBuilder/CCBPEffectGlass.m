@@ -14,6 +14,7 @@
 #import "TexturePropertySetter.h"
 #import "CocosScene.h"
 #import "SceneGraph.h"
+#import "EffectsUndoHelper.h"
 
 
 @implementation CCBPEffectGlass
@@ -163,7 +164,11 @@
 	
 }
 
-
+- (void) willChangeValueForKey:(NSString *)key
+{
+    [EffectsUndoHelper handleUndoForKey:key effect:self];
+    [super willChangeValueForKey:key];
+}
 
 
 @end

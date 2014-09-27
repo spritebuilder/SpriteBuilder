@@ -12,6 +12,7 @@
 #import "TexturePropertySetter.h"
 #import "CCBWriterInternal.h"
 #import "SceneGraph.h"
+#import "EffectsUndoHelper.h"
 
 @interface CCBWriterInternal(Private)
 + (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
@@ -122,4 +123,11 @@
 	}
 	
 }
+
+- (void) willChangeValueForKey:(NSString *)key
+{
+    [EffectsUndoHelper handleUndoForKey:key effect:self];
+    [super willChangeValueForKey:key];
+}
+
 @end

@@ -14,6 +14,7 @@
 #import "TexturePropertySetter.h"
 #import "CocosScene.h"
 #import "SceneGraph.h"
+#import "EffectsUndoHelper.h"
 
 
 @interface CCBWriterInternal(Private)
@@ -128,6 +129,10 @@
 
 }
 
-
+- (void) willChangeValueForKey:(NSString *)key
+{
+    [EffectsUndoHelper handleUndoForKey:key effect:self];
+    [super willChangeValueForKey:key];
+}
 
 @end
