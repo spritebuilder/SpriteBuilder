@@ -71,6 +71,21 @@
 			<string>spriteFrame</string>
 		</dict>
 		<dict>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<array>
+				<string></string>
+				<string></string>
+			</array>
+			<key>displayName</key>
+			<string>Normal map</string>
+			<key>type</key>
+			<string>SpriteFrame</string>
+			<key>name</key>
+			<string>normalMapSpriteFrame</string>
+		</dict>
+		<dict>
 			<key>defaultSerialization</key>
 			<integer>1</integer>
 			<key>animatable</key>
