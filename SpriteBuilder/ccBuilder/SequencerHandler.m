@@ -47,16 +47,7 @@
 #import "NSArray+Query.h"
 #import "CCBPhysicsJoint.h"
 #import "PlugInManager.h"
-
-// TODO: move these to a constants file and replace hard coded strings in project with constants.
-static NSString *const PASTEBOARD_TYPE_NODE = @"com.cocosbuilder.node";
-static NSString *const PASTEBOARD_TYPE_TEXTURE = @"com.cocosbuilder.texture";
-static NSString *const PASTEBOARD_TYPE_TEMPLATE = @"com.cocosbuilder.template";
-static NSString *const PASTEBOARD_TYPE_CCB = @"com.cocosbuilder.ccb";
-static NSString *const PASTEBOARD_TYPE_PLUGINNODE = @"com.cocosbuilder.PlugInNode";
-static NSString *const PASTEBOARD_TYPE_WAVE = @"com.cocosbuilder.wav";
-static NSString *const PASTEBOARD_TYPE_JOINTBODY = @"com.cocosbuilder.jointBody";
-static NSString *const PASTEBOARD_TYPE_EFFECTSPRITE = @"com.cocosbuilder.effectSprite";
+#import "SBPasteboardTypes.h"
 
 static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
 static NSString *const ORIGINAL_NODE_KEY = @"originalNode";

@@ -34,6 +34,7 @@
 #import "CCNode+NodeInfo.h"
 #import "EffectsManager.h"
 #import "CCEffect.h"
+#import "SBPasteboardTypes.h"
 
 @implementation CCBGLView
 
@@ -44,12 +45,12 @@
     trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
 
     [self registerForDraggedTypes:@[
-            @"com.cocosbuilder.texture",
-            @"com.cocosbuilder.template",
-            @"com.cocosbuilder.ccb",
-            @"com.cocosbuilder.PlugInNode",
-            @"com.cocosbuilder.jointBody",
-            @"com.cocosbuilder.effectSprite"]];
+            PASTEBOARD_TYPE_TEXTURE,
+            PASTEBOARD_TYPE_TEMPLATE,
+            PASTEBOARD_TYPE_CCB,
+            PASTEBOARD_TYPE_PLUGINNODE,
+            PASTEBOARD_TYPE_JOINTBODY,
+            PASTEBOARD_TYPE_EFFECTSPRITE]];
 }
 
 - (void)reshape
@@ -144,7 +145,7 @@
 
 - (BOOL)performDragForPhysicsJointBody:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
 {
-    NSArray* pbJoints = [pasteboard propertyListsForType:@"com.cocosbuilder.jointBody"];
+    NSArray* pbJoints = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
     for (NSDictionary* dict in pbJoints)
     {
         CGPoint point = ccp(dragPoint.x, dragPoint.y);
@@ -169,7 +170,7 @@
 
 - (void)performDragForPluginNode:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
 {
-    NSArray* pbPlugInNode = [pasteboard propertyListsForType:@"com.cocosbuilder.PlugInNode"];
+    NSArray* pbPlugInNode = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
     for (NSDictionary* dict in pbPlugInNode)
     {
         [appDelegate dropAddPlugInNodeNamed:dict[@"nodeClassName"] at:ccp(dragPoint.x, dragPoint.y)];
@@ -178,7 +179,7 @@
 
 - (void)performDragForCCB:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
 {
-    NSArray* pbCCBs = [pasteboard propertyListsForType:@"com.cocosbuilder.ccb"];
+    NSArray* pbCCBs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_CCB];
     for (NSDictionary* dict in pbCCBs)
     {
         [appDelegate dropAddCCBFileNamed:dict[@"ccbFile"] at:ccp(dragPoint.x, dragPoint.y) parent:NULL];
@@ -187,7 +188,7 @@
 
 - (void)performDragForTexture:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
 {
-    NSArray* pbTextures = [pasteboard propertyListsForType:@"com.cocosbuilder.texture"];
+    NSArray* pbTextures = [pasteboard propertyListsForType:PASTEBOARD_TYPE_TEXTURE];
     for (NSDictionary* dict in pbTextures)
     {
         [appDelegate dropAddSpriteNamed:dict[@"spriteFile"]
@@ -198,7 +199,7 @@
 
 - (BOOL)performDragForEffect:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard
 {
-    NSArray* pbSprites = [pasteboard propertyListsForType:@"com.cocosbuilder.effectSprite"];
+    NSArray* pbSprites = [pasteboard propertyListsForType:PASTEBOARD_TYPE_EFFECTSPRITE];
     for (NSDictionary* dict in pbSprites)
     {
         CGPoint aPoint = ccp(point.x, point.y);
