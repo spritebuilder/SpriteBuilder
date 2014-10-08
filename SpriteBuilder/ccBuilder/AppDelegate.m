@@ -1065,7 +1065,7 @@ typedef enum
 {
     if (!self.selectedNode) return;
     
-    InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+    InspectorValue* inspectorValue = currentInspectorValues[name];
     if (inspectorValue)
     {
 
@@ -1079,7 +1079,7 @@ typedef enum
     
     for (NSString* name in currentInspectorValues)
     {
-        InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+        InspectorValue* inspectorValue = currentInspectorValues[name];
         if ([inspectorValue.propertyType isEqualToString:type])
         {
             [inspectorValue refresh];
