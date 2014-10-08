@@ -1,4 +1,4 @@
-extern NSString *const SnapLayerRefreshLines;
+extern NSString *const SNAP_LAYER_REFRESH_LINES;
 
 extern NSString *const ANIMATION_PLAYBACK_WILL_START;
 

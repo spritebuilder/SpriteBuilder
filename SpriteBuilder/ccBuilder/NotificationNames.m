@@ -1,4 +1,4 @@
-NSString *const SnapLayerRefreshLines = @"SnapLayerRefreshLines";
+NSString *const SNAP_LAYER_REFRESH_LINES = @"SNAP_LAYER_REFRESH_LINES";
 
 NSString *const ANIMATION_PLAYBACK_WILL_START = @"ANIMATION_PLAYBACK_WILL_START";
 
