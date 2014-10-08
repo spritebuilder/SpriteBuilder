@@ -2954,6 +2954,8 @@ static BOOL hideAllToNextSeparator;
     
     [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
 }
 
 - (IBAction) delete:(id) sender

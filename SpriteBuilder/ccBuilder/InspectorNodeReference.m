@@ -13,6 +13,7 @@
 #import "MainWindow.h"
 #import "EffectsManager.h"
 #import "CCEffect.h"
+#import "NotificationNames.h"
 
 @implementation OutletButton
 {
@@ -129,6 +130,21 @@
 {
 	[super awakeFromNib];
 	self.dragType = DragTypeJoint;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nodeDeleted:) name:SCENEGRAPH_NODE_DELETED object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)nodeDeleted:(NSNotification *)notification
+{
+    if (self.reference == notification.object)
+    {
+        self.reference = nil;
+    }
 }
 
 -(void)setReference:(CCNode *)reference
