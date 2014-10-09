@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "CocosScene.h"
 #import "StringPropertySetter.h"
+#import "InspectorController.h"
 
 @implementation LocalizationEditorHandler
 
@@ -188,8 +189,8 @@
 
 - (void) setEdited
 {
-    [[AppDelegate appDelegate] refreshPropertiesOfType:@"String"];
-    [[AppDelegate appDelegate] refreshPropertiesOfType:@"Text"];
+    [[InspectorController sharedController] refreshPropertiesOfType:@"String"];
+    [[InspectorController sharedController] refreshPropertiesOfType:@"Text"];
     
     [self store];
 }

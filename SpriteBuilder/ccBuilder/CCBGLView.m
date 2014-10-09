@@ -35,6 +35,7 @@
 #import "EffectsManager.h"
 #import "CCEffect.h"
 #import "SBPasteboardTypes.h"
+#import "InspectorController.h"
 
 @implementation CCBGLView
 
@@ -223,7 +224,7 @@
         NSString *propertyName = dict[@"propertyName"];
 
         [effect setValue:node forKey:propertyName];
-        [[AppDelegate appDelegate] refreshProperty:@"effects"];
+        [[InspectorController sharedController] refreshProperty:@"effects"];
 	}
 
     return YES;

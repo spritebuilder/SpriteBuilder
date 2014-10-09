@@ -33,6 +33,7 @@
 #import "SequencerKeyframe.h"
 #import "SequencerNodeProperty.h"
 #import "NotificationNames.h"
+#import "InspectorController.h"
 
 @implementation InspectorValue
 
@@ -96,14 +97,13 @@
         for (int i = 0; i < [affectsProperties count]; i++)
         {
             NSString* propName = [affectsProperties objectAtIndex:i];
-            AppDelegate* ad = [AppDelegate appDelegate];
-            [ad refreshProperty:propName];
+            [[InspectorController sharedController] refreshProperty:propName];
         }
     }
     
     if (inPopoverWindow)
     {
-        [[AppDelegate appDelegate] updateInspectorFromSelection];
+        [[InspectorController sharedController] updateInspectorFromSelection];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:SNAP_LAYER_REFRESH_LINES object:nil]; // Used to updated the snap/alignment lines after a property has been modified in the properties menu
 }

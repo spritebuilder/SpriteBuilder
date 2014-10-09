@@ -40,6 +40,7 @@
 #import "CocosScene.h"
 #import "NodePhysicsBody.h"
 #import "PhysicsHandler.h"
+#import "InspectorController.h"
 
 NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 
@@ -230,7 +231,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     [seqNodeProp setKeyframe:keyframe];
     
     // Update property inspector
-    [[AppDelegate appDelegate] updateInspectorFromSelection];
+    [[InspectorController sharedController] updateInspectorFromSelection];
     [[SequencerHandler sharedHandler] redrawTimeline];
     [self updateProperty:name time:[SequencerHandler sharedHandler].currentSequence.timelinePosition sequenceId:seqId];
 	

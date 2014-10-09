@@ -13,6 +13,7 @@
 #import "CCNode+PositionExtentions.h"
 #import "PositionPropertySetter.h"
 #import "NotificationNames.h"
+#import "InspectorController.h"
 
 #define kSnapLayerSensitivity       4
 #define kSnapLayerSensitivityLine   1
@@ -483,7 +484,7 @@
     
     
     [self updateLines];
-    [appDelegate refreshProperty:@"position"];
+    [[InspectorController sharedController] refreshProperty:@"position"];
 }
 
 #pragma mark - Mouse Events
