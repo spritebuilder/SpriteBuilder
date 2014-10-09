@@ -116,6 +116,11 @@
     
     [fm moveItemAtPath:xcodeFileName toPath:newXcodeFileName error:NULL];
     
+    // Update Mac Xib file
+    NSString* xibFileName = [parentPath stringByAppendingPathComponent:@"Source/Resources/Platforms/Mac/MainMenu.xib"];
+    [self setName:identifier inFile:xibFileName search:substitutableProjectIdentifier];
+    [self setName:projName inFile:xibFileName search:substitutableProjectName];
+
     // Rename Approj project file (apportable)
     NSString* approjFileName = [parentPath stringByAppendingPathComponent:@"PROJECTNAME.approj"];
     projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
