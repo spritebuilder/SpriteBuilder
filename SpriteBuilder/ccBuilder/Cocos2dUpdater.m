@@ -131,10 +131,10 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
 
    _projectSettings.canUpdateCocos2D = ![self isCoco2dAGitSubmodule]
                && ((compareResult == Cocos2dVersionIncompatible)
-               || [self doesProjectsCocos2dFolderExistAndHasNoVesionfile]);;
+               || [self doesProjectsCocos2dFolderExistAndHasNoVersionfile]);;
 }
 
-- (BOOL)doesProjectsCocos2dFolderExistAndHasNoVesionfile
+- (BOOL)doesProjectsCocos2dFolderExistAndHasNoVersionfile
 {
     Cocos2dVersionComparisonResult compareResult = [self compareProjectsCocos2dVersionWithSpriteBuildersVersion];
 
@@ -154,7 +154,7 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     {
         return [self showUpdateDialogWithText:@"Your project is not using the latest version of Cocos2D. It's recommended that you update."];
     }
-    else if ([self doesProjectsCocos2dFolderExistAndHasNoVesionfile])
+    else if ([self doesProjectsCocos2dFolderExistAndHasNoVersionfile])
     {
         return [self showUpdateDialogWithText:@"Your project is probably not using the latest version of Cocos2D (the version file is missing, which indicates that you are using an old version). It's recommended that you update."];
     }
