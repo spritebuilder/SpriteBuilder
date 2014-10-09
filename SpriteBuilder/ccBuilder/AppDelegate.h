@@ -123,6 +123,7 @@ enum {
 @class RegistrationWindow;
 @class ResourceManagerOutlineView;
 @class CCBPublisher;
+@class InspectorController;
 
 typedef void (^CompletionCallback) (BOOL success);
 
@@ -144,18 +145,8 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet CCBGLView* __weak cocosView;
     IBOutlet NSView* mainView;
     IBOutlet CCBSplitHorizontalView* splitHorizontalView;
-    
-    __weak NSView *_inspectorPhysics;
-    // Inspector views
     IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
-    
-    IBOutlet NSScrollView* inspectorScroll;
-    NSView* inspectorDocumentView;
-    NSMutableDictionary* currentInspectorValues;
-    
-    IBOutlet NSScrollView* inspectorCodeScroll;
-    NSView* inspectorCodeDocumentView;
-    
+
     IBOutlet NSToolbar* toolbar;
     MainToolbarDelegate* toolbarDelegate;
     
@@ -307,18 +298,18 @@ typedef void (^CompletionCallback) (BOOL success);
     
 }
 
+
 @property (weak) IBOutlet MainWindow *window;
 
 @property (weak, nonatomic,readonly) IBOutlet ResourceManagerOutlineView *outlineProject;
 
+@property (weak, nonatomic) IBOutlet InspectorController *inspectorController;
+@property (nonatomic,strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
 
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
 @property (nonatomic,strong) CCBDocument* currentDocument;
 @property (nonatomic,assign) BOOL hasOpenedDocument;
 @property (weak, nonatomic,readonly) CCBGLView* cocosView;
-
-
-@property (nonatomic,strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
 
 @property (nonatomic,assign) BOOL canEditContentSize;
 @property (nonatomic,assign) BOOL defaultCanvasSize;
@@ -361,10 +352,6 @@ typedef void (^CompletionCallback) (BOOL success);
 // Transparent window
 - (void) resizeGUIWindow:(NSSize)size;
 
-// PlugIns and properties
-- (void) refreshProperty:(NSString*) name;
-- (void) refreshPropertiesOfType:(NSString*)type;
-
 @property (weak, nonatomic,readonly) IBOutlet LocalizationEditorHandler* localizationEditorHandler;
 
 // Physics
@@ -381,7 +368,6 @@ typedef void (^CompletionCallback) (BOOL success);
 
 - (void) updateTimelineMenu;
 - (void) gotoAutoplaySequence;
-- (void) updateInspectorFromSelection;
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
 - (void) openFile:(NSString*)filePath;
@@ -473,7 +459,5 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (weak) IBOutlet NSTableView *warningTableView;
 
 - (void)renamedResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath;
-
-@property (weak) IBOutlet NSView *inspectorPhysics;
 
 @end
