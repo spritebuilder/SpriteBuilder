@@ -13,7 +13,7 @@
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 
     // enable FPS and SPF
-    [director setDisplayStats:YES];
+    // [director setDisplayStats:YES];
 
     // connect the OpenGL view with the director
     [director setView:self.glView];
