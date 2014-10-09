@@ -106,7 +106,7 @@
         [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
 
         // Update plist
-        NSString* plistFileName = [parentPath stringByAppendingString:[NSString stringWithFormat:@"Source/Resources/Platforms/%@/Info.plist", platform]];
+        NSString* plistFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Resources/Platforms/%@/Info.plist", platform]];
         [self setName:identifier inFile:plistFileName search:substitutableProjectIdentifier];
         [self setName:projName inFile:plistFileName search:substitutableProjectName];
     }
