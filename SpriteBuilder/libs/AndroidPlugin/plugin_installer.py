@@ -43,6 +43,7 @@ def get_component_roots(include_legacy=False):
     components = [
 				  (xcshared_dir, "Platforms/Android.platform", 'CURRENT'),
 				  (xcshared_dir, "PlatformPlugIns/IDEAndroidSupportCore.ideplugin", 'CURRENT'),
+				  (xcshared_dir, "PlatformPlugIns/APPPlatformSupportUI.ideplugin", 'CURRENT'),
 				  (xcshared_dir, "Plug-ins/APPPlatformBuildSystem.xcplugin", 'CURRENT'),
 				  (xcshared_dir, "Plug-ins/IDEAndroidSupportCore.xcplugin", 'LEGACY'),
 				  (xcshared_dir, "Plug-ins/IDEJavaSupportCore.xcplugin", 'CURRENT'),
