@@ -178,6 +178,7 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
         BOOL updateResult = [self unzipProjectTemplateZip:&error]
             && [self renameCocos2dFolderToBackupFolder:&error]
             && [self copySpriteBuildersCocos2dFolderToProjectFolder:&error]
+            && [self createSymbolicLinkToCocos2dProject:&error]
             && [self tidyUpTempFolder:&error];
 
         [self finishWithUpdateResult:updateResult error:error];
@@ -529,6 +530,26 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     }
     return result;
 }
+
+- (BOOL)createSymbolicLinkToCocos2dProject:(NSError **)error
+{
+    // Previous versions of cocos2d had a project called cocos2d-ios.xcodeproj
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *oldProjectPath = [[self backupFolderPath] stringByAppendingPathComponent:@"cocos2d-ios.xcodeproj"];
+    if ([fileManager fileExistsAtPath:oldProjectPath])
+    {
+        // Make a symbolic link so users don't have to update their cocos2d reference
+        NSString *newProjectPath = [[self defaultProjectsCocos2DFolderPath]
+                                    stringByAppendingPathComponent:@"cocos2d.xcodeproj"];
+        NSString *symbolicLinkPath = [[self defaultProjectsCocos2DFolderPath]
+                                    stringByAppendingPathComponent:@"cocos2d-ios.xcodeproj"];
+        return [fileManager createSymbolicLinkAtPath:symbolicLinkPath
+                                 withDestinationPath:newProjectPath
+                                               error:error];
+    }
+    return YES;  // No soft link is needed
+}
+
 
 - (NSString *)cocos2dBackupFolderPath:(NSString *)defaultCocos2DFolderPath
 {
