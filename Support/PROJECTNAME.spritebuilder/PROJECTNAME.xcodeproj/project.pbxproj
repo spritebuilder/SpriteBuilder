@@ -333,22 +333,12 @@
 			path = "drawable-xxhdpi";
 			sourceTree = "<group>";
 		};
-		7A40360019DDEE84007B6E8F /* Mac */ = {
-			isa = PBXGroup;
-			children = (
-				7A40360519DDEE84007B6E8F /* AppDelegate.h */,
-				7A40360619DDEE84007B6E8F /* AppDelegate.m */,
-			);
-			name = Mac;
-			path = "PROJECTNAME Mac";
-			sourceTree = "<group>";
-		};
 		7A40362019DDEF0D007B6E8F /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
-				7A40362219DDF090007B6E8F /* Android */,
 				7A40362119DDF08C007B6E8F /* iOS */,
-				7A40360019DDEE84007B6E8F /* Mac */,
+				7A40362219DDF090007B6E8F /* Android */,
+				7A9791C019E6FAC5001FFC4D /* Mac */,
 			);
 			name = Platforms;
 			sourceTree = "<group>";
@@ -366,8 +356,8 @@
 			isa = PBXGroup;
 			children = (
 				5B12101B19748413004C1E1D /* PROJECTIDENTIFIERActivity.java */,
-				5B12102F197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m */,
 				5B12102E197484FA004C1E1D /* PROJECTIDENTIFIERActivity.h */,
+				5B12102F197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m */,
 			);
 			name = Android;
 			sourceTree = "<group>";
@@ -400,8 +390,8 @@
 		7A40366119DDF8C2007B6E8F /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
-				7A40366319DDF8D4007B6E8F /* Android */,
 				7A40366219DDF8CB007B6E8F /* iOS */,
+				7A40366319DDF8D4007B6E8F /* Android */,
 				7A40366419DDF8DB007B6E8F /* Mac */,
 			);
 			name = Platforms;
@@ -442,6 +432,15 @@
 				7A97910419E62E40001FFC4D /* libcocos2d-mac.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7A9791C019E6FAC5001FFC4D /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				7A40360519DDEE84007B6E8F /* AppDelegate.h */,
+				7A40360619DDEE84007B6E8F /* AppDelegate.m */,
+			);
+			name = Mac;
 			sourceTree = "<group>";
 		};
 		9222E2B918734FF800A246C7 /* libs */ = {
