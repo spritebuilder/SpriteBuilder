@@ -872,6 +872,7 @@
 		E525F5E6EF1FB917093D1F60 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F12EA995AE91DCC34059 /* InspectorStringSimple.xib */; };
 		E525F5E7563958DE71C9B4AE /* ResourceExportPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0424E2063AF911B0692 /* ResourceExportPackageCommand.m */; };
 		E525F5E78A703F1381486AA8 /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF599E666FBB986616AF /* InspectorColor4.xib */; };
+		E525F622A96F0C31CACF1883 /* InspectoreController_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */; };
 		E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F56FE00E54E100F524F1 /* PublishSpriteKitSpriteSheetOperation.m */; };
 		E525F634C2EE9B50F56B0E27 /* InspectorSeparatorSub.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF364C63BB5CD36B6E1D /* InspectorSeparatorSub.m */; };
 		E525F651194EC2A13EA30026 /* ResourceManager_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCBBB1841F3115718AD0 /* ResourceManager_Tests.m */; };
@@ -2635,6 +2636,7 @@
 		E525FC21381F84E752612C80 /* InspectorPopoverColor3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverColor3.xib; sourceTree = "<group>"; };
 		E525FC2C6864DF91BA1712E2 /* NSAlert+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAlert+Convenience.h"; sourceTree = "<group>"; };
 		E525FC30968813B67FE4F531 /* InspectorByte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorByte.m; sourceTree = "<group>"; };
+		E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectoreController_Tests.m; sourceTree = "<group>"; };
 		E525FC764043B778E59DF538 /* InspectorCodeConnections.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorCodeConnections.xib; sourceTree = "<group>"; };
 		E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemTestCase.m; sourceTree = "<group>"; };
 		E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishImageOperation.m; sourceTree = "<group>"; };
@@ -3854,6 +3856,7 @@
 				E525FD5B8B57EAC9AC003013 /* Publishing */,
 				E525F649EEC971226605C09F /* Publishing Resources */,
 				E525FEA530662F61E7B1B1E5 /* FormatConverter */,
+				E525F5F44F65BD7C2E55CDC5 /* Inspector */,
 			);
 			path = "SpriteBuilder Tests";
 			sourceTree = "<group>";
@@ -5603,6 +5606,14 @@
 				E525F74DC72109C2F7FB0EC8 /* openXcodeProject.AppleScript */,
 			);
 			name = Scripts;
+			sourceTree = "<group>";
+		};
+		E525F5F44F65BD7C2E55CDC5 /* Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */,
+			);
+			name = Inspector;
 			sourceTree = "<group>";
 		};
 		E525F649EEC971226605C09F /* Publishing Resources */ = {
@@ -7488,6 +7499,7 @@
 				E525FC8E53C200B5CBB844BF /* RMPackage_Tests.m in Sources */,
 				E525F55709C7B6FCB64695FA /* RMDirectory_Tests.m in Sources */,
 				E525FF8FC58DB5584201E9DC /* SBPasteboardTypes.m in Sources */,
+				E525F622A96F0C31CACF1883 /* InspectoreController_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

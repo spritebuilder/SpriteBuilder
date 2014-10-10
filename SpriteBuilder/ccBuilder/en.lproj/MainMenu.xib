@@ -1435,6 +1435,7 @@ CA
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <connections>
                                             <outlet property="appDelegate" destination="494" id="1348"/>
+                                            <outlet property="inspectorController" destination="9Xy-c4-NYN" id="16h-2f-HCe"/>
                                         </connections>
                                     </openGLView>
                                 </subviews>

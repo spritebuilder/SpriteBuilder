@@ -152,6 +152,10 @@ static InspectorController *__sharedInstance = nil;
     }
     NSView *view = inspectorValue.view;
 
+    #ifdef TESTING
+    view.identifier = [NSString stringWithFormat:@"TestInspector_%@", prop];
+    #endif
+
     [inspectorValue willBeAdded];
 
     //if its a separator, check to see if it isExpanded, if not set all of the next non-separator InspectorValues to hidden and don't touch the offset

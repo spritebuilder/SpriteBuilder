@@ -303,8 +303,8 @@ typedef void (^CompletionCallback) (BOOL success);
 
 @property (weak, nonatomic,readonly) IBOutlet ResourceManagerOutlineView *outlineProject;
 
-@property (weak, nonatomic) IBOutlet InspectorController *inspectorController;
-@property (nonatomic,strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic, strong) IBOutlet InspectorController *inspectorController;
+@property (nonatomic, strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
 
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
 @property (nonatomic,strong) CCBDocument* currentDocument;
