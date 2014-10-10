@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1090" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
         <plugIn identifier="com.apple.imagekit.ibplugin" version="6245"/>
     </dependencies>
@@ -2450,6 +2449,9 @@ CA
                 <outlet property="propertyInspectorHandler" destination="2075" id="2076"/>
                 <outlet property="resourceManagerSplitView" destination="1956" id="1960"/>
                 <outlet property="rightPanel" destination="1795" id="1796"/>
+                <outlet property="saveDlgAccessoryView" destination="L7D-gD-txa" id="BAn-e8-nQe"/>
+                <outlet property="saveDlgLanguageHint" destination="MV1-gJ-US0" id="ZuH-Sv-7nG"/>
+                <outlet property="saveDlgLanguagePopup" destination="aBU-kn-ueY" id="sFn-vD-ItR"/>
                 <outlet property="scrubberSelectionView" destination="1561" id="1562"/>
                 <outlet property="sequenceScrollView" destination="566" id="1570"/>
                 <outlet property="splitHorizontalView" destination="1530" id="1793"/>
@@ -2719,6 +2721,46 @@ CA
                 <outlet property="delegate" destination="494" id="Nqe-OT-jRB"/>
             </connections>
         </customObject>
+        <customView autoresizesSubviews="NO" id="L7D-gD-txa" userLabel="View">
+            <rect key="frame" x="0.0" y="-1" width="347" height="70"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Rk3-4M-33R">
+                    <rect key="frame" x="32" y="33" width="131" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Primary Language:" id="KU7-Cw-2cv">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="aBU-kn-ueY">
+                    <rect key="frame" x="167" y="26" width="150" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Objective-C" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="cQS-o8-1yO" id="JRa-yT-odh">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="z3E-fT-e5E">
+                            <items>
+                                <menuItem title="Objective-C" state="on" id="cQS-o8-1yO"/>
+                                <menuItem title="Item 2" id="5QR-Kj-glT"/>
+                                <menuItem title="Item 3" id="K2u-d3-dye"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="BEJ-je-4WN">
+                    <rect key="frame" x="167" y="6" width="168" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Language hint" placeholderString="" id="MV1-gJ-US0">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <point key="canvasLocation" x="-69.5" y="344"/>
+        </customView>
     </objects>
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>

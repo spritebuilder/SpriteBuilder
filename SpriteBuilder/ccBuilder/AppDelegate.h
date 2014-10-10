@@ -200,6 +200,9 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet NSMenu* __weak menuContextKeyframeInterpol;
     IBOutlet NSMenu* __weak menuContextResManager;
     IBOutlet NSMenu *__weak menuContextKeyframeNoselection;
+    IBOutlet NSView *__weak saveDlgAccessoryView;
+    IBOutlet NSPopUpButton *__weak saveDlgLanguagePopup;
+    IBOutlet NSTextFieldCell *__weak saveDlgLanguageHint;
 
     // TODO: not needed any more when PACKAGE feature is released
     IBOutlet NSMenuItem* menuPlusButtonNewPackage;

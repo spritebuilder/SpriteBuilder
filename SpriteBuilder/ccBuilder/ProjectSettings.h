@@ -46,6 +46,12 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 	CCBTargetEngineSpriteKit = 1,
 };
 
+typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
+{
+    CCBProgrammingLanguageObjectiveC = 0,
+    CCBProgrammingLanguageSwift = 1,
+};
+
 @class RMResource;
 @class CCBWarnings;
 
