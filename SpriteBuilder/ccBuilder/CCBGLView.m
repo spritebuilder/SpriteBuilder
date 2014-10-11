@@ -34,80 +34,85 @@
 #import "CCNode+NodeInfo.h"
 #import "EffectsManager.h"
 #import "CCEffect.h"
+#import "SBPasteboardTypes.h"
 
 @implementation CCBGLView
 
-- (void) reshape
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
+
+    [self registerForDraggedTypes:@[
+            PASTEBOARD_TYPE_TEXTURE,
+            PASTEBOARD_TYPE_TEMPLATE,
+            PASTEBOARD_TYPE_CCB,
+            PASTEBOARD_TYPE_PLUGINNODE,
+            PASTEBOARD_TYPE_JOINTBODY,
+            PASTEBOARD_TYPE_EFFECTSPRITE]];
+}
+
+- (void)reshape
 {
     [self removeTrackingRect:trackingTag];
     trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
     [[AppDelegate appDelegate] resizeGUIWindow:[self bounds].size];
-    
+
     [super reshape];
 }
 
-- (BOOL) acceptsFirstMouse:(NSEvent *)theEvent
+- (BOOL)acceptsFirstMouse:(NSEvent *)theEvent
 {
     return YES;
 }
 
-- (void) awakeFromNib
+- (BOOL)acceptsFirstResponder
 {
-    [super awakeFromNib];
-    
-    trackingTag = [self addTrackingRect:[self bounds] owner:self userData:NULL assumeInside:NO];
-    
-    [self registerForDraggedTypes:[NSArray arrayWithObjects: @"com.cocosbuilder.texture", @"com.cocosbuilder.template", @"com.cocosbuilder.ccb", @"com.cocosbuilder.PlugInNode", @"com.cocosbuilder.jointBody", @"com.cocosbuilder.effectSprite", NULL]];
+    return NO;
 }
 
-
--(BOOL) acceptsFirstResponder
-{
-	return NO;
-}
 
 #pragma mark Dragging
 
+- (NSPoint)convertDragginLocationToLocalPoint:(NSPoint)draggingLocation
+{
+    NSPoint point = [self convertPoint:draggingLocation fromView:NULL];
+    point = NSMakePoint(roundf((float) point.x),roundf((float) point.y));
+    return [[CCDirectorMac sharedDirector] convertToGL:point];
+}
+
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
-    NSPoint pt = [self convertPoint:[sender draggingLocation] fromView:NULL];
-    pt = NSMakePoint(roundf(pt.x),roundf(pt.y));
-    pt = [[CCDirectorMac sharedDirector] convertToGL:pt];
+    NSPoint localDragPoint = [self convertDragginLocationToLocalPoint:[sender draggingLocation]];
 
-    
-    return [[CocosScene cocosScene] draggingEntered:sender pos:pt];
+    return [[CocosScene cocosScene] draggingEntered:sender pos:localDragPoint];
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-    NSPoint pt = [self convertPoint:[sender draggingLocation] fromView:NULL];
-    pt = NSMakePoint(roundf(pt.x),roundf(pt.y));
-    pt = [[CCDirectorMac sharedDirector] convertToGL:pt];
-    
-    return [[CocosScene cocosScene] draggingUpdated:sender pos:pt];
-    
+    NSPoint localDragPoint = [self convertDragginLocationToLocalPoint:[sender draggingLocation]];
+
+    return [[CocosScene cocosScene] draggingUpdated:sender pos:localDragPoint];
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
-    NSPoint pt = [self convertPoint:[sender draggingLocation] fromView:NULL];
-    pt = NSMakePoint(roundf(pt.x),roundf(pt.y));
-    pt = [[CCDirectorMac sharedDirector] convertToGL:pt];
-    
-    [[CocosScene cocosScene] draggingExited:sender pos:pt];
-    
+    NSPoint localDragPoint = [self convertDragginLocationToLocalPoint:[sender draggingLocation]];
+
+    [[CocosScene cocosScene] draggingExited:sender pos:localDragPoint];
 }
+
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
     
 }
+
 /* draggingEnded: is implemented as of Mac OS 10.5 */
 - (void)draggingEnded:(id <NSDraggingInfo>)sender
 {
     [[CocosScene cocosScene] draggingEnded:sender];
 }
-
-
 
 - (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
@@ -116,87 +121,116 @@
 
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
 {
-    NSPoint pt = [self convertPoint:[sender draggingLocation] fromView:NULL];
-    pt = NSMakePoint(roundf(pt.x),roundf(pt.y));
-    pt = [[CCDirectorMac sharedDirector] convertToGL:pt];
-    
-    NSPasteboard* pb = [sender draggingPasteboard];
-    
-    // Textures
-    NSArray* pbTextures = [pb propertyListsForType:@"com.cocosbuilder.texture"];
-    for (NSDictionary* dict in pbTextures)
-    {
-        [appDelegate dropAddSpriteNamed:[dict objectForKey:@"spriteFile"] inSpriteSheet:[dict objectForKey:@"spriteSheetFile"] at:ccp(pt.x,pt.y)];
-    }
-    
-    // CCB Files
-    NSArray* pbCCBs = [pb propertyListsForType:@"com.cocosbuilder.ccb"];
-    for (NSDictionary* dict in pbCCBs)
-    {
-        [appDelegate dropAddCCBFileNamed:[dict objectForKey:@"ccbFile"] at:ccp(pt.x,pt.y) parent:NULL];
-    }
-    
-    // PlugInNode
-    NSArray* pbPlugInNode = [pb propertyListsForType:@"com.cocosbuilder.PlugInNode"];
-    for (NSDictionary* dict in pbPlugInNode)
-    {
-        [appDelegate dropAddPlugInNodeNamed:[dict objectForKey:@"nodeClassName"] at:ccp(pt.x, pt.y)];
-    }
-    
-    NSArray* pbJoints = [pb propertyListsForType:@"com.cocosbuilder.jointBody"];
-    for (NSDictionary* dict in pbJoints)
-    {
-        
-        CGPoint point = ccp(pt.x, pt.y);
-        
-        CCNode * body = [appDelegate.physicsHandler findPhysicsBodyAtPoint:point];
-        if(!body)
-            return NO;
-        
-        NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
-        JointHandleType type = [dict[@"bodyIndex"] integerValue];
-        
-        CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
-            return lJoint.UUID == uuid;
-        }];
-        
-        [appDelegate.physicsHandler assignBodyToJoint:body toJoint:joint withIdx:type pos:point];
-        
-    }
-	
-	NSArray* pbSprites = [pb propertyListsForType:@"com.cocosbuilder.effectSprite"];
-    for (NSDictionary* dict in pbSprites)
-    {
+    NSPoint localDragPoint = [self convertDragginLocationToLocalPoint:[sender draggingLocation]];
+    NSPasteboard* pasteboard = [sender draggingPasteboard];
 
-        CGPoint point = ccp(pt.x, pt.y);
-		
-		NSArray * classTypes = @[NSStringFromClass([CCSprite class])];
-		
-		CCNode * node = [[CocosScene cocosScene] findObjectAtPoint:point ofTypes:classTypes];
-        		  
-        if(!node)
-            return NO;
-	
-		NSUInteger effectUUID = [dict[@"effect"] unsignedIntegerValue];
-		
-		CCEffect<EffectProtocol>*effect = [[SceneGraph instance].rootNode findEffect:effectUUID];
-		if(!effect)
-		{
-			NSLog(@"Failed to find effect instance in scene graph.");
-			return NO;
-		}
-		
-		NSString* propertyName = dict[@"propertyName"];
-		
-		[effect setValue:node forKey:propertyName];
-		[[AppDelegate appDelegate] refreshProperty:@"effects"];
-	}
+    [self performDragForTexture:localDragPoint pasteboard:pasteboard];
 
+    [self performDragForCCB:localDragPoint pasteboard:pasteboard];
+
+    [self performDragForPluginNode:localDragPoint pasteboard:pasteboard];
+
+    if (![self performDragForPhysicsJointBody:localDragPoint pasteboard:pasteboard])
+    {
+        return NO;
+    }
+
+    if (![self performDragForEffect:localDragPoint pasteboard:pasteboard])
+    {
+        return NO;
+    }
 
     return YES;
 }
 
-#pragma mark -
+- (BOOL)performDragForPhysicsJointBody:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
+{
+    NSArray* pbJoints = [pasteboard propertyListsForType:PASTEBOARD_TYPE_JOINTBODY];
+    for (NSDictionary* dict in pbJoints)
+    {
+        CGPoint point = ccp(dragPoint.x, dragPoint.y);
+        CCNode * body = [self->appDelegate.physicsHandler findPhysicsBodyAtPoint:point];
+
+        if (!body)
+        {
+            return NO;
+        }
+
+        NSUInteger uuid = [dict[@"uuid"] unsignedIntegerValue];
+        JointHandleType type = (JointHandleType) [dict[@"bodyIndex"] integerValue];
+
+        CCBPhysicsJoint * joint = [[SceneGraph instance].joints.all findFirst:^BOOL(CCBPhysicsJoint * lJoint, int idx) {
+            return lJoint.UUID == uuid;
+        }];
+
+        [self->appDelegate.physicsHandler assignBodyToJoint:body toJoint:joint withIdx:type pos:point];
+    }
+    return YES;
+}
+
+- (void)performDragForPluginNode:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
+{
+    NSArray* pbPlugInNode = [pasteboard propertyListsForType:PASTEBOARD_TYPE_PLUGINNODE];
+    for (NSDictionary* dict in pbPlugInNode)
+    {
+        [appDelegate dropAddPlugInNodeNamed:dict[@"nodeClassName"] at:ccp(dragPoint.x, dragPoint.y)];
+    }
+}
+
+- (void)performDragForCCB:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
+{
+    NSArray* pbCCBs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_CCB];
+    for (NSDictionary* dict in pbCCBs)
+    {
+        [appDelegate dropAddCCBFileNamed:dict[@"ccbFile"] at:ccp(dragPoint.x, dragPoint.y) parent:NULL];
+    }
+}
+
+- (void)performDragForTexture:(NSPoint)dragPoint pasteboard:(NSPasteboard *)pasteboard
+{
+    NSArray* pbTextures = [pasteboard propertyListsForType:PASTEBOARD_TYPE_TEXTURE];
+    for (NSDictionary* dict in pbTextures)
+    {
+        [appDelegate dropAddSpriteNamed:dict[@"spriteFile"]
+                          inSpriteSheet:dict[@"spriteSheetFile"]
+                                     at:ccp(dragPoint.x, dragPoint.y)];
+    }
+}
+
+- (BOOL)performDragForEffect:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard
+{
+    NSArray* pbSprites = [pasteboard propertyListsForType:PASTEBOARD_TYPE_EFFECTSPRITE];
+    for (NSDictionary* dict in pbSprites)
+    {
+        CGPoint aPoint = ccp(point.x, point.y);
+        NSArray *classTypes = @[NSStringFromClass([CCSprite class])];
+        CCNode *node = [[CocosScene cocosScene] findObjectAtPoint:aPoint ofTypes:classTypes];
+
+        if (!node)
+        {
+            return NO;
+        }
+
+        NSUInteger effectUUID = [dict[@"effect"] unsignedIntegerValue];
+
+        CCEffect <EffectProtocol> *effect = [[SceneGraph instance].rootNode findEffect:effectUUID];
+        if (!effect)
+        {
+            NSLog(@"Failed to find effect instance in scene graph.");
+            return NO;
+        }
+
+        NSString *propertyName = dict[@"propertyName"];
+
+        [effect setValue:node forKey:propertyName];
+        [[AppDelegate appDelegate] refreshProperty:@"effects"];
+	}
+
+    return YES;
+}
+
+
+#pragma mark - Mouse Events
 
 - (void) scrollWheel:(NSEvent *)theEvent
 {
@@ -233,25 +267,20 @@
     {
         if ([cs stageZoom] < 1.5f)
         {
-            [cs setStageZoom:[cs stageZoom] + [event magnification]];
+            [cs setStageZoom:(float) ([cs stageZoom] + [event magnification])];
         }
     }
     else if ([event magnification] < 0)
     {
         if ([cs stageZoom] + [event magnification] > 0.25)
         {
-            [cs setStageZoom:[cs stageZoom] + [event magnification]];
+            [cs setStageZoom:(float) ([cs stageZoom] + [event magnification])];
         }
         else
         {
             [cs setStageZoom:0.25];
         }
     }
-}
-
--(void) dealloc
-{
-	SBLogSelf();
 }
 
 @end

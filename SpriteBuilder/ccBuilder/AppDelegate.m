@@ -1065,7 +1065,7 @@ typedef enum
 {
     if (!self.selectedNode) return;
     
-    InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+    InspectorValue* inspectorValue = currentInspectorValues[name];
     if (inspectorValue)
     {
 
@@ -1079,7 +1079,7 @@ typedef enum
     
     for (NSString* name in currentInspectorValues)
     {
-        InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+        InspectorValue* inspectorValue = currentInspectorValues[name];
         if ([inspectorValue.propertyType isEqualToString:type])
         {
             [inspectorValue refresh];
@@ -2954,6 +2954,8 @@ static BOOL hideAllToNextSeparator;
     
     [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
 }
 
 - (IBAction) delete:(id) sender

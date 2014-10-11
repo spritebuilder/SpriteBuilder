@@ -13,6 +13,8 @@
 #import "MainWindow.h"
 #import "EffectsManager.h"
 #import "CCEffect.h"
+#import "NotificationNames.h"
+#import "SBPasteboardTypes.h"
 
 @implementation OutletButton
 {
@@ -49,7 +51,6 @@
     imgOutletSet = [NSImage imageNamed:@"inspector-body-connected.png"];
     imgOutletUnSet = [NSImage imageNamed:@"inspector-body-disconnected.png"];
 	self.enabled = YES;
-
 }
 
 -(void)drawRect:(NSRect)dirtyRect
@@ -117,11 +118,8 @@
 
 @end
 
-@implementation InspectorNodeReference
-{
- 
 
-}
+@implementation InspectorNodeReference
 
 @dynamic reference;
 
@@ -129,6 +127,21 @@
 {
 	[super awakeFromNib];
 	self.dragType = DragTypeJoint;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nodeDeleted:) name:SCENEGRAPH_NODE_DELETED object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)nodeDeleted:(NSNotification *)notification
+{
+    if (self.reference == notification.object)
+    {
+        self.reference = nil;
+    }
 }
 
 -(void)setReference:(CCNode *)reference
@@ -159,13 +172,11 @@
 
 -(void)onOutletDown:(id)sender event:(NSEvent*)event
 {
-    if(self.reference)
+    if (self.reference || self.readOnly)
+    {
         return;
-	
-	if(self.readOnly)
-		return;
-    
-    
+    }
+
     // Get the screen information.
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     // Capture the screen.
@@ -188,24 +199,20 @@
 		
 
 		if(self.dragType == DragTypeJoint)
-			[pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.jointBody", nil]];
+            [pbItem setDataProvider:self forTypes:@[PASTEBOARD_TYPE_JOINTBODY]];
 		else
-			[pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.effectSprite", nil]];
+            [pbItem setDataProvider:self forTypes:@[PASTEBOARD_TYPE_EFFECTSPRITE]];
 		
 
         //create a new NSDraggingItem with our pasteboard item.
         NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
         
         
-        NSDraggingSession * session = [self.outletButton beginDraggingSessionWithItems:[NSArray arrayWithObject:dragItem] event:event source:self];
+        NSDraggingSession * session = [self.outletButton beginDraggingSessionWithItems:@[dragItem] event:event source:self];
         
         session.animatesToStartingPositionsOnCancelOrFail = NO;
-        
-         
     }
 }
-
-
 
 -(void)onOutletUp:(id)sender
 {
@@ -214,23 +221,17 @@
     outletWindow = nil;
     [self.outletButton clear];
     [self.outletButton setNeedsDisplay:YES];
-
-    
-    
 }
 
 -(void)onOutletDrag:(id)sender event:(NSEvent*)aEvent
 {
     
-    
 }
-
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context;
 {
     return NSDragOperationGeneric;
 }
-
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
 {
@@ -238,20 +239,15 @@
     CGPoint windowPoint = ccpSub(screenPoint, windowRect.origin);
     
     [outletWindow onOutletDrag:windowPoint];
-    
-    
 }
 
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
     [self onOutletUp:self];
-    
 }
 
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
-
-    
 	if(self.dragType == DragTypeJoint)
 	{
 		NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
@@ -277,15 +273,12 @@
 		
 		[pasteboard setData:data forType:@"com.cocosbuilder.effectSprite"];
 	}
-
 }
-
 
 -(NSString*)nodeName
 {
     return self.reference.displayName;
 }
-
 
 - (void) refresh
 {
@@ -307,9 +300,10 @@
 
 - (IBAction)handleGotoNode:(id)sender
 {
-	if(self.reference)
-		[[AppDelegate appDelegate] setSelectedNodes:@[self.reference]];
+    if (self.reference)
+    {
+        [[AppDelegate appDelegate] setSelectedNodes:@[self.reference]];
+    }
 }
-
 
 @end
