@@ -39,7 +39,7 @@
 
 @implementation CCBProjectCreator
 
--(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine
+-(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine programmingLanguage:(CCBProgrammingLanguage)programmingLanguage
 {
     NSError *error = nil;
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -83,9 +83,21 @@
     NSString* identifier = [projName sanitizedIdentifier];
     
     // Update the project
-    [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"] search:substitutableProjectName];
-    [self setName:identifier inFile:[xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"] search:substitutableProjectIdentifier];
-    
+    NSString *pbxprojFile = [xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"];
+    [self setName:projName inFile:pbxprojFile search:substitutableProjectName];
+    [self setName:identifier inFile:pbxprojFile search:substitutableProjectIdentifier];
+    if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
+    {
+        [self setName:@"IPHONEOS_DEPLOYMENT_TARGET = 5.0"
+               inFile:pbxprojFile
+               search:@"IPHONEOS_DEPLOYMENT_TARGET = 7.0"];
+        [self removeLinesMatching:@".*MainScene[.]swift.*" inFile:pbxprojFile];
+    }
+    else if (programmingLanguage == CCBProgrammingLanguageSwift)
+    {
+        [self removeLinesMatching:@".*MainScene[.][hm].*" inFile:pbxprojFile];
+    }
+
     // Update workspace data
     [self setName:projName inFile:[xcodeFileName stringByAppendingPathComponent:@"project.xcworkspace/contents.xcworkspacedata"] search:substitutableProjectName];
     
@@ -103,7 +115,19 @@
         NSString* newSchemeFile = [[[schemeFile stringByDeletingLastPathComponent] stringByAppendingPathComponent:[NSString stringWithFormat:format, projName, platform]]
             stringByAppendingPathExtension:@"xcscheme"];
         
-        [fm moveItemAtPath:schemeFile toPath:newSchemeFile error:NULL];
+        if (![fm moveItemAtPath:schemeFile toPath:newSchemeFile error:&error])
+        {
+            return NO;
+        }
+
+        if (![@"iOS" isEqualToString:platform] && programmingLanguage == CCBProgrammingLanguageSwift)
+        {
+            // Hide scheme for non-iOS Swift projects for now
+            if (![fm removeItemAtPath:newSchemeFile error:&error])
+            {
+                return NO;
+            }
+        }
 
         // Update plist
         NSString* plistFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Resources/Platforms/%@/Info.plist", platform]];
@@ -193,5 +217,19 @@
     [fileData writeToFile:fileName atomically:YES];
 }
 
+- (void) removeLinesMatching:(NSString*)pattern inFile:(NSString*)fileName
+{
+    NSData *fileData = [NSData dataWithContentsOfFile:fileName];
+    NSString *fileString = [[NSString alloc] initWithData:fileData encoding:NSUTF8StringEncoding];
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:pattern
+                                  options:NSRegularExpressionCaseInsensitive error:nil];
+    NSString *updatedString = [regex stringByReplacingMatchesInString:fileString
+                                                         options:0
+                                                           range:NSMakeRange(0, [fileString length])
+                                                    withTemplate:@""];
+    NSData *updatedFileData = [updatedString dataUsingEncoding:NSUTF8StringEncoding];
+    [updatedFileData writeToFile:fileName atomically:YES];
+}
 
 @end

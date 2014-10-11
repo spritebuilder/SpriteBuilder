@@ -1954,12 +1954,6 @@ static BOOL hideAllToNextSeparator;
     return YES;
 }
 
-- (BOOL) createProject:(NSString*)fileName engine:(CCBTargetEngine)engine
-{
-    CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
-    return [creator createDefaultProjectAtPath:fileName engine:engine];
-}
-
 - (void) updateResourcePathsFromProjectSettings
 {
     [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absoluteResourcePaths]];
@@ -3349,13 +3343,40 @@ static BOOL hideAllToNextSeparator;
     [cocos2dUpdater updateAndBypassIgnore:YES];
 }
 
+-(void)updateLanguageHint
+{
+    switch (saveDlgLanguagePopup.selectedItem.tag)
+    {
+        case CCBProgrammingLanguageObjectiveC:
+            saveDlgLanguageHint.title = @"All supported platforms";
+            break;
+        case CCBProgrammingLanguageSwift:
+            saveDlgLanguageHint.title = @"iOS7+ only";
+            break;
+        default:
+            NSAssert(false, @"Unknown programming language");
+            saveDlgLanguageHint.title = @"";  // NOTREACHED
+            break;
+    }
+}
+
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
     [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
     //saveDlg.message = @"Save your project file in the same directory as your projects resources.";
-    
+
+    // Configure the accessory view
+    [saveDlg setAccessoryView:saveDlgAccessoryView];
+    [saveDlgLanguagePopup removeAllItems];
+    [saveDlgLanguagePopup addItemsWithTitles:@[@"Objective-C", @"Swift"]];
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.firstObject).tag = CCBProgrammingLanguageObjectiveC;
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.lastObject).tag = CCBProgrammingLanguageSwift;
+    saveDlgLanguagePopup.target = self;
+    saveDlgLanguagePopup.action = @selector(updateLanguageHint);
+    [self updateLanguageHint];
+
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
         {
@@ -3379,7 +3400,8 @@ static BOOL hideAllToNextSeparator;
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{
-                                   if ([self createProject:fileName engine:engine])
+                                   CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
+                                   if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }
