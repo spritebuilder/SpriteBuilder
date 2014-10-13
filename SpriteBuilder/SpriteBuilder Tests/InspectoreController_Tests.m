@@ -217,7 +217,9 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
  */
 - (void)assertUpdateInspectorFromSelectionForPlugin:(NSString *)pluginClassName
 {
-    id node = [self setupInspectorAndSelectedNodeWithPlugin:pluginClassName];
+    CCNode *node = [self setupInspectorAndSelectedNodeWithPlugin:pluginClassName];
+    NodeInfo *info = node.userObject;
+    PlugInNode *plugIn = info.plugIn;
 
     NSDictionary *expectedProperties = [self expectedPropertyNamesForInspector:node];
     NSArray *propertyNames = expectedProperties[PROPERTY_NAMES_KEY];
@@ -230,13 +232,13 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
     for (NSString *propertyName in propertyNames)
     {
         NSView *inspectorView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", propertyName] inView:_inspectorScroll.documentView];
-        XCTAssertNotNil(inspectorView, @"No inspector view found for property name \"%@\" and class \"%@\"", propertyName, pluginClassName);
+        XCTAssertNotNil(inspectorView, @"No inspector view found for property name \"%@\" and class \"%@\". All node properties in plugin info: %@", propertyName, pluginClassName, plugIn.nodeProperties);
     }
 
     for (NSString *codeConnectionName in codeConnectionNames)
     {
         NSView *inspectorView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", codeConnectionName] inView:_inspectoreCodeScroll.documentView];
-        XCTAssertNotNil(inspectorView, @"No code inspector view found for property name \"%@\" and class \"%@\"", codeConnectionName, pluginClassName);
+        XCTAssertNotNil(inspectorView, @"No code inspector view found for property name \"%@\" and class \"%@\". All node properties in plugin info: %@", codeConnectionName, pluginClassName, plugIn.nodeProperties);
     }
 }
 
