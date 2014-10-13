@@ -18,6 +18,11 @@
 #import "PlugInNode.h"
 #import "SBAssserts.h"
 
+
+static NSString *const PROPERTY_NAMES_KEY = @"propertyNames";
+static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
+
+
 @interface InspectoreController_Tests : XCTestCase
 
 @property (nonatomic, strong) InspectorController *inspectorController;
@@ -66,154 +71,79 @@
     XCTAssertNotNil(_inspectoreCodeScroll.documentView);
 }
 
-
+/**
+ * These tests are high level tests to make sure the inspector is filled with the correct UI elements for most of the plugin nodes
+ * Expected properties for item and code connection section are extracted from the pluginInfo of a node
+ * Tests rely on the identity property set for the views set in InspectorController(set only for test target).
+ */
 - (void)testUpdateInspectorFromSelectionForCCNode
 {
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCNode"
-                             withExpectedProperties:@[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew"]
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNode"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCColorNode
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew", @"color", @"opacity", @"blendFunc"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCNodeColor"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNodeColor"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCBFile
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew", @"ccbFile"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCBFile"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCBFile"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCEffectNode
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew", @"effects"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCEffectNode"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCEffectNode"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCGradientNode
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew",
-            @"startColor", @"startOpacity", @"endColor", @"endOpacity", @"blendFunc", @"vector"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCNodeGradient"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNodeGradient"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCSprite
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew",
-            @"spriteFrame", @"normalMapSpriteFrame", @"opacity", @"color", @"flip", @"blendFunc", @"effects"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCSprite"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSprite"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCParticleSystem
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew",
-            @"emitterMode", @"posVar", @"emissionRate", @"duration", @"totalParticles", @"life", @"startSize", @"endSize", @"startSpin",
-            @"endSpin", @"angle", @"startColor", @"endColor", @"blendFunc", @"resetOnVisibilityToggle", @"gravity", @"speed", @"tangentialAccel",
-            @"radialAccel", @"startRadius", @"endRadius", @"rotatePerSecond", @"texture"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCParticleSystem"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCParticleSystem"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCLabelTTF
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew",
-            @"string", @"fontName", @"fontSize", @"adjustsFontSizeToFit", @"opacity", @"color", @"dimensions", @"horizontalAlignment",
-            @"verticalAlignment", @"fontColor", @"outlineColor", @"outlineWidth", @"shadowColor", @"shadowBlurRadius", @"shadowOffset"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCLabelTTF"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelTTF"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCLabelBMFont
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew",
-            @"fntFile", @"opacity", @"color", @"blendFunc", @"string"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCLabelBMFont"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelBMFont"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCButton
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation",
-            @"skew", @"CCControl", @"CCControl", @"preferredSize",
-            @"maxSize", @"userInteractionEnabled", @"CCButton", @"title", @"zoomWhenHighlighted", @"togglesSelectedState",
-            @"onSetSizeFromTexture", @"Normal State", @"backgroundSpriteFrame|Normal", @"backgroundOpacity|Normal",
-            @"backgroundColor|Normal", @"labelOpacity|Normal", @"labelColor|Normal",
-            @"Highlighted State", @"backgroundSpriteFrame|Highlighted", @"backgroundOpacity|Highlighted",
-            @"backgroundColor|Highlighted", @"labelOpacity|Highlighted", @"labelColor|Highlighted", @"Disabled State",
-            @"backgroundSpriteFrame|Disabled", @"backgroundOpacity|Disabled", @"backgroundColor|Disabled", @"labelOpacity|Disabled",
-            @"labelColor|Disabled", @"Selected State", @"backgroundSpriteFrame|Selected", @"backgroundOpacity|Selected", @"backgroundColor|Selected",
-            @"labelOpacity|Selected", @"labelColor|Selected", @"CCLabelTTF", @"fontName", @"fontSize", @"horizontalAlignment",
-            @"verticalAlignment", @"horizontalPadding", @"verticalPadding", @"Font Effects", @"fontColor", @"outlineColor",
-            @"outlineWidth", @"shadowColor", @"shadowBlurRadius", @"shadowOffset"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCButton"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass", @"block", @"continuous"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCButton"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCTextField
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation",
-            @"skew", @"CCControl",  @"CCControl", @"preferredSize", @"maxSize", @"userInteractionEnabled",
-            @"backgroundSpriteFrame", @"padding", @"fontSize"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCTextField"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass", @"block", @"continuous"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCTextField"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCSlider
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew",
-            @"CCControl", @"preferredSize", @"maxSize", @"userInteractionEnabled", @"backgroundSpriteFrame|Normal",
-            @"handleSpriteFrame|Normal", @"Highlighted state", @"backgroundSpriteFrame|Highlighted", @"handleSpriteFrame|Highlighted",
-            @"Disabled state", @"backgroundSpriteFrame|Disabled", @"handleSpriteFrame|Disabled"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCSlider"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass", @"block", @"continuous"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSlider"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCScrollView
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew", @"contentNode", @"horizontalScrollEnabled",
-            @"verticalScrollEnabled", @"bounces", @"pagingEnabled"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCScrollView"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCScrollView"];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCLayoutBox
 {
-    NSArray *properties = @[@"visible", @"name", @"position", @"contentSize", @"anchorPoint", @"scale", @"rotation", @"skew", @"direction", @"spacing"];
-
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCLayoutBox"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLayoutBox"];
 }
 
 /*
@@ -281,9 +211,18 @@
     XCTAssertEqual(inspectorViews.subviews.count, 0);
 }
 
-- (void)testUpdateInspectorFromSelectionForPlugin:(NSString *)pluginClassName withExpectedProperties:(NSArray *)propertyNames codeConnections:(NSArray *)codeConnections
+
+/**
+ * Asserts that a given selected node has all the property ui elements in the scrollViews(Main properties and code connections)
+ */
+- (void)assertUpdateInspectorFromSelectionForPlugin:(NSString *)pluginClassName
 {
     id node = [self setupInspectorAndSelectedNodeWithPlugin:pluginClassName];
+
+    NSDictionary *expectedProperties = [self expectedPropertyNamesForInspector:node];
+    NSArray *propertyNames = expectedProperties[PROPERTY_NAMES_KEY];
+    NSArray *codeConnectionNames = expectedProperties[CODE_CONNECTION_NAMES_KEY];
+
     XCTAssertNotNil(node , @"Failed to create plugin node \"%@\"", pluginClassName);
 
     [_inspectorController updateInspectorFromSelection];
@@ -294,7 +233,7 @@
         XCTAssertNotNil(inspectorView, @"No inspector view found for property name \"%@\" and class \"%@\"", propertyName, pluginClassName);
     }
 
-    for (NSString *codeConnectionName in codeConnections)
+    for (NSString *codeConnectionName in codeConnectionNames)
     {
         NSView *inspectorView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", codeConnectionName] inView:_inspectoreCodeScroll.documentView];
         XCTAssertNotNil(inspectorView, @"No code inspector view found for property name \"%@\" and class \"%@\"", codeConnectionName, pluginClassName);
@@ -304,6 +243,76 @@
 
 #pragma mark - Helper
 
+/**
+ * Returns a dictionary with two sections:
+ *  PROPERTY_NAMES_KEY: contains all names of properties for the item tab
+ *  CODE_CONNECTION_NAMES_KEY: contains all names of properties for the code connection
+ *
+ * Separators, properties without a name field and dontSetInEditor == 1 are ignored
+ * Special case is rotationalSkewX and rotationalSkewY are set if flash skew is enabled. Those two replace rotation
+ */
+- (NSDictionary *)expectedPropertyNamesForInspector:(CCNode *)node
+{
+    NodeInfo *info = node.userObject;
+    PlugInNode *plugIn = info.plugIn;
+
+    NSMutableDictionary *aResult = [@{
+            PROPERTY_NAMES_KEY : [NSMutableArray array],
+            CODE_CONNECTION_NAMES_KEY : [NSMutableArray array]
+    } mutableCopy];
+
+    for (NSDictionary *property in plugIn.nodeProperties)
+    {
+        NSString *propertyName = property[@"name"];
+
+        if ([propertyName isEqualToString:@"block"])
+        {
+            NSLog(@"asd");
+        }
+
+        if (!propertyName)
+        {
+            continue;
+        }
+
+        if ([property[@"type"] isEqualToString:@"Separator"])
+        {
+            continue;
+        }
+
+        if ([property[@"dontSetInEditor"] integerValue] == 1)
+        {
+            continue;
+        }
+
+        BOOL usesFlashSkew = [[_appDelegate selectedNode] usesFlashSkew];
+        if (usesFlashSkew && [propertyName isEqualToString:@"rotation"])
+        {
+            continue;
+        }
+
+        if (!usesFlashSkew && [propertyName isEqualToString:@"rotationalSkewX"])
+        {
+            continue;
+        }
+
+        if (!usesFlashSkew && [propertyName isEqualToString:@"rotationalSkewY"])
+        {
+            continue;
+        }
+
+        if ([property[@"codeConnection"] boolValue])
+        {
+            [aResult[CODE_CONNECTION_NAMES_KEY] addObject:propertyName];
+        }
+        else
+        {
+            [aResult[PROPERTY_NAMES_KEY] addObject:propertyName];
+        }
+    }
+
+    return aResult;
+}
 
 /**
  * Recursively searches a given viewHierarchy for a subview matching the given viewClass and binding parameters:
