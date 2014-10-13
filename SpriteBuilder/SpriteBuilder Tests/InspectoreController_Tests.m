@@ -17,6 +17,7 @@
 #import "NodeInfo.h"
 #import "PlugInNode.h"
 #import "SBAssserts.h"
+#import "SequencerSequence.h"
 
 
 static NSString *const PROPERTY_NAMES_KEY = @"propertyNames";
@@ -33,6 +34,7 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
 @property (nonatomic, strong) id cocosScene;
 @property (nonatomic, strong) id sequenceHandler;
 @property (nonatomic, strong) id appDelegate;
+@property (nonatomic, strong) id sequenceMock;
 
 @end
 
@@ -106,6 +108,13 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
     [self assertUpdateInspectorFromSelectionForPlugin:@"CCSprite"];
 }
 
+/*
+- (void)testUpdateInspectorFromSelectionForCCSprite9Slice
+{
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSprite9Slice"];
+}
+*/
+
 - (void)testUpdateInspectorFromSelectionForCCParticleSystem
 {
     [self assertUpdateInspectorFromSelectionForPlugin:@"CCParticleSystem"];
@@ -146,16 +155,33 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
     [self assertUpdateInspectorFromSelectionForPlugin:@"CCLayoutBox"];
 }
 
-/*
-- (void)testUpdateInspectorFromSelectionForCCPhyicsNode
+- (void)testUpdateInspectorFromSelectionForCCPhysicsSpringJoint
 {
-    NSArray *properties = @[];
+    [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
 
-    [self testUpdateInspectorFromSelectionForPlugin:@"CCLayoutBox"
-                             withExpectedProperties:properties
-                                    codeConnections:@[@"customClass"]];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsSpringJoint"];
 }
-*/
+
+- (void)testUpdateInspectorFromSelectionForCCPhysicsPivotJoint
+{
+    [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
+
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsPivotJoint"];
+}
+
+- (void)testUpdateInspectorFromSelectionForCCPhysicsPinJoint
+{
+    [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
+
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsPinJoint"];
+}
+
+- (void)testUpdateInspectorFromSelectionForCCPhysicsNode
+{
+    [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
+
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsNode"];
+}
 
 - (void)testRefreshPropertyForName
 {
@@ -250,7 +276,7 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
  *  PROPERTY_NAMES_KEY: contains all names of properties for the item tab
  *  CODE_CONNECTION_NAMES_KEY: contains all names of properties for the code connection
  *
- * Separators, properties without a name field and dontSetInEditor == 1 are ignored
+ * Separators, properties without a name field, inspectorDisabled == 1 and dontSetInEditor == 1 are ignored
  * Special case is rotationalSkewX and rotationalSkewY are set if flash skew is enabled. Those two replace rotation
  */
 - (NSDictionary *)expectedPropertyNamesForInspector:(CCNode *)node
@@ -267,22 +293,10 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
     {
         NSString *propertyName = property[@"name"];
 
-        if ([propertyName isEqualToString:@"block"])
-        {
-            NSLog(@"asd");
-        }
-
-        if (!propertyName)
-        {
-            continue;
-        }
-
-        if ([property[@"type"] isEqualToString:@"Separator"])
-        {
-            continue;
-        }
-
-        if ([property[@"dontSetInEditor"] integerValue] == 1)
+        if (!propertyName
+            || [property[@"type"] isEqualToString:@"Separator"]
+            || [property[@"dontSetInEditor"] integerValue] == 1
+            || [property[@"inspectorDisabled"] integerValue] == 1)
         {
             continue;
         }
@@ -354,6 +368,17 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
         }
     }
     return nil;
+}
+
+/**
+ * The sequenceHandlers currentSequence is queried for phyics properties
+ */
+- (void)setupSequenceMockForPhysicsJointsWithAutplay:(BOOL)autoPlayEnabled
+{
+    self.sequenceMock = [OCMockObject niceMockForClass:[SequencerSequence class]];
+    [[[_sequenceMock stub] andReturnValue:@(autoPlayEnabled)] autoPlay];
+    [[[_sequenceMock stub] andReturnValue:@0.0] timelinePosition];
+    OCMStub([_sequenceHandler currentSequence]).andReturn(_sequenceMock);
 }
 
 - (id)setupInspectorAndSelectedNodeWithPlugin:(NSString *)pluginClassName
