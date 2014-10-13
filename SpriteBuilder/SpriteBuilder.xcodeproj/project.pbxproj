@@ -829,6 +829,7 @@
 		E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F48CD0F42A2D56A68444 /* NSAlert+Convenience.m */; };
 		E525F32A0B8495A50314A1BD /* CreateDirectoryFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F849059B8F5243C1C0C3 /* CreateDirectoryFileCommand.m */; };
 		E525F32A8263ADF05CA91EAF /* InspectorEnabledFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F217260908CF37D87211 /* InspectorEnabledFloat.m */; };
+		E525F34D0D2408D54F1BF0DA /* InspectorPropertyPaneBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F4835BC8657DCA982832 /* InspectorPropertyPaneBuilder.m */; };
 		E525F354B165DA655818733B /* RMResource.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF18D2784BB119B2882A /* RMResource.m */; };
 		E525F3672D075912C6A900C5 /* InspectorCustom.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F573A9DD324DCD2EC052 /* InspectorCustom.xib */; };
 		E525F37A4EA653738D07D43A /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD16B4E31F0FF6FC377A /* InspectorButton.m */; };
@@ -2490,6 +2491,7 @@
 		E525F441BF8BA2627B1411F5 /* InspectorString.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorString.xib; sourceTree = "<group>"; };
 		E525F45D92A0B7605C0F0FB0 /* ResourceNewPackageCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewPackageCommand.h; sourceTree = "<group>"; };
 		E525F46A8395FB223B091E4B /* InspectorStartStop.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorStartStop.xib; sourceTree = "<group>"; };
+		E525F4835BC8657DCA982832 /* InspectorPropertyPaneBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorPropertyPaneBuilder.m; sourceTree = "<group>"; };
 		E525F48CD0F42A2D56A68444 /* NSAlert+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+Convenience.m"; sourceTree = "<group>"; };
 		E525F4903068E78680732248 /* SemanticVersioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SemanticVersioning.h; sourceTree = "<group>"; };
 		E525F49BD7988117B20F261D /* RMPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPackage.m; sourceTree = "<group>"; };
@@ -2509,6 +2511,7 @@
 		E525F58973387D7457A5387B /* InspectorValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorValue.m; sourceTree = "<group>"; };
 		E525F59E24C021F55FDA4710 /* InspectorInteger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorInteger.m; sourceTree = "<group>"; };
 		E525F5A87B18967058D36E9D /* RemoveFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand.m; sourceTree = "<group>"; };
+		E525F5EA95FBBDE05FCBE2E3 /* InspectorPropertyPaneBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPropertyPaneBuilder.h; sourceTree = "<group>"; };
 		E525F5FEC6B4AEDEC9E53CBC /* PackagePublishSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackagePublishSettings.h; sourceTree = "<group>"; };
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
 		E525F60141EECA8FC9DF3034 /* MiscConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscConstants.m; sourceTree = "<group>"; };
@@ -5647,6 +5650,8 @@
 				E525F8027C3E43F222BD84A5 /* InspectorController.m */,
 				E525F0A49364371BA5B0E891 /* InspectorController.h */,
 				E525F2CD3FA1D9C04C87345A /* Inspector Properties */,
+				E525F4835BC8657DCA982832 /* InspectorPropertyPaneBuilder.m */,
+				E525F5EA95FBBDE05FCBE2E3 /* InspectorPropertyPaneBuilder.h */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -7459,6 +7464,7 @@
 				E525F54E815C9791D778E3BA /* InspectorAnimation.m in Sources */,
 				E525F95319581B5FFD1883D5 /* InspectorPhysicsUnavailable.m in Sources */,
 				E525FDF82788E3030CE06C2F /* InspectorEffectControl.m in Sources */,
+				E525F34D0D2408D54F1BF0DA /* InspectorPropertyPaneBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
