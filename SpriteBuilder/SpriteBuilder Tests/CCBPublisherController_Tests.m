@@ -182,7 +182,7 @@
 
     [_publisherController startAsync:NO];
 
-    NSArray *resolutions = @[@"tablet", @"tablethd", @"phone", @"phonehd"];
+    NSArray *resolutions = @[RESOLUTION_TABLET, RESOLUTION_TABLET_HD, RESOLUTION_PHONE, RESOLUTION_PHONE_HD];
     NSArray *osSuffixes = @[@"iOS", @"Android"];
 
     for (NSString *osSuffix in osSuffixes)

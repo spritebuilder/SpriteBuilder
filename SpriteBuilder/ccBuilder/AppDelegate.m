@@ -89,7 +89,6 @@
 #import "SpriteSheetSettingsWindow.h"
 #import "AboutWindow.h"
 #import "CCBFileUtil.h"
-#import "ResourceManagerPreviewView.h"
 #import "ResourceManagerUtil.h"
 #import "SMTabBar.h"
 #import "SMTabBarItem.h"
@@ -142,6 +141,7 @@
 #import "SBUpdater.h"
 #import "OpenProjectInXCode.h"
 #import "CCNode+NodeInfo.h"
+#import "PreviewContainerViewController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -497,38 +497,20 @@ typedef enum
     // Load resource manager
 	[ResourceManager sharedManager];
     
-    // Setup preview
-    previewViewOwner = [[ResourceManagerPreviewView alloc] init];
-    
-    NSArray* topLevelObjs = NULL;
-    [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
-    
-    for (id obj in topLevelObjs)
-    {
-        if ([obj isKindOfClass:[NSView class]])
-        {
-            NSView* view = obj;
-            
-            [previewViewContainer addSubview:view];
-            view.frame = NSMakeRect(0.0, 0.0, previewViewContainer.frame.size.width, previewViewContainer.frame.size.height);
-        }
-    }
-    
+
     // Setup project display
-    projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
+    projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject
+                                                                               resType:kCCBResTypeNone
+                                                                     previewController:_previewContainerViewController];
     projectOutlineHandler.projectSettings = projectSettings;
-    
-    resourceManagerSplitView.delegate = previewViewOwner;
-    
-    [previewViewOwner setPreviewFile:NULL];
-    
+    resourceManagerSplitView.delegate = _previewContainerViewController;
+
     //Setup warnings outline
     warningHandler = [[WarningTableViewHandler alloc] init];
     
     self.warningTableView.delegate = warningHandler;
     self.warningTableView.target = warningHandler;
     self.warningTableView.dataSource = warningHandler;
-   // [self.warningTableView setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
     [self updateWarningsOutline];
 }
 
@@ -551,8 +533,6 @@ typedef enum
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	
-	
 #ifndef TESTING
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"138b7cc7454016e05dbbc512f38082b7" companyName:@"Apportable" crashReportManagerDelegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
@@ -723,6 +703,8 @@ typedef enum
 - (void)registerNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateEverythingAfterSettingsChanged) name:RESOURCE_PATHS_CHANGED object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadResources) name:RESOURCES_CHANGED object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
@@ -2035,7 +2017,7 @@ static BOOL hideAllToNextSeparator;
 
     // inject new project settings
     self.projectSettings = prjctSettings;
-    _resourceCommandController.projectSettings = self.projectSettings;
+    _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
 
@@ -2161,7 +2143,7 @@ static BOOL hideAllToNextSeparator;
     //[PositionPropertySetter refreshAllPositions];
     
     // Save preview
-    [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:@"ppng"]];
+    [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX]];
     
     // Restore resolution and timeline
     currentDocument.currentResolution = currentResolution;
@@ -2308,9 +2290,9 @@ static BOOL hideAllToNextSeparator;
 {
 	for( NSString* filename in filenames )
 	{
-			[self openProject:filename];		
-		}
+		[self openProject:filename];		
 	}
+}
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
@@ -2842,9 +2824,8 @@ static BOOL hideAllToNextSeparator;
         
         [self addCCObject:clipNode asChild:asChild];
         
-        //We might have copy/cut/pasted and body. Fix it up.
-		
-        [SceneGraph fixupReferences];//
+        //We might have copy/cut/pasted and body. Fix it up.		
+        [SceneGraph fixupReferences];
     }
 }
 

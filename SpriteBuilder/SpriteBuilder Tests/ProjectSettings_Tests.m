@@ -22,6 +22,7 @@
 #import "ResourceManagerUtil.h"
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
+#import "ResourcePropertyKeys.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
 
@@ -163,52 +164,52 @@
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbSliderBgHighlighted.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbButtonHighlighted.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"Sprites" : @{},
          @"ccbResources/ccbSliderBgNormal.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbTextField.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleFire.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources":@{
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbParticleMagic.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbButtonNormal.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleStars.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbSliderHandle.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(2)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleSmoke.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbParticleSnow.png":@{
-            @"tabletScale":@(1),
-            @"scaleFrom":@(1)
+            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          }
       },
       @"publishDirectoryAndroid":@"Source/Resources/Published-Android",
@@ -289,7 +290,7 @@
 
     XCTAssertTrue(project.excludedFromPackageMigration);
 
-    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:@"scaleFrom"];
+    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
 }
 
@@ -397,7 +398,7 @@
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
-    [projectSettings setProperty:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    [projectSettings setProperty:@(kCCBPublishFormatSound_ios_mp4) forRelPath:@"foo/ping.wav" andKey:RESOURCE_PROPERTY_IOS_SOUND];
 
     XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
 
@@ -406,7 +407,7 @@
     projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     projectSettings.projectPath = fullPath;
 
-    NSNumber *value = [projectSettings propertyForRelPath:@"foo/ping.wav" andKey:@"format_ios_sound"];
+    NSNumber *value = [projectSettings propertyForRelPath:@"foo/ping.wav" andKey:RESOURCE_PROPERTY_IOS_SOUND];
     XCTAssertEqual([value integerValue], (NSInteger)kCCBPublishFormatSound_ios_mp4);
 }
 
@@ -445,7 +446,7 @@
     NSInteger quality = [_projectSettings soundQualityForRelPath:@"foo" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality, NSNotFound);
 
-    [_projectSettings setProperty:@(7) forRelPath:@"baa" andKey:@"format_android_sound_quality"];
+    [_projectSettings setProperty:@(7) forRelPath:@"baa" andKey:RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY];
     int quality2 = [_projectSettings soundQualityForRelPath:@"baa" osType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(quality2, 7);
 }
@@ -489,7 +490,7 @@
     // Setting a new value should mark the resource as dirty
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     XCTAssertTrue([_projectSettings isDirtyResource:res1]);
 
@@ -497,7 +498,7 @@
     // Removing a property should mark the resource as dirty
     [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings removePropertyForResource:res1 andKey:@"format_ios"];
+    [_projectSettings removePropertyForResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     XCTAssertTrue([_projectSettings isDirtyResource:res1]);
 
@@ -505,13 +506,15 @@
     // Setting same value twice should not mark resource as dirty
     [_projectSettings clearAllDirtyMarkers];
 
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     [_projectSettings clearAllDirtyMarkers];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
-    [_projectSettings setProperty:@(1) forResource:res1 andKey:@"format_ios"];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 }
@@ -595,6 +598,35 @@
     XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
 }
 
+- (void)testClearDirtyMarker
+{
+    RMResource *res1 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"]];
+    RMResource *res2 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/baa.png"]];
+    RMResource *res3 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/123.png"]];
+
+    ResourceManager *resourceManager = [ResourceManager sharedManager];
+    [resourceManager setActiveDirectoriesWithFullReset:@[
+            [self fullPathForFile:@"project/Packages/package1.sbpack"],
+    ]];
+
+    [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
+    [_projectSettings clearAllDirtyMarkers];
+
+    [_projectSettings markAsDirtyResource:res1];
+    [_projectSettings markAsDirtyResource:res2];
+    [_projectSettings markAsDirtyResource:res3];
+
+    XCTAssertTrue([_projectSettings isDirtyResource:res1]);
+    XCTAssertTrue([_projectSettings isDirtyResource:res2]);
+    XCTAssertTrue([_projectSettings isDirtyResource:res3]);
+
+    [_projectSettings clearDirtyMarkerOfResource:res1];
+    [_projectSettings clearDirtyMarkerOfResource:res2];
+
+    XCTAssertFalse([_projectSettings isDirtyResource:res1]);
+    XCTAssertFalse([_projectSettings isDirtyResource:res2]);
+    XCTAssertTrue([_projectSettings isDirtyResource:res3]);
+}
 
 #pragma mark - test helper
 

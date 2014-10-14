@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
         <plugIn identifier="com.apple.imagekit.ibplugin" version="6245"/>
@@ -1173,7 +1173,7 @@ CA
                                                                         <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.073521465063095093" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
+                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.076471909880638123" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <ikCellsStyle key="cellsStyleMask" none="YES" titled="YES"/>
@@ -2442,6 +2442,7 @@ CA
                 <outlet property="outlineProject" destination="1499" id="1504"/>
                 <outlet property="physicsHandler" destination="fa4-D5-pFD" id="ZWp-5N-Rhs"/>
                 <outlet property="plugInNodeCollectionView" destination="2015" id="2022"/>
+                <outlet property="previewContainerViewController" destination="2IK-8v-BZR" id="p3l-W3-jku"/>
                 <outlet property="previewViewContainer" destination="1957" id="1962"/>
                 <outlet property="projectImageBrowserView" destination="1986" id="1987"/>
                 <outlet property="projectTabView" destination="1971" id="1976"/>
@@ -2761,6 +2762,11 @@ CA
             </subviews>
             <point key="canvasLocation" x="-69.5" y="344"/>
         </customView>
+        <viewController id="2IK-8v-BZR" customClass="PreviewContainerViewController">
+            <connections>
+                <outlet property="view" destination="1957" id="cQn-2p-tNV"/>
+            </connections>
+        </viewController>
     </objects>
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>

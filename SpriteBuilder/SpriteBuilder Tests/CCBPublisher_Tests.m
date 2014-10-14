@@ -19,6 +19,8 @@
 #import "PlugInManager.h"
 #import "CCBPublishingTarget.h"
 #import "ProjectSettings+Convenience.h"
+#import "ResourcePropertyKeys.h"
+#import "MiscConstants.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -222,7 +224,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setProperty:[NSNumber numberWithInt:1] forRelPath:@"rocket.png" andKey:@"scaleFrom"];
+    [_projectSettings setProperty:@1 forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -243,9 +245,9 @@
     _projectSettings.publishEnabledAndroid = YES;
     _projectSettings.resourceAutoScaleFactor = 4;
 
-    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_ios"];
-    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:@"format_android"];
-    [_projectSettings setProperty:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:@"format_ios_sound"];
+    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
+    [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT];
+    [_projectSettings setProperty:@(kFCSoundFormatMP4) forRelPath:@"blank.wav" andKey:RESOURCE_PROPERTY_IOS_SOUND];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher addPublishingTarget:_targetAndroid];
@@ -289,7 +291,7 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/sword.png" width:4 height:12 color:[NSColor yellowColor]];
 
     _projectSettings.resourceAutoScaleFactor = 4;
-    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -326,11 +328,11 @@
     _projectSettings.publishResolution_ios_tablet = NO;
     _projectSettings.publishResolution_ios_tablethd = NO;
 
-    [_projectSettings setProperty:@(YES) forRelPath:@"pvr" andKey:@"isSmartSpriteSheet"];
-    [_projectSettings setProperty:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:@"format_ios"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"pvr" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    [_projectSettings setProperty:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
-    [_projectSettings setProperty:@(YES) forRelPath:@"pvrtc" andKey:@"isSmartSpriteSheet"];
-    [_projectSettings setProperty:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:@"format_ios"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"pvrtc" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    [_projectSettings setProperty:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
     [_publisher addPublishingTarget:_targetIOS];
@@ -353,8 +355,8 @@
 - (void)testRepublishingWithoutCleaningCache
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
-    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:@"isSmartSpriteSheet"];
-    _targetIOS.resolutions = @[@"tablet"];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    _targetIOS.resolutions = @[RESOLUTION_TABLET];
 
     [_publisher addPublishingTarget:_targetIOS];
     // Yes that's correct, publishing twice

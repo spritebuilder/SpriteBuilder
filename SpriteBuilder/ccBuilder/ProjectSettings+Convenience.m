@@ -3,6 +3,7 @@
 #import "CCBWarnings.h"
 #import "NSString+RelativePath.h"
 #import "MiscConstants.h"
+#import "ResourcePropertyKeys.h"
 
 
 @implementation ProjectSettings (Convenience)
@@ -20,8 +21,8 @@
 - (NSInteger)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
     NSString *key = osType == kCCBPublisherOSTypeIOS
-        ? @"format_ios_sound_quality"
-        : @"format_android_sound_quality";
+        ? RESOURCE_PROPERTY_IOS_SOUND_QUALITY
+        : RESOURCE_PROPERTY_ANDROID_SOUND_QUALITY;
 
     int result = [[self propertyForRelPath:relPath andKey:key] intValue];
     if (!result)
@@ -37,13 +38,13 @@
     NSDictionary *map;
     if (osType == kCCBPublisherOSTypeIOS)
     {
-        key = @"format_ios_sound";
+        key = RESOURCE_PROPERTY_IOS_SOUND;
         map = @{@(0):@(kFCSoundFormatCAF),
                 @(1):@(kFCSoundFormatMP4)};
     }
     else if (osType == kCCBPublisherOSTypeAndroid)
     {
-        key = @"format_android_sound";
+        key = RESOURCE_PROPERTY_ANDROID_SOUND;
         map = @{@(0):@(kFCSoundFormatOGG)};
     }
     else
@@ -53,7 +54,7 @@
 
     int formatRaw = [[self propertyForRelPath:relPath andKey:key] intValue];
 
-    NSNumber *result = [map objectForKey:@(formatRaw)];
+    NSNumber *result = map[@(formatRaw)];
 
     return result
            ? [result intValue]
@@ -81,19 +82,19 @@
 
     if (self.publishResolution_ios_phone)
     {
-        [result addObject:@"phone"];
+        [result addObject:RESOLUTION_PHONE];
     }
     if (self.publishResolution_ios_phonehd)
     {
-        [result addObject:@"phonehd"];
+        [result addObject:RESOLUTION_PHONE_HD];
     }
     if (self.publishResolution_ios_tablet)
     {
-        [result addObject:@"tablet"];
+        [result addObject:RESOLUTION_TABLET];
     }
     if (self.publishResolution_ios_tablethd)
     {
-        [result addObject:@"tablethd"];
+        [result addObject:RESOLUTION_TABLET_HD];
     }
     return result;
 }
@@ -104,19 +105,19 @@
 
     if (self.publishResolution_android_phone)
     {
-        [result addObject:@"phone"];
+        [result addObject:RESOLUTION_PHONE];
     }
     if (self.publishResolution_android_phonehd)
     {
-        [result addObject:@"phonehd"];
+        [result addObject:RESOLUTION_PHONE_HD];
     }
     if (self.publishResolution_android_tablet)
     {
-        [result addObject:@"tablet"];
+        [result addObject:RESOLUTION_TABLET];
     }
     if (self.publishResolution_android_tablethd)
     {
-        [result addObject:@"tablethd"];
+        [result addObject:RESOLUTION_TABLET_HD];
     }
     return result;
 }
