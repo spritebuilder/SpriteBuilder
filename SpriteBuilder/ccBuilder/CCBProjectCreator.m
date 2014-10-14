@@ -199,12 +199,12 @@
     [apportableConfigurationContents writeToFile:apportableConfigFile atomically:YES encoding:NSUTF8StringEncoding error:&error];
 	
 	// perform cleanup to remove unnecessary files which only bloat the project
-	[self cleanupProjectAtPath:fileName programmingLanguage:programmingLanguage];
+	[self cleanupProjectAtPath:fileName];
 	
     return [fm fileExistsAtPath:fileName];
 }
 
--(void) cleanupProjectAtPath:(NSString*)fileName programmingLanguage:(CCBProgrammingLanguage)programmingLanguage
+-(void) cleanupProjectAtPath:(NSString*)fileName
 {
 	// This list needs to be updated/amended whenever cocos2d introduces new or renames folders whose contents are
 	// not needed during development of a SpriteBuilder project. See: https://github.com/spritebuilder/SpriteBuilder/issues/915
