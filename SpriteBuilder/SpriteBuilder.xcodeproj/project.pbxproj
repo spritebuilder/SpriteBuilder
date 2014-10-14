@@ -1541,7 +1541,7 @@
 		8369839519AC872100110D82 /* PreviewContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewContainerViewController.m; sourceTree = "<group>"; };
 		8369839819ACB8EC00110D82 /* PreviewAudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewAudioViewController.h; sourceTree = "<group>"; };
 		8369839919ACB8EC00110D82 /* PreviewAudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewAudioViewController.m; sourceTree = "<group>"; };
-		8369839E19ACB92200110D82 /* PreviewAudioView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PreviewAudioView.xib; path = ../../../../../Documents/PreviewAudioView.xib; sourceTree = "<group>"; };
+		8369839E19ACB92200110D82 /* PreviewAudioView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewAudioView.xib; sourceTree = "<group>"; };
 		836983A019ACC89C00110D82 /* PreviewImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewImageViewController.h; sourceTree = "<group>"; };
 		836983A119ACC89C00110D82 /* PreviewImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewImageViewController.m; sourceTree = "<group>"; };
 		836983A219ACC89C00110D82 /* PreviewImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewImageView.xib; sourceTree = "<group>"; };
