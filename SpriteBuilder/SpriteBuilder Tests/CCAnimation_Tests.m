@@ -15,6 +15,7 @@
 #import "CCAnimationManager.h"
 #import "CCAnimationManager_Private.h"
 #import "CCBSequence.h"
+#import "Cocos2dTestHelpers.h"
 
 #define IS_NEAR(a,b,accuracy) (fabsf(a - b) < kAccuracy)
 
@@ -101,20 +102,6 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 
 @implementation CCAnimation_Tests
 
--(NSData*)readCCB:(NSString*)srcFileName
-{
-	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *path = [bundle pathForResource:srcFileName ofType:@"ccb"];
-	NSDictionary *  doc  = [NSDictionary dictionaryWithContentsOfFile:path];
-	XCTAssertNotNil(doc, @"Can't find animation File %@",srcFileName);
-	if(doc == nil)
-		return nil;
-	
-	PlugInExport *plugIn = [[PlugInManager sharedManager] plugInExportForExtension:@"ccbi"];
-	NSData *data = [plugIn exportDocument:doc];
-	return data;
-}
-
 - (void)setUp
 {
     [super setUp];
@@ -137,7 +124,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 {
 	CCAnimationDelegateTester * callbackTest = [[CCAnimationDelegateTester alloc] init];
 	
-	NSData * animData = [self readCCB:@"AnimationTest1"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest1"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;
@@ -198,7 +185,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	CCAnimationDelegateTester * callbackTest = [[CCAnimationDelegateTester alloc] init];
 
-	NSData * animData = [self readCCB:@"AnimationTest1"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest1"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;
@@ -254,7 +241,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	CCAnimationDelegateTester * callbackTest = [[CCAnimationDelegateTester alloc] init];
 	
-	NSData * animData = [self readCCB:@"AnimationTest2"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest2"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;
@@ -394,7 +381,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 {
 	CCAnimationDelegateTester * callbackHelper = [[CCAnimationDelegateTester alloc] init];
 	
-	NSData * animData = [self readCCB:@"AnimationTest3"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest3"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;
@@ -457,7 +444,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 -(void)testAnimationSeeking1
 {
 	
-	NSData * animData = [self readCCB:@"AnimationTest4"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest4"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;
@@ -528,7 +515,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 -(void)testAnimationChaining1
 {
 	
-	NSData * animData = [self readCCB:@"AnimationTest5"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest5"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;
@@ -557,7 +544,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 -(void)testVisibility1
 {
 	
-	NSData * animData = [self readCCB:@"AnimationTest5"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest5"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;
@@ -589,7 +576,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 -(void)testZeroDurationTimeline1
 {
 	
-	NSData * animData = [self readCCB:@"AnimationTest5"];
+	NSData * animData = [Cocos2dTestHelpers readCCB:@"AnimationTest5"];
 	XCTAssertNotNil(animData, @"Can't find ccb File");
 	if(!animData)
 		return;

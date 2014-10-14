@@ -46,6 +46,12 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 	CCBTargetEngineSpriteKit = 1,
 };
 
+typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
+{
+    CCBProgrammingLanguageObjectiveC = 0,
+    CCBProgrammingLanguageSwift = 1,
+};
+
 @class RMResource;
 @class CCBWarnings;
 
@@ -147,7 +153,8 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 
 // *** Handling moved and deleted resources ***
 - (void) removedResourceAt:(NSString*) relPath;
-- (void) movedResourceFrom:(NSString*) relPathOld to:(NSString*) relPathNew;
+
+- (void)movedResourceFrom:(NSString *)relPathOld to:(NSString *)relPathNew fromFullPath:(NSString *)fromFullPath toFullPath:(NSString *)toFullPath;
 
 // *** Resource Paths ***
 // Adds a full resourcePath to the project, provide full filePath
@@ -172,6 +179,7 @@ typedef NS_ENUM(int8_t, CCBTargetEngine)
 
 // *** Misc ***
 - (NSString* ) getVersion;
+- (NSDictionary *)getVersionDictionary;
 
 // Tries to find the relative path among all packages for a given absolute path
 // Example: "/foo/Packages/baa.sbpack" as available packages and absolutePath given is

@@ -29,20 +29,20 @@
 
 -(void)testVerifyInstallation
 {
-	AndroidPluginInstaller * installer = [AndroidPluginInstaller new];
+//	AndroidPluginInstaller * installer = [AndroidPluginInstaller new];
 //	XCTAssert([installer verifyPluginInstallation], @"Failed to verify installation");
 }
 
 -(void)testCleanInstallation
 {
-	AndroidPluginInstaller * installer = [AndroidPluginInstaller new];
+//	AndroidPluginInstaller * installer = [AndroidPluginInstaller new];
 	//XCTAssert([installer verifyPluginInstallation], @"Failed to verify installation");
 }
 
 
 -(void)testInstallPlugin
 {
-	AndroidPluginInstaller * installer = [AndroidPluginInstaller new];
+//	AndroidPluginInstaller * installer = [AndroidPluginInstaller new];
 	//XCTAssert([installer installPlugin], @"Failed to install");
 }
 

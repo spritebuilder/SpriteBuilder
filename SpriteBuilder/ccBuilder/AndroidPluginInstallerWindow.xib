@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1090</int>
 		<string key="IBDocument.SystemVersion">13C64</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4514</string>
+		<string key="IBDocument.InterfaceBuilderVersion">5056</string>
 		<string key="IBDocument.AppKitVersion">1265.19</string>
 		<string key="IBDocument.HIToolboxVersion">697.40</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">4514</string>
+			<string key="NS.object.0">5056</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSCustomObject</string>
@@ -36,11 +36,11 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSWindowTemplate" id="1005">
-				<int key="NSWindowStyleMask">15</int>
+				<int key="NSWindowStyleMask">1</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{196, 240}, {378, 109}}</string>
 				<int key="NSWTFlags">1618477056</int>
-				<string key="NSWindowTitle">Spritebuilder Pro</string>
+				<string key="NSWindowTitle">SpriteBuilder 1.3 Beta</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -61,7 +61,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="679405167">
 								<int key="NSCellFlags">68157504</int>
 								<int key="NSCellFlags2">138413056</int>
-								<string key="NSContents">Setting up Spritebuilder Pro</string>
+								<string key="NSContents">Installing Android Support</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">.LucidaGrandeUI</string>
 									<double key="NSSize">16</double>

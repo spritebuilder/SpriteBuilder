@@ -42,49 +42,62 @@
 
 - (void)drawRect:(CGRect)rect {
 
-    if ([[self window] isKeyWindow]) {
-        static NSGradient *gradient = nil;
-        static NSColor *borderColor = nil;
-        if (!gradient) {
-            NSColor *color1 = [NSColor colorWithCalibratedWhite:0.851f alpha:1.0f];
-            NSColor *color2 = [NSColor colorWithCalibratedWhite:0.700f alpha:1.0f];
-            gradient = [[NSGradient alloc] initWithStartingColor:color1
-                                                     endingColor:color2];
-            borderColor = [NSColor colorWithCalibratedWhite:0.416 alpha:1];
-        }
-    
-        // Draw bar gradient
-        [gradient drawInRect:self.bounds angle:90.0];
-        
-        // add noise
-        [self drawNoisePattern];
-        
+    if (YOSEMITE_UI)
+    {
+        [[NSColor windowBackgroundColor] setFill];
+            NSRectFill(self.bounds);
+            
         // Draw drak gray bottom border
-        [borderColor setStroke];
+        [[NSColor colorWithCalibratedWhite:0.416 alpha:1] setStroke];
         [NSBezierPath strokeLineFromPoint:NSMakePoint(NSMinX(self.bounds), NSMaxY(self.bounds) - 0.5f)
                                   toPoint:NSMakePoint(NSMaxX(self.bounds), NSMaxY(self.bounds) - 0.5f)];
-    } else {
-        static NSGradient *gradient = nil;
-        static NSColor *borderColor = nil;
-        if (!gradient) {
-            NSColor *color1 = [NSColor colorWithCalibratedWhite:0.965 alpha:1];
-            NSColor *color2 = [NSColor colorWithCalibratedWhite:0.851 alpha:1];
-            gradient = [[NSGradient alloc] initWithStartingColor:color1
-                                                     endingColor:color2];
-            borderColor = [NSColor colorWithCalibratedWhite:0.651 alpha:1];
+    }
+    else
+    {
+        if ([[self window] isKeyWindow]) {
+            static NSGradient *gradient = nil;
+            static NSColor *borderColor = nil;
+            if (!gradient) {
+                NSColor *color1 = [NSColor colorWithCalibratedWhite:0.851f alpha:1.0f];
+                NSColor *color2 = [NSColor colorWithCalibratedWhite:0.700f alpha:1.0f];
+                gradient = [[NSGradient alloc] initWithStartingColor:color1
+                                                         endingColor:color2];
+                borderColor = [NSColor colorWithCalibratedWhite:0.416 alpha:1];
+            }
+            
+            // Draw bar gradient
+            [gradient drawInRect:self.bounds angle:90.0];
+            
+            // add noise
+            [self drawNoisePattern];
+            
+            // Draw drak gray bottom border
+            [borderColor setStroke];
+            [NSBezierPath strokeLineFromPoint:NSMakePoint(NSMinX(self.bounds), NSMaxY(self.bounds) - 0.5f)
+                                      toPoint:NSMakePoint(NSMaxX(self.bounds), NSMaxY(self.bounds) - 0.5f)];
+        } else {
+            static NSGradient *gradient = nil;
+            static NSColor *borderColor = nil;
+            if (!gradient) {
+                NSColor *color1 = [NSColor colorWithCalibratedWhite:0.965 alpha:1];
+                NSColor *color2 = [NSColor colorWithCalibratedWhite:0.851 alpha:1];
+                gradient = [[NSGradient alloc] initWithStartingColor:color1
+                                                         endingColor:color2];
+                borderColor = [NSColor colorWithCalibratedWhite:0.651 alpha:1];
+            }
+            
+            // Draw bar gradient
+            [gradient drawInRect:self.bounds angle:90.0];
+            
+            // add noise
+            [self drawNoisePattern];
+            
+            // Draw drak gray bottom border
+            [borderColor setStroke];
+            [NSBezierPath setDefaultLineWidth:0.0f];
+            [NSBezierPath strokeLineFromPoint:NSMakePoint(NSMinX(self.bounds), NSMaxY(self.bounds) - 0.5f)
+                                      toPoint:NSMakePoint(NSMaxX(self.bounds), NSMaxY(self.bounds) - 0.5f)];
         }
-        
-        // Draw bar gradient
-        [gradient drawInRect:self.bounds angle:90.0];
-        
-        // add noise
-        [self drawNoisePattern];
-        
-        // Draw drak gray bottom border
-        [borderColor setStroke];
-        [NSBezierPath setDefaultLineWidth:0.0f];
-        [NSBezierPath strokeLineFromPoint:NSMakePoint(NSMinX(self.bounds), NSMaxY(self.bounds) - 0.5f)
-                                  toPoint:NSMakePoint(NSMaxX(self.bounds), NSMaxY(self.bounds) - 0.5f)];
     }
 }
 

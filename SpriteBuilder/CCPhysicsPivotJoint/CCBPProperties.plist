@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ordering</key>
-	<real>3100</real>
+	<real>16100</real>
 	<key>displayName</key>
 	<string>Physics Pivot Joint</string>
 	<key>description</key>

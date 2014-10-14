@@ -38,6 +38,9 @@
 #import "CCNode+NodeInfo.h"
 #import "NodePhysicsBody.h"
 #import "CCBUtil.h"
+#import "EffectsManager.h"
+#import "NSArray+Query.h"
+#import "CCBPEffectNode.h"
 
 // Old positioning constants
 enum
@@ -61,6 +64,10 @@ enum
 };
 
 __strong NSDictionary* renamedProperties = nil;
+
+@interface CCNode (Private)
+-(void)postDeserializationFixup;
+@end
 
 @implementation CCBReaderInternal
 
@@ -412,6 +419,37 @@ __strong NSDictionary* renamedProperties = nil;
             [node setValue:target forKey:name];
         }
     }
+	else if([type isEqualToString:@"EffectControl"])
+	{
+		CCNode<CCEffectNodeProtocol> *effectNode = (CCNode<CCEffectNodeProtocol> *)node;
+		
+		NSMutableArray * effects = [NSMutableArray new];
+		
+		for (NSDictionary * serializedEffect in serializedValue) {
+			NSString* className = serializedEffect[@"className"];
+			NSDictionary * serializedProperties = serializedEffect[@"properties"];
+			
+			EffectDescription * effectDescription = [EffectsManager effectByClassName:className];
+			
+			if(!effectDescription)
+			{
+				NSLog(@"ERROR: Failed to find effect class of type : %@ in EffectManager description", className);
+				return;
+			}
+			
+			NSObject<EffectProtocol> *effect = (id<EffectProtocol>)[effectDescription constructDefault];
+			
+			[effect deserialize:serializedProperties];
+			effect.UUID = [serializedEffect[@"UUID"] unsignedIntegerValue];
+			
+			
+			[effects addObject:effect];
+		}
+		
+		effectNode.effects = effects;
+		
+		
+	}
     else
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);
@@ -614,6 +652,20 @@ __strong NSDictionary* renamedProperties = nil;
     }
     
     return [CCBReaderInternal nodeGraphFromDictionary:nodeGraph parentSize:parentSize];
+}
+
+
++(void)postDeserializationFixup:(CCNode*)node
+{
+	if([node respondsToSelector:@selector(postDeserializationFixup)])
+	{
+		[node performSelector:@selector(postDeserializationFixup) withObject:nil];
+	}
+	
+	for(CCNode * child in node.children)
+	{
+		[self postDeserializationFixup:child];
+	}
 }
 
 @end

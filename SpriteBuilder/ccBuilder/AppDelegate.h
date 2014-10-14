@@ -124,6 +124,8 @@ enum {
 @class CCBPublisher;
 @class PreviewContainerViewController;
 
+typedef void (^CompletionCallback) (BOOL success);
+
 @protocol AppDelegate_UndeclaredSelectors <NSObject>
 @optional
 - (void) customVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
@@ -198,6 +200,9 @@ enum {
     IBOutlet NSMenu* __weak menuContextKeyframeInterpol;
     IBOutlet NSMenu* __weak menuContextResManager;
     IBOutlet NSMenu *__weak menuContextKeyframeNoselection;
+    IBOutlet NSView *__weak saveDlgAccessoryView;
+    IBOutlet NSPopUpButton *__weak saveDlgLanguagePopup;
+    IBOutlet NSTextFieldCell *__weak saveDlgLanguageHint;
 
     // TODO: not needed any more when PACKAGE feature is released
     IBOutlet NSMenuItem* menuPlusButtonNewPackage;
@@ -344,6 +349,7 @@ enum {
 @property (nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;
 
+@property (weak) IBOutlet NSMenuItem *menuCheckForUpdates;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframe;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;

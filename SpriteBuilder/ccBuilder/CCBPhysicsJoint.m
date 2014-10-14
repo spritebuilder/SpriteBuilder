@@ -15,7 +15,6 @@
 #import "SequencerSequence.h"
 #import "AppDelegate.h"
 
-static const float kOutletVerticalOffset = 20.0f;
 static const float kOutletHorizontalOffset = 8.0f;
 
 NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"position", @"scaleX", @"scaleY", @"rotation", @"anchorPoint"};

@@ -136,6 +136,11 @@ enum {
     int     skewSegment;
     CGPoint cornerOrientation;//which way is the corner facing.
     int     cornerIndex;//Which corner of the object are we rotating?
+	
+	
+	//Dragging and Dropping
+	BOOL               effectSpriteDragging;
+    CGPoint            effectSpriteDraggingLocation;
 }
 
 @property (nonatomic) CCNode* rootNode;
@@ -193,6 +198,8 @@ enum {
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
 - (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
 - (void)draggingEnded:(id <NSDraggingInfo>)sender;
+- (CCNode*)findObjectAtPoint:(CGPoint)point ofTypes:(NSArray*)filterClassTypes;
+
 
 - (void) savePreviewToFile:(NSString*)path;
 

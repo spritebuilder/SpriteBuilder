@@ -11,7 +11,10 @@
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
 #import "MainWindow.h"
-
+#import "EffectsManager.h"
+#import "CCEffect.h"
+#import "NotificationNames.h"
+#import "SBPasteboardTypes.h"
 
 @implementation OutletButton
 {
@@ -48,24 +51,25 @@
     imgOutletSet = [NSImage imageNamed:@"inspector-body-connected.png"];
     imgOutletUnSet = [NSImage imageNamed:@"inspector-body-disconnected.png"];
 	self.enabled = YES;
-
 }
 
 -(void)drawRect:(NSRect)dirtyRect
 {
 	float opacity = self.enabled ? 1.0f : 0.5f;
+	NSRect frame = NSMakeRect(0,0, self.frame.size.width, self.frame.size.height);
+	
     if(self.inspector.reference)
     {
-        [imgOutletSet drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
+        [imgOutletSet drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
         return;
     }
     else if((mouseIsDown || mouseIsOver) && self.enabled)
     {
-        [imgOutletSet drawInRect:dirtyRect];
+        [imgOutletSet drawInRect:frame];
     }
     else
     {
-        [imgOutletUnSet drawInRect:dirtyRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
+        [imgOutletUnSet drawInRect:frame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:opacity];
     }
 }
 
@@ -114,14 +118,31 @@
 
 @end
 
-@implementation InspectorNodeReference
-{
- 
 
-}
+@implementation InspectorNodeReference
 
 @dynamic reference;
 
+-(void)awakeFromNib
+{
+	[super awakeFromNib];
+	self.dragType = DragTypeJoint;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nodeDeleted:) name:SCENEGRAPH_NODE_DELETED object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)nodeDeleted:(NSNotification *)notification
+{
+    if (self.reference == notification.object)
+    {
+        self.reference = nil;
+    }
+}
 
 -(void)setReference:(CCNode *)reference
 {
@@ -151,13 +172,11 @@
 
 -(void)onOutletDown:(id)sender event:(NSEvent*)event
 {
-    if(self.reference)
+    if (self.reference || self.readOnly)
+    {
         return;
-	
-	if(self.readOnly)
-		return;
-    
-    
+    }
+
     // Get the screen information.
     CGRect windowRect = [[[NSApplication sharedApplication] mainWindow] frame];
     // Capture the screen.
@@ -177,21 +196,23 @@
         
         
         NSPasteboardItem *pbItem = [NSPasteboardItem new];
-        [pbItem setDataProvider:self forTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.jointBody", nil]];
+		
+
+		if(self.dragType == DragTypeJoint)
+            [pbItem setDataProvider:self forTypes:@[PASTEBOARD_TYPE_JOINTBODY]];
+		else
+            [pbItem setDataProvider:self forTypes:@[PASTEBOARD_TYPE_EFFECTSPRITE]];
+		
 
         //create a new NSDraggingItem with our pasteboard item.
         NSDraggingItem *dragItem = [[NSDraggingItem alloc] initWithPasteboardWriter:pbItem];
         
         
-        NSDraggingSession * session = [self.outletButton beginDraggingSessionWithItems:[NSArray arrayWithObject:dragItem] event:event source:self];
+        NSDraggingSession * session = [self.outletButton beginDraggingSessionWithItems:@[dragItem] event:event source:self];
         
         session.animatesToStartingPositionsOnCancelOrFail = NO;
-        
-         
     }
 }
-
-
 
 -(void)onOutletUp:(id)sender
 {
@@ -200,23 +221,17 @@
     outletWindow = nil;
     [self.outletButton clear];
     [self.outletButton setNeedsDisplay:YES];
-
-    
-    
 }
 
 -(void)onOutletDrag:(id)sender event:(NSEvent*)aEvent
 {
     
-    
 }
-
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context;
 {
     return NSDragOperationGeneric;
 }
-
 
 - (void)draggingSession:(NSDraggingSession *)session movedToPoint:(NSPoint)screenPoint
 {
@@ -224,37 +239,46 @@
     CGPoint windowPoint = ccpSub(screenPoint, windowRect.origin);
     
     [outletWindow onOutletDrag:windowPoint];
-    
-    
 }
 
 - (void)draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
     [self onOutletUp:self];
-    
 }
 
 - (void)pasteboard:(NSPasteboard *)pasteboard item:(NSPasteboardItem *)item provideDataForType:(NSString *)type
 {
-
-        
-    NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
-    
-    NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
-                                                              format:NSPropertyListBinaryFormat_v1_0
-                                                             options:0
-                                                               error:NULL];
-    
-    [pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
-
+	if(self.dragType == DragTypeJoint)
+	{
+		NSDictionary * pasteData = @{@"uuid":@(selection.UUID), @"bodyIndex":[propertyName isEqualToString:@"bodyA"] ? @(BodyOutletA) : @(BodyOutletB)};
+		
+		NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
+																  format:NSPropertyListBinaryFormat_v1_0
+																 options:0
+																   error:NULL];
+		
+		[pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
+	}
+	
+	if(self.dragType == DragTypeEffectSprite)
+	{
+		CCEffect<EffectProtocol> *effect = (CCEffect<EffectProtocol>*)selection;
+		
+		NSDictionary * pasteData = @{@"effect":@(effect.UUID),@"propertyName" : propertyName};
+		
+		NSData *data = [NSPropertyListSerialization dataWithPropertyList:pasteData
+																  format:NSPropertyListBinaryFormat_v1_0
+																 options:0
+																   error:NULL];
+		
+		[pasteboard setData:data forType:@"com.cocosbuilder.effectSprite"];
+	}
 }
-
 
 -(NSString*)nodeName
 {
     return self.reference.displayName;
 }
-
 
 - (void) refresh
 {
@@ -271,13 +295,15 @@
 - (IBAction)handleDeleteNode:(id)sender
 {
     self.reference = nil;
+	[self refresh];
 }
 
 - (IBAction)handleGotoNode:(id)sender
 {
-	if(self.reference)
-		[[AppDelegate appDelegate] setSelectedNodes:@[self.reference]];
+    if (self.reference)
+    {
+        [[AppDelegate appDelegate] setSelectedNodes:@[self.reference]];
+    }
 }
-
 
 @end

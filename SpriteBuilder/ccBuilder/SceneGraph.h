@@ -12,6 +12,9 @@
 
 @class ProjectSettings;
 
+//This returns the scene root OR, if its a CCB file, it find the root CCB File.
+CCNode * findSceneRoot(CCNode * node);
+
 @interface SceneGraph : NSObject
 {
     CCNode* rootNode;
@@ -23,6 +26,7 @@
 +(instancetype) instance;
 +(instancetype)setInstance:(SceneGraph*)instance;
 +(CCNode*)findUUID:(NSUInteger)uuid node:(CCNode*)node;
++(void)fixupReferences;
 
 @property (nonatomic,strong) CCNode* rootNode;
 @property (nonatomic,strong) SequencerJoints * joints;

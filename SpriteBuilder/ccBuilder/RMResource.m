@@ -7,8 +7,8 @@
 #import "CCBSpriteSheetParser.h"
 #import "RMSpriteFrame.h"
 #import "ResourceManagerUtil.h"
-#import "MiscConstants.h"
 #import "RMDirectory.h"
+#import "MiscConstants.h"
 
 
 @implementation RMResource

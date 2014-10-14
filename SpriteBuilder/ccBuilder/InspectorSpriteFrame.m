@@ -44,15 +44,29 @@
 - (void) willBeAdded
 {
     // Setup menu
-    SequencerSequence* seq = [SequencerHandler sharedHandler].currentSequence;
-    id value = [selection valueForProperty:propertyName atTime:seq.timelinePosition sequenceId:seq.sequenceId];
-    
-    NSString* sf = [value objectAtIndex:0];
-    NSString* ssf = [value objectAtIndex:1];
-    
-    if ([ssf isEqualToString:kCCBUseRegularFile] || [ssf isEqualToString:@""]) ssf = NULL;
-    
-    [ResourceManagerUtil populateResourcePopup:popup resType:kCCBResTypeImage allowSpriteFrames:YES selectedFile:sf selectedSheet:ssf target:self];
+	if([selection isKindOfClass:[CCNode class]])
+	{
+		SequencerSequence* seq = [SequencerHandler sharedHandler].currentSequence;
+		id value = [selection valueForProperty:propertyName atTime:seq.timelinePosition sequenceId:seq.sequenceId];
+		
+		NSString* sf = [value objectAtIndex:0];
+		NSString* ssf = [value objectAtIndex:1];
+		
+		if ([ssf isEqualToString:kCCBUseRegularFile] || [ssf isEqualToString:@""]) ssf = NULL;
+		
+		[ResourceManagerUtil populateResourcePopup:popup resType:kCCBResTypeImage allowSpriteFrames:YES selectedFile:sf selectedSheet:ssf target:self];
+		
+	}
+	else
+	{
+		//[TexturePropertySetter
+        NSString* sf = [selection extraPropForKey:propertyName];
+        NSString* ssf = [selection extraPropForKey:[propertyName stringByAppendingString:@"Sheet"]];
+		
+		if ([ssf isEqualToString:kCCBUseRegularFile] || [ssf isEqualToString:@""]) ssf = NULL;
+		
+		[ResourceManagerUtil populateResourcePopup:popup resType:kCCBResTypeImage allowSpriteFrames:YES selectedFile:sf selectedSheet:ssf target:self];
+	}
 }
 
 - (void) selectedResource:(id)sender
@@ -88,7 +102,8 @@
         ssf = [ResourceManagerUtil relativePathFromAbsolutePath:frame.spriteSheetFile];
         [ResourceManagerUtil setTitle:[NSString stringWithFormat:@"%@/%@",ssf,sf] forPopup:popup];
     }
-    
+	
+	
     // Set the properties and sprite frames
     if (sf && ssf)
     {
@@ -97,7 +112,11 @@
     
         [TexturePropertySetter setSpriteFrameForNode:selection andProperty:propertyName withFile:sf andSheetFile:ssf];
         
-        [self updateAnimateablePropertyValue:[NSArray arrayWithObjects:sf, ssf , nil]];
+		// Setup menu
+		if([selection isKindOfClass:[CCNode class]])
+		{
+			[self updateAnimateablePropertyValue:[NSArray arrayWithObjects:sf, ssf , nil]];
+		}
     }
     
     [self updateAffectedProperties];

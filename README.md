@@ -21,7 +21,7 @@ Change directory into the top (this) directory of SpriteBuilder and run:
     cd SpriteBuilder
     git submodule update --init --recursive
     cd scripts
-    ./BuildDistribution.sh 1.x default
+    ./build_distribution.py --version 1.x
 
 You need to use the BuildDistribution.sh script the first time you build SpriteBuilder, after that you can build it from within Xcode.
 

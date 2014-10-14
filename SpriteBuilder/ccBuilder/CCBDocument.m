@@ -34,12 +34,12 @@
     if (self)
     {
         self.undoManager = [[NSUndoManager alloc] init];
-        self.stageZoom = 1;
-        self.stageScrollOffset = ccp(0, 0);
-        self.stageColor = kCCBCanvasColorBlack;
-        self.UUID = 0x1;
-    }
-
+		self.stageZoom = 1;
+		self.stageScrollOffset = ccp(0,0);
+		self.stageColor = kCCBCanvasColorBlack;
+		self.UUID = 0x1; //Starts at One!
+	}
+    
     return self;
 }
 
@@ -90,12 +90,12 @@
     }
 }
 
-- (NSString *)formattedName
+- (NSString*) formattedName
 {
     return [[_filePath lastPathComponent] stringByDeletingPathExtension];
 }
 
-- (NSString *)rootPath
+- (NSString*) rootPath
 {
     return [_filePath stringByDeletingLastPathComponent];
 }
@@ -116,6 +116,13 @@
 - (BOOL)store
 {
     return [_data writeToFile:_filePath atomically:YES];
+}
+
+- (NSUInteger)getAndIncrementUUID
+{
+	NSUInteger current = self.UUID;
+	self.UUID = self.UUID + 1;
+	return current;
 }
 
 @end

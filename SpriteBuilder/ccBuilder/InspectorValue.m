@@ -105,7 +105,7 @@
     {
         [[AppDelegate appDelegate] updateInspectorFromSelection];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:SnapLayerRefreshLines object:nil]; // Used to updated the snap/alignment lines after a property has been modified in the properties menu
+    [[NSNotificationCenter defaultCenter] postNotificationName:SNAP_LAYER_REFRESH_LINES object:nil]; // Used to updated the snap/alignment lines after a property has been modified in the properties menu
 }
 
 - (id) propertyForSelection

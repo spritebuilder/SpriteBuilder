@@ -131,10 +131,10 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
 
    _projectSettings.canUpdateCocos2D = ![self isCoco2dAGitSubmodule]
                && ((compareResult == Cocos2dVersionIncompatible)
-               || [self doesProjectsCocos2dFolderExistAndHasNoVesionfile]);;
+               || [self doesProjectsCocos2dFolderExistAndHasNoVersionfile]);;
 }
 
-- (BOOL)doesProjectsCocos2dFolderExistAndHasNoVesionfile
+- (BOOL)doesProjectsCocos2dFolderExistAndHasNoVersionfile
 {
     Cocos2dVersionComparisonResult compareResult = [self compareProjectsCocos2dVersionWithSpriteBuildersVersion];
 
@@ -154,7 +154,7 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     {
         return [self showUpdateDialogWithText:@"Your project is not using the latest version of Cocos2D. It's recommended that you update."];
     }
-    else if ([self doesProjectsCocos2dFolderExistAndHasNoVesionfile])
+    else if ([self doesProjectsCocos2dFolderExistAndHasNoVersionfile])
     {
         return [self showUpdateDialogWithText:@"Your project is probably not using the latest version of Cocos2D (the version file is missing, which indicates that you are using an old version). It's recommended that you update."];
     }
@@ -178,10 +178,12 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
         BOOL updateResult = [self unzipProjectTemplateZip:&error]
             && [self renameCocos2dFolderToBackupFolder:&error]
             && [self copySpriteBuildersCocos2dFolderToProjectFolder:&error]
+            && [self createSymbolicLinkToCocos2dProject:&error]
             && [self tidyUpTempFolder:&error];
 
         [self finishWithUpdateResult:updateResult error:error];
     });
+
 
     __weak id weakSelf = self;
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..." isIndeterminate:YES onCancelBlock:^
@@ -229,8 +231,8 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     {
 		
 		CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
-	        block();
-	    });
+            block();
+        });
     }
 }
 
@@ -433,6 +435,7 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
 
     NSError *error;
     NSString *result = [NSString stringWithContentsOfFile:versionFilePath encoding:NSUTF8StringEncoding error:&error];
+    result = [result stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (!result)
     {
         LocalLog(@"[COCO2D-UPDATER] [ERROR] reading SB's cocos2d version file: %@", error);
@@ -527,6 +530,26 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     }
     return result;
 }
+
+- (BOOL)createSymbolicLinkToCocos2dProject:(NSError **)error
+{
+    // Previous versions of cocos2d had a project called cocos2d-ios.xcodeproj
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *oldProjectPath = [[self backupFolderPath] stringByAppendingPathComponent:@"cocos2d-ios.xcodeproj"];
+    if ([fileManager fileExistsAtPath:oldProjectPath])
+    {
+        // Make a symbolic link so users don't have to update their cocos2d reference
+        NSString *newProjectPath = [[self defaultProjectsCocos2DFolderPath]
+                                    stringByAppendingPathComponent:@"cocos2d.xcodeproj"];
+        NSString *symbolicLinkPath = [[self defaultProjectsCocos2DFolderPath]
+                                    stringByAppendingPathComponent:@"cocos2d-ios.xcodeproj"];
+        return [fileManager createSymbolicLinkAtPath:symbolicLinkPath
+                                 withDestinationPath:newProjectPath
+                                               error:error];
+    }
+    return YES;  // No soft link is needed
+}
+
 
 - (NSString *)cocos2dBackupFolderPath:(NSString *)defaultCocos2DFolderPath
 {

@@ -9,8 +9,24 @@
 #import "SceneGraph.h"
 #import "CCNode+NodeInfo.h"
 #import "ProjectSettings.h"
+#import "CCBReaderInternal.h"
+#import "CCBFileUtil.h"
+#import "CCBPCCBFile.h"
 
 SceneGraph * gSceneGraph;
+
+CCNode * findSceneRoot(CCNode * node)
+{
+	if(node.parent == nil)
+		return node;
+	
+	if([[[node class] description] isEqualToString:@"CCBPCCBFile"])
+	{
+		return node;
+	}
+	
+	return findSceneRoot(node.parent);
+}
 
 @implementation SceneGraph
 @synthesize rootNode;
@@ -59,6 +75,13 @@ typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
     }
     return nil;
 
+}
+
++(void)fixupReferences
+{
+	[gSceneGraph.joints fixupReferences];
+	
+	[CCBReaderInternal postDeserializationFixup:gSceneGraph.rootNode];
 }
 
 

@@ -94,4 +94,8 @@ NSString * kAnimationOfPhysicsWarning;
 - (void) setUsesFlashSkew:(BOOL)seqExpanded;
 - (BOOL) usesFlashSkew;
 
+//Fixups
+-(void)postCopyFixup;
+-(void)postDeserializationFixup;
+
 @end

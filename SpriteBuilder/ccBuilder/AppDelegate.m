@@ -135,7 +135,12 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
+#import "LicenseManager.h"
+#import "LicenseWindow.h"
+#import "SUVersionComparisonProtocol.h"
+#import "SBUpdater.h"
 #import "OpenProjectInXCode.h"
+#import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -614,12 +619,39 @@ typedef enum
     [self setupProjectTilelessEditor];
     [self setupExtras];
     [self setupResourceCommandController];
+	[self setupSparkleGui];
 	
     [window restorePreviousOpenedPanels];
 
     [self.window makeKeyWindow];
 	_applicationLaunchComplete = YES;
     
+
+#ifdef TESTING
+	return;
+#endif
+	
+
+#ifndef SPRITEBUILDER_PRO
+    // Open registration window
+    if(![self openRegistration])
+	{
+		[[NSApplication sharedApplication] terminate:self];
+	}
+#else
+	if([LicenseManager requiresLicensing])
+	{
+		if(![self openLicensingWindow])
+		{
+			[[NSApplication sharedApplication] terminate:self];
+		}
+	}
+
+	[self setupSpriteBuilderPro];
+#endif
+	
+	
+	
     if (delayOpenFiles)
     {
         [self openFiles:delayOpenFiles];
@@ -643,10 +675,6 @@ typedef enum
 
     [self toggleFeatures];
 
-	[self setupSpriteBuilderPro];
-
-    // Open registration window
-    [self openRegistrationWindow:NULL];
 }
 
 - (void)setupResourceCommandController
@@ -1019,7 +1047,7 @@ typedef enum
 {
     if (!self.selectedNode) return;
     
-    InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+    InspectorValue* inspectorValue = currentInspectorValues[name];
     if (inspectorValue)
     {
 
@@ -1033,7 +1061,7 @@ typedef enum
     
     for (NSString* name in currentInspectorValues)
     {
-        InspectorValue* inspectorValue = [currentInspectorValues objectForKey:name];
+        InspectorValue* inspectorValue = currentInspectorValues[name];
         if ([inspectorValue.propertyType isEqualToString:type])
         {
             [inspectorValue refresh];
@@ -1699,6 +1727,8 @@ static BOOL hideAllToNextSeparator;
         [g.joints addJoint:child];
     }];
 
+	[CCBReaderInternal postDeserializationFixup:g.rootNode];
+
     
     [[CocosScene cocosScene] replaceSceneNodes:g];
     [outlineHierarchy reloadData];
@@ -1769,6 +1799,36 @@ static BOOL hideAllToNextSeparator;
     
     // Make sure timeline is up to date
     [sequenceHandler updatePropertiesToTimelinePosition];
+}
+
+-(void)fixupUUID:(CCBDocument*)doc dict:(NSMutableDictionary*)dict
+{
+    if(!dict[@"UUID"])
+    {
+        dict[@"UUID"] = @(doc.UUID);
+        [doc getAndIncrementUUID];
+    }
+    
+    if(dict[@"children"])
+    {
+        for (NSMutableDictionary * child in dict[@"children"])
+        {
+            [self fixupUUID:doc dict:child];
+        }
+        
+    }
+}
+
+
+-(void)fixupDoc:(CCBDocument*) doc
+{
+    //If UUID is unset, it means the doc is out of date. Fixup.
+    if(doc.UUID == 0x0)
+    {
+        doc.UUID = 0x1;
+        [self fixupUUID:doc dict: doc.data[@"nodeGraph"]];
+
+    }
 }
 
 - (void) switchToDocument:(CCBDocument*) document
@@ -1876,12 +1936,6 @@ static BOOL hideAllToNextSeparator;
     return YES;
 }
 
-- (BOOL) createProject:(NSString*)fileName engine:(CCBTargetEngine)engine
-{
-    CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
-    return [creator createDefaultProjectAtPath:fileName engine:engine];
-}
-
 - (void) updateResourcePathsFromProjectSettings
 {
     [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absoluteResourcePaths]];
@@ -1911,6 +1965,7 @@ static BOOL hideAllToNextSeparator;
 
     // Remove resource paths
     self.projectSettings = NULL;
+
     [[ResourceManager sharedManager] removeAllDirectories];
     
     // Remove language file
@@ -1924,9 +1979,18 @@ static BOOL hideAllToNextSeparator;
 
 - (BOOL) openProject:(NSString*) fileName
 {
-    // Close currently open project
+    if (![fileName hasSuffix:@".spritebuilder"] && ![fileName hasSuffix:@".ccbproj"])
+    {
+        return NO;
+    }
+
     [self closeProject];
     
+    if ([fileName hasSuffix:@".ccbproj"])
+    {
+        fileName = [fileName stringByDeletingLastPathComponent];
+    }
+
     // Add to recent list of opened documents
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
     
@@ -1951,9 +2015,11 @@ static BOOL hideAllToNextSeparator;
     prjctSettings.projectPath = fileName;
     [prjctSettings store];
 
+    // inject new project settings
     self.projectSettings = prjctSettings;
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
+    [ResourceManager sharedManager].projectSettings = projectSettings;
 
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
@@ -2018,7 +2084,7 @@ static BOOL hideAllToNextSeparator;
 
 - (void) openFile:(NSString*)filePath
 {
-	[[[CCDirector sharedDirector] view] lockOpenGLContext];
+	[(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
     
     // Check if file is already open
     CCBDocument* openDoc = [self findDocumentFromFile:filePath];
@@ -2043,7 +2109,7 @@ static BOOL hideAllToNextSeparator;
     physicsHandler.selectedNodePhysicsBody = NULL;
     [self setSelectedNodes:NULL];
     
-	[[[CCDirector sharedDirector] view] unlockOpenGLContext];
+	[(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (void) saveFile:(NSString*) fileName
@@ -2202,12 +2268,6 @@ static BOOL hideAllToNextSeparator;
     [[ResourceManager sharedManager] updateForNewFile:fileName];
 }
 
-/*
-- (BOOL) application:(NSApplication *)sender openFile:(NSString *)filename
-{
-    [self openProject:filename];
-    return YES;
-}*/
 
 - (NSString*) findProject:(NSString*) path
 {
@@ -2230,21 +2290,7 @@ static BOOL hideAllToNextSeparator;
 {
 	for( NSString* filename in filenames )
 	{
-        /*
-		if( [filename hasSuffix:@".ccb"] )
-		{
-			NSString* folderPathToSearch = [filename stringByDeletingLastPathComponent];
-			NSString* projectFile = [self findProject:folderPathToSearch];
-			if( projectFile )
-			{
-				[self openProject:projectFile];
-				[self openFile:filename];
-			}
-		}*/
-        if ([filename hasSuffix:@".spritebuilder"])
-		{
-			[self openProject:filename];		
-		}
+		[self openProject:filename];		
 	}
 }
 
@@ -2357,8 +2403,8 @@ static BOOL hideAllToNextSeparator;
     if(child.UUID == 0x0)
     {
 
-		child.UUID = currentDocument.UUID;
-        currentDocument.UUID = currentDocument.UUID + 1;
+		child.UUID = [currentDocument getAndIncrementUUID];
+
     }
     
     [outlineHierarchy reloadData];
@@ -2562,8 +2608,8 @@ static BOOL hideAllToNextSeparator;
     SceneGraph* g = [SceneGraph instance];
     
     CCNode* addedNode = [[PlugInManager sharedManager] createDefaultNodeOfType:jointName];
-    addedNode.UUID = [AppDelegate appDelegate].currentDocument.UUID;
-    [AppDelegate appDelegate].currentDocument.UUID = [AppDelegate appDelegate].currentDocument.UUID + 1;
+    addedNode.UUID = [[AppDelegate appDelegate].currentDocument getAndIncrementUUID];
+
     
     [g.joints addJoint:(CCBPhysicsJoint*)addedNode];
     
@@ -2747,8 +2793,8 @@ static BOOL hideAllToNextSeparator;
 
 -(void)updateUUIDs:(CCNode*)node
 {
-    node.UUID = currentDocument.UUID;
-    currentDocument.UUID = currentDocument.UUID + 1;
+    node.UUID = [currentDocument getAndIncrementUUID];
+	[node postCopyFixup];
     
     for (CCNode * child in node.children) {
         [self updateUUIDs:child];
@@ -2772,13 +2818,14 @@ static BOOL hideAllToNextSeparator;
         else parentSize = self.selectedNode.parent.contentSize;
         
         CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
+		[CCBReaderInternal postDeserializationFixup:clipNode];
         [self updateUUIDs:clipNode];
         
         
         [self addCCObject:clipNode asChild:asChild];
         
-        //We might have copy/cut/pasted and body. Fix it up.
-        [[SceneGraph instance].joints fixupReferences];//
+        //We might have copy/cut/pasted and body. Fix it up.		
+        [SceneGraph fixupReferences];
     }
 }
 
@@ -2882,6 +2929,8 @@ static BOOL hideAllToNextSeparator;
     
     [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
 }
 
 - (IBAction) delete:(id) sender
@@ -2986,7 +3035,7 @@ static BOOL hideAllToNextSeparator;
             NSString *filename = [[saveDlg URL] path];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_main_queue(), ^{
-                [[[CCDirector sharedDirector] view] lockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 // Save file to new path
                 [self saveFile:filename];
@@ -2997,7 +3046,7 @@ static BOOL hideAllToNextSeparator;
                 // Open newly created document
                 [self openFile:filename];
                 
-                [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
 		
@@ -3168,7 +3217,7 @@ static BOOL hideAllToNextSeparator;
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_main_queue(), ^{
-                [[[CCDirector sharedDirector] view] lockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 for (int i = 0; i < [files count]; i++)
                 {
@@ -3188,7 +3237,7 @@ static BOOL hideAllToNextSeparator;
                     }
                 }
                 
-                [[[CCDirector sharedDirector] view] unlockOpenGLContext];
+                [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
     }];
@@ -3275,13 +3324,40 @@ static BOOL hideAllToNextSeparator;
     [cocos2dUpdater updateAndBypassIgnore:YES];
 }
 
+-(void)updateLanguageHint
+{
+    switch (saveDlgLanguagePopup.selectedItem.tag)
+    {
+        case CCBProgrammingLanguageObjectiveC:
+            saveDlgLanguageHint.title = @"All supported platforms";
+            break;
+        case CCBProgrammingLanguageSwift:
+            saveDlgLanguageHint.title = @"iOS7+ only";
+            break;
+        default:
+            NSAssert(false, @"Unknown programming language");
+            saveDlgLanguageHint.title = @"";  // NOTREACHED
+            break;
+    }
+}
+
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
     [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
     //saveDlg.message = @"Save your project file in the same directory as your projects resources.";
-    
+
+    // Configure the accessory view
+    [saveDlg setAccessoryView:saveDlgAccessoryView];
+    [saveDlgLanguagePopup removeAllItems];
+    [saveDlgLanguagePopup addItemsWithTitles:@[@"Objective-C", @"Swift"]];
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.firstObject).tag = CCBProgrammingLanguageObjectiveC;
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.lastObject).tag = CCBProgrammingLanguageSwift;
+    saveDlgLanguagePopup.target = self;
+    saveDlgLanguagePopup.action = @selector(updateLanguageHint);
+    [self updateLanguageHint];
+
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
         {
@@ -3305,7 +3381,8 @@ static BOOL hideAllToNextSeparator;
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{
-                                   if ([self createProject:fileName engine:engine])
+                                   CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
+                                   if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }
@@ -4382,11 +4459,16 @@ static BOOL hideAllToNextSeparator;
 
 - (IBAction) openRegistrationWindow:(id)sender
 {
+	[self openRegistration];
+}
 	
-    if (!sender && [[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
+	
+-(BOOL)openRegistration
+{
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
     {
         // Email already registered or skipped
-        return;
+        return YES;
     }
     
     if (!registrationWindow)
@@ -4394,8 +4476,35 @@ static BOOL hideAllToNextSeparator;
         registrationWindow = [[RegistrationWindow alloc] initWithWindowNibName:@"RegistrationWindow"];
     }
     
-    [[registrationWindow window] makeKeyAndOrderFront:window];
+	NSInteger result = [NSApp runModalForWindow: registrationWindow.window];
+	[NSApp endSheet:registrationWindow.window];
+	[registrationWindow.window close];
+	
+	if(result == NSModalResponseStop)
+	{
+		return YES;
+	}
+
+	return NO;
 }
+
+-(BOOL)openLicensingWindow
+{
+	LicenseWindow * licenseWindow = [[LicenseWindow alloc] initWithWindowNibName:@"LicenseWindow"];
+	
+	NSInteger result = [NSApp runModalForWindow: licenseWindow.window];
+	[NSApp endSheet:licenseWindow.window];
+	[licenseWindow.window close];
+	
+	if(result == NSModalResponseStop)
+	{
+		return YES;
+	}
+	
+	return NO;
+
+}
+
 
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window
 {
@@ -4407,12 +4516,52 @@ static BOOL hideAllToNextSeparator;
 -(NSString*)applicationTitle
 {
 #ifdef SPRITEBUILDER_PRO
-	return @"SpriteBuilder Pro";
+	return @"SpriteBuilder 1.3 Beta";
 #else
 	return @"SpriteBuilder";
 #endif
 }
 
+
+#pragma mark Sparkle
+
+-(void)setupSparkleGui
+{
+#if SB_SANDBOXED
+	[self.menuCheckForUpdates setHidden:YES];
+#endif
+}
+
+
+- (id<SUVersionComparison>)versionComparatorForUpdater:(SUUpdater *)updater
+{
+	return [SBVersionComparitor new];
+}
+
+- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater
+{
+#if TESTING || SB_SANDBOXED
+	return NO;
+#else 
+	return YES;
+#endif
+}
+
+- (NSString *)feedURLStringForUpdater:(id)updater
+{
+	//Local Host testing.
+    //return @"http://localhost/sites/version";
+	
+#ifdef SPRITEBUILDER_PRO
+	return @"http://update.spritebuilder.com/pro/";
+#else
+	return @"http://update.spritebuilder.com";
+#endif
+
+	
+}
+
+#pragma mark -
 
 -(void)setupSpriteBuilderPro
 {
@@ -4429,22 +4578,12 @@ static BOOL hideAllToNextSeparator;
 	
 	AndroidPluginInstallerWindow *installerWindow = [[AndroidPluginInstallerWindow alloc] initWithWindowNibName:@"AndroidPluginInstallerWindow"];
 	
-    // Show new document sheet
-    [NSApp beginSheet:[installerWindow window]
-       modalForWindow:window
-        modalDelegate:NULL
-       didEndSelector:NULL
-          contextInfo:NULL];
 	
-	CGRect parentFrame = self.window.frame;
-	CGRect windowFrame = [installerWindow window].frame;
-	windowFrame.origin = CGPointMake(parentFrame.origin.x + parentFrame.size.width/2 - windowFrame.size.width/2, parentFrame.origin.y + parentFrame.size.height - windowFrame.size.height - 100 );
+	[[installerWindow window] center];
+    [[installerWindow window] makeKeyAndOrderFront:self];
 	
-	[[installerWindow window] setFrame:windowFrame display:YES];
  
-	[NSApp runModalForWindow:[installerWindow window]];
-    [NSApp endSheet:[installerWindow window]];
-    [[installerWindow window] close];
+	[[NSApplication sharedApplication] runModalForWindow:[installerWindow window]];
 	
 #endif
 }

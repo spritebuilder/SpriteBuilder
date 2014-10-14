@@ -11,15 +11,30 @@
 
 
 #ifdef DEBUG
-//#define SBPRO_TEST_INSTALLER
+//#define SBANDROID_TEST_INSTALLER
 #endif
 
-static const float kSBProPluginVersion = 3.0;
+static const float kSBAndroidPluginVersion = 5.00;
 
 
-NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
+NSString*   kSBDefualtsVersionIdentifier = @"SBAndroidPluginVersion";
+NSString*   kSBDefualtsMD5Identifier = @"SBAndroidPluginMD5";
+
 
 @implementation AndroidPluginInstaller
+
++(NSString*)xcodePluginPath
+{
+	
+	
+	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidXcodePlugin" ofType:@"zip" inDirectory:@"Generated"];
+	NSFileManager * fm =[[NSFileManager alloc] init];
+	if(![fm fileExistsAtPath:pluginBundlePath])
+	{
+		return nil;
+	}
+	return pluginBundlePath;
+}
 
 +(BOOL)runPythonScript:(NSString*)command output:(NSString**)result
 {
@@ -28,17 +43,14 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
     NSTask* task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/python";
 	
-	NSString *scriptPath = [[NSBundle mainBundle] pathForResource:@"plugin_installer" ofType:@"py"];
-	
-	NSString *pluginBundlePath = [[NSBundle mainBundle] pathForResource:@"AndroidPlugin" ofType:@"zip" inDirectory:@"Generated"];
-	NSFileManager * fm =[[NSFileManager alloc] init];
-	if(![fm fileExistsAtPath:pluginBundlePath])
+	NSString * pluginBundlePath = [self xcodePluginPath];
+	if(!pluginBundlePath)
 	{
-		*result = [NSString stringWithFormat:@"AndroidPlugin.zip is not in Generated Folder. Android Xcode plugin will not be installed properly."];
+		*result = [NSString stringWithFormat:@"AndroidXcodePlugin is not in Generated Folder. Android Xcode plugin will not be installed properly."];
 		return false;
 	}
-	
 
+	NSString *scriptPath = [[NSBundle mainBundle] pathForResource:@"plugin_installer" ofType:@"py"];
     task.arguments = [NSArray arrayWithObjects: scriptPath, command, pluginBundlePath, nil];
 	
     // NSLog breaks if we don't do this...
@@ -85,11 +97,47 @@ NSString*   kSBDefualtsIdentifier = @"SBProPluginVersion";
 	return [self runPythonScript:@"validate" output:output];
 }
 
++(NSString*)getPluginMD5
+{
+	
+	NSString * pluginBundlePath = [self xcodePluginPath];
+	if(pluginBundlePath == nil)
+		return nil;
+	
+	NSTask* task = [[NSTask alloc] init];
+    task.launchPath = @"/sbin/md5";
+	task.arguments = [NSArray arrayWithObjects: @"-q", pluginBundlePath, nil];
+
+	
+	// NSLog breaks if we don't do this...
+    [task setStandardInput: [NSPipe pipe]];
+	
+    NSPipe *stdOutPipe = nil;
+    stdOutPipe = [NSPipe pipe];
+    [task setStandardOutput:stdOutPipe];
+	
+    NSPipe* stdErrPipe = nil;
+    stdErrPipe = [NSPipe pipe];
+    [task setStandardError: stdErrPipe];
+	
+    [task launch];
+	
+    NSData* data = [[stdOutPipe fileHandleForReading] readDataToEndOfFile];
+	
+    [task waitUntilExit];
+	
+   // NSInteger exitCode = task.terminationStatus;
+
+	NSString * md5 =[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	return [md5 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+	
+}
+
 NSString * getVersionFile()
 {
 	NSArray *domains = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask,YES);
 	NSString *baseDir= [domains objectAtIndex:0];
-	NSString *versionFilePath = [baseDir stringByAppendingPathComponent:@"Application Support/Developer/Shared/Xcode/Plug-ins/AndroidPluginFile.plist"];
+	NSString *versionFilePath = [baseDir stringByAppendingPathComponent:@"Application Support/Developer/Shared/Xcode/Plug-ins/SBAndroidPluginFile.plist"];
 	return versionFilePath;
 }
 
@@ -97,7 +145,7 @@ NSString * getVersionFile()
 
 +(BOOL)needsInstallation
 {
-#ifdef SBPRO_TEST_INSTALLER
+#ifdef SBANDROID_TEST_INSTALLER
 	return YES;
 #endif
 	
@@ -112,18 +160,36 @@ NSString * getVersionFile()
 	if(versionInfo == nil)
 		return YES;
 		
-	NSNumber * currentVersion = versionInfo[kSBDefualtsIdentifier];
-	if(currentVersion == nil || [currentVersion floatValue] < kSBProPluginVersion)
+	NSNumber * currentVersion = versionInfo[kSBDefualtsVersionIdentifier];
+	if(currentVersion == nil || [currentVersion floatValue] < kSBAndroidPluginVersion)
 	{
 		return YES;
 	}
+	
+	NSString* currentInstalledMD5 = versionInfo[kSBDefualtsMD5Identifier];
+	if(currentInstalledMD5 == nil)
+		return YES;
+	
+	NSString * shippedPluginMD5 = [self getPluginMD5];
+	if(shippedPluginMD5 == nil)
+	{
+		return YES;
+	}
+	
+	if(![currentInstalledMD5 isEqualToString:shippedPluginMD5])
+	{
+		return YES;
+	}
+	
 	return NO;
 }
 
 +(void)setInstallationVersion
 {
 	NSString *versionFilePath = getVersionFile();
-	NSDictionary * versionInfo = @{kSBDefualtsIdentifier : @(kSBProPluginVersion)};
+	NSString * shippedPluginMD5 = [self getPluginMD5];
+	
+	NSDictionary * versionInfo = @{kSBDefualtsVersionIdentifier : @(kSBAndroidPluginVersion),kSBDefualtsMD5Identifier : shippedPluginMD5 };
 	[versionInfo writeToFile:versionFilePath atomically:YES];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 
 #import "ProjectSettings.h"
 #import "SBErrors.h"
@@ -18,6 +19,9 @@
 #import "ProjectSettings+Convenience.h"
 #import "RMResource.h"
 #import "ResourceManager.h"
+#import "ResourceManagerUtil.h"
+#import "ResourceTypes.h"
+#import "RMDirectory.h"
 #import "ResourcePropertyKeys.h"
 
 @interface ProjectSettings_Tests : FileSystemTestCase
@@ -515,6 +519,85 @@
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 }
 
+- (void)testMarkSpriteSheetDirtyIfNewOrRemovedImage
+{
+    NSString *REL_PACKAGE_PATH = @"project/Packages/package1.sbpack";
+    NSString *REL_SPRITESHEET_PATH = @"project/Packages/package1.sbpack/spritesheet";
+    NSString *REL_IMAGE_IN_SPRITESHEET_PATH = @"project/Packages/package1.sbpack/spritesheet/image.png";
+    NSString *REL_IMAGE_NOT_IN_SPRITESHEET_PATH = @"project/Packages/package1.sbpack/image.png";
+
+    _projectSettings.projectPath = [self fullPathForFile:@"project/abc.ccbproj"];
+    [_projectSettings addResourcePath:[self fullPathForFile:REL_PACKAGE_PATH] error:nil];
+
+    ResourceManager *resourceManager = [ResourceManager sharedManager];
+    [resourceManager setActiveDirectoriesWithFullReset:@[[self fullPathForFile:REL_PACKAGE_PATH]]];
+
+    RMDirectory *directory = [[RMDirectory alloc] init];
+    directory.dirPath = [self fullPathForFile:REL_SPRITESHEET_PATH];
+    directory.projectSettings = _projectSettings;
+
+    RMResource *spriteSheet = [[RMResource alloc] initWithFilePath:[self fullPathForFile:REL_SPRITESHEET_PATH]];
+    spriteSheet.type = kCCBResTypeDirectory;
+    spriteSheet.data = directory;
+
+    [_projectSettings makeSmartSpriteSheet:spriteSheet];
+
+    RMResource *imageInSpriteSheet = [[RMResource alloc] initWithFilePath:[self fullPathForFile:REL_IMAGE_IN_SPRITESHEET_PATH]];
+    imageInSpriteSheet.type = kCCBResTypeImage;
+
+    RMResource *image = [[RMResource alloc] initWithFilePath:[self fullPathForFile:REL_IMAGE_NOT_IN_SPRITESHEET_PATH]];
+    image.type = kCCBResTypeImage;
+
+    RMDirectory *activeDir = [resourceManager activeDirectoryForPath:[self fullPathForFile:REL_PACKAGE_PATH]];
+    [activeDir.any addObject:image];
+    [activeDir.any addObject:imageInSpriteSheet];
+    [activeDir.any addObject:spriteSheet];
+    [activeDir.images addObject:image];
+    [activeDir.images addObject:imageInSpriteSheet];
+    [activeDir.images addObject:spriteSheet];
+
+    [_projectSettings clearAllDirtyMarkers];
+
+    // Move from sprite sheet to another location
+    NSString *fullPathToSomeDir = [self fullPathForFile:[REL_PACKAGE_PATH stringByAppendingPathComponent:@"foo"]];
+
+    [_projectSettings movedResourceFrom:[ResourceManagerUtil relativePathFromAbsolutePath:imageInSpriteSheet.filePath]
+                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:fullPathToSomeDir]
+                           fromFullPath:imageInSpriteSheet.filePath
+                             toFullPath:fullPathToSomeDir];
+
+    XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
+
+
+    [_projectSettings clearAllDirtyMarkers];
+
+    // Move to sprite sheet from outside
+    NSString *fullPathToInSpriteSheet = [self fullPathForFile:REL_IMAGE_IN_SPRITESHEET_PATH];
+    [_projectSettings movedResourceFrom:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]
+                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:fullPathToInSpriteSheet]
+                           fromFullPath:image.filePath
+                             toFullPath:fullPathToInSpriteSheet];
+
+    XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
+
+
+    // Move to sprite sheet from outside
+    [_projectSettings clearAllDirtyMarkers];
+    [_projectSettings movedResourceFrom:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]
+                                     to:[ResourceManagerUtil relativePathFromAbsolutePath:image.filePath]
+                           fromFullPath:image.filePath
+                             toFullPath:image.filePath];
+
+    XCTAssertFalse([_projectSettings isDirtyRelPath:@"spritesheet"]);
+
+
+    // Image deleted
+    [_projectSettings clearAllDirtyMarkers];
+    [_projectSettings removedResourceAt:[ResourceManagerUtil relativePathFromAbsolutePath:imageInSpriteSheet.filePath]];
+
+    XCTAssertTrue([_projectSettings isDirtyRelPath:@"spritesheet"]);
+}
+
 - (void)testClearDirtyMarker
 {
     RMResource *res1 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"]];
@@ -544,7 +627,6 @@
     XCTAssertFalse([_projectSettings isDirtyResource:res2]);
     XCTAssertTrue([_projectSettings isDirtyResource:res3]);
 }
-
 
 #pragma mark - test helper
 

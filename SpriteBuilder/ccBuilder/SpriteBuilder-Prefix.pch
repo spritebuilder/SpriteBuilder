@@ -16,6 +16,9 @@
 #	define SBLogSelf() do{} while(0)
 #endif
 
+// Yosemite version check
+#define YOSEMITE_UI (rint(NSAppKitVersionNumber) > 1265)
+
 /** Suppress a compiler warning regarding the performSelector: method. */
 #define SUPPRESS_LEAK_WARNING(code) \
 _Pragma("clang diagnostic push")                                        \
