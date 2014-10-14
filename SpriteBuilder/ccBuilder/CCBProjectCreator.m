@@ -242,7 +242,7 @@
 
 		if ([fm fileExistsAtPath:removePath])
 		{
-			//[fm removeItemAtPath:removePath error:&error];
+			[fm removeItemAtPath:removePath error:&error];
 			if (error)
 			{
 				NSLog(@"WARNING: cleanup failed to remove path: %@", removePath);
