@@ -19,7 +19,7 @@ static InspectorController *__sharedInstance = nil;
 
 @interface InspectorController ()
 
-@property (nonatomic, strong) NSMutableDictionary *currentInspectorValues;
+@property (nonatomic, strong) NSMutableDictionary *currentInspectorValuesMap;
 @property (nonatomic, strong) NSView *inspectorDocumentView;
 @property (nonatomic, strong) NSView *inspectorCodeDocumentView;
 
@@ -34,7 +34,7 @@ static InspectorController *__sharedInstance = nil;
 
     if (self)
     {
-        self.currentInspectorValues = [NSMutableDictionary dictionary];
+        self.currentInspectorValuesMap = [NSMutableDictionary dictionary];
     }
 
     return self;
@@ -77,7 +77,7 @@ static InspectorController *__sharedInstance = nil;
         return;
     }
 
-    InspectorValue *inspectorValue = _currentInspectorValues[name];
+    InspectorValue *inspectorValue = _currentInspectorValuesMap[name];
     if (inspectorValue)
     {
         [inspectorValue refresh];
@@ -91,9 +91,9 @@ static InspectorController *__sharedInstance = nil;
         return;
     }
 
-    for (NSString *name in _currentInspectorValues)
+    for (NSString *name in _currentInspectorValuesMap)
     {
-        InspectorValue *inspectorValue = _currentInspectorValues[name];
+        InspectorValue *inspectorValue = _currentInspectorValuesMap[name];
         if ([inspectorValue.propertyType isEqualToString:type])
         {
             [inspectorValue refresh];
@@ -103,17 +103,32 @@ static InspectorController *__sharedInstance = nil;
 
 - (void)updateInspectorFromSelection
 {
-    InspectorPropertyPaneBuilder *builder = [[InspectorPropertyPaneBuilder alloc] initWithNode:[_appDelegate selectedNode]];
-    builder.inspectorCodeDocumentView = _inspectorCodeDocumentView;
-    builder.inspectorDocumentView = _inspectorDocumentView;
-    builder.propertyInspectorHandler = _propertyInspectorHandler;
-    builder.inspectorCodeScroll = _inspectorCodeScroll;
-    builder.inspectorScroll = _inspectorScroll;
+    [_currentInspectorValuesMap removeAllObjects];
+
+    [self buildInspectorPaneWithDocumentView:_inspectorDocumentView
+                                   scrollView:_inspectorScroll
+                         isCodeConnectionPane:NO];
+
+    [self buildInspectorPaneWithDocumentView:_inspectorCodeDocumentView
+                                  scrollView:_inspectorCodeScroll
+                        isCodeConnectionPane:YES];
+
+    [_propertyInspectorHandler updateTemplates];
+}
+
+- (void)buildInspectorPaneWithDocumentView:(NSView *)documentView scrollView:(NSScrollView *)scrollView isCodeConnectionPane:(BOOL)isCodeConnectionPane
+{
+    InspectorPropertyPaneBuilder *builder = [[InspectorPropertyPaneBuilder alloc] initWithIsCodeConnectionPane:isCodeConnectionPane
+                                                                                                           node:[_appDelegate selectedNode]];
     builder.cocosScene = _cocosScene;
     builder.sequenceHandler = _sequenceHandler;
     builder.inspectorPhysics = _inspectorPhysics;
+    builder.currentScrollView = scrollView;
+    builder.currentView = documentView;
 
-    self.currentInspectorValues = [builder buildAndCreatePropertyViewMap];
+    NSDictionary *inspectorValuesMap = [builder buildAndCreatePropertyViewMap];
+
+    [self.currentInspectorValuesMap addEntriesFromDictionary:inspectorValuesMap];
 }
 
 @end

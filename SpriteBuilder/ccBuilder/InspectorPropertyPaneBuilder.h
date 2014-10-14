@@ -6,16 +6,16 @@
 
 @interface InspectorPropertyPaneBuilder : NSObject
 
-@property (nonatomic, weak) NSView *inspectorDocumentView;
-@property (nonatomic, weak) NSView *inspectorCodeDocumentView;
-@property (nonatomic, weak, readonly) CCNode *node;
-@property (nonatomic, weak) IBOutlet NSScrollView *inspectorCodeScroll;
-@property (nonatomic, weak) IBOutlet NSScrollView *inspectorScroll;
+@property (nonatomic, strong, readonly) CCNode *node;
+
+@property (nonatomic, weak) NSView *currentView;
+@property (nonatomic, weak) NSScrollView *currentScrollView;
+
 @property (nonatomic, weak) CocosScene *cocosScene;
 @property (nonatomic, weak) SequencerHandler *sequenceHandler;
-@property (nonatomic, weak) IBOutlet NSView *inspectorPhysics;
+@property (nonatomic, weak) NSView *inspectorPhysics;
 
-- (instancetype)initWithNode:(CCNode *)node;
+- (instancetype)initWithIsCodeConnectionPane:(BOOL)isCodeConnectionPane node:(CCNode *)node;
 
 - (NSDictionary *)buildAndCreatePropertyViewMap;
 

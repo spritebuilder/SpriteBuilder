@@ -78,109 +78,113 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
  * Expected properties for item and code connection section are extracted from the pluginInfo of a node
  * Tests rely on the identity property set for the views set in InspectorController(set only for test target).
  */
+
+/*
+ * Disabled as long as https://github.com/spritebuilder/SpriteBuilder/issues/897 is not resolved
+ */
+/*
+- (void)testUpdateInspectorFromSelectionForCCSprite9Slice
+{
+    [self assertUpdateInspectorFromSelectionForPlugin:expectCustomClassInCodeConnection:@"CCSprite9Slice"];
+}
+*/
+
 - (void)testUpdateInspectorFromSelectionForCCNode
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNode"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNode" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCColorNode
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNodeColor"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNodeColor" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCBFile
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCBFile"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCBFile" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCEffectNode
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCEffectNode"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCEffectNode" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCGradientNode
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNodeGradient"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCNodeGradient" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCSprite
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSprite"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSprite" expectCustomClassInCodeConnection:YES];
 }
-
-/*
-- (void)testUpdateInspectorFromSelectionForCCSprite9Slice
-{
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSprite9Slice"];
-}
-*/
 
 - (void)testUpdateInspectorFromSelectionForCCParticleSystem
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCParticleSystem"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCParticleSystem" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCLabelTTF
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelTTF"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelTTF" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCLabelBMFont
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelBMFont"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelBMFont" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCButton
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCButton"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCButton" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCTextField
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCTextField"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCTextField" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCSlider
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSlider"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSlider" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCScrollView
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCScrollView"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCScrollView" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCLayoutBox
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLayoutBox"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLayoutBox" expectCustomClassInCodeConnection:YES];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCPhysicsSpringJoint
 {
     [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
 
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsSpringJoint"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsSpringJoint" expectCustomClassInCodeConnection:NO];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCPhysicsPivotJoint
 {
     [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
 
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsPivotJoint"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsPivotJoint" expectCustomClassInCodeConnection:NO];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCPhysicsPinJoint
 {
     [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
 
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsPinJoint"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsPinJoint" expectCustomClassInCodeConnection:NO];
 }
 
 - (void)testUpdateInspectorFromSelectionForCCPhysicsNode
 {
     [self setupSequenceMockForPhysicsJointsWithAutplay:YES];
 
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsNode"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCPhysicsNode" expectCustomClassInCodeConnection:NO];
 }
 
 - (void)testRefreshPropertyForName
@@ -241,7 +245,7 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
 /**
  * Asserts that a given selected node has all the property ui elements in the scrollViews(Main properties and code connections)
  */
-- (void)assertUpdateInspectorFromSelectionForPlugin:(NSString *)pluginClassName
+- (void)assertUpdateInspectorFromSelectionForPlugin:(NSString *)pluginClassName expectCustomClassInCodeConnection:(BOOL)expectCustomClassInCodeConnection
 {
     CCNode *node = [self setupInspectorAndSelectedNodeWithPlugin:pluginClassName];
     NodeInfo *info = node.userObject;
@@ -249,7 +253,12 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
 
     NSDictionary *expectedProperties = [self expectedPropertyNamesForInspector:node];
     NSArray *propertyNames = expectedProperties[PROPERTY_NAMES_KEY];
-    NSArray *codeConnectionNames = expectedProperties[CODE_CONNECTION_NAMES_KEY];
+    NSMutableArray *codeConnectionNames = [expectedProperties[CODE_CONNECTION_NAMES_KEY] mutableCopy];
+
+    if (expectCustomClassInCodeConnection)
+    {
+        [codeConnectionNames addObject:@"customClass"];
+    }
 
     XCTAssertNotNil(node , @"Failed to create plugin node \"%@\"", pluginClassName);
 
@@ -257,14 +266,32 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
 
     for (NSString *propertyName in propertyNames)
     {
-        NSView *inspectorView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", propertyName] inView:_inspectorScroll.documentView];
-        XCTAssertNotNil(inspectorView, @"No inspector view found for property name \"%@\" and class \"%@\". All node properties in plugin info: %@", propertyName, pluginClassName, plugIn.nodeProperties);
+        NSView *inspectorView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", propertyName]
+                                                  inView:_inspectorScroll.documentView];
+
+        XCTAssertNotNil(inspectorView, @"No inspector view found for property name \"%@\" and class \"%@\". All node properties in plugin info: %@",
+                        propertyName, pluginClassName, plugIn.nodeProperties);
+
+        NSView *notExpectedView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", propertyName]
+                                                    inView:_inspectoreCodeScroll.documentView];
+
+        XCTAssertNil(notExpectedView, @"Unexpected inspector view found in code connections tab for property name \"%@\" and class \"%@\".",
+                        propertyName, pluginClassName);
     }
 
     for (NSString *codeConnectionName in codeConnectionNames)
     {
-        NSView *inspectorView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", codeConnectionName] inView:_inspectoreCodeScroll.documentView];
-        XCTAssertNotNil(inspectorView, @"No code inspector view found for property name \"%@\" and class \"%@\". All node properties in plugin info: %@", codeConnectionName, pluginClassName, plugIn.nodeProperties);
+        NSView *inspectorView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", codeConnectionName]
+                                                  inView:_inspectoreCodeScroll.documentView];
+
+        XCTAssertNotNil(inspectorView, @"No code inspector view found for property name \"%@\" and class \"%@\". All node properties in plugin info: %@",
+                        codeConnectionName, pluginClassName, plugIn.nodeProperties);
+
+        NSView *notExpectedView = [self viewWithIdentifier:[NSString stringWithFormat:@"TestInspector_%@", codeConnectionName]
+                                                    inView:_inspectorScroll.documentView];
+
+        XCTAssertNil(notExpectedView, @"Unexpected inspector view found in main tab for property name \"%@\" and class \"%@\".",
+                        codeConnectionName, pluginClassName);
     }
 }
 

@@ -11,11 +11,16 @@
 #import "CCNode+NodeInfo.h"
 #import "CustomPropSetting.h"
 
+
 @interface InspectorPropertyPaneBuilder ()
 
-@property (nonatomic, weak) InspectorValue *lastInspectorValue;
+@property (nonatomic, strong, readwrite) CCNode *node;
+@property (nonatomic) BOOL isCodeConnectionPane;
+@property (nonatomic) int currentOffSetY;
+@property (nonatomic) BOOL displayPluginProperties;
+
+@property (nonatomic, strong) InspectorValue *lastInspectorValue;
 @property (nonatomic) BOOL hideAllToNextSeparator;
-@property (nonatomic, weak, readwrite) CCNode *node;
 @property (nonatomic, strong) NSMutableDictionary *currentInspectorValues;
 
 @end
@@ -23,12 +28,14 @@
 
 @implementation InspectorPropertyPaneBuilder
 
-- (instancetype)initWithNode:(CCNode *)node
+- (instancetype)initWithIsCodeConnectionPane:(BOOL)isCodeConnectionPane node:(CCNode *)node
 {
     self = [super init];
     if (self)
     {
+        self.isCodeConnectionPane = isCodeConnectionPane;
         self.node = node;
+        self.currentOffSetY = 0;
         self.currentInspectorValues = [NSMutableDictionary dictionary];
     }
 
@@ -43,9 +50,7 @@
 
     [self resetInspectorContainerViewFrames];
 
-    int paneOffset = 0;
-    int paneCodeOffset = 0;
-    BOOL displayPluginProperties = YES;
+    self.displayPluginProperties = YES;
 
     if (!_node)
     {
@@ -57,50 +62,49 @@
 
     if (plugIn.isJoint)
     {
-        paneOffset = [self disableStandardPropertiesAndTogglePhysicsWarningViewDisplayPluginProperties:&displayPluginProperties];
+        [self disableStandardPropertiesAndTogglePhysicsWarningView];
     }
     else
     {
-        paneCodeOffset = [self addCodeConnectionsPane:paneOffset plugIn:plugIn];
+        [self addCodeConnectionsPaneForPlugIn:plugIn];
     }
 
-    if (plugIn && displayPluginProperties)
+    if (plugIn && _displayPluginProperties)
     {
-        [self addProperties:plugIn paneOffset:&paneOffset paneCodeOffset:&paneCodeOffset];
+        [self addProperties:plugIn];
     }
     else
     {
-        NSLog(@"WARNING info:%@ plugIn:%@ selectedNode: %@", info, plugIn, _node);
+        if (_displayPluginProperties)
+        {
+            NSLog(@"WARNING info:%@ plugIn:%@ selectedNode: %@", info, plugIn, _node);
+        }
     }
 
-    paneOffset = [self addCustomProperties:paneOffset plugIn:plugIn];
+    [self addCustomPropertiesForPlugIn:plugIn];
 
     self.hideAllToNextSeparator = NO;
 
-    [_inspectorDocumentView setFrameSize:NSMakeSize([_inspectorScroll contentSize].width, paneOffset)];
-    [_inspectorCodeDocumentView setFrameSize:NSMakeSize([_inspectorCodeScroll contentSize].width, paneCodeOffset)];
-
-    [_propertyInspectorHandler updateTemplates];
+    [_currentView setFrameSize:NSMakeSize([_currentScrollView contentSize].width, _currentOffSetY)];
 
     [self resetKeyViewLoop];
 
     return _currentInspectorValues;
 }
 
-- (int)addInspectorPropertyOfType:(NSString *)type
+- (InspectorValue *)addInspectorPropertyOfType:(NSString *)type
                              name:(NSString *)name
                       displayName:(NSString *)displayName
                             extra:(NSString *)extra
                          readOnly:(BOOL)readOnly
                      affectsProps:(NSArray *)affectsProps
-                         atOffset:(int)atOffset
-                 isCodeConnection:(BOOL)isCodeConnection
 {
     InspectorValue *inspectorValue = [InspectorValue inspectorOfType:type
                                                        withSelection:_node
                                                      andPropertyName:name
                                                       andDisplayName:displayName
                                                             andExtra:extra];
+
     NSAssert3(inspectorValue, @"property '%@' (%@) not found in class %@", name, type, NSStringFromClass([_node class]));
 
     [self saveLastInspectorValue:inspectorValue];
@@ -109,26 +113,32 @@
 
     [self saveInspectorValueForFutureUpdates:name inspectorValue:inspectorValue];
 
-    [self loadNibWithType:type inspectorValue:inspectorValue];
+    [self loadPropertyEditorNibWithType:type inspectorValue:inspectorValue];
 
     [inspectorValue willBeAdded];
 
     NSView *inspectorValuesView = inspectorValue.view;
 
     #ifdef TESTING
+    // Tests rely on this identifier to find views within the hierarchy
     inspectorValuesView.identifier = [NSString stringWithFormat:@"TestInspector_%@", name];
     #endif
 
     //if its a separator, check to see if it isExpanded, if not set all of the next non-separator InspectorValues to hidden and don't touch the offset
-    atOffset = [inspectorValue isKindOfClass:[InspectorSeparator class]]
-        ? [self addSeparator:atOffset inspectorValue:inspectorValue inspectorValuesView:inspectorValuesView]
-        : [self toggleVisibilityToNextSeparator:atOffset inspectorValuesView:inspectorValuesView];
+    if ([inspectorValue isKindOfClass:[InspectorSeparator class]])
+    {
+        [self addSeparator:_currentOffSetY inspectorValue:inspectorValue inspectorValuesView:inspectorValuesView];
+    }
+    else
+    {
+        [self toggleVisibilityToNextSeparator:_currentOffSetY inspectorValuesView:inspectorValuesView];
+    }
 
-    [self addViewToCorrespondingTabAndPlaceAtBottom:isCodeConnection inspectorValuesView:inspectorValuesView];
+    [_currentView addSubview:inspectorValuesView];
 
     [inspectorValuesView setAutoresizingMask:NSViewWidthSizable];
-
-    return atOffset;
+    
+    return inspectorValue;
 }
 
 - (void)saveLastInspectorValue:(InspectorValue *)inspectorValue
@@ -152,19 +162,7 @@
     }
 }
 
-- (void)addViewToCorrespondingTabAndPlaceAtBottom:(BOOL)isCodeConnection inspectorValuesView:(NSView *)inspectorValuesView
-{
-    if (isCodeConnection)
-    {
-        [_inspectorCodeDocumentView addSubview:inspectorValuesView];
-    }
-    else
-    {
-        [_inspectorDocumentView addSubview:inspectorValuesView];
-    }
-}
-
-- (int)toggleVisibilityToNextSeparator:(int)offset inspectorValuesView:(NSView *)inspectorValuesView
+- (void)toggleVisibilityToNextSeparator:(int)offset inspectorValuesView:(NSView *)inspectorValuesView
 {
     if (_hideAllToNextSeparator)
     {
@@ -175,11 +173,11 @@
         NSRect frame = [inspectorValuesView frame];
         [inspectorValuesView setFrame:NSMakeRect(0, offset, frame.size.width, frame.size.height)];
         offset += frame.size.height;
+        self.currentOffSetY = offset;
     }
-    return offset;
 }
 
-- (int)addSeparator:(int)offset inspectorValue:(InspectorValue *)inspectorValue inspectorValuesView:(NSView *)inspectorValuesView
+- (void)addSeparator:(int)offset inspectorValue:(InspectorValue *)inspectorValue inspectorValuesView:(NSView *)inspectorValuesView
 {
     InspectorSeparator *inspectorSeparator = (InspectorSeparator *) inspectorValue;
 
@@ -188,10 +186,10 @@
     NSRect frame = [inspectorValuesView frame];
     [inspectorValuesView setFrame:NSMakeRect(0, offset, frame.size.width, frame.size.height)];
     offset += frame.size.height;
-    return offset;
+    self.currentOffSetY = offset;
 }
 
-- (void)loadNibWithType:(NSString *)type inspectorValue:(InspectorValue *)inspectorValue
+- (void)loadPropertyEditorNibWithType:(NSString *)type inspectorValue:(InspectorValue *)inspectorValue
 {
     NSString *inspectorNibName = [NSString stringWithFormat:@"Inspector%@", type];
     @try
@@ -244,19 +242,19 @@
     SEL privateSelector = NSSelectorFromString(privateFunction);
 
     //Undocumented function that resets the KeyViewLoop.
-    if ([_inspectorDocumentView respondsToSelector:privateSelector])
+    if ([_currentView respondsToSelector:privateSelector])
     {
-        objc_msgSend(_inspectorDocumentView, privateSelector);
+        objc_msgSend(_currentView, privateSelector);
     }
 
     //Undocumented function that resets the KeyViewLoop.
-    if ([_inspectorCodeDocumentView respondsToSelector:privateSelector])
+    if ([_currentView respondsToSelector:privateSelector])
     {
-        objc_msgSend(_inspectorCodeDocumentView, privateSelector);
+        objc_msgSend(_currentView, privateSelector);
     }
 }
 
-- (int)addCustomProperties:(int)paneOffset plugIn:(PlugInNode *)plugIn
+- (void)addCustomPropertiesForPlugIn:(PlugInNode *)plugIn
 {
     NSString *customClass = [_node extraPropForKey:@"customClass"];
     NSArray *customProps = _node.customProperties;
@@ -264,64 +262,49 @@
     {
         BOOL isCCBSubFile = [plugIn.nodeClassName isEqualToString:@"CCBFile"];
 
-        paneOffset = [self addSeparatorForCustomProperty:paneOffset customProps:customProps isCCBSubFile:isCCBSubFile];
+        [self addSeparatorForCustomPropertyCustomProps:customProps isCCBSubFile:isCCBSubFile];
 
-        paneOffset = [self addCustomPropertySettings:paneOffset customProps:customProps];
+        [self addCustomPropertySettingsCustomProps:customProps];
 
-        paneOffset = [self addCustomEditForCustomProperty:paneOffset isCCBSubFile:isCCBSubFile];
+        [self addCustomEditForCustomPropertyIsCCBSubFile:isCCBSubFile];
     }
-    return paneOffset;
 }
 
-- (int)addCustomEditForCustomProperty:(int)paneOffset isCCBSubFile:(BOOL)isCCBSubFile
+- (void)addCustomEditForCustomPropertyIsCCBSubFile:(BOOL)isCCBSubFile
 {
     if (!isCCBSubFile)
     {
-        paneOffset = [self addInspectorPropertyOfType:@"CustomEdit"
-                                                 name:NULL
-                                          displayName:@""
-                                                extra:NULL
-                                             readOnly:NO
-                                         affectsProps:NULL
-                                             atOffset:paneOffset
-                                     isCodeConnection:NO];
+        [self addInspectorPropertyOfType:@"CustomEdit" name:NULL displayName:@"" extra:NULL readOnly:NO affectsProps:NULL];
     }
-    return paneOffset;
 }
 
-- (int)addCustomPropertySettings:(int)paneOffset customProps:(NSArray *)customProps
+- (void)addCustomPropertySettingsCustomProps:(NSArray *)customProps
 {
     for (CustomPropSetting *setting in customProps)
     {
-        paneOffset = [self addInspectorPropertyOfType:@"Custom"
-                                                 name:setting.name
-                                          displayName:setting.name
-                                                extra:NULL
-                                             readOnly:NO
-                                         affectsProps:NULL
-                                             atOffset:paneOffset
-                                     isCodeConnection:NO];
+        [self addInspectorPropertyOfType:@"Custom"
+                                    name:setting.name
+                             displayName:setting.name
+                                   extra:NULL
+                                readOnly:NO
+                            affectsProps:NULL];
     }
-    return paneOffset;
 }
 
-- (int)addSeparatorForCustomProperty:(int)paneOffset customProps:(NSArray *)customProps isCCBSubFile:(BOOL)isCCBSubFile
+- (void)addSeparatorForCustomPropertyCustomProps:(NSArray *)customProps isCCBSubFile:(BOOL)isCCBSubFile
 {
     if ([customProps count] || !isCCBSubFile)
     {
-        paneOffset = [self addInspectorPropertyOfType:@"Separator"
-                                                 name:[_node extraPropForKey:@"customClass"]
-                                          displayName:[_node extraPropForKey:@"customClass"]
-                                                extra:NULL
-                                             readOnly:YES
-                                         affectsProps:NULL
-                                             atOffset:paneOffset
-                                     isCodeConnection:NO];
+        [self addInspectorPropertyOfType:@"Separator"
+                                    name:[_node extraPropForKey:@"customClass"]
+                             displayName:[_node extraPropForKey:@"customClass"]
+                                   extra:NULL
+                                readOnly:YES
+                            affectsProps:NULL];
     }
-    return paneOffset;
 }
 
-- (void)addProperties:(PlugInNode *)plugIn paneOffset:(int *)paneOffset paneCodeOffset:(int *)paneCodeOffset
+- (void)addProperties:(PlugInNode *)plugIn
 {
     NSArray *propInfos = plugIn.nodeProperties;
     for (int i = 0; i < [propInfos count]; i++)
@@ -357,52 +340,41 @@
             name = propInfo[@"displayName"];
         }
 
-        if (![propInfo[@"inspectorDisabled"] boolValue])
+        if (![propInfo[@"inspectorDisabled"] boolValue]
+            && ([propInfo[@"codeConnection"] boolValue] == _isCodeConnectionPane))
         {
-            if ([propInfo[@"codeConnection"] boolValue])
-            {
-                (*paneCodeOffset) = [self addInspectorPropertyOfType:propInfo[@"type"]
-                                                                name:name
-                                                         displayName:propInfo[@"displayName"]
-                                                               extra:propInfo[@"extra"]
-                                                            readOnly:readOnly
-                                                        affectsProps:propInfo[@"affectsProperties"]
-                                                            atOffset:*paneCodeOffset
-                                                    isCodeConnection:YES];
-            }
-            else
-            {
-                (*paneOffset) = [self addInspectorPropertyOfType:propInfo[@"type"]
-                                                            name:name
-                                                     displayName:propInfo[@"displayName"]
-                                                           extra:propInfo[@"extra"]
-                                                        readOnly:readOnly
-                                                    affectsProps:propInfo[@"affectsProperties"]
-                                                        atOffset:*paneOffset
-                                                isCodeConnection:NO];
-            }
+            [self addInspectorPropertyOfType:propInfo[@"type"]
+                                        name:name
+                                 displayName:propInfo[@"displayName"]
+                                       extra:propInfo[@"extra"]
+                                    readOnly:readOnly
+                                affectsProps:propInfo[@"affectsProperties"]];
         }
     }
 }
 
-- (int)disableStandardPropertiesAndTogglePhysicsWarningViewDisplayPluginProperties:(BOOL *)displayPluginProperties
+- (void)disableStandardPropertiesAndTogglePhysicsWarningView
 {
     [_inspectorPhysics setHidden:YES];
 
     if ([self isPhysicUnavailableAvailable])
     {
-        (*displayPluginProperties) = NO;
-        return [self addInspectorPropertyOfType:@"PhysicsUnavailable"
-                                                 name:@"name"
-                                          displayName:nil
-                                                extra:@""
-                                             readOnly:YES
-                                         affectsProps:nil
-                                             atOffset:0
-                                     isCodeConnection:NO];
-    }
+        self.displayPluginProperties = NO;
 
-    return 0;
+        if (!_isCodeConnectionPane)
+        {
+            InspectorValue *inspectorValue = [self addInspectorPropertyOfType:@"PhysicsUnavailable"
+                                        name:@"name"
+                                 displayName:nil
+                                       extra:@""
+                                    readOnly:YES
+                                affectsProps:nil];
+            
+            // This will retain the value, otherwise the action to go back to timeline frame 0 won't work
+            // as the target will be removed from memory prematurely
+            _currentInspectorValues[@"PhysicsUnavailable"] = inspectorValue;
+        }
+    }
 }
 
 - (BOOL)isPhysicUnavailableAvailable
@@ -411,36 +383,29 @@
             || ![_sequenceHandler currentSequence].autoPlay;
 }
 
-- (int)addCodeConnectionsPane:(int)paneOffset plugIn:(PlugInNode *)plugIn
+- (void)addCodeConnectionsPaneForPlugIn:(PlugInNode *)plugIn
 {
-    int paneCodeOffset = [self addInspectorPropertyOfType:@"CodeConnections"
-                                                     name:@"customClass"
-                                              displayName:@""
-                                                    extra:NULL
-                                                 readOnly:[plugIn.nodeClassName isEqualToString:@"CCBFile"]
-                                             affectsProps:NULL
-                                                 atOffset:paneOffset
-                                         isCodeConnection:YES];
+    if (_isCodeConnectionPane)
+    {
+        [self addInspectorPropertyOfType:@"CodeConnections"
+                                    name:@"customClass"
+                             displayName:@""
+                                   extra:NULL
+                                readOnly:[plugIn.nodeClassName isEqualToString:@"CCBFile"]
+                            affectsProps:NULL];
 
-    [_inspectorPhysics setHidden:NO];
-    return paneCodeOffset;
+        [_inspectorPhysics setHidden:NO];
+    }
 }
 
 - (void)resetInspectorContainerViewFrames
 {
-    [_inspectorDocumentView setFrameSize:NSMakeSize(233, 1)];
-    [_inspectorCodeDocumentView setFrameSize:NSMakeSize(233, 1)];
+    [_currentView setFrameSize:NSMakeSize(233, 1)];
 }
 
 - (void)removeAllOldInspectorPanes
 {
-    NSArray *panes = [_inspectorDocumentView subviews];
-    for (int i = [panes count] - 1; i >= 0; i--)
-    {
-        NSView *pane = panes[(NSUInteger) i];
-        [pane removeFromSuperview];
-    }
-    panes = [_inspectorCodeDocumentView subviews];
+    NSArray *panes = [_currentView subviews];
     for (int i = [panes count] - 1; i >= 0; i--)
     {
         NSView *pane = panes[(NSUInteger) i];
@@ -457,6 +422,5 @@
         [inspectorValue willBeRemoved];
     }
 }
-
 
 @end
