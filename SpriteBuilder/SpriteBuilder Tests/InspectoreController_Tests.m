@@ -10,7 +10,7 @@
 #import <OCMock/OCMock.h>
 #import "AppDelegate.h"
 #import "InspectorController.h"
-#import "PropertyInspectorHandler.h"
+#import "PropertyInspectorTemplateHandler.h"
 #import "CocosScene.h"
 #import "SequencerHandler.h"
 #import "PlugInManager.h"
@@ -51,7 +51,7 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
     self.inspectorScroll = [[NSScrollView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 100.0, 100.0)];
     self.inspectoreCodeScroll = [[NSScrollView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 100.0, 100.0)];
     self.inspectorPhysics = [[NSView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 100.0, 100.0)];
-    self.propertyInspectorHandler = [OCMockObject niceMockForClass:[PropertyInspectorHandler class]];
+    self.propertyInspectorHandler = [OCMockObject niceMockForClass:[PropertyInspectorTemplateHandler class]];
     self.cocosScene = [OCMockObject niceMockForClass:[CocosScene class]];
     self.sequenceHandler = [OCMockObject niceMockForClass:[SequencerHandler class]];
     self.appDelegate = [OCMockObject niceMockForClass:[AppDelegate class]];

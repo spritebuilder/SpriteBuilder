@@ -3,7 +3,7 @@
 @class AppDelegate;
 @class CocosScene;
 @class SequencerHandler;
-@class PropertyInspectorHandler;
+@class PropertyInspectorTemplateHandler;
 
 
 @interface InspectorController : NSObject
@@ -14,7 +14,7 @@
 
 @property (nonatomic, weak) IBOutlet NSScrollView *inspectorCodeScroll;
 @property (nonatomic, weak) IBOutlet NSScrollView *inspectorScroll;
-@property (nonatomic, weak) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic, weak) IBOutlet PropertyInspectorTemplateHandler * propertyInspectorHandler;
 @property (nonatomic, weak) IBOutlet NSView *inspectorPhysics;
 
 + (InspectorController *)sharedController;

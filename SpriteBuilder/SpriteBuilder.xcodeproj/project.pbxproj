@@ -446,9 +446,6 @@
 		B7AC69CB17A70A4B0041B8BD /* inspector-props.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69C617A70A4A0041B8BD /* inspector-props.png */; };
 		B7AC69CC17A70A4B0041B8BD /* inspector-props@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69C717A70A4B0041B8BD /* inspector-props@2x.png */; };
 		B7AC69CD17A70A4B0041B8BD /* inspector-template.png in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69C817A70A4B0041B8BD /* inspector-template.png */; };
-		B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D017A758A40041B8BD /* PropertyInspectorHandler.m */; };
-		B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */; };
-		B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */; };
 		B7AC69DC17A9D9700041B8BD /* defaultTemplates.zip in Resources */ = {isa = PBXBuildFile; fileRef = B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */; };
 		B7C3532317F65547005697C1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7C3532917F65547005697C1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C3532717F65547005697C1 /* InfoPlist.strings */; };
@@ -793,6 +790,7 @@
 		E525F002884ABE8D1CA3F0C5 /* InspectorPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7E5C3F70DFC88E438B2 /* InspectorPoint.m */; };
 		E525F005EE181A7F5BF74749 /* InspectorPopoverColor3.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FC21381F84E752612C80 /* InspectorPopoverColor3.xib */; };
 		E525F03B6CDF916ED1E70285 /* InspectorPopoverScaleLock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F90B1FAB88CFFA07BA6E /* InspectorPopoverScaleLock.xib */; };
+		E525F041038FD3307816F6BA /* PropertyInspectorTemplateHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F135CE98A990D3A8F336 /* PropertyInspectorTemplateHandler.m */; };
 		E525F041845D2D5ABB99D990 /* ResourceToggleSmartSpriteSheetCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD3EA53480310EC675E1 /* ResourceToggleSmartSpriteSheetCommand.m */; };
 		E525F07CCBACEC15F8A13EC7 /* AnimationPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6D55650A58DC2F3698B /* AnimationPlaybackManager.m */; };
 		E525F09057001303E5BB9685 /* InspectorColor4.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8423D5CF6F76AEFCBCC /* InspectorColor4.m */; };
@@ -870,6 +868,7 @@
 		E525F55709C7B6FCB64695FA /* RMDirectory_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F195694A84DD7EDEC25E /* RMDirectory_Tests.m */; };
 		E525F560E9CD0BFCB143ACC0 /* InspectorByte.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F33640CEA0B8E13CB7CA /* InspectorByte.xib */; };
 		E525F598C4D71DC6330D2F7F /* InspectorPhysicsUnavailable.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F377E4B3F3DF3FE57AF5 /* InspectorPhysicsUnavailable.xib */; };
+		E525F5CB1DA42E6720A6476E /* PropertyInspectorTemplateCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0DC68CB5BE68E2E4233 /* PropertyInspectorTemplateCollectionView.m */; };
 		E525F5E6EF1FB917093D1F60 /* InspectorStringSimple.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F12EA995AE91DCC34059 /* InspectorStringSimple.xib */; };
 		E525F5E7563958DE71C9B4AE /* ResourceExportPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0424E2063AF911B0692 /* ResourceExportPackageCommand.m */; };
 		E525F5E78A703F1381486AA8 /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF599E666FBB986616AF /* InspectorColor4.xib */; };
@@ -955,6 +954,7 @@
 		E525FD0CE48AC54FD5CA02BD /* InspectorEnabledFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FB2C511229C00D261998 /* InspectorEnabledFloat.xib */; };
 		E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */; };
 		E525FD5F78427772C74BE9FC /* InspectorScaleLock.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCFC2EDFEDA03875ABBF /* InspectorScaleLock.m */; };
+		E525FD63AB363E8EE8C4D5BB /* PropertyInspectorTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC21545751BAC7507A16 /* PropertyInspectorTemplate.m */; };
 		E525FD71DA9970A211540812 /* RMDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDE1E2157A624E4395A5 /* RMDirectory.m */; };
 		E525FD765886B725C95077AF /* InspectorText.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FA636F4ACE743A181D31 /* InspectorText.xib */; };
 		E525FD8AEF741E01F59BEF8F /* InspectorCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F1D9BFC4902AF8C2AC6C /* InspectorCheck.m */; };
@@ -1920,12 +1920,6 @@
 		B7AC69C617A70A4A0041B8BD /* inspector-props.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-props.png"; sourceTree = "<group>"; };
 		B7AC69C717A70A4B0041B8BD /* inspector-props@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-props@2x.png"; sourceTree = "<group>"; };
 		B7AC69C817A70A4B0041B8BD /* inspector-template.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-template.png"; sourceTree = "<group>"; };
-		B7AC69CF17A758A40041B8BD /* PropertyInspectorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorHandler.h; sourceTree = "<group>"; };
-		B7AC69D017A758A40041B8BD /* PropertyInspectorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorHandler.m; sourceTree = "<group>"; };
-		B7AC69D217A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplateCollectionView.h; sourceTree = "<group>"; };
-		B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplateCollectionView.m; sourceTree = "<group>"; };
-		B7AC69D517A827470041B8BD /* PropertyInspectorTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplate.h; sourceTree = "<group>"; };
-		B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplate.m; sourceTree = "<group>"; };
 		B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = defaultTemplates.zip; sourceTree = "<group>"; };
 		B7C3532217F65547005697C1 /* CCSprite9Slice.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCSprite9Slice.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7C3532617F65547005697C1 /* CCSprite9Slice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCSprite9Slice-Info.plist"; sourceTree = "<group>"; };
@@ -2414,6 +2408,7 @@
 		E525F0BC44FE0FDD5840BDC8 /* ResourceTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceTypes.h; sourceTree = "<group>"; };
 		E525F0C2A2BC9A53AFD04862 /* PackageMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrator_Tests.m; sourceTree = "<group>"; };
 		E525F0CC240D4588175A2329 /* CCBPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublisher.h; sourceTree = "<group>"; };
+		E525F0DC68CB5BE68E2E4233 /* PropertyInspectorTemplateCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplateCollectionView.m; sourceTree = "<group>"; };
 		E525F0DCE4278ED8AE6D7491 /* PackageRemover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRemover.m; sourceTree = "<group>"; };
 		E525F0E08A79DE5698E23CD6 /* FormatConvert_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormatConvert_Tests.m; sourceTree = "<group>"; };
 		E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceDeleteCommand.m; sourceTree = "<group>"; };
@@ -2427,6 +2422,7 @@
 		E525F12E427752EA9AA4EB37 /* ResourceNewFolderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewFolderCommand.h; sourceTree = "<group>"; };
 		E525F12EA995AE91DCC34059 /* InspectorStringSimple.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorStringSimple.xib; sourceTree = "<group>"; };
 		E525F13251AC905E5A0F52EF /* InspectorPopoverByte.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverByte.xib; sourceTree = "<group>"; };
+		E525F135CE98A990D3A8F336 /* PropertyInspectorTemplateHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplateHandler.m; sourceTree = "<group>"; };
 		E525F13FEF3757012A4E0DDE /* CCBPublisherCacheCleaner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisherCacheCleaner.m; sourceTree = "<group>"; };
 		E525F14190B50F98308504B5 /* ResourceContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu.m; sourceTree = "<group>"; };
 		E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainProjectSettingsDetailView.m; sourceTree = "<group>"; };
@@ -2434,6 +2430,7 @@
 		E525F167F988C167E79971B8 /* InspectorPoint.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPoint.xib; sourceTree = "<group>"; };
 		E525F173545F6AA131BE9DE6 /* InspectorInteger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorInteger.xib; sourceTree = "<group>"; };
 		E525F18317FA64A73A1C7E83 /* InspectorEnabledFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorEnabledFloat.h; sourceTree = "<group>"; };
+		E525F1845B6DC6B8B9545CC9 /* PropertyInspectorTemplateCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplateCollectionView.h; sourceTree = "<group>"; };
 		E525F195694A84DD7EDEC25E /* RMDirectory_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDirectory_Tests.m; sourceTree = "<group>"; };
 		E525F1957EC52D59F2C184C7 /* InspectorDegrees.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorDegrees.h; sourceTree = "<group>"; };
 		E525F197E108D243FE4D1FB1 /* PublishFileLookupProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishFileLookupProtocol.h; sourceTree = "<group>"; };
@@ -2521,6 +2518,7 @@
 		E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer_Tests.m; sourceTree = "<group>"; };
 		E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceNewFileCommand.m; sourceTree = "<group>"; };
 		E525F6338314BBF55ED2CE0A /* RMResource_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource_Tests.m; sourceTree = "<group>"; };
+		E525F647D379B0BB63F018D9 /* PropertyInspectorTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplate.h; sourceTree = "<group>"; };
 		E525F65DBF07F61846B9B9C4 /* InspectorFontTTF.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFontTTF.xib; sourceTree = "<group>"; };
 		E525F6BD9A7979086156B659 /* ProjectMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectMigrator.h; sourceTree = "<group>"; };
 		E525F6C26662457E8064AF52 /* InspectorFloatVar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorFloatVar.h; sourceTree = "<group>"; };
@@ -2637,8 +2635,10 @@
 		E525FC0EB59DB9CABB7E3B9D /* InspectorFloatScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFloatScale.m; sourceTree = "<group>"; };
 		E525FC1CBE9D5A0A1A22DD51 /* InspectorColor3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorColor3.xib; sourceTree = "<group>"; };
 		E525FC21381F84E752612C80 /* InspectorPopoverColor3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverColor3.xib; sourceTree = "<group>"; };
+		E525FC21545751BAC7507A16 /* PropertyInspectorTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplate.m; sourceTree = "<group>"; };
 		E525FC2C6864DF91BA1712E2 /* NSAlert+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAlert+Convenience.h"; sourceTree = "<group>"; };
 		E525FC30968813B67FE4F531 /* InspectorByte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorByte.m; sourceTree = "<group>"; };
+		E525FC4D802C18FBD44DE5D1 /* PropertyInspectorTemplateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplateHandler.h; sourceTree = "<group>"; };
 		E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectoreController_Tests.m; sourceTree = "<group>"; };
 		E525FC764043B778E59DF538 /* InspectorCodeConnections.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorCodeConnections.xib; sourceTree = "<group>"; };
 		E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemTestCase.m; sourceTree = "<group>"; };
@@ -3610,7 +3610,6 @@
 				830F4E83192DFBA2002B832D /* Packages */,
 				B7C3533B17FA306C005697C1 /* Physics Editor */,
 				E3B7AEDA14E3242600DFD402 /* PlugIn Manager */,
-				B7AC69CE17A756950041B8BD /* Property Inspector */,
 				E346286D155D21F10043EAB1 /* Publishing */,
 				B72D1DBF186125E80091252F /* Requirements.plist */,
 				E3C5C1A11504D144000CF6F3 /* Resource Manager */,
@@ -4468,19 +4467,6 @@
 				B7AC699B17A079C80041B8BD /* SMTabBarItem.m */,
 			);
 			path = InspectorTabBar;
-			sourceTree = "<group>";
-		};
-		B7AC69CE17A756950041B8BD /* Property Inspector */ = {
-			isa = PBXGroup;
-			children = (
-				B7AC69CF17A758A40041B8BD /* PropertyInspectorHandler.h */,
-				B7AC69D017A758A40041B8BD /* PropertyInspectorHandler.m */,
-				B7AC69D217A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.h */,
-				B7AC69D317A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m */,
-				B7AC69D517A827470041B8BD /* PropertyInspectorTemplate.h */,
-				B7AC69D617A827470041B8BD /* PropertyInspectorTemplate.m */,
-			);
-			name = "Property Inspector";
 			sourceTree = "<group>";
 		};
 		B7C3532417F65547005697C1 /* CCSprite9Slice */ = {
@@ -5433,7 +5419,7 @@
 			name = Migration;
 			sourceTree = "<group>";
 		};
-		E525F2CD3FA1D9C04C87345A /* Inspector Properties */ = {
+		E525F2CD3FA1D9C04C87345A /* Properties */ = {
 			isa = PBXGroup;
 			children = (
 				E525F89681295FE8D41A727B /* InspectorValue.h */,
@@ -5576,7 +5562,7 @@
 				E525F111DC84386499A8F15F /* InspectorEffectControl.m */,
 				E525FEBA90890AA6A1373E42 /* InspectorEffectControl.xib */,
 			);
-			name = "Inspector Properties";
+			name = Properties;
 			sourceTree = "<group>";
 		};
 		E525F41A4552817ADD0DE065 /* ValueObjects */ = {
@@ -5644,14 +5630,28 @@
 			name = Util;
 			sourceTree = "<group>";
 		};
+		E525FA844AF7698C8D6337B0 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				E525FC4D802C18FBD44DE5D1 /* PropertyInspectorTemplateHandler.h */,
+				E525F135CE98A990D3A8F336 /* PropertyInspectorTemplateHandler.m */,
+				E525F1845B6DC6B8B9545CC9 /* PropertyInspectorTemplateCollectionView.h */,
+				E525F0DC68CB5BE68E2E4233 /* PropertyInspectorTemplateCollectionView.m */,
+				E525F647D379B0BB63F018D9 /* PropertyInspectorTemplate.h */,
+				E525FC21545751BAC7507A16 /* PropertyInspectorTemplate.m */,
+			);
+			name = Templates;
+			sourceTree = "<group>";
+		};
 		E525FAED831D10344893DCBE /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
 				E525F8027C3E43F222BD84A5 /* InspectorController.m */,
 				E525F0A49364371BA5B0E891 /* InspectorController.h */,
-				E525F2CD3FA1D9C04C87345A /* Inspector Properties */,
+				E525F2CD3FA1D9C04C87345A /* Properties */,
 				E525F4835BC8657DCA982832 /* InspectorPropertyPaneBuilder.m */,
 				E525F5EA95FBBDE05FCBE2E3 /* InspectorPropertyPaneBuilder.h */,
+				E525FA844AF7698C8D6337B0 /* Templates */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -7339,9 +7339,6 @@
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
 				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
 				920994D0198717D20006F38D /* EffectGlassControl.m in Sources */,
-				B7AC69D117A758A40041B8BD /* PropertyInspectorHandler.m in Sources */,
-				B7AC69D417A75E7E0041B8BD /* PropertyInspectorTemplateCollectionView.m in Sources */,
-				B7AC69D717A827470041B8BD /* PropertyInspectorTemplate.m in Sources */,
 				B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */,
 				9276C1321959F71C00A1D4DC /* EffectViewController.m in Sources */,
 				B7083DF917B1CBC8006628C7 /* LocalizationEditorHandler.m in Sources */,
@@ -7465,6 +7462,9 @@
 				E525F95319581B5FFD1883D5 /* InspectorPhysicsUnavailable.m in Sources */,
 				E525FDF82788E3030CE06C2F /* InspectorEffectControl.m in Sources */,
 				E525F34D0D2408D54F1BF0DA /* InspectorPropertyPaneBuilder.m in Sources */,
+				E525F041038FD3307816F6BA /* PropertyInspectorTemplateHandler.m in Sources */,
+				E525F5CB1DA42E6720A6476E /* PropertyInspectorTemplateCollectionView.m in Sources */,
+				E525FD63AB363E8EE8C4D5BB /* PropertyInspectorTemplate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

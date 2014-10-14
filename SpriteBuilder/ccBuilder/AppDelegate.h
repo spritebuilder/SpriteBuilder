@@ -115,7 +115,7 @@ enum {
 @class ResourceManagerTilelessEditorManager;
 @class CCBImageBrowserView;
 @class PlugInNodeViewHandler;
-@class PropertyInspectorHandler;
+@class PropertyInspectorTemplateHandler;
 @class LocalizationEditorHandler;
 @class PhysicsHandler;
 @class WarningTableViewHandler;
@@ -145,7 +145,7 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet CCBGLView* __weak cocosView;
     IBOutlet NSView* mainView;
     IBOutlet CCBSplitHorizontalView* splitHorizontalView;
-    IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+    IBOutlet PropertyInspectorTemplateHandler * propertyInspectorHandler;
 
     IBOutlet NSToolbar* toolbar;
     MainToolbarDelegate* toolbarDelegate;
@@ -304,7 +304,7 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (weak, nonatomic,readonly) IBOutlet ResourceManagerOutlineView *outlineProject;
 
 @property (nonatomic, strong) IBOutlet InspectorController *inspectorController;
-@property (nonatomic, strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic, strong) IBOutlet PropertyInspectorTemplateHandler * propertyInspectorHandler;
 
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
 @property (nonatomic,strong) CCBDocument* currentDocument;

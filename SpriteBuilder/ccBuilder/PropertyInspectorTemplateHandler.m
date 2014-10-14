@@ -1,26 +1,26 @@
 //
-//  PropertyInspectorHandler.m
+//  PropertyInspectorTemplateHandler.m
 //  CocosBuilder
 //
 //  Created by Viktor on 7/29/13.
 //
 //
 
-#import "PropertyInspectorHandler.h"
+#import "PropertyInspectorTemplateHandler.h"
 #import "AppDelegate.h"
-#import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
 #import "PropertyInspectorTemplate.h"
 
-// TODO: Move more of the property inspector code over here!
-
-@implementation PropertyInspectorHandler
+@implementation PropertyInspectorTemplateHandler
 
 - (void) updateTemplates
 {
     CCNode* node = [AppDelegate appDelegate].selectedNode;
-    
-    if (!node) return;
+    if (!node)
+    {
+        return;
+    }
+
     PlugInNode* plugIn = node.plugIn;
     NSString* plugInName = plugIn.nodeClassName;
     
@@ -32,8 +32,11 @@
 - (IBAction) addTemplate:(id) sender
 {
     CCNode* node = [AppDelegate appDelegate].selectedNode;
-    if (!node) return;
-    
+    if (!node)
+    {
+        return;
+    }
+
     NSString* newName = newTemplateName.stringValue;
     
     // Make sure that the name is a valid file name
@@ -69,9 +72,12 @@
 - (void) applyTemplate:(PropertyInspectorTemplate*) templ
 {
     CCNode* node = [AppDelegate appDelegate].selectedNode;
-    if (!node) return;
-    if (!templ.properties) return;
-    
+    if (!node
+        || !templ.properties)
+    {
+        return;
+    }
+
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*template"];
     [templ applyToNode:node];
     
@@ -107,7 +113,7 @@
     NSTask* zipTask = [[NSTask alloc] init];
     [zipTask setCurrentDirectoryPath:[templDir stringByDeletingLastPathComponent]];
     [zipTask setLaunchPath:@"/usr/bin/unzip"];
-    NSArray* args = [NSArray arrayWithObjects:zipFile, nil];
+    NSArray* args = @[zipFile];
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];

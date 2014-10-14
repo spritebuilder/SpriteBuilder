@@ -3,8 +3,6 @@
 #import "InspectorValue.h"
 #import "NodeInfo.h"
 #import "PlugInNode.h"
-#import "CCNode.h"
-#import "PropertyInspectorHandler.h"
 #import "InspectorSeparator.h"
 #import "CocosScene.h"
 #import "SequencerSequence.h"

@@ -2701,7 +2701,7 @@ CA
                 </imageView>
             </subviews>
         </view>
-        <customObject id="2075" customClass="PropertyInspectorHandler">
+        <customObject id="2075" customClass="PropertyInspectorTemplateHandler">
             <connections>
                 <outlet property="collectionView" destination="2051" id="2079"/>
                 <outlet property="newTemplateBgColor" destination="2086" id="2087"/>

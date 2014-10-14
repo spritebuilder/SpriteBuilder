@@ -10,7 +10,7 @@
 #import "CCBColorView.h"
 #import "PropertyInspectorTemplate.h"
 #import "AppDelegate.h"
-#import "PropertyInspectorHandler.h"
+#import "PropertyInspectorTemplateHandler.h"
 
 @implementation PropertyInspectorTemplateCollectionView
 

@@ -96,7 +96,7 @@
 #import "ResourceManagerTilelessEditorManager.h"
 #import "CCBImageBrowserView.h"
 #import "PlugInNodeViewHandler.h"
-#import "PropertyInspectorHandler.h"
+#import "PropertyInspectorTemplateHandler.h"
 #import "LocalizationEditorHandler.h"
 #import "PhysicsHandler.h"
 #import "CCBProjectCreator.h"

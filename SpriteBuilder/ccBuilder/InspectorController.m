@@ -11,7 +11,7 @@
 #import "NodeInfo.h"
 #import "PlugInNode.h"
 #import "CustomPropSetting.h"
-#import "PropertyInspectorHandler.h"
+#import "PropertyInspectorTemplateHandler.h"
 #import "InspectorPropertyPaneBuilder.h"
 
 static InspectorController *__sharedInstance = nil;
