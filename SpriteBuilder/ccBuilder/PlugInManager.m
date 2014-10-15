@@ -24,6 +24,7 @@
 
 #import "PlugInManager.h"
 #import "PlugInExport.h"
+#import "PlugInNode.h"
 
 #if !CCB_BUILDING_COMMANDLINE
 #import "AppDelegate.h"
@@ -110,7 +111,7 @@
             
             [bundle load];
             
-            PlugInNode* plugIn = [[PlugInNode alloc] initWithBundle:bundle];
+            PlugInNode* plugIn = [[PlugInNode alloc] initWithBundle:bundle mainBundle:[NSBundle mainBundle]];
             if (plugIn)
             {
 				if (plugIn.isAbstract)

@@ -25,6 +25,11 @@
 #import "PlugInNode.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
+@interface PlugInNode()
+
+@property (nonatomic, strong) NSBundle *mainBundle;
+
+@end
 
 @implementation PlugInNode
 
@@ -107,13 +112,20 @@
     }
 }
 
-- (id) initWithBundle:(NSBundle*) b
+- (id)initWithBundle:(NSBundle *)aBundle mainBundle:(NSBundle *)mainBundle
 {
+    NSAssert(aBundle != nil, @"bundle must not be nil");
+    NSAssert(mainBundle != nil, @"mainBundle must not be nil");
+
     self = [super init];
-    if (!self) return NULL;
-    
-    bundle = b;
-    
+    if (!self)
+    {
+        return NULL;
+    }
+
+    bundle = aBundle;
+    self.mainBundle = mainBundle;
+
     // Load properties
     NSURL* propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
     NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
