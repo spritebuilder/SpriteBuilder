@@ -88,6 +88,7 @@
     for (NSDictionary *propertyToOverride in propertiesToOverride)
     {
         NSString* propName = propertyToOverride[@"name"];
+        BOOL shouldBeRemoved = [propertyToOverride[@"type"] isEqualToString:@"None"];
 
         // Find the old property
         for (int oldPropIdx = [array count] - 1; oldPropIdx >= 0; oldPropIdx--)
@@ -95,6 +96,11 @@
             NSDictionary* oldPropInfo = array[(NSUInteger) oldPropIdx];
             if ([oldPropInfo[@"name"] isEqualToString:propName])
             {
+                if (shouldBeRemoved)
+                {
+                    [array removeObjectAtIndex:(NSUInteger) oldPropIdx];
+                }
+                else
                 {
                     array[(NSUInteger) oldPropIdx] = propertyToOverride;
                 }
@@ -102,7 +108,6 @@
         }
     }
 }
-
 
 - (void) setupNodePropsDict
 {
