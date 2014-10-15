@@ -8,6 +8,7 @@
 
 #import "CCBProjectCreator.h"
 #import "AppDelegate.h"
+#import "CCBFileUtil.h"
 
 @implementation NSString (IdentifierSanitizer)
 
@@ -199,62 +200,10 @@
     [apportableConfigurationContents writeToFile:apportableConfigFile atomically:YES encoding:NSUTF8StringEncoding error:&error];
 	
 	// perform cleanup to remove unnecessary files which only bloat the project
-	[self cleanupProjectAtPath:fileName];
+	[CCBFileUtil cleanupSpriteBuilderProjectAtPath:fileName];
 	
     return [fm fileExistsAtPath:fileName];
 }
-
--(void) cleanupProjectAtPath:(NSString*)fileName
-{
-	// This list needs to be updated/amended whenever cocos2d introduces new or renames folders whose contents are
-	// not needed during development of a SpriteBuilder project. See: https://github.com/spritebuilder/SpriteBuilder/issues/915
-	NSString* cocosPath = @"Source/libs/cocos2d-iphone";
-	NSArray* removeItems = @[@"build",
-							 @"cocos2d-tests-android",
-							 @"cocos2d-tests-ios.xcodeproj",
-							 @"cocos2d-tests-android",
-							 @"cocos2d-tests-osx.xcodeproj",
-							 @"cocos2d-tests.xcodeproj",
-							 @"cocos2d-ui-tests",
-							 @"Resources",
-							 @"Resources-iPad",
-							 @"Resources-Mac",
-							 @"tools",
-							 @"UnitTests",
-							 @"external/Chipmunk/Demo",
-							 @"external/Chipmunk/doc",
-							 @"external/Chipmunk/doc-src",
-							 @"external/Chipmunk/msvc",
-							 @"external/Chipmunk/xcode",
-							 @"external/ObjectAL/ObjectAL/diagrams",
-							 @"external/ObjectAL/ObjectALDemo",
-							 @"external/ObjectAL/Sample Code",
-							 ];
-	
-	// removing extranous cocos2d-iphone files if existing
-	NSFileManager* fm = [NSFileManager defaultManager];
-	NSString* parentPath = [fileName stringByDeletingLastPathComponent];
-	NSError* error;
-	
-	for (NSString* removeItem in removeItems)
-	{
-		NSString* removePath = [NSString pathWithComponents:@[parentPath, cocosPath, removeItem]];
-
-		if ([fm fileExistsAtPath:removePath])
-		{
-			[fm removeItemAtPath:removePath error:&error];
-			if (error)
-			{
-				NSLog(@"WARNING: cleanup failed to remove path: %@", removePath);
-			}
-		}
-		else
-		{
-			NSLog(@"Developer Warning: tried to cleanup non-existent path: %@", removePath);
-		}
-	}
-}
-
 
 - (void) setName:(NSString*)name inFile:(NSString*)fileName search:(NSString*)searchStr
 {

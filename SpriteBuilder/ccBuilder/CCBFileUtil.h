@@ -33,4 +33,6 @@
 + (void) addFilesWithExtension:(NSString*)ext inDirectory:(NSString*)dir toArray:(NSMutableArray*)array subPath:(NSString*)subPath;
 + (NSArray*) filesInResourcePathsWithExtension:(NSString*)ext;
 
++(void) cleanupSpriteBuilderProjectAtPath:(NSString*)fileName;
+
 @end
