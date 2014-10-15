@@ -55,44 +55,48 @@
 @synthesize requireChildClass;
 @synthesize icon;
 
-- (void) loadPropertiesForBundle:(NSBundle*) b intoArray:(NSMutableArray*)arr
+- (void) loadPropertiesForBundle:(NSBundle*)aBundle intoArray:(NSMutableArray*)array
 {
-    NSURL* propsURL = [b URLForResource:@"CCBPProperties" withExtension:@"plist"];
-    NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
+    NSURL* propsURL = [aBundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
+    NSMutableDictionary*properties = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
     
-    // Add properties from super classes
-    NSString* inheritsFrom = [props objectForKey:@"inheritsFrom"];
+    [self addProperitesFromSuperClassToArray:array props:properties];
+
+    [array addObjectsFromArray:properties[@"properties"]];
+
+    [self overridePropertiesInArray:array props:properties];
+}
+
+- (void)addProperitesFromSuperClassToArray:(NSMutableArray *)array props:(NSMutableDictionary *)props
+{
+    NSString* inheritsFrom = props[@"inheritsFrom"];
     if (inheritsFrom)
     {
-        NSBundle* appBundle = [NSBundle mainBundle];
-        NSURL* plugInDir = [appBundle builtInPlugInsURL];
-        
+        NSURL* plugInDir = [_mainBundle builtInPlugInsURL];
+
         NSURL* superBundleURL = [plugInDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.ccbPlugNode",inheritsFrom]];
-        
+
         NSBundle* superBundle = [NSBundle bundleWithURL:superBundleURL];
-        
-        [self loadPropertiesForBundle:superBundle intoArray:arr];
+
+        [self loadPropertiesForBundle:superBundle intoArray:array];
     }
-    
-    [arr addObjectsFromArray:[props objectForKey:@"properties"]];
-    
-    // Handle overridden properties
-    NSArray* overrides = [props objectForKey:@"propertiesOverridden"];
-    if (overrides)
+}
+
+- (void)overridePropertiesInArray:(NSMutableArray *)array props:(NSMutableDictionary *)props
+{
+    NSArray *propertiesToOverride = props[@"propertiesOverridden"];
+    for (NSDictionary *propertyToOverride in propertiesToOverride)
     {
-        for (int i = 0; i < [overrides count]; i++)
+        NSString* propName = propertyToOverride[@"name"];
+
+        // Find the old property
+        for (int oldPropIdx = [array count] - 1; oldPropIdx >= 0; oldPropIdx--)
         {
-            NSDictionary* propInfo = [overrides objectAtIndex:i];
-            NSString* propName = [propInfo objectForKey:@"name"];
-            
-            // Find the old property
-            for (int oldPropIdx = 0; oldPropIdx < [arr count]; oldPropIdx++)
+            NSDictionary* oldPropInfo = array[(NSUInteger) oldPropIdx];
+            if ([oldPropInfo[@"name"] isEqualToString:propName])
             {
-                NSDictionary* oldPropInfo = [arr objectAtIndex:oldPropIdx];
-                if ([[oldPropInfo objectForKey:@"name"] isEqualToString:propName])
                 {
-                    // This property should be replaced
-                    [arr replaceObjectAtIndex:oldPropIdx withObject:propInfo];
+                    array[(NSUInteger) oldPropIdx] = propertyToOverride;
                 }
             }
         }
