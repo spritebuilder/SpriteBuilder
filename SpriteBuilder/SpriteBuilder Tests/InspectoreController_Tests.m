@@ -82,12 +82,11 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
 /*
  * Disabled as long as https://github.com/spritebuilder/SpriteBuilder/issues/897 is not resolved
  */
-/*
+
 - (void)testUpdateInspectorFromSelectionForCCSprite9Slice
 {
-    [self assertUpdateInspectorFromSelectionForPlugin:expectCustomClassInCodeConnection:@"CCSprite9Slice"];
+    [self assertUpdateInspectorFromSelectionForPlugin:@"CCSprite9Slice" expectCustomClassInCodeConnection:YES];
 }
-*/
 
 - (void)testUpdateInspectorFromSelectionForCCNode
 {
