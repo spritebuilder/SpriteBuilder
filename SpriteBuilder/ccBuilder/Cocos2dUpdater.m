@@ -15,6 +15,7 @@
 #import "NSError+SBErrors.h"
 #import "NSAlert+Convenience.h"
 #import "SemanticVersioning.h"
+#import "CCBFileUtil.h"
 
 // Debug option: Some verbosity on the console, 1 to enable 0 to turn off
 #define Cocos2UpdateLogging 0
@@ -181,6 +182,12 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
             && [self createSymbolicLinkToCocos2dProject:&error]
             && [self tidyUpTempFolder:&error];
 
+		// cleaning only makes sense if update succeeded
+		if (updateResult)
+		{
+			[CCBFileUtil cleanupSpriteBuilderProjectAtPath:_projectSettings.projectPath];
+		}
+		
         [self finishWithUpdateResult:updateResult error:error];
     });
 
@@ -543,9 +550,18 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
                                     stringByAppendingPathComponent:@"cocos2d.xcodeproj"];
         NSString *symbolicLinkPath = [[self defaultProjectsCocos2DFolderPath]
                                     stringByAppendingPathComponent:@"cocos2d-ios.xcodeproj"];
-        return [fileManager createSymbolicLinkAtPath:symbolicLinkPath
-                                 withDestinationPath:newProjectPath
-                                               error:error];
+		
+		// remove the existing cocos2d-ios.xcodeproj since this proj may still be included in the cocos2d distribution
+		if ([fileManager fileExistsAtPath:symbolicLinkPath])
+		{
+			[fileManager removeItemAtPath:symbolicLinkPath error:nil];
+		}
+		
+        BOOL result = [fileManager createSymbolicLinkAtPath:symbolicLinkPath
+										withDestinationPath:newProjectPath
+													  error:error];
+		return result;
+			
     }
     return YES;  // No soft link is needed
 }
