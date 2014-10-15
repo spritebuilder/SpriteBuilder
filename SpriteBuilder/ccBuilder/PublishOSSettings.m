@@ -13,7 +13,7 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     if (self)
     {
         self.audio_quality = DEFAULT_AUDIO_QUALITY;
-        self.resolutions = @[@"tablet", @"tablethd", @"phone", @"phonehd"];
+        self.resolutions = @[RESOLUTION_TABLET, RESOLUTION_TABLET_HD, RESOLUTION_PHONE, RESOLUTION_PHONE_HD];
     }
 
     return self;
@@ -48,22 +48,22 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
     if (_resolution_phone)
     {
-        [result addObject:@"phone"];
+        [result addObject:RESOLUTION_PHONE];
     }
 
     if (_resolution_phonehd)
     {
-        [result addObject:@"phonehd"];
+        [result addObject:RESOLUTION_PHONE_HD];
     }
 
     if (_resolution_tablet)
     {
-        [result addObject:@"tablet"];
+        [result addObject:RESOLUTION_TABLET];
     }
 
     if (_resolution_tablethd)
     {
-        [result addObject:@"tablethd"];
+        [result addObject:RESOLUTION_TABLET_HD];
     }
 
     return result;
@@ -78,22 +78,22 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
     for (NSString *resolution in resolutions)
     {
-        if ([resolution isEqualToString:@"phone"])
+        if ([resolution isEqualToString:RESOLUTION_PHONE])
         {
             self.resolution_phone = YES;
         }
 
-        if ([resolution isEqualToString:@"phonehd"])
+        if ([resolution isEqualToString:RESOLUTION_PHONE_HD])
         {
             self.resolution_phonehd = YES;
         }
 
-        if ([resolution isEqualToString:@"tablet"])
+        if ([resolution isEqualToString:RESOLUTION_TABLET])
         {
             self.resolution_tablet = YES;
         }
 
-        if ([resolution isEqualToString:@"tablethd"])
+        if ([resolution isEqualToString:RESOLUTION_TABLET_HD])
         {
             self.resolution_tablethd = YES;
         }

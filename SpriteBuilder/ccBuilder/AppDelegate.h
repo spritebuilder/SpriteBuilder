@@ -110,7 +110,6 @@ enum {
 @class MainToolbarDelegate;
 @class CCBSplitHorizontalView;
 @class AboutWindow;
-@class ResourceManagerPreviewView;
 @class SMTabBar;
 @class ResourceManagerTilelessEditorManager;
 @class CCBImageBrowserView;
@@ -123,6 +122,7 @@ enum {
 @class RegistrationWindow;
 @class ResourceManagerOutlineView;
 @class CCBPublisher;
+@class PreviewContainerViewController;
 
 typedef void (^CompletionCallback) (BOOL success);
 
@@ -236,7 +236,6 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet NSView* previewViewContainer;
     NSView* previewViewImage;
     NSView* previewViewGeneric;
-    ResourceManagerPreviewView* previewViewOwner;
     IBOutlet NSSplitView* resourceManagerSplitView;
     
     // Tileless editor view
@@ -320,8 +319,8 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (nonatomic,assign) BOOL hasOpenedDocument;
 @property (weak, nonatomic,readonly) CCBGLView* cocosView;
 
-
-@property (nonatomic,strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic, strong) IBOutlet PropertyInspectorHandler* propertyInspectorHandler;
+@property (nonatomic, strong) IBOutlet PreviewContainerViewController *previewContainerViewController;
 
 @property (nonatomic,assign) BOOL canEditContentSize;
 @property (nonatomic,assign) BOOL defaultCanvasSize;

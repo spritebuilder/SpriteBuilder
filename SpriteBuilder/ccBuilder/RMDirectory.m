@@ -2,6 +2,7 @@
 #import "ResourceTypes.h"
 #import "ProjectSettings.h"
 #import "RMResource.h"
+#import "ResourcePropertyKeys.h"
 
 
 @implementation RMDirectory
