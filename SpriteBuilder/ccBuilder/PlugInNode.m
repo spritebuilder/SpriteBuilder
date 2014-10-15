@@ -25,11 +25,15 @@
 #import "PlugInNode.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
+#import "SBPasteboardTypes.h"
+
+
 @interface PlugInNode()
 
 @property (nonatomic, strong) NSBundle *mainBundle;
 
 @end
+
 
 @implementation PlugInNode
 
@@ -99,15 +103,14 @@
 - (void) setupNodePropsDict
 {
     // Transform the nodes info array to a dictionary for quicker lookups of properties
-    
-    for (int i = 0; i < [nodeProperties count]; i++)
+    for (NSUInteger i = 0; i < [nodeProperties count]; i++)
     {
-        NSDictionary* propInfo = [nodeProperties objectAtIndex:i];
+        NSDictionary* propInfo = nodeProperties[i];
         
-        NSString* propName = [propInfo objectForKey:@"name"];
+        NSString* propName = propInfo[@"name"];
         if (propName)
         {
-            [nodePropertiesDict setObject:propInfo forKey:propName];
+            nodePropertiesDict[propName] = propInfo;
         }
     }
 }
@@ -131,18 +134,18 @@
     NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
     
 	_targetEngine = CCBTargetEngineCocos2d;
-	if ([[[props objectForKey:@"targetEngine"] lowercaseString] isEqualToString:@"spritekit"])
+	if ([[props[@"targetEngine"] lowercaseString] isEqualToString:@"spritekit"])
 	{
 		_targetEngine = CCBTargetEngineSpriteKit;
 	}
 	
-    nodeClassName = [props objectForKey:@"className"];
-    nodeEditorClassName = [props objectForKey:@"editorClassName"];
+    nodeClassName = props[@"className"];
+    nodeEditorClassName = props[@"editorClassName"];
     
-    displayName = [props objectForKey:@"displayName"];
-    descr = [props objectForKey:@"description"];
-    ordering = [[props objectForKey:@"ordering"] intValue];
-    supportsTemplates = [[props objectForKey:@"supportsTemplates"] boolValue];
+    displayName = props[@"displayName"];
+    descr = props[@"description"];
+    ordering = [props[@"ordering"] intValue];
+    supportsTemplates = [props[@"supportsTemplates"] boolValue];
     
     if (!displayName) displayName = [nodeClassName copy];
     if (!ordering) ordering = 100000;
@@ -154,38 +157,37 @@
     [self setupNodePropsDict];
     
     // Support for spriteFrame drop targets
-    NSDictionary* spriteFrameDrop = [props objectForKey:@"spriteFrameDrop"];
+    NSDictionary* spriteFrameDrop = props[@"spriteFrameDrop"];
     if (spriteFrameDrop)
     {
-        dropTargetSpriteFrameClass = [spriteFrameDrop objectForKey:@"className"];
-        dropTargetSpriteFrameProperty = [spriteFrameDrop objectForKey:@"property"];
+        dropTargetSpriteFrameClass = spriteFrameDrop[@"className"];
+        dropTargetSpriteFrameProperty = spriteFrameDrop[@"property"];
         
     }
     
     // Check if node type can be root node and which children are allowed
-    canBeRoot = [[props objectForKey:@"canBeRootNode"] boolValue];
-    canHaveChildren = [[props objectForKey:@"canHaveChildren"] boolValue];
-    isAbstract = [[props objectForKey:@"isAbstract"] boolValue];
-    isJoint = [[props objectForKey:@"isJoint"] boolValue];
-    requireChildClass = [props objectForKey:@"requireChildClass"];
-    requireParentClass = [props objectForKey:@"requireParentClass"];
-    positionProperty = [props objectForKey:@"positionProperty"];
+    canBeRoot = [props[@"canBeRootNode"] boolValue];
+    canHaveChildren = [props[@"canHaveChildren"] boolValue];
+    isAbstract = [props[@"isAbstract"] boolValue];
+    isJoint = [props[@"isJoint"] boolValue];
+    requireChildClass = props[@"requireChildClass"];
+    requireParentClass = props[@"requireParentClass"];
+    positionProperty = props[@"positionProperty"];
     
     return self;
 }
 
 - (BOOL) acceptsDroppedSpriteFrameChildren
 {
-    if (dropTargetSpriteFrameClass && dropTargetSpriteFrameProperty) return YES;
-    return NO;
+    return dropTargetSpriteFrameClass && dropTargetSpriteFrameProperty;
 }
 
 - (BOOL) dontSetInEditorProperty: (NSString*) prop
 {
-    NSDictionary* propInfo = [nodePropertiesDict objectForKey:prop];
-    BOOL dontSetInEditor = [[propInfo objectForKey:@"dontSetInEditor"] boolValue];
-    if ([[propInfo objectForKey:@"type"] isEqualToString:@"Separator"]
-        || [[propInfo objectForKey:@"type"] isEqualToString:@"SeparatorSub"])
+    NSDictionary* propInfo = nodePropertiesDict[prop];
+    BOOL dontSetInEditor = [propInfo[@"dontSetInEditor"] boolValue];
+    if ([propInfo[@"type"] isEqualToString:@"Separator"]
+        || [propInfo[@"type"] isEqualToString:@"SeparatorSub"])
     {
         dontSetInEditor = YES;
     }
@@ -206,13 +208,13 @@
     NSMutableArray* props = [NSMutableArray array];
     for (NSDictionary* propInfo in nodeProperties)
     {
-        if (useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotation"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewX"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewY"]) continue;
+        if (useFlashSkew && [propInfo[@"name"] isEqualToString:@"rotation"]) continue;
+        if (!useFlashSkew && [propInfo[@"name"] isEqualToString:@"rotationalSkewX"]) continue;
+        if (!useFlashSkew && [propInfo[@"name"] isEqualToString:@"rotationalSkewY"]) continue;
         
-        if ([[propInfo objectForKey:@"type"] isEqualToString:type] && ![[propInfo objectForKey:@"readOnly"] boolValue])
+        if ([propInfo[@"type"] isEqualToString:type] && ![propInfo[@"readOnly"] boolValue])
         {
-            [props addObject:[propInfo objectForKey:@"name"]];
+            [props addObject:propInfo[@"name"]];
         }
     }
     return props;
@@ -229,13 +231,13 @@
     
     for (NSDictionary* propInfo in nodeProperties)
     {
-        if (useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotation"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewX"]) continue;
-        if (!useFlashSkew && [[propInfo objectForKey:@"name"] isEqualToString:@"rotationalSkewY"]) continue;
+        if (useFlashSkew && [propInfo[@"name"] isEqualToString:@"rotation"]) continue;
+        if (!useFlashSkew && [propInfo[@"name"] isEqualToString:@"rotationalSkewX"]) continue;
+        if (!useFlashSkew && [propInfo[@"name"] isEqualToString:@"rotationalSkewY"]) continue;
         
-        if ([[propInfo objectForKey:@"animatable"] boolValue])
+        if ([propInfo[@"animatable"] boolValue])
         {
-            [props addObject:[propInfo objectForKey:@"name"]];
+            [props addObject:propInfo[@"name"]];
         }
     }
     
@@ -259,7 +261,7 @@
 
 - (NSString*) propertyTypeForProperty:(NSString*)property
 {
-    return [[nodePropertiesDict objectForKey:property] objectForKey:@"type"];
+    return [nodePropertiesDict[property] objectForKey:@"type"];
 }
 
 #pragma mark Drag and Drop
@@ -268,9 +270,9 @@
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
     
-    if ([pbType isEqualToString:@"com.cocosbuilder.PlugInNode"])
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_PLUGINNODE])
     {
-        [dict setObject:self.nodeClassName forKey:@"nodeClassName"];
+        dict[@"nodeClassName"] = self.nodeClassName;
         return dict;
     }
     return NULL;
@@ -278,13 +280,13 @@
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.PlugInNode"];
+    NSMutableArray* pbTypes = [@[PASTEBOARD_TYPE_PLUGINNODE] mutableCopy];
     return pbTypes;
 }
 
 - (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)pbType pasteboard:(NSPasteboard *)pasteboard
 {
-    if ([pbType isEqualToString:@"com.cocosbuilder.PlugInNode"]) return NSPasteboardWritingPromised;
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_PLUGINNODE]) return NSPasteboardWritingPromised;
     return 0;
 }
 
@@ -292,7 +294,9 @@
 
 -(void) dealloc
 {
+    #ifndef TESTING
 	SBLogSelf();
+    #endif
 }
 
 -(NSString*) description
