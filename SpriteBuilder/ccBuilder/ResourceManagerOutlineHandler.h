@@ -25,22 +25,22 @@
 #import <Foundation/Foundation.h>
 
 @class ResourceManager;
-@class ResourceManagerPreviewView;
 @class ProjectSettings;
+@protocol PreviewViewControllerProtocol;
 
 @interface ResourceManagerOutlineHandler : NSObject <NSOutlineViewDelegate, NSOutlineViewDataSource>
 {
     ResourceManager* resManager;
     NSOutlineView* resourceList;
-    IBOutlet ResourceManagerPreviewView* imagePreview;
-    IBOutlet NSTextField* lblNoPreview;
     int resType;
 }
 
 @property (nonatomic,assign) int resType;
 @property (nonatomic,weak) ProjectSettings *projectSettings;
 
-- (id) initWithOutlineView:(NSOutlineView*)outlineView resType:(int)rt preview:(ResourceManagerPreviewView*)preview;
+- (id) initWithOutlineView:(NSOutlineView*)outlineView
+                   resType:(int)resourceType
+         previewController:(id<PreviewViewControllerProtocol>)previewController;
 
 - (void) reload;
 

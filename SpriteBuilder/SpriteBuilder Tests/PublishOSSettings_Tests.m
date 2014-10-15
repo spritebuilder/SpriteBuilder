@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "PublishOSSettings.h"
+#import "MiscConstants.h"
 
 @interface PublishOSSettings_Tests : XCTestCase
 
@@ -50,10 +51,10 @@
     NSDictionary *dict = [_settings toDictionary];
 
     PublishOSSettings *publishOSSettings = [[PublishOSSettings alloc] initWithDictionary:dict];
-    XCTAssertTrue([publishOSSettings.resolutions containsObject:@"tablethd"]);
-    XCTAssertTrue([publishOSSettings.resolutions containsObject:@"phone"]);
-    XCTAssertFalse([publishOSSettings.resolutions containsObject:@"tablet"]);
-    XCTAssertFalse([publishOSSettings.resolutions containsObject:@"phonehd"]);
+    XCTAssertTrue([publishOSSettings.resolutions containsObject:RESOLUTION_TABLET_HD]);
+    XCTAssertTrue([publishOSSettings.resolutions containsObject:RESOLUTION_PHONE]);
+    XCTAssertFalse([publishOSSettings.resolutions containsObject:RESOLUTION_TABLET]);
+    XCTAssertFalse([publishOSSettings.resolutions containsObject:RESOLUTION_PHONE_HD]);
 
     XCTAssertEqual(publishOSSettings.audio_quality, 7);
 }

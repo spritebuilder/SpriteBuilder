@@ -2,6 +2,7 @@
 
 #import "ProjectSettings.h"
 #import "PackageMigrationController.h"
+#import "ResourcePropertiesMigrator.h"
 
 
 @interface ProjectMigrator ()
@@ -26,8 +27,16 @@
 
 - (BOOL)migrate
 {
+    BOOL result = YES;
+
     PackageMigrationController *packageMigrationController = [[PackageMigrationController alloc] initWithProjectSettings:_projectSettings];
-    return [packageMigrationController migrate];
+
+    ResourcePropertiesMigrator *resourcePropertiesMigrator = [[ResourcePropertiesMigrator alloc] initWithProjectSettings:_projectSettings];
+
+    result = result && [packageMigrationController migrate];
+    result = result && [resourcePropertiesMigrator migrate];
+
+    return result;
 }
 
 @end

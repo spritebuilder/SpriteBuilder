@@ -4,6 +4,8 @@
 #import "Tupac.h"
 #import "PublishingTaskStatusProgress.h"
 #import "ProjectSettings.h"
+#import "ResourcePropertyKeys.h"
+#import "MiscConstants.h"
 
 
 @interface PublishSpriteSheetOperation()
@@ -112,7 +114,7 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
     self.previewFilePath = nil;
     if (![__spriteSheetPreviewsGenerated containsObject:_subPath])
     {
-        self.previewFilePath = [_publishDirectory stringByAppendingPathExtension:@"ppng"];
+        self.previewFilePath = [_publishDirectory stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
         [__spriteSheetPreviewsGenerated addObject:_subPath];
     }
 }
@@ -152,19 +154,19 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)setTextureMaxSize
 {
-    if ([_resolution isEqualToString:@"phone"])
+    if ([_resolution isEqualToString:RESOLUTION_PHONE])
     {
         _packer.maxTextureSize = 1024;
     }
-    else if ([_resolution isEqualToString:@"phonehd"])
+    else if ([_resolution isEqualToString:RESOLUTION_PHONE_HD])
     {
         _packer.maxTextureSize = 2048;
     }
-    else if ([_resolution isEqualToString:@"tablet"])
+    else if ([_resolution isEqualToString:RESOLUTION_TABLET])
     {
         _packer.maxTextureSize = 2048;
     }
-    else if ([_resolution isEqualToString:@"tablethd"])
+    else if ([_resolution isEqualToString:RESOLUTION_TABLET_HD])
     {
         _packer.maxTextureSize = 4096;
     }
@@ -172,13 +174,13 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)loadSettings
 {
-    self.format_ios = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_ios"] intValue];
-    self.format_ios_dither = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_ios_dither"] boolValue];
-    self.format_ios_compress = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_ios_compress"] boolValue];
-    self.format_android = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android"] intValue];
-    self.format_android_dither = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android_dither"] boolValue];
-    self.format_android_compress = [[_projectSettings propertyForRelPath:_subPath andKey:@"format_android_compress"] boolValue];
-    self.trim = ![[_projectSettings propertyForRelPath:_subPath andKey:@"keepSpritesUntrimmed"] boolValue];
+    self.format_ios = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
+    self.format_ios_dither = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
+    self.format_ios_compress = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS] boolValue];
+    self.format_android = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT] intValue];
+    self.format_android_dither = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_DITHER] boolValue];
+    self.format_android_compress = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
+    self.trim = [[_projectSettings propertyForRelPath:_subPath andKey:RESOURCE_PROPERTY_TRIM_SPRITES] boolValue];
 }
 
 - (void)cancel

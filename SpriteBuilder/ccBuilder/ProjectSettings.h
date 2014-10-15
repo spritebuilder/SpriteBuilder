@@ -63,6 +63,8 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 // Full path to the project's root folder, according to -projectPath example: /foo/baa.spritebuilder/
 @property (nonatomic, readonly) NSString* projectPathDir;
 
+@property (nonatomic, strong, readonly) NSArray *allResourcesRelativePaths;
+
 @property (nonatomic, readonly) NSString* projectPathHashed;
 @property (nonatomic, strong) NSMutableArray* resourcePaths;
 
@@ -140,11 +142,13 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 - (void)removePropertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>)key;
 
 // *** Dirty markers ***
-- (BOOL) isDirtyResource:(RMResource*) res;
-- (BOOL) isDirtyRelPath:(NSString*) relPath;
-- (void) markAsDirtyResource:(RMResource*) res;
-- (void) markAsDirtyRelPath:(NSString*) relPath;
-- (void) clearAllDirtyMarkers;
+- (BOOL)isDirtyResource:(RMResource *)res;
+- (BOOL)isDirtyRelPath:(NSString *)relPath;
+- (void)markAsDirtyResource:(RMResource *)res;
+- (void)markAsDirtyRelPath:(NSString *)relPath;
+- (void)clearAllDirtyMarkers;
+- (void)clearDirtyMarkerOfRelPath:(NSString *)relPath;
+- (void)clearDirtyMarkerOfResource:(RMResource *)resource;
 - (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings;
 
 // *** Handling moved and deleted resources ***
@@ -182,5 +186,6 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 // "/foo/Packages/baa.sbpack/level1/sprites/fighter.png" will result in "level1/sprites/fighter.png"
 // If no package include the given absolutePath nil is returned
 - (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath;
+
 
 @end
