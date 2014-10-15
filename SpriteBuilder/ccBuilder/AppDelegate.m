@@ -89,7 +89,6 @@
 #import "SpriteSheetSettingsWindow.h"
 #import "AboutWindow.h"
 #import "CCBFileUtil.h"
-#import "ResourceManagerPreviewView.h"
 #import "ResourceManagerUtil.h"
 #import "SMTabBar.h"
 #import "SMTabBarItem.h"
@@ -142,6 +141,7 @@
 #import "SBUpdater.h"
 #import "OpenProjectInXCode.h"
 #import "CCNode+NodeInfo.h"
+#import "PreviewContainerViewController.h"
 #import "InspectorController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -477,38 +477,20 @@ typedef enum
     // Load resource manager
 	[ResourceManager sharedManager];
     
-    // Setup preview
-    previewViewOwner = [[ResourceManagerPreviewView alloc] init];
-    
-    NSArray* topLevelObjs = NULL;
-    [[NSBundle mainBundle] loadNibNamed:@"ResourceManagerPreviewView" owner:previewViewOwner topLevelObjects:&topLevelObjs];
-    
-    for (id obj in topLevelObjs)
-    {
-        if ([obj isKindOfClass:[NSView class]])
-        {
-            NSView* view = obj;
-            
-            [previewViewContainer addSubview:view];
-            view.frame = NSMakeRect(0.0, 0.0, previewViewContainer.frame.size.width, previewViewContainer.frame.size.height);
-        }
-    }
-    
+
     // Setup project display
-    projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject resType:kCCBResTypeNone preview:previewViewOwner];
+    projectOutlineHandler = [[ResourceManagerOutlineHandler alloc] initWithOutlineView:outlineProject
+                                                                               resType:kCCBResTypeNone
+                                                                     previewController:_previewContainerViewController];
     projectOutlineHandler.projectSettings = projectSettings;
-    
-    resourceManagerSplitView.delegate = previewViewOwner;
-    
-    [previewViewOwner setPreviewFile:NULL];
-    
+    resourceManagerSplitView.delegate = _previewContainerViewController;
+
     //Setup warnings outline
     warningHandler = [[WarningTableViewHandler alloc] init];
     
     self.warningTableView.delegate = warningHandler;
     self.warningTableView.target = warningHandler;
     self.warningTableView.dataSource = warningHandler;
-   // [self.warningTableView setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
     [self updateWarningsOutline];
 }
 
@@ -555,8 +537,8 @@ typedef enum
     //[OALSimpleAudio sharedInstance];
 
     // Install default templates
-    [propertyInspectorHandler installDefaultTemplatesReplace:NO];
-    [propertyInspectorHandler loadTemplateLibrary];
+    [propertyInspectorTemplateHandler installDefaultTemplatesReplace:NO];
+    [propertyInspectorTemplateHandler loadTemplateLibrary];
 
     [self setupFeatureToggle];
     
@@ -712,6 +694,8 @@ typedef enum
 - (void)registerNotificationObservers
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateEverythingAfterSettingsChanged) name:RESOURCE_PATHS_CHANGED object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadResources) name:RESOURCES_CHANGED object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
@@ -962,7 +946,7 @@ typedef enum
     if (currentDocument) currentDocument.lastEditedProperty = NULL;
     
     [self updateSmallTabBarsEnabled];
-    [propertyInspectorHandler updateTemplates];
+    [propertyInspectorTemplateHandler updateTemplates];
     
     [self didChangeValueForKey:@"selectedNode"];
     [self didChangeValueForKey:@"selectedNodes"];
@@ -1633,12 +1617,6 @@ typedef enum
     return YES;
 }
 
-- (BOOL) createProject:(NSString*)fileName engine:(CCBTargetEngine)engine
-{
-    CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
-    return [creator createDefaultProjectAtPath:fileName engine:engine];
-}
-
 - (void) updateResourcePathsFromProjectSettings
 {
     [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absoluteResourcePaths]];
@@ -1720,7 +1698,7 @@ typedef enum
 
     // inject new project settings
     self.projectSettings = prjctSettings;
-    _resourceCommandController.projectSettings = self.projectSettings;
+    _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
 
@@ -1846,7 +1824,7 @@ typedef enum
     //[PositionPropertySetter refreshAllPositions];
     
     // Save preview
-    [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:@"ppng"]];
+    [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX]];
     
     // Restore resolution and timeline
     currentDocument.currentResolution = currentResolution;
@@ -1993,9 +1971,9 @@ typedef enum
 {
 	for( NSString* filename in filenames )
 	{
-			[self openProject:filename];		
-		}
+		[self openProject:filename];		
 	}
+}
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
@@ -2020,8 +1998,8 @@ typedef enum
     
     [self setSelectedNodes:NULL];
     [self menuCleanCacheDirectories:sender];
-    [propertyInspectorHandler installDefaultTemplatesReplace:YES];
-    [propertyInspectorHandler loadTemplateLibrary];
+    [propertyInspectorTemplateHandler installDefaultTemplatesReplace:YES];
+    [propertyInspectorTemplateHandler loadTemplateLibrary];
     
     [NSUserDefaults resetStandardUserDefaults];
 }
@@ -2527,9 +2505,8 @@ typedef enum
         
         [self addCCObject:clipNode asChild:asChild];
         
-        //We might have copy/cut/pasted and body. Fix it up.
-		
-        [SceneGraph fixupReferences];//
+        //We might have copy/cut/pasted and body. Fix it up.		
+        [SceneGraph fixupReferences];
     }
 }
 
@@ -3028,13 +3005,40 @@ typedef enum
     [cocos2dUpdater updateAndBypassIgnore:YES];
 }
 
+-(void)updateLanguageHint
+{
+    switch (saveDlgLanguagePopup.selectedItem.tag)
+    {
+        case CCBProgrammingLanguageObjectiveC:
+            saveDlgLanguageHint.title = @"All supported platforms";
+            break;
+        case CCBProgrammingLanguageSwift:
+            saveDlgLanguageHint.title = @"iOS7+ only";
+            break;
+        default:
+            NSAssert(false, @"Unknown programming language");
+            saveDlgLanguageHint.title = @"";  // NOTREACHED
+            break;
+    }
+}
+
 -(void) createNewProjectTargetting:(CCBTargetEngine)engine
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
     [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
     //saveDlg.message = @"Save your project file in the same directory as your projects resources.";
-    
+
+    // Configure the accessory view
+    [saveDlg setAccessoryView:saveDlgAccessoryView];
+    [saveDlgLanguagePopup removeAllItems];
+    [saveDlgLanguagePopup addItemsWithTitles:@[@"Objective-C", @"Swift"]];
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.firstObject).tag = CCBProgrammingLanguageObjectiveC;
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.lastObject).tag = CCBProgrammingLanguageSwift;
+    saveDlgLanguagePopup.target = self;
+    saveDlgLanguagePopup.action = @selector(updateLanguageHint);
+    [self updateLanguageHint];
+
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSOKButton)
         {
@@ -3058,7 +3062,8 @@ typedef enum
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{
-                                   if ([self createProject:fileName engine:engine])
+                                   CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
+                                   if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }

@@ -42,6 +42,7 @@
 #import "RMDirectory.h"
 #import "ResourceTypes.h"
 #import "RMPackage.h"
+#import "ResourcePropertyKeys.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
 
@@ -339,7 +340,7 @@
             {
                 // A resource has been modified, we need to reload assets
                 res.modifiedTime = modifiedTime;
-                res.type = [ResourceManager getResourceTypeForFile:file];
+                res.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:file];
                 
                 // Reload its data
                 [res loadData];
@@ -364,7 +365,7 @@
             // This is a new resource, add it!
             res = [[RMResource alloc] init];
             res.modifiedTime = modifiedTime;
-            res.type = [ResourceManager getResourceTypeForFile:file];
+            res.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:file];
             res.filePath = file;
             
             // Load basic resource data if neccessary
@@ -652,27 +653,27 @@
     NSString* fileName = [autoFile lastPathComponent];
     RMResource* resource = [[RMResource alloc] init];
     resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
-    resource.type = [ResourceManager getResourceTypeForFile:resource.filePath];
-    int tabletScale = [[projectSettings propertyForResource:resource andKey:@"tabletScale"] intValue];
+    resource.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:resource.filePath];
+    int tabletScale = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
     if (!tabletScale) tabletScale = 2;
     
-    int srcScaleSetting = [[projectSettings propertyForResource:resource andKey:@"scaleFrom"] intValue];
+    int srcScaleSetting = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
     
     // Calculate the dst scale factor
     float dstScale = 1;
-    if ([res isEqualToString:@"phone"])
+    if ([res isEqualToString:RESOLUTION_PHONE])
     {
         dstScale = 1;
     }
-    if ([res isEqualToString:@"phonehd"])
+    if ([res isEqualToString:RESOLUTION_PHONE_HD])
     {
         dstScale = 2;
     }
-    else if ([res isEqualToString:@"tablet"])
+    else if ([res isEqualToString:RESOLUTION_TABLET])
     {
         dstScale = 1 * tabletScale;
     }
-    else if ([res isEqualToString:@"tablethd"])
+    else if ([res isEqualToString:RESOLUTION_TABLET_HD])
     {
         dstScale = 2 * tabletScale;
     }
@@ -1043,8 +1044,8 @@
         [fm moveItemAtPath:srcPath toPath:dstPath error:NULL];
         
         // Also attempt to move preview image (if any)
-        NSString* srcPathPre = [srcPath stringByAppendingPathExtension:@"ppng"];
-        NSString* dstPathPre = [dstPath stringByAppendingPathExtension:@"ppng"];
+        NSString* srcPathPre = [srcPath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
+        NSString* dstPathPre = [dstPath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
         [fm moveItemAtPath:srcPathPre toPath:dstPathPre error:NULL];
     }
     
@@ -1104,8 +1105,8 @@
 		[ResourceManager fileRename:srcPath  dstPath:dstPath error:NULL];
 
         // Also attempt to move preview image (if any)
-        NSString* srcPathPre = [srcPath stringByAppendingPathExtension:@"ppng"];
-        NSString* dstPathPre = [dstPath stringByAppendingPathExtension:@"ppng"];
+        NSString* srcPathPre = [srcPath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
+        NSString* dstPathPre = [dstPath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
 
 		[ResourceManager fileRename:srcPathPre dstPath:dstPathPre error:NULL];
     }
@@ -1145,7 +1146,7 @@
         [fm removeItemAtPath:res.filePath error:NULL];
         
         // Also attempt to remove preview image (if any)
-        NSString* filePathPre = [res.filePath stringByAppendingPathExtension:@"ppng"];
+        NSString* filePathPre = [res.filePath stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX];
         [fm removeItemAtPath:filePathPre error:NULL];
     }
     

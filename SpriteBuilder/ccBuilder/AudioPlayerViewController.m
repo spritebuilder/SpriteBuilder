@@ -45,7 +45,7 @@
  
  */
 
-#import "ResourceManagerPreivewAudio.h"
+#import "AudioPlayerViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SoundFileImageController.h"
 
@@ -53,14 +53,14 @@ static void *AVSPPlayerItemStatusContext = &AVSPPlayerItemStatusContext;
 static void *AVSPPlayerRateContext = &AVSPPlayerRateContext;
 static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
 
-@interface ResourceManagerPreviewAudio ()
+@interface AudioPlayerViewController ()
 
 - (void)setUpPlaybackOfAsset:(AVAsset *)asset withKeys:(NSArray *)keys;
 - (void)stopLoadingAnimationAndHandleError:(NSError *)error;
 
 @end
 
-@implementation ResourceManagerPreviewAudio
+@implementation AudioPlayerViewController
 
 @synthesize player;
 @synthesize playerLayer;

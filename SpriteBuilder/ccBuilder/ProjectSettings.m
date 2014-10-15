@@ -37,6 +37,7 @@
 #import "MiscConstants.h"
 #import "ResourceManagerUtil.h"
 #import "RMDirectory.h"
+#import "ResourcePropertyKeys.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
@@ -359,7 +360,7 @@
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
 
-    [self setProperty:@YES forResource:res andKey:@"isSmartSpriteSheet"];
+    [self setProperty:@YES forResource:res andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     
     [self store];
     [[ResourceManager sharedManager] notifyResourceObserversResourceListUpdated];
@@ -370,7 +371,7 @@
 {
     NSAssert(res.type == kCCBResTypeDirectory, @"Resource must be directory");
 
-    [self removePropertyForResource:res andKey:@"isSmartSpriteSheet"];
+    [self removePropertyForResource:res andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
 
     [self removeIntermediateFileLookupFile:res];
 
@@ -391,6 +392,18 @@
             NSLog(@"Error removing intermediate filelookup file %@ - %@", intermediateFileLookup, error);
         }
     }
+}
+
+- (NSArray *)allResourcesRelativePaths
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    for (NSString *relPath in _resourceProperties)
+    {
+        [result addObject:[relPath copy]];
+    }
+
+    return result;
 }
 
 - (void)setProperty:(id)newValue forResource:(RMResource *)res andKey:(id <NSCopying>) key
@@ -480,12 +493,22 @@
     [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }
 
+- (void)clearDirtyMarkerOfRelPath:(NSString *)relPath
+{
+    NSMutableDictionary *props = [_resourceProperties valueForKey:relPath];
+    [props removeObjectForKey:@"isDirty"];
+}
+
+- (void)clearDirtyMarkerOfResource:(RMResource *)resource
+{
+    [self clearDirtyMarkerOfRelPath:resource.relativePath];
+}
+
 - (void) clearAllDirtyMarkers
 {
     for (NSString* relPath in _resourceProperties)
     {
-        NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
-        [props removeObjectForKey:@"isDirty"];
+        [self clearDirtyMarkerOfRelPath:relPath];
     }
     
     [self storeDelayed];

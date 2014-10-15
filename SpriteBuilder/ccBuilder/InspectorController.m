@@ -113,7 +113,7 @@ static InspectorController *__sharedInstance = nil;
                                   scrollView:_inspectorCodeScroll
                         isCodeConnectionPane:YES];
 
-    [_propertyInspectorHandler updateTemplates];
+    [_propertyInspectorTemplateHandler updateTemplates];
 }
 
 - (void)buildInspectorPaneWithDocumentView:(NSView *)documentView scrollView:(NSScrollView *)scrollView isCodeConnectionPane:(BOOL)isCodeConnectionPane

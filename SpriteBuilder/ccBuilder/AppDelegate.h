@@ -110,7 +110,6 @@ enum {
 @class MainToolbarDelegate;
 @class CCBSplitHorizontalView;
 @class AboutWindow;
-@class ResourceManagerPreviewView;
 @class SMTabBar;
 @class ResourceManagerTilelessEditorManager;
 @class CCBImageBrowserView;
@@ -123,6 +122,7 @@ enum {
 @class RegistrationWindow;
 @class ResourceManagerOutlineView;
 @class CCBPublisher;
+@class PreviewContainerViewController;
 @class InspectorController;
 
 typedef void (^CompletionCallback) (BOOL success);
@@ -145,7 +145,7 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet CCBGLView* __weak cocosView;
     IBOutlet NSView* mainView;
     IBOutlet CCBSplitHorizontalView* splitHorizontalView;
-    IBOutlet PropertyInspectorTemplateHandler * propertyInspectorHandler;
+    IBOutlet PropertyInspectorTemplateHandler * propertyInspectorTemplateHandler;
 
     IBOutlet NSToolbar* toolbar;
     MainToolbarDelegate* toolbarDelegate;
@@ -191,6 +191,9 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet NSMenu* __weak menuContextKeyframeInterpol;
     IBOutlet NSMenu* __weak menuContextResManager;
     IBOutlet NSMenu *__weak menuContextKeyframeNoselection;
+    IBOutlet NSView *__weak saveDlgAccessoryView;
+    IBOutlet NSPopUpButton *__weak saveDlgLanguagePopup;
+    IBOutlet NSTextFieldCell *__weak saveDlgLanguageHint;
 
     // TODO: not needed any more when PACKAGE feature is released
     IBOutlet NSMenuItem* menuPlusButtonNewPackage;
@@ -224,7 +227,6 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet NSView* previewViewContainer;
     NSView* previewViewImage;
     NSView* previewViewGeneric;
-    ResourceManagerPreviewView* previewViewOwner;
     IBOutlet NSSplitView* resourceManagerSplitView;
     
     // Tileless editor view
@@ -304,12 +306,14 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (weak, nonatomic,readonly) IBOutlet ResourceManagerOutlineView *outlineProject;
 
 @property (nonatomic, strong) IBOutlet InspectorController *inspectorController;
-@property (nonatomic, strong) IBOutlet PropertyInspectorTemplateHandler * propertyInspectorHandler;
 
 @property (nonatomic,readonly) ResourceManagerOutlineHandler* projectOutlineHandler;
 @property (nonatomic,strong) CCBDocument* currentDocument;
 @property (nonatomic,assign) BOOL hasOpenedDocument;
 @property (weak, nonatomic,readonly) CCBGLView* cocosView;
+
+@property (nonatomic, strong) IBOutlet PropertyInspectorTemplateHandler* propertyInspectorTemplateHandler;
+@property (nonatomic, strong) IBOutlet PreviewContainerViewController *previewContainerViewController;
 
 @property (nonatomic,assign) BOOL canEditContentSize;
 @property (nonatomic,assign) BOOL defaultCanvasSize;

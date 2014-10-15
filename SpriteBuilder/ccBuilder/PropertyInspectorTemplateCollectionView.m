@@ -91,7 +91,7 @@
         NSInteger idx = [[self selectionIndexes] firstIndex];
         PropertyInspectorTemplate* templ = [[self content] objectAtIndex:idx];
         
-        [[AppDelegate appDelegate].propertyInspectorHandler removeTemplate:templ];
+        [[AppDelegate appDelegate].propertyInspectorTemplateHandler removeTemplate:templ];
         
         return;
     }
@@ -111,7 +111,7 @@
             NSInteger idx = [[self selectionIndexes] firstIndex];
             PropertyInspectorTemplate* templ = [[self content] objectAtIndex:idx];
             
-            [[AppDelegate appDelegate].propertyInspectorHandler applyTemplate:templ];
+            [[AppDelegate appDelegate].propertyInspectorTemplateHandler applyTemplate:templ];
         }
 	}
 }
