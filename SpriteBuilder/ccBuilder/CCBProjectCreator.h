@@ -11,6 +11,5 @@
 @interface CCBProjectCreator : NSObject
 
 - (BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine programmingLanguage:(CCBProgrammingLanguage)language;
--(void) cleanupProjectAtPath:(NSString*)fileName;
 
 @end
