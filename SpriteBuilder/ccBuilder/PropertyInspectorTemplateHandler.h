@@ -1,5 +1,5 @@
 //
-//  PropertyInspectorHandler.h
+//  PropertyInspectorTemplateHandler.h
 //  CocosBuilder
 //
 //  Created by Viktor on 7/29/13.
@@ -11,7 +11,7 @@
 @class PropertyInspectorTemplateLibrary;
 @class PropertyInspectorTemplate;
 
-@interface PropertyInspectorHandler : NSObject <NSCollectionViewDelegate>
+@interface PropertyInspectorTemplateHandler : NSObject <NSCollectionViewDelegate>
 {
     IBOutlet PropertyInspectorTemplateLibrary* templateLibrary;
     IBOutlet NSCollectionView* collectionView;

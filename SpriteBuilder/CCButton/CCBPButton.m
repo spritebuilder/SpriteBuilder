@@ -10,6 +10,7 @@
 #import "CCSpriteFrame.h"
 #import "CCTexture.h"
 #import "AppDelegate.h"
+#import "InspectorController.h"
 
 @implementation CCBPButton
 
@@ -34,7 +35,7 @@
     
     [self willChangeValueForKey:@"preferredSize"];
     [self didChangeValueForKey:@"preferredSize"];
-    [[AppDelegate appDelegate] refreshProperty:@"preferredSize"];
+    [[InspectorController sharedController] refreshProperty:@"preferredSize"];
     
 }
 

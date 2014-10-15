@@ -7,6 +7,7 @@
 //
 
 #import "CCBPhysicsSpringJoint.h"
+#import "InspectorController.h"
 #import "AppDelegate.h"
 
 @interface CCBPhysicsJoint()
@@ -264,7 +265,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     {
         CGPoint localPoint = [self convertToNodeSpace:worldPos];
         self.restLength =  localPoint.x;
-        [[AppDelegate appDelegate] refreshProperty:@"restLength"];
+        [[InspectorController sharedController] refreshProperty:@"restLength"];
     }
     
     [super setBodyHandle:worldPos bodyType:bodyType];
@@ -284,7 +285,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     if(change)
     {
         self.restLength = self.restLength;
-        [[AppDelegate appDelegate] refreshProperty:@"restLength"];
+        [[InspectorController sharedController] refreshProperty:@"restLength"];
     }
 }
 
@@ -302,7 +303,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
     if(change)
     {
         self.restLength = self.restLength;
-        [[AppDelegate appDelegate] refreshProperty:@"restLength"];
+        [[InspectorController sharedController] refreshProperty:@"restLength"];
     }
 }
 
@@ -319,7 +320,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
 		_restLength = 0;
 	}
 		
-	[[AppDelegate appDelegate] refreshProperty:@"restLength"];
+	[[InspectorController sharedController] refreshProperty:@"restLength"];
 }
 
 -(void)setRestLengthEnabled:(BOOL)restLengthEnabled

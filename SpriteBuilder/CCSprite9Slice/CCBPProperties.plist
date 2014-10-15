@@ -37,6 +37,12 @@
 			<key>displayName</key>
 			<string>Content size</string>
 		</dict>
+        <dict>
+            <key>name</key>
+            <string>effects</string>
+            <key>type</key>
+            <string>None</string>
+        </dict>
 	</array>
 	<key>properties</key>
 	<array>

@@ -82,7 +82,7 @@
 
 - (BOOL) dontSetInEditorProperty: (NSString*) prop;
 
-- (id) initWithBundle:(NSBundle*) b;
+- (id)initWithBundle:(NSBundle *)aBundle mainBundle:(NSBundle *)mainBundle;
 
 - (NSArray*) readablePropertiesForType:(NSString*)type node:(CCNode*)node;
 - (NSArray*) animatablePropertiesForNode:(CCNode*)node;

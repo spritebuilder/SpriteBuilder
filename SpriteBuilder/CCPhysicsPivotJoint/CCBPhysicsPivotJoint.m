@@ -13,6 +13,7 @@
 #import "CCButton.h"
 #import "NSArray+Query.h"
 #import "CCProgressNode.h"
+#import "InspectorController.h"
 
 const float kSegmentHandleDefaultRadius = 17.0f;
 
@@ -641,7 +642,7 @@ const float kRatchedRenderRadius = 30.0f;
     if(!aBodyA)
     {
         self.anchorA = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
+        [[InspectorController sharedController] refreshProperty:@"anchorA"];
         return;
     }
     
@@ -671,7 +672,7 @@ const float kRatchedRenderRadius = 30.0f;
     CGPoint lAnchorA = [self.bodyA convertToNodeSpace:worldPos];
     anchorA = lAnchorA;
     
-    [[AppDelegate appDelegate] refreshProperty:@"anchorA"];
+    [[InspectorController sharedController] refreshProperty:@"anchorA"];
     
 }
 
@@ -740,7 +741,7 @@ const float kRatchedRenderRadius = 30.0f;
 -(void)setDampedSpringRestAngle:(float)dampedSpringRestAngle
 {
     _dampedSpringRestAngle = dampedSpringRestAngle;
-    [[AppDelegate appDelegate] refreshProperty:@"dampedSpringRestAngle"];
+    [[InspectorController sharedController] refreshProperty:@"dampedSpringRestAngle"];
 }
 
 -(void)setDampedSpringStiffness:(float)dampedSpringStiffness
@@ -748,7 +749,8 @@ const float kRatchedRenderRadius = 30.0f;
 	if(dampedSpringStiffness < 0)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Stiffness Restrictions" message:@"The spring stiffness must be greater than Zero"];
-		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"dampedSpringStiffness" afterDelay:0];
+		[[InspectorController sharedController] performSelector:@selector(refreshProperty:) withObject:@"dampedSpringStiffness" afterDelay:0];
+
 		return;
 	}
 	_dampedSpringStiffness = dampedSpringStiffness;
@@ -758,7 +760,7 @@ const float kRatchedRenderRadius = 30.0f;
 {
     _referenceAngle = referenceAngle;
     cachedRatchedValue = -1.0f;
-    [[AppDelegate appDelegate]refreshProperty:@"referenceAngle"];
+    [[InspectorController sharedController] refreshProperty:@"referenceAngle"];
 }
 
 -(void)setLimitMax:(float)limitMax
@@ -769,7 +771,7 @@ const float kRatchedRenderRadius = 30.0f;
     }
     
     limitSubtendingAngleValid = NO;
-    [[AppDelegate appDelegate]refreshProperty:@"limitMax"];
+    [[InspectorController sharedController] refreshProperty:@"limitMax"];
 }
 
 -(void)setLimitMin:(float)limitMin
@@ -780,7 +782,7 @@ const float kRatchedRenderRadius = 30.0f;
     }
     
     limitSubtendingAngleValid = NO;
-    [[AppDelegate appDelegate]refreshProperty:@"limitMin"];
+    [[InspectorController sharedController] refreshProperty:@"limitMin"];
 }
 
 -(void)setRatchetPhase:(float)ratchetPhase
@@ -791,7 +793,7 @@ const float kRatchedRenderRadius = 30.0f;
     
     cachedRatchedValue = -1.0f;
     
-    [[AppDelegate appDelegate]refreshProperty:@"ratchetPhase"];
+    [[InspectorController sharedController] refreshProperty:@"ratchetPhase"];
 }
 
 -(void)setRatchetValue:(float)ratchetValue
@@ -808,7 +810,7 @@ const float kRatchedRenderRadius = 30.0f;
     
     _ratchetValue = ratchetValue;
     cachedRatchedValue = -1.0f;
-    [[AppDelegate appDelegate]refreshProperty:@"ratchetValue"];
+    [[InspectorController sharedController] refreshProperty:@"ratchetValue"];
 }
 
 -(void)setDampedSpringEnabled:(BOOL)dampedSpringEnabled

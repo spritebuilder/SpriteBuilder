@@ -49,6 +49,7 @@
 #import "PlugInManager.h"
 #import "SBPasteboardTypes.h"
 #import "EffectsManager.h"
+#import "InspectorController.h"
 
 static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
 static NSString *const ORIGINAL_NODE_KEY = @"originalNode";
@@ -482,7 +483,7 @@ static SequencerHandler* sharedSequencerHandler;
         node.locked = [(NSNumber*)object boolValue];
         if([AppDelegate appDelegate].selectedNode == node)
         {
-            [[AppDelegate appDelegate] updateInspectorFromSelection];
+            [[InspectorController sharedController] updateInspectorFromSelection];
         }
     }
     else if (![object isEqualToString:node.displayName])
@@ -852,7 +853,7 @@ static SequencerHandler* sharedSequencerHandler;
         NSString *propertyName = dict[@"propertyName"];
 
         [effect setValue:node forKey:propertyName];
-        [[AppDelegate appDelegate] refreshProperty:@"effects"];
+        [[InspectorController sharedController] refreshProperty:@"effects"];
 	}
 
 	return YES;
@@ -873,7 +874,7 @@ static SequencerHandler* sharedSequencerHandler;
         
         NSString * propertyName = [CCBPhysicsJoint convertBodyTypeToString:type];
         [joint setValue:item forKey:propertyName];
-        [[AppDelegate appDelegate] refreshProperty:propertyName];
+        [[InspectorController sharedController] refreshProperty:propertyName];
 
 		addedObject = YES;
     }
@@ -1008,7 +1009,7 @@ static SequencerHandler* sharedSequencerHandler;
     
     appDelegate.selectedNodes = selectedNodes;
     
-    [appDelegate updateInspectorFromSelection];
+    [[InspectorController sharedController] updateInspectorFromSelection];
     [[CocosScene cocosScene] selectionUpdated];
 }
 
@@ -1416,7 +1417,7 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [self redrawTimeline];
         [self updatePropertiesToTimelinePosition];
-        [[AppDelegate appDelegate] updateInspectorFromSelection];
+        [[InspectorController sharedController] updateInspectorFromSelection];
     }
     return didDelete;
 }
@@ -1429,7 +1430,7 @@ static SequencerHandler* sharedSequencerHandler;
     {
         [self redrawTimeline];
         [self updatePropertiesToTimelinePosition];
-        [[AppDelegate appDelegate] updateInspectorFromSelection];
+        [[InspectorController sharedController] updateInspectorFromSelection];
     }
 }
 
@@ -1524,7 +1525,7 @@ static SequencerHandler* sharedSequencerHandler;
         [[AppDelegate appDelegate] updateTimelineMenu];
         [self redrawTimeline];
         [self updatePropertiesToTimelinePosition];
-        [[AppDelegate appDelegate] updateInspectorFromSelection];
+        [[InspectorController sharedController] updateInspectorFromSelection];
         [self updateScaleSlider];
     }
 }
