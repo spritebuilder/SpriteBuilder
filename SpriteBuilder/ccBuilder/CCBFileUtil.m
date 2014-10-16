@@ -170,6 +170,10 @@
 							 @"external/ObjectAL/ObjectALDemo",
 							 @"external/ObjectAL/Sample Code",
 							 @"external/ObjectAL/ObjectAL.pdf",
+							 @"external/ObjectAL/external/ogg/doc",
+							 @"external/ObjectAL/external/ogg/win32",
+							 @"external/ObjectAL/external/tremor/doc",
+							 @"external/ObjectAL/external/tremor/win32",
 							 @"external/SSZipArchive/Example",
 							 @"external/SSZipArchive/Tests",
 							 ];
