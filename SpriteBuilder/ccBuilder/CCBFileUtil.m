@@ -154,6 +154,7 @@
 							 @"Resources-iPad",
 							 @"Resources-Mac",
 							 @"tools",
+							 @"tests",
 							 @"UnitTests",
 							 @"doxygen.config",
 							 @"doxygen.footer",
@@ -169,6 +170,8 @@
 							 @"external/ObjectAL/ObjectALDemo",
 							 @"external/ObjectAL/Sample Code",
 							 @"external/ObjectAL/ObjectAL.pdf",
+							 @"external/SSZipArchive/Example",
+							 @"external/SSZipArchive/Tests",
 							 ];
 	
 	// removing extranous cocos2d-iphone files if existing
