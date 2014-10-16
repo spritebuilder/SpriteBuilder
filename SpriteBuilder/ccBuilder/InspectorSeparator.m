@@ -24,16 +24,13 @@
 
 #import "InspectorSeparator.h"
 #import "AppDelegate.h"
-
+#import "InspectorController.h"
 @implementation InspectorSeparator
 
 - (BOOL)isExpanded
 {
-    if (![self propertyForSelection]) {
-        return YES;
-    }
-    
-    return [[self propertyForSelection] intValue] == NSOnState;
+    return ![self propertyForSelection]
+           || [[self propertyForSelection] intValue] == NSOnState;
 }
 
 - (void)setIsExpanded:(BOOL)isExpanded
@@ -43,33 +40,12 @@
     {
         return;
     }
+
+    [self setPropertyForSelection:@(_disclosureButton.state)];
     
-    /*
-    if (isExpanded) {
-        [self.inspectorValueBelow showAllToNextSeparatorWithAbove:self];
-    }
-    else {
-        [self.inspectorValueBelow hideAllToNextSeparatorWithAboveSeparator:self];
-    }
-    
-    [self setSuperviewFrameHeight];*/
-    
-    [self setPropertyForSelection:[NSNumber numberWithInt:_disclosureButton.state]];
-    
-    [[AppDelegate appDelegate] updateInspectorFromSelection];
+    [[InspectorController sharedController] updateInspectorFromSelection];
 }
 
-/*
-- (void)showAllToNextSeparatorWithAbove:(InspectorValue*)above
-{
-    [self moveToMeetAbove:above];
-}
-
-- (void)hideAllToNextSeparatorWithAboveSeparator:(InspectorValue*)aboveSeparator
-{
-    [self moveToMeetAbove:aboveSeparator];
-}
-*/
 - (BOOL)isSeparator
 {
     return YES;

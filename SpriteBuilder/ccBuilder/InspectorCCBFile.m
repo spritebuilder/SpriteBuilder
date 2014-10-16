@@ -34,6 +34,7 @@
 #import "CCNode+NodeInfo.h"
 #import "ResourceTypes.h"
 #import "RMResource.h"
+#import "InspectorController.h"
 
 @implementation InspectorCCBFile
 
@@ -75,7 +76,7 @@
     [self updateAffectedProperties];
     
     // Reload the inspector
-    [[AppDelegate appDelegate] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
+    [[InspectorController sharedController] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
 }
 
 @end

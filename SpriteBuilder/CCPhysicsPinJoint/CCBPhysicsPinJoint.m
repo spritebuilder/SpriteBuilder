@@ -9,8 +9,7 @@
 #import "CCBPhysicsPinJoint.h"
 #import "AppDelegate.h"
 #import "GeometryUtil.h"
-
-
+#import "InspectorController.h"
 
 
 @interface CCBPhysicsJoint()
@@ -293,10 +292,8 @@
 		}
     }
     
-	[[AppDelegate appDelegate] refreshProperty:@"minDistance"];
-    
+	[[InspectorController sharedController] refreshProperty:@"minDistance"];
 }
-
 
 -(void)setMaxDistance:(float)lMaxDistance
 {
@@ -318,7 +315,7 @@
     }
    
     
-    [[AppDelegate appDelegate] refreshProperty:@"maxDistance"];
+    [[InspectorController sharedController] refreshProperty:@"maxDistance"];
 }
 
 -(BOOL)maxDistanceEnabled
