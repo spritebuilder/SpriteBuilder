@@ -814,6 +814,7 @@
 		E525F0CA1647993A7388B7BC /* InspectorStringSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA43EE7D1C6B7C52E601 /* InspectorStringSimple.m */; };
 		E525F0EA925087B3D2ABE8D3 /* ResourceNewPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDFD10EE6761E4E94BED /* ResourceNewPackageCommand.m */; };
 		E525F12B1E4605EB494FA44C /* PackageMigrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7254C3A84AA7585A1F8 /* PackageMigrationController.m */; };
+		E525F165B4E19784684E39D4 /* PublishUtil_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA2C90028FB3D047213C /* PublishUtil_Tests.m */; };
 		E525F1775124A78C8A2FFE99 /* InspectorSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F4BF41919531FA401AC5 /* InspectorSize.m */; };
 		E525F19F8822F8E8D632F4FE /* InspectorCodeConnectionsJS.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD5B0F64DC8D7BC147CF /* InspectorCodeConnectionsJS.m */; };
 		E525F1D290DC4186045DF385 /* InspectorBlendmode.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F80A01670D35DE164CE4 /* InspectorBlendmode.m */; };
@@ -832,6 +833,7 @@
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F2CA0ED42F21A4777F2E /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF4F0648F14C369A8E7B /* InspectorPopoverFloat.xib */; };
 		E525F2D49FBDA5CF8C8F0026 /* InspectorFlip.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE849808293F2D7051BA /* InspectorFlip.m */; };
+		E525F30359F75816D1F178F1 /* PublishUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE25558D5B40E8284D62 /* PublishUtil.m */; };
 		E525F3051C62E3CBA69E877A /* InspectorIntegerLabeled.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F90E4BCE3BA5130B8E9D /* InspectorIntegerLabeled.xib */; };
 		E525F308447A45DFEE6C23EE /* ProjectMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9C63E463EE451384EBB /* ProjectMigrator.m */; };
 		E525F30A9EE36DBB3B363EE8 /* PackagePublishSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC9B1AB11FC59D613AA1 /* PackagePublishSettings_Tests.m */; };
@@ -2431,6 +2433,7 @@
 		E3FD4DDE15A455B90032C2DD /* SequencerSequenceArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SequencerSequenceArrayController.m; sourceTree = "<group>"; };
 		E525F001371D1628D87FFF3E /* RMResourceBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResourceBase.m; sourceTree = "<group>"; };
 		E525F0021A81F90852D0875E /* InspectorFlip.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFlip.xib; sourceTree = "<group>"; };
+		E525F002E61AB0221373A9E7 /* PublishUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishUtil.h; sourceTree = "<group>"; };
 		E525F01EE8CDFEE970D1C645 /* InspectorFloatCheck.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFloatCheck.xib; sourceTree = "<group>"; };
 		E525F0219F49F375C2F5DED2 /* PackageMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrator_Tests.m; sourceTree = "<group>"; };
 		E525F0424E2063AF911B0692 /* ResourceExportPackageCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceExportPackageCommand.m; sourceTree = "<group>"; };
@@ -2642,6 +2645,7 @@
 		E525FA122097E3A343BA0A68 /* RMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMResource.h; sourceTree = "<group>"; };
 		E525FA15437B8CAB27509534 /* NSString+Packages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Packages.m"; sourceTree = "<group>"; };
 		E525FA2687DAA762E0CF0430 /* ResourceCreateKeyframesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCreateKeyframesCommand.h; sourceTree = "<group>"; };
+		E525FA2C90028FB3D047213C /* PublishUtil_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishUtil_Tests.m; sourceTree = "<group>"; };
 		E525FA39177A6B3C303B9DA6 /* InspectorFontTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFontTTF.m; sourceTree = "<group>"; };
 		E525FA41F314DDA60057099D /* InspectorColor3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor3.m; sourceTree = "<group>"; };
 		E525FA43EE7D1C6B7C52E601 /* InspectorStringSimple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorStringSimple.m; sourceTree = "<group>"; };
@@ -2727,6 +2731,7 @@
 		E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRemover_Tests.m; sourceTree = "<group>"; };
 		E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCreator_Tests.m; sourceTree = "<group>"; };
 		E525FE21A2662188C1454FEB /* InspectorNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorNodeReference.h; sourceTree = "<group>"; };
+		E525FE25558D5B40E8284D62 /* PublishUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishUtil.m; sourceTree = "<group>"; };
 		E525FE331D09AEA8E9CB4145 /* PackageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageUtil.h; sourceTree = "<group>"; };
 		E525FE520C891B3D37F5F564 /* InspectorStartStop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorStartStop.h; sourceTree = "<group>"; };
 		E525FE561C3F2F72AC9FD31B /* InspectorCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCustom.m; sourceTree = "<group>"; };
@@ -4969,6 +4974,8 @@
 				E525F7FF46AF3A6A44E16D69 /* CCBPublisherController.m */,
 				E525F3100A5F52133B82A32B /* CCBPublisherController.h */,
 				E525F8D24C0C5FA581D7E9B8 /* PublishingFinishedDelegate.h */,
+				E525FE25558D5B40E8284D62 /* PublishUtil.m */,
+				E525F002E61AB0221373A9E7 /* PublishUtil.h */,
 			);
 			name = Publishing;
 			sourceTree = "<group>";
@@ -5777,6 +5784,7 @@
 				E525F770E84E88D9786A9D65 /* PublishingOperations */,
 				E525FC042369604B80B893DB /* CCBPublisher_Tests.m */,
 				E525FA6F3FA1EC682616EB41 /* CCBPublisherController_Tests.m */,
+				E525FA2C90028FB3D047213C /* PublishUtil_Tests.m */,
 			);
 			name = Publishing;
 			sourceTree = "<group>";
@@ -7587,6 +7595,7 @@
 				E525F2B77CFD1B6D7D74A102 /* ResourcePropertyKeys.m in Sources */,
 				E525F45CD322A0BCB1A7EDBF /* ResourcePropertiesMigrator.m in Sources */,
 				E525FD8036350149E83701B4 /* ImageFormatAndPropertiesHelper.m in Sources */,
+				E525F30359F75816D1F178F1 /* PublishUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7632,6 +7641,7 @@
 				E525F57D9C6C716295683654 /* PackageMigrator_Tests.m in Sources */,
 				E525F0BD99E8E797E5F4278F /* ResourcePropertiesMigrator_Tests.m in Sources */,
 				E525F7955AC7103E961D6553 /* PluginNode_Tests.m in Sources */,
+				E525F165B4E19784684E39D4 /* PublishUtil_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

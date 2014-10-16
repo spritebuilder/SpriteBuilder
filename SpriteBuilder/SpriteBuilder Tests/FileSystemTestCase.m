@@ -78,7 +78,7 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 {
     for (NSString *relFolderPath in folders)
     {
-        NSString *fullPathForFolder = [_testDirecotoryPath stringByAppendingPathComponent:relFolderPath];
+        NSString *fullPathForFolder = [self fullPathForFile:relFolderPath];
         NSError *error;
         XCTAssertTrue([_fileManager createDirectoryAtPath:fullPathForFolder withIntermediateDirectories:YES attributes:nil error:&error],
                       @"Could not create folder \"%@\", error: %@", fullPathForFolder, error);
@@ -92,7 +92,7 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     {
         NSData *emptyStringData = [@"" dataUsingEncoding:NSUTF8StringEncoding];
 
-        [dictionary setObject:emptyStringData forKey:relFilePath];
+        dictionary[relFilePath] = emptyStringData;
     }
 
     [self createFilesWithContents:dictionary];

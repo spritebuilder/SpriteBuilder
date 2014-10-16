@@ -145,6 +145,7 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 - (NSString *)effectiveOutputDirectory
 {
     return _publishToCustomOutputDirectory
+           && ([[_customOutputDirectory stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] > 0)
         ? _customOutputDirectory
         : DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 }
