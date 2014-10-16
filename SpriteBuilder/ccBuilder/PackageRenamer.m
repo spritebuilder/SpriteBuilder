@@ -6,6 +6,7 @@
 #import "ProjectSettings.h"
 #import "ResourceManager.h"
 #import "AppDelegate.h"
+#import "NSString+Misc.h"
 
 @implementation PackageRenamer
 
@@ -55,6 +56,12 @@
 - (BOOL)canRenamePackage:(RMPackage *)package toName:(NSString *)newName error:(NSError **)error
 {
     NSString *newFullPath = [self fullPathForRenamedPackage:package toName:newName];
+
+    if (!newName || [newName isEmpty])
+    {
+        [NSError setNewErrorWithCode:error code:SBEmptyPackageNameError message:@"A package name must not be empty or consist of whitespace characters only"];
+        return NO;
+    }
 
     if ([newFullPath isEqualToString:package.dirPath])
     {
