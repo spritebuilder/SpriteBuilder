@@ -92,6 +92,7 @@
     command.resources = [self selectedResources];
     command.projectSettings = _projectSettings;
     command.outlineView = _resourceManagerOutlineView;
+    command.resourceManager = _resourceManager;
     [command execute];
 }
 

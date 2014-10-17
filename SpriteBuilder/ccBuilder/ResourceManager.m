@@ -1294,6 +1294,21 @@
     return [self spriteSheetContainingFullPath:resource.filePath];
 }
 
+- (NSArray *)allPackages
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    for (RMDirectory *directory in activeDirectories)
+    {
+        if ([directory isKindOfClass:[RMPackage class]])
+        {
+            [result addObject:directory];
+        }
+    }
+
+    return result;
+}
+
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource
 {
     if (resource.type != kCCBResTypeImage)

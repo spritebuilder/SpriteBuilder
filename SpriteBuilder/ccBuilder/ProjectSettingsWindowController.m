@@ -86,18 +86,15 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     SettingsListEntry *mainProjectEntry = [[SettingsListEntry alloc] init];
     [_settingsList addObject:mainProjectEntry];
 
-    for (RMDirectory *directory in [ResourceManager sharedManager].activeDirectories)
+    for (RMPackage *package in [[ResourceManager sharedManager] allPackages])
     {
-        if ([directory isKindOfClass:[RMPackage class]])
-        {
-            PackagePublishSettings *packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:(RMPackage *)directory];
-            [packagePublishSettings load];
+        PackagePublishSettings *packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:package];
+        [packagePublishSettings load];
 
-            SettingsListEntry *packageEntry = [[SettingsListEntry alloc] init];
-            packageEntry.packagePublishSettings = packagePublishSettings;
+        SettingsListEntry *packageEntry = [[SettingsListEntry alloc] init];
+        packageEntry.packagePublishSettings = packagePublishSettings;
 
-            [_settingsList addObject:packageEntry];
-        }
+        [_settingsList addObject:packageEntry];
     }
 }
 
