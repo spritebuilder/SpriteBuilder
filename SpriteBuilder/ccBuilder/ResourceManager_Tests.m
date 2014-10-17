@@ -14,6 +14,8 @@
 #import "ResourceTypes.h"
 #import "ProjectSettings.h"
 #import "ResourceManagerUtil.h"
+#import "RMPackage.h"
+#import "SBAssserts.h"
 
 @interface ResourceManager_Tests : FileSystemTestCase
 
@@ -130,6 +132,35 @@
 
     RMResource *potentialSpriteSheet = [_resourceManager spriteSheetContainingFullPath:image.filePath];
     XCTAssertTrue([potentialSpriteSheet isSpriteSheet]);
+}
+
+- (void)testAllPackages
+{
+    NSArray *expectedPackagePaths = @[
+        [self fullPathForFile:@"project/Packages/gigapackage.sbpack"],
+        [self fullPathForFile:@"project/Packages/superpackage.sbpack"],
+        [self fullPathForFile:@"project/Packages/ultrapackage.sbpack"],
+    ];
+
+    self.resourceManager = [ResourceManager sharedManager];
+    [_resourceManager setActiveDirectoriesWithFullReset:expectedPackagePaths];
+
+    self.projectSettings = [[ProjectSettings alloc] init];
+    _projectSettings.projectPath = [self fullPathForFile:@"project/foo.ccbproj"];
+    for (NSString *packagePath in expectedPackagePaths)
+    {
+        [_projectSettings addResourcePath:packagePath error:nil];
+    }
+
+    NSArray *allPackages = [_resourceManager allPackages];
+    NSMutableArray *allPackagePaths = [NSMutableArray array];
+
+    for (RMPackage *aPackage in allPackages)
+    {
+        [allPackagePaths addObject:aPackage.dirPath ];
+    }
+
+    XCTAssertTrue([allPackagePaths isEqualToArray:expectedPackagePaths]);
 }
 
 @end

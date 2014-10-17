@@ -105,10 +105,13 @@
 - (RMResource *)spriteSheetContainingFullPath:(NSString *)fullPath;
 - (RMResource *)spriteSheetContainingResource:(RMResource *)resource;
 
+- (NSArray *)allPackages;
+
 // *** SpriteSheet helper ***
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource;
 
 // *** Debug ***
 - (void) debugPrintDirectories;
+
 
 @end
