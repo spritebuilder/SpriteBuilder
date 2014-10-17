@@ -4,9 +4,7 @@
 #import "ResourceManager.h"
 #import "RMPackage.h"
 #import "RMResource.h"
-#import "ResourceTypes.h"
 #import "ProjectSettings.h"
-#import "FeatureToggle.h"
 #import "PackageRemover.h"
 
 @implementation ResourceDeleteCommand
@@ -37,8 +35,7 @@
 
     [_outlineView deselectAll:nil];
 
-    // TODO: inject with property
-    [[ResourceManager sharedManager] reloadAllResources];
+    [_resourceManager reloadAllResources];
 }
 
 - (void)deleteResourcesInArrays:(NSMutableArray *)resourcesToDelete
@@ -60,7 +57,9 @@
     [packageRemover removePackagesFromProject:packagesPathsToDelete error:NULL];
 }
 
-- (void)sortItemsToDeleteIntoArrays:(NSMutableArray *)resourcesToDelete foldersToDelete:(NSMutableArray *)foldersToDelete packagesPathsToDelete:(NSMutableArray *)packagesPathsToDelete
+- (void)sortItemsToDeleteIntoArrays:(NSMutableArray *)resourcesToDelete
+                    foldersToDelete:(NSMutableArray *)foldersToDelete
+              packagesPathsToDelete:(NSMutableArray *)packagesPathsToDelete
 {
     for (id resource in _resources)
     {
