@@ -53,6 +53,26 @@
     XCTAssertEqual(error.code, SBDuplicateResourcePathError);
 }
 
+- (void)testCanRenamePackageToEmptyName
+{
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [@"/project/pack_old" stringByAppendingPackageSuffix];
+
+    [_projectSettings addResourcePath:[@"/project/pack_new" stringByAppendingPackageSuffix] error:nil];
+
+    NSError *error;
+    XCTAssertFalse([_packageRenamer canRenamePackage:package toName:nil error:&error]);
+    XCTAssertEqual(error.code, SBEmptyPackageNameError);
+
+    NSError *error2;
+    XCTAssertFalse([_packageRenamer canRenamePackage:package toName:@"" error:&error2]);
+    XCTAssertEqual(error2.code, SBEmptyPackageNameError);
+
+    NSError *error3;
+    XCTAssertFalse([_packageRenamer canRenamePackage:package toName:@"    " error:&error3]);
+    XCTAssertEqual(error3.code, SBEmptyPackageNameError);
+}
+
 - (void)testCanRenamePackageWithExistingFullPathInFileSystemButNotInProject
 {
     RMPackage *package = [[RMPackage alloc] init];
