@@ -6,6 +6,7 @@
 #import "RMResource.h"
 #import "ProjectSettings.h"
 #import "PackageRemover.h"
+#import "NSAlert+Convenience.h"
 
 @implementation ResourceDeleteCommand
 
@@ -29,6 +30,12 @@
                       foldersToDelete:foldersToDelete
                 packagesPathsToDelete:packagesPathsToDelete];
 
+    if ([self willAllPackagesBeDeleted:packagesPathsToDelete])
+    {
+        [NSAlert showModalDialogWithTitle:@"Error" message:@"At least one package must remain in the project."];
+        return;
+    }
+
     [self deleteResourcesInArrays:resourcesToDelete
                   foldersToDelete:foldersToDelete
             packagesPathsToDelete:packagesPathsToDelete];
@@ -36,6 +43,13 @@
     [_outlineView deselectAll:nil];
 
     [_resourceManager reloadAllResources];
+}
+
+- (BOOL)willAllPackagesBeDeleted:(NSArray *)packagePathsToDelete
+{
+    NSArray *packages = [_resourceManager allPackages];
+
+    return packagePathsToDelete.count >= packages.count;
 }
 
 - (void)deleteResourcesInArrays:(NSMutableArray *)resourcesToDelete
