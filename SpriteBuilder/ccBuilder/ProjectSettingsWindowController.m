@@ -15,6 +15,8 @@
 #import "MainProjectSettingsDetailView.h"
 #import "NSString+RelativePath.h"
 #import "MiscConstants.h"
+#import "PublishUtil.h"
+#import "NSAlert+Convenience.h"
 
 typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
@@ -210,12 +212,21 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     }
 
     NSString *projectDir = [_projectSettings.projectPath stringByDeletingLastPathComponent];
+    NSURL *openDirectory = currentPath
+        ? [NSURL fileURLWithPath:[currentPath absolutePathFromBaseDirPath:projectDir]]
+        : [NSURL fileURLWithPath:projectDir];
+
+    if (!openDirectory)
+    {
+        return;
+    }
 
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setCanChooseFiles:NO];
     [openDlg setCanChooseDirectories:YES];
     [openDlg setCanCreateDirectories:YES];
-    [openDlg setDirectoryURL:[NSURL fileURLWithPath:[currentPath absolutePathFromBaseDirPath:projectDir]]];
+    [openDlg setDirectoryURL:openDirectory];
+    openDlg.delegate = self;
 
     [openDlg beginSheetModalForWindow:self.window completionHandler:^(NSInteger result)
     {
@@ -229,6 +240,34 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
             }
         }
     }];
+}
+
+- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError
+{
+    PublishDirectoryDeletionRisk risk = [PublishUtil riskForPublishDirectoryBeingDeletedUponPublish:url.path
+                                                                                      projectSettings:_projectSettings];
+    if (risk == PublishDirectoryDeletionRiskSafe)
+    {
+        return YES;
+    }
+
+    if (risk == PublishDirectoryDeletionRiskDirectoryContainingProject)
+    {
+        [NSAlert showModalDialogWithTitle:@"Error" message:@"Chosen directory contains project directory. Please choose another one."];
+        return NO;
+    }
+
+    if (risk == PublishDirectoryDeletionRiskNonEmptyDirectory)
+    {
+        NSInteger warningResult = [[NSAlert alertWithMessageText:@"Warning"
+                                                   defaultButton:@"Yes"
+                                                 alternateButton:@"No"
+                                                     otherButton:nil
+                                       informativeTextWithFormat:@"%@", @"The chosen directory is not empty, its contents will be deleted upon publishing. Are you sure?"] runModal];
+
+        return warningResult == NSAlertDefaultReturn;
+    }
+    return YES;
 }
 
 @end

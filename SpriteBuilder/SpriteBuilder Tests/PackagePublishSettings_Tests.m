@@ -109,7 +109,14 @@
     _packagePublishSettings.publishToCustomOutputDirectory = NO;
 
     SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
-}
 
+    _packagePublishSettings.customOutputDirectory = nil;
+    _packagePublishSettings.publishToCustomOutputDirectory = YES;
+    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+
+    _packagePublishSettings.customOutputDirectory = @"    ";
+    _packagePublishSettings.publishToCustomOutputDirectory = YES;
+    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+}
 
 @end

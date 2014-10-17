@@ -12,7 +12,7 @@
 @class ProjectSettings;
 @class PackagePublishSettings;
 
-@interface ProjectSettingsWindowController : CCBModalSheetController <NSTableViewDelegate>
+@interface ProjectSettingsWindowController : CCBModalSheetController <NSTableViewDelegate, NSOpenSavePanelDelegate>
 
 @property (nonatomic, weak) ProjectSettings* projectSettings;
 @property (nonatomic, strong) PackagePublishSettings *currentPackageSettings;

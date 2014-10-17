@@ -167,6 +167,10 @@ static CGFloat IMAGE_PADDING_RIGHT = 3.0;
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     attributes[NSFontAttributeName] = self.font;
 
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineBreakMode:[self lineBreakMode]];
+    attributes[NSParagraphStyleAttributeName] = paragraphStyle;
+
     if ([self isHighlighted])
     {
         attributes[NSForegroundColorAttributeName] = [NSColor whiteColor];

@@ -66,6 +66,8 @@
 
         ImageAndTextCell* imageTextCell = [[ImageAndTextCell alloc] init];
         [imageTextCell setEditable:YES];
+        [imageTextCell setLineBreakMode:NSLineBreakByTruncatingTail];
+
         [[resourceList outlineTableColumn] setDataCell:imageTextCell];
         [[resourceList outlineTableColumn] setEditable:YES];
 
