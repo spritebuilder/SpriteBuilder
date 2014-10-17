@@ -26,7 +26,14 @@
 #import "AppDelegate.h"
 #import "ResourceContextMenu.h"
 #import "ResourceCommandController.h"
-#import "NotificationNames.h"
+
+
+@interface ResourceManagerOutlineView()
+
+@property (nonatomic, strong) id mouseEventMonitor;
+
+@end
+
 
 @implementation ResourceManagerOutlineView
 
@@ -38,15 +45,38 @@
     {
         // NW: bugfix for source list highlight style for right clicks otherwise no highlighting borders
         self.menu = [[NSMenu alloc] init];
+
+        self.mouseEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSLeftMouseDownMask | NSRightMouseDownMask | NSOtherMouseDownMask)
+                                                                       handler:^NSEvent *(NSEvent *event)
+        {
+            [self abortEditingOnMouseDownOutsideOfView];
+            return event;
+        }];
 }
     return self;
 }
 
+- (void)dealloc
+{
+    [NSEvent removeMonitor:_mouseEventMonitor];
+}
+
+- (void)abortEditingOnMouseDownOutsideOfView
+{
+    NSPoint globalLocation = [NSEvent mouseLocation];
+    NSPoint windowLocation = [[self window] convertScreenToBase:globalLocation];
+    NSPoint viewLocation = [self convertPoint:windowLocation fromView:nil];
+    if (!NSPointInRect(viewLocation, [self bounds]))
+    {
+        [self abortEditing];
+    }
+}
+
 - (NSMenu *)menuForEvent:(NSEvent *)evt
 {
-// NW: It's called to draw a highlight on the right clicked item,
-// the menu outlet of the outline view has to be just set as well
-[super menuForEvent:evt];
+    // NW: It's called to draw a highlight on the right clicked item,
+    // the menu outlet of the outline view has to be just set as well
+    [super menuForEvent:evt];
 
     return [[ResourceContextMenu alloc] initWithActionTarget:_actionTarget resources:[self selectedResources]];
 }
@@ -90,6 +120,7 @@
 {
     unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
     if(key == NSDeleteCharacter
+       || key == NSDeleteFunctionKey
        && [_actionTarget respondsToSelector:@selector(deleteResource:)])
     {
         [_actionTarget deleteResource:nil];
