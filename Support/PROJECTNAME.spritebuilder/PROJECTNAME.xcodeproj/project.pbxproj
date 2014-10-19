@@ -999,6 +999,7 @@
 					"-ObjC",
 					"-lz",
 				);
+				PRODUCT_MODULE_NAME = PROJECTNAME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1043,6 +1044,7 @@
 					"-ObjC",
 					"-lz",
 				);
+				PRODUCT_MODULE_NAME = PROJECTNAME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
@@ -1089,6 +1091,7 @@
 					"-lgles_apportable",
 					"-landroid",
 				);
+				PRODUCT_MODULE_NAME = PROJECTNAME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = sbandroid;
@@ -1135,6 +1138,7 @@
 					"-lgles_apportable",
 					"-landroid",
 				);
+				PRODUCT_MODULE_NAME = PROJECTNAME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = sbandroid;
