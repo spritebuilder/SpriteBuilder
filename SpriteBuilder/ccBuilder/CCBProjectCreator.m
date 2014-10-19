@@ -86,16 +86,27 @@
     NSString *pbxprojFile = [xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"];
     [self setName:projName inFile:pbxprojFile search:substitutableProjectName];
     [self setName:identifier inFile:pbxprojFile search:substitutableProjectIdentifier];
+    NSArray *filesToRemove;
     if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
     {
         [self setName:@"IPHONEOS_DEPLOYMENT_TARGET = 5.0"
                inFile:pbxprojFile
                search:@"IPHONEOS_DEPLOYMENT_TARGET = 7.0"];
         [self removeLinesMatching:@".*MainScene[.]swift.*" inFile:pbxprojFile];
+        filesToRemove = @[@"Source/MainScene.swift"];
     }
     else if (programmingLanguage == CCBProgrammingLanguageSwift)
     {
         [self removeLinesMatching:@".*MainScene[.][hm].*" inFile:pbxprojFile];
+        filesToRemove = @[@"Source/MainScene.h", @"Source/MainScene.m"];
+    }
+
+    for (NSString *file in filesToRemove)
+    {
+        if (![fm removeItemAtPath:[parentPath stringByAppendingPathComponent:file] error:&error])
+        {
+            return NO;
+        }
     }
 
     // Update workspace data
