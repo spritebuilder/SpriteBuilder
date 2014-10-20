@@ -8,8 +8,8 @@
 
 #import "CCBPhysicsTwoBodyJoint.h"
 #import "GeometryUtil.h"
-#import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
+#import "InspectorController.h"
 
 
 @interface CCBPhysicsJoint()
@@ -199,7 +199,7 @@ static const float kDefaultLength = 58.0f;
     if(!self.bodyB)
     {
         self.anchorB = CGPointZero;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
+        [[InspectorController sharedController] refreshProperty:@"anchorB"];
         return;
     }
     
@@ -209,7 +209,7 @@ static const float kDefaultLength = 58.0f;
     CGPoint lAnchorb = [self.bodyB convertToNodeSpace:worldPos];
     
     self.anchorB = lAnchorb;
-    [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
+    [[InspectorController sharedController] refreshProperty:@"anchorB"];
 }
 
 
@@ -225,7 +225,7 @@ static const float kDefaultLength = 58.0f;
     {
         CGPoint newPosition = [self.bodyB convertToNodeSpace:worldPos];
         self.anchorB = newPosition;
-        [[AppDelegate appDelegate] refreshProperty:@"anchorB"];
+        [[InspectorController sharedController] refreshProperty:@"anchorB"];
         
     }
     

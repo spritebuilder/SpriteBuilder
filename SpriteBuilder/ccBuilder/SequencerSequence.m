@@ -35,6 +35,7 @@
 #import "SequencerKeyframe.h"
 #import "ResourceManager.h"
 #import "OALSimpleAudio.h"
+#import "InspectorController.h"
 
 @implementation SequencerSequence
 
@@ -133,7 +134,7 @@
         {
             [sh redrawTimeline:NO];     // No need to reload Sequencer Outline View (No node has changed)
             [sh updatePropertiesToTimelinePosition];
-            [[AppDelegate appDelegate] updateInspectorFromSelection];
+            [[InspectorController sharedController] updateInspectorFromSelection];
         }
     }
 }

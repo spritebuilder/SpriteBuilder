@@ -15,7 +15,7 @@
 #import "CocosScene.h"
 #import "SceneGraph.h"
 #import "EffectsUndoHelper.h"
-
+#import "InspectorController.h"
 
 @interface CCBWriterInternal(Private)
 + (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
@@ -85,7 +85,7 @@
 {
 	[super setEnvironment:environment];
 	
-	[[AppDelegate appDelegate] refreshProperty:@"effects"];
+	[[InspectorController sharedController] refreshProperty:@"effects"];
 }
 
 

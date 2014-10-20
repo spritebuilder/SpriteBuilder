@@ -27,6 +27,7 @@
 #import "cocos2d.h"
 @class AppDelegate;
 @class CocosScene;
+@class InspectorController;
 
 @interface CCBGLView : CCGLView {
     
@@ -34,5 +35,7 @@
     
     IBOutlet __weak AppDelegate* appDelegate;
 }
+
+@property (nonatomic, weak) IBOutlet InspectorController *inspectorController;
 
 @end

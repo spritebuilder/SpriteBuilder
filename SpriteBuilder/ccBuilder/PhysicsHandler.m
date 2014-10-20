@@ -41,6 +41,7 @@
 #import "AppDelegate.h"
 #import "MainWindow.h"
 #import "CCBGLView.h"
+#import "InspectorController.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -716,7 +717,7 @@
 		if(![joint isMemberOfClass:[CCBPhysicsPivotJoint class]])
 			[joint setBodyHandle:worldPos bodyType:BodyAnchorA];
 		
-        [[AppDelegate appDelegate] refreshProperty:@"bodyA"];
+        [[InspectorController sharedController] refreshProperty:@"bodyA"];
     }
     else
     {
@@ -729,7 +730,7 @@
 		
         joint.bodyB = body;
         [joint setBodyHandle:worldPos bodyType:BodyAnchorB];
-        [[AppDelegate appDelegate] refreshProperty:@"bodyB"];
+        [[InspectorController sharedController] refreshProperty:@"bodyB"];
     }
     
     [joint refreshOutletStatus];

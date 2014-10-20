@@ -2413,9 +2413,7 @@ CA
                 <outlet property="animationPlaybackManager" destination="TMe-KA-zbR" id="F3h-M9-Nfa"/>
                 <outlet property="assetsList" destination="1056" id="1057"/>
                 <outlet property="cocosView" destination="603" id="604"/>
-                <outlet property="inspectorCodeScroll" destination="2045" id="2049"/>
-                <outlet property="inspectorPhysics" destination="VWM-rZ-YR4" id="89g-68-7yx"/>
-                <outlet property="inspectorScroll" destination="605" id="1039"/>
+                <outlet property="inspectorController" destination="haw-KQ-sDY" id="Xda-3k-xiC"/>
                 <outlet property="itemTabView" destination="2035" id="2042"/>
                 <outlet property="itemViewTabs" destination="2040" id="2041"/>
                 <outlet property="lblTimeline" destination="1237" id="1586"/>
@@ -2447,7 +2445,7 @@ CA
                 <outlet property="projectImageBrowserView" destination="1986" id="1987"/>
                 <outlet property="projectTabView" destination="1971" id="1976"/>
                 <outlet property="projectViewTabs" destination="1969" id="1970"/>
-                <outlet property="propertyInspectorHandler" destination="2075" id="2076"/>
+                <outlet property="propertyInspectorTemplateHandler" destination="2075" id="JQ6-Af-TEz"/>
                 <outlet property="resourceManagerSplitView" destination="1956" id="1960"/>
                 <outlet property="rightPanel" destination="1795" id="1796"/>
                 <outlet property="saveDlgAccessoryView" destination="L7D-gD-txa" id="BAn-e8-nQe"/>
@@ -2693,7 +2691,7 @@ CA
                 </imageView>
             </subviews>
         </view>
-        <customObject id="2075" customClass="PropertyInspectorHandler">
+        <customObject id="2075" customClass="PropertyInspectorTemplateHandler">
             <connections>
                 <outlet property="collectionView" destination="2051" id="2079"/>
                 <outlet property="newTemplateBgColor" destination="2086" id="2087"/>
@@ -2767,6 +2765,14 @@ CA
                 <outlet property="view" destination="1957" id="cQn-2p-tNV"/>
             </connections>
         </viewController>
+        <customObject id="haw-KQ-sDY" customClass="InspectorController">
+            <connections>
+                <outlet property="inspectorCodeScroll" destination="2045" id="hcZ-Id-iws"/>
+                <outlet property="inspectorPhysics" destination="VWM-rZ-YR4" id="UT4-PX-bpi"/>
+                <outlet property="inspectorScroll" destination="605" id="2pQ-fm-onH"/>
+                <outlet property="propertyInspectorHandler" destination="2075" id="LgQ-lO-YuQ"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>

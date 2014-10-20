@@ -27,6 +27,7 @@
 #import "CCBGlobals.h"
 #import "CCNode+NodeInfo.h"
 #import "AppDelegate.h"
+#import "InspectorController.h"
 
 @implementation InspectorCodeConnectionsJS
 
@@ -52,7 +53,7 @@
     
     
     // Reload the inspector
-    [[AppDelegate appDelegate] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
+    [[InspectorController sharedController] performSelectorOnMainThread:@selector(updateInspectorFromSelection) withObject:NULL waitUntilDone:NO];
 }
 
 - (NSString*) customClass

@@ -15,7 +15,7 @@
 #import "CocosScene.h"
 #import "SceneGraph.h"
 #import "EffectsUndoHelper.h"
-
+#import "InspectorController.h"
 
 @implementation CCBPEffectGlass
 {
@@ -103,7 +103,7 @@
 {
 	[super setRefractionEnvironment:refractionEnvironment];
 	
-	[[AppDelegate appDelegate] refreshProperty:@"effects"];
+	[[InspectorController sharedController] refreshProperty:@"effects"];
 }
 
 
@@ -111,7 +111,7 @@
 {
 	[super setReflectionEnvironment:reflectionEnvironment];
 	
-	[[AppDelegate appDelegate] refreshProperty:@"effects"];
+	[[InspectorController sharedController] refreshProperty:@"effects"];
 }
 
 

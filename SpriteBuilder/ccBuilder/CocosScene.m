@@ -52,6 +52,7 @@
 #import "NSArray+Query.h"
 #import "GeometryUtil.h"
 #import "NSPasteboard+CCB.h"
+#import "InspectorController.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -1548,7 +1549,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
             
             selectedNode.position = [selectedNode convertPositionFromPoints:newLocalPos type:selectedNode.positionType];
         }
-        [appDelegate refreshProperty:@"position"];
+        [[InspectorController sharedController] refreshProperty:@"position"];
         [snapLayer mouseDragged:pos event:event];
     }
     else if (currentMouseTransform == kCCBTransformHandleScale)
@@ -1637,7 +1638,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         [appDelegate saveUndoStateWillChangeProperty:@"scale"];
         int type = [PositionPropertySetter scaledFloatTypeForNode:transformScalingNode prop:@"scale"];
         [PositionPropertySetter setScaledX:xScaleNew Y:yScaleNew type:type forNode:transformScalingNode prop:@"scale"];
-        [appDelegate refreshProperty:@"scale"];
+        [[InspectorController sharedController] refreshProperty:@"scale"];
         
         
         //UpdateTheScaleTool
@@ -1684,7 +1685,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         [appDelegate saveUndoStateWillChangeProperty:@"rotation"];
         transformScalingNode.rotation = newRotation;
-        [appDelegate refreshProperty:@"rotation"];
+        [[InspectorController sharedController] refreshProperty:@"rotation"];
     }
     else if (currentMouseTransform == kCCBTransformHandleSkew)
     {
@@ -1750,7 +1751,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         [appDelegate saveUndoStateWillChangeProperty:@"skew"];
         transformScalingNode.skewX = skewXFinal;
         transformScalingNode.skewY = skewYFinal;
-        [appDelegate refreshProperty:@"skew"];
+        [[InspectorController sharedController] refreshProperty:@"skew"];
         
         
     }
@@ -1764,7 +1765,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         
         [appDelegate saveUndoStateWillChangeProperty:@"anchorPoint"];
         transformScalingNode.anchorPoint = ccpAdd(transformScalingNode.startAnchorPoint, deltaAnchorPoint);
-        [appDelegate refreshProperty:@"anchorPoint"];
+        [[InspectorController sharedController] refreshProperty:@"anchorPoint"];
         
         [self updateAnchorPointCompensation];
     }
@@ -1808,7 +1809,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 keyframe.name = seqNodeProp.propName;
                 
                 [seqNodeProp setKeyframe:keyframe];
-                [appDelegate updateInspectorFromSelection];
+                [[InspectorController sharedController] updateInspectorFromSelection];
             }
             
             [sh redrawTimeline];
