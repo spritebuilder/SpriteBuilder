@@ -28,8 +28,6 @@ class BuildDistribution:
         parser.add_argument('--version',required=True)
         parser.add_argument('-sku', choices=('pro','default'), default='default', help='The build sku (default:default)')
         parser.add_argument('-private_key', default=None, help='The private_key to secure the pro version. Pro version only ')
-        parser.add_argument('-dcf_hash', default=None, help='The githash that dcf was taken from. Pro version only. Optional ')
-        parser.add_argument('-dcf_tag', default=None, help='The git tag that dcf was taken from. Pro version only. Optional ')
         parser.add_argument('-revision', default=None, help='The git hash that SB was taken from. Optional ')
         parser.add_argument('-mode', choices=('sandboxed','non_sandboxed'), default='non_sandboxed',help='Is the app built to run in sandboxed mode (App store) or non sandboxed (direct download). (default:non_sandboxed)')
         parser.add_argument('-tests', default=True, help='Failure to successfully run the tests stops the build. Default true ')
@@ -44,7 +42,7 @@ class BuildDistribution:
         
         self.run_tests = args.tests
     
-        version_info = {'dcf_hash' : args.dcf_hash, 'dcf_tag' : args.dcf_tag, 'revision' : args.revision}
+        version_info = {'revision' : args.revision}
     
         self.build_distribution(args.version, args.sku, args.mode,  version_info, args.private_key)
     
@@ -52,9 +50,6 @@ class BuildDistribution:
     def build_distribution(self, version,sku, mode, version_info,  private_key=None, ):
 
         if sku == 'pro':
-            if not os.path.isfile('Generated/AndroidXcodePlugin.zip'):
-                raise Exception('Failed to find Generated/AndroidXcodePlugin.zip. Pro version requres this file');
-
             if private_key == None:
                 raise Exception('Failed to find private_key. Pro version requires this command line argument.')
     
