@@ -138,4 +138,77 @@
     [[NSFileManager defaultManager] setAttributes:attr ofItemAtPath:file error:NULL];
 }
 
++(void) cleanupSpriteBuilderProjectAtPath:(NSString*)path
+{
+	// The files/folders in this list will be DELETED from the project at the given path.
+	// This list needs to be updated/amended whenever cocos2d introduces new or renames folders whose contents are
+	// not needed during development of a SpriteBuilder project. See: https://github.com/spritebuilder/SpriteBuilder/issues/915
+	NSArray* removeItems = @[@"build",
+							 @"cocos2d-tests-android",
+							 @"cocos2d-tests-ios.xcodeproj",
+							 @"cocos2d-tests-android",
+							 @"cocos2d-tests-osx.xcodeproj",
+							 @"cocos2d-tests.xcodeproj",
+							 @"cocos2d-ui-tests",
+							 @"Resources",
+							 @"Resources-iPad",
+							 @"Resources-Mac",
+							 @"tools",
+							 @"tests",
+							 @"UnitTests",
+							 @"doxygen.config",
+							 @"doxygen.footer",
+							 @"Default-568h@2x.png",
+							 @"Icon.png",
+							 @"RELEASE TODO.txt",
+							 @"external/Chipmunk/Demo",
+							 @"external/Chipmunk/doc",
+							 @"external/Chipmunk/doc-src",
+							 @"external/Chipmunk/msvc",
+							 @"external/Chipmunk/xcode",
+							 @"external/ObjectAL/ObjectAL/diagrams",
+							 @"external/ObjectAL/ObjectALDemo",
+							 @"external/ObjectAL/Sample Code",
+							 @"external/ObjectAL/ObjectAL.pdf",
+							 @"external/ObjectAL/external/ogg/doc",
+							 @"external/ObjectAL/external/ogg/win32",
+							 @"external/ObjectAL/external/tremor/doc",
+							 @"external/ObjectAL/external/tremor/win32",
+							 @"external/SSZipArchive/Example",
+							 @"external/SSZipArchive/Tests",
+							 ];
+	
+	// removing extranous cocos2d-iphone files if existing
+	const NSString* const cocosPath = @"Source/libs/cocos2d-iphone";
+	NSFileManager* fm = [NSFileManager defaultManager];
+	NSString* parentPath = [path stringByDeletingLastPathComponent];
+	NSError* error;
+
+	// just to be sure we don't accidentally remove something when given an incorrect .ccbproj path
+	if ([parentPath hasSuffix:@".spritebuilder"])
+	{
+		for (NSString* removeItem in removeItems)
+		{
+			NSString* removePath = [NSString pathWithComponents:@[parentPath, cocosPath, removeItem]];
+			
+			if ([fm fileExistsAtPath:removePath])
+			{
+				[fm removeItemAtPath:removePath error:&error];
+				if (error)
+				{
+					NSLog(@"WARNING: cleanup failed to remove path at %@ - reason: %@", removePath, error);
+				}
+			}
+			else
+			{
+				//NSLog(@"Developer Warning: tried to cleanup non-existent path: %@", removePath);
+			}
+		}
+	}
+	else
+	{
+		NSAssert1(nil, @"Tried to cleanup .ccbproj path whose parent folder doesn't have the .spritebuilder extension: %@", path);
+	}
+}
+
 @end

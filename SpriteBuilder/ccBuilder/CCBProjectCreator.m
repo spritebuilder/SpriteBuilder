@@ -8,6 +8,7 @@
 
 #import "CCBProjectCreator.h"
 #import "AppDelegate.h"
+#import "CCBFileUtil.h"
 
 @implementation NSString (IdentifierSanitizer)
 
@@ -211,7 +212,10 @@
     NSString *replacement = [NSString stringWithFormat:@"\"default_target\": {\"project\": \"%@\", \"project_config\": \"Release\", \"target\": \"%@\"},", projName, projName];
     apportableConfigurationContents = [apportableConfigurationContents stringByReplacingOccurrencesOfString:@"default_target" withString:replacement];
     [apportableConfigurationContents writeToFile:apportableConfigFile atomically:YES encoding:NSUTF8StringEncoding error:&error];
-    
+	
+	// perform cleanup to remove unnecessary files which only bloat the project
+	[CCBFileUtil cleanupSpriteBuilderProjectAtPath:fileName];
+	
     return [fm fileExistsAtPath:fileName];
 }
 
