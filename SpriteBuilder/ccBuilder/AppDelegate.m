@@ -3013,7 +3013,7 @@ typedef enum
             saveDlgLanguageHint.title = @"All supported platforms";
             break;
         case CCBProgrammingLanguageSwift:
-            saveDlgLanguageHint.title = @"iOS7+ only";
+            saveDlgLanguageHint.title = @"iOS7+ and OSX 10.10+ only";
             break;
         default:
             NSAssert(false, @"Unknown programming language");
