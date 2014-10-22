@@ -313,7 +313,15 @@
 	NSRect cellFrame = [cell frame];
 	NSColor *lineColor = nil;
 	NSBezierPath *bezier = [NSBezierPath bezierPath];
-	lineColor = [NSColor darkGrayColor];
+    
+    if (YOSEMITE_UI)
+    {
+        lineColor = [NSColor colorWithCalibratedWhite:0.5 alpha:1];
+    }
+    else
+    {
+        lineColor = [NSColor darkGrayColor];
+    }
 
 	//disable antialiasing of bezier paths
 	[NSGraphicsContext saveGraphicsState];
@@ -552,9 +560,16 @@
     }
     
 	NSRectFillUsingOperation(rect, NSCompositeSourceAtop);
-	[[NSColor darkGrayColor] set];
     
-    //[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, rect.origin.y) toPoint:<#(NSPoint)#>
+    if (YOSEMITE_UI)
+    {
+        [[NSColor colorWithCalibratedWhite:0.5 alpha:1] set];
+    }
+    else
+    {
+        [[NSColor darkGrayColor] set];
+    }
+    
 
 	if(orientation == PSMTabBarHorizontalOrientation) {
 		[NSBezierPath strokeLineFromPoint:NSMakePoint(rect.origin.x, rect.origin.y + 0.5) toPoint:NSMakePoint(rect.origin.x + rect.size.width, rect.origin.y + 0.5)];
