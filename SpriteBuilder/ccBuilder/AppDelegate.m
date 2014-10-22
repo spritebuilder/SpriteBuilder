@@ -606,6 +606,11 @@ typedef enum
 
 	_applicationLaunchComplete = YES;
     
+    if (YOSEMITE_UI)
+    {
+        [loopButton setBezelStyle:NSRoundedBezelStyle];
+    }
+    
 
 #ifdef TESTING
 	return;

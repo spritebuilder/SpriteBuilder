@@ -2420,6 +2420,7 @@ CA
                 <outlet property="lblTimelineChained" destination="1666" id="1687"/>
                 <outlet property="leftPanel" destination="1491" id="1790"/>
                 <outlet property="localizationEditorHandler" destination="2097" id="2099"/>
+                <outlet property="loopButton" destination="e6M-L5-cKQ" id="dgO-PA-DRr"/>
                 <outlet property="mainView" destination="372" id="1262"/>
                 <outlet property="menuCanvasBorder" destination="1276" id="1293"/>
                 <outlet property="menuCanvasSize" destination="1264" id="1281"/>

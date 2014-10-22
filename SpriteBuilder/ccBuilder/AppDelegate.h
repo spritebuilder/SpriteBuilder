@@ -293,6 +293,9 @@ typedef void (^CompletionCallback) (BOOL success);
     // Physics editor
     IBOutlet PhysicsHandler* __weak physicsHandler;
     
+    // Updates for Yosemite
+    IBOutlet NSButton* loopButton;
+    
 @private
     MainWindow *__weak window;
 	BOOL _applicationLaunchComplete;
