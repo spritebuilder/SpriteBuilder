@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="6245"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -477,13 +478,13 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Arrange" id="1766">
                                     <items>
-                                        <menuItem title="Bring to Front" keyEquivalent=">" id="1767">
+                                        <menuItem title="Bring to Front" keyEquivalent="&gt;" id="1767">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuArrange:" target="494" id="1771"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Bring Forward" tag="1" keyEquivalent=">" id="1768">
+                                        <menuItem title="Bring Forward" tag="1" keyEquivalent="&gt;" id="1768">
                                             <connections>
                                                 <action selector="menuArrange:" target="494" id="1772"/>
                                             </connections>
@@ -1363,14 +1364,14 @@ CA
                                 <rect key="frame" x="0.0" y="656" width="250" height="22"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </customView>
-                            <box autoresizesSubviews="NO" horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1493" customClass="CCBBox">
+                            <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1493" customClass="CCBBox">
                                 <rect key="frame" x="247" y="0.0" width="5" height="678"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <font key="titleFont" metaFont="system"/>
                             </box>
-                            <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1942" customClass="CCBBox">
+                            <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1942" customClass="CCBBox">
                                 <rect key="frame" x="0.0" y="13" width="250" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -1412,7 +1413,7 @@ CA
                                     </binding>
                                 </connections>
                             </popUpButton>
-                            <box autoresizesSubviews="NO" horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1949" customClass="CCBBox">
+                            <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1949" customClass="CCBBox">
                                 <rect key="frame" x="27" y="0.0" width="5" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -1795,7 +1796,7 @@ CA
                         <rect key="frame" x="851" y="0.0" width="301" height="680"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                         <subviews>
-                            <box autoresizesSubviews="NO" horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1235" customClass="CCBBox">
+                            <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1235" customClass="CCBBox">
                                 <rect key="frame" x="-2" y="0.0" width="5" height="680"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                 <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -1945,21 +1946,21 @@ CA
                                                                             <binding destination="494" name="enabled" keyPath="physicsHandler.selectedNodePhysicsEnabled" id="2gy-yR-5UQ"/>
                                                                         </connections>
                                                                     </textField>
-                                                                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="a1T-Tl-JdY">
+                                                                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="a1T-Tl-JdY">
                                                                         <rect key="frame" x="0.0" y="629" width="298" height="5"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <font key="titleFont" metaFont="system"/>
                                                                     </box>
-                                                                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="42d-Np-OMJ">
+                                                                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="42d-Np-OMJ">
                                                                         <rect key="frame" x="0.0" y="530" width="298" height="5"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <font key="titleFont" metaFont="system"/>
                                                                     </box>
-                                                                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="03a-2k-gEk">
+                                                                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="03a-2k-gEk">
                                                                         <rect key="frame" x="0.0" y="453" width="298" height="5"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -2286,7 +2287,7 @@ CA
                                                         <action selector="addTemplate:" target="2075" id="2077"/>
                                                     </connections>
                                                 </button>
-                                                <box autoresizesSubviews="NO" verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="2070" customClass="CCBBox">
+                                                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="2070" customClass="CCBBox">
                                                     <rect key="frame" x="0.0" y="625" width="298" height="5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -2700,6 +2701,14 @@ CA
             </connections>
         </customObject>
         <customObject id="2080" customClass="PropertyInspectorTemplateLibrary"/>
+        <customObject id="haw-KQ-sDY" customClass="InspectorController">
+            <connections>
+                <outlet property="inspectorCodeScroll" destination="2045" id="hcZ-Id-iws"/>
+                <outlet property="inspectorPhysics" destination="VWM-rZ-YR4" id="UT4-PX-bpi"/>
+                <outlet property="inspectorScroll" destination="605" id="2pQ-fm-onH"/>
+                <outlet property="propertyInspectorTemplateHandler" destination="2075" id="dUm-QK-yjz"/>
+            </connections>
+        </customObject>
         <menuItem isSeparatorItem="YES" id="2096"/>
         <customObject id="2097" customClass="LocalizationEditorHandler">
             <connections>
@@ -2765,14 +2774,6 @@ CA
                 <outlet property="view" destination="1957" id="cQn-2p-tNV"/>
             </connections>
         </viewController>
-        <customObject id="haw-KQ-sDY" customClass="InspectorController">
-            <connections>
-                <outlet property="inspectorCodeScroll" destination="2045" id="hcZ-Id-iws"/>
-                <outlet property="inspectorPhysics" destination="VWM-rZ-YR4" id="UT4-PX-bpi"/>
-                <outlet property="inspectorScroll" destination="605" id="2pQ-fm-onH"/>
-                <outlet property="propertyInspectorHandler" destination="2075" id="LgQ-lO-YuQ"/>
-            </connections>
-        </customObject>
     </objects>
     <resources>
         <image name="NSStopProgressTemplate" width="11" height="11"/>

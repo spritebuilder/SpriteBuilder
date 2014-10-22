@@ -210,7 +210,6 @@ void ApplyCustomNodeVisitSwizzle()
     
     class_replaceMethod([CCNode class], @selector(visit:parentTransform:), newImp, method_getTypeEncoding(newMethod));
     class_addMethod([CCNode class], @selector(oldVisit:parentTransform:), origImp, method_getTypeEncoding(origMethod));
-    
 }
 
 - (void) setupCocos2d
@@ -534,10 +533,6 @@ typedef enum
     // Initialize Audio
     //[OALSimpleAudio sharedInstance];
 
-    // Install default templates
-    [propertyInspectorTemplateHandler installDefaultTemplatesReplace:NO];
-    [propertyInspectorTemplateHandler loadTemplateLibrary];
-
     [self setupFeatureToggle];
     
     selectedNodes = [[NSMutableArray alloc] init];
@@ -600,6 +595,10 @@ typedef enum
     [window restorePreviousOpenedPanels];
 
     [self.window makeKeyWindow];
+    
+    // Install default templates
+    [_propertyInspectorTemplateHandler installDefaultTemplatesReplace:NO];
+    [_propertyInspectorTemplateHandler loadTemplateLibrary];
 
     [InspectorController setSingleton:_inspectorController];
     [self setupInspectorController];
@@ -943,7 +942,7 @@ typedef enum
     if (currentDocument) currentDocument.lastEditedProperty = NULL;
     
     [self updateSmallTabBarsEnabled];
-    [propertyInspectorTemplateHandler updateTemplates];
+    [_propertyInspectorTemplateHandler updateTemplates];
     
     [self didChangeValueForKey:@"selectedNode"];
     [self didChangeValueForKey:@"selectedNodes"];
@@ -1995,8 +1994,8 @@ typedef enum
     
     [self setSelectedNodes:NULL];
     [self menuCleanCacheDirectories:sender];
-    [propertyInspectorTemplateHandler installDefaultTemplatesReplace:YES];
-    [propertyInspectorTemplateHandler loadTemplateLibrary];
+    [_propertyInspectorTemplateHandler installDefaultTemplatesReplace:YES];
+    [_propertyInspectorTemplateHandler loadTemplateLibrary];
     
     [NSUserDefaults resetStandardUserDefaults];
 }

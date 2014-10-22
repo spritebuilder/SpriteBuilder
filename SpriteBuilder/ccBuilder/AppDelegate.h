@@ -145,7 +145,6 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet CCBGLView* __weak cocosView;
     IBOutlet NSView* mainView;
     IBOutlet CCBSplitHorizontalView* splitHorizontalView;
-    IBOutlet PropertyInspectorTemplateHandler * propertyInspectorTemplateHandler;
 
     IBOutlet NSToolbar* toolbar;
     MainToolbarDelegate* toolbarDelegate;
