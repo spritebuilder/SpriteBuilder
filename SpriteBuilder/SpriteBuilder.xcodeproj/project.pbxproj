@@ -482,6 +482,20 @@
 		B7DEBD6417D113B800942E4D /* SpriteBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */; };
 		B7E08C9F19D63CF400383412 /* EffectsUndoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E08C9E19D63CF400383412 /* EffectsUndoHelper.m */; };
 		B7E1EFDD185F8D3D00C9E6E0 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */; };
+		B7E6BB4E19F868F000619A58 /* doc-particlesystem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4719F868F000619A58 /* doc-particlesystem@2x.png */; };
+		B7E6BB4F19F868F000619A58 /* doc-particlesystem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4719F868F000619A58 /* doc-particlesystem@2x.png */; };
+		B7E6BB5019F868F000619A58 /* sel-round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4819F868F000619A58 /* sel-round@2x.png */; };
+		B7E6BB5119F868F000619A58 /* sel-round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4819F868F000619A58 /* sel-round@2x.png */; };
+		B7E6BB5219F868F000619A58 /* select-corner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4919F868F000619A58 /* select-corner@2x.png */; };
+		B7E6BB5319F868F000619A58 /* select-corner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4919F868F000619A58 /* select-corner@2x.png */; };
+		B7E6BB5419F868F000619A58 /* select-physics-corner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4A19F868F000619A58 /* select-physics-corner@2x.png */; };
+		B7E6BB5519F868F000619A58 /* select-physics-corner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4A19F868F000619A58 /* select-physics-corner@2x.png */; };
+		B7E6BB5619F868F000619A58 /* select-pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4B19F868F000619A58 /* select-pt@2x.png */; };
+		B7E6BB5719F868F000619A58 /* select-pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4B19F868F000619A58 /* select-pt@2x.png */; };
+		B7E6BB5819F868F000619A58 /* seq-scaleslide-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4C19F868F000619A58 /* seq-scaleslide-bg@2x.png */; };
+		B7E6BB5919F868F000619A58 /* seq-scaleslide-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4C19F868F000619A58 /* seq-scaleslide-bg@2x.png */; };
+		B7E6BB5A19F868F000619A58 /* seq-timedisplay-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4D19F868F000619A58 /* seq-timedisplay-bg@2x.png */; };
+		B7E6BB5B19F868F000619A58 /* seq-timedisplay-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4D19F868F000619A58 /* seq-timedisplay-bg@2x.png */; };
 		B7E775E218563F8C004221AA /* frame-fixed.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E775E118563F8C004221AA /* frame-fixed.png */; };
 		B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7EE699C18188E0900B983FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7EE699A18188E0900B983FE /* InfoPlist.strings */; };
@@ -1997,6 +2011,13 @@
 		B7E08C9D19D63CF400383412 /* EffectsUndoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsUndoHelper.h; path = ccBuilder/EffectsUndoHelper.h; sourceTree = "<group>"; };
 		B7E08C9E19D63CF400383412 /* EffectsUndoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsUndoHelper.m; path = ccBuilder/EffectsUndoHelper.m; sourceTree = "<group>"; };
 		B7E1EFDC185F8D3D00C9E6E0 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		B7E6BB4719F868F000619A58 /* doc-particlesystem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "doc-particlesystem@2x.png"; sourceTree = "<group>"; };
+		B7E6BB4819F868F000619A58 /* sel-round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sel-round@2x.png"; sourceTree = "<group>"; };
+		B7E6BB4919F868F000619A58 /* select-corner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-corner@2x.png"; sourceTree = "<group>"; };
+		B7E6BB4A19F868F000619A58 /* select-physics-corner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-physics-corner@2x.png"; sourceTree = "<group>"; };
+		B7E6BB4B19F868F000619A58 /* select-pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-pt@2x.png"; sourceTree = "<group>"; };
+		B7E6BB4C19F868F000619A58 /* seq-scaleslide-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-scaleslide-bg@2x.png"; sourceTree = "<group>"; };
+		B7E6BB4D19F868F000619A58 /* seq-timedisplay-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-timedisplay-bg@2x.png"; sourceTree = "<group>"; };
 		B7E775E118563F8C004221AA /* frame-fixed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-fixed.png"; sourceTree = "<group>"; };
 		B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCTextField.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7EE699918188E0900B983FE /* CCTextField-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCTextField-Info.plist"; sourceTree = "<group>"; };
@@ -3398,6 +3419,13 @@
 		776041F01498FD630078095D /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B7E6BB4719F868F000619A58 /* doc-particlesystem@2x.png */,
+				B7E6BB4819F868F000619A58 /* sel-round@2x.png */,
+				B7E6BB4919F868F000619A58 /* select-corner@2x.png */,
+				B7E6BB4A19F868F000619A58 /* select-physics-corner@2x.png */,
+				B7E6BB4B19F868F000619A58 /* select-pt@2x.png */,
+				B7E6BB4C19F868F000619A58 /* seq-scaleslide-bg@2x.png */,
+				B7E6BB4D19F868F000619A58 /* seq-timedisplay-bg@2x.png */,
 				92F0961218F8855A00D47A94 /* inspector-body-goto-hi.png */,
 				92F0961318F8855A00D47A94 /* inspector-body-goto.png */,
 				92F0961418F8855A00D47A94 /* inspector-body-goto-hi@2x.png */,
@@ -6515,6 +6543,7 @@
 				92B8A32818E1063600EE52FC /* seq-locked-faint.png in Resources */,
 				921EEADD18A5760700D864C2 /* joint-pivot@2x.png in Resources */,
 				92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */,
+				B7E6BB5419F868F000619A58 /* select-physics-corner@2x.png in Resources */,
 				92F12E4F18847BC800AB8F32 /* seq-keyframe-x4.png in Resources */,
 				92DC215F188073C500C8DCCD /* select-scale.png in Resources */,
 				92DC2160188073C500C8DCCD /* select-crosshair.png in Resources */,
@@ -6598,6 +6627,7 @@
 				776C6896138874C200153214 /* dsa_pub.pem in Resources */,
 				77D33EAD138EFBD800012A88 /* StageSizeWindow.xib in Resources */,
 				92CAC1CB195A4C6C0035EA39 /* EffectGlowControl.xib in Resources */,
+				B7E6BB5A19F868F000619A58 /* seq-timedisplay-bg@2x.png in Resources */,
 				7729F03A1390215400CAA44F /* frame-iphone.png in Resources */,
 				7729F03D1390600200CAA44F /* frame-ipad.png in Resources */,
 				776A370B139544A200960E94 /* TB_actualSize.png in Resources */,
@@ -6639,6 +6669,7 @@
 				9218DF2B1919B04D0033851E /* joint-pivot-handle-ratchetmark.png in Resources */,
 				B7096E28180CD98E00164A8A /* doc-node.png in Resources */,
 				E385080B150AB232007E162A /* segmctrl-bg.png in Resources */,
+				B7E6BB5619F868F000619A58 /* select-pt@2x.png in Resources */,
 				92F0960518F8851300D47A94 /* inspector-body-connected.png in Resources */,
 				E34E5D6A153585EC000201FB /* ruler-bg-horizontal.png in Resources */,
 				E34E5D6B153585EC000201FB /* ruler-bg-vertical.png in Resources */,
@@ -6649,6 +6680,7 @@
 				E34E5D711535B34F000201FB /* ruler-mark-origin.png in Resources */,
 				92F0960618F8851300D47A94 /* inspector-body-disconnected.png in Resources */,
 				E34E5D731535BC5E000201FB /* ruler-numbers.png in Resources */,
+				B7E6BB5819F868F000619A58 /* seq-scaleslide-bg@2x.png in Resources */,
 				E3A16AF01536C885004B528A /* ruler-guide.png in Resources */,
 				920994DE19871A0A0006F38D /* effect-reflection.png in Resources */,
 				E3B9AF431538612200489438 /* ruler-xy.png in Resources */,
@@ -6687,6 +6719,7 @@
 				E3E8B49915793AF800373983 /* seq-btn-play.png in Resources */,
 				926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */,
 				E3E8B49A15793AF800373983 /* seq-btn-restart.png in Resources */,
+				B7E6BB5019F868F000619A58 /* sel-round@2x.png in Resources */,
 				E3E8B49B15793AF800373983 /* seq-btn-run.png in Resources */,
 				926D13CA18B5778300582959 /* joint-distance.png in Resources */,
 				E3E8B49C15793AF800373983 /* seq-btn-stepback.png in Resources */,
@@ -6810,6 +6843,7 @@
 				92F0961018F8851300D47A94 /* inspector-body-bg@2x.png in Resources */,
 				926D13C718B5778300582959 /* joint-distance-slide-sel@2x.png in Resources */,
 				E39C917B174C134C00092BD1 /* toolbar-btn-add.png in Resources */,
+				B7E6BB5219F868F000619A58 /* select-corner@2x.png in Resources */,
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
 				92CB085B19BA2E0800EFDCE3 /* EffectBlurControl.xib in Resources */,
 				921EEAD918A5760700D864C2 /* joint-anchor@2x.png in Resources */,
@@ -6884,6 +6918,7 @@
 				E525FDB10BC6C4522A30E1BB /* InspectorFloatScale.xib in Resources */,
 				E525FFEC03F2FE3650547F90 /* InspectorPopoverFloatXY.xib in Resources */,
 				E525FFAE9618673CD9592B56 /* InspectorFloatVar.xib in Resources */,
+				B7E6BB4E19F868F000619A58 /* doc-particlesystem@2x.png in Resources */,
 				E525FA23B9F5571ED655B96C /* InspectorFloatCheck.xib in Resources */,
 				E525FD0CE48AC54FD5CA02BD /* InspectorEnabledFloat.xib in Resources */,
 				E525F893642327E54701E7E2 /* InspectorCheck.xib in Resources */,
@@ -6922,16 +6957,23 @@
 			files = (
 				922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */,
 				833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */,
+				B7E6BB5119F868F000619A58 /* sel-round@2x.png in Resources */,
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
 				83599E9A1975470D008283EC /* photoshop.psd in Resources */,
+				B7E6BB5319F868F000619A58 /* select-corner@2x.png in Resources */,
 				92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */,
 				920994C419870EF90006F38D /* ShinyBallNormals.png in Resources */,
 				920994C319870EF90006F38D /* ShinyBallColor.png in Resources */,
+				B7E6BB5B19F868F000619A58 /* seq-timedisplay-bg@2x.png in Resources */,
 				920994C219870EF90006F38D /* cartoon_house.jpg in Resources */,
+				B7E6BB5719F868F000619A58 /* select-pt@2x.png in Resources */,
 				830B39B0197032F400218021 /* blank.wav in Resources */,
+				B7E6BB5919F868F000619A58 /* seq-scaleslide-bg@2x.png in Resources */,
+				B7E6BB4F19F868F000619A58 /* doc-particlesystem@2x.png in Resources */,
 				920994C119870EF90006F38D /* EffectTest1.ccb in Resources */,
 				92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */,
 				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
+				B7E6BB5519F868F000619A58 /* select-physics-corner@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
