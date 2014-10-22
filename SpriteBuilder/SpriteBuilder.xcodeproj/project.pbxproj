@@ -496,6 +496,8 @@
 		B7E6BB5919F868F000619A58 /* seq-scaleslide-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4C19F868F000619A58 /* seq-scaleslide-bg@2x.png */; };
 		B7E6BB5A19F868F000619A58 /* seq-timedisplay-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4D19F868F000619A58 /* seq-timedisplay-bg@2x.png */; };
 		B7E6BB5B19F868F000619A58 /* seq-timedisplay-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB4D19F868F000619A58 /* seq-timedisplay-bg@2x.png */; };
+		B7E6BB6819F86A9800619A58 /* ui-nopreview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB6719F86A9800619A58 /* ui-nopreview@2x.png */; };
+		B7E6BB6919F86A9800619A58 /* ui-nopreview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E6BB6719F86A9800619A58 /* ui-nopreview@2x.png */; };
 		B7E775E218563F8C004221AA /* frame-fixed.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E775E118563F8C004221AA /* frame-fixed.png */; };
 		B7EE699618188E0900B983FE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7C623B217F383CE00928F91 /* CoreFoundation.framework */; };
 		B7EE699C18188E0900B983FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7EE699A18188E0900B983FE /* InfoPlist.strings */; };
@@ -2018,6 +2020,7 @@
 		B7E6BB4B19F868F000619A58 /* select-pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-pt@2x.png"; sourceTree = "<group>"; };
 		B7E6BB4C19F868F000619A58 /* seq-scaleslide-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-scaleslide-bg@2x.png"; sourceTree = "<group>"; };
 		B7E6BB4D19F868F000619A58 /* seq-timedisplay-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seq-timedisplay-bg@2x.png"; sourceTree = "<group>"; };
+		B7E6BB6719F86A9800619A58 /* ui-nopreview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ui-nopreview@2x.png"; sourceTree = "<group>"; };
 		B7E775E118563F8C004221AA /* frame-fixed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame-fixed.png"; sourceTree = "<group>"; };
 		B7EE699518188E0800B983FE /* CCTextField.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCTextField.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7EE699918188E0900B983FE /* CCTextField-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCTextField-Info.plist"; sourceTree = "<group>"; };
@@ -3419,6 +3422,7 @@
 		776041F01498FD630078095D /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B7E6BB6719F86A9800619A58 /* ui-nopreview@2x.png */,
 				B7E6BB4719F868F000619A58 /* doc-particlesystem@2x.png */,
 				B7E6BB4819F868F000619A58 /* sel-round@2x.png */,
 				B7E6BB4919F868F000619A58 /* select-corner@2x.png */,
@@ -6567,6 +6571,7 @@
 				80E95C5A1836E44900D864CA /* select-locked.png in Resources */,
 				80FBACD91834553000C4BB69 /* visible-icon.png in Resources */,
 				B7E775E218563F8C004221AA /* frame-fixed.png in Resources */,
+				B7E6BB6819F86A9800619A58 /* ui-nopreview@2x.png in Resources */,
 				830485A519AF2A6E00A624BB /* PreviewAudioView.xib in Resources */,
 				B71706CD184ECD660081720A /* select-crosshair@2x.png in Resources */,
 				7789ABCD133AA82000CEFCC7 /* InfoPlist.strings in Resources */,
@@ -6957,6 +6962,7 @@
 			files = (
 				922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */,
 				833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */,
+				B7E6BB6919F86A9800619A58 /* ui-nopreview@2x.png in Resources */,
 				B7E6BB5119F868F000619A58 /* sel-round@2x.png in Resources */,
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
 				83599E9A1975470D008283EC /* photoshop.psd in Resources */,
