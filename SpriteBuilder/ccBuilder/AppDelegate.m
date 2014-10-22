@@ -608,7 +608,7 @@ typedef enum
     
     if (YOSEMITE_UI)
     {
-        [loopButton setBezelStyle:NSRoundedBezelStyle];
+        [loopButton setBezelStyle:NSTexturedRoundedBezelStyle];
     }
     
 
