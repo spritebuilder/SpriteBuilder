@@ -48,7 +48,7 @@
             NSRectFill(self.bounds);
             
         // Draw drak gray bottom border
-        [[NSColor colorWithCalibratedWhite:0.416 alpha:1] setStroke];
+        [[NSColor colorWithCalibratedWhite:0.5 alpha:1] setStroke];
         [NSBezierPath strokeLineFromPoint:NSMakePoint(NSMinX(self.bounds), NSMaxY(self.bounds) - 0.5f)
                                   toPoint:NSMakePoint(NSMaxX(self.bounds), NSMaxY(self.bounds) - 0.5f)];
     }
