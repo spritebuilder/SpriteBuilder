@@ -127,8 +127,6 @@
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
 #import "ProjectMigrator.h"
-#import "AndroidPluginInstallerWindow.h"
-#import "AndroidPluginInstaller.h"
 #import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
@@ -629,7 +627,6 @@ typedef enum
 		}
 	}
 
-	[self setupSpriteBuilderPro];
 #endif
 	
 	
@@ -4238,33 +4235,6 @@ typedef enum
 #endif
 
 	
-}
-
-#pragma mark -
-
--(void)setupSpriteBuilderPro
-{
-
-#ifdef SPRITEBUILDER_PRO
-#ifdef TESTING
-    return;
-#endif
-
-	if(![AndroidPluginInstaller needsInstallation])
-	{
-		return;
-	}
-	
-	AndroidPluginInstallerWindow *installerWindow = [[AndroidPluginInstallerWindow alloc] initWithWindowNibName:@"AndroidPluginInstallerWindow"];
-	
-	
-	[[installerWindow window] center];
-    [[installerWindow window] makeKeyAndOrderFront:self];
-	
- 
-	[[NSApplication sharedApplication] runModalForWindow:[installerWindow window]];
-	
-#endif
 }
 
 #pragma mark Extras / Snap

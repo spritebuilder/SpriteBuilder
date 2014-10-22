@@ -342,12 +342,6 @@
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
-		92FFB84F195DEA0300E9C96F /* AndroidPluginInstallerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB84D195DEA0300E9C96F /* AndroidPluginInstallerWindow.m */; };
-		92FFB850195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */; };
-		92FFB854195DEA2800E9C96F /* AndroidPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */; };
-		92FFB856195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */; };
-		92FFB859195DEC1100E9C96F /* plugin_installer.py in Resources */ = {isa = PBXBuildFile; fileRef = 92FFB858195DEC1100E9C96F /* plugin_installer.py */; };
-		92FFB85A195DEC7B00E9C96F /* plugin_installer.py in Resources */ = {isa = PBXBuildFile; fileRef = 92FFB858195DEC1100E9C96F /* plugin_installer.py */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -1807,13 +1801,6 @@
 		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
 		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
 		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
-		92FFB84C195DEA0300E9C96F /* AndroidPluginInstallerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndroidPluginInstallerWindow.h; sourceTree = "<group>"; };
-		92FFB84D195DEA0300E9C96F /* AndroidPluginInstallerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstallerWindow.m; sourceTree = "<group>"; };
-		92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AndroidPluginInstallerWindow.xib; sourceTree = "<group>"; };
-		92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AndroidPluginInstaller.h; sourceTree = "<group>"; };
-		92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstaller.m; sourceTree = "<group>"; };
-		92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AndroidPluginInstall_Tests.m; sourceTree = "<group>"; };
-		92FFB858195DEC1100E9C96F /* plugin_installer.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = plugin_installer.py; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -3090,11 +3077,6 @@
 				E34039BD1624BF610067C7B8 /* CCBDocumentController.m */,
 				9249983018B7E1F500DE9ADA /* SceneGraph.h */,
 				9249983118B7E1F500DE9ADA /* SceneGraph.m */,
-				92FFB84C195DEA0300E9C96F /* AndroidPluginInstallerWindow.h */,
-				92FFB84D195DEA0300E9C96F /* AndroidPluginInstallerWindow.m */,
-				92FFB84E195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib */,
-				92FFB852195DEA2800E9C96F /* AndroidPluginInstaller.h */,
-				92FFB853195DEA2800E9C96F /* AndroidPluginInstaller.m */,
 				9269C2FD199057EA00884F59 /* SBUpdater.h */,
 				9269C2FE199057EA00884F59 /* SBUpdater.m */,
 			);
@@ -3715,7 +3697,6 @@
 			isa = PBXGroup;
 			children = (
 				924EE96019902D5A0029CCD1 /* Sparkle */,
-				92FFB857195DEC1100E9C96F /* AndroidPlugin */,
 				8341326918DADF8C0088FFAB /* optipng */,
 				80AD79911863871200B653B7 /* PVRTexTool */,
 				B7D0918717C2C1310007FE7F /* Cocos2d */,
@@ -4024,7 +4005,6 @@
 			isa = PBXGroup;
 			children = (
 				83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */,
-				92FFB855195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m */,
 				83993DB419361305001C228B /* FeatureToggle_Tests.m */,
 			);
 			name = "Application Settings & Globals";
@@ -4387,14 +4367,6 @@
 				92CB085A19BA2E0800EFDCE3 /* EffectBlurControl.xib */,
 			);
 			name = Blur;
-			sourceTree = "<group>";
-		};
-		92FFB857195DEC1100E9C96F /* AndroidPlugin */ = {
-			isa = PBXGroup;
-			children = (
-				92FFB858195DEC1100E9C96F /* plugin_installer.py */,
-			);
-			path = AndroidPlugin;
 			sourceTree = "<group>";
 		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
@@ -6583,10 +6555,8 @@
 				9218DF3C1919B04D0033851E /* joint-pivot-mode-bg@2x.png in Resources */,
 				774E4EC3136D98AB0025D0A8 /* select-br.png in Resources */,
 				774E4EC4136D98AB0025D0A8 /* select-pt.png in Resources */,
-				92FFB859195DEC1100E9C96F /* plugin_installer.py in Resources */,
 				774E4EC5136D98AB0025D0A8 /* select-tl.png in Resources */,
 				774E4EC6136D98AB0025D0A8 /* select-tr.png in Resources */,
-				92FFB850195DEA0300E9C96F /* AndroidPluginInstallerWindow.xib in Resources */,
 				774E4ECE136DFFB70025D0A8 /* btn-move-hi.png in Resources */,
 				774E4ECF136DFFB70025D0A8 /* btn-move.png in Resources */,
 				774E4ED0136DFFB70025D0A8 /* btn-rotate-hi.png in Resources */,
@@ -6950,7 +6920,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92FFB85A195DEC7B00E9C96F /* plugin_installer.py in Resources */,
 				922CC3981946873A00B34854 /* AnimationTest2.ccb in Resources */,
 				833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */,
 				922CC396194676B600B34854 /* AnimationTest1.ccb in Resources */,
@@ -7332,7 +7301,6 @@
 				776C68451385D37E00153214 /* CCBTableView.m in Sources */,
 				77D33EAB138EA4F900012A88 /* CCBUtil.m in Sources */,
 				77E7D04B138F777A00E8EE67 /* CCBModalSheetController.m in Sources */,
-				92FFB854195DEA2800E9C96F /* AndroidPluginInstaller.m in Sources */,
 				77E7D04F138F78F600E8EE67 /* StageSizeWindow.m in Sources */,
 				776A37B61398D6BF00960E94 /* CCBGLView.m in Sources */,
 				4DB7C95719083B9C00ECE19F /* NotificationNames.m in Sources */,
@@ -7347,7 +7315,6 @@
 				E3C3660114EA0507007CD5FF /* TexturePropertySetter.m in Sources */,
 				92CB085E19BA2E4300EFDCE3 /* EffectBlurControl.m in Sources */,
 				E3C3660414EB2C1B007CD5FF /* CCBReaderInternal.m in Sources */,
-				92FFB84F195DEA0300E9C96F /* AndroidPluginInstallerWindow.m in Sources */,
 				9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */,
 				92AEE83D1979D55000B50F74 /* LicenseManager.m in Sources */,
 				E398C03314FB86D20078E771 /* PlugInExport.m in Sources */,
@@ -7629,7 +7596,6 @@
 				E525F7AC155C1C4502F6A34A /* PackageImporter_Tests.m in Sources */,
 				83CD449A193F35C50086E9E7 /* ResourceContextMenu_Tests.m in Sources */,
 				E525F09EC8AF83CADB163700 /* CCBReader_Tests.m in Sources */,
-				92FFB856195DEA8C00E9C96F /* AndroidPluginInstall_Tests.m in Sources */,
 				E525F4F04F018D82F3251813 /* CCAnimation_Tests.m in Sources */,
 				E525F0B45E1523153C200B71 /* FileSystemTestCase.m in Sources */,
 				E525FCE3F78C45137345C537 /* NSString+Publishing_Tests.m in Sources */,
