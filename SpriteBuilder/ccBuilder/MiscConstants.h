@@ -2,6 +2,8 @@ extern BOOL const IS_SPRITEBUILDER_PRO;
 
 extern NSInteger const DEFAULT_AUDIO_QUALITY;
 
+extern NSInteger const EFFECTS_MAXIMUM_PER_NODE;
+
 extern NSString *const PACKAGE_NAME_SUFFIX;
 extern NSString *const PACKAGES_FOLDER_NAME;
 

@@ -10,7 +10,10 @@
 #import "CCBPEffectNode.h"
 
 @interface InspectorEffectControl : InspectorValue <NSTableViewDataSource, NSTableViewDelegate>
-@property (readonly) id<CCEffectNodeProtocol> effectNode;
 
+@property (nonatomic, weak) IBOutlet NSButton *addEffectButton;
+@property (nonatomic, weak) IBOutlet NSButton *removeEffectButton;
+
+@property (readonly) id<CCEffectNodeProtocol> effectNode;
 
 @end

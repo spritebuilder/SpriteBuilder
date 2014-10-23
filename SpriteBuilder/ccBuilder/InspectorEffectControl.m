@@ -11,6 +11,7 @@
 #import "MainWindow.h"
 #import "EffectViewController.h"
 #import "EffectsManager.h"
+#import "MiscConstants.h"
 
 
 @interface InspectorEffectControl ()
@@ -19,19 +20,18 @@
 }
 @property (weak) IBOutlet NSTableView *tableView;
 
-
 @end
+
 
 @implementation InspectorEffectControl
 
-
-- (id) initWithSelection:(CCNode*)s andPropertyName:(NSString*)pn andDisplayName:(NSString*) dn andExtra:(NSString*)e
+- (id)initWithSelection:(CCNode*)aSelection andPropertyName:(NSString*)aPropertyName andDisplayName:(NSString*)aDisplayName andExtra:(NSString*)anExtra
 {
-	NSAssert([s conformsToProtocol:@protocol(CCEffectNodeProtocol)], @"Must conform to protocol");
-	return [super initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e];
+	NSAssert([aSelection conformsToProtocol:@ protocol(CCEffectNodeProtocol)], @"Must conform to protocol");
+	return [super initWithSelection:aSelection andPropertyName:aPropertyName andDisplayName:aDisplayName andExtra:anExtra];
 }
 
--(id<CCEffectNodeProtocol>)effectNode
+- (id<CCEffectNodeProtocol>)effectNode
 {
 	return (id<CCEffectNodeProtocol>)selection;
 }
@@ -41,7 +41,7 @@
 	if([self.tableView selectedRow] >=0)
 	{
 		NSInteger row = [self.tableView selectedRow];
-		CCEffect<EffectProtocol> *effect = [self.effectNode effects][row];
+		CCEffect<EffectProtocol> *effect = [self.effectNode effects][(NSUInteger) row];
         
         [[AppDelegate appDelegate] saveUndoState];
 		[self.effectNode removeEffect:effect];
@@ -53,7 +53,6 @@
 - (IBAction)handleAddButton:(id)sender
 {
     NSMenu* menu = [[NSMenu alloc] initWithTitle:@"Effects"];
-    //menu.showsStateColumn = NO;
     menu.font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
     
     NSArray* effects = [EffectsManager effects];
@@ -89,20 +88,19 @@
     [self refresh];
 }
 
-
 - (void) willBeAdded
 {
 	[self refresh];
 }
 
--(void)refresh
+- (void)refresh
 {
 	[viewControllers removeAllObjects];
 	viewControllers = [NSMutableArray new];
 	
 	NSArray * effects = [[self effectNode] effects];
-	
-	for (int i = 0; i < effects.count; i++)
+
+	for (NSUInteger i = 0; i < effects.count; i++)
 	{
 		EffectDescription * effectDescription = [[self effectNode] effectDescriptors][i];
 		id<EffectProtocol> effect =  [self.effectNode effects][i];
@@ -113,9 +111,13 @@
 		vc.effect =	effect;
 		[viewControllers addObject:vc];
 	}
-	
-	[self.tableView reloadData];
+
+    [_addEffectButton setEnabled:(effects.count < EFFECTS_MAXIMUM_PER_NODE)];
+    [_removeEffectButton setEnabled:effects.count > 0];
+
+    [self.tableView reloadData];
 }
+
 
 #pragma mark Data Source
 
@@ -126,32 +128,31 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	return [[self effectNode] effectDescriptors][row];
+	return [[self effectNode] effectDescriptors][(NSUInteger) row];
 }
+
 
 #pragma mark View Delegate
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
 	int row = self.tableView.selectedRow;
-	
-	for (int i=0; i < viewControllers.count; i++) {
+
+    for (NSUInteger i = 0; i < viewControllers.count; i++)
+    {
 		EffectViewController * viewController = viewControllers[i];
 		viewController.highlight = i == row;
 	}
 }
 
-
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	
-	return [(NSViewController*)viewControllers[row] view];
-	
+	return [(NSViewController*)viewControllers[(NSUInteger) row] view];
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
 {
-	NSView * effectView = [(NSViewController*)viewControllers[row] view];
+	NSView * effectView = [(NSViewController*)viewControllers[(NSUInteger) row] view];
 	return effectView.frame.size.height;
 }
 

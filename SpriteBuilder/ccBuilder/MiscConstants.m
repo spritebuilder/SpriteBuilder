@@ -6,6 +6,8 @@ BOOL const IS_SPRITEBUILDER_PRO = NO;
 
 NSInteger const DEFAULT_AUDIO_QUALITY = 4;
 
+NSInteger const EFFECTS_MAXIMUM_PER_NODE = 5;
+
 NSString *const PACKAGE_NAME_SUFFIX = @"sbpack";
 NSString *const PACKAGES_FOLDER_NAME = @"Packages";
 
