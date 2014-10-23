@@ -6,10 +6,10 @@
 //
 //
 
-#import <Sparkle/Sparkle.h>
 
+@interface SBVersionComparitor : NSObject
 
-@interface SBVersionComparitor : NSObject <SUVersionComparison>
+- (NSComparisonResult)compareVersion:(NSString *)versionA toVersion:(NSString *)versionB;
 
 @end
 

@@ -135,7 +135,6 @@
 #import "ResourceManager+Publishing.h"
 #import "LicenseManager.h"
 #import "LicenseWindow.h"
-#import "SUVersionComparisonProtocol.h"
 #import "SBUpdater.h"
 #import "OpenProjectInXCode.h"
 #import "CCNode+NodeInfo.h"
@@ -4214,12 +4213,12 @@ typedef enum
 }
 
 
-- (id<SUVersionComparison>)versionComparatorForUpdater:(SUUpdater *)updater
+- (SBVersionComparitor*)versionComparatorForUpdater
 {
 	return [SBVersionComparitor new];
 }
 
-- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater
+- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates
 {
 #if TESTING || SB_SANDBOXED
 	return NO;
