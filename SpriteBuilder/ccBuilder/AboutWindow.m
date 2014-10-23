@@ -69,13 +69,13 @@
     [contentView addSubview:closeButton];
 	
 
-#ifndef SPRITEBUILDER_PRO
+//#ifndef SPRITEBUILDER_PRO
 	//Not pro version.
 	self.proSuffix.stringValue = @"";
-#else
+//#else
 	//If is Pro version
-	[self.buttonViewOnGithub setHidden:YES];
-#endif
+//	[self.buttonViewOnGithub setHidden:YES];
+//#endif
 
 
 }

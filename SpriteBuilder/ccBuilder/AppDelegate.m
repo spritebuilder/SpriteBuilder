@@ -617,22 +617,22 @@ typedef enum
 #endif
 	
 
-#ifndef SPRITEBUILDER_PRO
+//#ifndef SPRITEBUILDER_PRO
     // Open registration window
     if(![self openRegistration])
 	{
 		[[NSApplication sharedApplication] terminate:self];
 	}
-#else
-	if([LicenseManager requiresLicensing])
-	{
-		if(![self openLicensingWindow])
-		{
-			[[NSApplication sharedApplication] terminate:self];
-		}
-	}
+//#else
+//	if([LicenseManager requiresLicensing])
+//	{
+//		if(![self openLicensingWindow])
+//		{
+//			[[NSApplication sharedApplication] terminate:self];
+//		}
+//	}
 
-#endif
+//#endif
 	
 	
 	
@@ -4196,11 +4196,11 @@ typedef enum
 
 -(NSString*)applicationTitle
 {
-#ifdef SPRITEBUILDER_PRO
-	return @"SpriteBuilder 1.3 Beta";
-#else
+//#ifdef SPRITEBUILDER_PRO
+//	return @"SpriteBuilder 1.3 Beta";
+//#else
 	return @"SpriteBuilder";
-#endif
+//#endif
 }
 
 
@@ -4233,11 +4233,11 @@ typedef enum
 	//Local Host testing.
     //return @"http://localhost/sites/version";
 	
-#ifdef SPRITEBUILDER_PRO
-	return @"http://update.spritebuilder.com/pro/";
-#else
+//#ifdef SPRITEBUILDER_PRO
+//	return @"http://update.spritebuilder.com/pro/";
+//#else
 	return @"http://update.spritebuilder.com";
-#endif
+//#endif
 
 	
 }

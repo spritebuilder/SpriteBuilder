@@ -24,7 +24,7 @@
 
 - (void)setPreviewedResource:(RMResource *)previewedResource projectSettings:(ProjectSettings *)projectSettings
 {
-    [_androidSettingsContainer setHidden:!IS_SPRITEBUILDER_PRO];
+    //[_androidSettingsContainer setHidden:!IS_SPRITEBUILDER_PRO];
 
     self.projectSettings = projectSettings;
     self.previewedResource = previewedResource;

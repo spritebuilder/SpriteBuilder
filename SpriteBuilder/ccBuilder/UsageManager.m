@@ -58,6 +58,7 @@ static NSString *urlEncode(id object) {
 	return self;
 }
 
+/*
 #ifdef SPRITEBUILDER_PRO
 
 -(void)migrateSandboxToPro
@@ -124,22 +125,23 @@ static NSString *urlEncode(id object) {
 }
 
 #endif
+ */
 
 -(void)setRegisterdEmailFlag
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:kSbRegisteredEmail];
 		
-#ifdef SPRITEBUILDER_PRO
-	[self ensureSandboxConsistancy];
-#endif
+//#ifdef SPRITEBUILDER_PRO
+//	[self ensureSandboxConsistancy];
+//#endif
 }
 
 
 - (void) registerUsage
 {
-#ifdef SPRITEBUILDER_PRO
-	[self migrateSandboxToPro];
-#endif
+//#ifdef SPRITEBUILDER_PRO
+//	[self migrateSandboxToPro];
+//#endif
    
     
     BOOL firstTimeUser = NO;
@@ -151,9 +153,9 @@ static NSString *urlEncode(id object) {
         [[NSUserDefaults standardUserDefaults] setValue:_userID forKey:kSbUserID];
         firstTimeUser = YES;
 		
-#ifdef SPRITEBUILDER_PRO
-		[self ensureSandboxConsistancy];
-#endif
+//#ifdef SPRITEBUILDER_PRO
+//		[self ensureSandboxConsistancy];
+//#endif
 		
     }
     

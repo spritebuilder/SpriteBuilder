@@ -10,6 +10,7 @@
 
 @implementation SBMenuItem
 
+/*
 -(NSString*)title
 {
 #ifdef SPRITEBUILDER_PRO
@@ -21,4 +22,5 @@
 #endif
 							 
 }
+ */
 @end
