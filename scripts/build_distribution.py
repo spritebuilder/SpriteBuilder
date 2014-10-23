@@ -31,20 +31,22 @@ class BuildDistribution:
         parser.add_argument('-revision', default=None, help='The git hash that SB was taken from. Optional ')
         parser.add_argument('-mode', choices=('sandboxed','non_sandboxed'), default='non_sandboxed',help='Is the app built to run in sandboxed mode (App store) or non sandboxed (direct download). (default:non_sandboxed)')
         parser.add_argument('-tests', default=True, help='Failure to successfully run the tests stops the build. Default true ')
-    
+        parser.add_argument('-templates_only', default=False, help='Generate templates only. Default false')
+        
         args = parser.parse_args()
     
         if args.sku == 'pro' and args.private_key == None:
             print 'Must specify private key in pro version';
             return 1
-
-       
         
-        self.run_tests = args.tests
-    
         version_info = {'revision' : args.revision}
-    
-        self.build_distribution(args.version, args.sku, args.mode,  version_info, args.private_key)
+        
+        if args.templates_only == 'True':
+            self.generate_template_project('PROJECTNAME',sku_folder=args.sku)
+            self.generate_template_project('SPRITEKITPROJECTNAME',sku_folder='')
+        else:
+            self.run_tests = args.tests
+            self.build_distribution(args.version, args.sku, args.mode,  version_info, args.private_key)
     
 
     def build_distribution(self, version,sku, mode, version_info,  private_key=None, ):
