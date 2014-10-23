@@ -1158,7 +1158,7 @@ static SequencerHandler* sharedSequencerHandler;
 {
 	SequencerExpandBtnCell* expCell = cell;
 	expCell.isExpanded = node.seqExpanded;
-	expCell.canExpand = (!isRootNode && !node.plugIn.isJoint);
+    expCell.canExpand = (node.keyframesCanBeEdited && !node.plugIn.isJoint);
 	expCell.node = node;
 }
 
@@ -1328,7 +1328,7 @@ static SequencerHandler* sharedSequencerHandler;
     {
         CCNode* node = item;
 
-		if ((node == [CocosScene cocosScene].rootNode && !node.seqExpanded)
+		if ((!node.keyframesCanBeEdited && !node.seqExpanded)
 			|| node.plugIn.isJoint)
 		{
 			return;

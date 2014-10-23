@@ -47,6 +47,7 @@ NSString * kAnimationOfPhysicsWarning;
 @property (nonatomic,retain) NodePhysicsBody* nodePhysicsBody;
 @property (nonatomic,assign) NSUInteger UUID;
 @property (nonatomic, readonly) BOOL hasKeyframes;
+@property (nonatomic,readonly) BOOL keyframesCanBeEdited;
 
 - (void) cacheStartTransformAndAnchor;
 

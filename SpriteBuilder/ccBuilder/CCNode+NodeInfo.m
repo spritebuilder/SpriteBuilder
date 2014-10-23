@@ -955,4 +955,14 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 	
 }
 
+- (BOOL) keyframesCanBeEdited
+{
+    BOOL isRootNode = [CocosScene cocosScene].rootNode == self;
+    
+    if (!isRootNode) return YES;
+    if ([self.plugIn.nodeClassName isEqualToString:@"CCSprite"]) return YES;
+    
+    return NO;
+}
+
 @end
