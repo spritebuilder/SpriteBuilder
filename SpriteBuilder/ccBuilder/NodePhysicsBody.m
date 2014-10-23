@@ -332,6 +332,15 @@
     _elasticity = elasticity;
 }
 
+- (void) setCollisionType:(NSString *)collisionType
+{
+    if (![_collisionType isEqualToString:collisionType])
+    {
+        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*collisionType"];
+        _collisionType = [collisionType copy];
+    }
+}
+
 - (void) dealloc
 {
 
