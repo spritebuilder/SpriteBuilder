@@ -11,6 +11,7 @@
 #import "MainWindow.h"
 #import "EffectViewController.h"
 #import "EffectsManager.h"
+#import "MiscConstants.h"
 
 
 @interface InspectorEffectControl ()
@@ -110,9 +111,13 @@
 		vc.effect =	effect;
 		[viewControllers addObject:vc];
 	}
-	
-	[self.tableView reloadData];
+
+    [_addEffectButton setEnabled:(effects.count < EFFECTS_MAXIMUM_PER_NODE)];
+    [_removeEffectButton setEnabled:effects.count > 0];
+
+    [self.tableView reloadData];
 }
+
 
 #pragma mark Data Source
 
