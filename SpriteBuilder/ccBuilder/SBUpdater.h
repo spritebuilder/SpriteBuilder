@@ -13,6 +13,6 @@
 
 @end
 
-@interface SBUpdater : SUUpdater
+@interface SBUpdater : NSObject
 
 @end

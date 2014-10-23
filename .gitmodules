@@ -8,6 +8,3 @@ url=https://github.com/cocos2d/cocos2d-swift.git
 [submodule "SpriteBuilder/libs/SpriteKit"]
 	path = SpriteBuilder/libs/SpriteKit
 url=https://github.com/apportable/SpriteBuilder-SK.git
-[submodule "SpriteBuilder/libs/Sparkle"]
-	path = SpriteBuilder/libs/Sparkle
-	url = https://github.com/sparkle-project/Sparkle.git
