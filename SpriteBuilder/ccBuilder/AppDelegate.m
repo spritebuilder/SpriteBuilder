@@ -3931,8 +3931,13 @@ typedef enum
     {
         newIndex = node.zOrder + 1;
     }
-    
+
+    // Note: Deleting the node will cleanup the userObject containting the NodeInfo stuff
+    // This needs to be preserved and attached again.
+    id userObject = node.userObject;
     [self deleteNode:node];
+    node.userObject = userObject;
+
     [self addCCObject:node toParent:parent atIndex:newIndex];
 }
 
