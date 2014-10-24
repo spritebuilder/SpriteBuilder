@@ -2014,21 +2014,21 @@ typedef enum
 
 - (void) saveUndoStateWillChangeProperty:(NSString*)prop
 {
-    if (!currentDocument) return;
-    
-    if (prop && [currentDocument.lastEditedProperty isEqualToString:prop])
+    if (!currentDocument
+        || (prop && [currentDocument.lastEditedProperty isEqualToString:prop]))
     {
         return;
     }
-    
-    NSMutableDictionary* doc = [self docDataFromCurrentNodeGraph];
-    
-    [currentDocument.undoManager registerUndoWithTarget:self selector:@selector(revertToState:) object:doc];
-    currentDocument.lastEditedProperty = prop;
-    
+
     currentDocument.isDirty = YES;
+    currentDocument.lastEditedProperty = prop;
+
+    NSMutableDictionary* doc = [self docDataFromCurrentNodeGraph];
+    [currentDocument.undoManager registerUndoWithTarget:self selector:@selector(revertToState:) object:doc];
+
     NSTabViewItem* item = [self tabViewItemFromDoc:currentDocument];
     [tabBar setIsEdited:YES ForTabViewItem:item];
+
     [self updateDirtyMark];
 }
 
@@ -2761,7 +2761,7 @@ typedef enum
     NSArray* JSDocs = [[NSDocumentController sharedDocumentController] documents];
     for (int i = 0; i < [JSDocs count]; i++)
     {
-        NSDocument* doc = [JSDocs objectAtIndex:i];
+        NSDocument* doc = JSDocs[i];
         if (doc.isDocumentEdited)
         {
             [doc saveDocument:sender];
@@ -2773,7 +2773,7 @@ typedef enum
     NSArray* docs = [tabView tabViewItems];
     for (int i = 0; i < [docs count]; i++)
     {
-        CCBDocument* doc = [(NSTabViewItem*)[docs objectAtIndex:i] identifier];
+        CCBDocument* doc = [(NSTabViewItem*) docs[i] identifier];
          if (doc.isDirty)
          {
              [self switchToDocument:doc forceReload:NO];
