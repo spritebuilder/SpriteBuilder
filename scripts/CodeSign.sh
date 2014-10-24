@@ -112,10 +112,6 @@ codeSign Contents/Frameworks/HockeySDK.framework/Versions/A/Frameworks/CrashRepo
 codeSign Contents/Frameworks/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework/Versions/Current/CrashReporter
 codeSign Contents/Frameworks/HockeySDK.framework/Versions/A/HockeySDK
 codeSign Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework/Versions/A/CrashReporter
-codeSign Contents/Frameworks/Sparkle.framework/Resources/Autoupdate.app/
-codeSign Contents/Frameworks/Sparkle.framework/Versions/A/Resources/Autoupdate.app/
-codeSign Contents/Frameworks/Sparkle.framework/Versions/A/Sparkle
-codeSign Contents/Frameworks/Sparkle.framework/Versions/Current/Resources/Autoupdate.app/
 codeSign Contents/Resources/ccz
 codeSign Contents/Resources/lame
 codeSign Contents/Resources/oggenc
