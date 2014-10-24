@@ -2067,7 +2067,7 @@ typedef enum
         NSArray* children = parent.children;
         for (NSUInteger i = (NSUInteger)index; i < [children count]; i++)
         {
-            CCNode *aChild = [children objectAtIndex:i];
+            CCNode *aChild = children[i];
             aChild.zOrder += 1;
         }
 		[parent addChild:child z:index];
@@ -2078,18 +2078,15 @@ typedef enum
     {
         child.hidden = YES;
     }
-    
-    
+
     //Set an unset UUID
     if(child.UUID == 0x0)
     {
-
 		child.UUID = [currentDocument getAndIncrementUUID];
-
     }
     
     [outlineHierarchy reloadData];
-    [self setSelectedNodes:[NSArray arrayWithObject:child]];
+    [self setSelectedNodes:@[child]];
     [_inspectorController updateInspectorFromSelection];
     
     return YES;
@@ -2587,11 +2584,13 @@ typedef enum
 - (void) deleteNode:(CCNode*)node
 {
     SceneGraph* g = [SceneGraph instance];
-    
-    
-    if (node == g.rootNode) return;
-    if (!node) return;
-    
+
+    if (!node
+        || node == g.rootNode)
+    {
+        return;
+    }
+
     [self saveUndoState];
     
     // Change zOrder of nodes after this one
@@ -2599,7 +2598,7 @@ typedef enum
     NSArray* siblings = [node.parent children];
     for (int i = zOrder+1; i < [siblings count]; i++)
     {
-        CCNode* sibling = [siblings objectAtIndex:i];
+        CCNode* sibling = siblings[i];
         sibling.zOrder -= 1;
     }
     
@@ -3890,7 +3889,6 @@ typedef enum
     
     CCNode* node = self.selectedNode;
     CCNode* parent = node.parent;
-    
     NSArray* siblings = [node.parent children];
     
     // Check bounds
