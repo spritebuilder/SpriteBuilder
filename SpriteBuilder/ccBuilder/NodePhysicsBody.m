@@ -34,11 +34,14 @@
 - (id) initWithNode:(CCNode*) node
 {
     self = [super init];
-    if (!self) return NULL;
-    
+    if (!self)
+    {
+        return NULL;
+    }
+
     [self setupDefaultPolygonForNode:node];
     
-    _dynamic = (node.hasKeyframes) ? NO : YES;
+    _dynamic = !node.hasKeyframes;
     _affectedByGravity = YES;
     _allowsRotation = YES;
     
@@ -56,10 +59,13 @@
 - (id) initWithSerialization:(id)ser
 {
     self = [super init];
-    if (!self) return NULL;
-    
+    if (!self)
+    {
+        return NULL;
+    }
+
     // Shape
-    _bodyShape = [[ser objectForKey:@"bodyShape"] intValue];
+    _bodyShape = (CCBPhysicsBodyShape) [[ser objectForKey:@"bodyShape"] intValue];
     _cornerRadius = [[ser objectForKey:@"cornerRadius"] floatValue];
     
     // Points
@@ -68,8 +74,8 @@
     for (NSArray* serPt in serPoints)
     {
         CGPoint pt = CGPointZero;
-        pt.x = [[serPt objectAtIndex:0] floatValue];
-        pt.y = [[serPt objectAtIndex:1] floatValue];
+        pt.x = [serPt[0] floatValue];
+        pt.y = [serPt[1] floatValue];
         [points addObject:[NSValue valueWithPoint:pt]];
     }
     
@@ -88,8 +94,6 @@
     _collisionCategories = nil;
     _collisionMask = nil;
 	
-
-    
     if(_collisionType == nil)
     {
         _collisionType = @"";
@@ -134,21 +138,20 @@
     NSMutableDictionary* ser = [NSMutableDictionary dictionary];
     
     // Shape
-    [ser setObject:[NSNumber numberWithInt:_bodyShape] forKey:@"bodyShape"];
-    [ser setObject:[NSNumber numberWithFloat:_cornerRadius] forKey:@"cornerRadius"];
+    ser[@"bodyShape"] = @(_bodyShape);
+    ser[@"cornerRadius"] = @(_cornerRadius);
     
     // Points
     NSMutableArray* serPoints = [NSMutableArray array];
     for (NSValue* val in _points)
     {
         CGPoint pt = [val pointValue];
-        NSArray* serPt = [NSArray arrayWithObjects:
-                       [NSNumber numberWithFloat:pt.x],
-                       [NSNumber numberWithFloat:pt.y],
-                       nil];
+        NSArray* serPt;
+        serPt = @[@((float) pt.x),
+                  @((float) pt.y)];
         [serPoints addObject:serPt];
     }
-    [ser setObject:serPoints forKey:@"points"];
+    ser[@"points"] = serPoints;
     
     //Polygons
     NSMutableArray * serPolygons = [NSMutableArray array];
@@ -158,24 +161,23 @@
         for (NSValue* val in polygon)
         {
             CGPoint pt = [val pointValue];
-            NSArray* serPt = [NSArray arrayWithObjects:
-                              [NSNumber numberWithFloat:pt.x],
-                              [NSNumber numberWithFloat:pt.y],
-                              nil];
+            NSArray* serPt;
+            serPt = @[@((float) pt.x),
+                      @((float) pt.y)];
             [serPolygon addObject:serPt];
         }
         [serPolygons addObject:serPolygon];
     }
-    [ser setObject:serPolygons forKey:@"polygons"];
+    ser[@"polygons"] = serPolygons;
     
     // Basic physics props
-    [ser setObject:[NSNumber numberWithBool:_dynamic] forKey:@"dynamic"];
-    [ser setObject:[NSNumber numberWithBool:_affectedByGravity] forKey:@"affectedByGravity"];
-    [ser setObject:[NSNumber numberWithBool:_allowsRotation] forKey:@"allowsRotation"];
-    
-    [ser setObject:[NSNumber numberWithFloat:_density] forKey:@"density"];
-    [ser setObject:[NSNumber numberWithFloat:_friction] forKey:@"friction"];
-    [ser setObject:[NSNumber numberWithFloat:_elasticity] forKey:@"elasticity"];
+    ser[@"dynamic"] = @(_dynamic);
+    ser[@"affectedByGravity"] = @(_affectedByGravity);
+    ser[@"allowsRotation"] = @(_allowsRotation);
+
+    ser[@"density"] = @(_density);
+    ser[@"friction"] = @(_friction);
+    ser[@"elasticity"] = @(_elasticity);
     
     if(_collisionType == nil)
     {
@@ -192,12 +194,10 @@
         _collisionMask = [NSArray array];
     }
 
-    
-    [ser setObject:_collisionType forKey:@"collisionType"];
-    [ser setObject:_collisionCategories forKey:@"collisionCategories"];
-    [ser setObject:_collisionMask forKey:@"collisionMask"];
+    ser[@"collisionType"] = _collisionType;
+    ser[@"collisionCategories"] = _collisionCategories;
+    ser[@"collisionMask"] = _collisionMask;
 
-    
     return ser;
 }
 
@@ -206,10 +206,8 @@
     _bodyShape = kCCBPhysicsBodyShapePolygon;
     self.cornerRadius = 0;
     
-    float w = node.contentSize.width;
-    float h = node.contentSize.height;
-    //CGPoint anchorPoint = node.anchorPoint;
-    
+    float w = (float) node.contentSize.width;
+    float h = (float) node.contentSize.height;
     
     if (w == 0)
     {
@@ -226,27 +224,25 @@
     CGPoint c = ccp(w, h);
     CGPoint d = ccp(w, 0);
     
-    self.points = [NSArray arrayWithObjects:
-                   [NSValue valueWithPoint:a],
-                   [NSValue valueWithPoint:b],
-                   [NSValue valueWithPoint:c],
-                   [NSValue valueWithPoint:d],
-                   nil];
+    self.points = @[[NSValue valueWithPoint:a],
+                    [NSValue valueWithPoint:b],
+                    [NSValue valueWithPoint:c],
+                    [NSValue valueWithPoint:d]];
 }
 
 - (void) setupDefaultCircleForNode:(CCNode*) node
 {
     _bodyShape = kCCBPhysicsBodyShapeCircle;
     
-    float radius = MAX(node.contentSize.width/2, node.contentSize.height/2);
+    float radius = (float) MAX(node.contentSize.width/2, node.contentSize.height/2);
     if (radius < kCCBPhysicsMinimumDefaultCircleRadius) radius = kCCBPhysicsMinimumDefaultCircleRadius;
     
     self.cornerRadius = radius;
     
-    float w = node.contentSize.width;
-    float h = node.contentSize.height;
+    float w = (float) node.contentSize.width;
+    float h = (float) node.contentSize.height;
     
-    self.points = [NSArray arrayWithObject:[NSValue valueWithPoint:ccp(w/2, h/2)]];
+    self.points = @[[NSValue valueWithPoint:ccp(w / 2, h / 2)]];
 }
 
 - (void) setBodyShape:(CCBPhysicsBodyShape)bodyShape
@@ -293,7 +289,6 @@
     {
         self.polygons = nil;
     }
-    
 }
 
 - (void) setDynamic:(BOOL)dynamic
@@ -332,9 +327,22 @@
     _elasticity = elasticity;
 }
 
-- (void) dealloc
+- (void)setCollisionMask:(NSArray *)collisionMask
 {
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*collisionMask"];
+    _collisionMask = collisionMask;
+}
 
+- (void)setCollisionCategories:(NSArray *)collisionCategories
+{
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*collisioncollisionCategories"];
+    _collisionCategories = collisionCategories;
+}
+
+- (void)setCollisionType:(NSString *)collisionType
+{
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*collisionType"];
+    _collisionType = collisionType;
 }
 
 @end

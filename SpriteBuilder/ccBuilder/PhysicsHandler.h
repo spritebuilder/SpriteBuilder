@@ -76,6 +76,4 @@
 - (void)draggingExited:(id <NSDraggingInfo>)sender pos:(CGPoint)pos;
 - (void)draggingEnded:(id <NSDraggingInfo>)sender;
 
-
-
 @end
