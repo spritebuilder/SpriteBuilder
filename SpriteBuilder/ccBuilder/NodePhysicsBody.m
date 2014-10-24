@@ -327,9 +327,22 @@
     _elasticity = elasticity;
 }
 
-- (void) dealloc
+- (void)setCollisionMask:(NSArray *)collisionMask
 {
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*collisionMask"];
+    _collisionMask = collisionMask;
+}
 
+- (void)setCollisionCategories:(NSArray *)collisionCategories
+{
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*collisioncollisionCategories"];
+    _collisionCategories = collisionCategories;
+}
+
+- (void)setCollisionType:(NSString *)collisionType
+{
+    [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*collisionType"];
+    _collisionType = collisionType;
 }
 
 @end
