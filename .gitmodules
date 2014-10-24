@@ -3,7 +3,7 @@
 url=https://github.com/cocos2d/cocos2d-swift.git
 [submodule "SpriteBuilder/libs/ssziparchive"]
 	path = SpriteBuilder/libs/ssziparchive
-	url = https://github.com/vlidholt/ssziparchive.git
+url=https://github.com/spritebuilder/ssziparchive.git
 
 [submodule "SpriteBuilder/libs/SpriteKit"]
 	path = SpriteBuilder/libs/SpriteKit

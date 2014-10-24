@@ -21,7 +21,7 @@
 	<key>engine</key>
 	<integer>0</integer>
 	<key>excludedFromPackageMigration</key>
-	<integer>0</integer>
+	<false/>
 	<key>exporter</key>
 	<string>ccbi</string>
 	<key>fileType</key>
@@ -164,6 +164,9 @@
 		</dict>
 	</dict>
 	<key>versionStr</key>
-	<string></string>
+	<string>revision : 106c48a287
+sku : default
+version : 1.3.0-beta
+</string>
 </dict>
 </plist>
