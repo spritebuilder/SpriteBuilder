@@ -133,7 +133,7 @@ typedef void (^CompletionCallback) (BOOL success);
 - (void) oldVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 @end
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITCrashReportManagerDelegate, PublishingFinishedDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITHockeyManagerDelegate, PublishingFinishedDelegate>
 {
     
     // Panel Views
