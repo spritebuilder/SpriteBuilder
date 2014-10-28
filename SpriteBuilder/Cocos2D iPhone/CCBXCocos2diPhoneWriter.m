@@ -516,8 +516,6 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
         NSString* fntName = [[prop lastPathComponent] stringByDeletingPathExtension];
         NSString* path = [[prop stringByAppendingPathComponent:fntName] stringByAppendingPathExtension:@"fnt"];
         
-        NSLog(@"FNT file: %@", path);
-        
         [self writeCachedString:path isPath: YES];
     }
     else if ([type isEqualToString:@"Text"]
