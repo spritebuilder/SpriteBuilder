@@ -55,9 +55,12 @@ codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKSpriteNode.ccbPlu
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
 
 # Sign Frameworks
-#codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework/Versions/Current"
-codesign --remove-signature "$APP/Contents/Frameworks/HockeySDK.framework"
+codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework/Versions/Current"
+#codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/Current/Frameworks/CrashReporter.framework/Versions/A"
+#codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework/Versions/Current"
+#codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework/Versions/A"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/Current"
+#codesign --entitlements $ENT -s "$ID" "$APP/Contents/Frameworks/HockeySDK.framework/Versions/A"
 
 # Sign App
 codesign --entitlements ../SpriteBuilder/SpriteBuilder.entitlements -s "$ID" "$APP"

@@ -126,10 +126,10 @@ class BuildDistribution:
             os.makedirs('build')
 
         shutil.copytree('SpriteBuilder/build/Release/{product_name}.app'.format(product_name=product_name),
-            'build/{product_name}.app'.format(product_name=product_name))
+            'build/{product_name}.app'.format(product_name=product_name),symlinks=True)
 
         shutil.copytree('SpriteBuilder/build/Release/{product_name}.app.dSYM'.format(product_name=product_name),
-            'build/{product_name}.app.dSYM'.format(product_name=product_name))
+            'build/{product_name}.app.dSYM'.format(product_name=product_name),symlinks=True)
 
         os.chdir('build/');
     
