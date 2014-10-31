@@ -1079,14 +1079,6 @@
 	return [fm moveItemAtPath:srcPath toPath:dstPath error:error];
 }
 
-+ (BOOL) duplicateResource:(NSString *)srcPath dstPath:(NSString *)dstPath error:(NSError **)error
-{
-    NSFileManager* fm = [NSFileManager defaultManager];
-
-    return [fm copyItemAtPath:srcPath toPath:dstPath error:error];
-}
-
-
 + (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName
 {
     NSString* dstPath = [[srcPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:newName];
@@ -1126,34 +1118,6 @@
     [[AppDelegate appDelegate].projectSettings movedResourceFrom:srcRel to:dstRel fromFullPath:srcPath toFullPath:dstPath];
     [[AppDelegate appDelegate] renamedDocumentPathFrom:srcPath to:dstPath];
     
-    // Update resources
-    [[ResourceManager sharedManager] reloadAllResources];
-}
-
-+ (void) copyResourceFile:(RMResource*) res {
-
-    NSFileManager* fm = [NSFileManager defaultManager];
-    NSError* error = nil;
-
-    NSString* path = [res.filePath stringByDeletingLastPathComponent];
-    NSString* baseName = [[res.filePath lastPathComponent] stringByDeletingPathExtension];
-    NSString* ext  = [res.filePath pathExtension];
-
-    uint copyId = 1;
-    NSString *targetPath = [NSString stringWithFormat:@"%@/%@ Copy %d.%@",
-                         path, baseName, copyId, ext];
-
-    // Ensure Unique Copy Name
-    while ([fm fileExistsAtPath:targetPath]) {
-        copyId++;
-        targetPath = [NSString stringWithFormat:@"%@/%@ Copy %d.%@",
-                      path, baseName, copyId, ext];
-    }
-
-    if(![fm copyItemAtPath:res.filePath toPath:targetPath error:&error]) {
-        NSLog(@"%@",error);
-    }
-
     // Update resources
     [[ResourceManager sharedManager] reloadAllResources];
 }

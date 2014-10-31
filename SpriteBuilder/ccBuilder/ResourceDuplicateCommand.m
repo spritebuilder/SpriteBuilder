@@ -19,12 +19,41 @@
 
     switch (resource.type) {
         case kCCBResTypeCCBFile:
-            [ResourceManager copyResourceFile:resource];
+            [self duplicateResource:resource];
             break;
         default:
             //NSAlert(@"Selected resource does not support duplication.");
             break;
     }
+}
+
+- (void)duplicateResource:(RMResource*) res {
+
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSError* error = nil;
+
+    NSString* path     = [res.filePath stringByDeletingLastPathComponent];
+    NSString* baseName = [[res.filePath lastPathComponent] stringByDeletingPathExtension];
+    NSString* ext  = [res.filePath pathExtension];
+
+    uint copyId = 1;
+    NSString *targetName = [NSString stringWithFormat:@"%@ copy %d.%@",
+                            baseName, copyId, ext];
+    NSString *targetPath = [path stringByAppendingPathComponent:targetName];
+
+    // Ensure Unique Copy
+    while ([fm fileExistsAtPath:targetPath]) {
+        targetName = [NSString stringWithFormat:@"%@ copy %d.%@",
+                      baseName, ++copyId, ext];
+        targetPath = [path stringByAppendingPathComponent:targetName];
+    }
+
+    if(![fm copyItemAtPath:res.filePath toPath:targetPath error:&error]) {
+        NSLog(@"%@",error);
+    }
+
+    // Refresh
+    [[ResourceManager sharedManager] reloadAllResources];
 }
 
 #pragma mark - ResourceCommandContextMenuProtocol

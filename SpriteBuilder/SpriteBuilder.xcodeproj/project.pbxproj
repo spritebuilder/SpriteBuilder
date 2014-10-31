@@ -17,6 +17,7 @@
 		58FA2036162D73F3006B8856 /* TB_rightPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2033162D73F3006B8856 /* TB_rightPanel.png */; };
 		5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */; };
 		5BA3DC36192110BA0055DD96 /* GuideGridSizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */; };
+		5BB9A3551A038C59008184AE /* ResourceDuplicateCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB9A3541A038C59008184AE /* ResourceDuplicateCommand.m */; };
 		5BBEC3601A011D8D00FBA08B /* InspectorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBEC35F1A011D8D00FBA08B /* InspectorTextView.m */; };
 		77055FB513D0E5CA009DD63A /* logo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 77055FB313D0E5CA009DD63A /* logo-icon.png */; };
 		77055FB613D0E5CA009DD63A /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 77055FB413D0E5CA009DD63A /* logo.png */; };
@@ -1337,6 +1338,8 @@
 		5BA3DC2F192108AB0055DD96 /* GuideGridSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideGridSizeWindow.h; sourceTree = "<group>"; };
 		5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideGridSizeWindow.m; sourceTree = "<group>"; };
 		5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideGridSizeWindow.xib; sourceTree = "<group>"; };
+		5BB9A3531A038C59008184AE /* ResourceDuplicateCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceDuplicateCommand.h; sourceTree = "<group>"; };
+		5BB9A3541A038C59008184AE /* ResourceDuplicateCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceDuplicateCommand.m; sourceTree = "<group>"; };
 		5BBEC35E1A011D8D00FBA08B /* InspectorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorTextView.h; sourceTree = "<group>"; };
 		5BBEC35F1A011D8D00FBA08B /* InspectorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorTextView.m; sourceTree = "<group>"; };
 		77055FB313D0E5CA009DD63A /* logo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-icon.png"; sourceTree = "<group>"; };
@@ -4021,6 +4024,8 @@
 		83CD44A819409FD90086E9E7 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
+				5BB9A3531A038C59008184AE /* ResourceDuplicateCommand.h */,
+				5BB9A3541A038C59008184AE /* ResourceDuplicateCommand.m */,
 				E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */,
 				E525FEBFE86C6D193DBB8D1E /* ResourceDeleteCommand.h */,
 				E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */,
@@ -7275,6 +7280,7 @@
 				E33BC1B81510E4B6009AE29A /* NodeGraphPropertySetter.m in Sources */,
 				92053DB6197F096000AA93AD /* EffectBloomControl.m in Sources */,
 				E36F3C3D152C756D00AAD805 /* NSString+RelativePath.m in Sources */,
+				5BB9A3551A038C59008184AE /* ResourceDuplicateCommand.m in Sources */,
 				E34E5D6615357CF2000201FB /* RulersLayer.m in Sources */,
 				E3A16AF31536D096004B528A /* GuidesLayer.m in Sources */,
 				E3B9AF4B153C150D00489438 /* CCBTransparentWindow.m in Sources */,
