@@ -90,7 +90,7 @@
     NSArray *filesToRemove;
     if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
     {
-        [self setName:@"IPHONEOS_DEPLOYMENT_TARGET = 5.0"
+        [self setName:@"IPHONEOS_DEPLOYMENT_TARGET = 6.0"
                inFile:pbxprojFile
                search:@"IPHONEOS_DEPLOYMENT_TARGET = 7.0"];
         [self setName:@"MACOSX_DEPLOYMENT_TARGET = 10.9"
