@@ -143,6 +143,7 @@
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
 		83993DB519361305001C228B /* FeatureToggle_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DB419361305001C228B /* FeatureToggle_Tests.m */; };
+		839CE57319FFA714003369F0 /* EffectInvertControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 839CE57219FFA714003369F0 /* EffectInvertControl.xib */; };
 		83CD449A193F35C50086E9E7 /* ResourceContextMenu_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD4499193F35C50086E9E7 /* ResourceContextMenu_Tests.m */; };
 		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
 		83EDACF5193DB70200327B86 /* ProjectSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */; };
@@ -859,6 +860,7 @@
 		E525F3B1589D3D602844043A /* ResourceNewFolderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F85BE0A7E542701EB9F5 /* ResourceNewFolderCommand.m */; };
 		E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD2D849749BB67455943 /* DateCache.m */; };
 		E525F3B78E1BFBBFB4B29E64 /* InspectorSeparatorSub.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FD01001CAF3B6158DDD4 /* InspectorSeparatorSub.xib */; };
+		E525F3E5D0C0911609F0218F /* effect-invert.png in Resources */ = {isa = PBXBuildFile; fileRef = E525FD9B967A08F6591822C0 /* effect-invert.png */; };
 		E525F40F9922DA237132A952 /* InspectorStartStop.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F786D53B1F4CFBAC88DB /* InspectorStartStop.m */; };
 		E525F413EBF9FE7A802A283C /* PackageCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8763FF7B0C58E25B128 /* PackageCreator.m */; };
 		E525F41CB400C44CC62ECAD9 /* ProjectSettings+Packages.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA61F7480E7C1152B7B5 /* ProjectSettings+Packages.m */; };
@@ -973,6 +975,7 @@
 		E525FC5DE242A8EB373D882A /* PackageExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FACAFF47151E5CC2C512 /* PackageExporter.m */; };
 		E525FC638B5C1759A72F1FC6 /* InspectorFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F114D9A9919E6CCBFBEC /* InspectorFloat.m */; };
 		E525FC7C4CC9DF569C8C7461 /* InspectorPopoverPosition.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F25365C18CD517E444D2 /* InspectorPopoverPosition.xib */; };
+		E525FC8CD36B7A22B1C36844 /* CCBPEffectInvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F3EE2D35B5B6044D8B4E /* CCBPEffectInvert.m */; };
 		E525FC8E53C200B5CBB844BF /* RMPackage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDD3F471141E09E46C88 /* RMPackage_Tests.m */; };
 		E525FCCB0F98F23FF4F4A83B /* MiscConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F60141EECA8FC9DF3034 /* MiscConstants.m */; };
 		E525FCD21C3519D61A86ACEF /* PackageRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB678B5AF8D31E5EA1C1 /* PackageRenamer.m */; };
@@ -995,6 +998,7 @@
 		E525FE4E98094590DEF34EF8 /* CCBPublisherCacheCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F13FEF3757012A4E0DDE /* CCBPublisherCacheCleaner.m */; };
 		E525FF00EF056E6904CAB106 /* InspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8027C3E43F222BD84A5 /* InspectorController.m */; };
 		E525FF15523F47E23FC1A6AB /* ResourceNewFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */; };
+		E525FF170507A8317EE1A57F /* EffectInvertControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F452981AD6ECA4329241 /* EffectInvertControl.m */; };
 		E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */; };
 		E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */; };
 		E525FF63460A0C637890856F /* InspectorString.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F441BF8BA2627B1411F5 /* InspectorString.xib */; };
@@ -1532,6 +1536,7 @@
 		83993DAD19360A28001C228B /* FeatureToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureToggle.h; sourceTree = "<group>"; };
 		83993DAE19360A28001C228B /* FeatureToggle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureToggle.m; sourceTree = "<group>"; };
 		83993DB419361305001C228B /* FeatureToggle_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureToggle_Tests.m; sourceTree = "<group>"; };
+		839CE57219FFA714003369F0 /* EffectInvertControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectInvertControl.xib; path = ccBuilder/EffectInvertControl.xib; sourceTree = "<group>"; };
 		83CD4499193F35C50086E9E7 /* ResourceContextMenu_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu_Tests.m; sourceTree = "<group>"; };
 		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
@@ -2495,11 +2500,13 @@
 		E525F3BE8FCEC41B08DEB649 /* ResourceManager+Publishing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ResourceManager+Publishing.h"; sourceTree = "<group>"; };
 		E525F3CFE241FFCE80D11336 /* PublishOSSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishOSSettings.m; sourceTree = "<group>"; };
 		E525F3EC220BB11985744E64 /* InspectorNodeReference.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorNodeReference.xib; sourceTree = "<group>"; };
+		E525F3EE2D35B5B6044D8B4E /* CCBPEffectInvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPEffectInvert.m; sourceTree = "<group>"; };
 		E525F3F446FE40F0B87D829F /* ObserverTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObserverTestHelper.m; sourceTree = "<group>"; };
 		E525F40B4A984D6D907A54CF /* InspectorPhysicsUnavailable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorPhysicsUnavailable.m; sourceTree = "<group>"; };
 		E525F41EF24ED269266294D3 /* InspectorPointLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPointLock.h; sourceTree = "<group>"; };
 		E525F43AA008D5DD2726DA7E /* InspectorPopoverFloatXY.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverFloatXY.xib; sourceTree = "<group>"; };
 		E525F441BF8BA2627B1411F5 /* InspectorString.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorString.xib; sourceTree = "<group>"; };
+		E525F452981AD6ECA4329241 /* EffectInvertControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EffectInvertControl.m; sourceTree = "<group>"; };
 		E525F45D92A0B7605C0F0FB0 /* ResourceNewPackageCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceNewPackageCommand.h; sourceTree = "<group>"; };
 		E525F46A8395FB223B091E4B /* InspectorStartStop.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorStartStop.xib; sourceTree = "<group>"; };
 		E525F47DCFBC86A41B289FC5 /* ImageFormatAndPropertiesHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFormatAndPropertiesHelper.m; sourceTree = "<group>"; };
@@ -2584,6 +2591,7 @@
 		E525F86B6E089F4C7ED63ADD /* PackageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageUtil.m; sourceTree = "<group>"; };
 		E525F8763FF7B0C58E25B128 /* PackageCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCreator.m; sourceTree = "<group>"; };
 		E525F876D70C7C45655B870F /* PublishingTaskStatusProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishingTaskStatusProgress.h; sourceTree = "<group>"; };
+		E525F891680296C6BAF03AB7 /* EffectInvertControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EffectInvertControl.h; sourceTree = "<group>"; };
 		E525F8924029BDE31AAE8FA2 /* PublishSoundFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSoundFileOperation.h; sourceTree = "<group>"; };
 		E525F89681295FE8D41A727B /* InspectorValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorValue.h; sourceTree = "<group>"; };
 		E525F89DF8C03EEC4800D11A /* PackageMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageMigrator.h; sourceTree = "<group>"; };
@@ -2617,6 +2625,7 @@
 		E525F9C63E463EE451384EBB /* ProjectMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectMigrator.m; sourceTree = "<group>"; };
 		E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceCommandController.m; sourceTree = "<group>"; };
 		E525FA122097E3A343BA0A68 /* RMResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMResource.h; sourceTree = "<group>"; };
+		E525FA13A9CF1EACF480CBCD /* CCBPEffectInvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPEffectInvert.h; sourceTree = "<group>"; };
 		E525FA15437B8CAB27509534 /* NSString+Packages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Packages.m"; sourceTree = "<group>"; };
 		E525FA2687DAA762E0CF0430 /* ResourceCreateKeyframesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCreateKeyframesCommand.h; sourceTree = "<group>"; };
 		E525FA2C90028FB3D047213C /* PublishUtil_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishUtil_Tests.m; sourceTree = "<group>"; };
@@ -2694,6 +2703,7 @@
 		E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseOperation.h; sourceTree = "<group>"; };
 		E525FD8E1D01D1EDBB7B7E5E /* ResourceOpenInExternalEditorCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceOpenInExternalEditorCommand.m; sourceTree = "<group>"; };
 		E525FD97778D165E7455E7F6 /* InspectorScaleLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorScaleLock.h; sourceTree = "<group>"; };
+		E525FD9B967A08F6591822C0 /* effect-invert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-invert.png"; path = "Resources/effect-invert.png"; sourceTree = "<group>"; };
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
 		E525FDD3F471141E09E46C88 /* RMPackage_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPackage_Tests.m; sourceTree = "<group>"; };
 		E525FDDD5A720D91B11798A4 /* ResourceShowInFinderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceShowInFinderCommand.m; sourceTree = "<group>"; };
@@ -4267,22 +4277,23 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				B747E5FD19CB39AA00F692A2 /* Hue */,
-				92CB084F19BA2D8B00EFDCE3 /* Blur */,
-				920994D4198719120006F38D /* Reflection */,
-				920994C9198717710006F38D /* Glass */,
-				92053DAD197F093700AA93AD /* Bloom */,
-				926FDC7F196C8DCA008C0132 /* Refraction */,
-				9266EE3A195A17AE006CBE81 /* Pixelate */,
-				9266EE31195A176A006CBE81 /* Saturation */,
-				922EAC481958F700006F2D75 /* ContrastEffect */,
-				922EAC3F1958F2FB006F2D75 /* BrightnessEffect */,
 				928696321958CC9A00402DD8 /* EffectsManager.h */,
 				928696331958CC9A00402DD8 /* EffectsManager.m */,
-				9276C1301959F71C00A1D4DC /* EffectViewController.h */,
-				9276C1311959F71C00A1D4DC /* EffectViewController.m */,
 				B7E08C9D19D63CF400383412 /* EffectsUndoHelper.h */,
 				B7E08C9E19D63CF400383412 /* EffectsUndoHelper.m */,
+				9276C1301959F71C00A1D4DC /* EffectViewController.h */,
+				9276C1311959F71C00A1D4DC /* EffectViewController.m */,
+				92053DAD197F093700AA93AD /* Bloom */,
+				92CB084F19BA2D8B00EFDCE3 /* Blur */,
+				922EAC3F1958F2FB006F2D75 /* BrightnessEffect */,
+				922EAC481958F700006F2D75 /* ContrastEffect */,
+				920994C9198717710006F38D /* Glass */,
+				B747E5FD19CB39AA00F692A2 /* Hue */,
+				E525F98C2556877CC37AE5AC /* Invert */,
+				9266EE3A195A17AE006CBE81 /* Pixelate */,
+				920994D4198719120006F38D /* Reflection */,
+				926FDC7F196C8DCA008C0132 /* Refraction */,
+				9266EE31195A176A006CBE81 /* Saturation */,
 			);
 			name = Effects;
 			path = ..;
@@ -5690,6 +5701,19 @@
 			name = Util;
 			sourceTree = "<group>";
 		};
+		E525F98C2556877CC37AE5AC /* Invert */ = {
+			isa = PBXGroup;
+			children = (
+				839CE57219FFA714003369F0 /* EffectInvertControl.xib */,
+				E525F3EE2D35B5B6044D8B4E /* CCBPEffectInvert.m */,
+				E525FA13A9CF1EACF480CBCD /* CCBPEffectInvert.h */,
+				E525FD9B967A08F6591822C0 /* effect-invert.png */,
+				E525F452981AD6ECA4329241 /* EffectInvertControl.m */,
+				E525F891680296C6BAF03AB7 /* EffectInvertControl.h */,
+			);
+			name = Invert;
+			sourceTree = "<group>";
+		};
 		E525FA57D91E9F36D018F3C1 /* FileCommands */ = {
 			isa = PBXGroup;
 			children = (
@@ -6632,6 +6656,7 @@
 				E36ECD6515869779003C177E /* seq-keyframe-sel.png in Resources */,
 				E36ECD6615869779003C177E /* seq-keyframe.png in Resources */,
 				E39B63A11587E56D009BDE38 /* seq-row-0-bg.png in Resources */,
+				839CE57319FFA714003369F0 /* EffectInvertControl.xib in Resources */,
 				E39B63A21587E56D009BDE38 /* seq-row-1-bg.png in Resources */,
 				E39B63A31587E56D009BDE38 /* seq-row-n-bg.png in Resources */,
 				E3A0ED52158FE3AB000BDF4B /* btn-dropdown.png in Resources */,
@@ -6845,6 +6870,7 @@
 				E525F4DEC802CEC768E89163 /* InspectorAnimation.xib in Resources */,
 				E525F598C4D71DC6330D2F7F /* InspectorPhysicsUnavailable.xib in Resources */,
 				E525FA04F2DB00657F8D534C /* InspectorEffectControl.xib in Resources */,
+				E525F3E5D0C0911609F0218F /* effect-invert.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7517,6 +7543,8 @@
 				E525FD8036350149E83701B4 /* ImageFormatAndPropertiesHelper.m in Sources */,
 				E525F30359F75816D1F178F1 /* PublishUtil.m in Sources */,
 				E525F6B824415CA3D1C215EA /* NSString+Misc.m in Sources */,
+				E525FC8CD36B7A22B1C36844 /* CCBPEffectInvert.m in Sources */,
+				E525FF170507A8317EE1A57F /* EffectInvertControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

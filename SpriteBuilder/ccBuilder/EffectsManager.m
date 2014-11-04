@@ -32,6 +32,8 @@
 #import "EffectReflectionControl.h"
 #import "CCBPEffectBlur.h"
 #import "EffectBlurControl.h"
+#import "EffectInvertControl.h"
+#import "CCBPEffectInvert.h"
 
 
 @implementation CCNode(Effects)
@@ -137,7 +139,20 @@
         
         [effectDescriptions addObject:effectDescription];
     }
-	
+
+    {
+        EffectDescription * effectDescription = [[EffectDescription alloc] init];
+        effectDescription.title = @"Invert";
+        effectDescription.description = @"Makes things inverted";
+        effectDescription.imageName = @"effect-invert.png";
+        effectDescription.baseClass = @"CCEffectInvert";
+        effectDescription.className = NSStringFromClass([CCBPEffectInvert class]);
+        effectDescription.viewController = NSStringFromClass([EffectInvertControl class]);
+        effectDescription.group = 0;
+
+        [effectDescriptions addObject:effectDescription];
+    }
+
 	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Pixellate";
