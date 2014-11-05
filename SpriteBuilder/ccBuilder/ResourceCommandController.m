@@ -14,6 +14,7 @@
 #import "ResourceNewPackageCommand.h"
 #import "CCBPublisherController.h"
 #import "PublishingFinishedDelegate.h"
+#import "ResourceDuplicateCommand.h"
 
 @interface ResourceCommandController ()
 @property (nonatomic, strong) ResourcePublishPackageCommand *publishCommand;
@@ -101,6 +102,14 @@
     ResourceExportPackageCommand *command = [[ResourceExportPackageCommand alloc] init];
     command.resources = [self selectedResources];
     command.windowForModals = _window;
+    [command execute];
+}
+
+- (void)duplicateResource:(id)sender
+{
+    ResourceDuplicateCommand *command = [[ResourceDuplicateCommand alloc] init];
+    command.resources = [self selectedResources];
+    command.resourceManager = _resourceManager;
     [command execute];
 }
 
