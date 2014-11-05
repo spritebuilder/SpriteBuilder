@@ -43,6 +43,7 @@
 #import "ResourceTypes.h"
 #import "RMPackage.h"
 #import "ResourcePropertyKeys.h"
+#import "NotificationNames.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
 
@@ -1152,7 +1153,8 @@
     
     // Make sure it is removed from the current project
     [[AppDelegate appDelegate].projectSettings removedResourceAt:res.relativePath];
-    [[AppDelegate appDelegate] removedDocumentWithPath:res.filePath];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED object:@{@"filepath": res.filePath}];
 }
 
 + (void) touchResource:(RMResource*) res

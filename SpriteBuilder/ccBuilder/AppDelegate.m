@@ -698,6 +698,8 @@ typedef enum
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadResources) name:RESOURCES_CHANGED object:nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removedDocumentWithPath:) name:RESOURCE_REMOVED object:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
 
@@ -3118,8 +3120,10 @@ typedef enum
     }
 }
 
-- (void) removedDocumentWithPath:(NSString*)path
+- (void) removedDocumentWithPath:(NSNotification *)notification
 {
+    NSString *path = [notification object][@"filepath"];
+
     NSTabViewItem* item = [self tabViewItemFromPath:path includeViewWithinFolderPath:YES];
     if (item)
     {
