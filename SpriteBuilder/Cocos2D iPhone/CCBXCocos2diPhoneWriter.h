@@ -56,6 +56,7 @@ enum {
     char temp[kCCBXTempBufferSize];
     int tempBit;
     int tempByte;
+	BOOL _exportingToSpriteKit;
 }
 
 @property (nonatomic,readonly) NSMutableData* data;
