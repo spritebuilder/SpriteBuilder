@@ -17,14 +17,9 @@
 {
     RMResource *resource = _resources.firstObject;
 
-    switch (resource.type) {
-        case kCCBResTypeCCBFile:
-            [self duplicateResource:resource];
-            break;
-        default:
-            //NSAlert(@"Selected resource does not support duplication.");
-            break;
-    }
+    NSAssert(resource.type==kCCBResTypeCCBFile,@"Only CCB files currently supported for duplication.");
+
+     [self duplicateResource:resource];
 }
 
 - (void)duplicateResource:(RMResource*) res {
