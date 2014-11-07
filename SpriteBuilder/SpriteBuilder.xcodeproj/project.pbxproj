@@ -140,6 +140,7 @@
 		8354FDFC198233AB004EC272 /* MainProjectSettingsDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */; };
 		83599E9A1975470D008283EC /* photoshop.psd in Resources */ = {isa = PBXBuildFile; fileRef = 83599E991975470D008283EC /* photoshop.psd */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		837D2E731A0D07F0009918B7 /* greyscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 837D2E721A0D07F0009918B7 /* greyscale.png */; };
 		837D701B19ADDC8D00C3335B /* openXcodeProject.AppleScript in Resources */ = {isa = PBXBuildFile; fileRef = E525F74DC72109C2F7FB0EC8 /* openXcodeProject.AppleScript */; };
 		837E940019815C8D00A9F90B /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
@@ -1530,6 +1531,7 @@
 		836983A619ACE55400110D82 /* PreviewSpriteSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewSpriteSheetViewController.m; sourceTree = "<group>"; };
 		836983A719ACE55400110D82 /* PreviewSpriteSheetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewSpriteSheetView.xib; sourceTree = "<group>"; };
 		836E2D3E19EE5AF300CD5B66 /* cocos2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d.xcodeproj; path = "cocos2d-iphone/cocos2d.xcodeproj"; sourceTree = "<group>"; };
+		837D2E721A0D07F0009918B7 /* greyscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greyscale.png; sourceTree = "<group>"; };
 		837E93FE19815C8D00A9F90B /* ProjectSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsWindowController.h; sourceTree = "<group>"; };
 		837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindowController.m; sourceTree = "<group>"; };
 		8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdater.h; sourceTree = "<group>"; };
@@ -5677,6 +5679,7 @@
 		E525F649EEC971226605C09F /* Publishing Resources */ = {
 			isa = PBXGroup;
 			children = (
+				837D2E721A0D07F0009918B7 /* greyscale.png */,
 				83599E991975470D008283EC /* photoshop.psd */,
 				830B39AF197032F400218021 /* blank.wav */,
 			);
@@ -6870,6 +6873,7 @@
 				83599E9A1975470D008283EC /* photoshop.psd in Resources */,
 				B7E6BB5319F868F000619A58 /* select-corner@2x.png in Resources */,
 				92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */,
+				837D2E731A0D07F0009918B7 /* greyscale.png in Resources */,
 				920994C419870EF90006F38D /* ShinyBallNormals.png in Resources */,
 				920994C319870EF90006F38D /* ShinyBallColor.png in Resources */,
 				B7E6BB5B19F868F000619A58 /* seq-timedisplay-bg@2x.png in Resources */,

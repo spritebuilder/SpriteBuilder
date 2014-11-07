@@ -63,12 +63,6 @@
     [self createFolders:@[@"Published-iOS", @"Published-Android", @"baa.spritebuilder/Packages/foo.sbpack"]];
 }
 
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
 - (void)testPublishingProject
 {
     // Language files are just copied
@@ -371,6 +365,24 @@
     [self assertFileExists:@"baa.spritebuilder/Packages/foo.sbpack/sheet.ppng"];
     [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet.plist"];
+}
+
+- (void)testGreyscaleImagePublishing
+{
+    [self createFolders:@[@"baa.spritebuilder/Packages/foo.sbpack/images/resources-auto"]];
+    [self copyTestingResource:@"greyscale.png" toFolder:@"baa.spritebuilder/Packages/foo.sbpack/images/resources-auto"];
+
+    _projectSettings.designTarget = kCCBDesignTargetFixed;
+    _projectSettings.defaultOrientation = kCCBOrientationPortrait;
+    _projectSettings.resourceAutoScaleFactor = 4;
+
+    [_publisher addPublishingTarget:_targetIOS];
+    [_publisher start];
+
+    [self assertFileExists:@"Published-iOS/images/resources-tablet/greyscale.png"];
+    [self assertFileExists:@"Published-iOS/images/resources-tablethd/greyscale.png"];
+    [self assertFileExists:@"Published-iOS/images/resources-phone/greyscale.png"];
+    [self assertFileExists:@"Published-iOS/images/resources-phonehd/greyscale.png"];
 }
 
 - (void)testEnums
