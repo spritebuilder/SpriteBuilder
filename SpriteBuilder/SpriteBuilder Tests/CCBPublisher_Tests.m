@@ -378,6 +378,11 @@
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
+
+    [self assertFileExists:@"Published-iOS/images/resources-tablet/greyscale.png"];
+    [self assertFileExists:@"Published-iOS/images/resources-tablethd/greyscale.png"];
+    [self assertFileExists:@"Published-iOS/images/resources-phone/greyscale.png"];
+    [self assertFileExists:@"Published-iOS/images/resources-phonehd/greyscale.png"];
 }
 
 - (void)testEnums
