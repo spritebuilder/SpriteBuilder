@@ -35,6 +35,7 @@
 
     // Configure CCFileUtils to work with SpriteBuilder
     [CCBReader configureCCFileUtils];
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [NSMutableArray arrayWithArray: @[@"iphone",@"default"]];
     
     [[CCPackageManager sharedManager] loadPackages];
 
