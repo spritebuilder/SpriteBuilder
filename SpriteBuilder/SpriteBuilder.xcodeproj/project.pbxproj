@@ -343,6 +343,10 @@
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
+		9DAE29551A1BDE53009FCC20 /* effect-lighting.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DAE29541A1BDE53009FCC20 /* effect-lighting.png */; };
+		9DAE29661A1BE274009FCC20 /* EffectLightingControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE29641A1BE274009FCC20 /* EffectLightingControl.m */; };
+		9DAE29671A1BE274009FCC20 /* EffectLightingControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DAE29651A1BE274009FCC20 /* EffectLightingControl.xib */; };
+		9DAE296A1A1BE2B1009FCC20 /* CCBPEffectLighting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE29691A1BE2B1009FCC20 /* CCBPEffectLighting.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -1779,6 +1783,12 @@
 		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
 		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
 		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
+		9DAE29541A1BDE53009FCC20 /* effect-lighting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-lighting.png"; path = "Resources/effect-lighting.png"; sourceTree = "<group>"; };
+		9DAE29631A1BE274009FCC20 /* EffectLightingControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectLightingControl.h; path = ccBuilder/EffectLightingControl.h; sourceTree = "<group>"; };
+		9DAE29641A1BE274009FCC20 /* EffectLightingControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectLightingControl.m; path = ccBuilder/EffectLightingControl.m; sourceTree = "<group>"; };
+		9DAE29651A1BE274009FCC20 /* EffectLightingControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectLightingControl.xib; path = ccBuilder/EffectLightingControl.xib; sourceTree = "<group>"; };
+		9DAE29681A1BE2B1009FCC20 /* CCBPEffectLighting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectLighting.h; path = ccBuilder/CCBPEffectLighting.h; sourceTree = "<group>"; };
+		9DAE29691A1BE2B1009FCC20 /* CCBPEffectLighting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectLighting.m; path = ccBuilder/CCBPEffectLighting.m; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -4277,6 +4287,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				9DAE294F1A1BDD78009FCC20 /* Lighting */,
 				B747E5FD19CB39AA00F692A2 /* Hue */,
 				92CB084F19BA2D8B00EFDCE3 /* Blur */,
 				920994D4198719120006F38D /* Reflection */,
@@ -4341,6 +4352,19 @@
 				92CB085A19BA2E0800EFDCE3 /* EffectBlurControl.xib */,
 			);
 			name = Blur;
+			sourceTree = "<group>";
+		};
+		9DAE294F1A1BDD78009FCC20 /* Lighting */ = {
+			isa = PBXGroup;
+			children = (
+				9DAE29541A1BDE53009FCC20 /* effect-lighting.png */,
+				9DAE29681A1BE2B1009FCC20 /* CCBPEffectLighting.h */,
+				9DAE29691A1BE2B1009FCC20 /* CCBPEffectLighting.m */,
+				9DAE29631A1BE274009FCC20 /* EffectLightingControl.h */,
+				9DAE29641A1BE274009FCC20 /* EffectLightingControl.m */,
+				9DAE29651A1BE274009FCC20 /* EffectLightingControl.xib */,
+			);
+			name = Lighting;
 			sourceTree = "<group>";
 		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
@@ -6573,6 +6597,7 @@
 				E35DBBDF14F3D1B60070A6E4 /* FontListTTF.plist in Resources */,
 				92053DB8197F097F00AA93AD /* effect-bloom.png in Resources */,
 				9218DF3B1919B04D0033851E /* joint-pivot-mode-s-off@2x.png in Resources */,
+				9DAE29551A1BDE53009FCC20 /* effect-lighting.png in Resources */,
 				B747E60F19CB3C0F00F692A2 /* EffectHueControl.xib in Resources */,
 				926D13C218B5778300582959 /* joint-distance-handle-short.png in Resources */,
 				9218DF411919B04D0033851E /* joint-pivot-handle-ref@2x.png in Resources */,
@@ -6648,6 +6673,7 @@
 				E39B63A21587E56D009BDE38 /* seq-row-1-bg.png in Resources */,
 				E39B63A31587E56D009BDE38 /* seq-row-n-bg.png in Resources */,
 				E3A0ED52158FE3AB000BDF4B /* btn-dropdown.png in Resources */,
+				9DAE29671A1BE274009FCC20 /* EffectLightingControl.xib in Resources */,
 				B73788F91804D8690076A88C /* ccbi.icns in Resources */,
 				E3A0ED55158FEAC0000BDF4B /* btn-dropdown-arrows.png in Resources */,
 				E3A0ED57159118F3000BDF4B /* SequencerSettingsWindow.xib in Resources */,
@@ -7297,6 +7323,7 @@
 				E3EDBC251549971000EEF1F3 /* CCBFileUtil.m in Sources */,
 				E3799EAD155979BF00196B4A /* ProjectSettings.m in Sources */,
 				E3462867155BF6C50043EAB1 /* ResourceManagerOutlineHandler.m in Sources */,
+				9DAE296A1A1BE2B1009FCC20 /* CCBPEffectLighting.m in Sources */,
 				E346286B155C18D80043EAB1 /* SavePanelLimiter.m in Sources */,
 				8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */,
 				E3462870155D22290043EAB1 /* CCBDirectoryPublisher.m in Sources */,
@@ -7429,6 +7456,7 @@
 				E525F62CDA640CE17C2C9B00 /* PublishSpriteKitSpriteSheetOperation.m in Sources */,
 				5BBEC3601A011D8D00FBA08B /* InspectorTextView.m in Sources */,
 				E525FA398CC2E279B3D65D16 /* PublishingTaskStatusProgress.m in Sources */,
+				9DAE29661A1BE274009FCC20 /* EffectLightingControl.m in Sources */,
 				E525FCCB0F98F23FF4F4A83B /* MiscConstants.m in Sources */,
 				E525F07CCBACEC15F8A13EC7 /* AnimationPlaybackManager.m in Sources */,
 				E525FD71DA9970A211540812 /* RMDirectory.m in Sources */,
