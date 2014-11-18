@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Initialization code here.
+        [self.view setWantsLayer:YES];
 
     }
     return self;
@@ -35,7 +35,6 @@
 	else
 		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0f, 0.0f, 0.0f, 0.0f)];
 	
-	[self.view setWantsLayer:YES];
 	[self.view setLayer:viewLayer];
 }
 
