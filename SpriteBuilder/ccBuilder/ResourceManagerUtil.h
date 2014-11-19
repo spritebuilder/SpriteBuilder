@@ -38,6 +38,8 @@
 
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup forceMarker:(BOOL) forceMarker;
 
++ (void)setFont:(NSString*)fontName forMenuItem:(NSMenuItem*)item;
+
 + (NSImage*) iconForResource:(RMResource*) res;
 
 @end

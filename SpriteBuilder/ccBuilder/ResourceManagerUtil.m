@@ -87,12 +87,23 @@
                 || res.type == kCCBResTypeTTF
                 || res.type == kCCBResTypeAudio)
             {
+                
                 NSString* itemName = [res.filePath lastPathComponent];
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:@selector(selectedResource:) keyEquivalent:@""];
                 [menuItem setTarget:target];
+                
                 [menu addItem:menuItem];
                 
                 menuItem.representedObject = res;
+
+                if (res.type == kCCBResTypeTTF) { // for user fonts menu
+                    // TODO: implement preview of user fonts
+                    // set item title to match font name
+                    // remove last 4 characters ".ttf"
+//                    NSString *fontName = [itemName substringToIndex:[itemName length] - 4];
+//                    [self setFont:fontName forMenuItem:menuItem];
+                }
+                
             }
             else if (res.type == kCCBResTypeSpriteSheet && allowSpriteFrames)
             {
@@ -230,6 +241,7 @@
     NSMenu* menuSubSystemFonts = [[NSMenu alloc] initWithTitle:@"System Fonts"];
     NSMenuItem* itemSystemFonts = [[NSMenuItem alloc] initWithTitle:@"System Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemSystemFonts];
+    
     [menu setSubmenu:menuSubSystemFonts forItem:itemSystemFonts];
     
     NSArray* systemFonts = [[ResourceManager sharedManager] systemFontList];
@@ -239,6 +251,9 @@
         [itemFont setTarget:target];
         itemFont.representedObject = fontName;
         
+        // set item title to match font name
+        [self setFont:fontName forMenuItem:itemFont];
+        
         [menuSubSystemFonts addItem:itemFont];
     }
     
@@ -246,6 +261,7 @@
     NSMenu* menuSubUserFonts = [[NSMenu alloc] initWithTitle:@"User Fonts"];
     NSMenuItem* itemUserFonts = [[NSMenuItem alloc] initWithTitle:@"User Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemUserFonts];
+    
     [menu setSubmenu:menuSubUserFonts forItem:itemUserFonts];
     
     [self populateResourceMenu:menuSubUserFonts resType:kCCBResTypeTTF allowSpriteFrames:NO selectedFile:file selectedSheet:NULL target:target];
@@ -282,6 +298,46 @@
     return NULL;
 }
 
+#pragma mark File font attributes
+
++ (void)setFont:(NSString*)fontName forMenuItem:(NSMenuItem*)item {
+    if (fontName && item) {
+        NSDictionary *attributes = @{
+                                     NSFontAttributeName: [NSFont fontWithName:fontName size:16.0],
+                                     };
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:fontName attributes:attributes];
+        [item setAttributedTitle:attributedTitle];
+    }
+}
+
++ (CTFontRef) fontFromBundle:(NSString*)fontName withHeight:(CGFloat)height {
+    // Get the path to our custom font and create a data provider.
+//    NSString* fontPath = [[NSBundle mainBundle] pathForResource : fontName ofType : @"ttf" ];
+//    NSString *fontPath = [[ResourceManager sharedManager] toAbsolutePath:fontName];
+    NSString *fontPath = fontName;
+    if (nil==fontPath)
+        return NULL;
+    
+    CGDataProviderRef dataProvider =
+    CGDataProviderCreateWithFilename ([fontPath UTF8String]);
+    if (NULL==dataProvider)
+        return NULL;
+    
+    // Create the font with the data provider, then release the data provider.
+    CGFontRef fontRef = CGFontCreateWithDataProvider ( dataProvider );
+    if ( NULL == fontRef )
+    {
+        CGDataProviderRelease ( dataProvider );
+        return NULL;
+    }
+    
+    CTFontRef fontCore = CTFontCreateWithGraphicsFont(fontRef, height, NULL, NULL);
+    CGDataProviderRelease (dataProvider);
+    CGFontRelease(fontRef);
+    
+    return fontCore;
+}
+
 #pragma mark File icons
 
 + (NSImage*) smallIconForFile:(NSString*)file
@@ -301,6 +357,7 @@
 }
 
 + (NSImage*) iconForResource:(RMResource*) res
+// TODO: Seems like this is never called?
 {
     NSImage* icon = NULL;
     

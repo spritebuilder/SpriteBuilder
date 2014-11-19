@@ -215,7 +215,6 @@
     [self updateAffectedProperties];
 }
 
-
 #pragma mark -
 #pragma mark Disclosure
 

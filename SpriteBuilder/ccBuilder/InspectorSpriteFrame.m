@@ -42,7 +42,7 @@
 @implementation InspectorSpriteFrame
 
 - (void) willBeAdded
-{
+{    
     // Setup menu
 	if([selection isKindOfClass:[CCNode class]])
 	{
