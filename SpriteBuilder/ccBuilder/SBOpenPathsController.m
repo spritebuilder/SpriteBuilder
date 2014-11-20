@@ -9,19 +9,28 @@
 #import "SBOpenPathsController.h"
 #import "ProjectSettings.h"
 #import "NSAlert+Convenience.h"
-#import "ProjectSettings+Packages.h"
 #import "MiscConstants.h"
+#import "RMPackage.h"
+#import "ResourceManager.h"
+#import "NotificationNames.h"
+
+static NSString *const KEY_TYPE = @"type";
+static NSString *const KEY_PACKAGE = @"package";
+
 
 typedef enum
 {
     SBOpenPathTypeProject = 0,
     SBOpenPathTypePublishIOS,
-    SBOpenPathTypePublishAndroid
+    SBOpenPathTypePublishAndroid,
+    SBOpenPathTypePublishPackage
 } SBOpenPathType;
 
 
 @interface SBOpenPathsController ()
 
+@property (nonatomic, strong) NSMutableArray *packageMenuItems;
+@property (nonatomic, strong) NSMutableDictionary *installedApps;
 @property (nonatomic, strong) NSMenu *menu;
 
 @end
@@ -29,37 +38,75 @@ typedef enum
 
 @implementation SBOpenPathsController
 
-- (void)setProjectSettings:(ProjectSettings *)projectSettings
+- (id)init
 {
-    _projectSettings = projectSettings;
+    self = [super init];
+    if (self)
+    {
+        self.packageMenuItems = [NSMutableArray array];
+        self.installedApps = [NSMutableDictionary dictionary];
 
-    if (_projectSettings)
-    {
-        [self populateOpenPathsMenuItem];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMenuItemsForPackages) name:RESOURCE_PATHS_CHANGED object:nil];
     }
-    else
-    {
-        [_openPathsMenuItem setSubmenu:nil];
-    }
+
+    return self;
 }
 
-- (void)populateOpenPathsMenuItem
+- (void)dealloc
 {
-     self.menu = [[NSMenu alloc] initWithTitle:@"Open Paths"];
-    
-    [self populateMenu];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)populateOpenPathsMenuItems
+{
+    self.menu = [[NSMenu alloc] initWithTitle:@"Open Paths"];
+
+    [self addMenuItemsFor:@"Project Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypeProject)}];
+    [self addMenuItemsFor:@"iOS Publish Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishIOS)}];
+    [self addMenuItemsFor:@"Android Publish Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishAndroid)}];
+    [self addSeparator];
+    [self updateMenuItemsForPackages];
 
     [_openPathsMenuItem setSubmenu:_menu];
 }
 
-- (void)populateMenu
+- (void)addSeparator
 {
-    [self addMenuItemsFor:@"Project Folder" openPathType:SBOpenPathTypeProject];
-    [self addMenuItemsFor:@"iOS Publish Folder" openPathType:SBOpenPathTypePublishIOS];
-    [self addMenuItemsFor:@"Android Publish Folder" openPathType:SBOpenPathTypePublishAndroid];
+    NSMenuItem *item = [NSMenuItem separatorItem];
+    [_menu addItem:item];
 }
 
-- (void)addMenuItemsFor:(NSString *)title openPathType:(SBOpenPathType)openPathType
+- (void)updateMenuItemsForPackages
+{
+    [self removeAllPackageSubmenus];
+
+    [self addPackagesSubmenus];
+}
+
+- (void)addPackagesSubmenus
+{
+    for (RMPackage *package in [[ResourceManager sharedManager] allPackages])
+    {
+        NSMenuItem *item2 = [self addMenuItemsFor:package.name
+                                representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishPackage), KEY_PACKAGE : package}];
+
+        [_packageMenuItems addObject:item2];
+    }
+}
+
+- (void)removeAllPackageSubmenus
+{
+    for (NSMenuItem *packageSubmenu in _packageMenuItems)
+    {
+        NSInteger index = [_menu indexOfItem:packageSubmenu];
+        if (index != -1)
+        {
+            [_menu removeItem:packageSubmenu];
+        }
+    }
+}
+
+- (NSMenuItem *)addMenuItemsFor:(NSString *)title representedObject:(id)representedObject
 {
     NSMenuItem *folderItem = [[NSMenuItem alloc] init];
     folderItem.title = title;
@@ -81,10 +128,12 @@ typedef enum
         NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:key
                                                       action:NSSelectorFromString(titleSelectorPairs[key])
                                                keyEquivalent:@""];
-        item.representedObject = @(openPathType);
+        item.representedObject = representedObject;
         item.target = self;
         [menu addItem:item];
     }
+
+    return folderItem;
 }
 
 - (void)addExtraOptionsToDictionary:(NSMutableDictionary *)titleSelectorPairs
@@ -102,6 +151,12 @@ typedef enum
 
 - (BOOL)isAppWithNameInApplicationFolder:(NSString *)applicationName
 {
+    NSNumber *isInstalled = _installedApps[applicationName];
+    if (isInstalled)
+    {
+        return [isInstalled boolValue];
+    }
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *applicationPathLocalDomain = [NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSLocalDomainMask, YES) firstObject];
 
@@ -111,16 +166,19 @@ typedef enum
     {
         if ([[applicationName stringByAppendingPathExtension:@"app"] isEqualToString:filename])
         {
+            _installedApps[applicationName] = @YES;
             return YES;
         }
     }
 
+    _installedApps[applicationName] = @NO;
     return NO;
 }
 
-- (NSString *)pathForOpenPathType:(SBOpenPathType)openPathType
+- (NSString *)pathForOpenPathType:(id)representedObject
 {
-    switch (openPathType)
+    SBOpenPathType type = (SBOpenPathType) [representedObject[KEY_TYPE] integerValue];
+    switch (type)
     {
         case SBOpenPathTypeProject:
             return _projectSettings.projectPathDir;
@@ -130,13 +188,19 @@ typedef enum
 
         case SBOpenPathTypePublishAndroid:
             return [_projectSettings.projectPathDir stringByAppendingPathComponent:_projectSettings.publishDirectoryAndroid];
+
+        case SBOpenPathTypePublishPackage:
+        {
+            RMPackage *package = representedObject[KEY_PACKAGE];
+            return package.fullPath;
+        }
     }
     return nil;
 }
 
 - (void)copyToClipboard:(id)sender
 {
-    NSString *path = [self pathForOpenPathType:(SBOpenPathType) [[sender representedObject] integerValue]];
+    NSString *path = [self pathForOpenPathType:[sender representedObject]];
     if (!path)
     {
         return;
@@ -148,7 +212,7 @@ typedef enum
 
 - (void)openInIterm2:(id)sender
 {
-    NSString *path = [self pathForOpenPathType:(SBOpenPathType) [[sender representedObject] integerValue]];
+    NSString *path = [self pathForOpenPathType:[sender representedObject]];
     if (!path)
     {
         return;
@@ -161,7 +225,7 @@ typedef enum
 
 - (void)openInTerminal:(id)sender
 {
-    NSString *path = [self pathForOpenPathType:(SBOpenPathType) [[sender representedObject] integerValue]];
+    NSString *path = [self pathForOpenPathType:[sender representedObject]];
     if (!path)
     {
         return;
@@ -184,7 +248,7 @@ typedef enum
 
 - (void)openInFinder:(id)sender
 {
-    NSString *path = [self pathForOpenPathType:(SBOpenPathType) [[sender representedObject] integerValue]];
+    NSString *path = [self pathForOpenPathType:[sender representedObject]];
     if (!path)
     {
         return;

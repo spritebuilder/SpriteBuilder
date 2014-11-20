@@ -15,6 +15,8 @@
 @property (nonatomic, weak) IBOutlet NSMenuItem *openPathsMenuItem;
 @property (nonatomic, weak) ProjectSettings *projectSettings;
 
-- (void)populateOpenPathsMenuItem;
+- (void)populateOpenPathsMenuItems;
+
+- (void)updateMenuItemsForPackages;
 
 @end
