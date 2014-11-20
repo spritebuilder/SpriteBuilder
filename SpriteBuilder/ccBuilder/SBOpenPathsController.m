@@ -10,6 +10,7 @@
 #import "ProjectSettings.h"
 #import "NSAlert+Convenience.h"
 #import "ProjectSettings+Packages.h"
+#import "MiscConstants.h"
 
 typedef enum
 {
@@ -68,12 +69,12 @@ typedef enum
 
     [_menu addItem:folderItem];
 
-    NSDictionary *titleSelectorPairs = @{
+    NSMutableDictionary *titleSelectorPairs = [@{
             @"Open in Finder" : @"openInFinder:",
-            @"Open in Terminal" : @"openInTerminal:",
-            @"Open in iTerm2" : @"openInIterm2:",
             @"Copy to Clipboard" : @"copyToClipboard:",
-    };
+    } mutableCopy];
+
+    [self addExtraOptionsToDictionary:titleSelectorPairs];
 
     for (NSString *key in titleSelectorPairs)
     {
@@ -84,6 +85,37 @@ typedef enum
         item.target = self;
         [menu addItem:item];
     }
+}
+
+- (void)addExtraOptionsToDictionary:(NSMutableDictionary *)titleSelectorPairs
+{
+    if (!APP_STORE_VERSION)
+    {
+        titleSelectorPairs[@"Open in Terminal"] = @"openInTerminal:";
+
+        if ([self isAppWithNameInApplicationFolder:@"iTerm2"])
+        {
+            titleSelectorPairs[@"Open in iTerm2"] = @"openInIterm2:";
+        }
+    }
+}
+
+- (BOOL)isAppWithNameInApplicationFolder:(NSString *)applicationName
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *applicationPathLocalDomain = [NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSLocalDomainMask, YES) firstObject];
+
+    NSError *error;
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:applicationPathLocalDomain error:&error];
+    for (NSString *filename in contents)
+    {
+        if ([[applicationName stringByAppendingPathExtension:@"app"] isEqualToString:filename])
+        {
+            return YES;
+        }
+    }
+
+    return NO;
 }
 
 - (NSString *)pathForOpenPathType:(SBOpenPathType)openPathType
