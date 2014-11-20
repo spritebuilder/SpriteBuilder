@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>displayName</key>
+	<string>Light Node</string>
+	<key>ordering</key>
+	<integer>4000</integer>
+	<key>description</key>
+	<string>Draws a rectangular area filled with a color.</string>
+	<key>inheritsFrom</key>
+	<string>CCNode</string>
+	<key>canHaveChildren</key>
+	<true/>
+	<key>className</key>
+	<string>CCLightNode</string>
+	<key>properties</key>
+	<array>
+		<dict>
+			<key>displayName</key>
+			<string>CCLightNode</string>
+			<key>name</key>
+			<string>CCLightNode</string>
+			<key>type</key>
+			<string>Separator</string>
+			<key>dontSetInEditor</key>
+			<true/>
+		</dict>
+	</array>
+	<key>editorClassName</key>
+	<string>CCBPLightNode</string>
+	<key>propertiesOverridden</key>
+	<array/>
+</dict>
+</plist>
