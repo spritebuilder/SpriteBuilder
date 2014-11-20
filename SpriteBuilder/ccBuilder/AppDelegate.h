@@ -124,6 +124,7 @@ enum {
 @class CCBPublisher;
 @class PreviewContainerViewController;
 @class InspectorController;
+@class SBOpenPathsController;
 
 typedef void (^CompletionCallback) (BOOL success);
 
@@ -349,6 +350,8 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (weak, nonatomic,readonly) IBOutlet NSMenu* menuContextKeyframeInterpol;
 @property (weak, nonatomic,readonly) IBOutlet NSMenu *menuContextKeyframeNoselection;
 @property (weak, nonatomic,readonly) NSSegmentedControl *panelVisibilityControl;
+
+@property (nonatomic, strong) IBOutlet SBOpenPathsController *openPathsController;
 
 @property (nonatomic,strong) ProjectSettings* projectSettings;
 @property (nonatomic,strong,readonly) NSString * applicationTitle;

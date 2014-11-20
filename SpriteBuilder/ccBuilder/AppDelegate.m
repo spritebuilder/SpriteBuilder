@@ -139,6 +139,7 @@
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
+#import "SBOpenPathsController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1648,6 +1649,7 @@ typedef enum
 
     // Remove resource paths
     self.projectSettings = NULL;
+    _openPathsController.projectSettings = nil;
 
     [[ResourceManager sharedManager] removeAllDirectories];
     
@@ -1703,6 +1705,7 @@ typedef enum
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
+    _openPathsController.projectSettings = projectSettings;
 
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];

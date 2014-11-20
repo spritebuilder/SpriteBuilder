@@ -140,6 +140,7 @@
 		8354FDFC198233AB004EC272 /* MainProjectSettingsDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */; };
 		83599E9A1975470D008283EC /* photoshop.psd in Resources */ = {isa = PBXBuildFile; fileRef = 83599E991975470D008283EC /* photoshop.psd */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
+		8363D7901A1CD451003F163E /* SBOpenPathsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8363D78F1A1CD451003F163E /* SBOpenPathsController.m */; };
 		837D2E731A0D07F0009918B7 /* greyscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 837D2E721A0D07F0009918B7 /* greyscale.png */; };
 		837D701B19ADDC8D00C3335B /* openXcodeProject.AppleScript in Resources */ = {isa = PBXBuildFile; fileRef = E525F74DC72109C2F7FB0EC8 /* openXcodeProject.AppleScript */; };
 		837E940019815C8D00A9F90B /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */; };
@@ -3634,6 +3635,7 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				8363D78D1A1CD420003F163E /* Open Paths */,
 				E390C77A170A2C20003E9E92 /* About Box & Email list */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				776041E11498F56D0078095D /* Application Settings & Globals */,
@@ -3935,6 +3937,15 @@
 				E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */,
 			);
 			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		8363D78D1A1CD420003F163E /* Open Paths */ = {
+			isa = PBXGroup;
+			children = (
+				8363D78E1A1CD451003F163E /* SBOpenPathsController.h */,
+				8363D78F1A1CD451003F163E /* SBOpenPathsController.m */,
+			);
+			name = "Open Paths";
 			sourceTree = "<group>";
 		};
 		8369838819AC815F00110D82 /* Preview */ = {
@@ -7396,6 +7407,7 @@
 				B747E60E19CB3C0F00F692A2 /* EffectHueControl.m in Sources */,
 				B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */,
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
+				8363D7901A1CD451003F163E /* SBOpenPathsController.m in Sources */,
 				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
 				920994D0198717D20006F38D /* EffectGlassControl.m in Sources */,
 				B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */,
