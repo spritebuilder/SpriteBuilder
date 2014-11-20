@@ -658,6 +658,8 @@ typedef enum
     }
 
     [self toggleFeatures];
+
+    [_openPathsController populateOpenPathsMenuItems];
 }
 
 - (void)setupInspectorController
@@ -2958,6 +2960,7 @@ typedef enum
     [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
     [self reloadResources];
     [self setResolution:0];
+    [_openPathsController updateMenuItemsForPackages];
 }
 
 - (IBAction) openDocument:(id)sender
