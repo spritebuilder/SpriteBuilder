@@ -136,7 +136,6 @@
 #import "LicenseManager.h"
 #import "LicenseWindow.h"
 #import "SBUpdater.h"
-#import "OpenProjectInXCode.h"
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
@@ -2928,10 +2927,9 @@ typedef enum
 
 - (IBAction)menuOpenProjectInXCode:(id)sender
 {
-    OpenProjectInXCode *openProjectInXCodeCommand = [[OpenProjectInXCode alloc] init];
     NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
-
-    [openProjectInXCodeCommand openProject:xcodePrjPath];
+    
+    [[NSWorkspace sharedWorkspace] openFile:xcodePrjPath withApplication:@"Xcode"];
 }
 
 - (IBAction)menuProjectSettings:(id)sender
