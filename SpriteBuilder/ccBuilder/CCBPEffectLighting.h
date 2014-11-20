@@ -11,6 +11,8 @@
 
 
 @interface CCBPEffectLighting : CCEffectLighting <EffectProtocol>
+
 @property (nonatomic,readonly) EffectDescription * effectDescription;
+@property (nonatomic) NSColor *editedColor;
 
 @end

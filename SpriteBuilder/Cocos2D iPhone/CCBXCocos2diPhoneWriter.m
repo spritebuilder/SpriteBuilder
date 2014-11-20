@@ -67,7 +67,8 @@
     [propTypes addObject:@"Color4"];
     [propTypes addObject:@"NodeReference"];
     [propTypes addObject:@"FloatCheck"];
-	[propTypes addObject:@"EffectControl"];
+    [propTypes addObject:@"EffectControl"];
+    [propTypes addObject:@"StringArray"];
 }
 
 - (id) init
@@ -602,6 +603,11 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 			[self writeEffect:effectDescription];
 		}
 	}
+    else if([type isEqualToString:@"StringArray"])
+    {
+        NSString *stringArrayText = [self concatenateWithSeperator:(NSArray *)prop seperator:@";"];
+        [self writeCachedString:stringArrayText isPath: NO];
+    }
     else
     {
         NSLog(@"WARNING: Unknown property Type:%@" , type);
@@ -740,6 +746,11 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 			}
 		}
 	}
+    else if([type isEqualToString:@"StringArray"])
+    {
+        NSString *stringArrayText = [self concatenateWithSeperator:(NSArray *)value seperator:@";"];
+        [self addToStringCache:stringArrayText isPath:NO];
+    }
 }
 
 - (void) cacheStringsForNode:(NSDictionary*) node

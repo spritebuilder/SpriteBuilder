@@ -26,7 +26,7 @@
 #import "CCBPublishDelegate.h"
 
 #define kCCBXTempBufferSize 8
-#define kCCBXVersion 10
+#define kCCBXVersion 11
 
 enum {
     kCCBXFloat0 = 0,
