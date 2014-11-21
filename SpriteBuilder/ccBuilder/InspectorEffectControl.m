@@ -156,4 +156,23 @@
 	return effectView.frame.size.height;
 }
 
+- (void)keyDown:(NSEvent *)theEvent
+{
+    if([theEvent.characters characterAtIndex:0] == NSDeleteCharacter)
+    {
+        NSLog(@"backspace!");
+    }
+}
+
+- (void)keyUp:(NSEvent *)theEvent
+{
+
+}
+
+- (void)interpretKeyEvents:(NSArray *)eventArray
+{
+
+}
+
+
 @end
