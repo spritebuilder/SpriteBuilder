@@ -34,10 +34,10 @@
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcz-aO-FfS" userLabel="Shininess Field">
                     <rect key="frame" x="203" y="105" width="42" height="19"/>
-                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="9aR-rf-eTT">
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" placeholderString="10.0" drawsBackground="YES" id="9aR-rf-eTT">
                         <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="Oam-81-UPa">
                             <real key="minimum" value="0.0"/>
-                            <real key="maximum" value="1"/>
+                            <real key="maximum" value="100"/>
                         </numberFormatter>
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -49,7 +49,7 @@
                 </textField>
                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3oD-yO-MFe">
                     <rect key="frame" x="101" y="105" width="94" height="17"/>
-                    <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="below" numberOfTickMarks="3" sliderType="linear" id="q16-tl-nlC"/>
+                    <sliderCell key="cell" controlSize="mini" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="10" tickMarkPosition="below" numberOfTickMarks="3" sliderType="linear" id="q16-tl-nlC"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.effect.shininess" id="p3S-5D-jo7"/>
                     </connections>
