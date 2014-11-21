@@ -27,6 +27,16 @@
 			<true/>
 		</dict>
 		<dict>
+			<key>displayName</key>
+			<string>Light Type</string>
+			<key>type</key>
+			<string>IntegerLabeled</string>
+			<key>name</key>
+			<string>type</string>
+			<key>extra</key>
+			<string>Point|0|Directional|1</string>
+		</dict>
+		<dict>
 			<key>name</key>
 			<string>color</string>
 			<key>defaultSerialization</key>
@@ -122,11 +132,11 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>1</integer>
+			<real>0.5</real>
 			<key>animatable</key>
 			<true/>
 			<key>default</key>
-			<integer>1</integer>
+			<real>0.5</real>
 			<key>displayName</key>
 			<string>Ambient Intensity</string>
 			<key>type</key>
