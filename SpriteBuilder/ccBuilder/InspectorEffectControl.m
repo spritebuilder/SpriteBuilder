@@ -38,14 +38,19 @@
 
 - (IBAction)handleRemoveButton:(id)sender
 {
-	if([self.tableView selectedRow] >=0)
+    [self removeSelectedEffect];
+}
+
+- (void)removeSelectedEffect
+{
+    if([self.tableView selectedRow] >=0)
 	{
 		NSInteger row = [self.tableView selectedRow];
 		CCEffect<EffectProtocol> *effect = [self.effectNode effects][(NSUInteger) row];
-        
+
         [[AppDelegate appDelegate] saveUndoState];
 		[self.effectNode removeEffect:effect];
-        
+
 		[self refresh];
 	}
 }
@@ -54,7 +59,7 @@
 {
     NSMenu* menu = [[NSMenu alloc] initWithTitle:@"Effects"];
     menu.font = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
-    
+
     NSArray* effects = [EffectsManager effects];
     int group = 0;
     for (EffectDescription* effect in effects)
@@ -63,18 +68,18 @@
         {
             // Add separator
             NSMenuItem* separator = [NSMenuItem separatorItem];
-            
+
             [menu addItem:separator];
             group = effect.group;
         }
-        
+
         NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:effect.title action:@selector(handleAddEffect:) keyEquivalent:@""];
         item.target = self;
         item.representedObject = effect;
-        
+
         [menu addItem:item];
     }
-    
+
     [menu popUpMenuPositioningItem:[menu itemAtIndex:0] atLocation:NSMakePoint(0, 15) inView:sender];
 }
 
@@ -82,7 +87,7 @@
 {
     NSMenuItem* item = sender;
     EffectDescription* effect = item.representedObject;
-    
+
     [[AppDelegate appDelegate] saveUndoState];
     [[self effectNode] addEffect:[effect constructDefault]];
     [self refresh];
@@ -97,17 +102,17 @@
 {
 	[viewControllers removeAllObjects];
 	viewControllers = [NSMutableArray new];
-	
+
 	NSArray * effects = [[self effectNode] effects];
 
 	for (NSUInteger i = 0; i < effects.count; i++)
 	{
 		EffectDescription * effectDescription = [[self effectNode] effectDescriptors][i];
 		id<EffectProtocol> effect =  [self.effectNode effects][i];
-		
+
 		Class viewControllerClass = NSClassFromString(effectDescription.viewController);
 		EffectViewController * vc = [((EffectViewController*)[viewControllerClass alloc]) initWithNibName:effectDescription.viewController bundle:[NSBundle mainBundle]];
-		
+
 		vc.effect =	effect;
 		[viewControllers addObject:vc];
 	}
@@ -156,17 +161,19 @@
 	return effectView.frame.size.height;
 }
 
+#pragma mark KeyboardEventHandler
+
 - (void)keyDown:(NSEvent *)theEvent
 {
-    if([theEvent.characters characterAtIndex:0] == NSDeleteCharacter)
-    {
-        NSLog(@"backspace!");
-    }
+
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
-
+    if([theEvent.characters characterAtIndex:0] == NSDeleteCharacter)
+    {
+       [self removeSelectedEffect];
+    }
 }
 
 - (void)interpretKeyEvents:(NSArray *)eventArray
