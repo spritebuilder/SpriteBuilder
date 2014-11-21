@@ -26,6 +26,156 @@
 			<key>dontSetInEditor</key>
 			<true/>
 		</dict>
+		<dict>
+			<key>name</key>
+			<string>color</string>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<key>displayName</key>
+			<string>Diffuse Color</string>
+			<key>type</key>
+			<string>Color4</string>
+			<key>default</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>1</integer>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<integer>1</integer>
+			<key>displayName</key>
+			<string>Diffuse Intensity</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>intensity</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>specularColor</string>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<key>displayName</key>
+			<string>Specular Color</string>
+			<key>type</key>
+			<string>Color4</string>
+			<key>default</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>1</integer>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<integer>1</integer>
+			<key>displayName</key>
+			<string>Specular Intensity</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>specularIntensity</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>ambientColor</string>
+			<key>defaultSerialization</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<key>displayName</key>
+			<string>Ambient Color</string>
+			<key>type</key>
+			<string>Color4</string>
+			<key>default</key>
+			<array>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>1</integer>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<integer>1</integer>
+			<key>displayName</key>
+			<string>Ambient Intensity</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>ambientIntensity</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>0</integer>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<integer>0</integer>
+			<key>displayName</key>
+			<string>Cutoff Radius</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>cutoffRadius</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<real>0.5</real>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<real>0.5</real>
+			<key>displayName</key>
+			<string>Half Radius</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>halfRadius</string>
+		</dict>
+		<dict>
+			<key>defaultSerialization</key>
+			<integer>100</integer>
+			<key>animatable</key>
+			<true/>
+			<key>default</key>
+			<integer>100</integer>
+			<key>displayName</key>
+			<string>Depth</string>
+			<key>type</key>
+			<string>Float</string>
+			<key>name</key>
+			<string>depth</string>
+		</dict>
 	</array>
 	<key>editorClassName</key>
 	<string>CCBPLightNode</string>
