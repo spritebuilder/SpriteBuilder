@@ -354,6 +354,8 @@
 		9DAE29661A1BE274009FCC20 /* EffectLightingControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE29641A1BE274009FCC20 /* EffectLightingControl.m */; };
 		9DAE29671A1BE274009FCC20 /* EffectLightingControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DAE29651A1BE274009FCC20 /* EffectLightingControl.xib */; };
 		9DAE296A1A1BE2B1009FCC20 /* CCBPEffectLighting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE29691A1BE2B1009FCC20 /* CCBPEffectLighting.m */; };
+		9DD4F4B31A1FCE5700438647 /* InspectorTokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B11A1FCE5700438647 /* InspectorTokenArray.m */; };
+		9DD4F4B41A1FCE5700438647 /* InspectorTokenArray.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B21A1FCE5700438647 /* InspectorTokenArray.xib */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -1812,6 +1814,9 @@
 		9DAE29651A1BE274009FCC20 /* EffectLightingControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectLightingControl.xib; path = ccBuilder/EffectLightingControl.xib; sourceTree = "<group>"; };
 		9DAE29681A1BE2B1009FCC20 /* CCBPEffectLighting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectLighting.h; path = ccBuilder/CCBPEffectLighting.h; sourceTree = "<group>"; };
 		9DAE29691A1BE2B1009FCC20 /* CCBPEffectLighting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectLighting.m; path = ccBuilder/CCBPEffectLighting.m; sourceTree = "<group>"; };
+		9DD4F4B01A1FCE5700438647 /* InspectorTokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorTokenArray.h; sourceTree = "<group>"; };
+		9DD4F4B11A1FCE5700438647 /* InspectorTokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorTokenArray.m; sourceTree = "<group>"; };
+		9DD4F4B21A1FCE5700438647 /* InspectorTokenArray.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorTokenArray.xib; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -5701,6 +5706,9 @@
 				E525FB84B7161C23D44036DB /* InspectorTexture.xib */,
 				5BBEC35E1A011D8D00FBA08B /* InspectorTextView.h */,
 				5BBEC35F1A011D8D00FBA08B /* InspectorTextView.m */,
+				9DD4F4B01A1FCE5700438647 /* InspectorTokenArray.h */,
+				9DD4F4B11A1FCE5700438647 /* InspectorTokenArray.m */,
+				9DD4F4B21A1FCE5700438647 /* InspectorTokenArray.xib */,
 				E525F89681295FE8D41A727B /* InspectorValue.h */,
 				E525F58973387D7457A5387B /* InspectorValue.m */,
 			);
@@ -6805,6 +6813,7 @@
 				E3DFE831160226760068CB50 /* frame-iphone5.png in Resources */,
 				9218DF421919B04D0033851E /* joint-pivot-motor@2x.png in Resources */,
 				58FA2034162D73F3006B8856 /* TB_bottomPanel.png in Resources */,
+				9DD4F4B41A1FCE5700438647 /* InspectorTokenArray.xib in Resources */,
 				58FA2035162D73F3006B8856 /* TB_leftPanel.png in Resources */,
 				58FA2036162D73F3006B8856 /* TB_rightPanel.png in Resources */,
 				921EEAD718A5760700D864C2 /* joint-anchor-sel@2x.png in Resources */,
@@ -7584,6 +7593,7 @@
 				E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */,
 				E525F12B1E4605EB494FA44C /* PackageMigrationController.m in Sources */,
 				E525F91C915E02FFF36E4B28 /* CCBDocumentDataCreator.m in Sources */,
+				9DD4F4B31A1FCE5700438647 /* InspectorTokenArray.m in Sources */,
 				E525F0A641C5CDF28D3F187B /* CCBPublishingTarget.m in Sources */,
 				E525FA53ED13870D020579B8 /* CCBPublisher.m in Sources */,
 				E525FE4E98094590DEF34EF8 /* CCBPublisherCacheCleaner.m in Sources */,
@@ -11887,6 +11897,7 @@
 				9D9BA6BE1A1E84BA0019C1DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B729AC61181F091800BA0D9C /* Build configuration list for PBXNativeTarget "CCSlider" */ = {
 			isa = XCConfigurationList;

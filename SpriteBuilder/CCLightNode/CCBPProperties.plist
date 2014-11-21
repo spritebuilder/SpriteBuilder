@@ -37,6 +37,14 @@
 			<string>Point|0|Directional|1</string>
 		</dict>
 		<dict>
+			<key>displayName</key>
+			<string>Light Groups</string>
+			<key>type</key>
+			<string>TokenArray</string>
+			<key>name</key>
+			<string>groups</string>
+		</dict>
+		<dict>
 			<key>name</key>
 			<string>color</string>
 			<key>defaultSerialization</key>

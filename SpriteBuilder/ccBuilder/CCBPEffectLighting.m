@@ -27,7 +27,7 @@
     CCColor *color = self.specularColor;
     
     return @[SERIALIZE_PROPERTY(shininess,Float),
-             @{@"name" : @"groups", @"type" : @"StringArray", @"value": groups },
+             @{@"name" : @"groups", @"type" : @"TokenArray", @"value": groups },
              @{@"name" : @"specularColor", @"type" : @"Color4", @"value": [CCBWriterInternal serializeColor4:color] },
              ];
 }

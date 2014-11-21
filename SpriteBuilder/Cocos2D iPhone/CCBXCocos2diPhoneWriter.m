@@ -68,7 +68,7 @@
     [propTypes addObject:@"NodeReference"];
     [propTypes addObject:@"FloatCheck"];
     [propTypes addObject:@"EffectControl"];
-    [propTypes addObject:@"StringArray"];
+    [propTypes addObject:@"TokenArray"];
 }
 
 - (id) init
@@ -603,10 +603,10 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 			[self writeEffect:effectDescription];
 		}
 	}
-    else if([type isEqualToString:@"StringArray"])
+    else if([type isEqualToString:@"TokenArray"])
     {
-        NSString *stringArrayText = [self concatenateWithSeperator:(NSArray *)prop seperator:@";"];
-        [self writeCachedString:stringArrayText isPath: NO];
+        NSString *arrayText = [self concatenateWithSeperator:(NSArray *)prop seperator:@";"];
+        [self writeCachedString:arrayText isPath: NO];
     }
     else
     {
@@ -746,10 +746,10 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
 			}
 		}
 	}
-    else if([type isEqualToString:@"StringArray"])
+    else if([type isEqualToString:@"TokenArray"])
     {
-        NSString *stringArrayText = [self concatenateWithSeperator:(NSArray *)value seperator:@";"];
-        [self addToStringCache:stringArrayText isPath:NO];
+        NSString *arrayText = [self concatenateWithSeperator:(NSArray *)value seperator:@";"];
+        [self addToStringCache:arrayText isPath:NO];
     }
 }
 
