@@ -5729,8 +5729,8 @@
 		E525FAED831D10344893DCBE /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				E525F0A49364371BA5B0E891 /* InspectorController.h */,
 				E525F8027C3E43F222BD84A5 /* InspectorController.m */,
+				E525F0A49364371BA5B0E891 /* InspectorController.h */,
 				E525F2CD3FA1D9C04C87345A /* Properties */,
 				E525F4835BC8657DCA982832 /* InspectorPropertyPaneBuilder.m */,
 				E525F5EA95FBBDE05FCBE2E3 /* InspectorPropertyPaneBuilder.h */,
@@ -6430,7 +6430,7 @@
 		};
 		836E2D5A19EE5BCC00CD5B66 /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.jar;
+			fileType = compiled.java.jar;
 			path = cocos2dJava.jar;
 			remoteRef = 836E2D5919EE5BCC00CD5B66 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;

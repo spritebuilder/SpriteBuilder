@@ -93,17 +93,6 @@
                 [menuItem setTarget:target];
                 
                 [menu addItem:menuItem];
-                
-                menuItem.representedObject = res;
-
-                if (res.type == kCCBResTypeTTF) { // for user fonts menu
-                    // TODO: implement preview of user fonts
-                    // set item title to match font name
-                    // remove last 4 characters ".ttf"
-//                    NSString *fontName = [itemName substringToIndex:[itemName length] - 4];
-//                    [self setFont:fontName forMenuItem:menuItem];
-                }
-                
             }
             else if (res.type == kCCBResTypeSpriteSheet && allowSpriteFrames)
             {
@@ -247,14 +236,13 @@
     NSArray* systemFonts = [[ResourceManager sharedManager] systemFontList];
     for (NSString* fontName in systemFonts)
     {
-        NSMenuItem* itemFont = [[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""];
-        [itemFont setTarget:target];
-        itemFont.representedObject = fontName;
+        NSMenuItem* fontItem = [[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""];
+        [fontItem setTarget:target];
+        fontItem.representedObject = fontName;
         
-        // set item title to match font name
-        [self setFont:fontName forMenuItem:itemFont];
+        [self setAttributedTitle:fontName ofMenuItem:fontItem];
         
-        [menuSubSystemFonts addItem:itemFont];
+        [menuSubSystemFonts addItem:fontItem];
     }
     
     // User fonts submenu
@@ -300,7 +288,7 @@
 
 #pragma mark File font attributes
 
-+ (void)setFont:(NSString*)fontName forMenuItem:(NSMenuItem*)item {
++ (void)setAttributedTitle:(NSString*)fontName ofMenuItem:(NSMenuItem*)item {
     if (fontName && item) {
         NSDictionary *attributes = @{
                                      NSFontAttributeName: [NSFont fontWithName:fontName size:16.0],
@@ -308,34 +296,6 @@
         NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:fontName attributes:attributes];
         [item setAttributedTitle:attributedTitle];
     }
-}
-
-+ (CTFontRef) fontFromBundle:(NSString*)fontName withHeight:(CGFloat)height {
-    // Get the path to our custom font and create a data provider.
-//    NSString* fontPath = [[NSBundle mainBundle] pathForResource : fontName ofType : @"ttf" ];
-//    NSString *fontPath = [[ResourceManager sharedManager] toAbsolutePath:fontName];
-    NSString *fontPath = fontName;
-    if (nil==fontPath)
-        return NULL;
-    
-    CGDataProviderRef dataProvider =
-    CGDataProviderCreateWithFilename ([fontPath UTF8String]);
-    if (NULL==dataProvider)
-        return NULL;
-    
-    // Create the font with the data provider, then release the data provider.
-    CGFontRef fontRef = CGFontCreateWithDataProvider ( dataProvider );
-    if ( NULL == fontRef )
-    {
-        CGDataProviderRelease ( dataProvider );
-        return NULL;
-    }
-    
-    CTFontRef fontCore = CTFontCreateWithGraphicsFont(fontRef, height, NULL, NULL);
-    CGDataProviderRelease (dataProvider);
-    CGFontRelease(fontRef);
-    
-    return fontCore;
 }
 
 #pragma mark File icons
@@ -357,7 +317,6 @@
 }
 
 + (NSImage*) iconForResource:(RMResource*) res
-// TODO: Seems like this is never called?
 {
     NSImage* icon = NULL;
     
