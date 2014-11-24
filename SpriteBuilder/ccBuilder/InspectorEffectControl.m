@@ -34,9 +34,7 @@
 
 - (void)awakeFromNib
 {
-//    [self.tableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     [self.tableView registerForDraggedTypes:@[PASTEBOARD_TYPE_EFFECTCONTROL]];
-
 
     [super awakeFromNib];
 }
@@ -148,6 +146,8 @@
 
 - (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
 {
+    [pboard clearContents];
+
     NSData *indexData = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
     [pboard declareTypes:@[PASTEBOARD_TYPE_EFFECTCONTROL] owner:self];
 
