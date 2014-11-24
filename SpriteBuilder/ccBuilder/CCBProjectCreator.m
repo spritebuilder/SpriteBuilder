@@ -160,13 +160,6 @@
     [self setName:identifier inFile:xibFileName search:substitutableProjectIdentifier];
     [self setName:projName inFile:xibFileName search:substitutableProjectName];
 
-    // Rename Approj project file (apportable)
-    NSString* approjFileName = [parentPath stringByAppendingPathComponent:@"PROJECTNAME.approj"];
-    projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-
-    NSString* newApprojFileName = [[[approjFileName stringByDeletingLastPathComponent] stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"approj"];
-    [fm moveItemAtPath:approjFileName toPath:newApprojFileName error:NULL];
-
     // Android
     NSString* activityJavaFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/java/org/cocos2d/%@/%@Activity.java", substitutableProjectIdentifier, substitutableProjectIdentifier]];
     if ([fm fileExistsAtPath:activityJavaFileName])
@@ -204,14 +197,6 @@
         [self setName:identifier inFile:manifestFileName search:substitutableProjectIdentifier];
         [self setName:projName inFile:manifestFileName search:substitutableProjectName];
     }
-    
-    // configure default configuration.json and include opengles2 as a feature
-    NSString *apportableConfigFile = [NSString stringWithFormat:@"%@%@", newApprojFileName, @"/configuration.json"];
-    NSString *apportableConfigurationContents = [NSString stringWithContentsOfFile:apportableConfigFile encoding:NSUTF8StringEncoding error:&error];
-    
-    NSString *replacement = [NSString stringWithFormat:@"\"default_target\": {\"project\": \"%@\", \"project_config\": \"Release\", \"target\": \"%@\"},", projName, projName];
-    apportableConfigurationContents = [apportableConfigurationContents stringByReplacingOccurrencesOfString:@"default_target" withString:replacement];
-    [apportableConfigurationContents writeToFile:apportableConfigFile atomically:YES encoding:NSUTF8StringEncoding error:&error];
 	
 	// perform cleanup to remove unnecessary files which only bloat the project
 	[CCBFileUtil cleanupSpriteBuilderProjectAtPath:fileName];
