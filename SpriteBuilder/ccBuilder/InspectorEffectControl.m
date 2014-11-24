@@ -12,6 +12,7 @@
 #import "EffectViewController.h"
 #import "EffectsManager.h"
 #import "MiscConstants.h"
+#import "SBPasteboardTypes.h"
 
 
 @interface InspectorEffectControl ()
@@ -29,6 +30,15 @@
 {
 	NSAssert([aSelection conformsToProtocol:@ protocol(CCEffectNodeProtocol)], @"Must conform to protocol");
 	return [super initWithSelection:aSelection andPropertyName:aPropertyName andDisplayName:aDisplayName andExtra:anExtra];
+}
+
+- (void)awakeFromNib
+{
+//    [self.tableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
+    [self.tableView registerForDraggedTypes:@[PASTEBOARD_TYPE_EFFECTCONTROL]];
+
+
+    [super awakeFromNib];
 }
 
 - (id<CCEffectNodeProtocol>)effectNode
@@ -135,6 +145,52 @@
 {
 	return [[self effectNode] effectDescriptors][(NSUInteger) row];
 }
+
+- (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard
+{
+    NSData *indexData = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+    [pboard declareTypes:@[PASTEBOARD_TYPE_EFFECTCONTROL] owner:self];
+
+    [pboard setData:indexData forType:PASTEBOARD_TYPE_EFFECTCONTROL];
+
+    return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation
+{
+    return NSDragOperationMove;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation
+{
+    NSPasteboard* pboard = [info draggingPasteboard];
+    NSData* rowData = [pboard dataForType:PASTEBOARD_TYPE_EFFECTCONTROL];
+    NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+    NSUInteger dragRow = (NSUInteger) [rowIndexes firstIndex];
+    NSMutableArray *effects =  [[self.effectNode effects] mutableCopy];
+
+    id toMove = effects[dragRow];
+    [effects insertObject:toMove atIndex:(NSUInteger) row];
+
+    NSUInteger removalRow = dragRow;
+    if (row < dragRow) removalRow++;
+    [effects removeObjectAtIndex:removalRow];
+
+    while([[self.effectNode effects] count] > 0)
+    {
+        [self.effectNode removeEffect:[self.effectNode effects][0]];
+    }
+
+    for( id effect in effects)
+    {
+        [self.effectNode addEffect:effect];
+    }
+
+    [self refresh];
+
+    return YES;
+}
+
 
 
 #pragma mark View Delegate
