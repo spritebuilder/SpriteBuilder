@@ -4263,7 +4263,7 @@ typedef enum
     self.snapToggle      = YES;
     self.snapToGuides    = YES;
     self.snapGrid        = NO;
-    self.snapNode        = NO;
+    self.snapNode        = YES;
 }
 
 -(void) setShowGuides:(BOOL)showGuidesNew {
