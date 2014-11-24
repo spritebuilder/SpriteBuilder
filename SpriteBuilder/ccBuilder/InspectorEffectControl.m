@@ -35,6 +35,7 @@
 - (void)awakeFromNib
 {
     [self.tableView registerForDraggedTypes:@[PASTEBOARD_TYPE_EFFECTCONTROL]];
+    [self.tableView setDraggingDestinationFeedbackStyle:NSTableViewDraggingDestinationFeedbackStyleGap];
 
     [super awakeFromNib];
 }
