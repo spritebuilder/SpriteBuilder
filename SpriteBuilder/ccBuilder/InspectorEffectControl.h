@@ -8,8 +8,9 @@
 
 #import "InspectorValue.h"
 #import "CCBPEffectNode.h"
+#import "NSKeyboardForwardingView.h"
 
-@interface InspectorEffectControl : InspectorValue <NSTableViewDataSource, NSTableViewDelegate>
+@interface InspectorEffectControl : InspectorValue <NSTableViewDataSource, NSTableViewDelegate, KeyboardEventHandler>
 
 @property (nonatomic, weak) IBOutlet NSButton *addEffectButton;
 @property (nonatomic, weak) IBOutlet NSButton *removeEffectButton;

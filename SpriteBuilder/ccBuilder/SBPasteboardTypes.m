@@ -6,3 +6,5 @@ NSString *const PASTEBOARD_TYPE_PLUGINNODE = @"com.cocosbuilder.PlugInNode";
 NSString *const PASTEBOARD_TYPE_WAVE = @"com.cocosbuilder.wav";
 NSString *const PASTEBOARD_TYPE_JOINTBODY = @"com.cocosbuilder.jointBody";
 NSString *const PASTEBOARD_TYPE_EFFECTSPRITE = @"com.cocosbuilder.effectSprite";
+NSString *const PASTEBOARD_TYPE_EFFECTCONTROL = @"com.cocosbuilder.effectControl";
+
