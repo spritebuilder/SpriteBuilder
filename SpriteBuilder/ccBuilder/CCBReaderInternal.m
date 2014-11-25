@@ -447,9 +447,11 @@ __strong NSDictionary* renamedProperties = nil;
 		}
 		
 		effectNode.effects = effects;
-		
-		
 	}
+    else if([type isEqualToString:@"TokenArray"])
+    {
+        [node setValue:serializedValue forKey:name];
+    }
     else
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);
