@@ -343,6 +343,8 @@
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
+		9D0CD23F1A252CA000FF785F /* light-point.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0CD23D1A252CA000FF785F /* light-point.png */; };
+		9D0CD2401A252CA000FF785F /* light-point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0CD23E1A252CA000FF785F /* light-point@2x.png */; };
 		9D9BA6C61A1E85C60019C1DE /* CCLightNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 9D9BA6B81A1E84BA0019C1DE /* CCLightNode.ccbPlugNode */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9D9BA6C91A1E864C0019C1DE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D9BA6C71A1E864C0019C1DE /* Icon.png */; };
 		9D9BA6CA1A1E864C0019C1DE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D9BA6C81A1E864C0019C1DE /* Icon@2x.png */; };
@@ -1800,6 +1802,8 @@
 		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
 		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
 		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
+		9D0CD23D1A252CA000FF785F /* light-point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-point.png"; sourceTree = "<group>"; };
+		9D0CD23E1A252CA000FF785F /* light-point@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-point@2x.png"; sourceTree = "<group>"; };
 		9D9BA6B81A1E84BA0019C1DE /* CCLightNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCLightNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D9BA6BB1A1E84BA0019C1DE /* CCLightNode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCLightNode-Info.plist"; sourceTree = "<group>"; };
 		9D9BA6C71A1E864C0019C1DE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -3422,6 +3426,8 @@
 				774F95C513638D74005D43EB /* missing-particle-texture.png */,
 				772BE566133E40D60009B5B9 /* missing-texture.png */,
 				E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */,
+				9D0CD23D1A252CA000FF785F /* light-point.png */,
+				9D0CD23E1A252CA000FF785F /* light-point@2x.png */,
 			);
 			name = "Stage Assets";
 			sourceTree = "<group>";
@@ -6620,6 +6626,7 @@
 				8304858519AE063A00A624BB /* PreviewCCBView.xib in Resources */,
 				77E1995513858DE0006C361B /* TabClose_Dirty_Pressed.png in Resources */,
 				77E1995613858DE0006C361B /* TabClose_Dirty_Rollover.png in Resources */,
+				9D0CD23F1A252CA000FF785F /* light-point.png in Resources */,
 				77E1995713858DE0006C361B /* TabClose_Dirty.png in Resources */,
 				830485A619AF2A7000A624BB /* PreviewImageView.xib in Resources */,
 				830485A719AF2A7200A624BB /* PreviewSpriteSheetView.xib in Resources */,
@@ -6641,6 +6648,7 @@
 				D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */,
 				B71706D1184ECD660081720A /* select-scale@2x.png in Resources */,
 				776C68921388107400153214 /* missing-font.png in Resources */,
+				9D0CD2401A252CA000FF785F /* light-point@2x.png in Resources */,
 				9266EE2E195A1695006CBE81 /* effect-pixelate.png in Resources */,
 				B7096E26180CD98E00164A8A /* doc-layer.png in Resources */,
 				776C6896138874C200153214 /* dsa_pub.pem in Resources */,
