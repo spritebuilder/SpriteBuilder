@@ -4267,7 +4267,7 @@ typedef enum
     self.snapToggle      = YES;
     self.snapToGuides    = YES;
     self.snapGrid        = NO;
-    self.snapNode        = NO;
+    self.snapNode        = YES;
 }
 
 -(void) setShowGuides:(BOOL)showGuidesNew {
@@ -4415,7 +4415,7 @@ typedef enum
 
 - (IBAction)showAPIDocs:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.cocos2d-iphone.org/docs/api/index.html"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.cocos2d-swift.org/docs/api/index.html"]];
 }
 
 - (IBAction)reportBug:(id)sender

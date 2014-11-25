@@ -59,7 +59,7 @@
 	}
 	else
 	{
-		//[TexturePropertySetter
+		// TexturePropertySetter
         NSString* sf = [selection extraPropForKey:propertyName];
         NSString* ssf = [selection extraPropForKey:[propertyName stringByAppendingString:@"Sheet"]];
 		

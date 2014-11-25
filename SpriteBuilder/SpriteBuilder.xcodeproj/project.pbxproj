@@ -344,6 +344,7 @@
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
+		98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -1781,6 +1782,8 @@
 		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
 		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
 		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
+		98C3964FFF8C4E1070E390F8 /* NSKeyboardForwardingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKeyboardForwardingView.h; sourceTree = "<group>"; };
+		98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSKeyboardForwardingView.m; sourceTree = "<group>"; };
 		A09AB6F614E993AA009C8B91 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = "libs/cocos2d-iphone/Resources/Fonts/fps_images.png"; sourceTree = SOURCE_ROOT; };
 		B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalizationEditorWindow.xib; sourceTree = "<group>"; };
 		B7083DF417B1CB88006628C7 /* LocalizationEditorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationEditorWindow.h; sourceTree = "<group>"; };
@@ -3115,6 +3118,8 @@
 				E525F486AD1DD1A54530FBB8 /* ImageFormatAndPropertiesHelper.h */,
 				E525FA71E014DDED2AFE71EF /* NSString+Misc.m */,
 				E525F2B4F3FE0A9DB6AEF0C0 /* NSString+Misc.h */,
+				98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */,
+				98C3964FFF8C4E1070E390F8 /* NSKeyboardForwardingView.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -7541,6 +7546,7 @@
 				E525FD8036350149E83701B4 /* ImageFormatAndPropertiesHelper.m in Sources */,
 				E525F30359F75816D1F178F1 /* PublishUtil.m in Sources */,
 				E525F6B824415CA3D1C215EA /* NSString+Misc.m in Sources */,
+				98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
