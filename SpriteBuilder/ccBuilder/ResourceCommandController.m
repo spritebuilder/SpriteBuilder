@@ -90,7 +90,7 @@
 - (void)deleteResource:(id)sender
 {
     ResourceDeleteCommand *command = [[ResourceDeleteCommand alloc] init];
-    command.resources = [self selectedResources];
+    command.resources = [_resourceManagerOutlineView selectedResourceAndChildren];
     command.projectSettings = _projectSettings;
     command.outlineView = _resourceManagerOutlineView;
     command.resourceManager = _resourceManager;

@@ -2652,12 +2652,12 @@ CA
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView tag="3" id="2023">
-                    <rect key="frame" x="4" y="4" width="44" height="44"/>
+                    <rect key="frame" x="3" y="3" width="42" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="TB_plugins" id="2024"/>
                 </imageView>
                 <textField verticalHuggingPriority="750" tag="1" id="2025">
-                    <rect key="frame" x="52" y="32" width="191" height="14"/>
+                    <rect key="frame" x="47" y="32" width="191" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="PlugIn Name" id="2026">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -2666,7 +2666,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" tag="2" id="2027">
-                    <rect key="frame" x="52" y="4" width="196" height="27"/>
+                    <rect key="frame" x="47" y="4" width="196" height="27"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Short description about the fuction of this type of node. No longer than two lines" id="2028">
                         <font key="font" metaFont="miniSystem"/>
