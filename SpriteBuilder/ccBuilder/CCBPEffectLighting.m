@@ -57,7 +57,8 @@
 
 -(void)setEditedColor:(NSColor *)editedColor
 {
-    self.specularColor = [CCColor colorWithRed:editedColor.redComponent green:editedColor.greenComponent blue:editedColor.blueComponent alpha:editedColor.alphaComponent];
+    NSColor *rgbColor = [editedColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+    self.specularColor = [CCColor colorWithRed:rgbColor.redComponent green:rgbColor.greenComponent blue:rgbColor.blueComponent alpha:rgbColor.alphaComponent];
 }
 
 - (NSColor*)editedColor
