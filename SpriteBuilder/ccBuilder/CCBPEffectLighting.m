@@ -24,11 +24,14 @@
 -(id)serialize
 {
     NSArray *groups = self.groups;
-    CCColor *color = self.specularColor;
+    if (!groups)
+    {
+        groups = @[];
+    }
     
     return @[SERIALIZE_PROPERTY(shininess,Float),
              @{@"name" : @"groups", @"type" : @"TokenArray", @"value": groups },
-             @{@"name" : @"specularColor", @"type" : @"Color4", @"value": [CCBWriterInternal serializeColor4:color] },
+             @{@"name" : @"specularColor", @"type" : @"Color4", @"value": [CCBWriterInternal serializeColor4:self.specularColor] },
              ];
 }
 
