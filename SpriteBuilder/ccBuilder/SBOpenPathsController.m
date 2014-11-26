@@ -17,6 +17,10 @@
 
 static NSString *const KEY_TYPE = @"type";
 static NSString *const KEY_PACKAGE = @"package";
+static NSString *const KEY_APP = @"app";
+static NSString *const KEY_SELECTOR = @"selector";
+static NSString *const KEY_TITLE = @"title";
+static NSString *const KEYWORD_SEPARATOR = @"Separator";
 static NSString *const OPENPATHS_SCRIPT_NAME = @"OpenPaths.scpt";
 
 typedef enum
@@ -30,6 +34,7 @@ typedef enum
 
 @interface SBOpenPathsController ()
 
+@property (nonatomic, strong) NSArray *additionalAppsToOpenPaths;
 @property (nonatomic, strong) NSMutableArray *packageMenuItems;
 @property (nonatomic, strong) NSMutableDictionary *installedApps;
 @property (nonatomic, strong) NSMenu *menu;
@@ -45,6 +50,8 @@ typedef enum
     self = [super init];
     if (self)
     {
+        self.additionalAppsToOpenPaths = @[@"iTerm2"];
+
         self.packageMenuItems = [NSMutableArray array];
         self.installedApps = [NSMutableDictionary dictionary];
         self.userScriptInstalled = [self isUserScriptInstalled];
@@ -111,7 +118,7 @@ typedef enum
     }
 }
 
-- (NSMenuItem *)addMenuItemsToOpenPathsMenuWithTitle:(NSString *)title representedObject:(id)representedObject
+- (NSMenuItem *)addMenuItemsToOpenPathsMenuWithTitle:(NSString *)title representedObject:(NSDictionary *)representedObject
 {
     NSMenuItem *folderItem = [[NSMenuItem alloc] init];
     folderItem.title = title;
@@ -121,21 +128,29 @@ typedef enum
 
     [_menu addItem:folderItem];
 
-    NSArray *titleSelectorPairs = [self createTitleSelectorPairs];
+    NSArray *titleSelectorPairs = [self createMenuEntryDataList];
 
     for (NSDictionary *entry in titleSelectorPairs)
     {
         NSMenuItem *item;
-        if ([entry[@"title"] isEqualToString:@"Separator"])
+        if ([entry[KEY_TITLE] isEqualToString:KEYWORD_SEPARATOR])
         {
             item = [NSMenuItem separatorItem];
         }
         else
         {
-            item = [[NSMenuItem alloc] initWithTitle:entry[@"title"]
-                                                          action:NSSelectorFromString(entry[@"selector"])
-                                                   keyEquivalent:@""];
-            item.representedObject = representedObject;
+            item = [[NSMenuItem alloc] initWithTitle:entry[KEY_TITLE]
+                                              action:NSSelectorFromString(entry[KEY_SELECTOR])
+                                       keyEquivalent:@""];
+
+            NSMutableDictionary *representeObjectCopy = [representedObject mutableCopy];
+
+            if (entry[KEY_APP])
+            {
+                representeObjectCopy[KEY_APP] = entry[KEY_APP];
+            }
+
+            item.representedObject = representeObjectCopy;
             item.target = self;
         }
 
@@ -145,20 +160,33 @@ typedef enum
     return folderItem;
 }
 
-- (NSArray *)createTitleSelectorPairs
+- (NSArray *)createMenuEntryDataList
 {
     NSMutableArray *result = [@[
-        @{@"title" : @"Copy to Clipboard", @"selector" : @"copyToClipboard:"},
-        @{@"title" : @"Separator"},
-        @{@"title" : @"Open in Finder", @"selector" : @"openInFinder:"},
-        @{@"title" : @"Open in Terminal", @"selector" : @"openInTerminal:"}
+        @{KEY_TITLE : @"Copy to Clipboard", KEY_SELECTOR : @"copyToClipboard:"},
+        @{KEY_TITLE : KEYWORD_SEPARATOR},
+        @{KEY_TITLE : @"Open in Finder", KEY_SELECTOR : @"openInFinder:"},
+        @{KEY_TITLE : @"Open in Terminal", KEY_SELECTOR : @"openPathInApp:", KEY_APP : @"Terminal"}
     ] mutableCopy];
 
-    if ([self isAppWithNameInApplicationFolder:@"iTerm2"])
+    for (NSString *appToAddToList in _additionalAppsToOpenPaths)
     {
-        [result addObject:@{@"title" : @"Open in iTerm2", @"selector" : @"openInIterm2:"}];
+        [self addAppWithNameIfInstalled:appToAddToList toList:result];
     }
+
     return result;
+}
+
+- (void)addAppWithNameIfInstalled:(NSString *)appName toList:(NSMutableArray *)list
+{
+    if ([self isAppWithNameInApplicationFolder:appName])
+    {
+        [list addObject:@{
+            KEY_TITLE : [NSString stringWithFormat:@"Open in %@", appName],
+            KEY_SELECTOR : @"openPathInApp:",
+            KEY_APP : appName
+        }];
+    }
 }
 
 - (BOOL)isAppWithNameInApplicationFolder:(NSString *)applicationName
@@ -222,28 +250,7 @@ typedef enum
     [[NSPasteboard generalPasteboard] setString:path  forType:NSStringPboardType];
 }
 
-- (void)openInIterm2:(id)sender
-{
-    [self openPathWithSender:sender andApplicationName:@"iTerm2"];
-}
-
-- (void)openInTerminal:(id)sender
-{
-    [self openPathWithSender:sender andApplicationName:@"Terminal"];
-}
-
-- (void)openInFinder:(id)sender
-{
-    NSString *path = [self pathForOpenPathType:[sender representedObject]];
-    if (!path)
-    {
-        return;
-    }
-
-    [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
-}
-
-- (void)openPathWithSender:(id)sender andApplicationName:(NSString *)applicationName
+- (void)openPathInApp:(id)sender
 {
     NSString *path = [self pathForOpenPathType:[sender representedObject]];
     if (!path)
@@ -257,7 +264,18 @@ typedef enum
         return;
     }
 
-    [self openPath:path withApplication:applicationName];
+    [self openPath:path withApplication:[sender representedObject][KEY_APP]];
+}
+
+- (void)openInFinder:(id)sender
+{
+    NSString *path = [self pathForOpenPathType:[sender representedObject]];
+    if (!path)
+    {
+        return;
+    }
+
+    [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
 }
 
 - (BOOL)isUserScriptInstalled
