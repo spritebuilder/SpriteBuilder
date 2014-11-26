@@ -103,8 +103,19 @@
 
 -(BOOL)selectedNodeHasKeyframes
 {
-    return [AppDelegate appDelegate].selectedNode != nil
-           && [AppDelegate appDelegate].selectedNode.hasKeyframes;
+    if([AppDelegate appDelegate].selectedNode==nil) return FALSE;
+    
+    // Check For
+    if( [[AppDelegate appDelegate].selectedNode hasKeyframesForProperty:@"position"] ||
+        [[AppDelegate appDelegate].selectedNode hasKeyframesForProperty:@"scale"]    ||
+        [[AppDelegate appDelegate].selectedNode hasKeyframesForProperty:@"rotation"] ||
+        [[AppDelegate appDelegate].selectedNode hasKeyframesForProperty:@"skew"]) {
+            [[AppDelegate appDelegate].selectedNode.physicsBody setType:CCPhysicsBodyTypeStatic];
+            return TRUE;
+        }
+        
+    return FALSE;
+    
 }
 
 - (BOOL) editingPhysicsBody
