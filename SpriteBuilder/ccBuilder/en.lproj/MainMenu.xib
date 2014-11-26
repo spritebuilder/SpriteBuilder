@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="6245"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -467,13 +468,13 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Arrange" id="1766">
                                     <items>
-                                        <menuItem title="Bring to Front" keyEquivalent=">" id="1767">
+                                        <menuItem title="Bring to Front" keyEquivalent="&gt;" id="1767">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuArrange:" target="494" id="1771"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Bring Forward" tag="1" keyEquivalent=">" id="1768">
+                                        <menuItem title="Bring Forward" tag="1" keyEquivalent="&gt;" id="1768">
                                             <connections>
                                                 <action selector="menuArrange:" target="494" id="1772"/>
                                             </connections>
@@ -2631,12 +2632,12 @@ CA
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView tag="3" id="2023">
-                    <rect key="frame" x="4" y="4" width="44" height="44"/>
+                    <rect key="frame" x="3" y="3" width="42" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="TB_plugins" id="2024"/>
                 </imageView>
                 <textField verticalHuggingPriority="750" tag="1" id="2025">
-                    <rect key="frame" x="52" y="32" width="191" height="14"/>
+                    <rect key="frame" x="47" y="32" width="191" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="PlugIn Name" id="2026">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -2645,7 +2646,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" tag="2" id="2027">
-                    <rect key="frame" x="52" y="4" width="196" height="27"/>
+                    <rect key="frame" x="47" y="4" width="196" height="27"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Short description about the fuction of this type of node. No longer than two lines" id="2028">
                         <font key="font" metaFont="miniSystem"/>
