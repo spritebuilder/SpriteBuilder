@@ -6,6 +6,7 @@
 //
 //
 
+#import <Carbon/Carbon.h>
 #import "SBOpenPathsController.h"
 #import "ProjectSettings.h"
 #import "NSAlert+Convenience.h"
@@ -16,7 +17,7 @@
 
 static NSString *const KEY_TYPE = @"type";
 static NSString *const KEY_PACKAGE = @"package";
-
+static NSString *const OPENPATHS_SCRIPT_NAME = @"OpenPaths.scpt";
 
 typedef enum
 {
@@ -32,6 +33,7 @@ typedef enum
 @property (nonatomic, strong) NSMutableArray *packageMenuItems;
 @property (nonatomic, strong) NSMutableDictionary *installedApps;
 @property (nonatomic, strong) NSMenu *menu;
+@property (nonatomic) BOOL userScriptInstalled;
 
 @end
 
@@ -45,6 +47,9 @@ typedef enum
     {
         self.packageMenuItems = [NSMutableArray array];
         self.installedApps = [NSMutableDictionary dictionary];
+        self.userScriptInstalled = [self isUserScriptInstalled];
+
+        // NSLog(@"%@", [self openPathsScriptURL].path);
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMenuItemsForPackages) name:RESOURCE_PATHS_CHANGED object:nil];
     }
@@ -61,9 +66,9 @@ typedef enum
 {
     self.menu = [[NSMenu alloc] initWithTitle:@"Open Paths"];
 
-    [self addMenuItemsFor:@"Project Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypeProject)}];
-    [self addMenuItemsFor:@"iOS Publish Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishIOS)}];
-    [self addMenuItemsFor:@"Android Publish Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishAndroid)}];
+    [self addMenuItemsToOpenPathsMenuWithTitle:@"Project Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypeProject)}];
+    [self addMenuItemsToOpenPathsMenuWithTitle:@"iOS Publish Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishIOS)}];
+    [self addMenuItemsToOpenPathsMenuWithTitle:@"Android Publish Folder" representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishAndroid)}];
     [self addSeparator];
     [self updateMenuItemsForPackages];
 
@@ -87,8 +92,8 @@ typedef enum
 {
     for (RMPackage *package in [[ResourceManager sharedManager] allPackages])
     {
-        NSMenuItem *item2 = [self addMenuItemsFor:package.name
-                                representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishPackage), KEY_PACKAGE : package}];
+        NSMenuItem *item2 = [self addMenuItemsToOpenPathsMenuWithTitle:package.name
+                                                     representedObject:@{KEY_TYPE : @(SBOpenPathTypePublishPackage), KEY_PACKAGE : package}];
 
         [_packageMenuItems addObject:item2];
     }
@@ -106,7 +111,7 @@ typedef enum
     }
 }
 
-- (NSMenuItem *)addMenuItemsFor:(NSString *)title representedObject:(id)representedObject
+- (NSMenuItem *)addMenuItemsToOpenPathsMenuWithTitle:(NSString *)title representedObject:(id)representedObject
 {
     NSMenuItem *folderItem = [[NSMenuItem alloc] init];
     folderItem.title = title;
@@ -116,37 +121,44 @@ typedef enum
 
     [_menu addItem:folderItem];
 
-    NSMutableDictionary *titleSelectorPairs = [@{
-            @"Open in Finder" : @"openInFinder:",
-            @"Copy to Clipboard" : @"copyToClipboard:",
-    } mutableCopy];
+    NSArray *titleSelectorPairs = [self createTitleSelectorPairs];
 
-    [self addExtraOptionsToDictionary:titleSelectorPairs];
-
-    for (NSString *key in titleSelectorPairs)
+    for (NSDictionary *entry in titleSelectorPairs)
     {
-        NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:key
-                                                      action:NSSelectorFromString(titleSelectorPairs[key])
-                                               keyEquivalent:@""];
-        item.representedObject = representedObject;
-        item.target = self;
+        NSMenuItem *item;
+        if ([entry[@"title"] isEqualToString:@"Separator"])
+        {
+            item = [NSMenuItem separatorItem];
+        }
+        else
+        {
+            item = [[NSMenuItem alloc] initWithTitle:entry[@"title"]
+                                                          action:NSSelectorFromString(entry[@"selector"])
+                                                   keyEquivalent:@""];
+            item.representedObject = representedObject;
+            item.target = self;
+        }
+
         [menu addItem:item];
     }
 
     return folderItem;
 }
 
-- (void)addExtraOptionsToDictionary:(NSMutableDictionary *)titleSelectorPairs
+- (NSArray *)createTitleSelectorPairs
 {
-    if (!APP_STORE_VERSION)
-    {
-        titleSelectorPairs[@"Open in Terminal"] = @"openInTerminal:";
+    NSMutableArray *result = [@[
+        @{@"title" : @"Copy to Clipboard", @"selector" : @"copyToClipboard:"},
+        @{@"title" : @"Separator"},
+        @{@"title" : @"Open in Finder", @"selector" : @"openInFinder:"},
+        @{@"title" : @"Open in Terminal", @"selector" : @"openInTerminal:"}
+    ] mutableCopy];
 
-        if ([self isAppWithNameInApplicationFolder:@"iTerm2"])
-        {
-            titleSelectorPairs[@"Open in iTerm2"] = @"openInIterm2:";
-        }
+    if ([self isAppWithNameInApplicationFolder:@"iTerm2"])
+    {
+        [result addObject:@{@"title" : @"Open in iTerm2", @"selector" : @"openInIterm2:"}];
     }
+    return result;
 }
 
 - (BOOL)isAppWithNameInApplicationFolder:(NSString *)applicationName
@@ -212,38 +224,12 @@ typedef enum
 
 - (void)openInIterm2:(id)sender
 {
-    NSString *path = [self pathForOpenPathType:[sender representedObject]];
-    if (!path)
-    {
-        return;
-    }
-
-    NSString *script = [self iTerm2OpenScriptWithPath:path];
-    [self runAppleScript:script];
-
+    [self openPathWithSender:sender andApplicationName:@"iTerm2"];
 }
 
 - (void)openInTerminal:(id)sender
 {
-    NSString *path = [self pathForOpenPathType:[sender representedObject]];
-    if (!path)
-    {
-        return;
-    }
-
-    NSString *script = [self terminalOpenScriptWithPath:path];
-    [self runAppleScript:script];
-}
-
-- (void)runAppleScript:(NSString *)script
-{
-    NSAppleScript *applescript = [[NSAppleScript alloc] initWithSource:script];
-    NSDictionary *error;
-    if (![applescript executeAndReturnError:&error])
-    {
-        [NSAlert showModalDialogWithTitle:@"Error" message:[NSString stringWithFormat:@"An error occured opening the path in Terminal"]];
-        NSLog(@"%@, %@", script, error);
-    }
+    [self openPathWithSender:sender andApplicationName:@"Terminal"];
 }
 
 - (void)openInFinder:(id)sender
@@ -257,37 +243,189 @@ typedef enum
     [[NSWorkspace sharedWorkspace] selectFile:path inFileViewerRootedAtPath:@""];
 }
 
-- (NSString *)terminalOpenScriptWithPath:(NSString *)path
+- (void)openPathWithSender:(id)sender andApplicationName:(NSString *)applicationName
 {
-    NSString *script =
-            @"tell application \"Terminal\"\n"
-            "  if not (exists window 1) then reopen\n"
-            "  activate\n"
-            "  do script \"cd %@\"\n"
-            "end tell";
+    NSString *path = [self pathForOpenPathType:[sender representedObject]];
+    if (!path)
+    {
+        return;
+    }
 
-    return [NSString stringWithFormat:script, path];
+    if (!_userScriptInstalled)
+    {
+        [self askForUserIntentToCopyScriptToUserScripts];
+        return;
+    }
+
+    [self openPath:path withApplication:applicationName];
 }
 
-- (NSString *)iTerm2OpenScriptWithPath:(NSString *)path
+- (BOOL)isUserScriptInstalled
 {
-    NSString *script =
-        @"tell application \"iTerm2\"\n"
-                "   activate\n"
-                "   try\n"
-                "      set _session to current session of current terminal\n"
-                "   on error\n"
-                "      set _term to (make new terminal)\n"
-                "      tell _term\n"
-                "         launch session \"Default\"\n"
-                "         set _session to current session\n"
-                "      end tell\n"
-                "   end try\n"
-                "   tell _session\n"
-                "      write text \"cd %@\"\n"
-                "   end tell\n"
-                "end tell\n";
-    return [NSString stringWithFormat:script, path];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    return [fileManager fileExistsAtPath:[self openPathsScriptURL].path];
+}
+
+- (void)askForUserIntentToCopyScriptToUserScripts
+{
+    [self installScriptAlert];
+
+    NSURL *directoryURL = [self applicationScriptDirectoryURL];
+
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    [openPanel setDirectoryURL:directoryURL];
+    [openPanel setCanChooseDirectories:YES];
+    [openPanel setCanChooseFiles:NO];
+    [openPanel setPrompt:@"Select Script Folder"];
+    [openPanel setMessage:[NSString stringWithFormat:@"Please select the User > Library > Application Scripts > %@ folder", bundleIdentifier]];
+    [openPanel beginWithCompletionHandler:^(NSInteger result)
+    {
+        if (result == NSFileHandlingPanelOKButton)
+        {
+            NSURL *selectedURL = [openPanel URL];
+            if ([selectedURL isEqual:directoryURL])
+            {
+                NSURL *destinationURL = [self openPathsScriptURL];
+
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                NSURL *sourceURL = [[NSBundle mainBundle] URLForResource:OPENPATHS_SCRIPT_NAME withExtension:nil];
+                NSError *error2;
+                BOOL success = [fileManager copyItemAtURL:sourceURL toURL:destinationURL error:&error2];
+                if (success)
+                {
+                    NSAlert *alert = [NSAlert alertWithMessageText:@"Script Installed"
+                                                     defaultButton:@"OK"
+                                                   alternateButton:nil
+                                                       otherButton:nil
+                                         informativeTextWithFormat:@"The script was installed succcessfully."];
+
+                    self.userScriptInstalled = YES;
+                    [alert runModal];
+                }
+                else
+                {
+                    NSLog(@"Error copying script file: %@", error2);
+                    if ([error2 code] != NSFileWriteFileExistsError)
+                    {
+                        // the item couldn't be copied, try again
+                        [self performSelector:@selector(askForUserIntentToCopyScriptToUserScripts) withObject:nil afterDelay:0.0];
+                    }
+                }
+            }
+            else
+            {
+                // try again because the user changed the folder path
+                [self performSelector:@selector(askForUserIntentToCopyScriptToUserScripts) withObject:nil afterDelay:0.0];
+            }
+        }
+    }];
+}
+
+- (void)installScriptAlert
+{
+    NSString *body =
+        @"To open paths in another application Spritebuilder needs to install a script to the Application Scripts directory. <br/><br/>"
+        @"Sandboxed apps are not allowed to send events to other applications without the users consent. "
+        @"To give your consent please click on <b>Select Script Folder</b> in the following dialogue to install the script. <br/><br/>"
+        @"<a href=\"http://www.maclife.com/article/blogs/what_sandboxing\">More info on sandboxing</a>. <br/><br/>"
+        @"After installing the script you can review the script, just open <p style='font-family: monospace;'>%PATHPLACEHOLDER%</p> in your favourite editor.<b> <br/><br/>"
+        @"The script won't be executed after installation.</b> <br/><br/>"
+        @"To open the desired path in another application please redo the previous action. "
+        @"You can delete the script anytime but the feature will stop to work and will ask you again to install the script.";
+
+    body = [body stringByReplacingOccurrencesOfString:@"%PATHPLACEHOLDER%" withString:[self applicationScriptDirectoryURL].path];
+
+    [NSAlert showModalDialogWithTitle:@"Installation of script needed" htmlBodyText:body];
+}
+
+- (void)openPath:(NSString *)path withApplication:(NSString *)applicationName
+{
+    NSUserAppleScriptTask *scriptTask = [self scriptTask];
+    if (scriptTask) {
+        NSAppleEventDescriptor *event = [self eventDescriptorForToOpenPath:path withApplicationName:applicationName];
+        [scriptTask executeWithAppleEvent:event completionHandler:^(NSAppleEventDescriptor *resultEventDescriptor, NSError *error) {
+            if (!resultEventDescriptor)
+            {
+                NSLog(@"%s AppleScript task error = %@", __PRETTY_FUNCTION__, error);
+            }
+        }];
+    }
+}
+
+- (NSAppleEventDescriptor *)eventDescriptorForToOpenPath:(NSString *)pathToOpen withApplicationName:(NSString *)applicationName
+{
+    // parameter
+    NSAppleEventDescriptor *parameterPath = [NSAppleEventDescriptor descriptorWithString:pathToOpen];
+    NSAppleEventDescriptor *parameterApplication = [NSAppleEventDescriptor descriptorWithString:applicationName];
+    NSAppleEventDescriptor *parameters = [NSAppleEventDescriptor listDescriptor];
+    [parameters insertDescriptor:parameterApplication atIndex:1];
+    [parameters insertDescriptor:parameterPath atIndex:2];
+
+    // target
+    ProcessSerialNumber psn = {0, kCurrentProcess};
+    NSAppleEventDescriptor *target = [NSAppleEventDescriptor descriptorWithDescriptorType:typeProcessSerialNumber bytes:&psn length:sizeof(ProcessSerialNumber)];
+
+    // function
+    NSAppleEventDescriptor *function = [NSAppleEventDescriptor descriptorWithString:@"openPathInApplication"];
+
+    // event
+    NSAppleEventDescriptor *event = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite
+                                                                             eventID:kASSubroutineEvent
+                                                                    targetDescriptor:target
+                                                                            returnID:kAutoGenerateReturnID
+                                                                       transactionID:kAnyTransactionID];
+
+    [event setParamDescriptor:function forKeyword:keyASSubroutineName];
+    [event setParamDescriptor:parameters forKeyword:keyDirectObject];
+
+    return event;
+}
+
+- (NSUserAppleScriptTask *)scriptTask
+{
+    NSUserAppleScriptTask *result = nil;
+
+    NSURL *directoryURL = [self applicationScriptDirectoryURL];
+    NSError *error;
+    if (directoryURL)
+    {
+        result = [[NSUserAppleScriptTask alloc] initWithURL:[self openPathsScriptURL] error:&error];
+        if (!result)
+        {
+            NSLog(@"%s no AppleScript task error = %@", __PRETTY_FUNCTION__, error);
+        }
+    }
+    else
+    {
+        NSLog(@"%s no Application Scripts folder error = %@", __PRETTY_FUNCTION__, error);
+    }
+
+    return result;
+}
+
+- (NSURL *)applicationScriptDirectoryURL
+{
+    NSError *error;
+    NSURL *directoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationScriptsDirectory
+                                                                 inDomain:NSUserDomainMask
+                                                        appropriateForURL:nil
+                                                                   create:YES
+                                                                    error:&error];
+
+    if (!directoryURL)
+    {
+        NSLog(@"Error retrieving application script directory: %@", error);
+    }
+
+    return directoryURL;
+}
+
+- (NSURL *)openPathsScriptURL
+{
+    return [[self applicationScriptDirectoryURL] URLByAppendingPathComponent:OPENPATHS_SCRIPT_NAME];
 }
 
 @end

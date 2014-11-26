@@ -142,7 +142,7 @@
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
 		8363D7901A1CD451003F163E /* SBOpenPathsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8363D78F1A1CD451003F163E /* SBOpenPathsController.m */; };
 		837D2E731A0D07F0009918B7 /* greyscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 837D2E721A0D07F0009918B7 /* greyscale.png */; };
-		837D701B19ADDC8D00C3335B /* openXcodeProject.AppleScript in Resources */ = {isa = PBXBuildFile; fileRef = E525F74DC72109C2F7FB0EC8 /* openXcodeProject.AppleScript */; };
+		837D701B19ADDC8D00C3335B /* OpenPaths.scpt in Resources */ = {isa = PBXBuildFile; fileRef = E525F74DC72109C2F7FB0EC8 /* OpenPaths.scpt */; };
 		837E940019815C8D00A9F90B /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
@@ -1547,6 +1547,7 @@
 		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
 		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
 		83EDACF8193DC99100327B86 /* Features.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Features.plist; sourceTree = "<group>"; };
+		83F4CA011A24C7CC003C6873 /* SpriteBuilder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpriteBuilder.entitlements; sourceTree = SOURCE_ROOT; };
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
 		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PackageSettingsDetailView.xib; sourceTree = "<group>"; };
@@ -2563,7 +2564,7 @@
 		E525F7254C3A84AA7585A1F8 /* PackageMigrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrationController.m; sourceTree = "<group>"; };
 		E525F743A9F069A88BFDCE66 /* PackageCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageCreator.h; sourceTree = "<group>"; };
 		E525F74ADF149FB8398AE965 /* NSString+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing.m"; sourceTree = "<group>"; };
-		E525F74DC72109C2F7FB0EC8 /* openXcodeProject.AppleScript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = openXcodeProject.AppleScript; sourceTree = "<group>"; };
+		E525F74DC72109C2F7FB0EC8 /* OpenPaths.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.scpt; path = OpenPaths.scpt; sourceTree = "<group>"; };
 		E525F74FD144B9330CE3906D /* InspectorButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
 		E525F76017FD450D7F946CEA /* ResourcePropertiesMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcePropertiesMigrator.m; sourceTree = "<group>"; };
 		E525F774CA4F82872C1EA888 /* MainProjectSettingsDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainProjectSettingsDetailView.h; sourceTree = "<group>"; };
@@ -3640,6 +3641,7 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				83F4CA011A24C7CC003C6873 /* SpriteBuilder.entitlements */,
 				8363D78D1A1CD420003F163E /* Open Paths */,
 				E390C77A170A2C20003E9E92 /* About Box & Email list */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
@@ -5676,7 +5678,7 @@
 		E525F5A4A89A3C9ABF48EA61 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				E525F74DC72109C2F7FB0EC8 /* openXcodeProject.AppleScript */,
+				E525F74DC72109C2F7FB0EC8 /* OpenPaths.scpt */,
 			);
 			name = Scripts;
 			sourceTree = "<group>";
@@ -5801,6 +5803,7 @@
 				7789ABBC133AA82000CEFCC7 /* Resources */,
 				776C6897138878FB00153214 /* Copy Files (Sparkle framework) */,
 				E3B7AED414E31E5D00DFD402 /* Copy PlugIns */,
+				83F4C9FC1A24C7BE003C6873 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -6471,7 +6474,7 @@
 				92DC2160188073C500C8DCCD /* select-crosshair.png in Resources */,
 				92DC2161188073C500C8DCCD /* select-skew.png in Resources */,
 				92DC2162188073C500C8DCCD /* select-rotation.png in Resources */,
-				837D701B19ADDC8D00C3335B /* openXcodeProject.AppleScript in Resources */,
+				837D701B19ADDC8D00C3335B /* OpenPaths.scpt in Resources */,
 				92D9D48218F8AB3800F167C1 /* joint-connection-disconnected.png in Resources */,
 				92F0960A18F8851300D47A94 /* inspector-body-remove.png in Resources */,
 				B7DE84961937C6380039FB72 /* SpriteBuilder-logo.png in Resources */,
@@ -7193,6 +7196,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		83F4C9FC1A24C7BE003C6873 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\nif [ -z \"${CODE_SIGN_IDENTITY}\" ]; then\necho \"Not code signing: No code signing identity set\"\nexit 0\nfi\n\nCONTENTSDIR=\"${BUILT_PRODUCTS_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\nFRAMEWORKSLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# frameworks\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework\"\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A\"\n\n# binaries\nfor f1 in \"lame\" \"ccz\" \"oggenc\" \"pngquant\" \"optipng\"\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$CONTENTSDIR/Resources/$f1\"\ndone\n\n# plugins\nPLUGINFILES=\"$CONTENTSDIR/PlugIns/*\"\nfor f2 in $PLUGINFILES\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$f2\"\ndone";
+		};
 		DC3DD33018A948560004D2AC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -8262,8 +8278,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = NonSandboxed.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8307,8 +8323,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = NonSandboxed.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -8460,8 +8476,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = NonSandboxed.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
