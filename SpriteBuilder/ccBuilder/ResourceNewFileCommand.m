@@ -5,6 +5,7 @@
 #import "NSAlert+Convenience.h"
 #import "ResourceManager.h"
 #import "RMResource.h"
+#import "MiscConstants.h"
 
 
 @implementation ResourceNewFileCommand
@@ -42,9 +43,9 @@
 
         BOOL isDir = NO;
 
-        if (!newFileWindowController.documentName)
+        if (![self isValidFilename:newFileWindowController.documentName])
         {
-            [NSAlert showModalDialogWithTitle:@"Missing File Name" message:@"Failed to create file, no file name was specified."];
+            [NSAlert showModalDialogWithTitle:@"Invalid File Name" message:@"Failed to create file, name was either invalid or missing."];
         }
         else if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
         {
@@ -68,6 +69,17 @@
                     });
         }
     }
+}
+
+- (BOOL)isValidFilename:(NSString *)name
+{
+    BOOL isLongEnough;
+    NSString *withoutFileExtension = [name stringByReplacingOccurrencesOfString:@".ccb" withString:@""];
+    isLongEnough = withoutFileExtension.length >= MINIMUM_FILENAME_LENGTH;
+
+    BOOL firstCharIsDot = [[name substringWithRange:(NSRange) {.location = 0, .length = 1}] isEqualToString:@"."];
+
+    return isLongEnough && !firstCharIsDot;
 }
 
 
