@@ -49,7 +49,7 @@ typedef enum
         self.installedApps = [NSMutableDictionary dictionary];
         self.userScriptInstalled = [self isUserScriptInstalled];
 
-        // NSLog(@"%@", [self openPathsScriptURL].path);
+        NSLog(@"%@", [self openPathsScriptURL].path);
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMenuItemsForPackages) name:RESOURCE_PATHS_CHANGED object:nil];
     }
@@ -307,10 +307,9 @@ typedef enum
                 }
                 else
                 {
-                    NSLog(@"Error copying script file: %@", error2);
+                    [NSAlert showModalDialogWithTitle:@"Error" message:[NSString stringWithFormat:@"An error occured installing the script. Trying again. Error: %@", error2]];
                     if ([error2 code] != NSFileWriteFileExistsError)
                     {
-                        // the item couldn't be copied, try again
                         [self performSelector:@selector(askForUserIntentToCopyScriptToUserScripts) withObject:nil afterDelay:0.0];
                     }
                 }
@@ -344,12 +343,14 @@ typedef enum
 - (void)openPath:(NSString *)path withApplication:(NSString *)applicationName
 {
     NSUserAppleScriptTask *scriptTask = [self scriptTask];
-    if (scriptTask) {
+    if (scriptTask)
+    {
         NSAppleEventDescriptor *event = [self eventDescriptorForToOpenPath:path withApplicationName:applicationName];
-        [scriptTask executeWithAppleEvent:event completionHandler:^(NSAppleEventDescriptor *resultEventDescriptor, NSError *error) {
+        [scriptTask executeWithAppleEvent:event completionHandler:^(NSAppleEventDescriptor *resultEventDescriptor, NSError *error)
+        {
             if (!resultEventDescriptor)
             {
-                NSLog(@"%s AppleScript task error = %@", __PRETTY_FUNCTION__, error);
+                [NSAlert showModalDialogWithTitle:@"Error" message:[NSString stringWithFormat:@"An error occured opening the path: %@", error]];
             }
         }];
     }
@@ -395,12 +396,19 @@ typedef enum
         result = [[NSUserAppleScriptTask alloc] initWithURL:[self openPathsScriptURL] error:&error];
         if (!result)
         {
-            NSLog(@"%s no AppleScript task error = %@", __PRETTY_FUNCTION__, error);
+            if (![self isUserScriptInstalled])
+            {
+                self.userScriptInstalled = NO;
+                [self askForUserIntentToCopyScriptToUserScripts];
+                return nil;
+            }
+
+            [NSAlert showModalDialogWithTitle:@"Error" message:@"The path could not be opened. Make sure the script has not been altered."];
         }
     }
     else
     {
-        NSLog(@"%s no Application Scripts folder error = %@", __PRETTY_FUNCTION__, error);
+        [NSAlert showModalDialogWithTitle:@"Error" message:@"No application script folder found. Is Spritebuilder running sandboxed?"];
     }
 
     return result;
