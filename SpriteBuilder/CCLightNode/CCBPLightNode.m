@@ -10,8 +10,10 @@
 #import "CCDirector.h"
 #import "CCDrawNode.h"
 #import "CCSprite.h"
+#import "SceneGraph.h"
 
 @interface CCBPLightNode ()
+@property (nonatomic, strong) SceneGraph *sceneGraph;
 @property (nonatomic, strong) CCNode *lightIcon;
 @end
 
@@ -28,12 +30,29 @@
     return self;
 }
 
+-(void)onEnter
+{
+    [super onEnter];
+    
+    self.sceneGraph = [SceneGraph instance];
+    [self.sceneGraph.lightIcons addChild:_lightIcon];
+}
+
+-(void)onExit
+{
+    [self.sceneGraph.lightIcons removeChild:_lightIcon];
+    self.sceneGraph = nil;
+
+    [super onExit];
+}
+
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
-    _lightIcon.position = self.position;
+    CGPoint worldPos = [self convertToWorldSpace:self.anchorPoint];
+    CGPoint localPos = [self.sceneGraph.lightIcons convertToNodeSpace:worldPos];
+    _lightIcon.position = localPos;
     _lightIcon.rotation = self.rotation;
 
-    [_lightIcon visit:renderer parentTransform:parentTransform];
     [super visit:renderer parentTransform:parentTransform];
 }
 

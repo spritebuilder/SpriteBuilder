@@ -51,6 +51,8 @@ CCNode * findSceneRoot(CCNode * node)
 		{
 			self.joints = [[SequencerJoints alloc] init];
 		}
+        
+        self.lightIcons = [[CCNode alloc] init];
     }
     return self;
 }
