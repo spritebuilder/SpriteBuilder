@@ -1,5 +1,3 @@
-extern BOOL const APP_STORE_VERSION;
-
 extern BOOL const IS_SPRITEBUILDER_PRO;
 
 extern NSInteger const DEFAULT_AUDIO_QUALITY;
