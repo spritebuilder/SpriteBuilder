@@ -75,7 +75,8 @@
 {
     BOOL isLongEnough;
     NSString *withoutFileExtension = [name stringByReplacingOccurrencesOfString:@".ccb" withString:@""];
-    isLongEnough = withoutFileExtension.length >= MINIMUM_FILENAME_LENGTH;
+    NSString *withoutWhitespace = [withoutFileExtension stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    isLongEnough = withoutWhitespace.length >= MINIMUM_FILENAME_LENGTH;
 
     BOOL firstCharIsDot = [[name substringWithRange:(NSRange) {.location = 0, .length = 1}] isEqualToString:@"."];
 
