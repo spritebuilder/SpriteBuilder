@@ -663,17 +663,11 @@
 	if(error)
 	{
 		NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-		NSString* version = infoDict[@"CFBundleVersion"];
+		NSString*bundleVersion = infoDict[@"CFBundleVersion"];
 
-		NSMutableDictionary * versionDict = [NSMutableDictionary dictionaryWithDictionary:@{@"version" : version}];
-		
-//#ifdef SPRITEBUILDER_PRO
-//		versionDict[@"sku"] = @"pro";
-//#else
+		NSMutableDictionary * versionDict = [NSMutableDictionary dictionaryWithDictionary:@{@"version" : bundleVersion}];
 		versionDict[@"sku"] = @"default";
-//#endif
 		return versionDict;
-		
 	}
 	else
 	{
@@ -682,7 +676,6 @@
 		return versionDict;
 	}
 }
-
 
 - (void)setCocos2dUpdateIgnoredVersions:(NSMutableArray *)anArray
 {
