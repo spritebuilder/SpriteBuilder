@@ -9,7 +9,6 @@
 #import "UsageManager.h"
 #import "HashValue.h"
 #import "ProjectSettings.h"
-#import "LicenseManager.h"
 
 NSString * kSbUserID = @"sbUserID";
 NSString * kSbRegisteredEmail = @"sbRegisteredEmail";
@@ -112,9 +111,6 @@ static NSString *urlEncode(id object) {
 	
     // Version.txt information
 	[mutableData addEntriesFromDictionary:[projectSettings getVersionDictionary]];
-	
-    // License manager.
-	[mutableData addEntriesFromDictionary:[LicenseManager getLicenseDetails]];
 
 	NSString * serialNumber = [self serialNumber];
 	if(!serialNumber)

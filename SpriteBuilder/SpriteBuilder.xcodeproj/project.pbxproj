@@ -264,7 +264,6 @@
 		926FDC88196C8EEC008C0132 /* CCBPEffectRefraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FDC87196C8EEC008C0132 /* CCBPEffectRefraction.m */; };
 		926FDC8A196C902D008C0132 /* effect-refraction.png in Resources */ = {isa = PBXBuildFile; fileRef = 926FDC89196C902D008C0132 /* effect-refraction.png */; };
 		9276C1321959F71C00A1D4DC /* EffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9276C1311959F71C00A1D4DC /* EffectViewController.m */; };
-		928104471982F7F900A8B7F4 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 928104461982F7F900A8B7F4 /* CocoaSecurity.m */; };
 		928696341958CC9A00402DD8 /* EffectsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 928696331958CC9A00402DD8 /* EffectsManager.m */; };
 		9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D13F918B57E7F00582959 /* CCBPhysicsPinJoint.m */; };
 		9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 92154ABE18A5531800BD215C /* CCBPhysicsPivotJoint.m */; };
@@ -280,9 +279,6 @@
 		929D1BB21954D34300B27340 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B921954D15400B27340 /* InfoPlist.strings */; };
 		929D1BB31954D34300B27340 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 929D1B941954D15400B27340 /* Icon.png */; };
 		929D1BB51954D36200B27340 /* CCBPEffectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B8E1954D15400B27340 /* CCBPEffectNode.m */; };
-		92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8361979D33D00B50F74 /* LicenseWindow.m */; };
-		92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92AEE8371979D33D00B50F74 /* LicenseWindow.xib */; };
-		92AEE83D1979D55000B50F74 /* LicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE83C1979D55000B50F74 /* LicenseManager.m */; };
 		92AEE8431979D62B00B50F74 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AEE8421979D62B00B50F74 /* Base64.m */; };
 		92B1B9D5192429A400DB91F5 /* joint-pivot-range.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */; };
 		92B1B9D6192429A400DB91F5 /* joint-pivot-range@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B1B9D4192429A400DB91F5 /* joint-pivot-range@2x.png */; };
@@ -1693,8 +1689,6 @@
 		926FDC89196C902D008C0132 /* effect-refraction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-refraction.png"; path = "Resources/effect-refraction.png"; sourceTree = "<group>"; };
 		9276C1301959F71C00A1D4DC /* EffectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectViewController.h; path = ccBuilder/EffectViewController.h; sourceTree = "<group>"; };
 		9276C1311959F71C00A1D4DC /* EffectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectViewController.m; path = ccBuilder/EffectViewController.m; sourceTree = "<group>"; };
-		928104451982F7F900A8B7F4 /* CocoaSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaSecurity.h; sourceTree = "<group>"; };
-		928104461982F7F900A8B7F4 /* CocoaSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaSecurity.m; sourceTree = "<group>"; };
 		928696321958CC9A00402DD8 /* EffectsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsManager.h; path = ccBuilder/EffectsManager.h; sourceTree = "<group>"; };
 		928696331958CC9A00402DD8 /* EffectsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsManager.m; path = ccBuilder/EffectsManager.m; sourceTree = "<group>"; };
 		9294EC9118C660480059014C /* CCBPhyicsPivotJointPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPhyicsPivotJointPlaceholder.h; sourceTree = "<group>"; };
@@ -1717,11 +1711,6 @@
 		929D1B941954D15400B27340 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		929D1B951954D15400B27340 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		929D1BA31954D16C00B27340 /* CCEffectNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCEffectNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
-		92AEE8351979D33D00B50F74 /* LicenseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseWindow.h; sourceTree = "<group>"; };
-		92AEE8361979D33D00B50F74 /* LicenseWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseWindow.m; sourceTree = "<group>"; };
-		92AEE8371979D33D00B50F74 /* LicenseWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LicenseWindow.xib; sourceTree = "<group>"; };
-		92AEE83B1979D55000B50F74 /* LicenseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseManager.h; sourceTree = "<group>"; };
-		92AEE83C1979D55000B50F74 /* LicenseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseManager.m; sourceTree = "<group>"; };
 		92AEE8411979D62B00B50F74 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		92AEE8421979D62B00B50F74 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		92B1B9D3192429A400DB91F5 /* joint-pivot-range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-pivot-range.png"; sourceTree = "<group>"; };
@@ -5161,8 +5150,6 @@
 		E390C77A170A2C20003E9E92 /* About Box & Email list */ = {
 			isa = PBXGroup;
 			children = (
-				928104451982F7F900A8B7F4 /* CocoaSecurity.h */,
-				928104461982F7F900A8B7F4 /* CocoaSecurity.m */,
 				92AEE8411979D62B00B50F74 /* Base64.h */,
 				92AEE8421979D62B00B50F74 /* Base64.m */,
 				E390C77B170A2C9B003E9E92 /* AboutWindow.h */,
@@ -5171,11 +5158,6 @@
 				B7DE848E1937A8390039FB72 /* RegistrationWindow.h */,
 				B7DE848F1937A8390039FB72 /* RegistrationWindow.m */,
 				B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */,
-				92AEE8351979D33D00B50F74 /* LicenseWindow.h */,
-				92AEE8361979D33D00B50F74 /* LicenseWindow.m */,
-				92AEE8371979D33D00B50F74 /* LicenseWindow.xib */,
-				92AEE83B1979D55000B50F74 /* LicenseManager.h */,
-				92AEE83C1979D55000B50F74 /* LicenseManager.m */,
 			);
 			name = "About Box & Email list";
 			sourceTree = "<group>";
@@ -6508,7 +6490,6 @@
 				774E4ED2136DFFB70025D0A8 /* btn-scale-hi.png in Resources */,
 				774E4ED3136DFFB70025D0A8 /* btn-scale.png in Resources */,
 				77E1995213858DE0006C361B /* overflowImage.png in Resources */,
-				92AEE8391979D33D00B50F74 /* LicenseWindow.xib in Resources */,
 				83EDACF9193DC99100327B86 /* Features.plist in Resources */,
 				77E1995313858DE0006C361B /* overflowImagePressed.png in Resources */,
 				77E1995413858DE0006C361B /* pi.png in Resources */,
@@ -7275,7 +7256,6 @@
 				92CB085E19BA2E4300EFDCE3 /* EffectBlurControl.m in Sources */,
 				E3C3660414EB2C1B007CD5FF /* CCBReaderInternal.m in Sources */,
 				9297AC3018A43BCA003C3705 /* NSArray+Query.m in Sources */,
-				92AEE83D1979D55000B50F74 /* LicenseManager.m in Sources */,
 				E398C03314FB86D20078E771 /* PlugInExport.m in Sources */,
 				E398C03814FB8A430078E771 /* CCBX.m in Sources */,
 				E3C5C1A41504D17E000CF6F3 /* ResourceManager.m in Sources */,
@@ -7349,12 +7329,10 @@
 				E3B7BCA015E3BCFE00CF95EF /* MainToolbarDelegate.m in Sources */,
 				E3AF6CDB15F0A9BC0048DB2A /* HelpWindow.m in Sources */,
 				E3AF6CE415F0DBA90048DB2A /* HelpPage.m in Sources */,
-				928104471982F7F900A8B7F4 /* CocoaSecurity.m in Sources */,
 				E34039BE1624BF610067C7B8 /* CCBDocumentController.m in Sources */,
 				581BCFE8162DADE7007DE600 /* CCBSplitHorizontalView.m in Sources */,
 				E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */,
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
-				92AEE8381979D33D00B50F74 /* LicenseWindow.m in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
 				B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */,
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
