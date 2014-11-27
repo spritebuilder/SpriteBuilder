@@ -119,7 +119,7 @@ enum {
 @class PhysicsHandler;
 @class WarningTableViewHandler;
 @class AnimationPlaybackManager;
-@class RegistrationWindow;
+@class MailingListWindow;
 @class ResourceManagerOutlineView;
 @class CCBPublisher;
 @class PreviewContainerViewController;
@@ -278,7 +278,7 @@ typedef void (^CompletionCallback) (BOOL success);
     
     // About window
     AboutWindow* aboutWindow;
-    RegistrationWindow* registrationWindow;
+    MailingListWindow * registrationWindow;
     
     // Animation playback
     BOOL playingBack;

@@ -119,7 +119,7 @@
 #import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
 #import "NotificationNames.h"
-#import "RegistrationWindow.h"
+#import "MailingListWindow.h"
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "RMResource.h"
@@ -617,25 +617,14 @@ typedef enum
 #endif
 	
 
-//#ifndef SPRITEBUILDER_PRO
     // Open registration window
-    if(![self openRegistration])
+    BOOL alreadyRegistered = (BOOL)([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail]);
+
+    if(!alreadyRegistered && ![self openRegistration])
 	{
 		[[NSApplication sharedApplication] terminate:self];
 	}
-//#else
-//	if([LicenseManager requiresLicensing])
-//	{
-//		if(![self openLicensingWindow])
-//		{
-//			[[NSApplication sharedApplication] terminate:self];
-//		}
-//	}
 
-//#endif
-	
-	
-	
     if (delayOpenFiles)
     {
         [self openFiles:delayOpenFiles];
@@ -4153,15 +4142,9 @@ typedef enum
 	
 -(BOOL)openRegistration
 {
-	if ([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
-    {
-        // Email already registered or skipped
-        return YES;
-    }
-    
     if (!registrationWindow)
     {
-        registrationWindow = [[RegistrationWindow alloc] initWithWindowNibName:@"RegistrationWindow"];
+        registrationWindow = [[MailingListWindow alloc] initWithWindowNibName:@"MailingListWindow"];
     }
     
 	NSInteger result = [NSApp runModalForWindow: registrationWindow.window];
