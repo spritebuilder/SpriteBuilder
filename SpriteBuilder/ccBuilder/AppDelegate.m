@@ -1663,18 +1663,13 @@ typedef enum
 
 - (BOOL) openProject:(NSString*) fileName
 {
-    if (![fileName hasSuffix:@".spritebuilder"] && ![fileName hasSuffix:@".ccbproj"])
+    if (![fileName hasSuffix:@".spritebuilder"])
     {
         return NO;
     }
 
     [self closeProject];
     
-    if ([fileName hasSuffix:@".ccbproj"])
-    {
-        fileName = [fileName stringByDeletingLastPathComponent];
-    }
-
     // Add to recent list of opened documents
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
     

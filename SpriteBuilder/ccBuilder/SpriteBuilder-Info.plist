@@ -51,20 +51,6 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>ccbproj</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>ccbproj.icns</string>
-			<key>CFBundleTypeName</key>
-			<string>SpriteBuilder Project</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>NSDocumentClass</key>
-			<string>AppDelegate</string>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
 				<string>ccbi</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
