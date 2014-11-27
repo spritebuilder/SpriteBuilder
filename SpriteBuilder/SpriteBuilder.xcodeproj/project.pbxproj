@@ -240,7 +240,6 @@
 		9266EE41195A17EE006CBE81 /* EffectPixelateControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */; };
 		9266EE42195A17EE006CBE81 /* EffectPixelateControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */; };
 		9269C2FF199057EA00884F59 /* SBUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 9269C2FE199057EA00884F59 /* SBUpdater.m */; };
-		9269C3101991A38200884F59 /* SBMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9269C30F1991A38100884F59 /* SBMenuItem.m */; };
 		926D139518B2DC2E00582959 /* NSDictionary+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 926D139418B2DC2E00582959 /* NSDictionary+Query.m */; };
 		926D13C018B5778300582959 /* joint-distance-handle-long.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B418B5778300582959 /* joint-distance-handle-long.png */; };
 		926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 926D13B518B5778300582959 /* joint-distance-handle-long@2x.png */; };
@@ -1652,8 +1651,6 @@
 		9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectPixelateControl.xib; path = ccBuilder/EffectPixelateControl.xib; sourceTree = "<group>"; };
 		9269C2FD199057EA00884F59 /* SBUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUpdater.h; sourceTree = "<group>"; };
 		9269C2FE199057EA00884F59 /* SBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUpdater.m; sourceTree = "<group>"; };
-		9269C30E1991A38100884F59 /* SBMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMenuItem.h; sourceTree = "<group>"; };
-		9269C30F1991A38100884F59 /* SBMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBMenuItem.m; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
 		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
 		926D13B418B5778300582959 /* joint-distance-handle-long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-distance-handle-long.png"; sourceTree = "<group>"; };
@@ -3258,8 +3255,6 @@
 				E3C12B1A171DD386001EEDDB /* NSWindow+CCBAccessoryView.m */,
 				80B149C6183D55E60085935B /* SoundFileImageController.h */,
 				80B149C7183D55E60085935B /* SoundFileImageController.m */,
-				9269C30E1991A38100884F59 /* SBMenuItem.h */,
-				9269C30F1991A38100884F59 /* SBMenuItem.m */,
 			);
 			name = "GUI Util";
 			sourceTree = "<group>";
@@ -7420,7 +7415,6 @@
 				E525F4A65E3BA6A5C69470AD /* RMAnimation.m in Sources */,
 				E525F90784006C34BD20E775 /* RMPackage.m in Sources */,
 				E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */,
-				9269C3101991A38200884F59 /* SBMenuItem.m in Sources */,
 				83FC4111198154CD00799B6C /* PackageSettingsDetailView.m in Sources */,
 				E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */,
 				E525F710D92CDE366BCEE575 /* ResourceContextMenu.m in Sources */,

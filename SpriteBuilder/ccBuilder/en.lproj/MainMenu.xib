@@ -18,7 +18,7 @@
                 <menuItem title="SpriteBuilder" id="56">
                     <menu key="submenu" title="SpriteBuilder" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About SpriteBuilder" id="58" customClass="SBMenuItem">
+                            <menuItem title="About SpriteBuilder" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuAbout:" target="494" id="1840"/>
@@ -29,7 +29,7 @@
                             </menuItem>
                             <menuItem title="Preferences…" keyEquivalent="," id="129"/>
                             <menuItem isSeparatorItem="YES" id="2091"/>
-                            <menuItem title="Reset SpriteBuilder..." id="2092" customClass="SBMenuItem">
+                            <menuItem title="Reset SpriteBuilder..." id="2092">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuResetSpriteBuilder:" target="494" id="2093"/>
@@ -51,7 +51,7 @@
                             <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134" customClass="SBMenuItem">
+                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134">
                                 <connections>
                                     <action selector="hide:" target="-1" id="367"/>
                                 </connections>
@@ -70,7 +70,7 @@
                             <menuItem isSeparatorItem="YES" id="149">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136" customClass="SBMenuItem">
+                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="menuQuit:" target="494" id="1252"/>
                                 </connections>
@@ -1028,7 +1028,7 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="491">
                         <items>
-                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492" customClass="SBMenuItem">
+                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492">
                                 <connections>
                                     <action selector="showHelp:" target="494" id="1806"/>
                                 </connections>
@@ -1164,7 +1164,7 @@ CA
                                                                         <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.073521465063095093" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
+                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.076471909880638123" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <ikCellsStyle key="cellsStyleMask" none="YES" titled="YES"/>
