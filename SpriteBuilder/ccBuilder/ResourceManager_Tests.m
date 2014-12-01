@@ -16,6 +16,8 @@
 #import "ResourceManagerUtil.h"
 #import "RMPackage.h"
 #import "SBAssserts.h"
+#import "FileSystemTestCase+Images.h"
+#import "ResourcePropertyKeys.h"
 
 @interface ResourceManager_Tests : FileSystemTestCase
 
@@ -172,6 +174,57 @@
     SBAssertStringsEqual(baaPackage.fullPath, [self fullPathForFile:@"project/Packages/baa.sbpack"]);
 
     XCTAssertNil(noPackage);
+}
+
+- (void)testCreateCachedImageFromAuto
+{
+    NSString *imgRelPath = @"project/Packages/foo.sbpack/resources-auto/original.png";
+    [self setupPackagesWithFullPaths:@[[self fullPathForFile:@"project/Packages/foo.sbpack"]]];
+
+
+    [self createPNGAtPath:imgRelPath width:20 height:20];
+    _projectSettings.resourceAutoScaleFactor = 4;
+
+    // Using default scaling
+    [_resourceManager createCachedImageFromAuto:[self fullPathForFile:imgRelPath]
+                                         saveAs:[self fullPathForFile:@"resized.png"]
+                                  forResolution:@"tablethd"
+                                projectSettings:_projectSettings];
+
+    [self assertPNGAtPath:[self fullPathForFile:@"resized.png"] hasWidth:20 hasHeight:20];
+
+
+    [_resourceManager createCachedImageFromAuto:[self fullPathForFile:imgRelPath]
+                                         saveAs:[self fullPathForFile:@"resized2.png"]
+                                  forResolution:@"tablet"
+                                projectSettings:_projectSettings];
+
+    [self assertPNGAtPath:[self fullPathForFile:@"resized2.png"] hasWidth:10 hasHeight:10];
+
+
+    [_resourceManager createCachedImageFromAuto:[self fullPathForFile:imgRelPath]
+                                         saveAs:[self fullPathForFile:@"resized3.png"]
+                                  forResolution:@"phone"
+                                projectSettings:_projectSettings];
+
+    [self assertPNGAtPath:[self fullPathForFile:@"resized3.png"] hasWidth:5 hasHeight:5];
+
+
+    [_resourceManager createCachedImageFromAuto:[self fullPathForFile:imgRelPath]
+                                         saveAs:[self fullPathForFile:@"resized4.png"]
+                                  forResolution:@"tablet"
+                                projectSettings:_projectSettings];
+
+    [self assertPNGAtPath:[self fullPathForFile:@"resized4.png"] hasWidth:10 hasHeight:10];
+
+    // Using override scaling saved for asset in project settings
+    [_projectSettings setProperty:@2 forRelPath:@"original.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    [_resourceManager createCachedImageFromAuto:[self fullPathForFile:imgRelPath]
+                                         saveAs:[self fullPathForFile:@"resized5.png"]
+                                  forResolution:@"tablethd"
+                                projectSettings:_projectSettings];
+
+    [self assertPNGAtPath:[self fullPathForFile:@"resized5.png"] hasWidth:40 hasHeight:40];
 }
 
 #pragma mark - helper
