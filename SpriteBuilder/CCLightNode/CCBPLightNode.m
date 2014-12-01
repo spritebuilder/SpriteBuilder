@@ -14,7 +14,9 @@
 
 @interface CCBPLightNode ()
 @property (nonatomic, strong) SceneGraph *sceneGraph;
-@property (nonatomic, strong) CCNode *lightIcon;
+@property (nonatomic, strong) CCTexture *pointLightImage;
+@property (nonatomic, strong) CCTexture *directionalLightImage;
+@property (nonatomic, strong) CCSprite *lightIcon;
 @end
 
 
@@ -24,6 +26,8 @@
 {
     if ((self = [super init]))
     {
+        _pointLightImage = [CCTexture textureWithFile:@"light-point.png"];
+        _directionalLightImage = [CCTexture textureWithFile:@"light-directional.png"];
         _lightIcon = [CCSprite spriteWithImageNamed:@"light-point.png"];
     }
 
@@ -54,6 +58,25 @@
     _lightIcon.rotation = self.rotation;
 
     [super visit:renderer parentTransform:parentTransform];
+}
+
+-(void)setColor:(CCColor *)color
+{
+    [super setColor:color];
+    self.lightIcon.color = color;
+}
+
+-(void)setType:(CCLightType)type
+{
+    [super setType:type];
+    if (type == CCLightPoint)
+    {
+        _lightIcon.texture = _pointLightImage;
+    }
+    else
+    {
+        _lightIcon.texture = _directionalLightImage;
+    }
 }
 
 @end
