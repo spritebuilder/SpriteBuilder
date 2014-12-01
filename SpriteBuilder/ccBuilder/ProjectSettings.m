@@ -488,7 +488,7 @@
         return;
     }
 
-    NSLog(@"mark as dirty: %@", relPath);
+    // NSLog(@"mark as dirty: %@", relPath);
 
     [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }

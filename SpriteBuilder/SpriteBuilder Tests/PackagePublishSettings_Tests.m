@@ -63,6 +63,7 @@
     _packagePublishSettings.publishToZip = NO;
     _packagePublishSettings.publishToCustomOutputDirectory = YES;
     _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
+    _packagePublishSettings.defaultScale = 3;
 
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     osSettingsIOS.audio_quality = 8;
@@ -87,6 +88,7 @@
     XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
     XCTAssertEqual(_packagePublishSettings.publishToZip, settingsLoaded.publishToZip);
     XCTAssertEqual(_packagePublishSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
+    XCTAssertEqual(_packagePublishSettings.defaultScale, settingsLoaded.defaultScale);
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
@@ -97,6 +99,23 @@
     XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
     XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_PHONE]);
     XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_TABLET_HD]);
+}
+
+- (void)testMigrationDefaultScale
+{
+    NSDictionary *values = @{
+            @"outputDir" : @"foo",
+            @"publishEnv" : @1,
+            @"publishToCustomDirectory" : @YES,
+            @"publishToMainProject" : @NO,
+            @"publishToZip" : @NO
+    };
+
+    [values writeToFile:[self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
+
+    [_packagePublishSettings load];
+
+    XCTAssertEqual(_packagePublishSettings.defaultScale, -1);
 }
 
 - (void)testEffectiveOutputDir

@@ -19,6 +19,8 @@
 
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
 
+@property (nonatomic) NSInteger defaultScale;
+
 - (instancetype)initWithPackage:(RMPackage *)package;
 
 @property (nonatomic, strong, readonly) NSDictionary *osSettings;

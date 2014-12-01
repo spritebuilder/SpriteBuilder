@@ -1,7 +1,5 @@
-#import <MacTypes.h>
 #import "PackagePublishSettings.h"
 #import "RMPackage.h"
-#import "CCBPublisherTypes.h"
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
@@ -11,6 +9,10 @@ NSString *const KEY_PUBLISH_TO_MAINPROJECT = @"publishToMainProject";
 NSString *const KEY_OS_SETTINGS = @"osSettings";
 NSString *const KEY_OUTPUTDIR = @"outputDir";
 NSString *const KEY_PUBLISH_ENV = @"publishEnv";
+NSString *const KEY_DEFAULT_SCALE = @"defaultScale";
+
+// It's a tag for a dropdown
+NSInteger const DEFAULT_VALUE_DEFAULT_SCALE = -1;
 
 @interface PackagePublishSettings ()
 
@@ -99,6 +101,11 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
     self.customOutputDirectory = dict[KEY_OUTPUTDIR];
     self.publishEnvironment = (CCBPublishEnvironment) [dict[KEY_PUBLISH_ENV] integerValue];
 
+    // Migration if keys are not set
+    self.defaultScale = dict[KEY_DEFAULT_SCALE]
+        ? [dict[KEY_DEFAULT_SCALE] integerValue]
+        : DEFAULT_VALUE_DEFAULT_SCALE;
+
     for (NSString *osType in dict[KEY_OS_SETTINGS])
     {
         NSDictionary *dictOsSettings = dict[KEY_OS_SETTINGS][osType];
@@ -138,6 +145,8 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 
         result[KEY_OS_SETTINGS][osType] = [someOsSettings toDictionary];
     }
+
+    result[KEY_DEFAULT_SCALE] = @(_defaultScale);
 
     return result;
 }
