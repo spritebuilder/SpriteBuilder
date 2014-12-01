@@ -83,7 +83,7 @@
 + (NSArray*) resIndependentExts;
 + (NSArray*) resIndependentDirs;
 
-- (void)createCachedImageFromAuto:(NSString *)autoFile saveAs:(NSString *)dstFile forResolution:(NSString *)res projectSettings:(ProjectSettings *)projectSettings;
+- (void)createCachedImageFromAutoPath:(NSString *)autoPath saveAs:(NSString *)dstFile forResolution:(NSString *)resolution projectSettings:(ProjectSettings *)projectSettings;
 
 - (void) notifyResourceObserversResourceListUpdated;
 
