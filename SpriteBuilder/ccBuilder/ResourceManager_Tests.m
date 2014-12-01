@@ -142,15 +142,7 @@
         [self fullPathForFile:@"project/Packages/ultrapackage.sbpack"],
     ];
 
-    self.resourceManager = [ResourceManager sharedManager];
-    [_resourceManager setActiveDirectoriesWithFullReset:expectedPackagePaths];
-
-    self.projectSettings = [[ProjectSettings alloc] init];
-    _projectSettings.projectPath = [self fullPathForFile:@"project/foo.ccbproj"];
-    for (NSString *packagePath in expectedPackagePaths)
-    {
-        [_projectSettings addResourcePath:packagePath error:nil];
-    }
+    [self setupPackagesWithFullPaths:expectedPackagePaths];
 
     NSArray *allPackages = [_resourceManager allPackages];
     NSMutableArray *allPackagePaths = [NSMutableArray array];
@@ -161,6 +153,43 @@
     }
 
     XCTAssertTrue([allPackagePaths isEqualToArray:expectedPackagePaths]);
+}
+
+- (void)testPackageForPath
+{
+    NSArray *packages = @[
+        [self fullPathForFile:@"project/Packages/foo.sbpack"],
+        [self fullPathForFile:@"project/Packages/baa.sbpack"],
+    ];
+
+    [self setupPackagesWithFullPaths:packages];
+
+    RMPackage *fooPackage = [_resourceManager packageForPath:[self fullPathForFile:@"project/Packages/foo.sbpack/images/resources-auto/sky.png"]];
+    RMPackage *baaPackage = [_resourceManager packageForPath:[self fullPathForFile:@"project/Packages/baa.sbpack/spritesheets/deep/deeper/bottom.png"]];
+    RMPackage *noPackage = [_resourceManager packageForPath:[self fullPathForFile:@"project/Packages/123.sbpack/images/resources-autp/sky.png"]];
+
+    SBAssertStringsEqual(fooPackage.fullPath, [self fullPathForFile:@"project/Packages/foo.sbpack"]);
+    SBAssertStringsEqual(baaPackage.fullPath, [self fullPathForFile:@"project/Packages/baa.sbpack"]);
+
+    XCTAssertNil(noPackage);
+}
+
+#pragma mark - helper
+
+// sets packages for resource manager and project settings
+- (void)setupPackagesWithFullPaths:(NSArray *)packages
+{
+    self.resourceManager = [ResourceManager sharedManager];
+    [_resourceManager setActiveDirectoriesWithFullReset:packages];
+
+    self.projectSettings = [[ProjectSettings alloc] init];
+    _projectSettings.projectPath = [self fullPathForFile:@"project/foo.ccbproj"];
+    for (NSString *packagePath in packages)
+    {
+        [_projectSettings addResourcePath:packagePath error:nil];
+    }
+
+    [self createFolders:packages];
 }
 
 @end

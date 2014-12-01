@@ -29,6 +29,7 @@
 @class RMResource;
 @class RMDirectory;
 @class ProjectSettings;
+@class RMPackage;
 
 #define kCCBMaxTrackedDirectories 500
 
@@ -107,6 +108,8 @@
 - (RMResource *)spriteSheetContainingResource:(RMResource *)resource;
 
 - (NSArray *)allPackages;
+
+- (RMPackage *)packageForPath:(NSString *)fullPath;
 
 // *** SpriteSheet helper ***
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource;

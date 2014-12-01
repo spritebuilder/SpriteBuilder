@@ -1329,6 +1329,18 @@
     return [potentialSpriteSheet isSpriteSheet];
 }
 
+- (RMPackage *)packageForPath:(NSString *)fullPath
+{
+    for (RMPackage *aPackage in [self allPackages])
+    {
+        if ([fullPath rangeOfString:aPackage.fullPath].location != NSNotFound)
+        {
+            return aPackage;
+        }
+    }
+
+    return nil;
+}
 
 #pragma mark Debug
 
