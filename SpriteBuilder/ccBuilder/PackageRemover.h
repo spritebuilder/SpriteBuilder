@@ -12,6 +12,6 @@
 // Sends RESOURCE_PATHS_CHANGED notification if there is at least one package that was removed successfully.
 // Returns NO if there was at least one error.
 // In error's userInfo dictionary there'll be the "errors" key with all underlying errors
-- (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error;
+- (BOOL)removePackagesFromProject:(NSArray *)packages error:(NSError **)error;
 
 @end

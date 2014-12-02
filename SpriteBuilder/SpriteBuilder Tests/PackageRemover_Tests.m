@@ -14,6 +14,7 @@
 #import "NSString+Packages.h"
 #import "SBErrors.h"
 #import "PackageRemover.h"
+#import "RMPackage.h"
 
 @interface PackageRemover_Tests : XCTestCase
 
@@ -68,8 +69,11 @@
 
     [_projectSettings addResourcePath:packagePath error:nil];
 
+    RMPackage *packageToRemove = [[RMPackage alloc] init];
+    packageToRemove.dirPath = packagePath;
+
     NSError *error;
-    XCTAssertTrue([_packageRemover removePackagesFromProject:@[packagePath] error:&error]);
+    XCTAssertTrue([_packageRemover removePackagesFromProject:@[packageToRemove] error:&error]);
     XCTAssertNil(error);
 
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
@@ -78,25 +82,33 @@
 
 - (void)testRemovePackagesWithAGoodAndOneErroneousPath
 {
-    id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
+    id observerMockChanged = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
-    NSString *packagePathGood = [@"/goodPath" stringByAppendingPackageSuffix];
-    NSString *packagePathBad = [@"/badPath" stringByAppendingPackageSuffix];
-    NSArray *packagePaths = @[packagePathGood, packagePathBad];
+    RMPackage *packageWithGoodPath = [[RMPackage alloc] init];
+    packageWithGoodPath.dirPath = [@"/goodPath" stringByAppendingPackageSuffix];
 
-    [_projectSettings addResourcePath:packagePathGood error:nil];
+    RMPackage *packageWithBadPath = [[RMPackage alloc] init];
+    packageWithBadPath.dirPath = [@"/badPath" stringByAppendingPackageSuffix];
 
-    [[[_fileManagerMock expect] andReturnValue:@(YES)] removeItemAtPath:packagePathGood error:[OCMArg anyObjectRef]];
+    id observerMockRemoved = [ObserverTestHelper observerMockForNotification:RESOURCE_REMOVED object:@{@"filepath": packageWithGoodPath.dirPath, @"resource" : packageWithGoodPath}];
+
+    NSArray *packagesToBeRemoved = @[packageWithGoodPath, packageWithBadPath];
+
+
+    [_projectSettings addResourcePath:packageWithGoodPath.dirPath error:nil];
+
+    [[[_fileManagerMock expect] andReturnValue:@(YES)] removeItemAtPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
 
     NSError *error;
-    XCTAssertFalse([_packageRemover removePackagesFromProject:packagePaths error:&error]);
+    XCTAssertFalse([_packageRemover removePackagesFromProject:packagesToBeRemoved error:&error]);
     XCTAssertNotNil(error);
 
     NSArray *errors = error.userInfo[@"errors"];
     XCTAssertEqual((int)errors.count, 1);
     XCTAssertEqual(error.code, SBRemovePackagesError);
 
-    [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
+    [ObserverTestHelper verifyAndRemoveObserverMock:observerMockChanged];
+    [ObserverTestHelper verifyAndRemoveObserverMock:observerMockRemoved];
     [_fileManagerMock verify];
 }
 
