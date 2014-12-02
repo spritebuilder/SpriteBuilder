@@ -220,16 +220,16 @@
 		[effectDescriptions addObject:effectDescription];
 	}
 
-    {
+	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Lighting";
 		effectDescription.description = @"Applies lighting to things";
 		effectDescription.imageName = @"effect-lighting";
 		effectDescription.className = NSStringFromClass([CCBPEffectLighting class]);
-        effectDescription.baseClass = @"CCEffectLighting";
+		effectDescription.baseClass = @"CCEffectLighting";
 		effectDescription.viewController = NSStringFromClass([EffectLightingControl class]);
-        effectDescription.group = 3;
-
+		effectDescription.group = 3;
+        
 		[effectDescriptions addObject:effectDescription];
 	}
 
