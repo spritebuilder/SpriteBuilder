@@ -9,7 +9,6 @@
 #import "EffectsManager.h"
 #import "CCBPEffectBrightness.h"
 #import "CCBPEffectContrast.h"
-//#import "CCBPEffectGlow.h"
 #import "CCBPEffectPixelate.h"
 #import "CCBPEffectSaturation.h"
 #import "CCBPEffectHue.h"
@@ -21,7 +20,6 @@
 #import "EffectPixelateControl.h"
 #import "EffectSaturationControl.h"
 #import "EffectBloomControl.h"
-//#import "EffectGlowControl.h"
 #import "EffectRefractionControl.h"
 #import "EffectHueControl.h"
 #import "AppDelegate.h"
@@ -32,6 +30,8 @@
 #import "EffectReflectionControl.h"
 #import "CCBPEffectBlur.h"
 #import "EffectBlurControl.h"
+#import "CCBPEffectLighting.h"
+#import "EffectLightingControl.h"
 
 
 @implementation CCNode(Effects)
@@ -219,19 +219,19 @@
         
 		[effectDescriptions addObject:effectDescription];
 	}
-	/*
+
 	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
-		effectDescription.title = @"Glow";
-		effectDescription.description = @"Makes things Glow";
-		effectDescription.imageName = @"effect-glow";
-		effectDescription.className = NSStringFromClass([CCBPEffectGlow class]);
-		effectDescription.viewController = NSStringFromClass([EffectGlowControl class]);
-		
+		effectDescription.title = @"Lighting";
+		effectDescription.description = @"Applies lighting to things";
+		effectDescription.imageName = @"effect-lighting";
+		effectDescription.className = NSStringFromClass([CCBPEffectLighting class]);
+		effectDescription.baseClass = @"CCEffectLighting";
+		effectDescription.viewController = NSStringFromClass([EffectLightingControl class]);
+		effectDescription.group = 3;
+        
 		[effectDescriptions addObject:effectDescription];
 	}
-	 */
-	
 
 	return effectDescriptions;
 }
