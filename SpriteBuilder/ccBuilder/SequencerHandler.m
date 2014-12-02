@@ -374,7 +374,15 @@ static SequencerHandler* sharedSequencerHandler;
     }
 
     CCNode* node = (CCNode*)item;
-    return [node children][(NSUInteger) index];
+
+    if (index < node.children.count)
+    {
+        return [node children][(NSUInteger) index];
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item

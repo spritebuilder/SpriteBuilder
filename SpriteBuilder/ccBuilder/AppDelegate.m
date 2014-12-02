@@ -119,7 +119,7 @@
 #import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
 #import "NotificationNames.h"
-#import "RegistrationWindow.h"
+#import "MailingListWindow.h"
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
 #import "RMResource.h"
@@ -614,8 +614,11 @@ typedef enum
 	return;
 #endif
 	
+
     // Open registration window
-    if(![self openRegistration])
+    BOOL alreadyRegistered = (BOOL)([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail]);
+
+    if(!alreadyRegistered && ![self openRegistration])
 	{
 		[[NSApplication sharedApplication] terminate:self];
 	}
@@ -1647,18 +1650,13 @@ typedef enum
 
 - (BOOL) openProject:(NSString*) fileName
 {
-    if (![fileName hasSuffix:@".spritebuilder"] && ![fileName hasSuffix:@".ccbproj"])
+    if (![fileName hasSuffix:@".spritebuilder"])
     {
         return NO;
     }
 
     [self closeProject];
     
-    if ([fileName hasSuffix:@".ccbproj"])
-    {
-        fileName = [fileName stringByDeletingLastPathComponent];
-    }
-
     // Add to recent list of opened documents
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
     
@@ -4137,15 +4135,9 @@ typedef enum
 	
 -(BOOL)openRegistration
 {
-	if ([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail])
-    {
-        // Email already registered or skipped
-        return YES;
-    }
-    
     if (!registrationWindow)
     {
-        registrationWindow = [[RegistrationWindow alloc] initWithWindowNibName:@"RegistrationWindow"];
+        registrationWindow = [[MailingListWindow alloc] initWithWindowNibName:@"MailingListWindow"];
     }
     
 	NSInteger result = [NSApp runModalForWindow: registrationWindow.window];

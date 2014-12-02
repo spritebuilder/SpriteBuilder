@@ -471,8 +471,8 @@
 		B7C623D417F38B7800928F91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C623D217F38B7800928F91 /* InfoPlist.strings */; };
 		B7C623DB17F3903900928F91 /* CCControl.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */; };
 		B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C623DC17F392FE00928F91 /* CCBPProperties.plist */; };
-		B7DE848D1937A8030039FB72 /* RegistrationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */; };
-		B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DE848F1937A8390039FB72 /* RegistrationWindow.m */; };
+		B7DE848D1937A8030039FB72 /* MailingListWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7DE848C1937A8030039FB72 /* MailingListWindow.xib */; };
+		B7DE84901937A8390039FB72 /* MailingListWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DE848F1937A8390039FB72 /* MailingListWindow.m */; };
 		B7DE84931937B18B0039FB72 /* signup-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84911937B18B0039FB72 /* signup-bg.png */; };
 		B7DE84941937B18B0039FB72 /* signup-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84921937B18B0039FB72 /* signup-bottom.png */; };
 		B7DE84961937C6380039FB72 /* SpriteBuilder-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */; };
@@ -1954,9 +1954,9 @@
 		B7C623D317F38B7800928F91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B7C623D517F38B7800928F91 /* CCControl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCControl-Prefix.pch"; sourceTree = "<group>"; };
 		B7C623DC17F392FE00928F91 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
-		B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegistrationWindow.xib; sourceTree = "<group>"; };
-		B7DE848E1937A8390039FB72 /* RegistrationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationWindow.h; sourceTree = "<group>"; };
-		B7DE848F1937A8390039FB72 /* RegistrationWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationWindow.m; sourceTree = "<group>"; };
+		B7DE848C1937A8030039FB72 /* MailingListWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailingListWindow.xib; sourceTree = "<group>"; };
+		B7DE848E1937A8390039FB72 /* MailingListWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailingListWindow.h; sourceTree = "<group>"; };
+		B7DE848F1937A8390039FB72 /* MailingListWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailingListWindow.m; sourceTree = "<group>"; };
 		B7DE84911937B18B0039FB72 /* signup-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup-bg.png"; sourceTree = "<group>"; };
 		B7DE84921937B18B0039FB72 /* signup-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup-bottom.png"; sourceTree = "<group>"; };
 		B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpriteBuilder-logo.png"; sourceTree = "<group>"; };
@@ -5150,9 +5150,9 @@
 				E390C77B170A2C9B003E9E92 /* AboutWindow.h */,
 				E390C77C170A2C9B003E9E92 /* AboutWindow.m */,
 				E390C77D170A2C9B003E9E92 /* AboutWindow.xib */,
-				B7DE848E1937A8390039FB72 /* RegistrationWindow.h */,
-				B7DE848F1937A8390039FB72 /* RegistrationWindow.m */,
-				B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */,
+				B7DE848E1937A8390039FB72 /* MailingListWindow.h */,
+				B7DE848F1937A8390039FB72 /* MailingListWindow.m */,
+				B7DE848C1937A8030039FB72 /* MailingListWindow.xib */,
 			);
 			name = "About Box & Email list";
 			sourceTree = "<group>";
@@ -6412,7 +6412,7 @@
 		};
 		836E2D5A19EE5BCC00CD5B66 /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = compiled.java.jar;
+			fileType = archive.jar;
 			path = cocos2dJava.jar;
 			remoteRef = 836E2D5919EE5BCC00CD5B66 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -6606,7 +6606,7 @@
 				E3E8B49015791FFB00373983 /* seq-tl-mark-origin.png in Resources */,
 				E3E8B4921579326A00373983 /* seq-timedisplay-bg.png in Resources */,
 				B73788F71804D8200076A88C /* ccbproj.icns in Resources */,
-				B7DE848D1937A8030039FB72 /* RegistrationWindow.xib in Resources */,
+				B7DE848D1937A8030039FB72 /* MailingListWindow.xib in Resources */,
 				E3E8B49915793AF800373983 /* seq-btn-play.png in Resources */,
 				926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */,
 				E3E8B49A15793AF800373983 /* seq-btn-restart.png in Resources */,
@@ -7308,7 +7308,7 @@
 				E3926188159C69D20034FF1D /* SequencerKeyframeEasing.m in Sources */,
 				E3FD4DD315A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m in Sources */,
 				E3FD4DDF15A455B90032C2DD /* SequencerSequenceArrayController.m in Sources */,
-				B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */,
+				B7DE84901937A8390039FB72 /* MailingListWindow.m in Sources */,
 				92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */,
 				E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */,
 				926FDC88196C8EEC008C0132 /* CCBPEffectRefraction.m in Sources */,
