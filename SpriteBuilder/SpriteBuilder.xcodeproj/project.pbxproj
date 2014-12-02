@@ -152,7 +152,6 @@
 		83EDACF9193DC99100327B86 /* Features.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83EDACF8193DC99100327B86 /* Features.plist */; };
 		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
 		83FC410C1981391600799B6C /* PackageSettingsDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */; };
-		83FC4111198154CD00799B6C /* PackageSettingsDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FC4110198154CD00799B6C /* PackageSettingsDetailView.m */; };
 		83FC411319815B8600799B6C /* ProjectSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */; };
 		92053DB4197F096000AA93AD /* EffectBloomControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92053DAF197F096000AA93AD /* EffectBloomControl.xib */; };
 		92053DB5197F096000AA93AD /* CCBPEffectBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = 92053DB0197F096000AA93AD /* CCBPEffectBloom.m */; };
@@ -905,7 +904,6 @@
 		E525F6BDAD02A4137800B1E3 /* InspectorCCBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8003FDCE343C78DCD85 /* InspectorCCBFile.m */; };
 		E525F6BF45DFEFF964A46DE5 /* InspectorBlendmode.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F0984B411CD058631648 /* InspectorBlendmode.xib */; };
 		E525F710D92CDE366BCEE575 /* ResourceContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F14190B50F98308504B5 /* ResourceContextMenu.m */; };
-		E525F7234F1B8EC8CCC2BF3A /* MainProjectSettingsDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */; };
 		E525F72F2963947D91C8567B /* FileSystemTestCase+Images.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2F32EC9F70210361E7D /* FileSystemTestCase+Images.m */; };
 		E525F737F211D45673D7BC62 /* PackageImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF96D86C4DDC63B9BF63 /* PackageImporter.m */; };
 		E525F73E5E09F387AE34D519 /* InspectorPosition.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF473922B627A6A884A7 /* InspectorPosition.xib */; };
@@ -1543,8 +1541,6 @@
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
 		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PackageSettingsDetailView.xib; sourceTree = "<group>"; };
-		83FC410F198154CD00799B6C /* PackageSettingsDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageSettingsDetailView.h; sourceTree = "<group>"; };
-		83FC4110198154CD00799B6C /* PackageSettingsDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettingsDetailView.m; sourceTree = "<group>"; };
 		83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsWindow.xib; sourceTree = "<group>"; };
 		92053DAF197F096000AA93AD /* EffectBloomControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBloomControl.xib; path = ccBuilder/EffectBloomControl.xib; sourceTree = "<group>"; };
 		92053DB0197F096000AA93AD /* CCBPEffectBloom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBloom.m; path = ccBuilder/CCBPEffectBloom.m; sourceTree = "<group>"; };
@@ -2436,7 +2432,6 @@
 		E525F135CE98A990D3A8F336 /* PropertyInspectorTemplateHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplateHandler.m; sourceTree = "<group>"; };
 		E525F13FEF3757012A4E0DDE /* CCBPublisherCacheCleaner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisherCacheCleaner.m; sourceTree = "<group>"; };
 		E525F14190B50F98308504B5 /* ResourceContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu.m; sourceTree = "<group>"; };
-		E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainProjectSettingsDetailView.m; sourceTree = "<group>"; };
 		E525F1567BD8D95A7C4DC809 /* InspectorCustomEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCustomEdit.m; sourceTree = "<group>"; };
 		E525F167F988C167E79971B8 /* InspectorPoint.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPoint.xib; sourceTree = "<group>"; };
 		E525F173545F6AA131BE9DE6 /* InspectorInteger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorInteger.xib; sourceTree = "<group>"; };
@@ -2550,7 +2545,6 @@
 		E525F74DC72109C2F7FB0EC8 /* openXcodeProject.AppleScript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = openXcodeProject.AppleScript; sourceTree = "<group>"; };
 		E525F74FD144B9330CE3906D /* InspectorButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
 		E525F76017FD450D7F946CEA /* ResourcePropertiesMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcePropertiesMigrator.m; sourceTree = "<group>"; };
-		E525F774CA4F82872C1EA888 /* MainProjectSettingsDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainProjectSettingsDetailView.h; sourceTree = "<group>"; };
 		E525F78399DADD59386B4F54 /* ResourceManager+Publishing_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ResourceManager+Publishing_Tests.m"; sourceTree = "<group>"; };
 		E525F786D53B1F4CFBAC88DB /* InspectorStartStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorStartStop.m; sourceTree = "<group>"; };
 		E525F7967710F9168CBEA295 /* CCBPublisherTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublisherTypes.h; sourceTree = "<group>"; };
@@ -3919,14 +3913,10 @@
 			isa = PBXGroup;
 			children = (
 				83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */,
-				83FC410F198154CD00799B6C /* PackageSettingsDetailView.h */,
-				83FC4110198154CD00799B6C /* PackageSettingsDetailView.m */,
 				83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */,
 				837E93FE19815C8D00A9F90B /* ProjectSettingsWindowController.h */,
 				837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */,
 				8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */,
-				E525F774CA4F82872C1EA888 /* MainProjectSettingsDetailView.h */,
-				E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -6412,7 +6402,7 @@
 		};
 		836E2D5A19EE5BCC00CD5B66 /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.jar;
+			fileType = compiled.java.jar;
 			path = cocos2dJava.jar;
 			remoteRef = 836E2D5919EE5BCC00CD5B66 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -7415,7 +7405,6 @@
 				E525F4A65E3BA6A5C69470AD /* RMAnimation.m in Sources */,
 				E525F90784006C34BD20E775 /* RMPackage.m in Sources */,
 				E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */,
-				83FC4111198154CD00799B6C /* PackageSettingsDetailView.m in Sources */,
 				E525FF5FB1CCCDABE19542EC /* ResourceCommandController.m in Sources */,
 				E525F710D92CDE366BCEE575 /* ResourceContextMenu.m in Sources */,
 				E525F1EEC9A8BD816F25A538 /* ResourceDeleteCommand.m in Sources */,
@@ -7452,7 +7441,6 @@
 				E525F4515E9C83C1E7655C11 /* PackagePublishSettings.m in Sources */,
 				E525FE05101964D26EF42978 /* ZipDirectoryOperation.m in Sources */,
 				E525F96B119C330AE0D2C20E /* PublishOSSettings.m in Sources */,
-				E525F7234F1B8EC8CCC2BF3A /* MainProjectSettingsDetailView.m in Sources */,
 				E525F50E27715B344266949A /* ResourceManager+Publishing.m in Sources */,
 				E525FFEC30A90DA81B17E9F5 /* SemanticVersioning.m in Sources */,
 				E525F842D5AEA48DD4D1FF95 /* OpenProjectInXCode.m in Sources */,

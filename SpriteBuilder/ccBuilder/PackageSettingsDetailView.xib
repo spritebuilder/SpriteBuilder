@@ -8,7 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ProjectSettingsWindowController"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe" customClass="PackageSettingsDetailView">
+        <customView id="c22-O7-iKe">
             <rect key="frame" x="0.0" y="0.0" width="480" height="292"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -282,9 +282,6 @@
                     </subviews>
                 </customView>
             </subviews>
-            <connections>
-                <outlet property="androidView" destination="qD5-uT-hCU" id="2OA-tC-S65"/>
-            </connections>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="ttd-bs-ebq"/>
     </objects>
