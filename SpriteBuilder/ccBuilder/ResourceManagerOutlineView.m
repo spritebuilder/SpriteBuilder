@@ -23,7 +23,6 @@
 */
 
 #import "ResourceManagerOutlineView.h"
-#import "AppDelegate.h"
 #import "ResourceContextMenu.h"
 #import "ResourceCommandController.h"
 
@@ -126,7 +125,7 @@
         [_actionTarget deleteResource:nil];
         return;
     }
-    
+
     [super keyDown:theEvent];
 }
 
@@ -139,4 +138,32 @@
     }
 }
 
+- (NSArray *)selectedResourceAndChildren
+{
+    NSArray *selectedResources = [self selectedResources];
+    NSArray *resources = @[];
+
+    for(id resource in selectedResources)
+    {
+        resources = [resources arrayByAddingObjectsFromArray:[self childrenOfResource:resource]];
+    }
+
+    return resources;
+}
+
+- (NSArray *)childrenOfResource:(id)resource
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    NSInteger noOfChildren = [self.dataSource outlineView:self numberOfChildrenOfItem:resource];
+    for (int i = 0; i < noOfChildren; i++)
+    {
+        id child = [self.dataSource outlineView:self child:i ofItem:resource];
+        [result addObjectsFromArray:[self childrenOfResource:child]];
+    }
+
+    [result addObject:resource];
+
+    return result;
+}
 @end

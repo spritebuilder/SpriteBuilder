@@ -29,3 +29,5 @@ NSString *const RESOLUTION_PHONE = @"phone";
 NSString *const RESOLUTION_PHONE_HD = @"phonehd";
 NSString *const RESOLUTION_TABLET = @"tablet";
 NSString *const RESOLUTION_TABLET_HD = @"tablethd";
+
+NSUInteger const MINIMUM_FILENAME_LENGTH = 3;
