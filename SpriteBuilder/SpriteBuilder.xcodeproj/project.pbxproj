@@ -1805,6 +1805,8 @@
 		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
 		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
 		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
+		98C3964FFF8C4E1070E390F8 /* NSKeyboardForwardingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSKeyboardForwardingView.h; sourceTree = "<group>"; };
+		98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSKeyboardForwardingView.m; sourceTree = "<group>"; };
 		9D0CD23D1A252CA000FF785F /* light-point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-point.png"; sourceTree = "<group>"; };
 		9D0CD23E1A252CA000FF785F /* light-point@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-point@2x.png"; sourceTree = "<group>"; };
 		9D9BA6B81A1E84BA0019C1DE /* CCLightNode.ccbPlugNode */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCLightNode.ccbPlugNode; sourceTree = BUILT_PRODUCTS_DIR; };
