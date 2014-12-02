@@ -1,8 +1,8 @@
 //
-//  CCBPNode.h
+//  CCBPLightNode.h
 //  SpriteBuilder
 //
-//  Created by Viktor on 12/17/13.
+//  Created by Thayer on 11/20/14.
 //
 //
 
