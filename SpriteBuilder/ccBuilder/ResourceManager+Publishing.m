@@ -1,6 +1,6 @@
 #import "ResourceManager+Publishing.h"
 #import "RMPackage.h"
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 
 
 @implementation ResourceManager (Publishing)
@@ -12,7 +12,7 @@
     {
         if ([directory isKindOfClass:[RMPackage class]])
         {
-            PackagePublishSettings *settings = [[PackagePublishSettings alloc] initWithPackage:(RMPackage *)directory];
+            SBPackageSettings *settings = [[SBPackageSettings alloc] initWithPackage:(RMPackage *)directory];
             if (![settings load])
             {
                 NSLog(@"Could not load Package.plist file for package \"%@\"", directory.dirPath);

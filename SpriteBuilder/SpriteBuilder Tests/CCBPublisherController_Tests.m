@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "CCBPublisherController.h"
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 #import "ProjectSettings.h"
 #import "RMPackage.h"
 #import "FileSystemTestCase+Images.h"
@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) PackagePublishSettings *packageSettings;
+@property (nonatomic, strong) SBPackageSettings *packageSettings;
 @property (nonatomic, strong) RMPackage *package;
 
 @end
@@ -58,7 +58,7 @@
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
 
-    self.packageSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
+    self.packageSettings = [[SBPackageSettings alloc] initWithPackage:_package];
     _packageSettings.publishToCustomOutputDirectory = NO;
     _packageSettings.publishToMainProject = NO;
     _packageSettings.publishToZip = YES;
@@ -166,15 +166,15 @@
     _projectSettings.publishEnabledIOS = YES;
     _projectSettings.publishEnabledAndroid = YES;
 
-    PackagePublishSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
+    SBPackageSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
     packageSettingsMenus.publishToMainProject = NO;
     packageSettingsMenus.publishToZip = NO;
 
-    PackagePublishSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
+    SBPackageSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
     packageSettingsCharacters.publishToMainProject = YES;
     packageSettingsCharacters.publishToZip = NO;
 
-    PackagePublishSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
+    SBPackageSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
     packageSettingsBackgrounds.publishToMainProject = YES;
     packageSettingsBackgrounds.publishToZip = NO;
 
@@ -234,12 +234,12 @@
 
 #pragma mark - helpers
 
-- (PackagePublishSettings *)createSettingsWithPath:(NSString *)path
+- (SBPackageSettings *)createSettingsWithPath:(NSString *)path
 {
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [self fullPathForFile:path];
 
-    return [[PackagePublishSettings alloc] initWithPackage:package];
+    return [[SBPackageSettings alloc] initWithPackage:package];
 }
 
 @end

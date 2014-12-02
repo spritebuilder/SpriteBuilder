@@ -5,7 +5,7 @@
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "RMPackage.h"
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 
 
 @implementation PackageCreator
@@ -94,7 +94,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = fullPath;
 
-    PackagePublishSettings *packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:package];
+    SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
     [packagePublishSettings store];
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "PackageSettingsDetailView.h"
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 
 @implementation PackageSettingsDetailView
 

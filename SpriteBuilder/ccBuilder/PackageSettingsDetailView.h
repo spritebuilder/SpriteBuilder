@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class PackagePublishSettings;
+@class SBPackageSettings;
 
 @interface PackageSettingsDetailView : NSView
 

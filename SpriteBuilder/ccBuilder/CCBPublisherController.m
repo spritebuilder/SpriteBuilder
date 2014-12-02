@@ -6,7 +6,7 @@
 #import "ProjectSettings+Convenience.h"
 #import "CCBPublisher.h"
 #import "RMPackage.h"
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 #import "PublishOSSettings.h"
 #import "NSString+RelativePath.h"
 #import "MiscConstants.h"
@@ -55,7 +55,7 @@
 
 - (void)addPublishingTargetsForPackages
 {
-    for (PackagePublishSettings *packageSetting in _packageSettings)
+    for (SBPackageSettings *packageSetting in _packageSettings)
     {
         [self addPublishingTargetsForPackageSetting:packageSetting osType:kCCBPublisherOSTypeIOS];
 
@@ -65,7 +65,7 @@
     }
 }
 
-- (void)addPublishingTargetsForPackageSetting:(PackagePublishSettings *)packageSettings osType:(CCBPublisherOSType)osType
+- (void)addPublishingTargetsForPackageSetting:(SBPackageSettings *)packageSettings osType:(CCBPublisherOSType)osType
 {
     if (!packageSettings.publishToZip)
     {
@@ -201,7 +201,7 @@
 - (NSArray *)inputDirsOfPackagePublishSettingsEnabledForMainProject
 {
     NSMutableArray *inputDirs = [NSMutableArray array];
-    for (PackagePublishSettings *somePackageSettings in _packageSettings)
+    for (SBPackageSettings *somePackageSettings in _packageSettings)
     {
         if (!somePackageSettings.publishToMainProject)
         {

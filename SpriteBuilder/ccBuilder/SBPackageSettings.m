@@ -1,4 +1,4 @@
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 #import "RMPackage.h"
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
@@ -14,18 +14,18 @@ NSString *const KEY_DEFAULT_SCALE = @"defaultScale";
 // It's a tag for a dropdown
 NSInteger const DEFAULT_VALUE_DEFAULT_SCALE = -1;
 
-@interface PackagePublishSettings ()
+@interface SBPackageSettings ()
 
 @property (nonatomic, strong) NSMutableDictionary *publishSettingsForOsType;
 
 @end
 
 
-@implementation PackagePublishSettings
+@implementation SBPackageSettings
 
 - (instancetype)init
 {
-    NSLog(@"Error initializing PackagePublishSettings, use initWithPackage:");
+    NSLog(@"Error initializing SBPackageSettings, use initWithPackage:");
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }

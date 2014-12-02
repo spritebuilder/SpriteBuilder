@@ -4,7 +4,7 @@
 @class RMPackage;
 @class PublishOSSettings;
 
-@interface PackagePublishSettings : NSObject
+@interface SBPackageSettings : NSObject
 
 @property (nonatomic, strong) RMPackage *package;
 
