@@ -360,6 +360,7 @@
 		9DBC22111A2CFA1C00FF9D64 /* light-directional@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DBC220F1A2CFA1C00FF9D64 /* light-directional@2x.png */; };
 		9DD4F4B31A1FCE5700438647 /* InspectorTokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B11A1FCE5700438647 /* InspectorTokenArray.m */; };
 		9DD4F4B41A1FCE5700438647 /* InspectorTokenArray.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B21A1FCE5700438647 /* InspectorTokenArray.xib */; };
+		98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -492,8 +493,8 @@
 		B7C623D417F38B7800928F91 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B7C623D217F38B7800928F91 /* InfoPlist.strings */; };
 		B7C623DB17F3903900928F91 /* CCControl.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B7C623CD17F38B7800928F91 /* CCControl.ccbPlugNode */; };
 		B7C623DD17F392FE00928F91 /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7C623DC17F392FE00928F91 /* CCBPProperties.plist */; };
-		B7DE848D1937A8030039FB72 /* RegistrationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */; };
-		B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DE848F1937A8390039FB72 /* RegistrationWindow.m */; };
+		B7DE848D1937A8030039FB72 /* MailingListWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7DE848C1937A8030039FB72 /* MailingListWindow.xib */; };
+		B7DE84901937A8390039FB72 /* MailingListWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DE848F1937A8390039FB72 /* MailingListWindow.m */; };
 		B7DE84931937B18B0039FB72 /* signup-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84911937B18B0039FB72 /* signup-bg.png */; };
 		B7DE84941937B18B0039FB72 /* signup-bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84921937B18B0039FB72 /* signup-bottom.png */; };
 		B7DE84961937C6380039FB72 /* SpriteBuilder-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */; };
@@ -2011,9 +2012,9 @@
 		B7C623D317F38B7800928F91 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B7C623D517F38B7800928F91 /* CCControl-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCControl-Prefix.pch"; sourceTree = "<group>"; };
 		B7C623DC17F392FE00928F91 /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
-		B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegistrationWindow.xib; sourceTree = "<group>"; };
-		B7DE848E1937A8390039FB72 /* RegistrationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationWindow.h; sourceTree = "<group>"; };
-		B7DE848F1937A8390039FB72 /* RegistrationWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationWindow.m; sourceTree = "<group>"; };
+		B7DE848C1937A8030039FB72 /* MailingListWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MailingListWindow.xib; sourceTree = "<group>"; };
+		B7DE848E1937A8390039FB72 /* MailingListWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailingListWindow.h; sourceTree = "<group>"; };
+		B7DE848F1937A8390039FB72 /* MailingListWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailingListWindow.m; sourceTree = "<group>"; };
 		B7DE84911937B18B0039FB72 /* signup-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup-bg.png"; sourceTree = "<group>"; };
 		B7DE84921937B18B0039FB72 /* signup-bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup-bottom.png"; sourceTree = "<group>"; };
 		B7DE84951937C6380039FB72 /* SpriteBuilder-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpriteBuilder-logo.png"; sourceTree = "<group>"; };
@@ -3169,6 +3170,8 @@
 				E525F486AD1DD1A54530FBB8 /* ImageFormatAndPropertiesHelper.h */,
 				E525FA71E014DDED2AFE71EF /* NSString+Misc.m */,
 				E525F2B4F3FE0A9DB6AEF0C0 /* NSString+Misc.h */,
+				98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */,
+				98C3964FFF8C4E1070E390F8 /* NSKeyboardForwardingView.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -5259,9 +5262,9 @@
 				E390C77B170A2C9B003E9E92 /* AboutWindow.h */,
 				E390C77C170A2C9B003E9E92 /* AboutWindow.m */,
 				E390C77D170A2C9B003E9E92 /* AboutWindow.xib */,
-				B7DE848E1937A8390039FB72 /* RegistrationWindow.h */,
-				B7DE848F1937A8390039FB72 /* RegistrationWindow.m */,
-				B7DE848C1937A8030039FB72 /* RegistrationWindow.xib */,
+				B7DE848E1937A8390039FB72 /* MailingListWindow.h */,
+				B7DE848F1937A8390039FB72 /* MailingListWindow.m */,
+				B7DE848C1937A8030039FB72 /* MailingListWindow.xib */,
 				92AEE8351979D33D00B50F74 /* LicenseWindow.h */,
 				92AEE8361979D33D00B50F74 /* LicenseWindow.m */,
 				92AEE8371979D33D00B50F74 /* LicenseWindow.xib */,
@@ -6551,7 +6554,7 @@
 		};
 		836E2D5A19EE5BCC00CD5B66 /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = compiled.java.jar;
+			fileType = archive.jar;
 			path = cocos2dJava.jar;
 			remoteRef = 836E2D5919EE5BCC00CD5B66 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -6751,7 +6754,7 @@
 				E3E8B49015791FFB00373983 /* seq-tl-mark-origin.png in Resources */,
 				E3E8B4921579326A00373983 /* seq-timedisplay-bg.png in Resources */,
 				B73788F71804D8200076A88C /* ccbproj.icns in Resources */,
-				B7DE848D1937A8030039FB72 /* RegistrationWindow.xib in Resources */,
+				B7DE848D1937A8030039FB72 /* MailingListWindow.xib in Resources */,
 				E3E8B49915793AF800373983 /* seq-btn-play.png in Resources */,
 				926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */,
 				E3E8B49A15793AF800373983 /* seq-btn-restart.png in Resources */,
@@ -7468,7 +7471,7 @@
 				E3926188159C69D20034FF1D /* SequencerKeyframeEasing.m in Sources */,
 				E3FD4DD315A0A2C10032C2DD /* SequencerKeyframeEasingWindow.m in Sources */,
 				E3FD4DDF15A455B90032C2DD /* SequencerSequenceArrayController.m in Sources */,
-				B7DE84901937A8390039FB72 /* RegistrationWindow.m in Sources */,
+				B7DE84901937A8390039FB72 /* MailingListWindow.m in Sources */,
 				92CD1C211965D824002BF2DE /* EffectBrightnessControl.m in Sources */,
 				E35A135F15B038D700C9AA15 /* ThoMoClientStub.m in Sources */,
 				926FDC88196C8EEC008C0132 /* CCBPEffectRefraction.m in Sources */,
@@ -7675,6 +7678,7 @@
 				E525FD8036350149E83701B4 /* ImageFormatAndPropertiesHelper.m in Sources */,
 				E525F30359F75816D1F178F1 /* PublishUtil.m in Sources */,
 				E525F6B824415CA3D1C215EA /* NSString+Misc.m in Sources */,
+				98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
