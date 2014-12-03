@@ -89,7 +89,7 @@
         _sequencerHandler.currentSequence.timelinePosition = 0;
     }
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:ANIMATION_PLAYBACK_WILL_START object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ANIMATION_PLAYBACK_WILL_START object:self];
 
     // Start playback
     self.playbackLastFrameTime = [NSDate timeIntervalSinceReferenceDate];
