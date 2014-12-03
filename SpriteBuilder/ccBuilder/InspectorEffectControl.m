@@ -120,9 +120,8 @@
 		id<EffectProtocol> effect =  [self.effectNode effects][i];
 
 		Class viewControllerClass = NSClassFromString(effectDescription.viewController);
-		EffectViewController * vc = [((EffectViewController*)[viewControllerClass alloc]) initWithNibName:effectDescription.viewController bundle:[NSBundle mainBundle]];
+        EffectViewController * vc = [((EffectViewController*)[viewControllerClass alloc]) initWithNibName:effectDescription.viewController bundle:[NSBundle mainBundle] effect:effect];
 
-		vc.effect =	effect;
 		[viewControllers addObject:vc];
 	}
 
