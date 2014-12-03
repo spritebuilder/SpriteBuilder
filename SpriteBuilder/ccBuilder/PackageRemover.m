@@ -5,6 +5,7 @@
 #import "ProjectSettings.h"
 #import "NotificationNames.h"
 #import "RMPackage.h"
+#import "MiscConstants.h"
 
 @implementation PackageRemover
 
@@ -25,7 +26,10 @@
     {
         if ([_projectSettings removeResourcePath:package.dirPath error:localError])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED object:@{@"filepath": package.dirPath, @"resource" : package}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED
+                                                                object:self
+                                                              userInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : package.dirPath, NOTIFICATION_USERINFO_KEY_RESOURCE : package}];
+
             [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
 
             return [_fileManager removeItemAtPath:package.dirPath error:localError];

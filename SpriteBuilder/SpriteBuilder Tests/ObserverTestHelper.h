@@ -15,9 +15,9 @@
 // any object accepted
 + (id)observerMockForNotification:(NSString *)notificationName;
 
-// Returns a [OCMockObject observerMock] with expecting notificationName and object sent by [NSNotificationCenter defaultCenter]
+// Returns a [OCMockObject observerMock] with expecting notificationName, object and userInfo sent by [NSNotificationCenter defaultCenter]
 // any object accepted
-+ (id)observerMockForNotification:(NSString *)notificationName object:(id)object;
++ (id)observerMockForNotification:(NSString *)notificationName expectedObject:(id)expectedObject expectedUserInfo:(NSDictionary *)expectedUserInfo;
 
 // Verifies and removes a [OCMockObject observerMock] from the [NSNotificationCenter defaultCenter]
 + (void)verifyAndRemoveObserverMock:(id)observerMock;

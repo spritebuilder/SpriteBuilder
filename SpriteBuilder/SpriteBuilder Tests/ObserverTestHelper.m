@@ -14,12 +14,12 @@
     return observerMock;
 }
 
-+ (id)observerMockForNotification:(NSString *)notificationName object:(id)object
++ (id)observerMockForNotification:(NSString *)notificationName expectedObject:(id)expectedObject expectedUserInfo:(NSDictionary *)expectedUserInfo
 {
     id observerMock = [OCMockObject observerMock];
 
     [[NSNotificationCenter defaultCenter] addMockObserver:observerMock name:notificationName object:nil];
-    [[observerMock expect] notificationWithName:notificationName object:object];
+    [[observerMock expect] notificationWithName:notificationName object:expectedObject userInfo:expectedUserInfo];
 
     return observerMock;
 }

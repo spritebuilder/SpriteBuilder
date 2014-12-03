@@ -1231,7 +1231,9 @@
     // Make sure it is removed from the current project
     [[AppDelegate appDelegate].projectSettings removedResourceAt:res.relativePath];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED object:@{@"filepath": res.filePath}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED
+                                                        object:self
+                                                      userInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : res.filePath, NOTIFICATION_USERINFO_KEY_RESOURCE : res}];
 }
 
 + (void) touchResource:(RMResource*) res

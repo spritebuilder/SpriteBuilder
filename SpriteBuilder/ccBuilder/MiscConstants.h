@@ -27,3 +27,9 @@ extern NSString *const RESOLUTION_TABLET;
 extern NSString *const RESOLUTION_TABLET_HD;
 
 extern NSUInteger const MINIMUM_FILENAME_LENGTH;
+
+
+// *** Notification userInfo dictionary keys
+
+extern NSString *const NOTIFICATION_USERINFO_KEY_FILEPATH;
+extern NSString *const NOTIFICATION_USERINFO_KEY_RESOURCE;

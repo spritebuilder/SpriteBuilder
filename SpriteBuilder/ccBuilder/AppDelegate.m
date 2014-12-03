@@ -3122,7 +3122,7 @@ typedef enum
 
 - (void) removedDocumentWithPath:(NSNotification *)notification
 {
-    NSString *path = [notification object][@"filepath"];
+    NSString *path = [notification userInfo][@"filepath"];
 
     NSTabViewItem* item = [self tabViewItemFromPath:path includeViewWithinFolderPath:YES];
     if (item)

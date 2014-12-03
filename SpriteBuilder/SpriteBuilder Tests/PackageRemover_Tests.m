@@ -15,6 +15,7 @@
 #import "SBErrors.h"
 #import "PackageRemover.h"
 #import "RMPackage.h"
+#import "MiscConstants.h"
 
 @interface PackageRemover_Tests : XCTestCase
 
@@ -90,7 +91,10 @@
     RMPackage *packageWithBadPath = [[RMPackage alloc] init];
     packageWithBadPath.dirPath = [@"/badPath" stringByAppendingPackageSuffix];
 
-    id observerMockRemoved = [ObserverTestHelper observerMockForNotification:RESOURCE_REMOVED object:@{@"filepath": packageWithGoodPath.dirPath, @"resource" : packageWithGoodPath}];
+    id observerMockRemoved = [ObserverTestHelper observerMockForNotification:RESOURCE_REMOVED
+                                                              expectedObject:[OCMArg any]
+                                                            expectedUserInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : packageWithGoodPath.dirPath,
+                                                                               NOTIFICATION_USERINFO_KEY_RESOURCE : packageWithGoodPath}];
 
     NSArray *packagesToBeRemoved = @[packageWithGoodPath, packageWithBadPath];
 
