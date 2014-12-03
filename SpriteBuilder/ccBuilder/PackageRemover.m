@@ -30,7 +30,7 @@
                                                                 object:self
                                                               userInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : package.dirPath, NOTIFICATION_USERINFO_KEY_RESOURCE : package}];
 
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
 
             return [_fileManager removeItemAtPath:package.dirPath error:localError];
         }

@@ -55,7 +55,7 @@
     {
         [self createPackageSettings:fullPath];
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
         return fullPath;
     }
 

@@ -99,7 +99,7 @@
 
         if ([_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
             return YES;
         }
 
