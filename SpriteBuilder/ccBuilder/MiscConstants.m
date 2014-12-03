@@ -37,4 +37,4 @@ NSUInteger const MINIMUM_FILENAME_LENGTH = 3;
 
 NSString *const NOTIFICATION_USERINFO_KEY_FILEPATH = @"filepath";
 NSString *const NOTIFICATION_USERINFO_KEY_RESOURCE = @"resource";
-
+NSString *const NOTIFICATION_USERINFO_KEY_NODE = @"node";

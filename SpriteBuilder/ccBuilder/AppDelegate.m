@@ -2613,7 +2613,7 @@ typedef enum
     [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:self userInfo:@{NOTIFICATION_USERINFO_KEY_NODE : node}];
 }
 
 - (IBAction) delete:(id) sender
