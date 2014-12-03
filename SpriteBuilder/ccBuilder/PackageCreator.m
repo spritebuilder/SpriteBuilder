@@ -21,12 +21,6 @@
     return self;
 }
 
-- (void)addIconToPackageFile:(NSString *)packagePath
-{
-    //NSImage* folderIcon = [NSImage imageNamed:@"Package.icns"];
-    //[[NSWorkspace sharedWorkspace] setIcon:folderIcon forFile:packagePath options:0];
-}
-
 - (NSString *)createPackageWithName:(NSString *)packageName error:(NSError **)error
 {
     NSString *fullPath = [_projectSettings fullPathForPackageName:packageName];
@@ -55,8 +49,6 @@
     BOOL addResPathSuccess = [_projectSettings addResourcePath:fullPath error:&underlyingErrorAddResPath];
     if(addResPathSuccess)
     {
-        [self addIconToPackageFile:fullPath];
-
         [self createPackageSettings:fullPath];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
