@@ -44,6 +44,8 @@ static CGFloat IMAGE_PADDING_RIGHT = 3.0;
 
 @implementation ImageAndTextCell
 
+@synthesize image = _image;
+
 - (id) init
 {
     self = [super init];

@@ -158,7 +158,7 @@
 	if(_isInOverflowMenu != value) {
 		_isInOverflowMenu = value;
 		if([[[self controlView] delegate] respondsToSelector:@selector(tabView:tabViewItem:isInOverflowMenu:)]) {
-			[[[self controlView] delegate] tabView:[self controlView] tabViewItem:[self representedObject] isInOverflowMenu:_isInOverflowMenu];
+			[(id)[[self controlView] delegate] tabView:[self controlView] tabViewItem:[self representedObject] isInOverflowMenu:_isInOverflowMenu];
 		}
 	}
 }
@@ -440,7 +440,7 @@
 		if([[[self controlView] delegate] respondsToSelector:@selector(accessibilityStringForTabView:objectCount:)]) {
 			attributeValue = [NSString stringWithFormat:@"%@, %lu %@", [self stringValue],
 							  (unsigned long)[self count],
-							  [[[self controlView] delegate] accessibilityStringForTabView:[[self controlView] tabView] objectCount:[self count]]];
+							  [(id)[[self controlView] delegate] accessibilityStringForTabView:[[self controlView] tabView] objectCount:[self count]]];
 		} else {
 			attributeValue = [self stringValue];
 		}
