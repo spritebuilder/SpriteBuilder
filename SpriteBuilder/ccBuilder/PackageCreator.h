@@ -1,11 +1,13 @@
 #import <Foundation/Foundation.h>
 
 @class ProjectSettings;
+@class SBPackageSettingsManager;
 
 
 @interface PackageCreator : NSObject
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;
+@property (nonatomic, weak) SBPackageSettingsManager *packageSettingsManager;
 @property (nonatomic, weak) NSFileManager *fileManager;
 
 // Creates a package at the root level of the project directory. A package is a special folder.
