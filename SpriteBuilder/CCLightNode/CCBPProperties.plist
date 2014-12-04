@@ -45,6 +45,8 @@
 			<string>groups</string>
 		</dict>
 		<dict>
+			<key>animatable</key>
+			<true/>
 			<key>name</key>
 			<string>color</string>
 			<key>defaultSerialization</key>
@@ -57,7 +59,7 @@
 			<key>displayName</key>
 			<string>Diffuse Color</string>
 			<key>type</key>
-			<string>Color4</string>
+			<string>Color3</string>
 			<key>default</key>
 			<array>
 				<integer>1</integer>
@@ -81,6 +83,8 @@
 			<string>intensity</string>
 		</dict>
 		<dict>
+			<key>animatable</key>
+			<true/>
 			<key>name</key>
 			<string>specularColor</string>
 			<key>defaultSerialization</key>
@@ -93,7 +97,7 @@
 			<key>displayName</key>
 			<string>Specular Color</string>
 			<key>type</key>
-			<string>Color4</string>
+			<string>Color3</string>
 			<key>default</key>
 			<array>
 				<integer>1</integer>
@@ -117,6 +121,8 @@
 			<string>specularIntensity</string>
 		</dict>
 		<dict>
+			<key>animatable</key>
+			<true/>
 			<key>name</key>
 			<string>ambientColor</string>
 			<key>defaultSerialization</key>
@@ -129,7 +135,7 @@
 			<key>displayName</key>
 			<string>Ambient Color</string>
 			<key>type</key>
-			<string>Color4</string>
+			<string>Color3</string>
 			<key>default</key>
 			<array>
 				<integer>1</integer>
