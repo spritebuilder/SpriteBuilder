@@ -227,7 +227,9 @@
     NSArray *allPackages = [_resourceManager allPackages];
     for (RMPackage *aPackage in allPackages)
     {
-        SBPackageSettings *packageSettings = [aPackage packageSettings];
+        SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:aPackage];
+        [packageSettings load];
+
         packageSettings.defaultScale = 1;
         [packageSettings store];
     }
