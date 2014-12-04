@@ -45,6 +45,7 @@
 #import "ResourcePropertyKeys.h"
 #import "NotificationNames.h"
 #import "SBPackageSettings.h"
+#import "ResourceManager+Publishing.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
 
@@ -965,7 +966,8 @@
                 if (!cachedFileExists || !datesMatch)
                 {
                     // Not yet cached, create file
-                    [self createCachedImageFromAutoPath:autoFile saveAs:cachedFile forResolution:ext projectSettings:[AppDelegate appDelegate].projectSettings packageSettings:nil];
+                    NSArray *packageSettings = [self loadAllPackageSettings];
+                    [self createCachedImageFromAutoPath:autoFile saveAs:cachedFile forResolution:ext projectSettings:[AppDelegate appDelegate].projectSettings packageSettings:packageSettings];
                 }
                 return cachedFile;
             }
