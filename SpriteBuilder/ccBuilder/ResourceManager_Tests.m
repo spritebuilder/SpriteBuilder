@@ -20,6 +20,7 @@
 #import "FileSystemTestCase+Images.h"
 #import "ResourcePropertyKeys.h"
 #import "SBPackageSettings.h"
+#import "ResourceManager+Publishing.h"
 
 @interface ResourceManager_Tests : FileSystemTestCase
 
@@ -186,6 +187,8 @@
     [self createPNGAtPath:imgRelPath width:20 height:20];
     _projectSettings.resourceAutoScaleFactor = 4;
 
+    [self setAllPackagesAutScalingTo:1];
+
     // Using default scaling - tablethd
     [_resourceManager createCachedImageFromAutoPath:[self fullPathForFile:imgRelPath] saveAs:[self fullPathForFile:@"resized.png"] forResolution:@"tablethd" projectSettings:_projectSettings packageSettings:nil];
 
@@ -222,24 +225,54 @@
     [self setupPackagesWithFullPaths:@[[self fullPathForFile:@"project/Packages/foo.sbpack"]]];
 
     [self createPNGAtPath:imgRelPath width:20 height:20];
+
     _projectSettings.resourceAutoScaleFactor = 4;
 
+    [self setAllPackagesAutScalingTo:2];
+
+    [_resourceManager createCachedImageFromAutoPath:[self fullPathForFile:imgRelPath]
+                                             saveAs:[self fullPathForFile:@"resized.png"]
+                                      forResolution:@"tablethd"
+                                    projectSettings:_projectSettings
+                                    packageSettings:[_resourceManager loadAllPackageSettings]];
+
+    [self assertPNGAtPath:[self fullPathForFile:@"resized.png"] hasWidth:40 hasHeight:40];
+}
+
+- (void)testCreateCachedImageFromAutoPathWithAssetSpecificScaling
+{
+    NSString *imgRelPath = @"project/Packages/foo.sbpack/resources-auto/original.png";
+    [self setupPackagesWithFullPaths:@[[self fullPathForFile:@"project/Packages/foo.sbpack"]]];
+
+    [self createPNGAtPath:imgRelPath width:5 height:5];
+
+    _projectSettings.resourceAutoScaleFactor = 4;
+
+    [self setAllPackagesAutScalingTo:1];
+
+    [_projectSettings setProperty:@1 forRelPath:@"original.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+
+    [_resourceManager createCachedImageFromAutoPath:[self fullPathForFile:imgRelPath]
+                                             saveAs:[self fullPathForFile:@"resized.png"]
+                                      forResolution:@"tablethd"
+                                    projectSettings:_projectSettings
+                                    packageSettings:[_resourceManager loadAllPackageSettings]];
+
+    [self assertPNGAtPath:[self fullPathForFile:@"resized.png"] hasWidth:20 hasHeight:20];
+}
+
+- (void)setAllPackagesAutScalingTo:(NSInteger)autoScaling
+{
     NSArray *allPackages = [_resourceManager allPackages];
     for (RMPackage *aPackage in allPackages)
     {
         SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:aPackage];
         [packageSettings load];
 
-        packageSettings.defaultScale = 1;
+        packageSettings.resourceAutoScaleFactor = autoScaling;
         [packageSettings store];
     }
-
-    // Using default scaling - tablethd
-    [_resourceManager createCachedImageFromAutoPath:[self fullPathForFile:imgRelPath] saveAs:[self fullPathForFile:@"resized.png"] forResolution:@"tablethd" projectSettings:_projectSettings packageSettings:nil];
-
-    [self assertPNGAtPath:[self fullPathForFile:@"resized.png"] hasWidth:5 hasHeight:5];
 }
-
 
 
 #pragma mark - helper

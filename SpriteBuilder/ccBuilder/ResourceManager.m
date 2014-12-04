@@ -44,6 +44,7 @@
 #import "RMPackage.h"
 #import "ResourcePropertyKeys.h"
 #import "NotificationNames.h"
+#import "SBPackageSettings.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
 
@@ -128,7 +129,7 @@
 
 
 
-- (void) updatedWatchedPaths
+- (void)updateWatchedPaths
 {
     if (pathWatcher.isWatchingPaths)
     {
@@ -521,8 +522,6 @@
         dir.count = 1;
         dir.dirPath = dirPath;
         directories[dirPath] = dir;
-        
-        [self updatedWatchedPaths];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_ADDED
                                                             object:@{NOTIFICATION_USERINFO_KEY_FILEPATH : dir.dirPath, NOTIFICATION_USERINFO_KEY_RESOURCE : dir}];
@@ -532,7 +531,6 @@
     
     [self updateResourcesForPath:dirPath];
 }
-
 
 - (BOOL)isPackage:(NSString *)dirPath
 {
@@ -559,7 +557,7 @@
         if (!dir.count)
         {
             [directories removeObjectForKey:dirPath];
-            [self updatedWatchedPaths];
+            [self updateWatchedPaths];
         }
     }
 }
@@ -568,7 +566,7 @@
 {
     [directories removeAllObjects];
     [activeDirectories removeAllObjects];
-    [self updatedWatchedPaths];
+    [self updateWatchedPaths];
     [self notifyResourceObserversResourceListUpdated];
 }
 
@@ -652,12 +650,13 @@
                                saveAs:(NSString *)dstFile
                         forResolution:(NSString *)resolution
                       projectSettings:(ProjectSettings *)projectSettings
+                      packageSettings:(NSArray *)packageSettings
 {
     NSAssert(projectSettings != nil, @"ProjectSettings must not be nil.");
 
     RMResource *resource = [self resourceForAutoPath:autoPath];
 
-    float scaleFactor = [self scaleFactorForResource:resource resolution:resolution projectSettings:projectSettings];
+    float scaleFactor = [self scaleFactorForResource:resource resolution:resolution projectSettings:projectSettings packageSettings:packageSettings];
 
     CGImageRef imageSrc = [self loadImageAtPath:autoPath];
 
@@ -807,10 +806,13 @@
     return resource;
 }
 
-- (float)scaleFactorForResource:(RMResource *)resource resolution:(NSString *)resolution projectSettings:(ProjectSettings *)projectSettings
+- (float)scaleFactorForResource:(RMResource *)resource
+                     resolution:(NSString *)resolution
+                projectSettings:(ProjectSettings *)projectSettings
+                packageSettings:(NSArray *)packageSettings
 {
     float dstScale = [self dstScaleForResource:resource resolution:resolution projectSettings:projectSettings];
-    float srcScale = [self srcScaleForResource:resource projectSettings:projectSettings];
+    float srcScale = [self srcScaleForResource:resource projectSettings:projectSettings packageSettings:packageSettings];
     float scaleFactor = dstScale/srcScale;
     return scaleFactor;
 }
@@ -844,14 +846,20 @@
     return dstScale;
 }
 
-- (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings
+- (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings
 {
     id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    SBPackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
+
     if (srcScaleSetting)
     {
         return [srcScaleSetting integerValue] != 0
             ? [srcScaleSetting integerValue]
             : 1;
+    }
+    else if (aPackageSettings && aPackageSettings.resourceAutoScaleFactor != DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING)
+    {
+        return aPackageSettings.resourceAutoScaleFactor;
     }
     else
     {
@@ -859,6 +867,22 @@
     }
 }
 
+- (SBPackageSettings *)packageSettingsForResource:(RMResource *)resource packageSettings:(NSArray *)packageSettings
+{
+    for (SBPackageSettings *aPackageSettings in packageSettings)
+    {
+        if ([resource.filePath rangeOfString:aPackageSettings.package.dirPath].location != NSNotFound)
+        {
+            return aPackageSettings;
+        }
+    }
+
+    return nil;
+}
+
+// TODO: wow this method is really to alot more than the name implie
+// 1. figure out what it does
+// 2. divide and conquer
 - (NSString*) toAbsolutePath:(NSString*)path
 {
     if ([activeDirectories count] == 0) return NULL;
@@ -941,8 +965,7 @@
                 if (!cachedFileExists || !datesMatch)
                 {
                     // Not yet cached, create file
-                    [self createCachedImageFromAutoPath:autoFile saveAs:cachedFile forResolution:ext projectSettings:[AppDelegate appDelegate]
-                            .projectSettings];
+                    [self createCachedImageFromAutoPath:autoFile saveAs:cachedFile forResolution:ext projectSettings:[AppDelegate appDelegate].projectSettings packageSettings:nil];
                 }
                 return cachedFile;
             }
