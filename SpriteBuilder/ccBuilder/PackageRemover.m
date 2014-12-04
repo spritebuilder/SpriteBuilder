@@ -26,7 +26,7 @@
     {
         if ([_projectSettings removeResourcePath:package.dirPath error:localError])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_REMOVED
                                                                 object:self
                                                               userInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : package.dirPath, NOTIFICATION_USERINFO_KEY_RESOURCE : package}];
 

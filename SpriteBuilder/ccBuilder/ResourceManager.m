@@ -523,6 +523,11 @@
         directories[dirPath] = dir;
         
         [self updatedWatchedPaths];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_ADDED
+                                                            object:@{NOTIFICATION_USERINFO_KEY_FILEPATH : dir.dirPath, NOTIFICATION_USERINFO_KEY_RESOURCE : dir}];
+
+        [self updateWatchedPaths];
     }
     
     [self updateResourcesForPath:dirPath];
@@ -1231,7 +1236,7 @@
     // Make sure it is removed from the current project
     [[AppDelegate appDelegate].projectSettings removedResourceAt:res.relativePath];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_REMOVED
                                                         object:self
                                                       userInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : res.filePath, NOTIFICATION_USERINFO_KEY_RESOURCE : res}];
 }

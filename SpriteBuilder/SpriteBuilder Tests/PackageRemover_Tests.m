@@ -91,13 +91,12 @@
     RMPackage *packageWithBadPath = [[RMPackage alloc] init];
     packageWithBadPath.dirPath = [@"/badPath" stringByAppendingPackageSuffix];
 
-    id observerMockRemoved = [ObserverTestHelper observerMockForNotification:RESOURCE_REMOVED
+    id observerMockRemoved = [ObserverTestHelper observerMockForNotification:RESOURCE_PATH_REMOVED
                                                               expectedObject:[OCMArg any]
                                                             expectedUserInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : packageWithGoodPath.dirPath,
                                                                                NOTIFICATION_USERINFO_KEY_RESOURCE : packageWithGoodPath}];
 
     NSArray *packagesToBeRemoved = @[packageWithGoodPath, packageWithBadPath];
-
 
     [_projectSettings addResourcePath:packageWithGoodPath.dirPath error:nil];
 
