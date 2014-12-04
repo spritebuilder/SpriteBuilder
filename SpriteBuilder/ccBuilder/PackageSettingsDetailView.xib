@@ -296,7 +296,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="selectedTag" keyPath="currentPackageSettings.defaultScale" id="dmd-7L-fRA"/>
+                        <binding destination="-2" name="selectedTag" keyPath="currentPackageSettings.resourceAutoScaleFactor" id="dmd-7L-fRA"/>
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Osr-Rp-bsg">

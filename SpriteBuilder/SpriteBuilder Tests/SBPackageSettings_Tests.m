@@ -15,7 +15,7 @@
 #import "MiscConstants.h"
 #import "CCBPublisherTypes.h"
 
-@interface PackagePublishSettings_Tests : FileSystemTestCase
+@interface SBPackageSettings_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) RMPackage *package;
 @property (nonatomic, strong) SBPackageSettings *packagePublishSettings;
@@ -23,7 +23,7 @@
 @end
 
 
-@implementation PackagePublishSettings_Tests
+@implementation SBPackageSettings_Tests
 
 - (void)setUp
 {
@@ -63,7 +63,7 @@
     _packagePublishSettings.publishToZip = NO;
     _packagePublishSettings.publishToCustomOutputDirectory = YES;
     _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
-    _packagePublishSettings.defaultScale = 3;
+    _packagePublishSettings.resourceAutoScaleFactor = 3;
 
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     osSettingsIOS.audio_quality = 8;
@@ -88,7 +88,7 @@
     XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
     XCTAssertEqual(_packagePublishSettings.publishToZip, settingsLoaded.publishToZip);
     XCTAssertEqual(_packagePublishSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
-    XCTAssertEqual(_packagePublishSettings.defaultScale, settingsLoaded.defaultScale);
+    XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, settingsLoaded.resourceAutoScaleFactor);
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
@@ -115,7 +115,7 @@
 
     [_packagePublishSettings load];
 
-    XCTAssertEqual(_packagePublishSettings.defaultScale, -1);
+    XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING);
 }
 
 - (void)testEffectiveOutputDir

@@ -848,7 +848,7 @@
 		E525F30359F75816D1F178F1 /* PublishUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE25558D5B40E8284D62 /* PublishUtil.m */; };
 		E525F3051C62E3CBA69E877A /* InspectorIntegerLabeled.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F90E4BCE3BA5130B8E9D /* InspectorIntegerLabeled.xib */; };
 		E525F308447A45DFEE6C23EE /* ProjectMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9C63E463EE451384EBB /* ProjectMigrator.m */; };
-		E525F30A9EE36DBB3B363EE8 /* PackagePublishSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC9B1AB11FC59D613AA1 /* PackagePublishSettings_Tests.m */; };
+		E525F30A9EE36DBB3B363EE8 /* SBPackageSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC9B1AB11FC59D613AA1 /* SBPackageSettings_Tests.m */; };
 		E525F310D9DF45E96DCBAA31 /* ResourceShowInFinderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDDD5A720D91B11798A4 /* ResourceShowInFinderCommand.m */; };
 		E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F48CD0F42A2D56A68444 /* NSAlert+Convenience.m */; };
 		E525F32A0B8495A50314A1BD /* CreateDirectoryFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F849059B8F5243C1C0C3 /* CreateDirectoryFileCommand.m */; };
@@ -2680,7 +2680,7 @@
 		E525FC789866B6FA119F827F /* PluginNode_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginNode_Tests.m; sourceTree = "<group>"; };
 		E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemTestCase.m; sourceTree = "<group>"; };
 		E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishImageOperation.m; sourceTree = "<group>"; };
-		E525FC9B1AB11FC59D613AA1 /* PackagePublishSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackagePublishSettings_Tests.m; sourceTree = "<group>"; };
+		E525FC9B1AB11FC59D613AA1 /* SBPackageSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPackageSettings_Tests.m; sourceTree = "<group>"; };
 		E525FCA57453D9BC4BFBBF24 /* OpenProjectInXCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenProjectInXCode.h; sourceTree = "<group>"; };
 		E525FCB3C5115B9C66A80E1D /* InspectorText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorText.h; sourceTree = "<group>"; };
 		E525FCB569937F41C9156ED2 /* OpenProjectInXCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenProjectInXCode.m; sourceTree = "<group>"; };
@@ -3847,7 +3847,7 @@
 				E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */,
 				E525FD702E268242A41C54F4 /* PackageExporter_Tests.m */,
 				E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */,
-				E525FC9B1AB11FC59D613AA1 /* PackagePublishSettings_Tests.m */,
+				E525FC9B1AB11FC59D613AA1 /* SBPackageSettings_Tests.m */,
 				E525FB3851A1B28013282F4C /* PublishOSSettings_Tests.m */,
 			);
 			name = Packages;
@@ -7564,7 +7564,7 @@
 				E525F2938670750314B81156 /* CCBPublisher_Tests.m in Sources */,
 				E525F72F2963947D91C8567B /* FileSystemTestCase+Images.m in Sources */,
 				E525F455AC1D4C9B7F74596E /* FormatConvert_Tests.m in Sources */,
-				E525F30A9EE36DBB3B363EE8 /* PackagePublishSettings_Tests.m in Sources */,
+				E525F30A9EE36DBB3B363EE8 /* SBPackageSettings_Tests.m in Sources */,
 				E525F4F4F15D32310BBCA63D /* CCBPublisherController_Tests.m in Sources */,
 				E525FFF21919490B3568DC1F /* ZipDirectoryOperation_Tests.m in Sources */,
 				E525FBFD616A1BE9F86C2312 /* PublishOSSettings_Tests.m in Sources */,
