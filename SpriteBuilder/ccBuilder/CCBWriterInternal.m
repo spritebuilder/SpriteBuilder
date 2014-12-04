@@ -431,6 +431,11 @@
 		serializedValue = serializedEffectsData;
 		
 	}
+    else if([type isEqualToString:@"TokenArray"])
+    {
+        NSArray *tokens = [node valueForKey:name];
+        serializedValue = tokens;
+    }
     else
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);

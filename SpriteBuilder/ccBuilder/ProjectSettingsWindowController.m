@@ -9,10 +9,8 @@
 #import "ProjectSettingsWindowController.h"
 #import "ProjectSettings.h"
 #import "SBPackageSettings.h"
-#import "PackageSettingsDetailView.h"
 #import "RMPackage.h"
 #import "ResourceManager.h"
-#import "MainProjectSettingsDetailView.h"
 #import "NSString+RelativePath.h"
 #import "MiscConstants.h"
 #import "PublishUtil.h"
@@ -121,9 +119,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (void)loadMainProjectSettingsView
 {
-    MainProjectSettingsDetailView *view = [self loadViewWithNibName:@"MainProjectSettingsDetailView" viewClass:[MainProjectSettingsDetailView class]];
-
-    view.showAndroidSettings = IS_SPRITEBUILDER_PRO || YES;
+    [self loadViewWithNibName:@"MainProjectSettingsDetailView"];
 }
 
 - (void)loadDetailViewForPackage:(SBPackageSettings *)settings
@@ -131,12 +127,10 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     NSAssert(settings != nil, @"packagePublishSettings must not be nil");
     self.currentPackageSettings = settings;
 
-    PackageSettingsDetailView *view = [self loadViewWithNibName:@"PackageSettingsDetailView" viewClass:[PackageSettingsDetailView class]];
-
-    view.showAndroidSettings = IS_SPRITEBUILDER_PRO || YES;
+    [self loadViewWithNibName:@"PackageSettingsDetailView"];
 }
 
-- (id)loadViewWithNibName:(NSString *)nibName viewClass:(Class)viewClass
+- (void)loadViewWithNibName:(NSString *)nibName
 {
     NSArray *topObjects;
     [[NSBundle mainBundle] loadNibNamed:nibName owner:self topLevelObjects:&topObjects];
@@ -145,13 +139,12 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
     for (id object in topObjects)
     {
-        if ([object isKindOfClass:viewClass])
+        if ([object isKindOfClass:[NSView class]])
         {
             [self.detailView addSubview:object];
-            return object;
+            return;
         }
     }
-    return nil;
 }
 
 - (IBAction)acceptSheet:(id)sender

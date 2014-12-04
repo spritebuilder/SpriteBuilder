@@ -15,8 +15,6 @@
 
 @interface PreviewImageViewController : PreviewBaseViewController <PreviewViewControllerProtocol>
 
-@property (nonatomic, weak) IBOutlet NSView *androidSettingsContainer;
-
 @property (nonatomic, weak) IBOutlet CCBImageView *previewMain;
 @property (nonatomic, weak) IBOutlet CCBImageView *previewPhone;
 @property (nonatomic, weak) IBOutlet CCBImageView *previewPhonehd;

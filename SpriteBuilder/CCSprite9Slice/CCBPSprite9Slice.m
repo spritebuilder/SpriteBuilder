@@ -8,6 +8,7 @@
 
 #import "CCBPSprite9Slice.h"
 #import "AppDelegate.h"
+#import "InspectorController.h"
 
 @implementation CCBPSprite9Slice
 
@@ -26,10 +27,13 @@
 	
 	if(self.marginRight + marginLeft >= 1)
 	{
-		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The left & right margins should add up to less than 1"];
-		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginLeft" afterDelay:0];
-		return;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[InspectorController sharedController] refreshProperty:@"marginLeft"];
+		    [[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The left & right margins should add up to less than 1"];
+        });
+        return;
 	}
+
 	[super setMarginLeft:marginLeft];
 }
 
@@ -38,10 +42,11 @@
     marginRight = clampf(marginRight, 0, 1);
 	if(self.marginLeft + marginRight >= 1)
 	{
-		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The left & right margins should add up to less than 1"];
-		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginRight" afterDelay:0];
-		
-		return;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[InspectorController sharedController] refreshProperty:@"marginRight"];
+            [[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The left & right margins should add up to less than 1"];
+        });
+        return;
 	}
 	
 	[super setMarginRight:marginRight];
@@ -52,8 +57,10 @@
     marginTop = clampf(marginTop, 0, 1);
 	if(self.marginBottom + marginTop >= 1)
 	{
-		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The top & bottom margins should add up to less than 1"];
-		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginTop" afterDelay:0];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[InspectorController sharedController] refreshProperty:@"marginTop"];
+		    [[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The top & bottom margins should add up to less than 1"];
+        });
 		return;
 	}
 	
@@ -66,8 +73,10 @@
     marginBottom = clampf(marginBottom, 0, 1);
 	if(self.marginTop + marginBottom >= 1)
 	{
-		[[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The top & bottom margins should add up to less than 1"];
-		[[AppDelegate appDelegate] performSelector:@selector(refreshProperty:) withObject:@"marginBottom" afterDelay:0];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[InspectorController sharedController] refreshProperty:@"marginBottom"];
+            [[AppDelegate appDelegate] modalDialogTitle:@"Margin Restrictions" message:@"The top & bottom margins should add up to less than 1"];
+        });
 		return;
 	}
 	

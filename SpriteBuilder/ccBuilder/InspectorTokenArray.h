@@ -1,7 +1,7 @@
 /*
- * CocosBuilder: http://www.cocosbuilder.com
+ * SpriteBuilder: http://www.spritebuilder.com
  *
- * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2014 Apportable
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,10 @@
  * THE SOFTWARE.
  */
 
-#import <Cocoa/Cocoa.h>
+#import "InspectorValue.h"
 
-@interface AboutWindow : NSWindowController
-{
-    IBOutlet NSTextField* txtVersion;
-    IBOutlet NSButton* btnVersion;
-}
+@interface InspectorTokenArray : InspectorValue
 
-@property (nonatomic,strong) NSString* version;
-
-- (IBAction)btnViewOnGithub:(id)sender;
-- (IBAction)btnSupportForum:(id)sender;
-- (IBAction)btnReportBug:(id)sender;
-- (IBAction)btnGetSource:(id)sender;
-- (IBAction)btnUserGuide:(id)sender;
+@property (nonatomic, copy) NSArray *tokens;
 
 @end

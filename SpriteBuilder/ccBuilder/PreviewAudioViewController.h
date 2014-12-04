@@ -15,7 +15,6 @@
 
 @interface PreviewAudioViewController : PreviewBaseViewController <PreviewViewControllerProtocol>
 
-@property (nonatomic, weak) IBOutlet NSView *androidSettingsContainer;
 @property (nonatomic, weak) IBOutlet NSView *audioControllerContainer;
 @property (nonatomic, weak) IBOutlet NSImageView *iconImage;
 

@@ -26,31 +26,18 @@
 #import "AppDelegate.h"
 
 @interface AboutWindow ()
+
 @property (weak) IBOutlet NSButton *buttonViewOnGithub;
 
 @end
 
 @implementation AboutWindow
 
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
-
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
-    // Load version file into version text field
-	
 
     NSString* version = [self versionAboutInfo];
-    
     if (version)
     {
         [txtVersion setStringValue:version];
@@ -61,23 +48,11 @@
     }
     
     self.version = [version substringWithRange:NSMakeRange(version.length-11, 10)];
-    
-    // Add close button
+
     NSButton* closeButton = [NSWindow standardWindowButton:NSWindowCloseButton forStyleMask:NSTitledWindowMask];
     [closeButton setFrameOrigin:NSMakePoint(21, 317)];
     NSView* contentView = self.window.contentView;
     [contentView addSubview:closeButton];
-	
-
-//#ifndef SPRITEBUILDER_PRO
-	//Not pro version.
-	self.proSuffix.stringValue = @"";
-//#else
-	//If is Pro version
-//	[self.buttonViewOnGithub setHidden:YES];
-//#endif
-
-
 }
 
 -(NSString*)versionAboutInfo
@@ -85,18 +60,10 @@
 	ProjectSettings* projectSettings = [[ProjectSettings alloc] init];
 	NSDictionary * versionDictionary = [projectSettings getVersionDictionary];
 
-#ifdef SPRITEBUILDER_PRO
-	
-	
-	
 	NSString * aboutInfo = @"";
 	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Version: %@\n", versionDictionary[@"version"]]];
 	aboutInfo = [aboutInfo stringByAppendingString:[NSString stringWithFormat:@"SB Revision: %@\n", versionDictionary[@"revision"]]];
-	
-#else
-	NSString * aboutInfo = [NSString stringWithFormat:@"Version:%@",versionDictionary[@"version"]];
-#endif
-	
+
 	return aboutInfo;
 }
 

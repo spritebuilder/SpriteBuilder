@@ -80,15 +80,17 @@
     }
     else if (row == kCCBRowNone)
     {
-        CCNode* lastNode = [outlineView itemAtRow:[outlineView numberOfRows]-1];
-        if (lastNode.seqExpanded)
+        id lastItem = [outlineView itemAtRow:[outlineView numberOfRows]-1];
+        if ([lastItem isKindOfClass:[CCNode class]])
         {
-            return [[[lastNode plugIn] animatablePropertiesForNode:lastNode] count]-1;
+            CCNode *lastNode = (CCNode*)lastItem;
+            if(lastNode.seqExpanded)
+            {
+                return [[[lastNode plugIn] animatablePropertiesForNode:lastNode] count] - 1;
+            }
         }
-        else
-        {
-            return 0;
-        }
+
+        return 0;
     }
     
     NSRect cellFrame = [outlineView frameOfCellAtColumn:0 row:row];

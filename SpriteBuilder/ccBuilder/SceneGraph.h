@@ -30,5 +30,6 @@ CCNode * findSceneRoot(CCNode * node);
 
 @property (nonatomic,strong) CCNode* rootNode;
 @property (nonatomic,strong) SequencerJoints * joints;
+@property (nonatomic,strong) CCNode* lightIcons;
 
 @end
