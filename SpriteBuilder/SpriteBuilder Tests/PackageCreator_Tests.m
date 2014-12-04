@@ -15,11 +15,9 @@
 #import "PackageCreator.h"
 #import "FileSystemTestCase.h"
 #import "SBAssserts.h"
-#import "SBPackageSettingsManager.h"
 
 @interface PackageCreator_Tests : FileSystemTestCase
 
-@property (nonatomic, strong) SBPackageSettingsManager *packageSettingsManager;
 @property (nonatomic, strong) PackageCreator *packageCreator;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) id fileManagerMock;
@@ -32,14 +30,11 @@
 {
     [super setUp];
 
-
-    self.packageSettingsManager = [[SBPackageSettingsManager alloc] init];
     self.projectSettings = [[ProjectSettings alloc] init];
     self.projectSettings.projectPath = [self fullPathForFile:@"foo.spritebuilder/packagestests.ccbproj"];
 
     self.packageCreator = [[PackageCreator alloc] init];
     _packageCreator.projectSettings = _projectSettings;
-    _packageCreator.packageSettingsManager = _packageSettingsManager;
 
     [self createFolders:@[@"foo.spritebuilder/Packages"]];
 }
