@@ -49,7 +49,10 @@
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
 @property (nonatomic, weak) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 
-- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings queue:(NSOperationQueue *)queue;
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
+              packageSettings:(NSArray *)packageSettings
+                     warnings:(CCBWarnings *)someWarnings
+                        queue:(NSOperationQueue *)queue;
 
 - (BOOL)generateAndEnqueuePublishingTasks;
 

@@ -46,7 +46,10 @@
     [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
     self.warnings = [[CCBWarnings alloc] init];
-    self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings warnings:_warnings finishedBlock:nil];
+    self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+                                                   packageSettings:@[]
+                                                          warnings:_warnings
+                                                     finishedBlock:nil];
 
     self.targetIOS = [[CCBPublishingTarget alloc] init];
     _targetIOS.osType = kCCBPublisherOSTypeIOS;

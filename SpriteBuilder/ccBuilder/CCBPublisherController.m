@@ -29,6 +29,7 @@
     _warnings.warningsDescription = @"Publisher Warnings";
 
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+                                                   packageSettings:_packageSettings
                                                           warnings:_warnings
                                                      finishedBlock:_finishBlock];
 

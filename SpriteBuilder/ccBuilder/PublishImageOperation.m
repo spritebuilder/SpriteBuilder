@@ -175,7 +175,8 @@
         [[ResourceManager sharedManager] createCachedImageFromAutoPath:srcAutoPath
                                                                 saveAs:_dstFilePath
                                                          forResolution:_resolution
-                                                       projectSettings:_projectSettings];
+                                                       projectSettings:_projectSettings
+                                                       packageSettings:_packageSettings];
 
         // Convert it
         NSString *dstPathConverted = nil;

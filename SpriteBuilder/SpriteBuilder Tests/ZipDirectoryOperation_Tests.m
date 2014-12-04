@@ -34,6 +34,7 @@
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
 
     self.operation = [[ZipDirectoryOperation alloc] initWithProjectSettings:projectSettings
+                                                            packageSettings:nil
                                                                    warnings:warnings
                                                              statusProgress:nil];
     _operation.inputPath = [self fullPathForFile:@"in"];
