@@ -881,8 +881,8 @@
     return nil;
 }
 
-// TODO: wow this method is really to alot more than the name implie
-// 1. figure out what it does
+// TODO: wow this method is really alot more than the name implies
+// 1. figure out what it does - partial answer: When a node in scene changes this method is invoked and updates it, for example scale changes
 // 2. divide and conquer
 - (NSString*) toAbsolutePath:(NSString*)path
 {

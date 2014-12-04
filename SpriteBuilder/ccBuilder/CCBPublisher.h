@@ -12,7 +12,7 @@
 @property (nonatomic, weak) id<TaskStatusUpdaterProtocol> taskStatusUpdater;
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
-              packageSettings:(NSArray *)packageSettings
+              packageSettings:(NSArray *)somePackageSettings
                      warnings:(CCBWarnings *)someWarnings
                 finishedBlock:(PublisherFinishBlock)finishBlock;
 

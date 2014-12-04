@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <MacTypes.h>
 #import "ResourceManager.h"
 #import "RMResource.h"
 #import "FileSystemTestCase.h"

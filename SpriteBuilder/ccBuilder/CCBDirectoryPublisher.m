@@ -67,12 +67,12 @@
 @implementation CCBDirectoryPublisher
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
-              packageSettings:(NSArray *)packageSettings
+              packageSettings:(NSArray *)somePackageSettings
                      warnings:(CCBWarnings *)someWarnings
                         queue:(NSOperationQueue *)queue
 {
     NSAssert(someProjectSettings != nil, @"project settings should never be nil! Publisher won't work without.");
-    NSAssert(packageSettings != nil, @"package settings must not be nil.");
+    NSAssert(somePackageSettings != nil, @"package settings must not be nil.");
     NSAssert(someWarnings != nil, @"warnings are nil. Are you sure you don't need them?");
     NSAssert(queue != nil, @"queue must not be nil");
 
@@ -80,10 +80,10 @@
 
 	if (self)
 	{
-        self.queue = queue;
         self.projectSettings = someProjectSettings;
+        self.packageSettings = somePackageSettings;
         self.warnings = someWarnings;
-        self.packageSettings = packageSettings;
+        self.queue = queue;
 
         self.modifiedDatesCache = [[DateCache alloc] init];
 

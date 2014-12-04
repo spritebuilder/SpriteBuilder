@@ -50,7 +50,7 @@
 @property (nonatomic, weak) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
-              packageSettings:(NSArray *)packageSettings
+              packageSettings:(NSArray *)somePackageSettings
                      warnings:(CCBWarnings *)someWarnings
                         queue:(NSOperationQueue *)queue;
 

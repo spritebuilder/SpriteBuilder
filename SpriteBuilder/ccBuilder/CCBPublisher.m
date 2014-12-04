@@ -33,11 +33,12 @@
 @implementation CCBPublisher
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
-              packageSettings:(NSArray *)packageSettings
+              packageSettings:(NSArray *)somePackageSettings
                      warnings:(CCBWarnings *)someWarnings
                 finishedBlock:(PublisherFinishBlock)finishBlock
 {
     NSAssert(someProjectSettings != nil, @"project settings should never be nil! Publisher won't work without.");
+    NSAssert(somePackageSettings != nil, @"package settings should never be nil! Publisher won't work without.");
     NSAssert(someWarnings != nil, @"warnings are nil. Are you sure you don't need them?");
 
     self = [super init];
@@ -47,7 +48,7 @@
 	}
 
     self.projectSettings = someProjectSettings;
-    self.packageSettings = packageSettings;
+    self.packageSettings = somePackageSettings;
     self.warnings = someWarnings;
     self.finishBlock = finishBlock;
 
@@ -203,8 +204,10 @@
 
 - (void)enqueueGenerateFilesOperationWithTarget:(CCBPublishingTarget *)target
 {
-    PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc]
-                                                                                 initWithProjectSettings:_projectSettings packageSettings:nil warnings:_warnings statusProgress:_publishingTaskStatusProgress];
+    PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                                packageSettings:_packageSettings
+                                                                                                       warnings:_warnings
+                                                                                                 statusProgress:_publishingTaskStatusProgress];
     operation.osType = target.osType;
     operation.outputDir = target.outputDirectory;
     operation.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;

@@ -21,6 +21,8 @@
 #import "ProjectSettings+Convenience.h"
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
+#import "RMPackage.h"
+#import "SBPackageSettings.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -43,11 +45,16 @@
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
     _projectSettings.publishEnabledIOS = YES;
     _projectSettings.publishEnabledAndroid = NO;
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
+
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
+    [_projectSettings addResourcePath:package.dirPath error:nil];
+
+    SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
 
     self.warnings = [[CCBWarnings alloc] init];
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
-                                                   packageSettings:@[]
+                                                   packageSettings:@[packageSettings]
                                                           warnings:_warnings
                                                      finishedBlock:nil];
 

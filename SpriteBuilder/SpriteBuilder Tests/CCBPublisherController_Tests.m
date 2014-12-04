@@ -71,7 +71,7 @@
     androidSettings.resolution_tablet = YES;
     androidSettings.resolution_phonehd = YES;
 
-    [self createFolders:@[@"Published-Packages", @"baa.spritebuilder/Packages/foo.sbpack"]];
+    [self createFolders:@[@"baa.spritebuilder/Packages/foo.sbpack"]];
 
     _publisherController.packageSettings = @[_packageSettings];
 }
@@ -220,6 +220,8 @@
 
 - (void)testNothingToPublish
 {
+    [self configureSinglePackagePublishSettingCase];
+
     _packageSettings.publishToZip = NO;
     _packageSettings.publishToMainProject = NO;
     _packageSettings.publishToCustomOutputDirectory = NO;
