@@ -17,7 +17,7 @@
 
 +(CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-    return [self effectWithGroups:nil specularColor:[CCColor whiteColor] shininess:10.0f];
+    return [self effectWithGroups:nil specularColor:[CCColor whiteColor] shininess:0.1f];
 }
 
 
