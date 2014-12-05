@@ -1446,6 +1446,13 @@ typedef enum
     
     //[self updateJSControlledMenu];
     [self updateCanvasBorderMenu];
+    
+    [self willChangeValueForKey:@"showJoints"];
+    [self didChangeValueForKey:@"showJoints"];
+
+    [self willChangeValueForKey:@"showLights"];
+    [self didChangeValueForKey:@"showLights"];
+    
 }
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
@@ -2286,6 +2293,28 @@ typedef enum
     [outlineHierarchy reloadData];
     [self setSelectedNodes: [NSArray arrayWithObject: addedNode]];
     [_inspectorController updateInspectorFromSelection];
+}
+
+-(BOOL)showLights
+{
+    BOOL allLightsHidden = YES;
+    for (CCNode *lightIcon in [SceneGraph instance].lightIcons.children)
+    {
+        if (!lightIcon.hidden)
+        {
+            allLightsHidden = NO;
+        }
+    }
+    return !allLightsHidden;
+}
+
+-(void)setShowLights:(BOOL)showLights
+{
+    for (CCNode *lightIcon in [SceneGraph instance].lightIcons.children)
+    {
+        lightIcon.hidden = !showLights;
+    }
+    [sequenceHandler.outlineHierarchy reloadItem:nil reloadChildren:YES];
 }
 
 - (void) gotoAutoplaySequence
