@@ -308,6 +308,30 @@
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet.plist"];
 }
 
+- (void)testSpriteSheetsFileLookup
+{
+    [self copyTestingResource:@"photoshop.psd" toRelPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet1/resources-auto/rock.psd"];
+    [self copyTestingResource:@"photoshop.psd" toRelPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet2/resources-auto/scissors.psd"];
+
+    _projectSettings.publishResolution_ios_phone = YES;
+    _projectSettings.publishResolution_ios_phonehd = NO;
+    _projectSettings.publishResolution_ios_tablet = NO;
+    _projectSettings.publishResolution_ios_tablethd = NO;
+
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet1" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sheet2" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+
+    [_publisher addPublishingTarget:_targetIOS];
+    [_publisher start];
+
+    [self assertFileExists:@"Published-iOS/resources-tablet/sheet1.plist"];
+    [self assertFileExists:@"Published-iOS/resources-tablet/sheet2.plist"];
+    [self assertFileExists:@"Published-iOS/fileLookup.plist"];
+
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sheet1/rock.psd" renamedName:@"sheet1/rock.png"];
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sheet2/scissors.psd" renamedName:@"sheet2/scissors.png"];
+}
+
 - (void)testSpriteSheetOutputPVRRGBA88888AndPVRTC
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/pvr/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
