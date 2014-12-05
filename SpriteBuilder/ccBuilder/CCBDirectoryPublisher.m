@@ -438,14 +438,16 @@
 
 	for (NSString *resolution in _resolutions)
 	{
-		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
+		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
+                                                     stringByAppendingPathComponent:spriteSheetName];
 
         NSString *intermediateFileLookupPath = [publishDirectory  stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
 		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
 		{
-            LocalLog(@"[SPRITESHEET] SKIPPING exists and up to date - file name: %@, subpath: %@, resolution: %@, file path: %@", [spriteSheetFile lastPathComponent], subPath, resolution, spriteSheetFile);
+            LocalLog(@"[SPRITESHEET] SKIPPING exists and up to date - file name: %@, subpath: %@, resolution: %@, file path: %@",
+                     [spriteSheetFile lastPathComponent], subPath, resolution, spriteSheetFile);
 			continue;
 		}
 
@@ -469,7 +471,8 @@
         {
             if (![publishIntermediateFilesLookup writeToFile:intermediateFileLookupPath])
             {
-                [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@", spriteSheetName, resolution]];
+                [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@",
+                                                               spriteSheetName, resolution]];
             }
             [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:intermediateFileLookupPath];
         }];
