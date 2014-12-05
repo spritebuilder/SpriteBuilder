@@ -38,8 +38,7 @@
 - (IBAction) pressedContinue:(id)sender
 {
    	NSString* email = _email.stringValue;
-	UsageManager * usageManager = [[UsageManager alloc] init];
-	
+
     if (!email || [email isEqualToString:@""])
     {
         // The user choose not to sign up
@@ -55,10 +54,10 @@
         }
         
         // Send it to the server
-        [usageManager registerEmail:email reveiveNewsLetter:_checkBox.state == NSOnState];
+        [[UsageManager sharedManager] registerEmail:email reveiveNewsLetter:_checkBox.state == NSOnState];
     }
     
-	[usageManager setRegisterdEmailFlag];
+	[[UsageManager sharedManager] setRegisterdEmailFlag];
 	
 	[NSApp stopModal];
 }
