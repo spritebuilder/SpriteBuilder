@@ -134,6 +134,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     lightIconsLayer = [CCNode node];
     lightIconsLayer.name = @"lightIconsLayer";
     [self addChild:lightIconsLayer z:8];
+    
+    stageLight = [[CCLightNode alloc] init];
+    stageLight.ambientIntensity = 0.0f;
+    stageLight.specularIntensity = 0.0f;
+    stageLight.depth = 100.0f;
+    [self addChild:stageLight];
 
 	CCColor* borderColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7];
     
@@ -2261,6 +2267,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     
     [self updateAnchorPointCompensation];
+
+    CCNode *lightIconsRoot = lightIconsLayer.children[0];
+    stageLight.visible = (lightIconsRoot.children.count == 0);
+    stageLight.position = center;
 }
 
 - (void) updateAnchorPointCompensation

@@ -87,6 +87,7 @@ enum {
     CCNode* jointsLayer;
     CCNode* borderLayer;
     CCNode* lightIconsLayer;
+    CCLightNode* stageLight;
     RulersLayer* rulerLayer;
     GuidesLayer* guideLayer;
     NotesLayer* notesLayer;
