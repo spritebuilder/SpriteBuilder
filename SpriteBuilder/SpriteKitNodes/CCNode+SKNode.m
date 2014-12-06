@@ -114,15 +114,15 @@
 
 -(CGPoint) positionRelativeToParent:(CGPoint)position
 {
-	if (_parent == nil)
+	if (self.parent == nil)
 	{
 		//NSLog(@"'%@' %p has no parent", self.name, self);
 		return self.position;
 	}
 	
 	CGPoint newPosition = position;
-	CGSize parentSizeInPoints = [_parent convertContentSizeToPoints:_parent.contentSize type:_parent.contentSizeType];
-	CGPoint parentAnchorInPoints = CGPointMake(parentSizeInPoints.width * _parent.anchorPoint.x, parentSizeInPoints.height * _parent.anchorPoint.y);
+	CGSize parentSizeInPoints = [self.parent convertContentSizeToPoints:self.parent.contentSize type:self.parent.contentSizeType];
+	CGPoint parentAnchorInPoints = CGPointMake(parentSizeInPoints.width * self.parent.anchorPoint.x, parentSizeInPoints.height * self.parent.anchorPoint.y);
 	
 	switch (self.positionType.xUnit)
 	{
@@ -163,10 +163,10 @@
 -(void) didMoveToParent
 {
 	// update position based on parent values
-	[self positionRelativeToParent:_position];
+	[self positionRelativeToParent:self.position];
 	
 	// do so recursively for all child nodes
-	for (CCNode* node in _children)
+	for (CCNode* node in self.children)
 	{
 		[node positionRelativeToParent:node.position];
 	}

@@ -6,6 +6,8 @@
 //
 //
 
+#import <AppKit/NSFont.h>
+
 #import "CCBPluginSKLabelNode.h"
 
 @implementation CCBPluginSKLabelNode
@@ -72,7 +74,6 @@ SKNODE_COMPATIBILITY_CODE
 
 -(void) setVerticalAlignmentMode:(NSInteger)verticalAlignmentMode
 {
-	_isTransformDirty = YES;
 	_verticalAlignmentMode = verticalAlignmentMode;
 	
 	switch (_verticalAlignmentMode)
@@ -81,19 +82,19 @@ SKNODE_COMPATIBILITY_CODE
 		case SKLabelVerticalAlignmentModeBaseline:
 			//self.verticalAlignment = CCVerticalTextAlignmentCenter;
 			// TODO: how to find baseline?
-			_anchorPoint = CGPointMake(_anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
+			self.anchorPoint = CGPointMake(self.anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
 			break;
 		case SKLabelVerticalAlignmentModeCenter:
 			//self.verticalAlignment = CCVerticalTextAlignmentCenter;
-			_anchorPoint = CGPointMake(_anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
+			self.anchorPoint = CGPointMake(self.anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
 			break;
 		case SKLabelVerticalAlignmentModeTop:
 			//self.verticalAlignment = CCVerticalTextAlignmentTop;
-			_anchorPoint = CGPointMake(_anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
+			self.anchorPoint = CGPointMake(self.anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
 			break;
 		case SKLabelVerticalAlignmentModeBottom:
 			//self.verticalAlignment = CCVerticalTextAlignmentBottom;
-			_anchorPoint = CGPointMake(_anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
+			self.anchorPoint = CGPointMake(self.anchorPoint.x, [self anchorPointYForVerticalAlignmentMode:_verticalAlignmentMode]);
 			break;
 			
 		default:
@@ -108,22 +109,21 @@ SKNODE_COMPATIBILITY_CODE
 
 -(void) setHorizontalAlignmentMode:(NSInteger)horizontalAlignmentMode
 {
-	_isTransformDirty = YES;
 	_horizontalAlignmentMode = horizontalAlignmentMode;
 	switch (_horizontalAlignmentMode)
 	{
 			// FIXME: cocos2d text alignments seem to have no effect, emulating it via anchorPoint (which SKLabelNode doesn't have, so that works fine)
 		case SKLabelHorizontalAlignmentModeCenter:
 			//self.horizontalAlignment = CCTextAlignmentCenter;
-			_anchorPoint = CGPointMake(0.5, _anchorPoint.y);
+			self.anchorPoint = CGPointMake(0.5, self.anchorPoint.y);
 			break;
 		case SKLabelHorizontalAlignmentModeLeft:
 			//self.horizontalAlignment = CCTextAlignmentLeft;
-			_anchorPoint = CGPointMake(0.0, _anchorPoint.y);
+			self.anchorPoint = CGPointMake(0.0, self.anchorPoint.y);
 			break;
 		case SKLabelHorizontalAlignmentModeRight:
 			//self.horizontalAlignment = CCTextAlignmentRight;
-			_anchorPoint = CGPointMake(1.0, _anchorPoint.y);
+			self.anchorPoint = CGPointMake(1.0, self.anchorPoint.y);
 			break;
 			
 		default:

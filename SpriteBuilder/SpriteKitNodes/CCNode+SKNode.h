@@ -64,7 +64,7 @@
 } \
 -(void) updatePositionRecursive { \
 	self.position = _positionAccordingToCocos; \
-	for (CCNode* node in _children) { \
+	for (CCNode* node in self.children) { \
 		if ([node respondsToSelector:@selector(updatePositionRecursive)]) { \
 			[node updatePositionRecursive]; \
 		} \

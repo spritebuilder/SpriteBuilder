@@ -102,16 +102,13 @@
     return color;
 }
 
-+ (ccBlendFunc) blendFuncValFromDict:(NSDictionary*) dict forKey:(NSString*) key
++ (CCBlendMode *) blendModeFromDict:(NSDictionary*) dict forKey:(NSString*) key
 {
     NSArray* arr = [dict valueForKey:key];
-    int src = [[arr objectAtIndex:0] intValue];
-    int dst = [[arr objectAtIndex:1] intValue];
-    ccBlendFunc blendFunc;
-    blendFunc.src = src;
-    blendFunc.dst = dst;
-    
-    return blendFunc;
+    return [CCBlendMode blendModeWithOptions:@{
+        CCBlendFuncSrcColor: arr[0],
+        CCBlendFuncDstColor: arr[1],
+    }];
 }
 
 #pragma mark Store extra properties (only used by editor)
@@ -170,7 +167,7 @@
 {
     //[node setColor: [CCBReaderInternalV1 color3ValFromDict:props forKey:@"color"]];
     [node setOpacity: [CCBReaderInternalV1 intValFromDict:props forKey:@"opacity"]];
-    node.blendFunc = [CCBReaderInternalV1 blendFuncValFromDict:props forKey:@"blendFunc"];
+    node.blendMode = [CCBReaderInternalV1 blendModeFromDict:props forKey:@"blendFunc"];
 }
 
 + (void) setPropsForLayerGradient: (CCNodeGradient*) node props:(NSDictionary*)props
@@ -198,7 +195,7 @@
     //node.color = [CCBReaderInternalV1 color3ValFromDict:props forKey:@"color"];
     node.flipX = [CCBReaderInternalV1 boolValFromDict:props forKey:@"flipX"];
     node.flipY = [CCBReaderInternalV1 boolValFromDict:props forKey:@"flipY"];
-    node.blendFunc = [CCBReaderInternalV1 blendFuncValFromDict:props forKey:@"blendFunc"];
+    node.blendMode = [CCBReaderInternalV1 blendModeFromDict:props forKey:@"blendFunc"];
 }
 
 + (void) setPropsForLabelBMFont: (CCLabelBMFont*) node props:(NSDictionary*)props

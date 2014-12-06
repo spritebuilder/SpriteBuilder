@@ -338,6 +338,7 @@
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
+		98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */; };
 		9D0CD23F1A252CA000FF785F /* light-point.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0CD23D1A252CA000FF785F /* light-point.png */; };
 		9D0CD2401A252CA000FF785F /* light-point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0CD23E1A252CA000FF785F /* light-point@2x.png */; };
 		9D9BA6C61A1E85C60019C1DE /* CCLightNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 9D9BA6B81A1E84BA0019C1DE /* CCLightNode.ccbPlugNode */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -355,7 +356,6 @@
 		9DBC22111A2CFA1C00FF9D64 /* light-directional@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DBC220F1A2CFA1C00FF9D64 /* light-directional@2x.png */; };
 		9DD4F4B31A1FCE5700438647 /* InspectorTokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B11A1FCE5700438647 /* InspectorTokenArray.m */; };
 		9DD4F4B41A1FCE5700438647 /* InspectorTokenArray.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B21A1FCE5700438647 /* InspectorTokenArray.xib */; };
-		98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
