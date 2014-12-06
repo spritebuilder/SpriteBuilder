@@ -3589,7 +3589,10 @@
 				7789ABC1133AA82000CEFCC7 /* Frameworks */,
 				7789ABBF133AA82000CEFCC7 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 0;
 		};
 		7789ABBF133AA82000CEFCC7 /* Products */ = {
 			isa = PBXGroup;
