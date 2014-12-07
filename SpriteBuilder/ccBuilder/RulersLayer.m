@@ -126,8 +126,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
     
     CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
     
-    //CGFloat scale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
-    CGFloat scale = dir.contentScaleFactor;
+    CGFloat scale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
     
     // Resize backrounds
     bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth / scale);

@@ -215,6 +215,7 @@ void ApplyCustomNodeVisitSwizzle()
     
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+    [director setUseRetinaIfAvailable:YES];
 	
 	[director setDisplayStats:NO];
 	[director setProjection:CCDirectorProjection2D];
@@ -222,8 +223,7 @@ void ApplyCustomNodeVisitSwizzle()
     
 	NSAssert(cocosView, @"cocosView is nil");
     
-    // TODO: Add support for retina display
-    //[cocosView setWantsBestResolutionOpenGLSurface:YES];
+    [cocosView setWantsBestResolutionOpenGLSurface:YES];
 	[director setView:cocosView];
     
     _baseContentScaleFactor = director.deviceContentScaleFactor;
@@ -3197,8 +3197,8 @@ typedef enum
     }
     
     [CCDirector sharedDirector].contentScaleFactor = s;
-    [CCDirector sharedDirector].UIScaleFactor = 1.0 / s;
-    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:s];
+    [CCDirector sharedDirector].UIScaleFactor = 1.0 / res.scale;
+    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
@@ -4266,9 +4266,11 @@ typedef enum
         if (dir.deviceContentScaleFactor != _baseContentScaleFactor) {
             
             _baseContentScaleFactor = dir.deviceContentScaleFactor;
+            CGFloat tmp = dir.contentScaleFactor;
             dir.contentScaleFactor = _baseContentScaleFactor;
             CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
             [[CCDirector sharedDirector] reshapeProjection:realSize];
+            dir.contentScaleFactor = tmp;
             
             [self updatePositionScaleFactor];
         }
