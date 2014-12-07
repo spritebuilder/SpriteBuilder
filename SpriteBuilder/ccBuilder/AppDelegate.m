@@ -215,16 +215,14 @@ void ApplyCustomNodeVisitSwizzle()
     
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-    [director setUseRetinaIfAvailable:YES];
+
+    NSAssert(cocosView, @"cocosView is nil");
+    [director setView:cocosView];
+    [cocosView setWantsBestResolutionOpenGLSurface:YES];
+    [[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
 	
 	[director setDisplayStats:NO];
-	[director setProjection:CCDirectorProjection2D];
-    //[cocosView openGLContext];
-    
-	NSAssert(cocosView, @"cocosView is nil");
-    
-    [cocosView setWantsBestResolutionOpenGLSurface:YES];
-	[director setView:cocosView];
+	[director setProjection:CCDirectorProjection2D];    
     
     _baseContentScaleFactor = director.deviceContentScaleFactor;
     
