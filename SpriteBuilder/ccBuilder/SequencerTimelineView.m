@@ -36,27 +36,21 @@
     // Load graphic assets
     
     // Background
-    imgBg = [NSImage imageNamed:@"seq-tl-bg.png"];
+    imgBg = [NSImage imageNamed:@"seq-tl-bg"];
     [imgBg setFlipped:YES];
     
     // Markers
-    imgMarkMajor = [NSImage imageNamed:@"seq-tl-mark-major.png"];
-    imgMarkMinor = [NSImage imageNamed:@"seq-tl-mark-minor.png"];
+    imgMarkMajor = [NSImage imageNamed:@"seq-tl-mark-major"];
+    imgMarkMinor = [NSImage imageNamed:@"seq-tl-mark-minor"];
     
     [imgMarkMajor setFlipped:YES];
     [imgMarkMinor setFlipped:YES];
     
-    imgEndmarker = [NSImage imageNamed:@"seq-endmarker.png"];
-    imgStartmarker = [NSImage imageNamed:@"seq-startmarker.png"];
+    imgEndmarker = [NSImage imageNamed:@"seq-endmarker"];
+    imgStartmarker = [NSImage imageNamed:@"seq-startmarker"];
     
-    // Numbers
-    imgNumbers = [NSImage imageNamed:@"ruler-numbers.png"];
-    
-    // Rects for the individual numbers
-    for (int i = 0; i < 10; i++)
-    {
-        numberRects[i] = NSMakeRect(18+6*i, 0, 6, 8);
-    }
+    NSFont *f = [NSFont fontWithName:@"Lucida Grande" size:9];
+    fontAttrs = @{ NSFontAttributeName: f, NSForegroundColorAttributeName: [NSColor colorWithWhite:0.33 alpha:1.0] };
     
     return self;
 }
@@ -64,12 +58,7 @@
 - (void) drawNumber:(int)num at:(NSPoint)pt
 {
     NSString* str = [NSString stringWithFormat:@"%d",num];
-    for (int i = 0; i < [str length]; i++)
-    {
-        int ch = [str characterAtIndex:i] - '0';
-        
-        [imgNumbers drawAtPoint:NSMakePoint(pt.x+i*6, pt.y) fromRect:numberRects[ch] operation:NSCompositeSourceOver fraction:1];
-    }
+    [str drawAtPoint:pt withAttributes:fontAttrs];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

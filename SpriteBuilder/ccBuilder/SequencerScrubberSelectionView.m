@@ -46,8 +46,8 @@
     self = [super initWithFrame:frame];
     if (!self) return NULL;
     
-    imgScrubHandle = [NSImage imageNamed:@"seq-scrub-handle.png"];
-    imgScrubLine = [NSImage imageNamed:@"seq-scrub-line.png"];
+    imgScrubHandle = [NSImage imageNamed:@"seq-scrub-handle"];
+    imgScrubLine = [NSImage imageNamed:@"seq-scrub-line"];
     
     return self;
 }

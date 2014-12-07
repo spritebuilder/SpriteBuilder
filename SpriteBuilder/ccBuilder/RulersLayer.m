@@ -124,15 +124,20 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
     stageOrigin = so;
     zoom = zm;
     
+    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+    
+    //CGFloat scale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
+    CGFloat scale = dir.contentScaleFactor;
+    
     // Resize backrounds
-    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth/[CCDirector sharedDirector].contentScaleFactor);
-    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth/[CCDirector sharedDirector].contentScaleFactor, winSize.height);
+    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth / scale);
+    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth / scale, winSize.height);
     
     // Add marks and numbers
     [marksVertical removeAllChildrenWithCleanup:YES];
     [marksHorizontal removeAllChildrenWithCleanup:YES];
     
-		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+		
     // Vertical marks
     int y = (int)so.y - (((int)so.y)/10)*10;
     while (y < winSize.height)

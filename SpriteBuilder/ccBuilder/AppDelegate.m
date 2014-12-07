@@ -225,13 +225,14 @@ void ApplyCustomNodeVisitSwizzle()
 	NSAssert(cocosView, @"cocosView is nil");
     
     // TODO: Add support for retina display
-    [cocosView setWantsBestResolutionOpenGLSurface:YES];
+    //[cocosView setWantsBestResolutionOpenGLSurface:YES];
 	[director setView:cocosView];
+    
+    _baseContentScaleFactor = director.deviceContentScaleFactor;
     
     [self updatePositionScaleFactor];
     
-    CGFloat scale = cocosView.window.backingScaleFactor;
-    CGSize realSize = CGSizeMake(cocosView.frame.size.width * scale, cocosView.frame.size.height * scale);
+    CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
     
     [director reshapeProjection:realSize];
     
@@ -3183,18 +3184,19 @@ typedef enum
         res = [[ResolutionSetting alloc] init];
         res.scale = 1;
     }
-	
-	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
+    
+    CGFloat s = _baseContentScaleFactor * res.scale;
+    
+	if([CCDirector sharedDirector].contentScaleFactor != s)
     {
         [[CCTextureCache sharedTextureCache] removeAllTextures];
         [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
         FNTConfigRemoveCache();
     }
     
-    
-    [CCDirector sharedDirector].contentScaleFactor = res.scale;
-    [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
-    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
+    [CCDirector sharedDirector].contentScaleFactor = s;
+    [CCDirector sharedDirector].UIScaleFactor = 1.0 / s;
+    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:s];
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
@@ -4288,6 +4290,23 @@ typedef enum
 }
 
 #pragma mark Delegate methods
+
+- (void)windowDidChangeScreen:(NSNotification *)notification {
+    if (window == notification.object) {
+        CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+
+        // check if DPI has changed
+        if (dir.deviceContentScaleFactor != _baseContentScaleFactor) {
+            
+            _baseContentScaleFactor = dir.deviceContentScaleFactor;
+            dir.contentScaleFactor = _baseContentScaleFactor;
+            CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
+            [[CCDirector sharedDirector] reshapeProjection:realSize];
+            
+            [self updatePositionScaleFactor];
+        }
+    }
+}
 
 - (BOOL) windowShouldClose:(id)sender
 {
