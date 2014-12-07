@@ -133,13 +133,11 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
-#import "LicenseManager.h"
-#import "LicenseWindow.h"
 #import "SBUpdater.h"
-#import "OpenProjectInXCode.h"
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
+#import "SBOpenPathsController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -652,6 +650,8 @@ typedef enum
     }
 
     [self toggleFeatures];
+
+    [_openPathsController populateOpenPathsMenuItems];
 }
 
 - (void)setupInspectorController
@@ -1643,6 +1643,7 @@ typedef enum
 
     // Remove resource paths
     self.projectSettings = NULL;
+    _openPathsController.projectSettings = nil;
 
     [[ResourceManager sharedManager] removeAllDirectories];
     
@@ -1693,6 +1694,7 @@ typedef enum
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
+    _openPathsController.projectSettings = projectSettings;
 
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
@@ -2917,10 +2919,9 @@ typedef enum
 
 - (IBAction)menuOpenProjectInXCode:(id)sender
 {
-    OpenProjectInXCode *openProjectInXCodeCommand = [[OpenProjectInXCode alloc] init];
     NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
-
-    [openProjectInXCodeCommand openProject:xcodePrjPath];
+    
+    [[NSWorkspace sharedWorkspace] openFile:xcodePrjPath withApplication:@"Xcode"];
 }
 
 - (IBAction)menuProjectSettings:(id)sender
@@ -2946,6 +2947,7 @@ typedef enum
     [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
     [self reloadResources];
     [self setResolution:0];
+    [_openPathsController updateMenuItemsForPackages];
 }
 
 - (IBAction) openDocument:(id)sender
@@ -4160,40 +4162,15 @@ typedef enum
 	return NO;
 }
 
--(BOOL)openLicensingWindow
-{
-	LicenseWindow * licenseWindow = [[LicenseWindow alloc] initWithWindowNibName:@"LicenseWindow"];
-	
-	NSInteger result = [NSApp runModalForWindow: licenseWindow.window];
-	[NSApp endSheet:licenseWindow.window];
-	[licenseWindow.window close];
-	
-	if(result == NSModalResponseStop)
-	{
-		return YES;
-	}
-	
-	return NO;
-
-}
-
-
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window
 {
     return currentDocument.undoManager;
 }
 
-#pragma mark Spritebuilder Pro
-
 -(NSString*)applicationTitle
 {
-//#ifdef SPRITEBUILDER_PRO
-//	return @"SpriteBuilder 1.3 Beta";
-//#else
 	return @"SpriteBuilder";
-//#endif
 }
-
 
 #pragma mark Sparkle
 
@@ -4203,7 +4180,6 @@ typedef enum
 	[self.menuCheckForUpdates setHidden:YES];
 #endif
 }
-
 
 - (SBVersionComparitor*)versionComparatorForUpdater
 {
@@ -4221,16 +4197,7 @@ typedef enum
 
 - (NSString *)feedURLStringForUpdater:(id)updater
 {
-	//Local Host testing.
-    //return @"http://localhost/sites/version";
-	
-//#ifdef SPRITEBUILDER_PRO
-//	return @"http://update.spritebuilder.com/pro/";
-//#else
 	return @"http://update.spritebuilder.com";
-//#endif
-
-	
 }
 
 #pragma mark Extras / Snap

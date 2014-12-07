@@ -14,12 +14,14 @@
 
 @implementation EffectViewController
 @synthesize highlight;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil effect:(id<EffectProtocol>)effect
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        [self.view setWantsLayer:YES];
-
+    if (self)
+    {
+        self.effect = effect;
+        [self.view setWantsLayer:YES];        
     }
     return self;
 }
@@ -34,7 +36,7 @@
 		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.8f, 0.87f, 0.92f, 1.0f)];
 	else
 		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0f, 0.0f, 0.0f, 0.0f)];
-	
+    
 	[self.view setLayer:viewLayer];
 }
 

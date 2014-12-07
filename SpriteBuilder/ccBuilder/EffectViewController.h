@@ -14,4 +14,7 @@
 
 @property (nonatomic) id<EffectProtocol> effect;
 @property (nonatomic) BOOL highlight;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil effect:(id<EffectProtocol>)effect;
+
 @end
