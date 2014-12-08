@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "PlugInNode.h"
 #import "PropertyInspectorTemplate.h"
+#import "InspectorController.h"
 
 @implementation PropertyInspectorTemplateHandler
 
@@ -87,6 +88,8 @@
         [particles stopSystem];
         [particles resetSystem];
     }
+
+    [[InspectorController sharedController] updateInspectorFromSelection];
 }
 
 - (void) installDefaultTemplatesReplace:(BOOL)replace

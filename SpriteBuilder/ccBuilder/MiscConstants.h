@@ -1,5 +1,3 @@
-extern BOOL const IS_SPRITEBUILDER_PRO;
-
 extern NSInteger const DEFAULT_AUDIO_QUALITY;
 
 extern NSInteger const EFFECTS_MAXIMUM_PER_NODE;
@@ -25,3 +23,5 @@ extern NSString *const RESOLUTION_PHONE;
 extern NSString *const RESOLUTION_PHONE_HD;
 extern NSString *const RESOLUTION_TABLET;
 extern NSString *const RESOLUTION_TABLET_HD;
+
+extern NSUInteger const MINIMUM_FILENAME_LENGTH;

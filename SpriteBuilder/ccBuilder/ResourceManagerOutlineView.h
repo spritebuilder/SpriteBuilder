@@ -32,4 +32,5 @@
 
 - (NSArray *)selectedResources;
 
+- (NSArray *)selectedResourceAndChildren;
 @end

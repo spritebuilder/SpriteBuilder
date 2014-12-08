@@ -4,6 +4,7 @@
 Source/Resources/Published-iOS
 Source/Resources/Published-Android
 Published-Packages
+*.backup
 
 # Xcode
 #

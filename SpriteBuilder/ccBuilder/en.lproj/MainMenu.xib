@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="6245"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -17,7 +18,7 @@
                 <menuItem title="SpriteBuilder" id="56">
                     <menu key="submenu" title="SpriteBuilder" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="About SpriteBuilder" id="58" customClass="SBMenuItem">
+                            <menuItem title="About SpriteBuilder" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuAbout:" target="494" id="1840"/>
@@ -28,7 +29,7 @@
                             </menuItem>
                             <menuItem title="Preferences…" keyEquivalent="," id="129"/>
                             <menuItem isSeparatorItem="YES" id="2091"/>
-                            <menuItem title="Reset SpriteBuilder..." id="2092" customClass="SBMenuItem">
+                            <menuItem title="Reset SpriteBuilder..." id="2092">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="menuResetSpriteBuilder:" target="494" id="2093"/>
@@ -50,7 +51,7 @@
                             <menuItem isSeparatorItem="YES" id="144">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134" customClass="SBMenuItem">
+                            <menuItem title="Hide SpriteBuilder" keyEquivalent="h" id="134">
                                 <connections>
                                     <action selector="hide:" target="-1" id="367"/>
                                 </connections>
@@ -69,7 +70,7 @@
                             <menuItem isSeparatorItem="YES" id="149">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136" customClass="SBMenuItem">
+                            <menuItem title="Quit SpriteBuilder" keyEquivalent="q" id="136">
                                 <connections>
                                     <action selector="menuQuit:" target="494" id="1252"/>
                                 </connections>
@@ -229,6 +230,20 @@
                                         </dictionary>
                                     </binding>
                                 </connections>
+                            </menuItem>
+                            <menuItem title="Open Paths" id="yvt-ae-jLl">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" id="xkI-D2-Csw"/>
+                                <connections>
+                                    <binding destination="494" name="enabled" keyPath="projectSettings" id="4nj-GW-hne">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSIsNotNil</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="o7a-Vi-gUJ">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
                             <menuItem title="Project Settings..." keyEquivalent=";" id="ViA-1x-YYp">
                                 <connections>
@@ -467,13 +482,13 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Arrange" id="1766">
                                     <items>
-                                        <menuItem title="Bring to Front" keyEquivalent=">" id="1767">
+                                        <menuItem title="Bring to Front" keyEquivalent="&gt;" id="1767">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="menuArrange:" target="494" id="1771"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Bring Forward" tag="1" keyEquivalent=">" id="1768">
+                                        <menuItem title="Bring Forward" tag="1" keyEquivalent="&gt;" id="1768">
                                             <connections>
                                                 <action selector="menuArrange:" target="494" id="1772"/>
                                             </connections>
@@ -1027,7 +1042,7 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="491">
                         <items>
-                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492" customClass="SBMenuItem">
+                            <menuItem title="SpriteBuilder User Guide" keyEquivalent="?" id="492">
                                 <connections>
                                     <action selector="showHelp:" target="494" id="1806"/>
                                 </connections>
@@ -1163,7 +1178,7 @@ CA
                                                                         <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.073521465063095093" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
+                                                                            <ikImageBrowserView autoresizesSubviews="NO" zoomValue="0.076471909880638123" constrainsToOriginalSize="YES" allowsMultipleSelection="NO" id="1986" customClass="CCBImageBrowserView">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="251" height="452"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <ikCellsStyle key="cellsStyleMask" none="YES" titled="YES"/>
@@ -2426,6 +2441,7 @@ CA
                 <outlet property="menuTimelineChained" destination="1670" id="1685"/>
                 <outlet property="menuTimelineChainedPopup" destination="1668" id="1686"/>
                 <outlet property="menuTimelinePopup" destination="1573" id="1588"/>
+                <outlet property="openPathsController" destination="yUV-fv-QjG" id="zSF-TY-Kv3"/>
                 <outlet property="outlineHierarchy" destination="570" id="1040"/>
                 <outlet property="outlineProject" destination="1499" id="1504"/>
                 <outlet property="physicsHandler" destination="fa4-D5-pFD" id="ZWp-5N-Rhs"/>
@@ -2456,7 +2472,12 @@ CA
             </connections>
         </customObject>
         <customObject id="TMe-KA-zbR" customClass="AnimationPlaybackManager"/>
-        <customObject id="420" customClass="NSFontManager"/>
+        <customObject id="420" userLabel="NSFontManager" customClass="NSFontManager"/>
+        <customObject id="yUV-fv-QjG" userLabel="Open Paths Controller" customClass="SBOpenPathsController">
+            <connections>
+                <outlet property="openPathsMenuItem" destination="yvt-ae-jLl" id="Ql5-OE-bv2"/>
+            </connections>
+        </customObject>
         <userDefaultsController representsSharedInstance="YES" id="1042"/>
         <arrayController id="1056"/>
         <menu title="Keyframe" autoenablesItems="NO" id="1600">
@@ -2597,8 +2618,8 @@ CA
                 </menuItem>
             </items>
         </menu>
-        <customObject id="1785" customClass="CCBDocumentController"/>
-        <customObject id="1828" customClass="MGSTextMenuController"/>
+        <customObject id="1785" userLabel="CCBDocumentController" customClass="CCBDocumentController"/>
+        <customObject id="1828" userLabel="MGSTextMenuController" customClass="MGSTextMenuController"/>
         <menuItem title="New" id="1861">
             <modifierMask key="keyEquivalentModifierMask"/>
             <menu key="submenu" title="New" id="1862">
@@ -2631,12 +2652,12 @@ CA
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView tag="3" id="2023">
-                    <rect key="frame" x="4" y="4" width="44" height="44"/>
+                    <rect key="frame" x="3" y="3" width="42" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="TB_plugins" id="2024"/>
                 </imageView>
                 <textField verticalHuggingPriority="750" tag="1" id="2025">
-                    <rect key="frame" x="52" y="32" width="191" height="14"/>
+                    <rect key="frame" x="47" y="32" width="191" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="PlugIn Name" id="2026">
                         <font key="font" metaFont="smallSystemBold"/>
@@ -2645,7 +2666,7 @@ CA
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" tag="2" id="2027">
-                    <rect key="frame" x="52" y="4" width="196" height="27"/>
+                    <rect key="frame" x="47" y="4" width="196" height="27"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Short description about the fuction of this type of node. No longer than two lines" id="2028">
                         <font key="font" metaFont="miniSystem"/>

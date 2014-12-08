@@ -7,6 +7,7 @@
 #import "ResourceManager.h"
 #import "AppDelegate.h"
 #import "NSString+Misc.h"
+#import "NotificationNames.h"
 
 @implementation PackageRenamer
 
@@ -43,6 +44,7 @@
     {
         [_resourceManager setActiveDirectoriesWithFullReset:[_projectSettings absoluteResourcePaths]];
         [[AppDelegate appDelegate] renamedResourcePathFrom:oldFullPath toPath:newFullPath];
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:package];
         return YES;
     }
 

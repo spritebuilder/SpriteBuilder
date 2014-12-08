@@ -14,12 +14,12 @@
 
 @implementation EffectViewController
 @synthesize highlight;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil effect:(id<EffectProtocol>)effect
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self.view setWantsLayer:YES];
-
+        // Initialization code here.
     }
     return self;
 }
@@ -31,10 +31,11 @@
 	CALayer *viewLayer = [CALayer layer];
 	
 	if(self.highlight)
-		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0f, 0.0f, 1.0f, 0.5f)];
+		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.8f, 0.87f, 0.92f, 1.0f)];
 	else
 		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0f, 0.0f, 0.0f, 0.0f)];
-	
+
+    [self.view setWantsLayer:YES];
 	[self.view setLayer:viewLayer];
 }
 

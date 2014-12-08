@@ -129,7 +129,12 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     // Border layer
     borderLayer = [CCNode node];
     [self addChild:borderLayer z:1];
-	
+
+    // Light icons layer
+    lightIconsLayer = [CCNode node];
+    lightIconsLayer.name = @"lightIconsLayer";
+    [self addChild:lightIconsLayer z:8];
+
 	CCColor* borderColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7];
     
     borderBottom = [CCNodeColor nodeWithColor:borderColor];
@@ -465,6 +470,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     [contentLayer removeChild:rootNode cleanup:YES];
     [jointsLayer removeAllChildrenWithCleanup:YES];
+    [lightIconsLayer removeAllChildrenWithCleanup:YES];
     
     self.rootNode = sceneGraph.rootNode;
     
@@ -473,6 +479,9 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     if(sceneGraph.joints.node)
         [jointsLayer addChild:sceneGraph.joints.node];
+    
+    if(sceneGraph.lightIcons)
+        [lightIconsLayer addChild:sceneGraph.lightIcons];
 }
 
 #pragma mark Handle selections

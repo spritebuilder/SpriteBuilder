@@ -1,19 +1,19 @@
 //
-//  RegistrationWindow.m
+//  MailingListWindow.m
 //  SpriteBuilder
 //
 //  Created by Viktor on 5/29/14.
 //
 //
 
-#import "RegistrationWindow.h"
+#import "MailingListWindow.h"
 #import "UsageManager.h"
 
-@interface RegistrationWindow ()
+@interface MailingListWindow ()
 
 @end
 
-@implementation RegistrationWindow
+@implementation MailingListWindow
 
 - (id)initWithWindow:(NSWindow *)window
 {

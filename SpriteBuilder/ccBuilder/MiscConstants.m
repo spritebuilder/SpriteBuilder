@@ -1,9 +1,3 @@
-#ifdef SPRITEBUILDER_PRO
-BOOL const IS_SPRITEBUILDER_PRO = YES;
-#else
-BOOL const IS_SPRITEBUILDER_PRO = NO;
-#endif
-
 NSInteger const DEFAULT_AUDIO_QUALITY = 4;
 
 NSInteger const EFFECTS_MAXIMUM_PER_NODE = 5;
@@ -29,3 +23,5 @@ NSString *const RESOLUTION_PHONE = @"phone";
 NSString *const RESOLUTION_PHONE_HD = @"phonehd";
 NSString *const RESOLUTION_TABLET = @"tablet";
 NSString *const RESOLUTION_TABLET_HD = @"tablethd";
+
+NSUInteger const MINIMUM_FILENAME_LENGTH = 3;
