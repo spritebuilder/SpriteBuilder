@@ -18,8 +18,10 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil effect:(id<EffectProtocol>)effect
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
+    if (self)
+    {
+        self.effect = effect;
+        [self.view setWantsLayer:YES];
     }
     return self;
 }
@@ -35,7 +37,6 @@
 	else
 		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0f, 0.0f, 0.0f, 0.0f)];
 
-    [self.view setWantsLayer:YES];
 	[self.view setLayer:viewLayer];
 }
 
