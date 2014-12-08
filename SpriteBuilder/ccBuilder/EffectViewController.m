@@ -21,7 +21,7 @@
     if (self)
     {
         self.effect = effect;
-        [self.view setWantsLayer:YES];
+        [self.view setWantsLayer:YES];        
     }
     return self;
 }
