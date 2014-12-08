@@ -87,12 +87,12 @@
                 || res.type == kCCBResTypeTTF
                 || res.type == kCCBResTypeAudio)
             {
-                
                 NSString* itemName = [res.filePath lastPathComponent];
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:@selector(selectedResource:) keyEquivalent:@""];
                 [menuItem setTarget:target];
-                
                 [menu addItem:menuItem];
+                
+                menuItem.representedObject = res;
             }
             else if (res.type == kCCBResTypeSpriteSheet && allowSpriteFrames)
             {
@@ -230,26 +230,24 @@
     NSMenu* menuSubSystemFonts = [[NSMenu alloc] initWithTitle:@"System Fonts"];
     NSMenuItem* itemSystemFonts = [[NSMenuItem alloc] initWithTitle:@"System Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemSystemFonts];
-    
     [menu setSubmenu:menuSubSystemFonts forItem:itemSystemFonts];
     
     NSArray* systemFonts = [[ResourceManager sharedManager] systemFontList];
     for (NSString* fontName in systemFonts)
     {
-        NSMenuItem* fontItem = [[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""];
-        [fontItem setTarget:target];
-        fontItem.representedObject = fontName;
+        NSMenuItem* itemFont = [[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""];
+        [itemFont setTarget:target];
+        itemFont.representedObject = fontName;
         
-        [self setAttributedTitle:fontName ofMenuItem:fontItem];
+        [self setAttributedTitle:fontName ofMenuItem:itemFont];
         
-        [menuSubSystemFonts addItem:fontItem];
+        [menuSubSystemFonts addItem:itemFont];
     }
     
     // User fonts submenu
     NSMenu* menuSubUserFonts = [[NSMenu alloc] initWithTitle:@"User Fonts"];
     NSMenuItem* itemUserFonts = [[NSMenuItem alloc] initWithTitle:@"User Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemUserFonts];
-    
     [menu setSubmenu:menuSubUserFonts forItem:itemUserFonts];
     
     [self populateResourceMenu:menuSubUserFonts resType:kCCBResTypeTTF allowSpriteFrames:NO selectedFile:file selectedSheet:NULL target:target];
