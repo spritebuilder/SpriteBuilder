@@ -36,7 +36,7 @@
 		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.8f, 0.87f, 0.92f, 1.0f)];
 	else
 		[viewLayer setBackgroundColor:CGColorCreateGenericRGB(0.0f, 0.0f, 0.0f, 0.0f)];
-
+    
 	[self.view setLayer:viewLayer];
 }
 
