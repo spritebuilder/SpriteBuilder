@@ -328,6 +328,22 @@
     [self assertFileExists:@"Published-iOS/resources-tablet/sheet2.plist"];
     [self assertFileExists:@"Published-iOS/fileLookup.plist"];
 
+    [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sheet1/intermediateFileLookup.plist"];
+    [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sheet2/intermediateFileLookup.plist"];
+
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sheet1/rock.psd" renamedName:@"sheet1/rock.png"];
+    [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sheet2/scissors.psd" renamedName:@"sheet2/scissors.png"];
+
+    // Publish again to see if the solution works with cached files
+    [_publisher start];
+
+    [self assertFileExists:@"Published-iOS/resources-tablet/sheet1.plist"];
+    [self assertFileExists:@"Published-iOS/resources-tablet/sheet2.plist"];
+    [self assertFileExists:@"Published-iOS/fileLookup.plist"];
+
+    [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sheet1/intermediateFileLookup.plist"];
+    [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sheet2/intermediateFileLookup.plist"];
+
     [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sheet1/rock.psd" renamedName:@"sheet1/rock.png"];
     [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sheet2/scissors.psd" renamedName:@"sheet2/scissors.png"];
 }
