@@ -20,12 +20,12 @@
 
 - (NSDate *)cachedDateForKey:(NSString *)key
 {
-	return [_modifiedDatesCache objectForKey:key];
+	return _modifiedDatesCache[key];
 }
 
 - (void)setCachedDate:(id)date forKey:(NSString *)key
 {
-	[_modifiedDatesCache setObject:date forKey:key];
+	_modifiedDatesCache[key] = date;
 }
 
 @end

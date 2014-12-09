@@ -113,7 +113,7 @@
 	// log additional warnings/errors from TextureAtlas tool
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:notification.object];
 
-	NSData* data = [notification.userInfo objectForKey:NSFileHandleNotificationDataItem];
+	NSData* data = (notification.userInfo)[NSFileHandleNotificationDataItem];
 	NSString* errorMessage = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	if (errorMessage.length)
 	{
