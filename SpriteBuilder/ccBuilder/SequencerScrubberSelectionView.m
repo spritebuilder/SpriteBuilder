@@ -467,7 +467,7 @@
             SequencerChannel* channel = item;
             [selectedKeyframes addObjectsFromArray:[channel.seqNodeProp keyframesBetweenMinTime:xMinTime maxTime:xMaxTime]];
         }
-        else
+        else if ([item isKindOfClass:[CCNode class]])
         {
             CCNode* node = item;
             for (int subRow = yMinSubRow; subRow <= yMaxSubRow; subRow++)
