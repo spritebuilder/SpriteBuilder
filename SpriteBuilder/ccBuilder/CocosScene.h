@@ -159,6 +159,8 @@ enum {
 @property (nonatomic,readonly) NotesLayer* notesLayer;
 @property (nonatomic,readonly) SnapLayer* snapLayer;
 @property (nonatomic,readonly) CCNode * physicsLayer;
+@property (nonatomic,readonly) CCNode* lightIconsLayer;
+@property (nonatomic,readonly) CCLightNode* stageLight;
 
 // Used to creat the scene
 +(id) sceneWithAppDelegate:(AppDelegate*)app;

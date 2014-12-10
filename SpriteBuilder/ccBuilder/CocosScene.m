@@ -75,6 +75,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 @synthesize notesLayer;
 @synthesize snapLayer;
 @synthesize physicsLayer;
+@synthesize lightIconsLayer;
+@synthesize stageLight;
 
 +(id) sceneWithAppDelegate:(AppDelegate*)app
 {
@@ -2268,8 +2270,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     [self updateAnchorPointCompensation];
 
-    CCNode *lightIconsRoot = lightIconsLayer.children[0];
-    stageLight.visible = (lightIconsRoot.children.count == 0);
+//    CCNode *lightIconsRoot = lightIconsLayer.children[0];
+//    stageLight.visible = (lightIconsRoot.children.count == 0);
     stageLight.position = center;
 }
 
