@@ -127,7 +127,6 @@
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
 #import "ProjectMigrator.h"
-#import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
@@ -528,8 +527,7 @@ typedef enum
         [[_menuItemExperimentalSpriteKitProject menu] removeItem:_menuItemExperimentalSpriteKitProject];
     }
 
-    UsageManager* usageManager = [[UsageManager alloc] init];
-    [usageManager registerUsage];
+    [[UsageManager sharedManager] registerUsage];
     
     // Initialize Audio
     //[OALSimpleAudio sharedInstance];
@@ -1846,6 +1844,8 @@ typedef enum
     else if (type == kCCBNewDocTypeSprite) class = @"CCSprite";
     else if (type == kCCBNewDocTypeParticleSystem) class = @"CCParticleSystem";
     
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"new_file_%@",class]];
+    
     resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
     
     ResolutionSetting* resolution = [resolutions objectAtIndex:0];
@@ -2816,6 +2816,9 @@ typedef enum
 
 - (void)publishStartAsync:(BOOL)async
 {
+    
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_publish_%@",projectSettings.publishEnvironment ? @"release" : @"develop"]];
+    
     self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = projectSettings;
     _publisherController.packageSettings = [[ResourceManager sharedManager] loadAllPackageSettings];
@@ -3036,6 +3039,8 @@ typedef enum
             NSString* fileName = [[saveDlg URL] path];
             NSString* fileNameRaw = [fileName stringByDeletingPathExtension];
             
+            [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_new_%@",saveDlgLanguagePopup.selectedItem.title]];
+            
             // Check validity of file name
             NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
             if ([[fileNameRaw lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
@@ -3057,6 +3062,7 @@ typedef enum
                                    if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
+                                    
                                    }
                                    else
                                    {
@@ -3068,6 +3074,7 @@ typedef enum
             {
                 [self modalDialogTitle:@"Failed to Create Project" message:@"Failed to create the project, make sure to only use letters and numbers for the file name (no spaces allowed)."];
             }
+            
         }
     }];
 }

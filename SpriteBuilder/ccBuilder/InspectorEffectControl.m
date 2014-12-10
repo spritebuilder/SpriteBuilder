@@ -13,7 +13,7 @@
 #import "EffectsManager.h"
 #import "MiscConstants.h"
 #import "SBPasteboardTypes.h"
-
+#import "UsageManager.h"
 
 @interface InspectorEffectControl ()
 {
@@ -96,6 +96,8 @@
 {
     NSMenuItem* item = sender;
     EffectDescription* effect = item.representedObject;
+    
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"effect_add_%@",effect.title]];
 
     [[AppDelegate appDelegate] saveUndoState];
     [[self effectNode] addEffect:[effect constructDefault]];

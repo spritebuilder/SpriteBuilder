@@ -151,24 +151,6 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     return [dict objectForKey:name];
 }
 
-//Adjust the physics body to support animations.
--(void)updatePhysicsBodyForAnimation
-{
-	//If physics body is dynamic, make static.
-	if(!self.nodePhysicsBody)
-		return;
-	
-	//Set dynamic bodies to be static if animating.
-	if(self.nodePhysicsBody.dynamic)
-	{
-		[[AppDelegate appDelegate] modalDialogTitle:@"Animation of physics bodies" message:@"Your are adding a keyframe to a node with a physics body. This will force the body to change from dynamic to static." disableKey:kAnimationOfPhysicsWarning];
-		
-		self.nodePhysicsBody.dynamic = NO;
-
-	}
-	   
-}
-
 - (void) enableSequenceNodeProperty:(NSString*)name sequenceId:(int)seqId
 {
     // Check if animations are already enabled for this node property
@@ -223,7 +205,6 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     
     // Make sure timeline is enabled for this property
     [self enableSequenceNodeProperty:name sequenceId:seqId];
-	[self updatePhysicsBodyForAnimation];
     
     // Add the keyframe
     SequencerNodeProperty* seqNodeProp = [self sequenceNodeProperty:name sequenceId:seqId];
@@ -870,7 +851,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 - (BOOL) shouldDisableProperty:(NSString*) prop
 {
     // Disable properties on root node
-    if (self == [CocosScene cocosScene].rootNode)
+    if (self == [CocosScene cocosScene].rootNode || self.nodePhysicsBody.dynamic)
     {
         if ([prop isEqualToString:@"position"]) return YES;
         else if ([prop isEqualToString:@"scale"]) return YES;
