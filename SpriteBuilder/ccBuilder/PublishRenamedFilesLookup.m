@@ -31,7 +31,7 @@
         return;
     }
 
-    [_lookup setObject:dst forKey:src];
+    _lookup[src] = dst;
 }
 
 - (BOOL)writeToFileAtomically:(NSString *)filePath
@@ -42,10 +42,10 @@
     NSMutableDictionary *plist = [NSMutableDictionary dictionary];
 
     NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
-    [metadata setObject:[NSNumber numberWithInt:1] forKey:@"version"];
+    metadata[@"version"] = @1;
 
-    [plist setObject:metadata forKey:@"metadata"];
-    [plist setObject:_lookup forKey:@"filenames"];
+    plist[@"metadata"] = metadata;
+    plist[@"filenames"] = _lookup;
 
     return [plist writeToFile:filePath atomically:YES];
 }

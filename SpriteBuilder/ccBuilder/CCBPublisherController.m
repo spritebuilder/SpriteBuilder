@@ -59,9 +59,7 @@
     {
         [self addPublishingTargetsForPackageSetting:packageSetting osType:kCCBPublisherOSTypeIOS];
 
-        //#ifdef SPRITEBUILDER_PRO
         [self addPublishingTargetsForPackageSetting:packageSetting osType:kCCBPublisherOSTypeAndroid];
-        //#endif
     }
 }
 
@@ -107,7 +105,7 @@
 - (NSString *)cachesPath:(NSString *)PublishedPackageName
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachesPath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME] stringByAppendingPathComponent:@"packages"];
+    NSString *cachesPath = [[paths[0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME] stringByAppendingPathComponent:@"packages"];
 
     NSString *result = [self createOutputDirectoryWithPackageName:PublishedPackageName
                                                           baseDir:cachesPath
@@ -157,12 +155,10 @@
         [self addMainProjectPublishingTargetToPublisherForOSType:kCCBPublisherOSTypeIOS];
     }
 
-    //#ifdef SPRITEBUILDER_PRO
     if (_projectSettings.publishEnabledAndroid)
     {
         [self addMainProjectPublishingTargetToPublisherForOSType:kCCBPublisherOSTypeAndroid];
     }
-    //#endif
 }
 
 - (void)addMainProjectPublishingTargetToPublisherForOSType:(CCBPublisherOSType)osType

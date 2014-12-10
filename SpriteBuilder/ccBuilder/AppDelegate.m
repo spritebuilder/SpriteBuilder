@@ -127,19 +127,16 @@
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
 #import "ProjectMigrator.h"
-#import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
-#import "LicenseManager.h"
-#import "LicenseWindow.h"
 #import "SBUpdater.h"
-#import "OpenProjectInXCode.h"
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
+#import "SBOpenPathsController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -527,8 +524,7 @@ typedef enum
         [[_menuItemExperimentalSpriteKitProject menu] removeItem:_menuItemExperimentalSpriteKitProject];
     }
 
-    UsageManager* usageManager = [[UsageManager alloc] init];
-    [usageManager registerUsage];
+    [[UsageManager sharedManager] registerUsage];
     
     // Initialize Audio
     //[OALSimpleAudio sharedInstance];
@@ -647,6 +643,8 @@ typedef enum
     }
 
     [self toggleFeatures];
+
+    [_openPathsController populateOpenPathsMenuItems];
 }
 
 - (void)setupInspectorController
@@ -1638,6 +1636,7 @@ typedef enum
 
     // Remove resource paths
     self.projectSettings = NULL;
+    _openPathsController.projectSettings = nil;
 
     [[ResourceManager sharedManager] removeAllDirectories];
     
@@ -1688,6 +1687,7 @@ typedef enum
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
+    _openPathsController.projectSettings = projectSettings;
 
     // Update resource paths
     [self updateResourcePathsFromProjectSettings];
@@ -1840,6 +1840,8 @@ typedef enum
     else if (type == kCCBNewDocTypeScene) class = @"CCNode";
     else if (type == kCCBNewDocTypeSprite) class = @"CCSprite";
     else if (type == kCCBNewDocTypeParticleSystem) class = @"CCParticleSystem";
+    
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"new_file_%@",class]];
     
     resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
     
@@ -2811,6 +2813,9 @@ typedef enum
 
 - (void)publishStartAsync:(BOOL)async
 {
+    
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_publish_%@",projectSettings.publishEnvironment ? @"release" : @"develop"]];
+    
     self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = projectSettings;
     _publisherController.packageSettings = [[ResourceManager sharedManager] loadAllPackageSettings];
@@ -2912,10 +2917,9 @@ typedef enum
 
 - (IBAction)menuOpenProjectInXCode:(id)sender
 {
-    OpenProjectInXCode *openProjectInXCodeCommand = [[OpenProjectInXCode alloc] init];
     NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
-
-    [openProjectInXCodeCommand openProject:xcodePrjPath];
+    
+    [[NSWorkspace sharedWorkspace] openFile:xcodePrjPath withApplication:@"Xcode"];
 }
 
 - (IBAction)menuProjectSettings:(id)sender
@@ -2941,6 +2945,7 @@ typedef enum
     [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
     [self reloadResources];
     [self setResolution:0];
+    [_openPathsController updateMenuItemsForPackages];
 }
 
 - (IBAction) openDocument:(id)sender
@@ -3031,6 +3036,8 @@ typedef enum
             NSString* fileName = [[saveDlg URL] path];
             NSString* fileNameRaw = [fileName stringByDeletingPathExtension];
             
+            [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_new_%@",saveDlgLanguagePopup.selectedItem.title]];
+            
             // Check validity of file name
             NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
             if ([[fileNameRaw lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
@@ -3052,6 +3059,7 @@ typedef enum
                                    if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
+                                    
                                    }
                                    else
                                    {
@@ -3063,6 +3071,7 @@ typedef enum
             {
                 [self modalDialogTitle:@"Failed to Create Project" message:@"Failed to create the project, make sure to only use letters and numbers for the file name (no spaces allowed)."];
             }
+            
         }
     }];
 }
@@ -4154,40 +4163,15 @@ typedef enum
 	return NO;
 }
 
--(BOOL)openLicensingWindow
-{
-	LicenseWindow * licenseWindow = [[LicenseWindow alloc] initWithWindowNibName:@"LicenseWindow"];
-	
-	NSInteger result = [NSApp runModalForWindow: licenseWindow.window];
-	[NSApp endSheet:licenseWindow.window];
-	[licenseWindow.window close];
-	
-	if(result == NSModalResponseStop)
-	{
-		return YES;
-	}
-	
-	return NO;
-
-}
-
-
 - (NSUndoManager*) windowWillReturnUndoManager:(NSWindow *)window
 {
     return currentDocument.undoManager;
 }
 
-#pragma mark Spritebuilder Pro
-
 -(NSString*)applicationTitle
 {
-//#ifdef SPRITEBUILDER_PRO
-//	return @"SpriteBuilder 1.3 Beta";
-//#else
 	return @"SpriteBuilder";
-//#endif
 }
-
 
 #pragma mark Sparkle
 
@@ -4197,7 +4181,6 @@ typedef enum
 	[self.menuCheckForUpdates setHidden:YES];
 #endif
 }
-
 
 - (SBVersionComparitor*)versionComparatorForUpdater
 {
@@ -4215,16 +4198,7 @@ typedef enum
 
 - (NSString *)feedURLStringForUpdater:(id)updater
 {
-	//Local Host testing.
-    //return @"http://localhost/sites/version";
-	
-//#ifdef SPRITEBUILDER_PRO
-//	return @"http://update.spritebuilder.com/pro/";
-//#else
 	return @"http://update.spritebuilder.com";
-//#endif
-
-	
 }
 
 #pragma mark Extras / Snap

@@ -86,6 +86,7 @@ enum {
     CCNode* physicsLayer;
     CCNode* jointsLayer;
     CCNode* borderLayer;
+    CCNode* lightIconsLayer;
     RulersLayer* rulerLayer;
     GuidesLayer* guideLayer;
     NotesLayer* notesLayer;

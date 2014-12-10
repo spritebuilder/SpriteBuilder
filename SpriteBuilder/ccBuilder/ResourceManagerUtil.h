@@ -38,6 +38,8 @@
 
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup forceMarker:(BOOL) forceMarker;
 
++ (NSImage*) thumbnailImageForResource:(RMResource*)res;
+
 + (NSImage*) iconForResource:(RMResource*) res;
 
 @end

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreviewAudioViewController">
             <connections>
-                <outlet property="androidSettingsContainer" destination="me8-aj-G9u" id="Qvt-Db-LPO"/>
                 <outlet property="audioControllerContainer" destination="f5s-HI-Z5F" id="tCd-HB-1wd"/>
                 <outlet property="iconImage" destination="fZz-Pg-hGJ" id="h3n-Jo-Zif"/>
                 <outlet property="view" destination="ez3-ty-9Kg" id="afi-hx-gOE"/>
@@ -61,12 +61,12 @@
                 <popUpButton verticalHuggingPriority="750" id="TOS-FG-Vaa">
                     <rect key="frame" x="159" y="21" width="88" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="unW-uZ-6of">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="unW-uZ-6of">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="xgX-a9-gIF">
                             <items>
-                                <menuItem title="Default" state="on" id="FCZ-G1-rvX"/>
+                                <menuItem title="Default" id="FCZ-G1-rvX"/>
                                 <menuItem title="8 - Best" tag="8" id="GJK-ke-n7i"/>
                                 <menuItem title="7" tag="7" id="bJT-bS-o0e"/>
                                 <menuItem title="6" tag="6" id="DuO-sw-VWg"/>
@@ -79,8 +79,8 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="format_ios_sound_quality_enabled" id="ARQ-5V-hkg"/>
                         <binding destination="-2" name="selectedTag" keyPath="format_ios_sound_quality" id="CK7-2w-nB1"/>
+                        <binding destination="-2" name="enabled" keyPath="format_ios_sound_quality_enabled" id="ARQ-5V-hkg"/>
                     </connections>
                 </popUpButton>
                 <imageView id="fZz-Pg-hGJ">
@@ -113,12 +113,12 @@
                         <popUpButton verticalHuggingPriority="750" id="Mih-Kr-ryd">
                             <rect key="frame" x="159" y="2" width="88" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="e7q-6O-Pav">
+                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="e7q-6O-Pav">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="miniSystem"/>
                                 <menu key="menu" title="OtherViews" id="vzN-xQ-U3S">
                                     <items>
-                                        <menuItem title="Default" state="on" id="eje-xH-2G3"/>
+                                        <menuItem title="Default" id="eje-xH-2G3"/>
                                         <menuItem title="8 - Best" tag="8" id="hOh-lC-ICg"/>
                                         <menuItem title="7" tag="7" id="saY-Mi-P0a"/>
                                         <menuItem title="6" tag="6" id="JB7-XX-4kr"/>
@@ -131,19 +131,19 @@
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="format_android_sound_quality_enabled" id="5l6-Xw-eyk"/>
                                 <binding destination="-2" name="selectedTag" keyPath="format_android_sound_quality" id="t2g-kD-4ud"/>
+                                <binding destination="-2" name="enabled" keyPath="format_android_sound_quality_enabled" id="5l6-Xw-eyk"/>
                             </connections>
                         </popUpButton>
                         <popUpButton verticalHuggingPriority="750" id="KK6-Jm-AAq">
                             <rect key="frame" x="41" y="2" width="73" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="push" title="OGG" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="eVj-NO-u4u">
+                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="eVj-NO-u4u">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="miniSystem"/>
                                 <menu key="menu" title="OtherViews" id="R86-nh-XEB">
                                     <items>
-                                        <menuItem title="OGG" state="on" id="Dxt-L0-we4"/>
+                                        <menuItem title="OGG" id="Dxt-L0-we4"/>
                                     </items>
                                 </menu>
                             </popUpButtonCell>

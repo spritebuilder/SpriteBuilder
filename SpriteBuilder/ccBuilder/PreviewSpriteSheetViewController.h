@@ -14,7 +14,6 @@
 
 @interface PreviewSpriteSheetViewController : PreviewBaseViewController <PreviewViewControllerProtocol>
 
-@property (nonatomic, weak) IBOutlet NSView *androidSettingsContainer;
 @property (nonatomic, weak) IBOutlet CCBImageView* previewSpriteSheet;
 
 @property (nonatomic) BOOL trimSprites;

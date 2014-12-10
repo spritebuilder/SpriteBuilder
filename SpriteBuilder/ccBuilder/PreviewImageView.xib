@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreviewImageViewController">
             <connections>
-                <outlet property="androidSettingsContainer" destination="3xn-4k-m7S" id="rlK-o0-ZHI"/>
                 <outlet property="previewMain" destination="BAN-Dy-3xS" id="bgN-SD-86y"/>
                 <outlet property="previewPhone" destination="syt-Jp-bgZ" id="EcL-hU-BY3"/>
                 <outlet property="previewPhonehd" destination="fG6-ZG-dqn" id="tq7-Nv-XYh"/>
@@ -16,7 +16,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="xSt-6d-u4P" userLabel="Image Preview View">
             <rect key="frame" x="0.0" y="0.0" width="250" height="238"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -104,12 +104,12 @@
                 <popUpButton verticalHuggingPriority="750" id="riW-cF-mjp">
                     <rect key="frame" x="128" y="16" width="57" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="1x" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" id="xtW-Iz-WZ7">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="xtW-Iz-WZ7">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="fO6-1k-tHd">
                             <items>
-                                <menuItem title="1x" state="on" tag="1" id="lUW-wp-Y0N"/>
+                                <menuItem title="1x" tag="1" id="lUW-wp-Y0N"/>
                                 <menuItem title="2x" tag="2" id="uNS-kM-D9C"/>
                             </items>
                         </menu>
@@ -126,12 +126,12 @@
                 <popUpButton verticalHuggingPriority="750" id="809-F9-bZA">
                     <rect key="frame" x="190" y="16" width="57" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="2x" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" id="Bxv-Oo-9nM">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Bxv-Oo-9nM">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="O3V-mb-rwu">
                             <items>
-                                <menuItem title="2x" state="on" tag="1" id="VjA-p1-vvt"/>
+                                <menuItem title="2x" tag="1" id="VjA-p1-vvt"/>
                                 <menuItem title="4x" tag="2" id="vEB-BO-gMk"/>
                             </items>
                         </menu>
@@ -157,12 +157,12 @@
                 <popUpButton verticalHuggingPriority="750" id="1O4-F6-4hl">
                     <rect key="frame" x="41" y="94" width="94" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="PNG" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="HNQ-Sf-eeX">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="HNQ-Sf-eeX">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="o5f-QX-kjB">
                             <items>
-                                <menuItem title="PNG" state="on" id="fXs-6l-ZBc"/>
+                                <menuItem title="PNG" id="fXs-6l-ZBc"/>
                                 <menuItem title="PNG 8-bit" tag="1" hidden="YES" id="kQn-ks-Rvn"/>
                                 <menuItem isSeparatorItem="YES" id="ccT-Q5-MRy"/>
                                 <menuItem title="JPG high" tag="8" id="go5-08-A8O">
@@ -209,8 +209,8 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="format_ios_dither_enabled" id="pcx-GK-dF8"/>
                         <binding destination="-2" name="value" keyPath="format_ios_dither" id="qa7-vi-iCs"/>
+                        <binding destination="-2" name="enabled" keyPath="format_ios_dither_enabled" id="pcx-GK-dF8"/>
                     </connections>
                 </button>
                 <button id="s3d-5P-WAc">
@@ -221,8 +221,8 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="format_ios_compress_enabled" id="RAp-5A-y9t"/>
                         <binding destination="-2" name="value" keyPath="format_ios_compress" id="POL-Zj-SWq"/>
+                        <binding destination="-2" name="enabled" keyPath="format_ios_compress_enabled" id="RAp-5A-y9t"/>
                     </connections>
                 </button>
                 <button hidden="YES" id="akF-Rg-AFC">
@@ -245,12 +245,12 @@
                 <popUpButton hidden="YES" verticalHuggingPriority="750" id="Ma1-P0-f9d">
                     <rect key="frame" x="41" y="-34" width="94" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="PNG" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="cH8-6q-9Ai">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="cH8-6q-9Ai">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="taS-KE-XcY">
                             <items>
-                                <menuItem title="PNG" state="on" id="OyT-Jw-sAm"/>
+                                <menuItem title="PNG" id="OyT-Jw-sAm"/>
                                 <menuItem title="PNG 8-bit" tag="1" hidden="YES" id="yto-IJ-yiw"/>
                                 <menuItem isSeparatorItem="YES" id="7te-Lc-00M"/>
                                 <menuItem title="JPG high" tag="8" id="rSe-Ln-OqE">
@@ -315,12 +315,12 @@
                 <popUpButton verticalHuggingPriority="750" id="ytl-XP-7nm">
                     <rect key="frame" x="181" y="118" width="62" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="GHO-wU-Fjv">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="GHO-wU-Fjv">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                         <menu key="menu" title="OtherViews" id="gSf-1O-Svf">
                             <items>
-                                <menuItem title="Default" state="on" id="8Ho-OL-Ktk"/>
+                                <menuItem title="Default" id="8Ho-OL-Ktk"/>
                                 <menuItem title="1x" tag="1" id="9V4-jY-lPg"/>
                                 <menuItem title="2x" tag="2" id="e6C-gW-Zo6"/>
                                 <menuItem title="4x" tag="4" id="8ll-KM-LXg">
@@ -418,8 +418,8 @@
                                 <font key="font" metaFont="miniSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="format_android_compress_enabled" id="P4v-p3-Req"/>
                                 <binding destination="-2" name="value" keyPath="format_android_compress" id="Gru-b9-uGb"/>
+                                <binding destination="-2" name="enabled" keyPath="format_android_compress_enabled" id="P4v-p3-Req"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" id="D3s-L6-0hn" customClass="CCBTextFieldLabel">
@@ -434,12 +434,12 @@
                         <popUpButton verticalHuggingPriority="750" id="f1L-4l-WSb">
                             <rect key="frame" x="41" y="2" width="94" height="15"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <popUpButtonCell key="cell" type="push" title="PNG" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Du7-Nn-be3">
+                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Du7-Nn-be3">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="miniSystem"/>
                                 <menu key="menu" title="OtherViews" id="SH4-FK-yds">
                                     <items>
-                                        <menuItem title="PNG" state="on" id="Pvn-qF-pEm"/>
+                                        <menuItem title="PNG" id="Pvn-qF-pEm"/>
                                         <menuItem title="PNG 8-bit" tag="1" id="xVo-eu-czA"/>
                                         <menuItem isSeparatorItem="YES" id="g3W-G3-S8I"/>
                                         <menuItem title="PVR RGBA8888" tag="2" id="Una-da-WrH"/>
@@ -464,8 +464,8 @@
                                 <font key="font" metaFont="miniSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="format_android_dither_enabled" id="W1N-9f-mpc"/>
                                 <binding destination="-2" name="value" keyPath="format_android_dither" id="QJZ-hP-ZWi"/>
+                                <binding destination="-2" name="enabled" keyPath="format_android_dither_enabled" id="W1N-9f-mpc"/>
                             </connections>
                         </button>
                     </subviews>
