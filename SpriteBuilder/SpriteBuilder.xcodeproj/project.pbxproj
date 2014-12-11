@@ -338,6 +338,7 @@
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
+		98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */; };
 		9D0CD23F1A252CA000FF785F /* light-point.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0CD23D1A252CA000FF785F /* light-point.png */; };
 		9D0CD2401A252CA000FF785F /* light-point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D0CD23E1A252CA000FF785F /* light-point@2x.png */; };
 		9D9BA6C61A1E85C60019C1DE /* CCLightNode.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 9D9BA6B81A1E84BA0019C1DE /* CCLightNode.ccbPlugNode */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -353,9 +354,11 @@
 		9DAE296A1A1BE2B1009FCC20 /* CCBPEffectLighting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE29691A1BE2B1009FCC20 /* CCBPEffectLighting.m */; };
 		9DBC22101A2CFA1C00FF9D64 /* light-directional.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DBC220E1A2CFA1C00FF9D64 /* light-directional.png */; };
 		9DBC22111A2CFA1C00FF9D64 /* light-directional@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9DBC220F1A2CFA1C00FF9D64 /* light-directional@2x.png */; };
+		9DC686AD1A3900B00083319A /* CCBPEffectColorChannelOffset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DC686A91A3900B00083319A /* CCBPEffectColorChannelOffset.m */; };
+		9DC686AE1A3900B00083319A /* EffectColorChannelOffsetControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DC686AB1A3900B00083319A /* EffectColorChannelOffsetControl.m */; };
+		9DC686AF1A3900B00083319A /* EffectColorChannelOffsetControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DC686AC1A3900B00083319A /* EffectColorChannelOffsetControl.xib */; };
 		9DD4F4B31A1FCE5700438647 /* InspectorTokenArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B11A1FCE5700438647 /* InspectorTokenArray.m */; };
 		9DD4F4B41A1FCE5700438647 /* InspectorTokenArray.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DD4F4B21A1FCE5700438647 /* InspectorTokenArray.xib */; };
-		98C392F0FA6E4C385A9B7BDA /* NSKeyboardForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */; };
 		A09AB6F714E993AA009C8B91 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09AB6F614E993AA009C8B91 /* fps_images.png */; };
 		B7083DF317B1C363006628C7 /* LocalizationEditorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7083DF217B1C363006628C7 /* LocalizationEditorWindow.xib */; };
 		B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B7083DF517B1CB88006628C7 /* LocalizationEditorWindow.m */; };
@@ -1810,6 +1813,11 @@
 		9DAE29691A1BE2B1009FCC20 /* CCBPEffectLighting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectLighting.m; path = ccBuilder/CCBPEffectLighting.m; sourceTree = "<group>"; };
 		9DBC220E1A2CFA1C00FF9D64 /* light-directional.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-directional.png"; sourceTree = "<group>"; };
 		9DBC220F1A2CFA1C00FF9D64 /* light-directional@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-directional@2x.png"; sourceTree = "<group>"; };
+		9DC686A81A3900B00083319A /* CCBPEffectColorChannelOffset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectColorChannelOffset.h; path = ccBuilder/CCBPEffectColorChannelOffset.h; sourceTree = "<group>"; };
+		9DC686A91A3900B00083319A /* CCBPEffectColorChannelOffset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectColorChannelOffset.m; path = ccBuilder/CCBPEffectColorChannelOffset.m; sourceTree = "<group>"; };
+		9DC686AA1A3900B00083319A /* EffectColorChannelOffsetControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectColorChannelOffsetControl.h; path = ccBuilder/EffectColorChannelOffsetControl.h; sourceTree = "<group>"; };
+		9DC686AB1A3900B00083319A /* EffectColorChannelOffsetControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectColorChannelOffsetControl.m; path = ccBuilder/EffectColorChannelOffsetControl.m; sourceTree = "<group>"; };
+		9DC686AC1A3900B00083319A /* EffectColorChannelOffsetControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectColorChannelOffsetControl.xib; path = ccBuilder/EffectColorChannelOffsetControl.xib; sourceTree = "<group>"; };
 		9DD4F4B01A1FCE5700438647 /* InspectorTokenArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorTokenArray.h; sourceTree = "<group>"; };
 		9DD4F4B11A1FCE5700438647 /* InspectorTokenArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorTokenArray.m; sourceTree = "<group>"; };
 		9DD4F4B21A1FCE5700438647 /* InspectorTokenArray.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InspectorTokenArray.xib; sourceTree = "<group>"; };
@@ -4324,6 +4332,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				9DC6869D1A38FD410083319A /* ColorChannelOffset */,
 				9DAE294F1A1BDD78009FCC20 /* Lighting */,
 				B747E5FD19CB39AA00F692A2 /* Hue */,
 				92CB084F19BA2D8B00EFDCE3 /* Blur */,
@@ -4424,6 +4433,18 @@
 				9DAE29651A1BE274009FCC20 /* EffectLightingControl.xib */,
 			);
 			name = Lighting;
+			sourceTree = "<group>";
+		};
+		9DC6869D1A38FD410083319A /* ColorChannelOffset */ = {
+			isa = PBXGroup;
+			children = (
+				9DC686A81A3900B00083319A /* CCBPEffectColorChannelOffset.h */,
+				9DC686A91A3900B00083319A /* CCBPEffectColorChannelOffset.m */,
+				9DC686AA1A3900B00083319A /* EffectColorChannelOffsetControl.h */,
+				9DC686AB1A3900B00083319A /* EffectColorChannelOffsetControl.m */,
+				9DC686AC1A3900B00083319A /* EffectColorChannelOffsetControl.xib */,
+			);
+			name = ColorChannelOffset;
 			sourceTree = "<group>";
 		};
 		B7083DEF17B1C31E006628C7 /* Localization Editor */ = {
@@ -6850,6 +6871,7 @@
 				B7096E2A180CD98E00164A8A /* doc-particlesystem.png in Resources */,
 				E334A4DE170CF475001604F7 /* seq-btn-end.png in Resources */,
 				E334A4DF170CF475001604F7 /* toolbar-bottom-noborder.png in Resources */,
+				9DC686AF1A3900B00083319A /* EffectColorChannelOffsetControl.xib in Resources */,
 				921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */,
 				E334A4E6170D0020001604F7 /* debugger-bug.png in Resources */,
 				E3D839DC171356EC004F6127 /* pngquant in Resources */,
@@ -7398,6 +7420,7 @@
 				9266EE23195A15EE006CBE81 /* EffectContrastControl.m in Sources */,
 				B747E60819CB3A0E00F692A2 /* CCBPEffectHue.m in Sources */,
 				5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */,
+				9DC686AE1A3900B00083319A /* EffectColorChannelOffsetControl.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
 				83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */,
 				E3C3660114EA0507007CD5FF /* TexturePropertySetter.m in Sources */,
@@ -7436,6 +7459,7 @@
 				E3462870155D22290043EAB1 /* CCBDirectoryPublisher.m in Sources */,
 				E3462873155D22FC0043EAB1 /* CCBWarnings.m in Sources */,
 				E32BBCB11561361200C58395 /* HashValue.m in Sources */,
+				9DC686AD1A3900B00083319A /* CCBPEffectColorChannelOffset.m in Sources */,
 				E3DCFD9F1562A3AD00BD7D7F /* TaskStatusWindow.m in Sources */,
 				E335CAF3157603C200A612EE /* SequencerHandler.m in Sources */,
 				E335CAF6157649F900A612EE /* SequencerExpandBtnCell.m in Sources */,

@@ -1,16 +1,22 @@
 //
-//  CCBPEffectHue.h
+//  CCBPEffectColorChannelOffset.h
 //  SpriteBuilder
 //
-//  Created by Viktor on 9/18/14.
+//  Created by Thayer on 12/10/14.
 //
 //
 
-#import "CCEffectHue.h"
+#import "CCEffectColorChannelOffset.h"
 #import "EffectsManager.h"
 
-@interface CCBPEffectHue : CCEffectHue <EffectProtocol>
+@interface CCBPEffectColorChannelOffset : CCEffectColorChannelOffset <EffectProtocol>
 
-@property (nonatomic) CCBPEffectHue * effect;
+@property (nonatomic,readonly) EffectDescription *effectDescription;
+@property (nonatomic,assign) float redOffsetX;
+@property (nonatomic,assign) float redOffsetY;
+@property (nonatomic,assign) float greenOffsetX;
+@property (nonatomic,assign) float greenOffsetY;
+@property (nonatomic,assign) float blueOffsetX;
+@property (nonatomic,assign) float blueOffsetY;
 
 @end

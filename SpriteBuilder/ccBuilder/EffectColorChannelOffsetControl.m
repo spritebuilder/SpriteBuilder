@@ -1,18 +1,18 @@
 //
-//  EffectSaturationControl.m
+//  EffectColorChannelOffsetControl.m
 //  SpriteBuilder
 //
-//  Created by John Twigg on 6/24/14.
+//  Created by Thayer on 12/10/14.
 //
 //
 
-#import "EffectHueControl.h"
+#import "EffectColorChannelOffsetControl.h"
 
-@interface EffectHueControl ()
+@interface EffectColorChannelOffsetControl ()
 
 @end
 
-@implementation EffectHueControl
+@implementation EffectColorChannelOffsetControl
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

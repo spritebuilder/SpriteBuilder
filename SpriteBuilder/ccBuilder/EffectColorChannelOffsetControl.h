@@ -1,15 +1,15 @@
 //
-//  EffectSaturationControl.h
+//  EffectColorChannelOffsetControl.h
 //  SpriteBuilder
 //
-//  Created by John Twigg on 6/24/14.
+//  Created by Thayer on 12/10/14.
 //
 //
 
 #import "EffectViewController.h"
-#import "CCBPEffectHue.h"
+#import "CCBPEffectColorChannelOffset.h"
 
-@class CCBPEffectHue;
-@interface EffectHueControl : EffectViewController
-@property (nonatomic) CCBPEffectHue * effect;
+@class CCBPEffectColorChannelOffset;
+@interface EffectColorChannelOffsetControl : EffectViewController
+@property (nonatomic) CCBPEffectColorChannelOffset *effect;
 @end
