@@ -41,6 +41,8 @@
 
     CCLabelBMFont *lblX;
     CCLabelBMFont *lblY;
+    
+    CGFloat viewScale;
 }
 
 - (void) setup;

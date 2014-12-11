@@ -211,22 +211,25 @@ void ApplyCustomNodeVisitSwizzle()
 - (void) setupCocos2d
 {
     ApplyCustomNodeVisitSwizzle();
+    
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+
+    NSAssert(cocosView, @"cocosView is nil");
+    [director setView:cocosView];
+    [cocosView setWantsBestResolutionOpenGLSurface:YES];
+    [[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
 	
 	[director setDisplayStats:NO];
-	[director setProjection:CCDirectorProjection2D];
-    //[cocosView openGLContext];
+	[director setProjection:CCDirectorProjection2D];    
     
-	NSAssert(cocosView, @"cocosView is nil");
-    
-    // TODO: Add support for retina display
-    // [cocosView setWantsBestResolutionOpenGLSurface:YES];
-	[director setView:cocosView];
+    _baseContentScaleFactor = director.deviceContentScaleFactor;
     
     [self updatePositionScaleFactor];
     
-    [director reshapeProjection:cocosView.frame.size];
+    CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
+    
+    [director reshapeProjection:realSize];
     
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
@@ -292,28 +295,28 @@ void ApplyCustomNodeVisitSwizzle()
 {
     NSMutableArray* items = [NSMutableArray array];
     
-    NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder.png"];
+    NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder"];
     [imgFolder setTemplate:YES];
     SMTabBarItem* itemFolder = [[SMTabBarItem alloc] initWithImage:imgFolder tag:0];
     itemFolder.toolTip = @"File View";
     itemFolder.keyEquivalent = @"";
     [items addObject:itemFolder];
     
-    NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects.png"];
+    NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects"];
     [imgObjs setTemplate:YES];
     SMTabBarItem* itemObjs = [[SMTabBarItem alloc] initWithImage:imgObjs tag:1];
     itemObjs.toolTip = @"Tileless Editor View";
     itemObjs.keyEquivalent = @"";
     [items addObject:itemObjs];
     
-    NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes.png"];
+    NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes"];
     [imgNodes setTemplate:YES];
     SMTabBarItem* itemNodes = [[SMTabBarItem alloc] initWithImage:imgNodes tag:2];
     itemNodes.toolTip = @"Node Library View";
     itemNodes.keyEquivalent = @"";
     [items addObject:itemNodes];
     
-    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning.png"];
+    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning"];
     [imgWarnings setTemplate:YES];
     SMTabBarItem* itemWarnings = [[SMTabBarItem alloc] initWithImage:imgWarnings tag:3];
     itemWarnings.toolTip = @"Warnings view";
@@ -337,7 +340,7 @@ typedef enum
 {
     NSMutableArray* items = [NSMutableArray array];
     
-    NSImage* imgProps = [NSImage imageNamed:@"inspector-props.png"];
+    NSImage* imgProps = [NSImage imageNamed:@"inspector-props"];
     [imgProps setTemplate:YES];
     SMTabBarItem* itemProps = [[SMTabBarItem alloc] initWithImage:imgProps tag:0];
     itemProps.toolTip = @"Item Properties";
@@ -345,7 +348,7 @@ typedef enum
 	itemProps.tag = eItemViewTabType_Properties;
     [items addObject:itemProps];
     
-    NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections.png"];
+    NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections"];
     [imgCode setTemplate:YES];
     SMTabBarItem* itemCode = [[SMTabBarItem alloc] initWithImage:imgCode tag:0];
     itemCode.toolTip = @"Item Code Connections";
@@ -361,7 +364,7 @@ typedef enum
 	itemPhysics.tag = eItemViewTabType_Physics;
     [items addObject:itemPhysics];
     
-    NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template.png"];
+    NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template"];
     [imgTemplate setTemplate:YES];
     SMTabBarItem* itemTemplate = [[SMTabBarItem alloc] initWithImage:imgTemplate tag:0];
     itemTemplate.toolTip = @"Item Templates";
@@ -3188,17 +3191,18 @@ typedef enum
         res = [[ResolutionSetting alloc] init];
         res.scale = 1;
     }
-	
-	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
+    
+    CGFloat s = _baseContentScaleFactor * res.scale;
+    
+	if([CCDirector sharedDirector].contentScaleFactor != s)
     {
         [[CCTextureCache sharedTextureCache] removeAllTextures];
         [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
         FNTConfigRemoveCache();
     }
     
-    
-    [CCDirector sharedDirector].contentScaleFactor = res.scale;
-    [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
+    [CCDirector sharedDirector].contentScaleFactor = s;
+    [CCDirector sharedDirector].UIScaleFactor = 1.0 / res.scale;
     [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
 				
     // Setup the rulers with the new contentScale
@@ -4258,6 +4262,25 @@ typedef enum
 }
 
 #pragma mark Delegate methods
+
+- (void)windowDidChangeScreen:(NSNotification *)notification {
+    if (window == notification.object) {
+        CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+
+        // check if DPI has changed
+        if (dir.deviceContentScaleFactor != _baseContentScaleFactor) {
+            
+            _baseContentScaleFactor = dir.deviceContentScaleFactor;
+            CGFloat tmp = dir.contentScaleFactor;
+            dir.contentScaleFactor = _baseContentScaleFactor;
+            CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
+            [[CCDirector sharedDirector] reshapeProjection:realSize];
+            dir.contentScaleFactor = tmp;
+            
+            [self updatePositionScaleFactor];
+        }
+    }
+}
 
 - (BOOL) windowShouldClose:(id)sender
 {

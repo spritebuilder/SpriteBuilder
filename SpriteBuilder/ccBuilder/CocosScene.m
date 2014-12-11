@@ -1994,14 +1994,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 }
 - (NSImage *)rotateImage:(NSImage *)image rotation:(float)rotation
 {
+    CGFloat scale = [[[[CCDirectorMac sharedDirector] view] window] backingScaleFactor];
     CGSize imageSize = image.size;
     CGRect rect ={ 0,0, imageSize };
     
-    
     NSBitmapImageRep *offscreenRep = [[NSBitmapImageRep alloc]
                                        initWithBitmapDataPlanes:NULL
-                                       pixelsWide:imageSize.width
-                                       pixelsHigh:imageSize.height
+                                       pixelsWide:imageSize.width * scale
+                                       pixelsHigh:imageSize.height * scale
                                        bitsPerSample:8
                                        samplesPerPixel:4
                                        hasAlpha:YES
@@ -2009,7 +2009,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                                        colorSpaceName:NSDeviceRGBColorSpace
                                        bitmapFormat:NSAlphaFirstBitmapFormat
                                        bytesPerRow:0
-                                       bitsPerPixel:0]; ;
+                                       bitsPerPixel:0];
+    [offscreenRep setSize:image.size];
     
     NSGraphicsContext * graphicsContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:offscreenRep];
     
@@ -2061,14 +2062,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     else if(currentTool == kCCBToolAnchor)
     {
-        NSImage * image = [NSImage imageNamed:@"select-crosshair.png"];
+        NSImage * image = [NSImage imageNamed:@"select-crosshair"];
         CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
         NSCursor * cursor =  [[NSCursor alloc] initWithImage:image hotSpot:centerPoint];
         [cursor push];
     }
     else if (currentTool == kCCBToolRotate)
     {
-        NSImage * image = [NSImage imageNamed:@"select-rotation.png"];
+        NSImage * image = [NSImage imageNamed:@"select-rotation"];
         
         float rotation = atan2f(cornerOrientation.y, cornerOrientation.x) - M_PI/4.0f;
         NSImage *img =[self rotateImage:image rotation:rotation];
@@ -2078,7 +2079,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     else if(currentTool == kCCBToolScale)
     {
-        NSImage * image = [NSImage imageNamed:@"select-scale.png"];
+        NSImage * image = [NSImage imageNamed:@"select-scale"];
         
         float rotation = atan2f(cornerOrientation.y, cornerOrientation.x) + M_PI/2.0f;
         NSImage *img =[self rotateImage:image rotation:rotation];
@@ -2092,7 +2093,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         float rotation = atan2f(skewSegmentOrientation.y, skewSegmentOrientation.x);
 
         //Rotate the Skew image.
-        NSImage * image = [NSImage imageNamed:@"select-skew.png"];
+        NSImage * image = [NSImage imageNamed:@"select-skew"];
         
         NSImage *img =[self rotateImage:image rotation:rotation];
 
@@ -2104,7 +2105,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     }
     else if(currentTool == kCCBToolTranslate)
     {
-        NSImage * image = [NSImage imageNamed:@"select-move.png"];
+        NSImage * image = [NSImage imageNamed:@"select-move"];
         CGPoint centerPoint = CGPointMake(image.size.width/2, image.size.height/2);
         NSCursor * cursor =  [[NSCursor alloc] initWithImage:image hotSpot:centerPoint];
         [cursor push];

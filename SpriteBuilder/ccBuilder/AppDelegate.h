@@ -301,6 +301,8 @@ typedef void (^CompletionCallback) (BOOL success);
     MainWindow *__weak window;
 	BOOL _applicationLaunchComplete;
     
+    CGFloat _baseContentScaleFactor;
+    
 }
 
 
