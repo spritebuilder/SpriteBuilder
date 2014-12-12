@@ -247,7 +247,7 @@
         NSMenuItem* itemFont = [[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""];
         [itemFont setTarget:target];
         itemFont.representedObject = fontName;
-        
+        [self setAttributedTitle:fontName ofMenuItem:itemFont];
         [menuSubSystemFonts addItem:itemFont];
     }
     
@@ -290,6 +290,16 @@
         NSLog(@"  base: %@", base);
     }
     return NULL;
+}
+
+#pragma mark File font attributes
+
++ (void)setAttributedTitle:(NSString*)fontName ofMenuItem:(NSMenuItem*)item {
+    if (fontName && item) {
+        NSDictionary *attributes = @{ NSFontAttributeName: [NSFont fontWithName:fontName size:16.0] };
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:fontName attributes:attributes];
+        [item setAttributedTitle:attributedTitle];
+    }
 }
 
 #pragma mark File icons
