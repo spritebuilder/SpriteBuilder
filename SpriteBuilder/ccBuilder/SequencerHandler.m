@@ -481,10 +481,20 @@ static SequencerHandler* sharedSequencerHandler;
     
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
-        bool hidden = [(NSNumber*)object boolValue];
+        BOOL itemIsLight = [item isKindOfClass:[CCLightNode class]];
+        if (itemIsLight)
+        {
+            [appDelegate willChangeValueForKey:@"showLights"];
+        }
         
+        bool hidden = [(NSNumber*)object boolValue];        
         node.hidden = hidden;
         [outlineView reloadItem:node reloadChildren:YES];
+
+        if (itemIsLight)
+        {
+            [appDelegate didChangeValueForKey:@"showLights"];
+        }
     }
     else if([tableColumn.identifier isEqualToString:@"locked"])
     {

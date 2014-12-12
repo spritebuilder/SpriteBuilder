@@ -773,6 +773,31 @@ CA
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Stage Light" id="yVq-ov-b8W" userLabel="Stage Light">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Stage Light" id="Wxk-KC-GUx" userLabel="Stage Light">
+                                    <items>
+                                        <menuItem title="Enable Diffuse" state="on" id="hzm-ku-NPW" userLabel="Enable Diffuse">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetStageLight:" target="494" id="eBd-aD-IIx"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Enable Specular" tag="1" id="kuU-Qc-B3O" userLabel="Enable Specular">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetStageLight:" target="494" id="gMd-rD-c6B"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Enable Ambient" tag="2" id="2I5-UR-Xx9" userLabel="Enable Ambient">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuSetStageLight:" target="494" id="8So-uU-cmd"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="1451"/>
                             <menuItem title="Extras" alternate="YES" keyEquivalent="H" id="5aS-8M-yP4">
                                 <connections>
@@ -799,6 +824,18 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <binding destination="494" name="value" keyPath="showStickyNotes" id="sg9-lg-g2R"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Joints" id="r9m-fF-w2F">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="494" name="value" keyPath="self.showJoints" id="BOO-L5-xIi"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Lights" id="hmI-o2-pV2" userLabel="Lights">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="494" name="value" keyPath="showLights" id="An7-of-P59"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -870,13 +907,6 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="menuAddStickyNote:" target="494" id="1465"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="wXO-wf-tbz"/>
-                            <menuItem title="Show Joints" id="r9m-fF-w2F">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <binding destination="494" name="value" keyPath="self.showJoints" id="BOO-L5-xIi"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -2435,6 +2465,7 @@ CA
                 <outlet property="menuFileNewPackage" destination="g6Z-Mh-Dls" id="D5e-wF-NCl"/>
                 <outlet property="menuItemSnapGrid" destination="zA6-4S-M8f" id="UZF-mG-oQZ"/>
                 <outlet property="menuItemStageColor" destination="KQF-gw-sgJ" id="cG7-Q4-aYh"/>
+                <outlet property="menuItemStageLight" destination="yVq-ov-b8W" id="xV9-WW-ou0"/>
                 <outlet property="menuPlusButtonNewPackage" destination="fe0-WO-wub" id="qKr-zd-Bou"/>
                 <outlet property="menuResolution" destination="1264" id="1474"/>
                 <outlet property="menuTimeline" destination="1581" id="1585"/>

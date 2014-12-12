@@ -201,6 +201,7 @@ typedef void (^CompletionCallback) (BOOL success);
     // TODO: END OF not needed any more when PACKAGE feature is released
 
     IBOutlet NSMenuItem *__weak menuItemStageColor;
+    IBOutlet NSMenuItem *__weak menuItemStageLight;
     
     IBOutlet NSPopUpButton* menuTimelinePopup;
     IBOutlet NSMenu* menuTimeline;
@@ -343,6 +344,7 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (nonatomic,assign) BOOL snapNode;
 
 @property (nonatomic,assign) BOOL showJoints;
+@property (nonatomic,assign) BOOL showLights;
 
 @property (nonatomic,readonly) CCBTransparentView* guiView;
 @property (nonatomic,readonly) CCBTransparentWindow* guiWindow;
