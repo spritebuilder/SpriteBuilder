@@ -137,14 +137,9 @@
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
 #import "SBOpenPathsController.h"
+#import "LightingHandler.h"
 
 static const int CCNODE_INDEX_LAST = -1;
-
-enum {
-    kCCBStageLightDiffuse,
-    kCCBStageLightSpecular,
-    kCCBStageLightAmbient,
-};
 
 @interface AppDelegate()
 
@@ -189,6 +184,7 @@ enum {
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
 @dynamic	showJoints;
+@synthesize lightingHandler;
 
 static AppDelegate* sharedAppDelegate;
 
@@ -259,6 +255,7 @@ void ApplyCustomNodeVisitSwizzle()
     sequenceHandler.timeScaleSlider = timeScaleSlider;
     sequenceHandler.scroller = timelineScroller;
     sequenceHandler.scrollView = sequenceScrollView;
+    sequenceHandler.lightVisibilityDelegate = self.lightingHandler;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSoundImages:) name:kSoundFileImageLoaded object:nil];
     
@@ -1457,10 +1454,7 @@ typedef enum
     [self willChangeValueForKey:@"showJoints"];
     [self didChangeValueForKey:@"showJoints"];
 
-    [self willChangeValueForKey:@"showLights"];
-    [self didChangeValueForKey:@"showLights"];
-    
-    [self updateStageLight];
+    [lightingHandler refreshAll];
 }
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
@@ -2095,7 +2089,7 @@ typedef enum
     [self setSelectedNodes:@[child]];
     [_inspectorController updateInspectorFromSelection];
     
-    [self updateStageLight];
+    [lightingHandler refreshStageLightAndMenu];
     
     return YES;
 }
@@ -2305,28 +2299,6 @@ typedef enum
     [outlineHierarchy reloadData];
     [self setSelectedNodes: [NSArray arrayWithObject: addedNode]];
     [_inspectorController updateInspectorFromSelection];
-}
-
--(BOOL)showLights
-{
-    BOOL allLightsHidden = YES;
-    for (CCNode *lightIcon in [SceneGraph instance].lightIcons.children)
-    {
-        if (!lightIcon.hidden)
-        {
-            allLightsHidden = NO;
-        }
-    }
-    return !allLightsHidden;
-}
-
--(void)setShowLights:(BOOL)showLights
-{
-    for (CCNode *lightIcon in [SceneGraph instance].lightIcons.children)
-    {
-        lightIcon.hidden = !showLights;
-    }
-    [sequenceHandler.outlineHierarchy reloadItem:nil reloadChildren:YES];
 }
 
 - (void) gotoAutoplaySequence
@@ -2642,7 +2614,7 @@ typedef enum
 
     [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
     
-    [self updateStageLight];
+    [lightingHandler refreshStageLightAndMenu];
 }
 
 - (IBAction) delete:(id) sender
@@ -3394,46 +3366,6 @@ typedef enum
     currentDocument.stageColor = [sender tag];
     [self updateCanvasColor];
 }
-
-- (void) updateStageLight
-{
-    CocosScene* cs = [CocosScene cocosScene];
-    
-    CCNode *lightIconsRoot = cs.lightIconsLayer.children[0];
-    BOOL stageLightEnabled = (lightIconsRoot.children.count == 0);
-    cs.stageLight.visible = stageLightEnabled;
-    menuItemStageLight.enabled = stageLightEnabled;
-    
-    NSMenuItem *diffuse = menuItemStageLight.submenu.itemArray[kCCBStageLightDiffuse];
-    diffuse.state = (cs.stageLight.intensity > 0.0f) ? NSOnState : NSOffState;
-    
-    NSMenuItem *specular = menuItemStageLight.submenu.itemArray[kCCBStageLightSpecular];
-    specular.state = (cs.stageLight.specularIntensity > 0.0f) ? NSOnState : NSOffState;
-
-    NSMenuItem *ambient = menuItemStageLight.submenu.itemArray[kCCBStageLightAmbient];
-    ambient.state = (cs.stageLight.ambientIntensity > 0.0f) ? NSOnState : NSOffState;
-}
-
-- (IBAction) menuSetStageLight:(id)sender
-{
-    CocosScene* cs = [CocosScene cocosScene];
-
-    int tag = [sender tag];
-    switch (tag)
-    {
-        case kCCBStageLightDiffuse:
-            cs.stageLight.intensity = (cs.stageLight.intensity == 0.0f) ? 1.0f : 0.0f;
-            break;
-        case kCCBStageLightSpecular:
-            cs.stageLight.specularIntensity = (cs.stageLight.specularIntensity == 0.0f) ? 1.0f : 0.0f;
-            break;
-        case kCCBStageLightAmbient:
-            cs.stageLight.ambientIntensity = (cs.stageLight.ambientIntensity == 0.0f) ? 0.5f : 0.0f;
-            break;
-    }
-    [self updateStageLight];
-}
-
 
 - (IBAction) menuZoomIn:(id)sender
 {

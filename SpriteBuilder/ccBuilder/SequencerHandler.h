@@ -24,6 +24,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "LightVisibilityDelegate.h"
 
 #define kCCBSeqDefaultRowHeight 16
 #define kCCBSeqAudioRowHeight 64
@@ -67,6 +68,8 @@
 @property (weak, nonatomic,readonly) NSOutlineView* outlineHierarchy;
 
 @property (nonatomic,strong) SequencerKeyframe* contextKeyframe;
+
+@property (nonatomic,weak) id<LightVisibilityDelegate> lightVisibilityDelegate;
 
 
 // Obtain the shared instance
