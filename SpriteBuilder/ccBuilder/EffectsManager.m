@@ -32,6 +32,7 @@
 #import "EffectBlurControl.h"
 #import "CCBPEffectLighting.h"
 #import "EffectLightingControl.h"
+#import "EffectOutlineControl.h"
 
 
 @implementation CCNode(Effects)
@@ -232,6 +233,20 @@
         
 		[effectDescriptions addObject:effectDescription];
 	}
+    
+    {
+        EffectDescription * effectDescription = [[EffectDescription alloc] init];
+        effectDescription.title = @"Outline";
+        effectDescription.description = @"Adds an outline";
+        effectDescription.imageName = @"effect-outline.png";
+        effectDescription.className = NSStringFromClass([CCBPEffectOutline class]);
+        effectDescription.baseClass = @"CCEffectOutline";
+        effectDescription.viewController = NSStringFromClass([EffectOutlineControl class]);
+        effectDescription.group = 1;
+        
+        [effectDescriptions addObject:effectDescription];
+    }
+
 
 	return effectDescriptions;
 }

@@ -449,7 +449,6 @@
 		B747E60819CB3A0E00F692A2 /* CCBPEffectHue.m in Sources */ = {isa = PBXBuildFile; fileRef = B747E60719CB3A0E00F692A2 /* CCBPEffectHue.m */; };
 		B747E60A19CB3BF700F692A2 /* effect-hue.png in Resources */ = {isa = PBXBuildFile; fileRef = B747E60919CB3BF700F692A2 /* effect-hue.png */; };
 		B747E60E19CB3C0F00F692A2 /* EffectHueControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B747E60C19CB3C0F00F692A2 /* EffectHueControl.m */; };
-		B747E60F19CB3C0F00F692A2 /* EffectHueControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = B747E60D19CB3C0F00F692A2 /* EffectHueControl.xib */; };
 		B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B41880B4D000E8166C /* help-logo@2x.png */; };
 		B759E4B81880B60B00E8166C /* logo-white.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B61880B60B00E8166C /* logo-white.png */; };
 		B759E4B91880B60B00E8166C /* logo-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B759E4B71880B60B00E8166C /* logo-white@2x.png */; };
@@ -564,10 +563,15 @@
 		B7F02D4817D12DB1008A2E2D /* about-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4617D12DB1008A2E2D /* about-bg.png */; };
 		B7F02D4917D12DB1008A2E2D /* about-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */; };
 		B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */; };
+		D285465D1A3C3A9000569C56 /* CCBPEffectOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = D285465C1A3C3A9000569C56 /* CCBPEffectOutline.m */; };
+		D28546601A3C3D6300569C56 /* EffectOutlineControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D285465F1A3C3D6300569C56 /* EffectOutlineControl.m */; };
+		D28546641A3C41C600569C56 /* EffectHueControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = D28546631A3C41C600569C56 /* EffectHueControl.xib */; };
+		D28546661A3C424600569C56 /* EffectOutlineControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = D28546651A3C424600569C56 /* EffectOutlineControl.xib */; };
 		D2E0168118D7838F00927430 /* SpriteBuilderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */; };
 		D2E0168518D783C900927430 /* AppleScriptKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E0168418D783C900927430 /* AppleScriptKit.framework */; };
 		D2E0168A18D789E700927430 /* SpriteBuilder.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D2E0168618D783F800927430 /* SpriteBuilder.sdef */; };
 		D2E0168B18D789E800927430 /* SpriteBuilder.sdef in Resources */ = {isa = PBXBuildFile; fileRef = D2E0168618D783F800927430 /* SpriteBuilder.sdef */; };
+		D2F06F9F1A3EA6F4000283CB /* effect-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F06F9E1A3EA6F4000283CB /* effect-outline.png */; };
 		D35E589E18E391DA008571EC /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D35E589D18E391DA008571EC /* GLKit.framework */; };
 		DC05E77B18D0ACCB00592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
 		DC05E78818D0ACE000592A1E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7789ABC2133AA82000CEFCC7 /* Cocoa.framework */; };
@@ -1957,7 +1961,6 @@
 		B747E60919CB3BF700F692A2 /* effect-hue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-hue.png"; path = "Resources/effect-hue.png"; sourceTree = "<group>"; };
 		B747E60B19CB3C0F00F692A2 /* EffectHueControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectHueControl.h; path = ccBuilder/EffectHueControl.h; sourceTree = "<group>"; };
 		B747E60C19CB3C0F00F692A2 /* EffectHueControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectHueControl.m; path = ccBuilder/EffectHueControl.m; sourceTree = "<group>"; };
-		B747E60D19CB3C0F00F692A2 /* EffectHueControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectHueControl.xib; path = ccBuilder/EffectHueControl.xib; sourceTree = "<group>"; };
 		B759E4B41880B4D000E8166C /* help-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help-logo@2x.png"; sourceTree = "<group>"; };
 		B759E4B61880B60B00E8166C /* logo-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white.png"; sourceTree = "<group>"; };
 		B759E4B71880B60B00E8166C /* logo-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-white@2x.png"; sourceTree = "<group>"; };
@@ -2106,10 +2109,17 @@
 		B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-bg@2x.png"; sourceTree = "<group>"; };
 		B7F02D4A17D13332008A2E2D /* CCBTransparentWindowDraggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBTransparentWindowDraggable.h; sourceTree = "<group>"; };
 		B7F02D4B17D13332008A2E2D /* CCBTransparentWindowDraggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBTransparentWindowDraggable.m; sourceTree = "<group>"; };
+		D285465B1A3C3A9000569C56 /* CCBPEffectOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectOutline.h; path = ccBuilder/CCBPEffectOutline.h; sourceTree = "<group>"; };
+		D285465C1A3C3A9000569C56 /* CCBPEffectOutline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectOutline.m; path = ccBuilder/CCBPEffectOutline.m; sourceTree = "<group>"; };
+		D285465E1A3C3D6300569C56 /* EffectOutlineControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectOutlineControl.h; path = ccBuilder/EffectOutlineControl.h; sourceTree = "<group>"; };
+		D285465F1A3C3D6300569C56 /* EffectOutlineControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectOutlineControl.m; path = ccBuilder/EffectOutlineControl.m; sourceTree = "<group>"; };
+		D28546631A3C41C600569C56 /* EffectHueControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectHueControl.xib; path = ccBuilder/EffectHueControl.xib; sourceTree = "<group>"; };
+		D28546651A3C424600569C56 /* EffectOutlineControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectOutlineControl.xib; path = ccBuilder/EffectOutlineControl.xib; sourceTree = "<group>"; };
 		D2E0167518D782CC00927430 /* SpriteBuilderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteBuilderCommand.h; sourceTree = "<group>"; };
 		D2E0167618D782CC00927430 /* SpriteBuilderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteBuilderCommand.m; sourceTree = "<group>"; };
 		D2E0168418D783C900927430 /* AppleScriptKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptKit.framework; path = System/Library/Frameworks/AppleScriptKit.framework; sourceTree = SDKROOT; };
 		D2E0168618D783F800927430 /* SpriteBuilder.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SpriteBuilder.sdef; sourceTree = SOURCE_ROOT; };
+		D2F06F9E1A3EA6F4000283CB /* effect-outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-outline.png"; path = "Resources/effect-outline.png"; sourceTree = "<group>"; };
 		D35E589D18E391DA008571EC /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		DC05E76818D0A9BD00592A1E /* CCBPluginSBButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPluginSBButtonNode.h; sourceTree = "<group>"; };
 		DC05E76918D0A9BD00592A1E /* CCBPluginSBButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPluginSBButtonNode.m; sourceTree = "<group>"; };
@@ -4423,6 +4433,7 @@
 		928696311958CAC100402DD8 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				D28546561A3C3A0900569C56 /* Outline */,
 				9DAE294F1A1BDD78009FCC20 /* Lighting */,
 				B747E5FD19CB39AA00F692A2 /* Hue */,
 				92CB084F19BA2D8B00EFDCE3 /* Blur */,
@@ -4599,7 +4610,7 @@
 				B747E60719CB3A0E00F692A2 /* CCBPEffectHue.m */,
 				B747E60B19CB3C0F00F692A2 /* EffectHueControl.h */,
 				B747E60C19CB3C0F00F692A2 /* EffectHueControl.m */,
-				B747E60D19CB3C0F00F692A2 /* EffectHueControl.xib */,
+				D28546631A3C41C600569C56 /* EffectHueControl.xib */,
 			);
 			name = Hue;
 			sourceTree = "<group>";
@@ -4854,6 +4865,19 @@
 				B7F02D4717D12DB1008A2E2D /* about-bg@2x.png */,
 			);
 			name = "About Box";
+			sourceTree = "<group>";
+		};
+		D28546561A3C3A0900569C56 /* Outline */ = {
+			isa = PBXGroup;
+			children = (
+				D2F06F9E1A3EA6F4000283CB /* effect-outline.png */,
+				D285465B1A3C3A9000569C56 /* CCBPEffectOutline.h */,
+				D285465C1A3C3A9000569C56 /* CCBPEffectOutline.m */,
+				D285465E1A3C3D6300569C56 /* EffectOutlineControl.h */,
+				D285465F1A3C3D6300569C56 /* EffectOutlineControl.m */,
+				D28546651A3C424600569C56 /* EffectOutlineControl.xib */,
+			);
+			name = Outline;
 			sourceTree = "<group>";
 		};
 		D2E0167218D782B500927430 /* SpriteBuilderCommands */ = {
@@ -6796,11 +6820,11 @@
 				9218DF3B1919B04D0033851E /* joint-pivot-mode-s-off@2x.png in Resources */,
 				9DAE29551A1BDE53009FCC20 /* effect-lighting.png in Resources */,
 				05CB0E641A320AAB00F38A2E /* ruler-xy@2x.png in Resources */,
-				B747E60F19CB3C0F00F692A2 /* EffectHueControl.xib in Resources */,
 				926D13C218B5778300582959 /* joint-distance-handle-short.png in Resources */,
 				9218DF411919B04D0033851E /* joint-pivot-handle-ref@2x.png in Resources */,
 				9218DF2B1919B04D0033851E /* joint-pivot-handle-ratchetmark.png in Resources */,
 				B7096E28180CD98E00164A8A /* doc-node.png in Resources */,
+				D28546661A3C424600569C56 /* EffectOutlineControl.xib in Resources */,
 				E385080B150AB232007E162A /* segmctrl-bg.png in Resources */,
 				05799F451A32B16F00387A23 /* seq-notset@2x.png in Resources */,
 				B7E6BB5619F868F000619A58 /* select-pt@2x.png in Resources */,
@@ -6951,6 +6975,7 @@
 				E367E32516384F3600247F12 /* orientation-portrait.png in Resources */,
 				9266EE30195A171B006CBE81 /* effect-saturation.png in Resources */,
 				581130601639C52500A86D70 /* seq-startmarker.png in Resources */,
+				D28546641A3C41C600569C56 /* EffectHueControl.xib in Resources */,
 				92F0960E18F8851300D47A94 /* inspector-body-connected@2x.png in Resources */,
 				E38DAB22165AC18800EA24E4 /* reshandler-spritesheet-folder.png in Resources */,
 				B759E4B51880B4D000E8166C /* help-logo@2x.png in Resources */,
@@ -6976,6 +7001,7 @@
 				E390C77F170A2C9B003E9E92 /* AboutWindow.xib in Resources */,
 				E390C781170A371E003E9E92 /* Generated in Resources */,
 				B7096E2A180CD98E00164A8A /* doc-particlesystem.png in Resources */,
+				D2F06F9F1A3EA6F4000283CB /* effect-outline.png in Resources */,
 				E334A4DE170CF475001604F7 /* seq-btn-end.png in Resources */,
 				E334A4DF170CF475001604F7 /* toolbar-bottom-noborder.png in Resources */,
 				921EEADB18A5760700D864C2 /* joint-pivot-sel@2x.png in Resources */,
@@ -7615,6 +7641,7 @@
 				E3808DBA1641D4B800398456 /* CCBTextFieldLabel.m in Sources */,
 				E380B2521642FC3C0006D31C /* TexturePacker.cpp in Sources */,
 				E380B2531642FC3C0006D31C /* Tupac.mm in Sources */,
+				D285465D1A3C3A9000569C56 /* CCBPEffectOutline.m in Sources */,
 				B7C3534117FA3DF1005697C1 /* PhysicsHandler.m in Sources */,
 				E39108081679365600391C3B /* MaxRectsBinPack.cpp in Sources */,
 				E39108091679365600391C3B /* Rect.cpp in Sources */,
@@ -7685,6 +7712,7 @@
 				E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */,
 				E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */,
 				E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */,
+				D28546601A3C3D6300569C56 /* EffectOutlineControl.m in Sources */,
 				E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */,
 				E525F3B510C25EE6D73F2C68 /* DateCache.m in Sources */,
 				E525F4E581031BFDE7E6DC9A /* NSString+Publishing.m in Sources */,
