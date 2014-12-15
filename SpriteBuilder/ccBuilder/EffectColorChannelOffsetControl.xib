@@ -162,6 +162,7 @@
 						<string key="NSFrame">{{203, 8}, {42, 19}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="439575813">
@@ -700,99 +701,99 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: effect.redOffsetY</string>
+						<string key="label">value: self.redOffsetY</string>
 						<reference key="source" ref="20192115"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="20192115"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: effect.redOffsetY</string>
+							<string key="NSLabel">value: self.redOffsetY</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">effect.redOffsetY</string>
+							<string key="NSKeyPath">self.redOffsetY</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">87</int>
+					<int key="connectionID">103</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: effect.redOffsetX</string>
+						<string key="label">value: self.redOffsetX</string>
 						<reference key="source" ref="556577295"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="556577295"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: effect.redOffsetX</string>
+							<string key="NSLabel">value: self.redOffsetX</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">effect.redOffsetX</string>
+							<string key="NSKeyPath">self.redOffsetX</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">85</int>
+					<int key="connectionID">105</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: effect.greenOffsetY</string>
+						<string key="label">value: self.greenOffsetY</string>
 						<reference key="source" ref="1029419367"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="1029419367"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: effect.greenOffsetY</string>
+							<string key="NSLabel">value: self.greenOffsetY</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">effect.greenOffsetY</string>
+							<string key="NSKeyPath">self.greenOffsetY</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">91</int>
+					<int key="connectionID">109</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: effect.greenOffsetX</string>
+						<string key="label">value: self.greenOffsetX</string>
 						<reference key="source" ref="157278738"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="157278738"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: effect.greenOffsetX</string>
+							<string key="NSLabel">value: self.greenOffsetX</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">effect.greenOffsetX</string>
+							<string key="NSKeyPath">self.greenOffsetX</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">90</int>
+					<int key="connectionID">107</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: effect.blueOffsetY</string>
+						<string key="label">value: self.blueOffsetY</string>
 						<reference key="source" ref="638424848"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="638424848"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: effect.blueOffsetY</string>
+							<string key="NSLabel">value: self.blueOffsetY</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">effect.blueOffsetY</string>
+							<string key="NSKeyPath">self.blueOffsetY</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">93</int>
+					<int key="connectionID">113</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: effect.blueOffsetX</string>
+						<string key="label">value: self.blueOffsetX</string>
 						<reference key="source" ref="306401200"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="306401200"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: effect.blueOffsetX</string>
+							<string key="NSLabel">value: self.blueOffsetX</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">effect.blueOffsetX</string>
+							<string key="NSKeyPath">self.blueOffsetX</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">92</int>
+					<int key="connectionID">111</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1062,7 +1063,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">99</int>
+			<int key="maxID">113</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
