@@ -31,9 +31,6 @@
 	DESERIALIZE_PROPERTY(contrast, floatValue);
 }
 
-
-
-
 -(EffectDescription*)effectDescription
 {
 	return [EffectsManager effectByClassName: NSStringFromClass([self class])];
