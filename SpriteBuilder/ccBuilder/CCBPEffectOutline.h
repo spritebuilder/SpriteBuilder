@@ -11,7 +11,4 @@
 
 @interface CCBPEffectOutline : CCEffectOutline<EffectProtocol>
 
-//@property (nonatomic,readonly) EffectDescription * effectDescription;
-//@property (nonatomic) CCBPEffectOutline * effect;
-
 @end
