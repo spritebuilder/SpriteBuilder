@@ -55,17 +55,6 @@
     }];
 }
 
--(void)setEditedColor:(NSColor *)editedColor
-{
-    NSColor *rgbColor = [editedColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-    self.specularColor = [CCColor colorWithRed:rgbColor.redComponent green:rgbColor.greenComponent blue:rgbColor.blueComponent alpha:rgbColor.alphaComponent];
-}
-
-- (NSColor*)editedColor
-{
-    return self.specularColor.NSColor;
-}
-
 -(EffectDescription*)effectDescription
 {
     return [EffectsManager effectByClassName: NSStringFromClass([self class])];
@@ -73,11 +62,6 @@
 
 - (void) willChangeValueForKey:(NSString *)key
 {
-    if ([key isEqualToString:@"editedColor"])
-    {
-        key = @"specularColor";
-    }
-    
     [EffectsUndoHelper handleUndoForKey:key effect:self];
     [super willChangeValueForKey:key];
 }

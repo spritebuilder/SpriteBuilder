@@ -23,4 +23,19 @@
     return self;
 }
 
+-(void)setColor:(NSColor *)color
+{
+    [self.effect willChangeValueForKey:@"specularColor"];
+    
+    NSColor *rgbColor = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+    self.effect.specularColor = [CCColor colorWithRed:rgbColor.redComponent green:rgbColor.greenComponent blue:rgbColor.blueComponent alpha:rgbColor.alphaComponent];
+
+    [self.effect didChangeValueForKey:@"specularColor"];
+}
+
+- (NSColor*)color
+{
+    return self.effect.specularColor.NSColor;
+}
+
 @end

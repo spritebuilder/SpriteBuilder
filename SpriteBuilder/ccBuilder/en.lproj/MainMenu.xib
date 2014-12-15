@@ -780,19 +780,19 @@ CA
                                         <menuItem title="Enable Diffuse" state="on" id="hzm-ku-NPW" userLabel="Enable Diffuse">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="menuSetStageLight:" target="494" id="eBd-aD-IIx"/>
+                                                <action selector="stageLightMenuSelected:" target="u4c-hS-F5m" id="G3w-tI-dT2"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enable Specular" tag="1" id="kuU-Qc-B3O" userLabel="Enable Specular">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="menuSetStageLight:" target="494" id="gMd-rD-c6B"/>
+                                                <action selector="stageLightMenuSelected:" target="u4c-hS-F5m" id="qPo-fc-Vef"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enable Ambient" tag="2" id="2I5-UR-Xx9" userLabel="Enable Ambient">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="menuSetStageLight:" target="494" id="8So-uU-cmd"/>
+                                                <action selector="stageLightMenuSelected:" target="u4c-hS-F5m" id="f30-b3-vyq"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -835,7 +835,7 @@ CA
                                         <menuItem title="Lights" id="hmI-o2-pV2" userLabel="Lights">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <binding destination="494" name="value" keyPath="showLights" id="An7-of-P59"/>
+                                                <binding destination="u4c-hS-F5m" name="value" keyPath="self.showLights" id="dto-eG-XWA"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -2454,6 +2454,7 @@ CA
                 <outlet property="lblTimeline" destination="1237" id="1586"/>
                 <outlet property="lblTimelineChained" destination="1666" id="1687"/>
                 <outlet property="leftPanel" destination="1491" id="1790"/>
+                <outlet property="lightingHandler" destination="u4c-hS-F5m" id="Fns-bd-5ne"/>
                 <outlet property="localizationEditorHandler" destination="2097" id="2099"/>
                 <outlet property="loopButton" destination="e6M-L5-cKQ" id="dgO-PA-DRr"/>
                 <outlet property="mainView" destination="372" id="1262"/>
@@ -2757,6 +2758,11 @@ CA
             </connections>
         </customObject>
         <customObject id="fa4-D5-pFD" customClass="PhysicsHandler"/>
+        <customObject id="u4c-hS-F5m" userLabel="Lighting Handler" customClass="LightingHandler">
+            <connections>
+                <outlet property="stageLightMenu" destination="yVq-ov-b8W" id="ozF-dG-Q7O"/>
+            </connections>
+        </customObject>
         <collectionViewItem id="19X-cC-WDn"/>
         <collectionViewItem id="0wd-3s-3IL"/>
         <collectionViewItem id="J5b-i6-X22"/>

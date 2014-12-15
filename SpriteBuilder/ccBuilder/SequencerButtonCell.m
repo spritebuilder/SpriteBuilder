@@ -18,7 +18,7 @@
 {
     if (!imagesLoaded)
     {
-        imgRowBgChannel = [NSImage imageNamed:@"seq-row-channel-bg.png"];
+        imgRowBgChannel = [NSImage imageNamed:@"seq-row-channel-bg"];
         imagesLoaded = YES;
     }
     
@@ -43,11 +43,11 @@
     
     if(![self isEnabled])
     {
-        self.image = [NSImage imageNamed:@"seq-visible-faint.png"];
+        self.image = [NSImage imageNamed:@"seq-visible-faint"];
     }
     else
     {
-        self.image = [NSImage imageNamed:@"seq-visible.png"];
+        self.image = [NSImage imageNamed:@"seq-visible"];
     }
 }
 
@@ -62,17 +62,17 @@
     switch (_status) {
         case LockedButtonStatus_Set:
         {
-            self.image = [NSImage imageNamed:@"seq-locked.png"];
+            self.image = [NSImage imageNamed:@"seq-locked"];
         }
         break;
         case LockedButtonStatus_NoSet:
         {
-            self.image =  [NSImage imageNamed:@"seq-notset.png"];
+            self.image =  [NSImage imageNamed:@"seq-notset"];
         }
             break;
         case LockedButtonStatus_SetNotEnabled:
         {
-            self.image =  [NSImage imageNamed:@"seq-locked-faint.png"];
+            self.image =  [NSImage imageNamed:@"seq-locked-faint"];
         }
             break;
         default:

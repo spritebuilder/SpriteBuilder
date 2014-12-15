@@ -95,6 +95,9 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 	// Need to force it to update the rulers.
 	winSize = CGSizeZero;
 	[[CocosScene cocosScene] forceRedraw];
+
+    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+    viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
 }
 
 - (id) init
@@ -125,14 +128,14 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
     zoom = zm;
     
     // Resize backrounds
-    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth/[CCDirector sharedDirector].contentScaleFactor);
-    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth/[CCDirector sharedDirector].contentScaleFactor, winSize.height);
+    bgHorizontal.contentSize = CGSizeMake(winSize.width, kCCBRulerWidth / viewScale);
+    bgVertical.contentSize = CGSizeMake(kCCBRulerWidth / viewScale, winSize.height);
     
     // Add marks and numbers
     [marksVertical removeAllChildrenWithCleanup:YES];
     [marksHorizontal removeAllChildrenWithCleanup:YES];
     
-		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+		
     // Vertical marks
     int y = (int)so.y - (((int)so.y)/10)*10;
     while (y < winSize.height)
@@ -171,7 +174,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
                 CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
                 lbl.anchorPoint = ccp(0,0);
-                lbl.position = ccp(2/scale, y + (8*(strLen - i - 1) - 1)/scale);
+                lbl.position = ccp(2/viewScale, y + (8*(strLen - i - 1) - 1)/viewScale);
             
                 [marksVertical addChild:lbl z:1];
             }
@@ -214,7 +217,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
             CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
             lbl.anchorPoint = ccp(0,0);
-            lbl.position = ccp(x+1/scale, -2/scale);
+            lbl.position = ccp(x+1/viewScale, -2/viewScale);
             [marksHorizontal addChild:lbl z:1];
         }
         x+=10;
