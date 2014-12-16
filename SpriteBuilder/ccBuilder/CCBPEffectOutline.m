@@ -45,7 +45,7 @@
     return [EffectsManager effectByClassName: NSStringFromClass([self class])];
 }
 
-- (void) willChangeValueForKey:(NSString *)key
+- (void)willChangeValueForKey:(NSString *)key
 {
     [EffectsUndoHelper handleUndoForKey:key effect:self];
     [super willChangeValueForKey:key];

@@ -25,12 +25,11 @@
 
 - (void) setColor:(NSColor *)color
 {
-    CGFloat r, g, b, a;
+    [self.effect willChangeValueForKey:@"outlineColor"];
     
-    [color getRed:&r green:&g blue:&b alpha:&a];
+    NSColor *rgbColor = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
     
-    CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:a];
-    self.effect.outlineColor = colorValue;
+    self.effect.outlineColor = [CCColor colorWithRed:rgbColor.redComponent green:rgbColor.greenComponent blue:rgbColor.blueComponent alpha:rgbColor.alphaComponent];
 }
 
 - (NSColor*) color
