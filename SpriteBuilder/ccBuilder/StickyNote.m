@@ -48,7 +48,10 @@
     [bg setMargin:0.3];
     [self addChild:bg z:0];
     
-    lbl = [CCLabelTTF labelWithString:@"Double click to edit" fontName:@"MarkerFelt-Thin" fontSize:14 / [CCDirector sharedDirector].contentScaleFactor];
+    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+    CGFloat viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
+    
+    lbl = [CCLabelTTF labelWithString:@"Double click to edit" fontName:@"MarkerFelt-Thin" fontSize:14 / viewScale];
     lbl.anchorPoint = ccp(0,0);
     lbl.positionType = CCPositionTypeUIPoints;
     lbl.contentSizeType = CCSizeTypeUIPoints;
@@ -69,8 +72,10 @@
     bg.contentSize = contentSize;
     
     //NSLog(@"set lbl.dimensions: (%f,%f)", contentSize.width - (2*kCCBNoteLblInsetH), contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot);
+    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+    CGFloat viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
     
-    lbl.dimensions = CGSizeMake((contentSize.width - (2*kCCBNoteLblInsetH))/[CCDirector sharedDirector].contentScaleFactor, (contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot)/[CCDirector sharedDirector].contentScaleFactor);
+    lbl.dimensions = CGSizeMake((contentSize.width - (2*kCCBNoteLblInsetH))/viewScale, (contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot)/viewScale);
     
     [super setContentSize:contentSize];
 }
@@ -89,7 +94,10 @@
 - (int) hitAreaFromPt:(CGPoint)pt
 {
     CGPoint localPt = [self convertToNodeSpace:pt];
-    localPt = ccpMult(localPt, [CCDirector sharedDirector].contentScaleFactor);
+    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+    CGFloat viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
+    
+    localPt = ccpMult(localPt, viewScale);
     
     CGRect resizeRect = CGRectMake(self.contentSize.width-22, 11, 16, 16);
     if (CGRectContainsPoint(resizeRect, localPt)) return kCCBStickyNoteHitResize;

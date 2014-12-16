@@ -3207,6 +3207,7 @@ typedef enum
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
+    [[CocosScene cocosScene].notesLayer setup];
 }
 
 - (void) setResolution:(int)r
