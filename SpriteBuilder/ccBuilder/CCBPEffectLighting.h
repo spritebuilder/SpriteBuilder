@@ -12,6 +12,4 @@
 
 @interface CCBPEffectLighting : CCEffectLighting <EffectProtocol>
 
-@property (nonatomic,readonly) EffectDescription * effectDescription;
-
 @end

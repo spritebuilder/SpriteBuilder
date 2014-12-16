@@ -11,5 +11,5 @@
 
 
 @interface CCBPEffectContrast : CCEffectContrast <EffectProtocol>
-@property (nonatomic,readonly) EffectDescription * effectDescription;
+
 @end

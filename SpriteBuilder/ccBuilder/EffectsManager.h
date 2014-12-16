@@ -36,6 +36,9 @@ self.name = [dict[@"value"] numberValue];\
 -(id)serialize;
 -(void)deserialize:(NSArray*)properties;
 
+@optional
+-(void)postDeserializationEffectFixup:(CCNode*)owner;
+
 @end
 
 ////////////////////////////////////////////////////////////
@@ -43,7 +46,7 @@ self.name = [dict[@"value"] numberValue];\
 @protocol CCEffectNodeProtocol <NSObject>
 @required
 @property (nonatomic,readonly) NSArray * effectDescriptors;
-@property (nonatomic, assign) NSArray * effects;
+@property (nonatomic,strong) NSArray * effects;
 
 -(void)addEffect:(CCEffect<EffectProtocol>*)effect;
 -(void)removeEffect:(CCEffect<EffectProtocol>*)effect;
