@@ -5,6 +5,7 @@
 // Class would otherwise be available but not autocompleting/syntax-highlighting.
 // Perhaps an Xcode bug?
 #import "libs/cocos2d-iphone/cocos2d/Support/CCColor.h"
+#import "libs/cocos2d-iphone/cocos2d-ui/CCBReader/CCBReader.h"
 #import "libs/cocos2d-iphone/cocos2d-ui/CCControl.h"
 #import "libs/cocos2d-iphone/cocos2d-ui/CCButton.h"
 #import "libs/cocos2d-iphone/cocos2d-ui/CCSlider.h"
