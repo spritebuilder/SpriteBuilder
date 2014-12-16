@@ -32,6 +32,8 @@
 #import "EffectBlurControl.h"
 #import "CCBPEffectLighting.h"
 #import "EffectLightingControl.h"
+#import "CCBPEffectColorChannelOffset.h"
+#import "EffectColorChannelOffsetControl.h"
 
 
 @implementation CCNode(Effects)
@@ -149,6 +151,19 @@
         effectDescription.group = 1;
         
 		[effectDescriptions addObject:effectDescription];
+	}
+	
+	{
+        EffectDescription * effectDescription = [[EffectDescription alloc] init];
+        effectDescription.title = @"Color Channel Offset";
+        effectDescription.description = @"Shifts color channels";
+        effectDescription.imageName = @"effect-color-channel-offset.png";
+        effectDescription.className = NSStringFromClass([CCBPEffectColorChannelOffset class]);
+        effectDescription.baseClass = @"CCEffectColorChannelOffset";
+        effectDescription.viewController = NSStringFromClass([EffectColorChannelOffsetControl class]);
+        effectDescription.group = 1;
+        
+        [effectDescriptions addObject:effectDescription];
 	}
 	
 	{
