@@ -2684,7 +2684,7 @@ CA
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView tag="3" id="2023">
-                    <rect key="frame" x="3" y="3" width="42" height="42"/>
+                    <rect key="frame" x="3" y="3" width="44" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="TB_plugins" id="2024"/>
                 </imageView>

@@ -46,11 +46,13 @@ enum
     CGPoint noteStartPos;
     CGSize noteStartSize;
     StickyNote* modifiedNote;
+    CGFloat viewScale;
     
     IBOutlet NSView* editView;
     IBOutlet NSTextView* textView;
     IBOutlet NSButton* closeButton;
 }
+- (void) setup;
 - (void) addNote;
 - (IBAction)clickedClose:(id)sender;
 - (BOOL) mouseDown:(CGPoint)pt event:(NSEvent*)event;

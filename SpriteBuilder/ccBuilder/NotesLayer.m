@@ -39,8 +39,14 @@
     if (!self) return NULL;
     
     notesVisible = YES;
+    [self setup];
     
     return self;
+}
+
+- (void) setup {
+    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+    viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
 }
 
 - (void) addNote
@@ -57,7 +63,7 @@
     
     // Setup text area and add it to guiLayer
     CGSize size = note.contentSize;
-    CGPoint pos = ccp(note.position.x * [CCDirector sharedDirector].contentScaleFactor, note.position.y * [CCDirector sharedDirector].contentScaleFactor - note.contentSize.height);
+    CGPoint pos = ccp(note.position.x * viewScale, note.position.y * viewScale - note.contentSize.height);
     
 	// FIXME: fix deprecation warning
     SUPPRESS_DEPRECATED([NSBundle loadNibNamed:@"StickyNoteEditView" owner:self]);
@@ -161,7 +167,7 @@
         [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*notes"];
         
         CGPoint delta = ccpSub(pt, mouseDownPos);
-        delta = ccpMult(delta, [CCDirector sharedDirector].contentScaleFactor);
+        delta = ccpMult(delta, viewScale);
         CGSize newSize;
         newSize.width = noteStartSize.width + delta.x;
         newSize.height = noteStartSize.height - delta.y;
