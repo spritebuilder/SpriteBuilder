@@ -11,6 +11,5 @@
 
 
 @interface CCBPEffectSaturation : CCEffectSaturation <EffectProtocol>
-@property (nonatomic,readonly) EffectDescription * effectDescription;
 
 @end

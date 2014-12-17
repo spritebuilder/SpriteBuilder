@@ -137,6 +137,7 @@
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
 #import "SBOpenPathsController.h"
+#import "LightingHandler.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -183,6 +184,7 @@ static const int CCNODE_INDEX_LAST = -1;
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
 @dynamic	showJoints;
+@synthesize lightingHandler;
 
 static AppDelegate* sharedAppDelegate;
 
@@ -253,6 +255,7 @@ void ApplyCustomNodeVisitSwizzle()
     sequenceHandler.timeScaleSlider = timeScaleSlider;
     sequenceHandler.scroller = timelineScroller;
     sequenceHandler.scrollView = sequenceScrollView;
+    sequenceHandler.lightVisibilityDelegate = self.lightingHandler;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSoundImages:) name:kSoundFileImageLoaded object:nil];
     
@@ -1447,6 +1450,11 @@ typedef enum
     
     //[self updateJSControlledMenu];
     [self updateCanvasBorderMenu];
+    
+    [self willChangeValueForKey:@"showJoints"];
+    [self didChangeValueForKey:@"showJoints"];
+
+    [lightingHandler refreshAll];
 }
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
@@ -2081,6 +2089,8 @@ typedef enum
     [self setSelectedNodes:@[child]];
     [_inspectorController updateInspectorFromSelection];
     
+    [lightingHandler refreshStageLightAndMenu];
+    
     return YES;
 }
 
@@ -2603,6 +2613,8 @@ typedef enum
     [sequenceHandler updateOutlineViewSelection];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
+    
+    [lightingHandler refreshStageLightAndMenu];
 }
 
 - (IBAction) delete:(id) sender

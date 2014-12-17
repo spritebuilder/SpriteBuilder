@@ -50,6 +50,7 @@
 #import "SBPasteboardTypes.h"
 #import "EffectsManager.h"
 #import "InspectorController.h"
+#import "NotificationNames.h"
 
 static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
 static NSString *const ORIGINAL_NODE_KEY = @"originalNode";
@@ -97,11 +98,14 @@ static SequencerHandler* sharedSequencerHandler;
 
 	[[[outlineHierarchy outlineTableColumn] dataCell] setEditable:YES];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(allLightsVisibilityDidChange:) name:ALL_LIGHTS_VISIBILITY_CHANGED object:nil];
+    
     return self;
 }
 
 - (void) dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.currentSequence = NULL;
 }
 
@@ -481,10 +485,22 @@ static SequencerHandler* sharedSequencerHandler;
     
     if([tableColumn.identifier isEqualToString:@"hidden"])
     {
-        bool hidden = [(NSNumber*)object boolValue];
+        BOOL itemIsLight = [item isKindOfClass:[CCLightNode class]];
+        CCLightNode *lightNode = nil;
+        if (itemIsLight)
+        {
+            lightNode = (CCLightNode *)item;
+            [self.lightVisibilityDelegate lightVisibilityWillChange:lightNode];
+        }
         
+        bool hidden = [(NSNumber*)object boolValue];        
         node.hidden = hidden;
         [outlineView reloadItem:node reloadChildren:YES];
+
+        if (itemIsLight)
+        {
+            [self.lightVisibilityDelegate lightVisibilityDidChange:lightNode];
+        }
     }
     else if([tableColumn.identifier isEqualToString:@"locked"])
     {
@@ -1603,6 +1619,13 @@ static SequencerHandler* sharedSequencerHandler;
              || [node shouldDisableProperty:prop])
            && [[node.plugIn animatablePropertiesForNode:node] containsObject:prop];
 
+}
+
+#pragma mark - Lighting notifications
+
+- (void)allLightsVisibilityDidChange:(NSNotification *)notification
+{
+    [self.outlineHierarchy reloadData];
 }
 
 @end
