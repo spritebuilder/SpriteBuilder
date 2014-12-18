@@ -139,7 +139,7 @@ typedef NSDictionary *(^PropertiesBlock)();
 
 - (void)assertPropertiesInPlugin:(PlugInNode *)plugin properties:(NSDictionary *)expectedProperties
 {
-    XCTAssertEqual([plugin.nodePropertiesDict count], [expectedProperties count], @"Plugins property count(%d) is not equal to expected count(%d). Expected properties: %@, plugin's properties: %@",
+    XCTAssertEqual([plugin.nodePropertiesDict count], [expectedProperties count], @"Plugins property count(%lu) is not equal to expected count(%lu). Expected properties: %@, plugin's properties: %@",
                    [plugin.nodePropertiesDict count], [expectedProperties count], expectedProperties, plugin.nodePropertiesDict);
 
     for (NSString *propertyName in expectedProperties)
