@@ -427,7 +427,7 @@ __strong NSDictionary* renamedProperties = nil;
 		
 		for (NSDictionary * serializedEffect in serializedValue) {
 			NSString* className = serializedEffect[@"className"];
-			NSDictionary * serializedProperties = serializedEffect[@"properties"];
+			id serializedProperties = serializedEffect[@"properties"];
 			
 			EffectDescription * effectDescription = [EffectsManager effectByClassName:className];
 			

@@ -14,7 +14,7 @@
                                                     8,
                                                     width*24,
                                                     CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB),
-                                                    kCGImageAlphaNoneSkipLast);
+                                                    (CGBitmapInfo)kCGImageAlphaNoneSkipLast);
 
     NSColor *calbrated = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
     CGContextSetRGBFillColor (context, calbrated.redComponent, calbrated.greenComponent, calbrated.blueComponent, calbrated.alphaComponent);
