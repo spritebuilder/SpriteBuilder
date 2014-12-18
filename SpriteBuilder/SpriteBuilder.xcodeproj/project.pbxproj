@@ -1605,6 +1605,7 @@
 		837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsWindowController.m; sourceTree = "<group>"; };
 		8392006B18ED91BC00B6C429 /* Cocos2dUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdater.h; sourceTree = "<group>"; };
 		8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocos2dUpdater.m; sourceTree = "<group>"; };
+		83957E661A432C7500134002 /* SpriteBuilder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpriteBuilder.entitlements; sourceTree = SOURCE_ROOT; };
 		83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettings_Tests.m; sourceTree = "<group>"; };
 		83993DAD19360A28001C228B /* FeatureToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureToggle.h; sourceTree = "<group>"; };
 		83993DAE19360A28001C228B /* FeatureToggle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureToggle.m; sourceTree = "<group>"; };
@@ -3899,6 +3900,7 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				83957E661A432C7500134002 /* SpriteBuilder.entitlements */,
 				E390C77A170A2C20003E9E92 /* About Box & Email list */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				776041E11498F56D0078095D /* Application Settings & Globals */,
@@ -6119,6 +6121,7 @@
 				7789ABBC133AA82000CEFCC7 /* Resources */,
 				776C6897138878FB00153214 /* Copy Files (Sparkle framework) */,
 				E3B7AED414E31E5D00DFD402 /* Copy PlugIns */,
+				83957E671A432C8600134002 /* Code Signing */,
 			);
 			buildRules = (
 			);
@@ -7592,6 +7595,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		83957E671A432C8600134002 /* Code Signing */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Code Signing";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\nif [ -z \"${CODE_SIGN_IDENTITY}\" ]; then\necho \"Not code signing: No code signing identity set\"\nexit 0\nfi\n\nCONTENTSDIR=\"${BUILT_PRODUCTS_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\nFRAMEWORKSLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# frameworks\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework\"\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A\"\n\n# binaries\nfor f1 in \"lame\" \"ccz\" \"oggenc\" \"pngquant\" \"optipng\"\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$CONTENTSDIR/Resources/$f1\"\ndone\n\n# plugins\nPLUGINFILES=\"$CONTENTSDIR/PlugIns/*\"\nfor f2 in $PLUGINFILES\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$f2\"\ndone";
+		};
 		DC3DD33018A948560004D2AC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -8682,8 +8699,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = NonSandboxed.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8727,8 +8744,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = NonSandboxed.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -8881,7 +8898,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = NonSandboxed.entitlements;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
