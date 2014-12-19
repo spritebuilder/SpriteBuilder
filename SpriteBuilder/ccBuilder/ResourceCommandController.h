@@ -26,6 +26,7 @@
 - (void)newFolder:(id)sender;
 - (void)newPackage:(id)sender;
 - (void)deleteResource:(id)sender;
+- (void)duplicateResource:(id)sender;
 
 - (void)exportPackage:(id)sender;
 

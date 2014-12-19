@@ -127,7 +127,6 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 // *** Smart Sprite Sheets ***
 - (void) makeSmartSpriteSheet:(RMResource*) res;
 - (void) removeSmartSpriteSheet:(RMResource*) res;
-- (NSArray*) smartSpriteSheetDirectories;
 
 // *** Setting and reading file properties ***
 // Will mark the resource as dirty if old value is not equal to new value

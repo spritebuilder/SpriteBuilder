@@ -8,3 +8,5 @@ extern NSString *const RESOURCE_PATHS_CHANGED;
 extern NSString *const RESOURCES_CHANGED;
 
 extern NSString *const SCENEGRAPH_NODE_DELETED;
+
+extern NSString *const ALL_LIGHTS_VISIBILITY_CHANGED;

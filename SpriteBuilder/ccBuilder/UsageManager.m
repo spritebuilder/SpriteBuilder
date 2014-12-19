@@ -46,6 +46,15 @@ static NSString *urlEncode(id object) {
 @implementation UsageManager
 @dynamic userID;
 
++ (UsageManager*)sharedManager {
+    static UsageManager *sharedManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedManager = [[self alloc] init];
+    });
+    return sharedManager;
+}
+
 -(id)init
 {
 	self = [super init];

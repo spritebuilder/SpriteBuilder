@@ -44,8 +44,12 @@
 // /foo/baa/123/test.txt
 - (NSString *)fullPathForFile:(NSString *)filePath;
 
-// Copies a resource in the bundle to the relative folder
+// Copies a resource in the bundle to the relative folder, the file's name will be preserved
 // Add resource for the SB test target in the copy bundle phase of the xcode project settings
 - (void)copyTestingResource:(NSString *)resourceName toFolder:(NSString *)folder;
+
+// Copies a resource in the bundle to the relative path, add new filename
+// Add resource for the SB test target in the copy bundle phase of the xcode project settings
+- (void)copyTestingResource:(NSString *)resourceName toRelPath:(NSString *)toRelPath;
 
 @end

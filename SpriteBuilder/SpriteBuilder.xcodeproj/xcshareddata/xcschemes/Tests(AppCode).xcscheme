@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   version = "1.3">
+   <BuildAction>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForRunning = "YES"
+            buildForTesting = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "833A5C49192B48CA001837B3"
+               BuildableName = "SpriteBuilder Tests.xctest"
+               BlueprintName = "SpriteBuilder Tests"
+               ReferencedContainer = "container:SpriteBuilder.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Testing">
+      <Testables>
+         <TestableReference>
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "833A5C49192B48CA001837B3"
+               BuildableName = "SpriteBuilder Tests.xctest"
+               BlueprintName = "SpriteBuilder Tests"
+               ReferencedContainer = "container:SpriteBuilder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      useCustomWorkingDirectory = "NO">
+   </LaunchAction>
+</Scheme>

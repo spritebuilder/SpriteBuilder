@@ -432,14 +432,6 @@
                       subPath:(NSString *)subPath
                     outputDir:(NSString *)outputDir
 {
-    // NOTE: For every spritesheet one shared dir is used, so we have to remove it on the
-    // queue to ensure that later spritesheets don't add more sprites from previous passes
-    [_queue addOperationWithBlock:^
-    {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        [fileManager removeItemAtPath:[_projectSettings tempSpriteSheetCacheDirectory] error:NULL];
-    }];
-
     NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPathIgnoringDirs:YES];
 
 	[_publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
@@ -448,14 +440,22 @@
 
 	for (NSString *resolution in _resolutions)
 	{
-		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]] stringByAppendingPathComponent:spriteSheetName];
+		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
+                                                     stringByAppendingPathComponent:spriteSheetName];
 
-        NSString *intermediateFileLookupPath = [publishDirectory  stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
+        NSFileManager *filemanager = [NSFileManager defaultManager];
+        [filemanager createDirectoryAtPath:[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath]
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:nil];
+        
+        NSString *intermediateFileLookupPath = [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath] stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
 		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
 		{
-            LocalLog(@"[SPRITESHEET] SKIPPING exists and up to date - file name: %@, subpath: %@, resolution: %@, file path: %@", [spriteSheetFile lastPathComponent], subPath, resolution, spriteSheetFile);
+            LocalLog(@"[SPRITESHEET] SKIPPING exists and up to date - file name: %@, subpath: %@, resolution: %@, file path: %@",
+                     [spriteSheetFile lastPathComponent], subPath, resolution, spriteSheetFile);
 			continue;
 		}
 
@@ -463,6 +463,7 @@
         PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] init];
 
         [self prepareImagesForSpriteSheetPublishing:publishDirectory
+                                            subPath:subPath
                                           outputDir:outputDir
                                          resolution:resolution
                                          fileLookup:publishIntermediateFilesLookup];
@@ -479,7 +480,8 @@
         {
             if (![publishIntermediateFilesLookup writeToFile:intermediateFileLookupPath])
             {
-                [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@", spriteSheetName, resolution]];
+                [_warnings addWarningWithDescription:[NSString stringWithFormat:@"Could not write intermediate file lookup for smart spritesheet %@ @ %@",
+                                                               spriteSheetName, resolution]];
             }
             [CCBFileUtil setModificationDate:srcSpriteSheetDate forFile:intermediateFileLookupPath];
         }];
@@ -501,8 +503,8 @@
     operation.srcSpriteSheetDate = srcSpriteSheetDate;
     operation.resolution = resolution;
     operation.srcDirs = @[
-            [_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
-            _projectSettings.tempSpriteSheetCacheDirectory];
+            [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
+            [_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath]];
     operation.spriteSheetFile = spriteSheetFile;
     operation.subPath = subPath;
     operation.osType = _osType;
@@ -519,6 +521,7 @@
 }
 
 - (void)prepareImagesForSpriteSheetPublishing:(NSString *)publishDirectory
+                                      subPath:(NSString *)subPath
                                     outputDir:(NSString *)outputDir
                                    resolution:(NSString *)resolution
                                    fileLookup:(id<PublishFileLookupProtocol>)fileLookup
@@ -536,7 +539,7 @@
         if ([filePath isResourceAutoFile]
             && ([fileName isSmartSpriteSheetCompatibleFile]))
         {
-            NSString *dstFile = [[_projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:fileName];
+            NSString *dstFile = [[[_projectSettings tempSpriteSheetCacheDirectory] stringByAppendingPathComponent:subPath] stringByAppendingPathComponent:fileName];
             [self publishImageFile:filePath
                                 to:dstFile
                      isSpriteSheet:NO
@@ -576,6 +579,7 @@
         PublishIntermediateFilesLookup *publishIntermediateFilesLookup = [[PublishIntermediateFilesLookup alloc] init];
 
         [self prepareImagesForSpriteSheetPublishing:publishDirectory
+                                            subPath:subPath
                                           outputDir:outputDir
                                          resolution:resolution
                                          fileLookup:publishIntermediateFilesLookup];

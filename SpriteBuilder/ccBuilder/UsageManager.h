@@ -16,6 +16,8 @@ extern NSString * kSbUserID;
     NSString* _userID;
 }
 
++ (UsageManager*)sharedManager;
+
 @property (readonly) NSString * userID;
 
 - (void) registerUsage;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
-        <plugIn identifier="com.apple.imagekit.ibplugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.imagekit.ibplugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -773,6 +773,31 @@ CA
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Stage Light" id="yVq-ov-b8W" userLabel="Stage Light">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Stage Light" id="Wxk-KC-GUx" userLabel="Stage Light">
+                                    <items>
+                                        <menuItem title="Enable Diffuse" state="on" id="hzm-ku-NPW" userLabel="Enable Diffuse">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="stageLightMenuSelected:" target="u4c-hS-F5m" id="G3w-tI-dT2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Enable Specular" tag="1" id="kuU-Qc-B3O" userLabel="Enable Specular">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="stageLightMenuSelected:" target="u4c-hS-F5m" id="qPo-fc-Vef"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Enable Ambient" tag="2" id="2I5-UR-Xx9" userLabel="Enable Ambient">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="stageLightMenuSelected:" target="u4c-hS-F5m" id="f30-b3-vyq"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="1451"/>
                             <menuItem title="Extras" alternate="YES" keyEquivalent="H" id="5aS-8M-yP4">
                                 <connections>
@@ -799,6 +824,18 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <binding destination="494" name="value" keyPath="showStickyNotes" id="sg9-lg-g2R"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Joints" id="r9m-fF-w2F">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="494" name="value" keyPath="self.showJoints" id="BOO-L5-xIi"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Lights" id="hmI-o2-pV2" userLabel="Lights">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <binding destination="u4c-hS-F5m" name="value" keyPath="self.showLights" id="dto-eG-XWA"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -870,13 +907,6 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="menuAddStickyNote:" target="494" id="1465"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="wXO-wf-tbz"/>
-                            <menuItem title="Show Joints" id="r9m-fF-w2F">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <binding destination="494" name="value" keyPath="self.showJoints" id="BOO-L5-xIi"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -2424,6 +2454,7 @@ CA
                 <outlet property="lblTimeline" destination="1237" id="1586"/>
                 <outlet property="lblTimelineChained" destination="1666" id="1687"/>
                 <outlet property="leftPanel" destination="1491" id="1790"/>
+                <outlet property="lightingHandler" destination="u4c-hS-F5m" id="Fns-bd-5ne"/>
                 <outlet property="localizationEditorHandler" destination="2097" id="2099"/>
                 <outlet property="loopButton" destination="e6M-L5-cKQ" id="dgO-PA-DRr"/>
                 <outlet property="mainView" destination="372" id="1262"/>
@@ -2435,6 +2466,7 @@ CA
                 <outlet property="menuFileNewPackage" destination="g6Z-Mh-Dls" id="D5e-wF-NCl"/>
                 <outlet property="menuItemSnapGrid" destination="zA6-4S-M8f" id="UZF-mG-oQZ"/>
                 <outlet property="menuItemStageColor" destination="KQF-gw-sgJ" id="cG7-Q4-aYh"/>
+                <outlet property="menuItemStageLight" destination="yVq-ov-b8W" id="xV9-WW-ou0"/>
                 <outlet property="menuPlusButtonNewPackage" destination="fe0-WO-wub" id="qKr-zd-Bou"/>
                 <outlet property="menuResolution" destination="1264" id="1474"/>
                 <outlet property="menuTimeline" destination="1581" id="1585"/>
@@ -2652,7 +2684,7 @@ CA
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView tag="3" id="2023">
-                    <rect key="frame" x="3" y="3" width="42" height="42"/>
+                    <rect key="frame" x="3" y="3" width="44" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="TB_plugins" id="2024"/>
                 </imageView>
@@ -2726,6 +2758,11 @@ CA
             </connections>
         </customObject>
         <customObject id="fa4-D5-pFD" customClass="PhysicsHandler"/>
+        <customObject id="u4c-hS-F5m" userLabel="Lighting Handler" customClass="LightingHandler">
+            <connections>
+                <outlet property="stageLightMenu" destination="yVq-ov-b8W" id="ozF-dG-Q7O"/>
+            </connections>
+        </customObject>
         <collectionViewItem id="19X-cC-WDn"/>
         <collectionViewItem id="0wd-3s-3IL"/>
         <collectionViewItem id="J5b-i6-X22"/>

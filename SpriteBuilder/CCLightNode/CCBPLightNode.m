@@ -11,6 +11,9 @@
 #import "CCDrawNode.h"
 #import "CCSprite.h"
 #import "SceneGraph.h"
+#import "NodeInfo.h"
+#import "CCNode+NodeInfo.h"
+
 
 @interface CCBPLightNode ()
 @property (nonatomic, strong) SceneGraph *sceneGraph;
@@ -26,27 +29,48 @@
 {
     if ((self = [super init]))
     {
+        _sceneGraph = nil;
         _pointLightImage = [CCTexture textureWithFile:@"light-point.png"];
         _directionalLightImage = [CCTexture textureWithFile:@"light-directional.png"];
         _lightIcon = [CCSprite spriteWithImageNamed:@"light-point.png"];
+        _lightIcon.userObject = [[NodeInfo alloc] init];
     }
 
     return self;
+}
+
+-(void)postDeserializationFixup
+{
+    [super postDeserializationFixup];
+
+    if (!self.sceneGraph)
+    {
+        self.sceneGraph = [SceneGraph instance];
+        NSAssert(self.sceneGraph, @"Expected a valid SceneGraph instance and didn't find one.");
+        [self.sceneGraph.lightIcons addChild:_lightIcon];
+    }
 }
 
 -(void)onEnter
 {
     [super onEnter];
     
-    self.sceneGraph = [SceneGraph instance];
-    [self.sceneGraph.lightIcons addChild:_lightIcon];
+    if (!self.sceneGraph)
+    {
+        self.sceneGraph = [SceneGraph instance];
+        NSAssert(self.sceneGraph, @"Expected a valid SceneGraph instance and didn't find one.");
+        [self.sceneGraph.lightIcons addChild:_lightIcon];
+    }
 }
 
 -(void)onExit
 {
-    [self.sceneGraph.lightIcons removeChild:_lightIcon];
-    self.sceneGraph = nil;
-
+    if (self.sceneGraph)
+    {
+        [self.sceneGraph.lightIcons removeChild:_lightIcon];
+        self.sceneGraph = nil;
+    }
+    
     [super onExit];
 }
 
@@ -54,10 +78,26 @@
 {
     CGPoint worldPos = [self convertToWorldSpace:self.anchorPoint];
     CGPoint localPos = [self.sceneGraph.lightIcons convertToNodeSpace:worldPos];
-    _lightIcon.position = localPos;
-    _lightIcon.rotation = self.rotation;
+    self.lightIcon.position = localPos;
+    self.lightIcon.rotation = self.rotation;
 
     [super visit:renderer parentTransform:parentTransform];
+}
+
+- (BOOL)hidden
+{
+    return self.lightIcon.hidden;
+}
+
+- (void)setHidden:(BOOL)hidden
+{
+    self.lightIcon.hidden = hidden;
+}
+
+- (void)setVisible:(BOOL)visible
+{
+    [super setVisible:visible];
+    self.lightIcon.visible = visible;
 }
 
 -(void)setColor:(CCColor *)color
@@ -71,11 +111,11 @@
     [super setType:type];
     if (type == CCLightPoint)
     {
-        _lightIcon.texture = _pointLightImage;
+        self.lightIcon.texture = _pointLightImage;
     }
     else
     {
-        _lightIcon.texture = _directionalLightImage;
+        self.lightIcon.texture = _directionalLightImage;
     }
 }
 

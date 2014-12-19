@@ -106,7 +106,7 @@
 - (NSString *)cachesPath:(NSString *)PublishedPackageName
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachesPath = [[[paths objectAtIndex:0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME] stringByAppendingPathComponent:@"packages"];
+    NSString *cachesPath = [[paths[0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME] stringByAppendingPathComponent:@"packages"];
 
     NSString *result = [self createOutputDirectoryWithPackageName:PublishedPackageName
                                                           baseDir:cachesPath

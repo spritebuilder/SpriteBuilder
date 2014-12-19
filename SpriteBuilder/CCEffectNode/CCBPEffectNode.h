@@ -15,13 +15,8 @@
 
 
 @interface CCBPEffectNode : CCEffectNode <CCEffectNodeProtocol>
-{
-	
-}
 
-@property (nonatomic) NSArray * effects;
-
-
+@property (nonatomic,strong) NSArray * effects;
 
 @end
 

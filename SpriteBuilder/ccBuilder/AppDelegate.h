@@ -125,6 +125,7 @@ enum {
 @class PreviewContainerViewController;
 @class InspectorController;
 @class SBOpenPathsController;
+@class LightingHandler;
 
 typedef void (^CompletionCallback) (BOOL success);
 
@@ -297,9 +298,14 @@ typedef void (^CompletionCallback) (BOOL success);
     // Updates for Yosemite
     IBOutlet NSButton* loopButton;
     
+    // Light controls
+    IBOutlet LightingHandler* __weak lightingHandler;
+    
 @private
     MainWindow *__weak window;
 	BOOL _applicationLaunchComplete;
+    
+    CGFloat _baseContentScaleFactor;
     
 }
 
@@ -371,6 +377,7 @@ typedef void (^CompletionCallback) (BOOL success);
 // Sequencer
 @property (nonatomic, readonly) BOOL playingBack;
 
+@property (weak, nonatomic,readonly) LightingHandler* lightingHandler;
 
 // Methods
 + (AppDelegate*) appDelegate;

@@ -30,7 +30,7 @@
         return;
     }
 
-    [_lookup setObject:dst forKey:src];
+    _lookup[src] = dst;
 }
 
 - (BOOL)writeToFile:(NSString *)path

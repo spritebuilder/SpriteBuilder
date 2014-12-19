@@ -127,7 +127,6 @@
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
 #import "ProjectMigrator.h"
-#import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
@@ -138,6 +137,7 @@
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
 #import "SBOpenPathsController.h"
+#import "LightingHandler.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -184,6 +184,7 @@ static const int CCNODE_INDEX_LAST = -1;
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
 @dynamic	showJoints;
+@synthesize lightingHandler;
 
 static AppDelegate* sharedAppDelegate;
 
@@ -212,22 +213,25 @@ void ApplyCustomNodeVisitSwizzle()
 - (void) setupCocos2d
 {
     ApplyCustomNodeVisitSwizzle();
+    
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+
+    NSAssert(cocosView, @"cocosView is nil");
+    [director setView:cocosView];
+    [cocosView setWantsBestResolutionOpenGLSurface:YES];
+    [[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
 	
 	[director setDisplayStats:NO];
-	[director setProjection:CCDirectorProjection2D];
-    //[cocosView openGLContext];
+	[director setProjection:CCDirectorProjection2D];    
     
-	NSAssert(cocosView, @"cocosView is nil");
-    
-    // TODO: Add support for retina display
-    // [cocosView setWantsBestResolutionOpenGLSurface:YES];
-	[director setView:cocosView];
+    _baseContentScaleFactor = director.deviceContentScaleFactor;
     
     [self updatePositionScaleFactor];
     
-    [director reshapeProjection:cocosView.frame.size];
+    CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
+    
+    [director reshapeProjection:realSize];
     
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
@@ -251,6 +255,7 @@ void ApplyCustomNodeVisitSwizzle()
     sequenceHandler.timeScaleSlider = timeScaleSlider;
     sequenceHandler.scroller = timelineScroller;
     sequenceHandler.scrollView = sequenceScrollView;
+    sequenceHandler.lightVisibilityDelegate = self.lightingHandler;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSoundImages:) name:kSoundFileImageLoaded object:nil];
     
@@ -293,28 +298,28 @@ void ApplyCustomNodeVisitSwizzle()
 {
     NSMutableArray* items = [NSMutableArray array];
     
-    NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder.png"];
+    NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder"];
     [imgFolder setTemplate:YES];
     SMTabBarItem* itemFolder = [[SMTabBarItem alloc] initWithImage:imgFolder tag:0];
     itemFolder.toolTip = @"File View";
     itemFolder.keyEquivalent = @"";
     [items addObject:itemFolder];
     
-    NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects.png"];
+    NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects"];
     [imgObjs setTemplate:YES];
     SMTabBarItem* itemObjs = [[SMTabBarItem alloc] initWithImage:imgObjs tag:1];
     itemObjs.toolTip = @"Tileless Editor View";
     itemObjs.keyEquivalent = @"";
     [items addObject:itemObjs];
     
-    NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes.png"];
+    NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes"];
     [imgNodes setTemplate:YES];
     SMTabBarItem* itemNodes = [[SMTabBarItem alloc] initWithImage:imgNodes tag:2];
     itemNodes.toolTip = @"Node Library View";
     itemNodes.keyEquivalent = @"";
     [items addObject:itemNodes];
     
-    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning.png"];
+    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning"];
     [imgWarnings setTemplate:YES];
     SMTabBarItem* itemWarnings = [[SMTabBarItem alloc] initWithImage:imgWarnings tag:3];
     itemWarnings.toolTip = @"Warnings view";
@@ -338,7 +343,7 @@ typedef enum
 {
     NSMutableArray* items = [NSMutableArray array];
     
-    NSImage* imgProps = [NSImage imageNamed:@"inspector-props.png"];
+    NSImage* imgProps = [NSImage imageNamed:@"inspector-props"];
     [imgProps setTemplate:YES];
     SMTabBarItem* itemProps = [[SMTabBarItem alloc] initWithImage:imgProps tag:0];
     itemProps.toolTip = @"Item Properties";
@@ -346,7 +351,7 @@ typedef enum
 	itemProps.tag = eItemViewTabType_Properties;
     [items addObject:itemProps];
     
-    NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections.png"];
+    NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections"];
     [imgCode setTemplate:YES];
     SMTabBarItem* itemCode = [[SMTabBarItem alloc] initWithImage:imgCode tag:0];
     itemCode.toolTip = @"Item Code Connections";
@@ -362,7 +367,7 @@ typedef enum
 	itemPhysics.tag = eItemViewTabType_Physics;
     [items addObject:itemPhysics];
     
-    NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template.png"];
+    NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template"];
     [imgTemplate setTemplate:YES];
     SMTabBarItem* itemTemplate = [[SMTabBarItem alloc] initWithImage:imgTemplate tag:0];
     itemTemplate.toolTip = @"Item Templates";
@@ -525,8 +530,7 @@ typedef enum
         [[_menuItemExperimentalSpriteKitProject menu] removeItem:_menuItemExperimentalSpriteKitProject];
     }
 
-    UsageManager* usageManager = [[UsageManager alloc] init];
-    [usageManager registerUsage];
+    [[UsageManager sharedManager] registerUsage];
     
     // Initialize Audio
     //[OALSimpleAudio sharedInstance];
@@ -1446,6 +1450,11 @@ typedef enum
     
     //[self updateJSControlledMenu];
     [self updateCanvasBorderMenu];
+    
+    [self willChangeValueForKey:@"showJoints"];
+    [self didChangeValueForKey:@"showJoints"];
+
+    [lightingHandler refreshAll];
 }
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
@@ -1843,6 +1852,8 @@ typedef enum
     else if (type == kCCBNewDocTypeSprite) class = @"CCSprite";
     else if (type == kCCBNewDocTypeParticleSystem) class = @"CCParticleSystem";
     
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"new_file_%@",class]];
+    
     resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
     
     ResolutionSetting* resolution = [resolutions objectAtIndex:0];
@@ -2077,6 +2088,8 @@ typedef enum
     [outlineHierarchy reloadData];
     [self setSelectedNodes:@[child]];
     [_inspectorController updateInspectorFromSelection];
+    
+    [lightingHandler refreshStageLightAndMenu];
     
     return YES;
 }
@@ -2600,6 +2613,8 @@ typedef enum
     [sequenceHandler updateOutlineViewSelection];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:self userInfo:@{NOTIFICATION_USERINFO_KEY_NODE : node}];
+    
+    [lightingHandler refreshStageLightAndMenu];
 }
 
 - (IBAction) delete:(id) sender
@@ -2813,6 +2828,9 @@ typedef enum
 
 - (void)publishStartAsync:(BOOL)async
 {
+    
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_publish_%@",projectSettings.publishEnvironment ? @"release" : @"develop"]];
+    
     self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = projectSettings;
     _publisherController.packageSettings = [[ResourceManager sharedManager] loadAllPackageSettings];
@@ -3033,6 +3051,8 @@ typedef enum
             NSString* fileName = [[saveDlg URL] path];
             NSString* fileNameRaw = [fileName stringByDeletingPathExtension];
             
+            [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_new_%@",saveDlgLanguagePopup.selectedItem.title]];
+            
             // Check validity of file name
             NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
             if ([[fileNameRaw lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
@@ -3181,21 +3201,23 @@ typedef enum
         res = [[ResolutionSetting alloc] init];
         res.scale = 1;
     }
-	
-	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
+    
+    CGFloat s = _baseContentScaleFactor * res.scale;
+    
+	if([CCDirector sharedDirector].contentScaleFactor != s)
     {
         [[CCTextureCache sharedTextureCache] removeAllTextures];
         [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
         FNTConfigRemoveCache();
     }
     
-    
-    [CCDirector sharedDirector].contentScaleFactor = res.scale;
-    [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
+    [CCDirector sharedDirector].contentScaleFactor = s;
+    [CCDirector sharedDirector].UIScaleFactor = 1.0 / res.scale;
     [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
+    [[CocosScene cocosScene].notesLayer setup];
 }
 
 - (void) setResolution:(int)r
@@ -4251,6 +4273,25 @@ typedef enum
 }
 
 #pragma mark Delegate methods
+
+- (void)windowDidChangeScreen:(NSNotification *)notification {
+    if (window == notification.object) {
+        CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+
+        // check if DPI has changed
+        if (dir.deviceContentScaleFactor != _baseContentScaleFactor) {
+            
+            _baseContentScaleFactor = dir.deviceContentScaleFactor;
+            CGFloat tmp = dir.contentScaleFactor;
+            dir.contentScaleFactor = _baseContentScaleFactor;
+            CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
+            [[CCDirector sharedDirector] reshapeProjection:realSize];
+            dir.contentScaleFactor = tmp;
+            
+            [self updatePositionScaleFactor];
+        }
+    }
+}
 
 - (BOOL) windowShouldClose:(id)sender
 {
