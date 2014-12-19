@@ -1,17 +1,18 @@
 #import "PackageUtil.h"
 #import "NotificationNames.h"
 #import "NSError+SBErrors.h"
+#import "RMPackage.h"
 
 
 @implementation PackageUtil
 
-- (BOOL)enumeratePackagePaths:(NSArray *)packagePaths
-                        error:(NSError **)error
-          prevailingErrorCode:(NSInteger)prevailingErrorCode
-             errorDescription:(NSString *)errorDescription
-                        block:(PackagePathBlock)block
+- (BOOL)enumeratePackages:(NSArray *)packages
+                    error:(NSError **)error
+      prevailingErrorCode:(NSInteger)prevailingErrorCode
+         errorDescription:(NSString *)errorDescription
+                    block:(PackagePathBlock)block
 {
-    if (!packagePaths || packagePaths.count <= 0)
+    if (!packages || packages.count <= 0)
     {
         return YES;
     }
@@ -20,10 +21,10 @@
     NSUInteger packagesAltered = 0;
     NSMutableArray *errors = [NSMutableArray array];
 
-    for (NSString *packagePath in packagePaths)
+    for (RMPackage *package in packages)
     {
         NSError *anError;
-        if (!block(packagePath, &anError))
+        if (!block(package, &anError))
         {
             [errors addObject:anError];
             result = NO;

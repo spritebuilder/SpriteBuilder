@@ -8,7 +8,7 @@
 
 #import "ProjectSettingsWindowController.h"
 #import "ProjectSettings.h"
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 #import "RMPackage.h"
 #import "ResourceManager.h"
 #import "NSString+RelativePath.h"
@@ -22,7 +22,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic) BOOL canBeModified;
-@property (nonatomic, strong) PackagePublishSettings *packagePublishSettings;
+@property (nonatomic, strong) SBPackageSettings *packagePublishSettings;
 
 @end
 
@@ -86,7 +86,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
     for (RMPackage *package in [[ResourceManager sharedManager] allPackages])
     {
-        PackagePublishSettings *packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:package];
+        SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
         [packagePublishSettings load];
 
         SettingsListEntry *packageEntry = [[SettingsListEntry alloc] init];
@@ -122,7 +122,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     [self loadViewWithNibName:@"MainProjectSettingsDetailView"];
 }
 
-- (void)loadDetailViewForPackage:(PackagePublishSettings *)settings
+- (void)loadDetailViewForPackage:(SBPackageSettings *)settings
 {
     NSAssert(settings != nil, @"packagePublishSettings must not be nil");
     self.currentPackageSettings = settings;

@@ -24,13 +24,13 @@
 
     NSMutableArray *resourcesToDelete = [[NSMutableArray alloc] init];
     NSMutableArray *foldersToDelete = [[NSMutableArray alloc] init];
-    NSMutableArray *packagesPathsToDelete = [[NSMutableArray alloc] init];
+    NSMutableArray *packagesToDelete = [[NSMutableArray alloc] init];
 
     [self sortItemsToDeleteIntoArrays:resourcesToDelete
                       foldersToDelete:foldersToDelete
-                packagesPathsToDelete:packagesPathsToDelete];
+                packagesPathsToDelete:packagesToDelete];
 
-    if ([self willAllPackagesBeDeleted:packagesPathsToDelete])
+    if ([self willAllPackagesBeDeleted:packagesToDelete])
     {
         [NSAlert showModalDialogWithTitle:@"Error" message:@"At least one package must remain in the project."];
         return;
@@ -38,7 +38,7 @@
 
     [self deleteResourcesInArrays:resourcesToDelete
                   foldersToDelete:foldersToDelete
-            packagesPathsToDelete:packagesPathsToDelete];
+                 packagesToDelete:packagesToDelete];
 
     [_outlineView deselectAll:nil];
 
@@ -54,7 +54,7 @@
 
 - (void)deleteResourcesInArrays:(NSMutableArray *)resourcesToDelete
                 foldersToDelete:(NSMutableArray *)foldersToDelete
-          packagesPathsToDelete:(NSMutableArray *)packagesPathsToDelete
+               packagesToDelete:(NSMutableArray *)packagesToDelete
 {
     for (RMResource *res in resourcesToDelete)
     {
@@ -68,12 +68,12 @@
 
     PackageRemover *packageRemover = [[PackageRemover alloc] init];
     packageRemover.projectSettings = _projectSettings;
-    [packageRemover removePackagesFromProject:packagesPathsToDelete error:NULL];
+    [packageRemover removePackagesFromProject:packagesToDelete error:NULL];
 }
 
 - (void)sortItemsToDeleteIntoArrays:(NSMutableArray *)resourcesToDelete
                     foldersToDelete:(NSMutableArray *)foldersToDelete
-              packagesPathsToDelete:(NSMutableArray *)packagesPathsToDelete
+              packagesPathsToDelete:(NSMutableArray *)packagesToDelete
 {
     for (id resource in _resources)
     {
@@ -92,7 +92,7 @@
         else if ([resource isKindOfClass:[RMPackage class]])
         {
             RMPackage *rmDirectory = (RMPackage *) resource;
-            [packagesPathsToDelete addObject:rmDirectory.dirPath];
+            [packagesToDelete addObject:rmDirectory];
         }
     }
 }

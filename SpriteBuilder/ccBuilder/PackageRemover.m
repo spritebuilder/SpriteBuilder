@@ -4,6 +4,8 @@
 #import "PackageUtil.h"
 #import "ProjectSettings.h"
 #import "NotificationNames.h"
+#import "RMPackage.h"
+#import "MiscConstants.h"
 
 @implementation PackageRemover
 
@@ -18,27 +20,30 @@
     return self;
 }
 
-- (BOOL)removePackagesFromProject:(NSArray *)packagePaths error:(NSError **)error
+- (BOOL)removePackagesFromProject:(NSArray *)packages error:(NSError **)error
 {
-    PackagePathBlock block = ^BOOL(NSString *packagePath, NSError **localError)
+    PackagePathBlock block = ^BOOL(RMPackage *package, NSError **localError)
     {
-        if ([_projectSettings removeResourcePath:packagePath error:localError])
+        if ([_projectSettings removeResourcePath:package.dirPath error:localError])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED object:@{@"filepath": packagePath}];
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_REMOVED
+                                                                object:self
+                                                              userInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : package.dirPath, NOTIFICATION_USERINFO_KEY_RESOURCE : package}];
 
-            return [_fileManager removeItemAtPath:packagePath error:localError];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
+
+            return [_fileManager removeItemAtPath:package.dirPath error:localError];
         }
 
         return NO;
     };
 
     PackageUtil *packageUtil = [[PackageUtil alloc] init];
-    return [packageUtil enumeratePackagePaths:packagePaths
-                                        error:error
-                          prevailingErrorCode:SBRemovePackagesError
-                             errorDescription:@"One or more packages could not be removed."
-                                        block:block];
+    return [packageUtil enumeratePackages:packages
+                                    error:error
+                      prevailingErrorCode:SBRemovePackagesError
+                         errorDescription:@"One or more packages could not be removed."
+                                    block:block];
 }
 
 @end

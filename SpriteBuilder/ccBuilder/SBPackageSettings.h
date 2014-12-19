@@ -1,10 +1,13 @@
 #import <Foundation/Foundation.h>
 #import "CCBPublisherTypes.h"
 
+
+extern NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
+
 @class RMPackage;
 @class PublishOSSettings;
 
-@interface PackagePublishSettings : NSObject
+@interface SBPackageSettings : NSObject
 
 @property (nonatomic, strong) RMPackage *package;
 
@@ -19,10 +22,14 @@
 
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
 
-- (instancetype)initWithPackage:(RMPackage *)package;
+@property (nonatomic) NSInteger resourceAutoScaleFactor;
 
 @property (nonatomic, strong, readonly) NSDictionary *osSettings;
+
+- (instancetype)initWithPackage:(RMPackage *)package;
+
 - (PublishOSSettings *)settingsForOsType:(CCBPublisherOSType)type;
+
 - (void)setOSSettings:(PublishOSSettings *)osSettings forOsType:(CCBPublisherOSType)type;
 
 - (BOOL)load;

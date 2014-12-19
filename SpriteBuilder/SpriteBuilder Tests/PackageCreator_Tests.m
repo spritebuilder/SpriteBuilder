@@ -18,23 +18,22 @@
 
 @interface PackageCreator_Tests : FileSystemTestCase
 
+@property (nonatomic, strong) PackageCreator *packageCreator;
+@property (nonatomic, strong) ProjectSettings *projectSettings;
+@property (nonatomic, strong) id fileManagerMock;
+
 @end
 
 @implementation PackageCreator_Tests
-{
-    PackageCreator *_packageCreator;
-    ProjectSettings *_projectSettings;
-    id _fileManagerMock;
-}
 
 - (void)setUp
 {
     [super setUp];
 
-    _packageCreator = [[PackageCreator alloc] init];
+    self.projectSettings = [[ProjectSettings alloc] init];
+    self.projectSettings.projectPath = [self fullPathForFile:@"foo.spritebuilder/packagestests.ccbproj"];
 
-    _projectSettings = [[ProjectSettings alloc] init];
-    _projectSettings.projectPath = [self fullPathForFile:@"foo.spritebuilder/packagestests.ccbproj"];
+    self.packageCreator = [[PackageCreator alloc] init];
     _packageCreator.projectSettings = _projectSettings;
 
     [self createFolders:@[@"foo.spritebuilder/Packages"]];

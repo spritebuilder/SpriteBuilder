@@ -1,7 +1,5 @@
-#import <MacTypes.h>
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 #import "RMPackage.h"
-#import "CCBPublisherTypes.h"
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 
@@ -11,19 +9,23 @@ NSString *const KEY_PUBLISH_TO_MAINPROJECT = @"publishToMainProject";
 NSString *const KEY_OS_SETTINGS = @"osSettings";
 NSString *const KEY_OUTPUTDIR = @"outputDir";
 NSString *const KEY_PUBLISH_ENV = @"publishEnv";
+NSString *const KEY_DEFAULT_SCALE = @"resourceAutoScaleFactor";
 
-@interface PackagePublishSettings ()
+// It's a tag for a dropdown
+NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = -1;
+
+@interface SBPackageSettings ()
 
 @property (nonatomic, strong) NSMutableDictionary *publishSettingsForOsType;
 
 @end
 
 
-@implementation PackagePublishSettings
+@implementation SBPackageSettings
 
 - (instancetype)init
 {
-    NSLog(@"Error initializing PackagePublishSettings, use initWithPackage:");
+    NSLog(@"Error initializing SBPackageSettings, use initWithPackage:");
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
@@ -37,6 +39,7 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
         self.publishToZip = NO;
         self.publishToMainProject = YES;
         self.publishToCustomOutputDirectory = NO;
+        self.resourceAutoScaleFactor = DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
 
         self.package = package;
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
@@ -99,6 +102,11 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
     self.customOutputDirectory = dict[KEY_OUTPUTDIR];
     self.publishEnvironment = (CCBPublishEnvironment) [dict[KEY_PUBLISH_ENV] integerValue];
 
+    // Migration if keys are not set
+    self.resourceAutoScaleFactor = dict[KEY_DEFAULT_SCALE]
+        ? [dict[KEY_DEFAULT_SCALE] integerValue]
+        : DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
+
     for (NSString *osType in dict[KEY_OS_SETTINGS])
     {
         NSDictionary *dictOsSettings = dict[KEY_OS_SETTINGS][osType];
@@ -138,6 +146,8 @@ NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 
         result[KEY_OS_SETTINGS][osType] = [someOsSettings toDictionary];
     }
+
+    result[KEY_DEFAULT_SCALE] = @(_resourceAutoScaleFactor);
 
     return result;
 }
