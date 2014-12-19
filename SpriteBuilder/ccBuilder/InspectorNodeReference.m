@@ -15,6 +15,7 @@
 #import "CCEffect.h"
 #import "NotificationNames.h"
 #import "SBPasteboardTypes.h"
+#import "MiscConstants.h"
 
 @implementation OutletButton
 {
@@ -138,7 +139,7 @@
 
 - (void)nodeDeleted:(NSNotification *)notification
 {
-    if (self.reference == notification.object)
+    if (self.reference == notification.userInfo[NOTIFICATION_USERINFO_KEY_NODE])
     {
         self.reference = nil;
     }

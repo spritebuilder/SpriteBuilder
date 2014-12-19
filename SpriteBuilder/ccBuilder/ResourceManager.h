@@ -29,6 +29,7 @@
 @class RMResource;
 @class RMDirectory;
 @class ProjectSettings;
+@class RMPackage;
 
 #define kCCBMaxTrackedDirectories 500
 
@@ -82,7 +83,7 @@
 + (NSArray*) resIndependentExts;
 + (NSArray*) resIndependentDirs;
 
-- (void)createCachedImageFromAuto:(NSString *)autoFile saveAs:(NSString *)dstFile forResolution:(NSString *)res projectSettings:(ProjectSettings *)projectSettings;
+- (void)createCachedImageFromAutoPath:(NSString *)autoPath saveAs:(NSString *)dstFile forResolution:(NSString *)resolution projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings;
 
 - (void) notifyResourceObserversResourceListUpdated;
 
@@ -106,6 +107,8 @@
 - (RMResource *)spriteSheetContainingResource:(RMResource *)resource;
 
 - (NSArray *)allPackages;
+
+- (RMPackage *)packageForPath:(NSString *)fullPath;
 
 // *** SpriteSheet helper ***
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource;

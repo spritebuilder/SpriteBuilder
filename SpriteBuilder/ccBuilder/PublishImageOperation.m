@@ -172,10 +172,11 @@
         }
 
         // Copy file and resize
-        [[ResourceManager sharedManager] createCachedImageFromAuto:srcAutoPath
-                                                            saveAs:_dstFilePath
-                                                     forResolution:_resolution
-                                                   projectSettings:_projectSettings];
+        [[ResourceManager sharedManager] createCachedImageFromAutoPath:srcAutoPath
+                                                                saveAs:_dstFilePath
+                                                         forResolution:_resolution
+                                                       projectSettings:_projectSettings
+                                                       packageSettings:_packageSettings];
 
         // Convert it
         NSString *dstPathConverted = nil;

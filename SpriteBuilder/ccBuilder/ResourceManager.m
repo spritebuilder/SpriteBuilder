@@ -44,6 +44,8 @@
 #import "RMPackage.h"
 #import "ResourcePropertyKeys.h"
 #import "NotificationNames.h"
+#import "SBPackageSettings.h"
+#import "ResourceManager+Publishing.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
 
@@ -128,7 +130,7 @@
 
 
 
-- (void) updatedWatchedPaths
+- (void)updateWatchedPaths
 {
     if (pathWatcher.isWatchingPaths)
     {
@@ -521,13 +523,15 @@
         dir.count = 1;
         dir.dirPath = dirPath;
         directories[dirPath] = dir;
-        
-        [self updatedWatchedPaths];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_ADDED
+                                                            object:@{NOTIFICATION_USERINFO_KEY_FILEPATH : dir.dirPath, NOTIFICATION_USERINFO_KEY_RESOURCE : dir}];
+
+        [self updateWatchedPaths];
     }
     
     [self updateResourcesForPath:dirPath];
 }
-
 
 - (BOOL)isPackage:(NSString *)dirPath
 {
@@ -554,7 +558,7 @@
         if (!dir.count)
         {
             [directories removeObjectForKey:dirPath];
-            [self updatedWatchedPaths];
+            [self updateWatchedPaths];
         }
     }
 }
@@ -563,7 +567,7 @@
 {
     [directories removeAllObjects];
     [activeDirectories removeAllObjects];
-    [self updatedWatchedPaths];
+    [self updateWatchedPaths];
     [self notifyResourceObserversResourceListUpdated];
 }
 
@@ -643,147 +647,243 @@
     return dir.dirPath;
 }
 
-- (void)createCachedImageFromAuto:(NSString *)autoFile
-                           saveAs:(NSString *)dstFile
-                    forResolution:(NSString *)res
-                  projectSettings:(ProjectSettings *)projectSettings
+- (void)createCachedImageFromAutoPath:(NSString *)autoPath
+                               saveAs:(NSString *)dstFile
+                        forResolution:(NSString *)resolution
+                      projectSettings:(ProjectSettings *)projectSettings
+                      packageSettings:(NSArray *)packageSettings
 {
     NSAssert(projectSettings != nil, @"ProjectSettings must not be nil.");
 
-    // Find settings for the file
-    NSString* fileName = [autoFile lastPathComponent];
-    RMResource* resource = [[RMResource alloc] init];
-    resource.filePath = [[[autoFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
-    resource.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:resource.filePath];
-    int tabletScale = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
-    if (!tabletScale) tabletScale = 2;
-    
-    int srcScaleSetting = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
-    
-    // Calculate the dst scale factor
-    float dstScale = 1;
-    if ([res isEqualToString:RESOLUTION_PHONE])
-    {
-        dstScale = 1;
-    }
-    if ([res isEqualToString:RESOLUTION_PHONE_HD])
-    {
-        dstScale = 2;
-    }
-    else if ([res isEqualToString:RESOLUTION_TABLET])
-    {
-        dstScale = 1 * tabletScale;
-    }
-    else if ([res isEqualToString:RESOLUTION_TABLET_HD])
-    {
-        dstScale = 2 * tabletScale;
-    }
+    RMResource *resource = [self resourceForAutoPath:autoPath];
 
-    // Calculate src scale factor
-    float srcScale = 1;
-    if (srcScaleSetting)
-    {
-        // Use the manual override
-        srcScale = srcScaleSetting;
-    }
-    else
-    {
-        // Use project default
-        srcScale = projectSettings.resourceAutoScaleFactor;
-    }
-    
-    // Calculate the actual factor
-    float scaleFactor = dstScale/srcScale;
-    
-    // Load src image
-	CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:autoFile], NULL);
-	CGImageRef imageSrc = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
-	CFRelease(image_source);
-	image_source = nil;
-		    
-    int wSrc = CGImageGetWidth(imageSrc);
-    int hSrc = CGImageGetHeight(imageSrc);
+    float scaleFactor = [self scaleFactorForResource:resource resolution:resolution projectSettings:projectSettings packageSettings:packageSettings];
 
-    
-    int wDst = wSrc * scaleFactor;
-    if(wDst == 0)
-        wDst = 1;
-    
-    int hDst = hSrc * scaleFactor;
-    if(hDst == 0)
-        hDst = 1;
-    
+    CGImageRef imageSrc = [self loadImageAtPath:autoPath];
+
+    CGSize dstSize = [self dstSize:scaleFactor imageSrc:imageSrc];
+
     BOOL save8BitPNG = NO;
+    CGContextRef newContext = [self createNewContextWithImage:imageSrc save8BitPNG:&save8BitPNG size:dstSize];
+
+	NSAssert(newContext != nil, @"CG draw context is nil");
+
+    [self enableAntiAliasForContext:newContext];
+
+    CGContextDrawImage(newContext, CGContextGetClipBoundingBox(newContext), imageSrc);
     
+    CGImageRef imageDst = CGBitmapContextCreateImage(newContext);
+
+    [self createDestionationDirectoryForPath:dstFile];
+
+    [self writeImageToDisk:imageDst atPath:dstFile];
+
+    CGImageRelease(imageDst);
+    CGImageRelease(imageSrc);
+    CFRelease(newContext);
+
+    if (save8BitPNG)
+    {
+        [self convertTo8Bit:dstFile];
+    }
+
+    [self updateModificationDateOfPath:dstFile toMatchModDateOfPath:autoPath];
+}
+
+- (CGContextRef)createNewContextWithImage:(CGImageRef)imageSrc save8BitPNG:(BOOL *)save8BitPNG size:(CGSize)size
+{
     CGColorSpaceRef colorSpace = CGImageGetColorSpace(imageSrc);
 	CGImageAlphaInfo bitmapInfo = kCGImageAlphaPremultipliedLast;
-	
+
     if (CGColorSpaceGetModel(colorSpace) == kCGColorSpaceModelIndexed)
     {
         colorSpace = CGColorSpaceCreateDeviceRGB();
-        save8BitPNG = YES;
+        *save8BitPNG = YES;
     }
 	if (CGColorSpaceGetModel(colorSpace) == kCGColorSpaceModelMonochrome)
 	{
 		bitmapInfo = kCGImageAlphaNone;
 	}
-    
-    // Create new, scaled image
-    CGContextRef newContext = CGBitmapContextCreate(NULL, wDst, hDst, 8, wDst*32, colorSpace, (CGBitmapInfo)bitmapInfo);
-	NSAssert(newContext != nil, @"CG draw context is nil");
-    
-    // Enable anti-aliasing
+
+    CGContextRef result = CGBitmapContextCreate(NULL,
+                          (size_t) size.width,
+                          (size_t) size.height,
+                          8,
+                          (size_t) (size.width * 32),
+                          colorSpace,
+                          (CGBitmapInfo) bitmapInfo);
+
+    if (CGColorSpaceGetModel(colorSpace) == kCGColorSpaceModelIndexed)
+    {
+        CFRelease(colorSpace);
+    }
+
+    return result;
+}
+
+- (CGImageRef)loadImageAtPath:(NSString *)autoPath
+{
+    CGImageSourceRef image_source = CGImageSourceCreateWithURL((__bridge CFURLRef) [NSURL fileURLWithPath:autoPath], NULL);
+    CGImageRef imageSrc = CGImageSourceCreateImageAtIndex(image_source, 0, NULL);
+    CFRelease(image_source);
+    return imageSrc;
+}
+
+- (void)enableAntiAliasForContext:(CGContextRef)newContext
+{
     CGContextSetInterpolationQuality(newContext, kCGInterpolationHigh);
     CGContextSetShouldAntialias(newContext, TRUE);
-    
-    CGContextDrawImage(newContext, CGContextGetClipBoundingBox(newContext), imageSrc);
-    
-    CGImageRef imageDst = CGBitmapContextCreateImage(newContext);
-    
-    // Create destination directory
-    NSError *error;
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:[dstFile stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:NULL error:&error])
-    {
-        NSLog(@"Error creating directory \"%@\" - %@", [dstFile stringByDeletingLastPathComponent], error);
-    }
-    
-    // Save the image
-    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:dstFile];
-		
+}
+
+- (void)writeImageToDisk:(CGImageRef)imageDst atPath:(NSString *)path
+{
+    CFURLRef url = (__bridge CFURLRef) [NSURL fileURLWithPath:path];
+
     // NOTE! Rescaled image is always saved as a PNG even if the output filename is .psd.
     // ImageIO discovers format types from the file header and not the extension.
     // However, later processing stages in the SB export process need the original filename to be preserved.
     CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
     CGImageDestinationAddImage(destination, imageDst, nil);
-    
+
     if (!CGImageDestinationFinalize(destination)) {
-        NSLog(@"Failed to write image to %@", dstFile);
+        NSLog(@"Failed to write image to %@", path);
     }
-    
+
     // Release created objects
     CFRelease(destination);
-    CGImageRelease(imageDst);
-    CGImageRelease(imageSrc);
-    CFRelease(newContext);
-    
-    // Convert file to 8 bit if original uses indexed colors
-    if (save8BitPNG)
+}
+
+- (void)createDestionationDirectoryForPath:(NSString *)dstFile
+{
+    NSError *error;
+    if (![[NSFileManager defaultManager] createDirectoryAtPath:[dstFile stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:NULL error:&error])
     {
-        CFRelease(colorSpace);
-        
-        NSTask* pngTask = [[NSTask alloc] init];
-        [pngTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"pngquant"]];
-        NSMutableArray* args = [@[@"--force", @"--ext", @".png", dstFile] mutableCopy];
-        [pngTask setArguments:args];
-        [pngTask launch];
-        [pngTask waitUntilExit];
+        NSLog(@"Error creating directory \"%@\" - %@", [dstFile stringByDeletingLastPathComponent], error);
     }
-    
-    // Update modification time to match original file
-    NSDate* autoFileDate = [CCBFileUtil modificationDateForFile:autoFile];
+}
+
+- (void)updateModificationDateOfPath:(NSString *)dstFile toMatchModDateOfPath:(NSString *)autoPath
+{
+    NSDate *autoFileDate = [CCBFileUtil modificationDateForFile:autoPath];
     [CCBFileUtil setModificationDate:autoFileDate forFile:dstFile];
 }
 
+- (void)convertTo8Bit:(NSString *)dstFile
+{
+    NSTask* pngTask = [[NSTask alloc] init];
+    [pngTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"pngquant"]];
+    NSMutableArray* args = [@[@"--force", @"--ext", @".png", dstFile] mutableCopy];
+    [pngTask setArguments:args];
+    [pngTask launch];
+    [pngTask waitUntilExit];
+}
+
+- (CGSize)dstSize:(float)scaleFactor imageSrc:(CGImageRef)imageSrc
+{
+    int wSrc = CGImageGetWidth(imageSrc);
+    int hSrc = CGImageGetHeight(imageSrc);
+
+    int wDst = (int) (wSrc * scaleFactor);
+    int hDst = (int) (hSrc * scaleFactor);
+    if (wDst == 0)
+    {
+        wDst = 1;
+    }
+
+    if (hDst == 0)
+    {
+        hDst = 1;
+    }
+
+    return CGSizeMake(wDst, hDst);
+}
+
+- (RMResource *)resourceForAutoPath:(NSString *)autoPath
+{
+    NSString* fileName = [autoPath lastPathComponent];
+    RMResource* resource = [[RMResource alloc] init];
+    resource.filePath = [[[autoPath stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
+    resource.type = (CCBResourceType) [ResourceManager getResourceTypeForFile:resource.filePath];
+    return resource;
+}
+
+- (float)scaleFactorForResource:(RMResource *)resource
+                     resolution:(NSString *)resolution
+                projectSettings:(ProjectSettings *)projectSettings
+                packageSettings:(NSArray *)packageSettings
+{
+    float dstScale = [self dstScaleForResource:resource resolution:resolution projectSettings:projectSettings];
+    float srcScale = [self srcScaleForResource:resource projectSettings:projectSettings packageSettings:packageSettings];
+    float scaleFactor = dstScale/srcScale;
+    return scaleFactor;
+}
+
+- (float)dstScaleForResource:(RMResource *)resource resolution:(NSString *)resolution projectSettings:(ProjectSettings *)projectSettings
+{
+    int tabletScale = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
+    if (!tabletScale)
+    {
+        tabletScale = 2;
+    }
+
+    // Calculate the dst scale factor
+    float dstScale = 1;
+    if ([resolution isEqualToString:RESOLUTION_PHONE])
+    {
+        dstScale = 1;
+    }
+    if ([resolution isEqualToString:RESOLUTION_PHONE_HD])
+    {
+        dstScale = 2;
+    }
+    else if ([resolution isEqualToString:RESOLUTION_TABLET])
+    {
+        dstScale = 1 * tabletScale;
+    }
+    else if ([resolution isEqualToString:RESOLUTION_TABLET_HD])
+    {
+        dstScale = 2 * tabletScale;
+    }
+    return dstScale;
+}
+
+- (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings
+{
+    id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    SBPackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
+
+    if (srcScaleSetting)
+    {
+        return [srcScaleSetting integerValue] != 0
+            ? [srcScaleSetting integerValue]
+            : 1;
+    }
+    else if (aPackageSettings && aPackageSettings.resourceAutoScaleFactor != DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING)
+    {
+        return aPackageSettings.resourceAutoScaleFactor;
+    }
+    else
+    {
+        return projectSettings.resourceAutoScaleFactor;
+    }
+}
+
+- (SBPackageSettings *)packageSettingsForResource:(RMResource *)resource packageSettings:(NSArray *)packageSettings
+{
+    for (SBPackageSettings *aPackageSettings in packageSettings)
+    {
+        if ([resource.filePath rangeOfString:aPackageSettings.package.dirPath].location != NSNotFound)
+        {
+            return aPackageSettings;
+        }
+    }
+
+    return nil;
+}
+
+// TODO: wow this method is really alot more than the name implies
+// 1. figure out what it does - partial answer: When a node in scene changes this method is invoked and updates it, for example scale changes
+// 2. divide and conquer
 - (NSString*) toAbsolutePath:(NSString*)path
 {
     if ([activeDirectories count] == 0) return NULL;
@@ -866,7 +966,8 @@
                 if (!cachedFileExists || !datesMatch)
                 {
                     // Not yet cached, create file
-                    [self createCachedImageFromAuto:autoFile saveAs:cachedFile forResolution:ext projectSettings:[AppDelegate appDelegate].projectSettings];
+                    NSArray *packageSettings = [self loadAllPackageSettings];
+                    [self createCachedImageFromAutoPath:autoFile saveAs:cachedFile forResolution:ext projectSettings:[AppDelegate appDelegate].projectSettings packageSettings:packageSettings];
                 }
                 return cachedFile;
             }
@@ -1160,7 +1261,9 @@
     // Make sure it is removed from the current project
     [[AppDelegate appDelegate].projectSettings removedResourceAt:res.relativePath];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_REMOVED object:@{@"filepath": res.filePath}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_REMOVED
+                                                        object:self
+                                                      userInfo:@{NOTIFICATION_USERINFO_KEY_FILEPATH : res.filePath, NOTIFICATION_USERINFO_KEY_RESOURCE : res}];
 }
 
 + (void) touchResource:(RMResource*) res
@@ -1329,6 +1432,18 @@
     return [potentialSpriteSheet isSpriteSheet];
 }
 
+- (RMPackage *)packageForPath:(NSString *)fullPath
+{
+    for (RMPackage *aPackage in [self allPackages])
+    {
+        if ([fullPath rangeOfString:aPackage.fullPath].location != NSNotFound)
+        {
+            return aPackage;
+        }
+    }
+
+    return nil;
+}
 
 #pragma mark Debug
 

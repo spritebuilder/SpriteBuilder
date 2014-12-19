@@ -59,15 +59,20 @@
 @property (nonatomic, weak) NSOperationQueue *queue;
 @property (nonatomic, weak) CCBWarnings *warnings;
 @property (nonatomic, weak) ProjectSettings *projectSettings;
+@property (nonatomic, strong) NSArray *packageSettings;
 
 @end
 
 
 @implementation CCBDirectoryPublisher
 
-- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings queue:(NSOperationQueue *)queue
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
+              packageSettings:(NSArray *)somePackageSettings
+                     warnings:(CCBWarnings *)someWarnings
+                        queue:(NSOperationQueue *)queue
 {
     NSAssert(someProjectSettings != nil, @"project settings should never be nil! Publisher won't work without.");
+    NSAssert(somePackageSettings != nil, @"package settings must not be nil.");
     NSAssert(someWarnings != nil, @"warnings are nil. Are you sure you don't need them?");
     NSAssert(queue != nil, @"queue must not be nil");
 
@@ -75,9 +80,10 @@
 
 	if (self)
 	{
-        self.queue = queue;
         self.projectSettings = someProjectSettings;
+        self.packageSettings = somePackageSettings;
         self.warnings = someWarnings;
+        self.queue = queue;
 
         self.modifiedDatesCache = [[DateCache alloc] init];
 
@@ -110,6 +116,7 @@
               fileLookup:(id<PublishFileLookupProtocol>)fileLookup
 {
     PublishImageOperation *operation = [[PublishImageOperation alloc] initWithProjectSettings:_projectSettings
+                                                                              packageSettings:_packageSettings
                                                                                      warnings:_warnings
                                                                                statusProgress:_publishingTaskStatusProgress];
 
@@ -151,6 +158,7 @@
     }
 
     PublishSoundFileOperation *operation = [[PublishSoundFileOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                      packageSettings:_packageSettings
                                                                                              warnings:_warnings
                                                                                        statusProgress:_publishingTaskStatusProgress];
     operation.srcFilePath = srcFilePath;
@@ -165,6 +173,7 @@
 - (void)publishRegularFile:(NSString *)srcFilePath to:(NSString*)dstFilePath
 {
     PublishRegularFileOperation *operation = [[PublishRegularFileOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                          packageSettings:_packageSettings
                                                                                                  warnings:_warnings
                                                                                            statusProgress:_publishingTaskStatusProgress];
     operation.srcFilePath = srcFilePath;
@@ -392,6 +401,7 @@
                                  stringByAppendingPathExtension:_projectSettings.exporter];
 
     PublishCCBOperation *operation = [[PublishCCBOperation alloc] initWithProjectSettings:_projectSettings
+                                                                          packageSettings:_packageSettings
                                                                                  warnings:_warnings
                                                                            statusProgress:_publishingTaskStatusProgress];
     operation.fileName = fileName;
@@ -485,6 +495,7 @@
                                             spriteSheetFile:(NSString *)spriteSheetFile
 {
     PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                          packageSettings:_packageSettings
                                                                                                  warnings:_warnings
                                                                                            statusProgress:_publishingTaskStatusProgress];
     operation.publishDirectory = publishDirectory;
@@ -596,6 +607,7 @@
                                                              resolution:(NSString *)resolution
 {
     PublishSpriteKitSpriteSheetOperation *operation = [[PublishSpriteKitSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                                            packageSettings:_packageSettings
                                                                                                                    warnings:_warnings
                                                                                                              statusProgress:_publishingTaskStatusProgress];
     operation.resolution = resolution;

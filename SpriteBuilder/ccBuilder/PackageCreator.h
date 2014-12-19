@@ -2,7 +2,6 @@
 
 @class ProjectSettings;
 
-
 @interface PackageCreator : NSObject
 
 @property (nonatomic, weak) ProjectSettings *projectSettings;

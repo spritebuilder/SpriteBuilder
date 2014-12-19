@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "PackagePublishSettings.h"
+#import "SBPackageSettings.h"
 #import "RMPackage.h"
 #import "PublishOSSettings.h"
 #import "FileSystemTestCase.h"
@@ -15,15 +15,15 @@
 #import "MiscConstants.h"
 #import "CCBPublisherTypes.h"
 
-@interface PackagePublishSettings_Tests : FileSystemTestCase
+@interface SBPackageSettings_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) RMPackage *package;
-@property (nonatomic, strong) PackagePublishSettings *packagePublishSettings;
+@property (nonatomic, strong) SBPackageSettings *packagePublishSettings;
 
 @end
 
 
-@implementation PackagePublishSettings_Tests
+@implementation SBPackageSettings_Tests
 
 - (void)setUp
 {
@@ -32,7 +32,7 @@
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack"];
 
-    self.packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:_package];
+    self.packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:_package];
 
     [self createFolders:@[@"/foo/project.spritebuilder/Packages/mypackage.sbpack"]];
 }
@@ -63,6 +63,7 @@
     _packagePublishSettings.publishToZip = NO;
     _packagePublishSettings.publishToCustomOutputDirectory = YES;
     _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
+    _packagePublishSettings.resourceAutoScaleFactor = 3;
 
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     osSettingsIOS.audio_quality = 8;
@@ -79,7 +80,7 @@
     [self assertFileExists:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"];
 
 
-    PackagePublishSettings *settingsLoaded = [[PackagePublishSettings alloc] initWithPackage:_package];
+    SBPackageSettings *settingsLoaded = [[SBPackageSettings alloc] initWithPackage:_package];
     [settingsLoaded load];
 
     XCTAssertEqual(_packagePublishSettings.publishToMainProject, settingsLoaded.publishToMainProject);
@@ -87,6 +88,7 @@
     XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
     XCTAssertEqual(_packagePublishSettings.publishToZip, settingsLoaded.publishToZip);
     XCTAssertEqual(_packagePublishSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
+    XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, settingsLoaded.resourceAutoScaleFactor);
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
@@ -97,6 +99,23 @@
     XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
     XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_PHONE]);
     XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_TABLET_HD]);
+}
+
+- (void)testMigrationDefaultScale
+{
+    NSDictionary *values = @{
+            @"outputDir" : @"foo",
+            @"publishEnv" : @1,
+            @"publishToCustomDirectory" : @YES,
+            @"publishToMainProject" : @NO,
+            @"publishToZip" : @NO
+    };
+
+    [values writeToFile:[self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
+
+    [_packagePublishSettings load];
+
+    XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING);
 }
 
 - (void)testEffectiveOutputDir

@@ -691,7 +691,7 @@ typedef enum
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadResources) name:RESOURCES_CHANGED object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removedDocumentWithPath:) name:RESOURCE_REMOVED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removedDocumentWithPath:) name:RESOURCE_PATH_REMOVED object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
@@ -2612,7 +2612,7 @@ typedef enum
     [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:self userInfo:@{NOTIFICATION_USERINFO_KEY_NODE : node}];
     
     [lightingHandler refreshStageLightAndMenu];
 }
@@ -3074,7 +3074,6 @@ typedef enum
                                    if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
-                                    
                                    }
                                    else
                                    {
@@ -3086,7 +3085,6 @@ typedef enum
             {
                 [self modalDialogTitle:@"Failed to Create Project" message:@"Failed to create the project, make sure to only use letters and numbers for the file name (no spaces allowed)."];
             }
-            
         }
     }];
 }
@@ -3130,7 +3128,7 @@ typedef enum
 
 - (void) removedDocumentWithPath:(NSNotification *)notification
 {
-    NSString *path = [notification object][@"filepath"];
+    NSString *path = [notification userInfo][@"filepath"];
 
     NSTabViewItem* item = [self tabViewItemFromPath:path includeViewWithinFolderPath:YES];
     if (item)
