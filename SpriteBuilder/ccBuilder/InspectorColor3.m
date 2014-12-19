@@ -48,4 +48,12 @@
     return calibratedColor;
 }
 
+- (void) refresh
+{
+    [self willChangeValueForKey:@"color"];
+    [self didChangeValueForKey:@"color"];
+    
+    [super refresh];
+}
+
 @end
