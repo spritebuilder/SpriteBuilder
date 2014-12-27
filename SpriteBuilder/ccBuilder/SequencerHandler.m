@@ -51,6 +51,7 @@
 #import "EffectsManager.h"
 #import "InspectorController.h"
 #import "NotificationNames.h"
+#import "SBUserDefaultsKeys.h"
 
 static NSString *const ORIGINAL_NODE_POINTER_KEY = @"srcNode";
 static NSString *const ORIGINAL_NODE_KEY = @"originalNode";
@@ -100,6 +101,8 @@ static SequencerHandler* sharedSequencerHandler;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(allLightsVisibilityDidChange:) name:ALL_LIGHTS_VISIBILITY_CHANGED object:nil];
     
+    [self setSortFromDefaults];
+    
     return self;
 }
 
@@ -114,6 +117,11 @@ static SequencerHandler* sharedSequencerHandler;
     return sharedSequencerHandler;
 }
 
+#pragma mark - sort order
+
+- (void)setSortFromDefaults {
+    reverseSort = [[NSUserDefaults standardUserDefaults] boolForKey:SEQUENCER_NODE_SORT_ORDER_REVERSE];
+}
 
 #pragma mark - Handle Scale slider
 
@@ -378,10 +386,13 @@ static SequencerHandler* sharedSequencerHandler;
     }
 
     CCNode* node = (CCNode*)item;
+    NSUInteger count = node.children.count - 1;
 
-    if (index < node.children.count)
+    if (index <= count)
     {
-        return [node children][(NSUInteger) index];
+        return reverseSort
+            ? [node children][count - index]
+            : [node children][index];
     }
     else
     {
@@ -986,6 +997,11 @@ static SequencerHandler* sharedSequencerHandler;
 
 - (BOOL)acceptDropForNodeType:(id)item index:(NSInteger)index clipData:(NSData *)clipData
 {
+    if (reverseSort == YES) {
+        CCNode *parent = (CCNode *)item;
+        index = parent.children.count - index;
+    }
+    
 	NSArray *nodes = [self deserializeDraggedObjects:clipData];
 	for (NSDictionary *node in nodes)
 		{
