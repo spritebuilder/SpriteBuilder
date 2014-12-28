@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05CA9CF11A5082C500265997 /* TabClose_Dirty_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CEB1A5082C500265997 /* TabClose_Dirty_Pressed@2x.png */; };
+		05CA9CF21A5082C500265997 /* TabClose_Dirty_Rollover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CEC1A5082C500265997 /* TabClose_Dirty_Rollover@2x.png */; };
+		05CA9CF31A5082C500265997 /* TabClose_Dirty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CED1A5082C500265997 /* TabClose_Dirty@2x.png */; };
+		05CA9CF41A5082C500265997 /* TabClose_Front_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CEE1A5082C500265997 /* TabClose_Front_Pressed@2x.png */; };
+		05CA9CF51A5082C500265997 /* TabClose_Front_Rollover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CEF1A5082C500265997 /* TabClose_Front_Rollover@2x.png */; };
+		05CA9CF61A5082C500265997 /* TabClose_Front@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CF01A5082C500265997 /* TabClose_Front@2x.png */; };
 		4D0C1E7618F4760800B028CA /* SnapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7318F472D600B028CA /* SnapLayer.m */; };
 		4D0C1E7918F49A3700B028CA /* CCNode+PositionExtentions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7818F49A3700B028CA /* CCNode+PositionExtentions.m */; };
 		4DB7C95719083B9C00ECE19F /* NotificationNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7C95419083ACF00ECE19F /* NotificationNames.m */; };
@@ -1390,6 +1396,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		05CA9CEB1A5082C500265997 /* TabClose_Dirty_Pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Dirty_Pressed@2x.png"; path = "TabBar/res/TabClose_Dirty_Pressed@2x.png"; sourceTree = "<group>"; };
+		05CA9CEC1A5082C500265997 /* TabClose_Dirty_Rollover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Dirty_Rollover@2x.png"; path = "TabBar/res/TabClose_Dirty_Rollover@2x.png"; sourceTree = "<group>"; };
+		05CA9CED1A5082C500265997 /* TabClose_Dirty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Dirty@2x.png"; path = "TabBar/res/TabClose_Dirty@2x.png"; sourceTree = "<group>"; };
+		05CA9CEE1A5082C500265997 /* TabClose_Front_Pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Front_Pressed@2x.png"; path = "TabBar/res/TabClose_Front_Pressed@2x.png"; sourceTree = "<group>"; };
+		05CA9CEF1A5082C500265997 /* TabClose_Front_Rollover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Front_Rollover@2x.png"; path = "TabBar/res/TabClose_Front_Rollover@2x.png"; sourceTree = "<group>"; };
+		05CA9CF01A5082C500265997 /* TabClose_Front@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Front@2x.png"; path = "TabBar/res/TabClose_Front@2x.png"; sourceTree = "<group>"; };
 		4D0C1E7218F472D600B028CA /* SnapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapLayer.h; sourceTree = "<group>"; };
 		4D0C1E7318F472D600B028CA /* SnapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapLayer.m; sourceTree = "<group>"; };
 		4D0C1E7718F49A3700B028CA /* CCNode+PositionExtentions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+PositionExtentions.h"; sourceTree = "<group>"; };
@@ -4031,11 +4043,17 @@
 				77E1994713858DE0006C361B /* overflowImagePressed.png */,
 				77E1994813858DE0006C361B /* pi.png */,
 				77E1994913858DE0006C361B /* TabClose_Dirty_Pressed.png */,
+				05CA9CEB1A5082C500265997 /* TabClose_Dirty_Pressed@2x.png */,
 				77E1994A13858DE0006C361B /* TabClose_Dirty_Rollover.png */,
+				05CA9CEC1A5082C500265997 /* TabClose_Dirty_Rollover@2x.png */,
 				77E1994B13858DE0006C361B /* TabClose_Dirty.png */,
+				05CA9CED1A5082C500265997 /* TabClose_Dirty@2x.png */,
 				77E1994C13858DE0006C361B /* TabClose_Front_Pressed.png */,
+				05CA9CEE1A5082C500265997 /* TabClose_Front_Pressed@2x.png */,
 				77E1994D13858DE0006C361B /* TabClose_Front_Rollover.png */,
+				05CA9CEF1A5082C500265997 /* TabClose_Front_Rollover@2x.png */,
 				77E1994E13858DE0006C361B /* TabClose_Front.png */,
+				05CA9CF01A5082C500265997 /* TabClose_Front@2x.png */,
 				77E1994F13858DE0006C361B /* TabNewMetal.png */,
 				77E1995013858DE0006C361B /* TabNewMetalPressed.png */,
 				77E1995113858DE0006C361B /* TabNewMetalRollover.png */,
@@ -6868,7 +6886,9 @@
 				8304858519AE063A00A624BB /* PreviewCCBView.xib in Resources */,
 				77E1995513858DE0006C361B /* TabClose_Dirty_Pressed.png in Resources */,
 				77E1995613858DE0006C361B /* TabClose_Dirty_Rollover.png in Resources */,
+				05CA9CF11A5082C500265997 /* TabClose_Dirty_Pressed@2x.png in Resources */,
 				83F3C9741A422C0E003D8659 /* notes-close@2x.png in Resources */,
+				05CA9CF41A5082C500265997 /* TabClose_Front_Pressed@2x.png in Resources */,
 				83F3C9D51A422CA4003D8659 /* seq-btn-stepforward@2x.png in Resources */,
 				77E1995713858DE0006C361B /* TabClose_Dirty.png in Resources */,
 				830485A619AF2A7000A624BB /* PreviewImageView.xib in Resources */,
@@ -6959,6 +6979,7 @@
 				920994DE19871A0A0006F38D /* effect-reflection.png in Resources */,
 				E3B9AF431538612200489438 /* ruler-xy.png in Resources */,
 				E3F3F845153C7772005443EE /* notes-bg.png in Resources */,
+				05CA9CF61A5082C500265997 /* TabClose_Front@2x.png in Resources */,
 				E3F3F847153D9126005443EE /* StickyNoteEditView.xib in Resources */,
 				E3F3F849153DB893005443EE /* notes-close.png in Resources */,
 				921EEAD618A5760700D864C2 /* joint-anchor-sel.png in Resources */,
@@ -6967,7 +6988,9 @@
 				92F0961918F8855A00D47A94 /* inspector-body-goto@2x.png in Resources */,
 				E35A2D8D1540111A00F78B72 /* position-0.png in Resources */,
 				E35A2D8E1540111A00F78B72 /* position-1.png in Resources */,
+				05CA9CF31A5082C500265997 /* TabClose_Dirty@2x.png in Resources */,
 				92F0960818F8851300D47A94 /* inspector-body-remove-hi.png in Resources */,
+				05CA9CF21A5082C500265997 /* TabClose_Dirty_Rollover@2x.png in Resources */,
 				E35A2D8F1540111A00F78B72 /* position-2.png in Resources */,
 				83F3C9D61A422CA4003D8659 /* seq-btn-stop.png in Resources */,
 				E35A2D901540111A00F78B72 /* position-3.png in Resources */,
@@ -7142,6 +7165,7 @@
 				B7096E2D180CD98E00164A8A /* doc-sprite.png in Resources */,
 				9218DF3F1919B04D0033851E /* joint-pivot-handle-min@2x.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
+				05CA9CF51A5082C500265997 /* TabClose_Front_Rollover@2x.png in Resources */,
 				8354FDFC198233AB004EC272 /* MainProjectSettingsDetailView.xib in Resources */,
 				B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */,
 				B732A1841799736500333C56 /* TB_build.png in Resources */,

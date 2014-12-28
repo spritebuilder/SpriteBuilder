@@ -49,8 +49,8 @@
     }
     trackingTag = [self addTrackingRect:myFrame owner:self userData:nil assumeInside:NO];
     
-    imgOutletSet = [NSImage imageNamed:@"inspector-body-connected.png"];
-    imgOutletUnSet = [NSImage imageNamed:@"inspector-body-disconnected.png"];
+    imgOutletSet = [NSImage imageNamed:@"inspector-body-connected"];
+    imgOutletUnSet = [NSImage imageNamed:@"inspector-body-disconnected"];
 	self.enabled = YES;
 }
 
