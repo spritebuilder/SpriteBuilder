@@ -39,14 +39,8 @@
     if (!self) return NULL;
     
     notesVisible = YES;
-    [self setup];
     
     return self;
-}
-
-- (void) setup {
-    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
-    viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
 }
 
 - (void) addNote
@@ -60,6 +54,8 @@
 - (void) editNote:(StickyNote*)note
 {
     AppDelegate* ad = [AppDelegate appDelegate];
+    
+    CGFloat viewScale = ad.derivedViewScaleFactor;
     
     // Setup text area and add it to guiLayer
     CGSize size = note.contentSize;
@@ -164,10 +160,12 @@
     }
     else if (operation == kCCBNoteOperationResizing)
     {
-        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*notes"];
+        AppDelegate *ad = [AppDelegate appDelegate];
+
+        [ad saveUndoStateWillChangeProperty:@"*notes"];
         
         CGPoint delta = ccpSub(pt, mouseDownPos);
-        delta = ccpMult(delta, viewScale);
+        delta = ccpMult(delta, ad.derivedViewScaleFactor);
         CGSize newSize;
         newSize.width = noteStartSize.width + delta.x;
         newSize.height = noteStartSize.height - delta.y;

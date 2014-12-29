@@ -25,6 +25,7 @@
 #import "StickyNote.h"
 #import "CCSprite9Slice.h"
 #import "CCBGlobals.h"
+#import "AppDelegate.h"
 
 @implementation StickyNote
 
@@ -48,8 +49,7 @@
     [bg setMargin:0.3];
     [self addChild:bg z:0];
     
-    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
-    CGFloat viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
+    CGFloat viewScale = [AppDelegate appDelegate].derivedViewScaleFactor;
     
     lbl = [CCLabelTTF labelWithString:@"Double click to edit" fontName:@"MarkerFelt-Thin" fontSize:14 / viewScale];
     lbl.anchorPoint = ccp(0,0);
@@ -72,8 +72,7 @@
     bg.contentSize = contentSize;
     
     //NSLog(@"set lbl.dimensions: (%f,%f)", contentSize.width - (2*kCCBNoteLblInsetH), contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot);
-    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
-    CGFloat viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
+    CGFloat viewScale = [AppDelegate appDelegate].derivedViewScaleFactor;
     
     lbl.dimensions = CGSizeMake((contentSize.width - (2*kCCBNoteLblInsetH))/viewScale, (contentSize.height -kCCBNoteLblInsetTop - kCCBNoteLblInsetBot)/viewScale);
     
@@ -94,8 +93,7 @@
 - (int) hitAreaFromPt:(CGPoint)pt
 {
     CGPoint localPt = [self convertToNodeSpace:pt];
-    CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
-    CGFloat viewScale = dir.contentScaleFactor / dir.deviceContentScaleFactor;
+    CGFloat viewScale = [AppDelegate appDelegate].derivedViewScaleFactor;
     
     localPt = ccpMult(localPt, viewScale);
     
