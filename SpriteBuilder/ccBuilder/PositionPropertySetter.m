@@ -77,10 +77,7 @@
     NSPoint newPos = [PositionPropertySetter positionForNode:node prop:@"position"];
     
     // Update animated value
-    NSArray* animValue = [NSArray arrayWithObjects:
-                          [NSNumber numberWithFloat:newPos.x],
-                          [NSNumber numberWithFloat:newPos.y],
-                          NULL];
+    NSArray* animValue = @[@((float) newPos.x), @((float) newPos.y)];
     
     NodeInfo* nodeInfo = node.userObject;
     PlugInNode* plugIn = nodeInfo.plugIn;
@@ -103,7 +100,7 @@
         }
         else
         {
-            [nodeInfo.baseValues setObject:animValue forKey:@"position"];
+            nodeInfo.baseValues[@"position"] = animValue;
         }
     }
 }
@@ -215,28 +212,31 @@
     PlugInNode* plugIn = node.plugIn;
     NSDictionary* properties = plugIn.nodePropertiesDict;
     
-    NSArray* affectedProps = [[properties objectForKey:prop] objectForKey:@"affectsProperties"];
+    NSArray* affectedProps = [properties[prop] objectForKey:@"affectsProperties"];
     NSMutableArray* propsToUpdate = [affectedProps mutableCopy];
     if (!propsToUpdate) propsToUpdate = [NSMutableArray array];
     
-    for (int i = propsToUpdate.count -1; i >= 0; i--)
+    for (int i = (int) (propsToUpdate.count -1); i >= 0; i--)
     {
-        NSString* canditate = [propsToUpdate objectAtIndex:i];
+        NSString* canditate = propsToUpdate[(NSUInteger) i];
         BOOL removeCandidate = NO;
         
         // Remove candidates that are read only
-        if ([[[properties objectForKey:canditate] objectForKey:@"readOnly"] boolValue])
+        if ([[properties[canditate] objectForKey:@"readOnly"] boolValue])
         {
             removeCandidate = YES;
         }
         
         // Remove candidates that are not size type
-        if (![[[properties objectForKey:canditate] objectForKey:@"type"] isEqualToString:@"Size"])
+        if (![[properties[canditate] objectForKey:@"type"] isEqualToString:@"Size"])
         {
             removeCandidate = YES;
         }
-        
-        if (removeCandidate) [propsToUpdate removeObjectAtIndex:i];
+
+        if (removeCandidate)
+        {
+            [propsToUpdate removeObjectAtIndex:(NSUInteger) i];
+        }
     }
     
     // Always update this property
@@ -245,11 +245,11 @@
     // Update the values
     NSMutableArray* absSizes = [NSMutableArray array];
     
-    for (NSString* prop in propsToUpdate)
+    for (NSString *aProp in propsToUpdate)
     {
         // Get absolute size
-        CGSize oldSize = [PositionPropertySetter sizeForNode:node prop:prop];
-        CGSize absSize = [node convertContentSizeToPoints:oldSize type:[self sizeTypeForNode:node prop:prop]];
+        CGSize oldSize = [PositionPropertySetter sizeForNode:node prop:aProp];
+        CGSize absSize = [node convertContentSizeToPoints:oldSize type:[self sizeTypeForNode:node prop:aProp]];
         
         [absSizes addObject:[NSValue valueWithSize:absSize]];
     }
@@ -259,13 +259,13 @@
     [node setValue:typeValue forKey:[prop stringByAppendingString:@"Type"]];
     
     int i = 0;
-    for (NSString* prop in propsToUpdate)
+    for (NSString *aProp in propsToUpdate)
     {
         // Calculate relative size for new type
-        CGSize absSize = [[absSizes objectAtIndex:i] sizeValue];
-        CGSize newSize = [node convertContentSizeFromPoints:absSize type:[self sizeTypeForNode:node prop:prop]];
-        
-        [node setValue:[NSValue valueWithSize:newSize] forKey:prop];
+        CGSize absSize = [absSizes[(NSUInteger) i] sizeValue];
+        CGSize newSize = [node convertContentSizeFromPoints:absSize type:[self sizeTypeForNode:node prop:aProp]];
+
+        [node setValue:[NSValue valueWithSize:newSize] forKey:aProp];
         i++;
     }
 }
@@ -293,7 +293,7 @@
 {
     AppDelegate* ad = [AppDelegate appDelegate];
     int currentResolution = ad.currentDocument.currentResolution;
-    ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
+    ResolutionSetting* resolution = ad.currentDocument.resolutions[(NSUInteger) currentResolution];
     
     float absScaleX = 0;
     float absScaleY = 0;
@@ -309,16 +309,16 @@
     }
     
     [node willChangeValueForKey:[prop stringByAppendingString:@"X"]];
-    [node setValue:[NSNumber numberWithFloat:absScaleX] forKey:[prop stringByAppendingString:@"X"]];
+    [node setValue:@(absScaleX) forKey:[prop stringByAppendingString:@"X"]];
     [node didChangeValueForKey:[prop stringByAppendingString:@"X"]];
     
     [node willChangeValueForKey:[prop stringByAppendingString:@"Y"]];
-    [node setValue:[NSNumber numberWithFloat:absScaleY] forKey:[prop stringByAppendingString:@"Y"]];
+    [node setValue:@(absScaleY) forKey:[prop stringByAppendingString:@"Y"]];
     [node didChangeValueForKey:[prop stringByAppendingString:@"Y"]];
-    
-    [node setExtraProp:[NSNumber numberWithFloat:scaleX] forKey:[prop stringByAppendingString:@"X"]];
-    [node setExtraProp:[NSNumber numberWithFloat:scaleY] forKey:[prop stringByAppendingString:@"Y"]];
-    [node setExtraProp:[NSNumber numberWithInt:type] forKey:[NSString stringWithFormat:@"%@Type", prop]];
+
+    [node setExtraProp:@(scaleX) forKey:[prop stringByAppendingString:@"X"]];
+    [node setExtraProp:@(scaleY) forKey:[prop stringByAppendingString:@"Y"]];
+    [node setExtraProp:@(type) forKey:[NSString stringWithFormat:@"%@Type", prop]];
 }
 
 + (float) scaleXForNode:(CCNode*)node prop:(NSString*)prop
@@ -354,18 +354,18 @@
 {
     AppDelegate* ad = [AppDelegate appDelegate];
     int currentResolution = ad.currentDocument.currentResolution;
-    ResolutionSetting* resolution = [ad.currentDocument.resolutions objectAtIndex:currentResolution];
+    ResolutionSetting* resolution = ad.currentDocument.resolutions[(NSUInteger) currentResolution];
     
     float absF = f;
     if (type == kCCBScaleTypeMultiplyResolution)
     {
         absF = f / resolution.scale;
     }
-    
-    [node setValue:[NSNumber numberWithFloat:absF ] forKey:prop];
-    
-    [node setExtraProp:[NSNumber numberWithFloat:f] forKey:prop];
-    [node setExtraProp:[NSNumber numberWithInt:type] forKey:[prop stringByAppendingString:@"Type"]];
+
+    [node setValue:@(absF) forKey:prop];
+
+    [node setExtraProp:@(f) forKey:prop];
+    [node setExtraProp:@(type) forKey:[prop stringByAppendingString:@"Type"]];
 }
 
 + (float) floatScaleForNode:(CCNode*)node prop:(NSString*)prop
