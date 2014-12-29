@@ -88,12 +88,6 @@
     self.srcFilePath = [srcDir stringByAppendingPathComponent:srcFileName];
     self.dstFilePath = [dstDir stringByAppendingPathComponent:dstFileName];
 
-    // Sprite Kit requires specific extensions for specific image resolutions (ie @2x, ~ipad, ..)
-    if (_projectSettings.engine == CCBTargetEngineSpriteKit)
-    {
-        self.dstFilePath = [self pathWithCocoaImageResolutionSuffix:_dstFilePath resolution:_resolution];
-    }
-
     // Create destination directory if it doesn't exist
     [fileManager createDirectoryAtPath:dstDir withIntermediateDirectories:YES attributes:NULL error:NULL];
 
@@ -310,26 +304,6 @@
         [_modifiedFileDateCache setCachedDate:srcDate forKey:directory];
     }
     return srcDate;
-}
-
-- (NSString *)pathWithCocoaImageResolutionSuffix:(NSString *)path resolution:(NSString *)resolution
-{
-    NSString *extension = [path pathExtension];
-
-    if ([resolution isEqualToString:RESOLUTION_PHONE_HD])
-    {
-        path = [NSString stringWithFormat:@"%@@2x.%@", [path stringByDeletingPathExtension], extension];
-    }
-    else if ([resolution isEqualToString:RESOLUTION_TABLET])
-    {
-        path = [NSString stringWithFormat:@"%@~ipad.%@", [path stringByDeletingPathExtension], extension];
-    }
-    else if ([resolution isEqualToString:RESOLUTION_TABLET_HD])
-    {
-        path = [NSString stringWithFormat:@"%@@2x~ipad.%@", [path stringByDeletingPathExtension], extension];
-    }
-
-    return path;
 }
 
 - (NSDate *)latestModifiedDateForDirectory:(NSString *)dir

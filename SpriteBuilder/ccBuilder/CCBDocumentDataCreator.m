@@ -128,10 +128,6 @@
 
     dict[@"joints"] = joints;
 
-    if (_projectSettings.engine != CCBTargetEngineSpriteKit)
-    {
-        [dict setObject:[_sceneGraph.joints serialize] forKey:@"SequencerJoints"];
-    }
     dict[@"SequencerJoints"] = [_sceneGraph.joints serialize];
 }
 

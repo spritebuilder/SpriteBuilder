@@ -208,8 +208,6 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet NSMenu* menuTimelineChained;
     IBOutlet NSTextField* lblTimelineChained;
     
-    IBOutlet NSMenuItem* _menuItemExperimentalSpriteKitProject;
-
     CGSize defaultCanvasSizes[kCCBNumCanvasDevices+1];
     BOOL defaultCanvasSize;
     

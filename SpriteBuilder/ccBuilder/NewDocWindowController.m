@@ -53,12 +53,6 @@
     NSText* textEditor = [self.window fieldEditor:YES forObject:documentNameField];
     NSRange range = NSMakeRange(0, 8);
     [textEditor setSelectedRange:range];
-	
-	if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
-	{
-		// no particle system support for SK
-		_btnParticleSystem.enabled = NO;
-	}
 }
 
 - (IBAction)pressedObjectTypeButton:(id)sender
