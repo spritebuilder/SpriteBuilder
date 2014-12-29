@@ -44,14 +44,6 @@ codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsPivotJoint
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsSpringJoint.ccbPlugNode"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCEffectNode.ccbPlugNode"
 
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SBButtonNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SBControlNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKColorSpriteNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKFile.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKLabelNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKNode.ccbPlugNode"
-codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/SKSpriteNode.ccbPlugNode"
-
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
 
 # Sign Frameworks
