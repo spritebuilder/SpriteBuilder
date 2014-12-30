@@ -2764,11 +2764,6 @@ CA
             <rect key="frame" x="0.0" y="0.0" width="248" height="27"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
         </customView>
-        <customObject id="yvi-fM-52L" customClass="SBUpdater">
-            <connections>
-                <outlet property="delegate" destination="494" id="Nqe-OT-jRB"/>
-            </connections>
-        </customObject>
         <customView autoresizesSubviews="NO" id="L7D-gD-txa" userLabel="View">
             <rect key="frame" x="0.0" y="-1" width="347" height="70"/>
             <autoresizingMask key="autoresizingMask"/>
