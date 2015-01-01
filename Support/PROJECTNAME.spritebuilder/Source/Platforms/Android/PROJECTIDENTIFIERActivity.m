@@ -25,6 +25,8 @@
 
 #import "PROJECTIDENTIFIERActivity.h"
 
+#import <AndroidKit/AndroidKeyEvent.h>
+
 @implementation PROJECTIDENTIFIERActivity
 
 - (CCScene *)startScene
