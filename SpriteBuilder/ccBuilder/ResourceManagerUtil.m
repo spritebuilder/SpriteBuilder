@@ -31,6 +31,8 @@
 #import "ResourceTypes.h"
 #import "RMSpriteFrame.h"
 #import "RMAnimation.h"
+#import <QuickLook/QuickLook.h>
+#import "AppDelegate.h"
 
 @protocol ResourceManagerUtil_UndeclaredSelectors <NSObject>
 @optional
@@ -305,40 +307,40 @@
 #pragma mark File icons
 
 + (NSImage*) thumbnailImageForResource:(RMResource*)res {
-    NSImage *image = [res previewForResolution:nil];
+
+    NSString* path = [res absoluteResolutionPath:nil];
     
-    if (![image isValid])
-    {
-        NSLog(@"Invalid Image");
+    CGFloat viewScale = [AppDelegate appDelegate].derivedViewScaleFactor;
+    
+    CGSize size = CGSizeMake(kRMImagePreviewSize*viewScale, kRMImagePreviewSize*viewScale);
+
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
+    
+    if (!path|| !fileURL) {
         return nil;
     }
     
-    [image setScalesWhenResized:YES];
-
-    float maxSideLength = 30.0;
-    float scale = 1;
-    float oldWidth = image.size.width;
-    float oldHeight = image.size.height;
+    CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault,
+                                            (__bridge CFURLRef)fileURL,
+                                            CGSizeMake(size.width, size.height),
+                                            nil);
     
-    if (oldWidth > maxSideLength || oldHeight > maxSideLength) {
-        if (oldWidth > oldHeight) {
-            scale = (oldWidth / maxSideLength);
-        } else scale = (oldHeight / maxSideLength);
+    if (ref != NULL) {
+        NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:ref];
+        NSImage *newImage = nil;
+        
+        if (bitmapImageRep) {
+            newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
+            [newImage addRepresentation:bitmapImageRep];
+            
+            if (newImage) {
+                return newImage;
+            }
+        }
+        CFRelease(ref);
     }
-    float newWidth = oldWidth/scale;
-    float newHeight = oldHeight/scale;
-    // set draw point so that the image will be centered correctly
-    NSPoint drawPoint = NSMakePoint((maxSideLength-newWidth)/2, (maxSideLength-newHeight)/2);
-    NSSize newSize = NSMakeSize(newWidth, newHeight);
-    NSImage *smallImage = [[NSImage alloc] initWithSize:NSMakeSize(maxSideLength, maxSideLength)];
-    [smallImage lockFocus];
-    [image setSize: newSize];
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    [image drawAtPoint:drawPoint fromRect:CGRectMake(0, 0, newSize.width, newSize.height) operation:NSCompositeCopy fraction:1.0];
-    [smallImage unlockFocus];
-    image = smallImage;
     
-    return image;
+    return nil;
 }
 
 + (NSImage*) smallIconForFile:(NSString*)file
