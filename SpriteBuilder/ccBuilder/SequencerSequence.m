@@ -134,7 +134,7 @@
         {
             [sh redrawTimeline:NO];     // No need to reload Sequencer Outline View (No node has changed)
             [sh updatePropertiesToTimelinePosition];
-            [[InspectorController sharedController] updateInspectorFromSelection];
+            [[InspectorController sharedController] refreshAllProperties];
         }
     }
 }
