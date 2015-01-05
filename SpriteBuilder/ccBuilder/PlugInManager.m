@@ -178,14 +178,6 @@
 
 - (CCNode*) createDefaultNodeOfType:(NSString*)name
 {
-	if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
-	{
-		// map class names to SK classes
-		NSDictionary* nodeClassMapping = @{@"CCNode": @"SKNode", @"CCSprite": @"SKSpriteNode", @"CCParticleSystem": @"SKNode", @"CCBFile": @"CCBSKFile"};
-		NSString* skClassName = [nodeClassMapping objectForKey:name];
-		name = skClassName ? skClassName : name;
-	}
-	
     PlugInNode* plugin = [self plugInNodeNamed:name];
     if (!plugin) return NULL;
     

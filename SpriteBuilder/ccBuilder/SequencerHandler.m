@@ -310,14 +310,7 @@ static SequencerHandler* sharedSequencerHandler;
 	
 	if (item == nil)
 	{
-		const NSUInteger itemCount = 4;
-		
-		// hide "Joints" item in Sprite Kit projects (assumes "Joints" is the last item in the outline view)
-		if ([AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit)
-		{
-			return (itemCount - 1);
-		}
-		return itemCount;
+        return 4;
 	}
     
     if([item isKindOfClass:[SequencerJoints class]])
