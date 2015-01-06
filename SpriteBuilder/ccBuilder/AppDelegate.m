@@ -699,11 +699,9 @@ typedef enum
 - (void)registerUserDefaults
 {
     NSDictionary *defaults = @{
-                               LAST_VISIT_LEFT_PANEL_VISIBLE : @(1),
-                               LAST_VISIT_BOTTOM_PANEL_VISIBLE : @(1),
-                               LAST_VISIT_RIGHT_PANEL_VISIBLE : @(1),
-                               SEQUENCER_NODE_SORT_ORDER_REVERSE: @(NO),
-                               };
+            LAST_VISIT_LEFT_PANEL_VISIBLE : @(1),
+            LAST_VISIT_BOTTOM_PANEL_VISIBLE : @(1),
+            LAST_VISIT_RIGHT_PANEL_VISIBLE : @(1)};
 
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }

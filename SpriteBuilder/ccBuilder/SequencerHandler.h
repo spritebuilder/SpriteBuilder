@@ -40,7 +40,6 @@
 {
     NSOutlineView* __weak outlineHierarchy;
     BOOL dragAndDropEnabled;
-    BOOL reverseSort;
     
     AppDelegate* appDelegate;
     
