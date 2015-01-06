@@ -247,6 +247,11 @@ void ApplyCustomNodeVisitSwizzle()
 			 @"cocos2d should run on the Main Thread. Compile SpriteBuilder with CC_DIRECTOR_MAC_THREAD=2");
 }
 
+- (void) updateDerivedViewScaleFactor {
+    CCDirectorMac *director     = (CCDirectorMac*) [CCDirector sharedDirector];
+    self.derivedViewScaleFactor = director.contentScaleFactor / director.deviceContentScaleFactor;
+}
+
 - (void) setupSequenceHandler
 {
     sequenceHandler = [[SequencerHandler alloc] initWithOutlineView:outlineHierarchy];
@@ -3217,7 +3222,7 @@ typedef enum
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
-    [[CocosScene cocosScene].notesLayer setup];
+    [self updateDerivedViewScaleFactor];
 }
 
 - (void) setResolution:(int)r

@@ -46,7 +46,6 @@ enum
     CGPoint noteStartPos;
     CGSize noteStartSize;
     StickyNote* modifiedNote;
-    CGFloat viewScale;
     
     IBOutlet NSView* editView;
     IBOutlet NSTextView* textView;
