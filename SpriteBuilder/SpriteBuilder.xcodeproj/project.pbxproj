@@ -2066,7 +2066,6 @@
 		B78AE44F17E3B1600028BE0B /* scale-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale-2.png"; sourceTree = "<group>"; };
 		B78AE45017E3B1600028BE0B /* scale-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale-3.png"; sourceTree = "<group>"; };
 		B78AE45117E3B1600028BE0B /* scale-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scale-4.png"; sourceTree = "<group>"; };
-		B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SpriteBuilder.entitlements; sourceTree = SOURCE_ROOT; };
 		B78B8B0F185FF982006ADBBE /* Folder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Folder.icns; sourceTree = "<group>"; };
 		B78DA3621773A89B00B85CC0 /* CCBButtonUnclickable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBButtonUnclickable.h; sourceTree = "<group>"; };
 		B78DA3631773A89B00B85CC0 /* CCBButtonUnclickable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBButtonUnclickable.m; sourceTree = "<group>"; };
@@ -3922,7 +3921,6 @@
 		7789ABC8133AA82000CEFCC7 /* SpriteBuilder */ = {
 			isa = PBXGroup;
 			children = (
-				83957E661A432C7500134002 /* SpriteBuilder.entitlements */,
 				E390C77A170A2C20003E9E92 /* About Box & Email list */,
 				776041E31498F5E80078095D /* AppDelegate & Cocos2D Scene */,
 				776041E11498F56D0078095D /* Application Settings & Globals */,
@@ -3944,11 +3942,9 @@
 				B7C3533B17FA306C005697C1 /* Physics Editor */,
 				E3B7AEDA14E3242600DFD402 /* PlugIn Manager */,
 				E346286D155D21F10043EAB1 /* Publishing */,
-				B72D1DBF186125E80091252F /* Requirements.plist */,
 				E3C5C1A11504D144000CF6F3 /* Resource Manager */,
 				E346286C155C23100043EAB1 /* Rulers, Guides & Notes */,
 				E335CAED1576031B00A612EE /* Sequencer */,
-				B78B8B0E185FE6A0006ADBBE /* SpriteBuilder.entitlements */,
 				D2E0167218D782B500927430 /* SpriteBuilderCommands */,
 				7789ABC9133AA82000CEFCC7 /* Supporting Files */,
 				E3B7BC9D15E3B97900CF95EF /* Toolbar */,
@@ -3961,6 +3957,8 @@
 		7789ABC9133AA82000CEFCC7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				83957E661A432C7500134002 /* SpriteBuilder.entitlements */,
+				B72D1DBF186125E80091252F /* Requirements.plist */,
 				D2E0168618D783F800927430 /* SpriteBuilder.sdef */,
 				7789ABCB133AA82000CEFCC7 /* InfoPlist.strings */,
 				7789ABCE133AA82000CEFCC7 /* SpriteBuilder-Prefix.pch */,
