@@ -138,6 +138,7 @@
 #import "InspectorController.h"
 #import "SBOpenPathsController.h"
 #import "LightingHandler.h"
+#import "NSAlert+Convenience.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1665,37 +1666,33 @@ typedef enum
     self.window.representedFilename = @"";
 }
 
-- (BOOL) openProject:(NSString*) fileName
-{
-    if (![fileName hasSuffix:@".spritebuilder"])
-    {
-        return NO;
-    }
 
+- (BOOL)openProjectWithProjectPath:(NSString *)projectPath
+{
     [self closeProject];
-    
+
     // Add to recent list of opened documents
-    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
-    
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:projectPath]];
+
     // Convert folder to actual project file
-    NSString* projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-    fileName = [[fileName stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"ccbproj"];
-    
+    NSString* projName = [[projectPath lastPathComponent] stringByDeletingPathExtension];
+    projectPath = [[projectPath stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"ccbproj"];
+
     // Load the project file
-    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fileName];
+    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
     if (!projectDict)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File may be missing or invalid."];
         return NO;
     }
-    
+
     ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     if (!prjctSettings)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
         return NO;
     }
-    prjctSettings.projectPath = fileName;
+    prjctSettings.projectPath = projectPath;
     [prjctSettings store];
 
     // inject new project settings
@@ -1710,7 +1707,7 @@ typedef enum
 
     // Update Node Plugins list
 	[plugInNodeViewHandler showNodePluginsForEngine:prjctSettings.engine];
-	
+
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success)
     {
@@ -1723,18 +1720,18 @@ typedef enum
     // Load or create language file
     NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
-    
+
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[fileName stringByDeletingLastPathComponent] lastPathComponent]]];
-    
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
+
     // Open ccb file for project if there is only one
     NSArray* resPaths = prjctSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
         NSString* resPath = [resPaths objectAtIndex:0];
-        
+
         NSArray* resDir = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:NULL];
-        
+
         int numCCBFiles = 0;
         NSString* ccbFile = NULL;
         for (NSString* file in resDir)
@@ -1743,27 +1740,74 @@ typedef enum
             {
                 ccbFile = file;
                 numCCBFiles++;
-                
+
                 if (numCCBFiles > 1) break;
             }
         }
-        
+
         if (numCCBFiles == 1)
         {
             // Open the ccb file
             [self openFile:[resPath stringByAppendingPathComponent:ccbFile]];
         }
     }
-    
+
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
 
-    self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
+    self.window.representedFilename = [projectPath stringByDeletingLastPathComponent];
 
     return YES;
+}
+
+- (void)openProject:(NSString *)fileName
+{
+    if (![fileName hasSuffix:@".spritebuilder"]
+        && ![fileName hasSuffix:@".ccbproj"])
+    {
+        return;
+    }
+
+    if ([fileName hasSuffix:@".ccbproj"])
+    {
+        [self openProjectFileByAskingForUsersConsentWithProjectPath:[fileName stringByDeletingLastPathComponent]];
+    }
+    else
+    {
+        [self openProjectWithProjectPath:fileName];
+    }
+}
+
+- (void)openProjectFileByAskingForUsersConsentWithProjectPath:(NSString *)projectPath
+{
+    NSURL *projectFolderURL = [NSURL fileURLWithPath:projectPath isDirectory:YES];
+
+    NSOpenPanel*openPanel = [NSOpenPanel openPanel];
+    [openPanel setMessage:@"Spritebuilder is running in a sandbox and needs access to all files within the project folder. Please click Open to grant access."];
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel setPrompt:@"Open"];
+    [openPanel setDirectoryURL:projectFolderURL];
+    [openPanel setCanChooseFiles:NO];
+    [openPanel setCanChooseDirectories:YES];
+    [openPanel beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelCancelButton)
+        {
+            return;
+        }
+
+        if (result == NSOKButton && [[openPanel URL] isEqualTo:projectFolderURL])
+        {
+            [self openProjectWithProjectPath:projectPath];
+        }
+        else
+        {
+            [NSAlert showModalDialogWithTitle:@"Error"
+                                      message:@"The chosen folder is not the project folder of the selected project file."];
+        }
+    }];
 }
 
 - (void) openFile:(NSString*)filePath
