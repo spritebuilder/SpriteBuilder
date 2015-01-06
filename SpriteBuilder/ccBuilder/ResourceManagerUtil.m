@@ -73,9 +73,12 @@
     [self setTitle:str forPopup:popup forceMarker:NO];
 }
 
-+ (void) addDirectory: (RMDirectory*) dir ToMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
++ (NSInteger) addDirectory: (RMDirectory*) dir ToMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
 {
     NSArray* arr = [dir resourcesForType:resType];
+    NSInteger count = 0; // Valid Assets Added
+    
+    [menu setDelegate:(id)self];
     
     for (id item in arr)
     {
@@ -96,12 +99,9 @@
                 
                 [menu addItem:menuItem];
                 
-                menuItem.representedObject = res;
-
-                if (res.type == kCCBResTypeImage) {
-                    NSImage *image = [self thumbnailImageForResource:res];
-                    [menuItem setImage:image];
-                }
+                [menuItem setRepresentedObject:res];
+                
+                count++;
                 
             }
             else if (res.type == kCCBResTypeSpriteSheet && allowSpriteFrames)
@@ -122,6 +122,8 @@
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
+                
+                count++;
             }
             else if (res.type == kCCBResTypeAnimation)
             {
@@ -141,6 +143,8 @@
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
+                
+                count++;
             }
             else if (res.type == kCCBResTypeDirectory)
             {
@@ -150,14 +154,19 @@
                 
                 NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
                 
-                [ResourceManagerUtil addDirectory:subDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
+                count=[ResourceManagerUtil addDirectory:subDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
                 
-                NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
-                [menu addItem:menuItem];
-                [menu setSubmenu:subMenu forItem:menuItem];
+                if(count) {
+                    NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
+                    [menu addItem:menuItem];
+                    [menu setSubmenu:subMenu forItem:menuItem];
+                }
+                
             }
         }
     }
+    
+    return count;
 }
 
 + (void) populateResourceMenu:(NSMenu*)menu resType:(int)resType allowSpriteFrames:(BOOL)allowSpriteFrames selectedFile:(NSString*)file selectedSheet:(NSString*) sheetFile target:(id)target
@@ -332,12 +341,12 @@
         if (bitmapImageRep) {
             newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
             [newImage addRepresentation:bitmapImageRep];
+            CFRelease(ref);
             
             if (newImage) {
                 return newImage;
             }
         }
-        CFRelease(ref);
     }
     
     return nil;
@@ -390,5 +399,21 @@
     }
     return icon;
 }
+
+#pragma mark NSMenu Delegate
++ (void)menuNeedsUpdate:(NSMenu *)menu {
+
+    for( NSMenuItem *item in [menu itemArray] ){
+        
+        RMResource* res = item.representedObject;
+        
+        if (res.type == kCCBResTypeImage) {
+             NSImage *image = [self thumbnailImageForResource:res];
+             [item setImage:image];
+        }
+        
+    }
+}
+
 
 @end
