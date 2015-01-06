@@ -3059,7 +3059,10 @@ typedef enum
             [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_new_%@",saveDlgLanguagePopup.selectedItem.title]];
             
             // Check validity of file name
-            NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+            NSMutableCharacterSet* validChars = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+            [validChars addCharactersInString:@"_"];
+            NSCharacterSet* invalidChars = [validChars invertedSet];
+            
             if ([[fileNameRaw lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
             {
                 // Create directory
