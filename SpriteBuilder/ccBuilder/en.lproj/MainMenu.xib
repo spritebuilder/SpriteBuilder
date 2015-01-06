@@ -94,12 +94,6 @@
                                                 <action selector="menuNewProject:" target="494" id="1485"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Sprite Kit Project (Experimental)..." id="9mK-yK-jy5">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="menuNewSpriteKitProject:" target="-1" id="2FM-eR-10L"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1936"/>
                                         <menuItem title="File..." keyEquivalent="n" id="1478">
                                             <connections>
@@ -2444,7 +2438,6 @@ CA
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
-                <outlet property="_menuItemExperimentalSpriteKitProject" destination="9mK-yK-jy5" id="tkD-ej-LME"/>
                 <outlet property="animationPlaybackManager" destination="TMe-KA-zbR" id="F3h-M9-Nfa"/>
                 <outlet property="assetsList" destination="1056" id="1057"/>
                 <outlet property="cocosView" destination="603" id="604"/>
@@ -2771,11 +2764,6 @@ CA
             <rect key="frame" x="0.0" y="0.0" width="248" height="27"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
         </customView>
-        <customObject id="yvi-fM-52L" customClass="SBUpdater">
-            <connections>
-                <outlet property="delegate" destination="494" id="Nqe-OT-jRB"/>
-            </connections>
-        </customObject>
         <customView autoresizesSubviews="NO" id="L7D-gD-txa" userLabel="View">
             <rect key="frame" x="0.0" y="-1" width="347" height="70"/>
             <autoresizingMask key="autoresizingMask"/>

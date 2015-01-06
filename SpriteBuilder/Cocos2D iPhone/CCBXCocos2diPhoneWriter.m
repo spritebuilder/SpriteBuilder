@@ -1258,25 +1258,6 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
         customProps = [NSArray array];
     }
 
-	// Sprite Kit requires certain properties to be exported in a specific order
-	if ([_delegate exportingToSpriteKit])
-	{
-		NSMutableArray* sortedProps = [NSMutableArray arrayWithCapacity:props.count];
-		for (NSDictionary* property in props)
-		{
-			// Sprite Frame should always be read first as it modifies (overrides) size & scale in Sprite Kit
-			if ([[property objectForKey:@"name"] isEqualToString:@"spriteFrame"])
-			{
-				[sortedProps insertObject:property atIndex:0];
-			}
-			else
-			{
-				[sortedProps addObject:property];
-			}
-		}
-		props = sortedProps;
-	}
-    
     NSUInteger uuid = [node[@"UUID"] unsignedIntegerValue];
     [self writeInt:(int)uuid withSign:NO];
     [self writeInt:(int)[props count] withSign:NO];

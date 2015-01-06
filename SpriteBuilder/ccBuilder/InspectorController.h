@@ -22,6 +22,7 @@
 
 - (void)setupInspectorPane;
 
+- (void)refreshAllProperties;
 - (void)refreshProperty:(NSString *)name;
 
 - (void)refreshPropertiesOfType:(NSString *)type;

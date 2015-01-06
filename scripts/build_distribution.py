@@ -43,7 +43,6 @@ class BuildDistribution:
         
         if args.templates_only == 'True':
             self.generate_template_project('PROJECTNAME',sku_folder=args.sku)
-            self.generate_template_project('SPRITEKITPROJECTNAME',sku_folder='')
         else:
             self.run_tests = args.tests
             self.build_distribution(args.version, args.sku, args.mode,  version_info, args.private_key)
@@ -174,7 +173,6 @@ class BuildDistribution:
         shutil.copyfile('SpriteBuilder/libs/cocos2d-iphone/VERSION','Generated/cocos2d_version.txt')
 
         self.generate_template_project('PROJECTNAME',sku_folder=sku)
-        self.generate_template_project('SPRITEKITPROJECTNAME',sku_folder='')    
 
 
     def generate_template_project(self, project_name,sku_folder):
