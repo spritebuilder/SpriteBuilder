@@ -138,6 +138,7 @@
 #import "SBOpenPathsController.h"
 #import "LightingHandler.h"
 #import "NSAlert+Convenience.h"
+#import "SecurityScopedBookmarksStore.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -145,6 +146,7 @@ static const int CCNODE_INDEX_LAST = -1;
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
 @property (nonatomic, strong) ResourceCommandController *resourceCommandController;
+@property (nonatomic, copy) NSURL *securityScopedProjectFolderResource;
 
 @end
 
@@ -1645,6 +1647,9 @@ typedef enum
     [self updateSmallTabBarsEnabled];
     
     self.window.representedFilename = @"";
+    
+    [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+    self.securityScopedProjectFolderResource = nil;
 }
 
 
@@ -1709,7 +1714,7 @@ typedef enum
     NSArray* resPaths = prjctSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
-        NSString* resPath = [resPaths objectAtIndex:0];
+        NSString* resPath = resPaths[0];
 
         NSArray* resDir = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:NULL];
 
@@ -1754,7 +1759,25 @@ typedef enum
 
     if ([fileName hasSuffix:@".ccbproj"])
     {
-        [self openProjectFileByAskingForUsersConsentWithProjectPath:[fileName stringByDeletingLastPathComponent]];
+        NSURL *projectPathURL = [NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent] isDirectory:YES];
+        NSURL *projectPathURLResolved = [SecurityScopedBookmarksStore resolveBookmarkForURL:projectPathURL];
+
+        if (projectPathURLResolved)
+        {
+            if ([projectPathURLResolved startAccessingSecurityScopedResource])
+            {
+                self.securityScopedProjectFolderResource = projectPathURLResolved;
+                [self openProjectWithProjectPath:projectPathURLResolved.path];
+            }
+            else
+            {
+                [self openProjectFileByAskingForUsersConsentWithProjectPath:projectPathURLResolved];
+            }
+        }
+        else
+        {
+            [self openProjectFileByAskingForUsersConsentWithProjectPath:projectPathURL];
+        }
     }
     else
     {
@@ -1762,26 +1785,26 @@ typedef enum
     }
 }
 
-- (void)openProjectFileByAskingForUsersConsentWithProjectPath:(NSString *)projectPath
+- (void)openProjectFileByAskingForUsersConsentWithProjectPath:(NSURL *)projectPathURL
 {
-    NSURL *projectFolderURL = [NSURL fileURLWithPath:projectPath isDirectory:YES];
-
     NSOpenPanel*openPanel = [NSOpenPanel openPanel];
     [openPanel setMessage:@"Spritebuilder is running in a sandbox and needs access to all files within the project folder. Please click Open to grant access."];
     [openPanel setAllowsMultipleSelection:NO];
     [openPanel setPrompt:@"Open"];
-    [openPanel setDirectoryURL:projectFolderURL];
+    [openPanel setDirectoryURL:projectPathURL];
     [openPanel setCanChooseFiles:NO];
     [openPanel setCanChooseDirectories:YES];
-    [openPanel beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
+    [openPanel beginSheetModalForWindow:window completionHandler:^(NSInteger result)
+    {
         if (result == NSFileHandlingPanelCancelButton)
         {
             return;
         }
 
-        if (result == NSOKButton && [[openPanel URL] isEqualTo:projectFolderURL])
+        if (result == NSOKButton && [[openPanel URL] isEqualTo:projectPathURL])
         {
-            [self openProjectWithProjectPath:projectPath];
+            [SecurityScopedBookmarksStore createAndStoreBookmarkForURL:projectPathURL];
+            [self openProjectWithProjectPath:projectPathURL.path];
         }
         else
         {
@@ -4330,6 +4353,9 @@ typedef enum
     [window saveMainWindowPanelsVisibility];
 
     [self saveOpenProjectPathToDefaults];
+    
+    [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+    self.securityScopedProjectFolderResource = nil;
 
     [[NSApplication sharedApplication] terminate:self];
 }
@@ -4367,6 +4393,10 @@ typedef enum
     if ([self windowShouldClose:self])
     {
 		[self.projectSettings store];
+        
+        [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+        self.securityScopedProjectFolderResource = nil;
+        
         [[NSApplication sharedApplication] terminate:self];
     }
 }
