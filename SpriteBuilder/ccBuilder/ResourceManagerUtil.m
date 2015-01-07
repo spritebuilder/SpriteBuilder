@@ -96,10 +96,11 @@
                 
                 menuItem.representedObject = res;
 
+                /*
                 if (res.type == kCCBResTypeImage) {
                     NSImage *image = [self thumbnailImageForResource:res];
                     [menuItem setImage:image];
-                }
+                }*/
                 
             }
             else if (res.type == kCCBResTypeSpriteSheet && allowSpriteFrames)
