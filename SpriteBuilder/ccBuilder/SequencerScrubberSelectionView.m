@@ -957,15 +957,8 @@
         // Highlight selected option in context menu
         NSMenu* menu = [AppDelegate appDelegate].menuContextKeyframeInterpol;
 
-		BOOL isSpriteKitProject = [AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit;
         for (NSMenuItem* item in menu.itemArray)
         {
-			// Strip all easing modes not supported by Sprite Kit
-			if (isSpriteKitProject)
-			{
-				item.hidden = (item.tag < 1 || item.tag > 4);
-			}
-
             [item setState:NSOffState];
         }
 		
@@ -1014,6 +1007,5 @@
     
     return NULL;
 }
-
 
 @end

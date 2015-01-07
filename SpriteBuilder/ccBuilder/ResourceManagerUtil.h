@@ -26,7 +26,7 @@
 
 @class RMResource;
 
-@interface ResourceManagerUtil : NSObject
+@interface ResourceManagerUtil : NSObject <NSMenuDelegate>
 
 + (void) populateResourcePopup:(NSPopUpButton*)popup resType:(int)resType allowSpriteFrames:(BOOL)allowSpriteFrames selectedFile:(NSString*)file selectedSheet:(NSString*) sheetFile target:(id)target;
 

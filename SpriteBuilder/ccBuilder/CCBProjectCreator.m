@@ -49,11 +49,6 @@
     NSString* substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     NSString* parentPath = [fileName stringByDeletingLastPathComponent];
     
-	if (engine == CCBTargetEngineSpriteKit)
-	{
-		substitutableProjectName = [NSString stringWithFormat:@"SPRITEKIT%@", substitutableProjectName];
-	}
-	
     NSString* zipFile = [[NSBundle mainBundle] pathForResource:substitutableProjectName ofType:@"zip" inDirectory:@"Generated"];
     
     // Check that zip file exists
@@ -68,7 +63,7 @@
     NSTask* zipTask = [[NSTask alloc] init];
     [zipTask setCurrentDirectoryPath:parentPath];
     [zipTask setLaunchPath:@"/usr/bin/unzip"];
-    NSArray* args = [NSArray arrayWithObjects:@"-o", zipFile, nil];
+    NSArray* args = @[@"-o", zipFile];
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
@@ -133,15 +128,6 @@
         if (![fm moveItemAtPath:schemeFile toPath:newSchemeFile error:&error])
         {
             return NO;
-        }
-
-        if ([@"Android" isEqualToString:platform] && programmingLanguage == CCBProgrammingLanguageSwift)
-        {
-            // Hide scheme for Android Swift projects for now
-            if (![fm removeItemAtPath:newSchemeFile error:&error])
-            {
-                return NO;
-            }
         }
 
         // Update plist
