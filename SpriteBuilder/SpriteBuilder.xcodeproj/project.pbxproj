@@ -1737,7 +1737,6 @@
 		922E8EFD18C13666008E1764 /* OutletDrawWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutletDrawWindow.m; path = ccBuilder/OutletDrawWindow.m; sourceTree = SOURCE_ROOT; };
 		922EAC451958F41E006F2D75 /* CCBPEffectBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectBrightness.h; path = ccBuilder/CCBPEffectBrightness.h; sourceTree = "<group>"; };
 		922EAC461958F41E006F2D75 /* CCBPEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBrightness.m; path = ccBuilder/CCBPEffectBrightness.m; sourceTree = "<group>"; };
-		9248BD1F199A8BB2009C154F /* SequencerTimelineDrawDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerTimelineDrawDelegate.h; sourceTree = "<group>"; };
 		9249983018B7E1F500DE9ADA /* SceneGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneGraph.h; sourceTree = "<group>"; };
 		9249983118B7E1F500DE9ADA /* SceneGraph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneGraph.m; sourceTree = "<group>"; };
 		92520731196238D000BFC071 /* SpriteBuilder 1.3 Beta.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SpriteBuilder 1.3 Beta.xcconfig"; sourceTree = "<group>"; };
@@ -4863,7 +4862,6 @@
 		E335CAED1576031B00A612EE /* Sequencer */ = {
 			isa = PBXGroup;
 			children = (
-				9248BD1F199A8BB2009C154F /* SequencerTimelineDrawDelegate.h */,
 				5811305E1639BF1200A86D70 /* SequencerTimelineDrawDelegate.h */,
 				E335CAF1157603C200A612EE /* SequencerHandler.h */,
 				E335CAF2157603C200A612EE /* SequencerHandler.m */,
