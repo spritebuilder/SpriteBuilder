@@ -130,15 +130,6 @@
             return NO;
         }
 
-        if ([@"Android" isEqualToString:platform] && programmingLanguage == CCBProgrammingLanguageSwift)
-        {
-            // Hide scheme for Android Swift projects for now
-            if (![fm removeItemAtPath:newSchemeFile error:&error])
-            {
-                return NO;
-            }
-        }
-
         // Update plist
         NSString* plistFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Resources/Platforms/%@/Info.plist", platform]];
         [self setName:identifier inFile:plistFileName search:substitutableProjectIdentifier];
