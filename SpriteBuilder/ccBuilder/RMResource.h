@@ -16,7 +16,7 @@
 - (void)loadData;
 
 - (NSImage *)previewForResolution:(NSString *)res;
-- (NSString*)absoluteResolutionPath:(NSString *)res;
+- (NSString*)absoluteAutoPathForResolution:(NSString *)res;
 
 // Convenience method until SB uses kCCBResTypeSpriteSheet as type, which is never set
 - (BOOL)isSpriteSheet;

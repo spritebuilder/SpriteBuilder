@@ -72,14 +72,13 @@
 - (NSImage*) previewForResolution:(NSString *)res
 {
     
-    NSString* autoPath = [self absoluteResolutionPath:res];
+    NSString* autoPath = [self absoluteAutoPathForResolution:res];
     if(!autoPath) return NULL;
     
-    NSImage* img = [[NSImage alloc] initWithContentsOfFile:[self absoluteResolutionPath:autoPath]];
-    return img;
+    return [[NSImage alloc] initWithContentsOfFile:autoPath];
 }
 
-- (NSString*)absoluteResolutionPath:(NSString *)res {
+- (NSString*)absoluteAutoPathForResolution:(NSString *)res {
     
     if (!res) res = @"auto";
     
@@ -89,9 +88,8 @@
         NSString* dirPath = [_filePath stringByDeletingLastPathComponent];
         NSString* resDirName = [@"resources-" stringByAppendingString:res];
         
-        NSString* autoPath = [[dirPath stringByAppendingPathComponent:resDirName] stringByAppendingPathComponent:fileName];
+        return [[dirPath stringByAppendingPathComponent:resDirName] stringByAppendingPathComponent:fileName];
         
-        return autoPath;
     }
     
     return nil;

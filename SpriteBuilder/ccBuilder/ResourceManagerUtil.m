@@ -73,7 +73,7 @@
     [self setTitle:str forPopup:popup forceMarker:NO];
 }
 
-+ (NSInteger) addDirectory: (RMDirectory*) dir ToMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
++ (NSInteger) addDirectory: (RMDirectory*) dir toMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
 {
     NSArray* arr = [dir resourcesForType:resType];
     NSInteger count = 0; // Valid Assets Added
@@ -154,7 +154,7 @@
                 
                 NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
                 
-                count=[ResourceManagerUtil addDirectory:subDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
+                count=[ResourceManagerUtil addDirectory:subDir toMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
                 
                 if(count) {
                     NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
@@ -195,7 +195,7 @@
         // There is only a single active directory, make its contents the top level
         RMDirectory* activeDir = [rm.activeDirectories objectAtIndex:0];
     
-        [ResourceManagerUtil addDirectory:activeDir ToMenu:menu target:target resType: resType allowSpriteFrames:allowSpriteFrames];
+        [ResourceManagerUtil addDirectory:activeDir toMenu:menu target:target resType: resType allowSpriteFrames:allowSpriteFrames];
     }
     else
     {
@@ -207,7 +207,7 @@
             
             NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
             
-            [ResourceManagerUtil addDirectory:activeDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
+            [ResourceManagerUtil addDirectory:activeDir toMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
             
             NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
             [menu addItem:menuItem];
@@ -317,12 +317,9 @@
 
 + (NSImage*) thumbnailImageForResource:(RMResource*)res {
 
-    NSString* path = [res absoluteResolutionPath:nil];
-    
+    NSString* path = [res absoluteAutoPathForResolution:nil];
     CGFloat viewScale = [AppDelegate appDelegate].derivedViewScaleFactor;
-    
     CGSize size = CGSizeMake(kRMImagePreviewSize*viewScale, kRMImagePreviewSize*viewScale);
-
     NSURL *fileURL = [NSURL fileURLWithPath:path];
     
     if (!path|| !fileURL) {
@@ -333,23 +330,20 @@
                                             (__bridge CFURLRef)fileURL,
                                             CGSizeMake(size.width, size.height),
                                             nil);
+    NSImage *newImage = nil;
     
     if (ref != NULL) {
         NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:ref];
-        NSImage *newImage = nil;
         
         if (bitmapImageRep) {
             newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
             [newImage addRepresentation:bitmapImageRep];
-            CFRelease(ref);
-            
-            if (newImage) {
-                return newImage;
-            }
         }
+        
+        CFRelease(ref);
     }
     
-    return nil;
+    return newImage;
 }
 
 + (NSImage*) smallIconForFile:(NSString*)file
