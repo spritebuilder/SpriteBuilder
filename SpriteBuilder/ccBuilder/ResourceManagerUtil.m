@@ -31,6 +31,8 @@
 #import "ResourceTypes.h"
 #import "RMSpriteFrame.h"
 #import "RMAnimation.h"
+#import <QuickLook/QuickLook.h>
+#import "AppDelegate.h"
 
 @protocol ResourceManagerUtil_UndeclaredSelectors <NSObject>
 @optional
@@ -71,9 +73,12 @@
     [self setTitle:str forPopup:popup forceMarker:NO];
 }
 
-+ (void) addDirectory: (RMDirectory*) dir ToMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
++ (NSInteger) addDirectory: (RMDirectory*) dir toMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
 {
     NSArray* arr = [dir resourcesForType:resType];
+    NSInteger count = 0; // Valid Assets Added
+    
+    [menu setDelegate:(id)self];
     
     for (id item in arr)
     {
@@ -94,12 +99,9 @@
                 
                 [menu addItem:menuItem];
                 
-                menuItem.representedObject = res;
-
-                if (res.type == kCCBResTypeImage) {
-                    NSImage *image = [self thumbnailImageForResource:res];
-                    [menuItem setImage:image];
-                }
+                [menuItem setRepresentedObject:res];
+                
+                count++;
                 
             }
             else if (res.type == kCCBResTypeSpriteSheet && allowSpriteFrames)
@@ -120,6 +122,8 @@
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
+                
+                count++;
             }
             else if (res.type == kCCBResTypeAnimation)
             {
@@ -139,6 +143,8 @@
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
+                
+                count++;
             }
             else if (res.type == kCCBResTypeDirectory)
             {
@@ -148,14 +154,19 @@
                 
                 NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
                 
-                [ResourceManagerUtil addDirectory:subDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
+                count=[ResourceManagerUtil addDirectory:subDir toMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
                 
-                NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
-                [menu addItem:menuItem];
-                [menu setSubmenu:subMenu forItem:menuItem];
+                if(count) {
+                    NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
+                    [menu addItem:menuItem];
+                    [menu setSubmenu:subMenu forItem:menuItem];
+                }
+                
             }
         }
     }
+    
+    return count;
 }
 
 + (void) populateResourceMenu:(NSMenu*)menu resType:(int)resType allowSpriteFrames:(BOOL)allowSpriteFrames selectedFile:(NSString*)file selectedSheet:(NSString*) sheetFile target:(id)target
@@ -184,7 +195,7 @@
         // There is only a single active directory, make its contents the top level
         RMDirectory* activeDir = [rm.activeDirectories objectAtIndex:0];
     
-        [ResourceManagerUtil addDirectory:activeDir ToMenu:menu target:target resType: resType allowSpriteFrames:allowSpriteFrames];
+        [ResourceManagerUtil addDirectory:activeDir toMenu:menu target:target resType: resType allowSpriteFrames:allowSpriteFrames];
     }
     else
     {
@@ -196,7 +207,7 @@
             
             NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
             
-            [ResourceManagerUtil addDirectory:activeDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
+            [ResourceManagerUtil addDirectory:activeDir toMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
             
             NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
             [menu addItem:menuItem];
@@ -305,40 +316,34 @@
 #pragma mark File icons
 
 + (NSImage*) thumbnailImageForResource:(RMResource*)res {
-    NSImage *image = [res previewForResolution:nil];
+
+    NSString* path = [res absoluteAutoPathForResolution:nil];
+    CGFloat viewScale = [AppDelegate appDelegate].derivedViewScaleFactor;
+    CGSize size = CGSizeMake(kRMImagePreviewSize*viewScale, kRMImagePreviewSize*viewScale);
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
     
-    if (![image isValid])
-    {
-        NSLog(@"Invalid Image");
+    if (!path|| !fileURL) {
         return nil;
     }
     
-    [image setScalesWhenResized:YES];
-
-    float maxSideLength = 30.0;
-    float scale = 1;
-    float oldWidth = image.size.width;
-    float oldHeight = image.size.height;
+    CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault,
+                                            (__bridge CFURLRef)fileURL,
+                                            CGSizeMake(size.width, size.height),
+                                            nil);
+    NSImage *newImage = nil;
     
-    if (oldWidth > maxSideLength || oldHeight > maxSideLength) {
-        if (oldWidth > oldHeight) {
-            scale = (oldWidth / maxSideLength);
-        } else scale = (oldHeight / maxSideLength);
+    if (ref != NULL) {
+        NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:ref];
+        
+        if (bitmapImageRep) {
+            newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
+            [newImage addRepresentation:bitmapImageRep];
+        }
+        
+        CFRelease(ref);
     }
-    float newWidth = oldWidth/scale;
-    float newHeight = oldHeight/scale;
-    // set draw point so that the image will be centered correctly
-    NSPoint drawPoint = NSMakePoint((maxSideLength-newWidth)/2, (maxSideLength-newHeight)/2);
-    NSSize newSize = NSMakeSize(newWidth, newHeight);
-    NSImage *smallImage = [[NSImage alloc] initWithSize:NSMakeSize(maxSideLength, maxSideLength)];
-    [smallImage lockFocus];
-    [image setSize: newSize];
-    [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-    [image drawAtPoint:drawPoint fromRect:CGRectMake(0, 0, newSize.width, newSize.height) operation:NSCompositeCopy fraction:1.0];
-    [smallImage unlockFocus];
-    image = smallImage;
     
-    return image;
+    return newImage;
 }
 
 + (NSImage*) smallIconForFile:(NSString*)file
@@ -388,5 +393,21 @@
     }
     return icon;
 }
+
+#pragma mark NSMenu Delegate
++ (void)menuNeedsUpdate:(NSMenu *)menu {
+
+    for( NSMenuItem *item in [menu itemArray] ){
+        
+        RMResource* res = item.representedObject;
+        
+        if (res.type == kCCBResTypeImage) {
+             NSImage *image = [self thumbnailImageForResource:res];
+             [item setImage:image];
+        }
+        
+    }
+}
+
 
 @end

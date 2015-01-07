@@ -21,6 +21,7 @@
 		58FA2034162D73F3006B8856 /* TB_bottomPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2031162D73F3006B8856 /* TB_bottomPanel.png */; };
 		58FA2035162D73F3006B8856 /* TB_leftPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2032162D73F3006B8856 /* TB_leftPanel.png */; };
 		58FA2036162D73F3006B8856 /* TB_rightPanel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FA2033162D73F3006B8856 /* TB_rightPanel.png */; };
+		5B321CC91A5B458800A7C779 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B321CC81A5B458800A7C779 /* QuickLook.framework */; };
 		5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */; };
 		5BA3DC36192110BA0055DD96 /* GuideGridSizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */; };
 		5BB9A3551A038C59008184AE /* ResourceDuplicateCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB9A3541A038C59008184AE /* ResourceDuplicateCommand.m */; };
@@ -1319,6 +1320,7 @@
 		58FA2031162D73F3006B8856 /* TB_bottomPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_bottomPanel.png; sourceTree = "<group>"; };
 		58FA2032162D73F3006B8856 /* TB_leftPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_leftPanel.png; sourceTree = "<group>"; };
 		58FA2033162D73F3006B8856 /* TB_rightPanel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TB_rightPanel.png; sourceTree = "<group>"; };
+		5B321CC81A5B458800A7C779 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
 		5BA3DC2F192108AB0055DD96 /* GuideGridSizeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideGridSizeWindow.h; sourceTree = "<group>"; };
 		5BA3DC30192108AB0055DD96 /* GuideGridSizeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideGridSizeWindow.m; sourceTree = "<group>"; };
 		5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideGridSizeWindow.xib; sourceTree = "<group>"; };
@@ -2808,6 +2810,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B321CC91A5B458800A7C779 /* QuickLook.framework in Frameworks */,
 				7B76CF8619F1AF9E006AF235 /* libcocos2d-mac.a in Frameworks */,
 				D35E589E18E391DA008571EC /* GLKit.framework in Frameworks */,
 				80AD79A21863878B00B653B7 /* libPVRTexLib.a in Frameworks */,
@@ -3665,6 +3668,7 @@
 		7789ABC1133AA82000CEFCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B321CC81A5B458800A7C779 /* QuickLook.framework */,
 				830F4EB019347032002B832D /* OCMock.framework */,
 				D35E589D18E391DA008571EC /* GLKit.framework */,
 				D2E0168418D783C900927430 /* AppleScriptKit.framework */,
