@@ -174,7 +174,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
                 CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
                 lbl.anchorPoint = ccp(0,0);
-                lbl.position = ccp(2/viewScale, y + (8*(strLen - i - 1) - 1)/viewScale);
+                lbl.position = ccp(2/viewScale, y + (8*(strLen - i - 1) /* - 1 */)/viewScale);
             
                 [marksVertical addChild:lbl z:1];
             }
@@ -217,7 +217,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 
             CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
             lbl.anchorPoint = ccp(0,0);
-            lbl.position = ccp(x+1/viewScale, -2/viewScale);
+            lbl.position = ccp(x+1/viewScale, 0/* -1/viewScale*/);
             [marksHorizontal addChild:lbl z:1];
         }
         x+=10;
