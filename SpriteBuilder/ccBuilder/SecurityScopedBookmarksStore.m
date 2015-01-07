@@ -61,7 +61,7 @@
 
     if (!bookmarkURL)
     {
-        NSLog(@"Error resolving bookmark data for project path %@", url.path);
+        NSLog(@"Error resolving bookmark data for project path %@ - %@", url.path, error);
         return nil;
     }
 
