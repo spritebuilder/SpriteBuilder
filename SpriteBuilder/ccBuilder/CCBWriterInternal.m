@@ -23,7 +23,6 @@
  */
 
 #import "CCBWriterInternal.h"
-#import "CCBReaderInternalV1.h"
 #import "NodeInfo.h"
 #import "PlugInNode.h"
 #import "TexturePropertySetter.h"

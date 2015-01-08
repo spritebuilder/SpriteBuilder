@@ -23,7 +23,6 @@
  */
 
 #import "CCBReaderInternal.h"
-#import "CCBReaderInternalV1.h"
 #import "PlugInManager.h"
 #import "PlugInNode.h"
 #import "NodeInfo.h"
@@ -642,10 +641,8 @@ __strong NSDictionary* renamedProperties = nil;
     
     if (fileVersion <= 2)
     {
-        // Use legacy reader
-        NSString* assetsPath = [NSString stringWithFormat:@"%@/", [[ResourceManager sharedManager] mainActiveDirectoryPath]];
-        
-        return [CCBReaderInternalV1 ccObjectFromDictionary:nodeGraph assetsDir:assetsPath owner:NULL];
+        NSLog(@"WARNING! Trying to load a file that is no longer supported by CocosBuilder");
+        return NULL;
     }
     else if (fileVersion > kCCBFileFormatVersion)
     {

@@ -27,7 +27,6 @@
 #import "CCBGlobals.h"
 #import "SceneGraph.h"
 #import "AppDelegate.h"
-#import "CCBReaderInternalV1.h"
 #import "NodeInfo.h"
 #import "PlugInManager.h"
 #import "PlugInNode.h"
