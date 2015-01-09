@@ -132,12 +132,13 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
-#import "SBUpdater.h"
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
 #import "SBOpenPathsController.h"
 #import "LightingHandler.h"
+#import "NSAlert+Convenience.h"
+#import "SecurityScopedBookmarksStore.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -145,6 +146,7 @@ static const int CCNODE_INDEX_LAST = -1;
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
 @property (nonatomic, strong) ResourceCommandController *resourceCommandController;
+@property (nonatomic, copy) NSURL *securityScopedProjectFolderResource;
 
 @end
 
@@ -442,17 +444,6 @@ typedef enum
         [itemViewTabs setSelectedItem:[itemViewTabs.items objectAtIndex:0]];
         [itemTabView selectTabViewItemAtIndex:0];
     }
-	
-	// physics tab forcibly disabled for Sprite Kit projects as there is no pyhsics editing support (yet)
-	if (projectSettings.engine == CCBTargetEngineSpriteKit)
-	{
-		if (itemViewTabs.items.count > 2)
-		{
-			SMTabBarItem* item = [itemViewTabs.items objectAtIndex:2];
-			item.enabled = NO;
-			//NSLog(@"Sprite Kit disabled tab item: %@", item);
-		}
-	}
 }
 
 - (void) setupProjectTilelessEditor
@@ -529,12 +520,6 @@ typedef enum
 
     [self registerNotificationObservers];
 
-    // Disable experimental features
-    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"EnableSpriteKit"] boolValue])
-    {
-        [[_menuItemExperimentalSpriteKitProject menu] removeItem:_menuItemExperimentalSpriteKitProject];
-    }
-
     [[UsageManager sharedManager] registerUsage];
     
     // Initialize Audio
@@ -597,7 +582,6 @@ typedef enum
     [self setupProjectTilelessEditor];
     [self setupExtras];
     [self setupResourceCommandController];
-	[self setupSparkleGui];
 	
     [window restorePreviousOpenedPanels];
 
@@ -1663,39 +1647,38 @@ typedef enum
     [self updateSmallTabBarsEnabled];
     
     self.window.representedFilename = @"";
+    
+    [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+    self.securityScopedProjectFolderResource = nil;
 }
 
-- (BOOL) openProject:(NSString*) fileName
-{
-    if (![fileName hasSuffix:@".spritebuilder"])
-    {
-        return NO;
-    }
 
+- (BOOL)openProjectWithProjectPath:(NSString *)projectPath
+{
     [self closeProject];
-    
+
     // Add to recent list of opened documents
-    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
-    
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:projectPath]];
+
     // Convert folder to actual project file
-    NSString* projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-    fileName = [[fileName stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"ccbproj"];
-    
+    NSString* projName = [[projectPath lastPathComponent] stringByDeletingPathExtension];
+    projectPath = [[projectPath stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"ccbproj"];
+
     // Load the project file
-    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fileName];
+    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
     if (!projectDict)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File may be missing or invalid."];
         return NO;
     }
-    
+
     ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     if (!prjctSettings)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
         return NO;
     }
-    prjctSettings.projectPath = fileName;
+    prjctSettings.projectPath = projectPath;
     [prjctSettings store];
 
     // inject new project settings
@@ -1710,7 +1693,7 @@ typedef enum
 
     // Update Node Plugins list
 	[plugInNodeViewHandler showNodePluginsForEngine:prjctSettings.engine];
-	
+
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success)
     {
@@ -1723,18 +1706,18 @@ typedef enum
     // Load or create language file
     NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
-    
+
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[fileName stringByDeletingLastPathComponent] lastPathComponent]]];
-    
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
+
     // Open ccb file for project if there is only one
     NSArray* resPaths = prjctSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
-        NSString* resPath = [resPaths objectAtIndex:0];
-        
+        NSString* resPath = resPaths[0];
+
         NSArray* resDir = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:NULL];
-        
+
         int numCCBFiles = 0;
         NSString* ccbFile = NULL;
         for (NSString* file in resDir)
@@ -1743,27 +1726,92 @@ typedef enum
             {
                 ccbFile = file;
                 numCCBFiles++;
-                
+
                 if (numCCBFiles > 1) break;
             }
         }
-        
+
         if (numCCBFiles == 1)
         {
             // Open the ccb file
             [self openFile:[resPath stringByAppendingPathComponent:ccbFile]];
         }
     }
-    
+
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
 
-    self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
+    self.window.representedFilename = [projectPath stringByDeletingLastPathComponent];
 
     return YES;
+}
+
+- (void)openProject:(NSString *)fileName
+{
+    if (![fileName hasSuffix:@".spritebuilder"]
+        && ![fileName hasSuffix:@".ccbproj"])
+    {
+        return;
+    }
+
+    if ([fileName hasSuffix:@".ccbproj"])
+    {
+        NSURL *projectPathURL = [NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent] isDirectory:YES];
+        NSURL *projectPathURLResolved = [SecurityScopedBookmarksStore resolveBookmarkForURL:projectPathURL];
+
+        if (projectPathURLResolved)
+        {
+            if ([projectPathURLResolved startAccessingSecurityScopedResource])
+            {
+                self.securityScopedProjectFolderResource = projectPathURLResolved;
+                [self openProjectWithProjectPath:projectPathURLResolved.path];
+            }
+            else
+            {
+                [self openProjectFileByAskingForUsersConsentWithProjectPath:projectPathURLResolved];
+            }
+        }
+        else
+        {
+            [self openProjectFileByAskingForUsersConsentWithProjectPath:projectPathURL];
+        }
+    }
+    else
+    {
+        [self openProjectWithProjectPath:fileName];
+    }
+}
+
+- (void)openProjectFileByAskingForUsersConsentWithProjectPath:(NSURL *)projectPathURL
+{
+    NSOpenPanel*openPanel = [NSOpenPanel openPanel];
+    [openPanel setMessage:@"Spritebuilder is running in a sandbox and needs access to all files within the project folder. Please click Open to grant access."];
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel setPrompt:@"Open"];
+    [openPanel setDirectoryURL:projectPathURL];
+    [openPanel setCanChooseFiles:NO];
+    [openPanel setCanChooseDirectories:YES];
+    [openPanel beginSheetModalForWindow:window completionHandler:^(NSInteger result)
+    {
+        if (result == NSFileHandlingPanelCancelButton)
+        {
+            return;
+        }
+
+        if (result == NSOKButton && [[openPanel URL] isEqualTo:projectPathURL])
+        {
+            [SecurityScopedBookmarksStore createAndStoreBookmarkForURL:projectPathURL];
+            [self openProjectWithProjectPath:projectPathURL.path];
+        }
+        else
+        {
+            [NSAlert showModalDialogWithTitle:@"Error"
+                                      message:@"The chosen folder is not the project folder of the selected project file."];
+        }
+    }];
 }
 
 - (void) openFile:(NSString*)filePath
@@ -3059,7 +3107,10 @@ typedef enum
             [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_new_%@",saveDlgLanguagePopup.selectedItem.title]];
             
             // Check validity of file name
-            NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+            NSMutableCharacterSet* validChars = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+            [validChars addCharactersInString:@"_"];
+            NSCharacterSet* invalidChars = [validChars invertedSet];
+            
             if ([[fileNameRaw lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
             {
                 // Create directory
@@ -3097,11 +3148,6 @@ typedef enum
 - (IBAction) menuNewProject:(id)sender
 {
 	[self createNewProjectTargetting:CCBTargetEngineCocos2d];
-}
-
--(IBAction) menuNewSpriteKitProject:(id)sender
-{
-	[self createNewProjectTargetting:CCBTargetEngineSpriteKit];
 }
 
 - (IBAction) menuNewPackage:(id)sender
@@ -4193,29 +4239,6 @@ typedef enum
 	return @"SpriteBuilder";
 }
 
-#pragma mark Sparkle
-
--(void)setupSparkleGui
-{
-#if SB_SANDBOXED
-	[self.menuCheckForUpdates setHidden:YES];
-#endif
-}
-
-- (SBVersionComparitor*)versionComparatorForUpdater
-{
-	return [SBVersionComparitor new];
-}
-
-- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates
-{
-#if TESTING || SB_SANDBOXED
-	return NO;
-#else 
-	return YES;
-#endif
-}
-
 - (NSString *)feedURLStringForUpdater:(id)updater
 {
 	return @"http://update.spritebuilder.com";
@@ -4330,6 +4353,9 @@ typedef enum
     [window saveMainWindowPanelsVisibility];
 
     [self saveOpenProjectPathToDefaults];
+    
+    [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+    self.securityScopedProjectFolderResource = nil;
 
     [[NSApplication sharedApplication] terminate:self];
 }
@@ -4367,6 +4393,10 @@ typedef enum
     if ([self windowShouldClose:self])
     {
 		[self.projectSettings store];
+        
+        [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+        self.securityScopedProjectFolderResource = nil;
+        
         [[NSApplication sharedApplication] terminate:self];
     }
 }

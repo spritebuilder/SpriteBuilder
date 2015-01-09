@@ -686,15 +686,7 @@
 
 -(void) setPublishResolution_ios_phone:(BOOL)publishResolution
 {
-	if (_engine != CCBTargetEngineSpriteKit)
-	{
-		_publishResolution_ios_phone = publishResolution;
-	}
-	else
-	{
-		// Sprite Kit doesn't run on non-Retina phones to begin with...
-		_publishResolution_ios_phone = NO;
-	}
+    _publishResolution_ios_phone = publishResolution;
 }
 
 - (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings

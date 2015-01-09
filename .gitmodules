@@ -5,6 +5,3 @@ url=https://github.com/cocos2d/cocos2d-swift.git
 	path = SpriteBuilder/libs/ssziparchive
 url=https://github.com/spritebuilder/ssziparchive.git
 
-[submodule "SpriteBuilder/libs/SpriteKit"]
-	path = SpriteBuilder/libs/SpriteKit
-url=https://github.com/apportable/SpriteBuilder-SK.git

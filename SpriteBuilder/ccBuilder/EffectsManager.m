@@ -249,6 +249,7 @@
 		[effectDescriptions addObject:effectDescription];
 	}
     
+    /*
     {
         EffectDescription * effectDescription = [[EffectDescription alloc] init];
         effectDescription.title = @"Outline";
@@ -261,7 +262,7 @@
         
         [effectDescriptions addObject:effectDescription];
     }
-
+     */
 
 	return effectDescriptions;
 }

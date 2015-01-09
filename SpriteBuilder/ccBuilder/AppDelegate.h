@@ -137,7 +137,6 @@ typedef void (^CompletionCallback) (BOOL success);
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITHockeyManagerDelegate, PublishingFinishedDelegate>
 {
-    
     // Panel Views
     IBOutlet NSView* leftPanel;
     IBOutlet NSView* rightPanel;
@@ -156,8 +155,6 @@ typedef void (^CompletionCallback) (BOOL success);
     NSTabView* tabView;
     
     // Inspector componentes
-    // IBOutlet NSComboBox* inspectorSpriteName;
-    // IBOutlet NSTextView* inspectorLabelBMFontString;
     BOOL canEditContentSize;
     BOOL canEditCustomClass;
     
@@ -211,16 +208,8 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet NSMenu* menuTimelineChained;
     IBOutlet NSTextField* lblTimelineChained;
     
-    IBOutlet NSMenuItem* _menuItemExperimentalSpriteKitProject;
-
     CGSize defaultCanvasSizes[kCCBNumCanvasDevices+1];
-    // IBOutlet NSMenuItem* menuItemStageCentered;
     BOOL defaultCanvasSize;
-    
-    // IBOutlet NSMenuItem* menuItemJSControlled;
-    // IBOutlet NSMenuItem* menuItemSafari;
-    // IBOutlet NSMenuItem* menuItemChrome;
-    // IBOutlet NSMenuItem* menuItemFirefox;
     
     IBOutlet NSSegmentedControl* segmPublishBtn;
     
@@ -248,7 +237,6 @@ typedef void (^CompletionCallback) (BOOL success);
     ResourceManagerOutlineHandler* projectOutlineHandler;
     
     // Project Warnings.
-
     WarningTableViewHandler * warningHandler;
     
     // Documents
@@ -306,7 +294,6 @@ typedef void (^CompletionCallback) (BOOL success);
 	BOOL _applicationLaunchComplete;
     
     CGFloat _baseContentScaleFactor;
-    
 }
 
 
