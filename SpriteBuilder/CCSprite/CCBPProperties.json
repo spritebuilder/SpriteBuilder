@@ -1,0 +1,76 @@
+{
+  "displayName": "Sprite",
+  "ordering": 6000,
+  "editorClassName": "CCBPSprite",
+  "className": "CCSprite",
+  "inheritsFrom": "CCNode",
+  "spriteFrameDrop": {
+    "className": "CCSprite",
+    "property": "spriteFrame"
+  },
+  "canHaveChildren": true,
+  "description": "Displays a texture.",
+  "properties": [
+    {
+      "displayName": "CCSprite",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCSprite"
+    },
+    {
+      "displayName": "Sprite frame",
+      "animatable": true,
+      "affectsProperties": ["blendFunc", "contentSize"],
+      "type": "SpriteFrame",
+      "name": "spriteFrame",
+      "default": ["", ""]
+    },
+    {
+      "displayName": "Normal map",
+      "animatable": true,
+      "type": "SpriteFrame",
+      "name": "normalMapSpriteFrame",
+      "default": ["", ""]
+    },
+    {
+      "displayName": "Opacity",
+      "defaultSerialization": 1,
+      "animatable": true,
+      "type": "Float",
+      "name": "opacity"
+    },
+    {
+      "displayName": "Color",
+      "defaultSerialization": [255, 255, 255],
+      "animatable": true,
+      "type": "Color3",
+      "name": "color"
+    },
+    {
+      "displayName": "",
+      "defaultSerialization": [false, false],
+      "type": "Flip",
+      "name": "flip"
+    },
+    {
+      "displayName": "",
+      "defaultSerialization": [1, 771],
+      "type": "Blendmode",
+      "name": "blendFunc"
+    },
+    {
+      "displayName": "Effects",
+      "type": "EffectControl",
+      "name": "effects"
+    }
+  ],
+  "canBeRootNode": true,
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "displayName": "Box Layout",
+  "ordering": 15000,
+  "editorClassName": "CCLayoutBox",
+  "className": "CCLayoutBox",
+  "inheritsFrom": "CCNode",
+  "spriteFrameDrop": {
+    "className": "CCSprite",
+    "property": "spriteFrame"
+  },
+  "canHaveChildren": true,
+  "description": "Positions its child nodes below it in a horizontal or vertical box layout.",
+  "properties": [
+    {
+      "displayName": "CCLayoutBox",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCLayoutBox"
+    },
+    {
+      "displayName": "Direction",
+      "extra": "Horizontal|0|Vertical|1",
+      "affectsProperties": ["contentSize"],
+      "type": "IntegerLabeled",
+      "name": "direction"
+    },
+    {
+      "displayName": "Spacing",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "spacing"
+    }
+  ],
+  "canBeRootNode": true,
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    }
+  ]
+}

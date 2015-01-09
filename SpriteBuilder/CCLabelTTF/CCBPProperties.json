@@ -1,0 +1,132 @@
+{
+  "displayName": "Label TTF",
+  "ordering": 9000,
+  "editorClassName": "CCBPLabelTTF",
+  "className": "CCLabelTTF",
+  "inheritsFrom": "CCNode",
+  "canHaveChildren": false,
+  "description": "Displays a true type font label.",
+  "properties": [
+    {
+      "displayName": "CCLabelTTF",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCLabelTTF"
+    },
+    {
+      "displayName": "Label text",
+      "affectsProperties": ["contentSize"],
+      "type": "Text",
+      "name": "string",
+      "default": "Sample Text"
+    },
+    {
+      "displayName": "Font name",
+      "affectsProperties": ["contentSize"],
+      "type": "FontTTF",
+      "name": "fontName",
+      "default": "Helvetica"
+    },
+    {
+      "displayName": "Font size",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "fontSize"
+    },
+    {
+      "displayName": "Adjusts font size to fit",
+      "affectsProperties": ["contentSize"],
+      "type": "Check",
+      "name": "adjustsFontSizeToFit"
+    },
+    {
+      "displayName": "Opacity",
+      "defaultSerialization": 1,
+      "animatable": true,
+      "type": "Float",
+      "name": "opacity",
+      "default": 1
+    },
+    {
+      "displayName": "Color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "animatable": true,
+      "type": "Color3",
+      "name": "color",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Dimensions",
+      "affectsProperties": ["contentSize"],
+      "type": "Size",
+      "name": "dimensions"
+    },
+    {
+      "displayName": "Alignment",
+      "extra": "Left|0|Center|1|Right|2",
+      "type": "IntegerLabeled",
+      "name": "horizontalAlignment"
+    },
+    {
+      "displayName": "",
+      "extra": "Top|0|Center|1|Bottom|2",
+      "type": "IntegerLabeled",
+      "name": "verticalAlignment"
+    },
+    {
+      "displayName": "Font Effects",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Font Effects"
+    },
+    {
+      "displayName": "Draw Color",
+      "defaultSerialization": [255, 255, 255, 255],
+      "type": "Color4",
+      "name": "fontColor",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Outline color",
+      "defaultSerialization": [0, 0, 0, 0],
+      "affectsProperties": ["contentSize"],
+      "type": "Color4",
+      "name": "outlineColor",
+      "default": [0, 0, 0, 0]
+    },
+    {
+      "displayName": "Outline width",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "outlineWidth"
+    },
+    {
+      "displayName": "Shadow color",
+      "defaultSerialization": [0, 0, 0, 0],
+      "affectsProperties": ["contentSize"],
+      "type": "Color4",
+      "name": "shadowColor",
+      "default": [0, 0, 0, 0]
+    },
+    {
+      "displayName": "Shadow blur radius",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "shadowBlurRadius"
+    },
+    {
+      "displayName": "Shadow offset",
+      "defaultSerialization": [0, 0, 0],
+      "type": "Position",
+      "name": "shadowOffset"
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    }
+  ]
+}

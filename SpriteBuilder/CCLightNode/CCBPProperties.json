@@ -1,0 +1,101 @@
+{
+  "displayName": "Light Node",
+  "ordering": 4000,
+  "editorClassName": "CCBPLightNode",
+  "className": "CCLightNode",
+  "inheritsFrom": "CCNode",
+  "canHaveChildren": true,
+  "description": "Draws a rectangular area filled with a color.",
+  "properties": [
+    {
+      "displayName": "CCLightNode",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCLightNode"
+    },
+    {
+      "displayName": "Light Type",
+      "extra": "Point|0|Directional|1",
+      "type": "IntegerLabeled",
+      "name": "type"
+    },
+    {
+      "displayName": "Light Groups",
+      "type": "TokenArray",
+      "name": "groups"
+    },
+    {
+      "displayName": "Diffuse Color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "animatable": true,
+      "type": "Color3",
+      "name": "color",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Diffuse Intensity",
+      "defaultSerialization": 1,
+      "animatable": true,
+      "type": "Float",
+      "name": "intensity",
+      "default": 1
+    },
+    {
+      "displayName": "Specular Color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "animatable": true,
+      "type": "Color3",
+      "name": "specularColor",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Specular Intensity",
+      "defaultSerialization": 1,
+      "animatable": true,
+      "type": "Float",
+      "name": "specularIntensity",
+      "default": 1
+    },
+    {
+      "displayName": "Ambient Color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "animatable": true,
+      "type": "Color3",
+      "name": "ambientColor",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Ambient Intensity",
+      "defaultSerialization": 0.5,
+      "animatable": true,
+      "type": "Float",
+      "name": "ambientIntensity",
+      "default": 0.5
+    },
+    {
+      "displayName": "Cutoff Radius",
+      "defaultSerialization": 0,
+      "animatable": true,
+      "type": "Float",
+      "name": "cutoffRadius",
+      "default": 0
+    },
+    {
+      "displayName": "Half Radius",
+      "defaultSerialization": 0.5,
+      "animatable": true,
+      "type": "Float",
+      "name": "halfRadius",
+      "default": 0.5
+    },
+    {
+      "displayName": "Depth",
+      "defaultSerialization": 1,
+      "animatable": true,
+      "type": "Float",
+      "name": "depth",
+      "default": 1
+    }
+  ],
+  "propertiesOverridden": [ ]
+}

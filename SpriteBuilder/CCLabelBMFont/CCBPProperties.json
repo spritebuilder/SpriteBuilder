@@ -1,0 +1,62 @@
+{
+  "displayName": "Label BM-Font",
+  "ordering": 10000,
+  "editorClassName": "CCLabelBMFont",
+  "className": "CCLabelBMFont",
+  "inheritsFrom": "CCNode",
+  "canHaveChildren": false,
+  "description": "Displays a bitmap font label.",
+  "properties": [
+    {
+      "displayName": "CCLabelBMFont",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCLabelBMFont"
+    },
+    {
+      "displayName": "Font file",
+      "affectsProperties": ["contentSize"],
+      "type": "FntFile",
+      "name": "fntFile",
+      "default": ""
+    },
+    {
+      "displayName": "Opacity",
+      "defaultSerialization": 1,
+      "animatable": true,
+      "type": "Float",
+      "name": "opacity",
+      "default": 1
+    },
+    {
+      "displayName": "Color",
+      "defaultSerialization": [255, 255, 255],
+      "animatable": true,
+      "type": "Color3",
+      "name": "color",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "",
+      "defaultSerialization": [1, 771],
+      "type": "Blendmode",
+      "name": "blendFunc",
+      "default": [1, 771]
+    },
+    {
+      "displayName": "Label text",
+      "affectsProperties": ["contentSize"],
+      "type": "Text",
+      "name": "string",
+      "default": "Sample Text"
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    }
+  ]
+}

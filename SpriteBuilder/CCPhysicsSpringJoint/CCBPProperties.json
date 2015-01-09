@@ -1,0 +1,89 @@
+{
+  "displayName": "Physics Spring Joint",
+  "ordering": 16300,
+  "editorClassName": "CCBPhysicsSpringJoint",
+  "className": "CCPhysicsSpringJoint",
+  "inheritsFrom": "NSObject",
+  "isJoint": true,
+  "canHaveChildren": false,
+  "description": "Connects two physics bodies with an elastic spring.",
+  "properties": [
+    {
+      "displayName": "CCPhysicsSpringJoint",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCPhysicsSpringJoint"
+    },
+    {
+      "displayName": "Position",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Position",
+      "name": "position",
+      "inspectorDisabled": true
+    },
+    {
+      "displayName": "Body A",
+      "affectsProperties": ["bodyA"],
+      "type": "NodeReference",
+      "name": "bodyA",
+      "default": 0
+    },
+    {
+      "displayName": "Body B",
+      "affectsProperties": ["bodyB"],
+      "type": "NodeReference",
+      "name": "bodyB",
+      "default": 0
+    },
+    {
+      "displayName": "Collide bodies",
+      "type": "Check",
+      "name": "collideBodies"
+    },
+    {
+      "displayName": "Anchor A",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Point",
+      "name": "anchorA"
+    },
+    {
+      "displayName": "Anchor B",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Point",
+      "name": "anchorB"
+    },
+    {
+      "displayName": "Breaking force",
+      "defaultSerialization": 0,
+      "type": "FloatCheck",
+      "name": "breakingForce"
+    },
+    {
+      "displayName": "Max force",
+      "defaultSerialization": 0,
+      "type": "FloatCheck",
+      "name": "maxForce"
+    },
+    {
+      "displayName": "Rest length",
+      "defaultSerialization": 0,
+      "type": "EnabledFloat",
+      "name": "restLength"
+    },
+    {
+      "displayName": "Damping",
+      "type": "Float",
+      "name": "damping"
+    },
+    {
+      "displayName": "Stiffness",
+      "type": "Float",
+      "name": "stiffness"
+    }
+  ],
+  "canBeRootNode": false,
+  "propertiesOverridden": [ ]
+}

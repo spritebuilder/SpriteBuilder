@@ -1,0 +1,61 @@
+{
+  "displayName": "Text Field",
+  "ordering": 12000,
+  "editorClassName": "CCBPTextField",
+  "className": "CCTextField",
+  "inheritsFrom": "CCControl",
+  "canHaveChildren": false,
+  "description": "Allows the user to enter text, sends events when the text finishes editing.",
+  "properties": [
+    {
+      "displayName": "CCTextField",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCTextField"
+    },
+    {
+      "displayName": "Sprite frame",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame",
+      "default": ["", "ccbResources/ccbTextField.png"]
+    },
+    {
+      "displayName": "Padding",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "padding",
+      "default": [7, 0]
+    },
+    {
+      "displayName": "Font size",
+      "type": "Float",
+      "dontSetInEditor": true,
+      "name": "fontSize",
+      "default": 17
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    },
+    {
+      "readOnly": false,
+      "displayName": "Preferred size",
+      "affectsProperties": ["maxSize", "contentSize"],
+      "type": "Size",
+      "name": "preferredSize",
+      "default": [200, 36, 0, 0]
+    },
+    {
+      "readOnly": true,
+      "displayName": "Max size",
+      "affectsProperties": ["preferredSize", "contentSize"],
+      "type": "Size",
+      "name": "maxSize"
+    }
+  ]
+}

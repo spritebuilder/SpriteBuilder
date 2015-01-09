@@ -1,0 +1,164 @@
+{
+  "displayName": "Physics Pivot Joint",
+  "ordering": 16100,
+  "editorClassName": "CCBPhysicsPivotJoint",
+  "className": "CCPhysicsPivotJoint",
+  "inheritsFrom": "NSObject",
+  "isJoint": true,
+  "canHaveChildren": false,
+  "description": "Connects two physics bodies with a pivot joint.",
+  "properties": [
+    {
+      "displayName": "CCPhysicsPivotJoint",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCPhysicsPivotJoint"
+    },
+    {
+      "displayName": "Position",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Position",
+      "name": "position",
+      "inspectorDisabled": true
+    },
+    {
+      "displayName": "Body A",
+      "affectsProperties": ["bodyA"],
+      "type": "NodeReference",
+      "name": "bodyA",
+      "default": 0
+    },
+    {
+      "displayName": "Body B",
+      "affectsProperties": ["bodyB"],
+      "type": "NodeReference",
+      "name": "bodyB",
+      "default": 0
+    },
+    {
+      "displayName": "Collide bodies",
+      "type": "Check",
+      "name": "collideBodies"
+    },
+    {
+      "displayName": "Anchor A",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Point",
+      "name": "anchorA"
+    },
+    {
+      "displayName": "Breaking force",
+      "defaultSerialization": 0,
+      "type": "FloatCheck",
+      "name": "breakingForce"
+    },
+    {
+      "displayName": "Max force",
+      "defaultSerialization": 0,
+      "type": "FloatCheck",
+      "name": "maxForce"
+    },
+    {
+      "displayName": "Reference",
+      "defaultSerialization": 0,
+      "type": "Degrees",
+      "name": "referenceAngle"
+    },
+    {
+      "displayName": "Spring",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "Spring"
+    },
+    {
+      "displayName": "Spring Enabled",
+      "defaultSerialization": 0,
+      "affectsProperties": [
+        "dampedSpringRestAngle",
+        "dampedSpringDamping",
+        "dampedSpringStiffness"
+      ],
+      "type": "Check",
+      "name": "dampedSpringEnabled"
+    },
+    {
+      "displayName": "Rest Angle",
+      "defaultSerialization": 0,
+      "type": "Degrees",
+      "name": "dampedSpringRestAngle"
+    },
+    {
+      "displayName": "Damping",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "dampedSpringDamping"
+    },
+    {
+      "displayName": "Stiffness",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "dampedSpringStiffness"
+    },
+    {
+      "displayName": "Limit",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "Limit"
+    },
+    {
+      "displayName": "Limit Enabled",
+      "defaultSerialization": 0,
+      "affectsProperties": ["limitMin", "limitMax"],
+      "type": "Check",
+      "name": "limitEnabled"
+    },
+    {
+      "displayName": "Min",
+      "defaultSerialization": 0,
+      "type": "Degrees",
+      "name": "limitMin"
+    },
+    {
+      "displayName": "Max",
+      "defaultSerialization": 90,
+      "type": "Degrees",
+      "name": "limitMax"
+    },
+    {
+      "displayName": "Motor",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "Motor"
+    },
+    {
+      "displayName": "Motor Enabled",
+      "defaultSerialization": 0,
+      "affectsProperties": ["motorRate"],
+      "type": "Check",
+      "name": "motorEnabled"
+    },
+    {
+      "displayName": "Max force",
+      "defaultSerialization": 0,
+      "type": "FloatCheck",
+      "name": "motorMaxForce"
+    },
+    {
+      "displayName": "Rate",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "motorRate"
+    },
+    {
+      "displayName": "layoutType",
+      "defaultSerialization": 0,
+      "type": "Byte",
+      "name": "layoutType",
+      "inspectorDisabled": true
+    }
+  ],
+  "canBeRootNode": false,
+  "propertiesOverridden": [ ]
+}
