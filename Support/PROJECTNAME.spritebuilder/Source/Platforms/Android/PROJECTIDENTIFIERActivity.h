@@ -25,7 +25,7 @@
 
 #import "CCActivity.h"
 
-BRIDGE_CLASS("org.cocos2d.PROJECTIDENTIFIER.PROJECTIDENTIFIERActivity")
+BRIDGE_CLASS("com.apportable.GLActivity")
 @interface PROJECTIDENTIFIERActivity : CCActivity
 
 @end
