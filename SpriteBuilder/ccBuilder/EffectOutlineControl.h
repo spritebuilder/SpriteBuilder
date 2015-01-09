@@ -7,6 +7,9 @@
 //
 
 #import "EffectViewController.h"
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #import "CCBPEffectOutline.h"
 
 @interface EffectOutlineControl : EffectViewController
@@ -15,3 +18,5 @@
 @property (nonatomic) CCBPEffectOutline * effect;
 
 @end
+
+#endif

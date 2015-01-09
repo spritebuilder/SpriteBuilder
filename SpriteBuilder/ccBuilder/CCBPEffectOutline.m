@@ -7,6 +7,10 @@
 //
 
 #import "CCBPEffectOutline.h"
+
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #import "EffectsUndoHelper.h"
 #import "CCBReaderInternal.h"
 #import "CCBWriterInternal.h"
@@ -52,3 +56,5 @@
 }
 
 @end
+
+#endif

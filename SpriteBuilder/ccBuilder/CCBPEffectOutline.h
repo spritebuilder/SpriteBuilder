@@ -7,8 +7,13 @@
 //
 
 #import "CCEffectOutline.h"
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #import "EffectsManager.h"
 
 @interface CCBPEffectOutline : CCEffectOutline<EffectProtocol>
 
 @end
+
+#endif
