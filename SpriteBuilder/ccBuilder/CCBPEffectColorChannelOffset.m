@@ -17,7 +17,7 @@
 
 + (CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-    return [self effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    return [self effectWithRedOffsetWithPoint:CGPointMake(0.0f, 0.0f) greenOffsetWithPoint:CGPointMake(0.0f, 0.0f) blueOffsetWithPoint:CGPointMake(0.0f, 0.0f)];
 }
 
 
