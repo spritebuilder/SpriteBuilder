@@ -147,21 +147,9 @@
     [self setName:projName inFile:xibFileName search:substitutableProjectName];
 
     // Android
-    NSString* activityJavaFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/java/org/cocos2d/%@/%@Activity.java", substitutableProjectIdentifier, substitutableProjectIdentifier]];
-    if ([fm fileExistsAtPath:activityJavaFileName])
+    NSString* activityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", substitutableProjectIdentifier]];
+    if ([fm fileExistsAtPath:activityMFileName])
     {
-        NSString* resultActivityJavaFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/java/org/cocos2d/%@/%@Activity.java", identifier, identifier]];
-        
-        if (![fm createDirectoryAtPath:[resultActivityJavaFileName stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:&error]) {
-            return NO;
-        }
-        
-        if (![fm moveItemAtPath:activityJavaFileName toPath:resultActivityJavaFileName error:&error]) {
-            return NO;
-        }
-        [self setName:identifier inFile:resultActivityJavaFileName search:substitutableProjectIdentifier];
-        
-        NSString* activityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", substitutableProjectIdentifier]];
         NSString* resultActivityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", identifier]];
         
         if (![fm moveItemAtPath:activityMFileName toPath:resultActivityMFileName error:&error]) {

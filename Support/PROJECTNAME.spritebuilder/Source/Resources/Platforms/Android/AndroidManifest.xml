@@ -10,7 +10,7 @@
         android:debuggable="true"
         android:icon="@drawable/ic_launcher">
         <activity   
-            android:name="org.cocos2d.PROJECTIDENTIFIER.PROJECTIDENTIFIERActivity"
+            android:name="com.apportable.GLActivity"
             android:label="PROJECTNAME"
             android:screenOrientation="sensorLandscape"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize"

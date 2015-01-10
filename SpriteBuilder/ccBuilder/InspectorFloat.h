@@ -25,6 +25,9 @@
 #import "InspectorValue.h"
 
 @interface InspectorFloat : InspectorValue
+{
+    IBOutlet NSTextField* textField;
+}
 
 @property (nonatomic,assign) float f;
 

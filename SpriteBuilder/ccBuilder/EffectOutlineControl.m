@@ -8,6 +8,8 @@
 
 #import "EffectOutlineControl.h"
 
+#if CC_EFFECTS_EXPERIMENTAL
+
 @interface EffectOutlineControl ()
 
 @end
@@ -41,3 +43,6 @@
 }
 
 @end
+
+#endif
+
