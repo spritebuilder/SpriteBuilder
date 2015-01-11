@@ -13,6 +13,7 @@
     IBOutlet NSTableView* tableTranslations;
     IBOutlet NSTableView* tableLanguages;
     IBOutlet NSPopUpButton* popLanguageAdd;
+    IBOutlet NSPopUpButton* popLanguageSetDefault;
     IBOutlet NSPopUpButton* popCurrentLanguage;
     IBOutlet NSTextView* textInspectorKey;
 }
@@ -29,6 +30,7 @@
 - (IBAction)pressedAddGroup:(id)sender;
 
 - (IBAction)selectedAddLanguage:(id)sender;
+- (IBAction)selectedSetDefaultLanguage:(id)sender;
 - (void)removeLanguagesAtIndexes:(NSIndexSet*)idxs;
 - (IBAction)selectedCurrentLanguage:(id)sender;
 

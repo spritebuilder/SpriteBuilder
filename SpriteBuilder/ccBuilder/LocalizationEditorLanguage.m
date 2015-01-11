@@ -39,6 +39,8 @@
     
     self.quickEdit = YES;
     
+    self.defaultLanguage = NO;
+    
     return self;
 }
 

@@ -64,12 +64,19 @@
     [ser setObject:[NSNumber numberWithInt:kCCBTranslationFileFormatVersion] forKey:@"fileVersion"];
     
     // Languages
+    NSString* defaultLanguage = nil;
     NSMutableArray* serLangs = [NSMutableArray array];
     for (LocalizationEditorLanguage* lang in activeLanguages)
     {
         [serLangs addObject:lang.isoLangCode];
+        if (lang.defaultLanguage) {
+            defaultLanguage = lang.isoLangCode;
+        }
     }
     [ser setObject:serLangs forKey:@"activeLanguages"];
+    if (defaultLanguage) {
+        [ser setObject:defaultLanguage forKey:@"defaultLanguage"];
+    }
     
     // Translations
     NSMutableArray* serTransls = [NSMutableArray array];
@@ -101,12 +108,20 @@
     // Read data
     
     // Languages
+    NSString* defaultLang = [ser objectForKey:@"defaultLanguage"];
     NSArray* serLangs = [ser objectForKey:@"activeLanguages"];
     for (NSString* isoCode in serLangs)
     {
         // Find language for code and add active language
         LocalizationEditorLanguage* lang = [self getLanguageByIsoLangCode:isoCode];
-        if (lang) [activeLanguages addObject:lang];
+        if (lang)
+        {
+            if ([lang.isoLangCode isEqualToString:defaultLang])
+            {
+                lang.defaultLanguage = YES;
+            }
+            [activeLanguages addObject:lang];
+        }
     }
     
     // Translations
@@ -278,6 +293,18 @@
         [transl.translations removeObjectForKey:lang.isoLangCode];
     }
     [self setCurrentLanguage:currentLanguage];
+}
+
+- (void) setDefaultLanguage:(LocalizationEditorLanguage*) lang
+{
+    for (LocalizationEditorLanguage* oneLanguage in activeLanguages)
+    {
+        oneLanguage.defaultLanguage = NO;
+        if (lang && [oneLanguage.isoLangCode isEqualToString:lang.isoLangCode])
+        {
+            oneLanguage.defaultLanguage = YES;
+        }
+    }
 }
 
 - (IBAction)openEditor:(id)sender
