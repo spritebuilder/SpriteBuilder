@@ -65,6 +65,20 @@
 			<key>extra</key>
 			<string>Gravity mode|0|Radius mode|1</string>
 		</dict>
+        <dict>
+            <key>saveInTemplate</key>
+            <true/>
+            <key>default</key>
+            <integer>2</integer>
+            <key>displayName</key>
+            <string>Position Type</string>
+            <key>name</key>
+            <string>particlePositionType</string>
+            <key>type</key>
+            <string>IntegerLabeled</string>
+            <key>extra</key>
+            <string>Free|0|Relative|1|Grouped|2</string>
+        </dict>
 		<dict>
 			<key>saveInTemplate</key>
 			<true/>
