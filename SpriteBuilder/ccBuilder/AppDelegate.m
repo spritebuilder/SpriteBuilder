@@ -32,7 +32,6 @@
 #import "cocos2d.h"
 #import "CCBWriterInternal.h"
 #import "CCBReaderInternal.h"
-#import "CCBReaderInternalV1.h"
 #import "CCBDocument.h"
 #import "NewDocWindowController.h"
 #import "CCBSpriteSheetParser.h"
@@ -1660,9 +1659,12 @@ typedef enum
     // Add to recent list of opened documents
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:projectPath]];
 
-    // Convert folder to actual project file
-    NSString* projName = [[projectPath lastPathComponent] stringByDeletingPathExtension];
-    projectPath = [[projectPath stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"ccbproj"];
+    //Find .ccbproj file
+    NSArray *projectContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:projectPath error:nil];
+    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj'"];
+    NSString *ccbprojFileName = (NSString*)[[projectContents filteredArrayUsingPredicate:ccbprojExtension] firstObject];
+
+    projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
 
     // Load the project file
     NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];

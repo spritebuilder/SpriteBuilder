@@ -59,7 +59,6 @@
 		772BE57C134398EE0009B5B9 /* NewDocWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772BE57B134398EE0009B5B9 /* NewDocWindow.xib */; };
 		772BE5801343A6EF0009B5B9 /* CCBWriterInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 772BE57F1343A6EE0009B5B9 /* CCBWriterInternal.m */; };
 		772BE58E134BB6C00009B5B9 /* CCBDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 772BE58D134BB6BE0009B5B9 /* CCBDocument.m */; };
-		772BE594134BC2BF0009B5B9 /* CCBReaderInternalV1.m in Sources */ = {isa = PBXBuildFile; fileRef = 772BE593134BC2BA0009B5B9 /* CCBReaderInternalV1.m */; };
 		774E4EC2136D98AB0025D0A8 /* select-bl.png in Resources */ = {isa = PBXBuildFile; fileRef = 774E4EBD136D98AB0025D0A8 /* select-bl.png */; };
 		774E4EC3136D98AB0025D0A8 /* select-br.png in Resources */ = {isa = PBXBuildFile; fileRef = 774E4EBE136D98AB0025D0A8 /* select-br.png */; };
 		774E4EC4136D98AB0025D0A8 /* select-pt.png in Resources */ = {isa = PBXBuildFile; fileRef = 774E4EBF136D98AB0025D0A8 /* select-pt.png */; };
@@ -1359,8 +1358,6 @@
 		772BE57F1343A6EE0009B5B9 /* CCBWriterInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBWriterInternal.m; sourceTree = "<group>"; };
 		772BE58C134BB6BD0009B5B9 /* CCBDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDocument.h; sourceTree = "<group>"; };
 		772BE58D134BB6BE0009B5B9 /* CCBDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDocument.m; sourceTree = "<group>"; };
-		772BE592134BC2B90009B5B9 /* CCBReaderInternalV1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReaderInternalV1.h; sourceTree = "<group>"; };
-		772BE593134BC2BA0009B5B9 /* CCBReaderInternalV1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReaderInternalV1.m; sourceTree = "<group>"; };
 		774E4EBD136D98AB0025D0A8 /* select-bl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-bl.png"; sourceTree = "<group>"; };
 		774E4EBE136D98AB0025D0A8 /* select-br.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-br.png"; sourceTree = "<group>"; };
 		774E4EBF136D98AB0025D0A8 /* select-pt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-pt.png"; sourceTree = "<group>"; };
@@ -3033,8 +3030,6 @@
 				772BE58D134BB6BE0009B5B9 /* CCBDocument.m */,
 				772BE57E1343A6ED0009B5B9 /* CCBWriterInternal.h */,
 				772BE57F1343A6EE0009B5B9 /* CCBWriterInternal.m */,
-				772BE592134BC2B90009B5B9 /* CCBReaderInternalV1.h */,
-				772BE593134BC2BA0009B5B9 /* CCBReaderInternalV1.m */,
 				E3C3660214EB2C1B007CD5FF /* CCBReaderInternal.h */,
 				E3C3660314EB2C1B007CD5FF /* CCBReaderInternal.m */,
 				E312EDC516AF71FE000778C8 /* CCBReaderInternalRenamedProps.plist */,
@@ -7169,7 +7164,6 @@
 				772BE572133E48350009B5B9 /* CCBGlobals.m in Sources */,
 				772BE5801343A6EF0009B5B9 /* CCBWriterInternal.m in Sources */,
 				772BE58E134BB6C00009B5B9 /* CCBDocument.m in Sources */,
-				772BE594134BC2BF0009B5B9 /* CCBReaderInternalV1.m in Sources */,
 				771B2B321353818200B260BA /* NewDocWindowController.m in Sources */,
 				77156DB1137F0351005EF746 /* CCBSpriteSheetParser.m in Sources */,
 				77E1992013858D78006C361B /* NSBezierPath_AMShading.m in Sources */,

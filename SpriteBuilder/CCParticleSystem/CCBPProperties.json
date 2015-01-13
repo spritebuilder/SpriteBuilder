@@ -27,6 +27,14 @@
       "name": "emitterMode"
     },
     {
+      "displayName": "Position Type",
+      "saveInTemplate": true,
+      "extra": "Free|0|Relative|1|Grouped|2",
+      "type": "IntegerLabeled",
+      "name": "particlePositionType",
+      "default": 2
+    },
+    {
       "displayName": "Position var",
       "saveInTemplate": true,
       "type": "Point",
