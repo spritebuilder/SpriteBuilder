@@ -198,6 +198,7 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
+    [self populateLanguageSetDefaultMenu];
 }
 
 #pragma mark Actions
