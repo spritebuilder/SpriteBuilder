@@ -32,7 +32,6 @@
 #import "cocos2d.h"
 #import "CCBWriterInternal.h"
 #import "CCBReaderInternal.h"
-#import "CCBReaderInternalV1.h"
 #import "CCBDocument.h"
 #import "NewDocWindowController.h"
 #import "CCBSpriteSheetParser.h"
