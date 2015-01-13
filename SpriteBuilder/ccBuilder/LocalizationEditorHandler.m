@@ -194,7 +194,15 @@
     
     if (activeLanguages.count > 0)
     {
-        [self setCurrentLanguage:[activeLanguages objectAtIndex:0]];
+        LocalizationEditorLanguage* initialLanguage = [activeLanguages objectAtIndex:0];
+        for (LocalizationEditorLanguage* lang in activeLanguages)
+        {
+            if (lang.defaultLanguage) {
+                initialLanguage = lang;
+                break;
+            }
+        }
+        [self setCurrentLanguage:initialLanguage];
     }
     else
     {
@@ -303,6 +311,7 @@
         if (lang && [oneLanguage.isoLangCode isEqualToString:lang.isoLangCode])
         {
             oneLanguage.defaultLanguage = YES;
+            [self setCurrentLanguage:oneLanguage];
         }
     }
 }
