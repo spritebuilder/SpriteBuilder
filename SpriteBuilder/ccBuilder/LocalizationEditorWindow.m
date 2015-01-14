@@ -47,20 +47,29 @@
     
     NSArray* langs = [AppDelegate appDelegate].localizationEditorHandler.activeLanguages;
     
+    int defaultLanguageIndex = -1;
     NSString* firstItem = @"Set Default Language";
     
     NSMutableArray* langTitles = [NSMutableArray array];
+    int currentLanguageIndex = 0;
     for (LocalizationEditorLanguage* lang in langs)
     {
         [langTitles addObject:lang.name];
         if (lang.defaultLanguage)
         {
             firstItem = [NSString stringWithFormat:@"Default: %@", lang.name];
+            defaultLanguageIndex = currentLanguageIndex;
         }
+        currentLanguageIndex++;
     }
     [langTitles addObject:@"None"];
+    if (defaultLanguageIndex == -1) {
+        defaultLanguageIndex = currentLanguageIndex;
+    }
     [langTitles insertObject:firstItem atIndex:0];
     [popLanguageSetDefault addItemsWithTitles:langTitles];
+    defaultLanguageIndex++;
+    [[popLanguageSetDefault itemAtIndex:defaultLanguageIndex] setState:NSOnState];
 }
 
 - (void) updateLanguageSelectionMenu
