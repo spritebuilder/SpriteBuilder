@@ -1,5 +1,4 @@
 #import "AppDelegate.h"
-#import "CCPackageManager.h"
 
 @interface AppDelegate ()
 
