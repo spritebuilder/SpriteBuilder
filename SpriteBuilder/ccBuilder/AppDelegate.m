@@ -32,7 +32,6 @@
 #import "cocos2d.h"
 #import "CCBWriterInternal.h"
 #import "CCBReaderInternal.h"
-#import "CCBReaderInternalV1.h"
 #import "CCBDocument.h"
 #import "NewDocWindowController.h"
 #import "CCBSpriteSheetParser.h"
@@ -127,17 +126,18 @@
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
 #import "ProjectMigrator.h"
-#import "UsageManager.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "CCBPublisherController.h"
 #import "ResourceManager+Publishing.h"
-#import "SBUpdater.h"
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
 #import "SBOpenPathsController.h"
+#import "LightingHandler.h"
+#import "NSAlert+Convenience.h"
+#import "SecurityScopedBookmarksStore.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -145,6 +145,7 @@ static const int CCNODE_INDEX_LAST = -1;
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
 @property (nonatomic, strong) ResourceCommandController *resourceCommandController;
+@property (nonatomic, copy) NSURL *securityScopedProjectFolderResource;
 
 @end
 
@@ -184,6 +185,7 @@ static const int CCNODE_INDEX_LAST = -1;
 @dynamic selectedNodeCanHavePhysics;
 @synthesize playingBack;
 @dynamic	showJoints;
+@synthesize lightingHandler;
 
 static AppDelegate* sharedAppDelegate;
 
@@ -212,22 +214,25 @@ void ApplyCustomNodeVisitSwizzle()
 - (void) setupCocos2d
 {
     ApplyCustomNodeVisitSwizzle();
+    
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+
+    NSAssert(cocosView, @"cocosView is nil");
+    [director setView:cocosView];
+    [cocosView setWantsBestResolutionOpenGLSurface:YES];
+    [[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
 	
 	[director setDisplayStats:NO];
-	[director setProjection:CCDirectorProjection2D];
-    //[cocosView openGLContext];
+	[director setProjection:CCDirectorProjection2D];    
     
-	NSAssert(cocosView, @"cocosView is nil");
-    
-    // TODO: Add support for retina display
-    // [cocosView setWantsBestResolutionOpenGLSurface:YES];
-	[director setView:cocosView];
+    _baseContentScaleFactor = director.contentScaleFactor;
     
     [self updatePositionScaleFactor];
     
-    [director reshapeProjection:cocosView.frame.size];
+    CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
+    
+    [director reshapeProjection:realSize];
     
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
@@ -243,6 +248,11 @@ void ApplyCustomNodeVisitSwizzle()
 			 @"cocos2d should run on the Main Thread. Compile SpriteBuilder with CC_DIRECTOR_MAC_THREAD=2");
 }
 
+- (void) updateDerivedViewScaleFactor {
+    CCDirectorMac *director     = (CCDirectorMac*) [CCDirector sharedDirector];
+    self.derivedViewScaleFactor = director.contentScaleFactor / director.contentScaleFactor;
+}
+
 - (void) setupSequenceHandler
 {
     sequenceHandler = [[SequencerHandler alloc] initWithOutlineView:outlineHierarchy];
@@ -251,6 +261,7 @@ void ApplyCustomNodeVisitSwizzle()
     sequenceHandler.timeScaleSlider = timeScaleSlider;
     sequenceHandler.scroller = timelineScroller;
     sequenceHandler.scrollView = sequenceScrollView;
+    sequenceHandler.lightVisibilityDelegate = self.lightingHandler;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSoundImages:) name:kSoundFileImageLoaded object:nil];
     
@@ -293,28 +304,28 @@ void ApplyCustomNodeVisitSwizzle()
 {
     NSMutableArray* items = [NSMutableArray array];
     
-    NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder.png"];
+    NSImage* imgFolder = [NSImage imageNamed:@"inspector-folder"];
     [imgFolder setTemplate:YES];
     SMTabBarItem* itemFolder = [[SMTabBarItem alloc] initWithImage:imgFolder tag:0];
     itemFolder.toolTip = @"File View";
     itemFolder.keyEquivalent = @"";
     [items addObject:itemFolder];
     
-    NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects.png"];
+    NSImage* imgObjs = [NSImage imageNamed:@"inspector-objects"];
     [imgObjs setTemplate:YES];
     SMTabBarItem* itemObjs = [[SMTabBarItem alloc] initWithImage:imgObjs tag:1];
     itemObjs.toolTip = @"Tileless Editor View";
     itemObjs.keyEquivalent = @"";
     [items addObject:itemObjs];
     
-    NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes.png"];
+    NSImage* imgNodes = [NSImage imageNamed:@"inspector-nodes"];
     [imgNodes setTemplate:YES];
     SMTabBarItem* itemNodes = [[SMTabBarItem alloc] initWithImage:imgNodes tag:2];
     itemNodes.toolTip = @"Node Library View";
     itemNodes.keyEquivalent = @"";
     [items addObject:itemNodes];
     
-    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning.png"];
+    NSImage* imgWarnings = [NSImage imageNamed:@"inspector-warning"];
     [imgWarnings setTemplate:YES];
     SMTabBarItem* itemWarnings = [[SMTabBarItem alloc] initWithImage:imgWarnings tag:3];
     itemWarnings.toolTip = @"Warnings view";
@@ -338,7 +349,7 @@ typedef enum
 {
     NSMutableArray* items = [NSMutableArray array];
     
-    NSImage* imgProps = [NSImage imageNamed:@"inspector-props.png"];
+    NSImage* imgProps = [NSImage imageNamed:@"inspector-props"];
     [imgProps setTemplate:YES];
     SMTabBarItem* itemProps = [[SMTabBarItem alloc] initWithImage:imgProps tag:0];
     itemProps.toolTip = @"Item Properties";
@@ -346,7 +357,7 @@ typedef enum
 	itemProps.tag = eItemViewTabType_Properties;
     [items addObject:itemProps];
     
-    NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections.png"];
+    NSImage* imgCode = [NSImage imageNamed:@"inspector-codeconnections"];
     [imgCode setTemplate:YES];
     SMTabBarItem* itemCode = [[SMTabBarItem alloc] initWithImage:imgCode tag:0];
     itemCode.toolTip = @"Item Code Connections";
@@ -362,7 +373,7 @@ typedef enum
 	itemPhysics.tag = eItemViewTabType_Physics;
     [items addObject:itemPhysics];
     
-    NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template.png"];
+    NSImage* imgTemplate = [NSImage imageNamed:@"inspector-template"];
     [imgTemplate setTemplate:YES];
     SMTabBarItem* itemTemplate = [[SMTabBarItem alloc] initWithImage:imgTemplate tag:0];
     itemTemplate.toolTip = @"Item Templates";
@@ -432,17 +443,6 @@ typedef enum
         [itemViewTabs setSelectedItem:[itemViewTabs.items objectAtIndex:0]];
         [itemTabView selectTabViewItemAtIndex:0];
     }
-	
-	// physics tab forcibly disabled for Sprite Kit projects as there is no pyhsics editing support (yet)
-	if (projectSettings.engine == CCBTargetEngineSpriteKit)
-	{
-		if (itemViewTabs.items.count > 2)
-		{
-			SMTabBarItem* item = [itemViewTabs.items objectAtIndex:2];
-			item.enabled = NO;
-			//NSLog(@"Sprite Kit disabled tab item: %@", item);
-		}
-	}
 }
 
 - (void) setupProjectTilelessEditor
@@ -519,14 +519,7 @@ typedef enum
 
     [self registerNotificationObservers];
 
-    // Disable experimental features
-    if (![[[NSUserDefaults standardUserDefaults] objectForKey:@"EnableSpriteKit"] boolValue])
-    {
-        [[_menuItemExperimentalSpriteKitProject menu] removeItem:_menuItemExperimentalSpriteKitProject];
-    }
-
-    UsageManager* usageManager = [[UsageManager alloc] init];
-    [usageManager registerUsage];
+    [[UsageManager sharedManager] registerUsage];
     
     // Initialize Audio
     //[OALSimpleAudio sharedInstance];
@@ -588,7 +581,6 @@ typedef enum
     [self setupProjectTilelessEditor];
     [self setupExtras];
     [self setupResourceCommandController];
-	[self setupSparkleGui];
 	
     [window restorePreviousOpenedPanels];
 
@@ -687,7 +679,7 @@ typedef enum
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadResources) name:RESOURCES_CHANGED object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removedDocumentWithPath:) name:RESOURCE_REMOVED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removedDocumentWithPath:) name:RESOURCE_PATH_REMOVED object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deselectAll) name:ANIMATION_PLAYBACK_WILL_START object:nil];
 }
@@ -1446,6 +1438,11 @@ typedef enum
     
     //[self updateJSControlledMenu];
     [self updateCanvasBorderMenu];
+    
+    [self willChangeValueForKey:@"showJoints"];
+    [self didChangeValueForKey:@"showJoints"];
+
+    [lightingHandler refreshAll];
 }
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
@@ -1649,39 +1646,41 @@ typedef enum
     [self updateSmallTabBarsEnabled];
     
     self.window.representedFilename = @"";
+    
+    [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+    self.securityScopedProjectFolderResource = nil;
 }
 
-- (BOOL) openProject:(NSString*) fileName
-{
-    if (![fileName hasSuffix:@".spritebuilder"])
-    {
-        return NO;
-    }
 
+- (BOOL)openProjectWithProjectPath:(NSString *)projectPath
+{
     [self closeProject];
-    
+
     // Add to recent list of opened documents
-    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:fileName]];
-    
-    // Convert folder to actual project file
-    NSString* projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
-    fileName = [[fileName stringByAppendingPathComponent:projName] stringByAppendingPathExtension:@"ccbproj"];
-    
+    [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:projectPath]];
+
+    //Find .ccbproj file
+    NSArray *projectContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:projectPath error:nil];
+    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj'"];
+    NSString *ccbprojFileName = (NSString*)[[projectContents filteredArrayUsingPredicate:ccbprojExtension] firstObject];
+
+    projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
+
     // Load the project file
-    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fileName];
+    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
     if (!projectDict)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File may be missing or invalid."];
         return NO;
     }
-    
+
     ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
     if (!prjctSettings)
     {
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
         return NO;
     }
-    prjctSettings.projectPath = fileName;
+    prjctSettings.projectPath = projectPath;
     [prjctSettings store];
 
     // inject new project settings
@@ -1696,7 +1695,7 @@ typedef enum
 
     // Update Node Plugins list
 	[plugInNodeViewHandler showNodePluginsForEngine:prjctSettings.engine];
-	
+
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success)
     {
@@ -1709,18 +1708,18 @@ typedef enum
     // Load or create language file
     NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
-    
+
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[fileName stringByDeletingLastPathComponent] lastPathComponent]]];
-    
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
+
     // Open ccb file for project if there is only one
     NSArray* resPaths = prjctSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
-        NSString* resPath = [resPaths objectAtIndex:0];
-        
+        NSString* resPath = resPaths[0];
+
         NSArray* resDir = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:NULL];
-        
+
         int numCCBFiles = 0;
         NSString* ccbFile = NULL;
         for (NSString* file in resDir)
@@ -1729,27 +1728,92 @@ typedef enum
             {
                 ccbFile = file;
                 numCCBFiles++;
-                
+
                 if (numCCBFiles > 1) break;
             }
         }
-        
+
         if (numCCBFiles == 1)
         {
             // Open the ccb file
             [self openFile:[resPath stringByAppendingPathComponent:ccbFile]];
         }
     }
-    
+
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
     Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdater updateAndBypassIgnore:NO];
 
-    self.window.representedFilename = [fileName stringByDeletingLastPathComponent];
+    self.window.representedFilename = [projectPath stringByDeletingLastPathComponent];
 
     return YES;
+}
+
+- (void)openProject:(NSString *)fileName
+{
+    if (![fileName hasSuffix:@".spritebuilder"]
+        && ![fileName hasSuffix:@".ccbproj"])
+    {
+        return;
+    }
+
+    if ([fileName hasSuffix:@".ccbproj"])
+    {
+        NSURL *projectPathURL = [NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent] isDirectory:YES];
+        NSURL *projectPathURLResolved = [SecurityScopedBookmarksStore resolveBookmarkForURL:projectPathURL];
+
+        if (projectPathURLResolved)
+        {
+            if ([projectPathURLResolved startAccessingSecurityScopedResource])
+            {
+                self.securityScopedProjectFolderResource = projectPathURLResolved;
+                [self openProjectWithProjectPath:projectPathURLResolved.path];
+            }
+            else
+            {
+                [self openProjectFileByAskingForUsersConsentWithProjectPath:projectPathURLResolved];
+            }
+        }
+        else
+        {
+            [self openProjectFileByAskingForUsersConsentWithProjectPath:projectPathURL];
+        }
+    }
+    else
+    {
+        [self openProjectWithProjectPath:fileName];
+    }
+}
+
+- (void)openProjectFileByAskingForUsersConsentWithProjectPath:(NSURL *)projectPathURL
+{
+    NSOpenPanel*openPanel = [NSOpenPanel openPanel];
+    [openPanel setMessage:@"Spritebuilder is running in a sandbox and needs access to all files within the project folder. Please click Open to grant access."];
+    [openPanel setAllowsMultipleSelection:NO];
+    [openPanel setPrompt:@"Open"];
+    [openPanel setDirectoryURL:projectPathURL];
+    [openPanel setCanChooseFiles:NO];
+    [openPanel setCanChooseDirectories:YES];
+    [openPanel beginSheetModalForWindow:window completionHandler:^(NSInteger result)
+    {
+        if (result == NSFileHandlingPanelCancelButton)
+        {
+            return;
+        }
+
+        if (result == NSOKButton && [[openPanel URL] isEqualTo:projectPathURL])
+        {
+            [SecurityScopedBookmarksStore createAndStoreBookmarkForURL:projectPathURL];
+            [self openProjectWithProjectPath:projectPathURL.path];
+        }
+        else
+        {
+            [NSAlert showModalDialogWithTitle:@"Error"
+                                      message:@"The chosen folder is not the project folder of the selected project file."];
+        }
+    }];
 }
 
 - (void) openFile:(NSString*)filePath
@@ -1842,6 +1906,8 @@ typedef enum
     else if (type == kCCBNewDocTypeScene) class = @"CCNode";
     else if (type == kCCBNewDocTypeSprite) class = @"CCSprite";
     else if (type == kCCBNewDocTypeParticleSystem) class = @"CCParticleSystem";
+    
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"new_file_%@",class]];
     
     resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
     
@@ -2077,6 +2143,8 @@ typedef enum
     [outlineHierarchy reloadData];
     [self setSelectedNodes:@[child]];
     [_inspectorController updateInspectorFromSelection];
+    
+    [lightingHandler refreshStageLightAndMenu];
     
     return YES;
 }
@@ -2599,7 +2667,9 @@ typedef enum
     [self deselectAll];
     [sequenceHandler updateOutlineViewSelection];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:node];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCENEGRAPH_NODE_DELETED object:self userInfo:@{NOTIFICATION_USERINFO_KEY_NODE : node}];
+    
+    [lightingHandler refreshStageLightAndMenu];
 }
 
 - (IBAction) delete:(id) sender
@@ -2813,6 +2883,9 @@ typedef enum
 
 - (void)publishStartAsync:(BOOL)async
 {
+    
+    [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_publish_%@",projectSettings.publishEnvironment ? @"release" : @"develop"]];
+    
     self.publisherController = [[CCBPublisherController alloc] init];
     _publisherController.projectSettings = projectSettings;
     _publisherController.packageSettings = [[ResourceManager sharedManager] loadAllPackageSettings];
@@ -3033,8 +3106,13 @@ typedef enum
             NSString* fileName = [[saveDlg URL] path];
             NSString* fileNameRaw = [fileName stringByDeletingPathExtension];
             
+            [[UsageManager sharedManager] sendEvent:[NSString stringWithFormat:@"project_new_%@",saveDlgLanguagePopup.selectedItem.title]];
+            
             // Check validity of file name
-            NSCharacterSet* invalidChars = [[NSCharacterSet alphanumericCharacterSet] invertedSet];
+            NSMutableCharacterSet* validChars = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+            [validChars addCharactersInString:@"_"];
+            NSCharacterSet* invalidChars = [validChars invertedSet];
+            
             if ([[fileNameRaw lastPathComponent] rangeOfCharacterFromSet:invalidChars].location == NSNotFound)
             {
                 // Create directory
@@ -3074,11 +3152,6 @@ typedef enum
 	[self createNewProjectTargetting:CCBTargetEngineCocos2d];
 }
 
--(IBAction) menuNewSpriteKitProject:(id)sender
-{
-	[self createNewProjectTargetting:CCBTargetEngineSpriteKit];
-}
-
 - (IBAction) menuNewPackage:(id)sender
 {
     [_resourceCommandController newPackage:sender];
@@ -3108,7 +3181,7 @@ typedef enum
 
 - (void) removedDocumentWithPath:(NSNotification *)notification
 {
-    NSString *path = [notification object][@"filepath"];
+    NSString *path = [notification userInfo][@"filepath"];
 
     NSTabViewItem* item = [self tabViewItemFromPath:path includeViewWithinFolderPath:YES];
     if (item)
@@ -3181,21 +3254,23 @@ typedef enum
         res = [[ResolutionSetting alloc] init];
         res.scale = 1;
     }
-	
-	if([CCDirector sharedDirector].contentScaleFactor != res.scale)
+    
+    CGFloat s = _baseContentScaleFactor * res.scale;
+    
+	if([CCDirector sharedDirector].contentScaleFactor != s)
     {
         [[CCTextureCache sharedTextureCache] removeAllTextures];
         [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
         FNTConfigRemoveCache();
     }
     
-    
-    [CCDirector sharedDirector].contentScaleFactor = res.scale;
-    [CCDirector sharedDirector].UIScaleFactor = 1.0/res.scale;
+    [CCDirector sharedDirector].contentScaleFactor = s;
+    [CCDirector sharedDirector].UIScaleFactor = 1.0 / res.scale;
     [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
+    [self updateDerivedViewScaleFactor];
 }
 
 - (void) setResolution:(int)r
@@ -4166,29 +4241,6 @@ typedef enum
 	return @"SpriteBuilder";
 }
 
-#pragma mark Sparkle
-
--(void)setupSparkleGui
-{
-#if SB_SANDBOXED
-	[self.menuCheckForUpdates setHidden:YES];
-#endif
-}
-
-- (SBVersionComparitor*)versionComparatorForUpdater
-{
-	return [SBVersionComparitor new];
-}
-
-- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates
-{
-#if TESTING || SB_SANDBOXED
-	return NO;
-#else 
-	return YES;
-#endif
-}
-
 - (NSString *)feedURLStringForUpdater:(id)updater
 {
 	return @"http://update.spritebuilder.com";
@@ -4252,6 +4304,25 @@ typedef enum
 
 #pragma mark Delegate methods
 
+- (void)windowDidChangeScreen:(NSNotification *)notification {
+    if (window == notification.object) {
+        CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
+
+        // check if DPI has changed
+        if (dir.contentScaleFactor != _baseContentScaleFactor) {
+            
+            _baseContentScaleFactor = dir.contentScaleFactor;
+            CGFloat tmp = dir.contentScaleFactor;
+            dir.contentScaleFactor = _baseContentScaleFactor;
+            CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
+            [[CCDirector sharedDirector] reshapeProjection:realSize];
+            dir.contentScaleFactor = tmp;
+            
+            [self updatePositionScaleFactor];
+        }
+    }
+}
+
 - (BOOL) windowShouldClose:(id)sender
 {
     if ([self hasDirtyDocument])
@@ -4284,6 +4355,9 @@ typedef enum
     [window saveMainWindowPanelsVisibility];
 
     [self saveOpenProjectPathToDefaults];
+    
+    [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+    self.securityScopedProjectFolderResource = nil;
 
     [[NSApplication sharedApplication] terminate:self];
 }
@@ -4321,6 +4395,10 @@ typedef enum
     if ([self windowShouldClose:self])
     {
 		[self.projectSettings store];
+        
+        [_securityScopedProjectFolderResource stopAccessingSecurityScopedResource];
+        self.securityScopedProjectFolderResource = nil;
+        
         [[NSApplication sharedApplication] terminate:self];
     }
 }

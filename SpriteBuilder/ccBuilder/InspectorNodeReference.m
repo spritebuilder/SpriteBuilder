@@ -15,6 +15,7 @@
 #import "CCEffect.h"
 #import "NotificationNames.h"
 #import "SBPasteboardTypes.h"
+#import "MiscConstants.h"
 
 @implementation OutletButton
 {
@@ -48,8 +49,8 @@
     }
     trackingTag = [self addTrackingRect:myFrame owner:self userData:nil assumeInside:NO];
     
-    imgOutletSet = [NSImage imageNamed:@"inspector-body-connected.png"];
-    imgOutletUnSet = [NSImage imageNamed:@"inspector-body-disconnected.png"];
+    imgOutletSet = [NSImage imageNamed:@"inspector-body-connected"];
+    imgOutletUnSet = [NSImage imageNamed:@"inspector-body-disconnected"];
 	self.enabled = YES;
 }
 
@@ -138,7 +139,7 @@
 
 - (void)nodeDeleted:(NSNotification *)notification
 {
-    if (self.reference == notification.object)
+    if (self.reference == notification.userInfo[NOTIFICATION_USERINFO_KEY_NODE])
     {
         self.reference = nil;
     }

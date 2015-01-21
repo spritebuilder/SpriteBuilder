@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *dstFilePath;
 @property (nonatomic, copy) NSString *outputDir;
 @property (nonatomic, copy) NSString *resolution;
+@property (nonatomic, strong) NSArray *packageSettings;
 
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
 @property (nonatomic, strong) id<PublishFileLookupProtocol> fileLookup;

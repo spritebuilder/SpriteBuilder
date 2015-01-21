@@ -31,6 +31,8 @@
 #import "ResourceTypes.h"
 #import "RMSpriteFrame.h"
 #import "RMAnimation.h"
+#import <QuickLook/QuickLook.h>
+#import "AppDelegate.h"
 
 @protocol ResourceManagerUtil_UndeclaredSelectors <NSObject>
 @optional
@@ -71,9 +73,12 @@
     [self setTitle:str forPopup:popup forceMarker:NO];
 }
 
-+ (void) addDirectory: (RMDirectory*) dir ToMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
++ (NSInteger) addDirectory: (RMDirectory*) dir toMenu: (NSMenu*) menu target:(id)target resType:(int) resType allowSpriteFrames:(BOOL) allowSpriteFrames
 {
     NSArray* arr = [dir resourcesForType:resType];
+    NSInteger count = 0; // Valid Assets Added
+    
+    [menu setDelegate:(id)self];
     
     for (id item in arr)
     {
@@ -87,12 +92,17 @@
                 || res.type == kCCBResTypeTTF
                 || res.type == kCCBResTypeAudio)
             {
+                
                 NSString* itemName = [res.filePath lastPathComponent];
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:@selector(selectedResource:) keyEquivalent:@""];
                 [menuItem setTarget:target];
+                
                 [menu addItem:menuItem];
                 
-                menuItem.representedObject = res;
+                [menuItem setRepresentedObject:res];
+                
+                count++;
+                
             }
             else if (res.type == kCCBResTypeSpriteSheet && allowSpriteFrames)
             {
@@ -112,6 +122,8 @@
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
+                
+                count++;
             }
             else if (res.type == kCCBResTypeAnimation)
             {
@@ -131,6 +143,8 @@
                 NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
                 [menu addItem:menuItem];
                 [menu setSubmenu:subMenu forItem:menuItem];
+                
+                count++;
             }
             else if (res.type == kCCBResTypeDirectory)
             {
@@ -140,14 +154,19 @@
                 
                 NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
                 
-                [ResourceManagerUtil addDirectory:subDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
+                count=[ResourceManagerUtil addDirectory:subDir toMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
                 
-                NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
-                [menu addItem:menuItem];
-                [menu setSubmenu:subMenu forItem:menuItem];
+                if(count) {
+                    NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
+                    [menu addItem:menuItem];
+                    [menu setSubmenu:subMenu forItem:menuItem];
+                }
+                
             }
         }
     }
+    
+    return count;
 }
 
 + (void) populateResourceMenu:(NSMenu*)menu resType:(int)resType allowSpriteFrames:(BOOL)allowSpriteFrames selectedFile:(NSString*)file selectedSheet:(NSString*) sheetFile target:(id)target
@@ -176,7 +195,7 @@
         // There is only a single active directory, make its contents the top level
         RMDirectory* activeDir = [rm.activeDirectories objectAtIndex:0];
     
-        [ResourceManagerUtil addDirectory:activeDir ToMenu:menu target:target resType: resType allowSpriteFrames:allowSpriteFrames];
+        [ResourceManagerUtil addDirectory:activeDir toMenu:menu target:target resType: resType allowSpriteFrames:allowSpriteFrames];
     }
     else
     {
@@ -188,7 +207,7 @@
             
             NSMenu* subMenu = [[NSMenu alloc] initWithTitle:itemName];
             
-            [ResourceManagerUtil addDirectory:activeDir ToMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
+            [ResourceManagerUtil addDirectory:activeDir toMenu:subMenu target:target resType:resType allowSpriteFrames:allowSpriteFrames];
             
             NSMenuItem* menuItem = [[NSMenuItem alloc] initWithTitle:itemName action:NULL keyEquivalent:@""];
             [menu addItem:menuItem];
@@ -230,6 +249,7 @@
     NSMenu* menuSubSystemFonts = [[NSMenu alloc] initWithTitle:@"System Fonts"];
     NSMenuItem* itemSystemFonts = [[NSMenuItem alloc] initWithTitle:@"System Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemSystemFonts];
+    
     [menu setSubmenu:menuSubSystemFonts forItem:itemSystemFonts];
     
     NSArray* systemFonts = [[ResourceManager sharedManager] systemFontList];
@@ -238,7 +258,7 @@
         NSMenuItem* itemFont = [[NSMenuItem alloc] initWithTitle:fontName action:@selector(selectedResource:) keyEquivalent:@""];
         [itemFont setTarget:target];
         itemFont.representedObject = fontName;
-        
+        [self setAttributedTitle:fontName ofMenuItem:itemFont];
         [menuSubSystemFonts addItem:itemFont];
     }
     
@@ -246,6 +266,7 @@
     NSMenu* menuSubUserFonts = [[NSMenu alloc] initWithTitle:@"User Fonts"];
     NSMenuItem* itemUserFonts = [[NSMenuItem alloc] initWithTitle:@"User Fonts" action:NULL keyEquivalent:@""];
     [menu addItem:itemUserFonts];
+    
     [menu setSubmenu:menuSubUserFonts forItem:itemUserFonts];
     
     [self populateResourceMenu:menuSubUserFonts resType:kCCBResTypeTTF allowSpriteFrames:NO selectedFile:file selectedSheet:NULL target:target];
@@ -282,7 +303,48 @@
     return NULL;
 }
 
+#pragma mark File font attributes
+
++ (void)setAttributedTitle:(NSString*)fontName ofMenuItem:(NSMenuItem*)item {
+    if (fontName && item) {
+        NSDictionary *attributes = @{ NSFontAttributeName: [NSFont fontWithName:fontName size:16.0] };
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:fontName attributes:attributes];
+        [item setAttributedTitle:attributedTitle];
+    }
+}
+
 #pragma mark File icons
+
++ (NSImage*) thumbnailImageForResource:(RMResource*)res {
+
+    NSString* path = [res absoluteAutoPathForResolution:nil];
+    CGFloat viewScale = [AppDelegate appDelegate].derivedViewScaleFactor;
+    CGSize size = CGSizeMake(kRMImagePreviewSize*viewScale, kRMImagePreviewSize*viewScale);
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
+    
+    if (!path|| !fileURL) {
+        return nil;
+    }
+    
+    CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault,
+                                            (__bridge CFURLRef)fileURL,
+                                            CGSizeMake(size.width, size.height),
+                                            nil);
+    NSImage *newImage = nil;
+    
+    if (ref != NULL) {
+        NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:ref];
+        
+        if (bitmapImageRep) {
+            newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
+            [newImage addRepresentation:bitmapImageRep];
+        }
+        
+        CFRelease(ref);
+    }
+    
+    return newImage;
+}
 
 + (NSImage*) smallIconForFile:(NSString*)file
 {
@@ -301,6 +363,7 @@
 }
 
 + (NSImage*) iconForResource:(RMResource*) res
+// XXX: never called?
 {
     NSImage* icon = NULL;
     
@@ -330,5 +393,21 @@
     }
     return icon;
 }
+
+#pragma mark NSMenu Delegate
++ (void)menuNeedsUpdate:(NSMenu *)menu {
+
+    for( NSMenuItem *item in [menu itemArray] ){
+        
+        RMResource* res = item.representedObject;
+        
+        if (res.type == kCCBResTypeImage) {
+             NSImage *image = [self thumbnailImageForResource:res];
+             [item setImage:image];
+        }
+        
+    }
+}
+
 
 @end

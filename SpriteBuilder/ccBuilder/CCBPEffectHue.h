@@ -11,6 +11,4 @@
 
 @interface CCBPEffectHue : CCEffectHue <EffectProtocol>
 
-@property (nonatomic) CCBPEffectHue * effect;
-
 @end

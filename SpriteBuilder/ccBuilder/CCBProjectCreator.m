@@ -49,11 +49,6 @@
     NSString* substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     NSString* parentPath = [fileName stringByDeletingLastPathComponent];
     
-	if (engine == CCBTargetEngineSpriteKit)
-	{
-		substitutableProjectName = [NSString stringWithFormat:@"SPRITEKIT%@", substitutableProjectName];
-	}
-	
     NSString* zipFile = [[NSBundle mainBundle] pathForResource:substitutableProjectName ofType:@"zip" inDirectory:@"Generated"];
     
     // Check that zip file exists
@@ -68,7 +63,7 @@
     NSTask* zipTask = [[NSTask alloc] init];
     [zipTask setCurrentDirectoryPath:parentPath];
     [zipTask setLaunchPath:@"/usr/bin/unzip"];
-    NSArray* args = [NSArray arrayWithObjects:@"-o", zipFile, nil];
+    NSArray* args = @[@"-o", zipFile];
     [zipTask setArguments:args];
     [zipTask launch];
     [zipTask waitUntilExit];
@@ -135,15 +130,6 @@
             return NO;
         }
 
-        if ([@"Android" isEqualToString:platform] && programmingLanguage == CCBProgrammingLanguageSwift)
-        {
-            // Hide scheme for Android Swift projects for now
-            if (![fm removeItemAtPath:newSchemeFile error:&error])
-            {
-                return NO;
-            }
-        }
-
         // Update plist
         NSString* plistFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Resources/Platforms/%@/Info.plist", platform]];
         [self setName:identifier inFile:plistFileName search:substitutableProjectIdentifier];
@@ -161,21 +147,9 @@
     [self setName:projName inFile:xibFileName search:substitutableProjectName];
 
     // Android
-    NSString* activityJavaFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/java/org/cocos2d/%@/%@Activity.java", substitutableProjectIdentifier, substitutableProjectIdentifier]];
-    if ([fm fileExistsAtPath:activityJavaFileName])
+    NSString* activityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", substitutableProjectIdentifier]];
+    if ([fm fileExistsAtPath:activityMFileName])
     {
-        NSString* resultActivityJavaFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/java/org/cocos2d/%@/%@Activity.java", identifier, identifier]];
-        
-        if (![fm createDirectoryAtPath:[resultActivityJavaFileName stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:&error]) {
-            return NO;
-        }
-        
-        if (![fm moveItemAtPath:activityJavaFileName toPath:resultActivityJavaFileName error:&error]) {
-            return NO;
-        }
-        [self setName:identifier inFile:resultActivityJavaFileName search:substitutableProjectIdentifier];
-        
-        NSString* activityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", substitutableProjectIdentifier]];
         NSString* resultActivityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", identifier]];
         
         if (![fm moveItemAtPath:activityMFileName toPath:resultActivityMFileName error:&error]) {

@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSOperationQueue *publishingQueue;
 @property (nonatomic, strong) NSMutableArray *publishingTargets;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
+@property (nonatomic, strong) NSArray *packageSettings;
 
 // Shared for targets
 @property (nonatomic, strong) CCBWarnings *warnings;
@@ -31,9 +32,13 @@
 
 @implementation CCBPublisher
 
-- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings warnings:(CCBWarnings *)someWarnings finishedBlock:(PublisherFinishBlock)finishBlock;
+- (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
+              packageSettings:(NSArray *)somePackageSettings
+                     warnings:(CCBWarnings *)someWarnings
+                finishedBlock:(PublisherFinishBlock)finishBlock
 {
     NSAssert(someProjectSettings != nil, @"project settings should never be nil! Publisher won't work without.");
+    NSAssert(somePackageSettings != nil, @"package settings should never be nil! Publisher won't work without.");
     NSAssert(someWarnings != nil, @"warnings are nil. Are you sure you don't need them?");
 
     self = [super init];
@@ -43,6 +48,7 @@
 	}
 
     self.projectSettings = someProjectSettings;
+    self.packageSettings = somePackageSettings;
     self.warnings = someWarnings;
     self.finishBlock = finishBlock;
 
@@ -167,6 +173,7 @@
     for (NSString *aDir in target.inputDirectories)
     {
         CCBDirectoryPublisher *dirPublisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
+                                                                                     packageSettings:_packageSettings
                                                                                             warnings:_warnings
                                                                                                queue:_publishingQueue];
         dirPublisher.inputDir = aDir;
@@ -198,6 +205,7 @@
 - (void)enqueueGenerateFilesOperationWithTarget:(CCBPublishingTarget *)target
 {
     PublishGeneratedFilesOperation *operation = [[PublishGeneratedFilesOperation alloc] initWithProjectSettings:_projectSettings
+                                                                                                packageSettings:_packageSettings
                                                                                                        warnings:_warnings
                                                                                                  statusProgress:_publishingTaskStatusProgress];
     operation.osType = target.osType;
@@ -257,6 +265,7 @@
     }
 
     ZipDirectoryOperation *operation = [[ZipDirectoryOperation alloc] initWithProjectSettings:_projectSettings
+                                                                              packageSettings:_packageSettings
                                                                                      warnings:_warnings
                                                                                statusProgress:_publishingTaskStatusProgress];
 
@@ -288,8 +297,9 @@
     for (NSString *pngFile in target.publishedPNGFiles)
     {
         OptimizeImageWithOptiPNGOperation *operation = [[OptimizeImageWithOptiPNGOperation alloc] initWithProjectSettings:_projectSettings
-                                                                                                           warnings:_warnings
-                                                                                                     statusProgress:_publishingTaskStatusProgress];
+                                                                                                          packageSettings:_packageSettings
+                                                                                                                 warnings:_warnings
+                                                                                                           statusProgress:_publishingTaskStatusProgress];
         operation.filePath = pngFile;
         operation.optiPngPath = pathToOptiPNG;
 

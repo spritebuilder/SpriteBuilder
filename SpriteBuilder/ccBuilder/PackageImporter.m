@@ -8,6 +8,7 @@
 #import "NotificationNames.h"
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"
+#import "RMPackage.h"
 
 @implementation PackageImporter
 
@@ -41,7 +42,10 @@
     {
         if ([path hasPackageSuffix])
         {
-            [result addObject:path];
+            RMPackage *aPackage = [[RMPackage alloc] init];
+            aPackage.dirPath = path;
+
+            [result addObject:aPackage];
         }
     }
     return result;
@@ -65,29 +69,29 @@
     PackagePathBlock block = [self packagePathImportBlock];
 
     PackageUtil *packageUtil = [[PackageUtil alloc] init];
-    return [packageUtil enumeratePackagePaths:filteredPaths
-                                        error:error
-                          prevailingErrorCode:SBImportingPackagesError
-                             errorDescription:@"One or more packages could not be imported."
-                                        block:block];
+    return [packageUtil enumeratePackages:filteredPaths
+                                    error:error
+                      prevailingErrorCode:SBImportingPackagesError
+                         errorDescription:@"One or more packages could not be imported."
+                                    block:block];
 }
 
 - (PackagePathBlock)packagePathImportBlock
 {
-    return ^BOOL(NSString *packagePathToImport, NSError **localError)
+    return ^BOOL(RMPackage *packageToImport, NSError **localError)
     {
-        if ([_projectSettings isResourcePathInProject:packagePathToImport])
+        if ([_projectSettings isResourcePathInProject:packageToImport.dirPath])
         {
             [NSError setNewErrorWithCode:localError code:SBPackageAlreayInProject message:@"Package already in project folder."];
             return NO;
         }
 
-        NSString *packageName = [[packagePathToImport lastPathComponent] stringByDeletingPathExtension];
+        NSString *packageName = [[packageToImport.dirPath lastPathComponent] stringByDeletingPathExtension];
         NSString *newPathInPackagesFolder = [_projectSettings fullPathForPackageName:packageName];
 
-        if (![_projectSettings isPathInPackagesFolder:packagePathToImport])
+        if (![_projectSettings isPathInPackagesFolder:packageToImport.dirPath])
         {
-            if (![_fileManager copyItemAtPath:packagePathToImport toPath:newPathInPackagesFolder error:localError])
+            if (![_fileManager copyItemAtPath:packageToImport.dirPath toPath:newPathInPackagesFolder error:localError])
             {
                 return NO;
             }
@@ -95,7 +99,7 @@
 
         if ([_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
             return YES;
         }
 

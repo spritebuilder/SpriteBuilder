@@ -178,7 +178,7 @@
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertFalse([_projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is in project settings.");
+        XCTAssertFalse([_projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is in project settings.", resourcePath);
     }
 }
 

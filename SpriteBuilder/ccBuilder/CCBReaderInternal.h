@@ -29,6 +29,7 @@
 
 @interface CCBReaderInternal : NSObject
 
++ (NSPoint) deserializePoint:(id) val;
 + (CCColor*) deserializeColor4:(id) val;
 
 //+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict;

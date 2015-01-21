@@ -422,7 +422,7 @@
         return;
     }
 
-    [props setValue:newValue forKey:key];
+    [props setValue:newValue forKey:(NSString *)key];
     [self markAsDirtyRelPath:relPath];
     [self storeDelayed];
 }
@@ -447,7 +447,7 @@
 - (id)propertyForRelPath:(NSString *)relPath andKey:(id <NSCopying>) key
 {
     NSMutableDictionary* props = [_resourceProperties valueForKey:relPath];
-    return [props valueForKey:key];
+    return [props valueForKey:(NSString *)key];
 }
 
 - (void)removePropertyForResource:(RMResource *)res andKey:(id <NSCopying>) key
@@ -488,7 +488,7 @@
         return;
     }
 
-    NSLog(@"mark as dirty: %@", relPath);
+    // NSLog(@"mark as dirty: %@", relPath);
 
     [self setProperty:@YES forRelPath:relPath andKey:@"isDirty"];
 }
@@ -686,15 +686,7 @@
 
 -(void) setPublishResolution_ios_phone:(BOOL)publishResolution
 {
-	if (_engine != CCBTargetEngineSpriteKit)
-	{
-		_publishResolution_ios_phone = publishResolution;
-	}
-	else
-	{
-		// Sprite Kit doesn't run on non-Retina phones to begin with...
-		_publishResolution_ios_phone = NO;
-	}
+    _publishResolution_ios_phone = publishResolution;
 }
 
 - (void)flagFilesDirtyWithWarnings:(CCBWarnings *)warnings

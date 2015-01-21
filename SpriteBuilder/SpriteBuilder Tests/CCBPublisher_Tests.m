@@ -21,6 +21,8 @@
 #import "ProjectSettings+Convenience.h"
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
+#import "RMPackage.h"
+#import "SBPackageSettings.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -43,10 +45,18 @@
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
     _projectSettings.publishEnabledIOS = YES;
     _projectSettings.publishEnabledAndroid = NO;
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
+
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
+    [_projectSettings addResourcePath:package.dirPath error:nil];
+
+    SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
 
     self.warnings = [[CCBWarnings alloc] init];
-    self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings warnings:_warnings finishedBlock:nil];
+    self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
+                                                   packageSettings:@[packageSettings]
+                                                          warnings:_warnings
+                                                     finishedBlock:nil];
 
     self.targetIOS = [[CCBPublishingTarget alloc] init];
     _targetIOS.osType = kCCBPublisherOSTypeIOS;
@@ -306,6 +316,46 @@
 
     [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
     [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet.plist"];
+}
+
+- (void)testSpriteSheetsFileLookup
+{
+    [self copyTestingResource:@"photoshop.psd" toRelPath:@"baa.spritebuilder/Packages/foo.sbpack/sub1/sheet1/resources-auto/rock.psd"];
+    [self copyTestingResource:@"photoshop.psd" toRelPath:@"baa.spritebuilder/Packages/foo.sbpack/sub2/sheet2/resources-auto/scissors.psd"];
+    
+    _projectSettings.publishResolution_ios_phone = YES;
+    _projectSettings.publishResolution_ios_phonehd = NO;
+    _projectSettings.publishResolution_ios_tablet = NO;
+    _projectSettings.publishResolution_ios_tablethd = NO;
+    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
+    
+    [_projectSettings setProperty:@(YES) forRelPath:@"sub1/sheet1" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    [_projectSettings setProperty:@(YES) forRelPath:@"sub2/sheet2" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+
+    [_publisher addPublishingTarget:_targetIOS];
+    [_publisher start];
+
+    void (^test)() = ^void()
+    {
+        [self assertFileExists:@"Published-iOS/sub1/resources-phone/sheet1.plist"];
+        [self assertFileExists:@"Published-iOS/sub1/resources-phone/sheet1.png"];
+        [self assertFileExists:@"Published-iOS/sub2/resources-phone/sheet2.plist"];
+        [self assertFileExists:@"Published-iOS/sub2/resources-phone/sheet2.png"];
+        [self assertFileExists:@"Published-iOS/fileLookup.plist"];
+
+        [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sub1/sheet1/intermediateFileLookup.plist"];
+        [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sub2/sheet2/intermediateFileLookup.plist"];
+
+        [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sub1/sheet1/rock.psd" renamedName:@"sub1/sheet1/rock.png"];
+        [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"sub2/sheet2/scissors.psd" renamedName:@"sub2/sheet2/scissors.png"];
+    };
+
+    test();
+
+    // Publish again to see if the solution works with cached files
+    [_publisher start];
+
+    test();
 }
 
 - (void)testSpriteSheetOutputPVRRGBA88888AndPVRTC

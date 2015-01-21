@@ -146,16 +146,23 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     XCTAssertTrue([projectSettings store], @"Could not create project file at \"%@\"", projectSettings.projectPath);
 }
 
-- (void)copyTestingResource:(NSString *)resourceName toFolder:(NSString *)folder
+- (void)copyTestingResource:(NSString *)resourceName toRelPath:(NSString *)toRelPath
 {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     NSString *path = [bundle pathForResource:resourceName ofType:nil];
 
-    NSString *fullTargetPath = [[self fullPathForFile:folder] stringByAppendingPathComponent:resourceName];
+    NSString *fullTargetPath = [self fullPathForFile:toRelPath];
 
     [self createIntermediateDirectoriesForFilPath:fullTargetPath];
 
     [[NSFileManager defaultManager] copyItemAtPath:path toPath:fullTargetPath error:nil];
+}
+
+- (void)copyTestingResource:(NSString *)resourceName toFolder:(NSString *)folder
+{
+    NSString *fullTargetPath = [folder stringByAppendingPathComponent:resourceName];
+
+    [self copyTestingResource:resourceName toRelPath:fullTargetPath];
 }
 
 - (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files

@@ -5,8 +5,7 @@
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "RMPackage.h"
-#import "PackagePublishSettings.h"
-
+#import "SBPackageSettings.h"
 
 @implementation PackageCreator
 
@@ -36,7 +35,9 @@
     if (!createDirSuccess
         && underlyingErrorCreate.code == NSFileWriteFileExistsError)
     {
-        [NSError setNewErrorWithCode:error code:SBResourcePathExistsButNotInProjectError message:[NSString stringWithFormat:@"Package %@ already exists on disk but is not in project", packageName]];
+        [NSError setNewErrorWithCode:error
+                                code:SBResourcePathExistsButNotInProjectError
+                             message:[NSString stringWithFormat:@"Package %@ already exists on disk but is not in project", packageName]];
         return nil;
     }
     else if (!createDirSuccess)
@@ -51,7 +52,7 @@
     {
         [self createPackageSettings:fullPath];
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
         return fullPath;
     }
 
@@ -86,7 +87,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = fullPath;
 
-    PackagePublishSettings *packagePublishSettings = [[PackagePublishSettings alloc] initWithPackage:package];
+    SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
     [packagePublishSettings store];
 }
 

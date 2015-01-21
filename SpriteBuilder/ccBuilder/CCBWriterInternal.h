@@ -34,6 +34,7 @@
 + (id) serializePropertyForNode:(CCNode*) node propInfo:(NSMutableDictionary*) propInfo excludeProps:(NSArray*) excludeProps;
 + (NSMutableDictionary*) dictionaryFromCCObject: (CCNode*) node;
 
++ (id) serializePoint:(CGPoint)pt;
 + (id) serializeColor4:(CCColor*)c;
 + (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
 

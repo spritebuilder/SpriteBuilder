@@ -1,7 +1,9 @@
 #import <Foundation/Foundation.h>
 
+@class RMPackage;
+
 // If NO is returned the error pointer has to be set
-typedef BOOL (^PackagePathBlock) (NSString *packagePath, NSError **error);
+typedef BOOL (^PackagePathBlock) (RMPackage *package, NSError **error);
 
 @interface PackageUtil : NSObject
 
@@ -13,10 +15,10 @@ typedef BOOL (^PackagePathBlock) (NSString *packagePath, NSError **error);
 //    stop the enumeration
 // If NO is returned refer to the userInfo dictionary with the key @"errors" to get a list of the underlying
 //    errors
-- (BOOL)enumeratePackagePaths:(NSArray *)packagePaths
-                        error:(NSError **)error
-          prevailingErrorCode:(NSInteger)prevailingErrorCode
-             errorDescription:(NSString *)errorDescription
-                        block:(PackagePathBlock)block;
+- (BOOL)enumeratePackages:(NSArray *)packages
+                    error:(NSError **)error
+      prevailingErrorCode:(NSInteger)prevailingErrorCode
+         errorDescription:(NSString *)errorDescription
+                    block:(PackagePathBlock)block;
 
 @end

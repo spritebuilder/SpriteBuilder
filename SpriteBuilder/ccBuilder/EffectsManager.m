@@ -32,6 +32,9 @@
 #import "EffectBlurControl.h"
 #import "CCBPEffectLighting.h"
 #import "EffectLightingControl.h"
+#import "EffectOutlineControl.h"
+#import "CCBPEffectColorChannelOffset.h"
+#import "EffectColorChannelOffsetControl.h"
 
 
 @implementation CCNode(Effects)
@@ -152,6 +155,19 @@
 	}
 	
 	{
+        EffectDescription * effectDescription = [[EffectDescription alloc] init];
+        effectDescription.title = @"Color Channel Offset";
+        effectDescription.description = @"Shifts color channels";
+        effectDescription.imageName = @"effect-color-channel-offset.png";
+        effectDescription.className = NSStringFromClass([CCBPEffectColorChannelOffset class]);
+        effectDescription.baseClass = @"CCEffectColorChannelOffset";
+        effectDescription.viewController = NSStringFromClass([EffectColorChannelOffsetControl class]);
+        effectDescription.group = 1;
+        
+        [effectDescriptions addObject:effectDescription];
+	}
+	
+	{
 		EffectDescription * effectDescription = [[EffectDescription alloc] init];
 		effectDescription.title = @"Blur";
 		effectDescription.description = @"Makes things blur";
@@ -232,6 +248,21 @@
         
 		[effectDescriptions addObject:effectDescription];
 	}
+    
+    /*
+    {
+        EffectDescription * effectDescription = [[EffectDescription alloc] init];
+        effectDescription.title = @"Outline";
+        effectDescription.description = @"Adds an outline";
+        effectDescription.imageName = @"effect-outline.png";
+        effectDescription.className = NSStringFromClass([CCBPEffectOutline class]);
+        effectDescription.baseClass = @"CCEffectOutline";
+        effectDescription.viewController = NSStringFromClass([EffectOutlineControl class]);
+        effectDescription.group = 1;
+        
+        [effectDescriptions addObject:effectDescription];
+    }
+     */
 
 	return effectDescriptions;
 }

@@ -26,7 +26,7 @@
 
 @class RMResource;
 
-@interface ResourceManagerUtil : NSObject
+@interface ResourceManagerUtil : NSObject <NSMenuDelegate>
 
 + (void) populateResourcePopup:(NSPopUpButton*)popup resType:(int)resType allowSpriteFrames:(BOOL)allowSpriteFrames selectedFile:(NSString*)file selectedSheet:(NSString*) sheetFile target:(id)target;
 
@@ -37,6 +37,10 @@
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup;
 
 + (void) setTitle:(NSString*)str forPopup:(NSPopUpButton*)popup forceMarker:(BOOL) forceMarker;
+
++ (void)setAttributedTitle:(NSString*)fontName ofMenuItem:(NSMenuItem*)item;
+
++ (NSImage*) thumbnailImageForResource:(RMResource*)res;
 
 + (NSImage*) iconForResource:(RMResource*) res;
 

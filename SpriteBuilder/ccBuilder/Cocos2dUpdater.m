@@ -546,8 +546,6 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     if ([fileManager fileExistsAtPath:oldProjectPath])
     {
         // Make a symbolic link so users don't have to update their cocos2d reference
-        NSString *newProjectPath = [[self defaultProjectsCocos2DFolderPath]
-                                    stringByAppendingPathComponent:@"cocos2d.xcodeproj"];
         NSString *symbolicLinkPath = [[self defaultProjectsCocos2DFolderPath]
                                     stringByAppendingPathComponent:@"cocos2d-ios.xcodeproj"];
 		
@@ -558,7 +556,7 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
 		}
 		
         BOOL result = [fileManager createSymbolicLinkAtPath:symbolicLinkPath
-										withDestinationPath:newProjectPath
+										withDestinationPath:@"cocos2d.xcodeproj"
 													  error:error];
 		return result;
 			

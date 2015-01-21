@@ -46,8 +46,8 @@
     self = [super initWithFrame:frame];
     if (!self) return NULL;
     
-    imgScrubHandle = [NSImage imageNamed:@"seq-scrub-handle.png"];
-    imgScrubLine = [NSImage imageNamed:@"seq-scrub-line.png"];
+    imgScrubHandle = [NSImage imageNamed:@"seq-scrub-handle"];
+    imgScrubLine = [NSImage imageNamed:@"seq-scrub-line"];
     
     return self;
 }
@@ -467,7 +467,7 @@
             SequencerChannel* channel = item;
             [selectedKeyframes addObjectsFromArray:[channel.seqNodeProp keyframesBetweenMinTime:xMinTime maxTime:xMaxTime]];
         }
-        else
+        else if ([item isKindOfClass:[CCNode class]])
         {
             CCNode* node = item;
             for (int subRow = yMinSubRow; subRow <= yMaxSubRow; subRow++)
@@ -957,15 +957,8 @@
         // Highlight selected option in context menu
         NSMenu* menu = [AppDelegate appDelegate].menuContextKeyframeInterpol;
 
-		BOOL isSpriteKitProject = [AppDelegate appDelegate].projectSettings.engine == CCBTargetEngineSpriteKit;
         for (NSMenuItem* item in menu.itemArray)
         {
-			// Strip all easing modes not supported by Sprite Kit
-			if (isSpriteKitProject)
-			{
-				item.hidden = (item.tag < 1 || item.tag > 4);
-			}
-
             [item setState:NSOffState];
         }
 		
@@ -1014,6 +1007,5 @@
     
     return NULL;
 }
-
 
 @end

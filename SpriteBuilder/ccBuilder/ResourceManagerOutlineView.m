@@ -118,8 +118,8 @@
 - (void) keyDown:(NSEvent *)theEvent
 {
     unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
-    if(key == NSDeleteCharacter
-       || key == NSDeleteFunctionKey
+    if((key == NSDeleteCharacter
+       || key == NSDeleteFunctionKey)
        && [_actionTarget respondsToSelector:@selector(deleteResource:)])
     {
         [_actionTarget deleteResource:nil];

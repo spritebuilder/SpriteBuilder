@@ -10,6 +10,7 @@
 #import "GeometryUtil.h"
 #import "CCNode+NodeInfo.h"
 #import "InspectorController.h"
+#import "AppDelegate.h"
 
 
 @interface CCBPhysicsJoint()
@@ -67,7 +68,7 @@ static const float kDefaultLength = 58.0f;
         CGPoint worldPosB = [self.bodyB convertToWorldSpace:self.anchorB];
         
         float distance = ccpDistance(worldPosA, worldPosB);
-        return distance * [CCDirector sharedDirector].contentScaleFactor;
+        return distance * [AppDelegate appDelegate].derivedViewScaleFactor;
     }
     
     return kDefaultLength;
