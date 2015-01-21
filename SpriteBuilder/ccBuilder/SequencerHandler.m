@@ -28,8 +28,8 @@
 #import "NodeInfo.h"
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
-#import "CCBWriterInternal.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryWriter.h"
+#import "CCBDictionaryReader.h"
 #import "SequencerExpandBtnCell.h"
 #import "SequencerStructureCell.h"
 #import "SequencerCell.h"
@@ -564,7 +564,7 @@ static SequencerHandler* sharedSequencerHandler;
 	NSMutableArray *array = [NSMutableArray array];
 	for (CCNode *node in items)
 	{
-		NSMutableDictionary *clipDict = [CCBWriterInternal dictionaryFromCCObject:node];
+		NSMutableDictionary *clipDict = [CCBDictionaryWriter serializeNode:node];
         [clipDict setObject:@((long long) node) forKey:ORIGINAL_NODE_POINTER_KEY];
 
 		[array addObject:clipDict];
@@ -584,7 +584,7 @@ static SequencerHandler* sharedSequencerHandler;
         CCNode *originalNode = (__bridge CCNode*)nodePtr;
 
 		NSDictionary *node = @{
-				COPY_NODE_KEY : [CCBReaderInternal nodeGraphFromDictionary:dictionary parentSize:CGSizeZero],
+				COPY_NODE_KEY : [CCBDictionaryReader nodeGraphFromDictionary:dictionary parentSize:CGSizeZero],
 			ORIGINAL_NODE_KEY : originalNode
 		};
 

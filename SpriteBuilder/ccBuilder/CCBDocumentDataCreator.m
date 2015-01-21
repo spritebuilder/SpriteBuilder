@@ -2,8 +2,8 @@
 #import "CCNode.h"
 #import "SceneGraph.h"
 #import "CCBDocument.h"
-#import "CCBWriterInternal.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryWriter.h"
+#import "CCBDictionaryReader.h"
 #import "GuidesLayer.h"
 #import "NotesLayer.h"
 #import "ProjectSettings.h"
@@ -90,7 +90,7 @@
 
 - (void)setNodeGraphInDict:(NSMutableDictionary *)dict
 {
-    NSMutableDictionary* nodeGraph = [CCBWriterInternal dictionaryFromCCObject:_sceneGraph.rootNode];
+    NSMutableDictionary* nodeGraph = [CCBDictionaryWriter serializeNode:_sceneGraph.rootNode];
     dict[@"nodeGraph"] = nodeGraph;
 }
 
@@ -123,7 +123,7 @@
     NSMutableArray * joints = [NSMutableArray array];
     for (CCNode * joint in _sceneGraph.joints.all)
     {
-        [joints addObject:[CCBWriterInternal dictionaryFromCCObject:joint]];
+        [joints addObject:[CCBDictionaryWriter serializeNode:joint]];
     }
 
     dict[@"joints"] = joints;

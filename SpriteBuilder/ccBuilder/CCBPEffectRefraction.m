@@ -8,8 +8,8 @@
 
 #import "CCBPEffectRefraction.h"
 #import "CCNode+NodeInfo.h"
-#import "CCBWriterInternal.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryWriter.h"
+#import "CCBDictionaryReader.h"
 #import "AppDelegate.h"
 #import "TexturePropertySetter.h"
 #import "CocosScene.h"
@@ -17,7 +17,7 @@
 #import "EffectsUndoHelper.h"
 #import "InspectorController.h"
 
-@interface CCBWriterInternal(Private)
+@interface CCBDictionaryWriter (Private)
 + (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
 @end
 
@@ -39,7 +39,7 @@
 {
 	return @[SERIALIZE_PROPERTY(refraction,Float),
 			 @{@"name" : @"environment", @"type" : @"NodeReference", @"value": @(self.environment.UUID)},
-			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBWriterInternal serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
+			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBDictionaryWriter serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
 			 ];
 }
 -(void)deserialize:(NSArray *)properties

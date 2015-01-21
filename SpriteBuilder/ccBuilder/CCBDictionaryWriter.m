@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#import "CCBWriterInternal.h"
+#import "CCBDictionaryWriter.h"
 #import "NodeInfo.h"
 #import "PlugInNode.h"
 #import "TexturePropertySetter.h"
@@ -37,7 +37,7 @@
 - (NSArray*) ccbExcludePropertiesForSave;
 @end
 
-@implementation CCBWriterInternal
+@implementation CCBDictionaryWriter
 
 
 
@@ -45,72 +45,61 @@
 
 + (id) serializePoint:(CGPoint)pt
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:pt.x],
-            [NSNumber numberWithFloat:pt.y],
-            nil];
+    return @[@((float) pt.x),
+            @((float) pt.y)];
 }
 
 + (id) serializePoint:(CGPoint)pt lock:(BOOL)lock type:(int)type
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:pt.x],
-            [NSNumber numberWithFloat:pt.y],
-            [NSNumber numberWithBool:lock],
-            [NSNumber numberWithInt:type],
-            nil];
+    return @[@((float) pt.x),
+            @((float) pt.y),
+            @(lock),
+            @(type)];
 }
 
 + (id) serializePosition:(NSPoint)pt type:(CCPositionType)type
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:pt.x],
-            [NSNumber numberWithFloat:pt.y],
-            [NSNumber numberWithInt:type.corner],
-            [NSNumber numberWithInt:type.xUnit],
-            [NSNumber numberWithInt:type.yUnit],
-            nil];
+    return @[@((float) pt.x),
+            @((float) pt.y),
+            @(type.corner),
+            @(type.xUnit),
+            @(type.yUnit)];
 }
 
 + (id) serializeSize:(CGSize)size
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:size.width],
-            [NSNumber numberWithFloat:size.height],
-            nil];
+    return @[@((float) size.width),
+            @((float) size.height)];
 }
 
 + (id) serializeSize:(NSSize)size type:(CCSizeType)type
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:size.width],
-            [NSNumber numberWithFloat:size.height],
-            [NSNumber numberWithInt:type.widthUnit],
-            [NSNumber numberWithInt:type.heightUnit],
-            nil];
+    return @[@((float) size.width),
+            @((float) size.height),
+            @(type.widthUnit),
+            @(type.heightUnit)];
 }
 
 + (id) serializeBoolPairX:(BOOL)x Y:(BOOL)y
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithBool:x],
-            [NSNumber numberWithBool:y],
-            nil];
+    return @[@(x), @(y)];
 }
 
 + (id) serializeFloat:(float)f
 {
-    return [NSNumber numberWithFloat:f];
+    return @(f);
 }
 
+// TODO: float type???
 + (id) serializeInt:(float)d
 {
-    return [NSNumber numberWithInt:d];
+    return @((int) d);
 }
 
+// TODO: float type???
 + (id) serializeBool:(float)b
 {
-    return [NSNumber numberWithBool:b];
+    return @((BOOL) b);
 }
 
 + (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile
@@ -123,7 +112,7 @@
     {
         spriteSheetFile = @"";
     }
-    return [NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil];
+    return @[spriteSheetFile, spriteFile];
 }
 
 + (id) serializeAnimation:(NSString*)spriteFile file:(NSString*)spriteSheetFile
@@ -136,7 +125,7 @@
     {
         spriteSheetFile = @"";
     }
-    return [NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil];
+    return @[spriteSheetFile, spriteFile];
 }
 
 + (id) serializeColor4:(CCColor*)c
@@ -144,42 +133,31 @@
     float r,g,b,a;
     [c getRed:&r green:&g blue:&b alpha:&a];
     
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:r],
-            [NSNumber numberWithFloat:g],
-            [NSNumber numberWithFloat:b],
-            [NSNumber numberWithFloat:a],
-            nil];
+    return @[@(r), @(g), @(b), @(a)];
 }
 
 + (id) serializeBlendFunc:(ccBlendFunc)bf
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithInt:bf.src],
-            [NSNumber numberWithInt:bf.dst],
-            nil];
+    return @[@(bf.src), @(bf.dst)];
 }
 
 + (id) serializeFloatScale:(float)f type:(int)type
 {
-    return [NSArray arrayWithObjects:
-            [NSNumber numberWithFloat:f],
-            [NSNumber numberWithInt:type],
-            nil];
+    return @[@(f), @(type)];
 }
 
 #pragma mark Writer
 
-+ (id) serializePropertyForNode:(CCNode*) node propInfo:(NSMutableDictionary*) propInfo excludeProps:(NSArray*) excludeProps
++ (id)serializePropertyOfNode:(CCNode *)node propInfo:(NSMutableDictionary *)propInfo excludeProps:(NSArray*) excludeProps
 {
     NodeInfo* info = node.userObject;
     PlugInNode* plugIn = info.plugIn;
     NSMutableDictionary* extraProps = info.extraProps;
     
-    NSString* type = [propInfo objectForKey:@"type"];
-    NSString* name = [propInfo objectForKey:@"name"];
+    NSString* type = propInfo[@"type"];
+    NSString* name = propInfo[@"name"];
     //NSString* platform = [propInfo objectForKey:@"platform"];
-    BOOL readOnly = [[propInfo objectForKey:@"readOnly"] boolValue];
+    BOOL readOnly = [propInfo[@"readOnly"] boolValue];
     //BOOL hasKeyframes = [node hasKeyframesForProperty:name];
     //id defaultSerialization = [propInfo objectForKey:@"defaultSerialization"];
     id serializedValue = NULL;
@@ -213,103 +191,101 @@
     if ([plugIn dontSetInEditorProperty:name])
     {
         // Get the serialized value from the extra props
-        serializedValue = [extraProps objectForKey:name];
+        serializedValue = extraProps[name];
     }
     else if ([type isEqualToString:@"Position"])
     {
         NSPoint pt = [PositionPropertySetter positionForNode:node prop:name];
-        CCPositionType type = [PositionPropertySetter positionTypeForNode:node prop:name];
-        serializedValue = [CCBWriterInternal serializePosition:pt type:type];
+        CCPositionType aType = [PositionPropertySetter positionTypeForNode:node prop:name];
+        serializedValue = [CCBDictionaryWriter serializePosition:pt type:aType];
     }
     else if([type isEqualToString:@"Point"]
             || [type isEqualToString:@"PointLock"])
     {
         CGPoint pt = NSPointToCGPoint( [[node valueForKey:name] pointValue] );
-        serializedValue = [CCBWriterInternal serializePoint:pt];
+        serializedValue = [CCBDictionaryWriter serializePoint:pt];
     }
     else if ([type isEqualToString:@"Size"])
     {
         //CGSize size = NSSizeToCGSize( [[node valueForKey:name] sizeValue] );
         NSSize size = [PositionPropertySetter sizeForNode:node prop:name];
-        CCSizeType type = [PositionPropertySetter sizeTypeForNode:node prop:name];
-        serializedValue = [CCBWriterInternal serializeSize:size type:type];
+        CCSizeType aType = [PositionPropertySetter sizeTypeForNode:node prop:name];
+        serializedValue = [CCBDictionaryWriter serializeSize:size type:aType];
     }
     else if ([type isEqualToString:@"FloatXY"])
     {
         float x = [[node valueForKey:[NSString stringWithFormat:@"%@X",name]] floatValue];
         float y = [[node valueForKey:[NSString stringWithFormat:@"%@Y",name]] floatValue];
-        serializedValue = [CCBWriterInternal serializePoint:ccp(x,y)];
+        serializedValue = [CCBDictionaryWriter serializePoint:ccp(x, y)];
     }
     else if ([type isEqualToString:@"ScaleLock"])
     {
         float x = [PositionPropertySetter scaleXForNode:node prop:name];
         float y = [PositionPropertySetter scaleYForNode:node prop:name];
-        BOOL lock = [[extraProps objectForKey:[NSString stringWithFormat:@"%@Lock",name]] boolValue];
+        BOOL lock = [extraProps[[NSString stringWithFormat:@"%@Lock", name]] boolValue];
         int scaleType = [PositionPropertySetter scaledFloatTypeForNode:node prop:name];
         
-        serializedValue = [CCBWriterInternal serializePoint:ccp(x,y) lock:lock type: scaleType];
+        serializedValue = [CCBDictionaryWriter serializePoint:ccp(x, y) lock:lock type:scaleType];
     }
     else if ([type isEqualToString:@"Float"]
              || [type isEqualToString:@"Degrees"])
     {
         float f = [[node valueForKey:name] floatValue];
-        serializedValue = [CCBWriterInternal serializeFloat:f];
+        serializedValue = [CCBDictionaryWriter serializeFloat:f];
     }
     else if([type isEqualToString:@"FloatCheck"] || [type isEqualToString:@"EnabledFloat"])
     {
         float f = [[node valueForKey:name] floatValue];
         BOOL  enabled = [[node valueForKey:[NSString stringWithFormat:@"%@Enabled",name]] boolValue];
         
-        serializedValue = [NSArray arrayWithObjects:
-                           [CCBWriterInternal serializeFloat:f],
-                           [CCBWriterInternal serializeBool:enabled],
-                           nil];
+        serializedValue = @[[CCBDictionaryWriter serializeFloat:f],
+                [CCBDictionaryWriter serializeBool:enabled]];
     }
     else if ([type isEqualToString:@"FloatScale"])
     {
         float f = [PositionPropertySetter floatScaleForNode:node prop:name];
-        int type = [PositionPropertySetter floatScaleTypeForNode:node prop:name];
-        serializedValue = [CCBWriterInternal serializeFloatScale:f type:type];
+        int aType = [PositionPropertySetter floatScaleTypeForNode:node prop:name];
+        serializedValue = [CCBDictionaryWriter serializeFloatScale:f type:aType];
     }
     else if ([type isEqualToString:@"FloatVar"])
     {
         float x = [[node valueForKey:name] floatValue];
         float y = [[node valueForKey:[NSString stringWithFormat:@"%@Var",name]] floatValue];
-        serializedValue = [CCBWriterInternal serializePoint:ccp(x,y)];
+        serializedValue = [CCBDictionaryWriter serializePoint:ccp(x, y)];
     }
     else if ([type isEqualToString:@"Integer"]
              || [type isEqualToString:@"IntegerLabeled"]
              || [type isEqualToString:@"Byte"])
     {
         int d = [[node valueForKey:name] intValue];
-        serializedValue = [CCBWriterInternal serializeInt:d];
+        serializedValue = [CCBDictionaryWriter serializeInt:d];
     }
     else if ([type isEqualToString:@"Check"])
     {
         BOOL check = [[node valueForKey:name] boolValue];
-        serializedValue = [CCBWriterInternal serializeBool:check];
+        serializedValue = [CCBDictionaryWriter serializeBool:check];
     }
     else if ([type isEqualToString:@"Flip"])
     {
         BOOL x = [[node valueForKey:[NSString stringWithFormat:@"%@X",name]] boolValue];
         BOOL y = [[node valueForKey:[NSString stringWithFormat:@"%@Y",name]] boolValue];
-        serializedValue = [CCBWriterInternal serializeBoolPairX:x Y:y];
+        serializedValue = [CCBDictionaryWriter serializeBoolPairX:x Y:y];
     }
     else if ([type isEqualToString:@"SpriteFrame"])
     {
-        NSString* spriteFile = [extraProps objectForKey:name];
-        NSString* spriteSheetFile = [extraProps objectForKey:[NSString stringWithFormat:@"%@Sheet",name]];
-        serializedValue = [CCBWriterInternal serializeSpriteFrame:spriteFile sheet:spriteSheetFile];
+        NSString* spriteFile = extraProps[name];
+        NSString* spriteSheetFile = extraProps[[NSString stringWithFormat:@"%@Sheet", name]];
+        serializedValue = [CCBDictionaryWriter serializeSpriteFrame:spriteFile sheet:spriteSheetFile];
     }
     else if ([type isEqualToString:@"Animation"])
     {
-        NSString* animation = [extraProps objectForKey:name];
-        NSString* animationFile = [extraProps objectForKey:[NSString stringWithFormat:@"%@Animation",name]];
-        serializedValue = [CCBWriterInternal serializeAnimation:animation file:animationFile];
+        NSString* animation = extraProps[name];
+        NSString* animationFile = extraProps[[NSString stringWithFormat:@"%@Animation", name]];
+        serializedValue = [CCBDictionaryWriter serializeAnimation:animation file:animationFile];
     }
     else if ([type isEqualToString:@"Texture"])
     {
-        NSString* spriteFile = [extraProps objectForKey:name];
+        NSString* spriteFile = extraProps[name];
         if (!spriteFile) spriteFile = @"";
         
         serializedValue = spriteFile;
@@ -317,12 +293,12 @@
     else if ([type isEqualToString:@"Color3"])
     {
         CCColor* colorValue = [node valueForKey:name];
-        serializedValue = [CCBWriterInternal serializeColor4:colorValue];
+        serializedValue = [CCBDictionaryWriter serializeColor4:colorValue];
     }
     else if ([type isEqualToString:@"Color4"])
     {
         CCColor* colorValue = [node valueForKey:name];
-        serializedValue = [CCBWriterInternal serializeColor4:colorValue];
+        serializedValue = [CCBDictionaryWriter serializeColor4:colorValue];
     }
     else if ([type isEqualToString:@"Color4FVar"])
     {
@@ -330,17 +306,15 @@
         CCColor* cValue = [node valueForKey:name];
         CCColor* cVarValue = [node valueForKey:nameVar];
         
-        serializedValue = [NSArray arrayWithObjects:
-                           [CCBWriterInternal serializeColor4:cValue],
-                           [CCBWriterInternal serializeColor4:cVarValue],
-                           nil];
+        serializedValue = @[[CCBDictionaryWriter serializeColor4:cValue],
+                [CCBDictionaryWriter serializeColor4:cVarValue]];
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
 //        NSValue* blendValue = [node valueForKey:name];
 //        ccBlendFunc bf;
 //        [blendValue getValue:&bf];
-//        serializedValue = [CCBWriterInternal serializeBlendFunc:bf];
+//        serializedValue = [CCBDictionaryWriter serializeBlendFunc:bf];
     }
     else if ([type isEqualToString:@"FntFile"])
     {
@@ -361,7 +335,7 @@
         NSString* str = [StringPropertySetter stringForNode:node andProp:name];
         BOOL localized = [StringPropertySetter isLocalizedNode:node andProp:name];
         if (!str) str = @"";
-        serializedValue = [NSArray arrayWithObjects:str, [NSNumber numberWithBool:localized], nil];
+        serializedValue = @[str, @(localized)];
     }
     else if ([type isEqualToString:@"FontTTF"])
     {
@@ -371,32 +345,25 @@
     }
     else if ([type isEqualToString:@"Block"])
     {
-        NSString* selector = [extraProps objectForKey:name];
-        NSNumber* target = [extraProps objectForKey:[NSString stringWithFormat:@"%@Target",name]];
+        NSString* selector = extraProps[name];
+        NSNumber* target = extraProps[[NSString stringWithFormat:@"%@Target", name]];
         if (!selector) selector = @"";
-        if (!target) target = [NSNumber numberWithInt:0];
-        serializedValue = [NSArray arrayWithObjects:
-                           selector,
-                           target,
-                           nil];
+        if (!target) target = @0;
+        serializedValue = @[selector, target];
     }
     else if ([type isEqualToString:@"BlockCCControl"])
     {
-        NSString* selector = [extraProps objectForKey:name];
-        NSNumber* target = [extraProps objectForKey:[NSString stringWithFormat:@"%@Target",name]];
-        NSNumber* ctrlEvts = [extraProps objectForKey:[NSString stringWithFormat:@"%@CtrlEvts",name]];
+        NSString* selector = extraProps[name];
+        NSNumber* target = extraProps[[NSString stringWithFormat:@"%@Target", name]];
+        NSNumber* ctrlEvts = extraProps[[NSString stringWithFormat:@"%@CtrlEvts", name]];
         if (!selector) selector = @"";
-        if (!target) target = [NSNumber numberWithInt:0];
-        if (!ctrlEvts) ctrlEvts = [NSNumber numberWithInt:0];
-        serializedValue = [NSArray arrayWithObjects:
-                           selector,
-                           target,
-                           ctrlEvts,
-                           nil];
+        if (!target) target = @0;
+        if (!ctrlEvts) ctrlEvts = @0;
+        serializedValue = @[selector, target, ctrlEvts];
     }
     else if ([type isEqualToString:@"CCBFile"])
     {
-        NSString* spriteFile = [extraProps objectForKey:name];
+        NSString* spriteFile = extraProps[name];
         if (!spriteFile) spriteFile = @"";
         serializedValue = spriteFile;
     }
@@ -443,7 +410,7 @@
     return serializedValue;
 }
 
-+ (NSMutableDictionary*) dictionaryFromCCObject:(CCNode *)node
++ (NSMutableDictionary*)serializeNode:(CCNode *)node
 {
     NodeInfo* info = node.userObject;
 	NSAssert(info, @"Node does not have an NodeInfo");
@@ -464,19 +431,19 @@
     }
     
     NSMutableArray* plugInProps = plugIn.nodeProperties;
-    int plugInPropsCount = [plugInProps count];
-    for (int i = 0; i < plugInPropsCount; i++)
+    NSUInteger plugInPropsCount = [plugInProps count];
+    for (NSUInteger i = 0; i < plugInPropsCount; i++)
     {
-        NSMutableDictionary* propInfo = [plugInProps objectAtIndex:i];
-        NSString* type = [propInfo objectForKey:@"type"];
-        NSString* name = [propInfo objectForKey:@"name"];
-        NSString* platform = [propInfo objectForKey:@"platform"];
+        NSMutableDictionary* propInfo = plugInProps[i];
+        NSString* type = propInfo[@"type"];
+        NSString* name = propInfo[@"name"];
+        NSString* platform = propInfo[@"platform"];
         BOOL hasKeyframes = [node hasKeyframesForProperty:name];
-        id defaultSerialization = [propInfo objectForKey:@"defaultSerialization"];
+        id defaultSerialization = propInfo[@"defaultSerialization"];
         id serializedValue = NULL;
         
 	
-        serializedValue = [CCBWriterInternal serializePropertyForNode:node propInfo:propInfo excludeProps:excludeProps];
+        serializedValue = [CCBDictionaryWriter serializePropertyOfNode:node propInfo:propInfo excludeProps:excludeProps];
         if (!serializedValue)
 			continue;
         
@@ -511,51 +478,51 @@
     // Visit all children of this node
     if (plugIn.canHaveChildren)
     {
-        for (int i = 0; i < [[node children] count]; i++)
+        for (NSUInteger i = 0; i < [[node children] count]; i++)
         {
-			CCNode * childNode = [[node children] objectAtIndex:i];
+			CCNode * childNode = [node children][i];
 			if(!childNode.userObject)
 			{
 				continue;
 			}
-			NSDictionary * serializedChild = [CCBWriterInternal dictionaryFromCCObject:childNode];
+			NSDictionary * serializedChild = [CCBDictionaryWriter serializeNode:childNode];
             [children addObject:serializedChild];
         }
     }
     
     // Create node
-    [dict setObject:props forKey:@"properties"];
-    [dict setObject:baseClass forKey:@"baseClass"];
-    [dict setObject:children forKey:@"children"];
+    dict[@"properties"] = props;
+    dict[@"baseClass"] = baseClass;
+    dict[@"children"] = children;
     
     // Serialize any animations
     id anim = [node serializeAnimatedProperties];
     if (anim)
     {
-        [dict setObject:anim forKey:@"animatedProperties"];
+        dict[@"animatedProperties"] = anim;
     }
     if (node.seqExpanded)
     {
-        [dict setObject:[NSNumber numberWithBool:YES] forKey:@"seqExpanded"];
+        dict[@"seqExpanded"] = @YES;
     }
     
     // Custom display names
     if (node.displayName)
     {
-        [dict setObject:node.displayName forKey:@"displayName"];
+        dict[@"displayName"] = node.displayName;
     }
     
     // Custom properties
     id customProps = [node serializeCustomProperties];
     if (customProps)
     {
-        [dict setObject:customProps forKey:@"customProperties"];
+        dict[@"customProperties"] = customProps;
     }
     
     // Support for Flash skews
     if (node.usesFlashSkew)
     {
-        [dict setValue:[NSNumber numberWithBool:YES] forKey:@"usesFlashSkew"];
+        [dict setValue:@YES forKey:@"usesFlashSkew"];
     }
     
     // Physics
@@ -567,13 +534,13 @@
     //hidden node graph
     if(node.hidden)
     {
-        [dict setValue:[NSNumber numberWithBool:YES] forKey:@"hidden"];
+        [dict setValue:@YES forKey:@"hidden"];
     }
 
     //locked node graph
     if(node.locked)
     {
-        [dict setValue:[NSNumber numberWithBool:YES] forKey:@"locked"];
+        [dict setValue:@YES forKey:@"locked"];
     }
     
     if(node.UUID)
@@ -587,25 +554,25 @@
     NSArray* selection = [AppDelegate appDelegate].selectedNodes;
     if (selection && [selection containsObject:node])
     {
-        [dict setObject:[NSNumber numberWithBool:YES] forKey:@"selected"];
+        dict[@"selected"] = @YES;
     }
     
     // Add code connection props
-    NSString* customClass = [extraProps objectForKey:@"customClass"];
+    NSString* customClass = extraProps[@"customClass"];
     if (!customClass) customClass = @"";
-    NSString* memberVarName = [extraProps objectForKey:@"memberVarAssignmentName"];
+    NSString* memberVarName = extraProps[@"memberVarAssignmentName"];
     if (!memberVarName) memberVarName = @"";
-    int memberVarType = [[extraProps objectForKey:@"memberVarAssignmentType"] intValue];
+    int memberVarType = [extraProps[@"memberVarAssignmentType"] intValue];
     
-    [dict setObject:customClass forKey:@"customClass"];
-    [dict setObject:memberVarName forKey:@"memberVarAssignmentName"];
-    [dict setObject:[NSNumber numberWithInt:memberVarType] forKey:@"memberVarAssignmentType"];
+    dict[@"customClass"] = customClass;
+    dict[@"memberVarAssignmentName"] = memberVarName;
+    dict[@"memberVarAssignmentType"] = @(memberVarType);
     
     // JS code connections
-    NSString* jsController = [extraProps objectForKey:@"jsController"];
+    NSString* jsController = extraProps[@"jsController"];
     if (jsController && ![jsController isEqualToString:@""])
     {
-        [dict setObject:jsController forKey:@"jsController"];
+        dict[@"jsController"] = jsController;
     }
     
     return dict;

@@ -27,7 +27,7 @@
 #import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "CCBDocument.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryReader.h"
 #import "CCNode+NodeInfo.h"
 #import "SequencerSequence.h"
 
@@ -58,7 +58,7 @@
             {
     
                 // Parse the node graph
-                ccbFile = [CCBReaderInternal nodeGraphFromDictionary:[doc objectForKey:@"nodeGraph"] parentSize:parentSize];
+                ccbFile = [CCBDictionaryReader nodeGraphFromDictionary:[doc objectForKey:@"nodeGraph"] parentSize:parentSize];
             }
             
             // Get first timeline
