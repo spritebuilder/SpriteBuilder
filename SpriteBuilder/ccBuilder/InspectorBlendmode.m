@@ -28,56 +28,56 @@
 
 - (void) setBlendSrc:(int)blendSrc
 {
-    ccBlendFunc blend;
-    NSValue* blendValue = [self propertyForSelection];
-    [blendValue getValue:&blend];
-    
-    blend.src = blendSrc;
-    
-    blendValue = [NSValue value:&blend withObjCType:@encode(ccBlendFunc)];
-    [self setPropertyForSelection:blendValue];
+//    ccBlendFunc blend;
+//    NSValue* blendValue = [self propertyForSelection];
+//    [blendValue getValue:&blend];
+//    
+//    blend.src = blendSrc;
+//    
+//    blendValue = [NSValue value:&blend withObjCType:@encode(ccBlendFunc)];
+//    [self setPropertyForSelection:blendValue];
 }
 
 - (int) blendSrc
 {
-    ccBlendFunc blend;
-    NSValue* blendValue = [self propertyForSelection];
-    [blendValue getValue:&blend];
-    
-    return blend.src;
+//    ccBlendFunc blend;
+//    NSValue* blendValue = [self propertyForSelection];
+//    [blendValue getValue:&blend];
+//    
+//    return blend.src;
 }
 
 - (void) setBlendDst:(int)blendDst
 {
-    ccBlendFunc blend;
-    NSValue* blendValue = [self propertyForSelection];
-    [blendValue getValue:&blend];
-    
-    blend.dst = blendDst;
-    
-    blendValue = [NSValue value:&blend withObjCType:@encode(ccBlendFunc)];
-    [self setPropertyForSelection:blendValue];
+//    ccBlendFunc blend;
+//    NSValue* blendValue = [self propertyForSelection];
+//    [blendValue getValue:&blend];
+//    
+//    blend.dst = blendDst;
+//    
+//    blendValue = [NSValue value:&blend withObjCType:@encode(ccBlendFunc)];
+//    [self setPropertyForSelection:blendValue];
 }
 
 - (int) blendDst
 {
-    ccBlendFunc blend;
-    NSValue* blendValue = [self propertyForSelection];
-    [blendValue getValue:&blend];
-    
-    return blend.dst;
+//    ccBlendFunc blend;
+//    NSValue* blendValue = [self propertyForSelection];
+//    [blendValue getValue:&blend];
+//    
+//    return blend.dst;
 }
 
 - (IBAction)blendNormal:(id)sender
 {
-    self.blendSrc = GL_ONE;
-    self.blendDst = GL_ONE_MINUS_SRC_ALPHA;
+//    self.blendSrc = GL_ONE;
+//    self.blendDst = GL_ONE_MINUS_SRC_ALPHA;
 }
 
 - (IBAction)blendAdditive:(id)sender
 {
-    self.blendSrc = GL_ONE;
-    self.blendDst = GL_ONE;
+//    self.blendSrc = GL_ONE;
+//    self.blendDst = GL_ONE;
 }
 
 - (void) refresh

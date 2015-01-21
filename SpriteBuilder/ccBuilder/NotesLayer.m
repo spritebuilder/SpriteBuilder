@@ -55,9 +55,11 @@
 {
     AppDelegate* ad = [AppDelegate appDelegate];
     
+    CGFloat viewScale = ad.derivedViewScaleFactor;
+    
     // Setup text area and add it to guiLayer
     CGSize size = note.contentSize;
-    CGPoint pos = ccp(note.position.x * [CCDirector sharedDirector].contentScaleFactor, note.position.y * [CCDirector sharedDirector].contentScaleFactor - note.contentSize.height);
+    CGPoint pos = ccp(note.position.x * viewScale, note.position.y * viewScale - note.contentSize.height);
     
 	// FIXME: fix deprecation warning
     SUPPRESS_DEPRECATED([NSBundle loadNibNamed:@"StickyNoteEditView" owner:self]);
@@ -158,10 +160,12 @@
     }
     else if (operation == kCCBNoteOperationResizing)
     {
-        [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*notes"];
+        AppDelegate *ad = [AppDelegate appDelegate];
+
+        [ad saveUndoStateWillChangeProperty:@"*notes"];
         
         CGPoint delta = ccpSub(pt, mouseDownPos);
-        delta = ccpMult(delta, [CCDirector sharedDirector].contentScaleFactor);
+        delta = ccpMult(delta, ad.derivedViewScaleFactor);
         CGSize newSize;
         newSize.width = noteStartSize.width + delta.x;
         newSize.height = noteStartSize.height - delta.y;

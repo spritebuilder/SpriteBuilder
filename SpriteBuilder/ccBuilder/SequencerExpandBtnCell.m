@@ -42,10 +42,10 @@
 - (void) loadImages
 {
     if ( !expandedImage && !collapsedImage ) {
-        self.expandedImage = [NSImage imageNamed:@"seq-btn-expand.png"];
+        self.expandedImage = [NSImage imageNamed:@"seq-btn-expand"];
         [expandedImage setFlipped:YES];
     
-        self.collapsedImage = [NSImage imageNamed:@"seq-btn-collapse.png"];
+        self.collapsedImage = [NSImage imageNamed:@"seq-btn-collapse"];
         [collapsedImage setFlipped:YES];
     }
 }

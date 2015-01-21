@@ -70,6 +70,20 @@ static InspectorController *__sharedInstance = nil;
     [_inspectorCodeScroll setDocumentView:_inspectorCodeDocumentView];
 }
 
+- (void)refreshAllProperties
+{
+    if (![_appDelegate selectedNode])
+    {
+        return;
+    }
+    
+    for (NSString *name in _currentInspectorValuesMap)
+    {
+        InspectorValue *inspectorValue = _currentInspectorValuesMap[name];
+        [inspectorValue refresh];
+    }
+}
+
 - (void)refreshProperty:(NSString *)name
 {
     if (![_appDelegate selectedNode])

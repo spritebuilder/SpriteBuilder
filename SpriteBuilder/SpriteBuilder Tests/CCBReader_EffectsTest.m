@@ -36,7 +36,7 @@
 		return;
 	
 	CCBReader * reader = [CCBReader reader];
-	CCNode * rootNode = [reader loadWithData:animData owner:nil];
+	[reader loadWithData:animData owner:nil];
 
 
 }

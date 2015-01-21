@@ -26,6 +26,46 @@
 
 @implementation InspectorFloat
 
+- (id) initWithSelection:(CCNode *)s andPropertyName:(NSString *)pn andDisplayName:(NSString *)dn andExtra:(NSString *)e
+{
+    self = [super initWithSelection:s andPropertyName:pn andDisplayName:dn andExtra:e];
+    if (!self) return NULL;
+    
+    return self;
+}
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+
+    NSMutableDictionary *extraDict = [[NSMutableDictionary alloc] init];
+    NSArray* extraParts = [self.extra componentsSeparatedByString:@"|"];
+    NSUInteger pairCount = (extraParts.count / 2);
+    for (NSUInteger pairIndex = 0; pairIndex < pairCount; pairIndex++)
+    {
+        NSString *key = extraParts[2 * pairIndex];
+        NSString *value = extraParts[2 * pairIndex + 1];
+        extraDict[key] = value;
+    }
+
+    // Get the cell from the text field and get the formatter from that.
+    NSTextFieldCell *textFieldCell = (NSTextFieldCell *) textField.cell;
+    NSNumberFormatter *numberFormatter = (NSNumberFormatter *) textFieldCell.formatter;
+    
+    if ((extraDict[@"min"] || extraDict[@"max"]) && numberFormatter)
+    {
+        NSNumberFormatter *stringConverter = [[NSNumberFormatter alloc] init];
+        if (extraDict[@"min"])
+        {
+            numberFormatter.minimum = [stringConverter numberFromString:extraDict[@"min"]];
+        }
+        if (extraDict[@"max"])
+        {
+            numberFormatter.maximum = [stringConverter numberFromString:extraDict[@"max"]];
+        }
+    }
+}
+
 - (void) setF:(float)f
 {
     [self setPropertyForSelection:[NSNumber numberWithFloat:f]];

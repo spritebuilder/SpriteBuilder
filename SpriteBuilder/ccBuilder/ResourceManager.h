@@ -29,8 +29,10 @@
 @class RMResource;
 @class RMDirectory;
 @class ProjectSettings;
+@class RMPackage;
 
 #define kCCBMaxTrackedDirectories 500
+#define kRMImagePreviewSize       32.0
 
 
 @interface ResourceManager : NSObject <SCEventListenerProtocol>
@@ -82,14 +84,13 @@
 + (NSArray*) resIndependentExts;
 + (NSArray*) resIndependentDirs;
 
-- (void)createCachedImageFromAuto:(NSString *)autoFile saveAs:(NSString *)dstFile forResolution:(NSString *)res projectSettings:(ProjectSettings *)projectSettings;
+- (void)createCachedImageFromAutoPath:(NSString *)autoPath saveAs:(NSString *)dstFile forResolution:(NSString *)resolution projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings;
 
 - (void) notifyResourceObserversResourceListUpdated;
 
 + (BOOL) importResources:(NSArray*) resources intoDir:(NSString*) dstDir;
 + (BOOL) moveResourceFile:(NSString*)srcFile ofType:(int) type toDirectory:(NSString*) dstDir;
 + (void) renameResourceFile:(NSString*)srcPath toNewName:(NSString*) newName;
-+ (void) copyResourceFile:(RMResource*) res;
 + (void) removeResource:(RMResource*) res;
 
 + (void) touchResource:(RMResource*) res;
@@ -107,6 +108,8 @@
 - (RMResource *)spriteSheetContainingResource:(RMResource *)resource;
 
 - (NSArray *)allPackages;
+
+- (RMPackage *)packageForPath:(NSString *)fullPath;
 
 // *** SpriteSheet helper ***
 - (BOOL)isResourceInSpriteSheet:(RMResource *)resource;

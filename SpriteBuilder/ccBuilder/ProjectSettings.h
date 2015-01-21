@@ -43,7 +43,6 @@ typedef enum
 typedef NS_ENUM(int8_t, CCBTargetEngine)
 {
 	CCBTargetEngineCocos2d = 0,
-	CCBTargetEngineSpriteKit = 1,
 };
 
 typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
@@ -127,7 +126,6 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 // *** Smart Sprite Sheets ***
 - (void) makeSmartSpriteSheet:(RMResource*) res;
 - (void) removeSmartSpriteSheet:(RMResource*) res;
-- (NSArray*) smartSpriteSheetDirectories;
 
 // *** Setting and reading file properties ***
 // Will mark the resource as dirty if old value is not equal to new value

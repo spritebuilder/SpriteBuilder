@@ -29,9 +29,9 @@
     NSImage* imgBg;
     NSImage* imgMarkMajor;
     NSImage* imgMarkMinor;
-    NSImage* imgNumbers;
     NSImage* imgEndmarker;
     NSImage* imgStartmarker;
-    NSRect numberRects[10];
+    NSDictionary *fontAttrs;
+    
 }
 @end

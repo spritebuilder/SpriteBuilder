@@ -125,6 +125,7 @@ enum {
 @class PreviewContainerViewController;
 @class InspectorController;
 @class SBOpenPathsController;
+@class LightingHandler;
 
 typedef void (^CompletionCallback) (BOOL success);
 
@@ -136,7 +137,6 @@ typedef void (^CompletionCallback) (BOOL success);
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITHockeyManagerDelegate, PublishingFinishedDelegate>
 {
-    
     // Panel Views
     IBOutlet NSView* leftPanel;
     IBOutlet NSView* rightPanel;
@@ -155,8 +155,6 @@ typedef void (^CompletionCallback) (BOOL success);
     NSTabView* tabView;
     
     // Inspector componentes
-    // IBOutlet NSComboBox* inspectorSpriteName;
-    // IBOutlet NSTextView* inspectorLabelBMFontString;
     BOOL canEditContentSize;
     BOOL canEditCustomClass;
     
@@ -210,16 +208,8 @@ typedef void (^CompletionCallback) (BOOL success);
     IBOutlet NSMenu* menuTimelineChained;
     IBOutlet NSTextField* lblTimelineChained;
     
-    IBOutlet NSMenuItem* _menuItemExperimentalSpriteKitProject;
-
     CGSize defaultCanvasSizes[kCCBNumCanvasDevices+1];
-    // IBOutlet NSMenuItem* menuItemStageCentered;
     BOOL defaultCanvasSize;
-    
-    // IBOutlet NSMenuItem* menuItemJSControlled;
-    // IBOutlet NSMenuItem* menuItemSafari;
-    // IBOutlet NSMenuItem* menuItemChrome;
-    // IBOutlet NSMenuItem* menuItemFirefox;
     
     IBOutlet NSSegmentedControl* segmPublishBtn;
     
@@ -247,7 +237,6 @@ typedef void (^CompletionCallback) (BOOL success);
     ResourceManagerOutlineHandler* projectOutlineHandler;
     
     // Project Warnings.
-
     WarningTableViewHandler * warningHandler;
     
     // Documents
@@ -297,10 +286,14 @@ typedef void (^CompletionCallback) (BOOL success);
     // Updates for Yosemite
     IBOutlet NSButton* loopButton;
     
+    // Light controls
+    IBOutlet LightingHandler* __weak lightingHandler;
+    
 @private
     MainWindow *__weak window;
 	BOOL _applicationLaunchComplete;
     
+    CGFloat _baseContentScaleFactor;
 }
 
 
@@ -322,6 +315,7 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (nonatomic,assign) BOOL defaultCanvasSize;
 @property (nonatomic,assign) BOOL canEditCustomClass;
 @property (nonatomic,assign) BOOL canEditStageSize;
+@property (nonatomic,assign) CGFloat derivedViewScaleFactor;
 
 @property (weak, nonatomic,readonly) CCNode* selectedNode;
 
@@ -371,6 +365,7 @@ typedef void (^CompletionCallback) (BOOL success);
 // Sequencer
 @property (nonatomic, readonly) BOOL playingBack;
 
+@property (weak, nonatomic,readonly) LightingHandler* lightingHandler;
 
 // Methods
 + (AppDelegate*) appDelegate;
