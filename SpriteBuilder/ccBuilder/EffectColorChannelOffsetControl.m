@@ -27,7 +27,7 @@
 {
     [self.effect willChangeValueForKey:@"redOffset"];
 
-    self.effect.redOffset = GLKVector2Make(x, self.effect.redOffset.y);
+    self.effect.redOffset = CGPointMake(x, self.effect.redOffset.y);
 
     [self.effect didChangeValueForKey:@"redOffset"];
 }
@@ -41,7 +41,7 @@
 {
     [self.effect willChangeValueForKey:@"redOffset"];
 
-    self.effect.redOffset = GLKVector2Make(self.effect.redOffset.x, y);
+    self.effect.redOffset = CGPointMake(self.effect.redOffset.x, y);
 
     [self.effect didChangeValueForKey:@"redOffset"];
 }
@@ -55,7 +55,7 @@
 {
     [self.effect willChangeValueForKey:@"greenOffset"];
 
-    self.effect.greenOffset = GLKVector2Make(x, self.effect.greenOffset.y);
+    self.effect.greenOffset = CGPointMake(x, self.effect.greenOffset.y);
     
     [self.effect didChangeValueForKey:@"greenOffset"];
 }
@@ -69,7 +69,7 @@
 {
     [self.effect willChangeValueForKey:@"greenOffset"];
     
-    self.effect.greenOffset = GLKVector2Make(self.effect.greenOffset.x, y);
+    self.effect.greenOffset = CGPointMake(self.effect.greenOffset.x, y);
     
     [self.effect didChangeValueForKey:@"greenOffset"];
 }
@@ -83,7 +83,7 @@
 {
     [self.effect willChangeValueForKey:@"blueOffset"];
 
-    self.effect.blueOffset = GLKVector2Make(x, self.effect.blueOffset.y);
+    self.effect.blueOffset = CGPointMake(x, self.effect.blueOffset.y);
     
     [self.effect didChangeValueForKey:@"blueOffset"];
 }
@@ -97,7 +97,7 @@
 {
     [self.effect willChangeValueForKey:@"blueOffset"];
     
-    self.effect.blueOffset = GLKVector2Make(self.effect.blueOffset.x, y);
+    self.effect.blueOffset = CGPointMake(self.effect.blueOffset.x, y);
     
     [self.effect didChangeValueForKey:@"blueOffset"];
 }
