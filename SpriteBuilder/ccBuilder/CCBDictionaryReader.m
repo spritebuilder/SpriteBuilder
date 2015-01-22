@@ -68,7 +68,28 @@ __strong NSDictionary* renamedProperties = nil;
 -(void)postDeserializationFixup;
 @end
 
+
+@interface CCBDictionaryReader()
+
+@property (nonatomic) NSUInteger fileVersion;
+@property (nonatomic, strong) NSDictionary *dataDict;
+
+@end
+
+
 @implementation CCBDictionaryReader
+
+- (instancetype)initWithDictionary:(NSDictionary *)dataDict
+{
+    self = [super init];
+
+    if (self)
+    {
+        self.dataDict = dataDict; 
+    }
+
+    return self;
+}
 
 + (NSPoint) deserializePoint:(id) val
 {
@@ -323,7 +344,6 @@ __strong NSDictionary* renamedProperties = nil;
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
-
         CCBlendMode *blendMode = [CCBDictionaryReader deserializeBlendMode:serializedValue];
         [node setValue:blendMode forKey:name];
     }
@@ -459,12 +479,18 @@ __strong NSDictionary* renamedProperties = nil;
 
 + (CCBlendMode *)deserializeBlendMode:(id)value
 {
-    return [CCBlendMode blendModeWithOptions:value];
-}
-
-+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize
-{
-    return [CCBDictionaryReader nodeGraphFromDictionary:dict parentSize:parentSize withParentGraph:nil];
+/*    if (_fileVersion < 5)
+    {
+        return [CCBlendMode blendModeWithOptions:@{
+            CCBlendFuncSrcColor: [value objectAtIndex:0],
+            CCBlendFuncDstColor: [value objectAtIndex:1],
+        }];
+    }
+    else
+    {
+*/
+        return [CCBlendMode blendModeWithOptions:value];
+//    }
 }
 
 + (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph
@@ -578,7 +604,7 @@ __strong NSDictionary* renamedProperties = nil;
     CGSize contentSize = node.contentSize;
     for (NSUInteger i = 0; i < [children count]; i++)
     {
-        CCNode* child = [CCBDictionaryReader nodeGraphFromDictionary:children[i] parentSize:contentSize];
+        CCNode* child = [CCBDictionaryReader nodeGraphFromDictionary:children[i] parentSize:contentSize withParentGraph:nil];
 		
 		if (child)
 		{
@@ -616,11 +642,6 @@ __strong NSDictionary* renamedProperties = nil;
 
 + (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize
 {
-    return [CCBDictionaryReader nodeGraphFromDocumentDictionary:dict parentSize:parentSize withParentGraph:nil];
-}
-
-+ (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize withParentGraph:(CCNode*)parentGraph
-{
     if (!dict)
     {
         NSLog(@"WARNING! Trying to load invalid file type (dict is null)");
@@ -649,7 +670,7 @@ __strong NSDictionary* renamedProperties = nil;
         return NULL;
     }
     
-    return [CCBDictionaryReader nodeGraphFromDictionary:nodeGraph parentSize:parentSize];
+    return [CCBDictionaryReader nodeGraphFromDictionary:nodeGraph parentSize:parentSize withParentGraph:nil];
 }
 
 

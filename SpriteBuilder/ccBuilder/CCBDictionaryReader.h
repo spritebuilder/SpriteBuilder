@@ -29,16 +29,21 @@
 
 @interface CCBDictionaryReader : NSObject
 
-+ (NSPoint) deserializePoint:(id) val;
-+ (CCColor*) deserializeColor4:(id) val;
++ (NSPoint)deserializePoint:(id)val;
 
-+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize;
++ (CCColor *)deserializeColor4:(id)val;
 
-+ (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize;
++ (CCNode *)nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize)parentSize;
 
-+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph;
++ (CCNode *)nodeGraphFromDictionary:(NSDictionary *)dict parentSize:(CGSize)parentSize withParentGraph:(CCNode *)parentGraph;
 
-+ (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph;
-+ (void)postDeserializationFixup:(CCNode*)node;
++ (void)setProp:(NSString *)name
+         ofType:(NSString *)type
+        toValue:(id)serializedValue
+        forNode:(CCNode *)node
+     parentSize:(CGSize)parentSize
+withParentGraph:(CCNode *)parentGraph;
+
++ (void)postDeserializationFixup:(CCNode *)node;
 
 @end

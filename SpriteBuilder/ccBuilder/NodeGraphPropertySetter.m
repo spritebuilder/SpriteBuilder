@@ -58,7 +58,7 @@
             {
     
                 // Parse the node graph
-                ccbFile = [CCBDictionaryReader nodeGraphFromDictionary:[doc objectForKey:@"nodeGraph"] parentSize:parentSize];
+                ccbFile = [CCBDictionaryReader nodeGraphFromDictionary:[doc objectForKey:@"nodeGraph"] parentSize:parentSize withParentGraph:nil];
             }
             
             // Get first timeline
