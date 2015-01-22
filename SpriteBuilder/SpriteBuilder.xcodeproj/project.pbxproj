@@ -1761,6 +1761,8 @@
 		9266EE3E195A17EE006CBE81 /* EffectPixelateControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectPixelateControl.h; path = ccBuilder/EffectPixelateControl.h; sourceTree = "<group>"; };
 		9266EE3F195A17EE006CBE81 /* EffectPixelateControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectPixelateControl.m; path = ccBuilder/EffectPixelateControl.m; sourceTree = "<group>"; };
 		9266EE40195A17EE006CBE81 /* EffectPixelateControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectPixelateControl.xib; path = ccBuilder/EffectPixelateControl.xib; sourceTree = "<group>"; };
+		9269C30E1991A38100884F59 /* SBMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMenuItem.h; sourceTree = "<group>"; };
+		9269C30F1991A38100884F59 /* SBMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBMenuItem.m; sourceTree = "<group>"; };
 		926D139318B2DC2E00582959 /* NSDictionary+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Query.h"; sourceTree = "<group>"; };
 		926D139418B2DC2E00582959 /* NSDictionary+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Query.m"; sourceTree = "<group>"; };
 		926D13B418B5778300582959 /* joint-distance-handle-long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joint-distance-handle-long.png"; sourceTree = "<group>"; };
@@ -3266,6 +3268,8 @@
 				E3C12B1A171DD386001EEDDB /* NSWindow+CCBAccessoryView.m */,
 				80B149C6183D55E60085935B /* SoundFileImageController.h */,
 				80B149C7183D55E60085935B /* SoundFileImageController.m */,
+				9269C30E1991A38100884F59 /* SBMenuItem.h */,
+				9269C30F1991A38100884F59 /* SBMenuItem.m */,
 			);
 			name = "GUI Util";
 			sourceTree = "<group>";

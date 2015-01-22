@@ -20,16 +20,6 @@
     return [self effectWithRedOffset:CGPointMake(0.0, 0.0) greenOffset:CGPointMake(0.0, 0.0) blueOffset:CGPointMake(0.0, 0.0)];
 }
 
-//- (CGPoint)vectorToPoint:(GLKVector2)vector
-//{
-//    return CGPointMake(vector.x, vector.y);
-//}
-//
-//- (GLKVector2)pointToVector:(CGPoint)point
-//{
-//    return GLKVector2Make(point.x, point.y);
-//}
-
 - (id)serialize
 {
     return @[@{@"name" : @"redOffsetWithPoint",   @"type" : @"Point", @"value": [CCBWriterInternal serializePoint:self.redOffset] },

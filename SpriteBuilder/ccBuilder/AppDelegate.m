@@ -226,7 +226,7 @@ void ApplyCustomNodeVisitSwizzle()
 	[director setDisplayStats:NO];
 	[director setProjection:CCDirectorProjection2D];    
     
-    _baseContentScaleFactor = director.contentScaleFactor;
+    _baseContentScaleFactor = director.deviceContentScaleFactor;
     
     [self updatePositionScaleFactor];
     
@@ -250,7 +250,7 @@ void ApplyCustomNodeVisitSwizzle()
 
 - (void) updateDerivedViewScaleFactor {
     CCDirectorMac *director     = (CCDirectorMac*) [CCDirector sharedDirector];
-    self.derivedViewScaleFactor = director.contentScaleFactor / director.contentScaleFactor;
+    self.derivedViewScaleFactor = director.contentScaleFactor / director.deviceContentScaleFactor;
 }
 
 - (void) setupSequenceHandler
@@ -4309,9 +4309,9 @@ typedef enum
         CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
 
         // check if DPI has changed
-        if (dir.contentScaleFactor != _baseContentScaleFactor) {
+        if (dir.deviceContentScaleFactor != _baseContentScaleFactor) {
             
-            _baseContentScaleFactor = dir.contentScaleFactor;
+            _baseContentScaleFactor = dir.deviceContentScaleFactor;
             CGFloat tmp = dir.contentScaleFactor;
             dir.contentScaleFactor = _baseContentScaleFactor;
             CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
