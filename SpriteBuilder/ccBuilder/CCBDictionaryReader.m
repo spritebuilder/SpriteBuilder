@@ -614,11 +614,6 @@ __strong NSDictionary* renamedProperties = nil;
     return node;
 }
 
-+ (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict
-{
-    return [CCBDictionaryReader nodeGraphFromDocumentDictionary:dict parentSize:CGSizeZero];
-}
-
 + (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize
 {
     return [CCBDictionaryReader nodeGraphFromDocumentDictionary:dict parentSize:parentSize withParentGraph:nil];
