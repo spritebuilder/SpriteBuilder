@@ -137,7 +137,7 @@
 			<key>type</key>
 			<string>Blendmode</string>
 			<key>name</key>
-			<string>blendFunc</string>
+			<string>blendMode</string>
 		</dict>
 		<dict>
 			<key>displayName</key>

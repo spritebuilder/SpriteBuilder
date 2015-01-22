@@ -141,6 +141,11 @@
     return @[@(bf.src), @(bf.dst)];
 }
 
++ (id) serializeBlendMode:(CCBlendMode *)blendMode
+{
+    return blendMode.options;
+}
+
 + (id) serializeFloatScale:(float)f type:(int)type
 {
     return @[@(f), @(type)];
@@ -311,10 +316,8 @@
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
-//        NSValue* blendValue = [node valueForKey:name];
-//        ccBlendFunc bf;
-//        [blendValue getValue:&bf];
-//        serializedValue = [CCBDictionaryWriter serializeBlendFunc:bf];
+        CCBlendMode *blendMode = [node valueForKey:name];;
+        serializedValue = [CCBDictionaryWriter serializeBlendMode:blendMode];
     }
     else if ([type isEqualToString:@"FntFile"])
     {

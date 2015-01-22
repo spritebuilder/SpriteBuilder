@@ -41,4 +41,5 @@
 + (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph;
 + (void)postDeserializationFixup:(CCNode*)node;
 
++ (CCBlendMode *)deserializeBlendMode:(id)value;
 @end

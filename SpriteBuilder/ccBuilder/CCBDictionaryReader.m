@@ -323,11 +323,9 @@ __strong NSDictionary* renamedProperties = nil;
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
-/*
-        ccBlendFunc bf = [CCBDictionaryReader deserializeBlendFunc:serializedValue];
-        NSValue* blendValue = [NSValue value:&bf withObjCType:@encode(ccBlendFunc)];
-        [node setValue:blendValue forKey:name];
-*/
+
+        CCBlendMode *blendMode = [CCBDictionaryReader deserializeBlendMode:serializedValue];
+        [node setValue:blendMode forKey:name];
     }
     else if ([type isEqualToString:@"FntFile"])
     {
@@ -457,6 +455,11 @@ __strong NSDictionary* renamedProperties = nil;
     {
         NSLog(@"WARNING Unrecognized property type: %@", type);
     }
+}
+
++ (CCBlendMode *)deserializeBlendMode:(id)value
+{
+    return [CCBlendMode blendModeWithOptions:value];
 }
 
 + (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize
