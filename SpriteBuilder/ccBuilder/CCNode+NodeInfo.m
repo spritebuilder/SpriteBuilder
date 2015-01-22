@@ -881,16 +881,20 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 
 
 
-- (CGAffineTransform) startTransform;
+- (GLKMatrix4) startMatrix;
 {
     NodeInfo* info = self.userObject;
-    return info.startTransform;
+    return info.startMatrix;
 }
 
 - (CGPoint) transformStartPosition
 {
     NodeInfo* info = self.userObject;
-    return CGPointApplyAffineTransform(self.anchorPointInPoints, info.startTransform);
+    CGPoint anchor = self.anchorPointInPoints;
+    GLKVector4 p = GLKMatrix4MultiplyVector4(info.startMatrix, GLKVector4Make(anchor.x, anchor.y, 0.0, 1.0));
+    
+    // Ignore z and perspective divide?
+    return CGPointMake(p.x, p.y);
 }
 
 - (CGPoint) startAnchorPoint
@@ -902,8 +906,8 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 - (void) cacheStartTransformAndAnchor
 {
     NodeInfo* info = self.userObject;
-    info.startTransform = self.nodeToWorldTransform;
-		info.startAnchorPoint = self.anchorPoint;
+    info.startMatrix = self.nodeToWorldMatrix;
+    info.startAnchorPoint = self.anchorPoint;
 }
 
 - (void) setUsesFlashSkew:(BOOL)seqExpanded
