@@ -887,6 +887,12 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     return info.startMatrix;
 }
 
+-(CGAffineTransform)startTransform
+{
+    GLKMatrix4 m = self.startMatrix;
+    return CGAffineTransformMake(m.m[0], m.m[1], m.m[4], m.m[5], m.m[12], m.m[13]);
+}
+
 - (CGPoint) transformStartPosition
 {
     NodeInfo* info = self.userObject;
