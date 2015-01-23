@@ -6,6 +6,7 @@
 //
 //
 
+#import <Foundation/Foundation.h>
 #import "CCBProjectCreator.h"
 #import "AppDelegate.h"
 #import "CCBFileUtil.h"
@@ -78,10 +79,12 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     NSString *projName = [[fileName lastPathComponent] stringByDeletingPathExtension];
     NSString *identifier = [projName sanitizedIdentifier];
 
+    NSDictionary *renameParams = @{substitutableProjectIdentifier:identifier, substitutableProjectName:projName};
+
     // Update the project
     NSString *pbxprojFile = [xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"];
-    [self setName:projName inFile:pbxprojFile search:substitutableProjectName];
-    [self setName:identifier inFile:pbxprojFile search:substitutableProjectIdentifier];
+    [self replace:renameParams in:pbxprojFile];
+
     NSArray *filesToRemove;
     if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
     {
@@ -133,8 +136,7 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
 
         // Update plist
         NSString *plistFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Resources/Platforms/%@/Info.plist", platform]];
-        [self setName:identifier inFile:plistFileName search:substitutableProjectIdentifier];
-        [self setName:projName inFile:plistFileName search:substitutableProjectName];
+        [self replace:renameParams in:plistFileName];
     }
 
     // Rename Xcode project file
@@ -144,41 +146,51 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
 
     // Update Mac Xib file
     NSString *xibFileName = [parentPath stringByAppendingPathComponent:@"Source/Resources/Platforms/Mac/MainMenu.xib"];
-    [self setName:identifier inFile:xibFileName search:substitutableProjectIdentifier];
-    [self setName:projName inFile:xibFileName search:substitutableProjectName];
+    [self replace:renameParams in:xibFileName];
+
 
     // Android
     NSString *activityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", substitutableProjectIdentifier]];
     if ([fm fileExistsAtPath:activityMFileName])
     {
-        NSString *resultActivityMFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", identifier]];
-
-        if (![fm moveItemAtPath:activityMFileName toPath:resultActivityMFileName error:&error])
-        {
-            return NO;
-        }
-
-        [self setName:identifier inFile:resultActivityMFileName search:substitutableProjectIdentifier];
-
         NSString *activityHFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.h", substitutableProjectIdentifier]];
-        NSString *resultActivityHFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.h", identifier]];
-
-        if (![fm moveItemAtPath:activityHFileName toPath:resultActivityHFileName error:&error])
-        {
-            return NO;
-        }
-
-        [self setName:identifier inFile:resultActivityHFileName search:substitutableProjectIdentifier];
-
         NSString *manifestFileName = [parentPath stringByAppendingPathComponent:@"Source/Resources/Platforms/Android/AndroidManifest.xml"];
-        [self setName:identifier inFile:manifestFileName search:substitutableProjectIdentifier];
-        [self setName:projName inFile:manifestFileName search:substitutableProjectName];
+        NSArray *filesNeedingInterpolation = @[activityMFileName,activityHFileName, manifestFileName];
+
+        for (NSString* filePath in filesNeedingInterpolation)
+        {
+            [self replace:renameParams in:filePath];
+        }
     }
 
     // perform cleanup to remove unnecessary files which only bloat the project
     [CCBFileUtil cleanupSpriteBuilderProjectAtPath:fileName];
 
     return [fm fileExistsAtPath:fileName];
+}
+
+- (void)replace:(NSDictionary *)substitutions in:(NSString *)fileName
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *resultFilename = [NSString stringWithString:fileName];
+
+    for( NSString*key in substitutions.allKeys)
+    {
+        resultFilename = [resultFilename stringByReplacingOccurrencesOfString:key withString:substitutions[key]];
+    }
+
+    BOOL renameRequired = ![resultFilename isEqualToString:fileName];
+    if(renameRequired)
+    {
+        NSError *error;
+        [fm moveItemAtPath:fileName toPath:resultFilename error:&error];
+        NSAssert(!error, @"error occurred renaming %@ - %@", fileName, [error description]);
+    }
+
+    for( NSString*key in substitutions.allKeys)
+    {
+        [self setName:substitutions[key] inFile:resultFilename search:key];
+    }
 }
 
 - (void)setName:(NSString *)name inFile:(NSString *)fileName search:(NSString *)searchStr
