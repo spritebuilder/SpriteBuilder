@@ -83,8 +83,7 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
 
     // Update the project
     NSString *pbxprojFile = [xcodeFileName stringByAppendingPathComponent:@"project.pbxproj"];
-    [self setName:projName inFile:pbxprojFile search:substitutableProjectName];
-    [self setName:identifier inFile:pbxprojFile search:substitutableProjectIdentifier];
+    [self replace:renameParams in:pbxprojFile];
 
     NSArray *filesToRemove;
     if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
@@ -148,13 +147,7 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     //Interpolate new project values into all remaining files with placeholders
 
     NSString *xibFileName = [parentPath stringByAppendingPathComponent:@"Source/Resources/Platforms/Mac/MainMenu.xib"];
-    NSString *macAppDelegateMFileName = [parentPath stringByAppendingPathComponent:@"Source/Platforms/Mac/AppDelegate.m"];
-    NSString *iosAppDelegateMFileName = [parentPath stringByAppendingPathComponent:@"Source/Platforms/iOS/AppDelegate.m"];
-    NSString *controllerHName = [parentPath stringByAppendingPathComponent:@"Source/PROJECTIDENTIFIERController.h"];
-    NSString *controllerMName = [parentPath stringByAppendingPathComponent:@"Source/PROJECTIDENTIFIERController.m"];
-
-    NSMutableArray *filesNeedingInterpolation = [NSMutableArray arrayWithArray: @[xibFileName, macAppDelegateMFileName,
-            iosAppDelegateMFileName, controllerHName,controllerMName]];
+    [self replace:renameParams in:xibFileName];
 
     //Add android files if they exist
     NSString *activityMFileName = [parentPath stringByAppendingPathComponent:
@@ -163,14 +156,12 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     {
         NSString *activityHFileName = [parentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.h", substitutableProjectIdentifier]];
         NSString *manifestFileName = [parentPath stringByAppendingPathComponent:@"Source/Resources/Platforms/Android/AndroidManifest.xml"];
+        NSArray *filesNeedingInterpolation = @[activityMFileName,activityHFileName, manifestFileName];
 
-        [filesNeedingInterpolation addObjectsFromArray: @[activityMFileName,activityHFileName, manifestFileName]];
-    }
-
-    //Perform the interpolation
-    for (NSString* filePath in filesNeedingInterpolation)
-    {
-        [self replace:renameParams in:filePath];
+        for (NSString* filePath in filesNeedingInterpolation)
+        {
+            [self replace:renameParams in:filePath];
+        }
     }
 
     // perform cleanup to remove unnecessary files which only bloat the project
@@ -178,6 +169,30 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
 
     return [fm fileExistsAtPath:fileName];
 };
+
+- (void)replace:(NSDictionary *)substitutions in:(NSString *)fileName
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *resultFilename = [NSString stringWithString:fileName];
+
+    for( NSString*key in substitutions.allKeys)
+    {
+        resultFilename = [resultFilename stringByReplacingOccurrencesOfString:key withString:substitutions[key]];
+    }
+
+    BOOL renameRequired = ![resultFilename isEqualToString:fileName];
+    if(renameRequired)
+    {
+        NSError *error;
+        [fm moveItemAtPath:fileName toPath:resultFilename error:&error];
+        NSAssert(!error, @"error occurred renaming %@ - %@", fileName, [error description]);
+    }
+
+    for( NSString*key in substitutions.allKeys)
+    {
+        [self setName:substitutions[key] inFile:resultFilename search:key];
+    }
+}
 
 - (void)replace:(NSDictionary *)substitutions in:(NSString *)fileName
 {
