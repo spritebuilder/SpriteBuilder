@@ -337,10 +337,10 @@
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
-        NSValue* blendValue = [node valueForKey:name];
-        ccBlendFunc bf;
-        [blendValue getValue:&bf];
-        serializedValue = [CCBWriterInternal serializeBlendFunc:bf];
+//        NSValue* blendValue = [node valueForKey:name];
+//        ccBlendFunc bf;
+//        [blendValue getValue:&bf];
+//        serializedValue = [CCBWriterInternal serializeBlendFunc:bf];
     }
     else if ([type isEqualToString:@"FntFile"])
     {

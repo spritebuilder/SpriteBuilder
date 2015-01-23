@@ -325,7 +325,7 @@ const int kSpringHeightHalf = kSpringHeight/2;
 
 -(void)setRestLengthEnabled:(BOOL)restLengthEnabled
 {
-	if((!self.bodyA || !self.bodyB) && self.isRunningInActiveScene)
+	if((!self.bodyA || !self.bodyB) && self.active)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Assign Bodies" message:@"You must assign this joint to both BodyA and BodyB before editing the rest length"];
 		return;

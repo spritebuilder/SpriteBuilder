@@ -274,9 +274,9 @@
 {
     minDistance = lMinDistance;
     
-    if(self.isRunningInActiveScene)
+    if(self.active)
     {
-		if(self.isRunningInActiveScene && !minDistanceEnabled )
+		if(self.active && !minDistanceEnabled )
 		{
 			[self willChangeValueForKey:@"minDistance"];
 			minDistance = [self localLength];
@@ -299,7 +299,7 @@
 {
     maxDistance = lMaxDistance;
     
-    if(self.isRunningInActiveScene )
+    if(self.active )
     {
 		if(!maxDistanceEnabled)
 		{
@@ -325,7 +325,7 @@
 
 -(void)setMaxDistanceEnabled:(BOOL)lMaxDistanceEnabled
 {
-	if((!self.bodyA || !self.bodyB) && self.isRunningInActiveScene)
+	if((!self.bodyA || !self.bodyB) && self.active)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Assign Bodies" message:@"You must assign this joint to both BodyA and BodyB before editing the max distance"];
 		return;
@@ -347,7 +347,7 @@
 
 -(void)setMinDistanceEnabled:(BOOL)lMinDistanceEnabled
 {
-	if((!self.bodyA || !self.bodyB) && self.isRunningInActiveScene)
+	if((!self.bodyA || !self.bodyB) && self.active)
 	{
 		[[AppDelegate appDelegate] modalDialogTitle:@"Assign Bodies" message:@"You must assign this joint to both BodyA and BodyB before editing the min distance"];
 		return;
