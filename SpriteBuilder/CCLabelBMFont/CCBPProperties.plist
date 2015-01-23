@@ -93,22 +93,26 @@
 			<string>color</string>
 		</dict>
 		<dict>
-			<key>default</key>
-			<array>
-				<integer>1</integer>
-				<integer>771</integer>
-			</array>
+            <key>default</key>
+            <dict>
+                <key>CCBlendFuncSrcColor</key>
+                <integer>1</integer>
+                <key>CCBlendFuncDstColor</key>
+                <integer>771</integer>
+            </dict>
 			<key>defaultSerialization</key>
-			<array>
-				<integer>1</integer>
-				<integer>771</integer>
-			</array>
+            <dict>
+                <key>CCBlendFuncSrcColor</key>
+                <integer>1</integer>
+                <key>CCBlendFuncDstColor</key>
+                <integer>771</integer>
+            </dict>
 			<key>displayName</key>
 			<string></string>
 			<key>type</key>
 			<string>Blendmode</string>
 			<key>name</key>
-			<string>blendFunc</string>
+			<string>blendMode</string>
 		</dict>
 		<dict>
 			<key>affectsProperties</key>

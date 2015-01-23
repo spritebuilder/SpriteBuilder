@@ -944,6 +944,7 @@
 		E525F7A38F87B899A18CA645 /* InspectorFloatXY.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F859D5D885670A69CAA5 /* InspectorFloatXY.m */; };
 		E525F7AC155C1C4502F6A34A /* PackageImporter_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */; };
 		E525F7D63B68B99ADD44F94C /* PackageCreator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */; };
+		E525F7FB50ECB0E5414C0E86 /* version_4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F5DC24AE882BDAAA8E22 /* version_4.ccb */; };
 		E525F8060449703DC2A1A4BD /* InspectorPopoverSpriteFrame.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FA695F4DA8350BF171CE /* InspectorPopoverSpriteFrame.xib */; };
 		E525F812527AA20385181AAA /* InspectorPopoverDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FED28257D82C09E2EB7B /* InspectorPopoverDegrees.xib */; };
 		E525F83F999A5DDB0E0E304F /* InspectorStartStop.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F46A8395FB223B091E4B /* InspectorStartStop.xib */; };
@@ -964,6 +965,7 @@
 		E525F9C561CF0D13BB57D6F5 /* NSError+SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F90876BE1677B68F8373 /* NSError+SBErrors.m */; };
 		E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */; };
 		E525F9DBFC05304CDDE326B9 /* InspectorString.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FFC4E205CD906143FE30 /* InspectorString.m */; };
+		E525F9DDCDAD0C1AD78029F0 /* CCBDictionaryReader_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F10140E3181E71A2CEF6 /* CCBDictionaryReader_Tests.m */; };
 		E525FA04F2DB00657F8D534C /* InspectorEffectControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FEBA90890AA6A1373E42 /* InspectorEffectControl.xib */; };
 		E525FA23B9F5571ED655B96C /* InspectorFloatCheck.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F01EE8CDFEE970D1C645 /* InspectorFloatCheck.xib */; };
 		E525FA2415B3F551B2A330F5 /* InspectorSeparator.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FD322BE7FEDE018F7CF3 /* InspectorSeparator.xib */; };
@@ -2491,6 +2493,7 @@
 		E525F0ED6F868B09686F38DF /* PublishRegularFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishRegularFileOperation.h; sourceTree = "<group>"; };
 		E525F0F30379667FD6285EA3 /* ResourceCommandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCommandController.h; sourceTree = "<group>"; };
 		E525F0FDB3663FD55352DB8F /* InspectorFloatXY.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFloatXY.xib; sourceTree = "<group>"; };
+		E525F10140E3181E71A2CEF6 /* CCBDictionaryReader_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDictionaryReader_Tests.m; sourceTree = "<group>"; };
 		E525F111DC84386499A8F15F /* InspectorEffectControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEffectControl.m; sourceTree = "<group>"; };
 		E525F114D9A9919E6CCBFBEC /* InspectorFloat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFloat.m; sourceTree = "<group>"; };
 		E525F12AC1FD0EE03A2850EE /* InspectorColor4FVar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor4FVar.m; sourceTree = "<group>"; };
@@ -2587,6 +2590,7 @@
 		E525F5A87B18967058D36E9D /* RemoveFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand.m; sourceTree = "<group>"; };
 		E525F5AB3F6A794F313DBF98 /* PreviewBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewBaseViewController.m; sourceTree = "<group>"; };
 		E525F5BD0D9F80CC94E78D08 /* CCBMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBMigrator.h; sourceTree = "<group>"; };
+		E525F5DC24AE882BDAAA8E22 /* version_4.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = version_4.ccb; sourceTree = "<group>"; };
 		E525F5EA95FBBDE05FCBE2E3 /* InspectorPropertyPaneBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPropertyPaneBuilder.h; sourceTree = "<group>"; };
 		E525F5FEC6B4AEDEC9E53CBC /* SBPackageSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPackageSettings.h; sourceTree = "<group>"; };
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
@@ -3990,6 +3994,7 @@
 				E525F4E8267453E4F829C98F /* Plugin Manager */,
 				E525F03E1544B3B62082E0C1 /* Migration */,
 				E525FF7082CA2E2A2812CBDB /* Document Readers & Writers */,
+				E525FC9645E2BF20C2460ED6 /* Testing Resources */,
 			);
 			path = "SpriteBuilder Tests";
 			sourceTree = "<group>";
@@ -5801,6 +5806,14 @@
 			name = Inspector;
 			sourceTree = "<group>";
 		};
+		E525FC9645E2BF20C2460ED6 /* Testing Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E525F5DC24AE882BDAAA8E22 /* version_4.ccb */,
+			);
+			path = "Testing Resources";
+			sourceTree = "<group>";
+		};
 		E525FD5B8B57EAC9AC003013 /* Publishing */ = {
 			isa = PBXGroup;
 			children = (
@@ -5824,6 +5837,7 @@
 			isa = PBXGroup;
 			children = (
 				E525FB7E6FD9CB089D4D1B03 /* CCBDictionaryWriter_Tests.m */,
+				E525F10140E3181E71A2CEF6 /* CCBDictionaryReader_Tests.m */,
 			);
 			name = "Document Readers & Writers";
 			sourceTree = "<group>";
@@ -6887,6 +6901,7 @@
 				92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */,
 				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
 				B7E6BB5519F868F000619A58 /* select-physics-corner@2x.png in Resources */,
+				E525F7FB50ECB0E5414C0E86 /* version_4.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7552,6 +7567,7 @@
 				E525F7955AC7103E961D6553 /* PluginNode_Tests.m in Sources */,
 				E525F165B4E19784684E39D4 /* PublishUtil_Tests.m in Sources */,
 				E525FFDBC4531DB8F1544905 /* CCBDictionaryWriter_Tests.m in Sources */,
+				E525F9DDCDAD0C1AD78029F0 /* CCBDictionaryReader_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
