@@ -7,8 +7,4 @@
 
 @interface PROJECTIDENTIFIERController : CCAppController
 
-+ (PROJECTIDENTIFIERController*)sharedController;
-
-+ (void)setupApplication;
-
 @end
