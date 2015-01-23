@@ -29,10 +29,6 @@
 
 @implementation PROJECTIDENTIFIERActivity
 
-- (CCScene *)startScene
-{
-    return [CCBReader loadAsScene:@"MainScene"];
-}
 
 - (BOOL)onKeyUp:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
 {
@@ -41,6 +37,13 @@
         [self finish];
     }
     return NO;
+}
+
+- (void)run
+{
+    [super run];
+    
+    [PROJECTIDENTIFIERController setupApplication];
 }
 
 @end
