@@ -94,6 +94,18 @@
                         @"value" : @[@1, @1, @1, @1,]
                     },
                     @{
+                        @"name" : @"blendMode",
+                        @"type" : @"Blendmode",
+                        @"value" : @{
+                            @"CCBlendEquationAlpha" : @32774,
+                            @"CCBlendEquationColor" : @32774,
+                            @"CCBlendFuncDstAlpha" : @771,
+                            @"CCBlendFuncDstColor" : @771,
+                            @"CCBlendFuncSrcAlpha" : @1,
+                            @"CCBlendFuncSrcColor" : @1
+                        }
+                    },
+                    @{
                         @"name" : @"effects",
                         @"type" : @"EffectControl",
                         @"value" : @[]
@@ -133,7 +145,33 @@
         ]
     };
 
-    XCTAssertTrue([result isEqualTo:expectedDict], @"%@ does not equal %@", result, expectedDict);
+    BOOL equal = [result isEqualTo:expectedDict];
+    XCTAssertTrue(equal);
+    if (!equal)
+    {
+        NSLog(@"Diff:");
+        [self diff:result dictB:expectedDict];
+    }
 };
+
+- (void)diff:(NSDictionary *)dictA dictB:(NSDictionary *)dictB
+{
+    NSTask *task = [[NSTask alloc] init];
+    [task setCurrentDirectoryPath:NSTemporaryDirectory()];
+    [task setLaunchPath:@"/bin/bash"];
+
+    NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/diff <(echo \"%@\") <(echo \"%@\")", dictA, dictB]];
+    [task setArguments:args];
+
+    @try
+    {
+        [task launch];
+        [task waitUntilExit];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"[COCO2D-UPDATER] [ERROR] unzipping failed: %@", exception);
+    }
+}
 
 @end
