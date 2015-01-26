@@ -1011,6 +1011,7 @@
 		E525FD0CE48AC54FD5CA02BD /* InspectorEnabledFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FB2C511229C00D261998 /* InspectorEnabledFloat.xib */; };
 		E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */; };
 		E525FD5F78427772C74BE9FC /* InspectorScaleLock.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCFC2EDFEDA03875ABBF /* InspectorScaleLock.m */; };
+		E525FD614349CBFEE95F6B57 /* test_ccbreader_node.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD0D27DC13384CB3965A /* test_ccbreader_node.ccb */; };
 		E525FD63AB363E8EE8C4D5BB /* PropertyInspectorTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC21545751BAC7507A16 /* PropertyInspectorTemplate.m */; };
 		E525FD71DA9970A211540812 /* RMDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDE1E2157A624E4395A5 /* RMDirectory.m */; };
 		E525FD765886B725C95077AF /* InspectorText.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FA636F4ACE743A181D31 /* InspectorText.xib */; };
@@ -2745,6 +2746,7 @@
 		E525FCF3390A837BDC5BF47E /* ResourcePropertiesMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourcePropertiesMigrator.h; sourceTree = "<group>"; };
 		E525FCFC2EDFEDA03875ABBF /* InspectorScaleLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorScaleLock.m; sourceTree = "<group>"; };
 		E525FD01001CAF3B6158DDD4 /* InspectorSeparatorSub.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorSeparatorSub.xib; sourceTree = "<group>"; };
+		E525FD0D27DC13384CB3965A /* test_ccbreader_node.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_node.ccb; sourceTree = "<group>"; };
 		E525FD16B4E31F0FF6FC377A /* InspectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorButton.m; sourceTree = "<group>"; };
 		E525FD2158199F3168E4AD1E /* MailingListWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MailingListWindow.xib; sourceTree = "<group>"; };
 		E525FD2D849749BB67455943 /* DateCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCache.m; sourceTree = "<group>"; };
@@ -5810,6 +5812,7 @@
 			isa = PBXGroup;
 			children = (
 				E525F52CCE4E79FA286F8FEE /* test_ccbreader_migration_version_4_to_5.ccb */,
+				E525FD0D27DC13384CB3965A /* test_ccbreader_node.ccb */,
 			);
 			path = "Testing Resources";
 			sourceTree = "<group>";
@@ -6902,6 +6905,7 @@
 				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
 				B7E6BB5519F868F000619A58 /* select-physics-corner@2x.png in Resources */,
 				E525FEC4E08E523FF20E1187 /* test_ccbreader_migration_version_4_to_5.ccb in Resources */,
+				E525FD614349CBFEE95F6B57 /* test_ccbreader_node.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

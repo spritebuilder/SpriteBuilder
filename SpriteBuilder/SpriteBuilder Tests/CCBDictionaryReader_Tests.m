@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "CCBDictionaryReader.h"
 #import "NodeInfo.h"
+#import "CustomPropSetting.h"
 
 @interface CCBDictionaryReader_Tests : XCTestCase
 
@@ -33,6 +34,44 @@
     XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncDstColor"], @772);
 }
 
+- (void)testNodeGraphFromDocumentDict_node
+{
+    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_node"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = container.children[0];
+
+    XCTAssertEqual(node.visible, NO);
+
+    XCTAssertEqualWithAccuracy(node.position.x, 0.176, 0.001);
+    XCTAssertEqual(node.position.y, 200.0);
+
+    XCTAssertEqual(node.positionType.corner, CCPositionReferenceCornerBottomLeft);
+    XCTAssertEqual(node.positionType.xUnit, CCPositionUnitNormalized);
+    XCTAssertEqual(node.positionType.yUnit, CCPositionUnitPoints);
+
+    XCTAssertEqual(node.contentSize.width, 123.0);
+    XCTAssertEqual(node.contentSize.height, 345.0);
+
+    XCTAssertEqualWithAccuracy(node.scaleX, 1.1, 0.001);
+    XCTAssertEqualWithAccuracy(node.scaleY, 1.1, 0.001);
+    XCTAssertEqual(node.scaleType, CCScaleTypePoints);
+
+    XCTAssertEqualWithAccuracy(node.anchorPoint.x, 0.6, 0.0001);
+    XCTAssertEqualWithAccuracy(node.anchorPoint.y, 0.7, 0.0001);
+
+    XCTAssertEqualObjects(node.name, @"Foobar");
+
+    XCTAssertEqualWithAccuracy(node.skewX, 0.2, 0.001);
+    XCTAssertEqualWithAccuracy(node.skewY, 0.5, 0.001);
+
+    XCTAssertEqualObjects([node.userObject extraProps][@"customClass"], @"MainScene");
+    XCTAssertEqualObjects([node.userObject extraProps][@"UUID"], @1);
+    XCTAssertEqualObjects([node.userObject extraProps][@"memberVarAssignmentType"], @1);
+
+    CustomPropSetting *customPropSetting = [node.userObject customProperties][0];
+    XCTAssertEqualObjects([customPropSetting name], @"myCustomProperty");
+    XCTAssertEqualObjects([customPropSetting value], @"test");
+}
+
 /*
 - (void)testNodeGraphFromDocumentDict_sprite
 {
@@ -47,34 +86,6 @@
 
     XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncSrcColor"], @774);
     XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncDstColor"], @772);
-}
-
-- (void)testNodeGraphFromDocumentDict_node
-{
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_node"] parentSize:CGSizeMake(1024.0, 1024.0)];
-
-    // Standard CCNode
-    XCTAssertEqual(node.position.x, 100.0);
-    XCTAssertEqual(node.position.y, 200.0);
-
-    XCTAssertEqual(node.contentSize.width, 123.0);
-    XCTAssertEqual(node.contentSize.height, 345.0);
-
-    XCTAssertEqual(node.scaleX, 1.0);
-    XCTAssertEqual(node.scaleY, 1.0);
-
-    XCTAssertEqualWithAccuracy(node.anchorPoint.x, 0.6, 0.0001);
-    XCTAssertEqualWithAccuracy(node.anchorPoint.y, 0.7, 0.0001);
-
-    XCTAssertEqualObjects(node.name, @"Foobar");
-
-    XCTAssertEqual(node.positionType.corner, CCPositionReferenceCornerBottomLeft);
-    XCTAssertEqual(node.positionType.xUnit, CCPositionUnitNormalized);
-    XCTAssertEqual(node.positionType.yUnit, CCPositionUnitPoints);
-
-    XCTAssertEqualObjects([node.userObject extraProps][@"customClass"], @"MainScene");
-    XCTAssertEqualObjects([node.userObject extraProps][@"UUID"], @1);
-    XCTAssertEqualObjects([node.userObject extraProps][@"memberVarAssignmentType"], @1);
 }
 
 - (void)testNodeGraphFromDocumentDict_nodegradient
