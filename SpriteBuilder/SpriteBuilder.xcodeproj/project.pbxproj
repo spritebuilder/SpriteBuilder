@@ -944,7 +944,6 @@
 		E525F7A38F87B899A18CA645 /* InspectorFloatXY.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F859D5D885670A69CAA5 /* InspectorFloatXY.m */; };
 		E525F7AC155C1C4502F6A34A /* PackageImporter_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */; };
 		E525F7D63B68B99ADD44F94C /* PackageCreator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */; };
-		E525F7FB50ECB0E5414C0E86 /* version_4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F5DC24AE882BDAAA8E22 /* version_4.ccb */; };
 		E525F8060449703DC2A1A4BD /* InspectorPopoverSpriteFrame.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FA695F4DA8350BF171CE /* InspectorPopoverSpriteFrame.xib */; };
 		E525F812527AA20385181AAA /* InspectorPopoverDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FED28257D82C09E2EB7B /* InspectorPopoverDegrees.xib */; };
 		E525F83F999A5DDB0E0E304F /* InspectorStartStop.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F46A8395FB223B091E4B /* InspectorStartStop.xib */; };
@@ -1025,6 +1024,7 @@
 		E525FE05101964D26EF42978 /* ZipDirectoryOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F1E97AEC538F15CC489E /* ZipDirectoryOperation.m */; };
 		E525FE38751D424935B4E27C /* InspectorFloatXY.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F0FDB3663FD55352DB8F /* InspectorFloatXY.xib */; };
 		E525FE4E98094590DEF34EF8 /* CCBPublisherCacheCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F13FEF3757012A4E0DDE /* CCBPublisherCacheCleaner.m */; };
+		E525FEC4E08E523FF20E1187 /* test_ccbreader_migration_version_4_to_5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F52CCE4E79FA286F8FEE /* test_ccbreader_migration_version_4_to_5.ccb */; };
 		E525FF00EF056E6904CAB106 /* InspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8027C3E43F222BD84A5 /* InspectorController.m */; };
 		E525FF15523F47E23FC1A6AB /* ResourceNewFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F62CB14FA52E5EBC0BDC /* ResourceNewFileCommand.m */; };
 		E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */; };
@@ -2580,6 +2580,7 @@
 		E525F50315A73CE3734277F2 /* InspectorFloatXY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorFloatXY.h; sourceTree = "<group>"; };
 		E525F510AE325C5A3DF41DA3 /* FileSystemTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemTestCase.h; sourceTree = "<group>"; };
 		E525F51E61767602F66107B1 /* InspectorIntegerLabeled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorIntegerLabeled.m; sourceTree = "<group>"; };
+		E525F52CCE4E79FA286F8FEE /* test_ccbreader_migration_version_4_to_5.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_migration_version_4_to_5.ccb; sourceTree = "<group>"; };
 		E525F548A11D0FDEAE37BAB5 /* InspectorBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorBlock.h; sourceTree = "<group>"; };
 		E525F555049710FF6F9C655F /* InspectorSeparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorSeparator.h; sourceTree = "<group>"; };
 		E525F563B38B9F934F699449 /* InspectorSeparator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorSeparator.m; sourceTree = "<group>"; };
@@ -2590,7 +2591,6 @@
 		E525F5A87B18967058D36E9D /* RemoveFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand.m; sourceTree = "<group>"; };
 		E525F5AB3F6A794F313DBF98 /* PreviewBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewBaseViewController.m; sourceTree = "<group>"; };
 		E525F5BD0D9F80CC94E78D08 /* CCBMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBMigrator.h; sourceTree = "<group>"; };
-		E525F5DC24AE882BDAAA8E22 /* version_4.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = version_4.ccb; sourceTree = "<group>"; };
 		E525F5EA95FBBDE05FCBE2E3 /* InspectorPropertyPaneBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPropertyPaneBuilder.h; sourceTree = "<group>"; };
 		E525F5FEC6B4AEDEC9E53CBC /* SBPackageSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPackageSettings.h; sourceTree = "<group>"; };
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
@@ -5809,7 +5809,7 @@
 		E525FC9645E2BF20C2460ED6 /* Testing Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E525F5DC24AE882BDAAA8E22 /* version_4.ccb */,
+				E525F52CCE4E79FA286F8FEE /* test_ccbreader_migration_version_4_to_5.ccb */,
 			);
 			path = "Testing Resources";
 			sourceTree = "<group>";
@@ -6901,7 +6901,7 @@
 				92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */,
 				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
 				B7E6BB5519F868F000619A58 /* select-physics-corner@2x.png in Resources */,
-				E525F7FB50ECB0E5414C0E86 /* version_4.ccb in Resources */,
+				E525FEC4E08E523FF20E1187 /* test_ccbreader_migration_version_4_to_5.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

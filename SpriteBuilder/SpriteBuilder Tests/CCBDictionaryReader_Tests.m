@@ -12,8 +12,6 @@
 
 @interface CCBDictionaryReader_Tests : XCTestCase
 
-@property (nonatomic, strong) NSDictionary *documentDict;
-
 @end
 
 
@@ -22,18 +20,40 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *path = [bundle pathForResource:@"version_4" ofType:@"ccb"];
-
-    self.documentDict = [NSDictionary dictionaryWithContentsOfFile:path];
 }
 
 - (void)testNodeGraphFromDocumentDict_version_4_to_5_migration_new_blend_mode
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:_documentDict parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_migration_version_4_to_5"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
+    CCSprite *child3 = node.children[2];
+    XCTAssertTrue([node.children[2] isKindOfClass:[CCSprite class]]);
+
+    XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncSrcColor"], @774);
+    XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncDstColor"], @772);
+}
+
+/*
+- (void)testNodeGraphFromDocumentDict_sprite
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_sprite"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCSprite *child3 = node.children[2];
+    XCTAssertTrue([node.children[2] isKindOfClass:[CCSprite class]]);
+
+    XCTAssertTrue([child3.effect isKindOfClass:[CCEffectStack class]]);
+    NSArray *effects = [child3 valueForKey:@"effects"];
+    XCTAssertTrue([effects[0] isKindOfClass:[CCEffectContrast class]]);
+
+    XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncSrcColor"], @774);
+    XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncDstColor"], @772);
+}
+
+- (void)testNodeGraphFromDocumentDict_node
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_node"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    // Standard CCNode
     XCTAssertEqual(node.position.x, 100.0);
     XCTAssertEqual(node.position.y, 200.0);
 
@@ -55,10 +75,13 @@
     XCTAssertEqualObjects([node.userObject extraProps][@"customClass"], @"MainScene");
     XCTAssertEqualObjects([node.userObject extraProps][@"UUID"], @1);
     XCTAssertEqualObjects([node.userObject extraProps][@"memberVarAssignmentType"], @1);
+}
 
-    XCTAssertEqual(node.children.count, 3);
+- (void)testNodeGraphFromDocumentDict_nodegradient
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_nodegradient"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
-
+    // Node Gradient
     CCNodeGradient *child1 = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCNodeGradient class]]);
 
@@ -74,7 +97,80 @@
     XCTAssertEqualWithAccuracy([child1 endColor].green, 0.5, 0.001);
     XCTAssertEqualWithAccuracy([child1 endColor].blue, 0.8, 0.001);
     XCTAssertEqualWithAccuracy([child1 endColor].alpha, 1.0, 0.001);
-    // XCTAssertEqual(, <#expression2, ...#>)
+}
+
+- (void)testNodeGraphFromDocumentDict_colornode
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_colornode"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_sprite9slice
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_sprite9slice"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_particlesystem
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_particlesystem"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_labelttf
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_labeltff"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_bmfont
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_button
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_button"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_textfield
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_textfield"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_slider
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_slider"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_scrollview
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_scrollview"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_boxlayout
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_boxlayout"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_effectnode
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_effectnode"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_subfile
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_subfile"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+*/
+
+
+#pragma mark - helper
+
+- (NSDictionary *)loadCCBFile:(NSString *)ccbName
+{
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *path = [bundle pathForResource:ccbName ofType:@"ccb"];
+
+    XCTAssertNotNil(path, @"CCB file loading failed, no path found for ccb %@.ccb", ccbName);
+
+    return [NSDictionary dictionaryWithContentsOfFile:path];
 }
 
 @end
