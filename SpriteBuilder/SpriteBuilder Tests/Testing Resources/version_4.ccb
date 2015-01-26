@@ -150,8 +150,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
-							<real>-1</real>
+							<real>0.3</real>
+							<real>-0.4</real>
 						</array>
 					</dict>
 				</array>
@@ -595,7 +595,7 @@
 				<key>type</key>
 				<string>StringSimple</string>
 				<key>value</key>
-				<string></string>
+				<string>Foobar</string>
 			</dict>
 			<dict>
 				<key>name</key>
@@ -604,10 +604,10 @@
 				<string>Position</string>
 				<key>value</key>
 				<array>
-					<real>0.0</real>
-					<real>0.0</real>
+					<real>100.0</real>
+					<real>200.0</real>
 					<integer>0</integer>
-					<integer>0</integer>
+					<integer>2</integer>
 					<integer>0</integer>
 				</array>
 			</dict>
@@ -618,8 +618,8 @@
 				<string>Size</string>
 				<key>value</key>
 				<array>
-					<real>1</real>
-					<real>1</real>
+					<real>123</real>
+					<real>345</real>
 					<integer>2</integer>
 					<integer>2</integer>
 				</array>
@@ -631,9 +631,9 @@
 				<string>Point</string>
 				<key>value</key>
 				<array>
-					<real>0.0</real>
-					<real>0.0</real>
-				</array>
+					<real>0.6</real>
+					<real>0.7</real>
+				</array>    
 			</dict>
 			<dict>
 				<key>name</key>
