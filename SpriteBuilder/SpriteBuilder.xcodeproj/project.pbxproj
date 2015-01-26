@@ -928,6 +928,7 @@
 		E525F5E7563958DE71C9B4AE /* ResourceExportPackageCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0424E2063AF911B0692 /* ResourceExportPackageCommand.m */; };
 		E525F5E78A703F1381486AA8 /* InspectorColor4.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF599E666FBB986616AF /* InspectorColor4.xib */; };
 		E525F5F8C06CCB481FC77BEC /* MoveFileCommand_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDF4D554770EFA28EE37 /* MoveFileCommand_Tests.m */; };
+		E525F5FE8329243997FA497E /* test_ccbreader_sprite.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F852D0DA5EFDE1C45F6A /* test_ccbreader_sprite.ccb */; };
 		E525F622A96F0C31CACF1883 /* InspectoreController_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */; };
 		E525F634C2EE9B50F56B0E27 /* InspectorSeparatorSub.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF364C63BB5CD36B6E1D /* InspectorSeparatorSub.m */; };
 		E525F651194EC2A13EA30026 /* ResourceManager_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCBBB1841F3115718AD0 /* ResourceManager_Tests.m */; };
@@ -2641,6 +2642,7 @@
 		E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishBaseOperation.m; sourceTree = "<group>"; };
 		E525F8423D5CF6F76AEFCBCC /* InspectorColor4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor4.m; sourceTree = "<group>"; };
 		E525F849059B8F5243C1C0C3 /* CreateDirectoryFileCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDirectoryFileCommand.m; sourceTree = "<group>"; };
+		E525F852D0DA5EFDE1C45F6A /* test_ccbreader_sprite.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_sprite.ccb; sourceTree = "<group>"; };
 		E525F859D5D885670A69CAA5 /* InspectorFloatXY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFloatXY.m; sourceTree = "<group>"; };
 		E525F85AE82110FF3A50E129 /* PublishGeneratedFilesOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishGeneratedFilesOperation.h; sourceTree = "<group>"; };
 		E525F85B020D91884C61B387 /* InspectorPhysicsUnavailable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPhysicsUnavailable.h; sourceTree = "<group>"; };
@@ -5813,6 +5815,7 @@
 			children = (
 				E525F52CCE4E79FA286F8FEE /* test_ccbreader_migration_version_4_to_5.ccb */,
 				E525FD0D27DC13384CB3965A /* test_ccbreader_node.ccb */,
+				E525F852D0DA5EFDE1C45F6A /* test_ccbreader_sprite.ccb */,
 			);
 			path = "Testing Resources";
 			sourceTree = "<group>";
@@ -6906,6 +6909,7 @@
 				B7E6BB5519F868F000619A58 /* select-physics-corner@2x.png in Resources */,
 				E525FEC4E08E523FF20E1187 /* test_ccbreader_migration_version_4_to_5.ccb in Resources */,
 				E525FD614349CBFEE95F6B57 /* test_ccbreader_node.ccb in Resources */,
+				E525F5FE8329243997FA497E /* test_ccbreader_sprite.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,7 @@
 
 - (void)testNodeGraphFromDocumentDict_version_4_to_5_migration_new_blend_mode
 {
+/*
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_migration_version_4_to_5"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCSprite *child3 = node.children[2];
@@ -32,6 +33,7 @@
 
     XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncSrcColor"], @774);
     XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncDstColor"], @772);
+*/
 }
 
 - (void)testNodeGraphFromDocumentDict_node
@@ -63,6 +65,8 @@
     XCTAssertEqualWithAccuracy(node.skewX, 0.2, 0.001);
     XCTAssertEqualWithAccuracy(node.skewY, 0.5, 0.001);
 
+    XCTAssertEqualWithAccuracy(node.rotation, 10.0, 0.001);
+
     XCTAssertEqualObjects([node.userObject extraProps][@"customClass"], @"MainScene");
     XCTAssertEqualObjects([node.userObject extraProps][@"UUID"], @1);
     XCTAssertEqualObjects([node.userObject extraProps][@"memberVarAssignmentType"], @1);
@@ -72,22 +76,33 @@
     XCTAssertEqualObjects([customPropSetting value], @"test");
 }
 
-/*
 - (void)testNodeGraphFromDocumentDict_sprite
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_sprite"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_sprite"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCSprite *sprite = container.children[0];
 
-    CCSprite *child3 = node.children[2];
-    XCTAssertTrue([node.children[2] isKindOfClass:[CCSprite class]]);
+    XCTAssertTrue([container.children[0] isKindOfClass:[CCSprite class]]);
 
-    XCTAssertTrue([child3.effect isKindOfClass:[CCEffectStack class]]);
-    NSArray *effects = [child3 valueForKey:@"effects"];
+    XCTAssertEqualWithAccuracy(sprite.color.red, 0.082352, 0.001);
+    XCTAssertEqualWithAccuracy(sprite.color.green, 0.77647, 0.001);
+    XCTAssertEqualWithAccuracy(sprite.color.blue, 0.10588, 0.001);
+    XCTAssertEqualWithAccuracy(sprite.color.alpha, 0.5, 0.001);
+
+    XCTAssertTrue([sprite.effect isKindOfClass:[CCEffectStack class]]);
+    NSArray *effects = [sprite valueForKey:@"effects"];
     XCTAssertTrue([effects[0] isKindOfClass:[CCEffectContrast class]]);
+    CCEffectContrast *effectContrast = effects[0];
+    XCTAssertEqualWithAccuracy(effectContrast.contrast, 0.6, 0.001);
 
-    XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncSrcColor"], @774);
-    XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncDstColor"], @772);
+    XCTAssertEqualObjects(sprite.blendMode.options[@"CCBlendFuncSrcColor"], @774);
+    XCTAssertEqualObjects(sprite.blendMode.options[@"CCBlendFuncDstColor"], @772);
+    XCTAssertEqualObjects(sprite.blendMode.options[@"CCBlendFuncSrcAlpha"], @774);
+    XCTAssertEqualObjects(sprite.blendMode.options[@"CCBlendFuncDstAlpha"], @772);
+    XCTAssertEqualObjects(sprite.blendMode.options[@"CCBlendEquationColor"], @32774);
+    XCTAssertEqualObjects(sprite.blendMode.options[@"CCBlendEquationAlpha"], @32774);
 }
 
+/*
 - (void)testNodeGraphFromDocumentDict_nodegradient
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_nodegradient"] parentSize:CGSizeMake(1024.0, 1024.0)];

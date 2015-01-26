@@ -344,6 +344,7 @@ __strong NSDictionary* renamedProperties = nil;
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
+
         CCBlendMode *blendMode = [CCBDictionaryReader deserializeBlendMode:serializedValue];
         [node setValue:blendMode forKey:name];
     }
