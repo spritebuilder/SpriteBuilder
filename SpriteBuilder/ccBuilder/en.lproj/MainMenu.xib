@@ -2359,9 +2359,9 @@ CA
                         <size key="minSize" width="127" height="23"/>
                         <size key="maxSize" width="132" height="25"/>
                         <segmentedControl key="view" wantsLayer="YES" verticalHuggingPriority="750" id="1786">
-                            <rect key="frame" x="0.0" y="12" width="131" height="25"/>
+                            <rect key="frame" x="0.0" y="14" width="131" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="automatic" trackingMode="selectAny" id="1787">
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="capsule" trackingMode="selectAny" id="1787">
                                 <font key="font" metaFont="system"/>
                                 <segments>
                                     <segment toolTip="Hide or Show the Resources" image="TB_leftPanel" selected="YES" tag="-1">

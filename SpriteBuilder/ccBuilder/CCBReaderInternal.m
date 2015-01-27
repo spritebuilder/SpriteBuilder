@@ -323,9 +323,11 @@ __strong NSDictionary* renamedProperties = nil;
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
+/*
         ccBlendFunc bf = [CCBReaderInternal deserializeBlendFunc:serializedValue];
         NSValue* blendValue = [NSValue value:&bf withObjCType:@encode(ccBlendFunc)];
         [node setValue:blendValue forKey:name];
+*/
     }
     else if ([type isEqualToString:@"FntFile"])
     {
