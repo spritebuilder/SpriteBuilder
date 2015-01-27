@@ -50,7 +50,7 @@
 
     if (!*error)
     {
-        [NSError setNewErrorWithCode:error code:SBRenamePackageGenericError message:[NSString stringWithFormat:@"An unexpected error occured. Code %li", SBRenamePackageGenericError]];
+        [NSError setNewErrorWithErrorPointer:error code:SBRenamePackageGenericError message:[NSString stringWithFormat:@"An unexpected error occured. Code %li", SBRenamePackageGenericError]];
     }
     return NO;
 }
@@ -61,7 +61,7 @@
 
     if (!newName || [newName isEmpty])
     {
-        [NSError setNewErrorWithCode:error code:SBEmptyPackageNameError message:@"A package name must not be empty or consist of whitespace characters only"];
+        [NSError setNewErrorWithErrorPointer:error code:SBEmptyPackageNameError message:@"A package name must not be empty or consist of whitespace characters only"];
         return NO;
     }
 
@@ -72,13 +72,13 @@
 
     if ([_projectSettings isResourcePathInProject:newFullPath])
     {
-        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:@"A package with this name already exists in the project"];
+        [NSError setNewErrorWithErrorPointer:error code:SBDuplicateResourcePathError message:@"A package with this name already exists in the project"];
         return NO;
     }
 
     if ([_fileManager fileExistsAtPath:newFullPath])
     {
-        [NSError setNewErrorWithCode:error code:SBResourcePathExistsButNotInProjectError message:@"A package with this name already exists on the file system, but is not in the project."];
+        [NSError setNewErrorWithErrorPointer:error code:SBResourcePathExistsButNotInProjectError message:@"A package with this name already exists on the file system, but is not in the project."];
         return NO;
     }
 

@@ -25,7 +25,6 @@
 
 - (void)testNodeGraphFromDocumentDict_version_4_to_5_migration_new_blend_mode
 {
-/*
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_migration_version_4_to_5"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCSprite *child3 = node.children[2];
@@ -33,7 +32,6 @@
 
     XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncSrcColor"], @774);
     XCTAssertEqualObjects(child3.blendMode.options[@"CCBlendFuncDstColor"], @772);
-*/
 }
 
 - (void)testNodeGraphFromDocumentDict_node

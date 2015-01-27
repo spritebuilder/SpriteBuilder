@@ -29,3 +29,8 @@ extern NSInteger const SBNoPackagePathsToImport;
 extern NSInteger const SBPackageAlreayInProject;
 extern NSInteger const SBEmptyPackageNameError;
 extern NSInteger const SBMigrationError;
+
+// CCB Reading and writing
+extern NSInteger const SBCCBMigrationError;
+extern NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError;
+extern NSInteger const SBCCBMigrationNoVersionFoundError;

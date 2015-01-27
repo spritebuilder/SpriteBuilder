@@ -32,6 +32,12 @@
                   Identifier = "CCAnimation_Tests">
                </Test>
                <Test
+                  Identifier = "CCBDictionaryMigrationStepVersion4_Tests">
+               </Test>
+               <Test
+                  Identifier = "CCBDictionaryMigrator_Tests">
+               </Test>
+               <Test
                   Identifier = "CCBReader_EffectsTest">
                </Test>
             </SkippedTests>

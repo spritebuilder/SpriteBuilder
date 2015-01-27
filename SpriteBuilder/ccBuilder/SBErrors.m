@@ -29,3 +29,8 @@ NSInteger const SBNoPackagePathsToImport = 2109;
 NSInteger const SBPackageAlreayInProject = 2110;
 NSInteger const SBEmptyPackageNameError = 2111;
 NSInteger const SBMigrationError = 2200;
+
+// CCB Reading and writing
+NSInteger const SBCCBMigrationError = 3000;
+NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError = 3001;
+NSInteger const SBCCBMigrationNoVersionFoundError = 3002;
