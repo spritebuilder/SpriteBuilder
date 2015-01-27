@@ -40,6 +40,8 @@
 #import "EffectsManager.h"
 #import "NSArray+Query.h"
 #import "CCBPEffectNode.h"
+#import "CCBDictionaryKeys.h"
+#import "CCBDictionaryMigrator.h"
 
 // Old positioning constants
 enum
@@ -648,17 +650,28 @@ __strong NSDictionary* renamedProperties = nil;
         NSLog(@"WARNING! Trying to load invalid file type (dict is null)");
         return NULL;
     }
+
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:dict];
+
+    NSError *error;
+    NSDictionary *migratedCCB = [migrator migrate:&error];
+    if (!migratedCCB)
+    {
+        NSLog(@"ERROR! Migration of ccb failed: %@", error);
+        return nil;
+    }
+
     // Load file metadata
     
-    NSString* fileType = dict[@"fileType"];
-    int fileVersion = [dict[@"fileVersion"] intValue];
+    NSString* fileType = migratedCCB[@"fileType"];
+    int fileVersion = [migratedCCB[CCB_DICTIONARY_KEY_FILEVERSION] intValue];
     
     if (!fileType  || ![fileType isEqualToString:@"CocosBuilder"])
     {
         NSLog(@"WARNING! Trying to load invalid file type (%@)", fileType);
     }
     
-    NSDictionary* nodeGraph = dict[@"nodeGraph"];
+    NSDictionary* nodeGraph = migratedCCB[@"nodeGraph"];
     
     if (fileVersion <= 2)
     {

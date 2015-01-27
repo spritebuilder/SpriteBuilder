@@ -23,9 +23,12 @@
     [super setUp];
 }
 
+// Some real world test
 - (void)testNodeGraphFromDocumentDict_version_4_to_5_migration_new_blend_mode
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_migration_version_4_to_5"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    XCTAssertNotNil(node);
 
     CCSprite *child3 = node.children[2];
     XCTAssertTrue([node.children[2] isKindOfClass:[CCSprite class]]);
