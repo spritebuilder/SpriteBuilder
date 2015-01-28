@@ -25,7 +25,7 @@
     
     CCDirectorMac *director = (CCDirectorMac*) self.glView.director;
     
-    [director reshapeProjection: defaultWindowSize];
+    [director reshapeProjection:CC_SIZE_SCALE(defaultWindowSize, director.contentScaleFactor)];
     
     // enable FPS and SPF
     // [director setDisplayStats:YES];
@@ -45,9 +45,9 @@
     
     [[CCPackageManager sharedManager] loadPackages];
     
-    [CCDirector bindDirector:director];
+    [CCDirector pushCurrentDirector:director];
     [director presentScene:[CCBReader loadAsScene:@"MainScene"]];
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification
