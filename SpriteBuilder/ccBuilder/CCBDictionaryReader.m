@@ -132,14 +132,6 @@ __strong NSDictionary* renamedProperties = nil;
     return [CCColor colorWithRed:(float) r green:(float) g blue:(float) b alpha:(float) a];
 }
 
-+ (ccBlendFunc) deserializeBlendFunc:(id) val
-{
-    ccBlendFunc bf;
-    bf.src = [[val objectAtIndex:0] intValue];
-    bf.dst = [[val objectAtIndex:1] intValue];
-    return bf;
-}
-
 + (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph
 {
     // Handle removed ignoreAnchorPointForPosition property
@@ -346,7 +338,6 @@ __strong NSDictionary* renamedProperties = nil;
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
-
         CCBlendMode *blendMode = [CCBDictionaryReader deserializeBlendMode:serializedValue];
         [node setValue:blendMode forKey:name];
     }
@@ -482,18 +473,7 @@ __strong NSDictionary* renamedProperties = nil;
 
 + (CCBlendMode *)deserializeBlendMode:(id)value
 {
-/*    if (_fileVersion < 5)
-    {
-        return [CCBlendMode blendModeWithOptions:@{
-            CCBlendFuncSrcColor: [value objectAtIndex:0],
-            CCBlendFuncDstColor: [value objectAtIndex:1],
-        }];
-    }
-    else
-    {
-*/
-        return [CCBlendMode blendModeWithOptions:value];
-//    }
+    return [CCBlendMode blendModeWithOptions:value];
 }
 
 + (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph

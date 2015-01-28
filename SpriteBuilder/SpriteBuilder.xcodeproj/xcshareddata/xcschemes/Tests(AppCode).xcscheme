@@ -38,7 +38,124 @@
                   Identifier = "CCBDictionaryMigrator_Tests">
                </Test>
                <Test
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_colornode">
+               </Test>
+               <Test
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_node">
+               </Test>
+               <Test
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_nodegradient">
+               </Test>
+               <Test
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_sprite">
+               </Test>
+               <Test
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_sprite9slice">
+               </Test>
+               <Test
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_version_4_to_5_migration_new_blend_mode">
+               </Test>
+               <Test
+                  Identifier = "CCBDictionaryWriter_Tests">
+               </Test>
+               <Test
+                  Identifier = "CCBPublisherController_Tests">
+               </Test>
+               <Test
+                  Identifier = "CCBPublisher_Tests">
+               </Test>
+               <Test
                   Identifier = "CCBReader_EffectsTest">
+               </Test>
+               <Test
+                  Identifier = "CCBReader_Tests">
+               </Test>
+               <Test
+                  Identifier = "CreateDirectoryFileCommand_Tests">
+               </Test>
+               <Test
+                  Identifier = "FeatureToggle_Tests">
+               </Test>
+               <Test
+                  Identifier = "FileSystemTestCase">
+               </Test>
+               <Test
+                  Identifier = "FormatConvert_Tests">
+               </Test>
+               <Test
+                  Identifier = "ImageFormatAndPropertiesHelper_Tests">
+               </Test>
+               <Test
+                  Identifier = "InspectoreController_Tests">
+               </Test>
+               <Test
+                  Identifier = "MoveFileCommand_Tests">
+               </Test>
+               <Test
+                  Identifier = "NSString_Publishing_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageCreator_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageExporter_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageImporter_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageMigrator_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageRemover_Tests">
+               </Test>
+               <Test
+                  Identifier = "PackageRenamer_Tests">
+               </Test>
+               <Test
+                  Identifier = "PluginNode_Tests">
+               </Test>
+               <Test
+                  Identifier = "PreviewView_Tests">
+               </Test>
+               <Test
+                  Identifier = "ProjectSettings_Tests">
+               </Test>
+               <Test
+                  Identifier = "PublishOSSettings_Tests">
+               </Test>
+               <Test
+                  Identifier = "PublishUtil_Tests">
+               </Test>
+               <Test
+                  Identifier = "RMDirectory_Tests">
+               </Test>
+               <Test
+                  Identifier = "RMPackage_Tests">
+               </Test>
+               <Test
+                  Identifier = "RMResource_Tests">
+               </Test>
+               <Test
+                  Identifier = "RemoveFileCommand_Tests">
+               </Test>
+               <Test
+                  Identifier = "ResourceContextMenu_Tests">
+               </Test>
+               <Test
+                  Identifier = "ResourceManager_Publishing_Tests">
+               </Test>
+               <Test
+                  Identifier = "ResourceManager_Tests">
+               </Test>
+               <Test
+                  Identifier = "ResourcePropertiesMigrator_Tests">
+               </Test>
+               <Test
+                  Identifier = "SBPackageSettings_Tests">
+               </Test>
+               <Test
+                  Identifier = "ZipDirectoryOperation_Tests">
                </Test>
             </SkippedTests>
          </TestableReference>

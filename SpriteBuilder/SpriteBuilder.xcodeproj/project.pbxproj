@@ -911,6 +911,7 @@
 		E525F473DCC5E8F4A66D4D33 /* InspectorFontTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA39177A6B3C303B9DA6 /* InspectorFontTTF.m */; };
 		E525F47B31DF73C88110CE72 /* InspectorButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F74FD144B9330CE3906D /* InspectorButton.xib */; };
 		E525F492F1453E2428B14B84 /* InspectorBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F21B757FCFE7424C05D9 /* InspectorBlock.m */; };
+		E525F4A6523F8D80476735C8 /* test_ccbreader_nodegradient.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD6C11DDD3219E518AE4 /* test_ccbreader_nodegradient.ccb */; };
 		E525F4A65E3BA6A5C69470AD /* RMAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2ADCDB6F6933CAD7A97 /* RMAnimation.m */; };
 		E525F4D53964A2B3E368777B /* InspectorCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE561C3F2F72AC9FD31B /* InspectorCustom.m */; };
 		E525F4DEC802CEC768E89163 /* InspectorAnimation.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F620E2E7CFB0B4AF1693 /* InspectorAnimation.xib */; };
@@ -935,6 +936,7 @@
 		E525F634C2EE9B50F56B0E27 /* InspectorSeparatorSub.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF364C63BB5CD36B6E1D /* InspectorSeparatorSub.m */; };
 		E525F651194EC2A13EA30026 /* ResourceManager_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCBBB1841F3115718AD0 /* ResourceManager_Tests.m */; };
 		E525F686F932F4F6640E9F29 /* InspectorTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F293C77C212C2DB614E1 /* InspectorTexture.m */; };
+		E525F6A585052B175F51A4D3 /* test_ccbreader_labeltff.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD6FE8D568EF3F751C33 /* test_ccbreader_labeltff.ccb */; };
 		E525F6B824415CA3D1C215EA /* NSString+Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA71E014DDED2AFE71EF /* NSString+Misc.m */; };
 		E525F6BDAD02A4137800B1E3 /* InspectorCCBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8003FDCE343C78DCD85 /* InspectorCCBFile.m */; };
 		E525F6BF45DFEFF964A46DE5 /* InspectorBlendmode.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F0984B411CD058631648 /* InspectorBlendmode.xib */; };
@@ -965,6 +967,7 @@
 		E525F96B119C330AE0D2C20E /* PublishOSSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F3CFE241FFCE80D11336 /* PublishOSSettings.m */; };
 		E525F97C2D5A1EE614613FF2 /* InspectorCustomEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F0AF452CAF5998D6381A /* InspectorCustomEdit.xib */; };
 		E525F9C561CF0D13BB57D6F5 /* NSError+SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F90876BE1677B68F8373 /* NSError+SBErrors.m */; };
+		E525F9C9B82E5807085D9836 /* test_ccbreader_colornode.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F00E2CE6692EAE080E34 /* test_ccbreader_colornode.ccb */; };
 		E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F827AA0BCCAE1BF601C2 /* PublishBaseOperation.m */; };
 		E525F9DBFC05304CDDE326B9 /* InspectorString.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FFC4E205CD906143FE30 /* InspectorString.m */; };
 		E525F9DDCDAD0C1AD78029F0 /* CCBDictionaryReader_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F10140E3181E71A2CEF6 /* CCBDictionaryReader_Tests.m */; };
@@ -986,6 +989,7 @@
 		E525FB20D3C6755CC64987B1 /* InspectorDegrees.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F799DEF1619721810E6E /* InspectorDegrees.xib */; };
 		E525FB27722F4E158CC501C5 /* InspectorNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2016B3DB7DF1651B605 /* InspectorNodeReference.m */; };
 		E525FB30A10E77E6C59149A6 /* InspectorScaleLock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FCDD7A52D2DE6BD2D6D4 /* InspectorScaleLock.xib */; };
+		E525FB73743B8CF39195EC9F /* test_ccbreader_sprite9slice.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD7B16D1386D7031A87E /* test_ccbreader_sprite9slice.ccb */; };
 		E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */; };
 		E525FB8A7250188137051AF3 /* InspectorTexture.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FB84B7161C23D44036DB /* InspectorTexture.xib */; };
 		E525FB91E80AB2C9074E51B9 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F3EC220BB11985744E64 /* InspectorNodeReference.xib */; };
@@ -2475,6 +2479,7 @@
 		E525F001371D1628D87FFF3E /* RMResourceBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResourceBase.m; sourceTree = "<group>"; };
 		E525F0021A81F90852D0875E /* InspectorFlip.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFlip.xib; sourceTree = "<group>"; };
 		E525F002E61AB0221373A9E7 /* PublishUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishUtil.h; sourceTree = "<group>"; };
+		E525F00E2CE6692EAE080E34 /* test_ccbreader_colornode.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_colornode.ccb; sourceTree = "<group>"; };
 		E525F01EE8CDFEE970D1C645 /* InspectorFloatCheck.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFloatCheck.xib; sourceTree = "<group>"; };
 		E525F0219F49F375C2F5DED2 /* PackageMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageMigrator_Tests.m; sourceTree = "<group>"; };
 		E525F0424E2063AF911B0692 /* ResourceExportPackageCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceExportPackageCommand.m; sourceTree = "<group>"; };
@@ -2767,8 +2772,11 @@
 		E525FD3EA53480310EC675E1 /* ResourceToggleSmartSpriteSheetCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceToggleSmartSpriteSheetCommand.m; sourceTree = "<group>"; };
 		E525FD51809BF51271B21170 /* ResourceOpenInExternalEditorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceOpenInExternalEditorCommand.h; sourceTree = "<group>"; };
 		E525FD5B0F64DC8D7BC147CF /* InspectorCodeConnectionsJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCodeConnectionsJS.m; sourceTree = "<group>"; };
+		E525FD6C11DDD3219E518AE4 /* test_ccbreader_nodegradient.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_nodegradient.ccb; sourceTree = "<group>"; };
+		E525FD6FE8D568EF3F751C33 /* test_ccbreader_labeltff.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_labeltff.ccb; sourceTree = "<group>"; };
 		E525FD702E268242A41C54F4 /* PackageExporter_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageExporter_Tests.m; sourceTree = "<group>"; };
 		E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseOperation.h; sourceTree = "<group>"; };
+		E525FD7B16D1386D7031A87E /* test_ccbreader_sprite9slice.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; name = test_ccbreader_sprite9slice.ccb; path = "Testing Resources/test_ccbreader_sprite9slice.ccb"; sourceTree = "<group>"; };
 		E525FD8E1D01D1EDBB7B7E5E /* ResourceOpenInExternalEditorCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceOpenInExternalEditorCommand.m; sourceTree = "<group>"; };
 		E525FD97778D165E7455E7F6 /* InspectorScaleLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorScaleLock.h; sourceTree = "<group>"; };
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
@@ -5840,6 +5848,9 @@
 				E525F52CCE4E79FA286F8FEE /* test_ccbreader_migration_version_4_to_5.ccb */,
 				E525FD0D27DC13384CB3965A /* test_ccbreader_node.ccb */,
 				E525F852D0DA5EFDE1C45F6A /* test_ccbreader_sprite.ccb */,
+				E525FD6C11DDD3219E518AE4 /* test_ccbreader_nodegradient.ccb */,
+				E525F00E2CE6692EAE080E34 /* test_ccbreader_colornode.ccb */,
+				E525FD6FE8D568EF3F751C33 /* test_ccbreader_labeltff.ccb */,
 			);
 			path = "Testing Resources";
 			sourceTree = "<group>";
@@ -5870,6 +5881,7 @@
 				E525F10140E3181E71A2CEF6 /* CCBDictionaryReader_Tests.m */,
 				E525FA7818B4C0D6C068B81A /* CCBDictionaryMigrator_Tests.m */,
 				E525FF1A156E5EA62580F43D /* CCBDictionaryMigrationStepVersion4_Tests.m */,
+				E525FD7B16D1386D7031A87E /* test_ccbreader_sprite9slice.ccb */,
 			);
 			name = "Document Readers & Writers";
 			sourceTree = "<group>";
@@ -6936,6 +6948,10 @@
 				E525FEC4E08E523FF20E1187 /* test_ccbreader_migration_version_4_to_5.ccb in Resources */,
 				E525FD614349CBFEE95F6B57 /* test_ccbreader_node.ccb in Resources */,
 				E525F5FE8329243997FA497E /* test_ccbreader_sprite.ccb in Resources */,
+				E525F4A6523F8D80476735C8 /* test_ccbreader_nodegradient.ccb in Resources */,
+				E525FB73743B8CF39195EC9F /* test_ccbreader_sprite9slice.ccb in Resources */,
+				E525F9C9B82E5807085D9836 /* test_ccbreader_colornode.ccb in Resources */,
+				E525F6A585052B175F51A4D3 /* test_ccbreader_labeltff.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
