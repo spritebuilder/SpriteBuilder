@@ -271,19 +271,6 @@
     XCTAssertEqualWithAccuracy(particleSystem.rotatePerSecondVar, 10.0, 0.001);
 }
 
-- (void)testNodeGraphFromDocumentDict_bmfont
-{
-    // SKIPPED UNTIL blendMode is available in bmfont class
-/*
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
-
-    CCParticleSystem *bmfont = node.children[0];
-    XCTAssertTrue([node.children[0] isKindOfClass:[CCLabelBMFont class]]);
-
-    XCTAssertEqualObjects(bmfont.displayName, @"Sample Text");
-*/
-}
-
 - (void)testNodeGraphFromDocumentDict_button
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_button"] parentSize:CGSizeMake(1024.0, 1024.0)];
@@ -311,17 +298,20 @@
     XCTAssertEqualObjects([textField.userObject extraProps][@"padding"], @7);
     XCTAssertEqualObjects([textField.userObject extraProps][@"paddingType"], @0);
     XCTAssertEqualObjects([textField.userObject extraProps][@"backgroundSpriteFrame"], @"ccbResources/ccbTextField.png");
-
-
-/*
-
-
-
-     */
-
 }
 
 /*
+// SKIPPED UNTIL blendMode is available in bmfont class
+- (void)testNodeGraphFromDocumentDict_bmfont
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCParticleSystem *bmfont = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCLabelBMFont class]]);
+
+    XCTAssertEqualObjects(bmfont.displayName, @"Sample Text");
+}
+
 - (void)testNodeGraphFromDocumentDict_slider
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_slider"] parentSize:CGSizeMake(1024.0, 1024.0)];
@@ -345,6 +335,26 @@
 - (void)testNodeGraphFromDocumentDict_subfile
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_subfile"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_physics_distance_joint
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_physics_distance_joint"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_physics_pivot_joint
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_physics_pivot_joint"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_physics_spring_joint
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_physics_spring_joint"] parentSize:CGSizeMake(1024.0, 1024.0)];
+}
+
+- (void)testNodeGraphFromDocumentDict_physicsnode
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_physicsnode"] parentSize:CGSizeMake(1024.0, 1024.0)];
 }
 */
 
