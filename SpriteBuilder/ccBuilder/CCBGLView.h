@@ -29,7 +29,7 @@
 @class CocosScene;
 @class InspectorController;
 
-@interface CCBGLView : CCGLView {
+@interface CCBGLView : CCViewMacGL {
     
     NSTrackingRectTag trackingTag;
     
