@@ -49,7 +49,7 @@
     if (!self) return NULL;
     
     self.name = [ser objectForKey:@"name"];
-    self.type = [[ser objectForKey:@"type"] intValue];
+    self.type = (kCCBCustomPropType) [[ser objectForKey:@"type"] intValue];
     self.optimized = [[ser objectForKey:@"optimized"] boolValue];
     self.value = [ser objectForKey:@"value"];
     
@@ -60,10 +60,10 @@
 {
     NSMutableDictionary* ser = [NSMutableDictionary dictionary];
     
-    [ser setObject:name forKey:@"name"];
-    [ser setObject:[NSNumber numberWithInt:type] forKey:@"type"];
-    [ser setObject:[NSNumber numberWithBool:optimized] forKey:@"optimized"];
-    [ser setObject:value forKey:@"value"];
+    ser[@"name"] = name;
+    ser[@"type"] = @(type);
+    ser[@"optimized"] = @(optimized);
+    ser[@"value"] = value;
     
     return ser;
 }
@@ -101,7 +101,7 @@
     }
 }
 
-- (void) setType:(int)t
+- (void) setType:(kCCBCustomPropType)t
 {
     if (t == type) return;
     
@@ -131,7 +131,7 @@
     CustomPropSetting* copy = [[CustomPropSetting alloc] init];
     
     copy.name = name;
-    copy.type = type;
+    copy.type = (kCCBCustomPropType) type;
     copy.optimized = optimized;
     copy.value = value;
     

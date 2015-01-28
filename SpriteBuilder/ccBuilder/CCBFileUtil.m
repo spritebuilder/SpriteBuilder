@@ -37,7 +37,9 @@
     
     if (!ad.currentDocument)
     {
+        #if !TESTING
         NSLog(@"No document!");
+        #endif
         return file;
     }
     

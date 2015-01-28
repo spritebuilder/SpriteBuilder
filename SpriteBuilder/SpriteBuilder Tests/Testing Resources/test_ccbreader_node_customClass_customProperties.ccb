@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>2</integer>
+	<integer>3</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -41,15 +41,38 @@
 		<array>
 			<dict>
 				<key>UUID</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>baseClass</key>
 				<string>CCNode</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string>MainScene</string>
+				<string>SBTestNode</string>
+				<key>customProperties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>myCustomProperty</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>3</integer>
+						<key>value</key>
+						<string>test</string>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anotherProperty</string>
+						<key>optimized</key>
+						<false/>
+						<key>type</key>
+						<integer>1</integer>
+						<key>value</key>
+						<string>1.234567</string>
+					</dict>
+				</array>
 				<key>displayName</key>
-				<string>Foobar</string>
+				<string>SBTestNode</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -58,19 +81,11 @@
 				<array>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>name</string>
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string>Foobar</string>
+						<string></string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -79,10 +94,10 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.17605634033679962</real>
-							<real>200</real>
+							<real>227.00003051757812</real>
+							<real>176.00001525878906</real>
 							<integer>0</integer>
-							<integer>2</integer>
+							<integer>0</integer>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -93,8 +108,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>123</real>
-							<real>345</real>
+							<real>0.0</real>
+							<real>0.0</real>
 							<integer>0</integer>
 							<integer>0</integer>
 						</array>
@@ -106,8 +121,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.60000002384185791</real>
-							<real>0.69999998807907104</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -117,34 +132,13 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1.1000000238418579</real>
-							<real>1.1000000238418579</real>
+							<real>1</real>
+							<real>1</real>
 							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
-					<dict>
-						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>10</real>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>skew</string>
-						<key>type</key>
-						<string>FloatXY</string>
-						<key>value</key>
-						<array>
-							<real>0.20000000298023224</real>
-							<real>0.5</real>
-						</array>
-					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

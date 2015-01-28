@@ -43,13 +43,13 @@
 				<key>UUID</key>
 				<integer>1</integer>
 				<key>baseClass</key>
-				<string>CCNode</string>
+				<string>CCTextField</string>
 				<key>children</key>
 				<array/>
 				<key>customClass</key>
-				<string>MainScene</string>
+				<string></string>
 				<key>displayName</key>
-				<string>Foobar</string>
+				<string>CCTextField</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -58,19 +58,11 @@
 				<array>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>name</string>
 						<key>type</key>
 						<string>StringSimple</string>
 						<key>value</key>
-						<string>Foobar</string>
+						<string></string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -79,22 +71,9 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.17605634033679962</real>
-							<real>200</real>
+							<real>226.00003051757812</real>
+							<real>166.00001525878906</real>
 							<integer>0</integer>
-							<integer>2</integer>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>123</real>
-							<real>345</real>
 							<integer>0</integer>
 							<integer>0</integer>
 						</array>
@@ -106,8 +85,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.60000002384185791</real>
-							<real>0.69999998807907104</real>
+							<real>0.0</real>
+							<real>0.0</real>
 						</array>
 					</dict>
 					<dict>
@@ -117,30 +96,73 @@
 						<string>ScaleLock</string>
 						<key>value</key>
 						<array>
-							<real>1.1000000238418579</real>
-							<real>1.1000000238418579</real>
+							<real>1</real>
+							<real>1</real>
 							<false/>
 							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>rotation</string>
+						<string>block</string>
 						<key>type</key>
-						<string>Degrees</string>
+						<string>Block</string>
 						<key>value</key>
-						<real>10</real>
+						<array>
+							<string></string>
+							<integer>1</integer>
+						</array>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>skew</string>
+						<string>preferredSize</string>
 						<key>type</key>
-						<string>FloatXY</string>
+						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>0.20000000298023224</real>
-							<real>0.5</real>
+							<real>368</real>
+							<real>384</real>
+							<integer>3</integer>
+							<integer>4</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>userInteractionEnabled</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundSpriteFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string>ccbResources/ccbTextField.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>padding</string>
+						<key>type</key>
+						<string>FloatScale</string>
+						<key>value</key>
+						<array>
+							<real>7</real>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>fontSize</string>
+						<key>type</key>
+						<string>Float</string>
+						<key>value</key>
+						<integer>17</integer>
 					</dict>
 				</array>
 				<key>selected</key>

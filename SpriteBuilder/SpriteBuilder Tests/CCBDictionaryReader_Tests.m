@@ -10,6 +10,9 @@
 #import "CCBDictionaryReader.h"
 #import "NodeInfo.h"
 #import "CustomPropSetting.h"
+#import "CCNode+NodeInfo.h"
+
+
 
 @interface CCBDictionaryReader_Tests : XCTestCase
 
@@ -67,22 +70,36 @@
     XCTAssertEqualWithAccuracy(node.skewY, 0.5, 0.001);
 
     XCTAssertEqualWithAccuracy(node.rotation, 10.0, 0.001);
+}
 
-    XCTAssertEqualObjects([node.userObject extraProps][@"customClass"], @"MainScene");
-    XCTAssertEqualObjects([node.userObject extraProps][@"UUID"], @1);
+- (void)testNodeGraphFromDocumentDict_node_customClass_customProperties
+{
+    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_node_customClass_customProperties"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = container.children[0];
+
+    XCTAssertEqualObjects([node.userObject extraProps][@"customClass"], @"SBTestNode");
+    XCTAssertEqualObjects([node.userObject extraProps][@"UUID"], @2);
     XCTAssertEqualObjects([node.userObject extraProps][@"memberVarAssignmentType"], @1);
 
-    CustomPropSetting *customPropSetting = [node.userObject customProperties][0];
-    XCTAssertEqualObjects([customPropSetting name], @"myCustomProperty");
-    XCTAssertEqualObjects([customPropSetting value], @"test");
+    CustomPropSetting *customPropSetting1 = [node.userObject customProperties][0];
+    XCTAssertEqualObjects([customPropSetting1 name], @"myCustomProperty");
+    XCTAssertEqual([customPropSetting1 type], kCCBCustomPropTypeString);
+    XCTAssertEqualObjects([customPropSetting1 value], @"test");
+
+    CustomPropSetting *customPropSetting2 = [node.userObject customProperties][1];
+    XCTAssertEqualObjects([customPropSetting2 name], @"anotherProperty");
+    XCTAssertEqual([customPropSetting2 type], kCCBCustomPropTypeFloat);
+    XCTAssertEqualObjects([customPropSetting2 value], @"1.234567");
 }
 
 - (void)testNodeGraphFromDocumentDict_sprite
 {
     CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_sprite"] parentSize:CGSizeMake(1024.0, 1024.0)];
-    CCSprite *sprite = container.children[0];
 
+    CCSprite *sprite = container.children[0];
     XCTAssertTrue([container.children[0] isKindOfClass:[CCSprite class]]);
+
+    XCTAssertEqualObjects([sprite.userObject extraProps][@"spriteFrame"], @"ccbResources/ccbParticleSnow.png");
 
     [self assertColor:[sprite color] red:1.0 green:0.0 blue:0.66666 alpha:0.5];
 
@@ -148,6 +165,8 @@
     CCLabelTTF *labelTTF = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCLabelTTF class]]);
 
+    XCTAssertEqualObjects(labelTTF.string, @"Sample Text");
+
     XCTAssertEqualObjects(labelTTF.fontName, @"Helvetica");
     XCTAssertEqualWithAccuracy(labelTTF.fontSize, 50.0, 0.001);
     XCTAssertEqualObjects([labelTTF.userObject extraProps][@"fontSizeType"], @0);
@@ -188,6 +207,8 @@
     XCTAssertTrue([node.children[0] isKindOfClass:[CCParticleSystem class]]);
 
     XCTAssertEqual(particleSystem.emitterMode, CCParticleSystemModeGravity);
+
+    XCTAssertEqualObjects([particleSystem.userObject extraProps][@"texture"], @"ccbResources/ccbParticleFire.png");
 
     [self assertPoint:particleSystem.posVar x:40.0 y:20.0];
 
@@ -250,22 +271,57 @@
     XCTAssertEqualWithAccuracy(particleSystem.rotatePerSecondVar, 10.0, 0.001);
 }
 
-/*
 - (void)testNodeGraphFromDocumentDict_bmfont
 {
+    // SKIPPED UNTIL blendMode is available in bmfont class
+/*
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCParticleSystem *bmfont = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCLabelBMFont class]]);
+
+    XCTAssertEqualObjects(bmfont.displayName, @"Sample Text");
+*/
 }
 
 - (void)testNodeGraphFromDocumentDict_button
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_button"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCButton *button = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCButton class]]);
+
+    // Too soul crushing...
 }
 
 - (void)testNodeGraphFromDocumentDict_textfield
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_textfield"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCTextField *textField = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCTextField class]]);
+
+    XCTAssertEqual(textField.fontSize, 17);
+    XCTAssertEqual(textField.padding, 7);
+
+    XCTAssertEqualWithAccuracy(textField.preferredSize.width, 368.0, 0.001);
+    XCTAssertEqualWithAccuracy(textField.preferredSize.height, 384.0, 0.001);
+
+    XCTAssertEqualObjects([textField.userObject extraProps][@"userInteractionEnabled"], @1);
+    XCTAssertEqualObjects([textField.userObject extraProps][@"padding"], @7);
+    XCTAssertEqualObjects([textField.userObject extraProps][@"paddingType"], @0);
+    XCTAssertEqualObjects([textField.userObject extraProps][@"backgroundSpriteFrame"], @"ccbResources/ccbTextField.png");
+
+
+/*
+
+
+
+     */
+
 }
 
+/*
 - (void)testNodeGraphFromDocumentDict_slider
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_slider"] parentSize:CGSizeMake(1024.0, 1024.0)];

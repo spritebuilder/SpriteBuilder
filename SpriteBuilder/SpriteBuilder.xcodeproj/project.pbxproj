@@ -934,6 +934,7 @@
 		E525F5FE8329243997FA497E /* test_ccbreader_sprite.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F852D0DA5EFDE1C45F6A /* test_ccbreader_sprite.ccb */; };
 		E525F622A96F0C31CACF1883 /* InspectoreController_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */; };
 		E525F634C2EE9B50F56B0E27 /* InspectorSeparatorSub.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF364C63BB5CD36B6E1D /* InspectorSeparatorSub.m */; };
+		E525F63F667D631467D76EEF /* test_ccbreader_textfield.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FB179D89ED1ACEE33589 /* test_ccbreader_textfield.ccb */; };
 		E525F651194EC2A13EA30026 /* ResourceManager_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCBBB1841F3115718AD0 /* ResourceManager_Tests.m */; };
 		E525F686F932F4F6640E9F29 /* InspectorTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F293C77C212C2DB614E1 /* InspectorTexture.m */; };
 		E525F6A585052B175F51A4D3 /* test_ccbreader_labeltff.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD6FE8D568EF3F751C33 /* test_ccbreader_labeltff.ccb */; };
@@ -965,6 +966,7 @@
 		E525F94BC8F398BA7E428344 /* InspectorFloatCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F29361AA6B48C33259EA /* InspectorFloatCheck.m */; };
 		E525F95319581B5FFD1883D5 /* InspectorPhysicsUnavailable.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F40B4A984D6D907A54CF /* InspectorPhysicsUnavailable.m */; };
 		E525F96B119C330AE0D2C20E /* PublishOSSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F3CFE241FFCE80D11336 /* PublishOSSettings.m */; };
+		E525F96C486EF55E9F4BC174 /* test_ccbreader_button.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD45ACBFA411AEC60339 /* test_ccbreader_button.ccb */; };
 		E525F97C2D5A1EE614613FF2 /* InspectorCustomEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F0AF452CAF5998D6381A /* InspectorCustomEdit.xib */; };
 		E525F9C561CF0D13BB57D6F5 /* NSError+SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F90876BE1677B68F8373 /* NSError+SBErrors.m */; };
 		E525F9C9B82E5807085D9836 /* test_ccbreader_colornode.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F00E2CE6692EAE080E34 /* test_ccbreader_colornode.ccb */; };
@@ -1018,7 +1020,9 @@
 		E525FCD21C3519D61A86ACEF /* PackageRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB678B5AF8D31E5EA1C1 /* PackageRenamer.m */; };
 		E525FCD2B5E1035F3134D63F /* CCBDictionaryMigrationStepVersion4.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC9CAA3BAF5B4B0DA87C /* CCBDictionaryMigrationStepVersion4.m */; };
 		E525FCE3F78C45137345C537 /* NSString+Publishing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */; };
+		E525FCF66F9E83F157B13967 /* test_ccbreader_node_customClass_customProperties.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FF43951F67C27A484A9E /* test_ccbreader_node_customClass_customProperties.ccb */; };
 		E525FD0CE48AC54FD5CA02BD /* InspectorEnabledFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FB2C511229C00D261998 /* InspectorEnabledFloat.xib */; };
+		E525FD3AC66466F0CBB00C30 /* test_ccbreader_bmfont.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FE388FD900B324B7746D /* test_ccbreader_bmfont.ccb */; };
 		E525FD4070C4F3BEFCBA482B /* test_ccbreader_particlesystem_radial.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F0F09BB5BAE09B75D553 /* test_ccbreader_particlesystem_radial.ccb */; };
 		E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */; };
 		E525FD5F78427772C74BE9FC /* InspectorScaleLock.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCFC2EDFEDA03875ABBF /* InspectorScaleLock.m */; };
@@ -2723,6 +2727,7 @@
 		E525FB10982384F8E0C0E079 /* PublishSpriteSheetOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishSpriteSheetOperation.h; sourceTree = "<group>"; };
 		E525FB122597817578F84A85 /* MiscConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiscConstants.h; sourceTree = "<group>"; };
 		E525FB1366B0FD0B12AC1EDA /* InspectorBlockCCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorBlockCCControl.h; sourceTree = "<group>"; };
+		E525FB179D89ED1ACEE33589 /* test_ccbreader_textfield.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_textfield.ccb; sourceTree = "<group>"; };
 		E525FB189F069AB001586F6C /* InspectorCodeConnectionsJS.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorCodeConnectionsJS.xib; sourceTree = "<group>"; };
 		E525FB2C511229C00D261998 /* InspectorEnabledFloat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorEnabledFloat.xib; sourceTree = "<group>"; };
 		E525FB3851A1B28013282F4C /* PublishOSSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishOSSettings_Tests.m; sourceTree = "<group>"; };
@@ -2773,6 +2778,7 @@
 		E525FD391D92578BD3DE58A8 /* ResourceCommandProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCommandProtocol.h; sourceTree = "<group>"; };
 		E525FD3A63A749E29885DE3C /* CCBDocumentDataCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDocumentDataCreator.h; sourceTree = "<group>"; };
 		E525FD3EA53480310EC675E1 /* ResourceToggleSmartSpriteSheetCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceToggleSmartSpriteSheetCommand.m; sourceTree = "<group>"; };
+		E525FD45ACBFA411AEC60339 /* test_ccbreader_button.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_button.ccb; sourceTree = "<group>"; };
 		E525FD51809BF51271B21170 /* ResourceOpenInExternalEditorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceOpenInExternalEditorCommand.h; sourceTree = "<group>"; };
 		E525FD53BB63D605C61C8844 /* test_ccbreader_particlesystem_gravity.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_particlesystem_gravity.ccb; sourceTree = "<group>"; };
 		E525FD5B0F64DC8D7BC147CF /* InspectorCodeConnectionsJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCodeConnectionsJS.m; sourceTree = "<group>"; };
@@ -2798,6 +2804,7 @@
 		E525FE21A2662188C1454FEB /* InspectorNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorNodeReference.h; sourceTree = "<group>"; };
 		E525FE25558D5B40E8284D62 /* PublishUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishUtil.m; sourceTree = "<group>"; };
 		E525FE331D09AEA8E9CB4145 /* PackageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageUtil.h; sourceTree = "<group>"; };
+		E525FE388FD900B324B7746D /* test_ccbreader_bmfont.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_bmfont.ccb; sourceTree = "<group>"; };
 		E525FE520C891B3D37F5F564 /* InspectorStartStop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorStartStop.h; sourceTree = "<group>"; };
 		E525FE561C3F2F72AC9FD31B /* InspectorCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCustom.m; sourceTree = "<group>"; };
 		E525FE6EEA14481321CC29E3 /* InspectorSpriteFrame.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorSpriteFrame.xib; sourceTree = "<group>"; };
@@ -2820,6 +2827,7 @@
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
 		E525FF2FD5A2AEEF5D5B6098 /* InspectorFloat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFloat.xib; sourceTree = "<group>"; };
 		E525FF364C63BB5CD36B6E1D /* InspectorSeparatorSub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorSeparatorSub.m; sourceTree = "<group>"; };
+		E525FF43951F67C27A484A9E /* test_ccbreader_node_customClass_customProperties.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_node_customClass_customProperties.ccb; sourceTree = "<group>"; };
 		E525FF473922B627A6A884A7 /* InspectorPosition.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPosition.xib; sourceTree = "<group>"; };
 		E525FF4F0648F14C369A8E7B /* InspectorPopoverFloat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverFloat.xib; sourceTree = "<group>"; };
 		E525FF599E666FBB986616AF /* InspectorColor4.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorColor4.xib; sourceTree = "<group>"; };
@@ -5857,6 +5865,10 @@
 				E525FD6FE8D568EF3F751C33 /* test_ccbreader_labeltff.ccb */,
 				E525FD53BB63D605C61C8844 /* test_ccbreader_particlesystem_gravity.ccb */,
 				E525F0F09BB5BAE09B75D553 /* test_ccbreader_particlesystem_radial.ccb */,
+				E525FE388FD900B324B7746D /* test_ccbreader_bmfont.ccb */,
+				E525FD45ACBFA411AEC60339 /* test_ccbreader_button.ccb */,
+				E525FB179D89ED1ACEE33589 /* test_ccbreader_textfield.ccb */,
+				E525FF43951F67C27A484A9E /* test_ccbreader_node_customClass_customProperties.ccb */,
 			);
 			path = "Testing Resources";
 			sourceTree = "<group>";
@@ -6960,6 +6972,10 @@
 				E525F6A585052B175F51A4D3 /* test_ccbreader_labeltff.ccb in Resources */,
 				E525FBC757B1805B7492E621 /* test_ccbreader_particlesystem_gravity.ccb in Resources */,
 				E525FD4070C4F3BEFCBA482B /* test_ccbreader_particlesystem_radial.ccb in Resources */,
+				E525FD3AC66466F0CBB00C30 /* test_ccbreader_bmfont.ccb in Resources */,
+				E525F96C486EF55E9F4BC174 /* test_ccbreader_button.ccb in Resources */,
+				E525F63F667D631467D76EEF /* test_ccbreader_textfield.ccb in Resources */,
+				E525FCF66F9E83F157B13967 /* test_ccbreader_node_customClass_customProperties.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
