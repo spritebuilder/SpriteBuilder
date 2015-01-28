@@ -180,12 +180,77 @@
     XCTAssertEqual(labelTTF.dimensionsType.heightUnit, CCSizeUnitInsetUIPoints);
 }
 
-/*
-- (void)testNodeGraphFromDocumentDict_particlesystem
+- (void)testNodeGraphFromDocumentDict_particlesystemGravityMode
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_particlesystem"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_particlesystem_gravity"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCParticleSystem *particleSystem = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCParticleSystem class]]);
+
+    XCTAssertEqual(particleSystem.emitterMode, CCParticleSystemModeGravity);
+
+    [self assertPoint:particleSystem.posVar x:40.0 y:20.0];
+
+    XCTAssertEqualWithAccuracy(particleSystem.emissionRate, 80.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.duration, -1.0, 0.001);
+
+    XCTAssertEqual(particleSystem.totalParticles, 250);
+
+    XCTAssertEqualWithAccuracy(particleSystem.life, 3.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.lifeVar, 0.25, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.startSize, 54.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.startSizeVar, 10.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.endSize, 1.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.endSizeVar, 2.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.startSpin, 3.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.startSpinVar, 4.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.endSpin, 5.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.endSpinVar, 6.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.angle, 90.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.angleVar, 10.0, 0.001);
+
+    [self assertColor:particleSystem.startColor red:0.759 green:0.25 blue:0.119 alpha:1.0];
+    [self assertColor:particleSystem.startColorVar red:1.0 green:0.0 blue:0.0 alpha:0.5];
+
+    [self assertColor:particleSystem.endColor red:0.0 green:1.0 blue:0.0 alpha:1.0];
+    [self assertColor:particleSystem.endColorVar red:0.0 green:0.0 blue:1.0 alpha:0.5];
+
+    [self assertPoint:particleSystem.gravity x:7.0 y:8.0];
+
+    XCTAssertEqualWithAccuracy(particleSystem.speed, 60.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.speedVar, 20.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.tangentialAccel, 9.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.tangentialAccelVar, 10.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.radialAccel, 11.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.radialAccelVar, 12.0, 0.001);
 }
 
+- (void)testNodeGraphFromDocumentDict_particlesystemRadialMode
+{
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_particlesystem_radial"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCParticleSystem *particleSystem = node.children[0];
+
+    XCTAssertEqual(particleSystem.emitterMode, CCParticleSystemModeRadius);
+
+    XCTAssertEqualWithAccuracy(particleSystem.startRadius, 7.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.startRadiusVar, 8.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.endRadius, 60.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.endRadiusVar, 20.0, 0.001);
+
+    XCTAssertEqualWithAccuracy(particleSystem.rotatePerSecond, 9.0, 0.001);
+    XCTAssertEqualWithAccuracy(particleSystem.rotatePerSecondVar, 10.0, 0.001);
+}
+
+/*
 - (void)testNodeGraphFromDocumentDict_bmfont
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
@@ -238,6 +303,12 @@
     XCTAssertNotNil(path, @"CCB file loading failed, no path found for ccb %@.ccb", ccbName);
 
     return [NSDictionary dictionaryWithContentsOfFile:path];
+}
+
+- (void)assertPoint:(CGPoint)point x:(CGFloat)x y:(CGFloat)y
+{
+    XCTAssertEqualWithAccuracy(point.x, x, 0.001);
+    XCTAssertEqualWithAccuracy(point.y, y, 0.001);
 }
 
 - (void)assertColor:(CCColor *)color red:(float)red green:(float)green blue:(float)blue alpha:(float)alpha

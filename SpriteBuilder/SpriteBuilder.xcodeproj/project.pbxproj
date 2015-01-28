@@ -996,6 +996,7 @@
 		E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A438244586206C9177 /* PublishCCBOperation.m */; };
 		E525FBB73A012AC88E99B21B /* PublishRenamedFilesLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F7EE37BDD5941E6C0AC9 /* PublishRenamedFilesLookup.m */; };
 		E525FBC0C230FF2C0DC747C9 /* InspectorCodeConnections.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FC764043B778E59DF538 /* InspectorCodeConnections.xib */; };
+		E525FBC757B1805B7492E621 /* test_ccbreader_particlesystem_gravity.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD53BB63D605C61C8844 /* test_ccbreader_particlesystem_gravity.ccb */; };
 		E525FBD671DAAB84B82D0C74 /* InspectorPopoverFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF4F0648F14C369A8E7B /* InspectorPopoverFloat.xib */; };
 		E525FBF660068A2D361AA5F4 /* InspectorInteger.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F59E24C021F55FDA4710 /* InspectorInteger.m */; };
 		E525FBF9C805E185C3F609B9 /* InspectorInteger.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F173545F6AA131BE9DE6 /* InspectorInteger.xib */; };
@@ -1018,6 +1019,7 @@
 		E525FCD2B5E1035F3134D63F /* CCBDictionaryMigrationStepVersion4.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC9CAA3BAF5B4B0DA87C /* CCBDictionaryMigrationStepVersion4.m */; };
 		E525FCE3F78C45137345C537 /* NSString+Publishing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */; };
 		E525FD0CE48AC54FD5CA02BD /* InspectorEnabledFloat.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FB2C511229C00D261998 /* InspectorEnabledFloat.xib */; };
+		E525FD4070C4F3BEFCBA482B /* test_ccbreader_particlesystem_radial.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F0F09BB5BAE09B75D553 /* test_ccbreader_particlesystem_radial.ccb */; };
 		E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F08B2DA5BA93DA1BCA35 /* PublishSpriteSheetOperation.m */; };
 		E525FD5F78427772C74BE9FC /* InspectorScaleLock.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCFC2EDFEDA03875ABBF /* InspectorScaleLock.m */; };
 		E525FD614349CBFEE95F6B57 /* test_ccbreader_node.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD0D27DC13384CB3965A /* test_ccbreader_node.ccb */; };
@@ -2503,6 +2505,7 @@
 		E525F0EA0914439933E379A0 /* ResourceDeleteCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceDeleteCommand.m; sourceTree = "<group>"; };
 		E525F0EC7A806514BD048AEB /* FileCommandProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileCommandProtocol.h; sourceTree = "<group>"; };
 		E525F0ED6F868B09686F38DF /* PublishRegularFileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishRegularFileOperation.h; sourceTree = "<group>"; };
+		E525F0F09BB5BAE09B75D553 /* test_ccbreader_particlesystem_radial.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_particlesystem_radial.ccb; sourceTree = "<group>"; };
 		E525F0F30379667FD6285EA3 /* ResourceCommandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCommandController.h; sourceTree = "<group>"; };
 		E525F0FDB3663FD55352DB8F /* InspectorFloatXY.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFloatXY.xib; sourceTree = "<group>"; };
 		E525F10140E3181E71A2CEF6 /* CCBDictionaryReader_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDictionaryReader_Tests.m; sourceTree = "<group>"; };
@@ -2771,6 +2774,7 @@
 		E525FD3A63A749E29885DE3C /* CCBDocumentDataCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDocumentDataCreator.h; sourceTree = "<group>"; };
 		E525FD3EA53480310EC675E1 /* ResourceToggleSmartSpriteSheetCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceToggleSmartSpriteSheetCommand.m; sourceTree = "<group>"; };
 		E525FD51809BF51271B21170 /* ResourceOpenInExternalEditorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceOpenInExternalEditorCommand.h; sourceTree = "<group>"; };
+		E525FD53BB63D605C61C8844 /* test_ccbreader_particlesystem_gravity.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_particlesystem_gravity.ccb; sourceTree = "<group>"; };
 		E525FD5B0F64DC8D7BC147CF /* InspectorCodeConnectionsJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCodeConnectionsJS.m; sourceTree = "<group>"; };
 		E525FD6C11DDD3219E518AE4 /* test_ccbreader_nodegradient.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_nodegradient.ccb; sourceTree = "<group>"; };
 		E525FD6FE8D568EF3F751C33 /* test_ccbreader_labeltff.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_labeltff.ccb; sourceTree = "<group>"; };
@@ -5851,6 +5855,8 @@
 				E525FD6C11DDD3219E518AE4 /* test_ccbreader_nodegradient.ccb */,
 				E525F00E2CE6692EAE080E34 /* test_ccbreader_colornode.ccb */,
 				E525FD6FE8D568EF3F751C33 /* test_ccbreader_labeltff.ccb */,
+				E525FD53BB63D605C61C8844 /* test_ccbreader_particlesystem_gravity.ccb */,
+				E525F0F09BB5BAE09B75D553 /* test_ccbreader_particlesystem_radial.ccb */,
 			);
 			path = "Testing Resources";
 			sourceTree = "<group>";
@@ -6952,6 +6958,8 @@
 				E525FB73743B8CF39195EC9F /* test_ccbreader_sprite9slice.ccb in Resources */,
 				E525F9C9B82E5807085D9836 /* test_ccbreader_colornode.ccb in Resources */,
 				E525F6A585052B175F51A4D3 /* test_ccbreader_labeltff.ccb in Resources */,
+				E525FBC757B1805B7492E621 /* test_ccbreader_particlesystem_gravity.ccb in Resources */,
+				E525FD4070C4F3BEFCBA482B /* test_ccbreader_particlesystem_radial.ccb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
