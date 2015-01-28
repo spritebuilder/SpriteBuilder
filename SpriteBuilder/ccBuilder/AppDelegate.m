@@ -138,6 +138,7 @@
 #import "LightingHandler.h"
 #import "NSAlert+Convenience.h"
 #import "SecurityScopedBookmarksStore.h"
+#import "CCDirector_Private.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -216,7 +217,8 @@ void ApplyCustomNodeVisitSwizzle()
     ApplyCustomNodeVisitSwizzle();
     
     // Insert code here to initialize your application
-    CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+    CCDirectorMac *director = cocosView.director;
+    [CCDirector pushCurrentDirector:director];
 
     NSAssert(cocosView, @"cocosView is nil");
     [director setView:cocosView];
@@ -242,7 +244,7 @@ void ApplyCustomNodeVisitSwizzle()
 	// Enable "moving" mouse event. Default no.
 	//[window setAcceptsMouseMovedEvents:YES];
 	
-	[director runWithScene:[CocosScene sceneWithAppDelegate:self]];
+	[director presentScene:[CocosScene sceneWithAppDelegate:self]];
 	
 	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread],
 			 @"cocos2d should run on the Main Thread. Compile SpriteBuilder with CC_DIRECTOR_MAC_THREAD=2");
@@ -1818,7 +1820,7 @@ typedef enum
 
 - (void) openFile:(NSString*)filePath
 {
-	[(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
+	[(CCViewMacGL *)[[CCDirector sharedDirector] view] lockOpenGLContext];
     
     // Check if file is already open
     CCBDocument* openDoc = [self findDocumentFromFile:filePath];
@@ -1843,7 +1845,7 @@ typedef enum
     physicsHandler.selectedNodePhysicsBody = NULL;
     [self setSelectedNodes:NULL];
     
-	[(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
+	[(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
 }
 
 - (void) saveFile:(NSString*) fileName
@@ -2774,7 +2776,7 @@ typedef enum
             NSString *filename = [[saveDlg URL] path];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_main_queue(), ^{
-                [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
+                [(CCViewMacGL *)[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 // Save file to new path
                 [self saveFile:filename];
@@ -2785,7 +2787,7 @@ typedef enum
                 // Open newly created document
                 [self openFile:filename];
                 
-                [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
+                [(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
 		
@@ -2959,7 +2961,7 @@ typedef enum
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                            dispatch_get_main_queue(), ^{
-                [(CCGLView*)[[CCDirector sharedDirector] view] lockOpenGLContext];
+                [(CCViewMacGL *)[[CCDirector sharedDirector] view] lockOpenGLContext];
                 
                 for (int i = 0; i < [files count]; i++)
                 {
@@ -2979,7 +2981,7 @@ typedef enum
                     }
                 }
                 
-                [(CCGLView*)[[CCDirector sharedDirector] view] unlockOpenGLContext];
+                [(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
         }
     }];
