@@ -1,4 +1,5 @@
 extern NSString *const CCB_DICTIONARY_KEY_FILEVERSION;
+extern NSString *const CCB_DICTIONARY_KEY_FILETYPE;
 
 extern NSString *const CCB_DICTIONARY_KEY_NODEGRAPH;
 

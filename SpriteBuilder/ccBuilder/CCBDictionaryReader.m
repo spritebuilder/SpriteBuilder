@@ -42,6 +42,8 @@
 #import "CCBPEffectNode.h"
 #import "CCBDictionaryKeys.h"
 #import "CCBDictionaryMigrator.h"
+#import "NSError+SBErrors.h"
+#import "SBErrors.h"
 
 // Old positioning constants
 enum
@@ -622,50 +624,82 @@ __strong NSDictionary* renamedProperties = nil;
     return node;
 }
 
-+ (CCNode *)nodeGraphFromDocumentData:(NSDictionary *)documentData parentSize:(CGSize)parentSize;
++ (CCNode *)nodeGraphFromDocumentData:(NSDictionary *)documentData parentSize:(CGSize)parentSize error:(NSError **)error
 {
     if (!documentData)
     {
-        NSLog(@"WARNING! Trying to load invalid file type (dict is null)");
-        return NULL;
+        [NSError setNewErrorWithErrorPointer:error code:SBCCBReadingError message:@"Document is nil"];
+        return nil;
+    }
+
+    if (![self isFileVersionValid:[documentData[CCB_DICTIONARY_KEY_FILEVERSION] intValue] error:error])
+    {
+        return nil;
     }
 
     CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:documentData];
 
-    NSError *error;
-    NSDictionary *migratedCCB = [migrator migrate:&error];
+    NSError *migrationError;
+    NSDictionary *migratedCCB = [migrator migrate:&migrationError];
     if (!migratedCCB)
     {
-        NSLog(@"ERROR! Migration of ccb failed: %@", error);
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBCCBReadingError
+                                    userInfo:@{
+                                            NSLocalizedDescriptionKey : @"Migration failed",
+                                            NSUnderlyingErrorKey : migrationError
+                                    }];
+        return nil;
+    };
+
+    if (![self isFileTypeValid:migratedCCB[CCB_DICTIONARY_KEY_FILETYPE] error:error])
+    {
         return nil;
     }
 
-    // Load file metadata
-    
-    NSString* fileType = migratedCCB[@"fileType"];
-    int fileVersion = [migratedCCB[CCB_DICTIONARY_KEY_FILEVERSION] intValue];
-    
-    if (!fileType  || ![fileType isEqualToString:@"CocosBuilder"])
+    NSDictionary *nodeGraph = migratedCCB[CCB_DICTIONARY_KEY_NODEGRAPH];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromNodeGraphData:nodeGraph parentSize:parentSize withParentGraph:nil];
+    if (node)
     {
-        NSLog(@"WARNING! Trying to load invalid file type (%@)", fileType);
+        return node;
     }
-    
-    NSDictionary* nodeGraph = migratedCCB[@"nodeGraph"];
-    
-    if (fileVersion <= 2)
+
+    [NSError setNewErrorWithErrorPointer:error code:SBCCBReadingErrorNoNodesFound message:@"No nodes found"];
+    return nil;
+}
+
++ (BOOL)isFileTypeValid:(NSString *)fileType error:(NSError **)error
+{
+    if (!fileType
+        || !([fileType isEqualToString:@"CocosBuilder"]
+             || [fileType isEqualToString:@"SpriteBuilder"]))
     {
-        NSLog(@"WARNING! Trying to load a file that is no longer supported by CocosBuilder");
-        return NULL;
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBCCBReadingErrorInvalidFileType
+                                     message:[NSString stringWithFormat:@"Filetype is wrong: Should be CocosBuilder but \"%@\" found", fileType]];
+        return NO;
+    }
+    return YES;
+}
+
++ (BOOL)isFileVersionValid:(int)fileVersion error:(NSError **)error
+{
+    if (fileVersion <= kCCBDictionaryLowestVersionSupport)
+    {
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBCCBReadingErrorVersionTooOld
+                                     message:[NSString stringWithFormat:@"Version no longer supported, min version is %d but %d found", kCCBDictionaryLowestVersionSupport, fileVersion]];
+        return NO;
     }
     else if (fileVersion > kCCBDictionaryFormatVersion)
     {
-        NSLog(@"WARNING! Trying to load file made with a newer version of CocosBuilder");
-        return NULL;
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBCCBReadingErrorVersionHigherThanSpritebuilderSupport
+                                     message:[NSString stringWithFormat:@"Version is newer than version supported by Spritebuilder, version found %d, support %d", fileVersion, kCCBDictionaryFormatVersion]];
+        return NO;
     }
-    
-    return [CCBDictionaryReader nodeGraphFromNodeGraphData:nodeGraph parentSize:parentSize withParentGraph:nil];
+    return YES;
 }
-
 
 +(void)postDeserializationFixup:(CCNode*)node
 {

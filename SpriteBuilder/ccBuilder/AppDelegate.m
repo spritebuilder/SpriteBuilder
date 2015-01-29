@@ -1367,8 +1367,17 @@ typedef enum
     }
     
     // Process contents
-    CCNode* loadedRoot = [CCBDictionaryReader nodeGraphFromDocumentData:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
-    
+
+    NSError *error;
+    CCNode* loadedRoot = [CCBDictionaryReader nodeGraphFromDocumentData:doc
+                                                             parentSize:CGSizeMake(resolution.width, resolution.height)
+                                                                  error:&error];
+    if (!loadedRoot)
+    {
+        [NSAlert showModalDialogWithTitle:@"Error opening ccb file" message:error.localizedDescription];
+        return;
+    }
+
     NSMutableArray* loadedJoints = [NSMutableArray array];
     if(doc[@"joints"] != nil)
     {
