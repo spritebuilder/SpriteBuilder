@@ -17,27 +17,14 @@
 
 + (CCEffect<CCEffectProtocol>*)defaultConstruct
 {
-    return [self effectWithRedOffset:GLKVector2Make(0.0, 0.0) greenOffset:GLKVector2Make(0.0, 0.0) blueOffset:GLKVector2Make(0.0, 0.0)];
-}
-
-- (CGPoint)vectorToPoint:(GLKVector2)vector
-{
-    return CGPointMake(vector.x, vector.y);
-}
-
-- (GLKVector2)pointToVector:(CGPoint)point
-{
-    return GLKVector2Make(point.x, point.y);
+    return [self effectWithRedOffset:CGPointMake(0.0, 0.0) greenOffset:CGPointMake(0.0, 0.0) blueOffset:CGPointMake(0.0, 0.0)];
 }
 
 - (id)serialize
 {
-    return @[@{@"name" : @"redOffsetWithPoint",   @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:[self vectorToPoint:self
-            .redOffset]] },
-             @{@"name" : @"greenOffsetWithPoint", @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:[self vectorToPoint:self
-                     .greenOffset]] },
-             @{@"name" : @"blueOffsetWithPoint",  @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:[self vectorToPoint:self
-                     .blueOffset]] },
+    return @[@{@"name" : @"redOffsetWithPoint",   @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:self.redOffset] },
+             @{@"name" : @"greenOffsetWithPoint", @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:self.greenOffset] },
+             @{@"name" : @"blueOffsetWithPoint",  @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:self.blueOffset] },
              ];
 }
 
@@ -47,21 +34,21 @@
         return [dict[@"name"] isEqualToString:@"redOffsetWithPoint"];\
     } complete:^(NSDictionary * dict, int idx) {
         
-        self.redOffset = [self pointToVector:[CCBDictionaryReader deserializePoint:dict[@"value"]]];
+        self.redOffset = [CCBDictionaryReader deserializePoint:dict[@"value"]];
     }];
 
     [properties findFirst:^BOOL(NSDictionary * dict, int idx) {\
         return [dict[@"name"] isEqualToString:@"greenOffsetWithPoint"];\
     } complete:^(NSDictionary * dict, int idx) {
         
-        self.greenOffset = [self pointToVector:[CCBDictionaryReader deserializePoint:dict[@"value"]]];
+        self.greenOffset = [CCBDictionaryReader deserializePoint:dict[@"value"]];
     }];
 
     [properties findFirst:^BOOL(NSDictionary * dict, int idx) {\
         return [dict[@"name"] isEqualToString:@"blueOffsetWithPoint"];\
     } complete:^(NSDictionary * dict, int idx) {
         
-        self.blueOffset = [self pointToVector:[CCBDictionaryReader deserializePoint:dict[@"value"]]];
+        self.blueOffset = [CCBDictionaryReader deserializePoint:dict[@"value"]];
     }];
 }
 
