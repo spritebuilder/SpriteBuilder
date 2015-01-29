@@ -1046,7 +1046,32 @@ CA
                                     <action selector="performZoom:" target="-1" id="240"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="2095"/>
+                            <menuItem isSeparatorItem="YES" id="Kaw-tc-IQh"/>
+                            <menuItem title="Show Next Tab" alternate="YES" keyEquivalent="}" id="soS-dY-z2I">
+                                <connections>
+                                    <action selector="selectNextTab:" target="494" id="CZO-rp-H7c"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Previous Tab" alternate="YES" keyEquivalent="{" id="xjK-5W-d0F">
+                                <connections>
+                                    <action selector="selectPreviousTab:" target="494" id="lM3-mX-Wxl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="2095">
+                                <menu key="submenu" id="mS8-CF-LxD">
+                                    <items>
+                                        <menuItem title="Item 1" enabled="NO" id="r22-d8-gOv">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Item 2" enabled="NO" id="j8k-5Z-ccT">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Item 3" enabled="NO" id="zaG-9W-UUZ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Language Editor" keyEquivalent="" id="2094">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

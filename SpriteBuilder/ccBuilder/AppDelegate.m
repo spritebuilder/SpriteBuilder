@@ -842,6 +842,16 @@ typedef enum
     return YES;
 }
 
+- (IBAction)selectNextTab:(id)sender
+{
+    [tabView selectNextTabViewItem:sender];
+}
+
+- (IBAction) selectPreviousTab:(id)sender
+{
+  [tabView selectPreviousTabViewItem:sender];
+}
+
 #pragma mark Handling selections
 
 - (BOOL) nodeHasCCBFileAncestor:(CCNode*)node
@@ -4193,6 +4203,14 @@ typedef enum
     {
         if (!hasOpenedDocument) return NO;
         return (self.selectedNode != NULL);
+    }
+    else if (menuItem.action == @selector(selectNextTab:))
+    {
+      return [tabView numberOfTabViewItems] > 1;
+    }
+    else if (menuItem.action == @selector(selectPreviousTab:))
+    {
+      return [tabView numberOfTabViewItems] > 1;
     }
     
     return YES;
