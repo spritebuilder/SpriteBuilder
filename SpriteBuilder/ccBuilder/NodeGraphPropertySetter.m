@@ -54,11 +54,11 @@
     
             // Verify doc type and version
             if ([[doc objectForKey:@"fileType"] isEqualToString:@"CocosBuilder"]
-                && [[doc objectForKey:@"fileVersion"] intValue] <= kCCBFileFormatVersion)
+                && [[doc objectForKey:@"fileVersion"] intValue] <= kCCBDictionaryFormatVersion)
             {
     
                 // Parse the node graph
-                ccbFile = [CCBDictionaryReader nodeGraphFromDictionary:[doc objectForKey:@"nodeGraph"] parentSize:parentSize withParentGraph:nil];
+                ccbFile = [CCBDictionaryReader nodeGraphFromNodeGraphData:[doc objectForKey:@"nodeGraph"] parentSize:parentSize withParentGraph:nil];
             }
             
             // Get first timeline

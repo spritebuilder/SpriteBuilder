@@ -584,7 +584,7 @@ static SequencerHandler* sharedSequencerHandler;
         CCNode *originalNode = (__bridge CCNode*)nodePtr;
 
 		NSDictionary *node = @{
-				COPY_NODE_KEY : [CCBDictionaryReader nodeGraphFromDictionary:dictionary parentSize:CGSizeZero withParentGraph:nil],
+				COPY_NODE_KEY : [CCBDictionaryReader nodeGraphFromNodeGraphData:dictionary parentSize:CGSizeZero withParentGraph:nil],
 			ORIGINAL_NODE_KEY : originalNode
 		};
 

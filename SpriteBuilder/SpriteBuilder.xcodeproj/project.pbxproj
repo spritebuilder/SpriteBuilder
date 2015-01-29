@@ -822,7 +822,7 @@
 		E3EDBC1415483E3200EEF1F3 /* ResolutionSettingsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EDBC1315483E3200EEF1F3 /* ResolutionSettingsWindow.m */; };
 		E3EDBC1615483EE000EEF1F3 /* ResolutionSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3EDBC1515483EE000EEF1F3 /* ResolutionSettingsWindow.xib */; };
 		E3EDBC251549971000EEF1F3 /* CCBFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EDBC241549971000EEF1F3 /* CCBFileUtil.m */; };
-		E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F2C21214FC157E007B660D /* CCBXCocos2diPhoneWriter.m */; };
+		E3F2C21314FC157E007B660D /* CCBBinaryWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F2C21214FC157E007B660D /* CCBBinaryWriter.m */; };
 		E3F3F83F153C72A3005443EE /* NotesLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F3F83E153C72A3005443EE /* NotesLayer.m */; };
 		E3F3F843153C7700005443EE /* StickyNote.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F3F842153C7700005443EE /* StickyNote.m */; };
 		E3F3F845153C7772005443EE /* notes-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F3F844153C7772005443EE /* notes-bg.png */; };
@@ -2467,8 +2467,8 @@
 		E3EDBC1515483EE000EEF1F3 /* ResolutionSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResolutionSettingsWindow.xib; sourceTree = "<group>"; };
 		E3EDBC231549971000EEF1F3 /* CCBFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBFileUtil.h; sourceTree = "<group>"; };
 		E3EDBC241549971000EEF1F3 /* CCBFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBFileUtil.m; sourceTree = "<group>"; };
-		E3F2C21114FC157E007B660D /* CCBXCocos2diPhoneWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBXCocos2diPhoneWriter.h; sourceTree = "<group>"; };
-		E3F2C21214FC157E007B660D /* CCBXCocos2diPhoneWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBXCocos2diPhoneWriter.m; sourceTree = "<group>"; };
+		E3F2C21114FC157E007B660D /* CCBBinaryWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBBinaryWriter.h; sourceTree = "<group>"; };
+		E3F2C21214FC157E007B660D /* CCBBinaryWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBBinaryWriter.m; sourceTree = "<group>"; };
 		E3F3F83D153C72A3005443EE /* NotesLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotesLayer.h; sourceTree = "<group>"; };
 		E3F3F83E153C72A3005443EE /* NotesLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotesLayer.m; sourceTree = "<group>"; };
 		E3F3F841153C7700005443EE /* StickyNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickyNote.h; sourceTree = "<group>"; };
@@ -5299,8 +5299,8 @@
 				E398C02514FB81A30078E771 /* Supporting Files */,
 				E398C03914FB8F850078E771 /* CCBXCocos2diPhone.h */,
 				E398C03A14FB8F850078E771 /* CCBXCocos2diPhone.m */,
-				E3F2C21114FC157E007B660D /* CCBXCocos2diPhoneWriter.h */,
-				E3F2C21214FC157E007B660D /* CCBXCocos2diPhoneWriter.m */,
+				E3F2C21114FC157E007B660D /* CCBBinaryWriter.h */,
+				E3F2C21214FC157E007B660D /* CCBBinaryWriter.m */,
 			);
 			name = "Cocos2D iPhone";
 			path = "../Cocos2D iPhone";
@@ -7819,7 +7819,7 @@
 			files = (
 				4D0C1E7918F49A3700B028CA /* CCNode+PositionExtentions.m in Sources */,
 				E398C03B14FB8F850078E771 /* CCBXCocos2diPhone.m in Sources */,
-				E3F2C21314FC157E007B660D /* CCBXCocos2diPhoneWriter.m in Sources */,
+				E3F2C21314FC157E007B660D /* CCBBinaryWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -97,7 +97,7 @@
 - (void)setMetaDataInDict:(NSMutableDictionary *)dict
 {
     dict[@"fileType"] = @"CocosBuilder";
-    dict[@"fileVersion"] = @(kCCBFileFormatVersion);
+    dict[@"fileVersion"] = @(kCCBDictionaryFormatVersion);
 }
 
 - (void)setStageInDict:(NSMutableDictionary *)dict

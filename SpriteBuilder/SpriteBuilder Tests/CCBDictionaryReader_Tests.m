@@ -36,7 +36,7 @@
 // Some real world test
 - (void)testNodeGraphFromDocumentDict_version_4_to_5_migration_new_blend_mode
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_migration_version_4_to_5"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_migration_version_4_to_5"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     XCTAssertNotNil(node);
 
@@ -49,7 +49,7 @@
 
 - (void)testNodeGraphFromDocumentDict_node
 {
-    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_node"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_node"] parentSize:CGSizeMake(1024.0, 1024.0)];
     CCNode *node = container.children[0];
 
     XCTAssertEqual(node.visible, NO);
@@ -81,7 +81,7 @@
 
 - (void)testNodeGraphFromDocumentDict_node_customClass_customProperties
 {
-    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_node_customClass_customProperties"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_node_customClass_customProperties"] parentSize:CGSizeMake(1024.0, 1024.0)];
     CCNode *node = container.children[0];
 
     XCTAssertEqualObjects([node.userObject extraProps][@"customClass"], @"SBTestNode");
@@ -101,7 +101,7 @@
 
 - (void)testNodeGraphFromDocumentDict_sprite
 {
-    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_sprite"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *container = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_sprite"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCSprite *sprite = container.children[0];
     XCTAssertTrue([container.children[0] isKindOfClass:[CCSprite class]]);
@@ -129,7 +129,7 @@
 
 - (void)testNodeGraphFromDocumentDict_nodegradient
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_nodegradient"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_nodegradient"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCNodeGradient *nodeGradient = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCNodeGradient class]]);
@@ -144,7 +144,7 @@
 
 - (void)testNodeGraphFromDocumentDict_colornode
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_colornode"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_colornode"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCNodeGradient *nodeColor = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCNodeColor class]]);
@@ -154,7 +154,7 @@
 
 - (void)testNodeGraphFromDocumentDict_sprite9slice
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_sprite9slice"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_sprite9slice"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCSprite9Slice *sprite9Slice = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCSprite9Slice class]]);
@@ -167,7 +167,7 @@
 
 - (void)testNodeGraphFromDocumentDict_labelttf
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_labeltff"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_labeltff"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCLabelTTF *labelTTF = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCLabelTTF class]]);
@@ -208,7 +208,7 @@
 
 - (void)testNodeGraphFromDocumentDict_particlesystemGravityMode
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_particlesystem_gravity"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_particlesystem_gravity"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCParticleSystem *particleSystem = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCParticleSystem class]]);
@@ -262,7 +262,7 @@
 
 - (void)testNodeGraphFromDocumentDict_particlesystemRadialMode
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_particlesystem_radial"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_particlesystem_radial"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCParticleSystem *particleSystem = node.children[0];
 
@@ -280,7 +280,7 @@
 
 - (void)testNodeGraphFromDocumentDict_button
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_button"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_button"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCButton *button = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCButton class]]);
@@ -317,7 +317,7 @@
 
 - (void)testNodeGraphFromDocumentDict_textfield
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_textfield"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_textfield"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCTextField *textField = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCTextField class]]);
@@ -337,7 +337,7 @@
 // FAILING until blendMode is available in bmfont class
 - (void)testNodeGraphFromDocumentDict_bmfont
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCParticleSystem *bmfont = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCLabelBMFont class]]);
@@ -347,7 +347,7 @@
 
 - (void)testNodeGraphFromDocumentDict_slider
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_slider"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_slider"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCSlider *slider = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCSlider class]]);
@@ -362,7 +362,7 @@
 
 - (void)testNodeGraphFromDocumentDict_scrollview
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_scrollview"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_scrollview"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCScrollView *scrollView = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCScrollView class]]);
@@ -375,7 +375,7 @@
 
 - (void)testNodeGraphFromDocumentDict_boxlayout
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_boxlayout"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_boxlayout"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCLayoutBox *layoutBox = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCLayoutBox class]]);
@@ -389,7 +389,7 @@
 
 - (void)testNodeGraphFromDocumentDict_effectnode
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_effectnode"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_effectnode"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     CCEffectNode *effectNode = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCEffectNode class]]);
@@ -408,7 +408,7 @@
 
 - (void)testNodeGraphFromDocumentDict_subfile
 {
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_subfile"] parentSize:CGSizeMake(1024.0, 1024.0)];
+    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_subfile"] parentSize:CGSizeMake(1024.0, 1024.0)];
 
     // "ccbFile" -> ""
     // Cannot import CCBPCCBFile.h for whatever reason

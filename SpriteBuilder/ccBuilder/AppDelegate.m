@@ -1365,14 +1365,15 @@ typedef enum
     }
     
     // Process contents
-    CCNode* loadedRoot = [CCBDictionaryReader nodeGraphFromDocumentDictionary:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
+    CCNode* loadedRoot = [CCBDictionaryReader nodeGraphFromDocumentData:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
     
     NSMutableArray* loadedJoints = [NSMutableArray array];
     if(doc[@"joints"] != nil)
     {
         for (NSDictionary * jointDict in doc[@"joints"])
         {
-            CCNode * joint = [CCBDictionaryReader nodeGraphFromDictionary:jointDict parentSize:CGSizeMake(resolution.width, resolution.height) withParentGraph:loadedRoot];
+            CCNode * joint = [CCBDictionaryReader nodeGraphFromNodeGraphData:jointDict parentSize:CGSizeMake(resolution.width, resolution
+                    .height)                                 withParentGraph:loadedRoot];
             
             if(joint)
             {
@@ -2552,7 +2553,7 @@ typedef enum
         if (asChild) parentSize = self.selectedNode.contentSize;
         else parentSize = self.selectedNode.parent.contentSize;
         
-        CCNode* clipNode = [CCBDictionaryReader nodeGraphFromDictionary:clipDict parentSize:parentSize withParentGraph:nil];
+        CCNode* clipNode = [CCBDictionaryReader nodeGraphFromNodeGraphData:clipDict parentSize:parentSize withParentGraph:nil];
 		[CCBDictionaryReader postDeserializationFixup:clipNode];
         [self updateUUIDs:clipNode];
         

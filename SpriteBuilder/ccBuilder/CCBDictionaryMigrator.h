@@ -9,7 +9,7 @@
 
 @property (nonatomic, readonly) NSDictionary *ccb;
 
-// Default is kCCBFileFormatVersion but can be set to any value if needed
+// Default is kCCBDictionaryFormatVersion but can be set to any value if needed
 @property (nonatomic) NSUInteger ccbMigrationVersionTarget;
 
 // Default is CCBDictionaryMigrationStepVersion

@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-#import "CCBXCocos2diPhoneWriter.h"
+#import "CCBBinaryWriter.h"
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "CustomPropSetting.h"
 #import "NSArray+Query.h"
 #import "CCRendererBasicTypes.h"
 
-@implementation CCBXCocos2diPhoneWriter
+@implementation CCBBinaryWriter
 
 @synthesize data;
 @synthesize serializedProjectSettings;
@@ -1044,7 +1044,7 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     [data appendBytes:&magic length:4];
     
     // Version
-    [self writeIntOLD:kCCBXVersion withSign:NO];
+    [self writeIntOLD:kCCBBinaryVersion withSign:NO];
 }
 
 - (void) writeStringCache

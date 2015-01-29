@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#define kCCBFileFormatVersion 5
+#define kCCBDictionaryFormatVersion 5
 
 @interface CCBDictionaryReader : NSObject
 
@@ -33,9 +33,9 @@
 
 + (CCColor *)deserializeColor4:(id)val;
 
-+ (CCNode *)nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize)parentSize;
++ (CCNode *)nodeGraphFromDocumentData:(NSDictionary *)documentData parentSize:(CGSize)parentSize;
 
-+ (CCNode *)nodeGraphFromDictionary:(NSDictionary *)dict parentSize:(CGSize)parentSize withParentGraph:(CCNode *)parentGraph;
++ (CCNode *)nodeGraphFromNodeGraphData:(NSDictionary *)nodeGraphData parentSize:(CGSize)parentSize withParentGraph:(CCNode *)parentGraph;
 
 + (void)setProp:(NSString *)name
          ofType:(NSString *)type

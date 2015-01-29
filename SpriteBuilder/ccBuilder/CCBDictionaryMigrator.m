@@ -26,7 +26,7 @@
     {
         self.ccb = ccb;
         self.migrationStepClassPrefix = @"CCBDictionaryMigrationStepVersion";
-        self.ccbMigrationVersionTarget = kCCBFileFormatVersion;
+        self.ccbMigrationVersionTarget = kCCBDictionaryFormatVersion;
     }
 
     return self;
