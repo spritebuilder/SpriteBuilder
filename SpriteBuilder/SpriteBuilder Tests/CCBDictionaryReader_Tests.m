@@ -5,13 +5,20 @@
 //  Created by Nicky Weber on 22.01.15.
 //
 //
+/*
+    Please note: The reader tests are for Sp
+
+
+
+ */
 
 #import <XCTest/XCTest.h>
 #import "CCBDictionaryReader.h"
 #import "NodeInfo.h"
 #import "CustomPropSetting.h"
 #import "CCNode+NodeInfo.h"
-
+#import "CCControl.h"
+#import "CCLayoutBox.h"
 
 
 @interface CCBDictionaryReader_Tests : XCTestCase
@@ -278,7 +285,34 @@
     CCButton *button = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCButton class]]);
 
-    // Too soul crushing...
+    [self assertColor:[button backgroundColorForState:CCControlStateNormal] red:1.0 green:1.0 blue:0.0 alpha:1.0];
+    [self assertColor:[button backgroundColorForState:CCControlStateHighlighted] red:0.0 green:1.0 blue:1.0 alpha:1.0];
+    [self assertColor:[button backgroundColorForState:CCControlStateDisabled] red:0.0 green:1.0 blue:0.0 alpha:1.0];
+    [self assertColor:[button backgroundColorForState:CCControlStateSelected] red:0.0 green:1.0 blue:0.5699 alpha:1.0];
+    [self assertColor:[button labelColorForState:CCControlStateNormal] red:1.0 green:0.0 blue:1.0 alpha:1.0];
+    [self assertColor:[button labelColorForState:CCControlStateHighlighted] red:0.0 green:0.0 blue:1.0 alpha:1.0];
+    [self assertColor:[button labelColorForState:CCControlStateDisabled] red:0.5647 green:0.5647 blue:0.5647 alpha:1.0];
+    [self assertColor:[button labelColorForState:CCControlStateSelected] red:0.5647 green:0.0 blue:1.0 alpha:1.0];
+
+    XCTAssertEqualWithAccuracy([button backgroundOpacityForState:CCControlStateNormal], 0.9, 0.001);
+    XCTAssertEqualWithAccuracy([button backgroundOpacityForState:CCControlStateHighlighted], 0.99, 0.001);
+    XCTAssertEqualWithAccuracy([button backgroundOpacityForState:CCControlStateDisabled], 0.98, 0.001);
+    XCTAssertEqualWithAccuracy([button backgroundOpacityForState:CCControlStateSelected], 0.5, 0.001);
+
+    XCTAssertEqualWithAccuracy([button labelOpacityForState:CCControlStateNormal], 0.95, 0.001);
+    XCTAssertEqualWithAccuracy([button labelOpacityForState:CCControlStateHighlighted], 0.88, 0.001);
+    XCTAssertEqualWithAccuracy([button labelOpacityForState:CCControlStateDisabled], 1.87, 0.001);
+    XCTAssertEqualWithAccuracy([button labelOpacityForState:CCControlStateSelected], 0.7, 0.001);
+
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Normal"], @"ccbResources/ccbButtonNormal.png");
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Disabled"], @"ccbResources/ccbButtonNormal.png");
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Selected"], @"ccbResources/ccbButtonNormal.png");
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Highlighted"], @"ccbResources/ccbButtonHighlighted.png");
+
+    XCTAssertEqualObjects([button.userObject extraProps][@"continuous"], @YES);
+    XCTAssertEqualObjects([button.userObject extraProps][@"block"], @"doit");
+    XCTAssertEqualObjects([button.userObject extraProps][@"zoomWhenHighlighted"], @YES);
+    XCTAssertEqualObjects([button.userObject extraProps][@"togglesSelectedState"], @YES);
 }
 
 - (void)testNodeGraphFromDocumentDict_textfield
@@ -300,8 +334,7 @@
     XCTAssertEqualObjects([textField.userObject extraProps][@"backgroundSpriteFrame"], @"ccbResources/ccbTextField.png");
 }
 
-/*
-// SKIPPED UNTIL blendMode is available in bmfont class
+// FAILING until blendMode is available in bmfont class
 - (void)testNodeGraphFromDocumentDict_bmfont
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_bmfont"] parentSize:CGSizeMake(1024.0, 1024.0)];
@@ -315,28 +348,77 @@
 - (void)testNodeGraphFromDocumentDict_slider
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_slider"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCSlider *slider = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCSlider class]]);
+
+    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Disabled"], @"ccbResources/ccbParticleSmoke.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Highlighted"], @"ccbResources/ccbParticleStars.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Normal"], @"ccbResources/ccbSliderBgNormal.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Disabled"], @"ccbResources/ccbParticleStars.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Highlighted"], @"ccbResources/ccbTextField.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Normal"], @"ccbResources/ccbSliderHandle.png");
 }
 
 - (void)testNodeGraphFromDocumentDict_scrollview
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_scrollview"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCScrollView *scrollView = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCScrollView class]]);
+
+    XCTAssertTrue(scrollView.bounces);
+    XCTAssertTrue(scrollView.verticalScrollEnabled);
+    XCTAssertTrue(scrollView.horizontalScrollEnabled);
+    XCTAssertTrue(scrollView.pagingEnabled);
 }
 
 - (void)testNodeGraphFromDocumentDict_boxlayout
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_boxlayout"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCLayoutBox *layoutBox = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCLayoutBox class]]);
+
+    XCTAssertEqual(layoutBox.direction, CCLayoutBoxDirectionVertical);
+    XCTAssertEqual(layoutBox.spacing, INFINITY);
+
+    XCTAssertEqualObjects([layoutBox.userObject extraProps][@"spacingType"], @1);
+    XCTAssertEqualObjects([layoutBox.userObject extraProps][@"spacing"], @3.0);
 }
 
 - (void)testNodeGraphFromDocumentDict_effectnode
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_effectnode"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    CCEffectNode *effectNode = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[CCEffectNode class]]);
+
+    CCEffectStack *effectStack = (CCEffectStack *) effectNode.effect;
+
+    CCEffectSaturation *saturation = (CCEffectSaturation *) [effectStack effectAtIndex:0];
+    XCTAssertEqualWithAccuracy(saturation.saturation, 0.8, 0.0001);
+
+    CCEffectBlur *blur = (CCEffectBlur *) [effectStack effectAtIndex:1];
+    XCTAssertEqual(blur.blurRadius, 6);
+
+    CCEffectPixellate *pixellate = (CCEffectPixellate *) [effectStack effectAtIndex:2];
+    XCTAssertEqualWithAccuracy(pixellate.blockSize, 3.0, 0.0001);
 }
 
 - (void)testNodeGraphFromDocumentDict_subfile
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_subfile"] parentSize:CGSizeMake(1024.0, 1024.0)];
+
+    // "ccbFile" -> ""
+    // Cannot import CCBPCCBFile.h for whatever reason
+    CCNode *subCCB = node.children[0];
+    XCTAssertTrue([node.children[0] isKindOfClass:[NSClassFromString(@"CCBPCCBFile") class]]);
+
+    XCTAssertEqualObjects([subCCB.userObject extraProps][@"ccbFile"], @"test_ccbreader_sprite.ccb");
 }
 
+/*
 - (void)testNodeGraphFromDocumentDict_physics_distance_joint
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentDictionary:[self loadCCBFile:@"test_ccbreader_physics_distance_joint"] parentSize:CGSizeMake(1024.0, 1024.0)];

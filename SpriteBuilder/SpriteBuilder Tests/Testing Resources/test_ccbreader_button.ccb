@@ -72,7 +72,7 @@
 						<key>value</key>
 						<array>
 							<real>245</real>
-							<real>175.00001525878906</real>
+							<real>175.27909851074219</real>
 							<integer>0</integer>
 							<integer>0</integer>
 							<integer>0</integer>
@@ -109,9 +109,17 @@
 						<string>Block</string>
 						<key>value</key>
 						<array>
-							<string></string>
+							<string>doit</string>
 							<integer>1</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>continuous</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
