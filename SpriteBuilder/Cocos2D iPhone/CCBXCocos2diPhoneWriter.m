@@ -27,6 +27,8 @@
 #import "SequencerKeyframeEasing.h"
 #import "CustomPropSetting.h"
 #import "NSArray+Query.h"
+#import "CCRendererBasicTypes.h"
+
 @implementation CCBXCocos2diPhoneWriter
 
 @synthesize data;
@@ -577,10 +579,12 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
-        int a = [[prop objectAtIndex:0] intValue];
-        int b = [[prop objectAtIndex:1] intValue];
-        [self writeInt:a withSign:NO];
-        [self writeInt:b withSign:NO];
+        [self writeInt:[prop[CCBlendFuncSrcColor] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendFuncSrcAlpha] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendFuncDstColor] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendFuncDstAlpha] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendEquationColor] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendEquationAlpha] intValue] withSign:NO];
     }
     else if([type isEqualToString:@"NodeReference"])
     {
