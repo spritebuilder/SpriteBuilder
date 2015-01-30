@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ProjectSettingsWindowController"/>
@@ -26,47 +26,25 @@
                     <rect key="frame" x="0.0" y="97" width="480" height="62"/>
                     <subviews>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mta-LG-UN1">
-                            <rect key="frame" x="17" y="16" width="56" height="17"/>
-                            <buttonCell key="cell" type="check" title="phone" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="LKF-qO-Ded">
+                            <rect key="frame" x="17" y="16" width="56" height="18"/>
+                            <buttonCell key="cell" type="check" title="1x" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="LKF-qO-Ded">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_phone" id="p8C-ff-KzF"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Eki-sQ-RAw"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_1x" id="qGJ-7O-E9F"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zI5-OW-zsa">
                             <rect key="frame" x="75" y="16" width="70" height="18"/>
-                            <buttonCell key="cell" type="check" title="phonehd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="znf-cY-ieS">
+                            <buttonCell key="cell" type="check" title="2x" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="znf-cY-ieS">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_phonehd" id="Yjl-9h-JMv"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1I7-be-AXQ"/>
-                            </connections>
-                        </button>
-                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ayO-jh-Yut">
-                            <rect key="frame" x="208" y="16" width="67" height="18"/>
-                            <buttonCell key="cell" type="check" title="tablethd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="TUd-2z-DSD">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_tablethd" id="Qp7-QO-jS0"/>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="MF8-Rc-QpE"/>
-                            </connections>
-                        </button>
-                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eUk-Kd-kPa">
-                            <rect key="frame" x="149" y="16" width="53" height="18"/>
-                            <buttonCell key="cell" type="check" title="tablet" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="RZa-Qg-LbB">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_tablet" id="Fap-Pw-RGU"/>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="GIe-bO-fyQ"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_2x" id="qQc-pY-ni7"/>
                             </connections>
                         </button>
                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uhy-uo-i21">
@@ -122,6 +100,17 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
+                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ayO-jh-Yut">
+                            <rect key="frame" x="132" y="15" width="67" height="18"/>
+                            <buttonCell key="cell" type="check" title="4x" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="TUd-2z-DSD">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_4x" id="Qp7-QO-jS0"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="MF8-Rc-QpE"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2gS-9J-jr5">
@@ -134,47 +123,25 @@
                             <font key="titleFont" metaFont="system"/>
                         </box>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X4i-P9-OgD">
-                            <rect key="frame" x="17" y="5" width="56" height="17"/>
-                            <buttonCell key="cell" type="check" title="phone" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1Ip-fI-oGa">
+                            <rect key="frame" x="17" y="5" width="56" height="18"/>
+                            <buttonCell key="cell" type="check" title="1x" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="1Ip-fI-oGa">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_phone" id="nlN-il-lwy"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_1x" id="2z7-YB-KBp"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="KNC-rd-iaZ"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20Q-SB-q8R">
                             <rect key="frame" x="75" y="3" width="70" height="18"/>
-                            <buttonCell key="cell" type="check" title="phonehd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="5rR-xK-KM3">
+                            <buttonCell key="cell" type="check" title="2x" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="5rR-xK-KM3">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_phonehd" id="Mwr-n0-skP"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1W9-V3-ZCt"/>
-                            </connections>
-                        </button>
-                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KXz-MI-UbZ">
-                            <rect key="frame" x="208" y="3" width="67" height="18"/>
-                            <buttonCell key="cell" type="check" title="tablethd" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Guq-Pp-56I">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_tablethd" id="DBc-F6-QFR"/>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="DTy-xH-awX"/>
-                            </connections>
-                        </button>
-                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8A-Da-Pp0">
-                            <rect key="frame" x="149" y="3" width="53" height="18"/>
-                            <buttonCell key="cell" type="check" title="tablet" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Rfu-7q-xKM">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_tablet" id="yVc-hh-uoh"/>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Ltp-Xh-8sr"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_2x" id="E2K-TQ-gQ9"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-aa-Nid" customClass="CCBTextFieldLabel">
@@ -240,6 +207,17 @@
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="gs7-KN-Fdm"/>
                             </connections>
                         </popUpButton>
+                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KXz-MI-UbZ">
+                            <rect key="frame" x="132" y="3" width="67" height="18"/>
+                            <buttonCell key="cell" type="check" title="4x" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Guq-Pp-56I">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_4x" id="DBc-F6-QFR"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="DTy-xH-awX"/>
+                            </connections>
+                        </button>
                     </subviews>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fo6-Ul-j5T">

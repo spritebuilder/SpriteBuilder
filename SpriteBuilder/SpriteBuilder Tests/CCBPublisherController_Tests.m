@@ -64,12 +64,12 @@
     _packageSettings.publishToZip = YES;
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
-    iosSettings.resolution_tablethd = YES;
-    iosSettings.resolution_phone = YES;
+    iosSettings.resolution_4x = YES;
+    iosSettings.resolution_2x = YES;
 
     PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
-    androidSettings.resolution_tablet = YES;
-    androidSettings.resolution_phonehd = YES;
+    androidSettings.resolution_1x = YES;
+    androidSettings.resolution_2x = YES;
 
     [self createFolders:@[@"baa.spritebuilder/Packages/foo.sbpack"]];
 
@@ -84,16 +84,17 @@
 
     [_publisherController startAsync:NO];
 
-    [self assertFileDoesNotExist:@"Published-Packages/foo-iOS-tablethd"];
-    [self assertFileDoesNotExist:@"Published-Packages/foo-iOS-phone"];
-    [self assertFileDoesNotExist:@"Published-Packages/foo-Android-tablet"];
-    [self assertFileDoesNotExist:@"Published-Packages/foo-Android-phonehd"];
+    // Assert that there are actually no directories created with the same name
+    [self assertFileDoesNotExist:@"Published-Packages/foo-iOS-1x"];
+    [self assertFileDoesNotExist:@"Published-Packages/foo-iOS-4x"];
+    [self assertFileDoesNotExist:@"Published-Packages/foo-Android-1x"];
+    [self assertFileDoesNotExist:@"Published-Packages/foo-Android-2x"];
 
     [self assertFilesExistRelativeToDirectory:[@"baa.spritebuilder" stringByAppendingPathComponent:DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES] filesPaths:@[
-            @"foo-iOS-tablethd.zip",
-            @"foo-iOS-phone.zip",
-            @"foo-Android-tablet.zip",
-            @"foo-Android-phonehd.zip"
+            @"foo-iOS-1x.zip",
+            @"foo-iOS-4x.zip",
+            @"foo-Android-1x.zip",
+            @"foo-Android-2x.zip"
     ]];
 }
 
@@ -145,12 +146,12 @@
 
     PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
     androidSettings.resolutions = @[];
-    androidSettings.resolution_phone = YES;
+    androidSettings.resolution_2x = YES;
 
     [_publisherController startAsync:NO];
 
     [self assertFilesExistRelativeToDirectory:@"custom" filesPaths:@[
-          @"foo-Android-phone.zip"
+          @"foo-Android-2x.zip"
     ]];
 }
 

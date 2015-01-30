@@ -24,8 +24,11 @@ NSString *const RESOLUTION_PHONE_HD = @"phonehd";
 NSString *const RESOLUTION_TABLET = @"tablet";
 NSString *const RESOLUTION_TABLET_HD = @"tablethd";
 
-NSUInteger const MINIMUM_FILENAME_LENGTH = 3;
+NSString *const RESOLUTION_1X = @"1x";
+NSString *const RESOLUTION_2X = @"2x";;
+NSString *const RESOLUTION_4X = @"4x";;
 
+NSUInteger const MINIMUM_FILENAME_LENGTH = 3;
 
 // *** Notification object dictionary keys
 
