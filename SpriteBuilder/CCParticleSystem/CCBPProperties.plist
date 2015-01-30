@@ -245,16 +245,18 @@
 			<key>saveInTemplate</key>
 			<true/>
 			<key>default</key>
-			<array>
-				<integer>1</integer>
-				<integer>1</integer>
-			</array>
+            <dict>
+                <key>CCBlendFuncSrcColor</key>
+                <integer>1</integer>
+                <key>CCBlendFuncDstColor</key>
+                <integer>1</integer>
+            </dict>
 			<key>displayName</key>
 			<string></string>
 			<key>type</key>
 			<string>Blendmode</string>
 			<key>name</key>
-			<string>blendFunc</string>
+			<string>blendMode</string>
 		</dict>
 		<dict>
 			<key>saveInTemplate</key>

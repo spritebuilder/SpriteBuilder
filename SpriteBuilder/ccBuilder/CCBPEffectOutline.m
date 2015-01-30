@@ -12,8 +12,8 @@
 #if CC_EFFECTS_EXPERIMENTAL
 
 #import "EffectsUndoHelper.h"
-#import "CCBReaderInternal.h"
-#import "CCBWriterInternal.h"
+#importCCBDictionaryReader
+#importCCBDictionaryWriter
 
 
 @implementation CCBPEffectOutline
@@ -27,7 +27,7 @@
 -(id)serialize
 {
     return @[SERIALIZE_PROPERTY(outlineWidth,Integer),
-             @{@"name" : @"outlineColor", @"type" : @"Color4", @"value": [CCBWriterInternal serializeColor4:self.outlineColor] },
+             @{@"name" : @"outlineColor", @"type" : @"Color4", @"value": [CCBDictionaryWriter serializeColor4:self.outlineColor] },
              ];
 }
 
@@ -39,7 +39,7 @@
         return [dict[@"name"] isEqualToString:@"outlineColor"];\
     } complete:^(NSDictionary * dict, int idx) {
         
-        self.outlineColor = [CCBReaderInternal deserializeColor4:dict[@"value"]];
+        self.outlineColor = [CCBDictionaryReader deserializeColor4:dict[@"value"]];
     }];
 
 }

@@ -26,7 +26,7 @@
 
     if ([_projectSettings isResourcePathInProject:fullPath])
     {
-        [NSError setNewErrorWithCode:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
+        [NSError setNewErrorWithErrorPointer:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
         return nil;
     }
 
@@ -35,9 +35,9 @@
     if (!createDirSuccess
         && underlyingErrorCreate.code == NSFileWriteFileExistsError)
     {
-        [NSError setNewErrorWithCode:error
-                                code:SBResourcePathExistsButNotInProjectError
-                             message:[NSString stringWithFormat:@"Package %@ already exists on disk but is not in project", packageName]];
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBResourcePathExistsButNotInProjectError
+                                     message:[NSString stringWithFormat:@"Package %@ already exists on disk but is not in project", packageName]];
         return nil;
     }
     else if (!createDirSuccess)

@@ -37,7 +37,7 @@
 
     if (errors.count > 0)
     {
-        [NSError setNewErrorWithCode:error code:prevailingErrorCode userInfo:@{NSLocalizedDescriptionKey : errorDescription, @"errors" : errors}];
+        [NSError setNewErrorWithErrorPointer:error code:prevailingErrorCode userInfo:@{NSLocalizedDescriptionKey : errorDescription, @"errors" : errors}];
     }
 
     return result;

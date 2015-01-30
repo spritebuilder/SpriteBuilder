@@ -30,8 +30,8 @@
 #import "NSFlippedView.h"
 #import "CCBGlobals.h"
 #import "cocos2d.h"
-#import "CCBWriterInternal.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryWriter.h"
+#import "CCBDictionaryReader.h"
 #import "CCBDocument.h"
 #import "NewDocWindowController.h"
 #import "CCBSpriteSheetParser.h"
@@ -1377,14 +1377,25 @@ typedef enum
     }
     
     // Process contents
-    CCNode* loadedRoot = [CCBReaderInternal nodeGraphFromDocumentDictionary:doc parentSize:CGSizeMake(resolution.width, resolution.height)];
-    
+
+    NSError *error;
+    CCNode* loadedRoot = [CCBDictionaryReader nodeGraphFromDocumentData:doc
+                                                             parentSize:CGSizeMake(resolution.width, resolution.height)
+                                                                  error:&error];
+    if (!loadedRoot)
+    {
+        [NSAlert showModalDialogWithTitle:@"Error opening ccb file" message:error.localizedDescription];
+        return;
+    }
+
     NSMutableArray* loadedJoints = [NSMutableArray array];
     if(doc[@"joints"] != nil)
     {
         for (NSDictionary * jointDict in doc[@"joints"])
         {
-            CCNode * joint = [CCBReaderInternal nodeGraphFromDictionary:jointDict parentSize:CGSizeMake(resolution.width, resolution.height) withParentGraph:loadedRoot];
+            CCNode * joint = [CCBDictionaryReader nodeGraphFromNodeGraphData:jointDict
+                                                                  parentSize:CGSizeMake(resolution.width, resolution.height)
+                                                             withParentGraph:loadedRoot];
             
             if(joint)
             {
@@ -1404,7 +1415,7 @@ typedef enum
         [g.joints addJoint:child];
     }];
 
-	[CCBReaderInternal postDeserializationFixup:g.rootNode];
+	[CCBDictionaryReader postDeserializationFixup:g.rootNode];
 
     
     [[CocosScene cocosScene] replaceSceneNodes:g];
@@ -2308,7 +2319,7 @@ typedef enum
         // Set its position
         [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) forNode:node prop:@"position"];
         
-        [CCBReaderInternal setProp:prop ofType:@"SpriteFrame" toValue:[NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil] forNode:node parentSize:CGSizeZero withParentGraph:nil];
+        [CCBDictionaryReader setProp:prop ofType:@"SpriteFrame" toValue:[NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil] forNode:node parentSize:CGSizeZero withParentGraph:nil];
         // Set it's displayName to the name of the spriteFile
         node.displayName = [[spriteFile lastPathComponent] stringByDeletingPathExtension];
         [self addCCObject:node toParent:parent];
@@ -2530,7 +2541,7 @@ typedef enum
         return;
     
     // Serialize selected node
-    NSMutableDictionary* clipDict = [CCBWriterInternal dictionaryFromCCObject:self.selectedNode];
+    NSMutableDictionary* clipDict = [CCBDictionaryWriter serializeNode:self.selectedNode];
     NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
     
@@ -2564,8 +2575,8 @@ typedef enum
         if (asChild) parentSize = self.selectedNode.contentSize;
         else parentSize = self.selectedNode.parent.contentSize;
         
-        CCNode* clipNode = [CCBReaderInternal nodeGraphFromDictionary:clipDict parentSize:parentSize];
-		[CCBReaderInternal postDeserializationFixup:clipNode];
+        CCNode* clipNode = [CCBDictionaryReader nodeGraphFromNodeGraphData:clipDict parentSize:parentSize withParentGraph:nil];
+		[CCBDictionaryReader postDeserializationFixup:clipNode];
         [self updateUUIDs:clipNode];
         
         

@@ -25,21 +25,26 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-#define kCCBFileFormatVersion 4
+#define kCCBDictionaryLowestVersionSupport 3
+#define kCCBDictionaryFormatVersion 5
 
-@interface CCBReaderInternal : NSObject
+@interface CCBDictionaryReader : NSObject
 
-+ (NSPoint) deserializePoint:(id) val;
-+ (CCColor*) deserializeColor4:(id) val;
++ (NSPoint)deserializePoint:(id)val;
 
-//+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict;
-+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize;
-//+ (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary*) dict;
-+ (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize;
-//+ (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node;
++ (CCColor *)deserializeColor4:(id)val;
 
-+ (CCNode*) nodeGraphFromDictionary:(NSDictionary*) dict parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph;
++ (CCNode *)nodeGraphFromDocumentData:(NSDictionary *)documentData parentSize:(CGSize)parentSize error:(NSError **)error;
 
-+ (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize withParentGraph:(CCNode*)parentGraph;
-+ (void)postDeserializationFixup:(CCNode*)node;
++ (CCNode *)nodeGraphFromNodeGraphData:(NSDictionary *)nodeGraphData parentSize:(CGSize)parentSize withParentGraph:(CCNode *)parentGraph;
+
++ (void)setProp:(NSString *)name
+         ofType:(NSString *)type
+        toValue:(id)serializedValue
+        forNode:(CCNode *)node
+     parentSize:(CGSize)parentSize
+withParentGraph:(CCNode *)parentGraph;
+
++ (void)postDeserializationFixup:(CCNode *)node;
+
 @end

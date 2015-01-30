@@ -29,3 +29,14 @@ NSInteger const SBNoPackagePathsToImport = 2109;
 NSInteger const SBPackageAlreayInProject = 2110;
 NSInteger const SBEmptyPackageNameError = 2111;
 NSInteger const SBMigrationError = 2200;
+
+// CCB Reading and writing
+NSInteger const SBCCBReadingError = 3000;
+NSInteger const SBCCBReadingErrorInvalidFileType = 3001;
+NSInteger const SBCCBReadingErrorVersionTooOld = 3002;
+NSInteger const SBCCBReadingErrorVersionHigherThanSpritebuilderSupport = 3003;
+NSInteger const SBCCBReadingErrorNoNodesFound = 3004;
+
+NSInteger const SBCCBMigrationError = 3010;
+NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError = 3011;
+NSInteger const SBCCBMigrationNoVersionFoundError = 3012;

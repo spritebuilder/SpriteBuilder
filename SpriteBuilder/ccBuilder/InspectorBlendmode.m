@@ -28,56 +28,52 @@
 
 - (void) setBlendSrc:(int)blendSrc
 {
-//    ccBlendFunc blend;
-//    NSValue* blendValue = [self propertyForSelection];
-//    [blendValue getValue:&blend];
-//    
-//    blend.src = blendSrc;
-//    
-//    blendValue = [NSValue value:&blend withObjCType:@encode(ccBlendFunc)];
-//    [self setPropertyForSelection:blendValue];
-}
+    CCBlendMode *blendMode = [self propertyForSelection];
+    NSMutableDictionary *newOptions = [blendMode.options mutableCopy];
+
+    newOptions[@"CCBlendFuncSrcColor"] = @(blendSrc);
+
+    CCBlendMode *newBlendMode = [CCBlendMode blendModeWithOptions:newOptions];
+
+    [self setPropertyForSelection:newBlendMode];
+};
 
 - (int) blendSrc
 {
-//    ccBlendFunc blend;
-//    NSValue* blendValue = [self propertyForSelection];
-//    [blendValue getValue:&blend];
-//    
-//    return blend.src;
+    CCBlendMode *blendMode = [self propertyForSelection];
+    NSNumber *srcColor = blendMode.options[@"CCBlendFuncSrcColor"];
+    return [srcColor intValue];
 }
 
 - (void) setBlendDst:(int)blendDst
 {
-//    ccBlendFunc blend;
-//    NSValue* blendValue = [self propertyForSelection];
-//    [blendValue getValue:&blend];
-//    
-//    blend.dst = blendDst;
-//    
-//    blendValue = [NSValue value:&blend withObjCType:@encode(ccBlendFunc)];
-//    [self setPropertyForSelection:blendValue];
+    CCBlendMode *blendMode = [self propertyForSelection];
+    NSMutableDictionary *newOptions = [blendMode.options mutableCopy];
+
+    newOptions[@"CCBlendFuncDstColor"] = @(blendDst);
+
+    CCBlendMode *newBlendMode = [CCBlendMode blendModeWithOptions:newOptions];
+
+    [self setPropertyForSelection:newBlendMode];
 }
 
 - (int) blendDst
 {
-//    ccBlendFunc blend;
-//    NSValue* blendValue = [self propertyForSelection];
-//    [blendValue getValue:&blend];
-//    
-//    return blend.dst;
+    CCBlendMode *blendMode = [self propertyForSelection];
+    NSNumber *dstColor = blendMode.options[@"CCBlendFuncDstColor"];
+    return [dstColor intValue];
 }
 
 - (IBAction)blendNormal:(id)sender
 {
-//    self.blendSrc = GL_ONE;
-//    self.blendDst = GL_ONE_MINUS_SRC_ALPHA;
+    self.blendSrc = GL_ONE;
+    self.blendDst = GL_ONE_MINUS_SRC_ALPHA;
 }
 
 - (IBAction)blendAdditive:(id)sender
 {
-//    self.blendSrc = GL_ONE;
-//    self.blendDst = GL_ONE;
+    self.blendSrc = GL_ONE;
+    self.blendDst = GL_ONE;
 }
 
 - (void) refresh

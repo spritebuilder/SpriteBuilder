@@ -24,30 +24,28 @@
 
 #import <Foundation/Foundation.h>
 
-enum
+typedef enum
 {
     kCCBCustomPropTypeInt = 0,
-    kCCBCustomPropTypeFloat,
-    kCCBCustomPropTypeBool,
-    kCCBCustomPropTypeString,
-};
+    kCCBCustomPropTypeFloat = 1,
+    kCCBCustomPropTypeBool = 2,
+    kCCBCustomPropTypeString = 3,
+} kCCBCustomPropType;
 
 @interface CustomPropSetting : NSObject
 {
     NSString* name;
-    int type;
+    kCCBCustomPropType type;
     NSString* value;
     BOOL optimized;
 }
 
 @property (nonatomic,copy) NSString* name;
-@property (nonatomic,assign) int type;
+@property (nonatomic,assign) kCCBCustomPropType type;
 @property (nonatomic,assign) BOOL optimized;
 @property (nonatomic,copy) NSString* value;
 
 - (id) initWithSerialization:(id)ser;
 - (id) serialization;
-
-- (NSString*) formatValue:(NSString*) val;
 
 @end

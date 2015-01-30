@@ -24,7 +24,7 @@
 
 #import "CCBPCCBFile.h"
 #import "ResourceManager.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryReader.h"
 #import "CCBGlobals.h"
 #import "CCBDocument.h"
 #import "AppDelegate.h"

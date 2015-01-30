@@ -505,18 +505,18 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     {
         if (!self.isCancelled)
         {
-            [NSError setNewErrorWithCode:error
-                                    code:SBCocos2dUpdateCopyFilesError
-                                 message:@"An error occured copying the cocos2d folder to the project directory."];
+            [NSError setNewErrorWithErrorPointer:error
+                                            code:SBCocos2dUpdateCopyFilesError
+                                         message:@"An error occured copying the cocos2d folder to the project directory."];
 
             LocalLog(@"[COCO2D-UPDATER] [ERROR] could not copy cocos2d folder from \"%@\" to \"%@\" with error %@",
                      unzippedCocos2dFolder, [self defaultProjectsCocos2DFolderPath], *error);
         }
         else
         {
-            [NSError setNewErrorWithCode:error
-                                    code:SBCocos2dUpdateUserCancelledError
-                                 message:@"Update cancelled."];
+            [NSError setNewErrorWithErrorPointer:error
+                                            code:SBCocos2dUpdateUserCancelledError
+                                         message:@"Update cancelled."];
         }
     }
 

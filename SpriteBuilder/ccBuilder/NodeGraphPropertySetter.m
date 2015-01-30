@@ -27,52 +27,55 @@
 #import "AppDelegate.h"
 #import "ResourceManager.h"
 #import "CCBDocument.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryReader.h"
 #import "CCNode+NodeInfo.h"
 #import "SequencerSequence.h"
+#import "NSString+Misc.h"
+#import "CCBDictionaryKeys.h"
+#import "CCBDirectoryPublisher.h"
 
 @implementation NodeGraphPropertySetter
 
 + (void) setNodeGraphForNode:(CCNode*)node andProperty:(NSString*) prop withFile:(NSString*) ccbFileName parentSize:(CGSize)parentSize
 {
+    if (!ccbFileName || [ccbFileName isEmpty])
+    {
+        return;
+    }
+
+    AppDelegate* ad = [AppDelegate appDelegate];
+
+    NSString* ccbFileNameAbs = [[ResourceManager sharedManager] toAbsolutePath:ccbFileName];
+
+    // Check that it's not the current document (or we get an inifnite loop)
+    if ([ad.currentDocument.filePath isEqualToString:ccbFileNameAbs])
+    {
+        return;
+    }
+
     CCNode* ccbFile = NULL;
     NSMutableArray* sequences = [NSMutableArray array];
     int startSequence = -1;
-    
-    if (ccbFileName && ![ccbFileName isEqualToString:@""])
+
+    NSMutableDictionary *doc = [NSMutableDictionary dictionaryWithContentsOfFile:ccbFileNameAbs];
+
+    ccbFile = [CCBDictionaryReader nodeGraphFromDocumentData:doc parentSize:parentSize error:NULL];
+
+    if (!ccbFile)
     {
-        AppDelegate* ad = [AppDelegate appDelegate];
-    
-        // Get absolut file path to ccb file
-        NSString* ccbFileNameAbs = [[ResourceManager sharedManager] toAbsolutePath:ccbFileName];
-    
-        // Check that it's not the current document (or we get an inifnite loop)
-        if (![ad.currentDocument.filePath isEqualToString:ccbFileNameAbs])
-        {
-            // Load document dictionary
-            NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithContentsOfFile:ccbFileNameAbs];
-    
-            // Verify doc type and version
-            if ([[doc objectForKey:@"fileType"] isEqualToString:@"CocosBuilder"]
-                && [[doc objectForKey:@"fileVersion"] intValue] <= kCCBFileFormatVersion)
-            {
-    
-                // Parse the node graph
-                ccbFile = [CCBReaderInternal nodeGraphFromDictionary:[doc objectForKey:@"nodeGraph"] parentSize:parentSize];
-            }
-            
-            // Get first timeline
-            NSArray* sequenceDicts = [doc objectForKey:@"sequences"];
-            for (NSDictionary* seqDict in sequenceDicts)
-            {
-                SequencerSequence* seq = [[SequencerSequence alloc] initWithSerialization:seqDict];
-                [sequences addObject:seq];
-                
-                if (seq.autoPlay) startSequence = seq.sequenceId;
-            }
-        }
+        return;
     }
-    
+
+    // Get first timeline
+    NSArray* sequenceDicts = doc[@"sequences"];
+    for (NSDictionary* seqDict in sequenceDicts)
+    {
+        SequencerSequence* seq = [[SequencerSequence alloc] initWithSerialization:seqDict];
+        [sequences addObject:seq];
+
+        if (seq.autoPlay) startSequence = seq.sequenceId;
+    }
+
     // Set the property
     [node setValue:ccbFile forKey:prop];
     

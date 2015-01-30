@@ -60,7 +60,7 @@
 			</array>
 			<key>affectsProperties</key>
 			<array>
-				<string>blendFunc</string>
+				<string>blendMode</string>
 				<string>contentSize</string>
 			</array>
 			<key>displayName</key>
@@ -128,16 +128,18 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<array>
-				<integer>1</integer>
-				<integer>771</integer>
-			</array>
+            <dict>
+                <key>CCBlendFuncSrcColor</key>
+                <integer>1</integer>
+                <key>CCBlendFuncDstColor</key>
+                <integer>1</integer>
+            </dict>
 			<key>displayName</key>
 			<string></string>
 			<key>type</key>
 			<string>Blendmode</string>
 			<key>name</key>
-			<string>blendFunc</string>
+			<string>blendMode</string>
 		</dict>
 		<dict>
 			<key>displayName</key>

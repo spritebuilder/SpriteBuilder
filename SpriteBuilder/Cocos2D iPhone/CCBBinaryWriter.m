@@ -22,12 +22,14 @@
  * THE SOFTWARE.
  */
 
-#import "CCBXCocos2diPhoneWriter.h"
+#import "CCBBinaryWriter.h"
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "CustomPropSetting.h"
 #import "NSArray+Query.h"
-@implementation CCBXCocos2diPhoneWriter
+#import "CCRendererBasicTypes.h"
+
+@implementation CCBBinaryWriter
 
 @synthesize data;
 @synthesize serializedProjectSettings;
@@ -577,10 +579,12 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     }
     else if ([type isEqualToString:@"Blendmode"])
     {
-        int a = [[prop objectAtIndex:0] intValue];
-        int b = [[prop objectAtIndex:1] intValue];
-        [self writeInt:a withSign:NO];
-        [self writeInt:b withSign:NO];
+        [self writeInt:[prop[CCBlendFuncSrcColor] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendFuncSrcAlpha] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendFuncDstColor] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendFuncDstAlpha] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendEquationColor] intValue] withSign:NO];
+        [self writeInt:[prop[CCBlendEquationAlpha] intValue] withSign:NO];
     }
     else if([type isEqualToString:@"NodeReference"])
     {
@@ -1040,7 +1044,7 @@ static unsigned int WriteVarint32FallbackToArray(uint32 value, uint8* target) {
     [data appendBytes:&magic length:4];
     
     // Version
-    [self writeIntOLD:kCCBXVersion withSign:NO];
+    [self writeIntOLD:kCCBBinaryVersion withSign:NO];
 }
 
 - (void) writeStringCache

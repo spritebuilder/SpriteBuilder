@@ -10,11 +10,11 @@
 #import "cocos2d.h"
 #import "CCNode+NodeInfo.h"
 #import "TexturePropertySetter.h"
-#import "CCBWriterInternal.h"
+#import "CCBDictionaryWriter.h"
 #import "SceneGraph.h"
 #import "EffectsUndoHelper.h"
 
-@interface CCBWriterInternal(Private)
+@interface CCBDictionaryWriter (Private)
 + (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
 @end
 
@@ -39,7 +39,7 @@
 			 SERIALIZE_PROPERTY(fresnelPower,Float),
 			 SERIALIZE_PROPERTY(shininess,   Float),
 			 @{@"name" : @"environment", @"type" : @"NodeReference", @"value": @(self.environment.UUID)},
-			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBWriterInternal serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
+			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBDictionaryWriter serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
 			 ];
 }
 

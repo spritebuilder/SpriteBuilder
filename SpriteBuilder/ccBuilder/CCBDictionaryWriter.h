@@ -27,15 +27,16 @@
 
 #define kCCBUseRegularFile @"Use regular file"
 
-@interface CCBWriterInternal : NSObject {
-@private
-    
-}
-+ (id) serializePropertyForNode:(CCNode*) node propInfo:(NSMutableDictionary*) propInfo excludeProps:(NSArray*) excludeProps;
-+ (NSMutableDictionary*) dictionaryFromCCObject: (CCNode*) node;
+@interface CCBDictionaryWriter : NSObject
 
-+ (id) serializePoint:(CGPoint)pt;
-+ (id) serializeColor4:(CCColor*)c;
-+ (id) serializeSpriteFrame:(NSString*)spriteFile sheet:(NSString*)spriteSheetFile;
++ (id)serializePropertyOfNode:(CCNode *)node propInfo:(NSMutableDictionary *)propInfo excludeProps:(NSArray *)excludeProps;
+
++ (NSMutableDictionary *)serializeNode:(CCNode *)node;
+
++ (id)serializePoint:(CGPoint)pt;
+
++ (id)serializeColor4:(CCColor *)c;
+
++ (id)serializeSpriteFrame:(NSString *)spriteFile sheet:(NSString *)spriteSheetFile;
 
 @end
