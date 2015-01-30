@@ -1383,8 +1383,9 @@ typedef enum
     {
         for (NSDictionary * jointDict in doc[@"joints"])
         {
-            CCNode * joint = [CCBDictionaryReader nodeGraphFromNodeGraphData:jointDict parentSize:CGSizeMake(resolution.width, resolution
-                    .height)                                 withParentGraph:loadedRoot];
+            CCNode * joint = [CCBDictionaryReader nodeGraphFromNodeGraphData:jointDict
+                                                                  parentSize:CGSizeMake(resolution.width, resolution.height)
+                                                             withParentGraph:loadedRoot];
             
             if(joint)
             {

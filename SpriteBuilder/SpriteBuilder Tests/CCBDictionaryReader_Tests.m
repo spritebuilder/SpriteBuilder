@@ -518,8 +518,6 @@
 {
     CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:[self loadCCBFile:@"test_ccbreader_subfile"] parentSize:CGSizeMake(1024.0, 1024.0) error:NULL];
 
-    // "ccbFile" -> ""
-    // Cannot import CCBPCCBFile.h for whatever reason
     CCNode *subCCB = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[NSClassFromString(@"CCBPCCBFile") class]]);
 
