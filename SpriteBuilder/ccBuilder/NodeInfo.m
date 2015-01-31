@@ -39,6 +39,7 @@
 {
     NodeInfo* info = [[NodeInfo alloc] init];
     info.plugIn = pin;
+
     return info;
 }
 

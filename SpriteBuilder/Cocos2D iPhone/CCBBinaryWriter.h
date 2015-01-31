@@ -26,7 +26,7 @@
 #import "CCBPublishDelegate.h"
 
 #define kCCBXTempBufferSize 8
-#define kCCBXVersion 10
+#define kCCBBinaryVersion 11
 
 enum {
     kCCBXFloat0 = 0,
@@ -37,13 +37,7 @@ enum {
     kCCBXFloatFull
 };
 
-enum {
-    kCCBXPlatformAll = 0,
-    kCCBXPlatformIOS,
-    kCCBXPlatformMac
-};
-
-@interface CCBXCocos2diPhoneWriter : NSObject
+@interface CCBBinaryWriter : NSObject
 {
     NSDictionary* serializedProjectSettings;
     

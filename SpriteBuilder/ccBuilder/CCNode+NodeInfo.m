@@ -33,8 +33,8 @@
 #import "SequencerSequence.h"
 #import "PositionPropertySetter.h"
 #import "TexturePropertySetter.h"
-#import "CCBWriterInternal.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryWriter.h"
+#import "CCBDictionaryReader.h"
 #import "CCBDocument.h"
 #import "CustomPropSetting.h"
 #import "CocosScene.h"
@@ -362,7 +362,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     else if (type == kCCBKeyframeTypeColor3)
     {
         CCColor* colorValue = [self valueForKey:name];
-        return [CCBWriterInternal serializeColor4:colorValue];
+        return [CCBDictionaryWriter serializeColor4:colorValue];
     }
     else if (type == kCCBKeyframeTypeSpriteFrame)
     {
@@ -419,7 +419,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     }
     else if (type == kCCBKeyframeTypeColor3)
     {
-        CCColor* colorValue = [CCBReaderInternal deserializeColor4:value];
+        CCColor* colorValue = [CCBDictionaryReader deserializeColor4:value];
         [self setValue:colorValue forKey:propName];
         
     }

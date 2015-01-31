@@ -9,7 +9,7 @@
 #import "SceneGraph.h"
 #import "CCNode+NodeInfo.h"
 #import "ProjectSettings.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryReader.h"
 #import "CCBFileUtil.h"
 #import "CCBPCCBFile.h"
 
@@ -78,7 +78,7 @@ typedef CCNode* (^FindUUIDBlock)(CCNode * node, NSUInteger uuid);
 {
 	[gSceneGraph.joints fixupReferences];
 	
-	[CCBReaderInternal postDeserializationFixup:gSceneGraph.rootNode];
+	[CCBDictionaryReader postDeserializationFixup:gSceneGraph.rootNode];
 }
 
 

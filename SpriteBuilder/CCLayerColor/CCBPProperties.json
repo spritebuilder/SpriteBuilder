@@ -33,9 +33,12 @@
     },
     {
       "displayName": "",
-      "defaultSerialization": [1, 771],
+      "defaultSerialization": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 771
+      },
       "type": "Blendmode",
-      "name": "blendFunc"
+      "name": "blendMode"
     }
   ],
   "propertiesOverridden": [

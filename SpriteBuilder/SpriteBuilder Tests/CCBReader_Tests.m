@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "CCBXCocos2diPhoneWriter.h"
+#import "CCBBinaryWriter.h"
 #import "CCBReader_Private.h"
 #import "Cocos2dTestHelpers.h"
 
@@ -31,7 +31,7 @@
 
 - (void)testCCBVersionCompatibility
 {
-    XCTAssertEqual(kCCBVersion, kCCBXVersion, @"CCB version %d read by CCBReader is incompatible with version %d written by SpriteBuilder. Is cocos2d up to date?", kCCBVersion, kCCBXVersion);
+    XCTAssertEqual(kCCBVersion, kCCBBinaryVersion, @"CCB version %d read by CCBReader is incompatible with version %d written by SpriteBuilder. Is cocos2d up to date?", kCCBVersion, kCCBBinaryVersion);
 }
 
 @end

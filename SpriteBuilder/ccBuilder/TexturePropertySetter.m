@@ -25,7 +25,7 @@
 #import "TexturePropertySetter.h"
 #import "AppDelegate.h"
 #import "CCBGlobals.h"
-#import "CCBWriterInternal.h"
+#import "CCBDictionaryWriter.h"
 #import "ResourceManager.h"
 #import "CCBFileUtil.h"
 #import "CCNode+NodeInfo.h"

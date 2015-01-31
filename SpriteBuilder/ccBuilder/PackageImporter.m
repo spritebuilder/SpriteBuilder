@@ -55,14 +55,14 @@
 {
     if (!packagePaths || packagePaths.count == 0)
     {
-        [NSError setNewErrorWithCode:error code:SBNoPackagePathsToImport message:[NSString stringWithFormat:@"No paths to import given"]];
+        [NSError setNewErrorWithErrorPointer:error code:SBNoPackagePathsToImport message:[NSString stringWithFormat:@"No paths to import given"]];
         return NO;
     }
 
     NSArray *filteredPaths = [self allPackagesInPaths:packagePaths];
     if (filteredPaths.count == 0)
     {
-        [NSError setNewErrorWithCode:error code:SBPathWithoutPackageSuffix message:[NSString stringWithFormat:@"No paths to import given with .%@ suffix", PACKAGE_NAME_SUFFIX]];
+        [NSError setNewErrorWithErrorPointer:error code:SBPathWithoutPackageSuffix message:[NSString stringWithFormat:@"No paths to import given with .%@ suffix", PACKAGE_NAME_SUFFIX]];
         return NO;
     }
 
@@ -82,7 +82,7 @@
     {
         if ([_projectSettings isResourcePathInProject:packageToImport.dirPath])
         {
-            [NSError setNewErrorWithCode:localError code:SBPackageAlreayInProject message:@"Package already in project folder."];
+            [NSError setNewErrorWithErrorPointer:localError code:SBPackageAlreayInProject message:@"Package already in project folder."];
             return NO;
         }
 

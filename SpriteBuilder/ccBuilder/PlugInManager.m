@@ -31,7 +31,7 @@
 #import "ProjectSettings.h"
 #import "PlugInNode.h"
 #import "NodeInfo.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryReader.h"
 #endif
 
 @implementation PlugInManager
@@ -216,7 +216,7 @@
             else
             {
                 // Set the property on the object
-                [CCBReaderInternal setProp:name ofType:type toValue:defaultValue forNode:node parentSize:CGSizeZero withParentGraph:nil];
+                [CCBDictionaryReader setProp:name ofType:type toValue:defaultValue forNode:node parentSize:CGSizeZero withParentGraph:nil];
             }
         }
     }

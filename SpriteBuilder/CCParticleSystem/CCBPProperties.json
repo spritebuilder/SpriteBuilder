@@ -119,8 +119,11 @@
       "displayName": "",
       "saveInTemplate": true,
       "type": "Blendmode",
-      "name": "blendFunc",
-      "default": [1, 1]
+      "name": "blendMode",
+      "default": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 1
+      }
     },
     {
       "displayName": "reset on visibility toggle",

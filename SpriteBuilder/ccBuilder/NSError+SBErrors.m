@@ -4,7 +4,7 @@
 
 @implementation NSError (SBErrors)
 
-+ (void)setNewErrorWithCode:(NSError **)errorPtr code:(NSInteger)code userInfo:(NSDictionary *)userInfo;
++ (void)setNewErrorWithErrorPointer:(NSError **)errorPtr code:(NSInteger)code userInfo:(NSDictionary *)userInfo;
 {
     NSError *newError = [NSError errorWithDomain:SBErrorDomain
                                             code:code
@@ -13,9 +13,9 @@
     [NSError setError:errorPtr withError:newError];
 }
 
-+ (void)setNewErrorWithCode:(NSError **)errorPtr code:(NSInteger)code message:(NSString *)message
++ (void)setNewErrorWithErrorPointer:(NSError **)errorPtr code:(NSInteger)code message:(NSString *)message
 {
-    [NSError setNewErrorWithCode:errorPtr code:code userInfo:@{NSLocalizedDescriptionKey : message}];
+    [NSError setNewErrorWithErrorPointer:errorPtr code:code userInfo:@{NSLocalizedDescriptionKey : message}];
 }
 
 + (void)setError:(NSError **)errorPtr withError:(NSError *)error

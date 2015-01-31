@@ -25,7 +25,7 @@
 {
     if ([self isPackageValid:package])
     {
-        [NSError setNewErrorWithCode:error code:SBPackageExportInvalidPackageError message:[NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]];
+        [NSError setNewErrorWithErrorPointer:error code:SBPackageExportInvalidPackageError message:[NSString stringWithFormat:@"Internal error: Invalid package %@ given.", package]];
         return NO;
     }
 

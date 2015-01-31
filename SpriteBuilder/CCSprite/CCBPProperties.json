@@ -20,7 +20,7 @@
     {
       "displayName": "Sprite frame",
       "animatable": true,
-      "affectsProperties": ["blendFunc", "contentSize"],
+      "affectsProperties": ["blendMode", "contentSize"],
       "type": "SpriteFrame",
       "name": "spriteFrame",
       "default": ["", ""]
@@ -54,9 +54,12 @@
     },
     {
       "displayName": "",
-      "defaultSerialization": [1, 771],
+      "defaultSerialization": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 1
+      },
       "type": "Blendmode",
-      "name": "blendFunc"
+      "name": "blendMode"
     },
     {
       "displayName": "Effects",

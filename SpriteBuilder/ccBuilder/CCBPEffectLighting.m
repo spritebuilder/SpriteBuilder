@@ -7,8 +7,8 @@
 //
 
 #import "CCBPEffectLighting.h"
-#import "CCBReaderInternal.h"
-#import "CCBWriterInternal.h"
+#import "CCBDictionaryReader.h"
+#import "CCBDictionaryWriter.h"
 #import "EffectsManager.h"
 #import "EffectsUndoHelper.h"
 
@@ -31,7 +31,7 @@
     
     return @[SERIALIZE_PROPERTY(shininess,Float),
              @{@"name" : @"groups", @"type" : @"TokenArray", @"value": groups },
-             @{@"name" : @"specularColor", @"type" : @"Color4", @"value": [CCBWriterInternal serializeColor4:self.specularColor] },
+             @{@"name" : @"specularColor", @"type" : @"Color4", @"value": [CCBDictionaryWriter serializeColor4:self.specularColor] },
              ];
 }
 
@@ -51,7 +51,7 @@
         return [dict[@"name"] isEqualToString:@"specularColor"];\
     } complete:^(NSDictionary * dict, int idx) {
         
-        self.specularColor = [CCBReaderInternal deserializeColor4:dict[@"value"]];
+        self.specularColor = [CCBDictionaryReader deserializeColor4:dict[@"value"]];
     }];
 }
 

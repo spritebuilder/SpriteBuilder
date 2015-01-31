@@ -28,7 +28,7 @@
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
 #import "CCBDocument.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryReader.h"
 #import "NodeGraphPropertySetter.h"
 #import "PositionPropertySetter.h"
 #import "CCNode+NodeInfo.h"

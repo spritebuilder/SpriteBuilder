@@ -45,10 +45,16 @@
     },
     {
       "displayName": "",
-      "defaultSerialization": [1, 771],
+      "defaultSerialization": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 771
+      },
       "type": "Blendmode",
-      "name": "blendFunc",
-      "default": [1, 771]
+      "name": "blendMode",
+      "default": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 771
+      }
     },
     {
       "displayName": "Vector",

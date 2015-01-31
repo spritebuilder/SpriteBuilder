@@ -8,8 +8,8 @@
 
 #import "CCBPEffectGlass.h"
 #import "CCNode+NodeInfo.h"
-#import "CCBWriterInternal.h"
-#import "CCBReaderInternal.h"
+#import "CCBDictionaryWriter.h"
+#import "CCBDictionaryReader.h"
 #import "AppDelegate.h"
 #import "TexturePropertySetter.h"
 #import "CocosScene.h"
@@ -43,7 +43,7 @@
 			 SERIALIZE_PROPERTY(fresnelPower,Float),
 			 @{@"name" : @"reflectionEnvironment", @"type" : @"NodeReference", @"value": @(self.reflectionEnvironment.UUID)},
 			 @{@"name" : @"refractionEnvironment", @"type" : @"NodeReference", @"value": @(self.refractionEnvironment.UUID)},
-			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBWriterInternal serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
+			 @{@"name" : @"normalMap", @"type" : @"SpriteFrame", @"value": [CCBDictionaryWriter serializeSpriteFrame:normalMapImageName sheet:normalMapSheet]}
 			 ];
 }
 
