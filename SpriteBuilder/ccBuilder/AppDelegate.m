@@ -4460,7 +4460,7 @@ typedef enum
 
 - (IBAction)showHelp:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://makegameswith.us/docs/"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://makeschool.com/docs/"]];
 }
 
 - (IBAction)showAPIDocs:(id)sender
