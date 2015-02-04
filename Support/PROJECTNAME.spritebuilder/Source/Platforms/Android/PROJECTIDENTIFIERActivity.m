@@ -24,6 +24,7 @@
 
 
 #import "PROJECTIDENTIFIERActivity.h"
+#import "PROJECTIDENTIFIERController.h"
 
 #import <AndroidKit/AndroidKeyEvent.h>
 
