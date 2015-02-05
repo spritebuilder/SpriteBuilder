@@ -98,7 +98,7 @@
                             outDir:(NSString *)outDir
                         fileLookup:(id <PublishFileLookupProtocol>)fileLookup
 {
-    for (NSString* resolution in _resolutions)
+    for (NSNumber *resolution in _resolutions)
     {
         [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution intermediateProduct:NO fileLookup:fileLookup];
 	}
@@ -110,7 +110,7 @@
                       to:(NSString *)dstFilePath
            isSpriteSheet:(BOOL)isSpriteSheet
                outputDir:(NSString *)outputDir
-              resolution:(NSString *)resolution
+              resolution:(NSNumber *)resolution
      intermediateProduct:(BOOL)intermediateProduct
               fileLookup:(id<PublishFileLookupProtocol>)fileLookup
 {
@@ -419,7 +419,7 @@
 
     [PublishSpriteSheetOperation resetSpriteSheetPreviewsGeneration];
 
-	for (NSString *resolution in _resolutions)
+	for (NSNumber *resolution in _resolutions)
 	{
 		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
                                                      stringByAppendingPathComponent:spriteSheetName];
@@ -472,7 +472,7 @@
 - (PublishSpriteSheetOperation *)createSpriteSheetOperation:(NSString *)publishDirectory
                                                     subPath:(NSString *)subPath
                                          srcSpriteSheetDate:(NSDate *)srcSpriteSheetDate
-                                                 resolution:(NSString *)resolution
+                                                 resolution:(NSNumber *)resolution
                                             spriteSheetFile:(NSString *)spriteSheetFile
 {
     PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
@@ -504,7 +504,7 @@
 - (void)prepareImagesForSpriteSheetPublishing:(NSString *)publishDirectory
                                       subPath:(NSString *)subPath
                                     outputDir:(NSString *)outputDir
-                                   resolution:(NSString *)resolution
+                                   resolution:(NSNumber *)resolution
                                    fileLookup:(id<PublishFileLookupProtocol>)fileLookup
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];

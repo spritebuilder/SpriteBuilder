@@ -13,7 +13,7 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     if (self)
     {
         self.audio_quality = DEFAULT_AUDIO_QUALITY;
-        self.resolutions = @[RESOLUTION_1X, RESOLUTION_2X, RESOLUTION_4X];
+        self.resolutions = @[@(RESOLUTION_1X), @(RESOLUTION_2X), @(RESOLUTION_4X)];
     }
 
     return self;
@@ -48,17 +48,17 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
     if (_resolution_1x)
     {
-        [result addObject:RESOLUTION_1X];
+        [result addObject:@(RESOLUTION_1X)];
     }
 
     if (_resolution_2x)
     {
-        [result addObject:RESOLUTION_2X];
+        [result addObject:@(RESOLUTION_2X)];
     }
 
     if (_resolution_4x)
     {
-        [result addObject:RESOLUTION_4X];
+        [result addObject:@(RESOLUTION_4X)];
     }
 
     return result;
@@ -70,19 +70,19 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     self.resolution_2x = NO;
     self.resolution_4x = NO;
 
-    for (NSString *contentScale in resolutions)
+    for (NSNumber *contentScale in resolutions)
     {
-        if ([contentScale isEqualToString:RESOLUTION_1X])
+        if ([contentScale isEqualTo:@(RESOLUTION_1X)])
         {
             self.resolution_1x = YES;
         }
 
-        if ([contentScale isEqualToString:RESOLUTION_2X])
+        if ([contentScale isEqualTo:@(RESOLUTION_2X)])
         {
             self.resolution_2x = YES;
         }
 
-        if ([contentScale isEqualToString:RESOLUTION_4X])
+        if ([contentScale isEqualTo:@(RESOLUTION_4X)])
         {
             self.resolution_4x = YES;
         }

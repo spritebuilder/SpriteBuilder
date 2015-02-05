@@ -10,6 +10,7 @@
 #import "PublishOSSettings.h"
 #import "NSString+RelativePath.h"
 #import "MiscConstants.h"
+#import "NSNumber+ImageResolutions.h"
 
 @interface CCBPublisherController()
 
@@ -71,16 +72,15 @@
         return;
     }
 
-    for (NSString *resolution in [packageSettings settingsForOsType:osType].resolutions)
+    for (NSNumber *resolution in [packageSettings settingsForOsType:osType].resolutions)
     {
         NSString *packagePublishName = [self generatePublishedPackageName:packageSettings.package.name osType:osType resolution:resolution];
 
         CCBPublishingTarget *target = [[CCBPublishingTarget alloc] init];
         target.osType = osType;
         target.resolutions = @[resolution];
-        target.inputDirectories = @[packageSettings.package.fullPath];
+        target.inputPackages = @[packageSettings];
         target.publishEnvironment = packageSettings.publishEnvironment;
-        target.audioQuality = [packageSettings settingsForOsType:osType].audio_quality;
         target.zipOutputPath = [self zipOutputPath:packagePublishName baseDir:packageSettings.effectiveOutputDirectory];
         target.outputDirectory = [self cachesPath:packagePublishName];
         target.directoryToClean = [packageSettings.effectiveOutputDirectory absolutePathFromBaseDirPath:_projectSettings.projectPathDir];
@@ -89,9 +89,9 @@
     }
 }
 
-- (NSString *)generatePublishedPackageName:(NSString *)packageName osType:(CCBPublisherOSType)osType resolution:(NSString *)resolution
+- (NSString *)generatePublishedPackageName:(NSString *)packageName osType:(CCBPublisherOSType)osType resolution:(NSNumber *)resolution
 {
-    return [NSString stringWithFormat:@"%@-%@-%@", packageName, [self osTypeToString:osType], resolution];
+    return [[NSString stringWithFormat:@"%@-%@", packageName, [self osTypeToString:osType]] stringByAppendingString:[resolution resolutionTag]];
 }
 
 - (NSString *)zipOutputPath:(NSString *)PublishedPackageName baseDir:(NSString *)baseDir
@@ -164,35 +164,23 @@
 
 - (void)addMainProjectPublishingTargetToPublisherForOSType:(CCBPublisherOSType)osType
 {
-    NSMutableArray *inputDirs = [[self inputDirsOfPackagePublishSettingsEnabledForMainProject] mutableCopy];
-    [inputDirs addObjectsFromArray:[self inputDirsOfResourcePaths]];
+    NSMutableArray *inputPackages = [[self inputDirsOfPackagePublishSettingsEnabledForMainProject] mutableCopy];
 
-    if ([inputDirs count] == 0)
+    if ([inputPackages count] == 0)
     {
         return;
     }
 
     CCBPublishingTarget *target = [[CCBPublishingTarget alloc] init];
+    target.inputPackages = inputPackages;
     target.osType = osType;
     target.outputDirectory = [_projectSettings publishDirForOSType:osType];
-    target.resolutions = [_projectSettings publishingResolutionsForOSType:osType];
-    target.inputDirectories = inputDirs;
+    target.useMainProjectResolutionsOfInputPackages = YES;
+    target.resolutions = nil;
     target.publishEnvironment = _projectSettings.publishEnvironment;
-    target.audioQuality = [_projectSettings audioQualityForOsType:osType];
     target.directoryToClean = [_projectSettings publishDirForOSType:osType];
 
     [_publisher addPublishingTarget:target];
-}
-
-- (NSArray *)inputDirsOfResourcePaths
-{
-    NSMutableArray *result = [NSMutableArray array];
-    for (RMDirectory *oldResourcePath in _oldResourcePaths)
-    {
-        [result addObject:oldResourcePath.dirPath];
-    }
-    return result;
-
 }
 
 - (NSArray *)inputDirsOfPackagePublishSettingsEnabledForMainProject
@@ -200,11 +188,10 @@
     NSMutableArray *inputDirs = [NSMutableArray array];
     for (SBPackageSettings *somePackageSettings in _packageSettings)
     {
-        if (!somePackageSettings.publishToMainProject)
+        if (somePackageSettings.publishToMainProject)
         {
-            continue;
+            [inputDirs addObject:somePackageSettings];
         }
-        [inputDirs addObject:somePackageSettings.package.dirPath];
     }
     return inputDirs;
 }

@@ -28,11 +28,11 @@
 - (void)testDefaultValuesAndSettingSome
 {
     _settings.resolution_4x = NO;
-    XCTAssertTrue([_settings.resolutions containsObject:@"1x"]);
-    XCTAssertTrue([_settings.resolutions containsObject:@"2x"]);
-    XCTAssertFalse([_settings.resolutions containsObject:@"4x"]);
+    XCTAssertTrue([_settings.resolutions containsObject:@(1)]);
+    XCTAssertTrue([_settings.resolutions containsObject:@(2)]);
+    XCTAssertFalse([_settings.resolutions containsObject:@(4)]);
 
-    _settings.resolutions = @[@"4x"];
+    _settings.resolutions = @[@(4)];
     XCTAssertFalse(_settings.resolution_1x);
     XCTAssertFalse(_settings.resolution_2x);
     XCTAssertTrue(_settings.resolution_4x);
@@ -49,9 +49,9 @@
     NSDictionary *dict = [_settings toDictionary];
 
     PublishOSSettings *publishOSSettings = [[PublishOSSettings alloc] initWithDictionary:dict];
-    XCTAssertFalse([publishOSSettings.resolutions containsObject:RESOLUTION_1X]);
-    XCTAssertTrue([publishOSSettings.resolutions containsObject:RESOLUTION_2X]);
-    XCTAssertTrue([publishOSSettings.resolutions containsObject:RESOLUTION_4X]);
+    XCTAssertFalse([publishOSSettings.resolutions containsObject:@(RESOLUTION_1X)]);
+    XCTAssertTrue([publishOSSettings.resolutions containsObject:@(RESOLUTION_2X)]);
+    XCTAssertTrue([publishOSSettings.resolutions containsObject:@(RESOLUTION_4X)]);
 
     XCTAssertEqual(publishOSSettings.audio_quality, 7);
 }

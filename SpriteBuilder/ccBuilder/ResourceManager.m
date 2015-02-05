@@ -649,7 +649,7 @@
 
 - (void)createCachedImageFromAutoPath:(NSString *)autoPath
                                saveAs:(NSString *)dstFile
-                        forResolution:(NSString *)resolution
+                        forResolution:(NSNumber *)resolution
                       projectSettings:(ProjectSettings *)projectSettings
                       packageSettings:(NSArray *)packageSettings
 {
@@ -808,43 +808,14 @@
 }
 
 - (float)scaleFactorForResource:(RMResource *)resource
-                     resolution:(NSString *)resolution
+                     resolution:(NSNumber *)resolution
                 projectSettings:(ProjectSettings *)projectSettings
                 packageSettings:(NSArray *)packageSettings
 {
-    float dstScale = [self dstScaleForResource:resource resolution:resolution projectSettings:projectSettings];
+    float dstScale = [resolution floatValue];
     float srcScale = [self srcScaleForResource:resource projectSettings:projectSettings packageSettings:packageSettings];
     float scaleFactor = dstScale/srcScale;
     return scaleFactor;
-}
-
-- (float)dstScaleForResource:(RMResource *)resource resolution:(NSString *)resolution projectSettings:(ProjectSettings *)projectSettings
-{
-    int tabletScale = [[projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
-    if (!tabletScale)
-    {
-        tabletScale = 2;
-    }
-
-    // Calculate the dst scale factor
-    float dstScale = 1;
-    if ([resolution isEqualToString:RESOLUTION_PHONE])
-    {
-        dstScale = 1;
-    }
-    if ([resolution isEqualToString:RESOLUTION_PHONE_HD])
-    {
-        dstScale = 2;
-    }
-    else if ([resolution isEqualToString:RESOLUTION_TABLET])
-    {
-        dstScale = 1 * tabletScale;
-    }
-    else if ([resolution isEqualToString:RESOLUTION_TABLET_HD])
-    {
-        dstScale = 2 * tabletScale;
-    }
-    return dstScale;
 }
 
 - (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings
@@ -864,7 +835,7 @@
     }
     else
     {
-        return projectSettings.resourceAutoScaleFactor;
+        return 4.0;
     }
 }
 

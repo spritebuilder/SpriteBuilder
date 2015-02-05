@@ -6,7 +6,9 @@
 
 @interface CCBPublishingTarget : NSObject
 
-@property (nonatomic, strong) NSArray *inputDirectories;
+@property (nonatomic) BOOL useMainProjectResolutionsOfInputPackages;
+
+@property (nonatomic, strong) NSArray *inputPackages;
 @property (nonatomic, copy) NSString *outputDirectory;
 @property (nonatomic, copy) NSString *directoryToClean;
 @property (nonatomic) CCBPublisherOSType osType;

@@ -2,6 +2,7 @@
 #import "CCBFileUtil.h"
 #import "ResourceManager.h"
 #import "MiscConstants.h"
+#import "NSNumber+ImageResolutions.h"
 
 
 @implementation NSString (Publishing)
@@ -128,9 +129,9 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];;
 	NSMutableArray *result = [NSMutableArray array];
 
-	for (NSString *publishExt in resolutions)
+	for (NSNumber *resolution in resolutions)
 	{
-		NSString *resolutionDir = [self stringByAppendingPathComponent:publishExt];
+		NSString *resolutionDir = [self stringByAppendingString:[resolution resolutionTag]];
 		BOOL isDirectory;
 		if ([fileManager fileExistsAtPath:resolutionDir isDirectory:&isDirectory] && isDirectory)
 		{

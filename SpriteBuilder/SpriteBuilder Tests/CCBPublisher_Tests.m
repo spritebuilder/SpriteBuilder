@@ -23,6 +23,7 @@
 #import "MiscConstants.h"
 #import "RMPackage.h"
 #import "SBPackageSettings.h"
+#import "CCBPublisherCacheCleaner.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -50,6 +51,8 @@
     package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
     [_projectSettings addResourcePath:package.dirPath error:nil];
 
+    [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
+
     SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
 
     self.warnings = [[CCBWarnings alloc] init];
@@ -60,13 +63,13 @@
 
     self.targetIOS = [[CCBPublishingTarget alloc] init];
     _targetIOS.osType = kCCBPublisherOSTypeIOS;
-    _targetIOS.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    _targetIOS.inputPackages = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     _targetIOS.outputDirectory = [self fullPathForFile:@"Published-iOS"];
     _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
 
     self.targetAndroid = [[CCBPublishingTarget alloc] init];
     _targetAndroid.osType = kCCBPublisherOSTypeAndroid;
-    _targetAndroid.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    _targetAndroid.inputPackages = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
     _targetAndroid.outputDirectory = [self fullPathForFile:@"Published-Android"];
     _targetAndroid.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
 
@@ -91,7 +94,6 @@
 
     _projectSettings.designTarget = kCCBDesignTargetFixed;
     _projectSettings.defaultOrientation = kCCBOrientationPortrait;
-    _projectSettings.resourceAutoScaleFactor = 4;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -227,7 +229,6 @@
     // Overriden resolution for tablet hd
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
 
-    _projectSettings.resourceAutoScaleFactor = 4;
     [_projectSettings setProperty:@1 forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
 
     [_publisher addPublishingTarget:_targetIOS];
@@ -247,7 +248,6 @@
     [self copyTestingResource:@"blank.wav" toFolder:@"baa.spritebuilder/Packages/foo.sbpack"];
 
     _projectSettings.publishEnabledAndroid = YES;
-    _projectSettings.resourceAutoScaleFactor = 4;
 
     [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT];
@@ -294,7 +294,6 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/shotgun.png" width:4 height:12 color:[NSColor blackColor]];
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/sword.png" width:4 height:12 color:[NSColor yellowColor]];
 
-    _projectSettings.resourceAutoScaleFactor = 4;
     [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
 
     [_publisher addPublishingTarget:_targetIOS];
@@ -366,7 +365,6 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/pvrtc/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/pvrtc/resources-auto/scissor.png" width:8 height:4 color:[NSColor greenColor]];
 
-    _projectSettings.resourceAutoScaleFactor = 4;
     _projectSettings.publishResolution_ios_phonehd = YES;
     _projectSettings.publishResolution_ios_phone = NO;
     _projectSettings.publishResolution_ios_tablet = NO;
@@ -424,7 +422,6 @@
 
     _projectSettings.designTarget = kCCBDesignTargetFixed;
     _projectSettings.defaultOrientation = kCCBOrientationPortrait;
-    _projectSettings.resourceAutoScaleFactor = 4;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
