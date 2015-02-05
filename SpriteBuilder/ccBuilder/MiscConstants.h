@@ -24,9 +24,9 @@ extern NSString *const RESOLUTION_PHONE_HD;
 extern NSString *const RESOLUTION_TABLET;
 extern NSString *const RESOLUTION_TABLET_HD;
 
-extern NSString *const RESOLUTION_1X;
-extern NSString *const RESOLUTION_2X;
-extern NSString *const RESOLUTION_4X;
+extern NSUInteger RESOLUTION_1X;
+extern NSUInteger RESOLUTION_2X;
+extern NSUInteger RESOLUTION_4X;
 
 extern NSUInteger const MINIMUM_FILENAME_LENGTH;
 

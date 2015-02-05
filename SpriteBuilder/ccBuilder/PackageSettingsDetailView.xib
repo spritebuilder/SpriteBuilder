@@ -8,7 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ProjectSettingsWindowController"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe" customClass="PackageSettingsDetailView">
+        <customView id="c22-O7-iKe">
             <rect key="frame" x="0.0" y="0.0" width="480" height="292"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -22,8 +22,94 @@
                         <binding destination="-2" name="value" keyPath="currentPackageSettings.publishToMainProject" id="EaA-AW-19v"/>
                     </connections>
                 </button>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fo6-Ul-j5T">
+                    <rect key="frame" x="0.0" y="10" width="480" height="66"/>
+                    <subviews>
+                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aoI-VY-cJY">
+                            <rect key="frame" x="18" y="40" width="206" height="18"/>
+                            <buttonCell key="cell" type="check" title="Custom directory for Zip files" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8tl-2q-2yA">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.publishToCustomOutputDirectory" id="WPE-aq-9q8"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Lst-ml-Urs"/>
+                            </connections>
+                        </button>
+                        <button identifier=" " verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-zb-gM5">
+                            <rect key="frame" x="412" y="17" width="48" height="21"/>
+                            <buttonCell key="cell" type="smallSquare" title="Select" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RsQ-4R-yom">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="selectPackagePublishingCustomDirectory:" target="-2" id="nHc-JI-osY"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToCustomOutputDirectory" id="vVu-wU-UnU"/>
+                            </connections>
+                        </button>
+                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DmF-MD-VA9">
+                            <rect key="frame" x="20" y="18" width="389" height="19"/>
+                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="p1j-hg-a42">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.customOutputDirectory" id="AF6-Dy-VU2"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToCustomOutputDirectory" id="06H-BQ-dZ3"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                </customView>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Rl-kp-U8s">
+                    <rect key="frame" x="312" y="255" width="151" height="22"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="ZuA-SP-UXh">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="gJ1-4X-yZP">
+                            <items>
+                                <menuItem title="4x (tablethd)" tag="4" id="PHd-IZ-teg"/>
+                                <menuItem title="2x (phonehd, tablet)" tag="2" id="5lU-Yh-sdj"/>
+                                <menuItem title="1x (phone)" tag="1" id="fgf-Cm-4T6"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="selectedTag" keyPath="currentPackageSettings.resourceAutoScaleFactor" id="dmd-7L-fRA"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Osr-Rp-bsg">
+                    <rect key="frame" x="199" y="256" width="110" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default scaling from" id="euZ-5x-mWp">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kpL-gw-3mC">
+                    <rect key="frame" x="18" y="234" width="56" height="18"/>
+                    <buttonCell key="cell" type="check" title="1x" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="FMz-aL-RnR">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToMainProject" id="zeL-zM-i53"/>
+                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProject_resolution_1x" id="Nw0-YS-XDM"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="axD-3R-s7L">
+                    <rect key="frame" x="77" y="234" width="70" height="18"/>
+                    <buttonCell key="cell" type="check" title="2x" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="McZ-yz-imq">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToMainProject" id="1Fh-z0-rww"/>
+                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProject_resolution_2x" id="C6e-My-ALK"/>
+                    </connections>
+                </button>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qD5-uT-hCU">
-                    <rect key="frame" x="0.0" y="97" width="480" height="62"/>
+                    <rect key="frame" x="0.0" y="74" width="480" height="62"/>
                     <subviews>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mta-LG-UN1">
                             <rect key="frame" x="17" y="16" width="56" height="18"/>
@@ -32,8 +118,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Eki-sQ-RAw"/>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_1x" id="qGJ-7O-E9F"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Eki-sQ-RAw"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zI5-OW-zsa">
@@ -43,8 +129,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1I7-be-AXQ"/>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_2x" id="qQc-pY-ni7"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1I7-be-AXQ"/>
                             </connections>
                         </button>
                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uhy-uo-i21">
@@ -114,7 +200,7 @@
                     </subviews>
                 </customView>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2gS-9J-jr5">
-                    <rect key="frame" x="0.0" y="158" width="480" height="87"/>
+                    <rect key="frame" x="0.0" y="135" width="480" height="87"/>
                     <subviews>
                         <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7xr-RR-uJ8">
                             <rect key="frame" x="20" y="84" width="440" height="5"/>
@@ -140,8 +226,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1W9-V3-ZCt"/>
                                 <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_2x" id="E2K-TQ-gQ9"/>
+                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1W9-V3-ZCt"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-aa-Nid" customClass="CCBTextFieldLabel">
@@ -220,71 +306,17 @@
                         </button>
                     </subviews>
                 </customView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fo6-Ul-j5T">
-                    <rect key="frame" x="0.0" y="33" width="480" height="66"/>
-                    <subviews>
-                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aoI-VY-cJY">
-                            <rect key="frame" x="18" y="40" width="206" height="18"/>
-                            <buttonCell key="cell" type="check" title="Custom directory for Zip files" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8tl-2q-2yA">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.publishToCustomOutputDirectory" id="WPE-aq-9q8"/>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Lst-ml-Urs"/>
-                            </connections>
-                        </button>
-                        <button identifier=" " verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mgz-zb-gM5">
-                            <rect key="frame" x="412" y="17" width="48" height="21"/>
-                            <buttonCell key="cell" type="smallSquare" title="Select" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RsQ-4R-yom">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="selectPackagePublishingCustomDirectory:" target="-2" id="nHc-JI-osY"/>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToCustomOutputDirectory" id="vVu-wU-UnU"/>
-                            </connections>
-                        </button>
-                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DmF-MD-VA9">
-                            <rect key="frame" x="20" y="18" width="389" height="19"/>
-                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="p1j-hg-a42">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.customOutputDirectory" id="AF6-Dy-VU2"/>
-                                <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToCustomOutputDirectory" id="06H-BQ-dZ3"/>
-                            </connections>
-                        </textField>
-                    </subviews>
-                </customView>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Rl-kp-U8s">
-                    <rect key="frame" x="312" y="255" width="151" height="22"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="ZuA-SP-UXh">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tyx-FG-K3q">
+                    <rect key="frame" x="133" y="234" width="67" height="18"/>
+                    <buttonCell key="cell" type="check" title="4x" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Qir-Qe-A6w">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="smallSystem"/>
-                        <menu key="menu" title="OtherViews" id="gJ1-4X-yZP">
-                            <items>
-                                <menuItem title="Global default scaling" tag="-1" id="ZYj-S8-R6T" userLabel="Global default scaling"/>
-                                <menuItem title="4x (tablethd)" tag="4" id="PHd-IZ-teg"/>
-                                <menuItem title="2x (phonehd, tablet)" tag="2" id="5lU-Yh-sdj"/>
-                                <menuItem title="1x (phone)" tag="1" id="fgf-Cm-4T6"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
+                    </buttonCell>
                     <connections>
-                        <binding destination="-2" name="selectedTag" keyPath="currentPackageSettings.resourceAutoScaleFactor" id="dmd-7L-fRA"/>
+                        <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToMainProject" id="iEz-7A-phk"/>
+                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProject_resolution_4x" id="rxk-75-MM3"/>
                     </connections>
-                </popUpButton>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Osr-Rp-bsg">
-                    <rect key="frame" x="199" y="256" width="110" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default scaling from" id="euZ-5x-mWp">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                </button>
             </subviews>
             <connections>
                 <outlet property="androidView" destination="qD5-uT-hCU" id="2OA-tC-S65"/>
