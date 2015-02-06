@@ -164,51 +164,40 @@
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbSliderBgHighlighted.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbButtonHighlighted.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"Sprites" : @{},
          @"ccbResources/ccbSliderBgNormal.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbTextField.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleFire.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources":@{
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbParticleMagic.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbButtonNormal.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleStars.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbSliderHandle.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
          },
          @"ccbResources/ccbParticleSmoke.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          },
          @"ccbResources/ccbParticleSnow.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
             RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
          }
       },

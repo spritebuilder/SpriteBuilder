@@ -2,7 +2,6 @@
 
 NSString *const RESOURCE_PROPERTY_TRIM_SPRITES = @"trimSprites";
 
-NSString *const RESOURCE_PROPERTY_IMAGE_TABLET_SCALE = @"tabletScale";
 NSString *const RESOURCE_PROPERTY_IMAGE_SCALE_FROM = @"scaleFrom";
 
 NSString *const RESOURCE_PROPERTY_IS_SMARTSHEET = @"isSmartSpriteSheet";

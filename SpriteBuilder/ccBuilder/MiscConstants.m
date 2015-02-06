@@ -18,11 +18,11 @@ NSString *const DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES = @"Published-Packages";
 
 NSString *const PACKAGE_PUBLISH_SETTINGS_FILE_NAME = @"Package.plist";
 
-NSString *const RESOLUTION_AUTO = @"auto";
-NSString *const RESOLUTION_PHONE = @"phone";
-NSString *const RESOLUTION_PHONE_HD = @"phonehd";
+NSString *const RESOLUTION_DIR_AUTO = @"auto";
+NSString *const RESOLUTION_DIR_1X = @"phone";
+NSString *const RESOLUTION_DIR_2X = @"phonehd";
 NSString *const RESOLUTION_TABLET = @"tablet";
-NSString *const RESOLUTION_TABLET_HD = @"tablethd";
+NSString *const RESOLUTION_DIR_4X = @"tablethd";
 
 NSUInteger const RESOLUTION_1X = 1;
 NSUInteger const RESOLUTION_2X = 2;
