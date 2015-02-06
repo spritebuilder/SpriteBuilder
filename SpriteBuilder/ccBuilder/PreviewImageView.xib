@@ -219,36 +219,6 @@
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
                 </button>
-                <popUpButton verticalHuggingPriority="750" id="ytl-XP-7nm">
-                    <rect key="frame" x="181" y="118" width="62" height="15"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" controlSize="mini" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="GHO-wU-Fjv">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
-                        <menu key="menu" title="OtherViews" id="gSf-1O-Svf">
-                            <items>
-                                <menuItem title="Default" id="8Ho-OL-Ktk"/>
-                                <menuItem title="1x" tag="1" id="9V4-jY-lPg"/>
-                                <menuItem title="2x" tag="2" id="e6C-gW-Zo6"/>
-                                <menuItem title="4x" tag="4" id="8ll-KM-LXg">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                    <connections>
-                        <binding destination="-2" name="selectedTag" keyPath="scaleFrom" id="AnW-Pg-U50"/>
-                    </connections>
-                </popUpButton>
-                <textField verticalHuggingPriority="750" id="0ie-fp-IcK" customClass="CCBTextFieldLabel">
-                    <rect key="frame" x="131" y="120" width="50" height="11"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scale from" id="0la-bJ-Mrr">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" id="Bc9-Yb-Xpc" customClass="CCBTextFieldLabel">
                     <rect key="frame" x="13" y="38" width="38" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -361,6 +331,17 @@
                         </button>
                     </subviews>
                 </customView>
+                <button id="NXn-6t-eRV">
+                    <rect key="frame" x="137" y="122" width="100" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="use UI Scale" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="D5q-Kd-Sp4">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.useUIScale" id="a71-sm-1Nz"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <menu autoenablesItems="NO" id="YgR-2N-odH" userLabel="Menu - 1x">

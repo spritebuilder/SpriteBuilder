@@ -57,8 +57,9 @@
     [_preview_4x setImage:self.img_4x];
 
     __weak PreviewImageViewController *weakSelf = self;
-    [self setInitialValues:^{
-        weakSelf.scaleFrom = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
+    [self setInitialValues:^
+    {
+        weakSelf.useUIScale = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE] boolValue];
 
         weakSelf.format_ios = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
         weakSelf.format_ios_dither = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_DITHER] boolValue];
@@ -95,10 +96,10 @@
     return [ImageFormatAndPropertiesHelper isValueAPowerOfTwo:bitmapRep.pixelsHigh];
 }
 
-- (void)setScaleFrom:(int)scaleFrom
+- (void)setUseUIScale:(BOOL)useUIScale
 {
-    _scaleFrom = scaleFrom;
-    [self setValue:@(scaleFrom) withName:RESOURCE_PROPERTY_IMAGE_SCALE_FROM isAudio:NO];
+    _useUIScale = useUIScale;
+    [self setValue:@(useUIScale) withName:RESOURCE_PROPERTY_IMAGE_USEUISCALE isAudio:NO];
 }
 
 - (void) setFormat_ios:(int)format_ios

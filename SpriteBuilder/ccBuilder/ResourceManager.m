@@ -856,7 +856,8 @@
 
 - (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings
 {
-    id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    // id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    id srcScaleSetting = nil;
     SBPackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
 
     if (srcScaleSetting)
@@ -865,13 +866,13 @@
                ? [srcScaleSetting integerValue]
                : 1;
     }
-    else if (aPackageSettings && aPackageSettings.resourceAutoScaleFactor != DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING)
+    else if (aPackageSettings)
     {
         return aPackageSettings.resourceAutoScaleFactor;
     }
     else
     {
-        return 4.0;
+        return 1.0;
     }
 }
 

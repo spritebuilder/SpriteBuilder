@@ -205,7 +205,7 @@
 
     [self setAllPackagesAutoSrcScalingTo:1];
 
-    [_projectSettings setProperty:@1 forRelPath:@"original.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    [_projectSettings setProperty:@YES forRelPath:@"original.png" andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
 
     [_resourceManager createCachedImageFromAutoPath:[self fullPathForFile:imgRelPath]
                                              saveAs:[self fullPathForFile:@"resized.png"]

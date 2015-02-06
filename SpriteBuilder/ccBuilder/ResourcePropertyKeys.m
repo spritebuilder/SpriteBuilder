@@ -2,7 +2,7 @@
 
 NSString *const RESOURCE_PROPERTY_TRIM_SPRITES = @"trimSprites";
 
-NSString *const RESOURCE_PROPERTY_IMAGE_SCALE_FROM = @"scaleFrom";
+NSString *const RESOURCE_PROPERTY_IMAGE_USEUISCALE = @"useUIScale";
 
 NSString *const RESOURCE_PROPERTY_IS_SMARTSHEET = @"isSmartSpriteSheet";
 NSString *const RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED = @"keepSpritesUntrimmed";

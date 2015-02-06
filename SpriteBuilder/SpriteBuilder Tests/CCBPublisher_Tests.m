@@ -25,6 +25,7 @@
 #import "SBPackageSettings.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "NSNumber+ImageResolutions.h"
+#import "PublishOSSettings.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -55,6 +56,7 @@
     [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
 
     SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
+    packageSettings.resourceAutoScaleFactor = 4;
 
     self.warnings = [[CCBWarnings alloc] init];
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
@@ -191,7 +193,7 @@
     // Overriden resolution for tablet hd
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-4x/rocket.png" width:3 height:17];
 
-    [_projectSettings setProperty:@1 forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    [_projectSettings setProperty:@YES forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -199,8 +201,8 @@
     // The overridden case
     [self assertPNGAtPath:@"Published-iOS/rocket-4x.png" hasWidth:3 hasHeight:17];
 
-    [self assertPNGAtPath:@"Published-iOS/rocket-1x.png" hasWidth:4 hasHeight:20];
-    [self assertPNGAtPath:@"Published-iOS/rocket-2x.png" hasWidth:8 hasHeight:40];
+    [self assertPNGAtPath:@"Published-iOS/rocket-1x.png" hasWidth:1 hasHeight:5];
+    [self assertPNGAtPath:@"Published-iOS/rocket-2x.png" hasWidth:2 hasHeight:10];
 }
 
 - (void)testDifferentOutputFormatsForIOSAndAndroid
