@@ -568,8 +568,12 @@
     int memberVarType = [extraProps[@"memberVarAssignmentType"] intValue];
     
     dict[@"customClass"] = customClass;
-    dict[@"memberVarAssignmentName"] = memberVarName;
     dict[@"memberVarAssignmentType"] = @(memberVarType);
+
+    if(memberVarType != 1) //don't copy the node's code connection
+    {
+        dict[@"memberVarAssignmentName"] = memberVarName;
+    }
     
     // JS code connections
     NSString* jsController = extraProps[@"jsController"];
