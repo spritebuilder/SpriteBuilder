@@ -180,7 +180,7 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 {
     NSString *fullFilePath = [self fullPathForFile:filePath];
     NSDictionary* attr = [[NSFileManager defaultManager] attributesOfItemAtPath:fullFilePath error:NULL];
-    return [attr objectForKey:NSFileModificationDate];
+    return attr[NSFileModificationDate];
 }
 
 - (void)assertFileExists:(NSString *)filePath

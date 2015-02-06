@@ -15,7 +15,6 @@
         self.publishedPNGFiles = [NSMutableSet set];
         self.publishedSpriteSheetFiles = [[NSMutableSet alloc] init];
         self.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] init];
-        self.audioQuality = DEFAULT_AUDIO_QUALITY;
     }
 
     return self;
