@@ -15,43 +15,9 @@
 #import "MiscConstants.h"
 #import "PublishUtil.h"
 #import "NSAlert+Convenience.h"
+#import "CCRendererBasicTypes_Private.h"
 
 typedef void (^DirectorySetterBlock)(NSString *directoryPath);
-
-@interface SettingsListEntry : NSObject
-
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic) BOOL canBeModified;
-@property (nonatomic, strong) SBPackageSettings *packagePublishSettings;
-
-@end
-
-
-@implementation SettingsListEntry
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self)
-    {
-        self.canBeModified = NO;
-    }
-    return self;
-}
-
-- (NSString *)name
-{
-    if (_packagePublishSettings)
-    {
-        return _packagePublishSettings.package.name;
-    }
-    return @"Main Project";
-}
-
-@end
-
-
-#pragma mark --------------------------------
 
 @implementation ProjectSettingsWindowController
 
@@ -63,7 +29,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     {
         self.settingsList = [NSMutableArray array];
 
-        [self populateSettingsList];
+        [self populatePackagesSettingsList];
     }
     
     return self;
@@ -76,37 +42,32 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     NSIndexSet *firstRow = [[NSIndexSet alloc] initWithIndex:0];
     [_tableView selectRowIndexes:firstRow byExtendingSelection:NO];
 
-    [self loadMainProjectSettingsView];
+    [self loadDetailViewForPackage:[self selectedPackageSettings]];
 }
 
-- (void)populateSettingsList
+- (void)populatePackagesSettingsList
 {
-    SettingsListEntry *mainProjectEntry = [[SettingsListEntry alloc] init];
-    [_settingsList addObject:mainProjectEntry];
-
     for (RMPackage *package in [[ResourceManager sharedManager] allPackages])
     {
         SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
         [packagePublishSettings load];
 
-        SettingsListEntry *packageEntry = [[SettingsListEntry alloc] init];
-        packageEntry.packagePublishSettings = packagePublishSettings;
-
-        [_settingsList addObject:packageEntry];
+        [_settingsList addObject:packagePublishSettings];
     }
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-    SettingsListEntry *listEntry = _settingsList[(NSUInteger) _tableView.selectedRow];
-    if (listEntry.packagePublishSettings)
+    SBPackageSettings *packageSettings = [self selectedPackageSettings];
+    if (packageSettings)
     {
-        [self loadDetailViewForPackage:listEntry.packagePublishSettings];
+        [self loadDetailViewForPackage:packageSettings];
     }
-    else
-    {
-        [self loadMainProjectSettingsView];
-    }
+}
+
+- (SBPackageSettings *)selectedPackageSettings
+{
+    return _settingsList[(NSUInteger) _tableView.selectedRow];
 }
 
 - (void)removeAllSubviewsOfDetailView
@@ -115,11 +76,6 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     {
         [subview removeFromSuperview];
     }
-}
-
-- (void)loadMainProjectSettingsView
-{
-    [self loadViewWithNibName:@"MainProjectSettingsDetailView"];
 }
 
 - (void)loadDetailViewForPackage:(SBPackageSettings *)settings
@@ -155,9 +111,9 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (void)saveAllSettings
 {
-    for (SettingsListEntry *listEntry in _settingsList)
+    for (SBPackageSettings *packageSettings in _settingsList)
     {
-        [listEntry.packagePublishSettings store];
+        [packageSettings store];
     }
     [_projectSettings store];
 }
@@ -181,16 +137,16 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (IBAction)selectPackagePublishingCustomDirectory:(id)sender;
 {
-    SettingsListEntry *listEntry = _settingsList[(NSUInteger) _tableView.selectedRow];
-    if (!listEntry.packagePublishSettings)
+    SBPackageSettings *packageSettings = [self selectedPackageSettings];
+    if (!packageSettings)
     {
         return;
     }
 
-    [self selectPublishCurrentPath:listEntry.packagePublishSettings.customOutputDirectory
+    [self selectPublishCurrentPath:packageSettings.customOutputDirectory
                     dirSetterBlock:^(NSString *directoryPath)
     {
-        listEntry.packagePublishSettings.customOutputDirectory = directoryPath;
+        packageSettings.customOutputDirectory = directoryPath;
     }];
 }
 

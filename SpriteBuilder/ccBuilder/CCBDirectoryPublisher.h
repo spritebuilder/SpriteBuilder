@@ -42,12 +42,12 @@
 @property (nonatomic, copy) NSString *outputDir;
 @property (nonatomic) CCBPublisherOSType osType;
 @property (nonatomic) NSInteger audioQuality;
-@property (nonatomic, weak) NSArray *resolutions;
-@property (nonatomic, weak) NSMutableSet *publishedPNGFiles;
-@property (nonatomic, weak) NSMutableSet *publishedSpriteSheetFiles;
-@property (nonatomic, weak) PublishRenamedFilesLookup *renamedFilesLookup;
+@property (nonatomic, copy) NSArray *resolutions;
+@property (nonatomic, strong) NSMutableSet *publishedPNGFiles;
+@property (nonatomic, strong) NSMutableSet *publishedSpriteSheetFiles;
+@property (nonatomic, strong) PublishRenamedFilesLookup *renamedFilesLookup;
 @property (nonatomic, strong) DateCache *modifiedDatesCache;
-@property (nonatomic, weak) PublishingTaskStatusProgress *publishingTaskStatusProgress;
+@property (nonatomic, strong) PublishingTaskStatusProgress *publishingTaskStatusProgress;
 
 - (id)initWithProjectSettings:(ProjectSettings *)someProjectSettings
               packageSettings:(NSArray *)somePackageSettings

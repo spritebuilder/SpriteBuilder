@@ -2,10 +2,9 @@
 
 @interface PublishOSSettings : NSObject
 
-@property (nonatomic) BOOL resolution_tablet;
-@property (nonatomic) BOOL resolution_tablethd;
-@property (nonatomic) BOOL resolution_phone;
-@property (nonatomic) BOOL resolution_phonehd;
+@property (nonatomic) BOOL resolution_1x;
+@property (nonatomic) BOOL resolution_2x;
+@property (nonatomic) BOOL resolution_4x;
 
 @property (nonatomic) NSInteger audio_quality;
 

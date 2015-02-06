@@ -86,13 +86,13 @@
     [self addWarningWithDescription:description isFatal:fatal relatedFile:relatedFile resolution:NULL];
 }
 
-- (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution
+- (void)addWarningWithDescription:(NSString *)description isFatal:(BOOL)fatal relatedFile:(NSString *)relatedFile resolution:(NSNumber *) resolution
 {
     CCBWarning* warning = [[CCBWarning alloc] init];
     warning.message = description;
     warning.relatedFile = relatedFile;
     warning.fatal = fatal;
-    warning.resolution = resolution;
+    warning.resolution = [resolution stringValue];
     [self addWarning:warning];
 }
 

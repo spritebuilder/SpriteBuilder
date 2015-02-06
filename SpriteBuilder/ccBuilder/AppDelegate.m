@@ -1253,17 +1253,29 @@ typedef enum
     BOOL centered = [[doc objectForKey:@"centeredOrigin"] boolValue];
     
     // Check for jsControlled
-    jsControlled = [[doc objectForKey:@"jsControlled"] boolValue];
+    jsControlled = [doc[@"jsControlled"] boolValue];
     
-    int docDimType = [[doc objectForKey:@"docDimensionsType"] intValue];
-    if (docDimType == kCCBDocDimensionsTypeNode) centered = YES;
-    else centered = NO;
-    
-    if (docDimType == kCCBDocDimensionsTypeLayer) self.canEditStageSize = YES;
-    else self.canEditStageSize = NO;
-    
+    int docDimType = [doc[@"docDimensionsType"] intValue];
+    if (docDimType == kCCBDocDimensionsTypeNode)
+    {
+        centered = YES;
+    }
+    else
+    {
+        centered = NO;
+    }
+
+    if (docDimType == kCCBDocDimensionsTypeLayer)
+    {
+        self.canEditStageSize = YES;
+    }
+    else
+    {
+        self.canEditStageSize = NO;
+    }
+
     // Setup stage & resolutions
-    NSMutableArray* serializedResolutions = [doc objectForKey:@"resolutions"];
+    NSMutableArray* serializedResolutions = doc[@"resolutions"];
     if (serializedResolutions)
     {
         // Load resolutions
@@ -1277,9 +1289,9 @@ typedef enum
         resolutions = [self updateResolutions:resolutions forDocDimensionType:docDimType];
         
         currentDocument.docDimensionsType = docDimType;
-        int currentResolution = [[doc objectForKey:@"currentResolution"] intValue];
-        currentResolution = clampf(currentResolution, 0, resolutions.count - 1);
-        ResolutionSetting* resolution = [resolutions objectAtIndex:currentResolution];
+        int currentResolution = [doc[@"currentResolution"] intValue];
+        currentResolution = (int) clampf(currentResolution, 0, resolutions.count - 1);
+        ResolutionSetting* resolution = resolutions[currentResolution];
         
         // Save in current document
         currentDocument.resolutions = resolutions;
@@ -1294,8 +1306,8 @@ typedef enum
     else
     {
         // Support old files where the current width and height was stored
-        int stageW = [[doc objectForKey:@"stageWidth"] intValue];
-        int stageH = [[doc objectForKey:@"stageHeight"] intValue];
+        int stageW = [doc[@"stageWidth"] intValue];
+        int stageH = [doc[@"stageHeight"] intValue];
         
         [[CocosScene cocosScene] setStageSize:CGSizeMake(stageW, stageH) centeredOrigin:centered];
         
@@ -1305,19 +1317,19 @@ typedef enum
         resolution.height = stageH;
         resolution.centeredOrigin = centered;
         
-        NSMutableArray* resolutions = [NSMutableArray arrayWithObject:resolution];
+        NSMutableArray* resolutions = [@[resolution] mutableCopy];
         currentDocument.resolutions = resolutions;
         currentDocument.currentResolution = 0;
     }
     [self updateResolutionMenu];
     
-    ResolutionSetting* resolution = [currentDocument.resolutions objectAtIndex:currentDocument.currentResolution];
+    ResolutionSetting* resolution = currentDocument.resolutions[currentDocument.currentResolution];
     
     // Stage border
-    [[CocosScene cocosScene] setStageBorder:[[doc objectForKey:@"stageBorder"] intValue]];
+    [[CocosScene cocosScene] setStageBorder:[doc[@"stageBorder"] intValue]];
     
     // Stage color
-    NSNumber *stageColorObject = [doc objectForKey: @"stageColor"];
+    NSNumber *stageColorObject = doc[@"stageColor"];
     int stageColor;
     if (stageColorObject != nil)
     {
@@ -2313,13 +2325,13 @@ typedef enum
         CCNode* node = [[PlugInManager sharedManager] createDefaultNodeOfType:class];
         
         // Round position
-        pt.x = roundf(pt.x);
-        pt.y = roundf(pt.y);
+        pt.x = roundf((float) pt.x);
+        pt.y = roundf((float) pt.y);
         
         // Set its position
         [PositionPropertySetter setPosition:NSPointFromCGPoint(pt) forNode:node prop:@"position"];
-        
-        [CCBDictionaryReader setProp:prop ofType:@"SpriteFrame" toValue:[NSArray arrayWithObjects:spriteSheetFile, spriteFile, nil] forNode:node parentSize:CGSizeZero withParentGraph:nil];
+
+        [CCBDictionaryReader setProp:prop ofType:@"SpriteFrame" toValue:@[spriteSheetFile, spriteFile] forNode:node parentSize:CGSizeZero withParentGraph:nil];
         // Set it's displayName to the name of the spriteFile
         node.displayName = [[spriteFile lastPathComponent] stringByDeletingPathExtension];
         [self addCCObject:node toParent:parent];

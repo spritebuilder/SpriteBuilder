@@ -12,7 +12,7 @@
 @property (nonatomic, copy) NSString *srcFilePath;
 @property (nonatomic, copy) NSString *dstFilePath;
 @property (nonatomic, copy) NSString *outputDir;
-@property (nonatomic, copy) NSString *resolution;
+@property (nonatomic, copy) NSNumber *resolution;
 @property (nonatomic, strong) NSArray *packageSettings;
 
 @property (nonatomic, strong) NSMutableSet *publishedPNGFiles;

@@ -98,7 +98,7 @@
                             outDir:(NSString *)outDir
                         fileLookup:(id <PublishFileLookupProtocol>)fileLookup
 {
-    for (NSString* resolution in _resolutions)
+    for (NSNumber *resolution in _resolutions)
     {
         [self publishImageFile:srcFile to:dstFile isSpriteSheet:isSpriteSheet outputDir:outDir resolution:resolution intermediateProduct:NO fileLookup:fileLookup];
 	}
@@ -110,7 +110,7 @@
                       to:(NSString *)dstFilePath
            isSpriteSheet:(BOOL)isSpriteSheet
                outputDir:(NSString *)outputDir
-              resolution:(NSString *)resolution
+              resolution:(NSNumber *)resolution
      intermediateProduct:(BOOL)intermediateProduct
               fileLookup:(id<PublishFileLookupProtocol>)fileLookup
 {
@@ -415,28 +415,30 @@
 {
     NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPathIgnoringDirs:YES];
 
-	[_publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 
     [PublishSpriteSheetOperation resetSpriteSheetPreviewsGeneration];
 
-	for (NSString *resolution in _resolutions)
+	for (NSNumber *resolution in _resolutions)
 	{
-		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
-                                                     stringByAppendingPathComponent:spriteSheetName];
+        NSString *subPathWithRes = [subPath filepathWithResolutionTag:resolution];
+
+	    [_publishedSpriteSheetFiles addObject:[subPathWithRes stringByAppendingPathExtension:@"plist"]];
+
+		NSString *spriteSheetFile = [spriteSheetDir stringByAppendingPathComponent:spriteSheetName];
 
         NSFileManager *filemanager = [NSFileManager defaultManager];
-        [filemanager createDirectoryAtPath:[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath]
+        [filemanager createDirectoryAtPath:[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPathWithRes]
                withIntermediateDirectories:YES
                                 attributes:nil
                                      error:nil];
         
-        NSString *intermediateFileLookupPath = [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath] stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
+        NSString *intermediateFileLookupPath = [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPathWithRes] stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
-		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
+		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPathWithRes])
 		{
             LocalLog(@"[SPRITESHEET] SKIPPING exists and up to date - file name: %@, subpath: %@, resolution: %@, file path: %@",
-                     [spriteSheetFile lastPathComponent], subPath, resolution, spriteSheetFile);
+                     [spriteSheetFile lastPathComponent], subPathWithRes, resolution, spriteSheetFile);
 			continue;
 		}
 
@@ -472,7 +474,7 @@
 - (PublishSpriteSheetOperation *)createSpriteSheetOperation:(NSString *)publishDirectory
                                                     subPath:(NSString *)subPath
                                          srcSpriteSheetDate:(NSDate *)srcSpriteSheetDate
-                                                 resolution:(NSString *)resolution
+                                                 resolution:(NSNumber *)resolution
                                             spriteSheetFile:(NSString *)spriteSheetFile
 {
     PublishSpriteSheetOperation *operation = [[PublishSpriteSheetOperation alloc] initWithProjectSettings:_projectSettings
@@ -504,7 +506,7 @@
 - (void)prepareImagesForSpriteSheetPublishing:(NSString *)publishDirectory
                                       subPath:(NSString *)subPath
                                     outputDir:(NSString *)outputDir
-                                   resolution:(NSString *)resolution
+                                   resolution:(NSNumber *)resolution
                                    fileLookup:(id<PublishFileLookupProtocol>)fileLookup
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];

@@ -8,16 +8,6 @@
 
 @implementation ProjectSettings (Convenience)
 
-- (BOOL)isPublishEnvironmentRelease
-{
-    return self.publishEnvironment == kCCBPublishEnvironmentRelease;
-}
-
-- (BOOL)isPublishEnvironmentDebug
-{
-    return self.publishEnvironment == kCCBPublishEnvironmentDevelop;
-}
-
 - (NSInteger)soundQualityForRelPath:(NSString *)relPath osType:(CCBPublisherOSType)osType
 {
     NSString *key = osType == kCCBPublisherOSTypeIOS
@@ -61,67 +51,6 @@
            : -1;
 }
 
-- (NSArray *)publishingResolutionsForOSType:(CCBPublisherOSType)osType;
-{
-    if (osType == kCCBPublisherOSTypeAndroid)
-    {
-        return [self publishingResolutionsForAndroid];
-    }
-
-    if (osType == kCCBPublisherOSTypeIOS)
-    {
-        return [self publishingResolutionsForIOS];
-    }
-
-    return nil;
-}
-
-- (NSArray *)publishingResolutionsForIOS
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    if (self.publishResolution_ios_phone)
-    {
-        [result addObject:RESOLUTION_PHONE];
-    }
-    if (self.publishResolution_ios_phonehd)
-    {
-        [result addObject:RESOLUTION_PHONE_HD];
-    }
-    if (self.publishResolution_ios_tablet)
-    {
-        [result addObject:RESOLUTION_TABLET];
-    }
-    if (self.publishResolution_ios_tablethd)
-    {
-        [result addObject:RESOLUTION_TABLET_HD];
-    }
-    return result;
-}
-
-- (NSArray *)publishingResolutionsForAndroid
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    if (self.publishResolution_android_phone)
-    {
-        [result addObject:RESOLUTION_PHONE];
-    }
-    if (self.publishResolution_android_phonehd)
-    {
-        [result addObject:RESOLUTION_PHONE_HD];
-    }
-    if (self.publishResolution_android_tablet)
-    {
-        [result addObject:RESOLUTION_TABLET];
-    }
-    if (self.publishResolution_android_tablethd)
-    {
-        [result addObject:RESOLUTION_TABLET_HD];
-    }
-    return result;
-}
-
 - (NSString *)publishDirForOSType:(CCBPublisherOSType)osType
 {
     NSString *result;
@@ -142,37 +71,6 @@
     }
 
     return [result absolutePathFromBaseDirPath:[self.projectPath stringByDeletingLastPathComponent]];
-}
-
-- (BOOL)publishEnabledForOSType:(CCBPublisherOSType)osType
-{
-    if (osType == kCCBPublisherOSTypeAndroid)
-    {
-        return self.publishEnabledAndroid;
-    }
-
-    if (osType == kCCBPublisherOSTypeIOS)
-    {
-        return self.publishEnabledIOS;
-    }
-
-    return NO;
-}
-
-
-- (NSInteger)audioQualityForOsType:(CCBPublisherOSType)osType
-{
-    if (osType == kCCBPublisherOSTypeAndroid)
-    {
-        return self.publishAudioQuality_android;
-    }
-
-    if (osType == kCCBPublisherOSTypeIOS)
-    {
-        return self.publishAudioQuality_ios;
-    }
-
-    return DEFAULT_AUDIO_QUALITY;
 }
 
 @end
