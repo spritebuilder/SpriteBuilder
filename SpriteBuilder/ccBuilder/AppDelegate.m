@@ -842,6 +842,16 @@ typedef enum
     return YES;
 }
 
+- (IBAction)selectNextTab:(id)sender
+{
+    [tabView selectNextTabViewItem:sender];
+}
+
+- (IBAction) selectPreviousTab:(id)sender
+{
+  [tabView selectPreviousTabViewItem:sender];
+}
+
 #pragma mark Handling selections
 
 - (BOOL) nodeHasCCBFileAncestor:(CCNode*)node
@@ -1395,8 +1405,9 @@ typedef enum
     {
         for (NSDictionary * jointDict in doc[@"joints"])
         {
-            CCNode * joint = [CCBDictionaryReader nodeGraphFromNodeGraphData:jointDict parentSize:CGSizeMake(resolution.width, resolution
-                    .height)                                 withParentGraph:loadedRoot];
+            CCNode * joint = [CCBDictionaryReader nodeGraphFromNodeGraphData:jointDict
+                                                                  parentSize:CGSizeMake(resolution.width, resolution.height)
+                                                             withParentGraph:loadedRoot];
             
             if(joint)
             {
@@ -4216,6 +4227,14 @@ typedef enum
         if (!hasOpenedDocument) return NO;
         return (self.selectedNode != NULL);
     }
+    else if (menuItem.action == @selector(selectNextTab:))
+    {
+      return [tabView numberOfTabViewItems] > 1;
+    }
+    else if (menuItem.action == @selector(selectPreviousTab:))
+    {
+      return [tabView numberOfTabViewItems] > 1;
+    }
     
     return YES;
 }
@@ -4453,7 +4472,7 @@ typedef enum
 
 - (IBAction)showHelp:(id)sender
 {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://makegameswith.us/docs/"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://makeschool.com/docs/"]];
 }
 
 - (IBAction)showAPIDocs:(id)sender

@@ -51,4 +51,7 @@ People/companies who were/are contributing code to CocosBuilder (alphabetically 
     Added padding to start/end of timline view
     Speedup mousewheel scrolling for timeline
     Added support for delegating interpolation frame drawing to the node-plugin
+
+* Stuart Carnie
+    Added initial support for Retina displays on OS X
     
