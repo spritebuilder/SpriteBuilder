@@ -6,6 +6,7 @@
 #import "ProjectSettings.h"
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
+#import "NSString+Publishing.h"
 
 
 @interface PublishSpriteSheetOperation()
@@ -65,6 +66,8 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 - (void)publishSpriteSheet
 {
     [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [_subPath lastPathComponent]]];
+
+    self.spriteSheetFile = [_spriteSheetFile filepathWithResolutionTag:_resolution];
 
     [self loadSettings];
 

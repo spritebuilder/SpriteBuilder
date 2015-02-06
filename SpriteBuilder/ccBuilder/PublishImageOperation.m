@@ -77,7 +77,7 @@
     // Find out which file to copy for the current resolution
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    [self tagDstFilePathWithResolution];
+    self.dstFilePath = [_dstFilePath filepathWithResolutionTag:_resolution];
 
     NSString *srcFileName = [_srcFilePath lastPathComponent];
     NSString *dstFileName = [_dstFilePath lastPathComponent];
@@ -338,15 +338,6 @@
     }
 
     return latestDate;
-}
-
-- (void)tagDstFilePathWithResolution
-{
-    NSString *path = [_dstFilePath stringByDeletingLastPathComponent];
-    NSString *extension = [_dstFilePath pathExtension];
-    NSString *name = [[_dstFilePath lastPathComponent] stringByDeletingPathExtension];
-
-    self.dstFilePath = [path stringByAppendingPathComponent:[[name stringByAppendingString:[_resolution resolutionTag]] stringByAppendingPathExtension:extension]];
 }
 
 - (NSString *)description

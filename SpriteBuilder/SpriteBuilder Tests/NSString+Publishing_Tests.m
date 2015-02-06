@@ -81,4 +81,15 @@
     XCTAssertTrue([latestModifiedDate isEqualToDate:expectedDate], @"Date is %@, expected %@ for file %@", latestModifiedDate, expectedDate, fullPath);
 }
 
+- (void)testFilepathWithResolutionTag
+{
+    XCTAssertEqualObjects([@"/foo/baa.png" filepathWithResolutionTag:@2], @"/foo/baa-2x.png");
+
+    XCTAssertEqualObjects([@"/foo.png.png" filepathWithResolutionTag:@2], @"/foo.png-2x.png");
+
+    XCTAssertEqualObjects([@"foo" filepathWithResolutionTag:@2], @"foo-2x");
+
+    XCTAssertEqualObjects([@"foo" filepathWithResolutionTag:nil], @"foo");
+}
+
 @end

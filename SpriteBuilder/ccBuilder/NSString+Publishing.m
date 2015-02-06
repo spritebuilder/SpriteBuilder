@@ -3,6 +3,7 @@
 #import "ResourceManager.h"
 #import "MiscConstants.h"
 #import "NSNumber+ImageResolutions.h"
+#import "NSString+Misc.h"
 
 
 @implementation NSString (Publishing)
@@ -178,6 +179,27 @@
 - (BOOL)isIntermediateFileLookup
 {
     return [self isEqualToString:INTERMEDIATE_FILE_LOOKUP_NAME];
+}
+
+- (NSString *)filepathWithResolutionTag:(NSNumber *)resolution
+{
+    if (!resolution)
+    {
+        return self;
+    }
+
+    NSString *path = [self stringByDeletingLastPathComponent];
+    NSString *extension = [self pathExtension];
+    NSString *name = [[self lastPathComponent] stringByDeletingPathExtension];
+
+    NSString *result = [path stringByAppendingPathComponent:[name stringByAppendingString:[resolution resolutionTag]]];
+
+    if (extension && ![extension isEmpty])
+    {
+        result = [result stringByAppendingPathExtension:extension];
+    }
+
+    return result;
 }
 
 @end

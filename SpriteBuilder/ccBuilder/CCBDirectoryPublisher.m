@@ -415,28 +415,30 @@
 {
     NSDate *srcSpriteSheetDate = [publishDirectory latestModifiedDateOfPathIgnoringDirs:YES];
 
-	[_publishedSpriteSheetFiles addObject:[subPath stringByAppendingPathExtension:@"plist"]];
 
     [PublishSpriteSheetOperation resetSpriteSheetPreviewsGeneration];
 
 	for (NSNumber *resolution in _resolutions)
 	{
-		NSString *spriteSheetFile = [[spriteSheetDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
-                                                     stringByAppendingPathComponent:spriteSheetName];
+        NSString *subPathWithRes = [subPath filepathWithResolutionTag:resolution];
+
+	    [_publishedSpriteSheetFiles addObject:[subPathWithRes stringByAppendingPathExtension:@"plist"]];
+
+		NSString *spriteSheetFile = [spriteSheetDir stringByAppendingPathComponent:spriteSheetName];
 
         NSFileManager *filemanager = [NSFileManager defaultManager];
-        [filemanager createDirectoryAtPath:[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath]
+        [filemanager createDirectoryAtPath:[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPathWithRes]
                withIntermediateDirectories:YES
                                 attributes:nil
                                      error:nil];
         
-        NSString *intermediateFileLookupPath = [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath] stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
+        NSString *intermediateFileLookupPath = [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPathWithRes] stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
-		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPath])
+		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPathWithRes])
 		{
             LocalLog(@"[SPRITESHEET] SKIPPING exists and up to date - file name: %@, subpath: %@, resolution: %@, file path: %@",
-                     [spriteSheetFile lastPathComponent], subPath, resolution, spriteSheetFile);
+                     [spriteSheetFile lastPathComponent], subPathWithRes, resolution, spriteSheetFile);
 			continue;
 		}
 
