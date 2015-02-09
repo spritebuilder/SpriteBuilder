@@ -14,6 +14,8 @@
 #import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "CCBPublisherTypes.h"
+#import "PublishResolutions.h"
+
 
 @interface SBPackageSettings_Tests : FileSystemTestCase
 
@@ -65,14 +67,23 @@
     _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
     _packagePublishSettings.resourceAutoScaleFactor = 3;
 
+    _packagePublishSettings.mainProjectResolutions.resolution_1x = YES;
+    _packagePublishSettings.mainProjectResolutions.resolution_2x = YES;
+    _packagePublishSettings.mainProjectResolutions.resolution_4x = NO;
+
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     osSettingsIOS.audio_quality = 8;
-    osSettingsIOS.resolutions = @[@(RESOLUTION_1X)];
+    osSettingsIOS.resolutions.resolution_1x = YES;
+    osSettingsIOS.resolutions.resolution_2x = NO;
+    osSettingsIOS.resolutions.resolution_4x = NO;
     [_packagePublishSettings setOSSettings:osSettingsIOS forOsType:kCCBPublisherOSTypeIOS];
 
     PublishOSSettings *osSettingsAndroid = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
     osSettingsAndroid.audio_quality = 2;
-    osSettingsAndroid.resolutions = @[@(RESOLUTION_4X)];
+    osSettingsAndroid.resolutions.resolution_1x = NO;
+    osSettingsAndroid.resolutions.resolution_2x = YES;
+    osSettingsAndroid.resolutions.resolution_4x = YES;
+
     [_packagePublishSettings setOSSettings:osSettingsAndroid forOsType:kCCBPublisherOSTypeAndroid];
 
     [_packagePublishSettings store];
@@ -90,15 +101,19 @@
     XCTAssertEqual(_packagePublishSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
     XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, settingsLoaded.resourceAutoScaleFactor);
 
+    XCTAssertTrue(_packagePublishSettings.mainProjectResolutions.resolution_1x);
+    XCTAssertTrue(_packagePublishSettings.mainProjectResolutions.resolution_2x);
+    XCTAssertFalse(_packagePublishSettings.mainProjectResolutions.resolution_4x);
+
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
-    XCTAssertTrue([osSettingsAndroidLoaded.resolutions containsObject:@(RESOLUTION_4X)]);
-    XCTAssertFalse([osSettingsAndroidLoaded.resolutions containsObject:@(RESOLUTION_1X)]);
+    XCTAssertTrue(osSettingsAndroidLoaded.resolutions.resolution_4x);
+    XCTAssertFalse(osSettingsAndroidLoaded.resolutions.resolution_1x);
 
     PublishOSSettings *osSettingsIOSLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeIOS];
     XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
-    XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:@(RESOLUTION_1X)]);
-    XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:@(RESOLUTION_4X)]);
+    XCTAssertTrue(osSettingsIOSLoaded.resolutions.resolution_1x);
+    XCTAssertFalse(osSettingsIOSLoaded.resolutions.resolution_4x);
 }
 
 - (void)testMigrationDefaultScale

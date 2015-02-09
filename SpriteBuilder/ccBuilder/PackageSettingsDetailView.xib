@@ -93,8 +93,8 @@
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProject_resolution_1x" id="Nw0-YS-XDM"/>
                         <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToMainProject" id="zeL-zM-i53"/>
+                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProjectResolutions.resolution_1x" id="Mg7-Au-hMT"/>
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="axD-3R-s7L">
@@ -104,8 +104,8 @@
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProject_resolution_2x" id="C6e-My-ALK"/>
                         <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToMainProject" id="1Fh-z0-rww"/>
+                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProjectResolutions.resolution_2x" id="yWQ-xl-ga1"/>
                     </connections>
                 </button>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qD5-uT-hCU">
@@ -118,8 +118,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_1x" id="qGJ-7O-E9F"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="Eki-sQ-RAw"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolutions.resolution_1x" id="Gja-vn-cXN"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zI5-OW-zsa">
@@ -129,8 +129,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_2x" id="qQc-pY-ni7"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1I7-be-AXQ"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolutions.resolution_2x" id="s7H-yq-cvB"/>
                             </connections>
                         </button>
                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uhy-uo-i21">
@@ -193,8 +193,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolution_4x" id="Qp7-QO-jS0"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="MF8-Rc-QpE"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.android.resolutions.resolution_4x" id="kO7-bV-LNP"/>
                             </connections>
                         </button>
                     </subviews>
@@ -215,8 +215,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_1x" id="2z7-YB-KBp"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="KNC-rd-iaZ"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolutions.resolution_1x" id="dqe-bB-ViL"/>
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="20Q-SB-q8R">
@@ -226,8 +226,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_2x" id="E2K-TQ-gQ9"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="1W9-V3-ZCt"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolutions.resolution_2x" id="pLF-M6-1Io"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1X-aa-Nid" customClass="CCBTextFieldLabel">
@@ -300,8 +300,8 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolution_4x" id="DBc-F6-QFR"/>
                                 <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToZip" id="DTy-xH-awX"/>
+                                <binding destination="-2" name="value" keyPath="currentPackageSettings.osSettings.ios.resolutions.resolution_4x" id="igf-LN-Ao5"/>
                             </connections>
                         </button>
                     </subviews>
@@ -313,8 +313,8 @@
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProject_resolution_4x" id="rxk-75-MM3"/>
                         <binding destination="-2" name="enabled" keyPath="currentPackageSettings.publishToMainProject" id="iEz-7A-phk"/>
+                        <binding destination="-2" name="value" keyPath="currentPackageSettings.mainProjectResolutions.resolution_4x" id="BtU-Cb-25S"/>
                     </connections>
                 </button>
             </subviews>
