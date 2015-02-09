@@ -164,40 +164,51 @@
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbSliderBgHighlighted.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbButtonHighlighted.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"Sprites" : @{},
          @"ccbResources/ccbSliderBgNormal.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbTextField.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleFire.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources":@{
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbParticleMagic.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbButtonNormal.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleStars.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbSliderHandle.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleSmoke.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleSnow.png":@{
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          }
       },
@@ -263,6 +274,9 @@
     XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);
 
     XCTAssertTrue(project.excludedFromPackageMigration);
+
+    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
 
     NSNumber *useUIScale = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
     XCTAssertTrue([useUIScale boolValue]);
@@ -455,6 +469,7 @@
     [_projectSettings clearAllDirtyMarkers];
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     [_projectSettings setProperty:@(YES) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
 
     [_projectSettings clearAllDirtyMarkers];
@@ -462,6 +477,7 @@
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
+    [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     [_projectSettings setProperty:@(YES) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);

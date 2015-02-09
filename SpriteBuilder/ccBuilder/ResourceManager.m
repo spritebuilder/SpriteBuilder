@@ -856,8 +856,7 @@
 
 - (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings
 {
-    // id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
-    id srcScaleSetting = nil;
+    id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     SBPackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
 
     if (srcScaleSetting)

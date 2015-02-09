@@ -149,6 +149,7 @@
     _resource.type = kCCBResTypeImage;
     [self setResourceProperties:@{
             RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES),
+            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1),
             RESOURCE_PROPERTY_IOS_IMAGE_FORMAT:@(kFCImageFormatPVR_RGBA8888),
             RESOURCE_PROPERTY_IOS_IMAGE_DITHER:@(YES),
             RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS:@(YES),
@@ -163,6 +164,7 @@
                                          isAudio:NO
                                       properties:@{
         RESOURCE_PROPERTY_IMAGE_USEUISCALE : @(YES),
+        RESOURCE_PROPERTY_IMAGE_SCALE_FROM : @(2),
         RESOURCE_PROPERTY_IOS_IMAGE_FORMAT : @(kFCImageFormatPVRTC_4BPP),
         RESOURCE_PROPERTY_IOS_IMAGE_DITHER : @(NO),
         RESOURCE_PROPERTY_IOS_IMAGE_COMPRESS : @(NO),

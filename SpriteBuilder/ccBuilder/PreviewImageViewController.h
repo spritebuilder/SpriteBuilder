@@ -23,6 +23,7 @@
 // Bindings
 @property (nonatomic, readonly) BOOL format_supportsPVRTC;
 
+@property (nonatomic) int scaleFrom;
 @property (nonatomic) BOOL useUIScale;
 
 @property (nonatomic) int  format_ios;
