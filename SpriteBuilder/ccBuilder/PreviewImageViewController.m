@@ -20,11 +20,10 @@
 
 @interface PreviewImageViewController ()
 
-@property (nonatomic,strong) NSImage* imgMain;
-@property (nonatomic,strong) NSImage* imgPhone;
-@property (nonatomic,strong) NSImage* imgPhonehd;
-@property (nonatomic,strong) NSImage* imgTablet;
-@property (nonatomic,strong) NSImage* imgTablethd;
+@property (nonatomic, strong) NSImage *imgMain;
+@property (nonatomic, strong) NSImage *img_1x;
+@property (nonatomic, strong) NSImage *img_2x;
+@property (nonatomic, strong) NSImage *img_4x;
 
 @end
 
@@ -37,10 +36,9 @@
     self.previewedResource = previewedResource;
 
     [_previewMain setAllowsCutCopyPaste:NO];
-    [_previewPhone setAllowsCutCopyPaste:NO];
-    [_previewPhonehd setAllowsCutCopyPaste:NO];
-    [_previewTablet setAllowsCutCopyPaste:NO];
-    [_previewTablethd setAllowsCutCopyPaste:NO];
+    [_preview_1x setAllowsCutCopyPaste:NO];
+    [_preview_2x setAllowsCutCopyPaste:NO];
+    [_preview_4x setAllowsCutCopyPaste:NO];
 
     [self populateInitialValues];
 }
@@ -48,20 +46,20 @@
 - (void)populateInitialValues
 {
     // TODO: necessary?
-    self.imgMain = [_previewedResource previewForResolution:RESOLUTION_AUTO];
-    self.imgPhone = [_previewedResource previewForResolution:RESOLUTION_PHONE];
-    self.imgPhonehd = [_previewedResource previewForResolution:RESOLUTION_PHONE_HD];
-    self.imgTablet = [_previewedResource previewForResolution:RESOLUTION_TABLET];
-    self.imgTablethd = [_previewedResource previewForResolution:RESOLUTION_TABLET_HD];
+    self.imgMain = [_previewedResource previewForResolution:RESOLUTION_DIR_AUTO];
+    self.img_1x = [_previewedResource previewForResolution:RESOLUTION_DIR_1X];
+    self.img_2x = [_previewedResource previewForResolution:RESOLUTION_DIR_2X];
+    self.img_4x = [_previewedResource previewForResolution:RESOLUTION_DIR_4X];
 
     [_previewMain setImage:self.imgMain];
-    [_previewPhone setImage:self.imgPhone];
-    [_previewPhonehd setImage:self.imgPhonehd];
-    [_previewTablet setImage:self.imgTablet];
-    [_previewTablethd setImage:self.imgTablethd];
+    [_preview_1x setImage:self.img_1x];
+    [_preview_2x setImage:self.img_2x];
+    [_preview_4x setImage:self.img_4x];
 
     __weak PreviewImageViewController *weakSelf = self;
-    [self setInitialValues:^{
+    [self setInitialValues:^
+    {
+        weakSelf.useUIScale = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE] boolValue];
         weakSelf.scaleFrom = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM] intValue];
 
         weakSelf.format_ios = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT] intValue];
@@ -75,13 +73,6 @@
         weakSelf.format_android_compress = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS] boolValue];
         weakSelf.format_android_dither_enabled = [ImageFormatAndPropertiesHelper supportsDither:(kFCImageFormat)weakSelf.format_android osType:kCCBPublisherOSTypeAndroid];
         weakSelf.format_android_compress_enabled = [ImageFormatAndPropertiesHelper supportsCompress:(kFCImageFormat)weakSelf.format_android osType:kCCBPublisherOSTypeAndroid];
-
-        int tabletScale = [[weakSelf.projectSettings propertyForResource:weakSelf.previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
-        if (!tabletScale)
-        {
-            tabletScale = 2;
-        }
-        weakSelf.tabletScale = tabletScale;
     }];
 }
 
@@ -110,6 +101,12 @@
 {
     _scaleFrom = scaleFrom;
     [self setValue:@(scaleFrom) withName:RESOURCE_PROPERTY_IMAGE_SCALE_FROM isAudio:NO];
+}
+
+- (void)setUseUIScale:(BOOL)useUIScale
+{
+    _useUIScale = useUIScale;
+    [self setValue:@(useUIScale) withName:RESOURCE_PROPERTY_IMAGE_USEUISCALE isAudio:NO];
 }
 
 - (void) setFormat_ios:(int)format_ios
@@ -154,33 +151,6 @@
     [self setValue:@(format_android_compress) withName:RESOURCE_PROPERTY_ANDROID_IMAGE_COMPRESS isAudio:NO];
 }
 
-- (void) setTabletScale:(int)tabletScale
-{
-    _tabletScale = tabletScale;
-
-    if (self.initialUpdate)
-    {
-        return;
-    }
-
-    // Return if tabletScale hasn't changed
-    int oldTabletScale = [[_projectSettings propertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE] intValue];
-    if (tabletScale == 2 && !oldTabletScale) return;
-
-    // Update value and reload assets
-    if (tabletScale != 2)
-    {
-        [_projectSettings setProperty:@(tabletScale) forResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE];
-    }
-    else
-    {
-        [_projectSettings removePropertyForResource:_previewedResource andKey:RESOURCE_PROPERTY_IMAGE_TABLET_SCALE];
-    }
-
-    [ResourceManager touchResource:_previewedResource];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCES_CHANGED object:nil];
-}
-
 - (IBAction)actionRemoveFile:(id)sender
 {
     if (!_previewedResource)
@@ -189,22 +159,18 @@
     }
 
     CCBImageView *imgView = NULL;
-    int tag = [sender tag];
-    if (tag == 0)
+    int tag = (int) [sender tag];
+    if (tag == 1)
     {
-        imgView = _previewPhone;
-    }
-    else if (tag == 1)
-    {
-        imgView = _previewPhonehd;
+        imgView = _preview_1x;
     }
     else if (tag == 2)
     {
-        imgView = _previewTablet;
+        imgView = _preview_2x;
     }
-    else if (tag == 3)
+    else if (tag == 4)
     {
-        imgView = _previewTablethd;
+        imgView = _preview_4x;
     }
 
     if (!imgView)
@@ -239,23 +205,19 @@
     NSString *resolution = NULL;
     if (imgView == _previewMain)
     {
-        resolution = RESOLUTION_AUTO;
+        resolution = RESOLUTION_DIR_AUTO;
     }
-    else if (imgView == _previewPhone)
+    else if (imgView == _preview_1x)
     {
-        resolution = RESOLUTION_PHONE;
+        resolution = RESOLUTION_DIR_1X;
     }
-    else if (imgView == _previewPhonehd)
+    else if (imgView == _preview_2x)
     {
-        resolution = RESOLUTION_PHONE_HD;
+        resolution = RESOLUTION_DIR_2X;
     }
-    else if (imgView == _previewTablet)
+    else if (imgView == _preview_4x)
     {
-        resolution = RESOLUTION_TABLET;
-    }
-    else if (imgView == _previewTablethd)
-    {
-        resolution = RESOLUTION_TABLET_HD;
+        resolution = RESOLUTION_DIR_4X;
     }
 
     if (!resolution)

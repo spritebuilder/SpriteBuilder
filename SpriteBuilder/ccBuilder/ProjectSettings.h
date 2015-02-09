@@ -73,18 +73,6 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 @property (nonatomic, copy) NSString* publishDirectory;
 @property (nonatomic, copy) NSString* publishDirectoryAndroid;
 
-@property (nonatomic,assign) BOOL publishResolution_ios_phone;
-@property (nonatomic,assign) BOOL publishResolution_ios_phonehd;
-@property (nonatomic,assign) BOOL publishResolution_ios_tablet;
-@property (nonatomic,assign) BOOL publishResolution_ios_tablethd;
-@property (nonatomic,assign) BOOL publishResolution_android_phone;
-@property (nonatomic,assign) BOOL publishResolution_android_phonehd;
-@property (nonatomic,assign) BOOL publishResolution_android_tablet;
-@property (nonatomic,assign) BOOL publishResolution_android_tablethd;
-
-@property (nonatomic,assign) int publishAudioQuality_ios;
-@property (nonatomic,assign) int publishAudioQuality_android;
-
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
 @property (nonatomic, readonly) NSArray* absoluteResourcePaths;
@@ -96,7 +84,6 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 @property (nonatomic, assign) BOOL deviceOrientationUpsideDown;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
-@property (nonatomic, assign) int resourceAutoScaleFactor;
 @property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
 
 // *** Temporary property, do not persist ***

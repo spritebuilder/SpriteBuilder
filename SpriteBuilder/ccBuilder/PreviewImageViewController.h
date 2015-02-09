@@ -16,16 +16,15 @@
 @interface PreviewImageViewController : PreviewBaseViewController <PreviewViewControllerProtocol>
 
 @property (nonatomic, weak) IBOutlet CCBImageView *previewMain;
-@property (nonatomic, weak) IBOutlet CCBImageView *previewPhone;
-@property (nonatomic, weak) IBOutlet CCBImageView *previewPhonehd;
-@property (nonatomic, weak) IBOutlet CCBImageView *previewTablet;
-@property (nonatomic, weak) IBOutlet CCBImageView *previewTablethd;
+@property (nonatomic, weak) IBOutlet CCBImageView *preview_1x;
+@property (nonatomic, weak) IBOutlet CCBImageView *preview_2x;
+@property (nonatomic, weak) IBOutlet CCBImageView *preview_4x;
 
 // Bindings
 @property (nonatomic, readonly) BOOL format_supportsPVRTC;
 
 @property (nonatomic) int scaleFrom;
-@property (nonatomic) int tabletScale;
+@property (nonatomic) BOOL useUIScale;
 
 @property (nonatomic) int  format_ios;
 @property (nonatomic) BOOL format_ios_dither;

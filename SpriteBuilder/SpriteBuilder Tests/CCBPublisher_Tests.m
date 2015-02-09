@@ -23,6 +23,8 @@
 #import "MiscConstants.h"
 #import "RMPackage.h"
 #import "SBPackageSettings.h"
+#import "CCBPublisherCacheCleaner.h"
+#import "NSNumber+ImageResolutions.h"
 
 @interface CCBPublisher_Tests : FileSystemTestCase
 
@@ -50,6 +52,8 @@
     package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
     [_projectSettings addResourcePath:package.dirPath error:nil];
 
+    [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
+
     SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
 
     self.warnings = [[CCBWarnings alloc] init];
@@ -60,15 +64,15 @@
 
     self.targetIOS = [[CCBPublishingTarget alloc] init];
     _targetIOS.osType = kCCBPublisherOSTypeIOS;
-    _targetIOS.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    _targetIOS.inputPackages = @[packageSettings];
     _targetIOS.outputDirectory = [self fullPathForFile:@"Published-iOS"];
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
+    _targetIOS.resolutions = @[@(1), @(2), @(4)];
 
     self.targetAndroid = [[CCBPublishingTarget alloc] init];
     _targetAndroid.osType = kCCBPublisherOSTypeAndroid;
-    _targetAndroid.inputDirectories = @[[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"]];
+    _targetAndroid.inputPackages = @[packageSettings];
     _targetAndroid.outputDirectory = [self fullPathForFile:@"Published-Android"];
-    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
+    _targetAndroid.resolutions = @[@(1), @(2), @(4)];
 
     [self createFolders:@[@"Published-iOS", @"Published-Android", @"baa.spritebuilder/Packages/foo.sbpack"]];
 }
@@ -91,25 +95,20 @@
 
     _projectSettings.designTarget = kCCBDesignTargetFixed;
     _projectSettings.defaultOrientation = kCCBOrientationPortrait;
-    _projectSettings.resourceAutoScaleFactor = 4;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     [self assertFileExists:@"Published-iOS/Strings.ccbLang"];
 
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted.png"];
-    [self assertFileExists:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted2.png"];
-    [self assertFileExists:@"Published-iOS/resources-tablet/photoshop.png"];
-    [self assertFileExists:@"Published-iOS/resources-tablethd/photoshop.png"];
-    [self assertFileExists:@"Published-iOS/resources-phone/photoshop.png"];
-    [self assertFileExists:@"Published-iOS/resources-phonehd/photoshop.png"];
+    for (NSNumber *resolution in @[@(1), @(2), @(4)])
+    {
+        [self assertFilesExistRelativeToDirectory:@"Published-iOS" filesPaths:@[
+                [NSString stringWithFormat:@"ccbResources/ccbButtonHighlighted%@.png", [resolution resolutionTag]],
+                [NSString stringWithFormat:@"ccbResources/ccbButtonHighlighted2%@.png", [resolution resolutionTag]],
+                [NSString stringWithFormat:@"photoshop%@.png", [resolution resolutionTag]]
+        ]];
+    }
 
     [self assertFileExists:@"Published-iOS/blank.caf"];
     [self assertFileExists:@"Published-iOS/configCocos2d.plist"];
@@ -126,49 +125,14 @@
     [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.caf"];
     [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"photoshop.psd" renamedName:@"photoshop.png"];
 
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted.png" hasWidth:1 hasHeight:3];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phone/ccbButtonHighlighted2.png" hasWidth:5 hasHeight:2];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-phonehd/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted.png" hasWidth:2 hasHeight:6];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablet/ccbButtonHighlighted2.png" hasWidth:10 hasHeight:4];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted.png" hasWidth:4 hasHeight:12];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/resources-tablethd/ccbButtonHighlighted2.png" hasWidth:20 hasHeight:8];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted-1x.png" hasWidth:1 hasHeight:3];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted2-1x.png" hasWidth:5 hasHeight:2];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted-2x.png" hasWidth:2 hasHeight:6];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted2-2x.png" hasWidth:10 hasHeight:4];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted-4x.png" hasWidth:4 hasHeight:12];
+    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted2-4x.png" hasWidth:20 hasHeight:8];
 
     [self assertFileDoesNotExist:@"Published-iOS/Package.plist"];
-}
-
-- (void)testPublishingOfResolutions
-{
-    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/picture.png" width:4 height:12];
-
-    _projectSettings.publishEnabledIOS = YES;
-    _projectSettings.publishResolution_ios_tablet = YES;
-    _projectSettings.publishResolution_ios_tablethd = NO;
-    _projectSettings.publishResolution_ios_phone = NO;
-    _projectSettings.publishResolution_ios_phonehd = YES;
-
-    _projectSettings.publishEnabledAndroid = YES;
-    _projectSettings.publishResolution_android_tablet = NO;
-    _projectSettings.publishResolution_android_tablethd = YES;
-    _projectSettings.publishResolution_android_phone = YES;
-    _projectSettings.publishResolution_android_phonehd = NO;
-
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
-    [_publisher addPublishingTarget:_targetIOS];
-    _targetAndroid.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeAndroid];
-    [_publisher addPublishingTarget:_targetAndroid];
-    [_publisher start];
-
-    [self assertFileExists:@"Published-iOS/resources-phonehd/picture.png"];
-    [self assertFileExists:@"Published-iOS/resources-tablet/picture.png"];
-    [self assertFileDoesNotExist:@"Published-iOS/resources-phone/picture.png"];
-    [self assertFileDoesNotExist:@"Published-iOS/resources-tablethd/picture.png"];
-
-    [self assertFileExists:@"Published-Android/resources-phone/picture.png"];
-    [self assertFileExists:@"Published-Android/resources-tablethd/picture.png"];
-    [self assertFileDoesNotExist:@"Published-Android/resources-phonehd/picture.png"];
-    [self assertFileDoesNotExist:@"Published-Android/resources-tablet/picture.png"];
 }
 
 - (void)testPublishBMFont
@@ -225,20 +189,19 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/rocket.png" width:4 height:20];
 
     // Overriden resolution for tablet hd
-    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-tablethd/rocket.png" width:3 height:17];
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-4x/rocket.png" width:3 height:17];
 
-    _projectSettings.resourceAutoScaleFactor = 4;
     [_projectSettings setProperty:@1 forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    [_projectSettings setProperty:@YES forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     // The overridden case
-    [self assertPNGAtPath:@"Published-iOS/resources-tablethd/rocket.png" hasWidth:3 hasHeight:17];
+    [self assertPNGAtPath:@"Published-iOS/rocket-4x.png" hasWidth:3 hasHeight:17];
 
-    [self assertPNGAtPath:@"Published-iOS/resources-tablet/rocket.png" hasWidth:8 hasHeight:40];
-    [self assertPNGAtPath:@"Published-iOS/resources-phone/rocket.png" hasWidth:4 hasHeight:20];
-    [self assertPNGAtPath:@"Published-iOS/resources-phonehd/rocket.png" hasWidth:8 hasHeight:40];
+    [self assertPNGAtPath:@"Published-iOS/rocket-1x.png" hasWidth:4 hasHeight:20];
+    [self assertPNGAtPath:@"Published-iOS/rocket-2x.png" hasWidth:8 hasHeight:40];
 }
 
 - (void)testDifferentOutputFormatsForIOSAndAndroid
@@ -247,7 +210,6 @@
     [self copyTestingResource:@"blank.wav" toFolder:@"baa.spritebuilder/Packages/foo.sbpack"];
 
     _projectSettings.publishEnabledAndroid = YES;
-    _projectSettings.resourceAutoScaleFactor = 4;
 
     [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings setProperty:@(kFCImageFormatJPG_High) forRelPath:@"rocket.png" andKey:RESOURCE_PROPERTY_ANDROID_IMAGE_FORMAT];
@@ -263,15 +225,13 @@
     [self assertRenamingRuleInfFileLookup:@"Published-Android/fileLookup.plist" originalName:@"rocket.png" renamedName:@"rocket.jpg"];
     [self assertRenamingRuleInfFileLookup:@"Published-Android/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.ogg"];
 
-    [self assertJPGAtPath:@"Published-iOS/resources-tablet/rocket.jpg" hasWidth:2 hasHeight:10];
-    [self assertJPGAtPath:@"Published-iOS/resources-tablethd/rocket.jpg" hasWidth:4 hasHeight:20];
-    [self assertJPGAtPath:@"Published-iOS/resources-phone/rocket.jpg" hasWidth:1 hasHeight:5];
-    [self assertJPGAtPath:@"Published-iOS/resources-phonehd/rocket.jpg" hasWidth:2 hasHeight:10];
+    [self assertJPGAtPath:@"Published-iOS/rocket-1x.jpg" hasWidth:1 hasHeight:5];
+    [self assertJPGAtPath:@"Published-iOS/rocket-2x.jpg" hasWidth:2 hasHeight:10];
+    [self assertJPGAtPath:@"Published-iOS/rocket-4x.jpg" hasWidth:4 hasHeight:20];
 
-    [self assertJPGAtPath:@"Published-Android/resources-tablet/rocket.jpg" hasWidth:2 hasHeight:10];
-    [self assertJPGAtPath:@"Published-Android/resources-tablethd/rocket.jpg" hasWidth:4 hasHeight:20];
-    [self assertJPGAtPath:@"Published-Android/resources-phone/rocket.jpg" hasWidth:1 hasHeight:5];
-    [self assertJPGAtPath:@"Published-Android/resources-phonehd/rocket.jpg" hasWidth:2 hasHeight:10];
+    [self assertJPGAtPath:@"Published-Android/rocket-1x.jpg" hasWidth:1 hasHeight:5];
+    [self assertJPGAtPath:@"Published-Android/rocket-2x.jpg" hasWidth:2 hasHeight:10];
+    [self assertJPGAtPath:@"Published-Android/rocket-4x.jpg" hasWidth:4 hasHeight:20];
 
     [self assertFileExists:@"Published-iOS/blank.m4a"];
     [self assertFileExists:@"Published-Android/blank.ogg"];
@@ -294,7 +254,6 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/shotgun.png" width:4 height:12 color:[NSColor blackColor]];
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/sword.png" width:4 height:12 color:[NSColor yellowColor]];
 
-    _projectSettings.resourceAutoScaleFactor = 4;
     [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
 
     [_publisher addPublishingTarget:_targetIOS];
@@ -302,47 +261,43 @@
 
     // The resolutions tests may be a bit too much here, but there are no
     // Tupac tests at the moment
-    [self assertFileExists:@"Published-iOS/resources-tablet/sheet.plist"];
-    [self assertPNGAtPath:@"Published-iOS/resources-tablet/sheet.png" hasWidth:16 hasHeight:16];
-    [self assertFileExists:@"Published-iOS/resources-tablethd/sheet.plist"];
-    [self assertPNGAtPath:@"Published-iOS/resources-tablethd/sheet.png" hasWidth:32 hasHeight:16];
-    [self assertFileExists:@"Published-iOS/resources-phone/sheet.plist"];
-    [self assertPNGAtPath:@"Published-iOS/resources-phone/sheet.png" hasWidth:16 hasHeight:8];
-    [self assertFileExists:@"Published-iOS/resources-phonehd/sheet.plist"];
-    [self assertPNGAtPath:@"Published-iOS/resources-phonehd/sheet.png" hasWidth:16 hasHeight:16];
+    [self assertFileExists:@"Published-iOS/sheet-2x.plist"];
+    [self assertPNGAtPath:@"Published-iOS/sheet-2x.png" hasWidth:32 hasHeight:16];
+    [self assertFileExists:@"Published-iOS/sheet-4x.plist"];
+    [self assertPNGAtPath:@"Published-iOS/sheet-4x.png" hasWidth:32 hasHeight:32];
+    [self assertFileExists:@"Published-iOS/sheet-1x.plist"];
+    [self assertPNGAtPath:@"Published-iOS/sheet-1x.png" hasWidth:16 hasHeight:8];
 
     // Previews are generated in texture packer
     [self assertFileExists:@"baa.spritebuilder/Packages/foo.sbpack/sheet.ppng"];
 
     [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
-    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet-1x.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet-2x.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet-4x.plist"];
 }
 
 - (void)testSpriteSheetsFileLookup
 {
     [self copyTestingResource:@"photoshop.psd" toRelPath:@"baa.spritebuilder/Packages/foo.sbpack/sub1/sheet1/resources-auto/rock.psd"];
     [self copyTestingResource:@"photoshop.psd" toRelPath:@"baa.spritebuilder/Packages/foo.sbpack/sub2/sheet2/resources-auto/scissors.psd"];
-    
-    _projectSettings.publishResolution_ios_phone = YES;
-    _projectSettings.publishResolution_ios_phonehd = NO;
-    _projectSettings.publishResolution_ios_tablet = NO;
-    _projectSettings.publishResolution_ios_tablethd = NO;
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
-    
+
     [_projectSettings setProperty:@(YES) forRelPath:@"sub1/sheet1" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings setProperty:@(YES) forRelPath:@"sub2/sheet2" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
 
+    _targetIOS.resolutions = @[@(1)];
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
     void (^test)() = ^void()
     {
-        [self assertFileExists:@"Published-iOS/sub1/resources-phone/sheet1.plist"];
-        [self assertFileExists:@"Published-iOS/sub1/resources-phone/sheet1.png"];
-        [self assertFileExists:@"Published-iOS/sub2/resources-phone/sheet2.plist"];
-        [self assertFileExists:@"Published-iOS/sub2/resources-phone/sheet2.png"];
+        [self assertFileExists:@"Published-iOS/sub1/sheet1-1x.plist"];
+        [self assertFileExists:@"Published-iOS/sub1/sheet1-1x.png"];
+        [self assertFileExists:@"Published-iOS/sub2/sheet2-1x.plist"];
+        [self assertFileExists:@"Published-iOS/sub2/sheet2-1x.png"];
         [self assertFileExists:@"Published-iOS/fileLookup.plist"];
 
+        // Testcase after bugfix which placed the intermediateFileLookup.plist in the project's path instead of the caches dir
         [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sub1/sheet1/intermediateFileLookup.plist"];
         [self assertFileDoesNotExist:@"baa.spritebuilder/Packages/foo.sbpack/sub2/sheet2/intermediateFileLookup.plist"];
 
@@ -366,55 +321,49 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/pvrtc/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/pvrtc/resources-auto/scissor.png" width:8 height:4 color:[NSColor greenColor]];
 
-    _projectSettings.resourceAutoScaleFactor = 4;
-    _projectSettings.publishResolution_ios_phonehd = YES;
-    _projectSettings.publishResolution_ios_phone = NO;
-    _projectSettings.publishResolution_ios_tablet = NO;
-    _projectSettings.publishResolution_ios_tablethd = NO;
-
     [_projectSettings setProperty:@(YES) forRelPath:@"pvr" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings setProperty:@(kFCImageFormatPVR_RGBA8888) forRelPath:@"pvr" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
     [_projectSettings setProperty:@(YES) forRelPath:@"pvrtc" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings setProperty:@(kFCImageFormatPVRTC_4BPP) forRelPath:@"pvrtc" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
 
-    _targetIOS.resolutions = [_projectSettings publishingResolutionsForOSType:kCCBPublisherOSTypeIOS];
+    _targetIOS.resolutions = @[@(2)];
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
-    [self assertFileExists:@"Published-iOS/resources-phonehd/pvr.plist"];
-    [self assertFileExists:@"Published-iOS/resources-phonehd/pvr.pvr"];
+    [self assertFileExists:@"Published-iOS/pvr-2x.plist"];
+    [self assertFileExists:@"Published-iOS/pvr-2x.pvr"];
     // Previews are generated in texture packer
     [self assertFileExists:@"baa.spritebuilder/Packages/foo.sbpack/pvr.ppng"];
 
-    [self assertFileExists:@"Published-iOS/resources-phonehd/pvrtc.plist"];
-    [self assertFileExists:@"Published-iOS/resources-phonehd/pvrtc.pvr"];
+    [self assertFileExists:@"Published-iOS/pvrtc-2x.plist"];
+    [self assertFileExists:@"Published-iOS/pvrtc-2x.pvr"];
     [self assertFileExists:@"baa.spritebuilder/Packages/foo.sbpack/pvrtc.ppng"];
 
     [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
-    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvr.plist"];
-    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvrtc.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvr-2x.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"pvrtc-2x.plist"];
 }
 
 - (void)testRepublishingWithoutCleaningCache
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/sheet/resources-auto/rock.png" width:4 height:4 color:[NSColor redColor]];
     [_projectSettings setProperty:@(YES) forRelPath:@"sheet" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
-    _targetIOS.resolutions = @[RESOLUTION_TABLET];
+    _targetIOS.resolutions = @[@(2)];
 
     [_publisher addPublishingTarget:_targetIOS];
     // Yes that's correct, publishing twice
     [_publisher start];
     [_publisher start];
 
-    [self assertFilesExistRelativeToDirectory:@"Published-iOS/resources-tablet" filesPaths:@[
-            @"sheet.plist",
-            @"sheet.png"
+    [self assertFilesExistRelativeToDirectory:@"Published-iOS" filesPaths:@[
+            @"sheet-2x.plist",
+            @"sheet-2x.png"
     ]];
 
     [self assertFileExists:@"baa.spritebuilder/Packages/foo.sbpack/sheet.ppng"];
     [self assertFileExists:@"Published-iOS/spriteFrameFileList.plist"];
-    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet.plist"];
+    [self assertSpriteFrameFileList:@"Published-iOS/spriteFrameFileList.plist" containsEntry:@"sheet-2x.plist"];
 }
 
 - (void)testGreyscaleImagePublishing
@@ -424,15 +373,13 @@
 
     _projectSettings.designTarget = kCCBDesignTargetFixed;
     _projectSettings.defaultOrientation = kCCBOrientationPortrait;
-    _projectSettings.resourceAutoScaleFactor = 4;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
-    [self assertFileExists:@"Published-iOS/images/resources-tablet/greyscale.png"];
-    [self assertFileExists:@"Published-iOS/images/resources-tablethd/greyscale.png"];
-    [self assertFileExists:@"Published-iOS/images/resources-phone/greyscale.png"];
-    [self assertFileExists:@"Published-iOS/images/resources-phonehd/greyscale.png"];
+    [self assertFileExists:@"Published-iOS/images/greyscale-1x.png"];
+    [self assertFileExists:@"Published-iOS/images/greyscale-2x.png"];
+    [self assertFileExists:@"Published-iOS/images/greyscale-4x.png"];
 }
 
 - (void)testEnums

@@ -34,4 +34,7 @@
 - (BOOL)containsCCBFile;
 
 - (BOOL)isIntermediateFileLookup;
+
+- (NSString *)filepathWithResolutionTag:(NSNumber *)resolution;
+
 @end

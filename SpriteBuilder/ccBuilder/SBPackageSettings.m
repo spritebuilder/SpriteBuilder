@@ -10,9 +10,12 @@ NSString *const KEY_OS_SETTINGS = @"osSettings";
 NSString *const KEY_OUTPUTDIR = @"outputDir";
 NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 NSString *const KEY_DEFAULT_SCALE = @"resourceAutoScaleFactor";
+NSString *const KEY_MAINPROJECT_RESOLUTION_1X = @"KEY_MAINPROJECT_RESOLUTION_1X";
+NSString *const KEY_MAINPROJECT_RESOLUTION_2X = @"KEY_MAINPROJECT_RESOLUTION_2X";
+NSString *const KEY_MAINPROJECT_RESOLUTION_4X = @"KEY_MAINPROJECT_RESOLUTION_4X";
 
 // It's a tag for a dropdown
-NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = -1;
+NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
 
 @interface SBPackageSettings ()
 
@@ -43,6 +46,7 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = -1;
 
         self.package = package;
         self.publishSettingsForOsType = [NSMutableDictionary dictionary];
+        self.mainProject_resolution_4x = YES;
 
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeIOS]] = [[PublishOSSettings alloc] init];
         _publishSettingsForOsType[[self osTypeToString:kCCBPublisherOSTypeAndroid]] = [[PublishOSSettings alloc] init];
@@ -96,6 +100,9 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = -1;
         return NO;
     }
 
+    self.mainProject_resolution_1x = [dict[KEY_MAINPROJECT_RESOLUTION_1X] boolValue];
+    self.mainProject_resolution_2x = [dict[KEY_MAINPROJECT_RESOLUTION_2X] boolValue];
+    self.mainProject_resolution_4x = [dict[KEY_MAINPROJECT_RESOLUTION_4X] boolValue];
     self.publishToCustomOutputDirectory = [dict[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] boolValue];
     self.publishToZip = [dict[KEY_PUBLISH_TO_ZIP] boolValue];
     self.publishToMainProject = [dict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
@@ -130,6 +137,9 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = -1;
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
+    result[KEY_MAINPROJECT_RESOLUTION_1X] = @(_mainProject_resolution_1x);
+    result[KEY_MAINPROJECT_RESOLUTION_2X] = @(_mainProject_resolution_2x);
+    result[KEY_MAINPROJECT_RESOLUTION_4X] = @(_mainProject_resolution_4x);
     result[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] = @(_publishToCustomOutputDirectory);
     result[KEY_PUBLISH_TO_ZIP] = @(_publishToZip);
     result[KEY_PUBLISH_TO_MAINPROJECT] = @(_publishToMainProject);
@@ -158,6 +168,28 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = -1;
            && ([[_customOutputDirectory stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] > 0)
         ? _customOutputDirectory
         : DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
+}
+
+- (NSArray *)mainProjectResolutions
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    if (_mainProject_resolution_1x)
+    {
+        [result addObject:@(RESOLUTION_1X)];
+    }
+
+    if (_mainProject_resolution_2x)
+    {
+        [result addObject:@(RESOLUTION_2X)];
+    }
+
+    if (_mainProject_resolution_4x)
+    {
+        [result addObject:@(RESOLUTION_4X)];
+    }
+
+    return result;
 }
 
 @end

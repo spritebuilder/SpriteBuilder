@@ -6,6 +6,7 @@
 #import "ProjectSettings.h"
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
+#import "NSString+Publishing.h"
 
 
 @interface PublishSpriteSheetOperation()
@@ -65,6 +66,8 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 - (void)publishSpriteSheet
 {
     [_publishingTaskStatusProgress updateStatusText:[NSString stringWithFormat:@"Generating sprite sheet %@...", [_subPath lastPathComponent]]];
+
+    self.spriteSheetFile = [_spriteSheetFile filepathWithResolutionTag:_resolution];
 
     [self loadSettings];
 
@@ -154,19 +157,15 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (void)setTextureMaxSize
 {
-    if ([_resolution isEqualToString:RESOLUTION_PHONE])
+    if ([_resolution unsignedIntegerValue] == 1)
     {
         _packer.maxTextureSize = 1024;
     }
-    else if ([_resolution isEqualToString:RESOLUTION_PHONE_HD])
+    else if ([_resolution unsignedIntegerValue] == 2)
     {
         _packer.maxTextureSize = 2048;
     }
-    else if ([_resolution isEqualToString:RESOLUTION_TABLET])
-    {
-        _packer.maxTextureSize = 2048;
-    }
-    else if ([_resolution isEqualToString:RESOLUTION_TABLET_HD])
+    else if ([_resolution unsignedIntegerValue] == 4)
     {
         _packer.maxTextureSize = 4096;
     }

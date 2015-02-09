@@ -67,12 +67,12 @@
 
     PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     osSettingsIOS.audio_quality = 8;
-    osSettingsIOS.resolutions = @[@"phone"];
+    osSettingsIOS.resolutions = @[@(RESOLUTION_1X)];
     [_packagePublishSettings setOSSettings:osSettingsIOS forOsType:kCCBPublisherOSTypeIOS];
 
     PublishOSSettings *osSettingsAndroid = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
     osSettingsAndroid.audio_quality = 2;
-    osSettingsAndroid.resolutions = @[@"tablethd"];
+    osSettingsAndroid.resolutions = @[@(RESOLUTION_4X)];
     [_packagePublishSettings setOSSettings:osSettingsAndroid forOsType:kCCBPublisherOSTypeAndroid];
 
     [_packagePublishSettings store];
@@ -92,13 +92,13 @@
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
-    XCTAssertTrue([osSettingsAndroidLoaded.resolutions containsObject:RESOLUTION_TABLET_HD]);
-    XCTAssertFalse([osSettingsAndroidLoaded.resolutions containsObject:RESOLUTION_TABLET]);
+    XCTAssertTrue([osSettingsAndroidLoaded.resolutions containsObject:@(RESOLUTION_4X)]);
+    XCTAssertFalse([osSettingsAndroidLoaded.resolutions containsObject:@(RESOLUTION_1X)]);
 
     PublishOSSettings *osSettingsIOSLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeIOS];
     XCTAssertEqual(osSettingsIOSLoaded.audio_quality, osSettingsIOS.audio_quality);
-    XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_PHONE]);
-    XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:RESOLUTION_TABLET_HD]);
+    XCTAssertTrue([osSettingsIOSLoaded.resolutions containsObject:@(RESOLUTION_1X)]);
+    XCTAssertFalse([osSettingsIOSLoaded.resolutions containsObject:@(RESOLUTION_4X)]);
 }
 
 - (void)testMigrationDefaultScale

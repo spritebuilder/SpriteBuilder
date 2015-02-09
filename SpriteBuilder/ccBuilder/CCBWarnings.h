@@ -54,7 +54,7 @@
 @property (nonatomic,copy) NSString* warningsDescription;
 @property (nonatomic,assign) CCBPublisherOSType currentOSType;
 
-- (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile resolution:(NSString*) resolution;
+- (void)addWarningWithDescription:(NSString *)description isFatal:(BOOL)fatal relatedFile:(NSString *)relatedFile resolution:(NSNumber *) resolution;
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal relatedFile:(NSString*) relatedFile;
 - (void) addWarningWithDescription:(NSString*)description isFatal:(BOOL)fatal;
 - (void) addWarningWithDescription:(NSString*)description;

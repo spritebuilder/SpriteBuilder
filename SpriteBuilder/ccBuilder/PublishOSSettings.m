@@ -13,7 +13,7 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     if (self)
     {
         self.audio_quality = DEFAULT_AUDIO_QUALITY;
-        self.resolutions = @[RESOLUTION_TABLET, RESOLUTION_TABLET_HD, RESOLUTION_PHONE, RESOLUTION_PHONE_HD];
+        self.resolutions = @[@(RESOLUTION_1X), @(RESOLUTION_2X), @(RESOLUTION_4X)];
     }
 
     return self;
@@ -46,24 +46,19 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    if (_resolution_phone)
+    if (_resolution_1x)
     {
-        [result addObject:RESOLUTION_PHONE];
+        [result addObject:@(RESOLUTION_1X)];
     }
 
-    if (_resolution_phonehd)
+    if (_resolution_2x)
     {
-        [result addObject:RESOLUTION_PHONE_HD];
+        [result addObject:@(RESOLUTION_2X)];
     }
 
-    if (_resolution_tablet)
+    if (_resolution_4x)
     {
-        [result addObject:RESOLUTION_TABLET];
-    }
-
-    if (_resolution_tablethd)
-    {
-        [result addObject:RESOLUTION_TABLET_HD];
+        [result addObject:@(RESOLUTION_4X)];
     }
 
     return result;
@@ -71,31 +66,25 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
 
 - (void)setResolutions:(NSArray *)resolutions
 {
-    self.resolution_phone = NO;
-    self.resolution_phonehd = NO;
-    self.resolution_tablet = NO;
-    self.resolution_tablethd = NO;
+    self.resolution_1x = NO;
+    self.resolution_2x = NO;
+    self.resolution_4x = NO;
 
-    for (NSString *resolution in resolutions)
+    for (NSNumber *contentScale in resolutions)
     {
-        if ([resolution isEqualToString:RESOLUTION_PHONE])
+        if ([contentScale isEqualTo:@(RESOLUTION_1X)])
         {
-            self.resolution_phone = YES;
+            self.resolution_1x = YES;
         }
 
-        if ([resolution isEqualToString:RESOLUTION_PHONE_HD])
+        if ([contentScale isEqualTo:@(RESOLUTION_2X)])
         {
-            self.resolution_phonehd = YES;
+            self.resolution_2x = YES;
         }
 
-        if ([resolution isEqualToString:RESOLUTION_TABLET])
+        if ([contentScale isEqualTo:@(RESOLUTION_4X)])
         {
-            self.resolution_tablet = YES;
-        }
-
-        if ([resolution isEqualToString:RESOLUTION_TABLET_HD])
-        {
-            self.resolution_tablethd = YES;
+            self.resolution_4x = YES;
         }
     }
 }

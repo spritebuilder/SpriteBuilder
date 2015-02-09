@@ -942,6 +942,7 @@
 		E525F622A96F0C31CACF1883 /* InspectoreController_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */; };
 		E525F634C2EE9B50F56B0E27 /* InspectorSeparatorSub.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF364C63BB5CD36B6E1D /* InspectorSeparatorSub.m */; };
 		E525F651194EC2A13EA30026 /* ResourceManager_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCBBB1841F3115718AD0 /* ResourceManager_Tests.m */; };
+		E525F660A85907D167CC85CF /* NSNumber+ImageResolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FEAFCE829585A46BDCCF /* NSNumber+ImageResolutions.m */; };
 		E525F686F932F4F6640E9F29 /* InspectorTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F293C77C212C2DB614E1 /* InspectorTexture.m */; };
 		E525F6B824415CA3D1C215EA /* NSString+Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA71E014DDED2AFE71EF /* NSString+Misc.m */; };
 		E525F6BDAD02A4137800B1E3 /* InspectorCCBFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8003FDCE343C78DCD85 /* InspectorCCBFile.m */; };
@@ -1001,6 +1002,7 @@
 		E525FB30A10E77E6C59149A6 /* InspectorScaleLock.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FCDD7A52D2DE6BD2D6D4 /* InspectorScaleLock.xib */; };
 		E525FB73743B8CF39195EC9F /* test_ccbreader_sprite9slice.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FD7B16D1386D7031A87E /* test_ccbreader_sprite9slice.ccb */; };
 		E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8D13D187525150C6EA7 /* OptimizeImageWithOptiPNGOperation.m */; };
+		E525FB8491D3CC4B8B0D536F /* NSNumber+ImageResolutions_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FEFBAEFBE0162647D84C /* NSNumber+ImageResolutions_Tests.m */; };
 		E525FB8A7250188137051AF3 /* InspectorTexture.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FB84B7161C23D44036DB /* InspectorTexture.xib */; };
 		E525FB91E80AB2C9074E51B9 /* InspectorNodeReference.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F3EC220BB11985744E64 /* InspectorNodeReference.xib */; };
 		E525FBA4E26414A8E6EBA77C /* PublishCCBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F8A438244586206C9177 /* PublishCCBOperation.m */; };
@@ -1098,13 +1100,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = D2FEB74F194F6C9E00FC0574;
 			remoteInfo = cocos2dAndroid;
-		};
-		836E2D5919EE5BCC00CD5B66 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 836E2D3E19EE5AF300CD5B66 /* cocos2d.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5BF3267A195F8D8800D9A51A;
-			remoteInfo = cocos2dJava;
 		};
 		836E2D5B19EE5BCC00CD5B66 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1682,8 +1677,6 @@
 		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
 		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
 		83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PackageSettingsDetailView.xib; sourceTree = "<group>"; };
-		83FC410F198154CD00799B6C /* PackageSettingsDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageSettingsDetailView.h; sourceTree = "<group>"; };
-		83FC4110198154CD00799B6C /* PackageSettingsDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettingsDetailView.m; sourceTree = "<group>"; };
 		83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsWindow.xib; sourceTree = "<group>"; };
 		92053DAF197F096000AA93AD /* EffectBloomControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBloomControl.xib; path = ccBuilder/EffectBloomControl.xib; sourceTree = "<group>"; };
 		92053DB0197F096000AA93AD /* CCBPEffectBloom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectBloom.m; path = ccBuilder/CCBPEffectBloom.m; sourceTree = "<group>"; };
@@ -2528,7 +2521,6 @@
 		E525F135CE98A990D3A8F336 /* PropertyInspectorTemplateHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyInspectorTemplateHandler.m; sourceTree = "<group>"; };
 		E525F13FEF3757012A4E0DDE /* CCBPublisherCacheCleaner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisherCacheCleaner.m; sourceTree = "<group>"; };
 		E525F14190B50F98308504B5 /* ResourceContextMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu.m; sourceTree = "<group>"; };
-		E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainProjectSettingsDetailView.m; sourceTree = "<group>"; };
 		E525F1567BD8D95A7C4DC809 /* InspectorCustomEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCustomEdit.m; sourceTree = "<group>"; };
 		E525F167F988C167E79971B8 /* InspectorPoint.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPoint.xib; sourceTree = "<group>"; };
 		E525F173545F6AA131BE9DE6 /* InspectorInteger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorInteger.xib; sourceTree = "<group>"; };
@@ -2645,7 +2637,6 @@
 		E525F74ADF149FB8398AE965 /* NSString+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing.m"; sourceTree = "<group>"; };
 		E525F74FD144B9330CE3906D /* InspectorButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorButton.xib; sourceTree = "<group>"; };
 		E525F76017FD450D7F946CEA /* ResourcePropertiesMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcePropertiesMigrator.m; sourceTree = "<group>"; };
-		E525F774CA4F82872C1EA888 /* MainProjectSettingsDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainProjectSettingsDetailView.h; sourceTree = "<group>"; };
 		E525F78399DADD59386B4F54 /* ResourceManager+Publishing_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ResourceManager+Publishing_Tests.m"; sourceTree = "<group>"; };
 		E525F786D53B1F4CFBAC88DB /* InspectorStartStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorStartStop.m; sourceTree = "<group>"; };
 		E525F7967710F9168CBEA295 /* CCBPublisherTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBPublisherTypes.h; sourceTree = "<group>"; };
@@ -2769,6 +2760,7 @@
 		E525FC30968813B67FE4F531 /* InspectorByte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorByte.m; sourceTree = "<group>"; };
 		E525FC4D802C18FBD44DE5D1 /* PropertyInspectorTemplateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplateHandler.h; sourceTree = "<group>"; };
 		E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectoreController_Tests.m; sourceTree = "<group>"; };
+		E525FC6BCE5D5EDF7BB77A9D /* NSNumber+ImageResolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+ImageResolutions.h"; sourceTree = "<group>"; };
 		E525FC764043B778E59DF538 /* InspectorCodeConnections.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorCodeConnections.xib; sourceTree = "<group>"; };
 		E525FC789866B6FA119F827F /* PluginNode_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginNode_Tests.m; sourceTree = "<group>"; };
 		E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemTestCase.m; sourceTree = "<group>"; };
@@ -2825,12 +2817,14 @@
 		E525FE98BF23E8DE561E18A7 /* InspectorTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorTexture.h; sourceTree = "<group>"; };
 		E525FEA1E9CA455A6317E164 /* InspectorByte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorByte.h; sourceTree = "<group>"; };
 		E525FEA356C07ED52CF1FCCA /* PreviewView_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewView_Tests.m; sourceTree = "<group>"; };
+		E525FEAFCE829585A46BDCCF /* NSNumber+ImageResolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ImageResolutions.m"; sourceTree = "<group>"; };
 		E525FEBA90890AA6A1373E42 /* InspectorEffectControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorEffectControl.xib; sourceTree = "<group>"; };
 		E525FEBD04EA72B634654F33 /* InspectorSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorSize.h; sourceTree = "<group>"; };
 		E525FEBFE86C6D193DBB8D1E /* ResourceDeleteCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceDeleteCommand.h; sourceTree = "<group>"; };
 		E525FED28257D82C09E2EB7B /* InspectorPopoverDegrees.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverDegrees.xib; sourceTree = "<group>"; };
 		E525FEDBFC68A96C09F6BCC9 /* test_ccbreader_node_customClass_customProperties.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_node_customClass_customProperties.ccb; sourceTree = "<group>"; };
 		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
+		E525FEFBAEFBE0162647D84C /* NSNumber+ImageResolutions_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ImageResolutions_Tests.m"; sourceTree = "<group>"; };
 		E525FF18D2784BB119B2882A /* RMResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource.m; sourceTree = "<group>"; };
 		E525FF1A156E5EA62580F43D /* CCBDictionaryMigrationStepVersion4_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDictionaryMigrationStepVersion4_Tests.m; sourceTree = "<group>"; };
 		E525FF20A3DA94C3BDBA97C7 /* CreateDirectoryFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDirectoryFileCommand_Tests.m; sourceTree = "<group>"; };
@@ -3173,6 +3167,8 @@
 				E525F2B4F3FE0A9DB6AEF0C0 /* NSString+Misc.h */,
 				98C39A979A6BFC23DB610BDE /* NSKeyboardForwardingView.m */,
 				98C3964FFF8C4E1070E390F8 /* NSKeyboardForwardingView.h */,
+				E525FEAFCE829585A46BDCCF /* NSNumber+ImageResolutions.m */,
+				E525FC6BCE5D5EDF7BB77A9D /* NSNumber+ImageResolutions.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -4071,14 +4067,10 @@
 			isa = PBXGroup;
 			children = (
 				83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */,
-				83FC410F198154CD00799B6C /* PackageSettingsDetailView.h */,
-				83FC4110198154CD00799B6C /* PackageSettingsDetailView.m */,
 				83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */,
 				837E93FE19815C8D00A9F90B /* ProjectSettingsWindowController.h */,
 				837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */,
 				8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */,
-				E525F774CA4F82872C1EA888 /* MainProjectSettingsDetailView.h */,
-				E525F156680F6C4D32762808 /* MainProjectSettingsDetailView.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -4127,7 +4119,6 @@
 			children = (
 				836E2D5619EE5BCC00CD5B66 /* libcocos2d.a */,
 				836E2D5819EE5BCC00CD5B66 /* libcocos2dAndroid.a */,
-				836E2D5A19EE5BCC00CD5B66 /* cocos2dJava.jar */,
 				836E2D5C19EE5BCC00CD5B66 /* libcocos2d-mac.a */,
 			);
 			name = Products;
@@ -5828,6 +5819,7 @@
 			children = (
 				E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */,
 				E525F935F75CEEC73F182FBD /* ImageFormatAndPropertiesHelper_Tests.m */,
+				E525FEFBAEFBE0162647D84C /* NSNumber+ImageResolutions_Tests.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -6478,13 +6470,6 @@
 			fileType = archive.ar;
 			path = libcocos2dAndroid.a;
 			remoteRef = 836E2D5719EE5BCC00CD5B66 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		836E2D5A19EE5BCC00CD5B66 /* cocos2dJava.jar */ = {
-			isa = PBXReferenceProxy;
-			fileType = compiled.java.jar;
-			path = cocos2dJava.jar;
-			remoteRef = 836E2D5919EE5BCC00CD5B66 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		836E2D5C19EE5BCC00CD5B66 /* libcocos2d-mac.a */ = {
@@ -7621,6 +7606,7 @@
 				E525FCD2B5E1035F3134D63F /* CCBDictionaryMigrationStepVersion4.m in Sources */,
 				E525F25371693EB307CB45D6 /* CCBDictionaryMigrator.m in Sources */,
 				E525F22885027391913A1DDE /* CCBDictionaryKeys.m in Sources */,
+				E525F660A85907D167CC85CF /* NSNumber+ImageResolutions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7670,6 +7656,7 @@
 				E525F9DDCDAD0C1AD78029F0 /* CCBDictionaryReader_Tests.m in Sources */,
 				E525FC693A6A8123E2B47943 /* CCBDictionaryMigrator_Tests.m in Sources */,
 				E525F23E087823CF3A7BAAD6 /* CCBDictionaryMigrationStepVersion4_Tests.m in Sources */,
+				E525FB8491D3CC4B8B0D536F /* NSNumber+ImageResolutions_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

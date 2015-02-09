@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "PublishImageOperation.h"
 
 #import "FCFormatConverter.h"
@@ -12,6 +11,9 @@
 #import "PublishLogging.h"
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
+#import "SBPackageSettings.h"
+#import "RMPackage.h"
+#import "NSNumber+ImageResolutions.h"
 
 @interface PublishImageOperation ()
 
@@ -75,15 +77,15 @@
     // Find out which file to copy for the current resolution
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
+    self.dstFilePath = [_dstFilePath filepathWithResolutionTag:_resolution];
+
     NSString *srcFileName = [_srcFilePath lastPathComponent];
     NSString *dstFileName = [_dstFilePath lastPathComponent];
     NSString *srcDir = [_srcFilePath stringByDeletingLastPathComponent];
     NSString *dstDir = [_dstFilePath stringByDeletingLastPathComponent];
     NSString *srcAutoPath = [_srcFilePath resourceAutoFilePath];
 
-    // Update path to reflect resolution
-    srcDir = [srcDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:_resolution]];
-    dstDir = [dstDir stringByAppendingPathComponent:[@"resources-" stringByAppendingString:_resolution]];
+    srcDir = [srcDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources%@", [_resolution resolutionTag]]];
 
     self.srcFilePath = [srcDir stringByAppendingPathComponent:srcFileName];
     self.dstFilePath = [dstDir stringByAppendingPathComponent:dstFileName];
@@ -172,7 +174,6 @@
                                                        projectSettings:_projectSettings
                                                        packageSettings:_packageSettings];
 
-        // Convert it
         NSString *dstPathConverted = nil;
         NSError *error;
 
@@ -245,7 +246,7 @@
     [_formatConverter cancel];
 }
 
-- (BOOL)isSpriteSheetAlreadyPublished:(NSString *)srcPath outDir:(NSString *)outDir resolution:(NSString *)resolution
+- (BOOL)isSpriteSheetAlreadyPublished:(NSString *)srcPath outDir:(NSString *)outDir resolution:(NSNumber *)resolution
 {
     NSString *ssDir = [srcPath stringByDeletingLastPathComponent];
     NSString *ssDirRel = [_projectSettings findRelativePathInPackagesForAbsolutePath:ssDir];
@@ -257,7 +258,7 @@
 
     // Make the name for the final sprite sheet
     NSString *ssDstPath = [[[[outDir stringByDeletingLastPathComponent]
-                                     stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]]
+                                     stringByAppendingPathComponent:[NSString stringWithFormat:@"resources%@", [resolution resolutionTag]]]
                                      stringByAppendingPathComponent:ssName] stringByAppendingPathExtension:@"plist"];
 
     NSDate *ssDstDate = [self modifiedDataOfSpriteSheetFile:ssDstPath];
@@ -341,7 +342,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"src: %@, dst: %@, target: %i, resolution: %@, srcfull: %@, dstfull: %@", [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent], _osType, _resolution, _srcFilePath, _dstFilePath];
+    return [NSString stringWithFormat:@"src: %@, dst: %@, target: %i, resolution: %@x, srcfull: %@, dstfull: %@", [_srcFilePath lastPathComponent], [_dstFilePath lastPathComponent], _osType, _resolution, _srcFilePath, _dstFilePath];
 }
 
 @end

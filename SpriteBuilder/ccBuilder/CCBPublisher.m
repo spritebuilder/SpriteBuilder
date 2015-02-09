@@ -11,6 +11,10 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "ZipDirectoryOperation.h"
 #import "MiscConstants.h"
+#import "SBPackageSettings.h"
+#import "RMDirectory.h"
+#import "RMPackage.h"
+#import "PublishOSSettings.h"
 
 
 @interface CCBPublisher ()
@@ -130,10 +134,6 @@
 - (BOOL)doPublish
 {
     __weak id weakSelf = self;
-/*    [_publishingQueue addOperationWithBlock:^
-    {
-        [weakSelf removeOldPublishDirIfCacheCleaned];
-    }];*/
 
     [self removeOldPublishDirIfCacheCleaned];
 
@@ -170,22 +170,33 @@
 
     target.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] init];
 
-    for (NSString *aDir in target.inputDirectories)
+    for (SBPackageSettings *packageSettings in target.inputPackages)
     {
         CCBDirectoryPublisher *dirPublisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
                                                                                      packageSettings:_packageSettings
                                                                                             warnings:_warnings
                                                                                                queue:_publishingQueue];
-        dirPublisher.inputDir = aDir;
+        dirPublisher.inputDir = packageSettings.package.dirPath;
         dirPublisher.outputDir = target.outputDirectory;
         dirPublisher.osType = target.osType;
-        dirPublisher.resolutions = target.resolutions;
-        dirPublisher.audioQuality = target.audioQuality;
+
+        if (target.useMainProjectResolutionsOfInputPackages)
+        {
+            dirPublisher.resolutions = [packageSettings mainProjectResolutions];
+        }
+        else
+        {
+            dirPublisher.resolutions = target.resolutions;
+        }
+
         dirPublisher.publishedPNGFiles = target.publishedPNGFiles;
         dirPublisher.renamedFilesLookup = target.renamedFilesLookup;
         dirPublisher.publishedSpriteSheetFiles = target.publishedSpriteSheetFiles;
         dirPublisher.publishingTaskStatusProgress = _publishingTaskStatusProgress;
         dirPublisher.modifiedDatesCache = _modifiedDatesCache;
+
+        PublishOSSettings *osSettings = [packageSettings settingsForOsType:target.osType];
+        dirPublisher.audioQuality = osSettings.audio_quality;
 
         if (![dirPublisher generateAndEnqueuePublishingTasks])
         {

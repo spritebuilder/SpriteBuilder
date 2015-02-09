@@ -164,52 +164,52 @@
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbSliderBgHighlighted.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbButtonHighlighted.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"Sprites" : @{},
          @"ccbResources/ccbSliderBgNormal.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbTextField.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleFire.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources":@{
             @"previewFolderHidden":@(YES)
          },
          @"ccbResources/ccbParticleMagic.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbButtonNormal.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleStars.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbSliderHandle.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleSmoke.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources/ccbParticleSnow.png":@{
-            RESOURCE_PROPERTY_IMAGE_TABLET_SCALE:@(1),
-            RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(1)
+                   RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
+                   RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          }
       },
       @"publishDirectoryAndroid":@"Source/Resources/Published-Android",
@@ -225,10 +225,8 @@
             @"path":@"packages/SpriteBuilder Resources.sbpack"
          }
       ],
-      @"publishAudioQuality_android":@(4),
       @"deviceOrientationLandscapeLeft":@(YES),
       @"publishResolution_android_tablethd":@(YES),
-      @"publishAudioQuality_ios":@(4),
       @"publishEnvironment":@(0),
       @"publishEnablediPhone":@(YES),
       @"publishToZipFile":@(NO),
@@ -255,28 +253,15 @@
     XCTAssertTrue(project.deviceOrientationLandscapeRight);
 
     // This a convention, if it's read as 0 has to become 4
-    XCTAssertEqual(project.resourceAutoScaleFactor, 4);
     SBAssertStringsEqual(project.publishDirectory, @"Source/Resources/Published-iOS");
 
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"Source/Resources/Published-Android");
     XCTAssertEqual(project.defaultOrientation, 0);
 
     XCTAssertTrue(project.publishEnabledAndroid);
-    XCTAssertTrue(project.publishResolution_android_phone);
-    XCTAssertTrue(project.publishResolution_android_phonehd);
-    XCTAssertTrue(project.publishResolution_android_tablet);
-    XCTAssertTrue(project.publishResolution_android_tablethd);
-
     XCTAssertTrue(project.publishEnabledIOS);
-    XCTAssertTrue(project.publishResolution_ios_phone);
-    XCTAssertTrue(project.publishResolution_ios_phonehd);
-    XCTAssertTrue(project.publishResolution_ios_tablet);
-    XCTAssertTrue(project.publishResolution_ios_tablethd);
 
     [self assertResourcePaths:@[@"packages/SpriteBuilder Resources.sbpack"] inProject:project];
-
-    XCTAssertEqual(project.publishAudioQuality_android, 4);
-    XCTAssertEqual(project.publishAudioQuality_ios, 4);
 
     XCTAssertFalse(project.onlyPublishCCBs);
     XCTAssertEqual(project.deviceScaling, 0);
@@ -292,6 +277,9 @@
 
     NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
+
+    NSNumber *useUIScale = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
+    XCTAssertTrue([useUIScale boolValue]);
 }
 
 - (void)testWrongFileType
@@ -314,8 +302,6 @@
 
     ProjectSettings *project = [[ProjectSettings alloc] initWithSerialization:projectDict];
     XCTAssertNotNil(project);
-    XCTAssertEqual(project.publishAudioQuality_android, DEFAULT_AUDIO_QUALITY);
-    XCTAssertEqual(project.publishAudioQuality_ios, DEFAULT_AUDIO_QUALITY);
     SBAssertStringsEqual(project.publishDirectory, @"");
     SBAssertStringsEqual(project.publishDirectoryAndroid, @"");
     XCTAssertFalse(project.excludedFromPackageMigration);
@@ -347,23 +333,10 @@
     XCTAssertTrue(projectSettings.deviceOrientationLandscapeLeft);
     XCTAssertTrue(projectSettings.deviceOrientationLandscapeRight);
 
-    XCTAssertEqual(projectSettings.resourceAutoScaleFactor, 4);
     XCTAssertTrue(projectSettings.publishEnabledIOS);
     XCTAssertTrue(projectSettings.publishEnabledAndroid);
 
-    XCTAssertTrue(projectSettings.publishResolution_ios_phone);
-    XCTAssertTrue(projectSettings.publishResolution_ios_phonehd);
-    XCTAssertTrue(projectSettings.publishResolution_ios_tablet);
-    XCTAssertTrue(projectSettings.publishResolution_ios_tablethd);
-
-    XCTAssertTrue(projectSettings.publishResolution_android_phone);
-    XCTAssertTrue(projectSettings.publishResolution_android_phonehd);
-    XCTAssertTrue(projectSettings.publishResolution_android_tablet);
-    XCTAssertTrue(projectSettings.publishResolution_android_tablethd);
-
     XCTAssertEqual(projectSettings.publishEnvironment, kCCBPublishEnvironmentDevelop);
-    XCTAssertEqual(projectSettings.publishAudioQuality_ios, 4);
-    XCTAssertEqual(projectSettings.publishAudioQuality_android, 4);
 
     XCTAssertEqual(projectSettings.tabletPositionScaleFactor, 2.0f);
 
@@ -450,15 +423,6 @@
     XCTAssertEqual(quality2, 7);
 }
 
-- (void)testConvenienceMethodForAudioQuality
-{
-    _projectSettings.publishAudioQuality_android = 8;
-    _projectSettings.publishAudioQuality_ios = 6;
-
-    XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeAndroid], 8);
-    XCTAssertEqual([_projectSettings audioQualityForOsType:kCCBPublisherOSTypeIOS], 6);
-}
-
 - (void)testMarkAsDirty
 {
     RMResource *res1 = [[RMResource alloc] initWithFilePath:[self fullPathForFile:@"project/Packages/package1.sbpack/foo.png"]];
@@ -472,7 +436,6 @@
 
     [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
     [_projectSettings clearAllDirtyMarkers];
-
 
     // Test clear all dirty markers
     [_projectSettings markAsDirtyResource:res1];
@@ -507,6 +470,7 @@
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    [_projectSettings setProperty:@(YES) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
 
     [_projectSettings clearAllDirtyMarkers];
 
@@ -514,6 +478,7 @@
 
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings setProperty:@(1) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    [_projectSettings setProperty:@(YES) forResource:res1 andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
 
     XCTAssertFalse([_projectSettings isDirtyResource:res1]);
 }

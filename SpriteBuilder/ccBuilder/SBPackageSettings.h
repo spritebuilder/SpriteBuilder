@@ -15,6 +15,10 @@ extern NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
 @property (nonatomic) BOOL publishToMainProject;
 @property (nonatomic) BOOL publishToCustomOutputDirectory;
 
+@property (nonatomic) BOOL mainProject_resolution_1x;
+@property (nonatomic) BOOL mainProject_resolution_2x;
+@property (nonatomic) BOOL mainProject_resolution_4x;
+
 // If this path  not starting with a / it will be treated as relative to the project dir
 @property (nonatomic, copy) NSString *customOutputDirectory;
 // Returns the default package publishing dir if publishToCustomOutputDirectory is NO, else customOutputDirectory
@@ -34,5 +38,7 @@ extern NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
 
 - (BOOL)load;
 - (BOOL)store;
+
+- (NSArray *)mainProjectResolutions;
 
 @end

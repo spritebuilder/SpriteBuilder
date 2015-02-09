@@ -18,11 +18,15 @@ extern NSString *const DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES;
 
 extern NSString *const PACKAGE_PUBLISH_SETTINGS_FILE_NAME;
 
-extern NSString *const RESOLUTION_AUTO;
-extern NSString *const RESOLUTION_PHONE;
-extern NSString *const RESOLUTION_PHONE_HD;
+extern NSString *const RESOLUTION_DIR_AUTO;
+extern NSString *const RESOLUTION_DIR_1X;
+extern NSString *const RESOLUTION_DIR_2X;
 extern NSString *const RESOLUTION_TABLET;
-extern NSString *const RESOLUTION_TABLET_HD;
+extern NSString *const RESOLUTION_DIR_4X;
+
+extern NSUInteger RESOLUTION_1X;
+extern NSUInteger RESOLUTION_2X;
+extern NSUInteger RESOLUTION_4X;
 
 extern NSUInteger const MINIMUM_FILENAME_LENGTH;
 
