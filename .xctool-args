@@ -1,0 +1,4 @@
+[
+    "-scheme","SpriteBuilder",
+    "-project","SpriteBuilder/SpriteBuilder.xcodeproj"
+]
