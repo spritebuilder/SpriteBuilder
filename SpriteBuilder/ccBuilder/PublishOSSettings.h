@@ -1,14 +1,12 @@
 #import <Foundation/Foundation.h>
 
-@interface PublishOSSettings : NSObject
+@class PublishResolutions;
 
-@property (nonatomic) BOOL resolution_1x;
-@property (nonatomic) BOOL resolution_2x;
-@property (nonatomic) BOOL resolution_4x;
+@interface PublishOSSettings : NSObject
 
 @property (nonatomic) NSInteger audio_quality;
 
-@property (nonatomic, strong) NSArray *resolutions;
+@property (nonatomic, strong) PublishResolutions *resolutions;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

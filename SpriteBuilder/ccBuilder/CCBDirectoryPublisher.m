@@ -42,6 +42,7 @@
 #import "PublishCCBOperation.h"
 #import "PublishImageOperation.h"
 #import "DateCache.h"
+#import "PublishResolutions.h"
 #import "NSString+Publishing.h"
 #import "PublishGeneratedFilesOperation.h"
 #import "PublishRenamedFilesLookup.h"

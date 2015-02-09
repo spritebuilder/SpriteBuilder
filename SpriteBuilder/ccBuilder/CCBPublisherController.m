@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "CCBPublisherController.h"
 #import "ProjectSettings.h"
 #import "CCBWarnings.h"
@@ -11,6 +10,7 @@
 #import "NSString+RelativePath.h"
 #import "MiscConstants.h"
 #import "NSNumber+ImageResolutions.h"
+#import "PublishResolutions.h"
 
 @interface CCBPublisherController()
 

@@ -17,6 +17,7 @@
 #import "MiscConstants.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "NSNumber+ImageResolutions.h"
+#import "PublishResolutions.h"
 
 @interface CCBPublisherController_Tests : FileSystemTestCase
 
@@ -68,14 +69,14 @@
     _packageSettings.publishToZip = YES;
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
-    iosSettings.resolution_4x = YES;
-    iosSettings.resolution_2x = YES;
-    iosSettings.resolution_1x = NO;
+    iosSettings.resolutions.resolution_4x = YES;
+    iosSettings.resolutions.resolution_2x = YES;
+    iosSettings.resolutions.resolution_1x = NO;
 
     PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
-    androidSettings.resolution_1x = YES;
-    androidSettings.resolution_2x = YES;
-    androidSettings.resolution_4x = NO;
+    androidSettings.resolutions.resolution_1x = YES;
+    androidSettings.resolutions.resolution_2x = YES;
+    androidSettings.resolutions.resolution_4x = NO;
 
     [self createFolders:@[@"baa.spritebuilder/Packages/foo.sbpack"]];
 
@@ -120,11 +121,14 @@
     _packageSettings.customOutputDirectory = @"../custom";
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
-    iosSettings.resolutions = @[];
+    iosSettings.resolutions.resolution_1x = NO;
+    iosSettings.resolutions.resolution_2x = NO;
+    iosSettings.resolutions.resolution_4x = NO;
 
     PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
-    androidSettings.resolutions = @[];
-    androidSettings.resolution_2x = YES;
+    androidSettings.resolutions.resolution_1x = NO;
+    androidSettings.resolutions.resolution_2x = YES;
+    androidSettings.resolutions.resolution_4x = NO;
 
     [_publisherController startAsync:NO];
 
@@ -134,7 +138,10 @@
 
     [self assertFilesDoNotExistRelativeToDirectory:@"custom" filesPaths:@[
             @"foo-Android-1x.zip",
-            @"foo-Android-4x.zip"
+            @"foo-Android-4x.zip",
+            @"foo-iOS-1x.zip",
+            @"foo-iOS-2x.zip",
+            @"foo-iOS-4x.zip"
     ]];
 
     [self assertFilesDoNotExistRelativeToDirectory:@"Published-iOS" filesPaths:@[
@@ -164,23 +171,23 @@
 
     // Not included, therefor button.png should not be in result
     SBPackageSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
-    packageSettingsMenus.mainProject_resolution_4x = NO;
-    packageSettingsMenus.mainProject_resolution_2x = YES;
-    packageSettingsMenus.mainProject_resolution_1x = NO;
+    packageSettingsMenus.mainProjectResolutions.resolution_4x = NO;
+    packageSettingsMenus.mainProjectResolutions.resolution_2x = YES;
+    packageSettingsMenus.mainProjectResolutions.resolution_1x = NO;
     packageSettingsMenus.publishToMainProject = NO;
     packageSettingsMenus.publishToZip = NO;
 
     SBPackageSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
-    packageSettingsCharacters.mainProject_resolution_4x = YES;
-    packageSettingsCharacters.mainProject_resolution_2x = NO;
-    packageSettingsCharacters.mainProject_resolution_1x = YES;
+    packageSettingsCharacters.mainProjectResolutions.resolution_4x = YES;
+    packageSettingsCharacters.mainProjectResolutions.resolution_2x = NO;
+    packageSettingsCharacters.mainProjectResolutions.resolution_1x = YES;
     packageSettingsCharacters.publishToMainProject = YES;
     packageSettingsCharacters.publishToZip = NO;
 
     SBPackageSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
-    packageSettingsBackgrounds.mainProject_resolution_4x = NO;
-    packageSettingsBackgrounds.mainProject_resolution_2x = NO;
-    packageSettingsBackgrounds.mainProject_resolution_1x = YES;
+    packageSettingsBackgrounds.mainProjectResolutions.resolution_4x = NO;
+    packageSettingsBackgrounds.mainProjectResolutions.resolution_2x = NO;
+    packageSettingsBackgrounds.mainProjectResolutions.resolution_1x = YES;
     packageSettingsBackgrounds.publishToMainProject = YES;
     packageSettingsBackgrounds.publishToZip = NO;
 
