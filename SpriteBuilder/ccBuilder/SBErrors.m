@@ -40,3 +40,7 @@ NSInteger const SBCCBReadingErrorNoNodesFound = 3004;
 NSInteger const SBCCBMigrationError = 3010;
 NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError = 3011;
 NSInteger const SBCCBMigrationNoVersionFoundError = 3012;
+
+NSInteger const SBPackageSettingsMigrationNoRuleError = 3100;
+NSInteger const SBPackageSettingsMigrationCannotDowngraderError = 3101;
+NSInteger const SBPackageSettingsEmptyOrDoesNotExist = 3102;

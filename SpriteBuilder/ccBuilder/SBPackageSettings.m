@@ -3,7 +3,12 @@
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 #import "PublishResolutions.h"
+#import "SBPackageSettingsMigrator.h"
+#import "NSError+SBErrors.h"
+#import "SBErrors.h"
 
+
+NSString *const KEY_VERSION = @"version";
 NSString *const KEY_PUBLISH_TO_CUSTOM_DIRECTORY = @"publishToCustomDirectory";
 NSString *const KEY_PUBLISH_TO_ZIP = @"publishToZip";
 NSString *const KEY_PUBLISH_TO_MAINPROJECT = @"publishToMainProject";
@@ -93,31 +98,35 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
     _publishSettingsForOsType[[self osTypeToString:type]] = osSettings;
 }
 
-- (BOOL)load
+- (BOOL)loadWithError:(NSError **)error
 {
     NSString *fullPath = [_package.dirPath stringByAppendingPathComponent:@"Package.plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:fullPath];
 
-    if (!dict)
+    if (!dict || [dict count] == 0)
+    {
+        [NSError setNewErrorWithErrorPointer:error code:SBPackageSettingsEmptyOrDoesNotExist message:@"Package.plist file is empty or does not exist."];
+        return NO;
+    }
+
+    SBPackageSettingsMigrator *migrator = [[SBPackageSettingsMigrator alloc] initWithDictionary:dict toVersion:PACKAGE_SETTINGS_VERSION];
+    NSDictionary *migratedDict = [migrator migrate:error];
+    if (!migratedDict)
     {
         return NO;
     }
 
-    self.mainProjectResolutions = [[PublishResolutions alloc] initWithData:dict[KEY_MAINPROJECT_RESOLUTIONS]];
-    self.publishToCustomOutputDirectory = [dict[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] boolValue];
-    self.publishToZip = [dict[KEY_PUBLISH_TO_ZIP] boolValue];
-    self.publishToMainProject = [dict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
-    self.customOutputDirectory = dict[KEY_OUTPUTDIR];
-    self.publishEnvironment = (CCBPublishEnvironment) [dict[KEY_PUBLISH_ENV] integerValue];
+    self.mainProjectResolutions = [[PublishResolutions alloc] initWithData:migratedDict[KEY_MAINPROJECT_RESOLUTIONS]];
+    self.publishToCustomOutputDirectory = [migratedDict[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] boolValue];
+    self.publishToZip = [migratedDict[KEY_PUBLISH_TO_ZIP] boolValue];
+    self.publishToMainProject = [migratedDict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
+    self.customOutputDirectory = migratedDict[KEY_OUTPUTDIR];
+    self.publishEnvironment = (CCBPublishEnvironment) [migratedDict[KEY_PUBLISH_ENV] integerValue];
+    self.resourceAutoScaleFactor = [migratedDict[KEY_DEFAULT_SCALE] integerValue];
 
-    // Migration if keys are not set
-    self.resourceAutoScaleFactor = dict[KEY_DEFAULT_SCALE]
-        ? [dict[KEY_DEFAULT_SCALE] integerValue]
-        : DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
-
-    for (NSString *osType in dict[KEY_OS_SETTINGS])
+    for (NSString *osType in migratedDict[KEY_OS_SETTINGS])
     {
-        NSDictionary *dictOsSettings = dict[KEY_OS_SETTINGS][osType];
+        NSDictionary *dictOsSettings = migratedDict[KEY_OS_SETTINGS][osType];
         PublishOSSettings *publishOSSettings = [[PublishOSSettings alloc] initWithDictionary:dictOsSettings];
         _publishSettingsForOsType[osType] = publishOSSettings;
     }

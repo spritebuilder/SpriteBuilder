@@ -223,7 +223,7 @@
     for (RMPackage *aPackage in allPackages)
     {
         SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:aPackage];
-        [packageSettings load];
+        [packageSettings loadWithError:nil];
 
         packageSettings.resourceAutoScaleFactor = autoScaling;
         [packageSettings store];
