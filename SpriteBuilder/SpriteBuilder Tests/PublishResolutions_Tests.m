@@ -22,18 +22,14 @@
 
     XCTAssertFalse(publishResolutions.resolution_1x);
     XCTAssertFalse(publishResolutions.resolution_2x);
-    XCTAssertTrue(publishResolutions.resolution_4x);
+    XCTAssertFalse(publishResolutions.resolution_4x);
 }
 
 - (void)testInitWithDictionary
 {
-    NSDictionary *data = @{
-        @"RESOLUTIONS_KEY_1X" : @YES,
-        @"RESOLUTIONS_KEY_2X" : @YES,
-        @"RESOLUTIONS_KEY_4X" : @NO,
-    };
+    id data = @[ @1, @2 ];
 
-    PublishResolutions *publishResolutions = [[PublishResolutions alloc] initWithDictionary:data];
+    PublishResolutions *publishResolutions = [[PublishResolutions alloc] initWithData:data];
 
     XCTAssertTrue(publishResolutions.resolution_1x);
     XCTAssertTrue(publishResolutions.resolution_2x);
@@ -47,13 +43,9 @@
     publishResolutions.resolution_2x = NO;
     publishResolutions.resolution_4x = YES;
 
-    NSDictionary *dict = [publishResolutions toDictionary];
+    NSDictionary *dict = [publishResolutions serialize];
 
-    NSDictionary *expectation = @{
-        @"RESOLUTIONS_KEY_1X" : @YES,
-        @"RESOLUTIONS_KEY_2X" : @NO,
-        @"RESOLUTIONS_KEY_4X" : @YES,
-    };
+    id expectation = @[ @1, @4 ];
 
     XCTAssertEqualObjects(expectation, dict);
 }

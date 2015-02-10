@@ -1,11 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "PublishResolutions.h"
 
-static NSString *const RESOLUTIONS_KEY_1X = @"RESOLUTIONS_KEY_1X";
-static NSString *const RESOLUTIONS_KEY_2X = @"RESOLUTIONS_KEY_2X";
-static NSString *const RESOLUTIONS_KEY_4X = @"RESOLUTIONS_KEY_4X";
-
-
 @interface PublishResolutions()
 
 @property (nonatomic, strong) NSMutableArray *internalList;
@@ -23,21 +18,35 @@ static NSString *const RESOLUTIONS_KEY_4X = @"RESOLUTIONS_KEY_4X";
 
         self.resolution_1x = NO;
         self.resolution_2x = NO;
-        self.resolution_4x = YES;
+        self.resolution_4x = NO;
     }
 
     return self;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithData:(id)data
 {
     self = [self init];
 
     if (self)
     {
-        self.resolution_1x = [dictionary[RESOLUTIONS_KEY_1X] boolValue];
-        self.resolution_2x = [dictionary[RESOLUTIONS_KEY_2X] boolValue];
-        self.resolution_4x = [dictionary[RESOLUTIONS_KEY_4X] boolValue];
+        for (NSNumber *resolution in data)
+        {
+            if ([resolution isEqualToNumber:@1])
+            {
+                self.resolution_1x = YES;
+            }
+
+            if ([resolution isEqualToNumber:@2])
+            {
+                self.resolution_2x = YES;
+            }
+
+            if ([resolution isEqualToNumber:@4])
+            {
+                self.resolution_4x = YES;
+            }
+        }
     }
 
     return self;
@@ -83,22 +92,14 @@ static NSString *const RESOLUTIONS_KEY_4X = @"RESOLUTIONS_KEY_4X";
     return [_internalList countByEnumeratingWithState:state objects:stackbuf count:len];
 }
 
-- (NSDictionary *)toDictionary
+- (id)serialize
 {
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-
-    result[RESOLUTIONS_KEY_1X] = @(_resolution_1x);
-    result[RESOLUTIONS_KEY_2X] = @(_resolution_2x);
-    result[RESOLUTIONS_KEY_4X] = @(_resolution_4x);
-
-    return result;
+    return _internalList;
 }
 
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"1x: %@, 2x: %@, 4x: %@", @(_resolution_1x), @(_resolution_2x), @(_resolution_4x)];
 }
-
-
 
 @end

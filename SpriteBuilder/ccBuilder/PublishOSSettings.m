@@ -27,7 +27,7 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     if (self && dictionary)
     {
         self.audio_quality = [dictionary[KEY_AUDIO_QUALITY] integerValue];
-        self.resolutions = [[PublishResolutions alloc] initWithDictionary:dictionary[KEY_RESOLUTIONS]];
+        self.resolutions = [[PublishResolutions alloc] initWithData:dictionary[KEY_RESOLUTIONS]];
     }
 
     return self;
@@ -38,7 +38,7 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
 
     result[KEY_AUDIO_QUALITY] = @(_audio_quality);
-    result[KEY_RESOLUTIONS] = [self.resolutions toDictionary];
+    result[KEY_RESOLUTIONS] = [self.resolutions serialize];
 
     return result;
 }
