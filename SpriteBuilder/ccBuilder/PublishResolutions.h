@@ -11,8 +11,8 @@
 @property (nonatomic) BOOL resolution_2x;
 @property (nonatomic) BOOL resolution_4x;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithData:(id)data;
 
-- (NSDictionary *)toDictionary;
+- (id)serialize;
 
 @end

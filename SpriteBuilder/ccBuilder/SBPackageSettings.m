@@ -11,7 +11,9 @@ NSString *const KEY_OS_SETTINGS = @"osSettings";
 NSString *const KEY_OUTPUTDIR = @"outputDir";
 NSString *const KEY_PUBLISH_ENV = @"publishEnv";
 NSString *const KEY_DEFAULT_SCALE = @"resourceAutoScaleFactor";
-NSString *const KEY_MAINPROJECT_RESOLUTIONS = @"KEY_MAINPROJECT_RESOLUTIONS";
+NSString *const KEY_MAINPROJECT_RESOLUTIONS = @"mainProjectResolutions";
+
+NSUInteger const PACKAGE_SETTINGS_VERSION = 3;
 
 // It's a tag for a dropdown
 NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
@@ -100,7 +102,8 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
     {
         return NO;
     }
-    self.mainProjectResolutions = [[PublishResolutions alloc] initWithDictionary:dict[KEY_MAINPROJECT_RESOLUTIONS]];
+
+    self.mainProjectResolutions = [[PublishResolutions alloc] initWithData:dict[KEY_MAINPROJECT_RESOLUTIONS]];
     self.publishToCustomOutputDirectory = [dict[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] boolValue];
     self.publishToZip = [dict[KEY_PUBLISH_TO_ZIP] boolValue];
     self.publishToMainProject = [dict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
@@ -135,7 +138,8 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
-    result[KEY_MAINPROJECT_RESOLUTIONS] = [_mainProjectResolutions toDictionary];
+    result[KEY_VERSION] = @(PACKAGE_SETTINGS_VERSION);
+    result[KEY_MAINPROJECT_RESOLUTIONS] = [_mainProjectResolutions serialize];
     result[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] = @(_publishToCustomOutputDirectory);
     result[KEY_PUBLISH_TO_ZIP] = @(_publishToZip);
     result[KEY_PUBLISH_TO_MAINPROJECT] = @(_publishToMainProject);
