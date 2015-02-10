@@ -157,6 +157,70 @@
     ]];
 }
 
+- (void)testPackageExportWithContentsInspection
+{
+    [self configureSinglePackagePublishSettingCase];
+
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/plane.png" width:10 height:2];
+
+    _packageSettings.publishToMainProject = NO;
+
+    PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    iosSettings.resolutions.resolution_1x = NO;
+    iosSettings.resolutions.resolution_2x = YES;
+    iosSettings.resolutions.resolution_4x = NO;
+
+    PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    androidSettings.resolutions.resolution_1x = NO;
+    androidSettings.resolutions.resolution_2x = NO;
+    androidSettings.resolutions.resolution_4x = NO;
+
+    [_publisherController startAsync:NO];
+
+    [self assertFileExists:@"baa.spritebuilder/Published-Packages/foo-iOS-2x.zip"];
+
+    XCTAssertTrue([self unzipPackageAt:@"baa.spritebuilder/Published-Packages/foo-iOS-2x.zip" to:@"package_test"]);
+
+    [self assertFilesExistRelativeToDirectory:@"package_test/foo-iOS-2x" filesPaths:@[
+            @"configCocos2d.plist",
+            @"fileLookup.plist",
+            @"plane-2x.png",
+            @"spriteFrameFileList.plist"
+    ]];
+}
+
+- (BOOL)unzipPackageAt:(NSString *)zipFile to:(NSString *)outputDir
+{
+    NSTask *task = [[NSTask alloc] init];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtPath:[self fullPathForFile:outputDir] withIntermediateDirectories:YES attributes:nil error:nil];
+
+    [task setCurrentDirectoryPath:[self fullPathForFile:outputDir]];
+    [task setLaunchPath:@"/usr/bin/unzip"];
+
+    NSArray *args = @[@"-d", [self fullPathForFile:outputDir], [self fullPathForFile:zipFile]];
+    [task setArguments:args];
+
+    NSPipe *pipeStdOut = [NSPipe pipe];
+    [task setStandardOutput:pipeStdOut];
+
+    int status = 0;
+    @try
+    {
+        [task launch];
+        [task waitUntilExit];
+
+        status = [task terminationStatus];
+    }
+    @catch (NSException *exception)
+    {
+        return NO;
+    }
+
+    return status == 0;
+}
+
 - (void)testPublishMainProjectWithSomePackagesNotIncluded
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/Menus.sbpack/resources-auto/button.png" width:4 height:4];
