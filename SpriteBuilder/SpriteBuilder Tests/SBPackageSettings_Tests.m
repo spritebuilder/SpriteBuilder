@@ -15,6 +15,7 @@
 #import "MiscConstants.h"
 #import "CCBPublisherTypes.h"
 #import "PublishResolutions.h"
+#import "SBErrors.h"
 
 
 @interface SBPackageSettings_Tests : FileSystemTestCase
@@ -92,7 +93,7 @@
 
 
     SBPackageSettings *settingsLoaded = [[SBPackageSettings alloc] initWithPackage:_package];
-    [settingsLoaded load];
+    [settingsLoaded loadWithError:nil];
 
     XCTAssertEqual(_packagePublishSettings.publishToMainProject, settingsLoaded.publishToMainProject);
     SBAssertStringsEqual(_packagePublishSettings.customOutputDirectory, settingsLoaded.customOutputDirectory);
@@ -119,18 +120,40 @@
 - (void)testMigrationDefaultScale
 {
     NSDictionary *values = @{
-            @"outputDir" : @"foo",
-            @"publishEnv" : @1,
-            @"publishToCustomDirectory" : @YES,
-            @"publishToMainProject" : @NO,
-            @"publishToZip" : @NO
+        @"outputDir" : @"foo",
+        @"publishEnv" : @1,
+        @"publishToCustomDirectory" : @YES,
+        @"publishToMainProject" : @NO,
+        @"publishToZip" : @NO
     };
 
     [values writeToFile:[self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
 
-    [_packagePublishSettings load];
+    NSError *error;
+    XCTAssertTrue([_packagePublishSettings loadWithError:&error]);
 
+    XCTAssertNil(error);
     XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING);
+}
+
+- (void)testLoadingEmptyAndNonExistentPackageSettingsFile
+{
+    NSError *error2;
+    XCTAssertFalse([_packagePublishSettings loadWithError:&error2]);
+
+    XCTAssertNotNil(error2);
+    XCTAssertEqual(error2.code, SBPackageSettingsEmptyOrDoesNotExist);
+
+    // ----
+
+    NSDictionary *values = @{};
+    [values writeToFile:[self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
+
+    NSError *error;
+    XCTAssertFalse([_packagePublishSettings loadWithError:&error]);
+
+    XCTAssertNotNil(error);
+    XCTAssertEqual(error.code, SBPackageSettingsEmptyOrDoesNotExist);
 }
 
 - (void)testEffectiveOutputDir

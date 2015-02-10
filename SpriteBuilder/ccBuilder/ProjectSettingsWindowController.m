@@ -50,7 +50,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     for (RMPackage *package in [[ResourceManager sharedManager] allPackages])
     {
         SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
-        [packagePublishSettings load];
+        [packagePublishSettings loadWithError:nil];
 
         [_settingsList addObject:packagePublishSettings];
     }

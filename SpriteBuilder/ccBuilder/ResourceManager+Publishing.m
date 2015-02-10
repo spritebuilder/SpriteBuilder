@@ -13,7 +13,7 @@
         if ([directory isKindOfClass:[RMPackage class]])
         {
             SBPackageSettings *settings = [[SBPackageSettings alloc] initWithPackage:(RMPackage *)directory];
-            if (![settings load])
+            if (![settings loadWithError:nil])
             {
                 NSLog(@"Could not load Package.plist file for package \"%@\"", directory.dirPath);
             }

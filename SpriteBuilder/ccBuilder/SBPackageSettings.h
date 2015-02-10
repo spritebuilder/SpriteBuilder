@@ -35,7 +35,7 @@ extern NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
 
 - (void)setOSSettings:(PublishOSSettings *)osSettings forOsType:(CCBPublisherOSType)type;
 
-- (BOOL)load;
+- (BOOL)loadWithError:(NSError **)error;
 - (BOOL)store;
 
 @end

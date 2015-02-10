@@ -40,3 +40,8 @@ extern NSInteger const SBCCBReadingErrorNoNodesFound;
 extern NSInteger const SBCCBMigrationError;
 extern NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError;
 extern NSInteger const SBCCBMigrationNoVersionFoundError;
+
+// Package Settings reading, writing & migration
+extern NSInteger const SBPackageSettingsMigrationNoRuleError;
+extern NSInteger const SBPackageSettingsMigrationCannotDowngraderError;
+extern NSInteger const SBPackageSettingsEmptyOrDoesNotExist;
