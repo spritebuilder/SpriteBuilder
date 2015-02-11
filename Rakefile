@@ -88,7 +88,19 @@ namespace :build do
     desc "Generate all associated files and version info"
     task :generated => [:template, "Generated/Version.txt","Generated/cocos2d_version.txt"] do
     end
+
+    task :tests do
+        sh "xctool build-tests"
+    end
 end
 
-CLEAN << `find . -type d -name build`.split
+task :default => "build:generated"
+
+desc "Run SpriteBuilder unit tests"
+task :test => "build:tests" do
+    sh "xctool run-tests"
+end
+
+build_dirs =  `find . -type d -iname build`.split
+CLEAN.include *build_dirs
 CLOBBER << "Generated"
