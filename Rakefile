@@ -15,7 +15,7 @@ end
 
 def get_template_files
     #folders to exclude from template via regex match
-    excluded_folders = ["build","tests","cocos2d-tests-android", "cocos2d-ui-tests"]
+    excluded_folders = ["xcuserdata", "build","tests","cocos2d-tests-android", "cocos2d-ui-tests"]
 
     Dir.chdir TEMPLATE_PROJECT do
         list = Rake::FileList.new("./**/*", "./Source/libs/cocos2d-iphone/**/*") do |fl|
@@ -25,7 +25,7 @@ def get_template_files
 
             excluded_folders.each { |folder| fl.exclude(/#{folder}/)}
         end
-        list.resolve()
+        list.resolve() #force path evaluation in the context of this directory (relative paths)
         return list
     end
 end
@@ -45,16 +45,14 @@ ABSOLUTE_TEMPLATE_FILES = TEMPLATE_FILES.map { |f| File.expand_path(File.join(TE
 ### Rake tasks
 #
 
-CLOBBER << "Generated"
-
 directory "Generated"
 
-desc "Build the project template"
 file "Generated/#{TEMPLATE_FILENAME}.zip" => ["Generated", *ABSOLUTE_TEMPLATE_FILES] do |task|
-    Dir.chdir TEMPLATE_PROJECT do
 
+    puts "Generating #{task.name()}..."
+
+    Dir.chdir TEMPLATE_PROJECT do
         output_path = File.join(PROJECT_ROOT, task.name())
-        puts output_path
         wrapped_filenames = TEMPLATE_FILES.map { |fn| "\"#{fn}\""}
 
         #zip in increments to avoid exceeding bash argument list length
@@ -64,3 +62,8 @@ file "Generated/#{TEMPLATE_FILENAME}.zip" => ["Generated", *ABSOLUTE_TEMPLATE_FI
     end
 end
 
+desc "Build (only) SpriteBuilder's new project template"
+task :template => ["Generated/#{TEMPLATE_FILENAME}.zip"] {}
+
+CLEAN << `find . -type d -name build`.split
+CLOBBER << "Generated"
