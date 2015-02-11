@@ -16,7 +16,7 @@ end
 
 def get_template_files
     #folders to exclude from template via regex match
-    excluded_folders = ["xcuserdata", "build","tests","cocos2d-tests-android", "cocos2d-ui-tests"]
+    excluded_folders = ["xcuserdata", "build","tests","cocos2d-tests-android", "cocos2d-ui-tests", "UnitTests"]
 
     Dir.chdir TEMPLATE_PROJECT do
         list = Rake::FileList.new("./**/*", "./Source/libs/cocos2d-iphone/**/*") do |fl|
