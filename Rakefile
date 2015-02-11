@@ -1,4 +1,5 @@
 require "rake/clean"
+require "json"
 
 #
 ### Helper Methods
@@ -41,6 +42,9 @@ TEMPLATE_PROJECT = File.join PROJECT_ROOT, "Support", "#{TEMPLATE_FILENAME}.spri
 TEMPLATE_FILES = get_template_files()
 ABSOLUTE_TEMPLATE_FILES = TEMPLATE_FILES.map { |f| File.expand_path(File.join(TEMPLATE_PROJECT,f)) }
 
+DEFAULT_SB_VERSION="1.4"
+DEFAULT_PRODUCT_NAME="SpriteBuilder"
+
 #
 ### Rake tasks
 #
@@ -48,7 +52,6 @@ ABSOLUTE_TEMPLATE_FILES = TEMPLATE_FILES.map { |f| File.expand_path(File.join(TE
 directory "Generated"
 
 file "Generated/#{TEMPLATE_FILENAME}.zip" => ["Generated", *ABSOLUTE_TEMPLATE_FILES] do |task|
-
     puts "Generating #{task.name()}..."
 
     Dir.chdir TEMPLATE_PROJECT do
@@ -62,8 +65,30 @@ file "Generated/#{TEMPLATE_FILENAME}.zip" => ["Generated", *ABSOLUTE_TEMPLATE_FI
     end
 end
 
-desc "Build (only) SpriteBuilder's new project template"
-task :template => ["Generated/#{TEMPLATE_FILENAME}.zip"] {}
+file "Generated/Version.txt" => "Generated" do |task|
+    puts "Generating #{task.name()}..."
+
+    version_info = {}
+    version_info["version"] = ENV["VERSION"] || DEFAULT_SB_VERSION
+    version_info["revision"] = ENV["REVISION"] || `git rev-parse --short=10 HEAD`.chomp
+
+    File.open("Generated/Version.txt","w") << JSON.pretty_generate(version_info)
+end
+
+file "Generated/cocos2d_version.txt" => 'SpriteBuilder/libs/cocos2d-iphone/VERSION' do |task|
+    puts "Generating #{task.name()}..."
+
+    `cp SpriteBuilder/libs/cocos2d-iphone/VERSION #{task.name()}`
+end
+
+namespace :build do
+    desc "Build (only) SpriteBuilder's new project template"
+    task :template => ["Generated/#{TEMPLATE_FILENAME}.zip"] {}
+
+    desc "Generate all associated files and version info"
+    task :generated => [:template, "Generated/Version.txt","Generated/cocos2d_version.txt"] do
+    end
+end
 
 CLEAN << `find . -type d -name build`.split
 CLOBBER << "Generated"
