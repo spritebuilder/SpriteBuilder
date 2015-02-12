@@ -128,10 +128,10 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
     [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelTTF" expectCustomClassInCodeConnection:YES];
 }
 
-- (void)testUpdateInspectorFromSelectionForCCLabelBMFont
-{
-    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelBMFont" expectCustomClassInCodeConnection:YES];
-}
+//- (void)testUpdateInspectorFromSelectionForCCLabelBMFont
+//{
+//    [self assertUpdateInspectorFromSelectionForPlugin:@"CCLabelBMFont" expectCustomClassInCodeConnection:YES];
+//}
 
 - (void)testUpdateInspectorFromSelectionForCCButton
 {

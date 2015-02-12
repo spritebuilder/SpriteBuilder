@@ -1,0 +1,18 @@
+checkout:
+    post:
+        - git submodule update --init --recursive
+
+test:
+    override:
+        - rake test
+    post:
+        - CONFIGURATION_BUILD_DIR=Build TARGET_BUILD_DIR=Build xctool -configuration Release -project SpriteBuilder/SpriteBuilder.xcodeproj -scheme SpriteBuilder archive -archivePath Build/SpriteBuilder
+        - cp -r Build/* $CIRCLE_ARTIFACTS
+
+general:
+    branches:
+        only:
+            - master
+            - develop
+            - experimental/circleciSign
+

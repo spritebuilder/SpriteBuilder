@@ -1,5 +1,6 @@
 require "rake/clean"
 require "json"
+require "fileutils"
 
 #
 ### Helper Methods
@@ -31,6 +32,15 @@ def get_template_files
     end
 end
 
+def get_artifact_name
+    return @artifact_name if @artifact_name
+    branch = `git rev-parse --abbrev-ref HEAD`.chomp
+    hash = `git rev-parse --short=10 HEAD`.chomp
+    date = Time.now.strftime("%d/%m/%Y-%H.%M")
+
+    @artifact_name = "#{branch}-#{hash}-#{date}".gsub(/[^0-9A-z.\-]/, '_')
+end
+
 def check_required_programs
     `which xctool`
     unless $?.success?
@@ -48,15 +58,18 @@ TEMPLATE_FILENAME="PROJECTNAME"
 TEMPLATE_PROJECT = File.join PROJECT_ROOT, "Support", "#{TEMPLATE_FILENAME}.spritebuilder"
 TEMPLATE_FILES = get_template_files()
 ABSOLUTE_TEMPLATE_FILES = TEMPLATE_FILES.map { |f| File.expand_path(File.join(TEMPLATE_PROJECT,f)) }
-
+DERIVED_DATA_LOCATION="~/Library/Developer/Xcode/DerivedData"
 DEFAULT_SB_VERSION="1.4"
 DEFAULT_PRODUCT_NAME="SpriteBuilder"
+
+BUILD_DIR=File.join PROJECT_ROOT, "Output"
 
 #
 ### Rake tasks
 #
 
 directory "Generated"
+directory BUILD_DIR
 
 file "Generated/#{TEMPLATE_FILENAME}.zip" => ["Generated", *ABSOLUTE_TEMPLATE_FILES] do |task|
     puts "Generating #{task.name()}..."
@@ -76,6 +89,7 @@ file "Generated/Version.txt" => "Generated" do |task|
     puts "Generating #{task.name()}..."
 
     version_info = {}
+    puts "No VERSION specified! Using default value of #{DEFAULT_SB_VERSION}" unless ENV["VERSION"] 
     version_info["version"] = ENV["VERSION"] || DEFAULT_SB_VERSION
     version_info["revision"] = ENV["REVISION"] || `git rev-parse --short=10 HEAD`.chomp
 
@@ -101,7 +115,7 @@ namespace :build do
     task :generated => [:template, "Generated/Version.txt","Generated/cocos2d_version.txt"] do
     end
 
-    task :tests => :build_requirements do
+    task :tests => [:generated,:build_requirements] do
         sh "xctool -configuration Testing build-tests"
     end
 end
@@ -113,6 +127,61 @@ task :test => ["build:tests", :build_requirements] do
     sh "xctool -configuration Testing run-tests"
 end
 
+namespace :package do
+    desc "Create SpriteBuilder.app + zip app and symbols"
+    task :app do
+        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} CONFIGURATION_BUILD_DIR=#{BUILD_DIR} VERSION=#{ENV["VERSION"]} -configuration Release build"
+        app, symbols = "NONE"
+
+        built_files = `find . -name SpriteBuilder.app`.chomp.split "\n"
+
+        app = built_files.max {|a,b| File.mtime(a) <=> File.mtime(b)}
+        symbols = "#{app}.dSYM"
+        versioned_app_name = "#{DEFAULT_PRODUCT_NAME}-#{ENV["VERSION"]}.app"
+
+        unless File.exists? app and File.exists? symbols
+            fail "Built products don't exist at #{app} and #{symbols}"
+        end
+
+        FileUtils.cp_r app, File.join(BUILD_DIR,versioned_app_name)
+
+        Dir.chdir BUILD_DIR do
+            `zip -q -r #{versioned_app_name}.zip #{versioned_app_name}`
+            `zip -q -r SpriteBuilder.app.dSYM.zip SpriteBuilder.app.dSYM`
+        end
+    end
+
+    desc "Create SpriteBuilder.xcarchive and zip"
+    task :archive do
+        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} VERSION='#{ENV["VERSION"]}' -configuration Release archive -archivePath #{BUILD_DIR}/SpriteBuilder"
+
+        Dir.chdir BUILD_DIR do
+            sh "zip -r SpriteBuilder.xcarchive.zip SpriteBuilder.xcarchive"
+        end
+    end
+end
+
+desc "Build SpriteBuilder distribution - requires a version number VERSION=<semantic version>"
+task :package => [:clobber, BUILD_DIR, :build_requirements] do
+    unless ENV["VERSION"]
+        fail "Version number not passed - set one with `VERSION=<semantic version> rake package` on the commandline"
+    end
+
+    #force generation of a new Version.txt with commandline value
+    Rake::Task["build:generated"].invoke
+
+    Rake::Task["package:app"].invoke
+    Rake::Task["clean"].invoke
+    Rake::Task["package:archive"].invoke
+
+    if ENV["CIRCLE_CI"]
+        Dir.chdir BUILD_DIR do
+            sh "echo Copying artifacts.."
+            sh "cp *.zip $CIRCLE_ARTIFACTS"
+        end
+    end
+end
+
 build_dirs =  `find . -type d -iname build`.split
 CLEAN.include *build_dirs
-CLOBBER << "Generated"
+CLOBBER.include *["Generated", "Build"]
