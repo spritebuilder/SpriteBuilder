@@ -192,7 +192,6 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
         [self finishWithUpdateResult:updateResult error:error];
     });
 
-
     __weak id weakSelf = self;
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..." isIndeterminate:YES onCancelBlock:^
     {
@@ -238,16 +237,25 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     }
     else
     {
+        #if !TESTING
 		CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
             block();
         });
+        #else
+        // For whatever reason the other run on main thread version does not complete the tests
+        dispatch_async(dispatch_get_main_queue(), ^{
+           block();
+        });
+        #endif
     }
 }
 
 - (void)openBrowserWithCocos2dUpdateInformation
 {
+    #if !TESTING
     NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
     [workspace openURL:[NSURL URLWithString:URL_COCOS2D_UPDATE_INFORMATION]];
+    #endif
 }
 
 - (void)showUpdateErrorDialog:(NSError *)error
@@ -601,10 +609,12 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
                                                            encoding:NSUTF8StringEncoding
                                                               error:&error];
 
-    NSRange cocos2dTextPosition = [submodulesContent rangeOfString:@"cocos2d-iphone.git" options:NSCaseInsensitiveSearch];
-    BOOL result = cocos2dTextPosition.location != NSNotFound;
+    NSRange cocos2diPhoneTextPosition = [submodulesContent rangeOfString:@"cocos2d-iphone.git" options:NSCaseInsensitiveSearch];
+    NSRange cocos2dSwiftTextPosition = [submodulesContent rangeOfString:@"cocos2d-swift.git" options:NSCaseInsensitiveSearch];
+    BOOL result = cocos2diPhoneTextPosition.location != NSNotFound
+                  || cocos2dSwiftTextPosition.location != NSNotFound;
 
-    LocalLog(@"[COCO2D-UPDATER] [INFO] .gitmodules file found, contains cocos2d-iphone.git? %d", result);
+    LocalLog(@"[COCO2D-UPDATER] [INFO] .gitmodules file found, contains cocos2d-iphone.git or cocos2d-swift.git? %d", result);
 
     return result;
 }
