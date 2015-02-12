@@ -892,6 +892,7 @@
 		E525F34D0D2408D54F1BF0DA /* InspectorPropertyPaneBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F4835BC8657DCA982832 /* InspectorPropertyPaneBuilder.m */; };
 		E525F354B165DA655818733B /* RMResource.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF18D2784BB119B2882A /* RMResource.m */; };
 		E525F3672D075912C6A900C5 /* InspectorCustom.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F573A9DD324DCD2EC052 /* InspectorCustom.xib */; };
+		E525F3692CB90F3FC93C5779 /* Cocos2dupdater_test.zip in Resources */ = {isa = PBXBuildFile; fileRef = E525F698E7B0BA46D9306E1C /* Cocos2dupdater_test.zip */; };
 		E525F37A4EA653738D07D43A /* InspectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD16B4E31F0FF6FC377A /* InspectorButton.m */; };
 		E525F38131940B04EF6B812B /* InspectorColor4FVar.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F12AC1FD0EE03A2850EE /* InspectorColor4FVar.m */; };
 		E525F39657967047967120FC /* PackageMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6ECDF843A612C330560 /* PackageMigrator.m */; };
@@ -2639,6 +2640,7 @@
 		E525F6338314BBF55ED2CE0A /* RMResource_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource_Tests.m; sourceTree = "<group>"; };
 		E525F647D379B0BB63F018D9 /* PropertyInspectorTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplate.h; sourceTree = "<group>"; };
 		E525F65DBF07F61846B9B9C4 /* InspectorFontTTF.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFontTTF.xib; sourceTree = "<group>"; };
+		E525F698E7B0BA46D9306E1C /* Cocos2dupdater_test.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Cocos2dupdater_test.zip; sourceTree = "<group>"; };
 		E525F6BD9A7979086156B659 /* ProjectMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectMigrator.h; sourceTree = "<group>"; };
 		E525F6C26662457E8064AF52 /* InspectorFloatVar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorFloatVar.h; sourceTree = "<group>"; };
 		E525F6D396DAA10BC5300C54 /* InspectorColor4FVar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorColor4FVar.xib; sourceTree = "<group>"; };
@@ -5925,6 +5927,7 @@
 				E525FA8DE3F7445926977690 /* test_ccbreader_particlesystem_gravity.ccb */,
 				E525F7E311C08B1F3B5BCA6E /* test_ccbreader_particlesystem_radial.ccb */,
 				E525F0C142266AD2AB2EEB4B /* test_ccbreader_labeltff.ccb */,
+				E525F698E7B0BA46D9306E1C /* Cocos2dupdater_test.zip */,
 			);
 			path = "Testing Resources";
 			sourceTree = "<group>";
@@ -7030,6 +7033,7 @@
 				E525F91F6C8A910FBCFE6766 /* test_ccbreader_particlesystem_gravity.ccb in Resources */,
 				E525FC88A571A9D6A1DA7482 /* test_ccbreader_particlesystem_radial.ccb in Resources */,
 				E525F5C98360B005AC6E8DBE /* test_ccbreader_labeltff.ccb in Resources */,
+				E525F3692CB90F3FC93C5779 /* Cocos2dupdater_test.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

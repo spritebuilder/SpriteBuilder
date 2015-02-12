@@ -154,6 +154,9 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 {
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = [_testDirecotoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.ccbproj", name]];
+
+    [self createIntermediateDirectoriesForFilPath:projectSettings.projectPath];
+
     XCTAssertTrue([projectSettings store], @"Could not create project file at \"%@\"", projectSettings.projectPath);
 
     return projectSettings;

@@ -14,6 +14,6 @@
 - (UpdateActions)updateAction:(NSString *)text
        projectsCocos2dVersion:(NSString *)projectsCocos2dVersion
  spriteBuildersCocos2dVersion:(NSString *)spriteBuildersCocos2dVersion
-                   backupPath:(NSString *)backPath;
+                   backupPath:(NSString *)backupPath;
 
 @end
