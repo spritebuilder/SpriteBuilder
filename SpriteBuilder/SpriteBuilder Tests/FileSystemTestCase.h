@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
+@class ProjectSettings;
+
 @interface FileSystemTestCase : XCTestCase
 
 @property (nonatomic, copy, readonly) NSString *testDirecotoryPath;
@@ -21,13 +23,33 @@
 - (void)createEmptyFilesRelativeToDirectory:(NSString *)relativeDirectory files:(NSArray *)files;
 
 // create files, dictionary structure: key: relativeFilePath
-// value has to be of type NSData *
+// value has to be of type NSData
 // Example for parameter:
 // NSDictionary *foo = @{@"path/to/file.txt": [NSData data]};
 - (void)createFilesWithContents:(NSDictionary *)filesWithContents;
 
+// create files, dictionary structure: key: relativeFilePath
+// value has to be of type NSString
+// Example for parameter:
+// NSDictionary *foo = @{@"path/to/file.txt": @""};
+- (void)createFilesWithTextContents:(NSDictionary *)filesWithTextContents;
+
 // Creates a .ccbproj file with default initialized values in testDirecotoryPath
-- (void)createProjectSettingsFileWithName:(NSString *)name;
+// Returns an instance of the newly created project Setitngs
+- (ProjectSettings *)createProjectSettingsFileWithName:(NSString *)name;
+
+// asserts the contents of given files matchs the given values
+// value has to be of type NSData
+// Example for parameter:
+// NSDictionary *foo = @{@"path/to/file.txt": [NSData data]};
+- (void)assertContentsOfFiles:(NSDictionary *)contentsOfFiles;
+
+// asserts the contents of given files matchs the given values
+// Contents of files will be treated as UTF8 encoded
+// value has to be of type NSString
+// Example for parameter:
+// NSDictionary *foo = @{@"path/to/file.txt": @""};
+- (void)assertContentsOfTextFiles:(NSDictionary *)contentsOfTextFiles;
 
 - (NSDate *)modificationDateOfFile:(NSString *)filePath;
 - (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files;

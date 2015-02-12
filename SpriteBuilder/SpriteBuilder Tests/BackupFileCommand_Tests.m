@@ -20,9 +20,7 @@
 
 - (void)testBackupFileAndUndo
 {
-    [self createFilesWithContents:@{
-        @"foo.txt" : [@"original" dataUsingEncoding:NSUTF8StringEncoding]
-    }];
+    [self createFilesWithTextContents:@{ @"foo.txt" : @"original" }];
 
     BackupFileCommand *backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:[self fullPathForFile:@"foo.txt"]];
 
@@ -35,16 +33,13 @@
 
     NSString *backupFilePath = [backupFileCommand.backupFilePath copy];
 
-    NSString *contents = [NSString stringWithContentsOfFile:backupFileCommand.backupFilePath encoding:NSUTF8StringEncoding error:nil];
-    XCTAssertEqualObjects(contents, @"original");
+    [self assertContentsOfTextFiles:@{ backupFileCommand.backupFilePath : @"original" }];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager removeItemAtPath:[self fullPathForFile:@"foo.txt"] error:nil];
     [self assertFileDoesNotExist:@"foo.txt"];
 
-    [self createFilesWithContents:@{
-        @"foo.txt" : [@"replacement" dataUsingEncoding:NSUTF8StringEncoding]
-    }];
+    [self createFilesWithTextContents:@{ @"foo.txt" : @"replacement" }];
 
     NSError *undoError;
     XCTAssertTrue([backupFileCommand undo:&undoError]);
@@ -53,17 +48,16 @@
 
     [self assertFileExists:@"foo.txt"];
 
-    NSString *contentsUndoneBackup = [NSString stringWithContentsOfFile:[self fullPathForFile:@"foo.txt"] encoding:NSUTF8StringEncoding error:nil];
-    XCTAssertEqualObjects(contentsUndoneBackup, @"original");
+    [self assertContentsOfTextFiles:@{ @"foo.txt" : @"original" }];
 
     XCTAssertFalse([fileManager fileExistsAtPath:backupFilePath]);
 };
 
 - (void)testBackupFolder
 {
-    [self createFilesWithContents:@{
-        @"folder/foo.txt" : [@"foo" dataUsingEncoding:NSUTF8StringEncoding],
-        @"folder/test/baa.txt" : [@"baa" dataUsingEncoding:NSUTF8StringEncoding],
+    [self createFilesWithTextContents:@{
+        @"folder/foo.txt" : @"foo",
+        @"folder/test/baa.txt" : @"baa"
     }];
 
     BackupFileCommand *backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:[self fullPathForFile:@"folder"]];
@@ -84,11 +78,10 @@
             @"test/baa.txt",
     ]];
 
-    NSString *contents1 = [NSString stringWithContentsOfFile:[self fullPathForFile:@"folder/foo.txt"] encoding:NSUTF8StringEncoding error:nil];
-    XCTAssertEqualObjects(contents1, @"foo");
-
-    NSString *contents2 = [NSString stringWithContentsOfFile:[self fullPathForFile:@"folder/test/baa.txt"] encoding:NSUTF8StringEncoding error:nil];
-    XCTAssertEqualObjects(contents2, @"baa");
+    [self assertContentsOfTextFiles:@{
+            @"folder/foo.txt" : @"foo",
+            @"folder/test/baa.txt" : @"baa"
+    }];
 }
 
 - (void)testExecutingTwice

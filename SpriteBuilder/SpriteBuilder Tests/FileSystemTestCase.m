@@ -126,6 +126,17 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     }
 }
 
+- (void)createFilesWithTextContents:(NSDictionary *)filesWithTextContents
+{
+    NSMutableDictionary *texts = [filesWithTextContents mutableCopy];
+    for (NSString *key in filesWithTextContents)
+    {
+        texts[key] = [filesWithTextContents[key] dataUsingEncoding:NSUTF8StringEncoding];
+    }
+
+    [self createFilesWithContents:texts];
+}
+
 - (void)createIntermediateDirectoriesForFilPath:(NSString *)relPath
 {
     NSString *fullPathForFile = [self fullPathForFile:relPath];
@@ -139,11 +150,39 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     }
 }
 
-- (void)createProjectSettingsFileWithName:(NSString *)name
+- (ProjectSettings *)createProjectSettingsFileWithName:(NSString *)name
 {
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = [_testDirecotoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.ccbproj", name]];
     XCTAssertTrue([projectSettings store], @"Could not create project file at \"%@\"", projectSettings.projectPath);
+
+    return projectSettings;
+}
+
+- (void)assertContentsOfFiles:(NSDictionary *)contentsOfFiles
+{
+    for (NSString *filePath in contentsOfFiles)
+    {
+        NSError *error;
+        NSData *data = [NSData dataWithContentsOfFile:[self fullPathForFile:filePath] options:0 error:&error];
+        XCTAssertNotNil(data);
+        XCTAssertNil(error);
+
+        XCTAssertEqualObjects(contentsOfFiles[filePath], data);
+    }
+}
+
+- (void)assertContentsOfTextFiles:(NSDictionary *)contentsOfTextFiles
+{
+    for (NSString *filePath in contentsOfTextFiles)
+    {
+        NSError *error;
+        NSString *text = [NSString stringWithContentsOfFile:[self fullPathForFile:filePath] encoding:NSUTF8StringEncoding error:&error];
+        XCTAssertNotNil(text);
+        XCTAssertNil(error);
+
+        XCTAssertEqualObjects(contentsOfTextFiles[filePath], text);
+    }
 }
 
 - (void)copyTestingResource:(NSString *)resourceName toRelPath:(NSString *)toRelPath
@@ -213,10 +252,16 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 
 - (NSString *)fullPathForFile:(NSString *)filePath
 {
+    if ([filePath hasPrefix:@"/"])
+    {
+        return filePath;
+    }
+
     if (![filePath hasPrefix:_testDirecotoryPath])
     {
         return [_testDirecotoryPath stringByAppendingPathComponent:filePath];
     }
+
     return filePath;
 }
 
