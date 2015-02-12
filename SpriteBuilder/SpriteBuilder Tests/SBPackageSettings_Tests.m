@@ -33,11 +33,11 @@
     [super setUp];
 
     self.package = [[RMPackage alloc] init];
-    _package.dirPath = [self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack"];
+    _package.dirPath = [self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack"];
 
     self.packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:_package];
 
-    [self createFolders:@[@"/foo/project.spritebuilder/Packages/mypackage.sbpack"]];
+    [self createFolders:@[@"foo/project.spritebuilder/Packages/mypackage.sbpack"]];
 }
 
 - (void)testInitialValuesAndKVCPaths
@@ -89,7 +89,7 @@
 
     [_packagePublishSettings store];
 
-    [self assertFileExists:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"];
+    [self assertFileExists:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"];
 
 
     SBPackageSettings *settingsLoaded = [[SBPackageSettings alloc] initWithPackage:_package];
@@ -127,7 +127,7 @@
         @"publishToZip" : @NO
     };
 
-    [values writeToFile:[self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
+    [values writeToFile:[self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
 
     NSError *error;
     XCTAssertTrue([_packagePublishSettings loadWithError:&error]);
@@ -147,7 +147,7 @@
     // ----
 
     NSDictionary *values = @{};
-    [values writeToFile:[self fullPathForFile:@"/foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
+    [values writeToFile:[self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
 
     NSError *error;
     XCTAssertFalse([_packagePublishSettings loadWithError:&error]);

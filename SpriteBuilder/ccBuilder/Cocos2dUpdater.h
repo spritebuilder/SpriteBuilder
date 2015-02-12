@@ -6,11 +6,21 @@
 //
 //
 
+
+typedef enum {
+   UpdateActionUpdate = 0,
+   UpdateActionNothingToDo,
+   UpdateActionIgnoreVersion,
+} UpdateActions;
+
+
 @class AppDelegate;
 @class ProjectSettings;
+@protocol SBCocos2dUpdateDelegate;
 
 @interface Cocos2dUpdater : NSObject
 
+@property (nonatomic, weak) id <SBCocos2dUpdateDelegate> delegate;
 @property (nonatomic, weak, readonly) AppDelegate *appDelegate;
 @property (nonatomic, weak, readonly) ProjectSettings *projectSettings;
 
