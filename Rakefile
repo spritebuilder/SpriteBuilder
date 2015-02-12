@@ -31,6 +31,13 @@ def get_template_files
     end
 end
 
+def check_required_programs
+    `which xctool`
+    unless $?.success?
+        return "xctool not detected - run `brew install xctool`"
+    end
+end
+
 
 #
 ### Build Constants
@@ -81,6 +88,11 @@ file "Generated/cocos2d_version.txt" => 'SpriteBuilder/libs/cocos2d-iphone/VERSI
     `cp SpriteBuilder/libs/cocos2d-iphone/VERSION #{task.name()}`
 end
 
+task :build_requirements do
+    requirement_missing = check_required_programs
+    fail requirement_missing if requirement_missing
+end
+
 namespace :build do
     desc "Build (only) SpriteBuilder's new project template"
     task :template => ["Generated/#{TEMPLATE_FILENAME}.zip"] {}
@@ -89,16 +101,16 @@ namespace :build do
     task :generated => [:template, "Generated/Version.txt","Generated/cocos2d_version.txt"] do
     end
 
-    task :tests do
-        sh "xctool build-tests"
+    task :tests => :build_requirements do
+        sh "xctool -configuration Testing build-tests"
     end
 end
 
 task :default => "build:generated"
 
 desc "Run SpriteBuilder unit tests"
-task :test => "build:tests" do
-    sh "xctool run-tests"
+task :test => ["build:tests", :build_requirements] do
+    sh "xctool -configuration Testing run-tests"
 end
 
 build_dirs =  `find . -type d -iname build`.split
