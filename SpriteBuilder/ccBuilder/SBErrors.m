@@ -44,3 +44,10 @@ NSInteger const SBCCBMigrationNoVersionFoundError = 3012;
 NSInteger const SBPackageSettingsMigrationNoRuleError = 3100;
 NSInteger const SBPackageSettingsMigrationCannotDowngraderError = 3101;
 NSInteger const SBPackageSettingsEmptyOrDoesNotExist = 3102;
+
+NSInteger const SBProjectMigrationError = 3200;
+
+NSInteger const SBFileCommandBackupError = 3300;
+NSInteger const SBFileCommandBackupAlreadyExecutedError = 3301;
+NSInteger const SBFileCommandBackupAlreadyUndoneError = 3302;
+NSInteger const SBFileCommandBackupCannotUndoNonExecutedCommandError = 3303;

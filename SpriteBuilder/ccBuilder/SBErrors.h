@@ -45,3 +45,13 @@ extern NSInteger const SBCCBMigrationNoVersionFoundError;
 extern NSInteger const SBPackageSettingsMigrationNoRuleError;
 extern NSInteger const SBPackageSettingsMigrationCannotDowngraderError;
 extern NSInteger const SBPackageSettingsEmptyOrDoesNotExist;
+
+// Project Migration
+extern NSInteger const SBProjectMigrationError;
+
+// File Commands
+extern NSInteger const SBFileCommandBackupError;
+extern NSInteger const SBFileCommandBackupAlreadyExecutedError;
+extern NSInteger const SBFileCommandBackupAlreadyUndoneError;
+extern NSInteger const SBFileCommandBackupCannotUndoNonExecutedCommandError;
+

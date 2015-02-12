@@ -4,4 +4,6 @@
 
 - (BOOL)isEmpty;
 
+- (NSString *)availabeFileNameWithRollingNumberAndExtraExtension:(NSString *)extension;
+
 @end

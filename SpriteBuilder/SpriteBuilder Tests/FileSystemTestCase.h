@@ -23,7 +23,7 @@
 // create files, dictionary structure: key: relativeFilePath
 // value has to be of type NSData *
 // Example for parameter:
-// NSDictionary *foo = @{@"path/to/file.txt": [NSDate data]};
+// NSDictionary *foo = @{@"path/to/file.txt": [NSData data]};
 - (void)createFilesWithContents:(NSDictionary *)filesWithContents;
 
 // Creates a .ccbproj file with default initialized values in testDirecotoryPath
