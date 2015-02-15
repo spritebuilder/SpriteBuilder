@@ -1051,6 +1051,50 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 #pragma mark Handle mouse input
 
+- (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton) button {
+    if (!appDelegate.hasOpenedDocument) return;
+    
+    switch (button) {
+        case CCMouseButtonLeft:
+            [self leftMouseDown:theEvent];
+            break;
+        case CCMouseButtonRight:
+            [self rightMouseDown:theEvent];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton) button {
+    if (!appDelegate.hasOpenedDocument) return;
+    [self mouseMoved:theEvent];
+    
+    switch (button) {
+        case CCMouseButtonLeft:
+            [self leftMouseDragged:theEvent];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton) button {
+    if (!appDelegate.hasOpenedDocument) return;
+    
+    switch (button) {
+        case CCMouseButtonLeft:
+            [self leftMouseUp:theEvent];
+            break;
+        case CCMouseButtonRight:
+            [self rightMouseUp:theEvent];
+            break;
+        default:
+            break;
+    }
+}
+
+
 - (CGPoint) convertToDocSpace:(CGPoint)viewPt
 {
     return [contentLayer convertToNodeSpace:viewPt];
@@ -1198,10 +1242,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
 }
 
-- (void) mouseDown:(NSEvent *)event
+- (void) leftMouseDown:(NSEvent *)event
 {
-    if (!appDelegate.hasOpenedDocument) return;
-    
     CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDown:pos event:event]) return;
@@ -1428,11 +1470,8 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 }
 
 
-- (void) mouseDragged:(NSEvent *)event
+- (void) leftMouseDragged:(NSEvent *)event
 {
-    if (!appDelegate.hasOpenedDocument) return;
-    [self mouseMoved:event];
-
     CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDragged:pos event:event]) return;
@@ -1868,7 +1907,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 }
 
-- (void) mouseUp:(NSEvent *)event
+- (void) leftMouseUp:(NSEvent *)event
 {
     if (!appDelegate.hasOpenedDocument) return;
     
