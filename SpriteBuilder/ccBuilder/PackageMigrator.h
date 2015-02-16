@@ -6,4 +6,6 @@
 
 @interface PackageMigrator : NSObject  <ProjectMigratorProtocol>
 
+- (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
+
 @end
