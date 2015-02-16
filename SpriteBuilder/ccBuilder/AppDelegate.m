@@ -111,7 +111,6 @@
 #import "PlugInNodeCollectionView.h"
 #import "SBErrors.h"
 #import "NSArray+Query.h"
-#import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
 #import "SBUserDefaultsKeys.h"
 #import "MiscConstants.h"
@@ -125,7 +124,7 @@
 #import "PackageImporter.h"
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
-#import "ProjectMigrator.h"
+#import "ProjectMigrationController.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
@@ -139,6 +138,8 @@
 #import "NSAlert+Convenience.h"
 #import "SecurityScopedBookmarksStore.h"
 #import "CCDirector_Private.h"
+#import "Cocos2dUpdaterController.h"
+#import "ProjectMigrationViewController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1715,6 +1716,14 @@ typedef enum
         [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
         return NO;
     }
+
+    ProjectMigrationViewController *projectMigrationViewController = [[ProjectMigrationViewController alloc] initWithProjectSettings:prjctSettings];
+    if (![projectMigrationViewController migrate])
+    {
+        [self closeProject];
+        return NO;
+    }
+
     prjctSettings.projectPath = projectPath;
     [prjctSettings store];
 
@@ -1736,10 +1745,6 @@ typedef enum
     {
         return NO;
     }
-
-    ProjectMigrator *migrator = [[ProjectMigrator alloc] initWithProjectSettings:projectSettings];
-    [migrator migrate];
-
     // Load or create language file
     NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
@@ -1778,8 +1783,8 @@ typedef enum
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
-    Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
-    [cocos2dUpdater updateAndBypassIgnore:NO];
+    Cocos2dUpdaterController *cocos2dUpdaterController = [[Cocos2dUpdaterController alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpdaterController updateAndBypassIgnore:NO];
 
     self.window.representedFilename = [projectPath stringByDeletingLastPathComponent];
 
@@ -3084,8 +3089,8 @@ typedef enum
 
 - (IBAction)updateCocos2d:(id)sender
 {
-    Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
-    [cocos2dUpdater updateAndBypassIgnore:YES];
+    Cocos2dUpdaterController *cocos2dUpdaterController = [[Cocos2dUpdaterController alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpdaterController updateAndBypassIgnore:YES];
 }
 
 -(void)updateLanguageHint

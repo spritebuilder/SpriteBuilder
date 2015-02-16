@@ -43,7 +43,9 @@
     [_projectSettings setProperty:@3 forRelPath:@"background.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings clearDirtyMarkerOfRelPath:@"background.png"];
 
-    [_migrator migrate];
+    NSError *error;
+    XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertNil(error);
 
     XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
