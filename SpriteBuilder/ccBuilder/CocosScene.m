@@ -1198,8 +1198,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
 }
 
-- (void) mouseDown:(NSEvent *)event
+- (void) mouseDown:(NSEvent *)event button:(CCMouseButton)button
 {
+    if(button == CCMouseButtonRight){
+        [self rightMouseDown:event];
+    } else if(button == CCMouseButtonOther) {
+        return;
+    }
+    
     if (!appDelegate.hasOpenedDocument) return;
     
     CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
@@ -1428,8 +1434,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 }
 
 
-- (void) mouseDragged:(NSEvent *)event
+- (void) mouseDragged:(NSEvent *)event button:(CCMouseButton)button
 {
+    if(button != CCMouseButtonLeft) return;
+    
     if (!appDelegate.hasOpenedDocument) return;
     [self mouseMoved:event];
 
@@ -1868,8 +1876,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 }
 
-- (void) mouseUp:(NSEvent *)event
+- (void) mouseUp:(NSEvent *)event button:(CCMouseButton)button
 {
+    if(button == CCMouseButtonRight){
+        [self rightMouseUp:event];
+    } else if(button == CCMouseButtonOther){
+        return;
+    }
+    
     if (!appDelegate.hasOpenedDocument) return;
     
     CCNode* selectedNode = appDelegate.selectedNode;
