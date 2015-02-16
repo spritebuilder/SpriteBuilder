@@ -8,8 +8,6 @@
 
 @protocol ProjectMigratorProtocol <NSObject>
 
-- (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
-
 - (NSString *)htmlInfoText;
 
 - (BOOL)migrationRequired;
