@@ -8,6 +8,7 @@
 @interface ResourcePropertiesMigrator ()
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
+@property (nonatomic, copy) NSString *backupFilePath;
 
 @end
 
@@ -27,11 +28,38 @@
     return self;
 }
 
-- (BOOL)migrate
+- (NSString *)htmlInfoText
 {
+    return @"d98789798798797987";
+
+}
+
+- (BOOL)migrationRequired
+{
+    return YES;
+
+}
+
+- (BOOL)migrateWithError:(NSError **)error
+{
+    if (![self migrationRequired])
+    {
+        return YES;
+    }
+
+    // self.backupFilePath = _projectSettings.projectPath;
+
+
+
     [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites];
 
     return YES;
+}
+
+- (void)rollback
+{
+
+    // [backup store];
 }
 
 // Note: To refactor the whole setValue redundancies the convention to name the properties the

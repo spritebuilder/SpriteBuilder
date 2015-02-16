@@ -13,7 +13,6 @@
 #import "RemoveFileCommand.h"
 #import "NSError+SBErrors.h"
 #import "SBErrors.h"
-#import "NSAlert+Convenience.h"
 
 
 NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
@@ -54,9 +53,29 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return self;
 }
 
-- (BOOL)migrate:(NSError **)error
+- (NSString *)htmlInfoText
 {
-    if (![self needsMigration])
+    return [NSString stringWithFormat:@"Convert old resource paths to Packages."];
+}
+
+- (BOOL)migrationRequired
+{
+    for (NSMutableDictionary *dict in _projectSettings.resourcePaths)
+    {
+        NSString *fullPath = [_projectSettings fullPathForResourcePathDict:dict];
+
+        if (![fullPath hasPackageSuffix]
+            || ![_projectSettings isPathInPackagesFolder:fullPath])
+        {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)migrateWithError:(NSError **)error
+{
+    if (![self migrationRequired])
     {
         return YES;
     }
@@ -104,21 +123,6 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return [NSError errorWithDomain:SBErrorDomain
                                code:SBMigrationError
                            userInfo:@{NSLocalizedDescriptionKey : message}];
-}
-
-- (BOOL)needsMigration
-{
-    for (NSMutableDictionary *dict in _projectSettings.resourcePaths)
-    {
-        NSString *fullPath = [_projectSettings fullPathForResourcePathDict:dict];
-
-        if (![fullPath hasPackageSuffix]
-            || ![_projectSettings isPathInPackagesFolder:fullPath])
-        {
-            return YES;
-        }
-    }
-    return NO;
 }
 
 - (void)backupResourcePaths

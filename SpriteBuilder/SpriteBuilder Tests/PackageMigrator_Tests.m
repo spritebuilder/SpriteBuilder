@@ -72,7 +72,7 @@
     [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
     [self assertFileExists:@"packages"];
@@ -92,7 +92,7 @@
     [self setProjectsResourcePaths:@[@"Packages"]];
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
     [self assertFileExists:@"Packages"];
@@ -113,7 +113,7 @@
     [self setProjectsResourcePaths:@[@"sprites"]];
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
     [self assertFileExists:[@"Packages/sprites" stringByAppendingPackageSuffix]];
@@ -132,7 +132,7 @@
     [self setProjectsResourcePaths:@[[@"sprites" stringByAppendingPackageSuffix]]];
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
     [self assertFileExists:[@"packages/sprites" stringByAppendingPackageSuffix]];
@@ -151,7 +151,7 @@
     [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrate:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
     [_packageMigrator rollback];

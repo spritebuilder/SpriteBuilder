@@ -1,11 +1,10 @@
 #import <Foundation/Foundation.h>
+#import "ProjectMigratorProtocol.h"
 
 @class ProjectSettings;
 
 
-@interface ResourcePropertiesMigrator : NSObject
-
-- (id)initWithProjectSettings:(ProjectSettings *)settings;
+@interface ResourcePropertiesMigrator : NSObject <ProjectMigratorProtocol>
 
 - (BOOL)migrate;
 
