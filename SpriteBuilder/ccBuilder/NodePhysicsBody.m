@@ -26,6 +26,7 @@
 #import "AppDelegate.h"
 #import "PolyDecomposition.h"
 #import "NSArray+Query.h"
+#import "SequencerHandler.h"
 
 #define kCCBPhysicsMinimumDefaultCircleRadius 16
 
@@ -41,7 +42,11 @@
 
     [self setupDefaultPolygonForNode:node];
     
-    _dynamic = !node.hasKeyframes;
+    _dynamic = !([node hasKeyframesForProperty:@"position"] ||
+                 [node hasKeyframesForProperty:@"scale"]    ||
+                 [node hasKeyframesForProperty:@"rotation"] ||
+                 [node hasKeyframesForProperty:@"skew"]);
+    
     _affectedByGravity = YES;
     _allowsRotation = YES;
     
@@ -295,6 +300,8 @@
 {
     [[AppDelegate appDelegate] saveUndoStateWillChangeProperty:@"*P*dynamic"];
     _dynamic = dynamic;
+    
+    [[SequencerHandler sharedHandler] redrawTimeline];
 }
 
 - (void) setAffectedByGravity:(BOOL)affectedByGravity
