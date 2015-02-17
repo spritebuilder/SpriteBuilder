@@ -59,7 +59,7 @@ TEMPLATE_PROJECT = File.join PROJECT_ROOT, "Support", "#{TEMPLATE_FILENAME}.spri
 TEMPLATE_FILES = get_template_files()
 ABSOLUTE_TEMPLATE_FILES = TEMPLATE_FILES.map { |f| File.expand_path(File.join(TEMPLATE_PROJECT,f)) }
 DERIVED_DATA_LOCATION="~/Library/Developer/Xcode/DerivedData"
-DEFAULT_SB_VERSION="1.4"
+DEFAULT_SB_VERSION=`cat VERSION`.chomp
 DEFAULT_PRODUCT_NAME="SpriteBuilder"
 
 BUILD_DIR=File.join PROJECT_ROOT, "Output"
@@ -89,8 +89,7 @@ file "Generated/Version.txt" => "Generated" do |task|
     puts "Generating #{task.name()}..."
 
     version_info = {}
-    puts "No VERSION specified! Using default value of #{DEFAULT_SB_VERSION}" unless ENV["VERSION"] 
-    version_info["version"] = ENV["VERSION"] || DEFAULT_SB_VERSION
+    version_info["version"] DEFAULT_SB_VERSION
     version_info["revision"] = ENV["REVISION"] || `git rev-parse --short=10 HEAD`.chomp
 
     File.open("Generated/Version.txt","w") << JSON.pretty_generate(version_info)
@@ -130,7 +129,7 @@ end
 namespace :package do
     desc "Create SpriteBuilder.app + zip app and symbols"
     task :app do
-        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} CONFIGURATION_BUILD_DIR=#{BUILD_DIR} VERSION=#{ENV["VERSION"]} -configuration Release build"
+        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} CONFIGURATION_BUILD_DIR=#{BUILD_DIR} VERSION=#{DEFAULT_SB_VERSION} -configuration Release build"
         app, symbols = "NONE"
 
         built_files = `find . -name SpriteBuilder.app`.chomp.split "\n"
@@ -153,7 +152,7 @@ namespace :package do
 
     desc "Create SpriteBuilder.xcarchive and zip"
     task :archive do
-        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} VERSION='#{ENV["VERSION"]}' -configuration Release archive -archivePath #{BUILD_DIR}/SpriteBuilder"
+        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} VERSION='#{DEFAULT_SB_VERSION}' -configuration Release archive -archivePath #{BUILD_DIR}/SpriteBuilder"
 
         Dir.chdir BUILD_DIR do
             sh "zip -r SpriteBuilder.xcarchive.zip SpriteBuilder.xcarchive"
@@ -161,11 +160,8 @@ namespace :package do
     end
 end
 
-desc "Build SpriteBuilder distribution - requires a version number VERSION=<semantic version>"
+desc "Build SpriteBuilder distribution"
 task :package => [:clobber, BUILD_DIR, :build_requirements] do
-    unless ENV["VERSION"]
-        fail "Version number not passed - set one with `VERSION=<semantic version> rake package` on the commandline"
-    end
 
     #force generation of a new Version.txt with commandline value
     Rake::Task["build:generated"].invoke
