@@ -14,7 +14,6 @@
 #import "SBErrors.h"
 #import "ProjectSettings.h"
 #import "PackageImporter.h"
-#import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "ProjectSettings+Packages.h"
 

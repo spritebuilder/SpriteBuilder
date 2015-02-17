@@ -13,7 +13,6 @@
 #import "SBErrors.h"
 #import "ProjectSettings+Packages.h"
 #import "NSString+Packages.h"
-#import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "FileSystemTestCase.h"
 #import "ProjectSettings+Convenience.h"
@@ -135,7 +134,7 @@
     NSString *fullPathForPackageName = [_projectSettings fullPathForPackageName:packageName];
     NSString *supposedFullPath = [fullPackagesPath stringByAppendingPathComponent:[packageName stringByAppendingPackageSuffix]];
 
-    SBAssertStringsEqual(fullPathForPackageName,supposedFullPath);
+    XCTAssertEqualObjects(fullPathForPackageName,supposedFullPath);
 }
 
 - (void)testIsPathWithinPackagesFolder
@@ -149,7 +148,7 @@
 {
     NSString *fullPackagesPath = [_projectSettings.projectPathDir stringByAppendingPathComponent:PACKAGES_FOLDER_NAME];
 
-    SBAssertStringsEqual(fullPackagesPath, _projectSettings.packagesFolderPath);
+    XCTAssertEqualObjects(fullPackagesPath, _projectSettings.packagesFolderPath);
 }
 
 - (void)testInitWithDictionary
@@ -253,9 +252,9 @@
     XCTAssertTrue(project.deviceOrientationLandscapeRight);
 
     // This a convention, if it's read as 0 has to become 4
-    SBAssertStringsEqual(project.publishDirectory, @"Source/Resources/Published-iOS");
+    XCTAssertEqualObjects(project.publishDirectory, @"Source/Resources/Published-iOS");
 
-    SBAssertStringsEqual(project.publishDirectoryAndroid, @"Source/Resources/Published-Android");
+    XCTAssertEqualObjects(project.publishDirectoryAndroid, @"Source/Resources/Published-Android");
     XCTAssertEqual(project.defaultOrientation, 0);
 
     XCTAssertTrue(project.publishEnabledAndroid);
@@ -268,7 +267,7 @@
     XCTAssertEqual(project.designTarget, 0);
 
     XCTAssertEqual(project.engine, CCBTargetEngineCocos2d);
-    SBAssertStringsEqual(project.exporter, @"ccbi");
+    XCTAssertEqualObjects(project.exporter, @"ccbi");
 
     XCTAssertFalse(project.publishToZipFile);
     XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);
@@ -302,8 +301,8 @@
 
     ProjectSettings *project = [[ProjectSettings alloc] initWithSerialization:projectDict];
     XCTAssertNotNil(project);
-    SBAssertStringsEqual(project.publishDirectory, @"");
-    SBAssertStringsEqual(project.publishDirectoryAndroid, @"");
+    XCTAssertEqualObjects(project.publishDirectory, @"");
+    XCTAssertEqualObjects(project.publishDirectoryAndroid, @"");
     XCTAssertFalse(project.excludedFromPackageMigration);
 }
 
@@ -324,8 +323,8 @@
     XCTAssertNotNil(projectSettings.resourcePaths);
     XCTAssertEqual(projectSettings.resourcePaths.count, 0);
     XCTAssertEqual(projectSettings.engine, CCBTargetEngineCocos2d);
-    SBAssertStringsEqual(projectSettings.publishDirectory, @"Published-iOS");
-    SBAssertStringsEqual(projectSettings.publishDirectoryAndroid, @"Published-Android");
+    XCTAssertEqualObjects(projectSettings.publishDirectory, @"Published-iOS");
+    XCTAssertEqualObjects(projectSettings.publishDirectoryAndroid, @"Published-Android");
 
     XCTAssertFalse(projectSettings.onlyPublishCCBs);
     XCTAssertFalse(projectSettings.publishToZipFile);
@@ -407,7 +406,7 @@
     [_projectSettings addResourcePath:[self fullPathForFile:@"Packages/baa.sbpack"] error:nil];
 
     NSString *fullPath = [self fullPathForFile:@"Packages/foo.sbpack/sprites/fighter.png"];
-    SBAssertStringsEqual([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath], @"sprites/fighter.png");
+    XCTAssertEqualObjects([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath], @"sprites/fighter.png");
 
     NSString *fullPath2 = [self fullPathForFile:@"Packages/level1.sbpack/sprites/fighter.png"];
     XCTAssertNil([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath2]);

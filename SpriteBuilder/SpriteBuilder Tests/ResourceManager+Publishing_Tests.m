@@ -12,7 +12,6 @@
 #import "RMPackage.h"
 #import "ResourceManager+Publishing.h"
 #import "SBPackageSettings.h"
-#import "SBAssserts.h"
 
 @interface ResourceManager_Publishing_Tests : FileSystemTestCase
 

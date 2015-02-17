@@ -14,7 +14,6 @@
 #import "MiscConstants.h"
 #import "PackageCreator.h"
 #import "FileSystemTestCase.h"
-#import "SBAssserts.h"
 
 @interface PackageCreator_Tests : FileSystemTestCase
 
@@ -42,7 +41,7 @@
 - (void)testCreatePackageWithName
 {
     NSError *error;
-    SBAssertStringsEqual([_packageCreator createPackageWithName:@"NewPackage" error:&error], [self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"]);
+    XCTAssertEqualObjects([_packageCreator createPackageWithName:@"NewPackage" error:&error], [self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage.sbpack"]);
     XCTAssertNil(error, @"Error object should nil");
 
     [self assertFileExists:@"foo.spritebuilder/Packages/NewPackage.sbpack"];
@@ -111,7 +110,7 @@
     [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/NewPackage 1.sbpack"] error:nil];
     [self createFolders:@[@"foo.spritebuilder/Packages/NewPackage 2.sbpack"]];
 
-    SBAssertStringsEqual(@"NewPackage 3", [_packageCreator creatablePackageNameWithBaseName:@"NewPackage"]);
+    XCTAssertEqualObjects(@"NewPackage 3", [_packageCreator creatablePackageNameWithBaseName:@"NewPackage"]);
 }
 
 @end

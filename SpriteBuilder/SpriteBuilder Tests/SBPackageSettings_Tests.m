@@ -11,7 +11,6 @@
 #import "RMPackage.h"
 #import "PublishOSSettings.h"
 #import "FileSystemTestCase.h"
-#import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "CCBPublisherTypes.h"
 #import "PublishResolutions.h"
@@ -96,7 +95,7 @@
     [settingsLoaded loadWithError:nil];
 
     XCTAssertEqual(_packagePublishSettings.publishToMainProject, settingsLoaded.publishToMainProject);
-    SBAssertStringsEqual(_packagePublishSettings.customOutputDirectory, settingsLoaded.customOutputDirectory);
+    XCTAssertEqualObjects(_packagePublishSettings.customOutputDirectory, settingsLoaded.customOutputDirectory);
     XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
     XCTAssertEqual(_packagePublishSettings.publishToZip, settingsLoaded.publishToZip);
     XCTAssertEqual(_packagePublishSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
@@ -161,19 +160,19 @@
     _packagePublishSettings.customOutputDirectory = @"foo";
     _packagePublishSettings.publishToCustomOutputDirectory = YES;
 
-    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, @"foo");
+    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, @"foo");
 
     _packagePublishSettings.publishToCustomOutputDirectory = NO;
 
-    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
 
     _packagePublishSettings.customOutputDirectory = nil;
     _packagePublishSettings.publishToCustomOutputDirectory = YES;
-    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
 
     _packagePublishSettings.customOutputDirectory = @"    ";
     _packagePublishSettings.publishToCustomOutputDirectory = YES;
-    SBAssertStringsEqual(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
 }
 
 @end

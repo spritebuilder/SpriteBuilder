@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "SBAssserts.h"
 
 #import "RMPackage.h"
 #import "MiscConstants.h"
@@ -24,7 +23,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [@"/project/packages/foo" stringByAppendingPackageSuffix];
 
-    SBAssertStringsEqual(package.name, @"foo");
+    XCTAssertEqualObjects(package.name, @"foo");
 }
 
 - (void)testNamePropertyWithDoubleSuffix
@@ -32,7 +31,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [[@"/project/packages/foo" stringByAppendingPackageSuffix] stringByAppendingPackageSuffix];
 
-    SBAssertStringsEqual(package.name, [@"foo" stringByAppendingPackageSuffix]);
+    XCTAssertEqualObjects(package.name, [@"foo" stringByAppendingPackageSuffix]);
 }
 
 @end
