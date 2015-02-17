@@ -10,16 +10,8 @@ deployment:
     develop:
         branch: develop
         commands:
-            - VERSION=$(cat VERSION) rake package
+            - rake package
     ex:
         branch: experimental/circleciSign
         commands:
-            - VERSION=$(cat VERSION) rake package
-
-general:
-    branches:
-        only:
-            - master
-            - develop
-            - experimental/circleciSign
-
+            - rake package
