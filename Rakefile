@@ -89,7 +89,7 @@ file "Generated/Version.txt" => "Generated" do |task|
     puts "Generating #{task.name()}..."
 
     version_info = {}
-    version_info["version"] DEFAULT_SB_VERSION
+    version_info["version"] = DEFAULT_SB_VERSION
     version_info["revision"] = ENV["REVISION"] || `git rev-parse --short=10 HEAD`.chomp
 
     File.open("Generated/Version.txt","w") << JSON.pretty_generate(version_info)
