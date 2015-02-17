@@ -139,8 +139,12 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
     NSAssert(_package != nil, @"package must not be nil");
 
     NSDictionary *dict = [self toDictionary];
-    NSString *fullPath = [_package.dirPath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
-    return [dict writeToFile:fullPath atomically:YES];
+    return [dict writeToFile:self.fullPath atomically:YES ];
+}
+
+- (NSString *)fullPath
+{
+    return [_package.dirPath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
 }
 
 - (NSDictionary *)toDictionary

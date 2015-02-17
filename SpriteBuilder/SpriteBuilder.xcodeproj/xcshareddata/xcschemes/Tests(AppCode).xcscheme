@@ -29,10 +29,19 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "AllPackageSettingsMigrator_Tests">
+               </Test>
+               <Test
                   Identifier = "CCAnimation_Tests">
                </Test>
                <Test
                   Identifier = "CCBReader_EffectsTest">
+               </Test>
+               <Test
+                  Identifier = "ProjectMigrationController_Tests">
+               </Test>
+               <Test
+                  Identifier = "ProjectMigrator_Tests">
                </Test>
             </SkippedTests>
          </TestableReference>

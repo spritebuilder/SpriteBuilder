@@ -11,6 +11,7 @@ extern NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
 @interface SBPackageSettings : NSObject
 
 @property (nonatomic, strong) RMPackage *package;
+@property (nonatomic, copy, readonly) NSString *fullPath;
 
 @property (nonatomic) BOOL publishToZip;
 @property (nonatomic) BOOL publishToMainProject;

@@ -20,7 +20,7 @@
 @interface SBPackageSettings_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) RMPackage *package;
-@property (nonatomic, strong) SBPackageSettings *packagePublishSettings;
+@property (nonatomic, strong) SBPackageSettings *packageSettings;
 
 @end
 
@@ -34,59 +34,59 @@
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack"];
 
-    self.packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:_package];
+    self.packageSettings = [[SBPackageSettings alloc] initWithPackage:_package];
 
     [self createFolders:@[@"foo/project.spritebuilder/Packages/mypackage.sbpack"]];
 }
 
 - (void)testInitialValuesAndKVCPaths
 {
-    XCTAssertTrue(_packagePublishSettings.publishToMainProject);
-    XCTAssertFalse(_packagePublishSettings.publishToZip);
-    XCTAssertFalse(_packagePublishSettings.publishToCustomOutputDirectory);
+    XCTAssertTrue(_packageSettings.publishToMainProject);
+    XCTAssertFalse(_packageSettings.publishToZip);
+    XCTAssertFalse(_packageSettings.publishToCustomOutputDirectory);
 
-    PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    PublishOSSettings *osSettingsIOS = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     XCTAssertNotNil(osSettingsIOS);
 
-    PublishOSSettings *osSettingsIOSKVC = [_packagePublishSettings valueForKeyPath:@"osSettings.ios"];
+    PublishOSSettings *osSettingsIOSKVC = [_packageSettings valueForKeyPath:@"osSettings.ios"];
     XCTAssertNotNil(osSettingsIOSKVC);
 
-    PublishOSSettings *osSettingsAndroid = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    PublishOSSettings *osSettingsAndroid = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertNotNil(osSettingsAndroid);
 
-    PublishOSSettings *osSettingsAndroidKVC = [_packagePublishSettings valueForKeyPath:@"osSettings.android"];
+    PublishOSSettings *osSettingsAndroidKVC = [_packageSettings valueForKeyPath:@"osSettings.android"];
     XCTAssertNotNil(osSettingsAndroidKVC);
 }
 
 - (void)testPersistency
 {
-    _packagePublishSettings.customOutputDirectory = @"foo";
-    _packagePublishSettings.publishToMainProject = NO;
-    _packagePublishSettings.publishToZip = NO;
-    _packagePublishSettings.publishToCustomOutputDirectory = YES;
-    _packagePublishSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
-    _packagePublishSettings.resourceAutoScaleFactor = 3;
+    _packageSettings.customOutputDirectory = @"foo";
+    _packageSettings.publishToMainProject = NO;
+    _packageSettings.publishToZip = NO;
+    _packageSettings.publishToCustomOutputDirectory = YES;
+    _packageSettings.publishEnvironment = kCCBPublishEnvironmentRelease;
+    _packageSettings.resourceAutoScaleFactor = 3;
 
-    _packagePublishSettings.mainProjectResolutions.resolution_1x = YES;
-    _packagePublishSettings.mainProjectResolutions.resolution_2x = YES;
-    _packagePublishSettings.mainProjectResolutions.resolution_4x = NO;
+    _packageSettings.mainProjectResolutions.resolution_1x = YES;
+    _packageSettings.mainProjectResolutions.resolution_2x = YES;
+    _packageSettings.mainProjectResolutions.resolution_4x = NO;
 
-    PublishOSSettings *osSettingsIOS = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    PublishOSSettings *osSettingsIOS = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
     osSettingsIOS.audio_quality = 8;
     osSettingsIOS.resolutions.resolution_1x = YES;
     osSettingsIOS.resolutions.resolution_2x = NO;
     osSettingsIOS.resolutions.resolution_4x = NO;
-    [_packagePublishSettings setOSSettings:osSettingsIOS forOsType:kCCBPublisherOSTypeIOS];
+    [_packageSettings setOSSettings:osSettingsIOS forOsType:kCCBPublisherOSTypeIOS];
 
-    PublishOSSettings *osSettingsAndroid = [_packagePublishSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    PublishOSSettings *osSettingsAndroid = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
     osSettingsAndroid.audio_quality = 2;
     osSettingsAndroid.resolutions.resolution_1x = NO;
     osSettingsAndroid.resolutions.resolution_2x = YES;
     osSettingsAndroid.resolutions.resolution_4x = YES;
 
-    [_packagePublishSettings setOSSettings:osSettingsAndroid forOsType:kCCBPublisherOSTypeAndroid];
+    [_packageSettings setOSSettings:osSettingsAndroid forOsType:kCCBPublisherOSTypeAndroid];
 
-    [_packagePublishSettings store];
+    [_packageSettings store];
 
     [self assertFileExists:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"];
 
@@ -94,16 +94,16 @@
     SBPackageSettings *settingsLoaded = [[SBPackageSettings alloc] initWithPackage:_package];
     [settingsLoaded loadWithError:nil];
 
-    XCTAssertEqual(_packagePublishSettings.publishToMainProject, settingsLoaded.publishToMainProject);
-    XCTAssertEqualObjects(_packagePublishSettings.customOutputDirectory, settingsLoaded.customOutputDirectory);
-    XCTAssertEqual(_packagePublishSettings.publishEnvironment, settingsLoaded.publishEnvironment);
-    XCTAssertEqual(_packagePublishSettings.publishToZip, settingsLoaded.publishToZip);
-    XCTAssertEqual(_packagePublishSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
-    XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, settingsLoaded.resourceAutoScaleFactor);
+    XCTAssertEqual(_packageSettings.publishToMainProject, settingsLoaded.publishToMainProject);
+    XCTAssertEqualObjects(_packageSettings.customOutputDirectory, settingsLoaded.customOutputDirectory);
+    XCTAssertEqual(_packageSettings.publishEnvironment, settingsLoaded.publishEnvironment);
+    XCTAssertEqual(_packageSettings.publishToZip, settingsLoaded.publishToZip);
+    XCTAssertEqual(_packageSettings.publishToCustomOutputDirectory, settingsLoaded.publishToCustomOutputDirectory);
+    XCTAssertEqual(_packageSettings.resourceAutoScaleFactor, settingsLoaded.resourceAutoScaleFactor);
 
-    XCTAssertTrue(_packagePublishSettings.mainProjectResolutions.resolution_1x);
-    XCTAssertTrue(_packagePublishSettings.mainProjectResolutions.resolution_2x);
-    XCTAssertFalse(_packagePublishSettings.mainProjectResolutions.resolution_4x);
+    XCTAssertTrue(_packageSettings.mainProjectResolutions.resolution_1x);
+    XCTAssertTrue(_packageSettings.mainProjectResolutions.resolution_2x);
+    XCTAssertFalse(_packageSettings.mainProjectResolutions.resolution_4x);
 
     PublishOSSettings *osSettingsAndroidLoaded = [settingsLoaded settingsForOsType:kCCBPublisherOSTypeAndroid];
     XCTAssertEqual(osSettingsAndroidLoaded.audio_quality, osSettingsAndroid.audio_quality);
@@ -129,16 +129,16 @@
     [values writeToFile:[self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
 
     NSError *error;
-    XCTAssertTrue([_packagePublishSettings loadWithError:&error]);
+    XCTAssertTrue([_packageSettings loadWithError:&error]);
 
     XCTAssertNil(error);
-    XCTAssertEqual(_packagePublishSettings.resourceAutoScaleFactor, DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING);
+    XCTAssertEqual(_packageSettings.resourceAutoScaleFactor, DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING);
 }
 
 - (void)testLoadingEmptyAndNonExistentPackageSettingsFile
 {
     NSError *error2;
-    XCTAssertFalse([_packagePublishSettings loadWithError:&error2]);
+    XCTAssertFalse([_packageSettings loadWithError:&error2]);
 
     XCTAssertNotNil(error2);
     XCTAssertEqual(error2.code, SBPackageSettingsEmptyOrDoesNotExist);
@@ -149,7 +149,7 @@
     [values writeToFile:[self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
 
     NSError *error;
-    XCTAssertFalse([_packagePublishSettings loadWithError:&error]);
+    XCTAssertFalse([_packageSettings loadWithError:&error]);
 
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBPackageSettingsEmptyOrDoesNotExist);
@@ -157,22 +157,27 @@
 
 - (void)testEffectiveOutputDir
 {
-    _packagePublishSettings.customOutputDirectory = @"foo";
-    _packagePublishSettings.publishToCustomOutputDirectory = YES;
+    _packageSettings.customOutputDirectory = @"foo";
+    _packageSettings.publishToCustomOutputDirectory = YES;
 
-    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, @"foo");
+    XCTAssertEqualObjects(_packageSettings.effectiveOutputDirectory, @"foo");
 
-    _packagePublishSettings.publishToCustomOutputDirectory = NO;
+    _packageSettings.publishToCustomOutputDirectory = NO;
 
-    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+    XCTAssertEqualObjects(_packageSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
 
-    _packagePublishSettings.customOutputDirectory = nil;
-    _packagePublishSettings.publishToCustomOutputDirectory = YES;
-    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+    _packageSettings.customOutputDirectory = nil;
+    _packageSettings.publishToCustomOutputDirectory = YES;
+    XCTAssertEqualObjects(_packageSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
 
-    _packagePublishSettings.customOutputDirectory = @"    ";
-    _packagePublishSettings.publishToCustomOutputDirectory = YES;
-    XCTAssertEqualObjects(_packagePublishSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+    _packageSettings.customOutputDirectory = @"    ";
+    _packageSettings.publishToCustomOutputDirectory = YES;
+    XCTAssertEqualObjects(_packageSettings.effectiveOutputDirectory, DEFAULT_OUTPUTDIR_PUBLISHED_PACKAGES);
+}
+
+- (void)testFullPath
+{
+    XCTAssertEqualObjects(_packageSettings.fullPath, [self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"]);
 }
 
 @end
