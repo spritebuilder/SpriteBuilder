@@ -36,9 +36,9 @@
 
         NSString* filePath = [dirPath stringByAppendingPathComponent:newFileWindowController.documentName];
 
-        if (![[filePath pathExtension] isEqualToString:@"ccb"])
+        if (![[filePath pathExtension] isEqualToString:kCCBDefaultExtension])
         {
-            filePath = [filePath stringByAppendingPathExtension:@"ccb"];
+            filePath = [filePath stringByAppendingPathExtension:kCCBDefaultExtension];
         }
 
         BOOL isDir = NO;
@@ -74,7 +74,7 @@
 - (BOOL)isValidFilename:(NSString *)name
 {
     BOOL isLongEnough;
-    NSString *withoutFileExtension = [name stringByReplacingOccurrencesOfString:@".ccb" withString:@""];
+    NSString *withoutFileExtension = [name stringByReplacingOccurrencesOfString:kCCBDefaultExtensionWithDot withString:@""];
     NSString *withoutWhitespace = [withoutFileExtension stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     isLongEnough = withoutWhitespace.length >= MINIMUM_FILENAME_LENGTH;
 

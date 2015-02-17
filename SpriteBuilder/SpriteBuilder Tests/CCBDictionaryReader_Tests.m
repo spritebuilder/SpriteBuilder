@@ -21,7 +21,7 @@
 #import "CCLayoutBox.h"
 #import "SBErrors.h"
 #import "CCBDictionaryKeys.h"
-
+#import "ProjectSettings.h"
 
 @interface CCBDictionaryReader_Tests : XCTestCase
 
@@ -552,7 +552,7 @@
 - (NSDictionary *)loadCCBFile:(NSString *)ccbName
 {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *path = [bundle pathForResource:ccbName ofType:@"ccb"];
+    NSString *path = [bundle pathForResource:ccbName ofType:kCCBDefaultExtension];
 
     XCTAssertNotNil(path, @"CCB file loading failed, no path found for ccb %@.ccb", ccbName);
 

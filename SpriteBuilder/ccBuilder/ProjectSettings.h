@@ -27,6 +27,9 @@
 
 #define kCCBProjectSettingsVersion 1
 #define kCCBDefaultExportPlugIn @"ccbi"
+#define kCCBDefaultExtension @"ccb"
+#define kCCBDefaultExtensionWithDot @".ccb"
+
 
 typedef enum
 {

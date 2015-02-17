@@ -4,7 +4,7 @@
 #import "MiscConstants.h"
 #import "NSNumber+ImageResolutions.h"
 #import "NSString+Misc.h"
-
+#import "ProjectSettings.h"
 
 @implementation NSString (Publishing)
 
@@ -167,7 +167,7 @@
                     return YES;
                 }
             }else{
-                if([[file lowercaseString] hasSuffix:@"ccb"]){
+                if([[file lowercaseString] hasSuffix:kCCBDefaultExtension]){
                     return YES;
                 }
             }

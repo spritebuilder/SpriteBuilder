@@ -1759,7 +1759,7 @@ typedef enum
         NSString* ccbFile = NULL;
         for (NSString* file in resDir)
         {
-            if ([file hasSuffix:@".ccb"])
+            if ([file hasSuffix:kCCBDefaultExtensionWithDot])
             {
                 ccbFile = file;
                 numCCBFiles++;
@@ -2800,7 +2800,7 @@ typedef enum
     if (!currentDocument) return;
     
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
-    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"ccb"]];
+    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:kCCBDefaultExtension]];
 	__block SavePanelLimiter* limiter = [[SavePanelLimiter alloc] initWithPanel:saveDlg];
     
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
@@ -3003,7 +3003,7 @@ typedef enum
                     NSArray* arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dirName error:NULL];
                     for(NSString* file in arr)
                     {
-                        if ([file hasSuffix:@".ccb"])
+                        if ([file hasSuffix:kCCBDefaultExtensionWithDot])
                         {
                             NSString* absPath = [dirName stringByAppendingPathComponent:file];
                             [self openFile:absPath];

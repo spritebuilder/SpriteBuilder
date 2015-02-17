@@ -230,7 +230,7 @@
       @"publishEnvironment":@(0),
       @"publishEnablediPhone":@(YES),
       @"publishToZipFile":@(NO),
-      @"exporter":@"ccbi",
+      @"exporter":kCCBDefaultExportPlugIn,
       @"versionStr":@"Version: 1.x\n-n GitHub: \nfcec170fc2\n",
       @"publishResolution_ios_phone":@(YES),
       @"publishResolution_ios_tablethd":@(YES),
@@ -268,7 +268,7 @@
     XCTAssertEqual(project.designTarget, 0);
 
     XCTAssertEqual(project.engine, CCBTargetEngineCocos2d);
-    SBAssertStringsEqual(project.exporter, @"ccbi");
+    SBAssertStringsEqual(project.exporter, kCCBDefaultExportPlugIn);
 
     XCTAssertFalse(project.publishToZipFile);
     XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);

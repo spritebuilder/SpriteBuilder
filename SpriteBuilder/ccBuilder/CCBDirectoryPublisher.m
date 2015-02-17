@@ -307,7 +307,7 @@
         }
     }
     else if (!isGeneratedSpriteSheet
-             && [[fileName lowercaseString] hasSuffix:@"ccb"])
+             && [[fileName lowercaseString] hasSuffix:kCCBDefaultExtension])
     {
         [self publishCCB:fileName filePath:filePath outputDir:outputDir];
     }

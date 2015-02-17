@@ -170,7 +170,7 @@
 
 + (BOOL)isResolutionDependentFile:(NSString *)file
 {
-    if ([[file pathExtension] isEqualToString:@"ccb"])
+    if ([[file pathExtension] isEqualToString:kCCBDefaultExtension])
     {
         return NO;
     }
@@ -248,7 +248,7 @@
     {
         return kCCBResTypeAnimation;
     }
-    else if ([ext isEqualToString:@"ccb"])
+    else if ([ext isEqualToString:kCCBDefaultExtension])
     {
         return kCCBResTypeCCBFile;
     }
