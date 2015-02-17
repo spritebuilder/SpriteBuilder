@@ -16,29 +16,29 @@
 #import "PackageImporter.h"
 #import "MiscConstants.h"
 #import "ProjectSettings+Packages.h"
+#import "FileSystemTestCase.h"
 
-@interface PackageImporter_Tests : XCTestCase
+@interface PackageImporter_Tests : FileSystemTestCase
+
+@property (nonatomic, strong) id fileManagerMock;
+@property (nonatomic, strong) PackageImporter *packageImporter;
+@property (nonatomic, strong) ProjectSettings *projectSettings;
 
 @end
 
+
 @implementation PackageImporter_Tests
-{
-    PackageImporter *_packageImporter;
-    ProjectSettings *_projectSettings;
-    id _fileManagerMock;
-}
 
 - (void)setUp
 {
     [super setUp];
 
-    _packageImporter = [[PackageImporter alloc] init];
+    self.packageImporter = [[PackageImporter alloc] init];
 
-    _projectSettings = [[ProjectSettings alloc] init];
-    _projectSettings.projectPath = @"/packagestests.ccbproj";
+    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
     _packageImporter.projectSettings = _projectSettings;
 
-    _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
+    self.fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
     _packageImporter.fileManager = _fileManagerMock;
 }
 
@@ -136,17 +136,40 @@
     NSError *error1;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:nil error:&error1]);
     XCTAssertNotNil(error1);
-    XCTAssertEqual(error1.code, SBNoPackagePathsToImport, @"error code should be set to SBNoPackagePathsToImport");
+    XCTAssertEqual(error1.code, SBNoPackagePathsToImport);
 
     NSError *error2;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[] error:&error2]);
     XCTAssertNotNil(error2);
-    XCTAssertEqual(error2.code, SBNoPackagePathsToImport, @"error code should be set to SBNoPackagePathsToImport");
+    XCTAssertEqual(error2.code, SBNoPackagePathsToImport);
 
     NSError *error3;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[@"/foo/package"] error:&error3]);
     XCTAssertNotNil(error3);
-    XCTAssertEqual(error3.code, SBPathWithoutPackageSuffix, @"error code should be set to SBPathWithoutPackageSuffix");
+    XCTAssertEqual(error3.code, SBPathWithoutPackageSuffix);
+}
+
+- (void)testImportPackageRealCase
+{
+    [self createFolders:@[@"foo.spritebuilder/Packages"]];
+    [self createEmptyFilesRelativeToDirectory:@"toimport/baa.sbpack" files:@[
+        @"images/resources-auto/sky.png",
+        @"sounds/rain.wav"
+    ]];
+
+    _packageImporter.fileManager = [NSFileManager defaultManager];
+
+    NSError *error;
+    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[[self fullPathForFile:@"toimport/baa.sbpack"]] error:&error]);
+    XCTAssertNil(error);
+
+    [self assertFilesExistRelativeToDirectory:@"foo.spritebuilder/Packages/baa.sbpack" filesPaths:@[
+        @"images/resources-auto/sky.png",
+        @"sounds/rain.wav",
+        @"Package.plist"
+    ]];
+
+    XCTAssertTrue([_projectSettings isResourcePathInProject:[self fullPathForFile:@"foo.spritebuilder/Packages/baa.sbpack"]]);
 }
 
 @end
