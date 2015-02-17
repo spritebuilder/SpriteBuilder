@@ -9,4 +9,6 @@
 
 + (void)assertArraysAreEqualIgnoringOrder:(NSArray *)arrayA arrayB:(NSArray *)arrayB;
 
++ (void)assertEqualObjectsWithDiff:(id)objectA objectB:(id)objectB;
+
 @end
