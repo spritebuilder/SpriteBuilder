@@ -5,9 +5,16 @@ checkout:
 test:
     override:
         - rake test
-    post:
-        - CONFIGURATION_BUILD_DIR=Build TARGET_BUILD_DIR=Build xctool -configuration Release -project SpriteBuilder/SpriteBuilder.xcodeproj -scheme SpriteBuilder archive -archivePath Build/SpriteBuilder
-        - cp -r Build/* $CIRCLE_ARTIFACTS
+
+deploy:
+    develop:
+        branch: develop
+        commands:
+            - VERSION=$(cat VERSION) rake package
+    ex:
+        branch: experimental/circleciSign
+        commands:
+            - VERSION=$(cat VERSION) rake package
 
 general:
     branches:
