@@ -100,7 +100,7 @@
             SequencerNodeProperty* seqNodeProp = [node sequenceNodeProperty:prop sequenceId:seq.sequenceId];
             BOOL hasKeyframes = ([seqNodeProp.keyframes count] > 0);
             
-            if ([node shouldDisableProperty:prop])
+            if ([node shouldDisableProperty:prop] || [node shouldDisableKeyframe:prop])
             {
                 [attrib setObject:textColorDisabled forKey:NSForegroundColorAttributeName];
             }
