@@ -9,6 +9,7 @@
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"
 #import "RMPackage.h"
+#import "SBPackageSettings.h"
 
 @implementation PackageImporter
 
@@ -89,22 +90,46 @@
         NSString *packageName = [[packageToImport.dirPath lastPathComponent] stringByDeletingPathExtension];
         NSString *newPathInPackagesFolder = [_projectSettings fullPathForPackageName:packageName];
 
-        if (![_projectSettings isPathInPackagesFolder:packageToImport.dirPath])
+        if (![_projectSettings isPathInPackagesFolder:packageToImport.dirPath]
+            && ![_fileManager copyItemAtPath:packageToImport.dirPath toPath:newPathInPackagesFolder error:localError])
         {
-            if (![_fileManager copyItemAtPath:packageToImport.dirPath toPath:newPathInPackagesFolder error:localError])
-            {
-                return NO;
-            }
+            return NO;
         }
 
-        if ([_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
+        if (![_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
-            return YES;
+            return NO;
         }
 
-        return NO;
+        if (![self migrateOrCreatePackageSettings:localError newPathInPackagesFolder:newPathInPackagesFolder])
+        {
+            return NO;
+        }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
+        return YES;
     };
+}
+
+- (BOOL)migrateOrCreatePackageSettings:(NSError **)localError newPathInPackagesFolder:(NSString *)newPathInPackagesFolder
+{
+    RMPackage *newPackage = [[RMPackage alloc] init];
+    newPackage.dirPath = newPathInPackagesFolder;
+
+    SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:newPackage];
+    NSError *loadError;
+    if (![packageSettings loadWithError:&loadError])
+    {
+        if (loadError.code != SBPackageSettingsEmptyOrDoesNotExist)
+        {
+            [NSError setNewErrorWithErrorPointer:localError code:SBMigrationError message:@"Error importing package: Could not migrate package settings."];
+            return NO;
+        }
+    }
+
+    [packageSettings store];
+
+    return YES;
 }
 
 @end
