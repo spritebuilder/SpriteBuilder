@@ -6,7 +6,7 @@ test:
     override:
         - rake test
 
-deploy:
+deployment:
     develop:
         branch: develop
         commands:
