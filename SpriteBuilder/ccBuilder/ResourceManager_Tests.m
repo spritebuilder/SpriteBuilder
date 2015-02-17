@@ -15,7 +15,6 @@
 #import "ProjectSettings.h"
 #import "ResourceManagerUtil.h"
 #import "RMPackage.h"
-#import "SBAssserts.h"
 #import "FileSystemTestCase+Images.h"
 #import "ResourcePropertyKeys.h"
 #import "SBPackageSettings.h"
@@ -172,8 +171,8 @@
     RMPackage *baaPackage = [_resourceManager packageForPath:[self fullPathForFile:@"project/Packages/baa.sbpack/spritesheets/deep/deeper/bottom.png"]];
     RMPackage *noPackage = [_resourceManager packageForPath:[self fullPathForFile:@"project/Packages/123.sbpack/images/resources-autp/sky.png"]];
 
-    SBAssertStringsEqual(fooPackage.fullPath, [self fullPathForFile:@"project/Packages/foo.sbpack"]);
-    SBAssertStringsEqual(baaPackage.fullPath, [self fullPathForFile:@"project/Packages/baa.sbpack"]);
+    XCTAssertEqualObjects(fooPackage.fullPath, [self fullPathForFile:@"project/Packages/foo.sbpack"]);
+    XCTAssertEqualObjects(baaPackage.fullPath, [self fullPathForFile:@"project/Packages/baa.sbpack"]);
 
     XCTAssertNil(noPackage);
 }

@@ -11,9 +11,6 @@
 #import <OCMock/OCMock.h>
 #import "PlugInNode.h"
 #import "FileSystemTestCase.h"
-#import "SBAssserts.h"
-
-
 
 typedef NSDictionary *(^PropertiesBlock)();
 
@@ -43,10 +40,10 @@ typedef NSDictionary *(^PropertiesBlock)();
     NSBundle *testBundleNode = [NSBundle bundleWithPath:fullPathForPlugin];
     PlugInNode *plugin = [[PlugInNode alloc] initWithBundle:testBundleNode mainBundle:_mainBundleMock];
 
-    SBAssertStringsEqual(plugin.displayName, @"Node");
-    SBAssertStringsEqual(plugin.descr, @"A node");
-    SBAssertStringsEqual(plugin.nodeClassName, @"TestNode");
-    SBAssertStringsEqual(plugin.nodeEditorClassName, @"TestEditorNode");
+    XCTAssertEqualObjects(plugin.displayName, @"Node");
+    XCTAssertEqualObjects(plugin.descr, @"A node");
+    XCTAssertEqualObjects(plugin.nodeClassName, @"TestNode");
+    XCTAssertEqualObjects(plugin.nodeEditorClassName, @"TestEditorNode");
     XCTAssertEqual(plugin.canBeRoot, YES);
     XCTAssertEqual(plugin.canHaveChildren, YES);
     XCTAssertEqual(plugin.ordering, 2000);
@@ -79,10 +76,10 @@ typedef NSDictionary *(^PropertiesBlock)();
     NSBundle *testBundleSprite = [NSBundle bundleWithPath:fullPathForPluginSprite];
     PlugInNode *plugin = [[PlugInNode alloc] initWithBundle:testBundleSprite mainBundle:_mainBundleMock];
 
-    SBAssertStringsEqual(plugin.displayName, @"Sprite");
-    SBAssertStringsEqual(plugin.descr, @"A Sprite");
-    SBAssertStringsEqual(plugin.nodeClassName, @"TestSprite");
-    SBAssertStringsEqual(plugin.nodeEditorClassName, @"TestEditorSprite");
+    XCTAssertEqualObjects(plugin.displayName, @"Sprite");
+    XCTAssertEqualObjects(plugin.descr, @"A Sprite");
+    XCTAssertEqualObjects(plugin.nodeClassName, @"TestSprite");
+    XCTAssertEqualObjects(plugin.nodeEditorClassName, @"TestEditorSprite");
     XCTAssertEqual(plugin.canHaveChildren, YES);
     XCTAssertEqual(plugin.ordering, 2001);
 

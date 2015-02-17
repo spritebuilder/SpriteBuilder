@@ -13,7 +13,6 @@
 #import "NSString+Packages.h"
 #import "RMPackage.h"
 #import "PackageExporter.h"
-#import "SBAssserts.h"
 
 @interface PackageExporter_Tests : XCTestCase
 
@@ -96,7 +95,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = @"/baa/superpackage.sbpack";
 
-    SBAssertStringsEqual([_packageExporter exportPathForPackage:package toDirectoryPath:@"/foo/exporthere"], @"/foo/exporthere/superpackage.sbpack");
+    XCTAssertEqualObjects([_packageExporter exportPathForPackage:package toDirectoryPath:@"/foo/exporthere"], @"/foo/exporthere/superpackage.sbpack");
 }
 
 @end

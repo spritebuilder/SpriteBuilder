@@ -2552,7 +2552,6 @@
 		E525F2016B3DB7DF1651B605 /* InspectorNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorNodeReference.m; sourceTree = "<group>"; };
 		E525F20B1403AD6F5FCAD713 /* PackageExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageExporter.h; sourceTree = "<group>"; };
 		E525F20C862886C580A23DFE /* InspectorPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPoint.h; sourceTree = "<group>"; };
-		E525F213547BCB1BBA54EC87 /* SBAssserts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAssserts.h; sourceTree = "<group>"; };
 		E525F215F31637B52F646A82 /* PackageRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageRenamer.h; sourceTree = "<group>"; };
 		E525F217260908CF37D87211 /* InspectorEnabledFloat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorEnabledFloat.m; sourceTree = "<group>"; };
 		E525F21B757FCFE7424C05D9 /* InspectorBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorBlock.m; sourceTree = "<group>"; };
@@ -5807,7 +5806,6 @@
 		E525F4E8DC228E3C24BAE4D6 /* TestHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				E525F213547BCB1BBA54EC87 /* SBAssserts.h */,
 				E525F3F446FE40F0B87D829F /* ObserverTestHelper.m */,
 				E525F616AAA64620A9528730 /* ObserverTestHelper.h */,
 				E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */,
