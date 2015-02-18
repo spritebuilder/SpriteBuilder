@@ -11,7 +11,7 @@
 #import "PublishLogging.h"
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "RMPackage.h"
 #import "NSNumber+ImageResolutions.h"
 

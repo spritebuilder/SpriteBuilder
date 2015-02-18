@@ -10,7 +10,7 @@
 #import <OCMock/OCMock.h>
 
 #import "ProjectSettings.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "ProjectSettings+Packages.h"
 #import "NSString+Packages.h"
 #import "MiscConstants.h"

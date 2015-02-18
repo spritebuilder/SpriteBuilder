@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "CCBPublisherController.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "ProjectSettings.h"
 #import "RMPackage.h"
 #import "FileSystemTestCase+Images.h"
@@ -23,7 +23,7 @@
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) SBPackageSettings *packageSettings;
+@property (nonatomic, strong) PackageSettings *packageSettings;
 @property (nonatomic, strong) RMPackage *package;
 
 @end
@@ -63,7 +63,7 @@
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
 
-    self.packageSettings = [[SBPackageSettings alloc] initWithPackage:_package];
+    self.packageSettings = [[PackageSettings alloc] initWithPackage:_package];
     _packageSettings.publishToCustomOutputDirectory = NO;
     _packageSettings.publishToMainProject = NO;
     _packageSettings.publishToZip = YES;
@@ -234,21 +234,21 @@
     _projectSettings.publishEnabledAndroid = YES;
 
     // Not included, therefor button.png should not be in result
-    SBPackageSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
+    PackageSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
     packageSettingsMenus.mainProjectResolutions.resolution_4x = NO;
     packageSettingsMenus.mainProjectResolutions.resolution_2x = YES;
     packageSettingsMenus.mainProjectResolutions.resolution_1x = NO;
     packageSettingsMenus.publishToMainProject = NO;
     packageSettingsMenus.publishToZip = NO;
 
-    SBPackageSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
+    PackageSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
     packageSettingsCharacters.mainProjectResolutions.resolution_4x = YES;
     packageSettingsCharacters.mainProjectResolutions.resolution_2x = NO;
     packageSettingsCharacters.mainProjectResolutions.resolution_1x = YES;
     packageSettingsCharacters.publishToMainProject = YES;
     packageSettingsCharacters.publishToZip = NO;
 
-    SBPackageSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
+    PackageSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
     packageSettingsBackgrounds.mainProjectResolutions.resolution_4x = NO;
     packageSettingsBackgrounds.mainProjectResolutions.resolution_2x = NO;
     packageSettingsBackgrounds.mainProjectResolutions.resolution_1x = YES;
@@ -312,12 +312,12 @@
 
 #pragma mark - helpers
 
-- (SBPackageSettings *)createSettingsWithPath:(NSString *)path
+- (PackageSettings *)createSettingsWithPath:(NSString *)path
 {
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [self fullPathForFile:path];
 
-    return [[SBPackageSettings alloc] initWithPackage:package];
+    return [[PackageSettings alloc] initWithPackage:package];
 }
 
 @end

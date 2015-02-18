@@ -25,7 +25,7 @@
 #import "PlugInNode.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 
 
 @interface PlugInNode()

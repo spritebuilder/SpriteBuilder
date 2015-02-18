@@ -1,11 +1,11 @@
 #import "PackageCreator.h"
 #import "NSError+SBErrors.h"
 #import "NotificationNames.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "RMPackage.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 
 @implementation PackageCreator
 
@@ -87,7 +87,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = fullPath;
 
-    SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
+    PackageSettings *packagePublishSettings = [[PackageSettings alloc] initWithPackage:package];
     [packagePublishSettings store];
 }
 

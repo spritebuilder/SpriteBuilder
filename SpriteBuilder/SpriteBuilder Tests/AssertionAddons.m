@@ -1,8 +1,8 @@
-#import "SBAssertions.h"
+#import "AssertionAddons.h"
 
 #import <XCTest/XCTest.h>
 
-@implementation SBAssertions
+@implementation AssertionAddons
 
 + (void)assertArraysAreEqualIgnoringOrder:(NSArray *)arrayA arrayB:(NSArray *)arrayB
 {

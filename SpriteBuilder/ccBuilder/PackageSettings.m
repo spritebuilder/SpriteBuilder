@@ -1,11 +1,11 @@
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "RMPackage.h"
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
 #import "PublishResolutions.h"
-#import "SBPackageSettingsMigrator.h"
+#import "PackageSettingsMigrator.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
 NSString *const KEY_VERSION = @"version";
@@ -23,7 +23,7 @@ NSUInteger const PACKAGE_SETTINGS_VERSION = 3;
 // It's a tag for a dropdown
 NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
 
-@interface SBPackageSettings ()
+@interface PackageSettings ()
 
 @property (nonatomic, strong) NSMutableDictionary *publishSettingsForOsType;
 @property (nonatomic, strong, readwrite) PublishResolutions *mainProjectResolutions;
@@ -31,7 +31,7 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
 @end
 
 
-@implementation SBPackageSettings
+@implementation PackageSettings
 
 - (instancetype)init
 {
@@ -109,7 +109,7 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
         return NO;
     }
 
-    SBPackageSettingsMigrator *migrator = [[SBPackageSettingsMigrator alloc] initWithDictionary:dict toVersion:PACKAGE_SETTINGS_VERSION];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:dict toVersion:PACKAGE_SETTINGS_VERSION];
     NSDictionary *migratedDict = [migrator migrate:error];
     if (!migratedDict)
     {

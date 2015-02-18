@@ -2523,7 +2523,7 @@ CA
         </customObject>
         <customObject id="TMe-KA-zbR" customClass="AnimationPlaybackManager"/>
         <customObject id="420" userLabel="NSFontManager" customClass="NSFontManager"/>
-        <customObject id="yUV-fv-QjG" userLabel="Open Paths Controller" customClass="SBOpenPathsController">
+        <customObject id="yUV-fv-QjG" userLabel="Open Paths Controller" customClass="OpenPathsController">
             <connections>
                 <outlet property="openPathsMenuItem" destination="yvt-ae-jLl" id="Ql5-OE-bv2"/>
             </connections>

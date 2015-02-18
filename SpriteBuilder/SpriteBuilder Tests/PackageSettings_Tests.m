@@ -7,25 +7,25 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "RMPackage.h"
 #import "PublishOSSettings.h"
 #import "FileSystemTestCase.h"
 #import "MiscConstants.h"
 #import "CCBPublisherTypes.h"
 #import "PublishResolutions.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
-@interface SBPackageSettings_Tests : FileSystemTestCase
+@interface PackageSettings_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) RMPackage *package;
-@property (nonatomic, strong) SBPackageSettings *packageSettings;
+@property (nonatomic, strong) PackageSettings *packageSettings;
 
 @end
 
 
-@implementation SBPackageSettings_Tests
+@implementation PackageSettings_Tests
 
 - (void)setUp
 {
@@ -34,7 +34,7 @@
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack"];
 
-    self.packageSettings = [[SBPackageSettings alloc] initWithPackage:_package];
+    self.packageSettings = [[PackageSettings alloc] initWithPackage:_package];
 
     [self createFolders:@[@"foo/project.spritebuilder/Packages/mypackage.sbpack"]];
 }
@@ -91,7 +91,7 @@
     [self assertFileExists:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"];
 
 
-    SBPackageSettings *settingsLoaded = [[SBPackageSettings alloc] initWithPackage:_package];
+    PackageSettings *settingsLoaded = [[PackageSettings alloc] initWithPackage:_package];
     [settingsLoaded loadWithError:nil];
 
     XCTAssertEqual(_packageSettings.publishToMainProject, settingsLoaded.publishToMainProject);

@@ -10,7 +10,7 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "BackupFileCommand.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 @interface BackupFileCommand_Tests : FileSystemTestCase
 

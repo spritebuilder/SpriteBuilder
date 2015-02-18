@@ -35,7 +35,7 @@
 #import "EffectsManager.h"
 #import "InspectorController.h"
 #import "CCEffect.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 #import "InspectorController.h"
 
 @implementation CCBGLView

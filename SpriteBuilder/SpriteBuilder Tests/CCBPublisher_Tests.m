@@ -22,7 +22,7 @@
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
 #import "RMPackage.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "NSNumber+ImageResolutions.h"
 
@@ -54,7 +54,7 @@
 
     [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
 
-    SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
+    PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
 
     self.warnings = [[CCBWarnings alloc] init];
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings

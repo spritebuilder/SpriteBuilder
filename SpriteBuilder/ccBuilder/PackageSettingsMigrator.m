@@ -1,6 +1,6 @@
-#import "SBPackageSettingsMigrator.h"
+#import "PackageSettingsMigrator.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 /*
 
@@ -78,7 +78,7 @@ Version 3
  */
 
 
-@interface SBPackageSettingsMigrator()
+@interface PackageSettingsMigrator ()
 
 @property (nonatomic, copy) NSDictionary *packageSettings;
 @property (nonatomic) NSUInteger migrationVersionTarget;
@@ -86,7 +86,7 @@ Version 3
 @end
 
 
-@implementation SBPackageSettingsMigrator
+@implementation PackageSettingsMigrator
 
 - (instancetype)initWithDictionary:(NSDictionary *)packageSettings toVersion:(NSUInteger)toVersion
 {

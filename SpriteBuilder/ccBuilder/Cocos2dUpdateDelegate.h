@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "Cocos2dUpdater.h"
 
-@protocol SBCocos2dUpdateDelegate <NSObject>
+@protocol Cocos2dUpdateDelegate <NSObject>
 
 - (void)updateSucceeded;
 

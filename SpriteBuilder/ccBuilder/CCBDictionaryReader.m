@@ -43,7 +43,7 @@
 #import "CCBDictionaryKeys.h"
 #import "CCBDictionaryMigrator.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 // Old positioning constants
 enum

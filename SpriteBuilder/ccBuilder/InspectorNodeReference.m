@@ -14,7 +14,7 @@
 #import "EffectsManager.h"
 #import "CCEffect.h"
 #import "NotificationNames.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 #import "MiscConstants.h"
 
 @implementation OutletButton

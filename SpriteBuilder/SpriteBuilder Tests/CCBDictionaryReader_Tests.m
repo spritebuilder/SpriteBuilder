@@ -19,7 +19,7 @@
 #import "CCNode+NodeInfo.h"
 #import "CCControl.h"
 #import "CCLayoutBox.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "CCBDictionaryKeys.h"
 
 

@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "CCBDictionaryMigrator.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "CCBDictionaryKeys.h"
 #import "CCBDictionaryMigrationProtocol.h"
 #import "NSError+SBErrors.h"

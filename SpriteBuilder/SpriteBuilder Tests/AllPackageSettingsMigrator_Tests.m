@@ -12,8 +12,8 @@
 #import "ProjectSettings.h"
 #import "AllPackageSettingsMigrator.h"
 #import "MiscConstants.h"
-#import "SBErrors.h"
-#import "SBAssertions.h"
+#import "Errors.h"
+#import "AssertionAddons.h"
 
 @interface AllPackageSettingsMigrator_Tests : FileSystemTestCase
 
@@ -134,8 +134,8 @@
     XCTAssertNotNil(settings_a);
     XCTAssertNotNil(settings_b);
 
-    [SBAssertions assertEqualObjectsWithDiff:settings_a objectB:packageSettings];
-    [SBAssertions assertEqualObjectsWithDiff:settings_b objectB:packageSettings];
+    [AssertionAddons assertEqualObjectsWithDiff:settings_a objectB:packageSettings];
+    [AssertionAddons assertEqualObjectsWithDiff:settings_b objectB:packageSettings];
 }
 
 @end

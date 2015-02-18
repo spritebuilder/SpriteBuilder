@@ -3,13 +3,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SBCocos2dUpdateDelegate.h"
+#import "Cocos2dUpdateDelegate.h"
 
 @class ProjectSettings;
 @class AppDelegate;
 
 
-@interface Cocos2dUpdaterController : NSObject <SBCocos2dUpdateDelegate>
+@interface Cocos2dUpdaterController : NSObject <Cocos2dUpdateDelegate>
 
 @property (nonatomic, weak, readonly) AppDelegate *appDelegate;
 @property (nonatomic, weak, readonly) ProjectSettings *projectSettings;

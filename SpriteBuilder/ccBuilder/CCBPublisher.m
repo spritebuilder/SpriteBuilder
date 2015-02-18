@@ -11,7 +11,7 @@
 #import "CCBPublisherCacheCleaner.h"
 #import "ZipDirectoryOperation.h"
 #import "MiscConstants.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "RMDirectory.h"
 #import "RMPackage.h"
 #import "PublishOSSettings.h"
@@ -170,7 +170,7 @@
 
     target.renamedFilesLookup = [[PublishRenamedFilesLookup alloc] init];
 
-    for (SBPackageSettings *packageSettings in target.inputPackages)
+    for (PackageSettings *packageSettings in target.inputPackages)
     {
         CCBDirectoryPublisher *dirPublisher = [[CCBDirectoryPublisher alloc] initWithProjectSettings:_projectSettings
                                                                                      packageSettings:_packageSettings

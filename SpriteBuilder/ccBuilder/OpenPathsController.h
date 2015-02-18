@@ -10,7 +10,7 @@
 
 @class ProjectSettings;
 
-@interface SBOpenPathsController : NSObject
+@interface OpenPathsController : NSObject
 
 @property (nonatomic, weak) IBOutlet NSMenuItem *openPathsMenuItem;
 @property (nonatomic, weak) ProjectSettings *projectSettings;

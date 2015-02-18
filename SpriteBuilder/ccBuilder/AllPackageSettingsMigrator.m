@@ -2,10 +2,10 @@
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "MiscConstants.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "RMPackage.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "BackupFileCommand.h"
 
 
@@ -105,7 +105,7 @@
 
         RMPackage *package = [[RMPackage alloc] init];
         package.dirPath = fullPackagePath;
-        SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
+        PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
 
         if (![self createBackupfileOfPackageSettings:packageSettings error:error])
         {
@@ -122,7 +122,7 @@
     return YES;
 }
 
-- (BOOL)migratePackageSettings:(SBPackageSettings *)packageSettings error:(NSError **)error
+- (BOOL)migratePackageSettings:(PackageSettings *)packageSettings error:(NSError **)error
 {
     NSError *underlyingError;
     if (![packageSettings loadWithError:&underlyingError])
@@ -137,7 +137,7 @@
     return YES;
 }
 
-- (BOOL)createBackupfileOfPackageSettings:(SBPackageSettings *)packageSettings error:(NSError **)error
+- (BOOL)createBackupfileOfPackageSettings:(PackageSettings *)packageSettings error:(NSError **)error
 {
     BackupFileCommand *backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:packageSettings.fullPath];
     NSError *backupError;
@@ -170,7 +170,7 @@
         RMPackage *package = [[RMPackage alloc] init];
         package.dirPath = fullPackagePath;
 
-        SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
+        PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
         if (![packageSettings store])
         {
             [NSError setNewErrorWithErrorPointer:error
@@ -196,7 +196,7 @@
     }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    for (SBPackageSettings *packageSettings in _packageSettingsCreated)
+    for (PackageSettings *packageSettings in _packageSettingsCreated)
     {
         NSError *error;
         if (![fileManager removeItemAtPath:packageSettings.fullPath error:&error])

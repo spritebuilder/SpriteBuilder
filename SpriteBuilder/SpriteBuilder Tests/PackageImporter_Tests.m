@@ -11,7 +11,7 @@
 #import "ObserverTestHelper.h"
 #import "NSString+Packages.h"
 #import "NotificationNames.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "ProjectSettings.h"
 #import "PackageImporter.h"
 #import "MiscConstants.h"

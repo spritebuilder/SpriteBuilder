@@ -12,7 +12,7 @@
 #import "ObserverTestHelper.h"
 #import "NotificationNames.h"
 #import "NSString+Packages.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "PackageRemover.h"
 #import "RMPackage.h"
 #import "MiscConstants.h"

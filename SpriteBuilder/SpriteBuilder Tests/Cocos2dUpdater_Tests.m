@@ -13,10 +13,10 @@
 #import "ProjectSettings.h"
 #import "AppDelegate.h"
 #import "FileSystemTestCase.h"
-#import "SBCocos2dUpdateDelegate.h"
+#import "Cocos2dUpdateDelegate.h"
 
 
-@interface SBCocos2dUpdaterTestDelegate : NSObject <SBCocos2dUpdateDelegate>
+@interface SBCocos2dUpdaterTestDelegate : NSObject <Cocos2dUpdateDelegate>
 
 @property (nonatomic, copy) void (^updateSucceeededBlock)(void);
 @property (nonatomic, copy) void (^updateFailedBlock)(NSError *error);

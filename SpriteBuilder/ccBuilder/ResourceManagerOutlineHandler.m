@@ -30,7 +30,7 @@
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
 #import "MiscConstants.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
