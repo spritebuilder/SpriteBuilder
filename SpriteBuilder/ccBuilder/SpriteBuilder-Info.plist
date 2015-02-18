@@ -31,7 +31,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>ccb</string>
+				<string>sb</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ccb.icns</string>
@@ -48,24 +48,24 @@
 			<key>NSDocumentClass</key>
 			<string></string>
 		</dict>
-        <dict>
-            <key>CFBundleTypeExtensions</key>
-            <array>
-                <string>ccbproj</string>
-            </array>
-            <key>CFBundleTypeIconFile</key>
-            <string>ccbproj.icns</string>
-            <key>CFBundleTypeName</key>
-            <string>SpriteBuilder Project</string>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>NSDocumentClass</key>
-            <string>AppDelegate</string>
-        </dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>ccbi</string>
+				<string>ccbproj</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>ccbproj.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>SpriteBuilder Project</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>AppDelegate</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sbi</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>ccbi.icns</string>
