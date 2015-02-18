@@ -116,25 +116,6 @@
     XCTAssertFalse(osSettingsIOSLoaded.resolutions.resolution_4x);
 }
 
-- (void)testMigrationDefaultScale
-{
-    NSDictionary *values = @{
-        @"outputDir" : @"foo",
-        @"publishEnv" : @1,
-        @"publishToCustomDirectory" : @YES,
-        @"publishToMainProject" : @NO,
-        @"publishToZip" : @NO
-    };
-
-    [values writeToFile:[self fullPathForFile:@"foo/project.spritebuilder/Packages/mypackage.sbpack/Package.plist"] atomically:YES];
-
-    NSError *error;
-    XCTAssertTrue([_packageSettings loadWithError:&error]);
-
-    XCTAssertNil(error);
-    XCTAssertEqual(_packageSettings.resourceAutoScaleFactor, DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING);
-}
-
 - (void)testLoadingEmptyAndNonExistentPackageSettingsFile
 {
     NSError *error2;

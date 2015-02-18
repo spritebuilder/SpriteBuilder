@@ -1,6 +1,8 @@
 #import "PackageSettingsMigrator.h"
 #import "NSError+SBErrors.h"
 #import "Errors.h"
+#import "PackageSettings.h"
+#import "BackupFileCommand.h"
 
 /*
 
@@ -81,31 +83,167 @@ Version 3
 @interface PackageSettingsMigrator ()
 
 @property (nonatomic, copy) NSDictionary *packageSettings;
+@property (nonatomic, copy, readwrite) NSDictionary *migratedPackageSettings;
+@property (nonatomic, strong) NSError *migrationError;
 @property (nonatomic) NSUInteger migrationVersionTarget;
+@property (nonatomic) BackupFileCommand *backupFileCommand;
+@property (nonatomic, copy) NSString *filepath;
 
 @end
 
 
 @implementation PackageSettingsMigrator
 
-- (instancetype)initWithDictionary:(NSDictionary *)packageSettings toVersion:(NSUInteger)toVersion
+- (instancetype)initWithFilepath:(NSString *)filepath toVersion:(NSUInteger)toVersion
 {
-    NSAssert(packageSettings != nil, @"packageSettings must not be nil");
+    NSAssert(filepath != nil, @"filepath must not be nil");
     NSAssert(toVersion > 0, @"toVersion must be greater than 0");
 
     self = [super init];
 
     if (self)
     {
+        self.filepath = filepath;
         self.migrationVersionTarget = toVersion;
-        self.packageSettings = packageSettings;
     }
 
     return self;
 }
 
-- (NSDictionary *)migrate:(NSError **)error
+- (NSDictionary *)migratedPackageSettings
 {
+    if (!_migratedPackageSettings)
+    {
+        NSError *error;
+        self.migratedPackageSettings = [self migrateDictionary:self.packageSettings error:&error];
+        self.migrationError = error;
+    }
+
+    return _migratedPackageSettings;
+}
+
+- (NSDictionary *)packageSettings
+{
+    if (!_packageSettings)
+    {
+        self.packageSettings = [NSDictionary dictionaryWithContentsOfFile:_filepath];
+    }
+
+    return _packageSettings;
+}
+
+- (NSString *)htmlInfoText
+{
+    return @"Package Settings are of an older version.";
+}
+
+- (BOOL)migrationRequired
+{
+    NSDictionary *dict = self.packageSettings;
+
+    // Doing the actual migration, it's not expensive to so the result can be compared to the
+    // file's content to see if it changed. Everything else may turn out in alot more code than the needed migration steps.
+    NSDictionary *result = self.migratedPackageSettings;
+
+    // If there was an error there's no real way to tell at this point so
+    // a migration is required to let a caller run into the actual error with the migrate method
+    if (!result)
+    {
+        return YES;
+    }
+
+    return ![dict isEqualToDictionary:result];
+}
+
+- (BOOL)migrateWithError:(NSError **)error
+{
+    if (![self migrationRequired])
+    {
+        return YES;
+    }
+
+    if (![self createBackupWithError:error])
+    {
+        return NO;
+    }
+
+    return [self migrate__:error];
+}
+
+- (BOOL)migrate__:(NSError **)error
+{
+    if (self.migratedPackageSettings == nil)
+    {
+        [NSError setError:error withError:_migrationError];
+        return NO;
+    }
+
+    NSError *overwriteError;
+    if (![self overwritePackageSettings:&overwriteError])
+    {
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBMigrationError
+                                    userInfo:@{
+                                            NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Could not overwrite existing Package Settings with migrated version at \"%@\"", _filepath],
+                                            NSUnderlyingErrorKey : overwriteError
+                                    }];
+        return NO;
+    };
+    return YES;
+}
+
+- (BOOL)overwritePackageSettings:(NSError **)error
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager removeItemAtPath:_filepath error:error])
+    {
+        return NO;
+    }
+
+    if (![self.migratedPackageSettings writeToFile:_filepath atomically:YES])
+    {
+        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError message:@"Dictionary Write error"];
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)createBackupWithError:(NSError **)error
+{
+    self.backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:_filepath];
+    NSError *backupError;
+    if (![_backupFileCommand execute:&backupError])
+    {
+        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError userInfo:@{
+                NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Could not create backup file of package settings at \"%@\"", _filepath],
+                NSUnderlyingErrorKey : backupError
+        }];
+        return NO;
+    };
+    return YES;
+}
+
+- (void)rollback
+{
+    [_backupFileCommand undo:nil];
+}
+
+- (void)tidyUp
+{
+    [_backupFileCommand tidyUp];
+}
+
+- (NSDictionary *)migrateDictionary:(NSDictionary *)dict error:(NSError **)error
+{
+    if (!dict || [dict count] == 0)
+    {
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBPackageSettingsEmptyOrDoesNotExist
+                                     message:[NSString stringWithFormat:@"Dictionary at \"%@\" does not exist or is empty", _filepath]];
+        return nil;
+    }
+
+
     NSUInteger currentVersion = 1;
     if (_packageSettings[@"version"])
     {
@@ -119,11 +257,18 @@ Version 3
 
     if (_migrationVersionTarget < currentVersion)
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBPackageSettingsMigrationCannotDowngraderError message:[NSString stringWithFormat:@"Cannot downgrade version %lu to version %lu", currentVersion, _migrationVersionTarget]];
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBPackageSettingsMigrationCannotDowngraderError
+                                     message:[NSString stringWithFormat:@"Cannot downgrade version %lu to version %lu", currentVersion, _migrationVersionTarget]];
         return nil;
     }
 
     return [self migrateFromVersion:currentVersion error:error];
+}
+
+- (NSDictionary *)migrate:(NSError **)error
+{
+
 }
 
 - (NSDictionary *)migrateFromVersion:(NSUInteger)fromVersion error:(NSError **)error
@@ -150,7 +295,7 @@ Version 3
     {
         case 2: return [self migrateToVersion_2:dict withError:error];
         case 3: return [self migrateToVersion_3:dict withError:error];
-        default:break;
+        default: break;
     }
 
     [NSError setNewErrorWithErrorPointer:error code:SBPackageSettingsMigrationNoRuleError message:[NSString stringWithFormat:@"Migration rule not found for version %lu", toVersion]];
