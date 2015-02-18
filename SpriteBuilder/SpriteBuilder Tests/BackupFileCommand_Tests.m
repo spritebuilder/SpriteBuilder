@@ -142,4 +142,20 @@
     XCTAssertEqual(error.code, SBFileCommandBackupError);
 }
 
+- (void)testTidyUp
+{
+    [self createEmptyFiles:@[@"test.txt"]];
+
+    BackupFileCommand *backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:[self fullPathForFile:@"test.txt"]];
+
+    NSError *error;
+    XCTAssertTrue([backupFileCommand execute:&error]);
+    XCTAssertNil(error);
+
+    [backupFileCommand tidyUp];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    XCTAssertFalse([fileManager fileExistsAtPath:backupFileCommand.backupFilePath]);
+}
+
 @end

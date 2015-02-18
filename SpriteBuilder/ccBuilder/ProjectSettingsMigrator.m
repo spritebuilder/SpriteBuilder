@@ -1,4 +1,3 @@
-#import <MacTypes.h>
 #import "ProjectSettingsMigrator.h"
 #import "ProjectSettings.h"
 #import "ResourcePathToPackageMigrator.h"
@@ -123,6 +122,11 @@
     {
         [_projectSettings clearDirtyMarkerOfRelPath:relPath];
     }
+}
+
+- (void)tidyUp
+{
+    [_backupFileCommand tidyUp];
 }
 
 @end

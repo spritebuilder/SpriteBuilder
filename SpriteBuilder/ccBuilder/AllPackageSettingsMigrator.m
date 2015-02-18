@@ -206,4 +206,12 @@
     }
 }
 
+- (void)tidyUp
+{
+    for (BackupFileCommand *backupFileCommand in _backupFileCommands)
+    {
+        [backupFileCommand tidyUp];
+    }
+}
+
 @end
