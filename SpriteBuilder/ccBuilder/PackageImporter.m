@@ -10,6 +10,7 @@
 #import "MiscConstants.h"
 #import "RMPackage.h"
 #import "PackageSettings.h"
+#import "PackageSettingsMigrator.h"
 
 @implementation PackageImporter
 
@@ -113,23 +114,44 @@
 
 - (BOOL)migrateOrCreatePackageSettings:(NSError **)localError newPathInPackagesFolder:(NSString *)newPathInPackagesFolder
 {
+    NSString *packageSettingsPath = [newPathInPackagesFolder stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:packageSettingsPath])
+    {
+        return [self migratePackageSettings:localError packageSettingsPath:packageSettingsPath];
+    }
+    else
+    {
+        [self createPackageSettingsFile:newPathInPackagesFolder];
+        return YES;
+    }
+}
+
+- (BOOL)migratePackageSettings:(NSError **)localError packageSettingsPath:(NSString *)packageSettingsPath
+{
+    PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:packageSettingsPath toVersion:PACKAGE_SETTINGS_VERSION];
+
+    NSError *underlyingError;
+    if (![packageSettingsMigrator migrateWithError:&underlyingError])
+    {
+        [NSError setNewErrorWithErrorPointer:localError code:SBMigrationError userInfo:@{
+                NSLocalizedDescriptionKey : @"Error importing package: Could not migrate package settings.",
+                NSUnderlyingErrorKey : underlyingError
+        }];
+        return NO;
+    };
+    return YES;
+}
+
+- (void)createPackageSettingsFile:(NSString *)newPathInPackagesFolder
+{
     RMPackage *newPackage = [[RMPackage alloc] init];
     newPackage.dirPath = newPathInPackagesFolder;
 
     PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:newPackage];
-    NSError *loadError;
-    if (![packageSettings loadWithError:&loadError])
-    {
-        if (loadError.code != SBPackageSettingsEmptyOrDoesNotExist)
-        {
-            [NSError setNewErrorWithErrorPointer:localError code:SBMigrationError message:@"Error importing package: Could not migrate package settings."];
-            return NO;
-        }
-    }
 
     [packageSettings store];
-
-    return YES;
 }
 
 @end
