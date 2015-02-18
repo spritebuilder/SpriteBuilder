@@ -591,6 +591,38 @@
     XCTAssertTrue([_projectSettings isDirtyResource:res3]);
 }
 
+- (void)testInitWithFilename
+{
+    [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
+
+    [self assertFileExists:@"foo.spritebuilder/foo.ccbproj"];
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/foo.ccbproj"]];
+
+    XCTAssertNotNil(projectSettings);
+    XCTAssertEqualObjects(projectSettings.projectPath, [self fullPathForFile:@"foo.spritebuilder/foo.ccbproj"]);
+}
+
+- (void)testInitWithFilenameFailing_fileDoesNotExist
+{
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.ccbproj"]];
+
+    XCTAssertNil(projectSettings);
+}
+
+- (void)testInitWithFilenameFailing_malformedPropertyList
+{
+    NSDictionary *somedict = @{
+        @"asdasd" : @"hahahahahha"
+    };
+
+    [somedict writeToFile:[self fullPathForFile:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.ccbproj"]] atomically:YES];
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.ccbproj"]];
+
+    XCTAssertNil(projectSettings);
+};
+
 #pragma mark - test helper
 
 - (void)assertResourcePaths:(NSArray *)resourcePaths inProject:(ProjectSettings *)project

@@ -1702,29 +1702,22 @@ typedef enum
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
 
-    // Load the project file
-    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
-    if (!projectDict)
-    {
-        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File may be missing or invalid."];
-        return NO;
-    }
-
-    ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
+    ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithFilepath:projectPath];
     if (!prjctSettings)
     {
-        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
+        [self modalDialogTitle:@"Invalid Project File"
+                       message:@"Failed to open the project. Possible causes: File does not exist, invalid or was created with a newer version of SpriteBuilder."];
         return NO;
     }
 
     ProjectMigrationViewController *projectMigrationViewController = [[ProjectMigrationViewController alloc] initWithProjectSettings:prjctSettings];
+    projectMigrationViewController.cancelButtonTitle = @"Close Project";
     if (![projectMigrationViewController migrate])
     {
         [self closeProject];
         return NO;
     }
 
-    prjctSettings.projectPath = projectPath;
     [prjctSettings store];
 
     // inject new project settings
