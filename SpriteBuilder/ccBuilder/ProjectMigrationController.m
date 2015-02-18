@@ -1,6 +1,6 @@
 #import "ProjectMigrationController.h"
 
-#import "PackageMigrator.h"
+#import "ResourcePathToPackageMigrator.h"
 #import "ProjectMigrationViewController.h"
 #import "NSError+SBErrors.h"
 #import "SBErrors.h"

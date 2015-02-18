@@ -1,7 +1,7 @@
 #import <MacTypes.h>
 #import "ProjectSettingsMigrator.h"
 #import "ProjectSettings.h"
-#import "PackageMigrator.h"
+#import "ResourcePathToPackageMigrator.h"
 #import "ResourcePropertyKeys.h"
 #import "BackupFileCommand.h"
 #import "NSError+SBErrors.h"

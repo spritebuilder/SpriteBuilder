@@ -29,19 +29,16 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AllPackageSettingsMigrator_Tests">
+                  Identifier = "CCAnimation_Tests">
                </Test>
                <Test
-                  Identifier = "CCAnimation_Tests">
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_bmfont">
                </Test>
                <Test
                   Identifier = "CCBReader_EffectsTest">
                </Test>
                <Test
-                  Identifier = "ProjectMigrationController_Tests">
-               </Test>
-               <Test
-                  Identifier = "ProjectMigrator_Tests">
+                  Identifier = "InspectoreController_Tests/testUpdateInspectorFromSelectionForCCLabelBMFont">
                </Test>
             </SkippedTests>
          </TestableReference>

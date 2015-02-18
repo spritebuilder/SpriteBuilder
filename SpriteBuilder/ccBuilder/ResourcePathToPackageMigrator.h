@@ -4,7 +4,7 @@
 @class ProjectSettings;
 
 
-@interface PackageMigrator : NSObject  <ProjectMigratorProtocol>
+@interface ResourcePathToPackageMigrator : NSObject  <ProjectMigratorProtocol>
 
 - (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
 

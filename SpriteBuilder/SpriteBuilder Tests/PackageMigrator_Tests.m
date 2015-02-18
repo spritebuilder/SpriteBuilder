@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "PackageMigrator.h"
+#import "ResourcePathToPackageMigrator.h"
 #import "ProjectSettings.h"
 #import "FileSystemTestCase.h"
 #import "NSString+Packages.h"
@@ -17,7 +17,7 @@
 @interface PackageMigrator_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) PackageMigrator *packageMigrator;
+@property (nonatomic, strong) ResourcePathToPackageMigrator *packageMigrator;
 
 @end
 
@@ -32,7 +32,7 @@
 
     self.projectSettings = [self loadProjectSettingsWithProjectName:@"migrationtest"];
 
-    self.packageMigrator = [[PackageMigrator alloc] initWithProjectSettings:_projectSettings];
+    self.packageMigrator = [[ResourcePathToPackageMigrator alloc] initWithProjectSettings:_projectSettings];
 }
 
 
