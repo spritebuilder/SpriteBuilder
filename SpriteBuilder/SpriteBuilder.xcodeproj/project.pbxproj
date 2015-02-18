@@ -8209,7 +8209,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**";
+				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**";
 			};
 			name = Debug;
 		};
@@ -8240,7 +8240,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**";
+				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**";
 			};
 			name = Release;
 		};
@@ -8434,7 +8434,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/kazmath/include/** libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**";
+				USER_HEADER_SEARCH_PATHS = "libs/cocos2d-iphone/external/Chipmunk/objectivec/include/ libs/cocos2d-iphone/external/Chipmunk/include/ libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**";
 			};
 			name = Testing;
 		};
@@ -8538,6 +8538,11 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**",
+				);
 				INFOPLIST_FILE = "Cocos2D iPhone/Cocos2D iPhone-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -10794,6 +10799,11 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**",
+				);
 				INFOPLIST_FILE = "Cocos2D iPhone/Cocos2D iPhone-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -10818,6 +10828,11 @@
 				GCC_PREFIX_HEADER = "Cocos2D iPhone/Cocos2D iPhone-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"libs/cocos2d-iphone/cocos2d/**",
+					"libs/cocos2d-iphone/cocos2d-ui/**",
+					"libs/cocos2d-iphone/external/ObjectAL/ObjectAL/ObjectAL/**",
+				);
 				INFOPLIST_FILE = "Cocos2D iPhone/Cocos2D iPhone-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
