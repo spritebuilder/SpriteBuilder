@@ -202,40 +202,6 @@
     }
 }
 
-- (BOOL)isDisabledProperty:(NSString *)name animatable:(BOOL)animatable
-{
-    // Only animatable properties can be disabled
-    if (!animatable)
-    {
-        return NO;
-    }
-
-    SequencerSequence *sequence = _sequenceHandler.currentSequence;
-    SequencerNodeProperty *sequencerNodeProperty = [_node sequenceNodeProperty:name sequenceId:sequence.sequenceId];
-
-    // Do not disable if animation hasn't been enabled
-    if (!sequencerNodeProperty)
-    {
-        return NO;
-    }
-
-    // Disable visiblilty if there are keyframes
-    if (sequencerNodeProperty.keyframes.count > 0 && [name isEqualToString:@"visible"])
-    {
-        return YES;
-    }
-
-    // Do not disable if we are currently at a keyframe
-    if ([sequencerNodeProperty hasKeyframeAtTime:sequence.timelinePosition])
-    {
-        return NO;
-    }
-
-    // Between keyframes - disable
-    return YES;
-}
-
-
 - (void)resetKeyViewLoop
 {
     NSString *privateFunction = [NSString stringWithFormat:@"%@%@%@", @"_setDefault", @"KeyView", @"Loop"];
@@ -319,10 +285,6 @@
         }
 
         BOOL readOnly = [propInfo[@"readOnly"] boolValue];
-        if ([self isDisabledProperty:name animatable:animated])
-        {
-            readOnly = YES;
-        }
 
         // Handle Flash skews
         BOOL usesFlashSkew = [_node usesFlashSkew];
