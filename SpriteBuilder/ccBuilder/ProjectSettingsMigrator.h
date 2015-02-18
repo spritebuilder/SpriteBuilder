@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
-#import "ProjectMigratorProtocol.h"
+#import "MigratorProtocol.h"
 
 @class ProjectSettings;
 @class BackupFileCommand;
 
 
-@interface ProjectSettingsMigrator : NSObject <ProjectMigratorProtocol>
+@interface ProjectSettingsMigrator : NSObject <MigratorProtocol>
 
 - (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
 
