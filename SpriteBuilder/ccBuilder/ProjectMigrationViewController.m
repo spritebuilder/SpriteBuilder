@@ -2,7 +2,7 @@
 #import "ProjectSettings.h"
 #import "ProjectMigrationController.h"
 #import "NSAlert+Convenience.h"
-#import "PackageMigrator.h"
+#import "ResourcePathToPackageMigrator.h"
 #import "ProjectSettingsMigrator.h"
 #import "AllPackageSettingsMigrator.h"
 
@@ -26,7 +26,7 @@
         self.projectMigrationController = [[ProjectMigrationController alloc] init];
         _projectMigrationController.delegate = self;
         _projectMigrationController.migrators = @[
-                [[PackageMigrator alloc] initWithProjectSettings:projectSettings],
+                [[ResourcePathToPackageMigrator alloc] initWithProjectSettings:projectSettings],
                 [[AllPackageSettingsMigrator alloc] initWithProjectSettings:projectSettings],
                 [[ProjectSettingsMigrator alloc] initWithProjectSettings:projectSettings]];
     };

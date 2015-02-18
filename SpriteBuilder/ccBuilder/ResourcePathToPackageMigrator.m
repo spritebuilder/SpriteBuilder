@@ -1,4 +1,4 @@
-#import "PackageMigrator.h"
+#import "ResourcePathToPackageMigrator.h"
 
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
@@ -18,7 +18,7 @@
 NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 
-@interface PackageMigrator ()
+@interface ResourcePathToPackageMigrator ()
 
 @property (nonatomic, weak)ProjectSettings *projectSettings;
 @property (nonatomic) BOOL resourcePathWithPackagesFolderNameFound;
@@ -30,7 +30,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 @end
 
 
-@implementation PackageMigrator
+@implementation ResourcePathToPackageMigrator
 
 - (instancetype)init
 {
