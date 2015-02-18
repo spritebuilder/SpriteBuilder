@@ -1,0 +1,17 @@
+checkout:
+    post:
+        - git submodule update --init --recursive
+
+test:
+    override:
+        - rake test
+
+deployment:
+    develop:
+        branch: develop
+        commands:
+            - rake package
+    ex:
+        branch: experimental/circleciSign
+        commands:
+            - rake package
