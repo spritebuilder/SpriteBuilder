@@ -104,11 +104,13 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 
 @property (nonatomic, readonly) CCBTargetEngine engine;
 
+// Returns an instance of ProjectSettings with projectPath already set
+- (instancetype)initWithFilepath:(NSString *)filepath;
 
+// Returns an instance of ProjectSettings. NOTE: You will have to set the projectPath property manually afterwards
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;
 - (id) serialize;
-
 
 // *** Smart Sprite Sheets ***
 - (void) makeSmartSpriteSheet:(RMResource*) res;

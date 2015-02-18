@@ -52,6 +52,24 @@
 
 @implementation ProjectSettings
 
+- (instancetype)initWithFilepath:(NSString *)filepath
+{
+    NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:filepath];
+    if (!projectDict)
+    {
+        return nil;
+    }
+
+    self = [self initWithSerialization:projectDict];
+
+    if (self)
+    {
+        self.projectPath = filepath;
+    }
+
+    return self;
+}
+
 - (id) init
 {
     self = [super init];
