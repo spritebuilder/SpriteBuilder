@@ -173,10 +173,7 @@
 
 - (NSString*) exporter
 {
-    if (_exporter)
-    {
-        return _exporter;
-    }
+    // Exporter is hardcoded to the current one to prevent incompatability issues. See _exporter / self.exporter
     return kCCBDefaultExportPlugIn;
 }
 
