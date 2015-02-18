@@ -30,6 +30,12 @@
     return self;
 }
 
+- (void)tidyUp
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:_backupFilePath error:nil];
+}
+
 - (BOOL)execute:(NSError **)error
 {
     if (_executed)
@@ -85,5 +91,7 @@
 
     return result;
 }
+
+
 
 @end
