@@ -5,7 +5,9 @@ checkout:
 test:
     override:
         - rake test
-
+    post:
+        - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+        - cp test_results.xml $CIRCLE_TEST_REPORTS/junit/
 deployment:
     develop:
         branch: develop

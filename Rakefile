@@ -32,6 +32,16 @@ def get_template_files
     end
 end
 
+def call_xctool command
+    reporter = "-reporter pretty"
+
+    if ENV["CIRCLE_CI"]
+        reporter = "-reporter plain -reporter junit:test_results.xml"
+    end
+
+    sh "xctool #{reporter} #{command}"
+end
+
 def get_artifact_name
     return @artifact_name if @artifact_name
     branch = `git rev-parse --abbrev-ref HEAD`.chomp
@@ -115,7 +125,7 @@ namespace :build do
     end
 
     task :tests => [:generated,:build_requirements] do
-        sh "xctool -configuration Testing build-tests"
+        call_xctool "-configuration Testing build-tests"
     end
 end
 
@@ -123,13 +133,13 @@ task :default => "build:generated"
 
 desc "Run SpriteBuilder unit tests"
 task :test => ["build:tests", :build_requirements] do
-    sh "xctool -configuration Testing run-tests"
+    call_xctool "-configuration Testing run-tests"
 end
 
 namespace :package do
     desc "Create SpriteBuilder.app + zip app and symbols"
     task :app do
-        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} CONFIGURATION_BUILD_DIR=#{BUILD_DIR} VERSION=#{DEFAULT_SB_VERSION} -configuration Release build"
+        call_xctool "TARGET_BUILD_DIR=#{BUILD_DIR} CONFIGURATION_BUILD_DIR=#{BUILD_DIR} VERSION=#{DEFAULT_SB_VERSION} -configuration Release build"
         app, symbols = "NONE"
 
         built_files = `find . -name SpriteBuilder.app`.chomp.split "\n"
@@ -152,7 +162,7 @@ namespace :package do
 
     desc "Create SpriteBuilder.xcarchive and zip"
     task :archive do
-        sh "xctool TARGET_BUILD_DIR=#{BUILD_DIR} VERSION='#{DEFAULT_SB_VERSION}' -configuration Release archive -archivePath #{BUILD_DIR}/SpriteBuilder"
+        call_xctool "TARGET_BUILD_DIR=#{BUILD_DIR} VERSION='#{DEFAULT_SB_VERSION}' -configuration Release archive -archivePath #{BUILD_DIR}/SpriteBuilder"
 
         Dir.chdir BUILD_DIR do
             sh "zip -r SpriteBuilder.xcarchive.zip SpriteBuilder.xcarchive"
