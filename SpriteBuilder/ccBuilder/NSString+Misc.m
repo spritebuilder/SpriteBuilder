@@ -30,7 +30,6 @@
     NSUInteger maxCounter = 0;
     for (NSString *filename in dirContents)
     {
-        NSLog(@"- %@", filename);
         maxCounter = [self highestBackupDirCounterPostfixCurrentCount:maxCounter filename:[path stringByAppendingPathComponent:filename] postfix:extension];
     }
 
