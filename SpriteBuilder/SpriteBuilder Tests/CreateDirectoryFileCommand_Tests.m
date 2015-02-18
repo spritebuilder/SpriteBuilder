@@ -18,8 +18,6 @@
 
 - (void)testCreationOfDirectory
 {
-    XCTFail(@"test fail!");
-    
     NSString *dirToCreatePath = [self fullPathForFile:@"new"];
 
     CreateDirectoryFileCommand *createDirectoryFileCommand = [[CreateDirectoryFileCommand alloc] initWithDirPath:dirToCreatePath];
